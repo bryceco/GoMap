@@ -521,8 +521,8 @@ class POIAllTagsViewController: UITableViewController {
             
             // Members
             let member = members[indexPath.row]
-            let isResolved = member.ref is OsmBaseObject
-            let cell = (isResolved
+            let isResolved = member.obj != nil
+			let cell = (isResolved
 							? tableView.dequeueReusableCell(withIdentifier: "RelationCell", for: indexPath)
                             : tableView.dequeueReusableCell(withIdentifier: "MemberCell", for: indexPath)) as! TextPairTableCell
 			if EDIT_RELATIONS {
@@ -533,12 +533,11 @@ class POIAllTagsViewController: UITableViewController {
                 cell.text2.isEnabled = false
             }
 			var memberName: String = ""
-			if let ref = member.ref as? OsmBaseObject {
-				memberName = ref.friendlyDescriptionWithDetails()
+			if let obj = member.obj {
+				memberName = obj.friendlyDescriptionWithDetails()
 			} else {
 				let type = member.type ?? ""
-				let num = (member.ref as? NSNumber)?.stringValue ?? ""
-				memberName = "\(type) \(num)"
+				memberName = "\(type) \(member.ref)"
 			}
 			cell.text1.text = member.role
 			cell.text2.text = memberName
@@ -884,41 +883,41 @@ class POIAllTagsViewController: UITableViewController {
 		guard let cell = sender as? UITableViewCell else { return false }
 		guard let indexPath = tableView.indexPath(for: cell) else { return false }
 
-        var object: OsmBaseObject? = nil
-        if indexPath.section == 1 {
+        let object: OsmBaseObject
+		if indexPath.section == 1 {
             // change the selected object in the editor to the relation
             object = relations[indexPath.row]
         } else if indexPath.section == 2 {
             let member = members[indexPath.row]
-            object = member.ref as? OsmBaseObject
-            if object == nil {
+			if let obj = member.obj {
+				object = obj
+			} else {
 				return false
             }
         } else {
             return false
         }
-        let mapView = AppDelegate.shared?.mapView
-        mapView?.editorLayer.selectedNode = object?.isNode()
-        mapView?.editorLayer.selectedWay = object?.isWay()
-        mapView?.editorLayer.selectedRelation = object?.isRelation()
+		let mapView = AppDelegate.shared!.mapView!
+        mapView.editorLayer.selectedNode = object.isNode()
+        mapView.editorLayer.selectedWay = object.isWay()
+        mapView.editorLayer.selectedRelation = object.isRelation()
         
-        var newPoint = mapView?.pushpinView.arrowPoint ?? .zero
-        let clLatLon = mapView?.longitudeLatitude(forScreenPoint: newPoint, birdsEye: true)
-        var latLon = OSMPoint(x: (clLatLon?.longitude ?? 0.0), y: (clLatLon?.latitude ?? 0.0))
-        if let point = object?.pointOnObject(for: latLon) {
-            latLon = point
-        }
-        newPoint = mapView?.screenPoint(forLatitude: latLon.y, longitude: latLon.x, birdsEye: true) ?? .zero
-        if !(mapView?.bounds.contains(newPoint) ?? false) {
+        var newPoint = mapView.pushpinView.arrowPoint
+        let clLatLon = mapView.longitudeLatitude(forScreenPoint: newPoint, birdsEye: true)
+        var latLon = OSMPoint(x: clLatLon.longitude, y: clLatLon.latitude)
+		latLon = object.pointOnObjectForPoint( latLon )
+
+        newPoint = mapView.screenPoint(forLatitude: latLon.y, longitude: latLon.x, birdsEye: true)
+		if !mapView.bounds.contains(newPoint) {
             // new object is far away
-            mapView?.placePushpinForSelection()
+            mapView.placePushpinForSelection()
         } else {
-            mapView?.placePushpin(at: newPoint, object: object)
+            mapView.placePushpin(at: newPoint, object: object)
         }
         
         // dismiss ourself and switch to the relation
-        let topController = mapView?.mainViewController
-        mapView?.refreshPushpinText() // update pushpin description to the relation
+        let topController = mapView.mainViewController
+        mapView.refreshPushpinText() // update pushpin description to the relation
         dismiss(animated: true) {
             topController?.performSegue(withIdentifier: "poiSegue", sender: nil)
         }

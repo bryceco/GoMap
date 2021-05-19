@@ -164,7 +164,7 @@ extension PresetsDatabase {
 
 	@objc func isArea(_ way: OsmWay) -> Bool {
 
-		if let value = way.tags?["area"] {
+		if let value = way.tags["area"] {
 			if OsmTags.IsOsmBooleanTrue(value) {
 				return true
 			}
@@ -175,10 +175,10 @@ extension PresetsDatabase {
 		if !way.isClosed() {
 			return false
 		}
-		if (way.tags?.count ?? 0) == 0 {
+		if way.tags.count == 0 {
 			return true // newly created closed way
 		}
-		for (key,val) in way.tags! {
+		for (key,val) in way.tags {
 			if let exclusions = PresetsDatabase.areaTagsDictionary[key] {
 				if exclusions[val] == nil {
 					return true

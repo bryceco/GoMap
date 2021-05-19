@@ -24,12 +24,12 @@ class HeightViewController: UIViewController {
     @IBOutlet var _heightLabel: UIButton!
     @IBOutlet var _applyButton: UIButton!
     @IBOutlet var _cancelButton: UIButton!
-    var _rulerViews: [AnyHashable : Any]?
-    var _rulerLayers: [AnyHashable : Any]?
+	var _rulerViews: [Int : UILabel] = [:]
+	var _rulerLayers: [Int : CAShapeLayer] = [:]
     var _isExiting = false
     var _scrollPosition: CGFloat = 0.0
     var _totalZoom: Double = 0.0
-    var _currentHeight: String?
+    var _currentHeight: String = ""
     var _alertHeight: String?
     
     var callback: ((_ newValue: String?) -> Void)?
@@ -113,7 +113,9 @@ class HeightViewController: UIViewController {
                 using: .xTrueNorthZVertical,
                 to: currentQueue,
                 withHandler: { motion, error in
-                    weakSelf?.refreshRulerLabels(motion)
+					if let motion = motion {
+						weakSelf?.refreshRulerLabels(motion)
+					}
                 })
         }
         
@@ -272,64 +274,65 @@ class HeightViewController: UIViewController {
     }
     
     static var cameraFOVCameraAngle: Double = 0
-    
+
+	private static let ModelList = [(model: String, fov: Double, focal_length: Double, vertical_sensor_size: Double)](
+		// http://caramba-apps.com/blog/files/field-of-view-angles-ipad-iphone.html
+		arrayLiteral:
+		("iPad5,4",         0.0, 3.3, 0.0),                // iPad Air 2
+		("iPad4,5",         0.0, 0.0, 0.0),                // iPad Mini (2nd Generation iPad Mini - Cellular)
+		("iPad4,4",         0.0, 0.0, 0.0),                // iPad Mini (2nd Generation iPad Mini - Wifi)
+		("iPad4,2",         0.0, 0.0, 0.0),                // iPad Air 5th Generation iPad (iPad Air) - Cellular
+		("iPad4,1",         0.0, 0.0, 0.0),                // iPad Air 5th Generation iPad (iPad Air) - Wifi
+		("iPad3,6",         0.0, 0.0, 0.0),                // iPad 4 (4th Generation)
+		("iPad3,5",         0.0, 0.0, 0.0),                // iPad 4 (4th Generation)
+		("iPad3,4",         0.0, 0.0, 0.0),                // iPad 4 (4th Generation)
+		("iPad3,3",         0.0, 0.0, 0.0),                // iPad 3 (3rd Generation)
+		("iPad3,2",         0.0, 0.0, 0.0),                // iPad 3 (3rd Generation)
+		("iPad3,1",         0.0, 0.0, 0.0),                // iPad 3 (3rd Generation)
+		("iPad2,7",         0.0, 0.0, 0.0),                // iPad Mini (Original)
+		("iPad2,6",         0.0, 0.0, 0.0),                // iPad Mini (Original)
+		("iPad2,5",         0.0, 3.3, 0.0),                // iPad Mini (Original)
+		("iPad2,4",       43.47, 0.0, 0.0),                // iPad 2
+		("iPad2,3",       43.47, 0.0, 0.0),                // iPad 2
+		("iPad2,2",       43.47, 0.0, 0.0),                // iPad 2
+		("iPad2,1",       43.47, 0.0, 0.0),                // iPad 2
+
+		("iPhone7,2",     0.0, 4.15, 4.89),                // iPhone 6+
+		("iPhone7,1",     0.0, 4.15, 4.89),                // iPhone 6
+		("iPhone6,2",     0.0, 4.12, 4.89),                // iPhone 5s (model A1457, A1518, A1528 (China), A1530 | Global)
+		("iPhone6,1",     0.0, 4.12, 4.89),                // iPhone 5s model A1433, A1533 | GSM)
+		("iPhone5,4",     0.0, 4.10, 4.54),                // iPhone 5c (model A1507, A1516, A1526 (China), A1529 | Global)
+		("iPhone5,3",     0.0, 4.10, 4.54),                // iPhone 5c (model A1456, A1532 | GSM)
+		("iPhone5,2", 58.498, 4.10, 4.592),                // iPhone 5 (model A1429, everything else)
+		("iPhone5,1", 58.498, 4.10, 4.592),                // iPhone 5 (model A1428, AT&T/Canada)
+		("iPhone4,1", 56.423, 4.28, 4.592),                // iPhone 4S
+		("iPhone3,1",  61.048, 3.85, 4.54),                // iPhone 4
+		("iPhone2,1",  49.871, 3.85, 3.58),                // iPhone 3GS
+		("iPhone1,1", 49.356, 3.85, 3.538),                // iPhone 3
+
+		("iPod4,1",         0.0, 0.0, 0.0),                // iPod Touch (Fifth Generation)
+		("iPod4,1",         0.0, 0.0, 0.0)                 // iPod Touch (Fourth Generation)
+	)
+
     func cameraFOV() -> Double {
-        
-        let ModelList = [(model: String, fov: Double, focal_length: Double?, vertical_sensor_size: Double?)](
-            // http://caramba-apps.com/blog/files/field-of-view-angles-ipad-iphone.html
-            arrayLiteral:
-            ("iPad5,4",         0.0, 3.3, 0.0),                // iPad Air 2
-            ("iPad4,5",         0.0, 0.0, 0.0),                // iPad Mini (2nd Generation iPad Mini - Cellular)
-            ("iPad4,4",         0.0, 0.0, 0.0),                // iPad Mini (2nd Generation iPad Mini - Wifi)
-            ("iPad4,2",         0.0, 0.0, 0.0),                // iPad Air 5th Generation iPad (iPad Air) - Cellular
-            ("iPad4,1",         0.0, 0.0, 0.0),                // iPad Air 5th Generation iPad (iPad Air) - Wifi
-            ("iPad3,6",         0.0, 0.0, 0.0),                // iPad 4 (4th Generation)
-            ("iPad3,5",         0.0, 0.0, 0.0),                // iPad 4 (4th Generation)
-            ("iPad3,4",         0.0, 0.0, 0.0),                // iPad 4 (4th Generation)
-            ("iPad3,3",         0.0, 0.0, 0.0),                // iPad 3 (3rd Generation)
-            ("iPad3,2",         0.0, 0.0, 0.0),                // iPad 3 (3rd Generation)
-            ("iPad3,1",         0.0, 0.0, 0.0),                // iPad 3 (3rd Generation)
-            ("iPad2,7",         0.0, 0.0, 0.0),                // iPad Mini (Original)
-            ("iPad2,6",         0.0, 0.0, 0.0),                // iPad Mini (Original)
-            ("iPad2,5",         0.0, 3.3, 0.0),                // iPad Mini (Original)
-            ("iPad2,4",       43.47, 0.0, 0.0),                // iPad 2
-            ("iPad2,3",       43.47, 0.0, 0.0),                // iPad 2
-            ("iPad2,2",       43.47, 0.0, 0.0),                // iPad 2
-            ("iPad2,1",       43.47, 0.0, 0.0),                // iPad 2
-            
-            ("iPhone7,2",     0.0, 4.15, 4.89),                // iPhone 6+
-            ("iPhone7,1",     0.0, 4.15, 4.89),                // iPhone 6
-            ("iPhone6,2",     0.0, 4.12, 4.89),                // iPhone 5s (model A1457, A1518, A1528 (China), A1530 | Global)
-            ("iPhone6,1",     0.0, 4.12, 4.89),                // iPhone 5s model A1433, A1533 | GSM)
-            ("iPhone5,4",     0.0, 4.10, 4.54),                // iPhone 5c (model A1507, A1516, A1526 (China), A1529 | Global)
-            ("iPhone5,3",     0.0, 4.10, 4.54),                // iPhone 5c (model A1456, A1532 | GSM)
-            ("iPhone5,2", 58.498, 4.10, 4.592),                // iPhone 5 (model A1429, everything else)
-            ("iPhone5,1", 58.498, 4.10, 4.592),                // iPhone 5 (model A1428, AT&T/Canada)
-            ("iPhone4,1", 56.423, 4.28, 4.592),                // iPhone 4S
-            ("iPhone3,1",  61.048, 3.85, 4.54),                // iPhone 4
-            ("iPhone2,1",  49.871, 3.85, 3.58),                // iPhone 3GS
-            ("iPhone1,1", 49.356, 3.85, 3.538),                // iPhone 3
-            
-            ("iPod4,1",         0.0, 0.0, 0.0),                // iPod Touch (Fifth Generation)
-            ("iPod4,1",         0.0, 0.0, 0.0)                 // iPod Touch (Fourth Generation)
-        )
+
         var systemInfo = utsname()
         uname(&systemInfo)
-        for i in 0..<(MemoryLayout.size(ofValue: ModelList) / MemoryLayout.size(ofValue: ModelList[0])) {
-            if ModelList[i].vertical_sensor_size == 0 {
+		for device in HeightViewController.ModelList {
+			if device.vertical_sensor_size == 0 {
                 continue
             }
-            if ModelList[i].focal_length == 0 {
+            if device.focal_length == 0 {
                 continue
             }
-            let a = 2 * atan2((ModelList[i].vertical_sensor_size ?? 0) / 2, (ModelList[i].focal_length ?? 0)) * 180 / .pi
-            assert(ModelList[i].fov == 0 || abs(Float(a - ModelList[i].fov)) < 0.01)
+            let a = 2 * atan2(device.vertical_sensor_size / 2, device.focal_length) * 180 / .pi
+            assert(device.fov == 0 || abs(Float(a - device.fov)) < 0.01)
             let machineMirror = Mirror(reflecting: systemInfo.machine)
             let model = machineMirror.children.reduce("") { identifier, element in
                 guard let value = element.value as? Int8, value != 0 else { return identifier }
                 return identifier + String(UnicodeScalar(UInt8(value)))
             }
-            if strcmp(model, ModelList[i].model) == 0 {
+            if strcmp(model, device.model) == 0 {
                 HeightViewController.cameraFOVCameraAngle = a
             }
         }
@@ -340,51 +343,48 @@ class HeightViewController: UIViewController {
         return HeightViewController.cameraFOVCameraAngle
     }
     
-    func distance(toObject error: inout Double?, direction pDirection: inout Double?) -> Double {
-        let delegate = AppDelegate.shared
+    func distanceToObject(error: inout Double, direction pDirection: inout Double) -> Double {
+		let delegate = AppDelegate.shared
         var object = delegate?.mapView?.editorLayer.selectedPrimary
-        if object == nil && delegate?.mapView?.pushpinView == nil {
-            error = nan("")
-            pDirection = nil
-            return nan("")
-        }
-        if object == nil {
-            // brand new object, so fake it
-            if let latlon = delegate?.mapView?.longitudeLatitude(forScreenPoint: (delegate?.mapView?.pushpinView.arrowPoint ?? .zero), birdsEye: true) {
-                let node = OsmNode()
-                node.setLongitude(latlon.longitude, latitude: latlon.latitude, undo: nil)
+		if object == nil && delegate?.mapView?.pushpinView == nil {
+			error = .nan
+			pDirection = .nan
+			return .nan
+		}
+		if object == nil {
+			// brand new object, so fake it
+			if let latlon = delegate?.mapView?.longitudeLatitude(forScreenPoint: (delegate?.mapView?.pushpinView.arrowPoint ?? .zero), birdsEye: true) {
+				let node = OsmNode()	// this gets thrown away at the end of this method
+				node.setLongitude( latlon.longitude, latitude: latlon.latitude, undo: nil)
                 object = node
-            }
+			} else {
+				fatalError()
+			}
         }
-        let location = delegate?.mapView?.currentLocation
-        let userLoc = location?.coordinate
-        let userPt = OSMPoint(x: (userLoc?.longitude ?? 0), y: (userLoc?.latitude ?? 0))
-        var dist: Double = Double(MAXFLOAT)
+		guard let object = object else { return 0.0 }
+		let location = (delegate?.mapView?.currentLocation)!
+        let userPt = OSMPoint(x: location.coordinate.longitude, y: location.coordinate.latitude)
+		var dist: Double = Double(MAXFLOAT)
         var bearing: Double = 0
         
-        if let nodeSet = object?.nodeSet {
-            for node in nodeSet() {
-                guard let node = node as? OsmNode else {
-                    continue
-                }
-                let nodePt = OSMPoint(x: node.lon, y: node.lat)
-                let d = GreatCircleDistance(userPt, nodePt)
-                if d < dist {
-                    dist = d
-                    var dir = OSMPoint(x: lat2latp(nodePt.y) - lat2latp(userPt.y), y: nodePt.x - userPt.x)
-                    dir = UnitVector(dir)
-                    bearing = atan2(dir.y, dir.x)
-                }
-            }
-        }
-        
-        error = location?.horizontalAccuracy
-        pDirection = bearing
+		for node in object.nodeSet() {
+			let nodePt = OSMPoint(x: node.lon, y: node.lat)
+			let d = GreatCircleDistance(userPt, nodePt)
+			if d < dist {
+				dist = d
+				var dir = OSMPoint(x: lat2latp(nodePt.y) - lat2latp(userPt.y), y: nodePt.x - userPt.x)
+				dir = UnitVector(dir)
+				bearing = atan2(dir.y, dir.x)
+			}
+		}
+
+        error = location.horizontalAccuracy
+		pDirection = bearing
         
         return dist
     }
     
-    func distanceString(forFloat num: Double) -> String? {
+    func distanceString(forFloat num: Double) -> String {
         if abs(Float(num)) < 10 {
             return String(format: "%.1f", num)
         } else {
@@ -392,32 +392,32 @@ class HeightViewController: UIViewController {
         }
     }
     
-    func refreshRulerLabels(_ motion: CMDeviceMotion?) {
+    func refreshRulerLabels(_ motion: CMDeviceMotion) {
         if _isExiting {
             return
         }
         
         // compute location
-        var distError: Double? = 0.0
-        var direction: Double? = 0.0
-        let dist = distance(toObject: &distError, direction: &direction)
+        var distError: Double = 0.0
+        var direction: Double = 0.0
+		let dist = distanceToObject(error: &distError, direction: &direction)
         if dist.isNaN {
             cancel(self)
             return
         }
         
         // get camera tilt
-        var pitch = motion?.attitude.pitch ?? 0.0
-        let yaw = motion?.attitude.yaw ?? 0.0
-        if abs(Float(yaw - (direction ?? 0.0))) < .pi / 2 {
+        var pitch = motion.attitude.pitch
+        let yaw = motion.attitude.yaw
+        if fabs(yaw - direction) < .pi / 2 {
             pitch = .pi / 2 - pitch
         } else {
             pitch = pitch - .pi / 2
         }
         
         // update distance label
-        let distText = "Distance: \(distanceString(forFloat: dist) ?? "") ± \(distanceString(forFloat: (distError ?? 0)) ?? "") meters"
-        UIView.performWithoutAnimation({ [self] in
+		let distText = "Distance: \(distanceString(forFloat: dist)) ± \(distanceString(forFloat: distError)) meters"
+		UIView.performWithoutAnimation({ [self] in
             _distanceLabel.setTitle(distText, for: .normal)
             _distanceLabel.layoutIfNeeded()
         })
@@ -430,9 +430,11 @@ class HeightViewController: UIViewController {
             let height1 = dist * tan(pitch - atan2(Double(rc.size.height / 2 * (1 - InsetPercent)) / _totalZoom, dist2))
             let height2 = dist * tan(pitch + atan2(Double(rc.size.height / 2 * (1 - InsetPercent)) / _totalZoom, dist2))
             let height = height2 - height1
-            let heightError = height * (distError ?? 0) / dist
+			let heightError = height * distError / dist
             _currentHeight = distanceString(forFloat: height)
-            let text = String.localizedStringWithFormat(NSLocalizedString("Height: %@ ± %@ meters", comment: ""), _currentHeight ?? "", distanceString(forFloat: heightError) ?? "")
+			let text = String.localizedStringWithFormat(NSLocalizedString("Height: %@ ± %@ meters", comment: ""),
+														_currentHeight,
+														distanceString(forFloat: heightError))
             UIView.performWithoutAnimation({ [self] in
                 _heightLabel.setTitle(text, for: .normal)
                 _heightLabel.layoutIfNeeded()
@@ -472,55 +474,56 @@ class HeightViewController: UIViewController {
                 
                 var labelWidth: CGFloat = 0
                 if div % 2 == 0 {
-                    var label = _rulerViews?[NSNumber(value: div)] as? UILabel
-                    if label == nil {
-                        label = UILabel()
-                        _rulerViews?[NSNumber(value: div)] = label
-                    }
-                    if pixels > Double(rc.size.height) || pixels < 0 {
-                        label?.removeFromSuperview()
+					let label: UILabel
+					if let lab = _rulerViews[div] {
+						label = lab
+					} else {
+						label = UILabel()
+                        _rulerViews[div] = label
+					}
+
+					if pixels > Double(rc.size.height) || pixels < 0 {
+                        label.removeFromSuperview()
                     } else {
-                        label?.layer.anchorPoint = CGPoint(x: 0, y: 0.5)
-                        label?.text = String.localizedStringWithFormat(NSLocalizedString("%@ meters", comment: "Always plural"), distanceString(forFloat: Double(height - scrollHeight)) ?? "")
-                        label?.font = UIFont.preferredFont(forTextStyle: .headline)
-                        label?.backgroundColor = UIColor(white: 1.0, alpha: 0.5)
-                        label?.textColor = UIColor.black
-                        label?.textAlignment = .center
-                        label?.sizeToFit()
-                        label?.bounds = label?.bounds.insetBy(dx: -labelBorderWidth, dy: 0) ?? CGRect.zero
-                        label?.center = CGPoint(x: 0, y: CGFloat(pixels))
-                        labelWidth = label?.bounds.size.width ?? 0.0
-                        if label?.superview == nil {
-                            if let label = label {
-                                view.addSubview(label)
-                            }
+                        label.layer.anchorPoint = CGPoint(x: 0, y: 0.5)
+                        label.text = String.localizedStringWithFormat(NSLocalizedString("%@ meters", comment: "Always plural"), distanceString(forFloat: Double(height - scrollHeight)))
+                        label.font = UIFont.preferredFont(forTextStyle: .headline)
+                        label.backgroundColor = UIColor(white: 1.0, alpha: 0.5)
+                        label.textColor = UIColor.black
+                        label.textAlignment = .center
+                        label.sizeToFit()
+                        label.bounds = label.bounds.insetBy(dx: -labelBorderWidth, dy: 0)
+                        label.center = CGPoint(x: 0, y: CGFloat(pixels))
+                        labelWidth = label.bounds.size.width
+                        if label.superview == nil {
+							view.addSubview(label)
                         }
                     }
                 }
-                
-                var layer = _rulerLayers?[NSNumber(value: div)] as? CAShapeLayer
-                if layer == nil {
-                    layer = CAShapeLayer()
-                    _rulerLayers?[NSNumber(value: div)] = layer
-                }
+
+				let layer: CAShapeLayer
+				if let lay = _rulerLayers[div] {
+					layer = lay
+				} else {
+					layer = CAShapeLayer()
+					_rulerLayers[div] = layer
+				}
                 if pixels > Double(rc.size.height) || pixels < 0 {
-                    layer?.removeFromSuperlayer()
+                    layer.removeFromSuperlayer()
                 } else {
                     let path = UIBezierPath()
                     let isZero = div == 0
                     path.move(to: CGPoint(x: labelWidth, y: CGFloat(pixels)))
                     path.addLine(to: CGPoint(x: rc.size.width, y: CGFloat(pixels)))
-                    layer?.path = path.cgPath
-                    layer?.strokeColor = isZero ? UIColor.green.cgColor : UIColor.white.cgColor
-                    layer?.lineWidth = isZero ? 2 : 1
-                    layer?.frame = view.bounds
+                    layer.path = path.cgPath
+                    layer.strokeColor = isZero ? UIColor.green.cgColor : UIColor.white.cgColor
+                    layer.lineWidth = isZero ? 2 : 1
+                    layer.frame = view.bounds
                     if div % 2 == 1 {
-                        layer?.lineDashPattern = [NSNumber(value: 5), NSNumber(value: 4)]
+                        layer.lineDashPattern = [NSNumber(value: 5), NSNumber(value: 4)]
                     }
-                    if layer?.superlayer == nil {
-                        if let layer = layer {
-                            view.layer.addSublayer(layer)
-                        }
+                    if layer.superlayer == nil {
+						view.layer.addSublayer(layer)
                     }
                 }
             }

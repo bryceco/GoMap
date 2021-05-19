@@ -23,8 +23,8 @@ extension OSMPoint: Hashable {
 
 extension EditorMapLayer {
     private static func AppendNodes(_ list: inout [OsmNode], way: OsmWay, addToBack: Bool, reverseNodes: Bool) {
-        let nodes = reverseNodes ? way.nodes!.reversed() : way.nodes!
-        if addToBack {
+        let nodes = reverseNodes ? way.nodes.reversed() : way.nodes
+		if addToBack {
             // insert at back of list
             let a = nodes[1 ..< nodes.count]
             list.append(contentsOf: a)
@@ -336,9 +336,8 @@ extension EditorMapLayer {
 
         for object in objectList {
             if object.isWay()?.isClosed() == true,
-                let dict = object.tags,
-                let value = dict["natural"],
-                value == "water"
+				let value = object.tags["natural"],
+				value == "water"
             {
                 continue // lakes are not a concern of this function
             }
@@ -347,8 +346,8 @@ extension EditorMapLayer {
                     outerWays.append(way)
                 } else if let relation = object.isRelation() {
                     for member in relation.members {
-                        if let way = member.ref as? OsmWay {
-                            if member.role == "outer" {
+                        if let way = member.obj as? OsmWay {
+							if member.role == "outer" {
                                 outerWays.append(way)
                             } else if member.role == "inner" {
                                 innerWays.append(way)

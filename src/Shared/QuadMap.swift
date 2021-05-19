@@ -46,7 +46,7 @@ class QuadMap: NSObject, NSCoding {
 		guard let root = coder.decodeObject(forKey: "rootQuad") else {
 			while true {
 				print("bad rootQuad")
-				let root3 = coder.decodeObject(forKey: "rootQuad")
+				let _ = coder.decodeObject(forKey: "rootQuad")
 			}
 			return nil
 		}

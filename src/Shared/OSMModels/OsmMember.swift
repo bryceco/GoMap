@@ -7,48 +7,45 @@
 //  Copyright © 2020 Bryce. All rights reserved.
 //
 
+@objcMembers
 class OsmMember: NSObject, NSCoding {
- // way, node, or relation: to help identify ref
 
-
-
-    private(set) var type: String?
-    private(set) var ref: Any?
-    private(set) var role: String?
+	let ref: OsmIdentifier
+	private(set) var type: String?	// way, node, or relation: to help identify ref
+	private(set) var obj: OsmBaseObject?
+	private(set) var role: String?
 
     override var description: String {
-        if let ref = ref {
-            return "\(super.description) role=\(role ?? ""); type=\(type ?? "");ref=\(ref);"
-        }
-        return nil
+		return "\(super.description) role=\(role ?? ""); type=\(type ?? ""); ref=\(ref);"
     }
 
-    init(type: String?, ref: NSNumber?, role: String?) {
-        super.init()
+    init(type: String?, ref: OsmIdentifier, role: String?) {
         self.type = type
         self.ref = ref
-        self.role = role
+		self.obj = nil
+		self.role = role
+		super.init()
     }
 
-    init(ref: OsmBaseObject?, role: String?) {
-        super.init()
-        self.ref = ref
-        self.role = role
-        if ref?.isNode() != nil {
-            type = "node"
-        } else if ref?.isWay() != nil {
+	init(obj: OsmBaseObject, role: String?) {
+		self.obj = obj
+		self.ref = obj.ident
+		self.role = role
+        if obj.isNode() != nil {
+			type = "node"
+        } else if obj.isWay() != nil {
             type = "way"
-        } else if ref?.isRelation() != nil {
-            type = "relation"
+        } else if obj.isRelation() != nil {
+			type = "relation"
         } else {
             type = nil
         }
+		super.init()
     }
 
-    func resolveRef(to object: OsmBaseObject?) {
-        assert((ref is NSNumber) || (ref is OsmBaseObject))
-        assert((object is NSNumber) || (object?.isNode() != nil && isNode()) || (object?.isWay() != nil && isWay()) || (object?.isRelation() != nil && isRelation()))
-        ref = object
+	func resolveRef(to object: OsmBaseObject) {
+		assert( self.ref == object.ident )
+		obj = object
     }
 
     func isNode() -> Bool {
@@ -64,17 +61,16 @@ class OsmMember: NSObject, NSCoding {
     }
 
     func encode(with coder: NSCoder) {
-        let o = self.ref as? OsmBaseObject
-        let ref = (self.ref is OsmBaseObject) ? o?.ident : (self.ref as? NSNumber)
-        coder.encode(type, forKey: "type")
-        coder.encode(ref, forKey: "ref")
-        coder.encode(role, forKey: "role")
+		coder.encode(type, forKey: "type")
+		coder.encode(ref, forKey: "ref")
+		coder.encode(role, forKey: "role")
     }
 
     required init?(coder: NSCoder) {
-        super.init()
         type = coder.decodeObject(forKey: "type") as? String
-        ref = coder.decodeObject(forKey: "ref")
+        ref = coder.decodeInt64(forKey: "ref")
         role = coder.decodeObject(forKey: "role") as? String
+		obj = nil
+		super.init()
     }
 }

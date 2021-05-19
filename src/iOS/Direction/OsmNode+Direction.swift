@@ -38,7 +38,7 @@ extension OsmNode {
         let keys = ["direction", "camera:direction"]
         for directionKey in keys {
             if
-                let value = tags?[directionKey],
+                let value = tags[directionKey],
                 let direction = OsmNode.directionFromString(value)
             {
                 return direction

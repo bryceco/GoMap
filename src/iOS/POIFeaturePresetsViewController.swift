@@ -93,11 +93,11 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
         if !isMovingToParent {
             // special case: if this is a new object and the user just selected the feature to be shop/amenity,
             // then automatically select the Name field as the first responder
-            let tabController = tabBarController as? POITabBarController
-            if tabController?.isTagDictChanged() != nil {
-                let dict = tabController?.keyValueDict
-                if dict?.count == 1 && (dict?["shop"] != nil || dict?["amenity"] != nil) && dict?["name"] == nil {
-                    // find name field and make it first responder
+            let tabController = tabBarController as! POITabBarController
+            if tabController.isTagDictChanged() {
+                let dict = tabController.keyValueDict
+                if dict.count == 1 && (dict["shop"] != nil || dict["amenity"] != nil) && dict["name"] == nil {
+					// find name field and make it first responder
                     DispatchQueue.main.async(execute: {
                         let index = IndexPath(row: 1, section: 0)
                         let cell = self.tableView.cellForRow(at: index) as? FeaturePresetCell
@@ -106,19 +106,19 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
                         }
                     })
                 }
-            } else if !childPushed && tabController?.selection?.ident.int64Value ?? 0 <= 0 && tabController?.keyValueDict.count == 0 {
-                // if we're being displayed for a newly created node then go straight to the Type picker
-                performSegue(withIdentifier: "POITypeSegue", sender: nil)
-            }
+			} else if !childPushed && (tabController.selection?.ident ?? 0) <= 0 && tabController.keyValueDict.count == 0 {
+				// if we're being displayed for a newly created node then go straight to the Type picker
+				performSegue(withIdentifier: "POITypeSegue", sender: nil)
+			}
         }
     }
     
     @objc func typeViewController(_ typeViewController: POIFeaturePickerViewController?, didChangeFeatureTo newFeature: PresetFeature?) {
         selectedFeature = newFeature
-        let tabController = tabBarController as? POITabBarController
-        let geometry = tabController?.selection != nil ? tabController?.selection?.geometryName() : GEOMETRY_NODE
+        let tabController = tabBarController as! POITabBarController
+        let geometry = tabController.selection != nil ? tabController.selection?.geometryName() : GEOMETRY_NODE
         
-        let oldFeature = PresetsDatabase.shared.matchObjectTagsToFeature(tabController?.keyValueDict, geometry: geometry!, includeNSI: true)
+        let oldFeature = PresetsDatabase.shared.matchObjectTagsToFeature(tabController.keyValueDict, geometry: geometry!, includeNSI: true)
     
         // remove previous feature tags
         var removeTags = oldFeature?.removeTags()
@@ -128,19 +128,19 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
             }
         }
         for (key, value) in removeTags ?? [:] {
-            tabController?.setFeatureKey(key, value: value)
+            tabController.setFeatureKey(key, value: value)
         }
         
         // add new feature tags
         for (key, value) in newFeature?.addTags() ?? [:] {
             if value == "*" {
-                if !(tabController?.keyValueDict.keys.contains(key) ?? false) {
-                    tabController?.setFeatureKey(key, value: "yes")
+                if !tabController.keyValueDict.keys.contains(key) {
+                    tabController.setFeatureKey(key, value: "yes")
                 } else {
                     // already has a value
                 }
             } else {
-                tabController?.setFeatureKey(key, value: value)
+                tabController.setFeatureKey(key, value: value)
             }
         }
         
@@ -148,8 +148,8 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
         // add default values of new feature fields
         let defaults = newFeature?.defaultValuesForGeometry(geometry!) ?? [:]
         for (key, value) in defaults {
-            if !(tabController?.keyValueDict.keys.contains(key) ?? false) {
-                tabController?.setFeatureKey(key, value: value)
+            if !tabController.keyValueDict.keys.contains(key) {
+                tabController.setFeatureKey(key, value: value)
             }
         }
     }
@@ -391,7 +391,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
             let cell = self.cell(for: textField)
             if let key = cell?.presetKey?.tagKey {
                 if PresetsDatabase.shared.eligibleForAutocomplete(key) {
-                    let set = PresetsDatabase.shared.allTagValuesForKey(key) ?? Set<String>()
+                    let set = PresetsDatabase.shared.allTagValuesForKey(key)
                     let appDelegate = AppDelegate.shared
                     let values = appDelegate?.mapView?.editorLayer.mapData.tagValues(forKey: key)
                     values?.addObjects(from: Array.init(arrayLiteral: set))

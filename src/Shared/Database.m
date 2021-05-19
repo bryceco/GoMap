@@ -10,7 +10,7 @@
 
 #import "DLog.h"
 #import "Database.h"
-#import "OsmMember.h"
+//#import "OsmMember.h"
 
 
 #define DoAssert(condition)	\
@@ -327,12 +327,12 @@ retry:
 			SqlCheck( sqlite3_bind_int(nodeStatement,		5, node.uid));
 			SqlCheck( sqlite3_bind_double(nodeStatement,	6, node.lon));
 			SqlCheck( sqlite3_bind_double(nodeStatement,	7, node.lat));
-			SqlCheck( sqlite3_bind_int64(nodeStatement,		8, node.ident.longLongValue));
+			SqlCheck( sqlite3_bind_int64(nodeStatement,		8, node.ident));
 
 			rc = sqlite3_step(nodeStatement);
 			if ( rc == SQLITE_CONSTRAINT ) {
 				// tried to insert something already there. This might be an update to a later version from the server so delete what we have and retry
-				NSLog(@"retry node %@\n",node.ident);
+				NSLog(@"retry node %lld\n",node.ident);
 				[self deleteNodes:@[node]];
 				goto retry;
 			}
@@ -344,7 +344,7 @@ retry:
 			[node.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
 				sqlite3_reset(tagStatement);
 				SqlCheck( sqlite3_clear_bindings(tagStatement));
-				SqlCheck( sqlite3_bind_int64(tagStatement,	1, node.ident.longLongValue));
+				SqlCheck( sqlite3_bind_int64(tagStatement,	1, node.ident));
 				SqlCheck( sqlite3_bind_text(tagStatement,	2, key.UTF8String, -1, NULL));
 				SqlCheck( sqlite3_bind_text(tagStatement,	3, value.UTF8String, -1, NULL));
 				rc = sqlite3_step(tagStatement);
@@ -387,7 +387,7 @@ retry:
 			// update way
 			sqlite3_reset(wayStatement);
 			SqlCheck( sqlite3_clear_bindings(wayStatement));
-			SqlCheck( sqlite3_bind_int64(wayStatement,	1, way.ident.longLongValue));
+			SqlCheck( sqlite3_bind_int64(wayStatement,	1, way.ident));
 			SqlCheck( sqlite3_bind_text(wayStatement,	2, way.user.UTF8String, -1, NULL));
 			SqlCheck( sqlite3_bind_text(wayStatement,	3, way.timestamp.UTF8String, -1, NULL));
 			SqlCheck( sqlite3_bind_int(wayStatement,	4, way.version));
@@ -398,7 +398,7 @@ retry:
 			rc = sqlite3_step(wayStatement);
 			if ( rc == SQLITE_CONSTRAINT ) {
 				// tried to insert something already there. This might be an update to a later version from the server so delete what we have and retry
-				NSLog(@"retry way %@\n",way.ident);
+				NSLog(@"retry way %lld\n",way.ident);
 				[self deleteWays:@[ way ]];
 				goto retry;
 			}
@@ -410,7 +410,7 @@ retry:
 			[way.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
 				sqlite3_reset(tagStatement);
 				SqlCheck( sqlite3_clear_bindings(tagStatement));
-				SqlCheck( sqlite3_bind_int64(tagStatement,	1, way.ident.longLongValue));
+				SqlCheck( sqlite3_bind_int64(tagStatement,	1, way.ident));
 				SqlCheck( sqlite3_bind_text(tagStatement,	2, key.UTF8String, -1, NULL));
 				SqlCheck( sqlite3_bind_text(tagStatement,	3, value.UTF8String, -1, NULL));
 				rc = sqlite3_step(tagStatement);
@@ -421,8 +421,8 @@ retry:
 			for ( OsmNode * node in way.nodes ) {
 				sqlite3_reset(nodeStatement);
 				SqlCheck( sqlite3_clear_bindings(nodeStatement));
-				SqlCheck( sqlite3_bind_int64(nodeStatement,	1, way.ident.longLongValue));
-				SqlCheck( sqlite3_bind_int64(nodeStatement,	2, node.ident.longLongValue));
+				SqlCheck( sqlite3_bind_int64(nodeStatement,	1, way.ident));
+				SqlCheck( sqlite3_bind_int64(nodeStatement,	2, node.ident));
 				SqlCheck( sqlite3_bind_int(nodeStatement,	3, index++));
 				rc = sqlite3_step(nodeStatement);
 				DbgAssert(rc == SQLITE_DONE);
@@ -463,7 +463,7 @@ retry:
 			// update way
 			sqlite3_reset(baseStatement);
 			SqlCheck( sqlite3_clear_bindings(baseStatement));
-			SqlCheck( sqlite3_bind_int64(baseStatement,	1, relation.ident.longLongValue));
+			SqlCheck( sqlite3_bind_int64(baseStatement,	1, relation.ident));
 			SqlCheck( sqlite3_bind_text(baseStatement,	2, relation.user.UTF8String, -1, NULL));
 			SqlCheck( sqlite3_bind_text(baseStatement,	3, relation.timestamp.UTF8String, -1, NULL));
 			SqlCheck( sqlite3_bind_int(baseStatement,	4, relation.version));
@@ -473,7 +473,7 @@ retry:
 			rc = sqlite3_step(baseStatement);
 			if ( rc == SQLITE_CONSTRAINT ) {
 				// tried to insert something already there. This might be an update to a later version from the server so delete what we have and retry
-				NSLog(@"retry relation %@\n",relation.ident);
+				NSLog(@"retry relation %lld\n",relation.ident);
 				[self deleteRelations:@[ relation ]];
 				goto retry;
 			}
@@ -485,7 +485,7 @@ retry:
 			[relation.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
 				sqlite3_reset(tagStatement);
 				SqlCheck( sqlite3_clear_bindings(tagStatement));
-				SqlCheck( sqlite3_bind_int64(tagStatement,	1, relation.ident.longLongValue));
+				SqlCheck( sqlite3_bind_int64(tagStatement,	1, relation.ident));
 				SqlCheck( sqlite3_bind_text(tagStatement,	2, key.UTF8String, -1, NULL));
 				SqlCheck( sqlite3_bind_text(tagStatement,	3, value.UTF8String, -1, NULL));
 				rc = sqlite3_step(tagStatement);
@@ -494,10 +494,10 @@ retry:
 
 			int index = 0;
 			for ( OsmMember * member in relation.members ) {
-				NSNumber * ref = [member.ref isKindOfClass:[OsmBaseObject class]] ? ((OsmBaseObject *)member.ref).ident : member.ref;
+				NSNumber * ref = @(member.ref);
 				sqlite3_reset(memberStatement);
 				SqlCheck( sqlite3_clear_bindings(memberStatement));
-				SqlCheck( sqlite3_bind_int64(memberStatement,	1, relation.ident.longLongValue));
+				SqlCheck( sqlite3_bind_int64(memberStatement,	1, relation.ident));
 				SqlCheck( sqlite3_bind_text(memberStatement,	2, member.type.UTF8String, -1, NULL));
 				SqlCheck( sqlite3_bind_int64(memberStatement,	3, ref.longLongValue));
 				SqlCheck( sqlite3_bind_text(memberStatement,	4, member.role.UTF8String, -1, NULL));
@@ -537,7 +537,7 @@ retry:
 		for ( OsmNode * node in nodes ) {
 			sqlite3_reset(nodeStatement);
 			SqlCheck( sqlite3_clear_bindings(nodeStatement));
-			SqlCheck( sqlite3_bind_int64(nodeStatement, 1, node.ident.longLongValue));
+			SqlCheck( sqlite3_bind_int64(nodeStatement, 1, node.ident));
 			rc = sqlite3_step(nodeStatement);
 			DbgAssert(rc == SQLITE_DONE);
 		}
@@ -563,7 +563,7 @@ retry:
 		for ( OsmWay * way in ways ) {
 			sqlite3_reset(nodeStatement);
 			SqlCheck( sqlite3_clear_bindings(nodeStatement));
-			SqlCheck( sqlite3_bind_int64(nodeStatement, 1, way.ident.longLongValue));
+			SqlCheck( sqlite3_bind_int64(nodeStatement, 1, way.ident));
 			rc = sqlite3_step(nodeStatement);
 			DbgAssert(rc == SQLITE_DONE);
 		}
@@ -589,7 +589,7 @@ retry:
 		for ( OsmRelation * relation in relations ) {
 			sqlite3_reset(relationStatement);
 			SqlCheck( sqlite3_clear_bindings(relationStatement));
-			SqlCheck( sqlite3_bind_int64(relationStatement, 1, relation.ident.longLongValue));
+			SqlCheck( sqlite3_bind_int64(relationStatement, 1, relation.ident));
 			rc = sqlite3_step(relationStatement);
 			DbgAssert(rc == SQLITE_DONE);
 		}
@@ -722,7 +722,7 @@ retry:
 									   timestamp:[NSString stringWithUTF8String:(const char *)timestamp]];
 		[node setLongitude:longitude latitude:latitude undo:nil];
 
-		[nodes setObject:node forKey:node.ident];
+		[nodes setObject:node forKey:@(node.ident)];
 	}
 	if ( rc == SQLITE_DONE || rc == SQLITE_OK ) {
 		BOOL ok = [self queryTagTable:@"node_tags" forObjects:nodes];
@@ -771,7 +771,7 @@ retry:
 		for ( NSInteger i = 0; i < nodecount; ++i )
 			[nodes addObject:@(-1LL)];
 		[way constructNodeList:nodes];
-		[ways setObject:way forKey:way.ident];
+		[ways setObject:way forKey:@(way.ident)];
 	}
 	if ( rc == SQLITE_DONE )
 		rc = SQLITE_OK;
@@ -847,7 +847,7 @@ retry:
 		for ( NSInteger i = 0; i < membercount; ++i ) {
 			[relation constructMember:(OsmMember *)[NSNull null]];
 		}
-		[relations setObject:relation forKey:relation.ident];
+		[relations setObject:relation forKey:@(relation.ident)];
 	}
 	sqlite3_finalize(relationStatement);
 
@@ -877,7 +877,9 @@ retry:
 		int				member_index	= sqlite3_column_int(memberStatement, 4);
 
 		OsmRelation * relation = relations[ @(ident) ];
-		OsmMember * member = [[OsmMember alloc] initWithType:[NSString stringWithUTF8String:(const char *)type] ref:@(ref) role:[NSString stringWithUTF8String:(const char *)role]];
+		OsmMember * member = [[OsmMember alloc] initWithType:[NSString stringWithUTF8String:(const char *)type]
+														 ref:ref
+														role:[NSString stringWithUTF8String:(const char *)role]];
 		NSMutableArray * list = (id)relation.members;
 		DbgAssert( list );
 		list[member_index] = member;

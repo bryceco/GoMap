@@ -427,7 +427,7 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
 							completion(error)
 						})
 					}
-				}) as? UIImage
+				})
 			if cachedImage != nil {
 				#if os(iOS)
 				layer.contents = cachedImage!.cgImage

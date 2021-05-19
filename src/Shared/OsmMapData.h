@@ -27,22 +27,21 @@
 @class QuadMapC;
 @class OsmUserStatistics;
 
-extern NSString * OSM_API_URL;	//	@"http://api.openstreetmap.org/"
-
+extern NSString * _Nonnull OSM_API_URL;	//	@"http://api.openstreetmap.org/"
 
 typedef void 		(^EditAction)(void);
-typedef void 		(^EditActionWithNode)(OsmNode * node);
-typedef OsmWay    * (^EditActionReturnWay)(void);
-typedef OsmNode   * (^EditActionReturnNode)(void);
+typedef void 		(^EditActionWithNode)(OsmNode * _Nonnull node);
+typedef OsmWay    * _Nonnull (^EditActionReturnWay)(void);
+typedef OsmNode   * _Nonnull(^EditActionReturnNode)(void);
 
 
 
 @interface OsmUserStatistics : NSObject
-@property (strong,nonatomic)	NSString	*	user;
-@property (strong,nonatomic)	NSDate		*	lastEdit;
-@property (assign,nonatomic)	NSInteger		editCount;
-@property (strong,nonatomic)	NSMutableSet *	changeSets;
-@property (assign,nonatomic)	NSInteger		changeSetsCount;
+@property (strong,nonatomic)	NSString	*_Nonnull	user;
+@property (strong,nonatomic)	NSDate		*_Nonnull	lastEdit;
+@property (assign,nonatomic)	NSInteger				editCount;
+@property (strong,nonatomic)	NSMutableSet *_Nonnull	changeSets;
+@property (assign,nonatomic)	NSInteger				changeSetsCount;
 @end
 
 
@@ -67,40 +66,40 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
  @param userDefaults The `UserDefaults` instance to use.
  @return An initialized instance of this object.
  */
-- (instancetype)initWithUserDefaults:(NSUserDefaults *)userDefaults NS_DESIGNATED_INITIALIZER;
+- (instancetype _Nullable)initWithUserDefaults:(NSUserDefaults *_Nonnull)userDefaults NS_DESIGNATED_INITIALIZER;
 
-@property (copy,nonatomic)	NSString *	credentialsUserName;
-@property (copy,nonatomic)	NSString *	credentialsPassword;
+@property (copy,nonatomic)	NSString *_Nullable	credentialsUserName;
+@property (copy,nonatomic)	NSString *_Nullable	credentialsPassword;
 
-+(void)setEditorMapLayerForArchive:(EditorMapLayer *)editorLayer; // only used when saving/restoring undo manager
-+(EditorMapLayer *)editorMapLayerForArchive; // only used when saving/restoring undo manager
++(void)setEditorMapLayerForArchive:(EditorMapLayer *_Nonnull)editorLayer; // only used when saving/restoring undo manager
++(EditorMapLayer *_Nullable)editorMapLayerForArchive; // only used when saving/restoring undo manager
 
 -(void)save;
--(instancetype)initWithCachedData NS_DESIGNATED_INITIALIZER;
+-(instancetype _Nullable)initWithCachedData NS_DESIGNATED_INITIALIZER;
 
--(NSString *)getServer;
--(void)setServer:(NSString *)hostname;
+-(NSString *_Nonnull)getServer;
+-(void)setServer:(NSString *_Nullable)hostname;
 
 -(void)purgeHard;
 -(void)purgeSoft;
 
 // undo manager interface
--(NSDictionary *)undo;
--(NSDictionary *)redo;
+-(NSDictionary *_Nonnull)undo;
+-(NSDictionary *_Nonnull)redo;
 -(BOOL)canUndo;
 -(BOOL)canRedo;
 -(void)beginUndoGrouping;
 -(void)endUndoGrouping;
 -(void)removeMostRecentRedo;
--(void)addChangeCallback:(void(^)(void))callback;
+-(void)addChangeCallback:(void(^_Nonnull)(void))callback;
 -(void)clearUndoStack;
--(NSString *)undoManagerDescription;
+-(NSString *_Nonnull)undoManagerDescription;
 
 // undo comments
-@property (strong,nonatomic)	NSDictionary * 	(^undoContextForComment)(NSString * comment);
-@property (strong,nonatomic) 	void 			(^undoCommentCallback)(BOOL undo,NSDictionary * context);
--(void)registerUndoCommentString:(NSString *)comment;
--(void)registerUndoCommentContext:(NSDictionary *)context;
+@property (strong,nonatomic)	NSDictionary *_Nonnull 	(^ _Nullable undoContextForComment)(NSString *_Nonnull comment);
+@property (strong,nonatomic) 	void 					(^ _Nullable undoCommentCallback)(BOOL undo,NSDictionary *_Nonnull context);
+-(void)registerUndoCommentString:(NSString *_Nonnull)comment;
+-(void)registerUndoCommentContext:(NSDictionary *_Nonnull)context;
 
 -(NSInteger)modificationCount;
 
@@ -110,45 +109,45 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 -(int32_t)nodeCount;
 -(int32_t)relationCount;
 
--(NSArray<OsmWay *> *)waysContainingNode:(OsmNode *)node;
+-(NSArray<OsmWay *> *_Nonnull)waysContainingNode:(OsmNode *_Nonnull)node;
 
--(OsmNode *)nodeForRef:(NSNumber *)ref;
--(OsmWay *)wayForRef:(NSNumber *)ref;
--(OsmRelation *)relationForRef:(NSNumber *)ref;
+-(OsmNode *_Nullable)nodeForRef:(NSNumber *_Nonnull)ref;
+-(OsmWay *_Nullable)wayForRef:(NSNumber *_Nonnull)ref;
+-(OsmRelation *_Nullable)relationForRef:(NSNumber *_Nonnull)ref;
 
-- (void)enumerateObjectsUsingBlock:(void (^)(OsmBaseObject * obj))block;
-- (void)enumerateObjectsInRegion:(OSMRect)bbox block:(void (^)(OsmBaseObject * _Nonnull obj))block;
-- (OsmBaseObject *)objectWithExtendedIdentifier:(NSNumber *)extendedIdentifier;
+- (void)enumerateObjectsUsingBlock:(void (^_Nonnull)(OsmBaseObject * _Nonnull obj))block;
+- (void)enumerateObjectsInRegion:(OSMRect)bbox block:(void (^_Nonnull)(OsmBaseObject * _Nonnull obj))block;
+- (OsmBaseObject *_Nullable)objectWithExtendedIdentifier:(NSNumber *_Nonnull)extendedIdentifier;
 
 - (void)clearCachedProperties;
 
--(NSMutableSet<NSString *> *)tagValuesForKey:(NSString *)key;
+-(NSMutableSet<NSString *> *_Nonnull)tagValuesForKey:(NSString *_Nonnull)key;
 
 // editing
-@property (class,readonly) NSSet<NSString *> * tagsToAutomaticallyStrip;
+@property (class,readonly) NSSet<NSString *> * _Nonnull tagsToAutomaticallyStrip;
 
--(OsmNode *)createNodeAtLocation:(CLLocationCoordinate2D)loc;
--(OsmWay *)createWay;
--(OsmRelation *)createRelation;
+-(OsmNode *_Nonnull)createNodeAtLocation:(CLLocationCoordinate2D)loc;
+-(OsmWay *_Nonnull)createWay;
+-(OsmRelation *_Nonnull)createRelation;
 
 
--(void)setLongitude:(double)longitude latitude:(double)latitude forNode:(OsmNode *)node;
--(void)setTags:(NSDictionary<NSString *, NSString *> *)dict forObject:(OsmBaseObject *)object;
+-(void)setLongitude:(double)longitude latitude:(double)latitude forNode:(OsmNode *_Nonnull)node;
+-(void)setTags:(NSDictionary<NSString *, NSString *> *_Nonnull)dict forObject:(OsmBaseObject *_Nonnull)object;
 
 // download data
-- (void)updateWithBox:(OSMRect)box progressDelegate:(MapView *)mapView completion:(void(^)(BOOL partial,NSError * error))completion;
+- (void)updateWithBox:(OSMRect)box progressDelegate:(MapView *_Nonnull)mapView completion:(void(^_Nonnull)(BOOL partial,NSError * _Nullable error))completion;
 - (void)cancelCurrentDownloads;
 
 // upload changeset
-- (NSAttributedString *)changesetAsAttributedString;
-- (NSString *)changesetAsXml;
-- (void)uploadChangesetWithComment:(NSString *)comment source:(NSString *)source imagery:(NSString *)imagery completion:(void(^)(NSString * error))completion;
-- (void)uploadChangesetXml:(NSXMLDocument *)xmlDoc comment:(NSString *)comment source:(NSString *)source imagery:(NSString *)imagery completion:(void(^)(NSString * error))completion;
-- (void)verifyUserCredentialsWithCompletion:(void(^)(NSString * errorMessage))completion;
-- (void)putRequest:(NSString *)url method:(NSString *)method xml:(NSXMLDocument *)xml completion:(void(^)(NSData * data,NSString * error))completion;
-+(NSString *)encodeBase64:(NSString *)plainText;
+- (NSAttributedString *_Nullable)changesetAsAttributedString;
+- (NSString * _Nullable)changesetAsXml;
+- (void)uploadChangesetWithComment:(NSString * _Nullable)comment source:(NSString * _Nullable)source imagery:(NSString * _Nullable)imagery completion:(void(^_Nullable)(NSString * _Nullable error))completion;
+- (void)uploadChangesetXml:(NSXMLDocument * _Nullable)xmlDoc comment:(NSString * _Nullable)comment source:(NSString *_Nullable)source imagery:(NSString *_Nullable)imagery completion:(void(^_Nullable)(NSString *_Nullable error))completion;
+- (void)verifyUserCredentialsWithCompletion:(void(^_Nonnull)(NSString *_Nullable errorMessage))completion;
+- (void)putRequest:(NSString *_Nonnull)url method:(NSString *_Nonnull)method xml:(NSXMLDocument * _Nonnull)xml completion:(void(^_Nonnull)(NSData *_Nullable data,NSString *_Nullable error))completion;
++(NSString *_Nullable)encodeBase64:(NSString *_Nullable)plainText;
 
--(NSArray<OsmUserStatistics *> *)userStatisticsForRegion:(OSMRect)rect;
+-(NSArray<OsmUserStatistics *> *_Nonnull)userStatisticsForRegion:(OSMRect)rect;
 
 -(void)consistencyCheck;
 

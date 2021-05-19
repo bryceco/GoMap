@@ -71,7 +71,7 @@ class TurnRestrictHwyView: UIView {
     }
 
     func createOneWayArrowsForHighway() {
-        if wayObj?.isOneWay == ONEWAY_NONE {
+		if wayObj?.isOneWay == ONEWAY._NONE {
             return
         }
 
@@ -83,7 +83,7 @@ class TurnRestrictHwyView: UIView {
         if let connectedNode = connectedNode {
             otherIndex = wayObj?.nodes.firstIndex(of: connectedNode) ?? NSNotFound
         }
-        let forwardOneWay = (wayObj?.isOneWay == ONEWAY_FORWARD) == ((otherIndex ?? 0) > (centerIndex ?? 0))
+		let forwardOneWay = (wayObj?.isOneWay == ONEWAY._FORWARD) == ((otherIndex ?? 0) > (centerIndex ?? 0))
 
         // create 3 arrows on highway
         let location1 = MidPointOf(centerPoint, endPoint)
@@ -139,7 +139,7 @@ class TurnRestrictHwyView: UIView {
             if let connectedNode = connectedNode {
                 otherIndex = way?.nodes.firstIndex(of: connectedNode) ?? NSNotFound
             }
-            if ((otherIndex ?? 0) > (centerIndex ?? 0)) == (way?.isOneWay == ONEWAY_FORWARD) {
+			if ((otherIndex ?? 0) > (centerIndex ?? 0)) == (way?.isOneWay == ONEWAY._FORWARD) {
                 return true
             }
         }
@@ -157,7 +157,7 @@ class TurnRestrictHwyView: UIView {
             if let connectedNode = connectedNode {
                 otherIndex = way?.nodes.firstIndex(of: connectedNode) ?? NSNotFound
             }
-            if ((otherIndex ?? 0) < (centerIndex ?? 0)) == (way?.isOneWay == ONEWAY_FORWARD) {
+			if ((otherIndex ?? 0) < (centerIndex ?? 0)) == (way?.isOneWay == ONEWAY._FORWARD) {
                 return true
             }
         }

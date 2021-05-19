@@ -115,7 +115,7 @@ class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
 			if dist < self.radius {
 				if let currentHighway = self.currentHighway,
 				   let way = obj.isWay(),
-				   obj.tags?["highway"] != nil,
+				   obj.tags["highway"] != nil,
 				   !currentHighway.sharesNodes(with: way)
 				{
 					return // only announce ways connected to current way
@@ -135,7 +135,7 @@ class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
         for (distance,object) in a {
 
             // track highway we're closest to
-            if object.isWay() != nil && object.tags?["highway"] != nil {
+            if object.isWay() != nil && object.tags["highway"] != nil {
 				if distance < closestHighwayDist {
                     closestHighwayDist = distance
                     closestHighwayWay = object.isWay()
@@ -159,8 +159,8 @@ class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
                 continue
             }
 
-            if buildings && object.tags?["building"] != nil {
-				var building = object.tags?["building"] ?? ""
+            if buildings && object.tags["building"] != nil {
+				var building = object.tags["building"] ?? ""
                 if building == "yes" {
                     building = ""
                 }
@@ -169,18 +169,18 @@ class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
             }
 
             if addresses,
-			   let number = object.tags?["addr:housenumber"]
+			   let number = object.tags["addr:housenumber"]
 			{
-                let street = object.tags?["addr:street"]
+                let street = object.tags["addr:street"]
                 let text = "\(street ?? "") number \(number)"
                 say(text, for: object)
             }
 
             if streets,
 			   object.isWay() != nil,
-			   let type = object.tags?["highway"]
+			   let type = object.tags["highway"]
 			{
-                let name = object.tags?["name"] ?? object.tags?["ref"]
+                let name = object.tags["name"] ?? object.tags["ref"]
                 if type == "service" && name == nil && object != newCurrentHighway {
                     // skip
                 } else {
@@ -193,7 +193,7 @@ class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
             }
 
             if shopsAndAmenities {
-                if object.tags?["shop"] != nil || object.tags?["amenity"] != nil {
+                if object.tags["shop"] != nil || object.tags["amenity"] != nil {
                     let text = object.friendlyDescription()
                     say(text, for: object)
                 }

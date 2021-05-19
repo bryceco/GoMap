@@ -61,7 +61,7 @@ class TurnRestrictController: UIViewController {
         // get highways that contain selection
         let mapData = AppDelegate.shared?.mapView?.editorLayer.mapData
 		var parentWays = mapData?.waysContaining(centralNode) ?? []
-		parentWays = parentWays.filter({ $0.tags?["highway"] != nil	})
+		parentWays = parentWays.filter({ $0.tags["highway"] != nil	})
 		_parentWays = parentWays
 
 		// Creating roads using adjacent connected nodes
@@ -72,9 +72,8 @@ class TurnRestrictController: UIViewController {
         var fromWay: OsmWay? = nil
         if _allRelations.count == 1 {
             // only one relation, so select it
-            let relation = _allRelations.last
-            fromWay = relation?.member(byRole: "from").ref as? OsmWay
-        } else {
+			fromWay = _allRelations.last?.member(byRole: "from")?.obj as? OsmWay
+		} else {
             // no relations or multiple relations, so select highway already selected by user
             let editor = AppDelegate.shared?.mapView?.editorLayer
             fromWay = editor?.selectedWay
@@ -139,8 +138,7 @@ class TurnRestrictController: UIViewController {
         // Get relations related to restrictions
         _allRelations = []
 		for relation in centralNode?.parentRelations ?? [] {
-			if let relation = relation as? OsmRelation,
-			   relation.isRestriction(),
+			if relation.isRestriction(),
 			   relation.members.count >= 3
 			{
 				_allRelations.append(relation)
@@ -289,17 +287,17 @@ class TurnRestrictController: UIViewController {
     }
 
     // Select a new "From" highway
-    func select(fromHighway selectedHwy: TurnRestrictHwyView?) {
+    func select(fromHighway selectedHwy: TurnRestrictHwyView) {
         _selectedFromHwy = selectedHwy
 
-        let editor = AppDelegate.shared?.mapView?.editorLayer
-        editor?.selectedWay = selectedHwy?.wayObj
+        let editor = AppDelegate.shared!.mapView!.editorLayer!
+        editor.selectedWay = selectedHwy.wayObj
 
-		selectedHwy?.wayObj = selectedHwy?.connectedNode?.turnRestrictionParentWay
-        _uTurnButton?.isHidden = _selectedFromHwy?.wayObj?.isOneWay != ONEWAY_NONE
+		selectedHwy.wayObj = selectedHwy.connectedNode?.turnRestrictionParentWay
+		_uTurnButton?.isHidden = _selectedFromHwy?.wayObj?.isOneWay != ONEWAY._NONE
 
-        let angle = TurnRestrictHwyView.heading(from: (selectedHwy?.endPoint ?? .zero), to: (selectedHwy?.centerPoint ?? .zero))
-        _uTurnButton?.transform = CGAffineTransform(rotationAngle: .pi + CGFloat(angle))
+        let angle = TurnRestrictHwyView.heading(from: selectedHwy.endPoint, to: selectedHwy.centerPoint)
+		_uTurnButton?.transform = CGAffineTransform(rotationAngle: .pi + CGFloat(angle))
 
         _currentUTurnRelation = findRelation(
             _editedRelations,
@@ -308,17 +306,17 @@ class TurnRestrictController: UIViewController {
             to: _selectedFromHwy?.wayObj)
         _uTurnButton?.isSelected = _currentUTurnRelation != nil
 
-        if let friendlyDescription = selectedHwy?.wayObj?.friendlyDescription() {
+        if let friendlyDescription = selectedHwy.wayObj?.friendlyDescription() {
             detailText.text = String.localizedStringWithFormat(NSLocalizedString("Travel from %@", comment: ""), friendlyDescription)
         }
 
         // highway exits center one-way
-        let selectedHwyIsOneWayExit = selectedHwy?.isOneWayExitingCenter() ?? false
+        let selectedHwyIsOneWayExit = selectedHwy.isOneWayExitingCenter()
 
         for highway in _highwayViewArray {
-            selectedHwy?.wayObj = selectedHwy?.connectedNode?.turnRestrictionParentWay
+            selectedHwy.wayObj = selectedHwy.connectedNode?.turnRestrictionParentWay
 
-            if highway == selectedHwy {
+			if highway == selectedHwy {
 
                 // highway is selected
                 highway.highlightLayer?.isHidden = false
@@ -328,23 +326,23 @@ class TurnRestrictController: UIViewController {
                 // highway is deselected, so display restrictions applied to it
                 highway.highlightLayer?.isHidden = true
 
-                let relation = findRelation(_editedRelations, from: selectedHwy?.wayObj, via: centralNode, to: highway.wayObj)
+				guard let relation = findRelation(_editedRelations, from: selectedHwy.wayObj, via: centralNode, to: highway.wayObj)
+				else { return }
 
-                highway.objRel = relation
-                highway.arrowButton?.isHidden = false
+				highway.objRel = relation
+				highway.arrowButton?.isHidden = false
 
-                var restriction = relation?.tags?["restriction"]
-                if restriction == nil {
-                    let a = relation?.extendedKeys(forKey: "restriction")
-                    if (a?.count ?? 0) != 0 {
-                        if let lastObject = a?.last as? String {
-                            restriction = relation?.tags?[lastObject]
-                        }
-                    }
-                }
-                if restriction?.hasPrefix("no_") ?? false {
+                var restriction = relation.tags["restriction"]
+                if restriction == nil,
+				   let lastObject = relation.extendedKeys(forKey: "restriction").last
+				{
+					restriction = relation.tags[lastObject]
+				}
+				guard let restriction = restriction else { return }
+
+				if restriction.hasPrefix("no_") {
 					highway.restriction = .NO
-                } else if restriction?.hasPrefix("only_") ?? false {
+                } else if restriction.hasPrefix("only_") {
 					highway.restriction = .ONLY
                 } else {
 					highway.restriction = .NONE
@@ -417,8 +415,8 @@ class TurnRestrictController: UIViewController {
 
 		if fabs(angle) < 23.0 {
             return "straight_on"
-		} else if (toHwy.wayObj?.isOneWay ?? ONEWAY_NONE) != ONEWAY_NONE &&
-					(fromHwy.wayObj?.isOneWay ?? ONEWAY_NONE) != ONEWAY_NONE &&
+		} else if (toHwy.wayObj?.isOneWay ?? ONEWAY._NONE) != ONEWAY._NONE &&
+					(fromHwy.wayObj?.isOneWay ?? ONEWAY._NONE) != ONEWAY._NONE &&
 					fabs(fabs(angle) - 180.0) < 40.0
 		{
             // more likely a u-turn if both are one-way
@@ -502,8 +500,8 @@ class TurnRestrictController: UIViewController {
     }
 
     func toggleTurnRestriction(_ targetHwy: TurnRestrictHwyView) {
-        if (targetHwy.objRel != nil) && (targetHwy.objRel?.tags?["restriction"] == nil) {
-            // it contains a restriction relation we don't understand
+		if targetHwy.objRel != nil && targetHwy.objRel?.tags["restriction"] == nil {
+			// it contains a restriction relation we don't understand
             let alert = UIAlertController(title: NSLocalizedString("Warning", comment: ""), message: NSLocalizedString("The turn contains an unrecognized turn restriction style. Proceeding will destroy it.", comment: ""), preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
             alert.addAction(UIAlertAction(title: NSLocalizedString("Modify", comment: ""), style: .destructive, handler: { [self] action in
@@ -556,9 +554,9 @@ class TurnRestrictController: UIViewController {
 		   let toTarget = toTarget
 		{
 			for relation in relationList {
-				if relation.member(byRole: "from")?.ref as? OsmWay === fromTarget,
-				   relation.member(byRole: "via")?.ref as? OsmNode === viaTarget,
-				   relation.member(byRole: "to")?.ref as? OsmWay === toTarget
+				if relation.member(byRole: "from")?.obj as? OsmWay === fromTarget,
+				   relation.member(byRole: "via")?.obj as? OsmNode === viaTarget,
+				   relation.member(byRole: "to")?.obj as? OsmWay === toTarget
 				{
 					return relation
 				}

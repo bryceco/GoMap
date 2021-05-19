@@ -33,37 +33,32 @@ class FeaturePickerCell: UITableViewCell {
     @IBOutlet var _image: UIImageView!
 }
 
-var mostRecentArray: NSMutableArray = []
+var mostRecentArray: [PresetFeature] = []
 var mostRecentMaximum: Int = 0
 var logoCache: PersistentWebCache<UIImage>? // static so memory cache persists each time we appear
 
 class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate {
     
-    var _featureList: NSArray = []
-    var _searchArrayRecent: NSArray = []
-    var _searchArrayAll: NSArray = []
-    @IBOutlet var _searchBar: UISearchBar!
-    var _isTopLevel = false
+    var _featureList: [AnyHashable] = []
+    var _searchArrayRecent: [PresetFeature] = []
+    var _searchArrayAll: [PresetFeature] = []
+	@IBOutlet var _searchBar: UISearchBar!
+	var _isTopLevel = false
     
     var parentCategory: PresetCategory?
     weak var delegate: POITypeViewControllerDelegate?
     
     class func loadMostRecent(forGeometry geometry: String) {
-        let max = UserDefaults.standard.object(forKey: "mostRecentTypesMaximum") as? NSNumber
-        mostRecentMaximum = (max != nil) ? (max?.intValue ?? 0) : MOST_RECENT_DEFAULT_COUNT
-        
-        let defaults: String = "mostRecentTypes.\(geometry)"
-        let a: NSArray = (UserDefaults.standard.object(forKey: defaults) as? NSArray) ?? []
-        mostRecentArray = NSMutableArray.init(capacity: (a.count + 1))
-        for featureID in a {
-            guard let featureID = featureID as? String else {
-                continue
-            }
-            let feature = PresetsDatabase.shared.presetFeatureForFeatureID(featureID)
-            if let feature = feature {
-                mostRecentArray.add(feature)
-            }
-        }
+		if let max = UserDefaults.standard.object(forKey: "mostRecentTypesMaximum") as? NSNumber,
+		   max.intValue > 0
+		{
+			mostRecentMaximum = max.intValue
+		} else {
+			mostRecentMaximum = MOST_RECENT_DEFAULT_COUNT
+		}
+		let defaults: String = "mostRecentTypes.\(geometry)"
+		let a = UserDefaults.standard.object(forKey: defaults) as? [String] ?? []
+		mostRecentArray = a.compactMap({ PresetsDatabase.shared.presetFeatureForFeatureID( $0 )	})
     }
     
     func currentSelectionGeometry() -> String? {
@@ -86,21 +81,14 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
         tableView.estimatedRowHeight = 44.0 // or could use UITableViewAutomaticDimension;
         tableView.rowHeight = UITableView.automaticDimension
         
-        var geometry: String? = currentSelectionGeometry()
-        if geometry == nil {
-            geometry = GEOMETRY_NODE // a brand new node
-        }
-        if let geometry = geometry {
-            POIFeaturePickerViewController.loadMostRecent(forGeometry: geometry)
-        }
-        
+		let geometry: String = currentSelectionGeometry() ?? GEOMETRY_NODE // a brand new node
+		POIFeaturePickerViewController.loadMostRecent(forGeometry: geometry)
+
         if parentCategory == nil {
             _isTopLevel = true
-            if let geometry = geometry {
-                _featureList = NSArray.init(array: PresetsDatabase.shared.featuresAndCategoriesForGeometry(geometry))
-            }
+			_featureList = PresetsDatabase.shared.featuresAndCategoriesForGeometry( geometry )
         } else {
-            _featureList = NSArray.init(array: parentCategory!.members)
+            _featureList = parentCategory!.members
         }
     }
     
@@ -156,10 +144,10 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var feature: PresetFeature? = nil
         if _searchArrayAll.count != 0 {
-            feature = (indexPath.section == 0 && _isTopLevel) ? (_searchArrayRecent[indexPath.row] as? PresetFeature) : (_searchArrayAll[indexPath.row] as? PresetFeature)
+            feature = (indexPath.section == 0 && _isTopLevel) ? _searchArrayRecent[indexPath.row] : _searchArrayAll[indexPath.row]
         } else if _isTopLevel && indexPath.section == 0 {
             // most recents
-            feature = mostRecentArray[indexPath.row] as? PresetFeature
+            feature = mostRecentArray[indexPath.row]
         } else {
             // type array
             let tagInfo = _featureList[indexPath.row]
@@ -220,20 +208,18 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 					return UIImage()
                 }
             }, completion: { image in
-                if let image = image as? UIImage {
-                    DispatchQueue.main.async(execute: {
-                        feature?.nsiLogo = image
-                        for cell in tableView.visibleCells {
-                            guard let cell = cell as? FeaturePickerCell else {
-                                continue
-                            }
-                            if cell.featureID == feature?.featureID {
-                                cell._image.image = image
-                            }
-                        }
-                    })
-                }
-            }) as? UIImage
+				DispatchQueue.main.async(execute: {
+					feature?.nsiLogo = image
+					for cell in tableView.visibleCells {
+						guard let cell = cell as? FeaturePickerCell else {
+							continue
+						}
+						if cell.featureID == feature?.featureID {
+							cell._image.image = image
+						}
+					}
+				})
+            })
             if logo != nil {
                 feature?.nsiLogo = logo
             }
@@ -264,38 +250,28 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
         return cell
     }
     
-    class func updateMostRecentArray(withSelection feature: PresetFeature?, geometry: String?) {
-        mostRecentArray.filter { NSPredicate(block: { f, bindings in
-            return !((f as? PresetFeature)?.featureID == feature?.featureID)
-        }).evaluate(with: $0) }
-        if let feature = feature {
-            mostRecentArray.insert(feature, at: 0)
-        }
-        if mostRecentArray.count > MOST_RECENT_SAVED_MAXIMUM {
-            mostRecentArray.removeLastObject()
-        }
+    class func updateMostRecentArray(withSelection feature: PresetFeature, geometry: String) {
+		mostRecentArray.removeAll(where: { $0.featureID == feature.featureID })
+		mostRecentArray.insert(feature, at: 0)
+		if mostRecentArray.count > MOST_RECENT_SAVED_MAXIMUM {
+			mostRecentArray.removeLast()
+		}
         
-        let a = NSMutableArray.init(capacity: mostRecentArray.count)
-        for f in mostRecentArray {
-            if let f = (f as? PresetFeature) {
-                a.add(f.featureID)
-            }
-        }
-        
-        let defaults = "mostRecentTypes.\(geometry ?? "")"
+		let a = mostRecentArray.map({ $0.featureID })
+        let defaults = "mostRecentTypes.\(geometry)"
         UserDefaults.standard.set(a, forKey: defaults)
     }
     
-    func updateTags(with feature: PresetFeature?) {
+    func updateTags(with feature: PresetFeature) {
         let geometry = currentSelectionGeometry() ?? ""
-        delegate?.typeViewController(self, didChangeFeatureTo: feature)
+		delegate?.typeViewController(self, didChangeFeatureTo: feature)
         POIFeaturePickerViewController.updateMostRecentArray(withSelection: feature, geometry: geometry)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if _searchArrayAll.count != 0 {
             let feature = indexPath.section == 0 && _isTopLevel ? _searchArrayRecent[indexPath.row] : _searchArrayAll[indexPath.row]
-            updateTags(with: feature as? PresetFeature)
+			updateTags(with: feature)
             navigationController?.popToRootViewController(animated: true)
             return
         }
@@ -303,13 +279,12 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
         if _isTopLevel && indexPath.section == 0 {
             // most recents
             let feature = mostRecentArray[indexPath.row]
-            updateTags(with: feature as? PresetFeature)
+            updateTags(with: feature)
             navigationController?.popToRootViewController(animated: true)
         } else {
             // type list
             let entry = _featureList[indexPath.row]
-            if entry is PresetCategory {
-                let category = entry as? PresetCategory
+            if let category = entry as? PresetCategory {
                 let sub = storyboard?.instantiateViewController(withIdentifier: "PoiTypeViewController") as? POIFeaturePickerViewController
                 sub?.parentCategory = category
                 sub?.delegate = delegate
@@ -317,11 +292,12 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
                 if let sub = sub {
                     navigationController?.pushViewController(sub, animated: true)
                 }
-            } else {
-                let feature = entry as? PresetFeature
+			} else if let feature = entry as? PresetFeature {
                 updateTags(with: feature)
                 navigationController?.popToRootViewController(animated: true)
-            }
+			} else {
+				fatalError()
+			}
         }
     }
     
@@ -332,13 +308,10 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
             _searchArrayRecent = []
         } else {
             // searching
-            let geometry = currentSelectionGeometry() ?? ""
-            let results = PresetsDatabase.shared.featuresInCategory(parentCategory, matching: searchText, geometry: geometry)
-            _searchArrayAll = results as NSArray
-            _searchArrayRecent = mostRecentArray.filtered(using: NSPredicate(block: { feature, bindings in
-                return (feature as? PresetFeature)?.matchesSearchText(searchText, geometry: geometry) ?? false
-            })) as NSArray
-        }
+			let geometry = currentSelectionGeometry()!
+			_searchArrayAll = PresetsDatabase.shared.featuresInCategory(parentCategory, matching: searchText, geometry: geometry)
+			_searchArrayRecent = mostRecentArray.filter { $0.matchesSearchText(searchText, geometry: geometry) }
+		}
         tableView.reloadData()
     }
     

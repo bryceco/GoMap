@@ -8,76 +8,73 @@
 //
 
 class OsmWay: OsmBaseObject {
-    private(set) var nodes: [OsmNode]?
+	private(set) var nodeRefs: [OsmIdentifier]?
+    private(set) var nodes: [OsmNode]
 
-    override var description: String {
+	override var description: String {
         return "OsmWay \(super.description)"
     }
 
-    func constructNode(_ node: NSNumber?) {
-        assert(!constructed)
-        if nodes == nil {
-            nodes = [node].compactMap { $0 }
-        } else {
-            if let node = node {
-                nodes?.append(node)
-            }
-        }
+	func nodeRefCount() -> Int {
+		return nodeRefs?.count ?? 0
+	}
+
+	func constructNode(_ node: NSNumber) {
+		assert(!self._constructed && nodes.isEmpty)
+		let ref = OsmIdentifier( node.int64Value )
+		assert( ref > 0 )
+		if nodeRefs == nil {
+			self.nodeRefs = [ref]
+		} else {
+			self.nodeRefs!.append(ref)
+		}
+		print("way \(self.ident) = \(self.nodeRefs?.count ?? 0)")
     }
 
-    func constructNodeList(_ nodes: inout [AnyHashable]) {
-        assert(!constructed)
-        self.nodes = nodes
+    func constructNodeList(_ nodes: [NSNumber]) {
+		assert(!self._constructed)
+		self.nodeRefs = nodes.map({ OsmIdentifier($0.int64Value) })
+	}
+
+    override func isWay() -> OsmWay? {
+		return self
     }
 
-    override func `is`() -> OsmWay? {
-        return self
-    }
+    func resolveToMapData(_ mapData: OsmMapData) {
+		guard let nodeRefs = nodeRefs else { fatalError() }
+		assert( nodes.count == 0 )
+		nodes.reserveCapacity(nodeRefs.count)
+		for ref in nodeRefs {
+			guard let node = mapData.node(forRef: NSNumber(value: ref)) else { fatalError() }
+			nodes.append( node )
+			node.setWayCount(node.wayCount + 1, undo: nil)
+		}
+		self.nodeRefs = nil
+	}
 
-    func resolve(to mapData: OsmMapData?) {
-        var i = 0, e = (nodes?.count ?? 0)
-        while i < e {
-            let ref = nodes?[i] as? NSNumber
-            if !(ref is NSNumber) {
-                continue
-            }
-            let node = mapData?.node(forRef: ref)
-            assert(node != nil, nil)
-            nodes?[i] = node
-            node?.setWayCount((node?.wayCount ?? 0) + 1, undo: nil)
-            i += 1
-        }
-    }
-
-    @objc func removeNode(at index: Int, undo: UndoManager?) {
-        assert(undo)
-        let node = nodes?[index]
+	@objc func removeNodeAtIndex(_ index: Int, undo: MyUndoManager) {
+        let node = nodes[index]
         incrementModifyCount(undo)
-        undo?.registerUndo(withTarget: self, selector: #selector(add(_:at:undo:)), objects: [node, NSNumber(value: index), undo])
-        nodes?.remove(at: index)
-        node?.setWayCount((node?.wayCount ?? 0) - 1, undo: nil)
-        computeBoundingBox()
+        undo.registerUndo(withTarget: self, selector: #selector(addNode(_:atIndex:undo:)), objects: [node, NSNumber(value: index), undo])
+        nodes.remove(at: index)
+        node.setWayCount(node.wayCount - 1, undo: nil)
+		computeBoundingBox()
     }
 
-    @objc func add(_ node: OsmNode?, at index: Int, undo: UndoManager?) {
-        if constructed {
-            assert(undo)
+    @objc func addNode(_ node: OsmNode, atIndex index: Int, undo: MyUndoManager?) {
+        if _constructed {
+            assert(undo != nil)
             incrementModifyCount(undo)
-            undo?.registerUndo(withTarget: self, selector: #selector(removeNode(at:undo:)), objects: [NSNumber(value: index), undo])
-        }
-        if nodes == nil {
-            nodes = []
-        }
-        if let node = node {
-            nodes?.insert(node, at: index)
-        }
-        node?.setWayCount((node?.wayCount ?? 0) + 1, undo: nil)
-        computeBoundingBox()
+			undo!.registerUndo(withTarget: self, selector: #selector(removeNodeAtIndex(_:undo:)), objects: [NSNumber(value: index), undo!])
+		}
+		nodes.insert(node, at: index)
+        node.setWayCount(node.wayCount + 1, undo: nil)
+		computeBoundingBox()
     }
 
-    override func serverUpdate(inPlace newerVersion: OsmWay?) {
+    override func serverUpdate(inPlace newerVersion: OsmBaseObject) {
         super.serverUpdate(inPlace: newerVersion)
-        nodes = newerVersion?.nodes
+        nodes = (newerVersion as! OsmWay).nodes
     }
 
     func isArea() -> Bool {
@@ -85,60 +82,54 @@ class OsmWay: OsmBaseObject {
     }
 
     func isClosed() -> Bool {
-        return (nodes?.count ?? 0) > 2 && nodes?[0] == nodes?.last
-    }
+        return nodes.count > 2 && nodes[0] == nodes.last
+	}
 
-    static var computeIsOneWayOneWayTags: [AnyHashable : Any]? = nil
+	static let computeIsOneWayOneWayTags: [String : [String:Bool]] = [
+		"aerialway": [
+			"chair_lift": true,
+			"mixed_lift": true,
+			"t-bar": true,
+			"j-bar": true,
+			"platter": true,
+			"rope_tow": true,
+			"magic_carpet": true,
+			"yes": true
+		],
+		"highway": [
+			"motorway": true,
+			"motorway_link": true,
+			"steps": true
+		],
+		"junction": [
+			"roundabout": true
+		],
+		"man_made": [
+			"piste:halfpipe": true,
+			"embankment": true
+		],
+		"natural": [
+			"cliff": true,
+			"coastline": true
+		],
+		"piste:type": [
+			"downhill": true,
+			"sled": true,
+			"yes": true
+		],
+		"waterway": [
+			"brook": true,
+			"canal": true,
+			"ditch": true,
+			"drain": true,
+			"fairway": true,
+			"river": true,
+			"stream": true,
+			"weir": true
+		]]
 
     func computeIsOneWay() -> ONEWAY {
-        if OsmWay.computeIsOneWayOneWayTags == nil {
-            OsmWay.computeIsOneWayOneWayTags = [
-                "aerialway": [
-                "chair_lift": NSNumber(value: true),
-                "mixed_lift": NSNumber(value: true),
-                "t-bar": NSNumber(value: true),
-                "j-bar": NSNumber(value: true),
-                "platter": NSNumber(value: true),
-                "rope_tow": NSNumber(value: true),
-                "magic_carpet": NSNumber(value: true),
-                "yes": NSNumber(value: true)
-            ],
-                "highway": [
-                "motorway": NSNumber(value: true),
-                "motorway_link": NSNumber(value: true),
-                "steps": NSNumber(value: true)
-            ],
-                "junction": [
-                "roundabout": NSNumber(value: true)
-            ],
-                "man_made": [
-                "piste:halfpipe": NSNumber(value: true),
-                "embankment": NSNumber(value: true)
-            ],
-                "natural": [
-                "cliff": NSNumber(value: true),
-                "coastline": NSNumber(value: true)
-            ],
-                "piste:type": [
-                "downhill": NSNumber(value: true),
-                "sled": NSNumber(value: true),
-                "yes": NSNumber(value: true)
-            ],
-                "waterway": [
-                "brook": NSNumber(value: true),
-                "canal": NSNumber(value: true),
-                "ditch": NSNumber(value: true),
-                "drain": NSNumber(value: true),
-                "fairway": NSNumber(value: true),
-                "river": NSNumber(value: true),
-                "stream": NSNumber(value: true),
-                "weir": NSNumber(value: true)
-            ]
-            ]
-        }
-
-        let oneWayVal = tags?["oneway"]
-        if let oneWayVal = oneWayVal {
+		if let oneWayVal = tags["oneway"] {
             if (oneWayVal == "yes") || (oneWayVal == "1") {
                 return ._FORWARD
             }
@@ -149,110 +140,88 @@ class OsmWay: OsmBaseObject {
                 return ._BACKWARD
             }
         }
-
-        var oneWay: ONEWAY = ._NONE
-        (tags as NSDictionary?)?.enumerateKeysAndObjects({ tag, value, stop in
-            let valueDict = OsmWay.computeIsOneWayOneWayTags[tag ?? ""] as? [AnyHashable : Any]
-            if let valueDict = valueDict {
-                if valueDict[value ?? ""] != nil {
-                    oneWay = ._FORWARD
-                    stop = UnsafeMutablePointer<ObjCBool>(mutating: &true)
-                }
+		for (tag,value) in tags {
+			if let valueDict = OsmWay.computeIsOneWayOneWayTags[tag],
+				valueDict[value] != nil
+			{
+				return ._FORWARD
             }
-        })
-        return oneWay
+        }
+		return ._NONE
     }
 
-    func sharesNodes(with way: OsmWay?) -> Bool {
-        if (nodes?.count ?? 0) * (way?.nodes?.count ?? 0) < 100 {
-            for n in way?.nodes ?? [] {
-                if nodes?.contains(n) ?? false {
+    func sharesNodes(with way: OsmWay) -> Bool {
+        if nodes.count * way.nodes.count < 100 {
+			for n in way.nodes {
+                if nodes.contains(n) {
                     return true
                 }
             }
             return false
         } else {
-            let set1 = Set<AnyHashable>(way?.nodes)
-            let set2 = Set<AnyHashable>(nodes)
-            return set1.intersect(set2)
-        }
-    }
+			let set1 = Set<NSObject>(way.nodes)
+            let set2 = Set<NSObject>(nodes)
+			return !set1.isDisjoint(with: set2)
+		}
+	}
 
     func isMultipolygonMember() -> Bool {
-        for parent in parentRelations ?? [] {
-            guard let parent = parent as? OsmRelation else {
-                continue
-            }
-            if parent.isMultipolygon() && (parent.tags?.count ?? 0) > 0 {
-                return true
+        for parent in parentRelations {
+			if parent.isMultipolygon() && !parent.tags.isEmpty {
+				return true
             }
         }
         return false
     }
 
     func isSimpleMultipolygonOuterMember() -> Bool {
-        let parents = parentRelations
-        if (parents?.count ?? 0) != 1 {
+        if parentRelations.count != 1 {
             return false
         }
 
-        let parent = parents?[0] as? OsmRelation
-        if !(parent?.isMultipolygon() ?? false) || (parent?.tags?.count ?? 0) > 1 {
-            return false
+        let parent = parentRelations[0]
+        if !parent.isMultipolygon() {
+			return false
         }
 
-        for member in parent?.members ?? [] {
-            if (member.ref as? OsmWay) == self {
+        for member in parent.members {
+            if member.obj === self {
                 if member.role != "outer" {
-                    return false // Not outer member
+					return false // Not outer member
                 }
             } else {
-                if member.role == nil || (member.role == "outer") {
-                    return false // Not a simple multipolygon
+                if member.role == nil || member.role == "outer" {
+					return false // Not a simple multipolygon
                 }
             }
         }
         return true
     }
 
-    func isSelfIntersection(_ node: OsmNode?) -> Bool {
-        if (nodes?.count ?? 0) < 3 {
+    func isSelfIntersection(_ node: OsmNode) -> Bool {
+		if nodes.count < 3 {
             return false
         }
-        var first: Int? = nil
-        if let node = node {
-            first = nodes?.firstIndex(of: node) ?? NSNotFound
+		guard let first = nodes.firstIndex(of: node),
+			  first+1 < nodes.count
+		else { return false }
+
+		if nodes[(first+1)...].contains(node) {
+			return true
         }
-        if first == NSNotFound {
-            return false
-        }
-        let next = (first ?? 0) + 1
-        if next >= (nodes?.count ?? 0) {
-            return false
-        }
-        var second: Int? = nil
-        if let node = node {
-            second = (nodes as NSArray?)?.index(of: node, in: NSRange(location: next, length: (nodes?.count ?? 0) - next)) ?? 0
-        }
-        if second == NSNotFound {
-            return false
-        }
-        return true
-    }
+		return false
+	}
 
     func needsNoNameHighlight() -> Bool {
-        let highway = tags?["highway"]
-        if highway == nil {
+		guard let highway = tags["highway"] else { return false }
+		if highway == "service" {
+			return false
+        }
+		if givenName() != nil {
             return false
         }
-        if highway == "service" {
-            return false
-        }
-        if givenName() != nil {
-            return false
-        }
-        if tags?["noname"] == "yes" {
-            return false
+		if tags["noname"] == "yes" {
+			return false
         }
         return true
     }
@@ -263,20 +232,20 @@ class OsmWay: OsmBaseObject {
     }
 
     // return the point on the way closest to the supplied point
-    override func pointOnObject(for target: OSMPoint) -> OSMPoint {
-        switch (nodes?.count ?? 0) {
+	override func pointOnObjectForPoint(_ target: OSMPoint) -> OSMPoint {
+        switch nodes.count {
             case 0:
                 return target
             case 1:
-                return ((nodes?.last)?.location())!
+                return nodes.last!.location()
             default:
                 break
         }
-        var bestPoint = OSMPoint(0, 0)
+		var bestPoint = OSMPoint(x: 0, y: 0)
         var bestDist: Double = 360 * 360
-        for i in 1..<(nodes?.count ?? 0) {
-            let p1 = (nodes?[i - 1])?.location()
-            let p2 = (nodes?[i])?.location()
+        for i in 1..<nodes.count {
+            let p1 = nodes[i-1].location()
+            let p2 = nodes[i].location()
             let linePoint = ClosestPointOnLineToPoint(p1, p2, target)
             let dist = MagSquared(Sub(linePoint, target))
             if dist < bestDist {
@@ -288,14 +257,16 @@ class OsmWay: OsmBaseObject {
     }
 
     override func distance(toLineSegment point1: OSMPoint, point point2: OSMPoint) -> Double {
-        if (nodes?.count ?? 0) == 1 {
-            return nodes?.last?.distance(toLineSegment: point1, point: point2) ?? 0.0
-        }
+        if nodes.count == 1 {
+			return nodes.last!.distance(toLineSegment: point1, point: point2)
+		}
         var dist = 1000000.0
         var prevNode: OsmNode? = nil
-        for node in nodes ?? [] {
-            if prevNode != nil && LineSegmentsIntersect(prevNode?.location(), node.location(), point1, point2) {
-                return 0.0
+        for node in nodes {
+            if let prevNode = prevNode,
+			   LineSegmentsIntersect(prevNode.location(), node.location(), point1, point2)
+			{
+				return 0.0
             }
             let d = node.distance(toLineSegment: point1, point: point2)
             if d < dist {
@@ -306,123 +277,102 @@ class OsmWay: OsmBaseObject {
         return dist
     }
 
-    override func nodeSet() -> Set<AnyHashable>? {
-        return Set<AnyHashable>(nodes)
+    override func nodeSet() -> Set<OsmNode> {
+        return Set<OsmNode>( nodes )
     }
 
     override func computeBoundingBox() {
-        var minX: Double
-        var maxX: Double
-        var minY: Double
-        var maxY: Double
-        var first = true
-        for node in nodes ?? [] {
-            let loc = node.location()
-            if first {
-                first = false
-                maxX = loc.x
-                minX = maxX
-                maxY = loc.y
-                minY = maxY
-            } else {
-                if loc.y < minY {
-                    minY = loc.y
-                }
-                if loc.x < minX {
-                    minX = loc.x
-                }
-                if loc.y > maxY {
-                    maxY = loc.y
-                }
-                if loc.x > maxX {
-                    maxX = loc.x
-                }
-            }
+		guard let first = nodes.first?.location() else {
+			_boundingBox = OSMRectMake(0, 0, 0, 0)
+			return
+		}
+
+		var minX = first.x
+		var maxX = first.x
+		var minY = first.y
+		var maxY = first.y
+		for node in nodes.dropFirst() {
+			let loc = node.location()
+			if loc.y < minY {
+				minY = loc.y
+			}
+			if loc.x < minX {
+				minX = loc.x
+			}
+			if loc.y > maxY {
+				maxY = loc.y
+			}
+			if loc.x > maxX {
+				maxX = loc.x
+			}
         }
-        if first {
-            boundingBox = OSMRectMake(0, 0, 0, 0)
-        } else {
-            boundingBox = OSMRectMake(minX, minY, maxX - minX, maxY - minY)
-        }
+		_boundingBox = OSMRectMake(minX, minY, maxX - minX, maxY - minY)
     }
 
-    func centerPoint(withArea pArea: UnsafeMutablePointer<Double>?) -> OSMPoint {
-        var pArea = pArea
-        var dummy: Double
-        if pArea == nil {
-            pArea = UnsafeMutablePointer<Double>(mutating: &dummy)
-        }
-
+    func centerPointWithArea(_ pArea: inout Double) -> OSMPoint {
         let isClosed = self.isClosed()
 
-        let nodeCount = isClosed ? (nodes?.count ?? 0) - 1 : (nodes?.count ?? 0)
+        let nodeCount = isClosed ? nodes.count - 1 : nodes.count
 
-        if nodeCount > 2 {
+		if nodeCount > 2 {
             if isClosed {
                 // compute centroid
                 var sum: Double = 0
                 var sumX: Double = 0
                 var sumY: Double = 0
-                var first = true
-                var offset = OSMPoint(0, 0)
-                var previous: OSMPoint
-                for node in nodes ?? [] {
-                    if first {
-                        offset.x = node.lon
-                        offset.y = node.lat
-                        previous.x = 0
-                        previous.y = 0
-                        first = false
-                    } else {
-                        let current = OSMPoint(node.lon - offset.x, node.lat - offset.y)
-                        let partialSum: CGFloat = previous.x * current.y - previous.y * current.x
-                        sum += Double(partialSum)
-                        sumX += Double((previous.x + current.x) * partialSum)
-                        sumY += Double((previous.y + current.y) * partialSum)
-                        previous = current
-                    }
+				let offset = nodes.first!.location()
+				var previous = OSMPoint(x: 0.0, y: 0.0)
+				for node in nodes.dropFirst() {
+					let current = OSMPoint(x: node.lon - offset.x,
+										   y: node.lat - offset.y)
+					let partialSum = previous.x * current.y - previous.y * current.x
+					sum += partialSum
+					sumX += (previous.x + current.x) * partialSum
+					sumY += (previous.y + current.y) * partialSum
+					previous = current
                 }
-                pArea = UnsafeMutablePointer<Double>(mutating: sum / 2)
-                var point = OSMPoint(sumX / 6 / Double(pArea ?? 0.0), sumY / 6 / Double(pArea ?? 0.0))
+				pArea = sum / 2
+				var point = OSMPoint(x: sumX / 6 / pArea, y: sumY / 6 / pArea)
                 point.x += offset.x
-                point.y += offset.y
+				point.y += offset.y
                 return point
             } else {
                 // compute average
                 var sumX: Double = 0
                 var sumY: Double = 0
-                for node in nodes ?? [] {
+                for node in nodes {
                     sumX += node.lon
                     sumY += node.lat
                 }
-                var point = OSMPoint(sumX / Double(nodeCount), sumY / Double(nodeCount))
+				let point = OSMPoint(x: sumX / Double(nodeCount), y: sumY / Double(nodeCount))
                 return point
             }
         } else if nodeCount == 2 {
-            pArea = nil
-            let n1 = nodes?[0]
-            let n2 = nodes?[1]
-            return OSMPointMake(((n1?.lon ?? 0.0) + (n2?.lon ?? 0.0)) / 2, ((n1?.lat ?? 0.0) + (n2?.lat ?? 0.0)) / 2)
+			pArea = 0.0
+			let n1 = nodes[0]
+            let n2 = nodes[1]
+            return OSMPointMake((n1.lon + n2.lon) / 2, (n1.lat + n2.lat) / 2)
         } else if nodeCount == 1 {
-            pArea = nil
-            let node = nodes?.last
-            return OSMPointMake(node?.lon, node?.lat)
+			pArea = 0.0
+			let node = nodes.last!
+			return OSMPointMake(node.lon, node.lat)
         } else {
-            pArea = nil
-            let pt = OSMPoint(0, 0)
+			pArea = 0.0
+			let pt = OSMPoint(x: 0, y: 0)
             return pt
         }
     }
 
     func centerPoint() -> OSMPoint {
-        return centerPoint(withArea: nil)
-    }
+		var area: Double = 0.0
+        return centerPointWithArea( &area )
+	}
 
     func lengthInMeters() -> Double {
         var first = true
         var len: Double = 0
-        var prev = OSMPoint(0, 0)
-        for node in nodes ?? [] {
+		var prev = OSMPoint(x: 0, y: 0)
+        for node in nodes {
             let pt = node.location()
             if !first {
                 len += GreatCircleDistance(pt, prev)
@@ -437,8 +387,8 @@ class OsmWay: OsmBaseObject {
     override func selectionPoint() -> OSMPoint {
         var dist = lengthInMeters() / 2
         var first = true
-        var prev = OSMPoint(0, 0)
-        for node in nodes ?? [] {
+		var prev = OSMPoint(x: 0, y: 0)
+        for node in nodes {
             let pt = node.location()
             if !first {
                 let segment = GreatCircleDistance(pt, prev)
@@ -454,29 +404,18 @@ class OsmWay: OsmBaseObject {
         return prev // dummy value, shouldn't ever happen
     }
 
-    class func isClockwiseArrayOfNodes(_ nodes: [AnyHashable]?) -> Bool {
-        if (nodes?.count ?? 0) < 4 || nodes?[0] != nodes?.last {
-            return false
+    class func isClockwiseArrayOfNodes(_ nodes: [OsmNode]) -> Bool {
+        if nodes.count < 4 || nodes[0] != nodes.last {
+			return false
         }
-        var sum: CGFloat = 0
-        var first = true
-        var offset: OSMPoint
-        var previous: OSMPoint
-        for node in nodes ?? [] {
-            guard let node = node as? OsmNode else {
-                continue
-            }
-            let point = node.location()
-            if first {
-                offset = point
-                previous.y = 0
-                previous.x = previous.y
-                first = false
-            } else {
-                let current = OSMPoint(point.x - offset.x, point.y - offset.y)
-                sum += previous.x * current.y - previous.y * current.x
-                previous = current
-            }
+        var sum: Double = 0
+		let offset = nodes.first!.location()
+		var previous = OSMPoint(x: 0.0, y: 0.0)
+		for node in nodes.dropFirst() {
+			let point = node.location()
+			let current = OSMPoint(x: point.x - offset.x, y: point.y - offset.y)
+			sum += previous.x * current.y - previous.y * current.x
+			previous = current
         }
         return sum >= 0
     }
@@ -485,40 +424,33 @@ class OsmWay: OsmBaseObject {
         return OsmWay.isClockwiseArrayOfNodes(nodes)
     }
 
-    class func shapePath(forNodes nodes: [AnyHashable]?, forward: Bool, withRefPoint pRefPoint: OSMPoint?) -> CGPath? {
-        var pRefPoint = pRefPoint
-        if (nodes?.count ?? 0) == 0 || nodes?[0] != nodes?.last {
-            return nil
-        }
+    class func shapePath(forNodes nodes: [OsmNode], forward: Bool, withRefPoint pRefPoint: UnsafeMutablePointer<OSMPoint>) -> CGPath? {
+		if nodes.count == 0 || nodes[0] != nodes.last {
+			return nil
+		}
         let path = CGMutablePath()
         var first = true
         // want loops to run clockwise
-        let enumerator = forward ? (nodes as NSArray?)?.objectEnumerator() : (nodes as NSArray?)?.reverseObjectEnumerator()
-        if let enumerator = enumerator {
-            for n in enumerator {
-                guard let n = n as? OsmNode else {
-                    continue
-                }
-                let pt = MapPointForLatitudeLongitude(n.lat, n.lon)
-                if first {
-                    first = false
-                    pRefPoint = pt
-                    path.move(to: CGPoint(x: 0, y: 0), transform: .identity)
-                } else {
-                    path.addLine(to: CGPoint(x: CGFloat((pt.x - pRefPoint?.x) * PATH_SCALING), y: CGFloat((pt.y - pRefPoint?.y) * PATH_SCALING)), transform: .identity)
-                }
-            }
-        }
+		for n in forward ? nodes : nodes.reversed() {
+			let pt = MapPointForLatitudeLongitude(n.lat, n.lon)
+			if first {
+				first = false
+				pRefPoint.pointee = pt
+				path.move(to: CGPoint(x: 0, y: 0), transform: .identity)
+			} else {
+				path.addLine(to: CGPoint(x: CGFloat((pt.x - pRefPoint.pointee.x) * PATH_SCALING), y: CGFloat((pt.y - pRefPoint.pointee.y) * PATH_SCALING)), transform: .identity)
+			}
+		}
         return path
     }
 
-    override func shapePathForObject(withRefPoint pRefPoint: OSMPoint?) -> CGPath? {
-        return OsmWay.shapePath(forNodes: nodes, forward: isClockwise(), withRefPoint: pRefPoint)
+    override func shapePathForObject( withRefPoint pRefPoint: UnsafeMutablePointer<OSMPoint> ) -> CGPath? {
+		return OsmWay.shapePath(forNodes: nodes, forward: isClockwise(), withRefPoint: pRefPoint)
     }
 
     func hasDuplicatedNode() -> Bool {
         var prev: OsmNode? = nil
-        for node in nodes ?? [] {
+        for node in nodes {
             if node == prev {
                 return true
             }
@@ -527,25 +459,25 @@ class OsmWay: OsmBaseObject {
         return false
     }
 
-    func connects(to way: OsmWay?) -> OsmNode? {
-        if (nodes?.count ?? 0) > 0 && (way?.nodes?.count ?? 0) > 0 {
-            if nodes?[0] == way?.nodes?[0] || nodes?[0] == way?.nodes?.last {
-                return nodes?[0]
+    func connectsTo(way: OsmWay) -> OsmNode? {
+		if nodes.count > 0 && way.nodes.count > 0 {
+            if nodes[0] == way.nodes[0] || nodes[0] == way.nodes.last! {
+                return nodes[0]
             }
-            if nodes?.last == way?.nodes?[0] || nodes?.last == way?.nodes?.last {
-                return nodes?.last
+            if nodes.last! == way.nodes[0] || nodes.last == way.nodes.last! {
+				return nodes.last
             }
         }
         return nil
     }
 
-    func segmentClosest(to point: OSMPoint) -> Int {
+    func segmentClosestToPoint(_ point: OSMPoint) -> Int {
         var best = -1
-        var bestDist = 100000000.0
-        for index in 0..<(nodes?.count ?? 0) {
-            let this = nodes?[index]
-            let next = nodes?[index + 1]
-            let dist = DistanceFromPointToLineSegment(point, this?.location(), next?.location())
+		var bestDist: CGFloat = 100000000.0
+		for index in nodes.indices.dropFirst() {
+			let this = nodes[index]
+            let next = nodes[index+1]
+			let dist = DistanceFromPointToLineSegment(point, this.location(), next.location())
             if dist < bestDist {
                 bestDist = dist
                 best = index
@@ -554,25 +486,29 @@ class OsmWay: OsmBaseObject {
         return best
     }
 
-    required init?(coder: NSCoder) {
+	required init?(coder: NSCoder) {
+		nodes = coder.decodeObject(forKey: "nodes") as! [OsmNode]
         super.init(coder: coder)
-        nodes = coder.decodeObject(forKey: "nodes") as? [OsmNode]
-        constructed = true
-        if DEBUG {
-        for node in nodes ?? [] {
-            assert(node.wayCount > 0)
-        }
-        }
+		_constructed = true
+		#if DEBUG
+		for node in nodes {
+			assert(node.wayCount > 0)
+		}
+		#endif
     }
 
-    override func encode(with coder: NSCoder) {
-        if DEBUG {
-        for node in nodes ?? [] {
-            assert(node.wayCount > 0)
-        }
-        }
+	override init() {
+		nodes = []
+		super.init()
+	}
 
-        super.encode(with: coder)
-        coder.encode(nodes, forKey: "nodes")
+    override func encode(with coder: NSCoder) {
+		#if DEBUG
+		for node in nodes {
+			assert(node.wayCount > 0)
+		}
+		#endif
+		super.encode(with: coder)
+		coder.encode(nodes, forKey: "nodes")
     }
 }

@@ -9,7 +9,7 @@
 #import "DLog.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
-#import "OsmMember.h"
+//#import "OsmMember.h"
 //#import "MyUndoManager.h"
 #import "VectorMath.h"
 
@@ -58,7 +58,7 @@
 				// allow deleting if we're both from and to (u-turn)
 				OsmMember * from = [relation memberByRole:@"from"];
 				OsmMember * to   = [relation memberByRole:@"to"];
-				if ( from.ref == way && to.ref == way ) {
+				if ( from.obj == way && to.obj == way ) {
 					return ^{
 						[self deleteRelationUnsafe:relation];
 						[self deleteWayUnsafe:way];
@@ -108,7 +108,7 @@
 				OsmNode * prevNode = index ? way.nodes.lastObject : way.nodes[0];
 				// disallow extending any via way, or any way touching via node
 				for ( OsmMember * viaMember in viaList ) {
-					OsmBaseObject * via = viaMember.ref;
+					OsmBaseObject * via = viaMember.obj;
 					if ( [via isKindOfClass:[OsmBaseObject class]] ) {
 						if ( via.isWay && (via == way || [via.isWay.nodes containsObject:prevNode]) ) {
 							*error = NSLocalizedString(@"Extending a 'via' in a Turn Restriction will break the relation", nil);
@@ -157,7 +157,7 @@
 			continue;
 		for ( NSInteger m = 0; m < members.count; ++m ) {
 			OsmMember * member = members[m];
-			OsmWay * way = member.ref;
+			OsmWay * way = member.obj;
 			if ( ![way isKindOfClass:[OsmWay class]] || way.nodes.count == 0 )
 				continue;
 			OsmNode * node = way.nodes.lastObject;
@@ -180,17 +180,17 @@
 	BOOL changed = NO;
 	for ( NSInteger m = 0; m < members.count; ++m ) {
 		OsmMember * member = members[m];
-		if ( ![member.ref isKindOfClass:[OsmWay class]] ) {
+		if ( ![member.obj isKindOfClass:[OsmWay class]] ) {
 			continue;
 		}
 		if ( [innerSet containsObject:member] ) {
 			if ( ![member.role isEqualToString:@"inner"] ) {
-				members[m] = [[OsmMember alloc] initWithRef:member.ref role:@"inner"];
+				members[m] = [[OsmMember alloc] initWithObj:member.obj role:@"inner"];
 				changed = YES;
 			}
 		} else {
 			if ( ![member.role isEqualToString:@"outer"] ) {
-				members[m] = [[OsmMember alloc] initWithRef:member.ref role:@"outer"];
+				members[m] = [[OsmMember alloc] initWithObj:member.obj role:@"outer"];
 				changed = YES;
 			}
 		}
@@ -225,7 +225,7 @@
 	// place the member adjacent to a way its connected to, if any
 	NSInteger index = 0;
 	for ( OsmMember * m in relation.members ) {
-		OsmWay * w = m.ref;
+		OsmWay * w = m.obj;
 		++index;
 		if ( ![w isKindOfClass:[OsmWay class]] )
 			continue;
@@ -246,7 +246,7 @@
 	}
 
 	return ^{
-		OsmMember * newMember = [[OsmMember alloc] initWithRef:newWay role:role];
+		OsmMember * newMember = [[OsmMember alloc] initWithObj:newWay role:role];
 		[self addMemberUnsafe:newMember toRelation:relation atIndex:index];
 	};
 }
@@ -262,7 +262,7 @@
 	return ^{
 		for ( NSInteger index = 0; index < relation.members.count; ++index ) {
 			OsmMember * member = relation.members[index];
-			if ( member.ref == obj ) {
+			if ( member.obj == obj ) {
 				[self deleteMemberInRelationUnsafe:relation index:index];
 				--index;
 			}
@@ -275,16 +275,18 @@
 // used when dragging a node into another node
 -(EditActionReturnNode)canMergeNode:(OsmNode *)node1 intoNode:(OsmNode *)node2 error:(NSString **)error
 {
-	NSDictionary * mergedTags = MergeTags(node1.tags, node2.tags, NO );
+	NSDictionary * mergedTags = [OsmBaseObject MergeTagsWithOurTags:node1.tags
+															otherTags:node2.tags
+													 allowConflicts:NO];
 	if ( mergedTags == nil ) {
 		*error = NSLocalizedString(@"The merged nodes contain conflicting tags", nil);
 		return nil;
 	}
 
 	OsmNode * survivor;
-	if ( node1.ident.longLongValue < 0 ) {
+	if ( node1.ident < 0 ) {
 		survivor = node2;
-	} else if ( node2.ident.longLongValue < 0 ) {
+	} else if ( node2.ident < 0 ) {
 		survivor = node1;
 	} else if ( node1.wayCount > node2.wayCount ) {
 		survivor = node1;
@@ -310,12 +312,12 @@
 				[restrictions addObject:relation];
 			}
 
-			NSString * prevRole = seen[relation.ident];
+			NSString * prevRole = seen[@(relation.ident)];
 			if (prevRole && ![prevRole isEqualToString:role] ) {
 				*error = NSLocalizedString(@"The nodes have conflicting roles in parent relations", nil);
 				return nil;
 			} else {
-				seen[relation.ident] = role;
+				seen[@(relation.ident)] = role;
 			}
 		}
 	}
@@ -338,11 +340,11 @@
 		NSMutableSet * memberWays = [NSMutableSet new];
 		for ( OsmMember * member in relation.members ) {
 			if ( member.isWay ) {
-				if ( ![member.ref isKindOfClass:[OsmWay class]] ) {
+				if ( ![member.obj isKindOfClass:[OsmWay class]] ) {
 					*error = NSLocalizedString(@"A relation the node belongs to is not fully downloaded",nil);
 					return nil;
 				}
-				[memberWays addObject:member.ref];
+				[memberWays addObject:member.obj];
 			}
 		}
 
@@ -373,7 +375,7 @@
 
 			} else if ( member.isWay ) {
 
-				OsmWay * way = member.ref;
+				OsmWay * way = member.obj;
 				if ( ![way isKindOfClass:[OsmBaseObject class]] ) {
 					*error = NSLocalizedString(@"A relation the node belongs to is not fully downloaded",nil);
 					return nil;
@@ -460,8 +462,8 @@
 		[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmRelation * relation, BOOL * _Nonnull stop) {
 			for ( NSInteger index = 0; index < relation.members.count; ++index ) {
 				OsmMember * member = relation.members[index];
-				if ( member.ref == deadNode ) {
-					OsmMember * newMember = [[OsmMember alloc] initWithRef:survivor role:member.role];
+				if ( member.obj == deadNode ) {
+					OsmMember * newMember = [[OsmMember alloc] initWithObj:survivor role:member.role];
 					[self addMemberUnsafe:newMember toRelation:relation atIndex:index+1];
 					[self deleteMemberInRelationUnsafe:relation index:index];
 				}
@@ -644,11 +646,11 @@ NSString * reverseValue( NSString * key, NSString * value)
 		// reverse roles in relations the way belongs to
 		for ( OsmRelation * relation in way.parentRelations ) {
 			for ( OsmMember * member in [relation.members copy] ) {
-				if ( member.ref == way ) {
+				if ( member.obj == way ) {
 					NSString * newRole = roleReversals[ member.role ];
 					if ( newRole ) {
 						NSInteger index = [relation.members indexOfObject:member];
-						OsmMember * newMember = [[OsmMember alloc] initWithRef:way role:newRole];
+						OsmMember * newMember = [[OsmMember alloc] initWithObj:way role:newRole];
 						[self deleteMemberInRelationUnsafe:relation index:index];
 						[self addMemberUnsafe:newMember toRelation:relation atIndex:index];
 					}
@@ -669,7 +671,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 		for ( OsmRelation * relation in way.parentRelations ) {
 			if ( relation.isRestriction ) {
 				for ( OsmMember * member in relation.members ) {
-					if ( ! [member.ref isKindOfClass:[OsmBaseObject class]] ) {
+					if ( ! [member.obj isKindOfClass:[OsmBaseObject class]] ) {
 						*error = NSLocalizedString(@"The way belongs to a relation that is not fully downloaded", nil);
 						return NO;
 					}
@@ -679,17 +681,17 @@ NSString * reverseValue( NSString * key, NSString * value)
 				NSArray * viaList = [relation membersByRole:@"via"];
 				OsmMember * from = [relation memberByRole:@"from"];
 				OsmMember * to   = [relation memberByRole:@"to"];
-				if ( from.ref == way || to.ref == way ) {
+				if ( from.obj == way || to.obj == way ) {
 					if ( isDelete && way.nodes.count <= 2 ) {
 						*error = NSLocalizedString(@"Can't remove Turn Restriction to/from way", nil);
 						return NO;	// deleting node will cause degenerate way
 					}
 					for ( OsmMember * viaMember in viaList ) {
-						if ( viaMember.ref == node ) {
+						if ( viaMember.obj == node ) {
 							*error = NSLocalizedString(@"Can't remove Turn Restriction 'via' node", nil);
 							return NO;
 						} else {
-							OsmBaseObject * viaObject = viaMember.ref;
+							OsmBaseObject * viaObject = viaMember.obj;
 							if ( [viaObject isKindOfClass:[OsmBaseObject class]] ) {
 								OsmNode * common = [viaObject.isWay connectsToWay:way];
 								if ( common.isNode == node ) {
@@ -704,7 +706,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 
 				// disallow deleting an endpoint of any via way, or a via node itself
 				for ( OsmMember * viaMember in viaList ) {
-					if ( viaMember.ref == way ) {
+					if ( viaMember.obj == way ) {
 						// can't delete an endpoint of a via way
 						*error = NSLocalizedString(@"Can't remove node in Turn Restriction 'via' way", nil);
 						return NO;
@@ -918,12 +920,12 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 				NSArray 	* v = [relation membersByRole:@"via"];
 				OsmMember 	* t = [relation memberByRole:@"to"];
 
-				if ( f.ref == wayA || t.ref == wayA ) {
+				if ( f.obj == wayA || t.obj == wayA ) {
 
 					// 1. split a FROM/TO
 					BOOL keepB = NO;
 					for ( OsmMember * member in v ) {
-						OsmBaseObject * via = member.ref;
+						OsmBaseObject * via = member.obj;
 						if ( ![via isKindOfClass:[OsmBaseObject class]] )
 							continue;
 						if ( via.isNode && [wayB.nodes containsObject:via.isNode] ) {
@@ -939,8 +941,8 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 						// replace member(s) referencing A with B
 						for ( NSInteger index = 0; index < relation.members.count; ++index ) {
 							OsmMember * memberA = relation.members[index];
-							if ( memberA.ref == wayA ) {
-								OsmMember * memberB = [[OsmMember alloc] initWithRef:wayB role:memberA.role];
+							if ( memberA.obj == wayA ) {
+								OsmMember * memberB = [[OsmMember alloc] initWithObj:wayB role:memberA.role];
 								[self addMemberUnsafe:memberB toRelation:relation atIndex:index+1];
 								[self deleteMemberInRelationUnsafe:relation index:index];
 							}
@@ -950,17 +952,17 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 				} else {
 
 					// 2. split a VIA
-					OsmWay * prevWay = f.ref;
+					OsmWay * prevWay = f.obj;
 					for ( NSInteger index = 0; index < relation.members.count; index++ ) {
 						OsmMember * memberA = relation.members[index];
 						if ( [memberA.role isEqualToString:@"via"] ) {
-							if ( memberA.ref == wayA ) {
-								OsmMember * memberB = [[OsmMember alloc] initWithRef:wayB role:memberA.role];
+							if ( memberA.obj == wayA ) {
+								OsmMember * memberB = [[OsmMember alloc] initWithObj:wayB role:memberA.role];
 								BOOL insertBefore = [prevWay isKindOfClass:[OsmWay class]] && [wayB connectsToWay:prevWay];
 								[self addMemberUnsafe:memberB toRelation:relation atIndex:insertBefore?index:index+1];
 								break;
 							}
-							prevWay = memberA.ref;
+							prevWay = memberA.obj;
 						}
 					}
 				}
@@ -972,7 +974,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 				// 2. But must be inserted as a pair
 
 				if ( relation == wayIsOuter ) {
-					NSDictionary * merged = MergeTags(relation.tags, wayA.tags, YES);
+					NSDictionary * merged = [OsmBaseObject MergeTagsWithOurTags:relation.tags otherTags:wayA.tags allowConflicts:YES];
 					[self setTags:merged forObject:relation];
 					[self setTags:nil forObject:wayA];
 					[self setTags:nil forObject:wayB];
@@ -982,13 +984,13 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 				OsmWay * prevWay = nil;
 				NSInteger index = 0;
 				for ( OsmMember * member in relation.members ) {
-					if ( member.ref == wayA ) {
+					if ( member.obj == wayA ) {
 						BOOL insertBefore = [prevWay isKindOfClass:[OsmWay class]] && [prevWay.isWay connectsToWay:wayB];
-						OsmMember * newMember = [[OsmMember alloc] initWithRef:wayB role:member.role];
+						OsmMember * newMember = [[OsmMember alloc] initWithObj:wayB role:member.role];
 						[self addMemberUnsafe:newMember toRelation:relation atIndex:insertBefore?index:index+1];
 						break;
 					}
-					prevWay = member.ref;
+					prevWay = member.obj;
 					++index;
 				}
 			}
@@ -1074,9 +1076,9 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	[tags setValue:strTurn forKey:@"restriction"];
 	[self setTags:tags forObject:restriction];
 
-	OsmMember * fromM = [[OsmMember alloc] initWithRef:fromWay role:@"from"];
-	OsmMember * viaM = [[OsmMember alloc] initWithRef:viaNode role:@"via"];
-	OsmMember * toM = [[OsmMember alloc] initWithRef:toWay role:@"to"];
+	OsmMember * fromM = [[OsmMember alloc] initWithObj:fromWay role:@"from"];
+	OsmMember * viaM = [[OsmMember alloc] initWithObj:viaNode role:@"via"];
+	OsmMember * toM = [[OsmMember alloc] initWithObj:toWay role:@"to"];
 
 	[self addMemberUnsafe:fromM toRelation:restriction atIndex:0];
 	[self addMemberUnsafe:viaM toRelation:restriction atIndex:1];
@@ -1138,9 +1140,9 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 			NSArray * viaList = [relation membersByRole:@"via"];
 			int foundSet = 0;
 			for ( OsmMember * member in viaList ) {
-				if ( member.ref == selectedWay )
+				if ( member.obj == selectedWay )
 					foundSet |= 1;
-				if ( member.ref == otherWay )
+				if ( member.obj == otherWay )
 					foundSet |= 2;
 			}
 			if ( foundSet != 3 ) {
@@ -1159,7 +1161,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	if ( ![self canAddNodeToWay:otherWay atIndex:(loc?:loc+1) error:error] )
 		return nil;
 
-	NSDictionary * newTags = MergeTags(selectedWay.tags, otherWay.tags, NO);
+	NSDictionary * newTags = [OsmBaseObject MergeTagsWithOurTags:selectedWay.tags otherTags:otherWay.tags allowConflicts:NO];
 	if ( newTags == nil ) {
 		// tag conflict
 		*error = NSLocalizedString(@"The ways contain incompatible tags",nil);
@@ -1246,7 +1248,7 @@ static void InsertNode( OsmMapData * mapData, OsmWay * way, OSMPoint center, dou
 	}
 
 	return ^{
-		OSMPoint center = [way centerPointWithArea:NULL];
+		OSMPoint center = [way centerPoint];
 		center.y = lat2latp(center.y);
 		double radius = AverageDistanceToCenter(way, center);
 
@@ -1335,20 +1337,20 @@ static void InsertNode( OsmMapData * mapData, OsmWay * way, OSMPoint center, dou
 		[self registerUndoCommentString:comment];
 		OsmRelation * newRelation = [self createRelation];
 		for ( OsmMember * member in object.isRelation.members ) {
-			OsmWay * way = member.ref;
+			OsmWay * way = member.obj;
 			if ( [way isKindOfClass:[OsmWay class]] ) {
 				OsmWay * newWay = nil;
 				for ( NSInteger prev = 0; prev < newRelation.members.count; ++prev ) {
 					OsmMember * m = object.isRelation.members[prev];
-					if ( m.ref == way ) {
+					if ( m.obj == way ) {
 						// way is duplicated
-						newWay = ((OsmMember *)newRelation.members[prev]).ref;
+						newWay = newRelation.members[prev].obj;
 						break;
 					}
 				}
 				if ( newWay == nil )
 					newWay = [self duplicateWay:way withOffset:offset];
-				OsmMember * newMember = [[OsmMember alloc] initWithType:member.type ref:(NSNumber *)newWay role:member.role];
+				OsmMember * newMember = [[OsmMember alloc] initWithObj:newWay role:member.role];
 				[newRelation addMember:newMember atIndex:newRelation.members.count undo:_undoManager];
 			}
 		}

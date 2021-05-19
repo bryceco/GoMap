@@ -50,7 +50,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 if (c.firstAttribute == .leading || c.firstAttribute == .trailing) && (c.secondAttribute == .leading || c.secondAttribute == .trailing) {
                     superview?.removeConstraint(c)
                     let c2 = NSLayoutConstraint(
-                        item: c.firstItem,
+						item: c.firstItem as Any,
                         attribute: attribute,
                         relatedBy: .equal,
                         toItem: c.secondItem,

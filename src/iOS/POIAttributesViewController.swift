@@ -10,6 +10,7 @@
 import SafariServices
 import UIKit
 
+fileprivate
 enum ROW : Int {
     case identifier = 0
     case user
@@ -19,6 +20,7 @@ enum ROW : Int {
     case changeset
 }
 
+fileprivate
 enum SectionType : Int {
     case metadata
     case nodeLatlon
@@ -39,6 +41,7 @@ enum SectionType : Int {
     }
 }
 
+@objcMembers
 class POIAttributesViewController: UITableViewController {
     @IBOutlet var _saveButton: UIBarButtonItem!
     
@@ -69,20 +72,20 @@ class POIAttributesViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let object = AppDelegate.shared?.mapView?.editorLayer.selectedPrimary
+		guard let object = AppDelegate.shared?.mapView?.editorLayer.selectedPrimary else { return 0 }
         
         if section == SectionType.metadata.getRawValue() {
             return 6
         }
-        if object?.isNode != nil {
+		if object.isNode() != nil {
             if section == SectionType.nodeLatlon.getRawValue() {
                 return 1 // longitude/latitude
             }
-        } else if object?.isWay != nil {
-            if section == SectionType.wayExtra.getRawValue() {
+        } else if let way = object.isWay() {
+			if section == SectionType.wayExtra.getRawValue() {
                 return 1
             } else if section == SectionType.wayNodes.getRawValue() {
-                return object?.isWay()?.nodes.count ?? 0 // all nodes
+                return way.nodes.count // all nodes
             }
         }
         return 0
@@ -90,91 +93,81 @@ class POIAttributesViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let appDelegate = AppDelegate.shared
-        let object = appDelegate?.mapView?.editorLayer.selectedPrimary
+		let object = appDelegate!.mapView!.editorLayer.selectedPrimary!
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? AttributeCustomCell
-        cell?.accessoryType = .none
+		let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AttributeCustomCell
+		cell.accessoryType = .none
         
         if indexPath.section == SectionType.metadata.getRawValue() {
             
             switch indexPath.row {
             case ROW.identifier.rawValue:
-                cell?.title.text = NSLocalizedString("Identifier", comment: "OSM node/way/relation identifier")
-                if let ident = object?.ident {
-                    cell?.value.text = "\(ident)"
-                }
-                cell?.accessoryType = object?.ident.int64Value ?? 0 > 0 ? .disclosureIndicator : .none
+                cell.title.text = NSLocalizedString("Identifier", comment: "OSM node/way/relation identifier")
+				cell.value.text = "\(object.ident)"
+                cell.accessoryType = object.ident > 0 ? .disclosureIndicator : .none
             case ROW.user.rawValue:
-                cell?.title.text = NSLocalizedString("User", comment: "OSM user name")
-                cell?.value.text = object?.user
-                cell?.accessoryType = (object?.user?.count ?? 0) > 0 ? .disclosureIndicator : .none
+                cell.title.text = NSLocalizedString("User", comment: "OSM user name")
+                cell.value.text = object.user
+                cell.accessoryType = object.user.count > 0 ? .disclosureIndicator : .none
             case ROW.uid.rawValue:
-                cell?.title.text = NSLocalizedString("UID", comment: "OSM numeric user ID")
-                cell?.value.text = NSNumber(value: object?.uid ?? 0).stringValue
+                cell.title.text = NSLocalizedString("UID", comment: "OSM numeric user ID")
+                cell.value.text = "\(object.uid)"
             case ROW.modified.rawValue:
-                cell?.title.text = NSLocalizedString("Modified", comment: "last modified date")
-                if let dateForTimestamp = object?.dateForTimestamp() {
-                    cell?.value.text = DateFormatter.localizedString(from: dateForTimestamp, dateStyle: .medium, timeStyle: .short)
-                }
+                cell.title.text = NSLocalizedString("Modified", comment: "last modified date")
+				let dateForTimestamp = object.dateForTimestamp()
+				cell.value.text = DateFormatter.localizedString(from: dateForTimestamp, dateStyle: .medium, timeStyle: .short)
             case ROW.version.rawValue:
-                cell?.title.text = NSLocalizedString("Version", comment: "OSM object versioh")
-                cell?.value.text = NSNumber(value: object?.version ?? 0).stringValue
-                cell?.accessoryType = object?.ident.int64Value ?? 0 > 0 ? .disclosureIndicator : .none
+                cell.title.text = NSLocalizedString("Version", comment: "OSM object versioh")
+                cell.value.text = "\(object.version)"
+                cell.accessoryType = object.ident > 0 ? .disclosureIndicator : .none
             case ROW.changeset.rawValue:
-                cell?.title.text = NSLocalizedString("Changeset", comment: "OSM changeset identifier")
-                cell?.value.text = NSNumber(value: object?.changeset ?? 0).stringValue
-                cell?.accessoryType = object?.ident.int64Value ?? 0 > 0 ? .disclosureIndicator : .none
-            default:
+                cell.title.text = NSLocalizedString("Changeset", comment: "OSM changeset identifier")
+                cell.value.text = "\(object.changeset)"
+                cell.accessoryType = object.ident > 0 ? .disclosureIndicator : .none
+			default:
                 assert(false)
             }
-        } else if object?.isNode != nil {
+        } else if let node = object.isNode() {
             if indexPath.section == SectionType.nodeLatlon.getRawValue() {
-                let node = object?.isNode
-                cell?.title.text = NSLocalizedString("Lat/Lon", comment: "coordinates")
-                if let lat = node?()?.lat, let lon = node?()?.lon {
-                    cell?.value.text = "\(lat),\(lon)"
-                }
+				cell.title.text = NSLocalizedString("Lat/Lon", comment: "coordinates")
+				cell.value.text = "\(node.lat),\(node.lon)"
             }
-        } else if object?.isWay != nil {
+        } else if let way = object.isWay() {
             if indexPath.section == SectionType.wayExtra.getRawValue() {
-                let len = object?.isWay()?.lengthInMeters() ?? 0.0
-                let nodes = object?.isWay()?.nodes.count ?? 0
-                cell?.title.text = NSLocalizedString("Length", comment: "")
-                cell?.value.text = len >= 10
+                let len = way.lengthInMeters()
+                let nodes = way.nodes.count
+                cell.title.text = NSLocalizedString("Length", comment: "")
+                cell.value.text = len >= 10
                     ? String.localizedStringWithFormat(NSLocalizedString("%.0f meters, %ld nodes", comment: "way length if > 10m"), len, nodes)
                     : String.localizedStringWithFormat(NSLocalizedString("%.1f meters, %ld nodes", comment: "way length if < 10m"), len, nodes)
-                cell?.accessoryType = .none
+                cell.accessoryType = .none
             } else if indexPath.section == SectionType.wayNodes.getRawValue() {
-                let way = object?.isWay
-                let node = way?()?.nodes[indexPath.row]
-                cell?.title.text = NSLocalizedString("Node", comment: "")
-                var name = node?.friendlyDescription()
-                if !(name?.hasPrefix("(") ?? false) {
-                    if let ident = node?.ident {
-                        name = "\(name ?? "") (\(ident))"
-                    }
+                let node = way.nodes[indexPath.row]
+                cell.title.text = NSLocalizedString("Node", comment: "")
+                var name = node.friendlyDescription()
+                if !name.hasPrefix("(") {
+					name = "\(name) (\(node.ident))"
                 } else {
-                    if let ident = node?.ident {
-                        name = "\(ident)"
-                    }
+					name = "\(node.ident)"
                 }
-                cell?.value.text = name
+                cell.value.text = name
             }
         } else {
             // shouldn't be here
             assert(false)
         }
         // do extra work so keyboard won't display if they select a value
-        let value = cell?.value
+        let value = cell.value
         value?.inputView = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
         
-        return cell!
+        return cell
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        let cell = tableView.cellForRow(at: indexPath)
-        if cell?.accessoryType == .none {
-            return nil
+        if let cell = tableView.cellForRow(at: indexPath),
+		   cell.accessoryType == .none
+		{
+			return nil
         }
         return indexPath
     }
@@ -259,6 +252,7 @@ class POIAttributesViewController: UITableViewController {
     }
 }
 
+fileprivate
 class AttributeCustomCell: UITableViewCell {
     @IBOutlet var title: UILabel!
     @IBOutlet var value: UITextField!

@@ -20,7 +20,7 @@
 #import "MapView.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
-#import "OsmMember.h"
+//#import "OsmMember.h"
 //#import "QuadMap.h"
 //#import "MyUndoManager.h"
 #import "VectorMath.h"
@@ -395,13 +395,13 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 {
 	__block NSInteger modifications = 0;
 	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmNode * node, BOOL *stop) {
-		modifications += node.deleted ? node.ident.longLongValue > 0 : node.isModified;
+		modifications += node.deleted ? node.ident > 0 : node.isModified;
 	}];
 	[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmWay * way, BOOL *stop) {
-		modifications += way.deleted ? way.ident.longLongValue > 0 : way.isModified;
+		modifications += way.deleted ? way.ident > 0 : way.isModified;
 	}];
 	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmRelation * relation, BOOL *stop) {
-		modifications += relation.deleted ? relation.ident.longLongValue > 0 : relation.isModified;
+		modifications += relation.deleted ? relation.ident > 0 : relation.isModified;
 	}];
 	NSInteger undoCount = _undoManager.countUndoGroups;
 	return MIN(modifications,undoCount);	// different ways to count, but both can be inflated so take the minimum
@@ -455,7 +455,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[node setLongitude:loc.longitude latitude:loc.latitude undo:nil];
 	[node setDeleted:YES undo:nil];
 	[self setConstructed:node];
-	[_nodes setObject:node forKey:node.ident];
+	[_nodes setObject:node forKey:@(node.ident)];
 	
 	[self registerUndoCommentString:NSLocalizedString(@"create node",nil)];
 	[node setDeleted:NO undo:_undoManager];
@@ -469,7 +469,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[way constructAsUserCreated:self.credentialsUserName];
 	[way setDeleted:YES undo:nil];
 	[self setConstructed:way];
-	[_ways setObject:way forKey:way.ident];
+	[_ways setObject:way forKey:@(way.ident)];
 
 	[self registerUndoCommentString:NSLocalizedString(@"create way",nil)];
 	[way setDeleted:NO undo:_undoManager];
@@ -482,7 +482,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[relation constructAsUserCreated:self.credentialsUserName];
 	[relation setDeleted:YES undo:nil];
 	[self setConstructed:relation];
-	[_relations setObject:relation forKey:relation.ident];
+	[_relations setObject:relation forKey:@(relation.ident)];
 
 	[self registerUndoCommentString:NSLocalizedString(@"create relation",nil)];
 	[relation setDeleted:NO undo:_undoManager];
@@ -496,7 +496,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		NSInteger memberIndex = 0;
 		while ( memberIndex < relation.members.count ) {
 			OsmMember * member = relation.members[memberIndex];
-			if ( member.ref == object ) {
+			if ( member.obj == object ) {
 				[self deleteMemberInRelationUnsafe:relation index:memberIndex];
 			} else {
 				++memberIndex;
@@ -895,7 +895,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		[node setLongitude:lon latitude:lat undo:nil];
 		[node constructBaseAttributesFromXmlDict:attributeDict];
 
-		[_nodes setObject:node forKey:node.ident];
+		[_nodes setObject:node forKey:@(node.ident)];
 		[_parserStack addObject:node];
 		
 	} else if ( [elementName isEqualToString:@"way"] ) {
@@ -903,7 +903,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		OsmWay * way = [OsmWay new];
 		[way constructBaseAttributesFromXmlDict:attributeDict];
 
-		[_ways setObject:way forKey:way.ident];
+		[_ways setObject:way forKey:@(way.ident)];
 		[_parserStack addObject:way];
 
 	} else if ( [elementName isEqualToString:@"tag"] ) {
@@ -928,7 +928,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		OsmRelation * relation = [OsmRelation new];
 		[relation constructBaseAttributesFromXmlDict:attributeDict];
 
-		[_relations setObject:relation forKey:relation.ident];
+		[_relations setObject:relation forKey:@(relation.ident)];
 		[_parserStack addObject:relation];
 
 	} else if ( [elementName isEqualToString:@"member"] ) {
@@ -937,7 +937,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		NSNumber *	ref  = @([[attributeDict objectForKey:@"ref"] longLongValue]);
 		NSString *	role = [attributeDict objectForKey:@"role"];
 
-		OsmMember * member = [[OsmMember alloc] initWithType:type ref:ref role:role];
+		OsmMember * member = [[OsmMember alloc] initWithType:type ref:ref.longLongValue role:role];
 
 		OsmRelation * relation = [_parserStack lastObject];
 		[relation constructMember:member];
@@ -1039,6 +1039,10 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		NSMutableArray<OsmWay *> * newWays = [NSMutableArray new];
 		NSMutableArray<OsmRelation *> * newRelations = [NSMutableArray new];
 
+		[newData->_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmWay * way,BOOL * stop){
+			DLog(@"%ld",[way nodeRefCount]);
+		}];
+
 		[newData->_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmNode * node,BOOL * stop){
 			OsmNode * current = [_nodes objectForKey:key];
 			if ( current == nil ) {
@@ -1135,18 +1139,18 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		// this can happen if they edited the upload XML and included an object that is not downloaded.
 		return;
 	}
-	assert( object.ident.longLongValue == oldId );
+	assert( object.ident == oldId );
 	if ( newVersion == 0 && newId == 0 ) {
 		// Delete object for real
 		// When a way is deleted we delete the nodes also, but they aren't marked as deleted in the graph.
 		// If nodes are still in use by another way the newId and newVersion will be set and we won't take this path.
 		assert( newId == 0 && newVersion == 0 );
 		if ( object.isNode ) {
-			[_nodes removeObjectForKey:object.ident];
+			[_nodes removeObjectForKey:@(object.ident)];
 		} else if ( object.isWay ) {
-			[_ways removeObjectForKey:object.ident];
+			[_ways removeObjectForKey:@(object.ident)];
 		} else if ( object.isRelation ) {
-			[_relations removeObjectForKey:object.ident];
+			[_relations removeObjectForKey:@(object.ident)];
 		} else {
 			assert(NO);
 		}
@@ -1162,9 +1166,9 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	if ( oldId != newId ) {
 		// replace placeholder object with new server provided identity
 		assert( oldId < 0 && newId > 0 );
-		[dictionary removeObjectForKey:object.ident];
+		[dictionary removeObjectForKey:@(object.ident)];
 		[object serverUpdateIdent:newId];
-		[dictionary setObject:object forKey:object.ident];
+		[dictionary setObject:object forKey:@(object.ident)];
 	} else {
 		assert( oldId > 0 );
 	}
@@ -1277,7 +1281,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	assert(type);
 
 	NSXMLElement * element = [NSXMLNode elementWithName:type];
-	[element addAttribute:[NSXMLNode attributeWithName:@"id" stringValue:object.ident.stringValue]];
+	[element addAttribute:[NSXMLNode attributeWithName:@"id" stringValue:@(object.ident).stringValue]];
 	[element addAttribute:[NSXMLNode attributeWithName:@"timestamp" stringValue:object.timestamp]];
 	[element addAttribute:[NSXMLNode attributeWithName:@"version" stringValue:@(object.version).stringValue]];
 	return element;
@@ -1310,7 +1314,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[deleteRelationElement	addAttribute:[NSXMLNode attributeWithName:@"if-unused" stringValue:@"yes"]];
 
 	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmNode * node, BOOL *stop) {
-		if ( node.deleted && node.ident.longLongValue > 0 ) {
+		if ( node.deleted && node.ident > 0 ) {
 			// deleted
 			NSXMLElement * element = [OsmMapData elementForObject:node];
 			[deleteNodeElement addChild:element];
@@ -1320,7 +1324,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			[element addAttribute:[NSXMLNode attributeWithName:@"lat" stringValue:@(node.lat).stringValue]];
 			[element addAttribute:[NSXMLNode attributeWithName:@"lon" stringValue:@(node.lon).stringValue]];
 			[OsmMapData addTagsForObject:node element:element];
-			if ( node.ident.longLongValue < 0 ) {
+			if ( node.ident < 0 ) {
 				[createNodeElement addChild:element];
 			} else {
 				[modifyNodeElement addChild:element];
@@ -1328,7 +1332,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		}
 	}];
 	[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmWay * way, BOOL *stop) {
-		if ( way.deleted && way.ident.longLongValue > 0 ) {
+		if ( way.deleted && way.ident > 0 ) {
 			NSXMLElement * element = [OsmMapData elementForObject:way];
 			[deleteWayElement addChild:element];
 			for ( OsmNode * node in way.nodes ) {
@@ -1340,11 +1344,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			NSXMLElement * element = [OsmMapData elementForObject:way];
 			for ( OsmNode * node in way.nodes ) {
 				NSXMLElement * refElement = [NSXMLElement elementWithName:@"nd"];
-				[refElement addAttribute:[NSXMLNode attributeWithName:@"ref" stringValue:node.ident.stringValue]];
+				[refElement addAttribute:[NSXMLNode attributeWithName:@"ref" stringValue:@(node.ident).stringValue]];
 				[element addChild:refElement];
 			}
 			[OsmMapData addTagsForObject:way element:element];
-			if ( way.ident.longLongValue < 0 ) {
+			if ( way.ident < 0 ) {
 				[createWayElement addChild:element];
 			} else {
 				[modifyWayElement addChild:element];
@@ -1352,29 +1356,21 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		}
 	}];
 	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmRelation * relation, BOOL *stop) {
-		if ( relation.deleted && relation.ident.longLongValue > 0 ) {
+		if ( relation.deleted && relation.ident > 0 ) {
 			NSXMLElement * element = [OsmMapData elementForObject:relation];
 			[deleteRelationElement addChild:element];
 		} else if ( relation.isModified && !relation.deleted ) {
 			// added/modified
 			NSXMLElement * element = [OsmMapData elementForObject:relation];
 			for ( OsmMember * member in relation.members ) {
-				NSNumber * ref = nil;
-				if ( [member.ref isKindOfClass:[NSNumber class]] ) {
-					ref = member.ref;
-				} else if ( [member.ref isKindOfClass:[OsmBaseObject class]] ) {
-					ref = ((OsmBaseObject *)member.ref).ident;
-				} else {
-					assert(NO);
-				}
 				NSXMLElement * memberElement = [NSXMLElement elementWithName:@"member"];
 				[memberElement addAttribute:[NSXMLNode attributeWithName:@"type" stringValue:member.type]];
-				[memberElement addAttribute:[NSXMLNode attributeWithName:@"ref" stringValue:ref.stringValue]];
+				[memberElement addAttribute:[NSXMLNode attributeWithName:@"ref" stringValue:@(member.ref).stringValue]];
 				[memberElement addAttribute:[NSXMLNode attributeWithName:@"role" stringValue:member.role]];
 				[element addChild:memberElement];
 			}
 			[OsmMapData addTagsForObject:relation element:element];
-			if ( relation.ident.longLongValue < 0 ) {
+			if ( relation.ident < 0 ) {
 				[createRelationElement addChild:element];
 			} else {
 				[modifyRelationElement addChild:element];
@@ -1431,12 +1427,12 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	NSMutableArray * deleteRelation	= [NSMutableArray new];
 
 	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmNode * node, BOOL *stop) {
-		if ( node.deleted && node.ident.longLongValue > 0 ) {
+		if ( node.deleted && node.ident > 0 ) {
 			// deleted
 			[deleteNode addObject:node];
 		} else if ( node.isModified && !node.deleted ) {
 			// added/modified
-			if ( node.ident.longLongValue < 0 ) {
+			if ( node.ident < 0 ) {
 				[createNode addObject:node];
 			} else {
 				[modifyNode addObject:node];
@@ -1444,14 +1440,14 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		}
 	}];
 	[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmWay * way, BOOL *stop) {
-		if ( way.deleted && way.ident.longLongValue > 0 ) {
+		if ( way.deleted && way.ident > 0 ) {
 			[deleteWay addObject:way];
 			for ( OsmNode * node in way.nodes ) {
 				[deleteNode addObject:node];
 			}
 		} else if ( way.isModified && !way.deleted ) {
 			// added/modified
-			if ( way.ident.longLongValue < 0 ) {
+			if ( way.ident < 0 ) {
 				[createWay addObject:way];
 			} else {
 				[modifyWay addObject:way];
@@ -1459,11 +1455,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		}
 	}];
 	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmRelation * relation, BOOL *stop) {
-		if ( relation.deleted && relation.ident.longLongValue > 0 ) {
+		if ( relation.deleted && relation.ident > 0 ) {
 			[deleteRelation addObject:relation];
 		} else if ( relation.isModified && !relation.deleted ) {
 			// added/modified
-			if ( relation.ident.longLongValue < 0 ) {
+			if ( relation.ident < 0 ) {
 				[createRelation addObject:relation];
 			} else {
 				[modifyRelation addObject:relation];
@@ -1944,18 +1940,18 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 -(void)copyNode:(OsmNode *)node
 {
-	[_nodes setObject:node forKey:node.ident];
+	[_nodes setObject:node forKey:@(node.ident)];
 }
 -(void)copyWay:(OsmWay *)way
 {
-	[_ways setObject:way forKey:way.ident];
+	[_ways setObject:way forKey:@(way.ident)];
 	for ( OsmNode * node in way.nodes ) {
 		[self copyNode:node];
 	}
 }
 -(void)copyRelation:(OsmRelation *)relation
 {
-	[_relations setObject:relation forKey:relation.ident];
+	[_relations setObject:relation forKey:@(relation.ident)];
 	// don't copy member objects
 }
 -(OsmMapData *)modifiedObjects
@@ -1964,17 +1960,17 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	OsmMapData * modified = [[OsmMapData alloc] initWithUserDefaults:self.userDefaults];
 
 	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * key, OsmNode * object, BOOL *stop) {
-		if ( object.deleted ? object.ident.longLongValue > 0 : object.isModified ) {
+		if ( object.deleted ? object.ident > 0 : object.isModified ) {
 			[modified copyNode:object];
 		}
 	}];
 	[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * key, OsmWay * object, BOOL *stop) {
-		if ( object.deleted ? object.ident.longLongValue > 0 : object.isModified ) {
+		if ( object.deleted ? object.ident > 0 : object.isModified ) {
 			[modified copyWay:object];
 		}
 	}];
 	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key, OsmRelation * object, BOOL *stop) {
-		if ( object.deleted ? object.ident.longLongValue > 0 : object.isModified ) {
+		if ( object.deleted ? object.ident > 0 : object.isModified ) {
 			[modified copyRelation:object];
 		}
 	}];
@@ -2066,11 +2062,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		if ( [object isKindOfClass:[OsmBaseObject class]] ) {
 
 			if ( object.isNode ) {
-				[_nodes setObject:object.isNode forKey:object.ident];
+				[_nodes setObject:object.isNode forKey:@(object.ident)];
 			} else if ( object.isWay ) {
-				[_ways setObject:object.isWay forKey:object.ident];
+				[_ways setObject:object.isWay forKey:@(object.ident)];
 			} else if ( object.isRelation ) {
-				[_relations setObject:object.isRelation forKey:object.ident];
+				[_relations setObject:object.isRelation forKey:@(object.ident)];
 			} else {
 				assert(NO);
 			}
@@ -2323,11 +2319,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	// remove objects from spatial that are no longer in a dictionary
 	[_spatial deleteObjectsWithPredicate:^BOOL(OsmBaseObject *obj) {
 		if ( obj.isNode ) {
-			return _nodes[obj.ident] == nil;
+			return _nodes[@(obj.ident)] == nil;
 		} else if ( obj.isWay ) {
-			return _ways[obj.ident] == nil;
+			return _ways[@(obj.ident)] == nil;
 		} else if ( obj.isRelation ) {
-			return _relations[obj.ident] == nil;
+			return _relations[@(obj.ident)] == nil;
 		} else {
 			return YES;
 		}
@@ -2510,7 +2506,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 {
 	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmRelation * relation, BOOL * _Nonnull stop) {
 		for ( OsmMember * member in relation.members ) {
-			OsmBaseObject * object = member.ref;
+			OsmBaseObject * object = member.obj;
 			if ( [object isKindOfClass:[NSNumber class]] )
 				continue;;
 			assert( [object.parentRelations containsObject:relation] );

@@ -141,19 +141,19 @@ class ContactUsViewController: UITableViewController, MFMailComposeViewControlle
         if cell == _sendMailCell {
 
             if MFMailComposeViewController.canSendMail() {
-                let appDelegate = AppDelegate.shared
+                let appDelegate = AppDelegate.shared!
                 let mail = MFMailComposeViewController()
                 mail.mailComposeDelegate = self
-                if let appName = appDelegate?.appName, let appVersion = appDelegate?.appVersion {
-                    mail.setSubject("\(appName) \(appVersion) feedback")
-                }
+				mail.setSubject("\(appDelegate.appName()) \(appDelegate.appVersion()) feedback")
                 mail.setToRecipients(["bryceco@yahoo.com"])
                 var body = "Device: \(deviceModel())\n"
                 body += "iOS version: \(UIDevice.current.systemVersion)\n"
-                if (appDelegate?.userName?.count ?? 0) != 0 {
-                    body += "OSM ID: \(appDelegate?.userName ?? "")\n\n"
-                }
-                mail.setMessageBody(body, isHTML: false)
+				if let userName = appDelegate.userName,
+				   userName.count > 0
+				{
+                    body += "OSM ID: \(userName)\n\n"
+				}
+				mail.setMessageBody(body, isHTML: false)
                 navigationController?.present(mail, animated: true)
             } else {
                 let alert = UIAlertController(

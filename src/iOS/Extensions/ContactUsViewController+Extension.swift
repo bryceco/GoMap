@@ -20,18 +20,12 @@ extension ContactUsViewController {
 
     // MARK: Private methods
 
-    private func createVersionDetailsString() -> String? {
-        guard
-            let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let appName = appDelegate.appName(),
-            let appVersion = appDelegate.appVersion(),
-            let appBuildNumber = appDelegate.appBuildNumber()
-        else {
-            assertionFailure("Unable to determine the app version details")
-            return nil
-        }
-
-        return "\(appName) \(appVersion) (\(appBuildNumber))"
+    private func createVersionDetailsString() -> String {
+		let appDelegate = UIApplication.shared.delegate as! AppDelegate
+		let appName = appDelegate.appName()
+		let appVersion = appDelegate.appVersion()
+		let appBuildNumber = appDelegate.appBuildNumber()
+		return "\(appName) \(appVersion) (\(appBuildNumber))"
     }
 
     @objc func openTestFlightURL() {

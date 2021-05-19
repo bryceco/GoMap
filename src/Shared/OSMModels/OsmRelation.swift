@@ -7,95 +7,82 @@
 //  Copyright © 2020 Bryce. All rights reserved.
 //
 
-
+@objcMembers
 class OsmRelation: OsmBaseObject {
-    private(set) var members: [OsmMember]?
+    private(set) var members: [OsmMember]
 
     override var description: String {
         return "OsmRelation \(super.description)"
     }
 
-    func constructMember(_ member: OsmMember?) {
-        assert(!constructed)
-        if members == nil {
-            members = [member].compactMap { $0 }
-        } else {
-            if let member = member {
-                members?.append(member)
-            }
-        }
+    func constructMember(_ member: OsmMember) {
+        assert(!_constructed)
+		members.append( member )
     }
 
-    override func `is`() -> OsmRelation? {
-        return self
+    override func isRelation() -> OsmRelation? {
+		return self
     }
 
-    func forAllMemberObjectsRecurse(_ callback: @escaping (OsmBaseObject?) -> Void, relations: inout Set<AnyHashable>) {
-        for member in members ?? [] {
-            let obj = member.ref as? OsmBaseObject
-            if obj is OsmBaseObject {
-                if obj?.isRelation() != nil {
-                    if let obj = obj {
-                        if relations.contains(obj) {
-                            // skip
-                        } else {
-                            callback(obj)
-                            relations.insert(obj)
-                            obj?.isRelation()?.forAllMemberObjectsRecurse(callback, relations: &relations)
-                        }
-                    }
+    func forAllMemberObjectsRecurse(_ callback: @escaping (OsmBaseObject) -> Void, relations: inout Set<OsmRelation>) {
+		for member in members {
+			if let obj = member.obj {
+				if let rel = obj.isRelation() {
+					if relations.contains(rel) {
+						// already processed
+					} else {
+						callback(obj)
+						relations.insert(rel)
+						rel.forAllMemberObjectsRecurse(callback, relations: &relations)
+					}
                 } else {
-                    callback(obj)
+					callback(obj)
                 }
             }
         }
     }
 
-    func forAllMemberObjects(_ callback: @escaping (OsmBaseObject?) -> Void) {
-        var relations = Set<AnyHashable>([self])
-        forAllMemberObjectsRecurse(callback, relations: &relations)
+    func forAllMemberObjects(_ callback: @escaping (OsmBaseObject) -> Void) {
+		var relations = Set<OsmRelation>( [self] )
+		forAllMemberObjectsRecurse(callback, relations: &relations)
     }
 
-    func allMemberObjects() -> Set<AnyHashable>? {
-        var objects = []
-        forAllMemberObjects({ obj in
-            objects.insert(obj)
-        })
+    func allMemberObjects() -> Set<OsmBaseObject> {
+		var objects: Set<OsmBaseObject> = []
+		forAllMemberObjects({ obj in
+			objects.insert(obj)
+		})
         return objects
     }
 
-    func resolve(to mapData: OsmMapData?) -> Bool {
+    func resolveToMapData(_ mapData: OsmMapData) -> Bool {
         var needsRedraw = false
-        for member in members ?? [] {
-            let ref = member.ref
-            if !(ref is NSNumber) {
-                // already resolved
-                continue
-            }
+        for member in members {
+			if member.obj != nil {
+				// already resolved
+				continue
+			}
 
             if member.isWay() {
-                let way = mapData?.way(forRef: ref)
-                if let way = way {
-                    member.resolveRef(to: way)
-                    way.addParentRelation(self, undo: nil)
-                    needsRedraw = true
+				if let way = mapData.way(forRef: NSNumber(value: member.ref)) {
+					member.resolveRef(to: way)
+					way.addParentRelation(self, undo: nil)
+					needsRedraw = true
                 } else {
                     // way is not in current view
                 }
             } else if member.isNode() {
-                let node = mapData?.node(forRef: ref)
-                if let node = node {
+				if let node = mapData.node(forRef: NSNumber(value: member.ref)) {
                     member.resolveRef(to: node)
-                    node.addParentRelation(self, undo: nil)
-                    needsRedraw = true
+					node.addParentRelation(self, undo: nil)
+					needsRedraw = true
                 } else {
-                    // node is not in current view
+					// node is not in current view
                 }
             } else if member.isRelation() {
-                let rel = mapData?.relation(forRef: ref)
-                if let rel = rel {
+				if let rel = mapData.relation(forRef: NSNumber(value: member.ref)) {
                     member.resolveRef(to: rel)
-                    rel.addParentRelation(self, undo: nil)
+					rel.addParentRelation(self, undo: nil)
                     needsRedraw = true
                 } else {
                     // relation is not in current view
@@ -112,166 +99,105 @@ class OsmRelation: OsmBaseObject {
 
     // convert references to objects back to NSNumber
     func deresolveRefs() {
-        for member in members ?? [] {
-            let ref = member.ref as? OsmBaseObject
-            if ref is OsmBaseObject {
-                ref?.removeParentRelation(self, undo: nil)
-                member.resolveRef(to: ref?.ident as? OsmBaseObject)
-            }
+        for member in members {
+			if let obj = member.obj {
+				assert( member.ref == obj.ident )
+				obj.removeParentRelation(self, undo: nil)
+			}
         }
     }
 
-    @objc func assignMembers(_ members: [AnyHashable]?, undo: UndoManager?) {
-        if constructed {
-            assert(undo)
-            incrementModifyCount(undo)
-            undo?.registerUndo(withTarget: self, selector: #selector(assignMembers(_:undo:)), objects: [self.members, undo])
-        }
+    @objc func assignMembers(_ newMembers: [OsmMember], undo: MyUndoManager?) {
+        if _constructed {
+            assert(undo != nil)
+			incrementModifyCount(undo!)
+            undo!.registerUndo(withTarget: self, selector: #selector(assignMembers(_:undo:)), objects: [self.members, undo!])
+		}
 
         // figure out which members changed and update their relation parents
-        if true {
-        var old = []
-        var new = []
-        for m in self.members ?? [] {
-            if m.ref is OsmBaseObject {
-                old.insert(m.ref)
-            }
-        }
-        for m in members ?? [] {
-            guard let m = m as? OsmMember else {
-                continue
-            }
-            if m.ref is OsmBaseObject {
-                new.insert(m.ref)
-            }
-        }
-        var common = new
-        common.intersect(old)
-        new.subtract(common) // added items
-        old.subtract(common) // removed items
-        for obj in old {
-            guard let obj = obj as? OsmBaseObject else {
-                continue
-            }
-            obj.removeParentRelation(self, undo: nil)
-        }
-        for obj in new {
-            guard let obj = obj as? OsmBaseObject else {
-                continue
-            }
-            obj.addParentRelation(self, undo: nil)
-        }
-        } else {
-        let old = (self.members as NSArray?)?.sortedArray(comparator: { obj1, obj2 in
-            let r1 = (obj1?.ref is OsmBaseObject) ? (obj1?.ref as? OsmBaseObject)?.ident : (obj1?.ref as? NSNumber)
-            let r2 = (obj2?.ref is OsmBaseObject) ? (obj2?.ref as? OsmBaseObject)?.ident : (obj2?.ref as? NSNumber)
-            if let r2 = r2 {
-                return r1?.compare(r2) ?? ComparisonResult.orderedSame
-            }
-            return ComparisonResult.orderedSame
-        })
-        let new = (members as NSArray?)?.sortedArray(comparator: { obj1, obj2 in
-            let r1 = (obj1?.ref is OsmBaseObject) ? (obj1?.ref as? OsmBaseObject)?.ident : (obj1?.ref as? NSNumber)
-            let r2 = (obj2?.ref is OsmBaseObject) ? (obj2?.ref as? OsmBaseObject)?.ident : (obj2?.ref as? NSNumber)
-            if let r2 = r2 {
-                return r1?.compare(r2) ?? ComparisonResult.orderedSame
-            }
-            return ComparisonResult.orderedSame
-        })
-        }
-
-        self.members = members as? [OsmMember]
+		var old = Set<OsmBaseObject>( self.members.compactMap({ $0.obj }) )
+		var new = Set<OsmBaseObject>( newMembers.compactMap({ $0.obj }) )
+		let common = old.intersection(new)
+		new.subtract(common)	// added items
+		old.subtract(common)    // removed items
+		for obj in old {
+			obj.removeParentRelation(self, undo:nil)
+		}
+		for obj in new {
+			obj.addParentRelation(self, undo:nil)
+		}
+        self.members = newMembers
     }
 
-    @objc func removeMember(at index: Int, undo: UndoManager?) {
-        assert(undo)
-        let member = members?[index]
+    @objc func removeMemberAtIndex(_ index: Int, undo: MyUndoManager) {
+        let member = members[index]
         incrementModifyCount(undo)
-        undo?.registerUndo(withTarget: self, selector: #selector(add(_:at:undo:)), objects: [member, NSNumber(value: index), undo])
-        members?.remove(at: index)
-        let obj = member?.ref as? OsmBaseObject
-        if obj is OsmBaseObject {
-            obj?.removeParentRelation(self, undo: nil)
-        }
+        undo.registerUndo(withTarget: self, selector: #selector(addMember(_:atIndex:undo:)), objects: [member, NSNumber(value: index), undo])
+        members.remove(at: index)
+		if let obj = member.obj {
+			obj.removeParentRelation(self, undo: nil)
+		}
     }
 
-    @objc func add(_ member: OsmMember?, at index: Int, undo: UndoManager?) {
-        if constructed {
-            assert(undo)
-            incrementModifyCount(undo)
-            undo?.registerUndo(withTarget: self, selector: #selector(removeMember(at:undo:)), objects: [NSNumber(value: index), undo])
+	@objc func addMember(_ member: OsmMember, atIndex index: Int, undo: MyUndoManager?) {
+		if _constructed {
+            assert(undo != nil)
+            incrementModifyCount(undo!)
+            undo?.registerUndo(withTarget: self, selector: #selector(removeMemberAtIndex(_:undo:)), objects: [NSNumber(value: index), undo!])
         }
-        if members == nil {
-            members = []
-        }
-        if let member = member {
-            members?.insert(member, at: index)
-        }
-        let obj = member?.ref as? OsmBaseObject
-        if obj is OsmBaseObject {
-            obj?.addParentRelation(self, undo: nil)
-        }
+		members.insert(member, at: index)
+		if let obj = member.obj {
+			obj.addParentRelation(self, undo: nil)
+		}
     }
 
-    override func serverUpdate(inPlace newerVersion: OsmRelation?) {
-        super.serverUpdate(inPlace: newerVersion)
-        members = newerVersion?.members
+    override func serverUpdate(inPlace newerVersion: OsmBaseObject) {
+		let newerVersion = newerVersion as! OsmRelation
+		super.serverUpdate(inPlace: newerVersion)
+        members = newerVersion.members
     }
 
     override func computeBoundingBox() {
-        var first = true
-        var box = OSMRect(0, 0, 0, 0)
-        let objects = allMemberObjects()
-        for obj in objects ?? [] {
-            guard let obj = obj as? OsmBaseObject else {
-                continue
-            }
-            if obj.isRelation() != nil {
-                continue // child members have already been added to the set
-            }
-            let rc = obj.boundingBox()
-            if rc.origin.x == 0 && rc.origin.y == 0 && rc.size.height == 0 && rc.size.width == 0 {
-                // skip
-            } else if first {
-                box = rc
-                first = false
-            } else {
-                box = OSMRectUnion(box, rc)
-            }
-        }
-        boundingBox = box
-    }
+		let objects = allMemberObjects()
+		let boxList: [OSMRect] = objects.compactMap({ obj in
+			if obj is OsmRelation {
+				return nil // child members have already been added to the set
+			}
+			let rc = obj.boundingBox
+			if rc.origin.x == 0 && rc.origin.y == 0 && rc.size.height == 0 && rc.size.width == 0 {
+				return nil
+			}
+			return rc
+		})
+		if var box = boxList.first {
+			for rc in boxList.dropFirst() {
+				box = OSMRectUnion(box, rc)
+			}
+			_boundingBox = box
+		} else {
+			_boundingBox = OSMRectZero()
+		}
+	}
 
-    override func nodeSet() -> Set<AnyHashable>? {
-        var set: Set<AnyHashable> = []
-        for member in members ?? [] {
-            if member.ref is NSNumber {
-                continue // unresolved reference
-            }
-
-            if member.isNode() {
-                let node = member.ref as? OsmNode
-                set.insert(node)
-            } else if member.isWay() {
-                let way = member.ref as? OsmWay
-                set.formUnion(Set(way?.nodes))
-            } else if member.isRelation() {
-                let relation = member.ref as? OsmRelation
-                for node in relation?.nodeSet() ?? [] {
-                    guard let node = node as? OsmNode else {
-                        continue
-                    }
-                    set.insert(node)
-                }
-            } else {
-                assert(false)
-            }
-        }
+    override func nodeSet() -> Set<OsmNode> {
+		var set: Set<OsmNode> = []
+        for member in members {
+			if let node = member.obj as? OsmNode {
+				set.insert(node)
+			} else if let way = member.obj as? OsmWay {
+                set.formUnion(Set(way.nodes))
+			} else if let relation = member.obj as? OsmRelation {
+				let all = relation.allMemberObjects().compactMap({ $0 as? OsmNode })
+				set.formUnion(all)
+			} else {
+				// unresolved
+			}
+		}
         return set
     }
 
     func member(byRole role: String?) -> OsmMember? {
-        for member in members ?? [] {
+        for member in members {
             if member.role == role {
                 return member
             }
@@ -279,270 +205,228 @@ class OsmRelation: OsmBaseObject {
         return nil
     }
 
-    func members(byRole role: String?) -> [AnyHashable]? {
-        var a: [AnyHashable] = []
-        for member in members ?? [] {
-            if member.role == role {
-                a.append(member)
-            }
-        }
-        return a
+    func members(byRole role: String) -> [OsmMember] {
+		return members.filter { $0.role == role }
     }
 
-    func member(byRef ref: OsmBaseObject?) -> OsmMember? {
-        for member in members ?? [] {
-            if (member.ref as? OsmBaseObject) == ref {
-                return member
-            }
-        }
-        return nil
+    func member(byRef ref: OsmBaseObject) -> OsmMember? {
+		return members.first(where: { $0.obj == ref } )
     }
 
     func isMultipolygon() -> Bool {
-        let type = tags?["type"]
-        return (type == "multipolygon") || (type == "building")
+		let type = tags["type"]
+		return type == "multipolygon" || type == "building"
     }
 
     func isBoundary() -> Bool {
-        return tags?["type"] == "boundary"
+		return tags["type"] == "boundary"
     }
 
     func isWaterway() -> Bool {
-        return tags?["type"] == "waterway"
+        return tags["type"] == "waterway"
     }
 
     func isRoute() -> Bool {
-        return tags?["type"] == "route"
+        return tags["type"] == "route"
     }
 
     func isRestriction() -> Bool {
-        let type = tags?["type"]
-        if let type = type {
-            if type == "restriction" {
-                return true
-            }
-            if type.hasPrefix("restriction:") {
-                return true
-            }
-        }
-        return false
+		if let type = tags["type"] {
+			return type == "restriction" || type.hasPrefix("restriction:")
+		}
+		return false
     }
 
-    func waysInMultipolygon() -> [AnyHashable]? {
-        if !isMultipolygon() {
-            return nil
-        }
-        var a = [AnyHashable](repeating: 0, count: members?.count ?? 0)
-        for mem in members ?? [] {
-            let role = mem.role
-            if (role == "outer") || (role == "inner") {
-                if mem.ref is OsmWay {
-                    if let ref1 = mem.ref as? AnyHashable {
-                        a.append(ref1)
-                    }
-                }
-            }
-        }
-        return a
+    func waysInMultipolygon() -> [OsmWay] {
+		if !isMultipolygon() {
+			return []
+		}
+		return members.compactMap({ mem in
+			if mem.role == "outer" || mem.role == "inner" {
+				return mem.obj as? OsmWay
+			}
+			return nil
+		})
     }
 
-    class func buildMultipolygon(fromMembers memberList: [AnyHashable]?, repairing: Bool, isComplete: UnsafeMutablePointer<ObjCBool>?) -> [AnyHashable]? {
-        var isComplete = isComplete
-        var loopList: [AnyHashable] = []
-        var loop: [AnyHashable]? = nil
-        var members = memberList
-        members?.filter { NSPredicate(block: { member, bindings in
-            return (member?.ref is OsmWay) && ((member?.role == "outer") || (member?.role == "inner"))
-        }).evaluate(with: $0) }
-        var isInner = false
+    static func buildMultipolygonFromMembers(_ memberList: [OsmMember],
+											 repairing: Bool,
+											 isComplete: UnsafeMutablePointer<ObjCBool>) -> [[OsmNode]]
+	{
+		var loopList: [[OsmNode]] = []
+        var loop: [OsmNode] = []
+        var members = memberList.filter({ ($0.obj is OsmWay) && ($0.role == "outer" || $0.role == "inner") })
+
+		var isInner = false
         var foundAdjacent = false
 
-        isComplete = UnsafeMutablePointer<ObjCBool>(mutating: (members?.count ?? 0) == (memberList?.count ?? 0))
+		isComplete.pointee = ObjCBool( members.count == memberList.count )
 
-        while (members?.count ?? 0) {
-            if loop == nil {
-                // add a member to loop
-                let member = members?.last as? OsmMember
-                members?.remove(at: (members?.count ?? 0) - 1)
-                isInner = member?.role == "inner"
-                let way = member?.ref as? OsmWay
-                loop = way?.nodes
-                foundAdjacent = true
+		while !members.isEmpty {
+			if loop.isEmpty {
+				// add a member to loop
+				let member = members.popLast()!
+				isInner = member.role == "inner"
+				let way = member.obj as! OsmWay
+				loop = way.nodes
+				foundAdjacent = true
             } else {
                 // find adjacent way
                 foundAdjacent = false
-                for i in 0..<(members?.count ?? 0) {
-                    let member = members?[i] as? OsmMember
-                    if (member?.role == "inner") != isInner {
-                        continue
-                    }
-                    let way = member?.ref as? OsmWay
-                    let enumerator = way?.nodes?[0] == loop?.last
-                        ? (way?.nodes as NSArray?)?.objectEnumerator()
-                        : way?.nodes?.last == loop?.last
-                            ? (way?.nodes as NSArray?)?.reverseObjectEnumerator()
-                            : nil
+				for i in members.indices {
+					let member = members[i]
+                    if (member.role == "inner") != isInner {
+						continue
+					}
+					let way = member.obj as! OsmWay
+					let enumerator = (way.nodes[0] == loop.last!) ? way.nodes.makeIterator()
+						: (way.nodes.last! == loop.last!) ? way.nodes.reversed().makeIterator()
+						: nil
                     if let enumerator = enumerator {
                         foundAdjacent = true
                         var first = true
                         for n in enumerator {
-                            guard let n = n as? OsmNode else {
-                                continue
-                            }
-                            if first {
+							if first {
                                 first = false
                             } else {
-                                loop?.append(n)
+								loop.append(n)
                             }
                         }
-                        members?.remove(at: i)
-                        break
+                        members.remove(at: i)
+						break
                     }
                 }
                 if !foundAdjacent && repairing {
                     // invalid, but we'll try to continue
-                    isComplete = UnsafeMutablePointer<ObjCBool>(mutating: &false)
-                    if let aLoop = loop?[0] {
-                        loop?.append(aLoop)
-                    } // force-close the loop
+					isComplete.pointee = false
+					// force-close the loop
+					loop.append( loop[0] )
                 }
             }
 
-            if (loop?.count ?? 0) != 0 && (loop?.last == loop?[0] || !foundAdjacent) {
+            if loop.count != 0 && (loop.last! == loop[0] || !foundAdjacent) {
                 // finished a loop. Outer goes clockwise, inner goes counterclockwise
-                let lp = OsmWay.isClockwiseArrayOfNodes(loop) == isInner ? ((loop as NSArray?)?.reverseObjectEnumerator().allObjects as? [AnyHashable]) : loop
-                if let lp = lp {
-                    loopList.append(lp)
-                }
-                loop = nil
+				if OsmWay.isClockwiseArrayOfNodes(loop) == isInner {
+					loopList.append( loop.reversed() )
+				} else {
+					loopList.append( loop )
+				}
+				loop = []
             }
         }
         return loopList
     }
 
-    func buildMultipolygonRepairing(_ repairing: Bool) -> [AnyHashable]? {
-        if !isMultipolygon() {
-            return nil
+    func buildMultipolygonRepairing(_ repairing: Bool) -> [[OsmNode]] {
+		if !isMultipolygon() {
+			return []
         }
-        var isComplete = true
-        let a = OsmRelation.buildMultipolygon(fromMembers: members, repairing: repairing, isComplete: UnsafeMutablePointer<ObjCBool>(mutating: &isComplete))
-        return a
+		var isComplete: ObjCBool = true
+        let a = OsmRelation.buildMultipolygonFromMembers( members,
+														  repairing: repairing,
+														  isComplete: &isComplete)
+		return a
     }
 
-    override func shapePathForObject(withRefPoint pRefPoint: OSMPoint?) -> CGPath? {
-        var pRefPoint = pRefPoint
+    override func shapePathForObject(withRefPoint pRefPoint: UnsafeMutablePointer<OSMPoint>) -> CGPath? {
         let loopList = buildMultipolygonRepairing(true)
-        if (loopList?.count ?? 0) == 0 {
+		if loopList.isEmpty {
             return nil
         }
 
         let path = CGMutablePath()
-        var hasRefPoint = false
-        var refPoint: OSMPoint
+        var refPoint: OSMPoint? = nil
 
-        for loop in loopList ?? [] {
-            guard let loop = loop as? [AnyHashable] else {
-                continue
-            }
-            var first = true
+		for loop in loopList {
+			var first = true
             for n in loop {
-                guard let n = n as? OsmNode else {
-                    continue
-                }
                 let pt = MapPointForLatitudeLongitude(n.lat, n.lon)
                 if first {
                     first = false
-                    if !hasRefPoint {
-                        hasRefPoint = true
-                        refPoint = pt
+					if refPoint == nil {
+						refPoint = pt
                     }
-                    path.move(to: CGPoint(x: CGFloat((pt.x - refPoint.x) * PATH_SCALING), y: CGFloat((pt.y - refPoint.y) * PATH_SCALING)), transform: .identity)
+                    path.move(to: CGPoint(x: CGFloat((pt.x - refPoint!.x) * PATH_SCALING), y: CGFloat((pt.y - refPoint!.y) * PATH_SCALING)), transform: .identity)
                 } else {
-                    path.addLine(to: CGPoint(x: CGFloat((pt.x - refPoint.x) * PATH_SCALING), y: CGFloat((pt.y - refPoint.y) * PATH_SCALING)), transform: .identity)
-                }
+                    path.addLine(to: CGPoint(x: CGFloat((pt.x - refPoint!.x) * PATH_SCALING), y: CGFloat((pt.y - refPoint!.y) * PATH_SCALING)), transform: .identity)
+				}
             }
         }
-        pRefPoint = refPoint
-        return path
+		pRefPoint.pointee = refPoint!
+		return path
     }
 
     func centerPoint() -> OSMPoint {
-        var outerSet: [AnyHashable] = []
-        for member in members ?? [] {
-            if member.role == "outer" {
-                let way = member.ref as? OsmWay
-                if way is OsmWay {
-                    if let way = way {
-                        outerSet.append(way)
-                    }
-                }
-            }
-        }
+		let outerSet: [OsmWay] = members.compactMap({
+			if $0.role == "outer" {
+				return $0.obj as? OsmWay
+			}
+			return nil
+		})
         if outerSet.count == 1 {
             return outerSet[0].centerPoint()
         } else {
-            let rc = boundingBox()
-            return OSMPointMake(rc.origin.x + rc.size.width / 2, rc.origin.y + rc.size.height / 2)
+			let rc = self.boundingBox
+			return OSMPoint(x: rc.origin.x + rc.size.width / 2,
+							y: rc.origin.y + rc.size.height / 2)
         }
     }
 
     override func selectionPoint() -> OSMPoint {
-        let bbox = boundingBox()
-        let center = OSMPoint(bbox.origin.x + bbox.size.width / 2, bbox.origin.y + bbox.size.height / 2)
-        if isMultipolygon() {
+		let bbox = self.boundingBox
+		let center = OSMPoint(x: bbox.origin.x + bbox.size.width / 2,
+							  y: bbox.origin.y + bbox.size.height / 2)
+		if isMultipolygon() {
             // pick a point on an outer polygon that is close to the center of the bbox
-            for member in members ?? [] {
-                if member.role == "outer" {
-                    let way = member.ref as? OsmWay
-                    if (way is OsmWay) && (way?.nodes?.count ?? 0) > 0 {
-                        return (way?.pointOnObject(for: center))!
-                    }
+            for member in members {
+                if member.role == "outer",
+				   let way = member.obj as? OsmWay,
+				   way.nodes.count > 0
+				{
+					return way.pointOnObjectForPoint( center )
                 }
             }
         }
         if isRestriction() {
             // pick via node or way
-            for member in members ?? [] {
-                if member.role == "via" {
-                    let object = member.ref as? OsmBaseObject
-                    if object is OsmBaseObject {
-                        if object?.isNode() != nil || object?.isWay() != nil {
-                            return (object?.selectionPoint())!
-                        }
-                    }
+            for member in members {
+                if member.role == "via",
+				   let object = member.obj
+				{
+					if object is OsmNode || object is OsmWay {
+						return object.selectionPoint()
+					}
                 }
             }
         }
         // choose any node/way member
         let all = allMemberObjects() // might be a super relation, so need to recurse down
-        let object = all?.first as? OsmBaseObject
-        return (object?.selectionPoint())!
+		if let object = all.first {
+			return object.selectionPoint()
+		}
+		return center	// this is a failure condition
     }
 
     override func distance(toLineSegment point1: OSMPoint, point point2: OSMPoint) -> Double {
         var dist = 1000000.0
-        for member in members ?? [] {
-            let object = member.ref as? OsmBaseObject
-            if object is OsmBaseObject {
-                if object?.isRelation() == nil {
-                    let d = object?.distance(toLineSegment: point1, point: point2) ?? 0.0
-                    if d < dist {
-                        dist = d
-                    }
-                }
-            }
+        for member in members {
+			if let object = member.obj {
+				if object.isRelation() == nil {
+					let d = object.distance(toLineSegment: point1, point: point2)
+					if d < dist {
+						dist = d
+					}
+				}
+			}
         }
         return dist
     }
 
-    override func pointOnObject(for target: OSMPoint) -> OSMPoint {
+	override func pointOnObjectForPoint(_ target: OSMPoint) -> OSMPoint {
         var bestPoint = target
         var bestDistance = 10000000.0
-        for object in allMemberObjects() ?? [] {
-            guard let object = object as? OsmBaseObject else {
-                continue
-            }
-            let pt = object.pointOnObject(for: target)
+        for object in allMemberObjects() {
+            let pt = object.pointOnObjectForPoint( target )
             let dist = DistanceFromPointToPoint(target, pt)
             if dist < bestDistance {
                 bestDistance = dist
@@ -552,23 +436,20 @@ class OsmRelation: OsmBaseObject {
         return bestPoint
     }
 
-    func contains(_ object: OsmBaseObject?) -> Bool {
-        let node = object?.isNode()
+    func containsObject(_ object: OsmBaseObject) -> Bool {
         let set = allMemberObjects()
-        for obj in set ?? [] {
-            guard let obj = obj as? OsmBaseObject else {
-                continue
-            }
-            if obj == object {
+        for obj in set {
+			if obj == object {
                 return true
             }
-            if let object = object as? OsmNode {
-                if node != nil && obj.isWay() != nil && obj.isWay()?.nodes?.contains(object) ?? false {
-                    return true
-                }
-            }
-        }
-        return false
+			if let way = obj as? OsmWay,
+			   let node = object as? OsmNode,
+			   way.nodes.contains(node)
+			{
+				return true
+			}
+		}
+		return false
     }
 
     override func encode(with coder: NSCoder) {
@@ -576,9 +457,14 @@ class OsmRelation: OsmBaseObject {
         coder.encode(members, forKey: "members")
     }
 
+	override init() {
+		members = []
+		super.init()
+	}
+
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        members = coder.decodeObject(forKey: "members") as? [OsmMember]
-        constructed = true
+		members = coder.decodeObject(forKey: "members") as! [OsmMember]
+		super.init(coder: coder)
+		_constructed = true
     }
 }

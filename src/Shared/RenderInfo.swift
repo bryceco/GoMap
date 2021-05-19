@@ -212,25 +212,23 @@ class RenderInfoDatabase: NSObject {
 	func renderInfoForObject(_ object: OsmBaseObject) -> RenderInfo? {
         var tags = object.tags
         // if the object is part of a rendered relation than inherit that relation's tags
-        if (object.parentRelations?.count != 0) && (object.isWay() != nil) && !object.hasInterestingTags() {
-            if let parentRelations = object.parentRelations {
-                for parent in parentRelations {
-                    guard let parent = parent as? OsmRelation else {
-                        continue
-                    }
-                    if parent.isBoundary() {
-                        tags = parent.tags
-                        break
-                    }
-                }
-            }
+        if object.isWay() != nil,
+		   object.parentRelations.count != 0,
+		   !object.hasInterestingTags()
+		{
+			for parent in object.parentRelations {
+				if parent.isBoundary() {
+					tags = parent.tags
+					break
+				}
+			}
         }
 
         // try exact match
         var bestRender: RenderInfo? = nil
         var bestIsDefault = false
         var bestCount = 0
-        for (key, value) in tags ?? [:] {
+        for (key, value) in tags {
 			guard let valDict = keyDict[key] else { continue }
 			var render = valDict[value]
             var isDefault = false
@@ -255,24 +253,16 @@ class RenderInfoDatabase: NSObject {
         }
 
         // check if it is an address point
-        var isAddress: Bool = (object.isNode() != nil) && ((object.tags?.count ?? 0) > 0)
-        if isAddress {
-            if let tags1 = object.tags {
-                for (key, _) in tags1 {
-                    if IsInterestingKey(key) && !key.hasPrefix("addr:") {
-                        isAddress = false
-                        break
-                    }
-                }
-            }
-            if isAddress {
-                if g_AddressRender == nil {
-                    g_AddressRender = RenderInfo()
-                    g_AddressRender?.key = "ADDRESS"
-                    g_AddressRender?.lineWidth = 0.0
-                }
-                return g_AddressRender
-            }
+		if object.isNode() != nil,
+		   !object.tags.isEmpty,
+		   tags.first(where: { key,_ in return OsmBaseObject.IsInterestingKey(key) && !key.hasPrefix("addr:") }) != nil
+		{
+			if g_AddressRender == nil {
+				g_AddressRender = RenderInfo()
+				g_AddressRender!.key = "ADDRESS"
+				g_AddressRender!.lineWidth = 0.0
+			}
+			return g_AddressRender
         }
 
         if g_DefaultRender == nil {

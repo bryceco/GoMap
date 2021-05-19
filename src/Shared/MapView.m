@@ -23,7 +23,7 @@
 #import "OsmNotesDatabase.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
-#import "OsmMember.h"
+//#import "OsmMember.h"
 //#import "RulerView.h"
 //#import "SpeechBalloonView.h"
 //#import "TapAndDragGesture.h"
@@ -2300,7 +2300,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
             break;
         case ACTION_RECTANGULARIZE:
         {
-            if ( _editorLayer.selectedWay.ident.longLongValue >= 0  &&  !OSMRectContainsRect( self.screenLongitudeLatitude, _editorLayer.selectedWay.boundingBox ) ) {
+            if ( _editorLayer.selectedWay.ident >= 0  &&  !OSMRectContainsRect( self.screenLongitudeLatitude, _editorLayer.selectedWay.boundingBox ) ) {
                 error = NSLocalizedString(@"The selected way must be completely visible", nil);	// avoid bugs where nodes are deleted from other objects
             } else {
                 EditAction rect = [_editorLayer.mapData canOrthogonalizeWay:_editorLayer.selectedWay error:&error];
@@ -2341,7 +2341,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
             break;
         case ACTION_STRAIGHTEN:
         {
-            if ( _editorLayer.selectedWay.ident.longLongValue >= 0  &&  !OSMRectContainsRect( self.screenLongitudeLatitude, _editorLayer.selectedWay.boundingBox ) ) {
+            if ( _editorLayer.selectedWay.ident >= 0  &&  !OSMRectContainsRect( self.screenLongitudeLatitude, _editorLayer.selectedWay.boundingBox ) ) {
                 error = NSLocalizedString(@"The selected way must be completely visible", nil);	// avoid bugs where nodes are deleted from other objects
             } else {
                 EditAction straighten = [_editorLayer.mapData canStraightenWay:_editorLayer.selectedWay error:&error];
@@ -2479,8 +2479,8 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
     // if we currently have a relation selected then select the via node instead
     if ( self.editorLayer.selectedPrimary.isRelation ) {
         OsmRelation * relation = self.editorLayer.selectedPrimary.isRelation;
-        OsmWay * fromWay = [relation memberByRole:@"from"].ref;
-        OsmNode * viaNode = [relation memberByRole:@"via"].ref;
+        OsmWay * fromWay = [relation memberByRole:@"from"].obj;
+        OsmNode * viaNode = [relation memberByRole:@"via"].obj;
         
         if ( ![viaNode isKindOfClass:[OsmNode class]] ) {
             // not supported yet

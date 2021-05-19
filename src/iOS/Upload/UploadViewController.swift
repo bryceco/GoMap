@@ -184,7 +184,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
                 completion?(NSLocalizedString("The XML is improperly formed", comment: ""))
                 return
             }
-            mapData?.uploadChangesetXml(xmlDoc, comment: comment, source: source, imagery: imagery, completion: completion)
+			mapData?.uploadChangesetXml(xmlDoc, comment: comment, source: source, imagery: imagery, completion: completion)
         } else {
             // normal upload
             mapData?.uploadChangeset(withComment: comment, source: source, imagery: imagery, completion: completion)
@@ -264,11 +264,11 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
         var ident = Int64((name as NSString).substring(from: 1)) ?? 0
         switch name[name.index(name.startIndex, offsetBy: 0)] {
         case "n":
-            ident = OsmBaseObject.extendedIdentifier(for: OSM_TYPE_NODE, identifier: ident)
+			ident = OsmBaseObject.extendedIdentifierForType( OSM_TYPE._NODE, identifier: ident)
         case "w":
-            ident = OsmBaseObject.extendedIdentifier(for: OSM_TYPE_WAY, identifier: ident)
+			ident = OsmBaseObject.extendedIdentifierForType( OSM_TYPE._WAY, identifier: ident)
         case "r":
-            ident = OsmBaseObject.extendedIdentifier(for: OSM_TYPE_RELATION, identifier: ident)
+			ident = OsmBaseObject.extendedIdentifierForType( OSM_TYPE._RELATION, identifier: ident)
         default:
             return false
         }

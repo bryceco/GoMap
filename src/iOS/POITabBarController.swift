@@ -28,11 +28,10 @@ class POITabBarController: UITabBarController {
         self.selection = selection
         relationList = [AnyHashable]()
         if let selection = selection {
-            for (key, obj) in selection.tags ?? [:] {
+            for (key, obj) in selection.tags {
                 keyValueDict[key] = obj
             }
-        
-            relationList = selection.parentRelations as? [AnyHashable]
+            relationList = selection.parentRelations
         }
         
         let tabIndex = UserDefaults.standard.integer(forKey: "POITabIndex")

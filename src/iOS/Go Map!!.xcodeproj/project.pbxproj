@@ -79,6 +79,11 @@
 		02E6267219973A0700565D62 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02E6267119973A0700565D62 /* Security.framework */; };
 		02E8436519B39FAD0044AC1D /* OsmNotesDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E8436419B39FAD0044AC1D /* OsmNotesDatabase.m */; };
 		02ED19811BBF119C00A57CF4 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */; };
+		02EDBF672653306400B7072E /* OsmBaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096F1263EBE5E00E3B129 /* OsmBaseObject.swift */; };
+		02EDBF6826535B9D00B7072E /* OsmNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096EF263EBE5D00E3B129 /* OsmNode.swift */; };
+		02EDBF6926535BB700B7072E /* OsmWay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096F0263EBE5D00E3B129 /* OsmWay.swift */; };
+		02EDBF6A26535BD400B7072E /* OsmRelation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096F2263EBE5E00E3B129 /* OsmRelation.swift */; };
+		02EDBF6B26535BEB00B7072E /* OsmMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096EE263EBE5D00E3B129 /* OsmMember.swift */; };
 		02EDCC081683EC2D007F9934 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02EDCC071683EC2D007F9934 /* CFNetwork.framework */; };
 		02F2449A264F635800C42E41 /* PathUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA924C263FFEF9000A2A99 /* PathUtil.swift */; };
 		02FEDAF42651DCC100DF15D7 /* POIAllTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3004F61263B2524006BF313 /* POIAllTagsViewController.swift */; };
@@ -95,10 +100,6 @@
 		6442666722540EDF00C0D545 /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666422540EDF00C0D545 /* Lock.swift */; };
 		6442666822540EDF00C0D545 /* Disposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666522540EDF00C0D545 /* Disposable.swift */; };
 		6442666922540EDF00C0D545 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666622540EDF00C0D545 /* Observable.swift */; };
-		6453776A23D38FA200656A1C /* OsmNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 6453776923D38FA200656A1C /* OsmNode.m */; };
-		6453776D23D3904E00656A1C /* OsmWay.m in Sources */ = {isa = PBXBuildFile; fileRef = 6453776C23D3904E00656A1C /* OsmWay.m */; };
-		6453777023D3913100656A1C /* OsmRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6453776F23D3913100656A1C /* OsmRelation.m */; };
-		6453777323D391CC00656A1C /* OsmMember.m in Sources */ = {isa = PBXBuildFile; fileRef = 6453777223D391CC00656A1C /* OsmMember.m */; };
 		647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */; };
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
 		64981F1F22667D7700178476 /* ContactUsViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64981F1E22667D7700178476 /* ContactUsViewController+Extension.swift */; };
@@ -133,7 +134,6 @@
 		C3D096D0263EA76500E3B129 /* GeekbenchScoreProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341E1572639DF090022E983 /* GeekbenchScoreProvider.swift */; };
 		C3D096DB263EB73E00E3B129 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096DA263EB73E00E3B129 /* main.swift */; };
 		C3D096DC263EB7DE00E3B129 /* MyApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096D7263EAE1E00E3B129 /* MyApplication.swift */; };
-		C3D096F8263ECE3200E3B129 /* OsmBaseObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 6453776523D38D4600656A1C /* OsmBaseObject.m */; };
 		C3D096FC263F118500E3B129 /* FpsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341E1552639DEFC0022E983 /* FpsLabel.swift */; };
 		C3FA9249263FF95B000A2A99 /* LocationURLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA9248263FF95B000A2A99 /* LocationURLParser.swift */; };
 		ED56E5AB26024DA5000B368C /* AutocompleteTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5AA26024DA5000B368C /* AutocompleteTextField.swift */; };
@@ -380,16 +380,6 @@
 		6442666422540EDF00C0D545 /* Lock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
 		6442666522540EDF00C0D545 /* Disposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Disposable.swift; sourceTree = "<group>"; };
 		6442666622540EDF00C0D545 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
-		6453776423D38D4600656A1C /* OsmBaseObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OsmBaseObject.h; sourceTree = "<group>"; };
-		6453776523D38D4600656A1C /* OsmBaseObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OsmBaseObject.m; sourceTree = "<group>"; };
-		6453776823D38FA200656A1C /* OsmNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OsmNode.h; sourceTree = "<group>"; };
-		6453776923D38FA200656A1C /* OsmNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OsmNode.m; sourceTree = "<group>"; };
-		6453776B23D3904E00656A1C /* OsmWay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OsmWay.h; sourceTree = "<group>"; };
-		6453776C23D3904E00656A1C /* OsmWay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OsmWay.m; sourceTree = "<group>"; };
-		6453776E23D3913100656A1C /* OsmRelation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OsmRelation.h; sourceTree = "<group>"; };
-		6453776F23D3913100656A1C /* OsmRelation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OsmRelation.m; sourceTree = "<group>"; };
-		6453777123D391CC00656A1C /* OsmMember.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OsmMember.h; sourceTree = "<group>"; };
-		6453777223D391CC00656A1C /* OsmMember.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OsmMember.m; sourceTree = "<group>"; };
 		647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModel.swift; sourceTree = "<group>"; };
 		647F46D02253F08200CEC482 /* HeadingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProvider.swift; sourceTree = "<group>"; };
 		64981F1E22667D7700178476 /* ContactUsViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ContactUsViewController+Extension.swift"; sourceTree = "<group>"; };
@@ -841,20 +831,10 @@
 		6453776323D38D1F00656A1C /* OSMModels */ = {
 			isa = PBXGroup;
 			children = (
-				6453776423D38D4600656A1C /* OsmBaseObject.h */,
-				6453776523D38D4600656A1C /* OsmBaseObject.m */,
 				C3D096F1263EBE5E00E3B129 /* OsmBaseObject.swift */,
-				6453776823D38FA200656A1C /* OsmNode.h */,
-				6453776923D38FA200656A1C /* OsmNode.m */,
 				C3D096EF263EBE5D00E3B129 /* OsmNode.swift */,
-				6453776B23D3904E00656A1C /* OsmWay.h */,
-				6453776C23D3904E00656A1C /* OsmWay.m */,
 				C3D096F0263EBE5D00E3B129 /* OsmWay.swift */,
-				6453776E23D3913100656A1C /* OsmRelation.h */,
-				6453776F23D3913100656A1C /* OsmRelation.m */,
 				C3D096F2263EBE5E00E3B129 /* OsmRelation.swift */,
-				6453777123D391CC00656A1C /* OsmMember.h */,
-				6453777223D391CC00656A1C /* OsmMember.m */,
 				C3D096EE263EBE5D00E3B129 /* OsmMember.swift */,
 				021FADEE25884BB900F6E1C0 /* OsmTags.swift */,
 			);
@@ -1081,7 +1061,6 @@
 				ED56E5E426028181000B368C /* DisplayViewController.swift in Sources */,
 				02A194B019C69701002338DA /* Database.m in Sources */,
 				02ACBBCA16713F2B00BB4414 /* MapView.m in Sources */,
-				C3D096F8263ECE3200E3B129 /* OsmBaseObject.m in Sources */,
 				020F4ADE24AAD4E700D9E34A /* PresetsDatabase.swift in Sources */,
 				02A123EB264C9B17005638C1 /* RenderInfo.swift in Sources */,
 				C3D096CB263E9A1100E3B129 /* DownloadThreadPool.swift in Sources */,
@@ -1096,7 +1075,6 @@
 				C3D096AE263D4BFB00E3B129 /* UploadViewController.swift in Sources */,
 				C365A569263FCC9C007DEC94 /* TapAndDragGesture.swift in Sources */,
 				ED91352526020945006A637A /* OfflineViewController.swift in Sources */,
-				6453776A23D38FA200656A1C /* OsmNode.m in Sources */,
 				ED9649DB2601CB7A00EC0A60 /* SettingsViewController.swift in Sources */,
 				C365A563263FC53F007DEC94 /* TurnRestrictHwyView.swift in Sources */,
 				ED9649E62601CE3100EC0A60 /* RotatingNavigationController.swift in Sources */,
@@ -1105,8 +1083,11 @@
 				028C51E625CB7A23004A88F7 /* TristateButton.swift in Sources */,
 				C3D096DC263EB7DE00E3B129 /* MyApplication.swift in Sources */,
 				021FADEF25884BB900F6E1C0 /* OsmTags.swift in Sources */,
+				02EDBF672653306400B7072E /* OsmBaseObject.swift in Sources */,
 				027EDC72206F3EED00D349D6 /* DDXMLNode.m in Sources */,
+				02EDBF6B26535BEB00B7072E /* OsmMember.swift in Sources */,
 				EDB2C3A12609E2A000C08293 /* LanguageTableViewController.swift in Sources */,
+				02EDBF6926535BB700B7072E /* OsmWay.swift in Sources */,
 				ED56E5C426027A50000B368C /* CustomPresetController.swift in Sources */,
 				02A123EE264CBBE5005638C1 /* DisplayLink.swift in Sources */,
 				EDDBA55326130287001E7D5C /* GpxViewController.swift in Sources */,
@@ -1116,7 +1097,6 @@
 				C3004F54263A99DD006BF313 /* POIAttributesViewController.swift in Sources */,
 				C3004F4D263A6306006BF313 /* NominatimViewController.swift in Sources */,
 				024233101674FDB4008A3B6A /* VectorMath.m in Sources */,
-				6453777323D391CC00656A1C /* OsmMember.m in Sources */,
 				6442666922540EDF00C0D545 /* Observable.swift in Sources */,
 				021B30C81973AA4400B36EFF /* OsmMapData+Edit.m in Sources */,
 				02A123EA264C8BA3005638C1 /* AerialList.swift in Sources */,
@@ -1137,10 +1117,10 @@
 				020EBA7926506156001D56F4 /* MercatorTileLayer.swift in Sources */,
 				02354F7A246349E100878A04 /* CurvedGlyphLayer.swift in Sources */,
 				ED56E5B426026542000B368C /* BingMetadataViewController.swift in Sources */,
+				02EDBF6A26535BD400B7072E /* OsmRelation.swift in Sources */,
 				02A123F1264EF139005638C1 /* QuadMap.swift in Sources */,
 				6442666822540EDF00C0D545 /* Disposable.swift in Sources */,
 				ED56E5C726027A50000B368C /* CreditsViewController.swift in Sources */,
-				6453777023D3913100656A1C /* OsmRelation.m in Sources */,
 				ED9649F92601D58900EC0A60 /* POIPresetValuePickerController.swift in Sources */,
 				64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */,
 				027EDC74206F3EED00D349D6 /* NSString+DDXML.m in Sources */,
@@ -1156,12 +1136,12 @@
 				026FC76726509D6E005DDAFF /* SpeechBalloonView.swift in Sources */,
 				ED56E5C526027A50000B368C /* CustomPresetListViewController.swift in Sources */,
 				C3D096CF263EA0DB00E3B129 /* KeyChain.swift in Sources */,
-				6453776D23D3904E00656A1C /* OsmWay.m in Sources */,
 				ED56E5EC26028B5F000B368C /* FilterObjectsViewController.swift in Sources */,
 				C341E15C2639DF440022E983 /* NearbyMappersViewController.swift in Sources */,
 				021FADC52585951E00F6E1C0 /* PresetGroup.swift in Sources */,
 				02CC01DC25843F2F004444EF /* PresetLanguages.swift in Sources */,
 				02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */,
+				02EDBF6826535B9D00B7072E /* OsmNode.swift in Sources */,
 				ED56E5C626027A50000B368C /* ContactUsViewController.swift in Sources */,
 				02A123E9264C8B60005638C1 /* GpxLayer.swift in Sources */,
 				ED56E5AB26024DA5000B368C /* AutocompleteTextField.swift in Sources */,
@@ -1511,7 +1491,7 @@
 				GCC_PREFIX_HEADER = "Go Map!!-Prefix.pch";
 				INFOPLIST_FILE = "Go Map!!-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 2.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMapSwift;
@@ -1543,7 +1523,7 @@
 				GCC_PREFIX_HEADER = "Go Map!!-Prefix.pch";
 				INFOPLIST_FILE = "Go Map!!-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 2.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMapSwift;

@@ -17,7 +17,7 @@
 #import "MapView.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
-#import "OsmMember.h"
+//#import "OsmMember.h"
 //#import "PathUtil.h"
 //#import "QuadMap.h"
 //#import "SpeechBalloonLayer.h"
@@ -706,11 +706,11 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 				[outerSegments addObject:object];
 			} else if ( object.isRelation ) {
 				for ( OsmMember * mem in object.isRelation.members ) {
-					if ( [mem.ref isKindOfClass:[OsmWay class]] ) {
+					if ( [mem.obj isKindOfClass:[OsmWay class]] ) {
 						if ( [mem.role isEqualToString:@"outer"] ) {
-							[outerSegments addObject:mem.ref];
+							[outerSegments addObject:mem.obj];
 						} else if ( [mem.role isEqualToString:@"inner"] ) {
-							[innerSegments addObject:mem.ref];
+							[innerSegments addObject:mem.obj];
 						} else {
 							// skip
 						}
@@ -1223,6 +1223,7 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 		if ( renderInfo.lineWidth && !object.isWay.isArea ) {
 			OSMPoint refPoint;
 			CGPathRef path = [object linePathForObjectWithRefPoint:&refPoint];
+			CGPathRetain(path);
 			if ( path ) {
 
 				{
@@ -1281,6 +1282,7 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 	if ( object.isWay || object.isRelation.isMultipolygon ) {
 		OSMPoint refPoint = { 0, 0 };
 		CGPathRef path = [object linePathForObjectWithRefPoint:&refPoint];
+		CGPathRetain(path);
 
 		if ( path ) {
 			CGFloat lineWidth = renderInfo.lineWidth*_highwayScale;
@@ -1315,6 +1317,7 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 
 			OSMPoint refPoint;
 			CGPathRef path = [object shapePathForObjectWithRefPoint:&refPoint];
+			CGPathRetain(path);
 			if ( path ) {
 				// draw
 				CGFloat alpha = object.tags[@"landuse"] ? 0.15 : 0.25;
@@ -1378,7 +1381,7 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 					}
 
 					// get walls
-					double hue = object.ident.longLongValue % 20 - 10;
+					double hue = object.ident % 20 - 10;
 					__block BOOL hasPrev = NO;
 					__block OSMPoint prevPoint;
 					[PathUtil CGPathApplyBlockEx:path block:^(CGPathElementType type, CGPoint point) {
@@ -1466,7 +1469,7 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 		if ( object.isRelation.isRestriction ) {
 			NSArray * viaMembers = [object.isRelation membersByRole:@"via" ];
 			for ( OsmMember * viaMember in viaMembers ) {
-				OsmBaseObject * viaMemberObject = viaMember.ref;
+				OsmBaseObject * viaMemberObject = viaMember.obj;
 				if ( [viaMemberObject isKindOfClass:[OsmBaseObject class]] ) {
 					if ( viaMemberObject.isNode || viaMemberObject.isWay ) {
 						OSMPoint latLon = viaMemberObject.selectionPoint;
@@ -1803,18 +1806,18 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 			// Turn Restrictions
 			if ( _mapView.enableTurnRestriction ) {
 				for ( OsmRelation * relation in object.parentRelations ) {
-					if ( relation.isRestriction && [relation memberByRole:@"from"].ref == object  ) {
+					if ( relation.isRestriction && [relation memberByRole:@"from"].obj == object  ) {
 						// the From member of the turn restriction is the selected way
-						if ( _selectedNode == nil || [relation memberByRole:@"via"].ref == _selectedNode ) {	// highlight if no node, is selected, or the selected node is the via node
+						if ( _selectedNode == nil || [relation memberByRole:@"via"].obj == _selectedNode ) {	// highlight if no node, is selected, or the selected node is the via node
 						//	BOOL isConditionalRestriction = relation.rags
 							for ( OsmMember * member in relation.members ) {
-								if ( member.isWay && [member.ref isKindOfClass:[OsmWay class]] ) {
-									OsmWay * way = member.ref;
+								if ( member.isWay && [member.obj isKindOfClass:[OsmWay class]] ) {
+									OsmWay * way = member.obj;
 									CGPathRef turnPath = [self pathForWay:way];
 									CAShapeLayerWithProperties * haloLayer	= [CAShapeLayerWithProperties new];
 									haloLayer.anchorPoint    	= CGPointMake(0, 0);
 									haloLayer.path            	= turnPath;
-									if ( member.ref == object && ![member.role isEqualToString:@"to"] )
+									if ( member.obj == object && ![member.role isEqualToString:@"to"] )
 										haloLayer.strokeColor 	= [UIColor.blackColor colorWithAlphaComponent:0.75].CGColor;
 									else if ( [relation.tags[@"restriction"] hasPrefix:@"only_"])
 										haloLayer.strokeColor   = [UIColor.blueColor colorWithAlphaComponent:0.75].CGColor;
@@ -2295,16 +2298,14 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 	for ( OsmBaseObject * object in objects ) {
 		if ( object.renderInfo == nil ) {
 			object.renderInfo = [RenderInfoDatabase.shared renderInfoForObject:object];
-//            object.renderInfo = [RenderInfoDatabase._database renderInfoFor:object];
 		}
-		if ( object->renderPriorityCached == 0 ) {
-			object->renderPriorityCached = [object.renderInfo renderPriorityForObject:object];
-//            object->renderPriorityCached = [object.renderInfo renderPriorityFor:object];
+		if ( object.renderPriorityCached == 0 ) {
+			object.renderPriorityCached = [object.renderInfo renderPriorityForObject:object];
 		}
 	}
 
 	// sort from big to small objects, and remove excess objects
-//	[objects countSortOsmObjectVisibleSizeWithLargest:objectLi/mit];
+//	[objects countSortOsmObjectVisibleSizeWithLargest:objectLimit];
 
 	// sometimes there are way too many address nodes that clog up the view, so limit those items specifically
 	objectLimit = objects.count;
@@ -2637,7 +2638,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 			if ( ![ignoreList containsObject:relation] ) {
 				CGFloat bestDist = 10000.0;
 				for ( OsmMember * member in relation.members ) {
-					OsmWay * way = member.ref;
+					OsmWay * way = member.obj;
 					if ( [way isKindOfClass:[OsmWay class]] ) {
 						if ( ![ignoreList containsObject:way] ) {
 							if ( [member.role isEqualToString:@"inner"] || [member.role isEqualToString:@"outer"] ) {
@@ -2696,8 +2697,8 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 			if ( pick == nil && self.selectedRelation ) {
 				// pick a way that is a member of the relation if possible
 				for ( OsmMember * member in self.selectedRelation.members ) {
-					if ( best[member.ref] ) {
-						pick = member.ref;
+					if ( best[member.obj] ) {
+						pick = member.obj;
 						break;
 					}
 				}
@@ -2733,7 +2734,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 		int diff = (o1.isRelation?2:o1.isWay?1:0) - (o2.isRelation?2:o2.isWay?1:0);
 		if ( diff )
 			return -diff;
-		int64_t diff2 = o1.ident.longLongValue - o2.ident.longLongValue;
+		int64_t diff2 = o1.ident - o2.ident;
 		return diff2 < 0 ? NSOrderedAscending : diff2 > 0 ? NSOrderedDescending : NSOrderedSame;
 	}];
 	return objectList;
@@ -2776,7 +2777,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 {
     // Merge tags
 	NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];
-	NSDictionary * newTags = MergeTags(object.tags, copyPasteTags, YES);
+	NSDictionary * newTags = [OsmBaseObject MergeTagsWithOurTags:object.tags otherTags:copyPasteTags allowConflicts:YES];
 	[self.mapData setTags:newTags forObject:object];
 	[self setNeedsLayout];
 }
