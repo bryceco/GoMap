@@ -37,13 +37,13 @@ class TurnRestrictController: UIViewController {
         _highwayViewArray = []
         createMapWindow()
 
-        AppDelegate.shared?.mapView?.editorLayer.mapData.beginUndoGrouping()
+        AppDelegate.shared.mapView.editorLayer.mapData.beginUndoGrouping()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        AppDelegate.shared?.mapView?.editorLayer.mapData.endUndoGrouping()
+        AppDelegate.shared.mapView.editorLayer.mapData.endUndoGrouping()
     }
 
     // To dray Popup window
@@ -59,7 +59,7 @@ class TurnRestrictController: UIViewController {
         viewWithTitle.layer.cornerRadius = 3
 
         // get highways that contain selection
-        let mapData = AppDelegate.shared?.mapView?.editorLayer.mapData
+        let mapData = AppDelegate.shared.mapView.editorLayer.mapData
 		var parentWays = mapData?.waysContaining(centralNode) ?? []
 		parentWays = parentWays.filter({ $0.tags["highway"] != nil	})
 		_parentWays = parentWays
@@ -75,7 +75,7 @@ class TurnRestrictController: UIViewController {
 			fromWay = _allRelations.last?.member(byRole: "from")?.obj as? OsmWay
 		} else {
             // no relations or multiple relations, so select highway already selected by user
-            let editor = AppDelegate.shared?.mapView?.editorLayer
+            let editor = AppDelegate.shared.mapView.editorLayer
             fromWay = editor?.selectedWay
         }
         if let fromWay = fromWay {
@@ -290,7 +290,7 @@ class TurnRestrictController: UIViewController {
     func select(fromHighway selectedHwy: TurnRestrictHwyView) {
         _selectedFromHwy = selectedHwy
 
-        let editor = AppDelegate.shared!.mapView!.editorLayer!
+        let editor = AppDelegate.shared.mapView.editorLayer!
         editor.selectedWay = selectedHwy.wayObj
 
 		selectedHwy.wayObj = selectedHwy.connectedNode?.turnRestrictionParentWay
@@ -459,7 +459,7 @@ class TurnRestrictController: UIViewController {
     // Enable/disable a left/right/straight turn restriction
     func toggleTurnRestrictionUnsafe(_ targetHwy: TurnRestrictHwyView) {
         let appDelegate = AppDelegate.shared
-        let mapData = appDelegate?.mapView?.editorLayer.mapData
+        let mapData = appDelegate.mapView.editorLayer.mapData
 
         switch targetHwy.restriction {
 			case .NO:
@@ -495,8 +495,8 @@ class TurnRestrictController: UIViewController {
 
 		detailText.text = textForTurn(from: _selectedFromHwy!, to: targetHwy)
 
-        appDelegate?.mapView?.editorLayer.selectedWay = _selectedFromHwy?.wayObj
-        appDelegate?.mapView?.editorLayer.setNeedsLayout()
+        appDelegate.mapView.editorLayer.selectedWay = _selectedFromHwy?.wayObj
+        appDelegate.mapView.editorLayer.setNeedsLayout()
     }
 
     func toggleTurnRestriction(_ targetHwy: TurnRestrictHwyView) {
@@ -516,7 +516,7 @@ class TurnRestrictController: UIViewController {
     // Use clicked the U-Turn button
     @objc func uTurnButtonClicked(_ sender: UIButton?) {
         let appDelegate = AppDelegate.shared
-        let mapData = appDelegate?.mapView?.editorLayer.mapData
+        let mapData = appDelegate.mapView.editorLayer.mapData
 
         sender?.isSelected = !(sender?.isSelected ?? false)
 
@@ -539,7 +539,7 @@ class TurnRestrictController: UIViewController {
                 : String.localizedStringWithFormat(NSLocalizedString("U-Turn from %@ allowed", comment: ""), friendlyDescription)
         }
 
-        appDelegate?.mapView?.editorLayer.setNeedsLayout()
+        appDelegate.mapView.editorLayer.setNeedsLayout()
     }
 
     // Getting restriction relation by From node, To node and Via node

@@ -91,8 +91,8 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
     }
     
     @IBAction func commit(_ sender: Any?) {
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        if (appDelegate?.userName?.count ?? 0) == 0 || appDelegate?.userPassword?.count == 0 {
+		let appDelegate = AppDelegate.shared
+		if (appDelegate.userName?.count ?? 0) == 0 || appDelegate.userPassword?.count == 0 {
             performSegue(withIdentifier: "loginSegue", sender: self)
             return
         }
@@ -111,8 +111,8 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
             return
         }
         
-        mapData?.credentialsUserName = appDelegate?.userName
-        mapData?.credentialsPassword = appDelegate?.userPassword
+        mapData?.credentialsUserName = appDelegate.userName
+        mapData?.credentialsPassword = appDelegate.userPassword
         
         _progressView.startAnimating()
         _commitButton.isEnabled = false
@@ -152,25 +152,23 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
                 // flash success message
                 let popTime = DispatchTime.now() + Double(Int64(0.3 * Double(NSEC_PER_SEC)))
                 DispatchQueue.main.asyncAfter(deadline: popTime, execute: {
-                    appDelegate?.mapView?.editorLayer.setNeedsLayout()
-                    appDelegate?.mapView?.flashMessage(NSLocalizedString("Upload complete!", comment: ""), duration: 1.5)
+                    appDelegate.mapView.editorLayer.setNeedsLayout()
+                    appDelegate.mapView.flashMessage(NSLocalizedString("Upload complete!", comment: ""), duration: 1.5)
                     
                     // record number of uploads
-                    var uploadKey: String? = nil
-                    if let appVersion = appDelegate?.appVersion() {
-                        uploadKey = "uploadCount-\(appVersion)"
-                    }
-                    var editCount = UserDefaults.standard.integer(forKey: uploadKey ?? "")
+                    let appVersion = appDelegate.appVersion()
+					let uploadKey = "uploadCount-\(appVersion)"
+                    var editCount = UserDefaults.standard.integer(forKey: uploadKey)
                     editCount += 1
-                    UserDefaults.standard.set(editCount, forKey: uploadKey ?? "")
-                    appDelegate?.mapView?.ask(toRate: editCount)
+					UserDefaults.standard.set(editCount, forKey: uploadKey)
+					appDelegate.mapView.ask(toRate: editCount)
                 })
             }
         }
         
         var imagery: String? = nil
-        if appDelegate?.mapView?.viewState == MAPVIEW_EDITORAERIAL || appDelegate?.mapView?.viewState == MAPVIEW_AERIAL {
-            imagery = appDelegate?.mapView?.aerialLayer.aerialService?.name
+        if appDelegate.mapView.viewState == MAPVIEW_EDITORAERIAL || appDelegate.mapView.viewState == MAPVIEW_AERIAL {
+            imagery = appDelegate.mapView.aerialLayer.aerialService?.name
         }
         
         if _xmlTextView.isEditable {
@@ -272,14 +270,12 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
         default:
             return false
         }
-        let object = appDelegate?.mapView?.editorLayer.mapData.object(withExtendedIdentifier: NSNumber(value: ident))
-        if object == nil {
-            return false
-        }
-        appDelegate?.mapView?.editorLayer.selectedRelation = object?.isRelation()
-        appDelegate?.mapView?.editorLayer.selectedWay = object?.isWay()
-        appDelegate?.mapView?.editorLayer.selectedNode = object?.isNode()
-        appDelegate?.mapView?.placePushpinForSelection()
+        guard let object = appDelegate.mapView.editorLayer.mapData.object(withExtendedIdentifier: NSNumber(value: ident))
+		else { return false }
+        appDelegate.mapView.editorLayer.selectedRelation = object.isRelation()
+        appDelegate.mapView.editorLayer.selectedWay = object.isWay()
+        appDelegate.mapView.editorLayer.selectedNode = object.isNode()
+        appDelegate.mapView.placePushpinForSelection()
         cancel(nil)
         return false
     }

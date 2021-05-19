@@ -11,7 +11,7 @@ import SafariServices
 import UIKit
 
 class NearbyMappersViewController: UITableViewController {
-    var _mappers: NSArray = []
+    var _mappers: [OsmUserStatistics] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,13 +21,10 @@ class NearbyMappersViewController: UITableViewController {
 
         let appDelegate = AppDelegate.shared
 
-        if let rect = appDelegate?.mapView?.screenLongitudeLatitude() {
-            _mappers = appDelegate?.mapView?.editorLayer.mapData.userStatistics(forRegion: rect) as NSArray? ?? []
-        }
-        _mappers = _mappers.sortedArray(comparator: { s1, s2 in
-            return ((s1 as AnyObject).lastEdit).compare((s1 as AnyObject).lastEdit)
-        }) as NSArray
-    }
+        let rect = appDelegate.mapView.screenLongitudeLatitude()
+		_mappers = appDelegate.mapView.editorLayer.mapData.userStatistics(forRegion: rect) ?? []
+		_mappers.sort(by: { s1, s2 in s1.lastEdit.compare(s2.lastEdit) != .orderedAscending })
+	}
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

@@ -35,7 +35,7 @@ class HeightViewController: UIViewController {
     var callback: ((_ newValue: String?) -> Void)?
     
     class func unableToInstantiate(withUserWarning vc: UIViewController?) -> Bool {
-        if AppDelegate.shared?.mapView?.gpsState == GPS_STATE_NONE {
+        if AppDelegate.shared.mapView.gpsState == GPS_STATE_NONE {
             let alert = UIAlertController(
                 title: NSLocalizedString("Error", comment: "Error dialog title"),
                 message: NSLocalizedString("This action requires GPS to be turned on", comment: ""),
@@ -345,24 +345,21 @@ class HeightViewController: UIViewController {
     
     func distanceToObject(error: inout Double, direction pDirection: inout Double) -> Double {
 		let delegate = AppDelegate.shared
-        var object = delegate?.mapView?.editorLayer.selectedPrimary
-		if object == nil && delegate?.mapView?.pushpinView == nil {
+        var object = delegate.mapView.editorLayer.selectedPrimary
+		if object == nil && delegate.mapView.pushpinView == nil {
 			error = .nan
 			pDirection = .nan
 			return .nan
 		}
 		if object == nil {
 			// brand new object, so fake it
-			if let latlon = delegate?.mapView?.longitudeLatitude(forScreenPoint: (delegate?.mapView?.pushpinView.arrowPoint ?? .zero), birdsEye: true) {
-				let node = OsmNode()	// this gets thrown away at the end of this method
-				node.setLongitude( latlon.longitude, latitude: latlon.latitude, undo: nil)
-                object = node
-			} else {
-				fatalError()
-			}
+			let latlon = delegate.mapView.longitudeLatitude(forScreenPoint: (delegate.mapView.pushpinView.arrowPoint), birdsEye: true)
+			let node = OsmNode()	// this gets thrown away at the end of this method
+			node.setLongitude( latlon.longitude, latitude: latlon.latitude, undo: nil)
+            object = node
         }
 		guard let object = object else { return 0.0 }
-		let location = (delegate?.mapView?.currentLocation)!
+		let location = delegate.mapView.currentLocation!
         let userPt = OSMPoint(x: location.coordinate.longitude, y: location.coordinate.latitude)
 		var dist: Double = Double(MAXFLOAT)
         var bearing: Double = 0

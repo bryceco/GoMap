@@ -28,11 +28,10 @@ class GpxTrackTableCell: UITableViewCell, UIActionSheetDelegate {
             self.tableView?.share(self.gpxTrack)
         }))
         alert.addAction(UIAlertAction(title: NSLocalizedString("Share", comment: "Open iOS sharing sheet"), style: .default, handler: { action in
-            var fileName: String? = nil
             let creationDate = self.gpxTrack.creationDate
-            let appName = AppDelegate.shared?.appName() ?? ""
-            fileName = "\(appName) \(creationDate).gpx"
-            let url = FileManager.default.temporaryDirectory.appendingPathComponent(fileName ?? "")
+			let appName = AppDelegate.shared.appName()
+            let fileName = "\(appName) \(creationDate).gpx"
+            let url = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
             let gpx = self.gpxTrack.gpxXmlString()
             do {
                 try FileManager.default.removeItem(at: url)
@@ -42,10 +41,10 @@ class GpxTrackTableCell: UITableViewCell, UIActionSheetDelegate {
                 try gpx?.write(to: url, atomically: true, encoding: .utf8)
                 
                 if try gpx?.write(to: url, atomically: true, encoding: .utf8) != nil {
-                    let controller = UIActivityViewController(activityItems: [fileName ?? "", url].compactMap { $0 }, applicationActivities: nil)
+                    let controller = UIActivityViewController(activityItems: [fileName, url].compactMap { $0 }, applicationActivities: nil)
                     controller.completionWithItemsHandler = { activityType, completed, returnedItems, activityError in
                         if completed {
-                            let gpxLayer = AppDelegate.shared?.mapView?.gpxLayer
+                            let gpxLayer = AppDelegate.shared.mapView.gpxLayer
                             gpxLayer?.markTrackUploaded(self.gpxTrack)
                             self.tableView?.tableView.reloadData()
                         }
@@ -70,7 +69,7 @@ class GpxTrackBackgroundCollection: UITableViewCell {
     @IBAction func enableBackground(_ sender: Any) {
         let toggle = sender as? UISwitch
         let appDelegate = AppDelegate.shared
-        appDelegate?.mapView?.gpsInBackground = toggle?.isOn ?? false
+        appDelegate.mapView.gpsInBackground = toggle?.isOn ?? false
     }
 }
 
@@ -182,8 +181,8 @@ class GpxViewController: UITableViewController {
             request?.setValue(String(format: "%ld", body.count), forHTTPHeaderField: "Content-Length")
             
             var auth: String? = nil
-            if let userPassword = appDelegate?.userPassword {
-                auth = "\(appDelegate?.userName ?? ""):\(userPassword)"
+            if let userPassword = appDelegate.userPassword {
+                auth = "\(appDelegate.userName ?? ""):\(userPassword)"
             }
             auth = OsmMapData.encodeBase64(auth)
             auth = "Basic \(auth ?? "")"
@@ -203,7 +202,7 @@ class GpxViewController: UITableViewController {
                             self.present(success, animated: true)
                             
                             // mark track as uploaded in UI
-                            let gpxLayer = AppDelegate.shared?.mapView?.gpxLayer
+                            let gpxLayer = AppDelegate.shared.mapView.gpxLayer
                             if let track = track {
                                 gpxLayer?.markTrackUploaded(track)
                             }
@@ -240,8 +239,7 @@ class GpxViewController: UITableViewController {
         
         navigationItem.rightBarButtonItem = editButtonItem
         
-        let appDelegate = AppDelegate.shared
-		appDelegate?.mapView?.gpxLayer.loadTracksInBackground(withProgress: {
+		AppDelegate.shared.mapView.gpxLayer.loadTracksInBackground(withProgress: {
             self.tableView?.reloadData()
         })
     }
@@ -250,8 +248,8 @@ class GpxViewController: UITableViewController {
         super.viewDidAppear(animated)
         
         let appDelegate = AppDelegate.shared
-        if appDelegate?.mapView?.gpxLayer.activeTrack != nil {
-            startTimer(forStart: appDelegate?.mapView?.gpxLayer.activeTrack?.creationDate)
+        if appDelegate.mapView.gpxLayer.activeTrack != nil {
+            startTimer(forStart: appDelegate.mapView.gpxLayer.activeTrack?.creationDate)
         }
     }
     
@@ -282,7 +280,7 @@ class GpxViewController: UITableViewController {
     
     @objc func timerFired(_ timer: Timer?) {
         let appDelegate = AppDelegate.shared
-        let track = appDelegate?.mapView?.gpxLayer.activeTrack
+        let track = appDelegate.mapView.gpxLayer.activeTrack
         if track != nil {
             let index = IndexPath(row: 0, section: SECTION_ACTIVE_TRACK)
             tableView?.reloadRows(at: [index], with: .none)
@@ -304,7 +302,7 @@ class GpxViewController: UITableViewController {
         } else if section == SECTION_PREVIOUS_TRACKS {
             // previous tracks
             let appDelegate = AppDelegate.shared
-            return appDelegate?.mapView?.gpxLayer.previousTracks.count ?? 0
+            return appDelegate.mapView.gpxLayer.previousTracks.count ?? 0
         } else if section == SECTION_CONFIGURE {
             // configuration
             return 2
@@ -334,7 +332,7 @@ class GpxViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let mapView = AppDelegate.shared?.mapView
+        let mapView = AppDelegate.shared.mapView
         let gpxLayer = mapView?.gpxLayer
         
         if indexPath.section == SECTION_ACTIVE_TRACK && gpxLayer?.activeTrack == nil {
@@ -403,7 +401,7 @@ class GpxViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            let gpxLayer = AppDelegate.shared?.mapView?.gpxLayer
+            let gpxLayer = AppDelegate.shared.mapView.gpxLayer
 			if let track = gpxLayer?.previousTracks[indexPath.row] {
                 gpxLayer?.delete(track)
             }
@@ -419,7 +417,7 @@ class GpxViewController: UITableViewController {
         if indexPath.section == SECTION_CONFIGURE {
             return nil
         }
-        if indexPath.section == SECTION_ACTIVE_TRACK && AppDelegate.shared?.mapView?.gpxLayer.activeTrack == nil {
+        if indexPath.section == SECTION_ACTIVE_TRACK && AppDelegate.shared.mapView.gpxLayer.activeTrack == nil {
             // don't allow selecting the active track if there is none
             return nil
         }
@@ -429,7 +427,7 @@ class GpxViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == SECTION_ACTIVE_TRACK {
             // active track
-            let gpxLayer = AppDelegate.shared?.mapView?.gpxLayer
+            let gpxLayer = AppDelegate.shared.mapView.gpxLayer
             gpxLayer?.selectedTrack = gpxLayer?.activeTrack
             if let selectedTrack = gpxLayer?.selectedTrack {
                 gpxLayer?.center(on: selectedTrack)
@@ -438,7 +436,7 @@ class GpxViewController: UITableViewController {
         } else if indexPath.section == SECTION_CONFIGURE {
             // configuration
         } else if indexPath.section == SECTION_PREVIOUS_TRACKS {
-            let gpxLayer = AppDelegate.shared?.mapView?.gpxLayer
+            let gpxLayer = AppDelegate.shared.mapView.gpxLayer
 			if let track = gpxLayer?.previousTracks[indexPath.row] {
                 gpxLayer?.selectedTrack = track
                 gpxLayer?.selectedTrack = track
@@ -463,7 +461,7 @@ class GpxViewController: UITableViewController {
                         let appDelegate = AppDelegate.shared
                         
                         let cutoff = Date(timeIntervalSinceNow: TimeInterval(-pickValue * 24 * 60 * 60))
-                        appDelegate?.mapView?.gpxLayer.trimTracksOlderThan(cutoff)
+                        appDelegate.mapView.gpxLayer.trimTracksOlderThan(cutoff)
                     }
                 }
                 self.tableView?.reloadData()

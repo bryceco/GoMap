@@ -24,7 +24,7 @@ class POITabBarController: UITabBarController {
         super.viewWillAppear(animated)
         
         let appDelegate = AppDelegate.shared
-        let selection = appDelegate?.mapView?.editorLayer.selectedPrimary
+        let selection = appDelegate.mapView.editorLayer.selectedPrimary
         self.selection = selection
         relationList = [AnyHashable]()
         if let selection = selection {
@@ -85,14 +85,14 @@ class POITabBarController: UITabBarController {
 
     func commitChanges() {
         let appDelegate = AppDelegate.shared
-        appDelegate?.mapView?.setTagsForCurrentObject(keyValueDict)
+		appDelegate.mapView.setTagsForCurrentObject(keyValueDict)
     }
     
     func isTagDictChanged(_ newDictionary: [String : String]?) -> Bool {
         let appDelegate = AppDelegate.shared
         
-        let tags = appDelegate?.mapView?.editorLayer.selectedPrimary.tags
-        if tags?.count == 0 {
+        let tags = appDelegate.mapView.editorLayer.selectedPrimary.tags
+        if tags.count == 0 {
             return newDictionary?.count != 0
         }
         

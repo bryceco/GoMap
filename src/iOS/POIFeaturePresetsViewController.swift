@@ -391,12 +391,11 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
             let cell = self.cell(for: textField)
             if let key = cell?.presetKey?.tagKey {
                 if PresetsDatabase.shared.eligibleForAutocomplete(key) {
-                    let set = PresetsDatabase.shared.allTagValuesForKey(key)
-                    let appDelegate = AppDelegate.shared
-                    let values = appDelegate?.mapView?.editorLayer.mapData.tagValues(forKey: key)
-                    values?.addObjects(from: Array.init(arrayLiteral: set))
-                    let list = values?.allObjects as? [String]
-                    textField.autocompleteStrings = list ?? []
+					var values = AppDelegate.shared.mapView.editorLayer.mapData.tagValues(forKey: key) as! Set<String>
+					let set = PresetsDatabase.shared.allTagValuesForKey(key)
+					values = values.union(set)
+					let list = Array<String>( values )
+                    textField.autocompleteStrings = list
                 }
                 isEditing = true
             }

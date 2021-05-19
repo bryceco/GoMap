@@ -49,7 +49,7 @@ class POIAttributesViewController: UITableViewController {
         super.viewDidLoad()
         
         let appDelegate = AppDelegate.shared
-        let object = appDelegate?.mapView?.editorLayer.selectedPrimary
+        let object = appDelegate.mapView.editorLayer.selectedPrimary
         title = object?.isNode != nil
             ? NSLocalizedString("Node Attributes", comment: "")
             : object?.isWay != nil
@@ -67,12 +67,12 @@ class POIAttributesViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        let object = AppDelegate.shared?.mapView?.editorLayer.selectedPrimary
+        let object = AppDelegate.shared.mapView.editorLayer.selectedPrimary
         return object?.isNode != nil ? 2 : object?.isWay != nil ? 3 : 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let object = AppDelegate.shared?.mapView?.editorLayer.selectedPrimary else { return 0 }
+		guard let object = AppDelegate.shared.mapView.editorLayer.selectedPrimary else { return 0 }
         
         if section == SectionType.metadata.getRawValue() {
             return 6
@@ -93,7 +93,7 @@ class POIAttributesViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let appDelegate = AppDelegate.shared
-		let object = appDelegate!.mapView!.editorLayer.selectedPrimary!
+		let object = appDelegate.mapView!.editorLayer.selectedPrimary!
         
 		let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AttributeCustomCell
 		cell.accessoryType = .none
@@ -173,7 +173,7 @@ class POIAttributesViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let object = AppDelegate.shared?.mapView?.editorLayer.selectedPrimary
+        let object = AppDelegate.shared.mapView.editorLayer.selectedPrimary
         if object == nil {
             return
         }

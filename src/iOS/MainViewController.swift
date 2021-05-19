@@ -95,8 +95,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
         
         mapView.mainViewController = self
         
-        let delegate = AppDelegate.shared
-        delegate?.mapView = mapView
+		AppDelegate.shared.mapView = mapView
         
         // undo/redo buttons
         updateUndoRedoButtonState()
@@ -548,11 +547,11 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     @objc func applicationDidEnterBackground(_ sender: Any?) {
         let appDelegate = AppDelegate.shared
-        if (appDelegate?.mapView?.gpsInBackground ?? false) && (appDelegate?.mapView?.enableGpxLogging ?? false) {
-            // allow GPS collection in background
+        if appDelegate.mapView!.gpsInBackground && appDelegate.mapView!.enableGpxLogging {
+			// allow GPS collection in background
         } else {
             // turn off GPS tracking
-            setGpsState(GPS_STATE_NONE)
+			setGpsState(GPS_STATE_NONE)
         }
     }
     

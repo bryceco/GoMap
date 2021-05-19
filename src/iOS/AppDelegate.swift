@@ -12,11 +12,11 @@ import UserNotifications
 
 @objcMembers
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    class var shared: AppDelegate? {
-        return UIApplication.shared.delegate as? AppDelegate
+    class var shared: AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
     }
     var window: UIWindow?
-    weak var mapView: MapView?
+    weak var mapView: MapView!
     var userName: String?
     var userPassword: String?
     private(set) var isAppUpgrade = false
@@ -101,11 +101,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if url.isFileURL && (url.pathExtension == "gpx") {
             // Load GPX
             url.startAccessingSecurityScopedResource()
-            var data: Data? = nil
-            do {
-                data = try Data(contentsOf: url, options: [])
-            } catch {
-            }
+            var data: Data? = try? Data(contentsOf: url, options: [])
+
             url.stopAccessingSecurityScopedResource()
             let delayInSeconds = 1.0
             let popTime = DispatchTime.now() + Double(Int64(delayInSeconds * Double(NSEC_PER_SEC)))

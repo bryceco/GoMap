@@ -110,7 +110,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         if _isTopLevel && section == 1 {
-            let countryCode = AppDelegate.shared?.mapView?.countryCodeForLocation
+            let countryCode = AppDelegate.shared.mapView.countryCodeForLocation
             let locale = NSLocale.current as NSLocale
             let countryName = locale.displayName(forKey: .countryCode, value: countryCode ?? "")
             

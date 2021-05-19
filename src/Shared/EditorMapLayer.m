@@ -1833,7 +1833,7 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 									LayerProperties * haloProps	= haloLayer.properties;
 									haloProps->lineWidth = haloLayer.lineWidth;
 
-									if ( ([member.role isEqualToString:@"to"] && member.ref == object) || ([member.role isEqualToString:@"via"] && member.isWay) ) {
+									if ( ([member.role isEqualToString:@"to"] && member.obj == object) || ([member.role isEqualToString:@"via"] && member.isWay) ) {
 										haloLayer.lineDashPattern = @[@(10 * _highwayScale), @(10 * _highwayScale)];
 									}
 

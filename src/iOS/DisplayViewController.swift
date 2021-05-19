@@ -30,18 +30,18 @@ class DisplayViewController: UITableViewController {
             message: NSLocalizedString("The + button can be positioned on either the left or right side of the screen", comment: ""),
             preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("Left side", comment: "Left-hand side of screen"), style: .default, handler: { action in
-            AppDelegate.shared?.mapView?.mainViewController.buttonLayout = BUTTON_LAYOUT._ADD_ON_LEFT
+            AppDelegate.shared.mapView.mainViewController.buttonLayout = BUTTON_LAYOUT._ADD_ON_LEFT
             self.setButtonLayoutTitle()
         }))
         alert.addAction(UIAlertAction(title: NSLocalizedString("Right side", comment: "Right-hand side of screen"), style: .default, handler: { action in
-            AppDelegate.shared?.mapView?.mainViewController.buttonLayout = BUTTON_LAYOUT._ADD_ON_RIGHT
+            AppDelegate.shared.mapView.mainViewController.buttonLayout = BUTTON_LAYOUT._ADD_ON_RIGHT
             self.setButtonLayoutTitle()
         }))
         present(alert, animated: true)
     }
 
     func applyChanges() {
-        let mapView = AppDelegate.shared?.mapView
+        let mapView = AppDelegate.shared.mapView
 
         let maxRow = tableView.numberOfRows(inSection: BACKGROUND_SECTION)
         for row in 0..<maxRow {
@@ -73,17 +73,16 @@ class DisplayViewController: UITableViewController {
 
     @IBAction func gpsSwitchChanged(_ sender: Any) {
         // need this to take effect immediately in case they exit the app without dismissing this controller, and they want GPS enabled in background
-        let mapView = AppDelegate.shared?.mapView
+        let mapView = AppDelegate.shared.mapView
         mapView?.enableGpxLogging = _gpxLoggingSwitch.isOn
     }
 
     @IBAction func toggleObjectFilters(_ sender: UISwitch) {
-        let editor = AppDelegate.shared?.mapView?.editorLayer
-        editor?.enableObjectFilters = sender.isOn
+        AppDelegate.shared.mapView.editorLayer.enableObjectFilters = sender.isOn
     }
 
     func setButtonLayoutTitle() {
-        let title = AppDelegate.shared?.mapView?.mainViewController.buttonLayout == BUTTON_LAYOUT._ADD_ON_LEFT ? "Left" : "Right"
+        let title = AppDelegate.shared.mapView.mainViewController.buttonLayout == BUTTON_LAYOUT._ADD_ON_LEFT ? "Left" : "Right"
         _addButtonPosition.setTitle(title, for: .normal)
     }
 
@@ -115,7 +114,7 @@ class DisplayViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         // place a checkmark next to currently selected display
         if indexPath.section == BACKGROUND_SECTION {
-            let mapView = AppDelegate.shared?.mapView
+            let mapView = AppDelegate.shared.mapView
             if cell.tag == Int(mapView?.viewState.rawValue ?? -1) {
                 cell.accessoryType = .checkmark
             } else {
@@ -125,12 +124,11 @@ class DisplayViewController: UITableViewController {
 
         // set the name of the aerial provider
         if indexPath.section == BACKGROUND_SECTION && indexPath.row == 2 {
-            if cell is CustomBackgroundCell {
-                let appDelegate = AppDelegate.shared
-                let aerials = appDelegate?.mapView?.customAerials
-                let custom = cell as? CustomBackgroundCell
-				custom?.button.setTitle(aerials?.currentAerial?.name, for: .normal)
-                custom?.button.sizeToFit()
+            if let custom = cell as? CustomBackgroundCell,
+			   let aerials = AppDelegate.shared.mapView.customAerials
+			{
+				custom.button.setTitle(aerials.currentAerial.name, for: .normal)
+                custom.button.sizeToFit()
             }
         }
     }

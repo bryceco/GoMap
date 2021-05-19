@@ -87,6 +87,6 @@ class LanguageTableViewController: UITableViewController {
         self.tableView.reloadData()
 
         PresetsDatabase.reload() // reset tags
-        AppDelegate.shared?.mapView?.refreshPushpinText()
+        AppDelegate.shared.mapView.refreshPushpinText()
     }
 }

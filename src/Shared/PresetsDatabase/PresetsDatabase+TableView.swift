@@ -27,7 +27,7 @@ extension PresetsDatabase {
 				}
 			}
 		} else {
-			let countryCode = AppDelegate.shared?.mapView?.countryCodeForLocation
+			let countryCode = AppDelegate.shared.mapView.countryCodeForLocation
 			list = PresetsDatabase.shared.featuresMatchingSearchText(searchText, geometry:geometry, country: countryCode)
 		}
 		let searchText = searchText.lowercased()
@@ -470,7 +470,7 @@ extension PresetsDatabase {
 				"unit"
 			]
 
-			let countryCode = AppDelegate.shared?.mapView?.countryCodeForLocation ?? "<unknown>"
+			let countryCode = AppDelegate.shared.mapView.countryCodeForLocation ?? "<unknown>"
 			var keysForCountry: [[String]]? = nil
 			for localeDict in jsonAddressFormats {
 				guard let localeDict = localeDict as? [String:Any] else { continue }

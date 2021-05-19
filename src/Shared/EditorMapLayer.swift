@@ -67,7 +67,7 @@ class EditorMapLayer: CALayer {
         fadingOutSet = NSMutableSet()
         
         // observe changes to geometry
-        self.mapView?.addObserver(self, forKeyPath: "screenFromMapTransform", options: 0, context: nil)
+        self.mapView.addObserver(self, forKeyPath: "screenFromMapTransform", options: 0, context: nil)
         
         OsmmapData?.setEditorMapLayerForArchive(self)
         
@@ -120,7 +120,7 @@ class EditorMapLayer: CALayer {
                 let text = NSLocalizedString("Your OSM data cache is getting large, which may lead to slow startup and shutdown times.\n\nYou may want to clear the cache (under Display settings) to improve performance.", comment: "")
                 let alertView = UIAlertController(title: NSLocalizedString("Cache size warning", comment: ""), message: text, preferredStyle: .alert)
                 alertView.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
-                self.mapView?.mainViewController.present(alertView, animated: true)
+                self.mapView.mainViewController.present(alertView, animated: true)
             })
         }
 #endif
@@ -134,18 +134,15 @@ class EditorMapLayer: CALayer {
         
         weak var weakSelf = self
         mapData?.undoContextForComment = { comment in
-            let strongSelf = weakSelf
-            if strongSelf == nil {
-                return nil
-            }
-            var trans = strongSelf?.mapView?.screenFromMapTransform
+			guard let strongSelf = weakSelf else { return nil }
+            var trans = strongSelf.mapView.screenFromMapTransform
             let location = Data(bytes: &trans, count: MemoryLayout.size(ofValue: trans))
             var dict: [AnyHashable : Any] = [:]
             dict["comment"] = comment ?? ""
             dict["location"] = location
-            let pushpin = strongSelf?.mapView?.pushpinPosition
+            let pushpin = strongSelf?.mapView.pushpinPosition
             if !(pushpin?.x.isNaN ?? false) {
-                dict["pushpin"] = NSCoder.string(for: strongSelf?.mapView?.pushpinPosition ?? CGPoint.zero)
+                dict["pushpin"] = NSCoder.string(for: strongSelf.mapView.pushpinPosition ?? CGPoint.zero)
             }
             if strongSelf?.selectedRelation != nil {
                 if let selectedRelation = strongSelf?.selectedRelation {

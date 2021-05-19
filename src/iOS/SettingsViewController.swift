@@ -35,12 +35,12 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
         let appDelegate = AppDelegate.shared
 
         _username.text = ""
-        if (appDelegate?.userName?.count ?? 0) > 0 {
-            appDelegate?.mapView?.editorLayer.mapData.verifyUserCredentials(completion: { [self] errorMessage in
+        if (appDelegate.userName?.count ?? 0) > 0 {
+            appDelegate.mapView.editorLayer.mapData.verifyUserCredentials(completion: { [self] errorMessage in
                 if errorMessage != nil {
                     _username.text = NSLocalizedString("<unknown>", comment: "unknown user name")
                 } else {
-                    _username.text = appDelegate?.userName
+                    _username.text = appDelegate.userName
                 }
 
                 tableView.reloadData()

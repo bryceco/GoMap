@@ -7,8 +7,8 @@
 //
 
 class AerialListViewController: UITableViewController {
-    var aerials: AerialList?
-    var imageryForRegion: [AerialService]?
+    var aerials: AerialList!
+    var imageryForRegion: [AerialService] = []
 
     weak var displayViewController: DisplayViewController?
     
@@ -18,12 +18,11 @@ class AerialListViewController: UITableViewController {
     
     override func viewDidLoad() {
         let appDelegate = AppDelegate.shared
-        aerials = appDelegate?.mapView?.customAerials
-        
-        if let viewport = appDelegate?.mapView?.screenLongitudeLatitude() {
-			imageryForRegion = aerials?.services(forRegion: viewport)
-        }
-        
+        aerials = appDelegate.mapView.customAerials!
+
+        let viewport = appDelegate.mapView.screenLongitudeLatitude()
+		imageryForRegion = aerials.services(forRegion: viewport)
+
         super.viewDidLoad()
         
         tableView.estimatedRowHeight = 44.0
@@ -36,25 +35,23 @@ class AerialListViewController: UITableViewController {
         super.viewWillDisappear(animated)
         
         if isMovingFromParent {
-            let appDelegate = AppDelegate.shared
-            let mapView = appDelegate?.mapView
-            mapView?.setAerialTileService(aerials?.currentAerial)
+			AppDelegate.shared.mapView.setAerialTileService( aerials?.currentAerial )
         }
     }
     
     // MARK: - Table view data source
     
-    func aerialList(forSection section: Int) -> [AerialService]? {
+    func aerialList(forSection section: Int) -> [AerialService] {
         if section == SECTION_BUILTIN {
-            return aerials?.builtinServices()
+            return aerials.builtinServices()
         }
         if section == SECTION_USER {
-            return aerials?.userDefinedServices()
+            return aerials.userDefinedServices()
         }
         if section == SECTION_EXTERNAL {
             return imageryForRegion
-        }
-        return nil
+		}
+        return []
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -88,7 +85,7 @@ class AerialListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let a = aerialList(forSection: section) ?? []
+        let a = aerialList(forSection: section)
         let offSet = (section == SECTION_USER) ? 1: 0
         return a.count + offSet
     }
@@ -101,30 +98,32 @@ class AerialListViewController: UITableViewController {
     
         let list = aerialList(forSection: indexPath.section)
         let cell = tableView.dequeueReusableCell(withIdentifier: "backgroundCell", for: indexPath)
-        let aerial = list?[indexPath.row]
+        let aerial = list[indexPath.row]
     
         // set selection
-        var title = aerial?.name
-        if aerial == aerials?.currentAerial {
-            title = "\u{2714} " + (title ?? "") // add checkmark
+        var title = aerial.name
+        if aerial == aerials.currentAerial {
+            title = "\u{2714} " + title // add checkmark
         }
     
         // get details
-        var urlDetail = aerial?.isMaxar != nil ? nil : aerial?.url
-        if urlDetail?.hasPrefix("https://") ?? false {
-            urlDetail = (urlDetail as NSString?)?.substring(from: 8)
-        } else if urlDetail?.hasPrefix("http://") ?? false {
-            urlDetail = (urlDetail as NSString?)?.substring(from: 7)
-        }
+        var urlDetail = aerial.isMaxar() ? "" : aerial.url
+		if urlDetail.hasPrefix("https://") {
+			urlDetail = String( urlDetail.dropFirst( 8 ) )
+        } else if urlDetail.hasPrefix("http://") {
+			urlDetail = String( urlDetail.dropFirst( 7 ) )
+		}
     
         var dateDetail: String? = nil
-        if aerial?.startDate != nil && aerial?.endDate != nil && !(aerial?.startDate == aerial?.endDate) {
-            if let startDate = aerial?.startDate, let endDate = aerial?.endDate {
+        if aerial.startDate != nil && aerial.endDate != nil && !(aerial.startDate == aerial.endDate) {
+            if let startDate = aerial.startDate,
+			   let endDate = aerial.endDate
+			{
                 dateDetail = String.localizedStringWithFormat(NSLocalizedString("vintage %@ - %@", comment: "Years aerial imagery was created"), startDate, endDate)
             }
-        } else if aerial?.startDate != nil || aerial?.endDate != nil {
-            if let startDate = aerial?.startDate ?? aerial?.endDate {
-                dateDetail = String.localizedStringWithFormat(NSLocalizedString("vintage %@", comment: "Year aerial imagery was created"), startDate)
+        } else if aerial.startDate != nil || aerial.endDate != nil {
+            if let startDate = aerial.startDate ?? aerial.endDate {
+				dateDetail = String.localizedStringWithFormat(NSLocalizedString("vintage %@", comment: "Year aerial imagery was created"), startDate)
             }
         }
         let details = dateDetail ?? urlDetail
@@ -177,16 +176,15 @@ class AerialListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let appDelegate = AppDelegate.shared
-        let mapView = appDelegate?.mapView
+        let mapView = appDelegate.mapView!
     
-        let list = aerialList(forSection: indexPath.section) ?? []
-		let service = (indexPath.row < list.count ? list[indexPath.row] : nil)
-        if service == nil {
-            return
-        }
-        aerials?.currentAerial = service
+        let list = aerialList(forSection: indexPath.section)
+		guard let service = (indexPath.row < list.count ? list[indexPath.row] : nil) else {
+			return
+		}
+        aerials.currentAerial = service
     
-        mapView?.setAerialTileService(aerials?.currentAerial)
+        mapView.setAerialTileService(aerials?.currentAerial)
     
         // if popping all the way up we need to tell Settings to save changes
         displayViewController?.applyChanges()

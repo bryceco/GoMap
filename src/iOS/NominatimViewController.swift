@@ -82,11 +82,11 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
         let widthDegrees = minMeters / metersPerDegree
         
         // disable GPS
-        while appDelegate?.mapView?.gpsState != GPS_STATE_NONE {
-            appDelegate?.mapView?.mainViewController.toggleLocation(self)
+        while appDelegate.mapView.gpsState != GPS_STATE_NONE {
+            appDelegate.mapView.mainViewController.toggleLocation(self)
         }
         
-        appDelegate?.mapView?.setTransformForLatitude(lat, longitude: lon, width: widthDegrees)
+        appDelegate.mapView.setTransformForLatitude(lat, longitude: lon, width: widthDegrees)
         
         dismiss(animated: true)
     }

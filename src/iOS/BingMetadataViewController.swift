@@ -20,14 +20,14 @@ class BingMetadataViewController: UIViewController {
         activityIndicator.startAnimating()
 
         let appDelegate = AppDelegate.shared
-        guard let viewRect = appDelegate?.mapView?.screenLongitudeLatitude() else { return }
-        var zoomLevel = appDelegate?.mapView?.aerialLayer.zoomLevel() ?? 0
-        let aerialService = appDelegate?.mapView?.aerialLayer.aerialService
+        let viewRect = appDelegate.mapView.screenLongitudeLatitude()
+        var zoomLevel = appDelegate.mapView.aerialLayer.zoomLevel()
+        let aerialService = appDelegate.mapView.aerialLayer.aerialService
         if zoomLevel > (aerialService?.maxZoom ?? 0) {
             zoomLevel = aerialService?.maxZoom ?? 0
         }
 
-        appDelegate?.mapView?.aerialLayer.metadata({ data, error in
+        appDelegate.mapView.aerialLayer.metadata({ data, error in
             self.activityIndicator.stopAnimating()
 
             if data != nil && error == nil {

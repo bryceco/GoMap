@@ -34,14 +34,14 @@ class ClearCacheViewController: UITableViewController {
         
         let appDelegate = AppDelegate.shared
         
-        _automaticCacheManagement.isOn = appDelegate?.mapView?.enableAutomaticCacheManagement ?? false
+        _automaticCacheManagement.isOn = appDelegate.mapView.enableAutomaticCacheManagement
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         let appDelegate = AppDelegate.shared
-        appDelegate?.mapView?.enableAutomaticCacheManagement = _automaticCacheManagement.isOn
+        appDelegate.mapView.enableAutomaticCacheManagement = _automaticCacheManagement.isOn
     }
     
     // MARK: - Table view delegate
@@ -51,8 +51,8 @@ class ClearCacheViewController: UITableViewController {
             return
         }
         
-        let mapView = AppDelegate.shared?.mapView
-        let mapData = mapView?.editorLayer.mapData
+        let mapView = AppDelegate.shared.mapView!
+        let mapData = mapView.editorLayer.mapData!
         
         var title: String? = nil
 		var object: GetDiskCacheSize? = nil
@@ -62,19 +62,19 @@ class ClearCacheViewController: UITableViewController {
             object = nil
         case Row.mapnik.rawValue:
             title = NSLocalizedString("Clear Mapnik Tiles", comment: "Delete cached data")
-			object = mapView?.mapnikLayer
+			object = mapView.mapnikLayer
         case Row.breadcrumb.rawValue:
             title = NSLocalizedString("Clear GPX Tracks", comment: "Delete cached data")
-            object = mapView?.gpxLayer
+            object = mapView.gpxLayer
         case Row.aerial.rawValue:
             title = NSLocalizedString("Clear Aerial Tiles", comment: "Delete cached data")
-            object = mapView?.aerialLayer
+            object = mapView.aerialLayer
         case Row.locator.rawValue:
             title = NSLocalizedString("Clear Locator Overlay Tiles", comment: "Delete cached data")
-            object = mapView?.locatorLayer
+            object = mapView.locatorLayer
         case Row.gps.rawValue:
             title = NSLocalizedString("Clear GPS Overlay Tiles", comment: "Delete cached data")
-            object = mapView?.gpsTraceLayer
+            object = mapView.gpsTraceLayer
         default:
             break
         }
@@ -82,8 +82,8 @@ class ClearCacheViewController: UITableViewController {
         cell.detailLabel.text = ""
         
         if indexPath.row == Row.osmData.rawValue {
-            let objectCount = (mapData?.nodeCount() ?? 0) + (mapData?.wayCount() ?? 0) + (mapData?.relationCount() ?? 0)
-            cell.detailLabel.text = String.localizedStringWithFormat(NSLocalizedString("%ld objects", comment: "Number of tiles/objects in cache"), objectCount)
+            let objectCount = mapData.nodeCount() + mapData.wayCount() + mapData.relationCount()
+			cell.detailLabel.text = String.localizedStringWithFormat(NSLocalizedString("%ld objects", comment: "Number of tiles/objects in cache"), objectCount)
         } else {
             cell.detailLabel.text = NSLocalizedString("computing size...", comment: "")
             DispatchQueue.global(qos: .default).async(execute: {
@@ -106,7 +106,7 @@ class ClearCacheViewController: UITableViewController {
         
         switch indexPath.row {
         case Row.osmData.rawValue /* OSM */:
-            if appDelegate?.mapView?.editorLayer.mapData.changesetAsXml() != nil {
+            if appDelegate.mapView.editorLayer.mapData.changesetAsXml() != nil {
                 let alert = UIAlertController(
                     title: NSLocalizedString("Warning", comment: ""),
                     message: NSLocalizedString("You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost.", comment: ""),
@@ -115,25 +115,25 @@ class ClearCacheViewController: UITableViewController {
                     self.navigationController?.popViewController(animated: true)
                 }))
                 alert.addAction(UIAlertAction(title: NSLocalizedString("Purge", comment: "Discard editing changes when resetting OSM data cache"), style: .default, handler: { action in
-                    appDelegate?.mapView?.editorLayer.purgeCachedDataHard(true)
-                    appDelegate?.mapView?.placePushpinForSelection()
+                    appDelegate.mapView.editorLayer.purgeCachedDataHard(true)
+                    appDelegate.mapView.placePushpinForSelection()
                     self.navigationController?.popViewController(animated: true)
                 }))
                 present(alert, animated: true)
                 return
             }
-            appDelegate?.mapView?.editorLayer.purgeCachedDataHard(true)
-            appDelegate?.mapView?.removePin()
+            appDelegate.mapView.editorLayer.purgeCachedDataHard(true)
+            appDelegate.mapView.removePin()
         case Row.mapnik.rawValue /* Mapnik */:
-            appDelegate?.mapView?.mapnikLayer.purgeTileCache()
+            appDelegate.mapView.mapnikLayer.purgeTileCache()
         case Row.breadcrumb.rawValue /* Breadcrumb */:
-            appDelegate?.mapView?.gpxLayer.purgeTileCache()
+            appDelegate.mapView.gpxLayer.purgeTileCache()
         case Row.aerial.rawValue /* Bing */:
-            appDelegate?.mapView?.aerialLayer.purgeTileCache()
+            appDelegate.mapView.aerialLayer.purgeTileCache()
         case Row.locator.rawValue /* Locator Overlay */:
-            appDelegate?.mapView?.locatorLayer.purgeTileCache()
+            appDelegate.mapView.locatorLayer.purgeTileCache()
         case Row.gps.rawValue /* GPS Overlay */:
-            appDelegate?.mapView?.gpsTraceLayer.purgeTileCache()
+            appDelegate.mapView.gpsTraceLayer.purgeTileCache()
         default:
             break
         }

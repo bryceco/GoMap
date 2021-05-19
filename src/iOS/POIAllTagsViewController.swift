@@ -590,8 +590,8 @@ class POIAllTagsViewController: UITableViewController {
 				let key = kv.k
 				if PresetsDatabase.shared.eligibleForAutocomplete(key) {
 					var set: Set<String> = PresetsDatabase.shared.allTagValuesForKey(key)
-                    let appDelegate = AppDelegate.shared!
-					let values = appDelegate.mapView!.editorLayer.mapData.tagValues(forKey: key)
+                    let appDelegate = AppDelegate.shared
+					let values = appDelegate.mapView.editorLayer.mapData.tagValues(forKey: key)
 					let values2 = values as! Set<String>
 					set = set.union(values2)
 					let list: [String] = Array(set)
@@ -897,7 +897,7 @@ class POIAllTagsViewController: UITableViewController {
         } else {
             return false
         }
-		let mapView = AppDelegate.shared!.mapView!
+		let mapView = AppDelegate.shared.mapView!
         mapView.editorLayer.selectedNode = object.isNode()
         mapView.editorLayer.selectedWay = object.isWay()
         mapView.editorLayer.selectedRelation = object.isRelation()

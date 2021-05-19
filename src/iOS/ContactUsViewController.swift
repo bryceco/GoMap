@@ -141,7 +141,7 @@ class ContactUsViewController: UITableViewController, MFMailComposeViewControlle
         if cell == _sendMailCell {
 
             if MFMailComposeViewController.canSendMail() {
-                let appDelegate = AppDelegate.shared!
+                let appDelegate = AppDelegate.shared
                 let mail = MFMailComposeViewController()
                 mail.mailComposeDelegate = self
 				mail.setSubject("\(appDelegate.appName()) \(appDelegate.appVersion()) feedback")

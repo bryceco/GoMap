@@ -25,12 +25,11 @@ class OfflineViewController: UITableViewController {
         
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableView.automaticDimension
-        _aerialCell.tileLayer = AppDelegate.shared?.mapView?.aerialLayer
-        _mapnikCell.tileLayer = AppDelegate.shared?.mapView?.mapnikLayer
+        _aerialCell.tileLayer = AppDelegate.shared.mapView.aerialLayer
+        _mapnikCell.tileLayer = AppDelegate.shared.mapView.mapnikLayer
         for cell in [_aerialCell, _mapnikCell] {
-            cell?.tileList = cell?.tileLayer?.allTilesIntersectingVisibleRect() as? [String]
-//            cell?.tileList = cell?.tileLayer?.allTilesIntersectingVisibleRect()
-            cell?.detailLabel.text = String.localizedStringWithFormat(NSLocalizedString("%lu tiles needed", comment: ""), UInt(cell?.tileList?.count ?? 0))
+            cell?.tileList = cell?.tileLayer?.allTilesIntersectingVisibleRect()
+			cell?.detailLabel.text = String.localizedStringWithFormat(NSLocalizedString("%lu tiles needed", comment: ""), UInt(cell?.tileList?.count ?? 0))
             cell?.button.isEnabled = (cell?.tileList?.count ?? 0) > 0
         }
     }

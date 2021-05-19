@@ -28,12 +28,12 @@ class AdvancedSettingsViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let appDelegate = AppDelegate.shared
-        let mapData = appDelegate?.mapView?.editorLayer.mapData
+        let mapData = appDelegate.mapView.editorLayer.mapData
         self.hostname.text = mapData?.getServer()
         self.originalHostname = self.hostname.text
         
         let app = UIApplication.shared as? MyApplication
-        self.switchFPS.isOn = appDelegate?.mapView?.automatedFramerateTestActive ?? false
+        self.switchFPS.isOn = appDelegate.mapView.automatedFramerateTestActive ?? false
         self.switchTouches.isOn = app?.showTouchCircles ?? false
     }
     
@@ -41,7 +41,7 @@ class AdvancedSettingsViewController: UITableViewController {
         super.viewWillDisappear(animated)
     
         let appDelegate = AppDelegate.shared
-        let mapData = appDelegate?.mapView?.editorLayer.mapData
+        let mapData = appDelegate.mapView.editorLayer.mapData
         if !(hostname.text == originalHostname) {
             mapData?.setServer(hostname.text)
         }
@@ -50,7 +50,7 @@ class AdvancedSettingsViewController: UITableViewController {
     @IBAction func switchFPS(_ sender: Any) {
         let toggle = sender as? UISwitch
         let appDelegate = AppDelegate.shared
-        appDelegate?.mapView?.automatedFramerateTestActive = toggle?.isOn ?? false
+        appDelegate.mapView.automatedFramerateTestActive = toggle?.isOn ?? false
     }
     
     @IBAction func switchTouch(_ sender: Any) {

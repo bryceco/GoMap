@@ -740,28 +740,20 @@ class AerialList: NSObject {
                 _recentlyUsed.append(service)
             }
         }
-        
-        var currentIdentifier = UserDefaults.standard.object(forKey: CUSTOMAERIALSELECTION_KEY)
-        if currentIdentifier == nil || (currentIdentifier is NSNumber) {
-			currentIdentifier = BING_IDENTIFIER
-        }
 
-        for service in builtinServices() + userDefinedServices() + downloadedList {
-			if (currentIdentifier as? String) == service.identifier {
-				currentAerial = service
-                break
-            }
-        }
-        if currentAerial == nil {
-            currentAerial = builtinServices()[0]
-        }
+		let currentIdentifier = (UserDefaults.standard.object(forKey: CUSTOMAERIALSELECTION_KEY) as? String?) ?? BING_IDENTIFIER
+
+		let allServices = builtinServices() + userDefinedServices() + downloadedList
+		currentAerial = allServices.first(where: {
+			currentIdentifier == $0.identifier
+		}) ??  builtinServices()[0]
     }
     
     func save() {
         let defaults = UserDefaults.standard
 		let a = userDefinedList.map({ $0.dictionary() })
         defaults.set(a, forKey: CUSTOMAERIALLIST_KEY)
-        defaults.set(currentAerial?.identifier, forKey: CUSTOMAERIALSELECTION_KEY)
+        defaults.set(currentAerial.identifier, forKey: CUSTOMAERIALSELECTION_KEY)
         
         var recents: [AnyHashable] = []
         for service in _recentlyUsed {
@@ -787,19 +779,18 @@ class AerialList: NSObject {
     }
     
     private var _currentAerial: AerialService?
-    var currentAerial: AerialService? {
+    var currentAerial: AerialService {
         get {
-            return _currentAerial
+            return _currentAerial!
         }
         set(currentAerial) {
             _currentAerial = currentAerial
             
             // update recently used
             let MAX_ITEMS = 6
-            _recentlyUsed.removeAll { $0 as AnyObject === currentAerial as AnyObject }
-            if let currentAerial = currentAerial {
-                _recentlyUsed.insert(currentAerial, at: 0)
-            }
+            _recentlyUsed.removeAll { $0 === currentAerial }
+			_recentlyUsed.insert(currentAerial, at: 0)
+
             while _recentlyUsed.count > MAX_ITEMS {
                 _recentlyUsed.removeLast()
             }
