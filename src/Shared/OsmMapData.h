@@ -132,7 +132,7 @@ typedef OsmNode   * _Nonnull(^EditActionReturnNode)(void);
 
 
 -(void)setLongitude:(double)longitude latitude:(double)latitude forNode:(OsmNode *_Nonnull)node;
--(void)setTags:(NSDictionary<NSString *, NSString *> *_Nonnull)dict forObject:(OsmBaseObject *_Nonnull)object;
+-(void)setTags:(NSDictionary<NSString *, NSString *> *_Nullable)dict forObject:(OsmBaseObject *_Nonnull)object;
 
 // download data
 - (void)updateWithBox:(OSMRect)box progressDelegate:(MapView *_Nonnull)mapView completion:(void(^_Nonnull)(BOOL partial,NSError * _Nullable error))completion;
@@ -144,7 +144,7 @@ typedef OsmNode   * _Nonnull(^EditActionReturnNode)(void);
 - (void)uploadChangesetWithComment:(NSString * _Nullable)comment source:(NSString * _Nullable)source imagery:(NSString * _Nullable)imagery completion:(void(^_Nullable)(NSString * _Nullable error))completion;
 - (void)uploadChangesetXml:(NSXMLDocument * _Nullable)xmlDoc comment:(NSString * _Nullable)comment source:(NSString *_Nullable)source imagery:(NSString *_Nullable)imagery completion:(void(^_Nullable)(NSString *_Nullable error))completion;
 - (void)verifyUserCredentialsWithCompletion:(void(^_Nonnull)(NSString *_Nullable errorMessage))completion;
-- (void)putRequest:(NSString *_Nonnull)url method:(NSString *_Nonnull)method xml:(NSXMLDocument * _Nonnull)xml completion:(void(^_Nonnull)(NSData *_Nullable data,NSString *_Nullable error))completion;
+- (void)putRequest:(NSString *_Nonnull)url method:(NSString *_Nonnull)method xml:(NSXMLDocument * _Nullable)xml completion:(void(^_Nonnull)(NSData *_Nullable data,NSString *_Nullable error))completion;
 +(NSString *_Nullable)encodeBase64:(NSString *_Nullable)plainText;
 
 -(NSArray<OsmUserStatistics *> *_Nonnull)userStatisticsForRegion:(OSMRect)rect;

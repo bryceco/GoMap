@@ -44,7 +44,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let mapView = (UIApplication.shared.delegate as? AppDelegate)?.mapView
+		let mapView = AppDelegate.shared.mapView
         mapData = mapView?.editorLayer.mapData
         
         let comment = UserDefaults.standard.object(forKey: "uploadComment") as? String
@@ -208,14 +208,13 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
     
     @IBAction func sendMail(_ sender: Any) {
         if MFMailComposeViewController.canSendMail() {
-            let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            
+			let appDelegate = AppDelegate.shared
+
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
-            if let appName = appDelegate?.appName() {
-                mail.setSubject(String.localizedStringWithFormat(NSLocalizedString("%@ changeset", comment: ""), appName))
-            }
-            let xml = mapData?.changesetAsXml()
+            let appName = appDelegate.appName()
+            mail.setSubject(String.localizedStringWithFormat(NSLocalizedString("%@ changeset", comment: ""), appName))
+			let xml = mapData?.changesetAsXml()
             if let data = xml?.data(using: .utf8) {
                 mail.addAttachmentData(data, mimeType: "application/xml", fileName: "osmChange.osc")
             }

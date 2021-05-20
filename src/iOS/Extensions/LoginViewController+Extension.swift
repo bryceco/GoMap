@@ -10,13 +10,12 @@ import UIKit
 
 extension LoginViewController {
     @objc func saveVerifiedCredentials(username: String, password: String) {
-        KeyChain.setString(username, forIdentifier: "username")
-        KeyChain.setString(password, forIdentifier: "password")
+        _=KeyChain.setString(username, forIdentifier: "username")
+		_=KeyChain.setString(password, forIdentifier: "password")
 
         // Update the app delegate as well.
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            appDelegate.userName = username
-            appDelegate.userPassword = password
-        }
+		let appDelegate = AppDelegate.shared
+		appDelegate.userName = username
+		appDelegate.userPassword = password
     }
 }

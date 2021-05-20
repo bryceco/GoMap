@@ -11,10 +11,10 @@ import UIKit
 
 class NominatimViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var _searchBar: UISearchBar!
-    var _resultsArray: [AnyHashable]?
+	var _resultsArray: [[String:Any]] = []
     @IBOutlet var _activityIndicator: UIActivityIndicatorView!
     @IBOutlet var _tableView: UITableView!
-    var _historyArray: [AnyHashable]?
+    var _historyArray: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,8 +25,8 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
         super.viewWillAppear(animated)
         _searchBar.becomeFirstResponder()
         
-        _historyArray = UserDefaults.standard.object(forKey: "searchHistory") as? [AnyHashable]
-    }
+		_historyArray = UserDefaults.standard.object(forKey: "searchHistory") as? [String] ?? []
+	}
     
     override func viewWillDisappear(_ animated: Bool) {
         view.endEditing(true)
@@ -42,9 +42,9 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (_searchBar.text?.count ?? 0) != 0 ? (_resultsArray?.count ?? 0) : (_historyArray?.count ?? 0)
-    }
-    
+        return (_searchBar.text?.count ?? 0) != 0 ? _resultsArray.count : _historyArray.count
+	}
+
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView()
     }
@@ -61,14 +61,14 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NominatimViewController.tableViewCellIdentifier, for: indexPath)
-        
-        if (_searchBar.text?.count ?? 0) != 0 {
-            let dict = _resultsArray?[indexPath.row] as? [AnyHashable : Any]
-            cell.textLabel?.text = dict?["display_name"] as? String
-        } else {
-            cell.textLabel?.text = _historyArray?[indexPath.row] as? String
-        }
-        return cell
+
+		if _searchBar.text?.isEmpty ?? true {
+			cell.textLabel?.text = _historyArray[indexPath.row]
+		} else {
+			let dict = _resultsArray[indexPath.row]
+			cell.textLabel?.text = dict["display_name"] as? String
+		}
+		return cell
     }
     
     @IBAction func cancel(_ sender: Any) {
@@ -96,38 +96,41 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (_searchBar.text?.count ?? 0) == 0 {
             // history item
-            _searchBar.text = _historyArray?[indexPath.row] as? String
-            searchBarSearchButtonClicked(_searchBar)
+            _searchBar.text = _historyArray[indexPath.row]
+			searchBarSearchButtonClicked(_searchBar)
             return
         }
         
-        let dict = _resultsArray?[indexPath.row] as? [AnyHashable : Any]
-        if let box = dict?["boundingbox"] as? [String] {
-            var lat1 = Double(box[0]) ?? 0.0
+        let dict = _resultsArray[indexPath.row]
+        if let box = dict["boundingbox"] as? [String] {
+            let lat1 = Double(box[0]) ?? 0.0
             let lat2 = Double(box[1]) ?? 0.0
-            var lon1 = Double(box[2]) ?? 0.0
-            let lon2 = Double(box[3]) ?? 0.0
+            let lon1 = Double(box[2]) ?? 0.0
+			let lon2 = Double(box[3]) ?? 0.0
             
-            lat1 = (lat1 + lat2) / 2
-            lon1 = (lon1 + lon2) / 2
+			let lat = (lat1 + lat2) / 2
+			let lon = (lon1 + lon2) / 2
             
-            jump(toLat: lat1, lon: lon1)
+            jump(toLat: lat, lon: lon)
         }
     }
     
     // look for a pair of non-integer numbers in the string, and jump to it if found
-    func containsLatLon(_ text: String?) -> Bool {
-        let scanner = Scanner(string: text ?? "")
+    func containsLatLon(_ text: String) -> Bool {
+        let scanner = Scanner(string: text)
         let digits = CharacterSet(charactersIn: "-0123456789")
         let comma = CharacterSet(charactersIn: ",/")
         scanner.charactersToBeSkipped = CharacterSet.whitespaces
-        var lat: Double = 0.0
-        var lon: Double = 0.0
-        
-        while !scanner.isAtEnd {
+
+		while !scanner.isAtEnd {
             scanner.scanUpToCharacters(from: digits, into: nil)
             let pos = scanner.scanLocation
-            if scanner.scanDouble(UnsafeMutablePointer<Double>(mutating: &lat)) && lat != Double(Int(lat)) && lat > -90 && lat < 90 && scanner.scanCharacters(from: comma, into: nil) && scanner.scanDouble(UnsafeMutablePointer<Double>(mutating: &lon)) && lon != Double(Int(lon)) && lon >= -180 && lon <= 180 {
+			var lat: Double = 0.0
+			var lon: Double = 0.0
+            if scanner.scanDouble( &lat) && lat != Double(Int(lat)) && lat > -90 && lat < 90,
+			   scanner.scanCharacters(from: comma, into: nil),
+			   scanner.scanDouble(&lon) && lon != Double(Int(lon)) && lon >= -180 && lon <= 180
+			{
                 updateHistory(with: "\(lat),\(lon)")
                 jump(toLat: lat, lon: lon)
                 return true
@@ -139,14 +142,12 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
         return false
     }
     
-    func updateHistory(with string: String?) {
-        var a = _historyArray ?? []
-        a.removeAll {$0 as? String == string}
-        a.insert(string ?? "", at: 0)
-        while (a.count) > 20 {
-            a.removeLast()
+    func updateHistory(with string: String) {
+		_historyArray.removeAll { $0 == string }
+		_historyArray.insert(string, at: 0)
+        while _historyArray.count > 20 {
+			_historyArray.removeLast()
         }
-        _historyArray = a
     }
     
     // MARK: Search bar delegate
@@ -158,70 +159,67 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         
-        _resultsArray = nil
-        let string = searchBar.text
-        if (string?.count ?? 0) == 0 {
-            // no search
-            self._searchBar.perform(#selector(UIResponder.resignFirstResponder), with: nil, afterDelay: 0.1)
-        } else if containsLatLon(string) {
+        _resultsArray = []
+        guard let string = searchBar.text,
+			  !string.isEmpty
+		else {
+			// no search
+			self._searchBar.perform(#selector(UIResponder.resignFirstResponder), with: nil, afterDelay: 0.1)
+			return
+		}
+		if containsLatLon(string) {
             return
-        } else {
-            // searching
-            _activityIndicator.startAnimating()
-            
-            let text = string?.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-            let url = "https://nominatim.openstreetmap.org/search?q=\(text ?? "")&format=json&limit=50"
-            var task: URLSessionDataTask? = nil
-            if let url1 = URL(string: url) {
-                task = URLSession.shared.dataTask(with: url1, completionHandler: { [self] data, response, error in
-                    DispatchQueue.main.async(execute: { [self] in
-                        
-                        _activityIndicator.stopAnimating()
-                        
-                        if data != nil && error == nil {
-                            
-                            /*
-                             {
-                             "place_id":"5639098",
-                             "licence":"Data \u00a9 OpenStreetMap contributors, ODbL 1.0. https:\/\/www.openstreetmap.org\/copyright",
-                             "osm_type":"node",
-                             "osm_id":"585214834",
-                             "boundingbox":["55.9587516784668","55.9587554931641","-3.20986247062683","-3.20986223220825"],
-                             "lat":"55.9587537","lon":"-3.2098624",
-                             "display_name":"Hectors, Deanhaugh Street, Stockbridge, Dean, Edinburgh, City of Edinburgh, Scotland, EH4 1NE, United Kingdom",
-                             "class":"amenity",
-                             "type":"pub",
-                             "icon":"https:\/\/nominatim.openstreetmap.org\/images\/mapicons\/food_pub.p.20.png"
-                             },
-                             */
-                            
-                            var json: Any? = nil
-                            do {
-                                if let data = data {
-                                    json = try JSONSerialization.jsonObject(with: data, options: [])
-                                }
-                            } catch {
-                            }
-                            _resultsArray = json as? [AnyHashable]
-                            _tableView.reloadData()
-                            
-                            if (_resultsArray?.count ?? 0) > 0 {
-                                updateHistory(with: string)
-                            }
-                        } else {
-                            // error fetching results
-                        }
-                        
-                        if (_resultsArray?.count ?? 0) == 0 {
-                            let alert = UIAlertController(title: NSLocalizedString("No results found", comment: ""), message: nil, preferredStyle: .alert)
-                            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
-                            present(alert, animated: true)
-                        }
-                    })
-                })
-            }
-            task?.resume()
         }
+
+		// searching
+		_activityIndicator.startAnimating()
+
+		let text = string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+		let url = "https://nominatim.openstreetmap.org/search?q=\(text ?? "")&format=json&limit=50"
+		if let url1 = URL(string: url) {
+			let task = URLSession.shared.dataTask(with: url1, completionHandler: { [self] data, response, error in
+				DispatchQueue.main.async(execute: { [self] in
+
+					_activityIndicator.stopAnimating()
+
+					if let data = data,
+					   error == nil
+					{
+						/*
+						 {
+						 "place_id":"5639098",
+						 "licence":"Data \u00a9 OpenStreetMap contributors, ODbL 1.0. https:\/\/www.openstreetmap.org\/copyright",
+						 "osm_type":"node",
+						 "osm_id":"585214834",
+						 "boundingbox":["55.9587516784668","55.9587554931641","-3.20986247062683","-3.20986223220825"],
+						 "lat":"55.9587537","lon":"-3.2098624",
+						 "display_name":"Hectors, Deanhaugh Street, Stockbridge, Dean, Edinburgh, City of Edinburgh, Scotland, EH4 1NE, United Kingdom",
+						 "class":"amenity",
+						 "type":"pub",
+						 "icon":"https:\/\/nominatim.openstreetmap.org\/images\/mapicons\/food_pub.p.20.png"
+						 },
+						 */
+
+						let json = try? JSONSerialization.jsonObject(with: data, options: [])
+						_resultsArray = json as? [[String:AnyHashable]] ?? []
+						_tableView.reloadData()
+
+						if _resultsArray.count > 0 {
+							updateHistory(with: string)
+						}
+					} else {
+						// error fetching results
+					}
+
+					if _resultsArray.count == 0 {
+						let alert = UIAlertController(title: NSLocalizedString("No results found", comment: ""), message: nil, preferredStyle: .alert)
+						alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+						present(alert, animated: true)
+					}
+				})
+			})
+			task.resume()
+		}
         _tableView.reloadData()
     }
 }

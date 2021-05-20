@@ -44,20 +44,20 @@ class LoginViewController: UITableViewController {
         let _username = self._username.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         let _password = self._password.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        appDelegate?.userName = _username
-        appDelegate?.userPassword = _password
+		let appDelegate = AppDelegate.shared
+        appDelegate.userName = _username
+        appDelegate.userPassword = _password
 
         _activityIndicator.color = UIColor.darkGray
         _activityIndicator.startAnimating()
 
-        appDelegate?.mapView.editorLayer.mapData.verifyUserCredentials(completion: { errorMessage in
+        appDelegate.mapView.editorLayer.mapData.verifyUserCredentials(completion: { errorMessage in
             var errorMessage = errorMessage
             self._activityIndicator.stopAnimating()
             if errorMessage != nil {
 
                 // warn that email addresses don't work
-                if appDelegate?.userName?.contains("@") ?? false {
+                if appDelegate.userName?.contains("@") ?? false {
                     errorMessage = NSLocalizedString("You must provide your OSM user name, not an email address.", comment: "")
                 }
                 let alert = UIAlertController(title: NSLocalizedString("Bad login", comment: ""), message: errorMessage, preferredStyle: .alert)
@@ -84,9 +84,9 @@ class LoginViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        _username.text = appDelegate?.userName
-        _password.text = appDelegate?.userPassword
+		let appDelegate = AppDelegate.shared
+        _username.text = appDelegate.userName
+        _password.text = appDelegate.userPassword
 
         _saveButton.isEnabled = (_username.text?.count ?? 0) != 0 && (_password.text?.count ?? 0) != 0
     }

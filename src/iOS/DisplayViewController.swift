@@ -89,7 +89,7 @@ class DisplayViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        let mapView = (UIApplication.shared.delegate as? AppDelegate)?.mapView
+		let mapView = AppDelegate.shared.mapView
 
         // becoming visible the first time
         navigationController?.isNavigationBarHidden = false

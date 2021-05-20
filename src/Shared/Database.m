@@ -322,9 +322,9 @@ retry:
 			SqlCheck( sqlite3_clear_bindings(nodeStatement));
 			SqlCheck( sqlite3_bind_text(nodeStatement,		1, node.user.UTF8String, -1, NULL));
 			SqlCheck( sqlite3_bind_text(nodeStatement,		2, node.timestamp.UTF8String, -1, NULL));
-			SqlCheck( sqlite3_bind_int(nodeStatement,		3, node.version));
+			SqlCheck( sqlite3_bind_int(nodeStatement,		3, (int)node.version));
 			SqlCheck( sqlite3_bind_int64(nodeStatement,		4, node.changeset));
-			SqlCheck( sqlite3_bind_int(nodeStatement,		5, node.uid));
+			SqlCheck( sqlite3_bind_int(nodeStatement,		5, (int)node.uid));
 			SqlCheck( sqlite3_bind_double(nodeStatement,	6, node.lon));
 			SqlCheck( sqlite3_bind_double(nodeStatement,	7, node.lat));
 			SqlCheck( sqlite3_bind_int64(nodeStatement,		8, node.ident));
@@ -390,9 +390,9 @@ retry:
 			SqlCheck( sqlite3_bind_int64(wayStatement,	1, way.ident));
 			SqlCheck( sqlite3_bind_text(wayStatement,	2, way.user.UTF8String, -1, NULL));
 			SqlCheck( sqlite3_bind_text(wayStatement,	3, way.timestamp.UTF8String, -1, NULL));
-			SqlCheck( sqlite3_bind_int(wayStatement,	4, way.version));
+			SqlCheck( sqlite3_bind_int(wayStatement,	4, (int)way.version));
 			SqlCheck( sqlite3_bind_int64(wayStatement,	5, way.changeset));
-			SqlCheck( sqlite3_bind_int(wayStatement,	6, way.uid));
+			SqlCheck( sqlite3_bind_int(wayStatement,	6, (int)way.uid));
 			SqlCheck( sqlite3_bind_int(wayStatement,	7, (int)way.nodes.count));
 
 			rc = sqlite3_step(wayStatement);
@@ -466,9 +466,9 @@ retry:
 			SqlCheck( sqlite3_bind_int64(baseStatement,	1, relation.ident));
 			SqlCheck( sqlite3_bind_text(baseStatement,	2, relation.user.UTF8String, -1, NULL));
 			SqlCheck( sqlite3_bind_text(baseStatement,	3, relation.timestamp.UTF8String, -1, NULL));
-			SqlCheck( sqlite3_bind_int(baseStatement,	4, relation.version));
+			SqlCheck( sqlite3_bind_int(baseStatement,	4, (int)relation.version));
 			SqlCheck( sqlite3_bind_int64(baseStatement,	5, relation.changeset));
-			SqlCheck( sqlite3_bind_int(baseStatement,	6, relation.uid));
+			SqlCheck( sqlite3_bind_int(baseStatement,	6, (int)relation.uid));
 			SqlCheck( sqlite3_bind_int(baseStatement,	7, (int)relation.members.count));
 			rc = sqlite3_step(baseStatement);
 			if ( rc == SQLITE_CONSTRAINT ) {

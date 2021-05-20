@@ -335,7 +335,7 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
         tileY: Int,
         minZoom: Int,
         zoomLevel: Int,
-        completion: @escaping (_ error: Error?) -> Void ) -> Bool
+        completion: @escaping (_ error: Error?) -> Void )
 	{
         let tileModX = modulus(tileX, 1 << zoomLevel)
         let tileModY = modulus(tileY, 1 << zoomLevel)
@@ -344,7 +344,7 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		if _layerDict[tileKey] != nil {
 			// already have it
 			completion(nil)
-			return true
+			return
 		} else {
             // create layer
             let layer = CALayer()
@@ -436,9 +436,9 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
 				#endif
 				layer.isHidden = false
 				completion(nil)
-				return true
+				return
 			}
-			return false // not immediately satisfied
+			return
         }
     }
 

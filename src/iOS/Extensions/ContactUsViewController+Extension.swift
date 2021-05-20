@@ -21,7 +21,7 @@ extension ContactUsViewController {
     // MARK: Private methods
 
     private func createVersionDetailsString() -> String {
-		let appDelegate = UIApplication.shared.delegate as! AppDelegate
+		let appDelegate = AppDelegate.shared
 		let appName = appDelegate.appName()
 		let appVersion = appDelegate.appVersion()
 		let appBuildNumber = appDelegate.appBuildNumber()

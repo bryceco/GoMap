@@ -212,7 +212,7 @@ class AerialListViewController: UITableViewController {
                 else {
                     return
                 }
-				let a = aerialList(forSection: indexPath.section ) ?? []
+				let a = aerialList(forSection: indexPath.section )
 				guard let service = ((indexPath.row ) < a.count ? a[indexPath.row ] : nil) else {
                     return
                 }

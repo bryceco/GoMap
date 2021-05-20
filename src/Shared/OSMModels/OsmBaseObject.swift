@@ -567,18 +567,6 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
             }
         }
         
-        if false {
-            let indoor = tags["indoor"]
-            if let indoor = indoor {
-                var text = "Indoor \(indoor)"
-                let level = tags["level"]
-                if let level = level {
-                    text = text + ", level \(level)"
-                }
-                return text
-            }
-        }
-        
 		// look for a feature key
         let featureKeys = PresetsDatabase.shared.allFeatureKeys()!
 		for (key,value) in tags {

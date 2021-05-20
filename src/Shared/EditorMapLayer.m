@@ -1812,7 +1812,7 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 						//	BOOL isConditionalRestriction = relation.rags
 							for ( OsmMember * member in relation.members ) {
 								if ( member.isWay && [member.obj isKindOfClass:[OsmWay class]] ) {
-									OsmWay * way = member.obj;
+									OsmWay * way = member.obj.isWay;
 									CGPathRef turnPath = [self pathForWay:way];
 									CAShapeLayerWithProperties * haloLayer	= [CAShapeLayerWithProperties new];
 									haloLayer.anchorPoint    	= CGPointMake(0, 0);
@@ -2638,7 +2638,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 			if ( ![ignoreList containsObject:relation] ) {
 				CGFloat bestDist = 10000.0;
 				for ( OsmMember * member in relation.members ) {
-					OsmWay * way = member.obj;
+					OsmWay * way = member.obj.isWay;
 					if ( [way isKindOfClass:[OsmWay class]] ) {
 						if ( ![ignoreList containsObject:way] ) {
 							if ( [member.role isEqualToString:@"inner"] || [member.role isEqualToString:@"outer"] ) {

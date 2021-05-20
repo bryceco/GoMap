@@ -32,10 +32,10 @@ class AdvancedSettingsViewController: UITableViewController {
         self.hostname.text = mapData?.getServer()
         self.originalHostname = self.hostname.text
         
-        let app = UIApplication.shared as? MyApplication
-        self.switchFPS.isOn = appDelegate.mapView.automatedFramerateTestActive ?? false
-        self.switchTouches.isOn = app?.showTouchCircles ?? false
-    }
+        let app = UIApplication.shared as! MyApplication
+        self.switchFPS.isOn = appDelegate.mapView.automatedFramerateTestActive
+        self.switchTouches.isOn = app.showTouchCircles
+	}
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -48,14 +48,14 @@ class AdvancedSettingsViewController: UITableViewController {
     }
     
     @IBAction func switchFPS(_ sender: Any) {
-        let toggle = sender as? UISwitch
+        let toggle = sender as! UISwitch
         let appDelegate = AppDelegate.shared
-        appDelegate.mapView.automatedFramerateTestActive = toggle?.isOn ?? false
+        appDelegate.mapView.automatedFramerateTestActive = toggle.isOn
     }
     
     @IBAction func switchTouch(_ sender: Any) {
-        let toggle = sender as? UISwitch
-        let app = UIApplication.shared as? MyApplication
-        app?.showTouchCircles = toggle?.isOn ?? false
+        let toggle = sender as! UISwitch
+        let app = UIApplication.shared as! MyApplication
+        app.showTouchCircles = toggle.isOn
     }
 }

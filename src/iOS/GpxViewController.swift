@@ -302,7 +302,7 @@ class GpxViewController: UITableViewController {
         } else if section == SECTION_PREVIOUS_TRACKS {
             // previous tracks
             let appDelegate = AppDelegate.shared
-            return appDelegate.mapView.gpxLayer.previousTracks.count ?? 0
+			return appDelegate.mapView.gpxLayer.previousTracks.count
         } else if section == SECTION_CONFIGURE {
             // configuration
             return 2
@@ -345,18 +345,18 @@ class GpxViewController: UITableViewController {
             // configuration section
             if indexPath.row == 0 {
                 // days before deleting
-                let cell = tableView.dequeueReusableCell(withIdentifier: "GpxTrackExpirationCell", for: indexPath) as? GpxTrackExpirationCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "GpxTrackExpirationCell", for: indexPath) as! GpxTrackExpirationCell
 				let expirationDays = UserDefaults.standard.object(forKey: GpxLayer.USER_DEFAULTS_GPX_EXPIRATIION_KEY) as? NSNumber
                 let expiration = expirationDays?.intValue ?? 0
                 let title = expiration <= 0 ? NSLocalizedString("Never", comment: "Never delete old tracks") : String.localizedStringWithFormat(NSLocalizedString("%ld Days", comment: "One or more days"), expiration)
-                cell?.expirationButton.setTitle(title, for: .normal)
-                cell?.expirationButton.sizeToFit()
-                return cell!
+                cell.expirationButton.setTitle(title, for: .normal)
+                cell.expirationButton.sizeToFit()
+                return cell
             } else {
                 // enable background use
-                let cell = tableView.dequeueReusableCell(withIdentifier: "GpxTrackBackgroundCollection", for: indexPath) as? GpxTrackBackgroundCollection
-                cell?.enableBackground.isOn = mapView?.gpsInBackground ?? false
-                return cell!
+                let cell = tableView.dequeueReusableCell(withIdentifier: "GpxTrackBackgroundCollection", for: indexPath) as! GpxTrackBackgroundCollection
+				cell.enableBackground.isOn = mapView!.gpsInBackground
+				return cell
             }
         }
         

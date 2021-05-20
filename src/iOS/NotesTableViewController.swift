@@ -114,53 +114,46 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
 
-    func commentAndResolve(_ resolve: Bool, sender: Any?) {
+    func commentAndResolve(_ resolve: Bool, sender: UIView?) {
         view.endEditing(true)
-        var cell = (sender as AnyObject).superview as? NotesResolveCell
-        while cell != nil && !(cell is NotesResolveCell) {
-            cell = cell?.superview as? NotesResolveCell
-        }
-        if let cell = cell {
-            let s = cell._text.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-            let alert = UIAlertController(title: NSLocalizedString("Updating Note...", comment: "OSM Note"), message: nil, preferredStyle: .alert)
-            present(alert, animated: true)
+		guard let cell: NotesResolveCell = sender?.superviewOfType()
+		else { return }
 
-            mapView?.notesDatabase.update(note, close: resolve, comment: s) { [self] newNote, errorMessage in
-                alert.dismiss(animated: true)
-                if let newNote = newNote {
-                    note = newNote
-                    DispatchQueue.main.async(execute: { [self] in
-                        done(nil)
-                        mapView?.refreshNoteButtonsFromDatabase()
-                    })
-                } else {
-                    let alert2 = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: errorMessage, preferredStyle: .alert)
-                    alert2.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
-                    present(alert2, animated: true)
-                }
-            }
-        }
-    }
+		let s = cell._text.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+		let alert = UIAlertController(title: NSLocalizedString("Updating Note...", comment: "OSM Note"), message: nil, preferredStyle: .alert)
+		present(alert, animated: true)
 
-    @IBAction func doComment(_ sender: Any) {
-        commentAndResolve(false, sender: sender)
-    }
+		mapView?.notesDatabase.update(note, close: resolve, comment: s) { [self] newNote, errorMessage in
+			alert.dismiss(animated: true)
+			if let newNote = newNote {
+				note = newNote
+				DispatchQueue.main.async(execute: { [self] in
+					done(nil)
+					mapView?.refreshNoteButtonsFromDatabase()
+				})
+			} else {
+				let alert2 = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: errorMessage, preferredStyle: .alert)
+				alert2.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+				present(alert2, animated: true)
+			}
+		}
+	}
 
-    @IBAction func doResolve(_ sender: Any) {
-        commentAndResolve(true, sender: sender)
-    }
+	@IBAction func doComment(_ sender: Any) {
+		commentAndResolve(false, sender: sender as? UIView)
+	}
 
-    func textViewDidChange(_ textView: UITextView) {
-        var cell = textView.superview as? NotesResolveCell
-        while cell != nil && !(cell is NotesResolveCell) {
-            cell = cell?.superview as? NotesResolveCell
-        }
-        if let cell = cell {
-            newComment = cell._text.text
-            let s = newComment?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-            cell.commentButton.isEnabled = (s?.count ?? 0) > 0
-        }
-    }
+	@IBAction func doResolve(_ sender: Any) {
+		commentAndResolve(true, sender: sender as? UIView)
+	}
+
+	func textViewDidChange(_ textView: UITextView) {
+		if let cell: NotesResolveCell = textView.superviewOfType() {
+			newComment = cell._text.text
+			let s = newComment?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+			cell.commentButton.isEnabled = (s?.count ?? 0) > 0
+		}
+	}
 
     @IBAction func done(_ sender: Any?) {
         dismiss(animated: true)

@@ -360,7 +360,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	[self enumerateObjectsInRegion:rect block:^(OsmBaseObject * base) {
 		NSDate * date = [base dateForTimestamp];
 		if ( base.user.length == 0 ) {
-			DLog(@"Empty user name for object: object %@, uid = %d", base, base.uid);
+			DLog(@"Empty user name for object: object %@, uid = %ld", base, (long)base.uid);
 			return;
 		}
 		OsmUserStatistics * stats = dict[ base.user ];
@@ -515,13 +515,13 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 	[node setDeleted:YES undo:_undoManager];
 
-	[_spatial removeMember:node undo:_undoManager];
+	(void)[_spatial removeMember:node undo:_undoManager];
 }
 
 -(void)deleteWayUnsafe:(OsmWay *)way
 {
 	[self registerUndoCommentString:NSLocalizedString(@"delete way",nil)];
-	[_spatial removeMember:way undo:_undoManager];
+	(void)[_spatial removeMember:way undo:_undoManager];
 
 	[self removeFromParentRelationsUnsafe:way];
 
@@ -540,7 +540,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 						: NSLocalizedString(@"delete relation",nil);
 	[self registerUndoCommentString:message];
 
-	[_spatial removeMember:relation undo:_undoManager];
+	(void)[_spatial removeMember:relation undo:_undoManager];
 
 	[self removeFromParentRelationsUnsafe:relation];
 
@@ -2075,7 +2075,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	// restore relation references
 	for ( OsmRelation * rel in dirty ) {
 		if ( [rel isKindOfClass:[OsmRelation class]] ) {
-			[rel resolveToMapData:self];
+			(void)[rel resolveToMapData:self];
 		}
 	}
 
@@ -2328,7 +2328,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	// fixup relation references
 	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmRelation * relation, BOOL *stop) {
 		[relation deresolveRefs];
-		[relation resolveToMapData:self];
+		(void)[relation resolveToMapData:self];
 	}];
 
 	[self consistencyCheck];
@@ -2448,7 +2448,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		return nil;
 	}
 
-	NSKeyedUnarchiver * unarchiver = [[NSKeyedUnarchiver alloc] initForReadingFromData:data error:nil];
+	NSKeyedUnarchiver * unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
 	unarchiver.delegate = self;
 	self = [unarchiver decodeObjectForKey:@"OsmMapData"];
 	if ( self ) {

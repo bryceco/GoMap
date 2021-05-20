@@ -100,10 +100,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         if url.isFileURL && (url.pathExtension == "gpx") {
             // Load GPX
-            url.startAccessingSecurityScopedResource()
-            var data: Data? = try? Data(contentsOf: url, options: [])
+            _=url.startAccessingSecurityScopedResource()
+            let data: Data? = try? Data(contentsOf: url, options: [])
+			url.stopAccessingSecurityScopedResource()
 
-            url.stopAccessingSecurityScopedResource()
             let delayInSeconds = 1.0
             let popTime = DispatchTime.now() + Double(Int64(delayInSeconds * Double(NSEC_PER_SEC)))
             DispatchQueue.main.asyncAfter(deadline: popTime, execute: { [self] in

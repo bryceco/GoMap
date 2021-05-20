@@ -51,7 +51,11 @@ static NSInteger g_nextTagID = 1;
 		_date = object.timestamp;
 		_user = object.user;
 		_action = @"fixme";
-		_text = [NSString stringWithFormat:@"%@ (%@ %@): %@", object.friendlyDescription, object.isNode?@"node":object.isWay?@"way":object.isRelation?@"relation":@"", object.ident, object.tags[fixme]];
+		_text = [NSString stringWithFormat:@"%@ (%@ %@): %@",
+				 object.friendlyDescription,
+				 object.isNode?@"node":object.isWay?@"way":object.isRelation?@"relation":@"",
+				 @(object.ident),
+				 object.tags[fixme]];
 	}
 	return self;
 }

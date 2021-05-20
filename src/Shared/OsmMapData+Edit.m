@@ -157,7 +157,7 @@
 			continue;
 		for ( NSInteger m = 0; m < members.count; ++m ) {
 			OsmMember * member = members[m];
-			OsmWay * way = member.obj;
+			OsmWay * way = member.obj.isWay;
 			if ( ![way isKindOfClass:[OsmWay class]] || way.nodes.count == 0 )
 				continue;
 			OsmNode * node = way.nodes.lastObject;
@@ -225,7 +225,7 @@
 	// place the member adjacent to a way its connected to, if any
 	NSInteger index = 0;
 	for ( OsmMember * m in relation.members ) {
-		OsmWay * w = m.obj;
+		OsmWay * w = m.obj.isWay;
 		++index;
 		if ( ![w isKindOfClass:[OsmWay class]] )
 			continue;
@@ -375,7 +375,7 @@
 
 			} else if ( member.isWay ) {
 
-				OsmWay * way = member.obj;
+				OsmWay * way = member.obj.isWay;
 				if ( ![way isKindOfClass:[OsmBaseObject class]] ) {
 					*error = NSLocalizedString(@"A relation the node belongs to is not fully downloaded",nil);
 					return nil;
@@ -952,7 +952,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 				} else {
 
 					// 2. split a VIA
-					OsmWay * prevWay = f.obj;
+					OsmWay * prevWay = f.obj.isWay;
 					for ( NSInteger index = 0; index < relation.members.count; index++ ) {
 						OsmMember * memberA = relation.members[index];
 						if ( [memberA.role isEqualToString:@"via"] ) {
@@ -962,7 +962,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 								[self addMemberUnsafe:memberB toRelation:relation atIndex:insertBefore?index:index+1];
 								break;
 							}
-							prevWay = memberA.obj;
+							prevWay = memberA.obj.isWay;
 						}
 					}
 				}
@@ -990,7 +990,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 						[self addMemberUnsafe:newMember toRelation:relation atIndex:insertBefore?index:index+1];
 						break;
 					}
-					prevWay = member.obj;
+					prevWay = member.obj.isWay;
 					++index;
 				}
 			}
@@ -1337,14 +1337,14 @@ static void InsertNode( OsmMapData * mapData, OsmWay * way, OSMPoint center, dou
 		[self registerUndoCommentString:comment];
 		OsmRelation * newRelation = [self createRelation];
 		for ( OsmMember * member in object.isRelation.members ) {
-			OsmWay * way = member.obj;
+			OsmWay * way = member.obj.isWay;
 			if ( [way isKindOfClass:[OsmWay class]] ) {
 				OsmWay * newWay = nil;
 				for ( NSInteger prev = 0; prev < newRelation.members.count; ++prev ) {
 					OsmMember * m = object.isRelation.members[prev];
 					if ( m.obj == way ) {
 						// way is duplicated
-						newWay = newRelation.members[prev].obj;
+						newWay = newRelation.members[prev].obj.isWay;
 						break;
 					}
 				}

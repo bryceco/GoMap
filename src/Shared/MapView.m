@@ -2479,8 +2479,8 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
     // if we currently have a relation selected then select the via node instead
     if ( self.editorLayer.selectedPrimary.isRelation ) {
         OsmRelation * relation = self.editorLayer.selectedPrimary.isRelation;
-        OsmWay * fromWay = [relation memberByRole:@"from"].obj;
-        OsmNode * viaNode = [relation memberByRole:@"via"].obj;
+        OsmWay * fromWay = [relation memberByRole:@"from"].obj.isWay;
+        OsmNode * viaNode = [relation memberByRole:@"via"].obj.isNode;
         
         if ( ![viaNode isKindOfClass:[OsmNode class]] ) {
             // not supported yet

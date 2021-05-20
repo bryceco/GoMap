@@ -22,7 +22,7 @@ class NearbyMappersViewController: UITableViewController {
         let appDelegate = AppDelegate.shared
 
         let rect = appDelegate.mapView.screenLongitudeLatitude()
-		_mappers = appDelegate.mapView.editorLayer.mapData.userStatistics(forRegion: rect) ?? []
+		_mappers = appDelegate.mapView.editorLayer.mapData.userStatistics(forRegion: rect)
 		_mappers.sort(by: { s1, s2 in s1.lastEdit.compare(s2.lastEdit) != .orderedAscending })
 	}
 
@@ -58,21 +58,17 @@ class NearbyMappersViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NearbyMappersViewController.tableViewCellIdentifier, for: indexPath)
 
-        let stats = _mappers[indexPath.row] as? OsmUserStatistics
-        cell.textLabel?.text = stats?.user
-        var date: String? = nil
-        if let lastEdit = stats?.lastEdit {
-            date = DateFormatter.localizedString(from: lastEdit, dateStyle: .medium, timeStyle: DateFormatter.Style.none)
-        }
-        cell.detailTextLabel?.text = String.localizedStringWithFormat(NSLocalizedString("%ld edits, last active %@", comment: "Brief synopsis of a mapper's activity (count,last active date)"), Int(stats?.editCount ?? 0), date ?? "")
+        let stats = _mappers[indexPath.row]
+		cell.textLabel?.text = stats.user
+		let date = DateFormatter.localizedString(from: stats.lastEdit, dateStyle: .medium, timeStyle: DateFormatter.Style.none)
+		cell.detailTextLabel?.text = String.localizedStringWithFormat(NSLocalizedString("%ld edits, last active %@", comment: "Brief synopsis of a mapper's activity (count,last active date)"), Int(stats.editCount ), date)
 
-        return cell
+		return cell
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let stats = _mappers[indexPath.row] as? OsmUserStatistics
-        let user = stats?.user
-        let urlString = "https://www.openstreetmap.org/user/\(user ?? "")"
+        let stats = _mappers[indexPath.row]
+		let urlString = "https://www.openstreetmap.org/user/\(stats.user)"
         let encodedUrlString = urlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
         let url = URL(string: encodedUrlString ?? "")
 

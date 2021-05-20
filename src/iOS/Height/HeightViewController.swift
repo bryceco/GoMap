@@ -119,7 +119,7 @@ class HeightViewController: UIViewController {
                 })
         }
         
-        startCameraPreview()
+        _=startCameraPreview()
         
         if _canZoom {
             let rc = view.bounds
