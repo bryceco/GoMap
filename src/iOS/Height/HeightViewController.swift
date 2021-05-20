@@ -34,14 +34,14 @@ class HeightViewController: UIViewController {
     
     var callback: ((_ newValue: String) -> Void)?
     
-    class func unableToInstantiate(withUserWarning vc: UIViewController?) -> Bool {
+    class func unableToInstantiate(withUserWarning vc: UIViewController) -> Bool {
         if AppDelegate.shared.mapView.gpsState == GPS_STATE_NONE {
             let alert = UIAlertController(
                 title: NSLocalizedString("Error", comment: "Error dialog title"),
                 message: NSLocalizedString("This action requires GPS to be turned on", comment: ""),
                 preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
-            vc?.present(alert, animated: true)
+            vc.present(alert, animated: true)
             return true
         }
         if AVCaptureDevice.authorizationStatus(for: .video) == .denied {
@@ -159,97 +159,72 @@ class HeightViewController: UIViewController {
     func startCameraPreview() -> Bool {
         _captureSession = AVCaptureSession()
         
-        let videoDevice = AVCaptureDevice.default(for: .video)
-        if videoDevice == nil {
-            return false
-        }
-        
-        var videoIn: AVCaptureDeviceInput? = nil
-        do {
-            if let videoDevice = videoDevice {
-                videoIn = try AVCaptureDeviceInput(device: videoDevice)
-            }
-        } catch {
-            return false
-        }
-        if let videoIn = videoIn {
-            if !(_captureSession?.canAddInput(videoIn) ?? false) {
-                return false
-            }
-        }
-        if let videoIn = videoIn {
-            _captureSession?.addInput(videoIn)
-        }
-        
-        if let reverse = (videoDevice?.formats as NSArray?)?.reverseObjectEnumerator() {
-            for format in reverse {
-                guard let format = format as? AVCaptureDevice.Format else {
-                    continue
-                }
-                if format.videoMaxZoomFactor > 10 {
-                    do {
-                        try videoDevice?.lockForConfiguration()
-                        videoDevice?.activeFormat = format
-                        videoDevice?.unlockForConfiguration()
-                        break
-                    } catch { }
-                }
-            }
-        }
-        
+		guard let captureSession = _captureSession,
+			  let videoDevice = AVCaptureDevice.default(for: .video),
+			  let videoIn = try? AVCaptureDeviceInput(device: videoDevice),
+			  captureSession.canAddInput(videoIn)
+		else {
+			return false
+		}
+		captureSession.addInput(videoIn)
+
+		let format = videoDevice.formats.reversed().first(where: { $0.videoMaxZoomFactor > 10 })
+			?? videoDevice.formats.last!
+		do {
+			try videoDevice.lockForConfiguration()
+			videoDevice.activeFormat = format
+			videoDevice.unlockForConfiguration()
+		} catch { }
+
         // can camera zoom?
-        _canZoom = (videoDevice?.activeFormat.videoMaxZoomFactor ?? 0.0) >= 10.0
+        _canZoom = videoDevice.activeFormat.videoMaxZoomFactor >= 10.0
         
-        // get FOV
-        _cameraFOV = Double(videoDevice?.activeFormat.videoFieldOfView ?? 0.0)
+		// get FOV
+        _cameraFOV = Double(videoDevice.activeFormat.videoFieldOfView)
         if _cameraFOV == 0 {
-            _cameraFOV = cameraFOV()
+			_cameraFOV = cameraFOV()
         }
         _cameraFOV *= .pi / 180
         
-        if let captureSession = _captureSession {
-            _previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        }
-        _previewLayer?.videoGravity = .resizeAspectFill
-        
-        _previewLayer?.bounds = view.layer.bounds
-        _previewLayer?.position = CGRectCenter(view.layer.bounds)
-        _previewLayer?.zPosition = -1 // buttons and labels need to be above video
-        if let previewLayer = _previewLayer {
-            view.layer.addSublayer(previewLayer)
-        }
-        
-        _captureSession?.startRunning()
+		_previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+		guard let previewLayer = _previewLayer else { return false }
+		previewLayer.videoGravity = .resizeAspectFill
+        previewLayer.bounds = view.layer.bounds
+		previewLayer.position = CGRectCenter(view.layer.bounds)
+		previewLayer.zPosition = -1 // buttons and labels need to be above video
+		view.layer.addSublayer(previewLayer)
+
+        captureSession.startRunning()
         
         return true
     }
     
-    @objc func didTap(_ tap: UITapGestureRecognizer?) {
-        var pos = tap?.location(in: view) ?? .zero
-        let input = _captureSession?.inputs.last as? AVCaptureDeviceInput
-        do {
-            try input?.device.lockForConfiguration()
-            let rc = view.bounds
-            pos.x = ((pos.x ) - rc.origin.x) / rc.size.width
-            pos.y = ((pos.y ) - rc.origin.y) / rc.size.height
-            input?.device.exposurePointOfInterest = pos
-            input?.device.unlockForConfiguration()
+    @objc func didTap(_ tap: UITapGestureRecognizer) {
+        var pos = tap.location(in: view)
+		guard let input = _captureSession?.inputs.last as? AVCaptureDeviceInput else { return }
+		do {
+            try input.device.lockForConfiguration()
+			let rc = view.bounds
+            pos.x = (pos.x - rc.origin.x) / rc.size.width
+            pos.y = (pos.y - rc.origin.y) / rc.size.height
+            input.device.exposurePointOfInterest = pos
+            input.device.unlockForConfiguration()
         } catch {}
     }
     
-    @objc func didPan(_ pan: UIPanGestureRecognizer?) {
-        let delta = pan?.translation(in: view)
-        _scrollPosition -= delta?.y ?? 0.0
-        pan?.setTranslation(CGPoint(x: 0, y: 0), in: view)
+    @objc func didPan(_ pan: UIPanGestureRecognizer) {
+        let delta = pan.translation(in: view)
+        _scrollPosition -= delta.y
+        pan.setTranslation(CGPoint(x: 0, y: 0), in: view)
     }
     
-    @objc func didPinch(_ pinch: UIPinchGestureRecognizer?) {
+    @objc func didPinch(_ pinch: UIPinchGestureRecognizer) {
         if _canZoom {
-            let input = _captureSession?.inputs.last as? AVCaptureDeviceInput
-            let device = input?.device
+			guard let input = _captureSession?.inputs.last as? AVCaptureDeviceInput else { return }
+            let device = input.device
             
-            let maxZoom = device?.activeFormat.videoMaxZoomFactor ?? 0.0
-            _totalZoom *= Double(pinch?.scale ?? 0.0)
+            let maxZoom = device.activeFormat.videoMaxZoomFactor
+            _totalZoom *= Double(pinch.scale)
             if _totalZoom < 1.0 {
                 _totalZoom = 1.0
             } else if _totalZoom > Double(maxZoom) {
@@ -257,11 +232,11 @@ class HeightViewController: UIViewController {
             }
             
             do {
-                try device?.lockForConfiguration()
-                device?.videoZoomFactor = CGFloat(_totalZoom)
-                device?.unlockForConfiguration()
+                try device.lockForConfiguration()
+                device.videoZoomFactor = CGFloat(_totalZoom)
+                device.unlockForConfiguration()
             } catch {}
-            pinch?.scale = 1.0
+            pinch.scale = 1.0
         }
     }
     

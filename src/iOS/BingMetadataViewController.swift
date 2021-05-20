@@ -1,4 +1,3 @@
-//  Converted to Swift 5.2 by Swiftify v5.2.23024 - https://swiftify.com/
 //
 //  BingMetadataViewController.swift
 //  Go Map!!
@@ -30,63 +29,48 @@ class BingMetadataViewController: UIViewController {
         appDelegate.mapView.aerialLayer.metadata({ data, error in
             self.activityIndicator.stopAnimating()
 
-            if data != nil && error == nil {
-                var json: Any? = nil
-                do {
-                    if let data = data {
-                        json = try JSONSerialization.jsonObject(with: data, options: [])
-                    }
-                } catch {
-                }
+			if let data = data, error == nil {
+				let json = try? JSONSerialization.jsonObject(with: data, options: [])
 
-                var attrList: [String] = []
+				var attrList: [String] = []
 
-                let resourceSets = (json as? [AnyHashable : Any])?["resourceSets"] as? [AnyHashable]
+				let resourceSets = (json as? [AnyHashable : Any])?["resourceSets"] as? [AnyHashable]
                 for resourceSet in resourceSets ?? [] {
-                    let resources = (resourceSet as? [AnyHashable : Any])?["resources"]
-                    if let resources: [Any] = resources as? [Any] {
-                        for resource in resources {
-                            let vintageStart = ((resource as? [AnyHashable : Any])?["vintageStart"] as? String) ?? ""
-                            let vintageEnd = ((resource as? [AnyHashable : Any])?["vintageEnd"] as? String) ?? ""
-                            let providers = (resource as? [AnyHashable : Any])?["imageryProviders"]
-                            if (providers != nil) {
-                                if let providers: [Any] = providers as? [Any] {
-                                    for provider in providers {
-                                        var attribution = ((provider as? [AnyHashable : Any])?["attribution"] as? String) ?? ""
-                                        let areas = (provider as? [AnyHashable : Any])?["coverageAreas"] as? [AnyHashable]
-                                        for area in areas ?? [] {
-                                            guard let area = area as? [AnyHashable : Any] else {
-                                                continue
-                                            }
-                                            let zoomMin = (area["zoomMin"] as? NSNumber)?.intValue ?? 0
-                                            let zoomMax = (area["zoomMax"] as? NSNumber)?.intValue ?? 0
-                                            let bbox = area["bbox"] as? [AnyHashable] ?? []
-                                            var rect = OSMRect.init(origin: _OSMPoint.init(x: (bbox[1] as? NSNumber)?.doubleValue ?? 0.0, y: (bbox[0] as? NSNumber)?.doubleValue ?? 0.0), size: OSMSize.init(width: (bbox[3] as? NSNumber)?.doubleValue ?? 0.0, height: (bbox[2] as? NSNumber)?.doubleValue ?? 0.0))
-                                            rect.size.width -= rect.origin.x
-                                            rect.size.height -= rect.origin.y
-                                            if zoomLevel >= zoomMin && zoomLevel <= zoomMax && OSMRectIntersectsRect(viewRect, rect) {
-                                                if vintageStart != "" && vintageEnd != "" {
-                                                    attribution = "\(attribution)\n   \(vintageStart) - \(vintageEnd)"
-                                                }
-                                                attrList.append(attribution)
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+					let resources = (resourceSet as? [AnyHashable : Any])?["resources"]
+					guard let resources = resources as? [Any] else { continue }
+					for resource in resources {
+						let vintageStart = ((resource as? [AnyHashable : Any])?["vintageStart"] as? String) ?? ""
+						let vintageEnd = ((resource as? [AnyHashable : Any])?["vintageEnd"] as? String) ?? ""
+						guard let providers = (resource as? [AnyHashable : Any])?["imageryProviders"] else { continue }
+						guard let providers = providers as? [Any] else { continue }
+						for provider in providers {
+							var attribution = ((provider as? [AnyHashable : Any])?["attribution"] as? String) ?? ""
+							let areas = (provider as? [AnyHashable : Any])?["coverageAreas"] as? [AnyHashable]
+							for area in areas ?? [] {
+								guard let area = area as? [AnyHashable : Any] else { continue }
+								let zoomMin = (area["zoomMin"] as? NSNumber)?.intValue ?? 0
+								let zoomMax = (area["zoomMax"] as? NSNumber)?.intValue ?? 0
+								let bbox = area["bbox"] as? [AnyHashable] ?? []
+								var rect = OSMRect.init(origin: _OSMPoint.init(x: (bbox[1] as? NSNumber)?.doubleValue ?? 0.0, y: (bbox[0] as? NSNumber)?.doubleValue ?? 0.0), size: OSMSize.init(width: (bbox[3] as? NSNumber)?.doubleValue ?? 0.0, height: (bbox[2] as? NSNumber)?.doubleValue ?? 0.0))
+								rect.size.width -= rect.origin.x
+								rect.size.height -= rect.origin.y
+								if zoomLevel >= zoomMin && zoomLevel <= zoomMax && OSMRectIntersectsRect(viewRect, rect) {
+									if vintageStart != "" && vintageEnd != "" {
+										attribution = "\(attribution)\n   \(vintageStart) - \(vintageEnd)"
+									}
+									attrList.append(attribution)
+								}
+							}
+						}
+					}
                 }
 
-                attrList = (attrList as NSArray).sortedArray(comparator: { obj1, obj2 in
-                    if ((obj1 as? NSString) ?? "").range(of: "Microsoft").location != NSNotFound {
-                        return ComparisonResult(rawValue: -1)!
-                    }
-                    if ((obj2 as? NSString) ?? "").range(of: "Microsoft").location != NSNotFound {
-                        return ComparisonResult(rawValue: 1)!
-                    }
-                    return (obj1 as? NSString ?? NSString()).compare(obj2 as? String ?? "")
-                }) as? [String] ?? []
+                attrList.sort(by: { obj1, obj2 in
+					let isMS1 = obj1.contains("Microsoft") ? 0 : 1
+					let isMS2 = obj2.contains("Microsoft") ? 0 : 1
+					if isMS1 != isMS2 { return isMS1 < isMS2 }
+					return obj1 < obj2
+				})
 
                 
                 let text = attrList.joined(separator: "\n\n• ")
