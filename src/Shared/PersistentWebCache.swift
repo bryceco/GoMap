@@ -1,4 +1,3 @@
-//  Converted to Swift 5.4 by Swiftify v5.4.27034 - https://swiftify.com/
 //
 //  PersistentWebCache.swift
 //  Go Map!!
@@ -22,25 +21,25 @@ class PersistentWebCache<T: AnyObject>: NSObject {
         return string
     }
     
-    func fileEnumerator(withAttributes attr: NSArray?) -> FileManager.DirectoryEnumerator {
+    func fileEnumerator(withAttributes attr: [URLResourceKey]) -> FileManager.DirectoryEnumerator {
         return FileManager.default.enumerator(
             at: _cacheDirectory,
-            includingPropertiesForKeys: (attr as? [URLResourceKey]),
+            includingPropertiesForKeys: attr,
             options: [.skipsSubdirectoryDescendants, .skipsPackageDescendants, .skipsHiddenFiles],
             errorHandler: nil)!
     }
     
     func allKeys() -> [String] {
-        var a: [AnyHashable] = []
-        for url in fileEnumerator(withAttributes: nil) {
-            guard let url = url as? URL else {
-                continue
-            }
-            let s = url.lastPathComponent // automatically removes escape encoding
-            a.append(s)
+        var a: [String] = []
+		for url in fileEnumerator(withAttributes: []) {
+			guard let url = url as? URL else {
+				continue
+			}
+			let s = url.lastPathComponent // automatically removes escape encoding
+			a.append(s)
         }
-        return a as? [String] ?? []
-    }
+		return a
+	}
 
 	convenience override init() {
 		self.init(name: "", memorySize: 0)
@@ -63,7 +62,7 @@ class PersistentWebCache<T: AnyObject>: NSObject {
 	}
     
     func removeAllObjects() {
-        for url in fileEnumerator(withAttributes: nil) {
+        for url in fileEnumerator(withAttributes: []) {
             guard let url = url as? URL else {
                 continue
             }

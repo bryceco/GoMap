@@ -1,4 +1,3 @@
-//  Converted to Swift 5.4 by Swiftify v5.4.27034 - https://swiftify.com/
 //
 //  VoiceAnnouncement.swift
 //  Go Map!!
@@ -21,7 +20,7 @@ class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
 
     var isNewUpdate = false
 
-    var mapView: MapView?
+    var mapView: MapView!
     var radius = 0.0
     var buildings = false
     var streets = false
@@ -208,16 +207,16 @@ class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
 
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
 		let object = utteranceMap.object(forKey: utterance)
-        mapView?.editorLayer.selectedNode = object?.isNode()
-        mapView?.editorLayer.selectedWay = object?.isWay()
-        mapView?.editorLayer.selectedRelation = object?.isRelation()
+        mapView.editorLayer.selectedNode = object?.isNode()
+        mapView.editorLayer.selectedWay = object?.isWay()
+        mapView.editorLayer.selectedRelation = object?.isRelation()
         utteranceMap.removeObject(forKey: utterance)
     }
 
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-        mapView?.editorLayer.selectedNode = nil
-        mapView?.editorLayer.selectedWay = nil
-        mapView?.editorLayer.selectedRelation = nil
+        mapView.editorLayer.selectedNode = nil
+        mapView.editorLayer.selectedWay = nil
+        mapView.editorLayer.selectedRelation = nil
     }
 
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {

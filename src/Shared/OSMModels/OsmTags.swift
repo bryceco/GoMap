@@ -29,7 +29,7 @@ class OsmTags : NSObject {
 		return tag
 	}
 
-	@objc class func IsOsmBooleanTrue(_ value: String?) -> Bool {
+	@objc class func isOsmBooleanTrue(_ value: String?) -> Bool {
 		switch value {
 			case "true", "yes", "1":
 				return true
@@ -38,7 +38,7 @@ class OsmTags : NSObject {
 		}
 	}
 
-	@objc class func IsOsmBooleanFalse(_ value: String?) -> Bool {
+	@objc class func isOsmBooleanFalse(_ value: String?) -> Bool {
 		switch value {
 			case "false", "no", "0":
 				return true

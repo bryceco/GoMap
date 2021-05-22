@@ -87,8 +87,7 @@ import Foundation
 
 	@objc func summary() -> String? {
 		let parentID = PresetFeature.parentIDofID( self.featureID )
-		let result = PresetsDatabase.shared.inheritedValueOfFeature(parentID,
-			fieldGetter: { (feature:PresetFeature?) -> AnyHashable? in return feature!.name })
+		let result = PresetsDatabase.shared.inheritedValueOfFeature(parentID, fieldGetter: { $0.name })
 		return result as? String
 	}
 
@@ -101,7 +100,11 @@ import Foundation
 	@objc func iconScaled24() -> UIImage?
 	{
 		if _iconScaled24 == PresetFeature.uninitializedImage {
-			_iconScaled24 = IconScaledForDisplay( self.iconUnscaled() )
+			if let image = self.iconUnscaled() {
+				_iconScaled24 = EditorMapLayer.IconScaledForDisplay( image )
+			} else {
+				_iconScaled24 = nil
+			}
 		}
 		return _iconScaled24
 	}

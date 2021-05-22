@@ -1,4 +1,3 @@
-//  Converted to Swift 5.4 by Swiftify v5.4.27034 - https://swiftify.com/
 //
 //  CustomAerial.h
 //  Go Map!!
@@ -422,23 +421,21 @@ class AerialList: NSObject {
         return ""
     }
     
-     func addPoints(_ points: [AnyHashable]?, to path: CGMutablePath?) {
-         var first = true
-         for pt in points ?? [] {
-             guard let pt = pt as? [AnyHashable] else {
-                 continue
-             }
-            let lon = (pt[0] as? NSNumber)?.doubleValue ?? 0.0
-            let lat = (pt[1] as? NSNumber)?.doubleValue ?? 0.0
-             if first {
-                 path?.move(to: CGPoint(x: CGFloat(lon), y: CGFloat(lat)), transform: .identity)
-                 first = false
-             } else {
-                 path?.addLine(to: CGPoint(x: CGFloat(lon), y: CGFloat(lat)), transform: .identity)
-             }
-         }
-         path?.closeSubpath()
-     }
+	func addPoints(_ points: [[NSNumber]], to path: CGMutablePath) {
+		var first = true
+		for pt in points {
+			let lon = CGFloat( pt[0].doubleValue )
+			let lat = CGFloat( pt[1].doubleValue )
+			let cgPoint = CGPoint( x: lon, y: lat )
+			if first {
+				path.move(to: cgPoint, transform: .identity)
+				first = false
+			} else {
+				path.addLine(to: cgPoint, transform: .identity)
+			}
+		}
+		path.closeSubpath()
+	}
     
      func processOsmLabAerialsList(_ featureArray: [AnyHashable]?, isGeoJSON: Bool) -> [AerialService] {
          let categories = [
@@ -469,29 +466,29 @@ class AerialList: NSObject {
 					print("Aerial: skipping type \(type)")
 					continue
 				}
-			 }
+			}
 			guard let properties: [String : Any] = isGeoJSON ? entry["properties"] as? [String : Any] : entry
 			else { continue }
 
 			guard let name = properties["name"] as? String else { continue }
-			 if name.hasPrefix("Maxar ") {
-				 // we special case their imagery because they require a special key
-				 continue
-			 }
+			if name.hasPrefix("Maxar ") {
+				// we special case their imagery because they require a special key
+				continue
+			}
 			guard let identifier = properties["id"] as? String else { continue }
 			let category = properties["category"] as? String
-			 if categories[category ?? ""] == nil {
-				 if identifier == "OpenTopoMap" {
-					 // okay
-				 } else {
-					 // NSLog(@"category %@ - %@",category,identifier);
-					 continue
-				 }
-			 }
+			if categories[category ?? ""] == nil {
+				if identifier == "OpenTopoMap" {
+					// okay
+				} else {
+					// NSLog(@"category %@ - %@",category,identifier);
+					continue
+				}
+			}
 			let startDateString = properties["start_date"] as? String
 			let endDateString = properties["end_date"] as? String
-			 let endDate = AerialService.date(from: endDateString)
-			 if let endDate = endDate,
+			let endDate = AerialService.date(from: endDateString)
+			if let endDate = endDate,
 				endDate.timeIntervalSinceNow < -20 * 365.0 * 24 * 60 * 60
 			{
 				 continue
@@ -500,52 +497,45 @@ class AerialList: NSObject {
 				print("Aerial: missing properties: \(name)")
 				continue
 			}
-			 let projections = properties["available_projections"] as? [String]
-			var url = properties["url"] as? String ?? ""
-			if url == "" {
+			let projections = properties["available_projections"] as? [String]
+			guard var url = properties["url"] as? String,
+				  url.hasPrefix("http:") || url.hasPrefix("https:")
+			else {
+				// invalid url
+				print("Aerial: bad url: \(name)")
 				continue
 			}
 
 			let propExtent = properties["extent"] as? [String:Any] ?? [:]
 
 			let maxZoom = ((isGeoJSON ? properties : propExtent)["max_zoom"] as? NSNumber)?.intValue ?? 0
-			 var attribIconString = properties["icon"] as? String
+			var attribIconString = properties["icon"] as? String ?? ""
 
 			let attribDict = properties["attribution"] as? [String:Any] ?? [:]
 			let attribString = attribDict["text"] as? String
-			 let attribUrl = attribDict["url"] as? String
-			 let overlay = (properties["overlay"] as? NSNumber)?.intValue ?? 0
+			let attribUrl = attribDict["url"] as? String
+			let overlay = (properties["overlay"] as? NSNumber)?.intValue ?? 0
 			if let supported = supportedTypes[type],
-			   supported == true
+				supported == true
 			{
 				// great
 			} else {
 				print("Aerial: unsupported type \(type): \(name)")
 				continue
-			 }
-			 if overlay != 0 {
-				 // we don@"t support overlays yet
-				 continue
-			 }
-			 if !(url.hasPrefix("http:") || url.hasPrefix("https:") ) {
-				 // invalid url
-				 print("Aerial: bad url \(url): \(name)")
-				 continue
-			 }
+			}
+			if overlay != 0 {
+				// we don@"t support overlays yet
+				continue
+			}
 
-			 // we only support some types of WMS projections
-			 var projection: String? = nil
-			 if type == "wms" {
-				 for proj in projections ?? [] {
-					 if supportedProjections.contains(proj) {
-						 projection = proj
-						 break
-					 }
-				 }
-				 if projection == nil {
-					 continue
-				 }
-			 }
+			// we only support some types of WMS projections
+			var projection: String? = nil
+			if type == "wms" {
+				projection = projections?.first(where: { supportedProjections.contains( $0 ) })
+				if projection == nil {
+					continue
+				}
+			}
 
 			 var polygonPoints: [AnyHashable]? = nil
 			 var isMultiPolygon = false // a GeoJSON multipolygon, which has an extra layer of nesting
@@ -554,117 +544,98 @@ class AerialList: NSObject {
 					polygonPoints = geometry["coordinates"] as? [AnyHashable]
 					isMultiPolygon = (geometry["type"] as? String ?? "") == "MultiPolygon"
 				}
-			 } else {
-				 polygonPoints = propExtent["polygon"] as? [AnyHashable]
-			 }
+			} else {
+				polygonPoints = propExtent["polygon"] as? [AnyHashable]
+			}
 
-			 var polygon: CGPath? = nil
-			 if let polygonPoints = polygonPoints {
-				 let path = CGMutablePath()
-				 if isMultiPolygon {
-					 for outer in polygonPoints {
-						 guard let outer = outer as? [AnyHashable] else {
-							 continue
-						 }
-						 for loop in outer {
-							 guard let loop = loop as? [AnyHashable] else {
-								 continue
-							 }
-							 addPoints(loop, to: path)
-						 }
-					 }
-				 } else {
-					 for loop in polygonPoints {
-						 guard let loop = loop as? [AnyHashable] else {
-							 continue
-						 }
-						 addPoints(loop, to: path)
-					 }
-				 }
-				 polygon = path.copy()
-			 }
+			var polygon: CGPath? = nil
+			if let polygonPoints = polygonPoints {
+				let path = CGMutablePath()
+				if isMultiPolygon {
+					if let polygonPoints = polygonPoints as? [[[[NSNumber]]]] {
+						for outer in polygonPoints {
+							for loop in outer {
+								addPoints(loop, to: path)
+							}
+						}
+					}
+				} else {
+					if let polygonPoints = polygonPoints as? [[[NSNumber]]] {
+						for loop in polygonPoints {
+							addPoints(loop, to: path)
+						}
+					}
+				}
+				polygon = path.copy()
+			}
 
-			 var attribIcon: UIImage? = nil
-			 var httpIcon = false
-			 if (attribIconString?.count ?? 0) > 0 {
-				 let prefixList = ["data:image/png;base64,", "data:image/png:base64,", "png:base64,"]
-				 for prefix in prefixList {
-					 if attribIconString?.hasPrefix(prefix) ?? false {
-						 attribIconString = (attribIconString as NSString?)?.substring(from: prefix.count)
-						 let decodedData = Data(base64Encoded: attribIconString ?? "", options: [])
-						 if let decodedData = decodedData {
-							 attribIcon = UIImage(data: decodedData)
-						 }
-						 if attribIcon == nil {
-							 print("bad icon decode: \(attribIconString ?? "")")
-						 }
-						 break
-					 }
-				 }
-				 if attribIcon == nil {
-					 if attribIconString?.hasPrefix("http") ?? false {
-						 httpIcon = true
-					 } else {
-						print("Aerial: unsupported icon format in \(name ): \(attribIconString ?? "")")
-					 }
-				 }
-			 }
+			var attribIcon: UIImage? = nil
+			var httpIcon = false
+			if attribIconString.count > 0 {
+				let prefixList = ["data:image/png;base64,", "data:image/png:base64,", "png:base64,"]
+				for prefix in prefixList {
+					if attribIconString.hasPrefix(prefix) {
+						attribIconString.removeFirst( prefix.count )
+						if let decodedData = Data(base64Encoded: attribIconString, options: []) {
+							attribIcon = UIImage(data: decodedData)
+						}
+						if attribIcon == nil {
+							print("bad icon decode: \(attribIconString)")
+						}
+						break
+					}
+				}
+				if attribIcon == nil {
+					if attribIconString.hasPrefix("http") {
+						httpIcon = true
+					} else {
+						print("Aerial: unsupported icon format in \(name ): \(attribIconString)")
+					}
+				}
+			}
 
-			 // support for {apikey}
+			// support for {apikey}
 			if url.contains("{apikey}") {
-				 var apikey: String = ""
+				var apikey: String = ""
 				if url.contains(".thunderforest.com/") {
-					 apikey = "be3dc024e3924c22beb5f841d098a8a3" // Please don't use in other apps. Sign up for a free account at Thunderforest.com insead.
-				 } else {
-					 continue
-				 }
-				 url = url.replacingOccurrences(of: "{apikey}", with: apikey)
-			 }
+					apikey = "be3dc024e3924c22beb5f841d098a8a3" // Please don't use in other apps. Sign up for a free account at Thunderforest.com insead.
+				} else {
+					continue
+				}
+				url = url.replacingOccurrences(of: "{apikey}", with: apikey)
+			}
 
 			let service = AerialService(withName: name, identifier: identifier, url: url, maxZoom: maxZoom, roundUp: true, startDate: startDateString, endDate: endDateString, wmsProjection: projection, polygon: polygon, attribString: attribString, attribIcon: attribIcon, attribUrl: attribUrl)
-			 externalAerials.append(service)
+			externalAerials.append(service)
 
-			 if httpIcon {
-				service.loadIcon(fromWeb: attribIconString!)
-			 }
-         }
-		externalAerials = externalAerials.sorted(by: {
-			return $0.name.caseInsensitiveCompare($1.name) == .orderedAscending
-         })
-         return externalAerials
-     }
+			if httpIcon {
+				service.loadIcon(fromWeb: attribIconString)
+			}
+		}
+		externalAerials = externalAerials.sorted(by: { $0.name.caseInsensitiveCompare($1.name) == .orderedAscending })
+		return externalAerials
+	}
     
     func processOsmLabAerialsData(_ data: Data?) -> [AerialService] {
-        if data == nil || (data?.count ?? 0) == 0 {
-            return []
-        }
+		guard let data = data,
+			  data.count > 0
+		else { return [] }
         
-		var json: Any? = nil
-		do {
-			if let data = data {
-				json = try JSONSerialization.jsonObject(with: data, options: [])
-			}
-		} catch {
-			return []
-		}
+		let json = try? JSONSerialization.jsonObject(with: data, options: [])
 		if let json = json as? [AnyHashable] {
 			// unversioned (old ELI) variety
 			return processOsmLabAerialsList(json, isGeoJSON: false)
 		}
 		if let json = json as? [String:Any] {
-			let meta = json["meta"] as? [String : Any]
-			if meta == nil {
-				// josm variety
-			} else {
+			if let meta = json["meta"] as? [String : Any] {
 				// new ELI variety
-				let formatVersion = meta?["format_version"] as? String
-				if formatVersion != "1.0" {
-					return []
-				}
-				let metaType = json["type"] as? String
-				if metaType != "FeatureCollection" {
-					return []
-				}
+				guard let formatVersion = meta["format_version"] as? String,
+					  formatVersion == "1.0",
+					  let metaType = json["type"] as? String,
+					  metaType == "FeatureCollection"
+				else { return [] }
+			} else {
+				// josm variety
 			}
 			let features = json["features"] as? [AnyHashable]
 			return processOsmLabAerialsList(features, isGeoJSON: true)

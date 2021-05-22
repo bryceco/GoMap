@@ -1,4 +1,3 @@
-//  Converted to Swift 5.4 by Swiftify v5.4.27034 - https://swiftify.com/
 //
 //  LayerProperties.swift
 //  Go Map!!
@@ -10,11 +9,11 @@
 import Foundation
 
 @objcMembers
-class LayerProperties: NSObject {
-    public var transform: CATransform3D?
-    public var position: OSMPoint?
+final class LayerProperties: NSObject {
+    public var transform: CATransform3D = CATransform3D()
+    public var position: OSMPoint = OSMPoint()
     public var offset = CGPoint.zero
-    public var lineWidth = 0.0
+	public var lineWidth: CGFloat = 0.0
     public var is3D = false
     public var isDirectional = false
 
@@ -25,47 +24,50 @@ class LayerProperties: NSObject {
 }
 
 @objc protocol LayerPropertiesProviding: AnyObject {
-    var properties: LayerProperties? { get }
+    var properties: LayerProperties { get }
 }
 
 @objcMembers
 class CALayerWithProperties: CALayer, LayerPropertiesProviding {
-    var properties: LayerProperties?
+    var properties: LayerProperties
     
     override init() {
+		properties = LayerProperties()
         super.init()
-            properties = LayerProperties()
     }
 
     required init?(coder aDecoder: NSCoder) {
+		properties = LayerProperties()
         super.init(coder: aDecoder)
     }
 }
 
 @objcMembers
 class CAShapeLayerWithProperties: CAShapeLayer, LayerPropertiesProviding {
-    var properties: LayerProperties?
+    var properties: LayerProperties
     
     override init() {
+		properties = LayerProperties()
         super.init()
-            properties = LayerProperties()
     }
 
     required init?(coder aDecoder: NSCoder) {
+		properties = LayerProperties()
         super.init(coder: aDecoder)
     }
 }
 
 @objcMembers
 class CATextLayerWithProperties: CATextLayer, LayerPropertiesProviding {
-    var properties: LayerProperties?
+    var properties: LayerProperties
     
     override init() {
+		properties = LayerProperties()
         super.init()
-            properties = LayerProperties()
     }
 
     required init?(coder aDecoder: NSCoder) {
+		properties = LayerProperties()
         super.init(coder: aDecoder)
     }
 }

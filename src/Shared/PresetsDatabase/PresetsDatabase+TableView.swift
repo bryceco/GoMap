@@ -165,10 +165,10 @@ extension PresetsDatabase {
 	@objc func isArea(_ way: OsmWay) -> Bool {
 
 		if let value = way.tags["area"] {
-			if OsmTags.IsOsmBooleanTrue(value) {
+			if OsmTags.isOsmBooleanTrue(value) {
 				return true
 			}
-			if OsmTags.IsOsmBooleanFalse(value) {
+			if OsmTags.isOsmBooleanFalse(value) {
 				return false
 			}
 		}
@@ -248,51 +248,37 @@ extension PresetsDatabase {
 			let urlText = searchKeys
 				? "https://taginfo.openstreetmap.org/api/4/keys/all?query=\(cleanKey)&filter=characters_colon&page=1&rp=10&sortname=count_all&sortorder=desc"
 				: "https://taginfo.openstreetmap.org/api/4/key/values?key=\(cleanKey)&page=1&rp=25&sortname=count_all&sortorder=desc"
-			var rawData: Data? = nil
-			if let url = URL(string: urlText) {
-				do {
-					try rawData = Data(contentsOf: url)
-				} catch {}
+			guard let url = URL(string: urlText),
+				  let rawData = try? Data(contentsOf: url)
+			else { return }
+
+			let json = try? JSONSerialization.jsonObject(with: rawData, options: []) as? [AnyHashable : Any]
+			let results = json?["data"] as? [[AnyHashable : Any]] ?? []
+			var resultList: [String] = []
+			if searchKeys {
+				for v in results {
+					if (v["count_all"] as? NSNumber)?.intValue ?? 0 < 1000 {
+						continue // it's a very uncommon value, so ignore it
+					}
+					if let k = v["key"] as? String {
+						resultList.append(k)
+					}
+				}
+			} else {
+				for v in results {
+					if ((v["fraction"] as? NSNumber)?.doubleValue ?? 0.0) < 0.01 {
+						continue // it's a very uncommon value, so ignore it
+					}
+					if let val = v["value"] as? String {
+						resultList.append(val)
+					}
+				}
 			}
-			if let rawData = rawData {
-				var json: [AnyHashable : Any]? = nil
-				do {
-					json = try JSONSerialization.jsonObject(with: rawData, options: []) as? [AnyHashable : Any]
-				} catch {
-				}
-				let results = json?["data"] as? [AnyHashable] ?? []
-				var resultList: [String] = []
-				if searchKeys {
-					for v in results {
-						guard let v = v as? [AnyHashable : Any] else {
-							continue
-						}
-						if (v["count_all"] as? NSNumber)?.intValue ?? 0 < 1000 {
-							continue // it's a very uncommon value, so ignore it
-						}
-						if let k = v["key"] as? String {
-							resultList.append(k)
-						}
-					}
-				} else {
-					for v in results {
-						guard let v = v as? [AnyHashable : Any] else {
-							continue
-						}
-						if ((v["fraction"] as? NSNumber)?.doubleValue ?? 0.0) < 0.01 {
-							continue // it's a very uncommon value, so ignore it
-						}
-						if let val = v["value"] as? String {
-							resultList.append(val)
-						}
-					}
-				}
-				if resultList.count > 0 {
-					DispatchQueue.main.async(execute: {
-						self.taginfoCache[cacheKey] = resultList
-						update()
-					})
-				}
+			if resultList.count > 0 {
+				DispatchQueue.main.async(execute: {
+					self.taginfoCache[cacheKey] = resultList
+					update()
+				})
 			}
 		})
 		return []
@@ -487,7 +473,7 @@ extension PresetsDatabase {
 			}
 
 			let placeholders = dict["placeholders"] as? [String : Any]
-			var addrs: [AnyHashable] = []
+			var addrs: [PresetKey] = []
 			for addressGroup in keysForCountry ?? [] {
 				for addressKey in addressGroup {
 					var name: String?

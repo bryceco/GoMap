@@ -1,4 +1,3 @@
-//  Converted to Swift 5.4 by Swiftify v5.4.27034 - https://swiftify.com/
 //
 //  FirstViewController.h
 //  Go Map!!
@@ -157,8 +156,8 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 hit = mapView.editorLayer.osmHitTestNode(inSelectedWay: loc, radius: DefaultHitTestRadius)
             }
             if hit == nil {
-                hit = mapView.editorLayer.osmHitTest(loc, radius: DefaultHitTestRadius, isDragConnect: false, ignoreList: nil, segment: &segment)
-            }
+                hit = mapView.editorLayer.osmHitTest(loc, radius: DefaultHitTestRadius, isDragConnect: false, ignoreList: [], segment: &segment)
+			}
             if (hit != nil) == (mapView.editorLayer.selectedNode != nil) || (hit != nil) == (mapView.editorLayer.selectedWay != nil) || (hit?.isRelation != nil) {
                 hit = nil
             }

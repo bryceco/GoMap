@@ -1,4 +1,3 @@
-//  Converted to Swift 5.4 by Swiftify v5.4.27034 - https://swiftify.com/
 //
 //  GpxLayer.swift
 //  OpenStreetMap
@@ -121,10 +120,6 @@ class GpxTrack: NSObject, NSCoding {
 
     func finish() {
         recording = false
-//        if let points = points {
-//            #warning("Swiftify: Skipping redundant initializing to itself")
-//            //points = points
-//        }
     }
 
     convenience init(rect: CGRect) {

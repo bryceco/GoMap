@@ -50,7 +50,7 @@ class PresetGroup: NSObject {
 			   values[1].tagValue == "no"
 			{
 				if let v = isPlaceholder ? "yes" : dict?[ preset.tagKey ],
-				   OsmTags.IsOsmBooleanTrue( v )
+				   OsmTags.isOsmBooleanTrue( v )
 				{
 					if summary.isEmpty {
 						summary = preset.name

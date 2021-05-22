@@ -50,11 +50,19 @@ class BingMetadataViewController: UIViewController {
 								guard let area = area as? [AnyHashable : Any] else { continue }
 								let zoomMin = (area["zoomMin"] as? NSNumber)?.intValue ?? 0
 								let zoomMax = (area["zoomMax"] as? NSNumber)?.intValue ?? 0
-								let bbox = area["bbox"] as? [AnyHashable] ?? []
-								var rect = OSMRect.init(origin: _OSMPoint.init(x: (bbox[1] as? NSNumber)?.doubleValue ?? 0.0, y: (bbox[0] as? NSNumber)?.doubleValue ?? 0.0), size: OSMSize.init(width: (bbox[3] as? NSNumber)?.doubleValue ?? 0.0, height: (bbox[2] as? NSNumber)?.doubleValue ?? 0.0))
+								guard let bbox = area["bbox"] as? [NSNumber],
+										bbox.count == 4
+								else { continue }
+								var rect = OSMRect(origin: _OSMPoint(x: bbox[1].doubleValue,
+																	 y: bbox[0].doubleValue),
+												   size: OSMSize(width: bbox[3].doubleValue,
+																 height: bbox[2].doubleValue))
 								rect.size.width -= rect.origin.x
 								rect.size.height -= rect.origin.y
-								if zoomLevel >= zoomMin && zoomLevel <= zoomMax && OSMRectIntersectsRect(viewRect, rect) {
+								if zoomLevel >= zoomMin,
+								   zoomLevel <= zoomMax,
+								   OSMRectIntersectsRect(viewRect, rect)
+								{
 									if vintageStart != "" && vintageEnd != "" {
 										attribution = "\(attribution)\n   \(vintageStart) - \(vintageEnd)"
 									}

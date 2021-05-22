@@ -1,4 +1,3 @@
-//  Converted to Swift 5.4 by Swiftify v5.4.27034 - https://swiftify.com/
 //
 //  PushPinView.swift
 //  Go Map!!
@@ -10,7 +9,7 @@
 import QuartzCore
 import UIKit
 
-//typealias PushPinViewDragCallback = (UIGestureRecognizer.State, CGFloat, CGFloat, UIGestureRecognizer) -> Void
+typealias PushPinViewDragCallback = (Int, CGFloat, CGFloat, UIGestureRecognizer) -> Void
 
 @objcMembers
 class PushPinView: UIButton, CAAnimationDelegate {
@@ -315,7 +314,7 @@ class PushPinView: UIButton, CAAnimationDelegate {
         }
 
         if let dragCallback = dragCallback {
-            dragCallback(gesture.state, dX, dY, gesture)
+			dragCallback(gesture.state.rawValue, dX, dY, gesture)
         }
     }
 

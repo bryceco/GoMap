@@ -26,7 +26,7 @@
 #import "VectorMath.h"
 
 #import "Database.h"
-#import "EditorMapLayer.h"
+//#import "EditorMapLayer.h"
 
 #define OSM_SERVER_KEY	@"OSM Server"
 

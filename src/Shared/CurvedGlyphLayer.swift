@@ -276,7 +276,7 @@ private class StringGlyphs {
     }
 
     // return a non-curved rectangular layer
-    @objc static func layerWithString(_ string: String) -> CATextLayerWithProperties? {
+    @objc static func layerWithString(_ string: String) -> CATextLayerWithProperties {
         let MAX_TEXT_WIDTH: CGFloat = 100.0
 
         // Don't cache these here because they are cached by the objects they are attached to

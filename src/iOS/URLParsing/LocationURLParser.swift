@@ -1,14 +1,5 @@
-//  Converted to Swift 5.4 by Swiftify v5.4.27034 - https://swiftify.com/
 //
-//  GeoURLParser.h
-//  Go Map!!
-//
-//  Created by Wolfgang Timme on 2/2/20.
-//  Copyright © 2020 Bryce. All rights reserved.
-//
-
-//
-//  GeoURLParser.m
+//  LocationURLParser.swift
 //  Go Map!!
 //
 //  Created by Wolfgang Timme on 2/2/20.

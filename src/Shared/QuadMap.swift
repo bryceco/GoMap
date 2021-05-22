@@ -1,4 +1,3 @@
-//  Converted to Swift 5.4 by Swiftify v5.4.27034 - https://swiftify.com/
 //
 //  QuadMap.swift
 //  OpenStreetMap
@@ -44,10 +43,8 @@ class QuadMap: NSObject, NSCoding {
 		let ok = coder.containsValue(forKey: "rootQuad")
 		assert(ok)
 		guard let root = coder.decodeObject(forKey: "rootQuad") else {
-			while true {
-				print("bad rootQuad")
-				let _ = coder.decodeObject(forKey: "rootQuad")
-			}
+			print("bad rootQuad")
+			let _ = coder.decodeObject(forKey: "rootQuad")
 			return nil
 		}
 		guard let root2 = root as? QuadBox else {

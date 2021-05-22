@@ -14,7 +14,7 @@
 #import "BingMapsGeometry.h"
 //#import "DisplayLink.h"
 #import "DLog.h"
-#import "EditorMapLayer.h"
+//#import "EditorMapLayer.h"
 //#import "FpsLabel.h"
 //#import "GpxLayer.h"
 #import "MapView.h"
@@ -59,6 +59,14 @@ static const CGFloat Z_BALL				= 6;
 static const CGFloat Z_TOOLBAR			= 90;
 static const CGFloat Z_PUSHPIN			= 105;
 static const CGFloat Z_FLASH			= 110;
+
+
+#define DefaultHitTestRadius  10.0 // how close to an object do we need to tap to select it
+#define DragConnectHitTestRadius  (DefaultHitTestRadius * 0.6) // how close to an object do we need to drag a node to connect to it
+//private let MinIconSizeInPixels: CGFloat = 24.0
+//private let MinIconSizeInMeters: CGFloat = 2.0
+//private let Pixels_Per_Character: CGFloat = 8.0
+//private let NodeHighlightRadius: CGFloat = 6.0
 
 
 @implementation MapLocation
@@ -217,10 +225,12 @@ const CGFloat kEditControlCornerRadius = 4;
         }
         _rulerLayer.drawsAsynchronously	= YES;
 #endif
-        
+
+		__weak MapView * weakSelf = self;
         _editorLayer.mapData.undoCommentCallback = ^(BOOL undo,NSDictionary * context) {
-            
-            if ( self.silentUndo )
+
+			__strong MapView * myself = weakSelf;
+			if ( myself == nil || myself.silentUndo )
                 return;
             
             NSString 	 * title 	= undo ? NSLocalizedString(@"Undo",nil) : NSLocalizedString(@"Redo",nil);
@@ -229,31 +239,31 @@ const CGFloat kEditControlCornerRadius = 4;
             
             if ( location.length == sizeof(OSMTransform) ) {
                 const OSMTransform * transform = (OSMTransform *)[location bytes];
-                self.screenFromMapTransform = *transform;
+				weakSelf.screenFromMapTransform = *transform;
             }
             
-            _editorLayer.selectedRelation 	= context[ @"selectedRelation" ];
-            _editorLayer.selectedWay 		= context[ @"selectedWay" ];
-            _editorLayer.selectedNode		= context[ @"selectedNode" ];
-            if ( _editorLayer.selectedNode.deleted )
-                _editorLayer.selectedNode = nil;
+			myself->_editorLayer.selectedRelation 	= context[ @"selectedRelation" ];
+			myself->_editorLayer.selectedWay 		= context[ @"selectedWay" ];
+			myself->_editorLayer.selectedNode		= context[ @"selectedNode" ];
+            if ( myself->_editorLayer.selectedNode.deleted )
+				myself->_editorLayer.selectedNode = nil;
             
 #if TARGET_OS_IPHONE
             NSString * pushpin = context[@"pushpin"];
             if ( pushpin && _editorLayer.selectedPrimary ) {
                 // since we don't record the pushpin location until after a drag has begun we need to re-center on the object:
                 CGPoint pt = CGPointFromString(pushpin);
-                CLLocationCoordinate2D loc = [self longitudeLatitudeForScreenPoint:pt birdsEye:YES];
-                OSMPoint pos = [_editorLayer.selectedPrimary pointOnObjectForPoint:OSMPointMake(loc.longitude, loc.latitude)];
-                pt = [self screenPointForLatitude:pos.y longitude:pos.x birdsEye:YES];
+                CLLocationCoordinate2D loc = [myself longitudeLatitudeForScreenPoint:pt birdsEye:YES];
+                OSMPoint pos = [myself->_editorLayer.selectedPrimary pointOnObjectForPoint:OSMPointMake(loc.longitude, loc.latitude)];
+                pt = [myself screenPointForLatitude:pos.y longitude:pos.x birdsEye:YES];
                 // place pushpin
-                [self placePushpinAtPoint:pt object:_editorLayer.selectedPrimary];
+                [myself placePushpinAtPoint:pt object:myself->_editorLayer.selectedPrimary];
             } else {
-                [self removePin];
-            }
+				[myself removePin];
+			}
 #endif
             NSString * message = [NSString stringWithFormat:@"%@ %@", title, action];
-            [self flashMessage:message];
+            [myself flashMessage:message];
         };
     }
     return self;
@@ -2722,15 +2732,15 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
                                 angle += delta;
                                 OSMPoint new = { axis.x + radius * cos(angle), axis.y + radius * sin(angle) };
                                 CGPoint dist = { new.x - pt.x, -(new.y - pt.y) };
-                                [strongSelf.editorLayer adjustNode:node byDistance:dist];
+								[strongSelf.editorLayer adjust:node byDistance:dist];
                             }
                             
                         } else {
                             // drag object
                             CGPoint delta = { strongSelf->_pushpinDragTotalMove.x, -strongSelf->_pushpinDragTotalMove.y };
                             for ( OsmNode * node in object.nodeSet ) {
-                                [strongSelf.editorLayer adjustNode:node byDistance:delta];
-                            }
+                                [strongSelf.editorLayer adjust:node byDistance:delta];
+							}
                         }
                         
                         // do hit testing for connecting to other objects
@@ -2875,9 +2885,9 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
         NSString * error = nil;
         EditActionWithNode add = [_editorLayer canAddNodeToWay:way atIndex:segment+1 error:&error];
         if ( add ) {
-            OsmNode * newNode = [_editorLayer createNodeAtPoint:arrowPoint];
+            OsmNode * newNode = [_editorLayer createNodeAt:arrowPoint];
             add(newNode);
-            _editorLayer.selectedNode = newNode;
+			_editorLayer.selectedNode = newNode;
             [self placePushpinForSelection];
         } else {
             [self showAlert:NSLocalizedString(@"Error",nil) message:error];
@@ -2887,13 +2897,13 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
         
         if ( node && way && way.nodes.count && (way.isClosed || (node != way.nodes[0] && node != way.nodes.lastObject)) ) {
             // both a node and way are selected but selected node is not an endpoint (or way is closed), so we will create a new way from that node
-            way = [_editorLayer createWayWithNode:node];
+            way = [_editorLayer createWayWith:node];
         } else {
             if ( node == nil ) {
-                node = [_editorLayer createNodeAtPoint:arrowPoint];
+                node = [_editorLayer createNodeAt:arrowPoint];
             }
             if ( way == nil ) {
-                way = [_editorLayer createWayWithNode:node];
+                way = [_editorLayer createWayWith:node];
             }
         }
         NSInteger prevIndex = [way.nodes indexOfObject:node];
@@ -2995,7 +3005,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
             [self showAlert:NSLocalizedString(@"Can't extend way",nil) message:error];
             return;
         }
-        OsmNode * node2 = [_editorLayer createNodeAtPoint:newPoint];
+        OsmNode * node2 = [_editorLayer createNodeAt:newPoint];
         _editorLayer.selectedWay = way;		// set selection before perfoming add-node action so selection is recorded in undo stack
         _editorLayer.selectedNode = node2;
         addNodeToWay( node2 );
@@ -3061,7 +3071,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
         // create new object
         assert( _pushpinView );
         CGPoint point = _pushpinView.arrowPoint;
-        OsmNode * node = [_editorLayer createNodeAtPoint:point];
+        OsmNode * node = [_editorLayer createNodeAt:point];
         [_editorLayer.mapData setTags:tags forObject:node];
         _editorLayer.selectedNode = node;
         // create new pushpin for new object
@@ -3595,7 +3605,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
                 angle += delta;
                 OSMPoint new = { axis.x + radius * cos(angle), axis.y + radius * sin(angle) };
                 CGPoint dist = { new.x - pt.x, -(new.y - pt.y) };
-                [_editorLayer adjustNode:node byDistance:dist];
+                [_editorLayer adjust:node byDistance:dist];
             }
         } else {
             // ended
@@ -3665,7 +3675,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
     } else {
         
         // hit test anything
-        hit = [_editorLayer osmHitTest:point radius:DefaultHitTestRadius isDragConnect:NO ignoreList:nil segment:NULL];
+        hit = [_editorLayer osmHitTest:point radius:DefaultHitTestRadius isDragConnect:NO ignoreList:@[] segment:NULL];
         if ( hit ) {
             if ( hit.isNode ) {
                 _editorLayer.selectedNode = (id)hit;

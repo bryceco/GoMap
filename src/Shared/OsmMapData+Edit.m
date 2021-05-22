@@ -165,7 +165,7 @@
 				// This way is part of the loop being checked against
 				continue;
 			}
-			extern const double PATH_SCALING;
+			double PATH_SCALING = 256.0 * 256;
 			OSMPoint pt = MapPointForLatitudeLongitude( node.lat, node.lon );
 			pt = Sub( pt, refPoint );
 			pt = Mult( pt, PATH_SCALING );

@@ -18,7 +18,7 @@ class PresetsForFeature: NSObject {
 		return _featureName
 	}
 
-	@objc func sectionList() -> [AnyHashable] {
+	@objc func sectionList() -> [PresetGroup] {
 		return _sectionList
 	}
 
@@ -31,24 +31,23 @@ class PresetsForFeature: NSObject {
 		return group.presetKeys.count
 	}
 
-	@objc func groupAtIndex(_ index: Int) -> PresetGroup? {
+	@objc func groupAtIndex(_ index: Int) -> PresetGroup {
 		return _sectionList[index]
 	}
 
-	@objc func presetAtSection(_ section: Int, row: Int) -> Any? {
+	@objc func presetAtSection(_ section: Int, row: Int) -> Any {
 		let group = _sectionList[section]
 		let tag = group.presetKeys[row]
 		return tag
 	}
 
-	@objc func presetAtIndexPath(_ indexPath: IndexPath) -> Any? {
+	@objc func presetAtIndexPath(_ indexPath: IndexPath) -> Any {
 		return presetAtSection( indexPath.section, row: indexPath.row)
 	}
 
-	@objc class func fieldsFor(featureID:String?, field fieldGetter: @escaping (_ feature: PresetFeature) -> [String]?) -> [String]
+	class func fieldsFor(featureID:String, field fieldGetter: @escaping (_ feature: PresetFeature) -> [String]?) -> [String]
 	{
-		guard let featureID = featureID,
-			  let fields = PresetsDatabase.shared.inheritedValueOfFeature(featureID, fieldGetter:fieldGetter) as? [String]
+		guard let fields = PresetsDatabase.shared.inheritedValueOfFeature(featureID, fieldGetter:fieldGetter) as? [String]
 		else { return [] }
 
 		var list = [String]()
@@ -65,10 +64,10 @@ class PresetsForFeature: NSObject {
 	}
 
 	func addPresetsForFields(
-		inFeatureID featureID: String?,
+		inFeatureID featureID: String,
 		geometry: String,
 		field fieldGetter: @escaping (_ feature: PresetFeature) -> [String]?,
-		ignore: [String]?,
+		ignore: [String],
 		dupSet: inout Set<String>,
 		update: (() -> Void)?
 	) {
@@ -99,7 +98,7 @@ class PresetsForFeature: NSObject {
 		}
 	}
 
-	@objc init(withFeature feature:PresetFeature?,
+	init(withFeature feature:PresetFeature?,	// feature == nil if a new object
 			   objectTags: [String : String],
 			   geometry: String,
 			   update: (() -> Void)?)

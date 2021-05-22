@@ -6,8 +6,8 @@
 
 //#import "MyUndoManager.h"
 #import "UndoAction.h"
-#import "EditorMapLayer.h"
-#import "LayerProperties.h"
+//#import "EditorMapLayer.h"
+//#import "LayerProperties.h"
 #import "OsmMapData.h"
 //#import "OsmMember.h"
 //#import "OsmNode.h"
@@ -32,9 +32,9 @@
 //#import "aes.h"
 #import "QuadBox.h"
 
-UIImage * IconScaledForDisplay(UIImage *icon);
-UIImage * ImageScaledToSize( UIImage * image, CGFloat iconSize);
-typedef void (^    PushPinViewDragCallback)(UIGestureRecognizerState state, CGFloat dx, CGFloat dy, UIGestureRecognizer * gesture );
+//UIImage * IconScaledForDisplay(UIImage *icon);
+//UIImage * ImageScaledToSize( UIImage * image, CGFloat iconSize);
+//typedef void (^    PushPinViewDragCallback)(UIGestureRecognizerState state, CGFloat dx, CGFloat dy, UIGestureRecognizer * gesture );
 
 
 

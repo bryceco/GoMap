@@ -1,4 +1,3 @@
-//  Converted to Swift 5.4 by Swiftify v5.4.27034 - https://swiftify.com/
 //
 //  POICustomTagsViewController.h
 //  Go Map!!
@@ -153,8 +152,8 @@ class POIAllTagsViewController: UITableViewController {
         let tabController = tabBarController as! POITabBarController
         
         // fetch values from tab controller
-        relations = tabController.relationList as? [OsmRelation] ?? []
-        members = (tabController.selection as? OsmRelation)?.members ?? []
+        relations = tabController.relationList
+		members = (tabController.selection as? OsmRelation)?.members ?? []
         
 		tags = []
 		for (key,value) in tabController.keyValueDict {

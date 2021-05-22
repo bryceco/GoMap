@@ -21,7 +21,6 @@
 		021FADD725873D0100F6E1C0 /* PresetsForFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADD625873D0100F6E1C0 /* PresetsForFeature.swift */; };
 		021FADE22588474300F6E1C0 /* PresetCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADE12588474300F6E1C0 /* PresetCategory.swift */; };
 		021FADEF25884BB900F6E1C0 /* OsmTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADEE25884BB900F6E1C0 /* OsmTags.swift */; };
-		022012BB24A015E800C1728F /* EditorMapLayer+Ocean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */; };
 		022B09A719BD3F7B0041687B /* QuadBox.mm in Sources */ = {isa = PBXBuildFile; fileRef = 022B09A619BD3F7B0041687B /* QuadBox.mm */; };
 		02354F7A246349E100878A04 /* CurvedGlyphLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02354F79246349E100878A04 /* CurvedGlyphLayer.swift */; };
 		023B892B19C148790060CDB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B892A19C148790060CDB5 /* Images.xcassets */; };
@@ -41,6 +40,9 @@
 		027EDC72206F3EED00D349D6 /* DDXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC65206F3EED00D349D6 /* DDXMLNode.m */; };
 		027EDC73206F3EED00D349D6 /* DDXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC66206F3EED00D349D6 /* DDXMLDocument.m */; };
 		027EDC74206F3EED00D349D6 /* NSString+DDXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC6C206F3EED00D349D6 /* NSString+DDXML.m */; };
+		0286EAA52656F15A007CFEE9 /* EditorMapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */; };
+		0286EAA62656FEAC007CFEE9 /* EditorMapLayer+Ocean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */; };
+		0286EAA726570382007CFEE9 /* LayerProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096D1263EA7E100E3B129 /* LayerProperties.swift */; };
 		028C51E625CB7A23004A88F7 /* TristateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028C51E525CB7A23004A88F7 /* TristateButton.swift */; };
 		028F504719BA2F460093C423 /* presets in Resources */ = {isa = PBXBuildFile; fileRef = 028F504619BA2F460093C423 /* presets */; };
 		0291D83724427AFA00F793BE /* Display.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0291D83524427AFA00F793BE /* Display.storyboard */; };
@@ -115,9 +117,7 @@
 		C3004F4D263A6306006BF313 /* NominatimViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3004F4C263A6306006BF313 /* NominatimViewController.swift */; };
 		C3004F52263A6CA5006BF313 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3004F51263A6CA5006BF313 /* MainViewController.swift */; };
 		C3004F54263A99DD006BF313 /* POIAttributesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3004F53263A99DC006BF313 /* POIAttributesViewController.swift */; };
-		C30C22BB264426B700D8C932 /* EditorMapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA7616713F2A00BB4414 /* EditorMapLayer.m */; };
 		C31315232644292700C0AD86 /* LocationBallLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096D4263EACFF00E3B129 /* LocationBallLayer.swift */; };
-		C31315242644292C00C0AD86 /* LayerProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 0216636F24738C9600B0B0F6 /* LayerProperties.m */; };
 		C341E1532639DECC0022E983 /* WikiPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341E1522639DECC0022E983 /* WikiPage.swift */; };
 		C341E15A2639DF210022E983 /* NotesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341E1592639DF210022E983 /* NotesTableViewController.swift */; };
 		C341E15C2639DF440022E983 /* NearbyMappersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341E15B2639DF440022E983 /* NearbyMappersViewController.swift */; };
@@ -184,8 +184,6 @@
 		02128F7B2575D925003D2551 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Height.strings"; sourceTree = "<group>"; };
 		02128F7C2575D925003D2551 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Display.strings"; sourceTree = "<group>"; };
 		0216636C2470AFAB00B0B0F6 /* CurvedTextLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CurvedTextLayer.swift; path = ../Shared/CurvedTextLayer.swift; sourceTree = "<group>"; };
-		0216636E24738C9600B0B0F6 /* LayerProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LayerProperties.h; path = ../Shared/LayerProperties.h; sourceTree = "<group>"; };
-		0216636F24738C9600B0B0F6 /* LayerProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LayerProperties.m; path = ../Shared/LayerProperties.m; sourceTree = "<group>"; };
 		021B30C51973AA4400B36EFF /* OsmMapData+Edit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = "OsmMapData+Edit.h"; path = "../Shared/OsmMapData+Edit.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		021B30C61973AA4400B36EFF /* OsmMapData+Edit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = "OsmMapData+Edit.m"; path = "../Shared/OsmMapData+Edit.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		021C6AB2168768C800FB17B0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -255,8 +253,6 @@
 		02ACBA4116713CCB00BB4414 /* Go Map!!-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Go Map!!-Prefix.pch"; sourceTree = "<group>"; };
 		02ACBA6D16713F2A00BB4414 /* BingMapsGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = BingMapsGeometry.h; path = ../Shared/BingMapsGeometry.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02ACBA7016713F2A00BB4414 /* changeset.xsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = changeset.xsl; path = ../Shared/changeset.xsl; sourceTree = "<group>"; };
-		02ACBA7516713F2A00BB4414 /* EditorMapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = EditorMapLayer.h; path = ../Shared/EditorMapLayer.h; sourceTree = "<group>"; };
-		02ACBA7616713F2A00BB4414 /* EditorMapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = EditorMapLayer.m; path = ../Shared/EditorMapLayer.m; sourceTree = "<group>"; };
 		02ACBA7F16713F2A00BB4414 /* MapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapView.h; path = ../Shared/MapView.h; sourceTree = "<group>"; };
 		02ACBA8016713F2A00BB4414 /* MapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapView.m; path = ../Shared/MapView.m; sourceTree = "<group>"; };
 		02ACBA8316713F2A00BB4414 /* OsmMapData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OsmMapData.h; path = ../Shared/OsmMapData.h; sourceTree = "<group>"; };
@@ -693,8 +689,6 @@
 				0289D0DD16A88BA300F86151 /* DLog.h */,
 				C381C308263FD294003142BA /* DLog.swift */,
 				C3D096CA263E9A1100E3B129 /* DownloadThreadPool.swift */,
-				02ACBA7516713F2A00BB4414 /* EditorMapLayer.h */,
-				02ACBA7616713F2A00BB4414 /* EditorMapLayer.m */,
 				C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */,
 				022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */,
 				02401F371DE1369E00F32AF5 /* ExternalGPS.h */,
@@ -705,8 +699,6 @@
 				C3FA925626416BF5000A2A99 /* GpxLayer.swift */,
 				02ACBD0016713FCF00BB4414 /* iosapi.h */,
 				C3D096CE263EA0DB00E3B129 /* KeyChain.swift */,
-				0216636E24738C9600B0B0F6 /* LayerProperties.h */,
-				0216636F24738C9600B0B0F6 /* LayerProperties.m */,
 				C3D096D1263EA7E100E3B129 /* LayerProperties.swift */,
 				C3D096D4263EACFF00E3B129 /* LocationBallLayer.swift */,
 				02ACBA7F16713F2A00BB4414 /* MapView.h */,
@@ -1059,7 +1051,6 @@
 				647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */,
 				021FADD225873CC000F6E1C0 /* PresetKeyUserDefined.swift in Sources */,
 				ED56E5B526026542000B368C /* ClearCacheViewController.swift in Sources */,
-				C30C22BB264426B700D8C932 /* EditorMapLayer.m in Sources */,
 				026FC7682650A17B005DDAFF /* VoiceAnnouncement.swift in Sources */,
 				ED56E5E426028181000B368C /* DisplayViewController.swift in Sources */,
 				02A194B019C69701002338DA /* Database.m in Sources */,
@@ -1089,23 +1080,25 @@
 				02EDBF672653306400B7072E /* OsmBaseObject.swift in Sources */,
 				027EDC72206F3EED00D349D6 /* DDXMLNode.m in Sources */,
 				02EDBF6B26535BEB00B7072E /* OsmMember.swift in Sources */,
+				0286EAA726570382007CFEE9 /* LayerProperties.swift in Sources */,
 				EDB2C3A12609E2A000C08293 /* LanguageTableViewController.swift in Sources */,
 				02EDBF6926535BB700B7072E /* OsmWay.swift in Sources */,
 				ED56E5C426027A50000B368C /* CustomPresetController.swift in Sources */,
 				02A123EE264CBBE5005638C1 /* DisplayLink.swift in Sources */,
 				EDDBA55326130287001E7D5C /* GpxViewController.swift in Sources */,
-				C31315242644292C00C0AD86 /* LayerProperties.m in Sources */,
 				021FADBB258591D000F6E1C0 /* PresetKey.swift in Sources */,
 				C381C30B263FE518003142BA /* PushPinView.swift in Sources */,
 				C3004F54263A99DD006BF313 /* POIAttributesViewController.swift in Sources */,
 				C3004F4D263A6306006BF313 /* NominatimViewController.swift in Sources */,
 				024233101674FDB4008A3B6A /* VectorMath.m in Sources */,
+				0286EAA52656F15A007CFEE9 /* EditorMapLayer.swift in Sources */,
 				6442666922540EDF00C0D545 /* Observable.swift in Sources */,
 				021B30C81973AA4400B36EFF /* OsmMapData+Edit.m in Sources */,
 				02A123EA264C8BA3005638C1 /* AerialList.swift in Sources */,
 				C3D096AC263D48F700E3B129 /* AppDelegate.swift in Sources */,
 				02F2449A264F635800C42E41 /* PathUtil.swift in Sources */,
 				C341E1532639DECC0022E983 /* WikiPage.swift in Sources */,
+				0286EAA62656FEAC007CFEE9 /* EditorMapLayer+Ocean.swift in Sources */,
 				ED9649C12601C33E00EC0A60 /* AdvancedSettingsViewController.swift in Sources */,
 				C3D0969C263CBC1100E3B129 /* POIFeaturePickerViewController.swift in Sources */,
 				647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */,
@@ -1159,7 +1152,6 @@
 				64F59A50240915840093DCDB /* MainViewController+Extension.swift in Sources */,
 				C3D096D0263EA76500E3B129 /* GeekbenchScoreProvider.swift in Sources */,
 				020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */,
-				022012BB24A015E800C1728F /* EditorMapLayer+Ocean.swift in Sources */,
 				021FADC0258594EE00F6E1C0 /* PresetValue.swift in Sources */,
 				C365A565263FC943007DEC94 /* SpeechBalloonLayer.swift in Sources */,
 				02E049BA2650B0E10028B57F /* TurnRestrictController.swift in Sources */,

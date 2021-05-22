@@ -1,4 +1,3 @@
-//  Converted to Swift 5.2 by Swiftify v5.2.23024 - https://swiftify.com/
 //
 //  ClearCacheViewController.swift
 //  Go Map!!

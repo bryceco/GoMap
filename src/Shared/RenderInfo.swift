@@ -1,4 +1,3 @@
-//  Converted to Swift 5.4 by Swiftify v5.4.27034 - https://swiftify.com/
 //
 //  RenderInfo.swift
 //  OpenStreetMap
@@ -11,8 +10,20 @@ import Foundation
 
 private let RenderInfoMaxPriority = (33 + 1) * 3
 
-var g_AddressRender: RenderInfo? = nil
-var g_DefaultRender: RenderInfo? = nil
+private let g_AddressRender: RenderInfo = {
+											let info = RenderInfo()
+											info.key = "ADDRESS"
+											info.lineWidth = 0.0
+											return info
+										}()
+
+let g_DefaultRender: RenderInfo = {
+									let info = RenderInfo()
+									info.key = "DEFAULT"
+									info.lineColor = UIColor.black
+									info.lineWidth = 0.0
+									return info
+								}()
 
 @objcMembers
 class RenderInfo: NSObject {
@@ -159,11 +170,7 @@ class RenderInfoDatabase: NSObject {
     var allFeatures: [RenderInfo] = []
     var keyDict: [String : [String? : RenderInfo?]] = [:]
 
-    static var _database = RenderInfoDatabase()
-
-    class func shared() -> RenderInfoDatabase? {
-        return _database
-    }
+	static let shared = RenderInfoDatabase()
 
     class func readConfiguration() -> [RenderInfo] {
         var text = NSData(contentsOfFile: "RenderInfo.json") as Data?
@@ -209,7 +216,7 @@ class RenderInfoDatabase: NSObject {
         }
     }
 
-	func renderInfoForObject(_ object: OsmBaseObject) -> RenderInfo? {
+	func renderInfoForObject(_ object: OsmBaseObject) -> RenderInfo {
         var tags = object.tags
         // if the object is part of a rendered relation than inherit that relation's tags
         if object.isWay() != nil,
@@ -257,24 +264,9 @@ class RenderInfoDatabase: NSObject {
 		   !object.tags.isEmpty,
 		   tags.first(where: { key,_ in return OsmBaseObject.IsInterestingKey(key) && !key.hasPrefix("addr:") }) != nil
 		{
-			if g_AddressRender == nil {
-				g_AddressRender = RenderInfo()
-				g_AddressRender!.key = "ADDRESS"
-				g_AddressRender!.lineWidth = 0.0
-			}
 			return g_AddressRender
         }
 
-        if g_DefaultRender == nil {
-            g_DefaultRender = RenderInfo()
-            g_DefaultRender?.key = "DEFAULT"
-#if os(iOS)
-            g_DefaultRender?.lineColor = UIColor.black
-#else
-            g_DefaultRender?.lineColor = NSColor(calibratedRed: 0, green: 0, blue: 0, alpha: 1)
-#endif
-            g_DefaultRender?.lineWidth = 0.0
-        }
         return g_DefaultRender
     }
 }

@@ -32,9 +32,9 @@ import Foundation
 
 	@objc func setSelection(forString value:String)
 	{
-		if OsmTags.IsOsmBooleanFalse(value) {
+		if OsmTags.isOsmBooleanFalse(value) {
 			super.selectedSegmentIndex = 0;
-		} else if OsmTags.IsOsmBooleanTrue(value) {
+		} else if OsmTags.isOsmBooleanTrue(value) {
 			super.selectedSegmentIndex = 2;
 		} else {
 			super.selectedSegmentIndex = 1;

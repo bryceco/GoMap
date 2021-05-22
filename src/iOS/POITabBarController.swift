@@ -9,8 +9,8 @@
 @objcMembers
 class POITabBarController: UITabBarController {
     var keyValueDict = [String : String]()
-    var relationList: [AnyHashable]?
-    var selection: OsmBaseObject?
+    var relationList: [OsmRelation] = []
+	var selection: OsmBaseObject?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,16 +26,11 @@ class POITabBarController: UITabBarController {
         let appDelegate = AppDelegate.shared
         let selection = appDelegate.mapView.editorLayer.selectedPrimary
         self.selection = selection
-        relationList = [AnyHashable]()
-        if let selection = selection {
-            for (key, obj) in selection.tags {
-                keyValueDict[key] = obj
-            }
-            relationList = selection.parentRelations
-        }
-        
-        let tabIndex = UserDefaults.standard.integer(forKey: "POITabIndex")
-        selectedIndex = tabIndex
+		keyValueDict = selection?.tags ?? [:]
+		relationList = selection?.parentRelations ?? []
+
+		let tabIndex = UserDefaults.standard.integer(forKey: "POITabIndex")
+		selectedIndex = tabIndex
         
         // hide attributes tab on new objects
         updatePOIAttributesTabBarItemVisibility(withSelectedObject: selection)
@@ -84,19 +79,12 @@ class POITabBarController: UITabBarController {
     }
 
     func commitChanges() {
-        let appDelegate = AppDelegate.shared
-		appDelegate.mapView.setTagsForCurrentObject(keyValueDict)
+        AppDelegate.shared.mapView.setTagsForCurrentObject( keyValueDict )
     }
     
     func isTagDictChanged(_ newDictionary: [String : String]?) -> Bool {
-        let appDelegate = AppDelegate.shared
-        
-        let tags = appDelegate.mapView.editorLayer.selectedPrimary.tags
-        if tags.count == 0 {
-            return newDictionary?.count != 0
-        }
-        
-        return !(newDictionary == tags)
+        let tags = AppDelegate.shared.mapView.editorLayer.selectedPrimary!.tags
+        return newDictionary != tags
     }
 
     func isTagDictChanged() -> Bool {
@@ -104,7 +92,7 @@ class POITabBarController: UITabBarController {
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        let tabIndex = tabBar.items?.firstIndex(of: item) ?? NSNotFound
-        UserDefaults.standard.set(tabIndex, forKey: "POITabIndex")
+		let tabIndex = tabBar.items!.firstIndex(of: item)!
+		UserDefaults.standard.set(tabIndex, forKey: "POITabIndex")
     }
 }

@@ -1,4 +1,3 @@
-//  Converted to Swift 5.4 by Swiftify v5.4.27034 - https://swiftify.com/
 //
 //  WikiPage.swift
 //  Go Map!!
@@ -80,7 +79,7 @@ class WikiPage: NSObject {
             language = lang
         }
 
-        var pageList: [AnyHashable] = []
+        var pageList: [String] = []
 
         tagKey = tagKey.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
         tagValue = tagValue.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
@@ -98,43 +97,31 @@ class WikiPage: NSObject {
             pageList.append("Key:\(tagKey)")
         }
 
-        var urlDict: [AnyHashable : Any] = [:]
+        var urlDict: [String : URL] = [:]
 
-        DispatchQueue.global(qos: .default).async(execute: { [self] in
+		DispatchQueue.global(qos: .default).async(execute: { [self] in
 
             let group = DispatchGroup()
-            let baseURL = URL(string: "https://wiki.openstreetmap.org/wiki/")
+            let baseURL = URL(string: "https://wiki.openstreetmap.org/wiki/")!
 
             for page in pageList {
-                guard let page = page as? String else {
-                    continue
-                }
-                let url = baseURL?.appendingPathComponent(page)
-                if url == nil {
-                    continue
-                }
+				let url = baseURL.appendingPathComponent(page)
                 group.enter()
-                if let url = url {
-                    ifUrlExists(url) { exists in
-                        if exists {
-                            DispatchQueue.main.async(execute: {
-                                urlDict[page] = url
-                            })
-                        }
-                        group.leave()
-                    }
-                }
-            }
-            _ = group.wait(timeout: DispatchTime.distantFuture)
+				ifUrlExists(url, completion: { exists in
+					if exists {
+						DispatchQueue.main.async(execute: {
+							urlDict[page] = url
+						})
+					}
+					group.leave()
+				})
+			}
+			_ = group.wait(timeout: DispatchTime.distantFuture)
 
             DispatchQueue.main.async(execute: {
-                for page in pageList {
-                    guard let page = page as? String else {
-                        continue
-                    }
-                    let url = urlDict[page] as? URL
-                    if let url = url {
-                        completion(url)
+				for page in pageList {
+					if let url = urlDict[page] {
+						completion(url)
                         return
                     }
                 }

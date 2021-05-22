@@ -203,8 +203,8 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
                 return returnUrl as URL
             }, objectForData: { data in
 				if let image = UIImage(data: data) {
-					return ImageScaledToSize(image, 60.0)
-                } else {
+					return EditorMapLayer.ImageScaledToSize(image, 60.0)
+				} else {
 					return UIImage()
                 }
             }, completion: { image in

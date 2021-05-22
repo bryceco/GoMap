@@ -22,6 +22,7 @@ extension OSMPoint: Hashable {
 }
 
 extension EditorMapLayer {
+	
     private static func AppendNodes(_ list: inout [OsmNode], way: OsmWay, addToBack: Bool, reverseNodes: Bool) {
         let nodes = reverseNodes ? way.nodes.reversed() : way.nodes
 		if addToBack {
@@ -56,7 +57,7 @@ extension EditorMapLayer {
         case LEFT, TOP, RIGHT, BOTTOM
     }
 
-    private static func WallForPoint(_ pt: OSMPoint, rect: OSMRect) -> SIDE? {
+    private static func WallForPoint(_ pt: OSMPoint, rect: OSMRect) -> SIDE {
         let delta = 0.01
         if fabs(pt.x - rect.origin.x) < delta {
             return .LEFT
@@ -70,7 +71,7 @@ extension EditorMapLayer {
         if fabs(pt.y - rect.origin.y - rect.size.height) < delta {
             return .BOTTOM
         }
-        return nil
+		fatalError()
     }
 
     private static func IsClockwisePolygon(_ points: [OSMPoint]) -> Bool {
@@ -122,10 +123,10 @@ extension EditorMapLayer {
         return index >= 0
     }
 
-    private static func ClipLineToRect(p1: OSMPoint, p2: OSMPoint, rect: OSMRect) -> [OSMPoint]? {
-        if p1.x.isInfinite || p2.x.isInfinite {
-            return nil
-        }
+    static func ClipLineToRect(p1: OSMPoint, p2: OSMPoint, rect: OSMRect) -> [OSMPoint] {
+		if p1.x.isInfinite || p2.x.isInfinite {
+            return []
+		}
 
         let top = rect.origin.y
         let bottom = rect.origin.y + rect.size.height
@@ -329,7 +330,7 @@ extension EditorMapLayer {
         }
     }
 
-    @objc func getOceanLayerSwift(_ objectList: [OsmBaseObject]) -> CAShapeLayer? {
+	public func getOceanLayer(_ objectList: [OsmBaseObject]) -> CAShapeLayer? {
         // get all coastline ways
         var outerWays = [OsmWay]()
         var innerWays = [OsmWay]()
@@ -473,7 +474,7 @@ extension EditorMapLayer {
                     let wall2 = EditorMapLayer.WallForPoint(point2, rect: viewRect)
 
                     wall_loop: while true {
-                        switch wall1! {
+                        switch wall1 {
                         case .LEFT:
                             if wall2 == .LEFT, point1.y > point2.y {
                                 break wall_loop

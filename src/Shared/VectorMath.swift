@@ -1,12 +1,3 @@
-//  Converted to Swift 5.4 by Swiftify v5.4.27034 - https://swiftify.com/
-//
-//  VectorMath.swift
-//  Rocket
-//
-//  Created by Bryce Cogswell on 5/31/12.
-//
-//
-
 //
 //  VectorMath.swift
 //  OpenStreetMap
