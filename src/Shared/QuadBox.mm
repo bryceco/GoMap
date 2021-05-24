@@ -37,7 +37,7 @@ typedef enum {
 	QUAD_LAST = 3
 } QUAD_ENUM;
 
-class QuadBoxCC
+class QuadBoxCC final
 {
 #pragma mark Construction
 

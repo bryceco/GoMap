@@ -281,7 +281,7 @@ final class OsmWay: OsmBaseObject {
 
     override func computeBoundingBox() {
 		guard let first = nodes.first?.location() else {
-			_boundingBox = OSMRectMake(0, 0, 0, 0)
+			_boundingBox = OSMRectZero()
 			return
 		}
 
@@ -304,7 +304,8 @@ final class OsmWay: OsmBaseObject {
 				maxX = loc.x
 			}
         }
-		_boundingBox = OSMRectMake(minX, minY, maxX - minX, maxY - minY)
+		_boundingBox = OSMRect(origin: OSMPoint(x: minX, y: minY),
+							   size: OSMSize(width: maxX - minX, height: maxY - minY))
     }
 
     func centerPointWithArea(_ pArea: inout Double) -> OSMPoint {

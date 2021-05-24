@@ -14,28 +14,25 @@ if !Rocket_VectorMath_h {
 
 let TRANSFORM_3D = 0
 
-struct _OSMPoint {
+struct OSMPoint {
     var x: Double
     var y: Double
 }
 
-typealias OSMPoint = _OSMPoint
-struct _OSMSize {
+struct OSMSize {
     var width: Double
     var height: Double
 }
 
-typealias OSMSize = _OSMSize
-struct _OSMRect {
+struct OSMRect {
     var origin: OSMPoint
     var size: OSMSize
 }
 
-typealias OSMRect = _OSMRect
 if TRANSFORM_3D {
 typealias OSMTransform = CATransform3D
 } else {
-struct _OSMTransform {
+struct OSMTransform {
     //	|  a   b   0  |
     //	|  c   d   0  |
     //	| tx  ty   1  |
@@ -47,103 +44,69 @@ struct _OSMTransform {
     var ty: Double
 }
 
-typealias OSMTransform = _OSMTransform
-}
-
-class OSMPointBoxed: NSObject {
-    private(set) var point: OSMPoint?
-
-    class func point(with point: OSMPoint) -> OSMPointBoxed? {
-        let p = OSMPointBoxed()
-        p.point = point
-        return p
-    }
-
-    func copy(with zone: NSZone? = nil) -> Any {
-        return self
-    }
-
-    override var description: String {
-        if let x1 = point?.x, let y1 = point?.y {
-            return String(format: "<%@ %p> x=%f,y=%f", OSMPointBoxed, self, x1, y1)
-        }
-        return nil
-    }
-}
-
-class OSMRectBoxed: NSObject {
-    private(set) var rect: OSMRect?
-
-    class func rect(with rect: OSMRect) -> OSMRectBoxed? {
-        let r = OSMRectBoxed()
-        r.rect = rect
-        return r
-    }
-}
-
 // MARK: Point
-@inline(__always) private func CGPointWithOffset(_ pt: CGPoint, _ dx: CGFloat, _ dy: CGFloat) -> CGPoint {
+@inline(__always) func CGPointWithOffset(_ pt: CGPoint, _ dx: CGFloat, _ dy: CGFloat) -> CGPoint {
     return CGPoint(x: pt.x + dx, y: pt.y + dy)
 }
 
-@inline(__always) private func CGPointSubtract(_ a: CGPoint, _ b: CGPoint) -> CGPoint {
+@inline(__always) func CGPointSubtract(_ a: CGPoint, _ b: CGPoint) -> CGPoint {
     let pt = CGPoint(x: Double(a.x - b.x), y: Double(a.y - b.y))
     return pt
 }
 
-@inline(__always) private func OSMPointMake(_ x: Double, _ y: Double) -> OSMPoint {
+@inline(__always) func OSMPointMake(_ x: Double, _ y: Double) -> OSMPoint {
     let pt = OSMPoint(x, y)
     return pt
 }
 
-@inline(__always) private func OSMPointFromCGPoint(_ pt: CGPoint) -> OSMPoint {
+@inline(__always) func OSMPointFromCGPoint(_ pt: CGPoint) -> OSMPoint {
     let point = OSMPoint(pt.x, pt.y)
     return point
 }
 
-@inline(__always) private func CGPointFromOSMPoint(_ pt: OSMPoint) -> CGPoint {
+@inline(__always) func CGPointFromOSMPoint(_ pt: OSMPoint) -> CGPoint {
     let p = CGPoint(x: Double(CGFloat(pt.x)), y: Double(CGFloat(pt.y)))
     return p
 }
 
-@inline(__always) private func Dot(_ a: OSMPoint, _ b: OSMPoint) -> Double {
+@inline(__always) func Dot(_ a: OSMPoint, _ b: OSMPoint) -> Double {
     return a.x * b.x + a.y * b.y
 }
 
-@inline(__always) private func MagSquared(_ a: OSMPoint) -> Double {
+@inline(__always) func MagSquared(_ a: OSMPoint) -> Double {
     return a.x * a.x + a.y * a.y
 }
 
-@inline(__always) private func Mag(_ a: OSMPoint) -> Double {
+@inline(__always) func Mag(_ a: OSMPoint) -> Double {
     return hypot(a.x, a.y)
 }
 
-@inline(__always) private func Add(_ a: OSMPoint, _ b: OSMPoint) -> OSMPoint {
+@inline(__always) func Add(_ a: OSMPoint, _ b: OSMPoint) -> OSMPoint {
     return OSMPointMake(a.x + b.x, a.y + b.y)
 }
 
-@inline(__always) private func Sub(_ a: OSMPoint, _ b: OSMPoint) -> OSMPoint {
+@inline(__always) func Sub(_ a: OSMPoint, _ b: OSMPoint) -> OSMPoint {
     return OSMPointMake(a.x - b.x, a.y - b.y)
 }
 
-@inline(__always) private func Mult(_ a: OSMPoint, _ c: Double) -> OSMPoint {
+@inline(__always) func Mult(_ a: OSMPoint, _ c: Double) -> OSMPoint {
     return OSMPointMake(a.x * c, a.y * c)
 }
 
-@inline(__always) private func UnitVector(_ a: OSMPoint) -> OSMPoint {
+@inline(__always) func UnitVector(_ a: OSMPoint) -> OSMPoint {
     let d = CGFloat(Mag(a))
     return OSMPointMake(Double(a.x / d), Double(a.y / d))
 }
 
-@inline(__always) private func CrossMag(_ a: OSMPoint, _ b: OSMPoint) -> Double {
+@inline(__always) func CrossMag(_ a: OSMPoint, _ b: OSMPoint) -> Double {
     return a.x * b.y - a.y * b.x
 }
 
-@inline(__always) private func DistanceFromPointToPoint(_ a: OSMPoint, _ b: OSMPoint) -> Double {
+@inline(__always) func DistanceFromPointToPoint(_ a: OSMPoint, _ b: OSMPoint) -> Double {
     return Mag(Sub(a, b))
 }
 
-@inline(__always) private func OffsetPoint(_ p: OSMPoint, _ dx: Double, _ dy: Double) -> OSMPoint {
+@inline(__always) func OffsetPoint(_ p: OSMPoint, _ dx: Double, _ dy: Double) -> OSMPoint {
     let p2 = OSMPoint(p.x + dx, p.y + dy)
     return p2
 }
@@ -301,42 +264,37 @@ func GreatCircleDistance(_ p1: OSMPoint, _ p2: OSMPoint) -> Double {
 }
 
 // MARK: Rect
-@inline(__always) private func CGRectCenter(_ rc: CGRect) -> CGPoint {
+@inline(__always) func CGRectCenter(_ rc: CGRect) -> CGPoint {
     let c = CGPoint(x: Double(rc.origin.x + rc.size.width / 2), y: Double(rc.origin.y + rc.size.height / 2))
     return c
 }
 
-@inline(__always) private func OSMRectMake(_ x: Double, _ y: Double, _ w: Double, _ h: Double) -> OSMRect {
-    let rc = OSMRect(x, y, w, h)
-    return rc
-}
-
-@inline(__always) private func CGRectFromOSMRect(_ rc: OSMRect) -> CGRect {
+@inline(__always) func CGRectFromOSMRect(_ rc: OSMRect) -> CGRect {
     let r = CGRect(x: Double(CGFloat(rc.origin.x)), y: Double(CGFloat(rc.origin.y)), width: Double(CGFloat(rc.size.width)), height: Double(CGFloat(rc.size.height)))
     return r
 }
 
-@inline(__always) private func OSMRectZero() -> OSMRect {
+@inline(__always) func OSMRectZero() -> OSMRect {
     let rc = OSMRect(0)
     return rc
 }
 
-@inline(__always) private func OSMRectOffset(_ rect: OSMRect, _ dx: Double, _ dy: Double) -> OSMRect {
+@inline(__always) func OSMRectOffset(_ rect: OSMRect, _ dx: Double, _ dy: Double) -> OSMRect {
     rect.origin.x += dx
     rect.origin.y += dy
     return rect
 }
 
-@inline(__always) private func OSMRectFromCGRect(_ cg: CGRect) -> OSMRect {
+@inline(__always) func OSMRectFromCGRect(_ cg: CGRect) -> OSMRect {
     let rc = OSMRect(cg.origin.x, cg.origin.y, cg.size.width, cg.size.height)
     return rc
 }
 
-@inline(__always) private func OSMRectContainsPoint(_ rc: OSMRect, _ pt: OSMPoint) -> Bool {
+@inline(__always) func OSMRectContainsPoint(_ rc: OSMRect, _ pt: OSMPoint) -> Bool {
     return pt.x >= rc.origin.x && pt.x <= rc.origin.x + rc.size.width && pt.y >= rc.origin.y && pt.y <= rc.origin.y + rc.size.height
 }
 
-@inline(__always) private func OSMRectIntersectsRect(_ a: OSMRect, _ b: OSMRect) -> Bool {
+@inline(__always) func OSMRectIntersectsRect(_ a: OSMRect, _ b: OSMRect) -> Bool {
     if a.origin.x >= b.origin.x + b.size.width {
         return false
     }
@@ -352,7 +310,7 @@ func GreatCircleDistance(_ p1: OSMPoint, _ p2: OSMPoint) -> Double {
     return true
 }
 
-@inline(__always) private func OSMRectUnion(_ a: OSMRect, _ b: OSMRect) -> OSMRect {
+@inline(__always) func OSMRectUnion(_ a: OSMRect, _ b: OSMRect) -> OSMRect {
     let minX = Double(min(a.origin.x, b.origin.x))
     let minY = Double(min(a.origin.y, b.origin.y))
     let maxX = Double(max(a.origin.x + a.size.width, b.origin.x + b.size.width))
@@ -361,32 +319,31 @@ func GreatCircleDistance(_ p1: OSMPoint, _ p2: OSMPoint) -> Double {
     return r
 }
 
-@inline(__always) private func OSMRectContainsRect(_ a: OSMRect, _ b: OSMRect) -> Bool {
+@inline(__always) func OSMRectContainsRect(_ a: OSMRect, _ b: OSMRect) -> Bool {
     return a.origin.x <= b.origin.x && a.origin.y <= b.origin.y && a.origin.x + a.size.width >= b.origin.x + b.size.width && a.origin.y + a.size.height >= b.origin.y + b.size.height
 }
 
 // MARK: Transform
-func OSMTransformInvert(_ t: OSMTransform) -> }
-OSMTransform {
+func OSMTransformInvert(_ t: OSMTransform) -> OSMTransform {
     if TRANSFORM_3D {
-    return CATransform3DInvert(t)
+		return CATransform3DInvert(t)
     } else {
-    //	|  a   b   0  |
-    //	|  c   d   0  |
-    //	| tx  ty   1  |
+		//	|  a   b   0  |
+		//	|  c   d   0  |
+		//	| tx  ty   1  |
 
-    let det = Determinant(t)
-    let s = 1.0 / det
-    let a: OSMTransform
+		let det = Determinant(t)
+		let s = 1.0 / det
+		let a: OSMTransform
 
-    a.a = s * t.d
-    a.c = s * -t.c
-    a.tx = s * (t.c * t.ty - t.d * t.tx)
-    a.b = s * -t.b
-    a.d = s * t.a
-    a.ty = s * (t.b * t.tx - t.a * t.ty)
+		a.a = s * t.d
+		a.c = s * -t.c
+		a.tx = s * (t.c * t.ty - t.d * t.tx)
+		a.b = s * -t.b
+		a.d = s * t.a
+		a.ty = s * (t.b * t.tx - t.a * t.ty)
 
-    return a
+		return a
     }
 }
 

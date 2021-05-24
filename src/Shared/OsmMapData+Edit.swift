@@ -1,6 +1,5 @@
-//  Converted to Swift 5.4 by Swiftify v5.4.24180 - https://swiftify.com/
 //
-//  OsmMapData+Straighten.h
+//  OsmMapData+Edit.h
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 7/9/14.
@@ -508,35 +507,30 @@ extension OsmMapData {
 
     func canStraightenWay(_ way: OsmWay, error: inout String?) -> EditAction? {
         let count = way.nodes.count
-        
-        var points = [AnyHashable](repeating: 0, count: count)
-        for i in 0..<count {
-            let n = way.nodes[i]
-            let p = OSMPoint(x: n.lon, y: lat2latp(n.lat))
-            points[i] = OSMPointBoxed.point(with: p)
-        }
-        if let startPoint = (points[0] as? OSMPointBoxed)?.point, let endPoint = (points[count - 1] as? OSMPointBoxed)?.point {
-            let threshold = 0.2 * DistanceFromPointToPoint(startPoint, endPoint)
+		var points: [OSMPoint?] = way.nodes.map({ OSMPoint( x: $0.lon, y: lat2latp($0.lat)) })
+		if count > 2 {
+			let startPoint = points[0]!
+			let endPoint = points[count - 1]!
+			let threshold = 0.2 * DistanceFromPointToPoint(startPoint, endPoint)
             for i in 1..<(count - 1) {
                 let node = way.nodes[i]
-                if let point = (points[i] as? OSMPointBoxed)?.point {
-                    let u = positionAlongWay(point, startPoint, endPoint)
-                    let newPoint = Add(startPoint, Mult(Sub(endPoint, startPoint), u))
-                    
-                    let dist = DistanceFromPointToPoint(newPoint, point)
-                    if dist > threshold {
-                        error = NSLocalizedString("The way is not sufficiently straight", comment: "")
-                        return nil
-                    }
-                    
-                    // if node is interesting then move it, otherwise delete it.
-                    if node.wayCount > 1 || node.parentRelations.count > 0 || node.hasInterestingTags() {
-                        points[i] = OSMPointBoxed.point(with: newPoint)
-                    } else {
-                        // safe to delete
-                        points[i] = NSNull()
-                    }
-                }
+				let point = points[i]!
+				let u = positionAlongWay(point, startPoint, endPoint)
+				let newPoint = Add(startPoint, Mult(Sub(endPoint, startPoint), u))
+
+				let dist = DistanceFromPointToPoint(newPoint, point)
+				if dist > threshold {
+					error = NSLocalizedString("The way is not sufficiently straight", comment: "")
+					return nil
+				}
+
+				// if node is interesting then move it, otherwise delete it.
+				if node.wayCount > 1 || node.parentRelations.count > 0 || node.hasInterestingTags() {
+					points[i] = newPoint
+				} else {
+					// safe to delete
+					points[i] = nil
+				}
             }
         }
         
@@ -545,20 +539,19 @@ extension OsmMapData {
             
             var i = count - 1
             while i >= 0 {
-                let point = points[i] as? OSMPointBoxed
-                if point == nil {
-                    let node = way.nodes[i]
-                    var dummy: String? = nil
-                    let canDelete = self.canDelete(node, from: way, error: &dummy)
-                    if canDelete != nil {
-                        canDelete!()
-                    } else {
-                        // no big deal
+				if let point = points[i] {
+					// update position
+					let node = way.nodes[i]
+					setLongitude(point.x, latitude: latp2lat(point.y), for: node)
+				} else {
+					// remove point
+					let node = way.nodes[i]
+					var dummy: String? = nil
+					if let canDelete = self.canDelete(node, from: way, error: &dummy) {
+						canDelete()
+					} else {
+						// no big deal
                     }
-                } else {
-                    let node = way.nodes[i]
-                    let pt = point?.point ?? .init()
-                    setLongitude(pt.x, latitude: latp2lat(pt.y), for: node)
                 }
                 i -= 1
             }
@@ -1545,7 +1538,7 @@ extension OsmMapData {
             if pDotp != 0 {
                 pDotp = 1.0
             }
-            return OSMPointMake(0, 0)
+			return OSMPoint(x: 0, y: 0)
         }
         
         var dotp = filterDotProduct(Dot(p, q))

@@ -46,4 +46,56 @@ final class OsmTags : NSObject {
 				return false
 		}
 	}
+
+
+	// editing
+	static let tagsToAutomaticallyStrip: Set<String> =
+									 ["tiger:upload_uuid",
+									   "tiger:tlid",
+									   "tiger:source",
+									   "tiger:separated",
+									   "geobase:datasetName",
+									   "geobase:uuid",
+									   "sub_sea:type",
+									   "odbl",
+									   "odbl:note",
+									   "yh:LINE_NAME",
+									   "yh:LINE_NUM",
+									   "yh:STRUCTURE",
+									   "yh:TOTYUMONO",
+									   "yh:TYPE",
+									   "yh:WIDTH_RANK"]
+
+	@objc
+	static func IsInterestingKey(_ key: String) -> Bool {
+		if key == "attribution" ||
+			key == "created_by" ||
+			key == "source" ||
+			key == "odbl"	||
+			key.hasPrefix("tiger:") ||
+			key.hasPrefix("source:") ||
+			key.hasPrefix("source_ref") ||
+			OsmTags.tagsToAutomaticallyStrip.contains(key)
+		{
+			return false
+		}
+		return true
+	}
+
+	static func StringTruncatedTo255(_ s: String) -> String {
+		var s = s
+		let last = s.index(s.startIndex, offsetBy: 256)
+		s.removeSubrange(last...)
+		return s
+	}
+
+	static func DictWithTagsTruncatedTo255(_ tags: [String : String]) -> [String : String] {
+		var newDict = [String : String](minimumCapacity: (tags.count))
+		for (key, value) in tags {
+			let keyInternal = StringTruncatedTo255(key)
+			let valueInternal = StringTruncatedTo255(value)
+			newDict[keyInternal] = valueInternal
+		}
+		return newDict
+	}
 }

@@ -62,7 +62,7 @@ class FilterObjectsViewController: UITableViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let editor = AppDelegate.shared.mapView.editorLayer!
+		let editor = AppDelegate.shared.mapView.editorLayer!.objectFilters
 
         levelsText.text = editor.showLevelRange
         switchLevel.isOn = editor.showLevel
@@ -83,7 +83,7 @@ class FilterObjectsViewController: UITableViewController, UITextFieldDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        let editor = AppDelegate.shared.mapView.editorLayer!
+		let editor = AppDelegate.shared.mapView.editorLayer!.objectFilters
 
         editor.showLevelRange = levelsText.text!
         editor.showLevel = switchLevel.isOn

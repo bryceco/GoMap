@@ -40,6 +40,11 @@ enum SectionType : Int {
     }
 }
 
+class AttributeCustomCell: UITableViewCell {
+	@IBOutlet var title: UILabel!
+	@IBOutlet var value: UITextField!
+}
+
 @objcMembers
 class POIAttributesViewController: UITableViewController {
     @IBOutlet var _saveButton: UIBarButtonItem!
@@ -249,10 +254,4 @@ class POIAttributesViewController: UITableViewController {
         let tabController = tabBarController as? POITabBarController
         tabController?.commitChanges()
     }
-}
-
-fileprivate
-class AttributeCustomCell: UITableViewCell {
-    @IBOutlet var title: UILabel!
-    @IBOutlet var value: UITextField!
 }

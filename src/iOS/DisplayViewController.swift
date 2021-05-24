@@ -77,7 +77,7 @@ class DisplayViewController: UITableViewController {
     }
 
     @IBAction func toggleObjectFilters(_ sender: UISwitch) {
-        AppDelegate.shared.mapView.editorLayer.enableObjectFilters = sender.isOn
+		AppDelegate.shared.mapView.editorLayer.objectFilters.enableObjectFilters = sender.isOn
     }
 
     func setButtonLayoutTitle() {
@@ -105,7 +105,7 @@ class DisplayViewController: UITableViewController {
         _unnamedRoadSwitch.isOn = mapView?.enableUnnamedRoadHalo ?? false
         _gpxLoggingSwitch.isOn = mapView?.enableGpxLogging ?? false
         _turnRestrictionSwitch.isOn = mapView?.enableTurnRestriction ?? false
-        _objectFiltersSwitch.isOn = mapView?.editorLayer.enableObjectFilters ?? false
+		_objectFiltersSwitch.isOn = mapView?.editorLayer.objectFilters.enableObjectFilters ?? false
 
         setButtonLayoutTitle()
     }

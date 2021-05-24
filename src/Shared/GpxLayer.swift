@@ -776,7 +776,7 @@ class GpxLayer: CALayer, GetDiskCacheSize {
                 if let path2 = path.mutableCopy(using: &tran) {
                     path = path2
                 }
-                refPoint = OSMPointMake(initial.x + Double(bbox.origin.x) / PATH_SCALING, initial.y + Double(bbox.origin.y) / PATH_SCALING)
+				refPoint = OSMPoint(x: initial.x + Double(bbox.origin.x) / PATH_SCALING, y: initial.y + Double(bbox.origin.y) / PATH_SCALING)
             } else {
             }
         }

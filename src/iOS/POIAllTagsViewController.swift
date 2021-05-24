@@ -161,12 +161,12 @@ class POIAllTagsViewController: UITableViewController {
 		}
         
 		tags.sort(by: { obj1, obj2 in
-			let tag1 = obj1.k
-			let tag2 = obj2.k
-            let tiger1 = tag1.hasPrefix("tiger:") || tag1.hasPrefix("gnis:")
-            let tiger2 = tag2.hasPrefix("tiger:") || tag2.hasPrefix("gnis:")
+			let key1 = obj1.k
+			let key2 = obj2.k
+            let tiger1 = key1.hasPrefix("tiger:") || key1.hasPrefix("gnis:")
+            let tiger2 = key2.hasPrefix("tiger:") || key2.hasPrefix("gnis:")
             if tiger1 == tiger2 {
-                return tag1 < tag2
+                return key1 < key2
 			} else {
 				return (tiger1 ? 1 : 0) < (tiger2 ? 1 : 0)
 			}

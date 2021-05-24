@@ -1,21 +1,11 @@
-//  Converted to Swift 5.4 by Swiftify v5.4.27034 - https://swiftify.com/
 //
-//  NewItemController.h
+//  POIFeaturePickerViewController.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 12/10/12.
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
-//
-//  NewItemController.m
-//  Go Map!!
-//
-//  Created by Bryce Cogswell on 12/10/12.
-//  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
-//
-
-//  Converted to Swift 5.4 by Swiftify v5.4.24202 - https://swiftify.com/
 
 import UIKit
 

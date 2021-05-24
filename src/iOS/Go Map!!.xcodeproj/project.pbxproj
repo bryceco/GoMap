@@ -75,6 +75,7 @@
 		02C3194E250EAED500C5D200 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02C3194C250EAED500C5D200 /* Localizable.strings */; };
 		02CC01D12584195E004444EF /* PresetFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC01D02584195E004444EF /* PresetFeature.swift */; };
 		02CC01DC25843F2F004444EF /* PresetLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC01DB25843F2F004444EF /* PresetLanguages.swift */; };
+		02CD9974265C65C200213AD6 /* EditorFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CD9973265C65C200213AD6 /* EditorFilters.swift */; };
 		02D5B5F3248F154D00FEE448 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D5B5F2248F154D00FEE448 /* Colors.swift */; };
 		02DC59811671B79100213558 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02DC59801671B79100213558 /* CoreText.framework */; };
 		02E049BA2650B0E10028B57F /* TurnRestrictController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096AF263D4FF500E3B129 /* TurnRestrictController.swift */; };
@@ -233,16 +234,16 @@
 		027EDC6B206F3EED00D349D6 /* NSString+DDXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DDXML.h"; sourceTree = "<group>"; };
 		027EDC6C206F3EED00D349D6 /* NSString+DDXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DDXML.m"; sourceTree = "<group>"; };
 		027EDC6F206F3EED00D349D6 /* DDXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLNode.h; sourceTree = "<group>"; };
-		0288169C265895FA00C30EA2 /* OsmMapData+Edit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OsmMapData+Edit.swift"; sourceTree = "<group>"; };
-		0288169D265895FA00C30EA2 /* OsmMapData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OsmMapData.swift; sourceTree = "<group>"; };
-		028816A02659B4A600C30EA2 /* GZip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GZip.swift; sourceTree = "<group>"; };
-		028816A2265AD9D100C30EA2 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		0288169C265895FA00C30EA2 /* OsmMapData+Edit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "OsmMapData+Edit.swift"; path = "../Shared/OsmMapData+Edit.swift"; sourceTree = "<group>"; };
+		0288169D265895FA00C30EA2 /* OsmMapData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OsmMapData.swift; path = ../Shared/OsmMapData.swift; sourceTree = "<group>"; };
+		028816A02659B4A600C30EA2 /* GZip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GZip.swift; path = ../Shared/GZip.swift; sourceTree = "<group>"; };
+		028816A2265AD9D100C30EA2 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Database.swift; path = ../Shared/Database.swift; sourceTree = "<group>"; };
 		0289D0DD16A88BA300F86151 /* DLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = DLog.h; path = ../Shared/DLog.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		028C51E525CB7A23004A88F7 /* TristateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TristateButton.swift; sourceTree = "<group>"; };
 		028F504619BA2F460093C423 /* presets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = presets; path = ../presets; sourceTree = "<group>"; };
 		029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "POI-Icons.xcassets"; path = "../POI-Icons/POI-Icons.xcassets"; sourceTree = "<group>"; };
 		02A123EC264CAE6F005638C1 /* Atomic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Atomic.swift; path = ../Shared/Atomic.swift; sourceTree = "<group>"; };
-		02A123F3264EF3DD005638C1 /* QuadBox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuadBox.h; sourceTree = "<group>"; };
+		02A123F3264EF3DD005638C1 /* QuadBox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QuadBox.h; path = ../Shared/QuadBox.h; sourceTree = "<group>"; };
 		02A194B119C6A432002338DA /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		02A41837256A2026005BF1AB /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/Height.strings; sourceTree = "<group>"; };
 		02A41838256A2026005BF1AB /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/Changeset.strings; sourceTree = "<group>"; };
@@ -309,6 +310,7 @@
 		02C3199D250EBCAC00C5D200 /* nb-NO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-NO"; path = "nb-NO.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		02CC01D02584195E004444EF /* PresetFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetFeature.swift; sourceTree = "<group>"; };
 		02CC01DB25843F2F004444EF /* PresetLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetLanguages.swift; sourceTree = "<group>"; };
+		02CD9973265C65C200213AD6 /* EditorFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EditorFilters.swift; path = ../Shared/EditorFilters.swift; sourceTree = "<group>"; };
 		02D5B5F2248F154D00FEE448 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Colors.swift; path = ../Shared/Colors.swift; sourceTree = "<group>"; };
 		02DC59801671B79100213558 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		02E049BC2651D1750028B57F /* UndoAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UndoAction.h; path = ../Shared/UndoAction.h; sourceTree = "<group>"; };
@@ -687,6 +689,7 @@
 				0289D0DD16A88BA300F86151 /* DLog.h */,
 				C381C308263FD294003142BA /* DLog.swift */,
 				C3D096CA263E9A1100E3B129 /* DownloadThreadPool.swift */,
+				02CD9973265C65C200213AD6 /* EditorFilters.swift */,
 				C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */,
 				022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */,
 				02401F371DE1369E00F32AF5 /* ExternalGPS.h */,
@@ -695,6 +698,7 @@
 				C341E1572639DF090022E983 /* GeekbenchScoreProvider.swift */,
 				02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */,
 				C3FA925626416BF5000A2A99 /* GpxLayer.swift */,
+				028816A02659B4A600C30EA2 /* GZip.swift */,
 				02ACBD0016713FCF00BB4414 /* iosapi.h */,
 				C3D096CE263EA0DB00E3B129 /* KeyChain.swift */,
 				C3D096D1263EA7E100E3B129 /* LayerProperties.swift */,
@@ -733,7 +737,6 @@
 				C381C305263FD0CA003142BA /* VectorMath.swift */,
 				C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */,
 				C341E1522639DECC0022E983 /* WikiPage.swift */,
-				028816A02659B4A600C30EA2 /* GZip.swift */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -1097,6 +1100,7 @@
 				0286EAA62656FEAC007CFEE9 /* EditorMapLayer+Ocean.swift in Sources */,
 				ED9649C12601C33E00EC0A60 /* AdvancedSettingsViewController.swift in Sources */,
 				C3D0969C263CBC1100E3B129 /* POIFeaturePickerViewController.swift in Sources */,
+				02CD9974265C65C200213AD6 /* EditorFilters.swift in Sources */,
 				647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */,
 				021FADE22588474300F6E1C0 /* PresetCategory.swift in Sources */,
 				C3004F52263A6CA5006BF313 /* MainViewController.swift in Sources */,

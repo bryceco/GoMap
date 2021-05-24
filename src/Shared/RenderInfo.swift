@@ -262,7 +262,7 @@ class RenderInfoDatabase: NSObject {
         // check if it is an address point
 		if object.isNode() != nil,
 		   !object.tags.isEmpty,
-		   tags.first(where: { key,_ in return OsmBaseObject.IsInterestingKey(key) && !key.hasPrefix("addr:") }) != nil
+		   tags.first(where: { key,_ in return OsmTags.IsInterestingKey(key) && !key.hasPrefix("addr:") }) != nil
 		{
 			return g_AddressRender
         }

@@ -10,19 +10,19 @@
 import CommonCrypto
 import Foundation
 
-let BING_MAPS_KEY: String = "ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk"
+private let BING_MAPS_KEY: String = "ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk"
 
 private var CUSTOMAERIALLIST_KEY = "AerialList"
 private var CUSTOMAERIALSELECTION_KEY = "AerialListSelection"
 private var RECENTLY_USED_KEY = "AerialListRecentlyUsed"
 
-let BING_IDENTIFIER = "BingIdentifier"
-let MAPNIK_IDENTIFIER = "MapnikIdentifier"
-let OSM_GPS_TRACE_IDENTIFIER = "OsmGpsTraceIdentifier"
-let MAPBOX_LOCATOR_IDENTIFIER = "MapboxLocatorIdentifier"
-let NO_NAME_IDENTIFIER = "No Name Identifier"
-let MAXAR_PREMIUM_IDENTIFIER = "Maxar-Premium"
-let MAXAR_STANDARD_IDENTIFIER = "Maxar-Standard"
+private let BING_IDENTIFIER = "BingIdentifier"
+private let MAPNIK_IDENTIFIER = "MapnikIdentifier"
+private let OSM_GPS_TRACE_IDENTIFIER = "OsmGpsTraceIdentifier"
+private let MAPBOX_LOCATOR_IDENTIFIER = "MapboxLocatorIdentifier"
+private let NO_NAME_IDENTIFIER = "No Name Identifier"
+private let MAXAR_PREMIUM_IDENTIFIER = "Maxar-Premium"
+private let MAXAR_STANDARD_IDENTIFIER = "Maxar-Standard"
 
 @objcMembers
 class AerialService: NSObject {
@@ -520,7 +520,7 @@ class AerialList: NSObject {
 			{
 				// great
 			} else {
-				print("Aerial: unsupported type \(type): \(name)")
+				// print("Aerial: unsupported type \(type): \(name)")
 				continue
 			}
 			if overlay != 0 {

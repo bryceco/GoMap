@@ -479,28 +479,28 @@ extension EditorMapLayer {
                             if wall2 == .LEFT, point1.y > point2.y {
                                 break wall_loop
                             }
-                            point1 = OSMPointMake(viewRect.origin.x, viewRect.origin.y)
+							point1 = OSMPoint(x: viewRect.origin.x, y: viewRect.origin.y)
                             path.addLine(to: CGPointFromOSMPoint(point1))
                             fallthrough
                         case .TOP:
                             if wall2 == .TOP, point1.x < point2.x {
                                 break wall_loop
                             }
-                            point1 = OSMPointMake(viewRect.origin.x + viewRect.size.width, viewRect.origin.y)
+							point1 = OSMPoint(x: viewRect.origin.x + viewRect.size.width, y: viewRect.origin.y)
                             path.addLine(to: CGPointFromOSMPoint(point1))
                             fallthrough
                         case .RIGHT:
                             if wall2 == .RIGHT, point1.y < point2.y {
                                 break wall_loop
                             }
-                            point1 = OSMPointMake(viewRect.origin.x + viewRect.size.width, viewRect.origin.y + viewRect.size.height)
+							point1 = OSMPoint(x: viewRect.origin.x + viewRect.size.width, y: viewRect.origin.y + viewRect.size.height)
                             path.addLine(to: CGPointFromOSMPoint(point1))
                             fallthrough
                         case .BOTTOM:
                             if wall2 == .BOTTOM, point1.x > point2.x {
                                 break wall_loop
                             }
-                            point1 = OSMPointMake(viewRect.origin.x, viewRect.origin.y + viewRect.size.height)
+							point1 = OSMPoint(x: viewRect.origin.x, y: viewRect.origin.y + viewRect.size.height)
                             path.addLine(to: CGPointFromOSMPoint(point1))
                             wall1 = .LEFT
                         }

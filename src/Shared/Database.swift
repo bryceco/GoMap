@@ -1,4 +1,3 @@
-//  Converted to Swift 5.4 by Swiftify v5.4.24180 - https://swiftify.com/
 //
 //  Database.swift
 //  Go Map!!
@@ -10,11 +9,18 @@
 import Foundation
 import SQLite3
 
-private typealias sqlite3 = OpaquePointer
-private typealias sqlite3_stmt = OpaquePointer
+#if DEBUG && false
+	let USE_RTREE = 1
+#else
+	let USE_RTREE = 0
+#endif
 
-class Database: NSObject {
-    let path: String
+
+final class Database {
+	private typealias sqlite3 = OpaquePointer
+	private typealias sqlite3_stmt = OpaquePointer
+
+	let path: String
 	private let db: sqlite3
 	
 #if USE_RTREE
@@ -54,8 +60,6 @@ class Database: NSObject {
 		self.db = db
 		rc = sqlite3_exec(self.db, "PRAGMA foreign_keys=ON;", nil, nil, nil)
 		assert(rc == SQLITE_OK)
-
-		super.init()
     }
 
     class func delete(withName name: String) {
@@ -120,17 +124,17 @@ class Database: NSObject {
 		try SqlOk( sqlite3_exec(
             db,
             """
-                        CREATE TABLE IF NOT EXISTS nodes(\
-                        \tIDENT\t\tINT8\tunique PRIMARY KEY\tNOT NULL,\
-                        \tUSER        varchar(255)\t\tNOT NULL,\
-                        \tTIMESTAMP   varchar(255)\t\tNOT NULL,\
-                        \tVERSION     INT\t\t\t\t\tNOT NULL,\
-                        \tCHANGESET   INT8\t\t\t\tNOT NULL,\
-                        \tUID         INT\t\t\t\t\tNOT NULL,\
-                        \tlongitude   real\t\t\t\tNOT NULL,\
-                        \tlatitude\treal\t\t\t\tNOT NULL\
-                        );
-                        """,
+				CREATE TABLE IF NOT EXISTS nodes(\
+					IDENT		INT8	unique PRIMARY KEY	NOT NULL,\
+					USER        varchar(255)	NOT NULL,\
+					TIMESTAMP   varchar(255)	NOT NULL,\
+					VERSION     INT				NOT NULL,\
+					CHANGESET   INT8			NOT NULL,\
+					UID         INT				NOT NULL,\
+					longitude   real			NOT NULL,\
+					latitude	real			NOT NULL\
+				);
+			""",
             nil,
 			nil,
             nil))
@@ -138,12 +142,12 @@ class Database: NSObject {
 		try SqlOk( sqlite3_exec(
             db,
             """
-                        create table if not exists node_tags(\
-                        ident\tint8\t\t\tnot null,\
-                        key\t\tvarchar(255)\tnot null,\
-                        value\tvarchar(255)\tnot null,\
-                        FOREIGN KEY(ident) REFERENCES nodes(ident) on delete cascade);
-                        """,
+				create table if not exists node_tags(\
+					ident	int8			not null,\
+					key		varchar(255)	not null,\
+					value	varchar(255)	not null,\
+					FOREIGN KEY(ident) REFERENCES nodes(ident) on delete cascade);
+			""",
             nil,
 			nil,
 			nil))
@@ -153,16 +157,16 @@ class Database: NSObject {
 		try SqlOk( sqlite3_exec(
             db,
             """
-                        CREATE TABLE IF NOT EXISTS ways(\
-                        \tIDENT\t\tINT8\tunique PRIMARY KEY\tNOT NULL,\
-                        \tUSER        varchar(255)\t\tNOT NULL,\
-                        \tTIMESTAMP   varchar(255)\t\tNOT NULL,\
-                        \tVERSION     INT\t\t\t\t\tNOT NULL,\
-                        \tCHANGESET   INT8\t\t\t\tNOT NULL,\
-                        \tUID         INT\t\t\t\t\tNOT NULL,\
-                        \tnodecount   INT\t\t\t\t\tNOT NULL\
-                        );
-                        """,
+				CREATE TABLE IF NOT EXISTS ways(\
+					IDENT		INT8	unique PRIMARY KEY	NOT NULL,\
+					USER        varchar(255)				NOT NULL,\
+					TIMESTAMP   varchar(255)				NOT NULL,\
+					VERSION     INT							NOT NULL,\
+					CHANGESET   INT8						NOT NULL,\
+					UID         INT							NOT NULL,\
+					nodecount   INT							NOT NULL\
+				);
+			""",
             nil,
 			nil,
 			nil))
@@ -170,12 +174,12 @@ class Database: NSObject {
 		try SqlOk( sqlite3_exec(
             db,
             """
-                        create table if not exists way_nodes(\
-                        ident\t\tint8\tnot null,\
-                        node_id\t\tint8\tnot null,\
-                        node_index\tint4\tnot null,\
-                        FOREIGN KEY(ident) REFERENCES ways(ident) on delete cascade);
-                        """,
+				create table if not exists way_nodes(\
+					ident		int8	not null,\
+					node_id		int8	not null,\
+					node_index	int4	not null,\
+					FOREIGN KEY(ident) REFERENCES ways(ident) on delete cascade);
+			""",
             nil,
 			nil,
 			nil))
@@ -183,12 +187,12 @@ class Database: NSObject {
 		try SqlOk( sqlite3_exec(
             db,
             """
-                        create table if not exists way_tags(\
-                        ident\tint8\t\t\tnot null,\
-                        key\t\tvarchar(255)\tnot null,\
-                        value\tvarchar(255)\tnot null,\
-                        FOREIGN KEY(ident) REFERENCES ways(ident) on delete cascade);
-                        """,
+				create table if not exists way_tags(\
+					ident	int8			not null,\
+					key		varchar(255)	not null,\
+					value	varchar(255)	not null,\
+					FOREIGN KEY(ident) REFERENCES ways(ident) on delete cascade);
+			""",
             nil,
 			nil,
 			nil))
@@ -198,16 +202,16 @@ class Database: NSObject {
 		try SqlOk( sqlite3_exec(
             db,
             """
-                        CREATE TABLE IF NOT EXISTS relations(\
-                        \tIDENT\t\tINT8\tunique PRIMARY KEY\tNOT NULL,\
-                        \tUSER        varchar(255)\t\tNOT NULL,\
-                        \tTIMESTAMP   varchar(255)\t\tNOT NULL,\
-                        \tVERSION     INT\t\t\t\t\tNOT NULL,\
-                        \tCHANGESET   INT8\t\t\t\tNOT NULL,\
-                        \tUID         INT\t\t\t\t\tNOT NULL,\
-                        \tmembercount INT\t\t\t\t\tNOT NULL\
-                        );
-                        """,
+				CREATE TABLE IF NOT EXISTS relations(\
+					IDENT		INT8	unique PRIMARY KEY	NOT NULL,\
+					USER        varchar(255)		NOT NULL,\
+					TIMESTAMP   varchar(255)		NOT NULL,\
+					VERSION     INT					NOT NULL,\
+					CHANGESET   INT8				NOT NULL,\
+					UID         INT					NOT NULL,\
+					membercount INT					NOT NULL\
+					);
+			""",
             nil,
 			nil,
 			nil))
@@ -215,14 +219,14 @@ class Database: NSObject {
 		try SqlOk( sqlite3_exec(
             db,
             """
-                        create table if not exists relation_members(\
-                        ident\t\tint8\t\t\tnot null,\
-                        type\t\t\tvarchar[255]\tnot null,\
-                        ref\t\t\tint8\t\t\tnot null,\
-                        role\t\t\tvarchar[255]\tnot null,\
-                        member_index\tint4\t\t\tnot null,\
-                        FOREIGN KEY(ident) REFERENCES relations(ident) on delete cascade);
-                        """,
+				create table if not exists relation_members(\
+					ident			int8			not null,\
+					type			varchar[255]	not null,\
+					ref				int8			not null,\
+					role			varchar[255]	not null,\
+					member_index	int4			not null,\
+					FOREIGN KEY(ident) REFERENCES relations(ident) on delete cascade);
+			""",
             nil,
 			nil,
 			nil))
@@ -230,12 +234,12 @@ class Database: NSObject {
 		try SqlOk( sqlite3_exec(
             db,
             """
-                        create table if not exists relation_tags(\
-                        ident\tint8\t\t\tnot null,\
-                        key\t\tvarchar(255)\tnot null,\
-                        value\tvarchar(255)\tnot null,\
-                        FOREIGN KEY(ident) REFERENCES relations(ident) on delete cascade);
-                        """,
+				create table if not exists relation_tags(\
+					ident	int8			not null,\
+					key		varchar(255)	not null,\
+					value	varchar(255)	not null,\
+					FOREIGN KEY(ident) REFERENCES relations(ident) on delete cascade);
+			""",
             nil,
 			nil,
 			nil))
@@ -246,14 +250,14 @@ class Database: NSObject {
 		try SqlOk( sqlite3_exec(
 			db,
 			"""
-					create virtual table if not exists spatial using rtree(\
-					ident\tint8\t\tprimary key\tnot null,\
-					minX\t\tdouble\t\tnot null,\
-					maxX\t\tdouble\t\tnot null,\
-					minY\t\tdouble\t\tnot null,\
-					maxY\t\tdouble\t\tnot null\
-					);
-					""",
+				create virtual table if not exists spatial using rtree(\
+					ident	int8	primary key	not null,\
+					minX	double	not null,\
+					maxX	double	not null,\
+					minY	double	not null,\
+					maxY	double	not null\
+				);
+			""",
 			nil,
 			nil,
 			nil))
@@ -897,9 +901,3 @@ class Database: NSObject {
         }
     }
 }
-
-#if DEBUG && false
-    let USE_RTREE = 1
-#else
-    let USE_RTREE = 0
-#endif

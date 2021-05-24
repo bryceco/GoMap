@@ -10,13 +10,13 @@ import QuartzCore
 
 //let CUSTOM_TRANSFORM = 1
 
-@inline(__always) func modulus(_ a: Int, _ n: Int) -> Int {
-    var m = a % n
-    if m < 0 {
-        m += n
-    }
-    assert(m >= 0)
-    return m
+@inline(__always) private func modulus(_ a: Int, _ n: Int) -> Int {
+	var m = a % n
+	if m < 0 {
+		m += n
+	}
+	assert(m >= 0)
+	return m
 }
 
 private func TileToWMSCoords(_ tx: Int, _ ty: Int, _ z: Int, _ projection: String) -> OSMPoint {
@@ -25,10 +25,10 @@ private func TileToWMSCoords(_ tx: Int, _ ty: Int, _ z: Int, _ projection: Strin
     let lat = atan(sinh(.pi * (1 - Double(2 * ty) / zoomSize)))
     var loc: OSMPoint
     if projection == "EPSG:4326" {
-        loc = OSMPointMake(lon * 180 / .pi, lat * 180 / .pi)
+		loc = OSMPoint(x: lon * 180 / .pi, y: lat * 180 / .pi)
     } else {
         // EPSG:3857 and others
-        loc = OSMPointMake(lon, log(tan((.pi / 2 + lat) / 2))) // mercatorRaw
+		loc = OSMPoint(x: lon, y: log(tan((.pi / 2 + lat) / 2))) // mercatorRaw
         loc = Mult(loc, 20037508.34 / .pi)
     }
     return loc
@@ -57,7 +57,7 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
         needsDisplayOnBoundsChange = true
         
         // disable animations
-        actions = [
+		self.actions = [
             "onOrderIn": NSNull(),
             "onOrderOut": NSNull(),
             "sublayers": NSNull(),
@@ -347,7 +347,7 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		} else {
             // create layer
             let layer = CALayer()
-            layer.actions = actions
+			layer.actions = self.actions
             layer.zPosition = CGFloat(zoomLevel) * 0.01 - 0.25
             layer.edgeAntialiasingMask = CAEdgeAntialiasingMask(rawValue: 0) // don't AA edges of tiles or there will be a seam visible
             layer.isOpaque = true

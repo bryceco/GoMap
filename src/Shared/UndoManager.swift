@@ -210,15 +210,19 @@ class MyUndoManager: NSObject, NSCoding {
         groupingStack.removeLast()
     }
     
-    func objectRefs() -> NSSet {
-        let refs = NSMutableSet()
-        for action in undoStack {
-            refs.add(action.target)
-			refs.addObjects(from: action.objects)
+	func objectRefs() -> Set<OsmBaseObject> {
+		var refs: Set<OsmBaseObject> = []
+		for action in undoStack {
+			if let target = action.target as? OsmBaseObject {
+				refs.insert( target )
+			}
+			refs.formUnion( action.objects.compactMap({ $0 as? OsmBaseObject }) )
         }
         for action in redoStack {
-            refs.add(action.target)
-			refs.addObjects(from: action.objects)
+			if let target = action.target as? OsmBaseObject {
+				refs.insert( target )
+			}
+			refs.formUnion( action.objects.compactMap({ $0 as? OsmBaseObject }) )
         }
         return refs
     }

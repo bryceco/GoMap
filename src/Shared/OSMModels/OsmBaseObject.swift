@@ -31,29 +31,29 @@ let PATH_SCALING = (256*256.0)
 @objcMembers
 class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
-	private(set) var ident: Int64
-	private(set) var user: String
-	private(set) var timestamp: String
-	private(set) var version: Int
-	private(set) var changeset: Int64
-	private(set) var uid: Int
-	private(set) var visible: Bool
+	final private(set) var ident: Int64
+	final private(set) var user: String
+	final private(set) var timestamp: String
+	final private(set) var version: Int
+	final private(set) var changeset: Int64
+	final private(set) var uid: Int
+	final private(set) var visible: Bool
 
-	var isShown: TRISTATE = TRISTATE._UNKNOWN
+	final var isShown: TRISTATE = TRISTATE._UNKNOWN
 
 	// extra stuff
 
-	var _constructed = false
+	final var _constructed = false
 
-	public var renderPriorityCached = 0
+	final public var renderPriorityCached = 0
 	private var _deleted = false
-	var deleted: Bool {
+	final var deleted: Bool {
 		return _deleted
 	}
 
-	var renderInfo: RenderInfo? = nil
-	private(set) var modifyCount: Int32 = 0
-	private(set) var parentRelations: [OsmRelation] = []
+	final var renderInfo: RenderInfo? = nil
+	final private(set) var modifyCount: Int32 = 0
+	final private(set) var parentRelations: [OsmRelation] = []
 
 	override init() {
 		ident = 0
@@ -132,21 +132,6 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 			return nil
 		}
 	}
-
-	static func IsInterestingKey(_ key: String) -> Bool {
-		if key == "attribution" ||
-			key == "created_by" ||
-			key == "source" ||
-			key == "odbl"	||
-			key.hasPrefix("tiger:") ||
-			key.hasPrefix("source:") ||
-			key.hasPrefix("source_ref") ||
-			OsmMapData.tagsToAutomaticallyStrip.contains(key)
-		{
-            return false
-        }
-        return true
-    }
     
     var extendedIdentifier: OsmIdentifier {
 		return (OsmIdentifier(self.extendedType.rawValue) << 62) | OsmIdentifier(ident)
@@ -190,7 +175,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
     
     func hasInterestingTags() -> Bool {
         for (key, _) in tags {
-			if OsmBaseObject.IsInterestingKey(key) {
+			if OsmTags.IsInterestingKey(key) {
                 return true
             }
         }
@@ -337,7 +322,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
                 merged[otherKey] = otherValue
             } else if ourValue == otherValue {
                 // we already have it but replacement is the same
-			} else if OsmBaseObject.IsInterestingKey(otherKey) {
+			} else if OsmTags.IsInterestingKey(otherKey) {
 				// conflict, so return error
 				return nil
             } else {
@@ -589,7 +574,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 		// any non-ignored key
 		for (key,value) in tags {
-			if OsmBaseObject.IsInterestingKey(key) {
+			if OsmTags.IsInterestingKey(key) {
 				return "\(key) = \(value)"
 			}
 		}

@@ -1,4 +1,3 @@
-//  Converted to Swift 5.4 by Swiftify v5.4.24180 - https://swiftify.com/
 //
 //  OsmMapData.swift
 //  OpenStreetMap
@@ -28,27 +27,16 @@ class OsmUserStatistics: NSObject {
 	var changeSetsCount = 0
 }
 
-var g_EditorMapLayerForArchive: EditorMapLayer? = nil
 
-private func StringTruncatedTo255(_ s: String) -> String {
-    var s = s
-	let last = s.index(s.startIndex, offsetBy: 256)
-	s.removeSubrange(last...)
-    return s
-}
-
-private func DictWithTagsTruncatedTo255(_ tags: [String : String]) -> [String : String] {
-    var newDict = [String : String](minimumCapacity: (tags.count))
-    for (key, value) in tags {
-        let keyInternal = StringTruncatedTo255(key)
-        let valueInternal = StringTruncatedTo255(value)
-        newDict[keyInternal] = valueInternal
-    }
-    return newDict
+fileprivate class ServerQuery: NSObject {
+	var quadList: [QuadBox] = []
+	var rect = OSMRectZero()
 }
 
 @objcMembers
 final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
+	fileprivate static var g_EditorMapLayerForArchive: EditorMapLayer? = nil
+
 	private var parserCurrentElementText: String?
 	private var parserStack: [AnyHashable] = []
 	private var parseError: Error?
@@ -67,24 +55,6 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
     // undo comments
     var undoContextForComment: ((_ comment: String) -> [String : Any])? = nil
     var undoCommentCallback: ((_ undo: Bool, _ context: [String : Any]) -> Void)? = nil
-
-    // editing
-	static let tagsToAutomaticallyStrip: Set<String> =
-										["tiger:upload_uuid",
-										  "tiger:tlid",
-										  "tiger:source",
-										  "tiger:separated",
-										  "geobase:datasetName",
-										  "geobase:uuid",
-										  "sub_sea:type",
-										  "odbl",
-										  "odbl:note",
-										  "yh:LINE_NAME",
-										  "yh:LINE_NUM",
-										  "yh:STRUCTURE",
-										  "yh:TOTYUMONO",
-										  "yh:TYPE",
-										  "yh:WIDTH_RANK"]
     
 	private var previousDiscardDate: Date = Date.distantPast
     
@@ -99,17 +69,13 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
     }
     
     func initCommon() {
-        // TODO: [Swiftify] ensure that the code below is executed only once (`dispatch_once()` is deprecated)
 		UserDefaults.standard.register(defaults: [OSM_SERVER_KEY: "https://api.openstreetmap.org/"])
 		let server = UserDefaults.standard.object(forKey: OSM_SERVER_KEY) as! String
         setServer(server)
         setupPeriodicSaveTimer()
     }
     
-    /// Initializes the object.
-    /// - Parameter userDefaults: The `UserDefaults` instance to use.
-    /// - Returns: An initialized instance of this object.
-    init(userDefaults: UserDefaults) {
+	override init() {
         parserStack = []
 		nodes = [:]
 		ways = [:]
@@ -123,11 +89,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 
         initCommon()
     }
-    
-    convenience override init() {
-        self.init(userDefaults: UserDefaults.standard)
-    }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(MyUndoManager.UndoManagerDidChangeNotification), object: undoManager)
         periodicSaveTimer?.invalidate()
@@ -417,7 +379,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 
 	@objc
     func setTags(_ dict: [String : String], for object: OsmBaseObject?) {
-        let localDict = DictWithTagsTruncatedTo255(dict)
+		let localDict = OsmTags.DictWithTagsTruncatedTo255( dict )
         registerUndoCommentString(NSLocalizedString("set tags", comment: ""))
         object?.setTags(localDict, undo: undoManager)
     }
@@ -764,14 +726,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
                 do {
                     try mapData!.parseXmlStream(stream)
                 } catch {
-                    if false {
-#if false
-                        // probably some html-encoded error message from the server, or if cancelled then the leading portion of the xml download
-                        //NSString * s = [[NSString alloc] initWithBytes:agent.dataHeader.bytes length:agent.dataHeader.length encoding:NSUTF8StringEncoding];
-                        //error = [[NSError alloc] initWithDomain:@"parser" code:100 userInfo:@{ NSLocalizedDescriptionKey : s }];
-                        err = NSError(domain: "parser", code: 100, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Data not available", comment: "")])
-#endif
-                    } else if stream.streamError != nil {
+					if stream.streamError != nil {
                         err = stream.streamError
                     } else if err != nil {
                         // use the parser's reported error
@@ -848,7 +803,6 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         parserCurrentElementText = nil
 
         if elementName == "node" {
-            
             let lat = Double(attributeDict["lat"] ?? "") ?? 0.0
             let lon = Double(attributeDict["lon"] ?? "") ?? 0.0
             let node = OsmNode(fromXmlDict: attributeDict)!
@@ -876,13 +830,10 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
             relations[relation.ident] = relation
             parserStack.append(relation)
         } else if elementName == "member" {
-            
             let type = attributeDict["type"]
             let ref = NSNumber(value: Int64(attributeDict["ref"] ?? "") ?? 0)
             let role = attributeDict["role"]
-            
             let member = OsmMember(type: type, ref: ref.int64Value, role: role)
-            
             let relation = parserStack.last as! OsmRelation
             relation.constructMember(member)
             parserStack.append(member)
@@ -1001,7 +952,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
                 }
             }
             
-			for (key, relation) in relations {
+			for (key, relation) in newData.relations {
 				let current = relations[key]
 				if current == nil {
 					relations[key] = relation
@@ -1066,9 +1017,9 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
                     continue
                 }
                 // node/way/relation
-                    if let attribute = DDXMLNode.attribute(withName: "changeset", stringValue: String(changesetID)) as? DDXMLNode {
-                        osmObject.addAttribute(attribute)
-                    }
+				if let attribute = DDXMLNode.attribute(withName: "changeset", stringValue: String(changesetID)) as? DDXMLNode {
+					osmObject.addAttribute(attribute)
+				}
             }
         }
     }
@@ -1871,81 +1822,58 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
     }
     
     required convenience init?(coder: NSCoder) {
-        self.init()
-        
-        nodes = coder.decodeObject(forKey: "nodes") as? [OsmIdentifier : OsmNode] ?? [:]
-        ways = coder.decodeObject(forKey: "ways") as? [OsmIdentifier : OsmWay] ?? [:]
-        relations = coder.decodeObject(forKey: "relations") as? [OsmIdentifier : OsmRelation] ?? [:]
-		region = coder.decodeObject(forKey: "region") as? QuadMap ?? QuadMap()
-        spatial = coder.decodeObject(forKey: "spatial") as? QuadMap ?? QuadMap()
-        undoManager = coder.decodeObject(forKey: "undoManager") as? MyUndoManager ?? MyUndoManager()
+		self.init()
+
+		guard
+			let nodes = coder.decodeObject(forKey: "nodes") as? [OsmIdentifier : OsmNode],
+			let ways = coder.decodeObject(forKey: "ways") as? [OsmIdentifier : OsmWay],
+			let relations = coder.decodeObject(forKey: "relations") as? [OsmIdentifier : OsmRelation],
+			let region = coder.decodeObject(forKey: "region") as? QuadMap,
+			let spatial = coder.decodeObject(forKey: "spatial") as? QuadMap,
+			let undoManager = coder.decodeObject(forKey: "undoManager") as? MyUndoManager
+		else { return nil }
+
+		self.nodes = nodes
+		self.ways = ways
+		self.relations = relations
+		self.region = region
+		self.spatial = spatial
+		self.undoManager = undoManager
         
         initCommon()
         
 		if region.isEmpty() {
 			// This path taken if we came from a quick-save
             // didn't save spatial, so add everything back into it
-            enumerateObjects(usingBlock: { [self] object in
-				spatial.addMember(object, undo: nil)
+			enumerateObjects(usingBlock: { object in
+				self.spatial.addMember(object, undo: nil)
             })
         }
 
     }
-    
-    func copyNode(_ node: OsmNode) {
-        nodes[node.ident] = node
-    }
-    
-	func copyWay(_ way: OsmWay) {
-		ways[way.ident] = way
-		for node in way.nodes {
-			copyNode(node)
-		}
-    }
-    
-    func copyRelation(_ relation: OsmRelation) {
-		relations[relation.ident] = relation
-		// don't copy member objects
-    }
-    
+
     func modifiedObjects() -> OsmMapData {
         // get modified nodes and ways
-		let modified = OsmMapData(userDefaults: UserDefaults.standard)
-        
-        for (_, object) in nodes {
-            if object.deleted ? (object.ident > 0) : object.isModified() {
-                modified.copyNode(object)
-            }
+		var objects = undoManager.objectRefs().compactMap({ $0 as? OsmBaseObject })
+		objects +=     nodes.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() })
+		objects +=      ways.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() })
+		objects += relations.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() })
+
+		let modified = OsmMapData()
+		for obj in objects {
+			if let node = obj as? OsmNode {
+				modified.nodes[node.ident] = node
+			} else if let way = obj as? OsmWay {
+				modified.ways[way.ident] = way
+				for node in way.nodes {
+					modified.nodes[node.ident] = node
+				}
+			} else if let relation = obj as? OsmRelation {
+				modified.relations[relation.ident] = relation
+			} else {
+				// some other undo object
+			}
         }
-        
-        for (_, object) in ways {
-            if object.deleted ? (object.ident > 0) : object.isModified() {
-                modified.copyWay(object)
-            }
-        }
-        
-        for (_, object) in relations {
-            if object.deleted ? object.ident > 0 : object.isModified() {
-                modified.copyRelation(object)
-            }
-        }
-        
-        let undoObjects = undoManager.objectRefs()
-        for object in undoObjects {
-			if let obj = object as? OsmBaseObject {
-				if let node = obj.isNode() {
-					modified.copyNode(node)
-				} else if let way = obj.isWay() {
-					modified.copyWay(way)
-				} else if let relation = obj.isRelation() {
-					modified.copyRelation(relation)
-				} else {
-					assert(false)
-                }
-            }
-        }
-        modified.undoManager = undoManager
-        
         return modified
     }
     
@@ -1987,7 +1915,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         }
         
         // get objects referenced by undo manager
-        let undoRefs = undoManager.objectRefs() as? Set<OsmBaseObject> ?? []
+        let undoRefs = undoManager.objectRefs()
 		dirty = dirty.union(undoRefs)
         
         // add nodes in ways to dirty set, because we must preserve them to maintain consistency
@@ -2078,7 +2006,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
                     // database failure
                     region = QuadMap()
                 }
-                save()
+                archiveModifiedData()
             })
         })
     }
@@ -2310,31 +2238,48 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         sqlSaveNodes(insertNode, saveWays: insertWay, saveRelations: insertRelation, deleteNodes: deleteNode, deleteWays: deleteWay, deleteRelations: deleteRelation, isUpdate: true)
     }
     
-    func save() {
+    func archiveModifiedData() {
         var t = CACurrentMediaTime()
         // save dirty data and relations
-        DbgAssert((g_EditorMapLayerForArchive != nil))
+		DbgAssert((OsmMapData.g_EditorMapLayerForArchive != nil))
 
-		let modified = modifiedObjects()
-		modified.region = region
-		assert( modified.spatial.count() == 0 )
+		// save our original data
+		let origNodes = self.nodes
+		let origWays = self.ways
+		let origRelations = self.relations
+		let origSpatial = self.spatial
 
+		// update self with minimized versions appropriate for saving
+		let modified = self.modifiedObjects()
+		self.nodes = modified.nodes
+		self.ways = modified.ways
+		self.relations = modified.relations
+		self.spatial = QuadMap()
+
+		// Do the save.
 		let archiver = OsmMapDataArchiver()
-		_=archiver.saveArchive(mapData: modified, aliasing: self)
+		_=archiver.saveArchive(mapData: self)
+
+		// restore originals
+		self.nodes = origNodes
+		self.ways = origWays
+		self.relations = origRelations
+		self.spatial = origSpatial
 
         t = CACurrentMediaTime() - t
-		DLog("archive save \(modified.nodeCount()),\(modified.wayCount()),\(modified.relationCount()),\(undoManager.countUndoGroups),\(region.count()) = \(t)")
-		DLog("Save objects = \(nodeCount() + wayCount() + relationCount())")
-        
+		DLog("Archive save \(modified.nodeCount()),\(modified.wayCount()),\(modified.relationCount()),\(undoManager.countUndoGroups),\(region.count()) = \(t)")
+
         periodicSaveTimer?.invalidate()
         periodicSaveTimer = nil
     }
     
-    static func withCachedData() -> OsmMapData? {
+    static func withArchivedData() -> OsmMapData? {
 
 		let archiver = OsmMapDataArchiver()
 		guard let decode = archiver.loadArchive() else { return nil }
-		assert( decode.spatial.count() == 0 )
+		if decode.spatial.count() > 0 {
+			print("spatial accidentally saved, please fix")
+		}
 
 		// rebuild spatial database
 		decode.enumerateObjects(usingBlock: { obj in
@@ -2385,24 +2330,14 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
     }
 }
 
-fileprivate class ServerQuery: NSObject {
-    var quadList: [QuadBox] = []
-    var rect = OSMRect()
-}
+class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 
-class OsmMapDataArchiver: NSObject, NSKeyedArchiverDelegate, NSKeyedUnarchiverDelegate {
-
-	var aliasing: OsmMapData? = nil
-
-	func saveArchive( mapData: OsmMapData, aliasing: OsmMapData ) -> Bool {
+	func saveArchive( mapData: OsmMapData ) -> Bool {
 		let path = OsmMapData.pathToArchiveFile()
 		let data = NSMutableData()
 		let archiver = NSKeyedArchiver(forWritingWith: data)
-		archiver.delegate = self
-		self.aliasing = aliasing
 		archiver.encode(mapData, forKey: "OsmMapData")
 		archiver.finishEncoding()
-return true
 		let ok = NSData(data: data as Data).write(toFile: path, atomically: true)
 		return ok
 	}
@@ -2422,23 +2357,10 @@ return true
 		return decode
 	}
 
-	func archiver(_ archiver: NSKeyedArchiver, willEncode object: Any) -> Any? {
-		if object is OsmMapData {
-			// when saving the modified objects we want to pretend its the default
-			// data, not the temp copy
-			return self.aliasing
-		}
-		if object is EditorMapLayer {
-			DbgAssert(g_EditorMapLayerForArchive != nil)
-			return g_EditorMapLayerForArchive
-		}
-		return object
-	}
-
 	func unarchiver(_ unarchiver: NSKeyedUnarchiver, didDecode object: Any?) -> Any? {
 		if object is EditorMapLayer {
-			DbgAssert(g_EditorMapLayerForArchive != nil)
-			return g_EditorMapLayerForArchive
+			DbgAssert(OsmMapData.g_EditorMapLayerForArchive != nil)
+			return OsmMapData.g_EditorMapLayerForArchive
 		}
 		return object
 	}
