@@ -21,8 +21,8 @@
 //#import "MercatorTileLayer.h"
 //#import "MyApplication.h"
 #import "OsmNotesDatabase.h"
-#import "OsmMapData.h"
-#import "OsmMapData+Edit.h"
+//#import "OsmMapData.h"
+//#import "OsmMapData+Edit.h"
 //#import "OsmMember.h"
 //#import "RulerView.h"
 //#import "SpeechBalloonView.h"
@@ -30,6 +30,12 @@
 //#import "TurnRestrictController.h"
 //#import "VoiceAnnouncement.h"
 #import "Go_Map__-Swift.h"
+
+typedef void            (^EditAction)(void);
+typedef void            (^EditActionWithNode)(OsmNode * _Nonnull node);
+typedef OsmWay    * _Nonnull (^EditActionReturnWay)(void);
+typedef OsmNode   * _Nonnull(^EditActionReturnNode)(void);
+
 
 #if TARGET_OS_IPHONE
 #import "DDXML.h"
@@ -2005,7 +2011,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 {
     void(^deleteHandler)(UIAlertAction * action) = ^(UIAlertAction * action) {
         NSString * error = nil;
-        EditAction canDelete = [_editorLayer canDeleteSelectedObject:&error];
+		EditAction canDelete = nil; // [_editorLayer canDeleteSelectedObject:&error];
         if ( canDelete ) {
             canDelete();
             CGPoint pos = _pushpinView.arrowPoint;
@@ -2028,7 +2034,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
         [alertDelete addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Delete completely",nil) style:UIAlertActionStyleDefault handler:deleteHandler]];
         [alertDelete addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Detach from relation",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             NSString * error = nil;
-            EditAction canRemove = [_editorLayer.mapData canRemoveObject:_editorLayer.selectedPrimary fromRelation:_editorLayer.selectedRelation error:&error];
+			EditAction canRemove = nil; // [_editorLayer.mapData canRemoveObject:_editorLayer.selectedPrimary fromRelation:_editorLayer.selectedRelation error:&error];
             if ( canRemove ) {
                 canRemove();
                 _editorLayer.selectedRelation = nil;
@@ -2150,7 +2156,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
     if ( _editorLayer.selectedWay ) {
         if ( _editorLayer.selectedNode ) {
             // node in way
-            NSArray<OsmWay *> * parentWays = [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode];
+			NSArray<OsmWay *> * parentWays = nil; // [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode];
             BOOL disconnect		= parentWays.count > 1 || _editorLayer.selectedNode.hasInterestingTags || [_editorLayer.selectedWay isSelfIntersection:_editorLayer.selectedNode];
             BOOL split 			= _editorLayer.selectedWay.isClosed || (_editorLayer.selectedNode != _editorLayer.selectedWay.nodes[0] && _editorLayer.selectedNode != _editorLayer.selectedWay.nodes.lastObject);
             BOOL join 			= parentWays.count > 1;
@@ -2313,7 +2319,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
             if ( _editorLayer.selectedWay.ident >= 0  &&  !OSMRectContainsRect( self.screenLongitudeLatitude, _editorLayer.selectedWay.boundingBox ) ) {
                 error = NSLocalizedString(@"The selected way must be completely visible", nil);	// avoid bugs where nodes are deleted from other objects
             } else {
-                EditAction rect = [_editorLayer.mapData canOrthogonalizeWay:_editorLayer.selectedWay error:&error];
+				EditAction rect = nil; // [_editorLayer.mapData canOrthogonalizeWay:_editorLayer.selectedWay error:&error];
                 if ( rect )
                     rect();
             }
@@ -2321,21 +2327,21 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
             break;
         case ACTION_REVERSE:
         {
-            EditAction reverse = [_editorLayer.mapData canReverseWay:_editorLayer.selectedWay error:&error];
+			EditAction reverse = nil; // [_editorLayer.mapData canReverseWay:_editorLayer.selectedWay error:&error];
             if ( reverse )
                 reverse();
         }
             break;
         case ACTION_JOIN:
         {
-            EditAction join = [_editorLayer.mapData canJoinWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode error:&error];
+			EditAction join = nil; // [_editorLayer.mapData canJoinWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode error:&error];
             if ( join )
                 join();
         }
             break;
         case ACTION_DISCONNECT:
         {
-            EditActionReturnNode disconnect = [_editorLayer.mapData canDisconnectWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode error:&error];
+			EditActionReturnNode disconnect = nil; // [_editorLayer.mapData canDisconnectWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode error:&error];
             if ( disconnect ) {
                 _editorLayer.selectedNode = disconnect();
                 [self placePushpinForSelection];
@@ -2344,7 +2350,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
             break;
         case ACTION_SPLIT:
         {
-            EditActionReturnWay split = [_editorLayer.mapData canSplitWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode error:&error];
+			EditActionReturnWay split = nil; // [_editorLayer.mapData canSplitWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode error:&error];
             if ( split )
                 split();
         }
@@ -2354,7 +2360,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
             if ( _editorLayer.selectedWay.ident >= 0  &&  !OSMRectContainsRect( self.screenLongitudeLatitude, _editorLayer.selectedWay.boundingBox ) ) {
                 error = NSLocalizedString(@"The selected way must be completely visible", nil);	// avoid bugs where nodes are deleted from other objects
             } else {
-                EditAction straighten = [_editorLayer.mapData canStraightenWay:_editorLayer.selectedWay error:&error];
+				EditAction straighten = nil; // [_editorLayer.mapData canStraightenWay:_editorLayer.selectedWay error:&error];
                 if ( straighten )
                     straighten();
             }
@@ -2362,7 +2368,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
             break;
         case ACTION_CIRCULARIZE:
         {
-            EditAction circle = [_editorLayer.mapData canCircularizeWay:_editorLayer.selectedWay error:&error];
+			EditAction circle = nil; // [_editorLayer.mapData canCircularizeWay:_editorLayer.selectedWay error:&error];
             if ( circle )
                 circle();
         }
@@ -2395,10 +2401,10 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
                 if ( tags == nil )
                     tags = [NSMutableDictionary new];
                 tags[ @"type"] = type;
-                [_editorLayer.mapData setTags:tags forObject:relation];
-                [_editorLayer.mapData setTags:nil forObject:_editorLayer.selectedPrimary];
+                [_editorLayer.mapData setTags:tags for:relation];
+				[_editorLayer.mapData setTags:@{} for:_editorLayer.selectedPrimary];
                 
-                EditAction add = [_editorLayer.mapData canAddObject:_editorLayer.selectedPrimary toRelation:relation withRole:@"outer" error:nil];
+				EditAction add = nil; // [_editorLayer.mapData canAddObject:_editorLayer.selectedPrimary toRelation:relation withRole:@"outer" error:nil];
                 add();
                 _editorLayer.selectedNode = nil;
                 _editorLayer.selectedWay = nil;
@@ -2557,7 +2563,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
     
     NSArray<OsmBaseObject *> * ignoreList = nil;
     NSInteger index = [way.nodes indexOfObject:node];
-    NSArray<OsmWay *> * parentWays = node.wayCount == 1 ? @[ way ] : [_editorLayer.mapData waysContainingNode:node];
+    NSArray<OsmWay *> * parentWays = node.wayCount == 1 ? @[ way ] : [_editorLayer.mapData waysContaining:node];
     if ( way.nodes.count < 3 ) {
         ignoreList = [parentWays arrayByAddingObjectsFromArray:(id)way.nodes];
     } else if ( index == 0 ) {
@@ -2629,10 +2635,10 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
                     [strongSelf unblinkObject];
                     
                     if ( object.isWay ) {
-                        [strongSelf->_editorLayer.mapData updateParentMultipolygonRelationRolesForWay:object.isWay];
+                        [strongSelf->_editorLayer.mapData updateParentMultipolygonRelationRolesFor:object.isWay];
                     } else if ( strongSelf.editorLayer.selectedWay && object.isNode ) {
-                        [strongSelf->_editorLayer.mapData updateParentMultipolygonRelationRolesForWay:strongSelf.editorLayer.selectedWay];
-                    }
+                        [strongSelf->_editorLayer.mapData updateParentMultipolygonRelationRolesFor:strongSelf.editorLayer.selectedWay];
+					}
                     
                     if ( strongSelf.editorLayer.selectedWay && object.isNode ) {
                         // dragging a node that is part of a way
@@ -2643,7 +2649,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
                         if ( hit.isNode ) {
                             // replace dragged node with hit node
                             NSString * error = nil;
-                            EditActionReturnNode merge = [strongSelf.editorLayer.mapData canMergeNode:dragNode intoNode:hit.isNode error:&error];
+							EditActionReturnNode merge = nil; // [strongSelf.editorLayer.mapData canMergeNode:dragNode intoNode:hit.isNode error:&error];
                             if ( merge == nil ) {
                                 [strongSelf showAlert:error message:nil];
                                 return;
@@ -2660,9 +2666,9 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
                         } else if ( hit.isWay ) {
                             // add new node to hit way
                             OSMPoint pt = [hit pointOnObjectForPoint:dragNode.location];
-                            [strongSelf.editorLayer.mapData setLongitude:pt.x latitude:pt.y forNode:dragNode];
+                            [strongSelf.editorLayer.mapData setLongitude:pt.x latitude:pt.y for:dragNode];
                             NSString * error = nil;
-                            EditActionWithNode add = [strongSelf.editorLayer canAddNodeToWay:hit.isWay atIndex:segment+1 error:&error];
+							EditActionWithNode add = nil; // [strongSelf.editorLayer canAddNodeToWay:hit.isWay atIndex:segment+1 error:&error];
                             if ( add ) {
                                 add(dragNode);
                             } else {
@@ -2883,7 +2889,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
         OSMPoint pt2 = { pt.longitude, pt.latitude };
         NSInteger segment = [way segmentClosestToPoint:pt2];
         NSString * error = nil;
-        EditActionWithNode add = [_editorLayer canAddNodeToWay:way atIndex:segment+1 error:&error];
+		EditActionWithNode add = nil; // [_editorLayer canAddNodeToWay:way atIndex:segment+1 error:&error];
         if ( add ) {
             OsmNode * newNode = [_editorLayer createNodeAt:arrowPoint];
             add(newNode);
@@ -2985,7 +2991,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
             if ( d < 3.0 ) {
                 // join first to last
                 NSString * error = nil;
-                EditActionWithNode action = [_editorLayer canAddNodeToWay:way atIndex:nextIndex error:&error];
+				EditActionWithNode action = nil; // [_editorLayer canAddNodeToWay:way atIndex:nextIndex error:&error];
                 if ( action ) {
                     action(start);
                     _editorLayer.selectedWay = way;
@@ -3000,7 +3006,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
         
         
         NSString * error = nil;
-        EditActionWithNode addNodeToWay = [_editorLayer canAddNodeToWay:way atIndex:nextIndex error:&error];
+		EditActionWithNode addNodeToWay = nil; // [_editorLayer canAddNodeToWay:way atIndex:nextIndex error:&error];
         if ( !addNodeToWay ) {
             [self showAlert:NSLocalizedString(@"Can't extend way",nil) message:error];
             return;
@@ -3072,14 +3078,14 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
         assert( _pushpinView );
         CGPoint point = _pushpinView.arrowPoint;
         OsmNode * node = [_editorLayer createNodeAt:point];
-        [_editorLayer.mapData setTags:tags forObject:node];
+        [_editorLayer.mapData setTags:tags for:node];
         _editorLayer.selectedNode = node;
         // create new pushpin for new object
         [self placePushpinForSelection];
     } else {
         // update current object
         OsmBaseObject * object = _editorLayer.selectedPrimary;
-        [_editorLayer.mapData setTags:tags forObject:object];
+        [_editorLayer.mapData setTags:tags for:object];
         [self refreshPushpinText];
         [self refreshNoteButtonsFromDatabase];
     }
@@ -3234,7 +3240,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
                     
                     if ( [note.status isEqualToString:@"closed"] ) {
                         [button removeFromSuperview];
-                    } else if ( note.isFixme && [self.editorLayer.mapData objectWithExtendedIdentifier:note.noteId].tags[@"fixme"] == nil ) {
+                    } else if ( note.isFixme && [self.editorLayer.mapData objectWithExtendedIdentifier:note.noteId.longLongValue].tags[@"fixme"] == nil ) {
                         [button removeFromSuperview];
                     } else {
                         double offsetX = note.isKeepRight || note.isFixme ? 0.00001 : 0.0;
@@ -3268,7 +3274,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
     
     if ( note.isWaypoint || note.isKeepRight ) {
         if ( !_editorLayer.hidden ) {
-            OsmBaseObject * object = [_editorLayer.mapData objectWithExtendedIdentifier:note.noteId];
+			OsmBaseObject * object = [_editorLayer.mapData objectWithExtendedIdentifier:note.noteId.longLongValue];
             if ( object ) {
                 _editorLayer.selectedNode		= object.isNode;
                 _editorLayer.selectedWay		= object.isWay;
@@ -3308,7 +3314,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
         [self.mainViewController presentViewController:alertKeepRight animated:YES completion:nil];
         
     } else if ( note.isFixme ) {
-        OsmBaseObject * object = [_editorLayer.mapData objectWithExtendedIdentifier:note.noteId];
+        OsmBaseObject * object = [_editorLayer.mapData objectWithExtendedIdentifier:note.noteId.longLongValue];
         _editorLayer.selectedNode		= object.isNode;
         _editorLayer.selectedWay		= object.isWay;
         _editorLayer.selectedRelation	= object.isRelation;
@@ -3509,7 +3515,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
                 UIAlertController * confirm = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Add way to multipolygon?",nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
                 void (^addMmember)(NSString *) = ^(NSString * role) {
                     NSString * error = nil;
-                    EditAction add = [_editorLayer.mapData canAddObject:ways.lastObject toRelation:_editorLayer.selectedRelation withRole:role error:&error];
+					EditAction add = nil; // [_editorLayer.mapData canAddObject:ways.lastObject toRelation:_editorLayer.selectedRelation withRole:role error:&error];
                     if ( add ) {
                         add();
                         [self flashMessage:NSLocalizedString(@"added to multipolygon relation",nil)];

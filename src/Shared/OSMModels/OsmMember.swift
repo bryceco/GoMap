@@ -7,7 +7,7 @@
 //
 
 @objcMembers
-class OsmMember: NSObject, NSCoding {
+final class OsmMember: NSObject, NSCoding {
 
 	let ref: OsmIdentifier
 	private(set) var type: String?	// way, node, or relation: to help identify ref

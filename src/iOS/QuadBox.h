@@ -21,6 +21,7 @@
 -(void)nullifyCpp;
 -(void)deleteCpp;
 -(NSInteger)count;
+-(BOOL)isEmpty;
 
 // spatial specific
 -(void)addMember:(OsmBaseObject * _Nonnull)member bbox:(OSMRect)bbox;

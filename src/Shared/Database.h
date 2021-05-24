@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+@class OsmNode;
+@class OsmWay;
+@class OsmRelation;
+
 @interface Database : NSObject
 {
 	NSString			*	_path;
@@ -16,28 +20,28 @@
 	struct sqlite3_stmt	*	_spatialInsert;
 	struct sqlite3_stmt	*	_spatialDelete;
 }
-@property (class,readonly,nonatomic)	dispatch_queue_t	dispatchQueue;
+@property (class,readonly,nonatomic)	dispatch_queue_t _Nonnull	dispatchQueue;
 
-+(NSString *)databasePathWithName:(NSString *)name;
-+(void)deleteDatabaseWithName:(NSString *)name;
++(NSString *_Nonnull)databasePathWithName:(NSString *_Nullable)name;
++(void)deleteDatabaseWithName:(NSString *_Nullable)name;
 
--(instancetype)initWithName:(NSString *)name;
--(NSString *)path;
+-(instancetype _Nullable )initWithName:(NSString *_Nullable)name;
+-(NSString *_Nonnull)path;
 -(void)close;
 
 -(void)createTables;
 -(void)dropTables;
 
--(BOOL)saveNodes:(NSArray<OsmNode *> *)saveNodes
-        saveWays:(NSArray<OsmWay *> *)saveWays
-   saveRelations:(NSArray<OsmRelation *> *)saveRelations
-     deleteNodes:(NSArray<OsmNode *> *)deleteNodes
-      deleteWays:(NSArray<OsmWay *> *)deleteWays
- deleteRelations:(NSArray<OsmRelation *> *)deleteRelations
+-(BOOL)saveNodes:(NSArray<OsmNode *> *_Nonnull)saveNodes
+        saveWays:(NSArray<OsmWay *> *_Nonnull)saveWays
+   saveRelations:(NSArray<OsmRelation *> *_Nonnull)saveRelations
+     deleteNodes:(NSArray<OsmNode *> *_Nonnull)deleteNodes
+      deleteWays:(NSArray<OsmWay *> *_Nonnull)deleteWays
+ deleteRelations:(NSArray<OsmRelation *> *_Nonnull)deleteRelations
         isUpdate:(BOOL)isUpdate;
 
--(NSMutableDictionary<NSNumber *, OsmNode *> *)querySqliteNodes;
--(NSMutableDictionary<NSNumber *, OsmWay *> *)querySqliteWays;
--(NSMutableDictionary<NSNumber *, OsmRelation *> *)querySqliteRelations;
+-(NSMutableDictionary<NSNumber *, OsmNode *> *_Nullable)querySqliteNodes;
+-(NSMutableDictionary<NSNumber *, OsmWay *> *_Nullable)querySqliteWays;
+-(NSMutableDictionary<NSNumber *, OsmRelation *> *_Nullable)querySqliteRelations;
 
 @end

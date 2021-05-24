@@ -9,7 +9,7 @@
 import Foundation
 
 // not used as a class yet, maybe someday
-class OsmTags : NSObject {
+final class OsmTags : NSObject {
 
 	static private let PrettyTagExpr: NSRegularExpression = {
 		do {

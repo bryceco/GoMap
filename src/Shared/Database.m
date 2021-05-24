@@ -670,8 +670,9 @@ retry:
 				break;
 			}
 			NSMutableDictionary * tags = (id)obj.tags;
-			if ( tags == nil ) {
-				tags = [NSMutableDictionary new];
+			assert( tags );
+			if ( ![tags isKindOfClass:[NSMutableDictionary class]] ) {
+				tags = tags.mutableCopy;
 				[obj setTags:tags undo:nil];
 			}
 			[tags setObject:value forKey:key];

@@ -6,8 +6,17 @@
 //  Copyright © 2020 Bryce. All rights reserved.
 //
 
+class OsmRelationBuilder: NSObject {
+	var relation: OsmRelation
+	var members: [OsmMember?]
+	init(with relation: OsmRelation, memberCount: Int ) {
+		self.relation = relation
+		self.members = Array<OsmMember?>(repeating: nil, count: memberCount)
+	}
+}
+
 @objcMembers
-class OsmRelation: OsmBaseObject {
+final class OsmRelation: OsmBaseObject {
     private(set) var members: [OsmMember]
 
     override var description: String {
@@ -63,7 +72,7 @@ class OsmRelation: OsmBaseObject {
 			}
 
             if member.isWay() {
-				if let way = mapData.way(forRef: NSNumber(value: member.ref)) {
+				if let way = mapData.way(forRef: member.ref) {
 					member.resolveRef(to: way)
 					way.addParentRelation(self, undo: nil)
 					needsRedraw = true
@@ -71,16 +80,16 @@ class OsmRelation: OsmBaseObject {
                     // way is not in current view
                 }
             } else if member.isNode() {
-				if let node = mapData.node(forRef: NSNumber(value: member.ref)) {
-                    member.resolveRef(to: node)
+				if let node = mapData.node(forRef: member.ref) {
+					member.resolveRef(to: node)
 					node.addParentRelation(self, undo: nil)
 					needsRedraw = true
                 } else {
 					// node is not in current view
                 }
             } else if member.isRelation() {
-				if let rel = mapData.relation(forRef: NSNumber(value: member.ref)) {
-                    member.resolveRef(to: rel)
+				if let rel = mapData.relation(forRef: member.ref) {
+					member.resolveRef(to: rel)
 					rel.addParentRelation(self, undo: nil)
                     needsRedraw = true
                 } else {
@@ -435,14 +444,14 @@ class OsmRelation: OsmBaseObject {
         return bestPoint
     }
 
-    func containsObject(_ object: OsmBaseObject) -> Bool {
+    func containsObject(_ target: OsmBaseObject) -> Bool {
         let set = allMemberObjects()
         for obj in set {
-			if obj == object {
+			if obj == target {
                 return true
             }
 			if let way = obj as? OsmWay,
-			   let node = object as? OsmNode,
+			   let node = target as? OsmNode,
 			   way.nodes.contains(node)
 			{
 				return true
@@ -456,12 +465,22 @@ class OsmRelation: OsmBaseObject {
         coder.encode(members, forKey: "members")
     }
 
-	override init() {
-		members = []
-		super.init()
+	override init(withVersion version: Int, changeset: Int64, user: String, uid: Int, ident: Int64, timestamp: String, tags: [String:String]) {
+		self.members = []
+		super.init(withVersion: version, changeset: changeset, user: user, uid: uid, ident: ident, timestamp: timestamp, tags: tags)
 	}
 
-    required init?(coder: NSCoder) {
+	convenience init(asUserCreated userName: String) {
+		let ident = OsmBaseObject.nextUnusedIdentifier()
+		self.init(withVersion: 1, changeset: 0, user: userName, uid: 0, ident: ident, timestamp: "", tags: [:])
+	}
+
+	override init?(fromXmlDict attributeDict: [String : Any]) {
+		self.members = []
+		super.init(fromXmlDict: attributeDict)
+	}
+
+	required init?(coder: NSCoder) {
 		members = coder.decodeObject(forKey: "members") as! [OsmMember]
 		super.init(coder: coder)
 		_constructed = true

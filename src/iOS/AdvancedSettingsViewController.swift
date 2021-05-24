@@ -29,7 +29,7 @@ class AdvancedSettingsViewController: UITableViewController {
         super.viewWillAppear(animated)
         let appDelegate = AppDelegate.shared
         let mapData = appDelegate.mapView.editorLayer.mapData
-        self.hostname.text = mapData?.getServer()
+        self.hostname.text = mapData.getServer()
         self.originalHostname = self.hostname.text
         
         let app = UIApplication.shared as! MyApplication
@@ -43,7 +43,7 @@ class AdvancedSettingsViewController: UITableViewController {
         let appDelegate = AppDelegate.shared
         let mapData = appDelegate.mapView.editorLayer.mapData
         if !(hostname.text == originalHostname) {
-            mapData?.setServer(hostname.text)
+            mapData.setServer(hostname.text!)
         }
     }
     

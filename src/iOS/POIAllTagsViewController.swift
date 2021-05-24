@@ -591,8 +591,7 @@ class POIAllTagsViewController: UITableViewController {
 					var set: Set<String> = PresetsDatabase.shared.allTagValuesForKey(key)
                     let appDelegate = AppDelegate.shared
 					let values = appDelegate.mapView.editorLayer.mapData.tagValues(forKey: key)
-					let values2 = values as! Set<String>
-					set = set.union(values2)
+					set = set.union(values)
 					let list: [String] = Array(set)
                     textField?.autocompleteStrings = list
                 }

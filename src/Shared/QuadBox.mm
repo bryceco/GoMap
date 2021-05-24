@@ -332,6 +332,15 @@ public:
 		return c;
 	}
 
+	BOOL isEmpty() const
+	{
+		for ( int i = 0; i < 4; ++i ) {
+			if ( _children[i] )
+				return false;
+		}
+		return _members.size() == 0;
+	}
+
 	NSInteger countBusy() const
 	{
 		NSInteger c = _busy ? 1 : 0;
@@ -672,6 +681,10 @@ public:
 -(NSInteger)count
 {
 	return _cpp->count();
+}
+-(BOOL)isEmpty
+{
+	return _cpp->isEmpty();
 }
 
 #pragma mark Region

@@ -11,11 +11,12 @@
 #endif
 
 #import "OsmNotesDatabase.h"
-#import "OsmMapData.h"
+//#import "OsmMapData.h"
 
 
 static NSArray * FixMeList = nil;
 
+NSString * OSM_API_URL = @"https://api.openstreetmap.org/";
 
 #define STATUS_FIXME		@"fixme"
 #define STATUS_KEEPRIGHT	@"keepright"
@@ -163,13 +164,13 @@ static NSInteger g_nextTagID = 1;
 		if ( osmIdent && osmType ) {
 			if ( [osmType isEqualToString:@"node"] ) {
 				type = OSM_TYPE_NODE;
-				object = [mapData nodeForRef:osmIdent];
+				object = [mapData nodeForRef:osmIdent.longLongValue];
 			} else if ( [osmType isEqualToString:@"way"] ) {
 				type = OSM_TYPE_WAY;
-				object = [mapData wayForRef:osmIdent];
+				object = [mapData wayForRef:osmIdent.longLongValue];
 			} else if ( [osmType isEqualToString:@"relation"] ) {
 				type = OSM_TYPE_RELATION;
-				object = [mapData relationForRef:osmIdent];
+				object = [mapData relationForRef:osmIdent.longLongValue];
 			}
 		}
 		NSString * objectName = object ? [NSString stringWithFormat:@"%@ (%@ %@)", object.friendlyDescription, osmType, osmIdent] : [NSString stringWithFormat:@"%@ %@", osmType, osmIdent];

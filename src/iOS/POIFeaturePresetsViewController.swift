@@ -369,7 +369,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			let cell: FeaturePresetCell = textField.superviewOfType()!
 			if let key = cell.presetKey?.tagKey {
                 if PresetsDatabase.shared.eligibleForAutocomplete(key) {
-					var values = AppDelegate.shared.mapView.editorLayer.mapData.tagValues(forKey: key) as! Set<String>
+					var values = AppDelegate.shared.mapView.editorLayer.mapData.tagValues(forKey: key)
 					let set = PresetsDatabase.shared.allTagValuesForKey(key)
 					values = values.union(set)
 					let list = Array<String>( values )

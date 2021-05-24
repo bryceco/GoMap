@@ -50,7 +50,7 @@ class LoginViewController: UITableViewController {
         _activityIndicator.color = UIColor.darkGray
         _activityIndicator.startAnimating()
 
-        appDelegate.mapView.editorLayer.mapData.verifyUserCredentials(completion: { errorMessage in
+        appDelegate.mapView.editorLayer.mapData.verifyUserCredentials(withCompletion: { errorMessage in
             var errorMessage = errorMessage
             self._activityIndicator.stopAnimating()
             if errorMessage != nil {

@@ -14,7 +14,7 @@ private let MAP_RECT = OSMRect(origin: OSMPoint(x:-180.0, y:-90.0),
 
 @objcMembers
 class QuadMap: NSObject, NSCoding {
-    var rootQuad: QuadBox
+    let rootQuad: QuadBox
 
     // MARK: Common
 
@@ -34,6 +34,10 @@ class QuadMap: NSObject, NSCoding {
     func count() -> Int {
         return rootQuad.count()
     }
+
+	func isEmpty() -> Bool {
+		return rootQuad.isEmpty()
+	}
 
     func encode(with coder: NSCoder) {
         coder.encode(rootQuad, forKey: "rootQuad")

@@ -11,7 +11,7 @@ import QuartzCore
 import UIKit
 
 class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeViewControllerDelegate {
-    var mapData: OsmMapData?
+    var mapData: OsmMapData!
     @IBOutlet var _commentContainerView: UIView!
     @IBOutlet var _xmlTextView: UITextView!
     @IBOutlet var _commentTextView: UITextView!
@@ -110,8 +110,8 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
             return
         }
         
-        mapData?.credentialsUserName = appDelegate.userName
-        mapData?.credentialsPassword = appDelegate.userPassword
+        mapData?.credentialsUserName = appDelegate.userName ?? ""
+        mapData?.credentialsPassword = appDelegate.userPassword ?? ""
         
         _progressView.startAnimating()
         _commitButton.isEnabled = false
@@ -122,13 +122,13 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
         _commentTextView.resignFirstResponder()
         _xmlTextView.resignFirstResponder()
         
-        var comment = _commentTextView.text
-        comment = comment?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        var comment = _commentTextView.text ?? ""
+		comment = comment.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         
-        var source = _sourceTextField.text
-        source = source?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        var source = _sourceTextField.text ?? ""
+		source = source.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         
-        let completion: ((String?) -> Void)? = { [self] error in
+        let completion: ((String?) -> Void) = { [self] error in
             _progressView.stopAnimating()
             _commitButton.isEnabled = true
             _cancelButton.isEnabled = true
@@ -165,20 +165,20 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
             }
         }
         
-        var imagery: String? = nil
-        if appDelegate.mapView.viewState == MAPVIEW_EDITORAERIAL || appDelegate.mapView.viewState == MAPVIEW_AERIAL {
-            imagery = appDelegate.mapView.aerialLayer.aerialService?.name
-        }
+        var imagery: String = ""
+		if appDelegate.mapView.viewState == MAPVIEW_EDITORAERIAL || appDelegate.mapView.viewState == MAPVIEW_AERIAL {
+            imagery = appDelegate.mapView.aerialLayer.aerialService?.name ?? ""
+		}
         
         if _xmlTextView.isEditable {
             
             // upload user-edited text
             let xmlText = _xmlTextView.text
-            var xmlDoc: DDXMLDocument? = nil
-            do {
+            let xmlDoc: DDXMLDocument
+			do {
                 xmlDoc = try DDXMLDocument(xmlString: xmlText ?? "", options: 0)
             } catch {
-                completion?(NSLocalizedString("The XML is improperly formed", comment: ""))
+                completion(NSLocalizedString("The XML is improperly formed", comment: ""))
                 return
             }
 			mapData?.uploadChangesetXml(xmlDoc, comment: comment, source: source, imagery: imagery, completion: completion)
@@ -268,7 +268,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
         default:
             return false
         }
-        guard let object = appDelegate.mapView.editorLayer.mapData.object(withExtendedIdentifier: NSNumber(value: ident))
+        guard let object = appDelegate.mapView.editorLayer.mapData.object(withExtendedIdentifier: ident)
 		else { return false }
         appDelegate.mapView.editorLayer.selectedRelation = object.isRelation()
         appDelegate.mapView.editorLayer.selectedWay = object.isWay()

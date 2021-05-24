@@ -42,7 +42,7 @@ class EditorMapLayer: CALayer {
 	var showLevelRange: String = "" { // range of levels for building level
 		didSet {
 			UserDefaults.standard.set(self.showLevelRange, forKey: "editor.showLevelRange")
-			mapData?.clearCachedProperties()
+			mapData.clearCachedProperties()
 		}
 	}
     var showPoints = false
@@ -70,7 +70,7 @@ class EditorMapLayer: CALayer {
     var _selectedWay: OsmWay?
     var _selectedRelation: OsmRelation?
 
-    private(set) var mapData: OsmMapData!
+    let mapData: OsmMapData
 
     var addNodeInProgress = false
     private(set) var atVisibleObjectLimit = false
@@ -78,6 +78,29 @@ class EditorMapLayer: CALayer {
 
     init(mapView: MapView) {
 		self.mapView = mapView
+
+		var t = CACurrentMediaTime()
+		if let mapData = OsmMapData.withCachedData() {
+			t = CACurrentMediaTime() - t
+#if os(iOS)
+			if mapView.enableAutomaticCacheManagement {
+				_=mapData.discardStaleData()
+			} else if t > 5.0 {
+				// need to pause before posting the alert because the view controller isn't ready here yet
+				DispatchQueue.main.async(execute: {
+					let text = NSLocalizedString("Your OSM data cache is getting large, which may lead to slow startup and shutdown times.\n\nYou may want to clear the cache (under Display settings) to improve performance.", comment: "")
+					let alertView = UIAlertController(title: NSLocalizedString("Cache size warning", comment: ""), message: text, preferredStyle: .alert)
+					alertView.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+					mapView.mainViewController.present(alertView, animated: true)
+				})
+			}
+#endif
+			self.mapData = mapData
+		} else {
+			self.mapData = OsmMapData()
+			self.mapData.purgeHard() // force database to get reset
+		}
+
         super.init()
 
         let appDelegate = AppDelegate.shared
@@ -126,58 +149,31 @@ class EditorMapLayer: CALayer {
         showPower = defaults.bool(forKey: "editor.showPower")
         showPastFuture = defaults.bool(forKey: "editor.showPastFuture")
         showOthers = defaults.bool(forKey: "editor.showOthers")
-        
-        var t = CACurrentMediaTime()
-        mapData = OsmMapData()
-        t = CACurrentMediaTime() - t
-#if os(iOS)
-        if (mapData != nil) && mapView.enableAutomaticCacheManagement {
-            mapData?.discardStaleData()
-		} else if (mapData != nil) && t > 5.0 {
-            // need to pause before posting the alert because the view controller isn't ready here yet
-            DispatchQueue.main.async(execute: { [self] in
-                let text = NSLocalizedString("Your OSM data cache is getting large, which may lead to slow startup and shutdown times.\n\nYou may want to clear the cache (under Display settings) to improve performance.", comment: "")
-                let alertView = UIAlertController(title: NSLocalizedString("Cache size warning", comment: ""), message: text, preferredStyle: .alert)
-                alertView.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
-                self.mapView.mainViewController.present(alertView, animated: true)
-            })
-        }
-#endif
-        if mapData == nil {
-            mapData = OsmMapData()
-            mapData?.purgeHard() // force database to get reset
-        }
-        
-        mapData.credentialsUserName = appDelegate.userName
-        mapData.credentialsPassword = appDelegate.userPassword
+
+        mapData.credentialsUserName = appDelegate.userName ?? ""
+        mapData.credentialsPassword = appDelegate.userPassword ?? ""
         
         weak var weakSelf = self
         mapData.undoContextForComment = { comment in
 			guard let strongSelf = weakSelf else { return [:] }
             var trans = strongSelf.mapView.screenFromMapTransform
             let location = Data(bytes: &trans, count: MemoryLayout.size(ofValue: trans))
-            var dict: [AnyHashable : Any] = [:]
-            dict["comment"] = comment
-            dict["location"] = location
+            var dict: [String : Any] = [:]
+			dict["comment"] = comment
+			dict["location"] = location
             let pushpin = strongSelf.mapView.pushpinPosition
             if !pushpin.x.isNaN {
                 dict["pushpin"] = NSCoder.string(for: strongSelf.mapView.pushpinPosition)
             }
-            if strongSelf._selectedRelation != nil {
-                if let selectedRelation = strongSelf._selectedRelation {
-                    dict["selectedRelation"] = selectedRelation
-                }
-            }
-            if strongSelf._selectedWay != nil {
-                if let selectedWay = strongSelf._selectedWay {
-                    dict["selectedWay"] = selectedWay
-                }
-            }
-            if strongSelf._selectedNode != nil {
-                if let selectedNode = strongSelf._selectedNode {
-                    dict["selectedNode"] = selectedNode
-                }
-            }
+			if let selectedRelation = strongSelf._selectedRelation {
+				dict["selectedRelation"] = selectedRelation
+			}
+			if let selectedWay = strongSelf._selectedWay {
+				dict["selectedWay"] = selectedWay
+			}
+			if let selectedNode = strongSelf._selectedNode {
+				dict["selectedNode"] = selectedNode
+			}
             return dict
         }
         
@@ -223,7 +219,7 @@ class EditorMapLayer: CALayer {
     }
     
     func save() {
-        mapData?.save()
+        mapData.save()
     }
 
     //    #define SET_FILTER(name)\
@@ -289,7 +285,7 @@ class EditorMapLayer: CALayer {
     
     func updateMapLocation() {
         if isHidden {
-            mapData?.cancelCurrentDownloads()
+            mapData.cancelCurrentDownloads()
             return
         }
         
@@ -304,7 +300,7 @@ class EditorMapLayer: CALayer {
 
 		updateIconSize()
 
-		mapData?.update(withBox: box, progressDelegate: mapView) { [self] partial, error in
+		mapData.update(withBox: box, progressDelegate: mapView) { [self] partial, error in
 			if let error = error {
 				DispatchQueue.main.async(execute: { [self] in
 					// present error asynchrounously so we don't interrupt the current UI action
@@ -1247,7 +1243,10 @@ class EditorMapLayer: CALayer {
         
         // Arrow heads and street names
         for object in shownObjects {
-            let isHighlight = highlights.contains(object)
+			if !(object is OsmWay) {
+				continue
+			}
+			let isHighlight = highlights.contains(object)
 			if object.isOneWay != ._NONE || isHighlight {
 
                 // arrow heads
@@ -1326,7 +1325,7 @@ class EditorMapLayer: CALayer {
     
     func resetDisplayLayers() {
         // need to refresh all text objects
-        mapData.enumerateObjects({ obj in
+		mapData.enumerateObjects(usingBlock: { obj in
             obj.shapeLayers = nil
         })
         baseLayer!.sublayers = nil
@@ -2181,7 +2180,7 @@ class EditorMapLayer: CALayer {
     func pasteTagsMerge(_ object: OsmBaseObject) {
         // Merge tags
 		if let copyPasteTags = UserDefaults.standard.object(forKey: "copyPasteTags") as? [String : String] {
-			let newTags = OsmBaseObject.MergeTagsWith(ourTags: object.tags, otherTags: copyPasteTags, allowConflicts: true)
+			let newTags = OsmBaseObject.MergeTagsWith(ourTags: object.tags, otherTags: copyPasteTags, allowConflicts: true)!
 			mapData.setTags(newTags, for: object)
 			setNeedsLayout()
 		}
@@ -2190,7 +2189,7 @@ class EditorMapLayer: CALayer {
     func pasteTagsReplace(_ object: OsmBaseObject) {
         // Replace all tags
 		if let copyPasteTags = UserDefaults.standard.object(forKey: "copyPasteTags") as? [String : String] {
-			mapData!.setTags(copyPasteTags, for: object)
+			mapData.setTags(copyPasteTags, for: object)
 			setNeedsLayout()
 		}
     }
@@ -2226,7 +2225,7 @@ class EditorMapLayer: CALayer {
 	@objc
     func createWay(with node: OsmNode) -> OsmWay {
         let way = mapData.createWay()
-        var dummy: NSString? = nil
+        var dummy: String? = nil
 		let add = mapData.canAddNode(to: way, at: 0, error: &dummy)
         add?(node)
         setNeedsLayout()
@@ -2235,27 +2234,25 @@ class EditorMapLayer: CALayer {
     
     // MARK: Editing actions that modify data and can fail
 
-	@objc
-    func canAddNode(toWay way: OsmWay, atIndex index: Int, error: UnsafeMutablePointer<NSString?>) -> EditActionWithNode? {
-		guard let action = mapData.canAddNode(to: way, at: index, error: &error.pointee) else {
+    func canAddNode(toWay way: OsmWay, atIndex index: Int, error: inout String?) -> EditActionWithNode? {
+		guard let action = mapData.canAddNode(to: way, at: index, error: &error) else {
 			return nil
-        }
+		}
         return { [self] node in
 			action(node)
 			setNeedsLayout()
         }
     }
     
-	@objc
-    func canDeleteSelectedObject(_ error: UnsafeMutablePointer<NSString?>) -> EditAction? {
-		if selectedNode != nil {
+    func canDeleteSelectedObject(_ error: inout String?) -> EditAction? {
+		if let selectedNode = selectedNode {
             
-            // delete node from selected way
+			// delete node from selected way
 			let action: EditAction?
-			if selectedWay != nil {
-				action = mapData.canDelete(selectedNode, from: selectedWay, error: &error.pointee)
+			if let selectedWay = selectedWay {
+				action = mapData.canDelete(selectedNode, from: selectedWay, error: &error)
             } else {
-				action = mapData.canDelete(selectedNode, error: &error.pointee)
+				action = mapData.canDelete(selectedNode, error: &error)
 			}
             if let action = action {
                 let way = selectedWay
@@ -2269,10 +2266,10 @@ class EditorMapLayer: CALayer {
                     setNeedsLayout()
                 }
             }
-        } else if selectedWay != nil {
+        } else if let selectedWay = selectedWay {
             
 			// delete way
-			if let action = mapData.canDelete(selectedWay, error: &error.pointee) {
+			if let action = mapData.canDelete(selectedWay, error: &error) {
 				return { [self] in
                     action()
                     self.selectedNode = nil
@@ -2280,8 +2277,8 @@ class EditorMapLayer: CALayer {
                     setNeedsLayout()
                 }
             }
-        } else if selectedRelation != nil {
-			if let action = mapData.canDelete(selectedRelation, error: &error.pointee) {
+        } else if let selectedRelation = selectedRelation {
+			if let action = mapData.canDelete(selectedRelation, error: &error) {
 				return { [self] in
                     action()
                     self.selectedNode = nil

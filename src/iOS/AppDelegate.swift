@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		NSKeyedUnarchiver.setClass(PresetValue.classForKeyedArchiver(), 		 	forClassName: "PresetValue")
 		NSKeyedUnarchiver.setClass(QuadMap.classForKeyedArchiver(), 				forClassName: "QuadMap")
 		NSKeyedUnarchiver.setClass(MyUndoManager.classForKeyedArchiver(), 			forClassName: "UndoManager")
+		NSKeyedUnarchiver.setClass(OsmMapData.classForKeyedArchiver(), 				forClassName: "OsmMapData")
 	}
 
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {

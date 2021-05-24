@@ -84,7 +84,7 @@ class GpxViewController: UITableViewController {
         dismiss(animated: true)
     }
     
-    func share(_ track: GpxTrack?) {
+    func share(_ track: GpxTrack) {
         let progress = UIAlertController(
             title: NSLocalizedString("Uploading GPX...", comment: ""),
             message: NSLocalizedString("Please wait", comment: ""),
@@ -97,136 +97,84 @@ class GpxViewController: UITableViewController {
             
             let url = OSM_API_URL + "api/0.6/gpx/create"
             
-            var request: NSMutableURLRequest? = nil
-            if let url1 = URL(string: url) {
-                request = NSMutableURLRequest(url: url1)
-            }
-            let boundary = "----------------------------d10f7aa230e8"
-            request?.httpMethod = "POST"
+			guard let url1 = URL(string: url) else { return }
+			let request = NSMutableURLRequest(url: url1)
+			let boundary = "----------------------------d10f7aa230e8"
+            request.httpMethod = "POST"
             let contentType = "multipart/form-data; boundary=\(boundary)"
-            request?.setValue(contentType, forHTTPHeaderField: "Content-Type")
-            request?.setValue("close", forHTTPHeaderField: "Connection")
+            request.setValue(contentType, forHTTPHeaderField: "Content-Type")
+            request.setValue("close", forHTTPHeaderField: "Connection")
             
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy_MM_dd__HH_mm_ss"
-            var startDateFile: String? = nil
-            if let creationDate = track?.creationDate {
-                startDateFile = dateFormatter.string(from: creationDate)
-            }
-            var startDateFriendly: String? = nil
-            if let creationDate = track?.creationDate {
-                startDateFriendly = DateFormatter.localizedString(from: creationDate, dateStyle: .short, timeStyle: .short)
-            }
+			let startDateFile = dateFormatter.string(from: track.creationDate)
+			let startDateFriendly = DateFormatter.localizedString(from: track.creationDate, dateStyle: .short, timeStyle: .short)
+
+			var body = Data()
+			body.append("--\(boundary)\r\n".data(using: .utf8)!)
+			body.append("Content-Disposition: form-data; name=\"file\"; filename=\"GoMap__\(startDateFile).gpx\"\r\n".data(using: .utf8)!)
+			body.append("Content-Type: application/octet-stream\r\n\r\n".data(using: .utf8)!)
+			body.append(track.gpxXmlData()!)
+			body.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+			body.append("Content-Disposition: form-data; name=\"description\"\r\n\r\n".data(using: .utf8)!)
+			body.append("Go Map!! \(startDateFriendly)".data(using: .utf8)!)
+			body.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+			body.append("Content-Disposition: form-data; name=\"tags\"\r\n\r\n".data(using: .utf8)!)
+			body.append("GoMap".data(using: .utf8)!)
+			body.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+			body.append("Content-Disposition: form-data; name=\"public\"\r\n\r\n".data(using: .utf8)!)
+			body.append("1".data(using: .utf8)!)
+			body.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+			body.append("Content-Disposition: form-data; name=\"visibility\"\r\n\r\n".data(using: .utf8)!)
+			body.append("public".data(using: .utf8)!)
+			body.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
+            request.httpBody = body
+            request.setValue(String(format: "%ld", body.count), forHTTPHeaderField: "Content-Length")
             
-            var body = Data()
-            if let data1 = "--\(boundary)\r\n".data(using: .utf8) {
-                body.append(data1)
-            }
-            if let data1 = "Content-Disposition: form-data; name=\"file\"; filename=\"GoMap__\(startDateFile ?? "").gpx\"\r\n".data(using: .utf8) {
-                body.append(data1)
-            }
-            if let data1 = "Content-Type: application/octet-stream\r\n\r\n".data(using: .utf8) {
-                body.append(data1)
-            }
-            if let gpxXmlData = track?.gpxXmlData() {
-                body.append(gpxXmlData)
-            }
-            
-            if let data1 = "\r\n--\(boundary)\r\n".data(using: .utf8) {
-                body.append(data1)
-            }
-            if let data1 = "Content-Disposition: form-data; name=\"description\"\r\n\r\n".data(using: .utf8) {
-                body.append(data1)
-            }
-            if let data1 = "Go Map!! \(startDateFriendly ?? "")".data(using: .utf8) {
-                body.append(data1)
-            }
-            
-            if let data1 = "\r\n--\(boundary)\r\n".data(using: .utf8) {
-                body.append(data1)
-            }
-            if let data1 = "Content-Disposition: form-data; name=\"tags\"\r\n\r\n".data(using: .utf8) {
-                body.append(data1)
-            }
-            if let data1 = "GoMap".data(using: .utf8) {
-                body.append(data1)
-            }
-            
-            if let data1 = "\r\n--\(boundary)\r\n".data(using: .utf8) {
-                body.append(data1)
-            }
-            if let data1 = "Content-Disposition: form-data; name=\"public\"\r\n\r\n".data(using: .utf8) {
-                body.append(data1)
-            }
-            if let data1 = "1".data(using: .utf8) {
-                body.append(data1)
-            }
-            
-            if let data1 = "\r\n--\(boundary)\r\n".data(using: .utf8) {
-                body.append(data1)
-            }
-            if let data1 = "Content-Disposition: form-data; name=\"visibility\"\r\n\r\n".data(using: .utf8) {
-                body.append(data1)
-            }
-            if let data1 = "public".data(using: .utf8) {
-                body.append(data1)
-            }
-            
-            if let data1 = "\r\n--\(boundary)--\r\n".data(using: .utf8) {
-                body.append(data1)
-            }
-            request?.httpBody = body
-            
-            request?.setValue(String(format: "%ld", body.count), forHTTPHeaderField: "Content-Length")
-            
-            var auth: String? = nil
-            if let userPassword = appDelegate.userPassword {
-                auth = "\(appDelegate.userName ?? ""):\(userPassword)"
-            }
+			guard let userName = appDelegate.userName,
+				let userPassword = appDelegate.userPassword
+			else { return }
+			var auth = "\(userName):\(userPassword)"
             auth = OsmMapData.encodeBase64(auth)
-            auth = "Basic \(auth ?? "")"
-            request?.setValue(auth, forHTTPHeaderField: "Authorization")
+			auth = "Basic \(auth)"
+            request.setValue(auth, forHTTPHeaderField: "Authorization")
             
             var task: URLSessionDataTask? = nil
-            if let request = request {
-                task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
-                    DispatchQueue.main.async(execute: {
-                        progress.dismiss(animated: true)
-                        
-                        let httpResponse = ((response is HTTPURLResponse) ? response : nil) as? HTTPURLResponse
-                        if httpResponse?.statusCode == 200 {
-                            // ok
-                            let success = UIAlertController(title: NSLocalizedString("GPX Upload Complete", comment: ""), message: nil, preferredStyle: .alert)
-                            success.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
-                            self.present(success, animated: true)
-                            
-                            // mark track as uploaded in UI
-                            let gpxLayer = AppDelegate.shared.mapView.gpxLayer
-                            if let track = track {
-                                gpxLayer?.markTrackUploaded(track)
-                            }
-                            self.tableView?.reloadData()
-                        } else {
-                            if let response = response {
-                                DLog("response =\(response)\n")
-                            }
-                            let dataStringRep = data?.map { String(format: "%02x", $0) }.joined() ?? ""
-                            DLog("data = \(dataStringRep)")
-                            var errorMessage: String? = nil
-                            if (data?.count ?? 0) > 0 {
-                                errorMessage = String(data: data!, encoding: .utf8)
-                            } else {
-                                errorMessage = error?.localizedDescription ?? ""
-                            }
-                            
-                            let failure = UIAlertController(title: NSLocalizedString("GPX Upload Failed", comment: ""), message: errorMessage, preferredStyle: .alert)
-                            failure.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
-                            self.present(failure, animated: true)
-                        }
-                    })
-                })
-            }
-            task?.resume()
+			task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
+				DispatchQueue.main.async(execute: {
+					progress.dismiss(animated: true)
+
+					let httpResponse = ((response is HTTPURLResponse) ? response : nil) as? HTTPURLResponse
+					if httpResponse?.statusCode == 200 {
+						// ok
+						let success = UIAlertController(title: NSLocalizedString("GPX Upload Complete", comment: ""), message: nil, preferredStyle: .alert)
+						success.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+						self.present(success, animated: true)
+
+						// mark track as uploaded in UI
+						let gpxLayer = AppDelegate.shared.mapView.gpxLayer!
+						gpxLayer.markTrackUploaded(track)
+						self.tableView?.reloadData()
+					} else {
+						if let response = response {
+							DLog("response =\(response)\n")
+						}
+						let dataStringRep = data?.map { String(format: "%02x", $0) }.joined() ?? ""
+						DLog("data = \(dataStringRep)")
+						var errorMessage: String? = nil
+						if (data?.count ?? 0) > 0 {
+							errorMessage = String(data: data!, encoding: .utf8)
+						} else {
+							errorMessage = error?.localizedDescription ?? ""
+						}
+
+						let failure = UIAlertController(title: NSLocalizedString("GPX Upload Failed", comment: ""), message: errorMessage, preferredStyle: .alert)
+						failure.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+						self.present(failure, animated: true)
+					}
+				})
+			})
+			task?.resume()
         })
     }
     

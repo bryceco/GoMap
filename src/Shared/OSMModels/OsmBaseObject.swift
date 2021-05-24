@@ -63,7 +63,6 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		changeset = 0
 		uid = 0
 		visible = false
-		_tags = [:]
 		_deleted = false
 		modifyCount = 0
 	}
@@ -96,6 +95,44 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		assert(ident != 0)
 	}
 
+	init(withVersion version: Int, changeset: Int64, user: String, uid: Int, ident: Int64, timestamp: String, tags: [String:String]) {
+		self.version = version
+		self.changeset = changeset
+		self.user = user
+		self.uid = uid
+		self.visible = true
+		self.ident = ident
+		self.timestamp = timestamp
+		self._tags = tags
+		super.init()
+	}
+
+	init?(fromXmlDict attributeDict: [String : Any]) {
+		if let version = attributeDict["version"] as? String,
+		   let version = Int(version),
+		   let changeset = attributeDict["changeset"] as? String,
+		   let changeset = Int64(changeset),
+		   let user = attributeDict["user"] as? String,
+		   let uid = attributeDict["uid"] as? String,
+		   let uid = Int(uid),
+		   let ident = attributeDict["id"] as? String,
+		   let ident = Int64(ident),
+		   let timestamp = attributeDict["timestamp"] as? String
+		{
+			self.version = version
+			self.changeset = changeset
+			self.user = user
+			self.uid = uid
+			self.visible = true
+			self.ident = ident
+			self.timestamp = timestamp
+			self._tags = [:]
+			super.init()
+		} else {
+			return nil
+		}
+	}
+
 	static func IsInterestingKey(_ key: String) -> Bool {
 		if key == "attribution" ||
 			key == "created_by" ||
@@ -120,19 +157,17 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
     // attributes
     
-	private var _tags: [String : String] = [:]
-    var tags: [String : String] {
+	private var _tags: [String : String] = NSMutableDictionary() as! [String:String]
+	var tags: [String : String] {
         return _tags
     }
 
-	open var _boundingBox = OSMRectZero()
+	public var _boundingBox: OSMRect? = nil	// public only so subclasses can set it
 	var boundingBox: OSMRect {
-		if _boundingBox.origin.x == 0.0 && _boundingBox.origin.y == 0.0 &&
-			_boundingBox.size.height == 0.0 && _boundingBox.size.width == 0.0
-		{
+		if _boundingBox == nil {
 			computeBoundingBox()
         }
-        return _boundingBox
+        return _boundingBox!
     }
 
 	var shapeLayers: [CALayer & LayerPropertiesProviding]? = nil
@@ -192,7 +227,6 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
     
 	public func computeBoundingBox() {
         assert(false)
-        _boundingBox = OSMRectZero()
     }
     
     func distance(toLineSegment point1: OSMPoint, point point2: OSMPoint) -> Double {
@@ -288,7 +322,8 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		UserDefaults.standard.set(OsmBaseObject._nextUnusedIdentifier, forKey: "nextUnusedIdentifier")
 		return OsmBaseObject._nextUnusedIdentifier
     }
-    
+
+	// result is nil only if allowConflicts==false
 	static func MergeTagsWith(ourTags: [String : String]?, otherTags: [String : String]?, allowConflicts: Bool) -> [String : String]? {
 		guard let ourTags = ourTags,
 			  !ourTags.isEmpty else { return otherTags ?? [:] }
@@ -311,31 +346,9 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
         }
         return merged
     }
-    
+
     // MARK: Construction
     
-    func constructBaseAttributes(withVersion version: Int, changeset: Int64, user: String, uid: Int, ident: Int64, timestamp: String) {
-		assert(!_constructed)
-        self.version = version
-        self.changeset = changeset
-        self.user = user
-        self.uid = uid
-		self.visible = true
-        self.ident = ident
-		self.timestamp = timestamp
-	}
-    
-    func constructBaseAttributes(fromXmlDict attributeDict: [String : Any]) {
-		let version = Int(attributeDict["version"] as! String)!
-		let changeset = Int64(attributeDict["changeset"] as! String)!
-		let user = attributeDict["user"] as! String
-        let uid = Int(attributeDict["uid"] as! String)!
-		let ident = Int64(attributeDict["id"] as! String)!
-		let timestamp = attributeDict["timestamp"] as! String
-        
-		constructBaseAttributes(withVersion: version, changeset: changeset, user: user, uid: uid, ident: ident, timestamp: timestamp)
-    }
-
     func constructTag(_ tag: String, value: String) {
         // drop deprecated tags
         if tag == "created_by" {
@@ -385,7 +398,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
         renderPriorityCached = 0
         _isOneWay = nil
         isShown = ._UNKNOWN
-        _boundingBox = OSMRectZero()
+        _boundingBox = nil
         
         for layer in shapeLayers ?? [] {
 			layer.removeFromSuperlayer()
@@ -621,19 +634,6 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
     
     func copy(with zone: NSZone? = nil) -> Any {
         return self
-    }
-    
-    func construct(asUserCreated userName: String?) {
-        // newly created by user
-        assert(!_constructed)
-        ident = OsmBaseObject.nextUnusedIdentifier()
-		visible = true
-        user = userName ?? ""
-        version = 1
-        changeset = 0
-        uid = 0
-        _deleted = false
-		setTimestamp(Date(), undo: nil)
     }
     
 	@objc func addParentRelation(_ parentRelation: OsmRelation, undo: MyUndoManager?) {

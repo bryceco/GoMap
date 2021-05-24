@@ -51,7 +51,7 @@ class ClearCacheViewController: UITableViewController {
         }
         
         let mapView = AppDelegate.shared.mapView!
-        let mapData = mapView.editorLayer.mapData!
+        let mapData = mapView.editorLayer.mapData
         
         var title: String? = nil
 		var object: GetDiskCacheSize? = nil

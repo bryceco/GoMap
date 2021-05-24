@@ -6,9 +6,9 @@
 //  Copyright © 2020 Bryce. All rights reserved.
 //
 
-class OsmWay: OsmBaseObject {
-	private(set) var nodeRefs: [OsmIdentifier]?
-    private(set) var nodes: [OsmNode]
+final class OsmWay: OsmBaseObject {
+	var nodeRefs: [OsmIdentifier]?	// only used during construction
+	private(set) var nodes: [OsmNode]
 
 	override var description: String {
         return "OsmWay \(super.description)"
@@ -43,7 +43,7 @@ class OsmWay: OsmBaseObject {
 		assert( nodes.count == 0 )
 		nodes.reserveCapacity(nodeRefs.count)
 		for ref in nodeRefs {
-			guard let node = mapData.node(forRef: NSNumber(value: ref)) else { fatalError() }
+			guard let node = mapData.node(forRef: ref) else { fatalError() }
 			nodes.append( node )
 			node.setWayCount(node.wayCount + 1, undo: nil)
 		}
@@ -495,9 +495,19 @@ class OsmWay: OsmBaseObject {
 		#endif
     }
 
-	override init() {
-		nodes = []
-		super.init()
+	override init(withVersion version: Int, changeset: Int64, user: String, uid: Int, ident: Int64, timestamp: String, tags: [String:String]) {
+		self.nodes = []
+		super.init(withVersion: version, changeset: changeset, user: user, uid: uid, ident: ident, timestamp: timestamp, tags: tags)
+	}
+
+	convenience init(asUserCreated userName: String) {
+		let ident = OsmBaseObject.nextUnusedIdentifier()
+		self.init(withVersion: 1, changeset: 0, user: userName, uid: 0, ident: ident, timestamp: "", tags: [:])
+	}
+
+	override init?(fromXmlDict attributeDict: [String : Any]) {
+		self.nodes = []
+		super.init(fromXmlDict: attributeDict)
 	}
 
     override func encode(with coder: NSCoder) {

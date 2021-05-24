@@ -15,7 +15,7 @@ func DbgAssert(_ x: Any) {
     assert(x, "unspecified")
 }
 
-@inline(__always) func MemoryUsedMB() -> Double {
+func MemoryUsedMB() -> Double {
     var info: task_basic_info
     var size = MemoryLayout.size(ofValue: info)
     let kerr = task_info(mach_task_self(), TASK_BASIC_INFO, &info as? task_info_t, &size)

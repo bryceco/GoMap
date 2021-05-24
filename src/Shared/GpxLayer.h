@@ -21,7 +21,7 @@
 @property (assign,nonatomic)	double		latitude;
 @property (assign,nonatomic)	double		accuracy;
 @property (assign,nonatomic)	double		elevation;
-@property (strong,nonatomic)	NSDate *	timestamp;
+@property (strong,nonatomic)	NSDate *_Nonnull	timestamp;
 @end
 
 

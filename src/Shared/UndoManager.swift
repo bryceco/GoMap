@@ -147,8 +147,8 @@ class MyUndoManager: NSObject, NSCoding {
         commentList.append(comment)
     }
     
-    func registerUndoComment(_ comment: NSDictionary) {
-        registerUndo(withTarget: self, selector: #selector(doComment(_:)), objects: [comment])
+	func registerUndoComment(_ comment: [String: Any]) {
+		registerUndo(withTarget: self, selector: #selector(doComment(_:)), objects: [comment])
     }
     
     class func doActionGroup(fromStack stack: inout [UndoAction]) {

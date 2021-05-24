@@ -6,7 +6,7 @@
 //  Copyright © 2020 Bryce. All rights reserved.
 //
 
-class OsmNode: OsmBaseObject {
+final class OsmNode: OsmBaseObject {
     
     private(set) var lat: Double = 0.0
     private(set) var lon: Double = 0.0
@@ -93,20 +93,25 @@ class OsmNode: OsmBaseObject {
         lat = newerVersion.lat
     }
 
-	override init() {
-		super.init()
+	override init(withVersion version: Int, changeset: Int64, user: String, uid: Int, ident: Int64, timestamp: String, tags: [String:String]) {
+		super.init(withVersion: version, changeset: changeset, user: user, uid: uid, ident: ident, timestamp: timestamp, tags: tags)
+	}
+
+	convenience init(asUserCreated userName: String) {
+		let ident = OsmBaseObject.nextUnusedIdentifier()
+		self.init(withVersion: 1, changeset: 0, user: userName, uid: 0, ident: ident, timestamp: "", tags: [:])
+	}
+
+	override init?(fromXmlDict attributeDict: [String : Any]) {
+		super.init(fromXmlDict: attributeDict)
 	}
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        if coder.allowsKeyedCoding {
-            lat = coder.decodeDouble(forKey: "lat")
-            lon = coder.decodeDouble(forKey: "lon")
-            wayCount = coder.decodeInteger(forKey: "wayCount")
-		} else {
-			return nil
-		}
-        _constructed = true
+		lat = coder.decodeDouble(forKey: "lat")
+		lon = coder.decodeDouble(forKey: "lon")
+		wayCount = coder.decodeInteger(forKey: "wayCount")
+		_constructed = true
     }
 
     override func encode(with coder: NSCoder) {
