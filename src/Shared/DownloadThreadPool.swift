@@ -8,8 +8,7 @@
 
 import Foundation
 
-@objcMembers
-class DownloadThreadPool: NSObject, URLSessionDataDelegate, URLSessionTaskDelegate {
+final class DownloadThreadPool: NSObject, URLSessionDataDelegate, URLSessionTaskDelegate {
     
     var _urlSession: URLSession!
     var _downloadCount: AtomicInt

@@ -190,60 +190,50 @@ class AerialListViewController: UITableViewController {
         displayViewController?.applyChanges()
         dismiss(animated: true)
     }
-    
-    
-    // might need a fix here
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let controller = segue.destination as? UITableViewController
-        var editRow: IndexPath? = nil
-        if controller is AerialEditViewController {
-            let c = controller as? AerialEditViewController
-            if sender is UIButton {
-                // add new
-                editRow = IndexPath(row: aerials?.userDefinedServices().count ?? 0, section: SECTION_USER)
-            } else {
-                // edit existing service
-                var cell: UIView? = sender as? UIView
-                while cell != nil && !(cell is UITableViewCell) {
-                    cell = cell?.superview
-                }
-                guard let cell = cell as? UITableViewCell,
-					  let indexPath = tableView.indexPath(for: cell)
-                else {
-                    return
-                }
-				let a = aerialList(forSection: indexPath.section )
-				guard let service = ((indexPath.row ) < a.count ? a[indexPath.row ] : nil) else {
-                    return
-                }
-				if indexPath.section == SECTION_USER {
-                    editRow = indexPath
-                }
-				c?.name = service.name
-				c?.url = service.isMaxar() ? nil : service.url
-				if service.maxZoom > 0 {
-                    c?.zoom = NSNumber(value: service.maxZoom)
-                }
-				c?.projection = service.wmsProjection
-            }
-    
-            c?.completion = { service in
-                if editRow == nil {
-                    return
-                }
-                if editRow?.row == self.aerials?.userDefinedServices().count {
-                    self.aerials?.addUserDefinedService(service, at: self.aerials?.userDefinedServices().count ?? 0)
-                } else {
-                    self.aerials?.removeUserDefinedService(at: editRow?.row ?? 0)
-                    self.aerials?.addUserDefinedService(service, at: editRow?.row ?? 0)
-                }
-                self.tableView.reloadData()
-    
-                if let editRow = editRow {
-                    self.tableView(self.tableView, didSelectRowAt: editRow)
-                }
-            }
-        }
-    }
-    
+        guard let controller = segue.destination as? AerialEditViewController,
+			  let sender = sender as? UIView
+		else { return }
+
+		var editRow: IndexPath? = nil
+		if sender is UIButton {
+			// add new
+			editRow = IndexPath(row: aerials?.userDefinedServices().count ?? 0, section: SECTION_USER)
+		} else {
+			// edit existing service
+			guard let cell:UITableViewCell = sender.superviewOfType(),
+				let indexPath = tableView.indexPath(for: cell)
+			else {
+				return
+			}
+			let list = aerialList(forSection: indexPath.section )
+			guard let service = (indexPath.row < list.count ? list[indexPath.row] : nil) else {
+				return
+			}
+			if indexPath.section == SECTION_USER {
+				editRow = indexPath
+			}
+			controller.name = service.name
+			controller.url = service.isMaxar() ? nil : service.url
+			if service.maxZoom > 0 {
+				controller.zoom = service.maxZoom
+			}
+			controller.projection = service.wmsProjection
+		}
+
+		controller.completion = { service in
+			guard let editRow = editRow else {
+				return
+			}
+			if editRow.row == self.aerials?.userDefinedServices().count {
+				self.aerials?.addUserDefinedService(service, at: self.aerials?.userDefinedServices().count ?? 0)
+			} else {
+				self.aerials?.removeUserDefinedService(at: editRow.row )
+				self.aerials?.addUserDefinedService(service, at: editRow.row)
+			}
+			self.tableView.reloadData()
+			self.tableView(self.tableView, didSelectRowAt: editRow)
+		}
+	}
 }

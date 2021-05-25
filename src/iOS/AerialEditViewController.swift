@@ -18,7 +18,7 @@ class AerialEditViewController: UITableViewController {
     
     var name: String?
     var url: String?
-    var zoom: NSNumber?
+    var zoom: Int = 0
     var projection: String?
     var completion: ((_ service: AerialService) -> Void)?
     
@@ -29,7 +29,7 @@ class AerialEditViewController: UITableViewController {
         
         nameField.text = name
         urlField.text = url
-        zoomField.text = "\(zoom ?? 0)"
+        zoomField.text = "\(zoom)"
         projectionField.text = projection
         picker.delegate = self
         
@@ -48,16 +48,12 @@ class AerialEditViewController: UITableViewController {
         projectionField.inputView = picker
     }
     
-    func isBannedURL(_ url: String?) -> Bool {
-        let pattern = ".*\\.google(apis)?\\..*/(vt|kh)[\\?/].*([xyz]=.*){3}.*"
-        var regex: NSRegularExpression? = nil
-        do {
-            regex = try NSRegularExpression(pattern: pattern, options: .caseInsensitive)
-        } catch {
-        }
-        let range = regex?.rangeOfFirstMatch(in: url ?? "", options: [], range: NSRange(location: 0, length: url?.count ?? 0))
-        if range?.location != NSNotFound {
-            return true
+    func isBannedURL(_ url: String) -> Bool {
+		let pattern = ".*\\.google(apis)?\\..*/(vt|kh)[\\?/].*([xyz]=.*){3}.*"
+		let regex = try! NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+		let range = regex.rangeOfFirstMatch(in: url, options: [], range: NSRange(location: 0, length: url.count))
+		if range.location != NSNotFound {
+			return true
         }
         return false
     }
@@ -68,18 +64,18 @@ class AerialEditViewController: UITableViewController {
         url = url.replacingOccurrences(of: "%7B", with: "{")
         url = url.replacingOccurrences(of: "%7D", with: "}")
         
-        if isBannedURL(urlField.text) {
+        if isBannedURL( url ) {
             return
         }
         
         let identifier = url
         
-        var projection = projectionField.text
-        if projection?.count == 0 || (projection == TMS_PROJECTION_NAME) {
-            projection = ""
+        var projection = projectionField.text ?? ""
+		if projection == TMS_PROJECTION_NAME {
+			projection = ""
         }
-        
-        let service = AerialService(
+
+		let service = AerialService(
 			withName: nameField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? "",
             identifier: identifier,
             url: url,
@@ -104,7 +100,7 @@ class AerialEditViewController: UITableViewController {
     @IBAction func contentChanged(_ sender: Any) {
         var allowed = false
         if (nameField.text?.count ?? 0) > 0 && (urlField.text?.count ?? 0) > 0 {
-            if !isBannedURL(urlField.text) {
+            if !isBannedURL(urlField.text ?? "") {
                 allowed = true
             }
         }

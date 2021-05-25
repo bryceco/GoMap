@@ -8,15 +8,13 @@
 
 import Foundation
 
-@objc protocol GeekbenchScoreProviding: AnyObject {
-    func geekbenchScore() -> Double
-}
+class GeekbenchScoreProvider {
 
-@objcMembers
-class GeekbenchScoreProvider: NSObject, GeekbenchScoreProviding {
-    static var score: Double = 0
-    
-    func geekbenchScore() -> Double {
+	func geekbenchScore() -> Double {
+		return GeekbenchScoreProvider.score
+	}
+
+	static var score: Double = {
         var systemInfo = utsname()
         uname(&systemInfo)
         let machineMirror = Mirror(reflecting: systemInfo.machine)
@@ -59,11 +57,7 @@ class GeekbenchScoreProvider: NSObject, GeekbenchScoreProviding {
             "iPod5,1": NSNumber(value: 410)    /* iPod Touch (Fifth Generation) */,
             "iPod4,1": NSNumber(value: 209)
         ]
-        let value = dict[name] ?? 0
-        GeekbenchScoreProvider.score = Double(truncating: value)
-        if GeekbenchScoreProvider.score == 0 {
-            GeekbenchScoreProvider.score = 2500
-        }
-        return GeekbenchScoreProvider.score
-    }
+		let value = dict[name]?.doubleValue ?? 2500.0
+        return value
+    }()
 }

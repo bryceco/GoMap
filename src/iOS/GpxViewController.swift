@@ -9,7 +9,9 @@
 import UIKit
 
 func DLog(_ args: String...) {
+#if DEBUG
     print (args)
+#endif
 }
 
 class GpxTrackTableCell: UITableViewCell, UIActionSheetDelegate {

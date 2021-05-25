@@ -1356,7 +1356,7 @@ class EditorMapLayer: CALayer {
 		}
         
         // sort from big to small objects, and remove excess objects
-        //    [objects countSortOsmObjectVisibleSizeWithLargest:objectLimit];
+		objects = RenderInfo.sortByPriority( list: objects, keepingFirst: objectLimit )
         
         // sometimes there are way too many address nodes that clog up the view, so limit those items specifically
         objectLimit = objects.count

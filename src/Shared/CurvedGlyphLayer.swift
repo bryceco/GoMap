@@ -16,7 +16,7 @@ private struct TextLoc {
     var length: CGFloat
 }
 
-private class PathPoints {
+private final class PathPoints {
     public let points: [CGPoint]
     public let length: CGFloat
     private var offset: CGFloat = 0.0
@@ -75,7 +75,7 @@ private class PathPoints {
     }
 }
 
-private class StringGlyphs {
+private final class StringGlyphs {
     // static stuff
     public static var uiFont = UIFont.preferredFont(forTextStyle: .subheadline)
 
@@ -86,7 +86,7 @@ private class StringGlyphs {
         return c
     }()
 
-    @objc private class func fontSizeDidChange() {
+	@objc private class func fontSizeDidChange() {
         StringGlyphs.uiFont = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.subheadline)
         StringGlyphs.cache.removeAllObjects()
     }
@@ -153,11 +153,11 @@ private class StringGlyphs {
     }
 }
 
-@objc class CurvedGlyphLayer: NSObject {
+final class CurvedGlyphLayer {
     // static stuff
     public static var foreColor = UIColor.white
     public static var backColor = UIColor.black
-    @objc static var whiteOnBlack: Bool = true {
+    static var whiteOnBlack: Bool = true {
         willSet(newValue) {
             if newValue != whiteOnBlack {
                 GlyphLayer.fontSizeDidChange()
@@ -176,10 +176,9 @@ private class StringGlyphs {
     private init(withGlyphs stringGlyphs: StringGlyphs, frame _: CGRect, pathPoints: PathPoints) {
         self.stringGlyphs = stringGlyphs
         self.pathPoints = pathPoints
-        super.init()
     }
 
-    @objc public static func layer(WithString string: NSString, alongPath path: CGPath) -> CurvedGlyphLayer? {
+    public static func layer(WithString string: NSString, alongPath path: CGPath) -> CurvedGlyphLayer? {
         guard let glyphRuns = StringGlyphs.stringGlyphsForString(string: string) else { return nil }
         let pathPoints = PathPoints(WithPath: path)
 
@@ -192,7 +191,7 @@ private class StringGlyphs {
         return layer
     }
 
-    @objc func glyphLayers() -> [GlyphLayer]? {
+    func glyphLayers() -> [GlyphLayer]? {
         pathPoints.resetOffset()
         guard pathPoints.advanceOffsetBy((pathPoints.length - stringGlyphs.rect.width) / 2) else { return nil }
 
@@ -276,7 +275,7 @@ private class StringGlyphs {
     }
 
     // return a non-curved rectangular layer
-    @objc static func layerWithString(_ string: String) -> CATextLayerWithProperties {
+    static func layerWithString(_ string: String) -> CATextLayerWithProperties {
         let MAX_TEXT_WIDTH: CGFloat = 100.0
 
         // Don't cache these here because they are cached by the objects they are attached to
@@ -326,7 +325,7 @@ private class StringGlyphs {
     }
 }
 
-class GlyphLayer: CALayerWithProperties {
+final class GlyphLayer: CALayerWithProperties {
     private static let cache = { () -> NSCache<NSData, GlyphLayer> in
         NotificationCenter.default.addObserver(StringGlyphs.self, selector: #selector(GlyphLayer.fontSizeDidChange), name: UIContentSizeCategory.didChangeNotification, object: nil)
         let c = NSCache<NSData, GlyphLayer>()
@@ -350,11 +349,11 @@ class GlyphLayer: CALayerWithProperties {
         super.removeFromSuperlayer()
     }
 
-    @objc static func fontSizeDidChange() {
+	@objc static func fontSizeDidChange() {
         cache.removeAllObjects()
     }
 
-    @objc override func action(forKey _: String) -> CAAction? {
+    override func action(forKey _: String) -> CAAction? {
         // we don't want any animated actions
         return NSNull()
     }

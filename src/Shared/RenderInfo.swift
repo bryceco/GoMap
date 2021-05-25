@@ -17,7 +17,7 @@ private let g_AddressRender: RenderInfo = {
 											return info
 										}()
 
-let g_DefaultRender: RenderInfo = {
+private let g_DefaultRender: RenderInfo = {
 									let info = RenderInfo()
 									info.key = "DEFAULT"
 									info.lineColor = UIColor.black
@@ -25,8 +25,7 @@ let g_DefaultRender: RenderInfo = {
 									return info
 								}()
 
-@objcMembers
-class RenderInfo: NSObject {
+final class RenderInfo {
     var renderPriority = 0
 
     var key: String = ""
@@ -35,12 +34,12 @@ class RenderInfo: NSObject {
     var lineWidth: CGFloat = 0.0
     var areaColor: UIColor?
 
-    override var description: String {
-		return "\(super.description) \(key)=\(value ?? "")"
+    var description: String {
+		return "\(type(of:self)): \(key)=\(value ?? "")"
     }
 
     func isAddressPoint() -> Bool {
-        return self == g_AddressRender
+        return self === g_AddressRender
     }
 
     class func color(forHexString text: String?) -> UIColor? {
@@ -142,7 +141,7 @@ class RenderInfo: NSObject {
                     }
                 } else if key == "railway" {
                     renderPriority = 22
-                } else if self == g_AddressRender {
+                } else if self === g_AddressRender {
                     renderPriority = 1
                 } else {
                     renderPriority = 2
@@ -163,10 +162,41 @@ class RenderInfo: NSObject {
         assert(priority < RenderInfoMaxPriority)
         return priority
     }
+
+	static func sortByPriority( list: [OsmBaseObject], keepingFirst k: Int ) -> [OsmBaseObject]
+	{
+		let listCount = list.count
+		var countOfPriority = [Int](repeating: 0, count: RenderInfoMaxPriority)
+
+		for obj in list {
+			countOfPriority[ (RenderInfoMaxPriority-1) - obj.renderPriorityCached ] += 1
+		}
+
+		var max = listCount
+		for i in 1..<RenderInfoMaxPriority {
+			let prevSum = countOfPriority[i-1]
+			let newSum = countOfPriority[i] + prevSum
+			countOfPriority[i] = newSum
+			if max == listCount {
+				if prevSum >= k || newSum >= 2*k {
+					max = prevSum
+				}
+			}
+		}
+		var output = [OsmBaseObject?](repeating: nil, count: max)
+		for obj in list {
+			let index = (RenderInfoMaxPriority-1) - obj.renderPriorityCached
+			let dest = countOfPriority[index] - 1
+			countOfPriority[index] = dest
+			if ( dest < max ) {
+				output[ dest ] = obj
+			}
+		}
+		return output.map({ $0! })
+	}
 }
 
-@objcMembers
-class RenderInfoDatabase: NSObject {
+final class RenderInfoDatabase {
     var allFeatures: [RenderInfo] = []
     var keyDict: [String : [String? : RenderInfo?]] = [:]
 
@@ -201,8 +231,7 @@ class RenderInfoDatabase: NSObject {
         return renderList
     }
 
-    override required init() {
-        super.init()
+    required init() {
         allFeatures = RenderInfoDatabase.readConfiguration()
         keyDict = [:]
         for tag in allFeatures {

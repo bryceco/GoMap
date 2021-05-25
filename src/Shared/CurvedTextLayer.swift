@@ -10,16 +10,15 @@ import CoreText
 import Foundation
 import QuartzCore
 
-@objc class CurvedTextLayer: NSObject {
-    @objc public static let shared = CurvedTextLayer()
+final class CurvedTextLayer {
+    public static let shared = CurvedTextLayer()
 
     let layerCache = NSCache<NSString, CATextLayer>()
     let framesetterCache = NSCache<NSString, CTFramesetter>()
     let textSizeCache = NSCache<NSString, NSValue>()
     var cachedColorIsWhiteOnBlack = true
 
-    override init() {
-        super.init()
+    init() {
         layerCache.countLimit = 100
         framesetterCache.countLimit = 100
         textSizeCache.countLimit = 100
@@ -31,17 +30,13 @@ import QuartzCore
         NotificationCenter.default.removeObserver(self)
     }
 
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     @objc private func fontSizeDidChange() {
         layerCache.removeAllObjects()
         textSizeCache.removeAllObjects()
         framesetterCache.removeAllObjects()
     }
 
-    @objc func layerWithString(_ string: String, whiteOnBlock whiteOnBlack: Bool) -> CALayer? {
+    func layerWithString(_ string: String, whiteOnBlock whiteOnBlack: Bool) -> CALayer? {
         let MAX_TEXT_WIDTH: CGFloat = 100.0
 
         // Don't cache these here because they are cached by the objects they are attached to
@@ -102,7 +97,7 @@ import QuartzCore
         points.removeSubrange(dst + 1 ..< points.count)
     }
 
-    struct TextLoc {
+	private struct TextLoc {
         var pos: CGPoint
         var angle: CGFloat
         var length: CGFloat
@@ -180,7 +175,7 @@ import QuartzCore
         return layerCache.object(forKey: string as NSString)
     }
 
-    @objc func layersWithString(_ string: NSString, alongPath path: CGPath, whiteOnBlock whiteOnBlack: Bool) -> [CALayer]? {
+    func layersWithString(_ string: NSString, alongPath path: CGPath, whiteOnBlock whiteOnBlack: Bool) -> [CALayer]? {
         let uiFont = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.subheadline)
 
         let textColor = whiteOnBlack ? UIColor.white : UIColor.black

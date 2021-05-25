@@ -1849,12 +1849,11 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 				self.spatial.addMember(object, undo: nil)
             })
         }
-
     }
 
     func modifiedObjects() -> OsmMapData {
         // get modified nodes and ways
-		var objects = undoManager.objectRefs().compactMap({ $0 as? OsmBaseObject })
+		var objects = Array( undoManager.objectRefs() )
 		objects +=     nodes.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() })
 		objects +=      ways.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() })
 		objects += relations.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() })

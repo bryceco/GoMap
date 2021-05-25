@@ -8,8 +8,8 @@
 
 import Foundation
 
-class Colors: UIColor {
-    @objc static func cssColorForColorName(_ string: String) -> UIColor? {
+class Colors {
+    static func cssColorForColorName(_ string: String) -> UIColor? {
         guard string.count > 0 else { return nil }
 
         var hex: UInt64 = 0

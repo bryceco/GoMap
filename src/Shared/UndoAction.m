@@ -26,21 +26,19 @@
 - (void)encodeWithCoder:(NSCoder *)coder
 {
 	DbgAssert(_target);
-	DLog(@"encode %@: %@",[_target class],_selector);
-	[coder encodeObject:_target             forKey:@"target"];
-	[coder encodeObject:_selector   forKey:@"selector"];
-	[coder encodeObject:_objects    forKey:@"objects"];
-	[coder encodeInteger:_group             forKey:@"group"];
+	[coder encodeObject:_target		forKey:@"target"];
+	[coder encodeObject:_selector  	forKey:@"selector"];
+	[coder encodeObject:_objects   	forKey:@"objects"];
+	[coder encodeInteger:_group 	forKey:@"group"];
 }
 
 - (id)initWithCoder:(NSCoder *)coder
 {
 	self = [super init];
-	_target         = [coder decodeObjectForKey:@"target"];
-	_selector       = [coder decodeObjectForKey:@"selector"];
-	_objects        = [coder decodeObjectForKey:@"objects"];
-	_group          = [coder decodeIntegerForKey:@"group"];
-	DLog(@"decode %@: %@",[_target class],_selector);
+	_target		= [coder decodeObjectForKey:@"target"];
+	_selector	= [coder decodeObjectForKey:@"selector"];
+	_objects	= [coder decodeObjectForKey:@"objects"];
+	_group		= [coder decodeIntegerForKey:@"group"];
 	DbgAssert(_target);
 	return self;
 }

@@ -10,12 +10,19 @@
 #define OpenStreetMap_DLog_h
 
 #if defined(DEBUG)
-#import <Foundation/Foundation.h>
-#import "mach/mach.h"
 
 #define DLog(...)		NSLog( __VA_ARGS__ )
 #define DbgAssert(x)	NSCAssert((x),@"unspecified")
 
+#else
+
+#define DLog(...)		(void)0
+#define DbgAssert(x)	(void)0
+
+#endif
+
+#import <Foundation/Foundation.h>
+#import "mach/mach.h"
 inline static double MemoryUsedMB(void)
 {
 	struct task_basic_info info;
@@ -24,10 +31,4 @@ inline static double MemoryUsedMB(void)
 	return (kerr == KERN_SUCCESS) ? info.resident_size*1e-6 : 0; // size in bytes
 }
 
-#else
-
-#define DLog(...)		(void)0
-#define DbgAssert(x)	(void)0
-
-#endif
 #endif
