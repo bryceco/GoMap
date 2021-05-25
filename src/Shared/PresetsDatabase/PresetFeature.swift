@@ -48,7 +48,11 @@ import Foundation
 		self._removeTags = jsonDict["removeTags"] as? [String: String]
 		self.searchable = jsonDict["searchable"] as? Bool ?? true
 		self.tags = jsonDict["tags"] as! [String: String]
-		self.terms = jsonDict["terms"] as? [String] ?? jsonDict["matchNames"] as? [String] ?? []
+		if let terms = jsonDict["terms"] as? String {
+			self.terms = terms.split(separator: ",").map({ String($0) })
+		} else {
+			self.terms = jsonDict["terms"] as? [String] ?? jsonDict["matchNames"] as? [String] ?? []
+		}
 
 		self.nsiSuggestion = isNSI
 	}
