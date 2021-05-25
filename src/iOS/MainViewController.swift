@@ -147,22 +147,24 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
         #endif
     }
     
-    @objc func hover(_ recognizer: UIGestureRecognizer?) {
-        let loc = recognizer?.location(in: mapView) ?? .zero
-        var segment = 0
+    @objc func hover(_ recognizer: UIGestureRecognizer) {
+		let loc = recognizer.location(in: mapView)
+		var segment = 0
         var hit: OsmBaseObject? = nil
-        if recognizer?.state == .changed {
-            if mapView.editorLayer.selectedWay != nil {
-                hit = mapView.editorLayer.osmHitTestNode(inSelectedWay: loc, radius: DefaultHitTestRadius)
-            }
-            if hit == nil {
-                hit = mapView.editorLayer.osmHitTest(loc, radius: DefaultHitTestRadius, isDragConnect: false, ignoreList: [], segment: &segment)
+		if recognizer.state == .changed && !mapView.editorLayer.isHidden {
+			if mapView.editorLayer.selectedWay != nil {
+				hit = mapView.editorLayer.osmHitTestNode(inSelectedWay: loc, radius: DefaultHitTestRadius)
 			}
-            if (hit != nil) == (mapView.editorLayer.selectedNode != nil) || (hit != nil) == (mapView.editorLayer.selectedWay != nil) || (hit?.isRelation != nil) {
-                hit = nil
-            }
-        }
-        mapView.blink(hit, segment: -1)
+			if hit == nil {
+				hit = mapView.editorLayer.osmHitTest(loc, radius: DefaultHitTestRadius, isDragConnect: false, ignoreList: [], segment: &segment)
+			}
+			if let chit = hit,
+			   chit == mapView.editorLayer.selectedNode || chit == mapView.editorLayer.selectedWay || chit.isRelation() != nil
+			{
+				hit = nil
+			}
+		}
+		mapView.blink(hit, segment: -1)
     }
     
     @available(iOS 13.0, *)

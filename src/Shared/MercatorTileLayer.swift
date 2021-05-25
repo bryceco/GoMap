@@ -184,76 +184,76 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
     }
 
     func removeUnneededTiles(for rect: OSMRect, zoomLevel: Int) {
-        let MAX_ZOOM = 30
+		guard let sublayers = self.sublayers else { return }
+
+		let MAX_ZOOM = 30
 
         var removeList: [CALayer] = []
         
         // remove any tiles that don't intersect the current view
-        for layer in sublayers ?? [] {
-            if !layerOverlapsScreen(layer) {
+        for layer in sublayers {
+			if !layerOverlapsScreen(layer) {
                 removeList.append(layer)
             }
         }
         for layer in removeList {
-            let key = layer.value(forKey: "tileKey") as? String
-            if let key = key {
+			if let key = layer.value(forKey: "tileKey") as? String {
 				// DLog("prune \(key): \(layer)")
-                _layerDict.removeValue(forKey: key)
-                layer.removeFromSuperlayer()
-                layer.contents = nil
+				_layerDict.removeValue(forKey: key)
+				layer.removeFromSuperlayer()
+				layer.contents = nil
             }
-        }
-        removeList.removeAll()
+		}
+		removeList.removeAll()
         
         // next remove objects that are covered by a parent (larger) object
         var layerList = [[CALayer]](repeating: [CALayer](), count: MAX_ZOOM)
-        var transparent = [Bool](repeating: false, count: MAX_ZOOM) // some objects at this level are transparent
-        // place each object in a zoom level bucket
-        for layer in sublayers ?? [] {
-            let tileKey = layer.value(forKey: "tileKey") as! String
+		var transparent = [Bool](repeating: false, count: MAX_ZOOM) // some objects at this level are transparent
+		// place each object in a zoom level bucket
+		for layer in sublayers {
+			let tileKey = layer.value(forKey: "tileKey") as! String
 			let z = Int( tileKey[..<tileKey.firstIndex(of: ",")!] )!
-            if z < MAX_ZOOM {
+			if z < MAX_ZOOM {
                 if layer.contents == nil {
                     transparent[z] = true
                 }
 				layerList[z].append(layer)
-            }
+			} else {
+				print("oops")
+			}
         }
         
         // remove tiles at zoom levels less than us if we don't have any transparent tiles (we've tiled everything in greater detail)
         var remove = false
-        var z = zoomLevel
-        while z >= 0 {
-            if remove {
+		for z in (0...zoomLevel).reversed() {
+			if remove {
 				removeList.append(contentsOf: layerList[z])
             }
-            if !transparent[z] {
-                remove = true
-            }
-            z -= 1
-        }
+			if !transparent[z] {
+				remove = true
+			}
+		}
         
-        // remove tiles at zoom levels greater than us if we're not transparent (we cover the more detailed tiles)
-        remove = false
-        for z in zoomLevel..<MAX_ZOOM {
-            if remove {
+		// remove tiles at zoom levels greater than us if we're not transparent (we cover the more detailed tiles)
+		remove = false
+		for z in zoomLevel..<MAX_ZOOM {
+			if remove {
 				removeList.append(contentsOf: layerList[z])
-            }
-            if !transparent[z] {
-                remove = true
-            }
-        }
+			}
+			if !transparent[z] {
+				remove = true
+			}
+		}
         
         for layer in removeList {
-            let key = layer.value(forKey: "tileKey") as? String
-            if let key = key {
-                // DLog("prune \(key): \(layer)")
-                _layerDict.removeValue(forKey: key)
-                layer.removeFromSuperlayer()
-                layer.contents = nil
+			if let key = layer.value(forKey: "tileKey") as? String {
+				// DLog("prune \(key): \(layer)")
+				_layerDict.removeValue(forKey: key)
+				layer.removeFromSuperlayer()
+				layer.contents = nil
             }
-        }
-    }
+		}
+	}
 
     func isPlaceholderImage(_ data: Data?) -> Bool {
         if let data = data {
@@ -392,6 +392,8 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
 							//                    let rc = mapView.boundingMapRectForScreen()
 							//                    removeUnneededTiles(for: rc, zoomLevel: Int(zoomLevel))
 							//#endif
+
+							// after we've set the content we need to prune other layers since we're no longer transparent
 						} else {
 							// no longer needed
 						}
