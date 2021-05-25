@@ -11,12 +11,12 @@ import Foundation
 
 // A group of related tags, such as address tags, organized for display purposes
 // A group becomes a Section in UITableView
-class PresetGroup: NSObject {
+final class PresetGroup: NSObject {
 	@objc let name: String?				// e.g. Address
 	@objc let presetKeys: [AnyHashable]	// either PresetKey or PresetGroup
-	@objc var isDrillDown = false
+	@objc let isDrillDown: Bool
 
-	init(name: String?, tags: [AnyHashable]) {
+	init(name: String?, tags: [AnyHashable], isDrillDown: Bool = false) {
 #if DEBUG
 		if tags.count > 0 {
 			assert((tags.last is PresetKey) || (tags.last is PresetGroup)) // second case for drill down group
@@ -24,6 +24,7 @@ class PresetGroup: NSObject {
 #endif
 		self.name = name
 		self.presetKeys = tags
+		self.isDrillDown = isDrillDown
 		super.init()
 	}
 

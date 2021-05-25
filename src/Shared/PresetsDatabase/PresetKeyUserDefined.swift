@@ -39,7 +39,13 @@ import Foundation
 	{
 		self.appliesToKey = appliesToKey
 		self.appliesToValue = appliesToValue
-		super.init(name: name, tagKey: key, defaultValue: nil, placeholder: placeholder, keyboard: keyboard, capitalize: capitalize, presets: presets)
+		super.init(name: name,
+				   tagKey: key,
+				   defaultValue: nil,
+				   placeholder: placeholder,
+				   keyboard: keyboard,
+				   capitalize: capitalize,
+				   presets: presets)
 	}
 
 	@objc override func encode(with coder: NSCoder) {
@@ -70,13 +76,13 @@ import Foundation
 				let classList = [NSArray.self,
 								 PresetKeyUserDefined.self,
 								 PresetValue.self]
-				list = try! NSKeyedUnarchiver.unarchivedObject(ofClasses: classList, from: data) as? [PresetKeyUserDefined] ?? []
+				list = try NSKeyedUnarchiver.unarchivedObject(ofClasses: classList, from: data) as? [PresetKeyUserDefined] ?? []
 			} else {
 				let oldList = NSKeyedUnarchiver.unarchiveObject(withFile: path)
 				list = oldList as? [PresetKeyUserDefined] ?? []
 			}
 		} catch {
-			print("error loading custom presets")
+			print("error loading custom presets: \(error)")
 			list = []
 		}
 	}
