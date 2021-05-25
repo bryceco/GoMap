@@ -73,6 +73,10 @@
 		02AFBF242458C1E800BE43F4 /* BingPlaceholderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */; };
 		02BE6190245D1F9D00E92662 /* EsriPlaceholderImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */; };
 		02C3194E250EAED500C5D200 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02C3194C250EAED500C5D200 /* Localizable.strings */; };
+		02CB2405265DB7CB00835F32 /* OpeningHoursRecognizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB2401265DB7CB00835F32 /* OpeningHoursRecognizerView.swift */; };
+		02CB2406265DB7CB00835F32 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB2402265DB7CB00835F32 /* CameraView.swift */; };
+		02CB2407265DB7CB00835F32 /* LevenshteinDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB2403265DB7CB00835F32 /* LevenshteinDistance.swift */; };
+		02CB2408265DB7CB00835F32 /* HoursRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB2404265DB7CB00835F32 /* HoursRecognizer.swift */; };
 		02CC01D12584195E004444EF /* PresetFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC01D02584195E004444EF /* PresetFeature.swift */; };
 		02CC01DC25843F2F004444EF /* PresetLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC01DB25843F2F004444EF /* PresetLanguages.swift */; };
 		02CD9974265C65C200213AD6 /* EditorFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CD9973265C65C200213AD6 /* EditorFilters.swift */; };
@@ -308,6 +312,10 @@
 		02C3199B250EBCAC00C5D200 /* nb-NO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-NO"; path = "nb-NO.lproj/Changeset.strings"; sourceTree = "<group>"; };
 		02C3199C250EBCAC00C5D200 /* nb-NO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-NO"; path = "nb-NO.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		02C3199D250EBCAC00C5D200 /* nb-NO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-NO"; path = "nb-NO.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		02CB2401265DB7CB00835F32 /* OpeningHoursRecognizerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpeningHoursRecognizerView.swift; sourceTree = "<group>"; };
+		02CB2402265DB7CB00835F32 /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		02CB2403265DB7CB00835F32 /* LevenshteinDistance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevenshteinDistance.swift; sourceTree = "<group>"; };
+		02CB2404265DB7CB00835F32 /* HoursRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoursRecognizer.swift; sourceTree = "<group>"; };
 		02CC01D02584195E004444EF /* PresetFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetFeature.swift; sourceTree = "<group>"; };
 		02CC01DB25843F2F004444EF /* PresetLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetLanguages.swift; sourceTree = "<group>"; };
 		02CD9973265C65C200213AD6 /* EditorFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EditorFilters.swift; path = ../Shared/EditorFilters.swift; sourceTree = "<group>"; };
@@ -611,7 +619,6 @@
 				ED9649C02601C33E00EC0A60 /* AerialEditViewController.swift */,
 				ED9649D22601C4CE00EC0A60 /* AerialListViewController.swift */,
 				C3D096AB263D48F700E3B129 /* AppDelegate.swift */,
-				C3D096DA263EB73E00E3B129 /* main.swift */,
 				ED56E5AA26024DA5000B368C /* AutocompleteTextField.swift */,
 				ED56E5B226026541000B368C /* BingMetadataViewController.swift */,
 				ED56E5B326026541000B368C /* ClearCacheViewController.swift */,
@@ -629,11 +636,13 @@
 				027EDC5D206F3EED00D349D6 /* KissXML */,
 				EDB2C3A02609E29F00C08293 /* LanguageTableViewController.swift */,
 				EDB2C3A52609E6E100C08293 /* LoginViewController.swift */,
+				C3D096DA263EB73E00E3B129 /* main.swift */,
 				C3004F51263A6CA5006BF313 /* MainViewController.swift */,
 				C341E15B2639DF440022E983 /* NearbyMappersViewController.swift */,
 				C3004F4C263A6306006BF313 /* NominatimViewController.swift */,
 				C341E1592639DF210022E983 /* NotesTableViewController.swift */,
 				ED91352426020945006A637A /* OfflineViewController.swift */,
+				02CB2409265DB7D600835F32 /* Opening Hours */,
 				C3004F61263B2524006BF313 /* POIAllTagsViewController.swift */,
 				C3004F53263A99DC006BF313 /* POIAttributesViewController.swift */,
 				C3D0969B263CBC1100E3B129 /* POIFeaturePickerViewController.swift */,
@@ -645,12 +654,12 @@
 				ED9649DA2601CB7A00EC0A60 /* SettingsViewController.swift */,
 				02ACBCFF16713F7F00BB4414 /* Shared */,
 				0291D83A2442822300F793BE /* Storyboards */,
+				0266DE852655A21F007A502E /* Superview.swift */,
 				02ACBA3A16713CCB00BB4414 /* Supporting Files */,
 				028C51E525CB7A23004A88F7 /* TristateButton.swift */,
 				C3D096AF263D4FF500E3B129 /* TurnRestrictController.swift */,
 				647C150D24268DB7008A9366 /* Upload */,
 				64305F6C23E71F5700232BB9 /* URLParsing */,
-				0266DE852655A21F007A502E /* Superview.swift */,
 			);
 			name = "Go Map!";
 			sourceTree = "<group>";
@@ -748,6 +757,17 @@
 				C3D096B2263D618E00E3B129 /* HeightViewController.swift */,
 			);
 			path = Height;
+			sourceTree = "<group>";
+		};
+		02CB2409265DB7D600835F32 /* Opening Hours */ = {
+			isa = PBXGroup;
+			children = (
+				02CB2402265DB7CB00835F32 /* CameraView.swift */,
+				02CB2404265DB7CB00835F32 /* HoursRecognizer.swift */,
+				02CB2403265DB7CB00835F32 /* LevenshteinDistance.swift */,
+				02CB2401265DB7CB00835F32 /* OpeningHoursRecognizerView.swift */,
+			);
+			path = "Opening Hours";
 			sourceTree = "<group>";
 		};
 		02CC01CF2584190A004444EF /* PresetsDatabase */ = {
@@ -1061,6 +1081,7 @@
 				64E21EB322651620004605D7 /* LoginViewController+Extension.swift in Sources */,
 				ED9649D32601C4CE00EC0A60 /* AerialListViewController.swift in Sources */,
 				ED9649C22601C33E00EC0A60 /* AerialEditViewController.swift in Sources */,
+				02CB2405265DB7CB00835F32 /* OpeningHoursRecognizerView.swift in Sources */,
 				C3D096B6263DF82F00E3B129 /* RulerView.swift in Sources */,
 				C341E15A2639DF210022E983 /* NotesTableViewController.swift in Sources */,
 				027EDC71206F3EED00D349D6 /* DDXMLElementAdditions.m in Sources */,
@@ -1088,6 +1109,7 @@
 				EDDBA55326130287001E7D5C /* GpxViewController.swift in Sources */,
 				021FADBB258591D000F6E1C0 /* PresetKey.swift in Sources */,
 				C381C30B263FE518003142BA /* PushPinView.swift in Sources */,
+				02CB2407265DB7CB00835F32 /* LevenshteinDistance.swift in Sources */,
 				C3004F54263A99DD006BF313 /* POIAttributesViewController.swift in Sources */,
 				C3004F4D263A6306006BF313 /* NominatimViewController.swift in Sources */,
 				024233101674FDB4008A3B6A /* VectorMath.m in Sources */,
@@ -1144,9 +1166,11 @@
 				ED56E5AB26024DA5000B368C /* AutocompleteTextField.swift in Sources */,
 				027EDC73206F3EED00D349D6 /* DDXMLDocument.m in Sources */,
 				0266DE862655A21F007A502E /* Superview.swift in Sources */,
+				02CB2408265DB7CB00835F32 /* HoursRecognizer.swift in Sources */,
 				02D5B5F3248F154D00FEE448 /* Colors.swift in Sources */,
 				021FADCD25873C8200F6E1C0 /* PresetsDatabase+TableView.swift in Sources */,
 				027EDC70206F3EED00D349D6 /* DDXMLElement.m in Sources */,
+				02CB2406265DB7CB00835F32 /* CameraView.swift in Sources */,
 				02A123EF264EE7BC005638C1 /* aes.swift in Sources */,
 				6442666722540EDF00C0D545 /* Lock.swift in Sources */,
 				028816A12659B4A600C30EA2 /* GZip.swift in Sources */,

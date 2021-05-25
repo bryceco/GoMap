@@ -69,17 +69,6 @@ class POIAllTagsViewController: UITableViewController {
     deinit {
     }
 
-	func cellForView(_ view: Any? ) -> TextPairTableCell? {
-		var view = view as? UIView
-		while view != nil {
-			if let pair = view as? TextPairTableCell {
-				return pair
-			}
-			view = view?.superview
-		}
-		return nil
-	}
-
     // return -1 if unchanged, else row to set focus
     func updateWithRecomendations(forFeature forceReload: Bool) -> Int {
         let tabController = tabBarController as? POITabBarController
@@ -289,7 +278,7 @@ class POIAllTagsViewController: UITableViewController {
     }
     
     @IBAction func openWebsite(_ sender: UIView?) {
-		guard let pair = cellForView(sender),
+		guard let pair: TextPairTableCell = sender?.superviewOfType(),
 			  let key = pair.text1.text,
 			  let value = pair.text2.text
 			else { return }
@@ -348,7 +337,7 @@ class POIAllTagsViewController: UITableViewController {
     }
     
     @IBAction func setSurveyDate(_ sender: UIView?) {
-		guard let pair = cellForView(sender) else { return }
+		guard let pair: TextPairTableCell = sender?.superviewOfType() else { return }
 
         let now = Date()
         let dateFormatter = ISO8601DateFormatter()
@@ -379,7 +368,7 @@ class POIAllTagsViewController: UITableViewController {
     }
     
     @IBAction func setDirection(_ sender: Any) {
-		guard let pair = cellForView(sender) else { return }
+		guard let pair: TextPairTableCell = (sender as? UIView)?.superviewOfType() else { return }
 
 		let directionViewController = DirectionViewController(
             key: pair.text1.text ?? "",
@@ -408,7 +397,7 @@ class POIAllTagsViewController: UITableViewController {
     }
     
     @IBAction func setHeight(_ sender: UIView?) {
-		guard let pair = cellForView( sender ) else { return }
+		guard let pair: TextPairTableCell = sender?.superviewOfType() else { return }
 
         if HeightViewController.unableToInstantiate(withUserWarning: self) {
             return
@@ -445,9 +434,9 @@ class POIAllTagsViewController: UITableViewController {
     }
     
     @IBAction func infoButtonPressed(_ sender: Any?) {
-		guard let pair = cellForView( sender ) else { return }
+		guard let pair: TextPairTableCell = (sender as? UIView)?.superviewOfType() else { return }
 
-        // show OSM wiki page
+		// show OSM wiki page
 		guard let key = pair.text1.text,
 			  let value = pair.text2.text,
 			  !key.isEmpty
@@ -576,8 +565,9 @@ class POIAllTagsViewController: UITableViewController {
     @IBAction func textFieldEditingDidBegin(_ textField: AutocompleteTextField?) {
         currentTextField = textField
         
-		guard let pair = cellForView( textField ) else { return }
-		guard let indexPath = tableView.indexPath(for: pair) else { return }
+		guard let pair: TextPairTableCell = textField?.superviewOfType(),
+			  let indexPath = tableView.indexPath(for: pair)
+		else { return }
 
         if indexPath.section == 0 {
             
@@ -641,8 +631,9 @@ class POIAllTagsViewController: UITableViewController {
     }
     
     func textFieldEditingDidEnd(_ textField: UITextField?) {
-		guard let pair = cellForView( textField ) else { return }
-		guard let indexPath = tableView.indexPath(for: pair) else { return }
+		guard let pair: TextPairTableCell = textField?.superviewOfType(),
+			  let indexPath = tableView.indexPath(for: pair)
+		else { return }
 
 		if indexPath.section == 0 {
             var kv = tags[indexPath.row]
@@ -703,7 +694,7 @@ class POIAllTagsViewController: UITableViewController {
     
     @IBAction func textFieldChanged(_ textField: UITextField?) {
 		guard let textField = textField,
-			  let pair = cellForView( textField ),
+			  let pair: TextPairTableCell = textField.superviewOfType(),
 			  let indexPath = tableView.indexPath(for: pair)
 		else { return }
 
@@ -732,7 +723,7 @@ class POIAllTagsViewController: UITableViewController {
     }
     
     func tab(toNext forward: Bool) {
-		guard let pair = cellForView( currentTextField ),
+		guard let pair: TextPairTableCell = currentTextField?.superviewOfType(),
 			  var indexPath = tableView.indexPath(for: pair)
 		else { return }
 

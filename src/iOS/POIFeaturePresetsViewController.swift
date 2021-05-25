@@ -247,7 +247,11 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
             } else if presetKey.isYesNo() {
                 // special case for yes/no tristate
                 let button = TristateButton()
-                let value = keyValueDict[ presetKey.tagKey ] ?? ""
+				var value = keyValueDict[ presetKey.tagKey ] ?? ""
+				if presetKey.tagKey == "tunnel" && keyValueDict["waterway"] != nil && value == "culvert" {
+					// Special hack for tunnel=culvert when used with waterways:
+					value = "yes"
+				}
                 button.setSelection(forString: value )
                 if button.stringForSelection() == nil {
                     // display the string iff we don't recognize it (or it's nil)
@@ -260,6 +264,16 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
                 cell.valueField.rightViewMode = .always
                 cell.valueField.placeholder = nil
                 button.onSelect = { newValue in
+					var newValue = newValue
+					if presetKey.tagKey == "tunnel" && keyValueDict["waterway"] != nil {
+						// Special hack for tunnel=culvert when used with waterways:
+						// See https://github.com/openstreetmap/iD/blob/1ee45ee1f03f0fe4d452012c65ac6ff7649e229f/modules/ui/fields/radio.js#L307
+						if newValue == "yes" {
+							newValue = "culvert"
+						} else {
+							newValue = nil	// "no" isn't allowed
+						}
+					}
                     self.updateTag(withValue: newValue ?? "", forKey: presetKey.tagKey)
 					cell.valueField.text = nil
 					cell.valueField.resignFirstResponder()
@@ -315,7 +329,11 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 				  canMeasureHeight(for: presetKey)
 		{
 			measureHeight(forKey: presetKey.tagKey)
-        } else {
+		} else if let presetKey = cell.presetKey as? PresetKey,
+				  canRecognizeOpeningHours(for: presetKey)
+		{
+			recognizeOpeningHours(forKey: presetKey.tagKey)
+		} else {
             performSegue(withIdentifier: "POIPresetSegue", sender: cell)
         }
     }
@@ -471,4 +489,37 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
         }
         navigationController?.pushViewController(vc, animated: true)
     }
+
+	func canRecognizeOpeningHours(for key: PresetKey) -> Bool {
+		#if !targetEnvironment(macCatalyst)
+		if #available(iOS 14.0, *) {
+			if Int.bitWidth == Int64.bitWidth {	// old architectures don't support SwiftUI
+				return key.tagKey == "opening_hours" ||	key.tagKey.hasSuffix( ":opening_hours" )
+			}
+		}
+		#endif
+		return false
+	}
+
+	func recognizeOpeningHours(forKey key: String) {
+		#if !targetEnvironment(macCatalyst)
+		if #available(iOS 14.0, *) {
+			if Int.bitWidth == Int64.bitWidth {	// old architectures don't support SwiftUI
+				let feedback = UINotificationFeedbackGenerator()
+				feedback.prepare()
+				let vc = OpeningHoursRecognizerController.with(onAccept: {newValue in
+					self.updateTag(withValue: newValue, forKey:key)
+					self.navigationController?.popViewController( animated: true )
+				}, onCancel: {
+					self.navigationController?.popViewController( animated: true )
+				}, onRecognize: {_ in
+					feedback.notificationOccurred(.success)
+					feedback.prepare()
+				})
+				self.navigationController?.pushViewController(vc, animated: true)
+			}
+		}
+		#endif
+	}
+
 }

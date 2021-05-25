@@ -83,8 +83,12 @@ class POITabBarController: UITabBarController {
     }
     
     func isTagDictChanged(_ newDictionary: [String : String]?) -> Bool {
-        let tags = AppDelegate.shared.mapView.editorLayer.selectedPrimary!.tags
-        return newDictionary != tags
+		guard let tags = AppDelegate.shared.mapView.editorLayer.selectedPrimary?.tags
+		else {
+			print("oops, object was deselected")
+			return false
+		}
+		return newDictionary != tags
     }
 
     func isTagDictChanged() -> Bool {
