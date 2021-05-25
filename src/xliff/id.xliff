@@ -573,7 +573,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="I'll do it!" xml:space="preserve">
         <source>I'll do it!</source>
-        <target>Akan saya lakukan!</target>
+        <target state="needs-translation">Akan saya lakukan!</target>
         <note>rate the app now</note>
       </trans-unit>
       <trans-unit id="Identifier" xml:space="preserve">
