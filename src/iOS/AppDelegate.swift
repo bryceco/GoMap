@@ -46,7 +46,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        let defaults: UserDefaults = UserDefaults.standard
+		#if false
+		// This code sets the screen size as mandated for Mac App Store screen shots
+		let setScreenSizeForAppStoreScreenShots = false
+		if setScreenSizeForAppStoreScreenShots {
+			let size = CGSize( 640 * (1440.0/752) * (1440.0/1337) * (1440.0/1431), 640 * (900.0/752) * (900.0/877) * (900.0/898) + 1 )
+			for scene in UIApplication.sharedApplication.connectedScenes {
+				scene.sizeRestrictions.minimumSize = size;
+				scene.sizeRestrictions.maximumSize = size;
+			}
+		}
+		#endif
+
+		let defaults: UserDefaults = UserDefaults.standard
 
         // save the app version so we can detect upgrades
         let prevVersion = defaults.object(forKey: "appVersion") as? String

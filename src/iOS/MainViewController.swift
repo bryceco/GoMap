@@ -172,31 +172,48 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
         mapView.rightClick(atLocation: location)
         return nil
     }
-    
-#if os(macOS)
-    
-    override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-        if #available(macCatalyst 13.4, *) {
+
+	#if targetEnvironment(macCatalyst)
+	func keypressAction( key: UIKey ) {
+		let size = self.view.bounds.size
+		let delta = CGPoint(x: size.width * 0.15, y: size.height * 0.15)
+		switch key.keyCode {
+		case .keyboardRightArrow:	mapView.adjustOrigin(by: CGPoint(x: -delta.x, y: 0))
+		case .keyboardLeftArrow:	mapView.adjustOrigin(by: CGPoint(x: delta.x, y: 0))
+		case .keyboardDownArrow:	mapView.adjustOrigin(by: CGPoint(x: 0, y: -delta.y))
+		case .keyboardUpArrow:		mapView.adjustOrigin(by: CGPoint(x: 0, y: delta.y))
+		default:					break
+		}
+	}
+	var keypressTimers: Dictionary<UIKey,Timer> = [:]
+	override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+		if #available(macCatalyst 13.4, *) {
             for press in presses {
-                let key = press.key
-                let ARROW_KEY_DELTA: CGFloat = 256
-                switch key?.keyCode {
-                case .keyboardRightArrow:
-                    mapView.adjustOrigin(by: CGPoint(x: -ARROW_KEY_DELTA, y: 0))
-                case .keyboardLeftArrow:
-                    mapView.adjustOrigin(by: CGPoint(x: ARROW_KEY_DELTA, y: 0))
-                case .keyboardDownArrow:
-                    mapView.adjustOrigin(by: CGPoint(x: 0, y: -ARROW_KEY_DELTA))
-                case .keyboardUpArrow:
-                    mapView.adjustOrigin(by: CGPoint(x: 0, y: ARROW_KEY_DELTA))
-                default:
-                    break
-                }
-            }
-        }
+				if let key = press.key {
+					keypressAction(key: key)
+					if keypressTimers[key] == nil {
+						let timer = Timer(fire: Date.init(timeInterval: 0.5, since: Date()), interval: 0.25, repeats: true, block: {_ in
+							self.keypressAction(key: key)
+						})
+						RunLoop.current.add(timer, forMode: .default)
+						keypressTimers[key] = timer
+					}
+				}
+			}
+		}
     }
-#endif
-    
+	override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+		for press in presses {
+			if let key = press.key {
+				if let timer = keypressTimers[key] {
+					timer.invalidate()
+					keypressTimers.removeValue(forKey: key)
+				}
+			}
+		}
+	}
+	#endif
+
     func setButtonAppearances() {
         // update button styling
         let buttons = [

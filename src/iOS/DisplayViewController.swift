@@ -81,8 +81,8 @@ class DisplayViewController: UITableViewController {
     }
 
     func setButtonLayoutTitle() {
-        let title = AppDelegate.shared.mapView.mainViewController.buttonLayout == BUTTON_LAYOUT._ADD_ON_LEFT ? "Left" : "Right"
-        _addButtonPosition.setTitle(title, for: .normal)
+		let title = AppDelegate.shared.mapView.mainViewController.buttonLayout == BUTTON_LAYOUT._ADD_ON_LEFT ? NSLocalizedString("Left", comment: "") : NSLocalizedString("Right", comment: "")
+		_addButtonPosition.setTitle(title, for: .normal)
     }
 
     override func viewWillAppear(_ animated: Bool) {

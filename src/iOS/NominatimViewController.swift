@@ -116,6 +116,21 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
     
     // look for a pair of non-integer numbers in the string, and jump to it if found
     func containsLatLon(_ text: String) -> Bool {
+		let text = text.trimmingCharacters(in: .whitespacesAndNewlines)
+
+		// try parsing as a URL containing lat=,lon=
+		if let comps = URLComponents(string: text) {
+			if let lat = comps.queryItems?.first(where: {$0.name == "lat"})?.value,
+			   let lon = comps.queryItems?.first(where: {$0.name == "lon"})?.value,
+			   let lat = Double(lat),
+			   let lon = Double(lon)
+			{
+				updateHistory(with: "\(lat),\(lon)")
+				jump(toLat: lat, lon: lon)
+				return true
+			}
+		}
+
         let scanner = Scanner(string: text)
         let digits = CharacterSet(charactersIn: "-0123456789")
         let comma = CharacterSet(charactersIn: ",/")
