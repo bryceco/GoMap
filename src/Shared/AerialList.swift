@@ -229,7 +229,7 @@ class AerialService: NSObject {
     static let mapboxLocator = AerialService(
             withName: "Mapbox Locator",
             identifier: MAPBOX_LOCATOR_IDENTIFIER,
-            url: "https://api.mapbox.com/styles/v1/openstreetmap/ckasmteyi1tda1ipfis6wqhuq/tiles/256/{zoom}/{x}/{y}{@2x}?access_token=pk.eyJ1Ijoib3BlbnN0cmVldG1hcCIsImEiOiJjaml5MjVyb3MwMWV0M3hxYmUzdGdwbzE4In0.q548FjhsSJzvXsGlPsFxAQ",
+			url: "https://api.mapbox.com/styles/v1/openstreetmap/ckasmteyi1tda1ipfis6wqhuq/tiles/256/{zoom}/{x}/{y}{@2x}?access_token=pk.eyJ1IjoiYnJ5Y2VjbyIsImEiOiJja212YzlybTkwM28xMm9waGFtcmdiNzgyIn0.jdhZilCebOXBDoTuzmTYRA",
             maxZoom: 20,
             roundUp: false,
             startDate: nil,
