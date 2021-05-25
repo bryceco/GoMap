@@ -7,7 +7,7 @@
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>Go Map!!</source>
-        <target/>
+        <target>Go Map!!</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleGetInfoString" xml:space="preserve">
@@ -17,7 +17,7 @@
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>Go Map!!</source>
-        <target/>
+        <target>Go Map!!</target>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="GPS Exchange Format (GPX)" xml:space="preserve">
@@ -27,12 +27,12 @@
       </trans-unit>
       <trans-unit id="NSBluetoothPeripheralUsageDescription" xml:space="preserve">
         <source>Connect to external Bluetooth GPS devices</source>
-        <target/>
+        <target>Hubungkan dengan perangkat GPS Bluetooth eksternal</target>
         <note>Privacy - Bluetooth Peripheral Usage Description</note>
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
         <source>The camera is used to measure heights of buildings or objects</source>
-        <target/>
+        <target>Kamera digunakan untuk mengukur tinggi bangunan atau obyek</target>
         <note>Privacy - Camera Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
@@ -47,7 +47,7 @@
       </trans-unit>
       <trans-unit id="NSLocationAlwaysUsageDescription" xml:space="preserve">
         <source>Your location will be displayed and followed on the map.</source>
-        <target/>
+        <target>Lokasi Anda akan ditampilkan dan diikuti di peta.</target>
         <note>Privacy - Location Always Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationWhenInUseUsageDescription" xml:space="preserve">
@@ -106,7 +106,7 @@
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
         <source>%1$.2f MB, %2$ld files</source>
-        <target/>
+        <target>%1$.2f MB, %2$ld berkas</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
@@ -121,28 +121,28 @@
       </trans-unit>
       <trans-unit id="%@ meters" xml:space="preserve">
         <source>%@ meters</source>
-        <target/>
+        <target>%@ meter</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="%ld Days" xml:space="preserve">
         <source>%ld Days</source>
-        <target/>
+        <target>%ld Hari</target>
         <note>One or more days
    Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@" xml:space="preserve">
         <source>%1$ld edits, last active %2$@</source>
-        <target/>
+        <target>%1$ld suntingan, terakhir aktif %2$@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$ld meters, %2$ld points</source>
-        <target/>
+        <target>%1$ld meter, %2$ld titik</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld objects" xml:space="preserve">
         <source>%ld objects</source>
-        <target/>
+        <target>%ld obyek</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%lu tiles needed" xml:space="preserve">
@@ -152,7 +152,7 @@
       </trans-unit>
       <trans-unit id="(new object)" xml:space="preserve">
         <source>(new object)</source>
-        <target/>
+        <target>(obyek baru)</target>
         <note>a newly created node/object</note>
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
@@ -177,17 +177,17 @@
       </trans-unit>
       <trans-unit id="+ Button Position" xml:space="preserve">
         <source>+ Button Position</source>
-        <target/>
+        <target>Posisi Tombol +</target>
         <note>Location of Add Node button on the screen</note>
       </trans-unit>
       <trans-unit id="1 Day" xml:space="preserve">
         <source>1 Day</source>
-        <target/>
+        <target>1 Hari</target>
         <note>1 day singular</note>
       </trans-unit>
       <trans-unit id="&lt;unknown&gt;" xml:space="preserve">
         <source>&lt;unknown&gt;</source>
-        <target/>
+        <target>&lt;tak diketahui&gt;</target>
         <note>unknown user name</note>
       </trans-unit>
       <trans-unit id="A GPX Track records your path as you travel along a road or trail" xml:space="preserve">
@@ -202,7 +202,7 @@
       </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
         <source>Add Note</source>
-        <target/>
+        <target>Tambahkan Catatan</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Add inner member" xml:space="preserve">
@@ -247,7 +247,7 @@
       </trans-unit>
       <trans-unit id="An unknown error occurred fetching metadata" xml:space="preserve">
         <source>An unknown error occurred fetching metadata</source>
-        <target/>
+        <target>Sebuah kesalahan yang tak diketahui terjadi ketika mengambil metadata</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Attention" xml:space="preserve">
@@ -257,12 +257,12 @@
       </trans-unit>
       <trans-unit id="Attributes" xml:space="preserve">
         <source>Attributes</source>
-        <target/>
+        <target>Atribut-atribut</target>
         <note>node/way/relation attributes</note>
       </trans-unit>
       <trans-unit id="Automatic" xml:space="preserve">
         <source>Automatic</source>
-        <target/>
+        <target>Otomatis</target>
         <note>Automatic selection of presets languages</note>
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
@@ -337,12 +337,12 @@
       </trans-unit>
       <trans-unit id="Cancel" xml:space="preserve">
         <source>Cancel</source>
-        <target/>
+        <target>Batal</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cannot compose message" xml:space="preserve">
         <source>Cannot compose message</source>
-        <target/>
+        <target>Tidak dapat menulis pesan</target>
         <note>e-mail message</note>
       </trans-unit>
       <trans-unit id="Cannot connect an inner way to an outer way" xml:space="preserve">
@@ -392,12 +392,12 @@
       </trans-unit>
       <trans-unit id="Configure" xml:space="preserve">
         <source>Configure</source>
-        <target/>
+        <target>Konfigurasi</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Confirm move" xml:space="preserve">
         <source>Confirm move</source>
-        <target/>
+        <target>Konfirmasi perpindahan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Connecting the nodes would damage a relation" xml:space="preserve">
@@ -418,17 +418,18 @@
       <trans-unit id="Create&#10;" xml:space="preserve">
         <source>Create
 </source>
-        <target/>
+        <target>Buat
+</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Create Relation" xml:space="preserve">
         <source>Create Relation</source>
-        <target/>
+        <target>Buat Hubungan</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Create Relation Type" xml:space="preserve">
         <source>Create Relation Type</source>
-        <target/>
+        <target>Buat Jenis Hubungan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
@@ -438,38 +439,39 @@
       </trans-unit>
       <trans-unit id="Data not available" xml:space="preserve">
         <source>Data not available</source>
-        <target/>
+        <target>Data tidak tersedia</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Delete" xml:space="preserve">
         <source>Delete</source>
-        <target/>
+        <target>Hapus</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Delete&#10;" xml:space="preserve">
         <source>Delete
 </source>
-        <target/>
+        <target>Hapus
+</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Delete completely" xml:space="preserve">
         <source>Delete completely</source>
-        <target/>
+        <target>Hapus sepenuhnya</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Delete failed" xml:space="preserve">
         <source>Delete failed</source>
-        <target/>
+        <target>Penghapusan gagal</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Detach from relation" xml:space="preserve">
         <source>Detach from relation</source>
-        <target/>
+        <target>Lepaskan dari hubungan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Disconnect" xml:space="preserve">
         <source>Disconnect</source>
-        <target/>
+        <target>Putuskan</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Display options" xml:space="preserve">
@@ -479,27 +481,27 @@
       </trans-unit>
       <trans-unit id="Done" xml:space="preserve">
         <source>Done</source>
-        <target/>
+        <target>Selesai</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Duplicate" xml:space="preserve">
         <source>Duplicate</source>
-        <target/>
+        <target>Duplikasi</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Edit" xml:space="preserve">
         <source>Edit</source>
-        <target/>
+        <target>Sunting</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Edit XML" xml:space="preserve">
         <source>Edit XML</source>
-        <target/>
+        <target>Sunting XML</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Edit restrictions" xml:space="preserve">
         <source>Edit restrictions</source>
-        <target/>
+        <target>Sunting batasan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Editing layer not visible" xml:space="preserve">
@@ -531,7 +533,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Error" xml:space="preserve">
         <source>Error</source>
-        <target/>
+        <target>Kesalahan</target>
         <note>Error dialog title</note>
       </trans-unit>
       <trans-unit id="Error connecting to way" xml:space="preserve">
@@ -541,7 +543,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Error fetching metadata: %@" xml:space="preserve">
         <source>Error fetching metadata: %@</source>
-        <target/>
+        <target>Gagal mengambil metadata: %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Extending a 'via' in a Turn Restriction will break the relation" xml:space="preserve">
@@ -566,12 +568,12 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Height: %@ ± %@ meters" xml:space="preserve">
         <source>Height: %1$@ ± %2$@ meters</source>
-        <target/>
+        <target>Tinggi: %1$@ ± %2$@ meter</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="I'll do it!" xml:space="preserve">
         <source>I'll do it!</source>
-        <target/>
+        <target>Akan saya lakukan!</target>
         <note>rate the app now</note>
       </trans-unit>
       <trans-unit id="Identifier" xml:space="preserve">
@@ -581,22 +583,22 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Ignore" xml:space="preserve">
         <source>Ignore</source>
-        <target/>
+        <target>Abaikan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="In order to measure height, please enable camera access in the app's settings." xml:space="preserve">
         <source>In order to measure height, please enable camera access in the app's settings.</source>
-        <target/>
+        <target>Untuk mengukur tinggi, mohon aktifkan akses kamera di pengaturan aplikasi.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Invalid URL" xml:space="preserve">
         <source>Invalid URL</source>
-        <target/>
+        <target>URL tidak valid</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Join" xml:space="preserve">
         <source>Join</source>
-        <target/>
+        <target>Hubungkan</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Joining would invalidate a Turn Restriction the way belongs to" xml:space="preserve">
@@ -611,27 +613,27 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Last updated %@" xml:space="preserve">
         <source>Last updated %@</source>
-        <target/>
+        <target>Terakhir diperbarui %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Lat/Lon" xml:space="preserve">
         <source>Lat/Lon</source>
-        <target/>
+        <target>Lin/Buj</target>
         <note>coordinates</note>
       </trans-unit>
       <trans-unit id="Left" xml:space="preserve">
         <source>Left</source>
-        <target/>
+        <target>Kiri</target>
         <note>Left side of screen</note>
       </trans-unit>
       <trans-unit id="Left side" xml:space="preserve">
         <source>Left side</source>
-        <target/>
+        <target>Sisi kiri</target>
         <note>Left-hand side of screen</note>
       </trans-unit>
       <trans-unit id="Length" xml:space="preserve">
         <source>Length</source>
-        <target/>
+        <target>Panjang</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Location services timed out." xml:space="preserve">
@@ -641,17 +643,17 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
         <source>Location unavailable</source>
-        <target/>
+        <target>Lokasi tidak tersedia</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Login successful" xml:space="preserve">
         <source>Login successful</source>
-        <target/>
+        <target>Berhasil masuk</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Low memory: clearing cache" xml:space="preserve">
         <source>Low memory: clearing cache</source>
-        <target/>
+        <target>Memori sedikit: menghapus cache</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Mail delivery is not available on this device" xml:space="preserve">
@@ -661,7 +663,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Make Circular" xml:space="preserve">
         <source>Make Circular</source>
-        <target/>
+        <target>Buat Melingkar</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Make Rectangular" xml:space="preserve">
@@ -681,7 +683,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Maybe later..." xml:space="preserve">
         <source>Maybe later...</source>
-        <target/>
+        <target>Mungkin nanti...</target>
         <note>rate the app later</note>
       </trans-unit>
       <trans-unit id="Member of multipolygon relation" xml:space="preserve">
@@ -706,18 +708,19 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Modified" xml:space="preserve">
         <source>Modified</source>
-        <target/>
+        <target>Dimodifikasi</target>
         <note>last modified date</note>
       </trans-unit>
       <trans-unit id="Modify" xml:space="preserve">
         <source>Modify</source>
-        <target/>
+        <target>Modifikasi</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Modify&#10;" xml:space="preserve">
         <source>Modify
 </source>
-        <target/>
+        <target>Modifikasi
+</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Modifying the raw XML data allows you to correct errors that prevent uploading.&#10;&#10;It is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format." xml:space="preserve">
@@ -729,22 +732,22 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="More..." xml:space="preserve">
         <source>More...</source>
-        <target/>
+        <target>Lainnya...</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Most recent" xml:space="preserve">
         <source>Most recent</source>
-        <target/>
+        <target>Baru-baru ini</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Move" xml:space="preserve">
         <source>Move</source>
-        <target/>
+        <target>Pindahkan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Move selected object?" xml:space="preserve">
         <source>Move selected object?</source>
-        <target/>
+        <target>Pindahkan obyek yang dipilih?</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Multipolygon" xml:space="preserve">
@@ -759,28 +762,28 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Never" xml:space="preserve">
         <source>Never</source>
-        <target/>
+        <target>Jangan pernah</target>
         <note>Never delete old GPX tracks
    Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Next" xml:space="preserve">
         <source>Next</source>
-        <target/>
+        <target>Selanjutnya</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No Data" xml:space="preserve">
         <source>No Data</source>
-        <target/>
+        <target>Tidak Ada Data</target>
         <note>Alert title</note>
       </trans-unit>
       <trans-unit id="No Left Turn restriction" xml:space="preserve">
         <source>No Left Turn restriction</source>
-        <target/>
+        <target>Tidak ada batasan Dilarang Belok Kiri</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No Right Turn restriction" xml:space="preserve">
         <source>No Right Turn restriction</source>
-        <target/>
+        <target>Tidak ada batasan Dilarang Belok Kanan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No Straight On restriction" xml:space="preserve">
@@ -790,7 +793,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="No U-Turn restriction" xml:space="preserve">
         <source>No U-Turn restriction</source>
-        <target/>
+        <target>Tidak ada batasan Dilarang Putar Balik</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No active track" xml:space="preserve">
@@ -800,12 +803,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="No image data available" xml:space="preserve">
         <source>No image data available</source>
-        <target/>
+        <target>Tidak ada data gambar yang tersedia</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No results found" xml:space="preserve">
         <source>No results found</source>
-        <target/>
+        <target>Tidak menemukan apapun</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No tags to paste" xml:space="preserve">
@@ -840,17 +843,17 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Not found" xml:space="preserve">
         <source>Not found</source>
-        <target/>
+        <target>Tidak ditemukan</target>
         <note>User credentials not found</note>
       </trans-unit>
       <trans-unit id="Note History" xml:space="preserve">
         <source>Note History</source>
-        <target/>
+        <target>Riwayat Catatan</target>
         <note>OSM note</note>
       </trans-unit>
       <trans-unit id="Nothing to upload, no changes have been made." xml:space="preserve">
         <source>Nothing to upload, no changes have been made.</source>
-        <target/>
+        <target>Tidak ada yang perlu diunggah, belum ada perubahan yang telah dibuat.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Number of recent items to display" xml:space="preserve">
@@ -860,17 +863,17 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="OK" xml:space="preserve">
         <source>OK</source>
-        <target/>
+        <target>Oke</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="OSM data must be version 0.6 (fetched '%@')" xml:space="preserve">
         <source>OSM data must be version 0.6 (fetched '%@')</source>
-        <target/>
+        <target>Data OSM harus versi 0.6 (yang diambil '%@')</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Object modified" xml:space="preserve">
         <source>Object modified</source>
-        <target/>
+        <target>Obyek dimodifikasi</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only Left Turn restriction" xml:space="preserve">
@@ -900,37 +903,37 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Open Settings" xml:space="preserve">
         <source>Open Settings</source>
-        <target/>
+        <target>Buka Pengaturan</target>
         <note>Open the iOS Settings app</note>
       </trans-unit>
       <trans-unit id="Open URL" xml:space="preserve">
         <source>Open URL</source>
-        <target/>
+        <target>Buka URL</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Paste" xml:space="preserve">
         <source>Paste</source>
-        <target/>
+        <target>Tempel</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)" xml:space="preserve">
         <source>Pasting %ld tag(s)</source>
-        <target/>
+        <target>Menempel %ld tag</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Perform Action" xml:space="preserve">
         <source>Perform Action</source>
-        <target/>
+        <target>Lakukan Tindakan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Please wait" xml:space="preserve">
         <source>Please wait</source>
-        <target/>
+        <target>Mohon tunggu</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
         <source>Previous</source>
-        <target/>
+        <target>Sebelumnya</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Previous Tracks" xml:space="preserve">
@@ -940,12 +943,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Purge" xml:space="preserve">
         <source>Purge</source>
-        <target/>
+        <target>Bersihkan</target>
         <note>Discard editing changes when resetting OSM data cache</note>
       </trans-unit>
       <trans-unit id="Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." xml:space="preserve">
         <source>Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap.</source>
-        <target/>
+        <target state="needs-translation">Menilai aplikasi ini membuat lebih mudah penyunting peta lain untuk menemukannya dan meningkatkan visibilitas OpenStreetMap.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Recent Aerial Imagery" xml:space="preserve">
@@ -960,12 +963,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Relation Attributes" xml:space="preserve">
         <source>Relation Attributes</source>
-        <target/>
+        <target>Atribut-atribut Hubungan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation Tags" xml:space="preserve">
         <source>Relation Tags</source>
-        <target/>
+        <target>Tag-tag Hubungan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation: %@" xml:space="preserve">
@@ -975,7 +978,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Relations" xml:space="preserve">
         <source>Relations</source>
-        <target/>
+        <target>Hubungan-hubungan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Replace Tags" xml:space="preserve">
@@ -995,17 +998,17 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Restrict" xml:space="preserve">
         <source>Restrict</source>
-        <target/>
+        <target>Batasi</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Restriction: %@" xml:space="preserve">
         <source>Restriction: %@</source>
-        <target/>
+        <target>Batasan: %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Results for %@ (%@)" xml:space="preserve">
         <source>Results for %1$@ (%2$@)</source>
-        <target/>
+        <target>Hasil untuk %1$@ (%2$@)</target>
         <note>country name,2-character country code</note>
       </trans-unit>
       <trans-unit id="Reverse" xml:space="preserve">
@@ -1015,52 +1018,52 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Right" xml:space="preserve">
         <source>Right</source>
-        <target/>
+        <target>Kanan</target>
         <note>Right side of screen</note>
       </trans-unit>
       <trans-unit id="Right side" xml:space="preserve">
         <source>Right side</source>
-        <target/>
+        <target>Sisi kanan</target>
         <note>Right-hand side of screen</note>
       </trans-unit>
       <trans-unit id="Rotate" xml:space="preserve">
         <source>Rotate</source>
-        <target/>
+        <target>Putar</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Select Object" xml:space="preserve">
         <source>Select Object</source>
-        <target/>
+        <target>Pilih Obyek</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Select a highway approaching the intersection" xml:space="preserve">
         <source>Select a highway approaching the intersection</source>
-        <target/>
+        <target>Pilih jalan tol yang mendekati persimpangan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Selected object is off screen" xml:space="preserve">
         <source>Selected object is off screen</source>
-        <target/>
+        <target>Obyek yang dipilih diluar layar</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Set" xml:space="preserve">
         <source>Set</source>
-        <target/>
+        <target>Tetapkan</target>
         <note>set tag value</note>
       </trans-unit>
       <trans-unit id="Set Height Tag" xml:space="preserve">
         <source>Set Height Tag</source>
-        <target/>
+        <target>Atur Tag Tinggi</target>
         <note>The height=* tag</note>
       </trans-unit>
       <trans-unit id="Settings" xml:space="preserve">
         <source>Settings</source>
-        <target/>
+        <target>Pengaturan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Share" xml:space="preserve">
         <source>Share</source>
-        <target/>
+        <target>Bagikan</target>
         <note>Open iOS sharing sheet
    Title for sharing options</note>
       </trans-unit>
@@ -1071,12 +1074,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Sorry, an error occurred while loading the GPX file" xml:space="preserve">
         <source>Sorry, an error occurred while loading the GPX file</source>
-        <target/>
+        <target>Maaf, sebuah kesalahan terjadi ketika memuat berkas GPX</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Split" xml:space="preserve">
         <source>Split</source>
-        <target/>
+        <target>Pisahkan</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Standard imagery" xml:space="preserve">
@@ -1086,27 +1089,27 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Start" xml:space="preserve">
         <source>Start</source>
-        <target/>
+        <target>Mulai</target>
         <note>Begin downloading tiles</note>
       </trans-unit>
       <trans-unit id="Stop" xml:space="preserve">
         <source>Stop</source>
-        <target/>
+        <target>Berhenti</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Straighten" xml:space="preserve">
         <source>Straighten</source>
-        <target/>
+        <target>Luruskan</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Tags" xml:space="preserve">
         <source>Tags</source>
-        <target/>
+        <target>Tag-tag</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
         <source>The + button can be positioned on either the left or right side of the screen</source>
-        <target/>
+        <target>Tombol + dapat diposisikan pada antara sisi kiri atau sisi kanan dari layar</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The XML is improperly formed" xml:space="preserve">
@@ -1116,7 +1119,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="The current location cannot be determined: " xml:space="preserve">
         <source>The current location cannot be determined: </source>
-        <target/>
+        <target>Lokasi saat ini tidak dapat ditentukan: </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The merged nodes contain conflicting tags" xml:space="preserve">
@@ -1176,7 +1179,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="This action requires GPS to be turned on" xml:space="preserve">
         <source>This action requires GPS to be turned on</source>
-        <target/>
+        <target>Tindakan ini memerlukan GPS yang diaktifkan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="This app does not yet support editing turn restrictions without a node as the 'via' member" xml:space="preserve">
@@ -1191,17 +1194,17 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Travel ALLOWED from %@ to %@" xml:space="preserve">
         <source>Travel ALLOWED from %1$@ to %2$@</source>
-        <target/>
+        <target>Perjalanan DIIZINKAN dari %1$@ ke %2$@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel ONLY from %@ to %@" xml:space="preserve">
         <source>Travel ONLY from %1$@ to %2$@</source>
-        <target/>
+        <target>Perjalanan HANYA dari %1$@ ke %2$@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel PROHIBITED from %@ to %@" xml:space="preserve">
         <source>Travel PROHIBITED from %1$@ to %2$@</source>
-        <target/>
+        <target>Perjalanan DILARANG dari %1$@ ke %2$@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel from %@" xml:space="preserve">
@@ -1228,22 +1231,22 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="U-Turn from %@ allowed" xml:space="preserve">
         <source>U-Turn from %@ allowed</source>
-        <target/>
+        <target>Memutar balik dari %@ diizinkan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="U-Turn from %@ prohibited" xml:space="preserve">
         <source>U-Turn from %@ prohibited</source>
-        <target/>
+        <target>Memutar balik dari %@ dilarang</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="UID" xml:space="preserve">
         <source>UID</source>
-        <target/>
+        <target>UID</target>
         <note>OSM numeric user ID</note>
       </trans-unit>
       <trans-unit id="Unable to upload changes" xml:space="preserve">
         <source>Unable to upload changes</source>
-        <target/>
+        <target>Tidak dapat menggunggah perubahan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Undo" xml:space="preserve">
@@ -1258,42 +1261,42 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Unsupported turn restriction type" xml:space="preserve">
         <source>Unsupported turn restriction type</source>
-        <target/>
+        <target>Jenis pembatasan belokan tidak didukung</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Update" xml:space="preserve">
         <source>Update</source>
-        <target/>
+        <target>Perbarui</target>
         <note>update an osm note</note>
       </trans-unit>
       <trans-unit id="Updating Note..." xml:space="preserve">
         <source>Updating Note...</source>
-        <target/>
+        <target>Memperbarui Catatan...</target>
         <note>OSM Note</note>
       </trans-unit>
       <trans-unit id="Upload complete!" xml:space="preserve">
         <source>Upload complete!</source>
-        <target/>
+        <target>Pengunggahan selesai!</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Upload to OSM" xml:space="preserve">
         <source>Upload to OSM</source>
-        <target/>
+        <target>Unggah ke OSM</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Upload your changes" xml:space="preserve">
         <source>Upload your changes</source>
-        <target/>
+        <target>Unggah perubahan Anda</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Uploading GPX..." xml:space="preserve">
         <source>Uploading GPX...</source>
-        <target/>
+        <target>Mengunggah GPX...</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="User" xml:space="preserve">
         <source>User</source>
-        <target/>
+        <target>Pengguna</target>
         <note>OSM user name</note>
       </trans-unit>
       <trans-unit id="User-defined imagery" xml:space="preserve">
@@ -1303,12 +1306,12 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Version" xml:space="preserve">
         <source>Version</source>
-        <target/>
+        <target>Versi</target>
         <note>OSM object versioh</note>
       </trans-unit>
       <trans-unit id="Warning" xml:space="preserve">
         <source>Warning</source>
-        <target/>
+        <target>Peringatan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Way Attributes" xml:space="preserve">
@@ -1341,12 +1344,12 @@ These members are marked with '&gt;'.</source>
       </trans-unit>
       <trans-unit id="You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." xml:space="preserve">
         <source>You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost.</source>
-        <target/>
+        <target>Anda telah membuat perubahan-perubahan yang bellum diunggah ke server. Menghapus cache akan menghilangkan perubahan-perubahan tersebut.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You must provide your OSM user name, not an email address." xml:space="preserve">
         <source>You must provide your OSM user name, not an email address.</source>
-        <target/>
+        <target>Anda harus memberikan nama pengguna OSM, bukan alamat surel.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You must save or discard changes to the current object before editing its associated relation" xml:space="preserve">
@@ -1390,7 +1393,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="computing size..." xml:space="preserve">
         <source>computing size...</source>
-        <target/>
+        <target>mengkomputasi ukuran...</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="create node" xml:space="preserve">
@@ -1400,12 +1403,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="create relation" xml:space="preserve">
         <source>create relation</source>
-        <target/>
+        <target>buat hubungan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="create turn restriction" xml:space="preserve">
         <source>create turn restriction</source>
-        <target/>
+        <target>buat batasan belokan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="create way" xml:space="preserve">
@@ -1430,22 +1433,22 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="delete object from relation" xml:space="preserve">
         <source>delete object from relation</source>
-        <target/>
+        <target>hapus obyek dari hubungan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete relation" xml:space="preserve">
         <source>delete relation</source>
-        <target/>
+        <target>hapus hubungan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete restriction" xml:space="preserve">
         <source>delete restriction</source>
-        <target/>
+        <target>hapus batasan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete route" xml:space="preserve">
         <source>delete route</source>
-        <target/>
+        <target>hapus rute</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete way" xml:space="preserve">
@@ -1455,17 +1458,17 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="duplicate" xml:space="preserve">
         <source>duplicate</source>
-        <target/>
+        <target>duplikasi</target>
         <note>create a duplicate</note>
       </trans-unit>
       <trans-unit id="meters" xml:space="preserve">
         <source>meters</source>
-        <target/>
+        <target>meter</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="move" xml:space="preserve">
         <source>move</source>
-        <target/>
+        <target>pindahkan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">
@@ -1480,22 +1483,22 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="other object" xml:space="preserve">
         <source>other object</source>
-        <target/>
+        <target>obyek lain</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="relation" xml:space="preserve">
         <source>relation</source>
-        <target/>
+        <target>hubungan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="set tags" xml:space="preserve">
         <source>set tags</source>
-        <target/>
+        <target>atur tag-tag</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="update relation members" xml:space="preserve">
         <source>update relation members</source>
-        <target/>
+        <target>atur anggota hubungan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="vintage %@" xml:space="preserve">
@@ -1522,22 +1525,22 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
         <source>Set Height</source>
-        <target/>
+        <target>Tetapkan Tinggi</target>
         <note>Class = "UIButton"; normalTitle = "Set Height"; ObjectID = "QZK-2k-kEa";</note>
       </trans-unit>
       <trans-unit id="SdH-uy-BuK.normalTitle" xml:space="preserve">
         <source>Distance</source>
-        <target/>
+        <target>Jarak</target>
         <note>Class = "UIButton"; normalTitle = "Distance"; ObjectID = "SdH-uy-BuK";</note>
       </trans-unit>
       <trans-unit id="juy-LX-vDs.normalTitle" xml:space="preserve">
         <source>Height</source>
-        <target/>
+        <target>Tinggi</target>
         <note>Class = "UIButton"; normalTitle = "Height"; ObjectID = "juy-LX-vDs";</note>
       </trans-unit>
       <trans-unit id="l5O-tO-QFr.normalTitle" xml:space="preserve">
         <source>Cancel</source>
-        <target/>
+        <target>Batal</target>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "l5O-tO-QFr";</note>
       </trans-unit>
     </body>
@@ -1549,7 +1552,7 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
         <source>Cancel</source>
-        <target/>
+        <target>Batal</target>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "1SY-O5-qJR";</note>
       </trans-unit>
       <trans-unit id="1f0-8q-yCi.text" xml:space="preserve">
@@ -1559,22 +1562,22 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="2Ku-Lb-uCf.text" xml:space="preserve">
         <source>Details</source>
-        <target/>
+        <target>Keterangan</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "2Ku-Lb-uCf";</note>
       </trans-unit>
       <trans-unit id="2ZY-zi-luF.text" xml:space="preserve">
         <source>Clear Cache</source>
-        <target/>
+        <target>Hapus Cache</target>
         <note>Class = "UILabel"; text = "Clear Cache"; ObjectID = "2ZY-zi-luF";</note>
       </trans-unit>
       <trans-unit id="4s8-Bj-JOX.normalTitle" xml:space="preserve">
         <source>99 Days</source>
-        <target/>
+        <target>99 Hari</target>
         <note>Class = "UIButton"; normalTitle = "99 Days"; ObjectID = "4s8-Bj-JOX";</note>
       </trans-unit>
       <trans-unit id="5hB-2Y-Wgl.text" xml:space="preserve">
         <source>Projection</source>
-        <target/>
+        <target>Proyeksi</target>
         <note>Class = "UILabel"; text = "Projection"; ObjectID = "5hB-2Y-Wgl";</note>
       </trans-unit>
       <trans-unit id="7df-49-qTa.text" xml:space="preserve">
@@ -1584,7 +1587,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="7ga-PZ-MfV.placeholder" xml:space="preserve">
         <source>-1..3,7</source>
-        <target/>
+        <target>-1..3,7</target>
         <note>Class = "UITextField"; placeholder = "-1..3,7"; ObjectID = "7ga-PZ-MfV";</note>
       </trans-unit>
       <trans-unit id="8HT-Bc-Q2z.title" xml:space="preserve">
@@ -1594,17 +1597,17 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="8S7-Kw-QHF.normalTitle" xml:space="preserve">
         <source>Details</source>
-        <target/>
+        <target>Keterangan</target>
         <note>Class = "UIButton"; normalTitle = "Details"; ObjectID = "8S7-Kw-QHF";</note>
       </trans-unit>
       <trans-unit id="8es-4f-sj3.headerTitle" xml:space="preserve">
         <source>Overlays</source>
-        <target/>
+        <target>Lapisan-lapisan</target>
         <note>Class = "UITableViewSection"; headerTitle = "Overlays"; ObjectID = "8es-4f-sj3";</note>
       </trans-unit>
       <trans-unit id="9L3-JO-Whj.text" xml:space="preserve">
         <source>Mapnik only</source>
-        <target/>
+        <target>Hanya Mapnik</target>
         <note>Class = "UILabel"; text = "Mapnik only"; ObjectID = "9L3-JO-Whj";</note>
       </trans-unit>
       <trans-unit id="186-0W-Nrr.title" xml:space="preserve">
@@ -1614,7 +1617,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="DmO-dW-3Fh.text" xml:space="preserve">
         <source>Collect in background:</source>
-        <target/>
+        <target>Kumpulkan di latar belakang:</target>
         <note>Class = "UILabel"; text = "Collect in background:"; ObjectID = "DmO-dW-3Fh";</note>
       </trans-unit>
       <trans-unit id="EHa-L5-Hcz.text" xml:space="preserve">
@@ -1624,17 +1627,17 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="EmS-9F-1qc.text" xml:space="preserve">
         <source>Details</source>
-        <target/>
+        <target>Keterangan</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "EmS-9F-1qc";</note>
       </trans-unit>
       <trans-unit id="F9l-B0-puf.text" xml:space="preserve">
         <source>Details</source>
-        <target/>
+        <target>Keterangan</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "F9l-B0-puf";</note>
       </trans-unit>
       <trans-unit id="GNK-bZ-i9X.text" xml:space="preserve">
         <source>Details</source>
-        <target/>
+        <target>Keterangan</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "GNK-bZ-i9X";</note>
       </trans-unit>
       <trans-unit id="H3p-Ta-kIy.title" xml:space="preserve">
@@ -1674,12 +1677,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="O0U-6M-7AT.text" xml:space="preserve">
         <source>Notes and Fixmes</source>
-        <target/>
+        <target>Catatan-catatan dan Fixme</target>
         <note>Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "O0U-6M-7AT";</note>
       </trans-unit>
       <trans-unit id="OiJ-GU-gZ3.title" xml:space="preserve">
         <source>Cancel</source>
-        <target/>
+        <target>Batal</target>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "OiJ-GU-gZ3";</note>
       </trans-unit>
       <trans-unit id="Okg-2D-O6U.text" xml:space="preserve">
