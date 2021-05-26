@@ -90,7 +90,7 @@ class QuadMap: NSObject, NSCoding {
 
     // MARK: Spatial
 
-	@objc func addMember(_ member: OsmBaseObject, undo: MyUndoManager?) {
+	func addMember(_ member: OsmBaseObject, undo: MyUndoManager?) {
         if let undo = undo {
             undo.registerUndo(withTarget: self, selector: #selector(removeMember(_:undo:)), objects: [member, undo])
         }

@@ -449,7 +449,7 @@ class POIAllTagsViewController: UITableViewController {
 		pair.infoButton.isEnabled = false
 		pair.infoButton.titleLabel?.layer.opacity = 0.0
         progress.startAnimating()
-        WikiPage.shared().bestWikiPage(forKey: key, value: value, language: languageCode()) { [self] url in
+        WikiPage.shared.bestWikiPage(forKey: key, value: value, language: languageCode()) { [self] url in
             progress.removeFromSuperview()
 			pair.infoButton.isEnabled = true
 			pair.infoButton.titleLabel?.layer.opacity = 1.0

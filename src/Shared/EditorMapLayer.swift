@@ -133,8 +133,7 @@ class EditorMapLayer: CALayer {
         NotificationCenter.default.removeObserver(self)
     }
 
-	@objc
-	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+	@objc override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
 		if (object as? NSObject) == mapView && (keyPath == "screenFromMapTransform") {
             updateMapLocation()
         } else {

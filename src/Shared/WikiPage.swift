@@ -8,15 +8,9 @@
 
 import Foundation
 
-@objcMembers
-@objc(WikiPage)
-class WikiPage: NSObject {
-    static var g_shared = WikiPage()
-    
-    class func shared() -> WikiPage {
-        // `dispatch_once()` call was converted to a static variable initializer
-        return g_shared
-    }
+class WikiPage {
+
+	static let shared = WikiPage()
 
     func wikiLanguage(forLanguageCode code: String) -> String? {
         if code.count == 0 {

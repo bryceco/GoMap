@@ -8,10 +8,10 @@
 
 import Foundation
 
-@objc class TristateButton : UISegmentedControl{
-	@objc var onSelect: ((String?) -> Void)? = nil
+class TristateButton : UISegmentedControl{
+	var onSelect: ((String?) -> Void)? = nil
 
-	@objc func stringForSelection() -> String?
+	func stringForSelection() -> String?
 	{
 		return ["no", nil, "yes"][ self.selectedSegmentIndex ]
 	}
@@ -30,7 +30,7 @@ import Foundation
 		}
 	}
 
-	@objc func setSelection(forString value:String)
+	func setSelection(forString value:String)
 	{
 		if OsmTags.isOsmBooleanFalse(value) {
 			super.selectedSegmentIndex = 0;
