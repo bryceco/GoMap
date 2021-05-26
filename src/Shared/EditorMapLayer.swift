@@ -417,12 +417,11 @@ class EditorMapLayer: CALayer {
         })
         if path != nil {
             // orient path so text draws right-side up
-            let dx: Double = lastPoint.x - firstPoint.x
-            if dx < 0 {
-                // reverse path
-				path = PathUtil.pathReversed( path! )
-            }
-        }
+            if lastPoint.x - firstPoint.x < 0 {
+				// reverse path
+				path = path!.reversed()
+			}
+		}
         if pLength != nil {
 			pLength!.pointee = CGFloat(length)
         }

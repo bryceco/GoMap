@@ -189,8 +189,8 @@ final class CurvedTextLayer {
         //	NSLog(@"\"%@\"",string);
 
         // get line segments
-        var pathPoints = CGPathGetPoints(path)
-        EliminatePointsOnStraightSegments(points: &pathPoints)
+		var pathPoints = path.getPoints()
+		EliminatePointsOnStraightSegments(points: &pathPoints)
         if pathPoints.count < 2 {
             return nil
         }

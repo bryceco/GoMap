@@ -23,8 +23,8 @@ private final class PathPoints {
     private var segment: Int = 0
 
     init(WithPath path: CGPath) {
-        points = CGPathGetPoints( path )
-        var len: CGFloat = 0.0
+		points = path.getPoints()
+		var len: CGFloat = 0.0
 		if points.count >= 2 {
 			for i in 1 ..< points.count {
 				len += hypot(points[i].x - points[i - 1].x,
