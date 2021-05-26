@@ -825,7 +825,7 @@ class GpxLayer: CALayer, GetDiskCacheSize {
             
             if track.shapePaths[scale] == nil {
                 let epsilon = pow(Double(10.0), Double(scale)) / 256.0
-				track.shapePaths[scale] = track.shapePaths[0]?.pathWithReducePoints( epsilon )
+				track.shapePaths[scale] = track.shapePaths[0]?.pathWithReducePoints( CGFloat(epsilon) )
 			}
             //		DLog(@"reduce %ld to %ld\n",CGPathPointCount(track->shapePaths[0]),CGPathPointCount(track->shapePaths[scale]));
             layer.path = track.shapePaths[scale]

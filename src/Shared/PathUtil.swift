@@ -9,9 +9,13 @@
 extension CGPath {
 
 	func apply(action: (CGPathElement)->Void) {
+		// get a copy of the block to invoke on each element
 		var action = action
+		// call the native CGPath.apply(), passing the block in info
 		apply(info: &action, function: { (type,element) in
+			// cast info to be a function pointer
 			let block = type!.bindMemory(to: ((CGPathElement)->()).self, capacity: 1).pointee
+			// call the function
 			block( element.pointee )
 		})
 	}
@@ -23,9 +27,8 @@ extension CGPath {
 	}
 
 	func getPoints() -> [CGPoint] {
-		let count = self.pointCount()
 		var list = [CGPoint]()
-		list.reserveCapacity(count)
+		list.reserveCapacity( self.pointCount() )
 		self.apply(action: { element in
 			switch element.type {
 				case .moveToPoint, .addLineToPoint:
@@ -46,7 +49,7 @@ extension CGPath {
 		})
 	}
 
-	func invokeBlockAlongPath(_ initialOffset: Double, _ interval: Double, _ callback: (_ pt: CGPoint, _ direction: CGPoint) -> Void) {
+	func invokeBlockAlongPath(_ initialOffset: CGFloat, _ interval: CGFloat, _ callback: (_ pt: CGPoint, _ direction: CGPoint) -> Void) {
 		var offset = initialOffset
 		var previous = CGPoint()
 
@@ -56,15 +59,15 @@ extension CGPath {
 					previous = element.points[0]
 				case .addLineToPoint:
 					let nextPt = element.points[0]
-					var dx = Double((nextPt.x) - previous.x)
-					var dy = Double((nextPt.y) - previous.y)
-					let len = sqrt(dx * dx + dy * dy)
+					var dx = (nextPt.x) - previous.x
+					var dy = (nextPt.y) - previous.y
+					let len = CGFloat(sqrt(dx * dx + dy * dy))
 					dx /= len
 					dy /= len
 
 					while offset < len {
 						// found it
-						let pos = CGPoint(x: Double(previous.x) + Double(offset) * dx, y: Double(previous.y) + Double(offset) * dy)
+						let pos = CGPoint(x: previous.x + offset * dx, y: previous.y + offset * dy)
 						let dir = CGPoint(x: dx, y: dy)
 						callback(pos, dir)
 						offset += interval
@@ -79,7 +82,7 @@ extension CGPath {
 		})
 	}
 
-	func pathPositionAndAngleForOffset(_ startOffset: Double, _ baselineOffsetDistance: Double, _ pPos: inout CGPoint, _ pAngle: inout CGFloat, _ pLength: inout CGFloat) {
+	func pathPositionAndAngleForOffset(_ startOffset: CGFloat, _ baselineOffsetDistance: CGFloat, _ pPos: inout CGPoint, _ pAngle: inout CGFloat, _ pLength: inout CGFloat) {
 		var reachedOffset = false
 		var quit = false
 		var previous: CGPoint = .zero
@@ -102,7 +105,7 @@ extension CGPath {
 					let a = CGFloat(atan2f(Float(dy), Float(dx)))
 
 					// shift text off baseline
-					let baselineOffset = CGPoint(x: Double(dy) * baselineOffsetDistance, y: Double(-dx) * baselineOffsetDistance)
+					let baselineOffset = CGPoint(x: dy * baselineOffsetDistance, y: -dx * baselineOffsetDistance)
 
 					if !reachedOffset {
 						// always set position/angle because if we fall off the end we need it set
@@ -111,7 +114,7 @@ extension CGPath {
 						pAngle = a
 						pLength = len - offset
 					} else {
-						if abs(Float(a - CGFloat(pAngle))) < .pi / 40 {
+						if abs(a - pAngle) < .pi / 40 {
 							// continuation of previous
 							pLength = len - offset
 						} else {
@@ -133,18 +136,18 @@ extension CGPath {
 		})
 	}
 
-	private static func DouglasPeuckerCore(_ points: [CGPoint], _ first: Int, _ last: Int, _ epsilon: Double, _ result: inout [CGPoint] ) {
+	private static func DouglasPeuckerCore(_ points: [CGPoint], _ first: Int, _ last: Int, _ epsilon: CGFloat, _ result: inout [CGPoint] ) {
 		// Find the point with the maximum distance
-		var dmax: Double = 0.0
+		var dmax: CGFloat = 0.0
 		var index: Int = 0
 		let end1 = OSMPointFromCGPoint(points[first])
 		let end2 = OSMPointFromCGPoint(points[last])
 		for i in (first + 1)..<last {
 			let p = OSMPointFromCGPoint(points[i])
 			let d = DistanceFromPointToLineSegment(p, end1, end2)
-			if Double(d) > dmax {
+			if d > dmax {
 				index = i
-				dmax = Double(d)
+				dmax = d
 			}
 		}
 		// If max distance is greater than epsilon, recursively simplify
@@ -159,7 +162,7 @@ extension CGPath {
 		}
 	}
 
-	func pathWithReducePoints(_ epsilon: Double) -> CGMutablePath {
+	func pathWithReducePoints(_ epsilon: CGFloat) -> CGMutablePath {
 		let count = self.pointCount()
 		if count < 3 {
 			return self.mutableCopy()!
