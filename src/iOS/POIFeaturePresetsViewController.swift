@@ -104,7 +104,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
                     DispatchQueue.main.async(execute: {
                         let index = IndexPath(row: 1, section: 0)
                         let cell = self.tableView.cellForRow(at: index) as? FeaturePresetCell
-                        if cell != nil && (cell?.presetKey?.tagKey == "name") {
+                        if (cell?.presetKey as? PresetKey)?.tagKey == "name" {
                             cell?.valueField.becomeFirstResponder()
                         }
                     })
@@ -341,10 +341,13 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let cell = sender as? FeaturePresetCell
         if segue.destination is POIPresetValuePickerController {
-            let preset = segue.destination as? POIPresetValuePickerController
-            preset?.tag = cell?.presetKey?.tagKey ?? ""
-            preset?.valueDefinitions = cell?.presetKey?.presetList
-            preset?.navigationItem.title = cell?.presetKey?.name
+			if let preset = segue.destination as? POIPresetValuePickerController,
+			   let presetKey = cell?.presetKey as? PresetKey
+			{
+				preset.tag = presetKey.tagKey
+				preset.valueDefinitions = presetKey.presetList
+				preset.navigationItem.title = presetKey.name
+			}
         } else if segue.destination is POIFeaturePickerViewController {
             let dest = segue.destination as? POIFeaturePickerViewController
             dest?.delegate = self
@@ -385,7 +388,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
         if let textField = textField {
             // get list of values for current key
 			let cell: FeaturePresetCell = textField.superviewOfType()!
-			if let key = cell.presetKey?.tagKey {
+			if let key = (cell.presetKey as? PresetKey)?.tagKey {
                 if PresetsDatabase.shared.eligibleForAutocomplete(key) {
 					var values = AppDelegate.shared.mapView.editorLayer.mapData.tagValues(forKey: key)
 					let set = PresetsDatabase.shared.allTagValuesForKey(key)
@@ -406,8 +409,9 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
     }
     
     @IBAction func textFieldDidEndEditing(_ textField: UITextField) {
-		let cell: FeaturePresetCell = textField.superviewOfType()!
-		guard let presetKey = cell.presetKey else { return }
+		guard let cell: FeaturePresetCell = textField.superviewOfType(),
+			  let presetKey = cell.presetKey as? PresetKey
+		else { return }
     
         let prettyValue = textField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
 		textField.text = prettyValue

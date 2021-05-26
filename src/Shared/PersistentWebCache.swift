@@ -92,7 +92,7 @@ class PersistentWebCache<T: AnyObject>: NSObject {
         })
     }
     
-    @objc func getDiskCacheSize(_ pSize: UnsafeMutablePointer<Int>, count pCount: UnsafeMutablePointer<Int>) {
+    func getDiskCacheSize(_ pSize: UnsafeMutablePointer<Int>, count pCount: UnsafeMutablePointer<Int>) {
         var count = 0
         var size = 0
         for url in fileEnumerator(withAttributes: [URLResourceKey.fileAllocatedSizeKey]) {

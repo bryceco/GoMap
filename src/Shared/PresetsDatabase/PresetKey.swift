@@ -31,16 +31,16 @@ let GEOMETRY_NODE = "point"
 let GEOMETRY_VERTEX = "vertex"
 
 // A key along with information about possible values
-@objc class PresetKey: NSObject, NSSecureCoding {
+class PresetKey: NSObject, NSSecureCoding {
 	public class var supportsSecureCoding: Bool { return true }
 
-	@objc let name: String					// name of the preset, e.g. Hours
-	@objc let tagKey: String				// the key being set, e.g. opening_hours
-	@objc let defaultValue: String?
-	@objc let placeholder: String			// placeholder text in the UITextField
-	@objc let presetList: [PresetValue]?	// array of potential values, or nil if it's free-form text
-	@objc let keyboardType: UIKeyboardType
-	@objc let autocapitalizationType: UITextAutocapitalizationType
+	let name: String					// name of the preset, e.g. Hours
+	let tagKey: String				// the key being set, e.g. opening_hours
+	let defaultValue: String?
+	let placeholder: String			// placeholder text in the UITextField
+	let presetList: [PresetValue]?	// array of potential values, or nil if it's free-form text
+	let keyboardType: UIKeyboardType
+	let autocapitalizationType: UITextAutocapitalizationType
 
 	init(
 		name: String,
@@ -60,7 +60,7 @@ let GEOMETRY_VERTEX = "vertex"
 		self.defaultValue = defaultValue
 	}
 
-	@objc required init?(coder: NSCoder) {
+	required init?(coder: NSCoder) {
 		if let name = coder.decodeObject(forKey: "name") as? String,
 		   let tagKey = coder.decodeObject(forKey: "tagKey") as? String,
 		   let placeholder = coder.decodeObject(forKey: "placeholder") as? String,
@@ -80,7 +80,7 @@ let GEOMETRY_VERTEX = "vertex"
 		}
 	}
 
-	@objc func encode(with coder: NSCoder) {
+	func encode(with coder: NSCoder) {
 		coder.encode(name, forKey: "name")
 		coder.encode(tagKey, forKey: "tagKey")
 		coder.encode(placeholder, forKey: "placeholder")
@@ -89,7 +89,7 @@ let GEOMETRY_VERTEX = "vertex"
 		coder.encode(autocapitalizationType.rawValue, forKey: "capitalize")
 	}
 
-	@objc func prettyNameForTagValue(_ value: String) -> String {
+	func prettyNameForTagValue(_ value: String) -> String {
 		if let presetList = presetList {
 			for presetValue in presetList {
 				if presetValue.tagValue == value {
@@ -100,7 +100,7 @@ let GEOMETRY_VERTEX = "vertex"
 		return value
 	}
 
-	@objc func tagValueForPrettyName(_ value: String) -> String {
+	func tagValueForPrettyName(_ value: String) -> String {
 		if let presetList = presetList {
 			for presetValue in presetList {
 				let diff: ComparisonResult? = presetValue.name.compare(value, options: [.caseInsensitive, .diacriticInsensitive, .widthInsensitive], range: nil, locale: .current)
@@ -112,7 +112,7 @@ let GEOMETRY_VERTEX = "vertex"
 		return value
 	}
 
-	@objc func isYesNo() -> Bool
+	func isYesNo() -> Bool
 	{
 		if let presetList = presetList,
 			presetList.count == 2,

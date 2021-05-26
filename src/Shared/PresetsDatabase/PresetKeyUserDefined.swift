@@ -10,13 +10,13 @@ import Foundation
 
 
 // A preset the user defined as a custom preset
-@objc class PresetKeyUserDefined: PresetKey {
+class PresetKeyUserDefined: PresetKey {
 	override public class var supportsSecureCoding: Bool { return true }
 
-	@objc let appliesToKey: String		// "" if not used
-	@objc let appliesToValue: String	// "" if not used
+	let appliesToKey: String		// "" if not used
+	let appliesToValue: String	// "" if not used
 
-	@objc required init?(coder: NSCoder) {
+	required init?(coder: NSCoder) {
 		if let appliesToKey = coder.decodeObject(forKey: "appliesToKey") as? String,
 		   let appliesToValue = coder.decodeObject(forKey: "appliesToValue") as? String
 		{
@@ -28,7 +28,7 @@ import Foundation
 		}
 	}
 
-	@objc init(appliesToKey: String,	// empty string is possible
+	init(appliesToKey: String,	// empty string is possible
 			   appliesToValue: String,	// empty string is possible
 			   name: String,
 			   tagKey key: String,
@@ -48,25 +48,19 @@ import Foundation
 				   presets: presets)
 	}
 
-	@objc override func encode(with coder: NSCoder) {
+	override func encode(with coder: NSCoder) {
 		super.encode(with: coder)
 		coder.encode(appliesToKey, forKey: "appliesToKey")
 		coder.encode(appliesToValue, forKey: "appliesToValue")
 	}
 }
 
-@objc class PresetKeyUserDefinedList: NSObject {
-	@objc var list: [PresetKeyUserDefined] = []
+class PresetKeyUserDefinedList {
+	private (set) var list: [PresetKeyUserDefined] = []
 
-	@objc public static let shared = PresetKeyUserDefinedList()
+	public static let shared = PresetKeyUserDefinedList()
 
-	override init()
-	{
-		super.init()
-		self.load()
-	}
-
-	func load() {
+	init() {
 		do {
 			// some people experience a crash during loading...
 			let path = PresetKeyUserDefinedList.archivePath()
@@ -87,7 +81,7 @@ import Foundation
 		}
 	}
 
-	@objc func save() {
+	func save() {
 		let path = PresetKeyUserDefinedList.archivePath()
 		if #available(iOS 11.0, *) {
 			do {
@@ -99,11 +93,11 @@ import Foundation
 		}
 	}
 
-	@objc func addPreset(_ preset: PresetKeyUserDefined, atIndex index: Int) {
+	func addPreset(_ preset: PresetKeyUserDefined, atIndex index: Int) {
 		list.insert(preset, at: index)
 	}
 
-	@objc func removePresetAtIndex(_ index: Int ) {
+	func removePresetAtIndex(_ index: Int ) {
 		list.remove(at: index)
 	}
 

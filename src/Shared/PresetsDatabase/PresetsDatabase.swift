@@ -9,10 +9,10 @@
 import Foundation
 
 
-@objc class PresetsDatabase : NSObject {
+class PresetsDatabase {
 
-	@objc static var shared = PresetsDatabase()
-	@objc class func reload()
+	static var shared = PresetsDatabase()
+	class func reload()
 	{
 		// called when language changes
 		shared = PresetsDatabase()
@@ -73,7 +73,7 @@ import Foundation
 	@objc let noForLocale: String
 	@objc let unknownForLocale: String
 
-	override init() {
+	init() {
 		// get translations for current language
 		let presetLanguages = PresetLanguages() // don't need to save this, it doesn't get used again unless user changes the language
 		let code = presetLanguages.preferredLanguageCode()
@@ -105,8 +105,6 @@ import Foundation
 		// name suggestion index
 		nsiPresets = [String: PresetFeature]()
 		nsiIndex   = stdIndex
-
-		super.init()
 
 		DispatchQueue.global(qos: .userInitiated).async {
 			let jsonNsiPresetsDict 	= PresetsDatabase.DictionaryForFile("nsi_presets.json")

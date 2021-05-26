@@ -11,8 +11,8 @@ import Foundation
 
 // A top-level group such as road, building, for building hierarchical menus
 class PresetCategory: NSObject {
-	@objc let categoryID: String
-	@objc let members: [PresetFeature]
+	let categoryID: String
+	let members: [PresetFeature]
 
 	@objc var friendlyName: String? {
 		let dict = PresetsDatabase.shared.jsonCategories[categoryID] as? [AnyHashable : Any]
