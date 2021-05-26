@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc class DirectionViewController: UIViewController {
+class DirectionViewController: UIViewController {
     // MARK: Private properties
 
     private let viewModel: MeasureDirectionViewModel
@@ -22,7 +22,7 @@ import UIKit
 
     // MARK: Initializer
 
-    @objc init(key: String, value: String?, setValue: @escaping (String?) -> Void) {
+    init(key: String, value: String?, setValue: @escaping (String?) -> Void) {
         viewModel = MeasureDirectionViewModel(key: key, value: value)
         callback = setValue
 

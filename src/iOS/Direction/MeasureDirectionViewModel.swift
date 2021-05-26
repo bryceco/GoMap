@@ -9,11 +9,11 @@
 import CoreLocation
 import Foundation
 
-@objc protocol MeasureDirectionViewModelDelegate: AnyObject {
-    func didFinishUpdatingTag(key: String, value: String)
+protocol MeasureDirectionViewModelDelegate: AnyObject {
+	func didFinishUpdatingTag(key: String, value: String)
 }
 
-class MeasureDirectionViewModel: NSObject, HeadingProviderDelegate {
+class MeasureDirectionViewModel: HeadingProviderDelegate {
     // MARK: Public properties
 
     weak var delegate: MeasureDirectionViewModelDelegate?
@@ -48,8 +48,6 @@ class MeasureDirectionViewModel: NSObject, HeadingProviderDelegate {
         oldValue = value
 
         primaryActionButtonTitle = String(format: "Update '%@' tag", key)
-
-        super.init()
 
         headingProvider.delegate = self
 

@@ -19,14 +19,6 @@ extension CGPath {
 	}
 }
 
-extension PathUtil {
-	// silliness so we can be called by Obj-C:
-	@objc static func CGPathApplyBlockEx( _ path: CGPath, block: ApplyPathCallback) {
-		path.apply(action: { element in block(element.type,element.points[0])})
-	}
-}
-
-
 func CGPathPointCount(_ path: CGPath) -> Int {
     var count = 0
 	path.apply(action: { _ in count += 1 })
@@ -144,8 +136,8 @@ func PathPositionAndAngleForOffset(_ path: CGPath, _ startOffset: Double, _ base
     })
 }
 
-@objc class PathUtil : NSObject {
-	@objc static func pathReversed(_ path: CGPath) -> CGMutablePath { // reverse path
+class PathUtil {
+	static func pathReversed(_ path: CGPath) -> CGMutablePath { // reverse path
 		var a: [CGPoint] = []
 		path.apply(action: { element in
 			if element.type == .moveToPoint || element.type == .addLineToPoint {

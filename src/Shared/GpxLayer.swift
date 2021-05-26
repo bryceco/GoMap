@@ -28,19 +28,14 @@ private func metersApart(_ lat1: Double, _ lon1: Double, _ lat2: Double, _ lon2:
     return d * 1000
 }
 
-@objcMembers
-class GpxLayerProperties: NSObject {
-    public var position: OSMPoint?
-    public var lineWidth = 0.0
-    //    CATransform3D    transform;
-    //    BOOL            is3D;
-    override init() {
-        super.init()
-        //        transform = CATransform3DIdentity;
-    }
+class GpxTrackLayerWithProperties: CAShapeLayer {
+	struct Properties {
+		var position: OSMPoint?
+		var lineWidth: CGFloat
+	}
+	var props = Properties(position: nil, lineWidth: 0.0)
 }
 
-@objcMembers
 class GpxPoint: NSObject, NSCoding {
     var longitude = 0.0
     var latitude = 0.0
@@ -71,7 +66,6 @@ class GpxPoint: NSObject, NSCoding {
 }
 
 // MARK: Track
-@objcMembers
 class GpxTrack: NSObject, NSCoding {
 
     var recording = false
@@ -89,7 +83,7 @@ class GpxTrack: NSObject, NSCoding {
     }
     var creationDate = Date() // when trace was recorded or downloaded
     private(set) var points: [GpxPoint] = []
-    var shapeLayer: CAShapeLayer?
+    var shapeLayer: GpxTrackLayerWithProperties?
 
     func addPoint(_ location: CLLocation?) {
         recording = true
@@ -784,7 +778,7 @@ class GpxLayer: CALayer, GetDiskCacheSize {
         return path
     }
 
-    func getShapeLayer(for track: GpxTrack) -> CAShapeLayer {
+    func getShapeLayer(for track: GpxTrack) -> GpxTrackLayerWithProperties {
         if let shapeLayer = track.shapeLayer {
             return shapeLayer
         }
@@ -796,7 +790,7 @@ class GpxLayer: CALayer, GetDiskCacheSize {
 
         let color = track == selectedTrack ? UIColor.red : UIColor(red: 1.0, green: 99 / 255.0, blue: 249 / 255.0, alpha: 1.0)
 
-        let layer = CAShapeLayer()
+        let layer = GpxTrackLayerWithProperties()
         layer.anchorPoint = CGPoint(x: 0, y: 0)
         layer.position = CGPointFromOSMPoint(refPoint)
         layer.path = path
@@ -807,10 +801,8 @@ class GpxLayer: CALayer, GetDiskCacheSize {
         layer.lineJoin = .miter
         layer.zPosition = 0.0
         layer.actions = actions
-        let props = GpxLayerProperties()
-        layer.setValue(props, forKey: "properties")
-        props.position = refPoint
-        props.lineWidth = Double(layer.lineWidth)
+		layer.props.position = refPoint
+		layer.props.lineWidth = layer.lineWidth
         track.shapeLayer = layer
         return layer
     }
@@ -839,8 +831,7 @@ class GpxLayer: CALayer, GetDiskCacheSize {
             layer.path = track.shapePaths[scale]
             
             // configure the layer for presentation
-            let props = layer.value(forKey: "properties") as? GpxLayerProperties
-            guard let pt = props?.position else { return }
+			guard let pt = layer.props.position else { return }
             let pt2 = mapView.screenPoint(fromMapPoint: pt, birdsEye: false)
             
             // rotate and scale
@@ -850,12 +841,12 @@ class GpxLayer: CALayer, GetDiskCacheSize {
             layer.setAffineTransform(t)
             
             let shape = layer
-            shape.lineWidth = CGFloat((props?.lineWidth ?? 0.0) / pScale)
+			shape.lineWidth = layer.props.lineWidth / CGFloat(pScale)
             
             // add the layer if not already present
             if layer.superlayer == nil {
-                insertSublayer(layer, at: UInt32(UInt(sublayers?.count ?? 0)))// place at bottom
-            }
+				insertSublayer(layer, at: UInt32(self.sublayers?.count ?? 0))	// place at bottom
+			}
         }
         
         if mapView.birdsEyeRotation != 0 {

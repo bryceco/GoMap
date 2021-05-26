@@ -80,6 +80,16 @@ class LoginViewController: UITableViewController {
         })
     }
 
+	func saveVerifiedCredentials(username: String, password: String) {
+		_=KeyChain.setString(username, forIdentifier: "username")
+		_=KeyChain.setString(password, forIdentifier: "password")
+
+		// Update the app delegate as well.
+		let appDelegate = AppDelegate.shared
+		appDelegate.userName = username
+		appDelegate.userPassword = password
+	}
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 

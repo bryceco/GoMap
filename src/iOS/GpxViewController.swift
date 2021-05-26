@@ -195,12 +195,11 @@ class GpxViewController: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        let appDelegate = AppDelegate.shared
-        if appDelegate.mapView.gpxLayer.activeTrack != nil {
-            startTimer(forStart: appDelegate.mapView.gpxLayer.activeTrack?.creationDate)
-        }
-    }
+
+		if let track = AppDelegate.shared.mapView.gpxLayer.activeTrack {
+			startTimer(forStart: track.creationDate)
+		}
+	}
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -208,36 +207,22 @@ class GpxViewController: UITableViewController {
         _timer = nil
     }
     
-    func startTimer(forStart date: Date?) {
-        var date = date
+	func startTimer(forStart date: Date) {
         let now = Date()
-        var delta: TimeInterval = 0.0
-        if let date = date {
-            delta = now.timeIntervalSince(date)
-        }
+        var delta = now.timeIntervalSince(date)
         delta = 1 - fmod(delta, 1.0)
-        date = now.addingTimeInterval(delta)
-        if let date = date {
-            _timer = Timer(fireAt: date, interval: 1.0, target: self, selector: #selector(timerFired(_:)), userInfo: nil, repeats: true)
-        }
-        
-        let runloop = RunLoop.current
-        if let timer = _timer {
-            runloop.add(timer, forMode: .default)
-        }
-    }
-    
-    @objc func timerFired(_ timer: Timer?) {
-        let appDelegate = AppDelegate.shared
-        let track = appDelegate.mapView.gpxLayer.activeTrack
-        if track != nil {
-            let index = IndexPath(row: 0, section: SECTION_ACTIVE_TRACK)
-            tableView?.reloadRows(at: [index], with: .none)
-        } else {
-            self._timer?.invalidate()
-            self._timer = nil
-        }
-    }
+		let date = now.addingTimeInterval(delta)
+		_timer = Timer(fire: date, interval: 1.0, repeats: true, block: { timer in
+			if AppDelegate.shared.mapView.gpxLayer.activeTrack != nil {
+				let index = IndexPath(row: 0, section: SECTION_ACTIVE_TRACK)
+				self.tableView?.reloadRows(at: [index], with: .none)
+			} else {
+				timer.invalidate()
+				self._timer = nil
+			}
+		})
+		RunLoop.current.add(_timer!, forMode: .default)
+	}
     
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {

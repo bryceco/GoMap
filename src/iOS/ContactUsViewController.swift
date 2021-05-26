@@ -190,10 +190,32 @@ class ContactUsViewController: UITableViewController, MFMailComposeViewControlle
         self.tableView.deselectRow(at: indexPath, animated: true)
     }
 
+	override open func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+		let isLastSection = tableView.numberOfSections == section + 1
+		if isLastSection {
+			return createVersionDetailsString()
+		}
+
+		return nil
+	}
+
+	// MARK: Private methods
+
+	private func createVersionDetailsString() -> String {
+		let appDelegate = AppDelegate.shared
+		let appName = appDelegate.appName()
+		let appVersion = appDelegate.appVersion()
+		let appBuildNumber = appDelegate.appBuildNumber()
+		return "\(appName) \(appVersion) (\(appBuildNumber))"
+	}
+
+	func openTestFlightURL() {
+		guard let url = URL(string: "https://testflight.apple.com/join/T96F9wYq") else { return }
+
+		UIApplication.shared.open(url, options: [:], completionHandler: nil)
+	}
+
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         dismiss(animated: true)
-    }
-
-    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
     }
 }

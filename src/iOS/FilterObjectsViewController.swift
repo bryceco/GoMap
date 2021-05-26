@@ -25,7 +25,6 @@ class FilterObjectsViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var switchOthers: UISwitch!
 
     // return a list of arrays, each array containing either a single integer or a first-last pair of integers
-	@objc
 	class func levels(for text: String?) -> [[NSNumber]] {
 		guard let text = text else { return [] }
 		var list: [[NSNumber]] = []

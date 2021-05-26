@@ -8,7 +8,6 @@
 
 import UIKit
 
-@objcMembers
 class GpxConfigureViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     @IBOutlet var pickerView: UIPickerView!
     var expirationValue: NSNumber?

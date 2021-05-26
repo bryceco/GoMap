@@ -8,7 +8,6 @@
 
 import Foundation
 
-@objcMembers
 class PersistentWebCache<T: AnyObject>: NSObject {
     private let _cacheDirectory: URL
     private let _memoryCache: NSCache<NSString, T>

@@ -9,7 +9,6 @@
 import MapKit
 import UIKit
 
-@objcMembers
 class NotesTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
     var newComment: String?
 

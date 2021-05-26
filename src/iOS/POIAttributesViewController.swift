@@ -45,7 +45,6 @@ class AttributeCustomCell: UITableViewCell {
 	@IBOutlet var value: UITextField!
 }
 
-@objcMembers
 class POIAttributesViewController: UITableViewController {
     @IBOutlet var _saveButton: UIBarButtonItem!
     

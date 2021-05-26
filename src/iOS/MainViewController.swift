@@ -7,6 +7,7 @@
 //
 
 import CoreLocation
+import SafariServices
 import UIKit
 
 enum BUTTON_LAYOUT : Int {
@@ -396,8 +397,18 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
             view.addSubview(speech)
 #endif
     }
-    
-    // MARK: Keyboard shortcuts
+
+	@IBAction func openHelp() {
+		let urlAsString = "https://wiki.openstreetmap.org/w/index.php?title=Go_Map!!&mobileaction=toggle_view_mobile"
+		guard let url = URL(string: urlAsString) else { return }
+
+		let safariViewController = SFSafariViewController(url: url)
+		safariViewController.modalPresentationStyle = .pageSheet
+		safariViewController.popoverPresentationController?.sourceView = view
+		present(safariViewController, animated: true)
+	}
+
+	// MARK: Keyboard shortcuts
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         if action == #selector(undo(_:)) {

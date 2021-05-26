@@ -1857,7 +1857,6 @@ class EditorMapLayer: CALayer {
     
     // MARK: Editing
     
-	@objc
     func adjust(_ node: OsmNode, byDistance delta: CGPoint) {
         var pt = mapView.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: true)
         pt.x += delta.x
@@ -1868,14 +1867,12 @@ class EditorMapLayer: CALayer {
         setNeedsLayout()
     }
     
-	@objc
     func duplicateObject(_ object: OsmBaseObject, withOffset offset: OSMPoint) -> OsmBaseObject {
         let newObject = mapData.duplicate(object, withOffset: offset)!
 		setNeedsLayout()
 		return newObject
     }
     
-	@objc
 	func createNode(at point: CGPoint) -> OsmNode {
         let loc = mapView.longitudeLatitude(forScreenPoint: point, birdsEye: true)
         let node = mapData.createNode(atLocation: loc)
@@ -1883,7 +1880,6 @@ class EditorMapLayer: CALayer {
         return node
     }
     
-	@objc
     func createWay(with node: OsmNode) -> OsmWay {
         let way = mapData.createWay()
         var dummy: String? = nil

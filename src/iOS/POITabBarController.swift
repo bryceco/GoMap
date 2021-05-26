@@ -6,7 +6,6 @@
 //  Copyright © 2021 Bryce. All rights reserved.
 //
 
-@objcMembers
 class POITabBarController: UITabBarController {
     var keyValueDict = [String : String]()
     var relationList: [OsmRelation] = []

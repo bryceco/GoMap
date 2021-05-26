@@ -12,7 +12,6 @@ import UIKit
 
 private let InsetPercent: CGFloat = 0.15
 
-@objcMembers
 class HeightViewController: UIViewController {
     var _captureSession: AVCaptureSession?
     var _previewLayer: AVCaptureVideoPreviewLayer?

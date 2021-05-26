@@ -27,7 +27,6 @@ class TextPairTableCell: UITableViewCell {
     }
 }
 
-@objcMembers
 class POIAllTagsViewController: UITableViewController {
 	var tags: [(k:String,v:String)] = []
     var relations: [OsmRelation] = []

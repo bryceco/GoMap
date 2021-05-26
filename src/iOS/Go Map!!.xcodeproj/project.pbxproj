@@ -111,15 +111,12 @@
 		6442666922540EDF00C0D545 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666622540EDF00C0D545 /* Observable.swift */; };
 		647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */; };
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
-		64981F1F22667D7700178476 /* ContactUsViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64981F1E22667D7700178476 /* ContactUsViewController+Extension.swift */; };
 		64C072FA226227D500598078 /* PresetKeyTagCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C072F9226227D500598078 /* PresetKeyTagCase.swift */; };
 		64C072FE22622B9C00598078 /* Require.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C072FD22622B9C00598078 /* Require.swift */; };
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
 		64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D74BF22253DF49004FFD20 /* DirectionViewController.xib */; };
-		64E21EB322651620004605D7 /* LoginViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB222651620004605D7 /* LoginViewController+Extension.swift */; };
 		64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */; };
 		64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */; };
-		64F59A50240915840093DCDB /* MainViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F59A4F240915840093DCDB /* MainViewController+Extension.swift */; };
 		C3004F4D263A6306006BF313 /* NominatimViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3004F4C263A6306006BF313 /* NominatimViewController.swift */; };
 		C3004F52263A6CA5006BF313 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3004F51263A6CA5006BF313 /* MainViewController.swift */; };
 		C3004F54263A99DD006BF313 /* POIAttributesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3004F53263A99DC006BF313 /* POIAttributesViewController.swift */; };
@@ -389,15 +386,12 @@
 		6442666622540EDF00C0D545 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModel.swift; sourceTree = "<group>"; };
 		647F46D02253F08200CEC482 /* HeadingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProvider.swift; sourceTree = "<group>"; };
-		64981F1E22667D7700178476 /* ContactUsViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ContactUsViewController+Extension.swift"; sourceTree = "<group>"; };
 		64C072F9226227D500598078 /* PresetKeyTagCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetKeyTagCase.swift; sourceTree = "<group>"; };
 		64C072FD22622B9C00598078 /* Require.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Require.swift; sourceTree = "<group>"; };
 		64D74BF12253DF49004FFD20 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		64D74BF22253DF49004FFD20 /* DirectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectionViewController.xib; sourceTree = "<group>"; };
-		64E21EB222651620004605D7 /* LoginViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginViewController+Extension.swift"; sourceTree = "<group>"; };
 		64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSMMapDataTestCase.swift; sourceTree = "<group>"; };
 		64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+UserDefaults.swift"; sourceTree = "<group>"; };
-		64F59A4F240915840093DCDB /* MainViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+Extension.swift"; sourceTree = "<group>"; };
 		C3004F4C263A6306006BF313 /* NominatimViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NominatimViewController.swift; sourceTree = "<group>"; };
 		C3004F51263A6CA5006BF313 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C3004F53263A99DC006BF313 /* POIAttributesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POIAttributesViewController.swift; sourceTree = "<group>"; };
@@ -628,7 +622,6 @@
 				ED56E5C126027A50000B368C /* CustomPresetListViewController.swift */,
 				64D74BF02253DF39004FFD20 /* Direction */,
 				ED56E5E326028181000B368C /* DisplayViewController.swift */,
-				64981F1D22667D7700178476 /* Extensions */,
 				ED56E5E926028B5F000B368C /* FilterObjectsViewController.swift */,
 				ED56E5E826028B5F000B368C /* GpxConfigureViewController.swift */,
 				ED56E5EA26028B5F000B368C /* GpxViewController.swift */,
@@ -866,16 +859,6 @@
 			path = Upload;
 			sourceTree = "<group>";
 		};
-		64981F1D22667D7700178476 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				64981F1E22667D7700178476 /* ContactUsViewController+Extension.swift */,
-				64E21EB222651620004605D7 /* LoginViewController+Extension.swift */,
-				64F59A4F240915840093DCDB /* MainViewController+Extension.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		64C072FC22622B9C00598078 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
@@ -1078,7 +1061,6 @@
 				02A123EB264C9B17005638C1 /* RenderInfo.swift in Sources */,
 				C3D096CB263E9A1100E3B129 /* DownloadThreadPool.swift in Sources */,
 				C3D096FC263F118500E3B129 /* FpsLabel.swift in Sources */,
-				64E21EB322651620004605D7 /* LoginViewController+Extension.swift in Sources */,
 				ED9649D32601C4CE00EC0A60 /* AerialListViewController.swift in Sources */,
 				ED9649C22601C33E00EC0A60 /* AerialEditViewController.swift in Sources */,
 				02CB2405265DB7CB00835F32 /* OpeningHoursRecognizerView.swift in Sources */,
@@ -1150,7 +1132,6 @@
 				02A123ED264CAE6F005638C1 /* Atomic.swift in Sources */,
 				02008650265B25DC008F37DD /* Database.swift in Sources */,
 				02E049BE2651D1750028B57F /* UndoAction.m in Sources */,
-				64981F1F22667D7700178476 /* ContactUsViewController+Extension.swift in Sources */,
 				02401F391DE1369E00F32AF5 /* ExternalGPS.m in Sources */,
 				026FC76726509D6E005DDAFF /* SpeechBalloonView.swift in Sources */,
 				ED56E5C526027A50000B368C /* CustomPresetListViewController.swift in Sources */,
@@ -1175,7 +1156,6 @@
 				6442666722540EDF00C0D545 /* Lock.swift in Sources */,
 				028816A12659B4A600C30EA2 /* GZip.swift in Sources */,
 				0216636D2470AFAB00B0B0F6 /* CurvedTextLayer.swift in Sources */,
-				64F59A50240915840093DCDB /* MainViewController+Extension.swift in Sources */,
 				C3D096D0263EA76500E3B129 /* GeekbenchScoreProvider.swift in Sources */,
 				020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */,
 				021FADC0258594EE00F6E1C0 /* PresetValue.swift in Sources */,

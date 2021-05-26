@@ -116,7 +116,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
         }
     }
     
-    @objc func typeViewController(_ typeViewController: POIFeaturePickerViewController, didChangeFeatureTo newFeature: PresetFeature) {
+    func typeViewController(_ typeViewController: POIFeaturePickerViewController, didChangeFeatureTo newFeature: PresetFeature) {
         selectedFeature = newFeature
         let tabController = tabBarController as! POITabBarController
         let geometry = tabController.selection != nil ? tabController.selection?.geometryName() : GEOMETRY_NODE
