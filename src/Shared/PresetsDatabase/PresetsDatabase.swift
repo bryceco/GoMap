@@ -64,14 +64,14 @@ class PresetsDatabase {
 		return newDict
 	}
 
-	@objc let jsonAddressFormats: [Any]				 	// address formats for different countries
-	@objc let jsonDefaults: [String : Any] 				// map a geometry to a set of features/categories
-	@objc let jsonCategories: [String : Any]	 		// map a top-level category ("building") to a set of specific features ("building/retail")
-	@objc let jsonFields: [String : Any]				// possible values for a preset key ("oneway=")
+	let jsonAddressFormats: [Any]				 	// address formats for different countries
+	let jsonDefaults: [String : Any] 				// map a geometry to a set of features/categories
+	let jsonCategories: [String : Any]	 		// map a top-level category ("building") to a set of specific features ("building/retail")
+	let jsonFields: [String : Any]				// possible values for a preset key ("oneway=")
 
-	@objc let yesForLocale: String
-	@objc let noForLocale: String
-	@objc let unknownForLocale: String
+	let yesForLocale: String
+	let noForLocale: String
+	let unknownForLocale: String
 
 	init() {
 		// get translations for current language
@@ -176,12 +176,12 @@ class PresetsDatabase {
 	}
 
 	// enumerate contents of database
-	@objc func enumeratePresetsUsingBlock(_ block:(_ feature: PresetFeature) -> Void) {
+	func enumeratePresetsUsingBlock(_ block:(_ feature: PresetFeature) -> Void) {
 		for (_,v) in stdPresets {
 			block(v)
 		}
 	}
-	@objc func enumeratePresetsAndNsiUsingBlock(_ block:(_ feature: PresetFeature) -> Void) {
+	func enumeratePresetsAndNsiUsingBlock(_ block:(_ feature: PresetFeature) -> Void) {
 		for (_,v) in stdPresets {
 			block(v)
 		}
@@ -207,21 +207,21 @@ class PresetsDatabase {
 		}
 		return nil
 	}
-	@objc func inheritedValueOfFeature( _ featureID: String?,
-										fieldGetter: @escaping (_ feature: PresetFeature) -> Any? )
-										-> Any?
+	func inheritedValueOfFeature( _ featureID: String?,
+									fieldGetter: @escaping (_ feature: PresetFeature) -> Any? )
+									-> Any?
 	{
 		// This is currently never used for NSI entries, so we can ignore nsiPresets
 		return PresetsDatabase.inheritedFieldForPresetsDict(stdPresets, featureID: featureID, field: fieldGetter)
 	}
 
 
-	@objc func presetFeatureForFeatureID(_ featureID:String) -> PresetFeature?
+	func presetFeatureForFeatureID(_ featureID:String) -> PresetFeature?
 	{
 		return stdPresets[featureID] ?? nsiPresets[featureID]
 	}
 
-	@objc func matchObjectTagsToFeature(_ objectTags: [String: String]?,
+	func matchObjectTagsToFeature(_ objectTags: [String: String]?,
 												 geometry: String,
 												 includeNSI: Bool) -> PresetFeature?
 	{
@@ -246,7 +246,7 @@ class PresetsDatabase {
 		return bestFeature
 	}
 
-	@objc func featuresMatchingSearchText(_ searchText:String?, geometry:String, country:String? ) -> [PresetFeature]
+	func featuresMatchingSearchText(_ searchText:String?, geometry:String, country:String? ) -> [PresetFeature]
 	{
 		var list = [PresetFeature]()
 		enumeratePresetsAndNsiUsingBlock { (feature) in

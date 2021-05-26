@@ -29,7 +29,7 @@ var logoCache: PersistentWebCache<UIImage>? // static so memory cache persists e
 
 class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate {
     
-    var _featureList: [AnyHashable] = []
+    var _featureList: [AnyObject] = []
     var _searchArrayRecent: [PresetFeature] = []
     var _searchArrayAll: [PresetFeature] = []
 	@IBOutlet var _searchBar: UISearchBar!
@@ -235,7 +235,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
         cell._image.contentMode = .scaleAspectFit
         cell.setNeedsUpdateConstraints()
         cell.details.text = feature?.summary()
-        cell.accessoryType = currentFeature == feature ? .checkmark : .none
+        cell.accessoryType = currentFeature === feature ? .checkmark : .none
         cell.featureID = feature?.featureID
         return cell
     }

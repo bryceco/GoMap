@@ -10,11 +10,11 @@ import Foundation
 
 
 // A top-level group such as road, building, for building hierarchical menus
-class PresetCategory: NSObject {
+class PresetCategory {
 	let categoryID: String
 	let members: [PresetFeature]
 
-	@objc var friendlyName: String? {
+	var friendlyName: String? {
 		let dict = PresetsDatabase.shared.jsonCategories[categoryID] as? [AnyHashable : Any]
 		return dict?["name"] as? String
 	}
@@ -37,7 +37,6 @@ class PresetCategory: NSObject {
 			}
 			return result
 		}()
-		super.init()
 	}
 }
 

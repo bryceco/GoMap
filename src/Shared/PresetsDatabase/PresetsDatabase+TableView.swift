@@ -12,13 +12,13 @@ import Foundation
 // The entire presets database from iD
 extension PresetsDatabase {
 
-	@objc func featuresAndCategoriesForGeometry(_ geometry: String) -> [AnyHashable] {
+	func featuresAndCategoriesForGeometry(_ geometry: String) -> [AnyObject] {
 		let list = jsonDefaults[geometry] as! [String]
 		let featureList = self.featuresAndCategoriesForMemberList( memberList: list )
 		return featureList
 	}
 
-	@objc func featuresInCategory( _ category: PresetCategory?, matching searchText: String, geometry:String) -> [PresetFeature] {
+	func featuresInCategory( _ category: PresetCategory?, matching searchText: String, geometry:String) -> [PresetFeature] {
 		var list = [PresetFeature]()
 		if let category = category {
 			for feature in category.members {
@@ -50,7 +50,7 @@ extension PresetsDatabase {
 		return list
 	}
 
-	@objc func allTagKeys() -> Set<String> {
+	func allTagKeys() -> Set<String> {
 		var set = Set<String>()
 		for (_,dict) in jsonFields {
 			guard let dict = dict as? [String:Any] else { continue }
@@ -81,7 +81,7 @@ extension PresetsDatabase {
 		return set
 	}
 
-	@objc func allTagValuesForKey(_ key: String) -> Set<String> {
+	func allTagValuesForKey(_ key: String) -> Set<String> {
 		var set = Set<String>()
 		for (_,dict) in jsonFields {
 			guard let dict = dict as? [String:Any] else { continue }
@@ -114,7 +114,7 @@ extension PresetsDatabase {
 		return set
 	}()
 
-	@objc func allFeatureKeys() -> Set<String>? {
+	func allFeatureKeys() -> Set<String>? {
 		return PresetsDatabase.allFeatureKeysSet
 	}
 
@@ -162,7 +162,7 @@ extension PresetsDatabase {
 		return areaKeys
 	}()
 
-	@objc func isArea(_ way: OsmWay) -> Bool {
+	func isArea(_ way: OsmWay) -> Bool {
 
 		if let value = way.tags["area"] {
 			if OsmTags.isOsmBooleanTrue(value) {
@@ -202,7 +202,7 @@ extension PresetsDatabase {
 			"unit": true,
 			"width": true
 		]
-	@objc func eligibleForAutocomplete(_ key: String) -> Bool {
+	func eligibleForAutocomplete(_ key: String) -> Bool {
 		if PresetsDatabase.autocompleteIgnoreList[key] != nil {
 			return false
 		}
@@ -214,8 +214,8 @@ extension PresetsDatabase {
 		return true
 	}
 
-	func featuresAndCategoriesForMemberList(memberList: [String]) -> [AnyHashable] {
-		var list: [AnyHashable] = []
+	func featuresAndCategoriesForMemberList(memberList: [String]) -> [AnyObject] {
+		var list: [AnyObject] = []
 		for featureID in memberList {
 			if featureID.hasPrefix("category-") {
 				let category = PresetCategory(categoryID: featureID)

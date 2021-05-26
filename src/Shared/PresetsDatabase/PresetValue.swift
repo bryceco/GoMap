@@ -10,26 +10,26 @@ import Foundation
 
 
 // A possible value for a preset key
-@objc class PresetValue: NSObject, NSSecureCoding {
+class PresetValue: NSObject, NSSecureCoding {
 	static let supportsSecureCoding: Bool = true
 	
-	@objc let name: String
-	@objc let details: String?
-	@objc let tagValue: String
+	let name: String
+	let details: String?
+	let tagValue: String
 
-	@objc init(name: String?, details: String?, tagValue value: String) {
+	init(name: String?, details: String?, tagValue value: String) {
 		self.name = name ?? OsmTags.PrettyTag(value)
 		self.details = details
 		self.tagValue = value
 	}
 
-	@objc func encode(with coder: NSCoder) {
+	func encode(with coder: NSCoder) {
 		coder.encode(name, forKey: "name")
 		coder.encode(details, forKey: "details")
 		coder.encode(tagValue, forKey: "tagValue")
 	}
 
-	@objc required init?(coder: NSCoder) {
+	required init?(coder: NSCoder) {
 		self.details = coder.decodeObject(forKey: "details") as? String
 		if let name = coder.decodeObject(forKey: "name") as? String,
 		   let tagValue = coder.decodeObject(forKey: "tagValue") as? String
@@ -39,9 +39,5 @@ import Foundation
 		} else {
 			return nil
 		}
-	}
-
-	override var description: String {
-		return name
 	}
 }

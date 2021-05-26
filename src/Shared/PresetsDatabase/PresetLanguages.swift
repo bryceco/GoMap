@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc class PresetLanguages : NSObject {
+class PresetLanguages : NSObject {
 	private let codeList : [String]
 
 	override init() {
@@ -34,12 +34,12 @@ import Foundation
 		super.init()
 	}
 
-	@objc func preferredLanguageIsDefault() -> Bool {
+	func preferredLanguageIsDefault() -> Bool {
 		let code = UserDefaults.standard.object(forKey: "preferredLanguage") as? String
 		return code == nil
 	}
 
-	@objc func preferredLanguageCode() -> String {
+	func preferredLanguageCode() -> String {
 		var code = UserDefaults.standard.object(forKey: "preferredLanguage") as? String
 		if code == nil {
 			let userPrefs = NSLocale.preferredLanguages
@@ -49,21 +49,21 @@ import Foundation
 		return code!
 	}
 
-	@objc func setPreferredLanguageCode(_ code: String?) {
+	func setPreferredLanguageCode(_ code: String?) {
 		UserDefaults.standard.set(code, forKey: "preferredLanguage")
 	}
 
-	@objc func languageCodes() -> [String] {
+	func languageCodes() -> [String] {
 		return codeList
 	}
 
-	@objc class func languageNameForCode(_ code: String) -> String? {
+	class func languageNameForCode(_ code: String) -> String? {
 		let locale = NSLocale(localeIdentifier: code)
 		let name = locale.displayName(forKey: .identifier, value: code)
 		return name
 	}
 
-	@objc class func localLanguageNameForCode(_ code: String) -> String? {
+	class func localLanguageNameForCode(_ code: String) -> String? {
 		let locale = NSLocale.current as NSLocale
 		let name = locale.displayName(forKey: .identifier, value: code)
 		return name

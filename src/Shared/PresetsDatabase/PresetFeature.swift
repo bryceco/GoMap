@@ -9,18 +9,18 @@
 import Foundation
 
 // A feature-defining tag such as amenity=shop
-@objc class PresetFeature: NSObject {
+class PresetFeature {
 
 	static let uninitializedImage = UIImage()
 
-	@objc let featureID: String
+	let featureID: String
 
 	// from json dictionary:
 	let _addTags: [String : String]?
 	let fields: [String]?
 	let geometry: [String]
 	let icon: String?							// icon on the map
-	@objc let logoURL: String?					// NSI brand image
+	let logoURL: String?					// NSI brand image
 	let locationSet: [String: [String]]?
 	let matchScore: Double
 	let moreFields: [String]?
@@ -74,34 +74,34 @@ import Foundation
 		return ["include":includes]
 	}
 
-	@objc let nsiSuggestion: Bool		// is from NSI
-	@objc var nsiLogo: UIImage? = nil	// from NSI imageURL
+	let nsiSuggestion: Bool		// is from NSI
+	var nsiLogo: UIImage? = nil	// from NSI imageURL
 
 	var _iconUnscaled: UIImage? = PresetFeature.uninitializedImage
 	var _iconScaled24: UIImage? = PresetFeature.uninitializedImage
 
-	@objc override var description : String {
+	var description : String {
 		return self.featureID
 	}
 
-	@objc func friendlyName() -> String
+	func friendlyName() -> String
 	{
 		return self.name ?? self.featureID
 	}
 
-	@objc func summary() -> String? {
+	func summary() -> String? {
 		let parentID = PresetFeature.parentIDofID( self.featureID )
 		let result = PresetsDatabase.shared.inheritedValueOfFeature(parentID, fieldGetter: { $0.name })
 		return result as? String
 	}
 
-	@objc func iconUnscaled() -> UIImage? {
+	func iconUnscaled() -> UIImage? {
 		if _iconUnscaled == PresetFeature.uninitializedImage {
 			_iconUnscaled = self.icon != nil ? UIImage(named: self.icon!) : nil
 		}
 		return _iconUnscaled
 	}
-	@objc func iconScaled24() -> UIImage?
+	func iconScaled24() -> UIImage?
 	{
 		if _iconScaled24 == PresetFeature.uninitializedImage {
 			if let image = self.iconUnscaled() {
@@ -113,11 +113,11 @@ import Foundation
 		return _iconScaled24
 	}
 
-	@objc func addTags() -> [String : String] {
+	func addTags() -> [String : String] {
 		return self._addTags ?? self.tags
 	}
 
-	@objc func removeTags() -> [String : String] {
+	func removeTags() -> [String : String] {
 		return self._removeTags ?? self.addTags()
 	}
 
@@ -129,7 +129,7 @@ import Foundation
 		return nil
 	}
 
-	@objc func matchesSearchText(_ searchText: String?, geometry:String) -> Bool {
+	func matchesSearchText(_ searchText: String?, geometry:String) -> Bool {
 		guard let searchText = searchText else {
 			return false
 		}
@@ -196,7 +196,7 @@ import Foundation
 		return totalScore
 	}
 
-	@objc func defaultValuesForGeometry(_ geometry: String) -> [String : String]
+	func defaultValuesForGeometry(_ geometry: String) -> [String : String]
 	{
 		var result : [String : String] = [:]
 		let fields = PresetsForFeature.fieldsFor(featureID:self.featureID, field:{ f in return f.fields })

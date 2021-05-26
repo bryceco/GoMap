@@ -11,12 +11,12 @@ import Foundation
 
 // A group of related tags, such as address tags, organized for display purposes
 // A group becomes a Section in UITableView
-final class PresetGroup: NSObject {
-	@objc let name: String?				// e.g. Address
-	@objc let presetKeys: [AnyHashable]	// either PresetKey or PresetGroup
-	@objc let isDrillDown: Bool
+final class PresetGroup {
+	let name: String?				// e.g. Address
+	let presetKeys: [AnyObject]	// either PresetKey or PresetGroup
+	let isDrillDown: Bool
 
-	init(name: String?, tags: [AnyHashable], isDrillDown: Bool = false) {
+	init(name: String?, tags: [AnyObject], isDrillDown: Bool = false) {
 #if DEBUG
 		if tags.count > 0 {
 			assert((tags.last is PresetKey) || (tags.last is PresetGroup)) // second case for drill down group
@@ -25,22 +25,21 @@ final class PresetGroup: NSObject {
 		self.name = name
 		self.presetKeys = tags
 		self.isDrillDown = isDrillDown
-		super.init()
 	}
 
 	convenience init(fromMerger p1: PresetGroup, with p2: PresetGroup) {
 		self.init(name: p1.name, tags: p1.presetKeys + p2.presetKeys)
 	}
 
-	override var description: String {
+	var description: String {
 		var text = "\(name ?? "<unknown>"):\n"
 		for key in presetKeys {
-			text += "   \(key.description)\n"
+			text += "   \((key as? PresetKey)?.description ?? "<>")\n"
 		}
 		return text
 	}
 
-	@objc func multiComboSummary(ofDict dict:[String:String]?, isPlaceholder:Bool) -> String
+	func multiComboSummary(ofDict dict:[String:String]?, isPlaceholder:Bool) -> String
 	{
 		var summary = ""
 		for preset in presetKeys {

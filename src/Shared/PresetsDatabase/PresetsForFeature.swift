@@ -14,34 +14,34 @@ class PresetsForFeature: NSObject {
 	var _featureName: String
 	var _sectionList: [PresetGroup]
 
-	@objc func featureName() -> String {
+	func featureName() -> String {
 		return _featureName
 	}
 
-	@objc func sectionList() -> [PresetGroup] {
+	func sectionList() -> [PresetGroup] {
 		return _sectionList
 	}
 
-	@objc func sectionCount() -> Int {
+	func sectionCount() -> Int {
 		return _sectionList.count
 	}
 
-	@objc func tagsInSection(_ index: Int) -> Int {
+	func tagsInSection(_ index: Int) -> Int {
 		let group = _sectionList[index]
 		return group.presetKeys.count
 	}
 
-	@objc func groupAtIndex(_ index: Int) -> PresetGroup {
+	func groupAtIndex(_ index: Int) -> PresetGroup {
 		return _sectionList[index]
 	}
 
-	@objc func presetAtSection(_ section: Int, row: Int) -> Any {
+	func presetAtSection(_ section: Int, row: Int) -> Any {
 		let group = _sectionList[section]
 		let tag = group.presetKeys[row]
 		return tag
 	}
 
-	@objc func presetAtIndexPath(_ indexPath: IndexPath) -> Any {
+	func presetAtIndexPath(_ indexPath: IndexPath) -> Any {
 		return presetAtSection( indexPath.section, row: indexPath.row)
 	}
 
@@ -127,7 +127,7 @@ class PresetsForFeature: NSObject {
 		_sectionList = [typeGroup]
 
 		// Add user-defined presets
-		var customGroup: [AnyHashable] = []
+		var customGroup: [AnyObject] = []
 		for custom in PresetKeyUserDefinedList.shared.list {
 			if custom.appliesToKey == "" {
 				// accept all
@@ -163,7 +163,7 @@ class PresetsForFeature: NSObject {
 			ignore: ignoreTags,
 			dupSet: &dupSet,
 			update: update)
-		_sectionList.append(PresetGroup(name: nil, tags: [String]())) // Create a break between the common items and the rare items
+		_sectionList.append(PresetGroup(name: nil, tags: [AnyObject]())) // Create a break between the common items and the rare items
 		addPresetsForFields(
 			inFeatureID: feature.featureID,
 			geometry: geometry,
