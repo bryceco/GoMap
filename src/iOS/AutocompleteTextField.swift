@@ -80,8 +80,8 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 
     func keyboardFrame(from notification: Notification) -> CGRect {
         let userInfo = notification.userInfo
-        let rect = (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as AnyObject).cgRectValue ?? .zero
-        return rect
+		let rect = (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue 
+		return rect
     }
 
 	@objc func keyboardWillShow(_ nsNotification: Notification) {

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SQLite3
 
 #if DEBUG && false
 	let USE_RTREE = 1
@@ -15,28 +14,14 @@ import SQLite3
 	let USE_RTREE = 0
 #endif
 
-private let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
-
-enum DatabaseError: Error {
-	case unlink
-	case exec(String)
-	case prepare(String)
-	case clearBindings
-	case bind
-	case step
-	case OsmError(String)
-}
 
 final class Database {
-	private typealias sqlite3 = OpaquePointer
-	private typealias sqlite3_stmt = OpaquePointer
 
-	let path: String
-	private let db: sqlite3
+	private let db: Sqlite
 	
 #if USE_RTREE
-	private var spatialInsert: sqlite3_stmt
-    private var spatialDelete: sqlite3_stmt
+	private var spatialInsert: SqliteStatement
+    private var spatialDelete: SqliteStatement
 #endif
 
 	static let dispatchQueue = DispatchQueue(label: "com.bryceco.gomap.database",
@@ -46,143 +31,53 @@ final class Database {
     // MARK: initialize
     
 	class func databasePath(withName name: String) -> String {
-		let paths = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).map(\.path)
-		let bundleName = Bundle.main.infoDictionary?["CFBundleIdentifier"] as! String
-		var path = URL(fileURLWithPath: URL(fileURLWithPath: paths[0]).appendingPathComponent(bundleName).path).appendingPathComponent("data.sqlite3").path
-		if name.count != 0 {
-			path = path + ".\(name)"
-		}
-		try? FileManager.default.createDirectory(atPath: URL(fileURLWithPath: path).deletingLastPathComponent().path, withIntermediateDirectories: true, attributes: nil)
-		return path
+		return Sqlite.pathForName(name)
 	}
     
 	// return self if database can be opened
 	// return nil if database doesn't exist or is corrupted
     init?(name: String) {
-		path = Database.databasePath(withName: name)
-
-		var db: sqlite3? = nil
-		var rc = sqlite3_open_v2(path, &db, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, nil)
-		guard rc == SQLITE_OK,
-			  let db = db
-		else {
+		guard let db = Sqlite(name: name) else { return nil }
+		self.db = db
+		if (try? db.exec("PRAGMA foreign_keys=ON;")) == nil {
 			return nil
 		}
-		self.db = db
-		rc = sqlite3_exec(self.db, "PRAGMA foreign_keys=ON;", nil, nil, nil)
-		assert(rc == SQLITE_OK)
     }
+
+	var path: String {
+		get { db.path }
+	}
 
     class func delete(withName name: String) throws {
 		let path = Database.databasePath(withName: name)
 		if unlink(path) != 0 {
-			throw DatabaseError.unlink
+			throw SqliteError.unlink
 		}
     }
 
-	private func SqlExec(_ command: String ) throws {
-		let result = sqlite3_exec(self.db, command, nil, nil, nil)
-		if result != SQLITE_OK {
-			throw DatabaseError.exec(command)
-		}
-	}
-	private func SqlPrepare(_ command: String ) throws -> sqlite3_stmt {
-		var statement: sqlite3_stmt? = nil
-		let result = sqlite3_prepare_v2(db, command, -1, &statement, nil)
-		if result != SQLITE_OK || statement == nil {
-			throw DatabaseError.prepare(command)
-		}
-		return statement!
-	}
-	private func SqlClearBindings(_ statement: sqlite3_stmt ) throws {
-		if sqlite3_clear_bindings(statement) != SQLITE_OK {
-			throw DatabaseError.clearBindings
-		}
-	}
-	private func SqlReset(_ statement: sqlite3_stmt ) throws {
-		if sqlite3_reset(statement) != SQLITE_OK {
-			throw DatabaseError.clearBindings
-		}
-	}
-	private func SqlBindText(_ statement: sqlite3_stmt, _ index: Int32, _ value: String?) throws {
-		if sqlite3_bind_text(statement, index, value, -1, SQLITE_TRANSIENT) != SQLITE_OK {
-			throw DatabaseError.bind
-		}
-	}
-	private func SqlBindInt32(_ statement: sqlite3_stmt, _ index: Int32, _ value: Int32) throws {
-		if sqlite3_bind_int(statement, index, value) != SQLITE_OK {
-			throw DatabaseError.bind
-		}
-	}
-	private func SqlBindInt64(_ statement: sqlite3_stmt, _ index: Int32, _ value: Int64) throws {
-		if sqlite3_bind_int64(statement, index, value) != SQLITE_OK {
-			throw DatabaseError.bind
-		}
-	}
-	private func SqlBindDouble(_ statement: sqlite3_stmt, _ index: Int32, _ value: Double) throws {
-		if sqlite3_bind_double(statement, index, value) != SQLITE_OK {
-			throw DatabaseError.bind
-		}
-	}
-	private func SqlStep(_ statement: sqlite3_stmt, hasResult: Int32?) throws -> Bool {
-		let rc = sqlite3_step(statement)
-		if rc == SQLITE_DONE {
-			return false
-		}
-		if let hasResult = hasResult,
-		   rc == hasResult
-		{
-			return true
-		}
-		throw DatabaseError.step
-	}
-	private func SqlStep(_ statement: sqlite3_stmt) throws {
-		_ = try SqlStep(statement, hasResult: nil)
-	}
-
-	func close() {
-#if USE_RTREE
-            if spatialInsert != nil {
-                sqlite3_finalize(spatialInsert)
-            }
-            if spatialDelete != nil {
-                sqlite3_finalize(spatialDelete)
-            }
-#endif
-		let rc = sqlite3_close(db)
-		if rc != SQLITE_OK {
-			print("Database could not close: \(sqlite3_errmsg(db)!)\n")
-		}
-    }
-    
 	deinit {
-		close()
     }
     
-    func dropTables() {
-		var rc: Int32 = 0
-        rc |= sqlite3_exec(db, "drop table node_tags;", nil, nil, nil)
-        rc |= sqlite3_exec(db, "drop table nodes;", nil, nil, nil)
-        rc |= sqlite3_exec(db, "drop table way_tags;", nil, nil, nil)
-        rc |= sqlite3_exec(db, "drop table way_nodes;", nil, nil, nil)
-        rc |= sqlite3_exec(db, "drop table ways;", nil, nil, nil)
-        rc |= sqlite3_exec(db, "drop table relation_tags;", nil, nil, nil)
-        rc |= sqlite3_exec(db, "drop table relation_members;", nil, nil, nil)
-        rc |= sqlite3_exec(db, "drop table relations;", nil, nil, nil)
+    func dropTables() throws {
+		try db.exec("drop table node_tags;")
+		try db.exec("drop table nodes;")
+		try db.exec("drop table way_tags;")
+		try db.exec("drop table way_nodes;")
+		try db.exec("drop table ways;")
+		try db.exec("drop table relation_tags;")
+		try db.exec("drop table relation_members;")
+		try db.exec("drop table relations;")
 #if USE_RTREE
-		rc |= sqlite3_exec(db, "drop table spatial;", 0, 0, 0)
+		try db.exec("drop table spatial;")
 #endif
-        rc |= sqlite3_exec(db, "vacuum;", nil, nil, nil) // compact database
-		if rc != 0 {
-			DLog("database dropTables error")
-		}
+		try db.exec("vacuum;") // compact database
 	}
     
     func createTables() throws {
 
         // nodes
         
-		try SqlExec(
+		try db.exec(
             """
 				CREATE TABLE IF NOT EXISTS nodes(\
 					IDENT		INT8	unique PRIMARY KEY	NOT NULL,\
@@ -196,7 +91,7 @@ final class Database {
 				);
 			""")
 
-		try SqlExec(
+		try db.exec(
             """
 				create table if not exists node_tags(\
 					ident	int8			not null,\
@@ -207,7 +102,7 @@ final class Database {
 
         // ways
         
-		try SqlExec(
+		try db.exec(
             """
 				CREATE TABLE IF NOT EXISTS ways(\
 					IDENT		INT8	unique PRIMARY KEY	NOT NULL,\
@@ -220,7 +115,7 @@ final class Database {
 				);
 			""")
 
-		try SqlExec(
+		try db.exec(
             """
 				create table if not exists way_nodes(\
 					ident		int8	not null,\
@@ -229,7 +124,7 @@ final class Database {
 					FOREIGN KEY(ident) REFERENCES ways(ident) on delete cascade);
 			""")
 
-		try SqlExec(
+		try db.exec(
             """
 				create table if not exists way_tags(\
 					ident	int8			not null,\
@@ -240,7 +135,7 @@ final class Database {
 
         // relations
         
-		try SqlExec(
+		try db.exec(
             """
 				CREATE TABLE IF NOT EXISTS relations(\
 					IDENT		INT8	unique PRIMARY KEY	NOT NULL,\
@@ -253,7 +148,7 @@ final class Database {
 					);
 			""")
 
-		try SqlExec(
+		try db.exec(
             """
 				create table if not exists relation_members(\
 					ident			int8			not null,\
@@ -264,7 +159,7 @@ final class Database {
 					FOREIGN KEY(ident) REFERENCES relations(ident) on delete cascade);
 			""")
 
-		try SqlExec(
+		try db.exec(
             """
 				create table if not exists relation_tags(\
 					ident	int8			not null,\
@@ -276,7 +171,7 @@ final class Database {
         // spatial
         
 #if USE_RTREE
-		try SqlExec(
+		try db.exec(
 			"""
 				create virtual table if not exists spatial using rtree(\
 					ident	int8	primary key	not null,\
@@ -342,38 +237,34 @@ final class Database {
             return
         }
         
-		let nodeStatement = try SqlPrepare("INSERT INTO NODES (user,timestamp,version,changeset,uid,longitude,latitude,ident) VALUES (?,?,?,?,?,?,?,?);")
-		let tagStatement = try SqlPrepare("INSERT INTO node_tags (ident,key,value) VALUES (?,?,?);")
-		defer {
-			sqlite3_finalize(nodeStatement)
-			sqlite3_finalize(tagStatement)
-		}
+		let nodeStatement = try db.prepare("INSERT INTO NODES (user,timestamp,version,changeset,uid,longitude,latitude,ident) VALUES (?,?,?,?,?,?,?,?);")
+		let tagStatement = try db.prepare("INSERT INTO node_tags (ident,key,value) VALUES (?,?,?);")
 
 		for node in nodes {
-			try SqlReset(nodeStatement)
-			try SqlClearBindings(nodeStatement)
-			try SqlBindText(nodeStatement, 1, node.user)
-			try SqlBindText(nodeStatement, 2, node.timestamp)
-			try SqlBindInt32(nodeStatement, 3, Int32(node.version))
-			try SqlBindInt64(nodeStatement, 4, node.changeset)
-			try SqlBindInt32(nodeStatement, 5, Int32(node.uid))
-			try SqlBindDouble(nodeStatement, 6, node.lon)
-			try SqlBindDouble(nodeStatement, 7, node.lat)
-			try SqlBindInt64(nodeStatement, 8, node.ident)
+			try db.reset(nodeStatement)
+			try db.clearBindings(nodeStatement)
+			try db.bindText(nodeStatement, 1, node.user)
+			try db.bindText(nodeStatement, 2, node.timestamp)
+			try db.bindInt32(nodeStatement, 3, Int32(node.version))
+			try db.bindInt64(nodeStatement, 4, node.changeset)
+			try db.bindInt32(nodeStatement, 5, Int32(node.uid))
+			try db.bindDouble(nodeStatement, 6, node.lon)
+			try db.bindDouble(nodeStatement, 7, node.lat)
+			try db.bindInt64(nodeStatement, 8, node.ident)
 
-			while try SqlStep(nodeStatement, hasResult: SQLITE_CONSTRAINT) {
+			while try db.step(nodeStatement, hasResult: Sqlite.CONSTRAINT) {
 				// tried to insert something already there. This might be an update to a later version from the server so delete what we have and retry
 				print(String(format: "retry node %lld\n", node.ident))
 				try? deleteNodes([node])
 			}
 
 			for (key,value) in node.tags {
-				try SqlReset(tagStatement)
-				try SqlClearBindings(tagStatement)
-				try SqlBindInt64(tagStatement, 1, node.ident)
-				try SqlBindText(tagStatement, 2, key)
-				try SqlBindText(tagStatement, 3, value)
-				try SqlStep(tagStatement)
+				try db.reset(tagStatement)
+				try db.clearBindings(tagStatement)
+				try db.bindInt64(tagStatement, 1, node.ident)
+				try db.bindText(tagStatement, 2, key)
+				try db.bindText(tagStatement, 3, value)
+				try db.step(tagStatement)
 			}
 #if USE_RTREE
 			add(toSpatial: node)
@@ -382,56 +273,49 @@ final class Database {
     }
     
     func saveWays(_ ways: [OsmWay]) throws {
-		var rc = SQLITE_OK
-        
+
         if ways.count == 0 {
             return
         }
         
-        let wayStatement = try SqlPrepare("INSERT INTO ways (ident,user,timestamp,version,changeset,uid,nodecount) VALUES (?,?,?,?,?,?,?);")
-        let tagStatement = try SqlPrepare("INSERT INTO way_tags (ident,key,value) VALUES (?,?,?);")
-		let nodeStatement = try SqlPrepare("INSERT INTO way_nodes (ident,node_id,node_index) VALUES (?,?,?);")
-		defer {
-			sqlite3_finalize(wayStatement)
-			sqlite3_finalize(tagStatement)
-			sqlite3_finalize(nodeStatement)
-		}
+        let wayStatement = try db.prepare("INSERT INTO ways (ident,user,timestamp,version,changeset,uid,nodecount) VALUES (?,?,?,?,?,?,?);")
+        let tagStatement = try db.prepare("INSERT INTO way_tags (ident,key,value) VALUES (?,?,?);")
+		let nodeStatement = try db.prepare("INSERT INTO way_nodes (ident,node_id,node_index) VALUES (?,?,?);")
+
 		for way in ways {
-			try SqlReset(wayStatement)
-			try SqlClearBindings(wayStatement)
-			try SqlBindInt64(wayStatement, 1, way.ident)
-			try SqlBindText(wayStatement, 2, way.user)
-			try SqlBindText(wayStatement, 3, way.timestamp)
-			try SqlBindInt32(wayStatement, 4, Int32(way.version))
-			try SqlBindInt64(wayStatement, 5, way.changeset)
-			try SqlBindInt32(wayStatement, 6, Int32(way.uid))
-			try SqlBindInt32(wayStatement, 7, Int32(way.nodes.count))
-			while try SqlStep(wayStatement, hasResult: SQLITE_CONSTRAINT) {
+			try db.reset(wayStatement)
+			try db.clearBindings(wayStatement)
+			try db.bindInt64(wayStatement, 1, way.ident)
+			try db.bindText(wayStatement, 2, way.user)
+			try db.bindText(wayStatement, 3, way.timestamp)
+			try db.bindInt32(wayStatement, 4, Int32(way.version))
+			try db.bindInt64(wayStatement, 5, way.changeset)
+			try db.bindInt32(wayStatement, 6, Int32(way.uid))
+			try db.bindInt32(wayStatement, 7, Int32(way.nodes.count))
+			while try db.step(wayStatement, hasResult: Sqlite.CONSTRAINT) {
 				// tried to insert something already there. This might be an update to a later version from the server so delete what we have and retry
 				print(String(format: "retry way %lld\n", way.ident))
 				try? deleteWays([way])
 			}
 
 			for (key,value) in way.tags {
-				try SqlReset(tagStatement)
-				try SqlClearBindings(tagStatement)
-				try SqlBindInt64(tagStatement, 1, way.ident)
-				try SqlBindText(tagStatement, 2, key)
-				try SqlBindText(tagStatement, 3, value)
-				rc = sqlite3_step(tagStatement)
-				DbgAssert(rc == SQLITE_DONE)
+				try db.reset(tagStatement)
+				try db.clearBindings(tagStatement)
+				try db.bindInt64(tagStatement, 1, way.ident)
+				try db.bindText(tagStatement, 2, key)
+				try db.bindText(tagStatement, 3, value)
+				try db.step(tagStatement)
 			}
 
 			var index: Int32 = 0
 			for node in way.nodes {
-				try SqlReset(nodeStatement)
-				try SqlClearBindings(nodeStatement)
-				try SqlBindInt64(nodeStatement, 1, way.ident)
-				try SqlBindInt64(nodeStatement, 2, node.ident)
-				try SqlBindInt32(nodeStatement, 3, index)
+				try db.reset(nodeStatement)
+				try db.clearBindings(nodeStatement)
+				try db.bindInt64(nodeStatement, 1, way.ident)
+				try db.bindInt64(nodeStatement, 2, node.ident)
+				try db.bindInt32(nodeStatement, 3, index)
+				try db.step(nodeStatement)
 				index += 1
-				rc = sqlite3_step(nodeStatement)
-				DbgAssert(rc == SQLITE_DONE)
 			}
 #if USE_RTREE
 			add(toSpatial: way)
@@ -444,52 +328,46 @@ final class Database {
             return
         }
         
-		let baseStatement = try SqlPrepare("INSERT INTO relations (ident,user,timestamp,version,changeset,uid,membercount) VALUES (?,?,?,?,?,?,?);")
-		let tagStatement = try SqlPrepare("INSERT INTO relation_tags (ident,key,value) VALUES (?,?,?);")
-        let memberStatement = try SqlPrepare("INSERT INTO relation_members (ident,type,ref,role,member_index) VALUES (?,?,?,?,?);")
-		defer {
-			sqlite3_finalize(baseStatement)
-			sqlite3_finalize(tagStatement)
-			sqlite3_finalize(memberStatement)
-		}
+		let baseStatement = try db.prepare("INSERT INTO relations (ident,user,timestamp,version,changeset,uid,membercount) VALUES (?,?,?,?,?,?,?);")
+		let tagStatement = try db.prepare("INSERT INTO relation_tags (ident,key,value) VALUES (?,?,?);")
+        let memberStatement = try db.prepare("INSERT INTO relation_members (ident,type,ref,role,member_index) VALUES (?,?,?,?,?);")
 
 		for relation in relations {
-			try SqlReset(baseStatement)
-			try SqlClearBindings(baseStatement)
-			try SqlBindInt64(baseStatement, 1, relation.ident)
-			try SqlBindText(baseStatement, 2, relation.user)
-			try SqlBindText(baseStatement, 3, relation.timestamp)
-			try SqlBindInt32(baseStatement, 4, Int32(relation.version))
-			try SqlBindInt64(baseStatement, 5, relation.changeset)
-			try SqlBindInt32(baseStatement, 6, Int32(relation.uid))
-			try SqlBindInt32(baseStatement, 7, Int32(relation.members.count))
-			while try SqlStep(baseStatement, hasResult: SQLITE_CONSTRAINT) {
+			try db.reset(baseStatement)
+			try db.clearBindings(baseStatement)
+			try db.bindInt64(baseStatement, 1, relation.ident)
+			try db.bindText(baseStatement, 2, relation.user)
+			try db.bindText(baseStatement, 3, relation.timestamp)
+			try db.bindInt32(baseStatement, 4, Int32(relation.version))
+			try db.bindInt64(baseStatement, 5, relation.changeset)
+			try db.bindInt32(baseStatement, 6, Int32(relation.uid))
+			try db.bindInt32(baseStatement, 7, Int32(relation.members.count))
+			while try db.step(baseStatement, hasResult: Sqlite.CONSTRAINT) {
 				// tried to insert something already there. This might be an update to a later version from the server so delete what we have and retry
 				print(String(format: "retry relation %lld\n", relation.ident))
 				try? deleteRelations([relation])
 			}
 
 			for (key,value) in relation.tags {
-				try SqlReset(tagStatement)
-				try SqlClearBindings(tagStatement)
-				try SqlBindInt64(tagStatement, 1, relation.ident)
-				try SqlBindText(tagStatement, 2, key)
-				try SqlBindText(tagStatement, 3, value)
-				try SqlStep(tagStatement)
+				try db.reset(tagStatement)
+				try db.clearBindings(tagStatement)
+				try db.bindInt64(tagStatement, 1, relation.ident)
+				try db.bindText(tagStatement, 2, key)
+				try db.bindText(tagStatement, 3, value)
+				try db.step(tagStatement)
 			}
 
 			var index: Int32 = 0
 			for member in relation.members {
-				let ref = NSNumber(value: member.ref)
-				sqlite3_reset(memberStatement)
-				try SqlClearBindings(memberStatement)
-				try SqlBindInt64(memberStatement, 1, relation.ident)
-				try SqlBindText(memberStatement, 2, member.type)
-				try SqlBindInt64(memberStatement, 3, ref.int64Value)
-				try SqlBindText(memberStatement, 4, member.role)
-				try SqlBindInt32(memberStatement, 5, index)
+				try db.reset(memberStatement)
+				try db.clearBindings(memberStatement)
+				try db.bindInt64(memberStatement, 1, relation.ident)
+				try db.bindText(memberStatement, 2, member.type)
+				try db.bindInt64(memberStatement, 3, member.ref)
+				try db.bindText(memberStatement, 4, member.role)
+				try db.bindInt32(memberStatement, 5, index)
+				try db.step(memberStatement)
 				index += 1
-				try SqlStep(memberStatement)
 			}
 #if USE_RTREE
 			add(toSpatial: relation)
@@ -504,16 +382,13 @@ final class Database {
             return
         }
         
-		let nodeStatement = try SqlPrepare("DELETE from NODES where ident=?;")
-		defer {
-			sqlite3_finalize(nodeStatement)
-		}
+		let nodeStatement = try db.prepare("DELETE from NODES where ident=?;")
 
 		for node in nodes {
-			try SqlReset(nodeStatement)
-			try SqlClearBindings(nodeStatement)
-			try SqlBindInt64(nodeStatement, 1, node.ident)
-			try SqlStep(nodeStatement)
+			try db.reset(nodeStatement)
+			try db.clearBindings(nodeStatement)
+			try db.bindInt64(nodeStatement, 1, node.ident)
+			try db.step(nodeStatement)
 		}
     }
 
@@ -522,16 +397,13 @@ final class Database {
             return
 		}
         
-		let nodeStatement = try SqlPrepare("DELETE from WAYS where ident=?;")
-		defer {
-			sqlite3_finalize(nodeStatement)
-		}
+		let nodeStatement = try db.prepare("DELETE from WAYS where ident=?;")
 
 		for way in ways {
-			try SqlReset(nodeStatement)
-			try SqlClearBindings(nodeStatement)
-			try SqlBindInt64(nodeStatement, 1, way.ident)
-			try SqlStep(nodeStatement)
+			try db.reset(nodeStatement)
+			try db.clearBindings(nodeStatement)
+			try db.bindInt64(nodeStatement, 1, way.ident)
+			try db.step(nodeStatement)
 		}
     }
 
@@ -540,16 +412,13 @@ final class Database {
             return
         }
         
-		let relationStatement = try SqlPrepare("DELETE from RELATIONS where ident=?;")
-		defer {
-			sqlite3_finalize(relationStatement)
-		}
+		let relationStatement = try db.prepare("DELETE from RELATIONS where ident=?;")
 
 		for relation in relations {
-			try SqlReset(relationStatement)
-			try SqlClearBindings(relationStatement)
-			try SqlBindInt64(relationStatement, 1, relation.ident)
-			try SqlStep(relationStatement)
+			try db.reset(relationStatement)
+			try db.clearBindings(relationStatement)
+			try db.bindInt64(relationStatement, 1, relation.ident)
+			try db.step(relationStatement)
 		}
 	}
     
@@ -565,11 +434,13 @@ final class Database {
         isUpdate: Bool
 			) throws
 	{
-#if false && DEBUG
+#if DEBUG
+#if !targetEnvironment(macCatalyst)
 		assert(dispatch_get_current_queue() == Database.dispatchQueue)
 #endif
+#endif
 
-		try SqlExec("BEGIN")
+		try db.exec("BEGIN")
 
 		do {
 			if isUpdate {
@@ -583,9 +454,9 @@ final class Database {
 			try self.deleteNodes(deleteNodes)
 			try self.deleteWays(deleteWays)
 			try self.deleteRelations(deleteRelations)
-			sqlite3_exec(db, "COMMIT", nil, nil, nil)
+			try db.exec("COMMIT")
 		} catch {
-			sqlite3_exec(db, "ROLLBACK", nil, nil, nil)
+			try db.exec("ROLLBACK")
 			throw error
 		}
     }
@@ -595,35 +466,16 @@ final class Database {
 	func queryTagTable(_ tableName: String) throws -> [OsmIdentifier:[String:String]] {
 
 		let query = "SELECT key,value,ident FROM \(tableName)"
-		let tagStatement = try SqlPrepare(query)
-		defer {
-			sqlite3_finalize(tagStatement)
-		}
+		let tagStatement = try db.prepare(query)
 
 		var list = [OsmIdentifier:[String:String]]()
 
-		try SqlReset(tagStatement)
-		try SqlClearBindings(tagStatement)
-		while try SqlStep(tagStatement, hasResult: SQLITE_ROW) {
-			let ckey = sqlite3_column_text(tagStatement, 0)
-			let cvalue = sqlite3_column_text(tagStatement, 1)
-			let ident = sqlite3_column_int64(tagStatement, 2)
-
-			#if false
-			// crashes compiler
-			guard let ckey = ckey,
-				  let cvalue = cvalue else
-			{
-				throw DatabaseError.OsmError("key or value in tag is empty")
-			}
-			#else
-			if ckey == nil || cvalue == nil {
-				throw DatabaseError.OsmError("key or value in tag is empty")
-			}
-			#endif
-
-			let key = String(cString: ckey!)
-			let value = String(cString: cvalue!)
+		try db.reset(tagStatement)
+		try db.clearBindings(tagStatement)
+		while try db.step(tagStatement, hasResult: Sqlite.ROW) {
+			let key = db.columnText(tagStatement, 0)
+			let value = db.columnText(tagStatement, 1)
+			let ident = db.columnInt64(tagStatement, 2)
 
 			if list[ident] == nil {
 				list[ident] = [:]
@@ -635,47 +487,31 @@ final class Database {
     }
 
 	func querySqliteNodes() throws -> [OsmIdentifier : OsmNode] {
-		let nodeStatement = try SqlPrepare("SELECT ident,user,timestamp,version,changeset,uid,longitude,latitude FROM nodes;")
-		defer {
-			sqlite3_finalize(nodeStatement)
-		}
+		let nodeStatement = try db.prepare("SELECT ident,user,timestamp,version,changeset,uid,longitude,latitude FROM nodes;")
 
 		let tagDict = try queryTagTable("node_tags")
 
 		var nodes: [OsmIdentifier : OsmNode] = [:]
         
-		while try SqlStep(nodeStatement, hasResult: SQLITE_ROW) {
-			let ident = sqlite3_column_int64(nodeStatement, 0)
-            let user = sqlite3_column_text(nodeStatement, 1)
-            let timestamp = sqlite3_column_text(nodeStatement, 2)
-            let version = sqlite3_column_int(nodeStatement, 3)
-            let changeset = sqlite3_column_int64(nodeStatement, 4)
-			let uid = sqlite3_column_int(nodeStatement, 5)
-            let longitude = sqlite3_column_double(nodeStatement, 6)
-            let latitude = sqlite3_column_double(nodeStatement, 7)
-
-			#if false
-			// crashes compiler
-			guard let user = user,
-				  let timestamp = timestamp
-			else {
-				throw DatabaseError.OsmError("user or timestamp is empty")
-			}
-			#else
-			if user == nil || timestamp == nil {
-				throw DatabaseError.OsmError("user or timestamp is empty")
-			}
-			#endif
+		while try db.step(nodeStatement, hasResult: Sqlite.ROW) {
+			let ident = db.columnInt64(nodeStatement, 0)
+            let user = db.columnText(nodeStatement, 1)
+            let timestamp = db.columnText(nodeStatement, 2)
+            let version = db.columnInt32(nodeStatement, 3)
+            let changeset = db.columnInt64(nodeStatement, 4)
+			let uid = db.columnInt32(nodeStatement, 5)
+			let longitude = db.columnDouble(nodeStatement, 6)
+            let latitude = db.columnDouble(nodeStatement, 7)
 
 			let tags = tagDict[ident ] ?? [:]
 
 			let node = OsmNode(
 				withVersion: Int(version),
 				changeset: Int64(changeset),
-                user: String(cString: user!),
+                user: user,
 				uid: Int(uid),
                 ident: ident,
-                timestamp: String(cString: timestamp!),
+                timestamp: timestamp,
 				tags: tags)
             node.setLongitude(longitude, latitude: latitude, undo: nil)
 
@@ -691,46 +527,29 @@ final class Database {
     
     func querySqliteWays() throws -> [OsmIdentifier : OsmWay] {
 
-		let wayStatement = try SqlPrepare("SELECT ident,user,timestamp,version,changeset,uid,nodecount FROM ways")
-		defer {
-			sqlite3_finalize(wayStatement)
-		}
+		let wayStatement = try db.prepare("SELECT ident,user,timestamp,version,changeset,uid,nodecount FROM ways")
 
 		var ways: [OsmIdentifier : OsmWay] = [:]
 		let tagDicts = try queryTagTable("way_tags")
 
-		while try SqlStep(wayStatement, hasResult: SQLITE_ROW) {
-			let ident = sqlite3_column_int64(wayStatement, 0)
-            let user = sqlite3_column_text(wayStatement, 1)
-            let timestamp = sqlite3_column_text(wayStatement, 2)
-            let version = sqlite3_column_int(wayStatement, 3)
-            let changeset = sqlite3_column_int64(wayStatement, 4)
-			let uid = sqlite3_column_int(wayStatement, 5)
-            let nodecount = sqlite3_column_int(wayStatement, 6)
-
-			#if false
-			// crashes the compiler
-			guard let user = user,
-				  let timestamp = timestamp,
-				  nodecount >= 0
-			else {
-				throw DatabaseError.OsmError("user, timestamp or nodecount is empty")
-			}
-			#else
-			if user == nil || timestamp == nil || nodecount < 0 {
-				throw DatabaseError.OsmError("user, timestamp or nodecount is empty")
-			}
-			#endif
+		while try db.step(wayStatement, hasResult: Sqlite.ROW) {
+			let ident = db.columnInt64(wayStatement, 0)
+            let user = db.columnText(wayStatement, 1)
+            let timestamp = db.columnText(wayStatement, 2)
+            let version = db.columnInt32(wayStatement, 3)
+            let changeset = db.columnInt64(wayStatement, 4)
+			let uid = db.columnInt32(wayStatement, 5)
+            let nodecount = db.columnInt32(wayStatement, 6)
 
 			let tags = tagDicts[ident] ?? [:]
             
 			let way = OsmWay(
 				withVersion: Int(version),
                 changeset: changeset,
-				user: String(cString: user!),
+				user: user,
 				uid: Int(uid),
                 ident: ident,
-                timestamp: String(cString: timestamp!),
+                timestamp: timestamp,
 				tags: tags)
 
 			let nodeRefs = [NSNumber].init(repeating: NSNumber(value: -1), count: Int(nodecount))
@@ -746,18 +565,15 @@ final class Database {
     
     func queryNodes(forWays ways: [OsmIdentifier : OsmWay]) throws {
 
-		let nodeStatement = try SqlPrepare("SELECT ident,node_id,node_index FROM way_nodes")
-		defer {
-			sqlite3_finalize(nodeStatement)
-		}
+		let nodeStatement = try db.prepare("SELECT ident,node_id,node_index FROM way_nodes")
 
-		while try SqlStep(nodeStatement, hasResult: SQLITE_ROW) {
-			let ident = sqlite3_column_int64(nodeStatement, 0)
-			let node_id = sqlite3_column_int64(nodeStatement, 1)
-			let node_index = sqlite3_column_int(nodeStatement, 2)
+		while try db.step(nodeStatement, hasResult: Sqlite.ROW) {
+			let ident = db.columnInt64(nodeStatement, 0)
+			let node_id = db.columnInt64(nodeStatement, 1)
+			let node_index = db.columnInt32(nodeStatement, 2)
             
 			guard let way = ways[ident] else {
-				throw DatabaseError.OsmError("way referenced by node does not exist")
+				throw SqliteError.OsmError("way referenced by node does not exist")
 			}
 
 			way.nodeRefs![Int(node_index)] = node_id
@@ -766,45 +582,29 @@ final class Database {
     
     func querySqliteRelations() throws -> [OsmIdentifier : OsmRelation] {
 
-		let relationStatement = try SqlPrepare("SELECT ident,user,timestamp,version,changeset,uid,membercount FROM relations")
-		defer {
-			sqlite3_finalize(relationStatement)
-		}
+		let relationStatement = try db.prepare("SELECT ident,user,timestamp,version,changeset,uid,membercount FROM relations")
 
 		let tagsDict = try queryTagTable("relation_tags")
 
 		var relations: [OsmIdentifier : OsmRelationBuilder] = [:]
-		while try SqlStep(relationStatement, hasResult: SQLITE_ROW) {
-            let ident = sqlite3_column_int64(relationStatement, 0)
-            let user = sqlite3_column_text(relationStatement, 1)
-            let timestamp = sqlite3_column_text(relationStatement, 2)
-            let version = sqlite3_column_int(relationStatement, 3)
-            let changeset = sqlite3_column_int64(relationStatement, 4)
-            let uid = sqlite3_column_int(relationStatement, 5)
-            let membercount = sqlite3_column_int(relationStatement, 6)
-
-			#if false
-			// crashes compiler
-			guard let user = user,
-				  let timestamp = timestamp
-			else {
-				throw DatabaseError.OsmError("user or timestamp is empty")
-			}
-			#else
-			if user == nil || timestamp == nil {
-				throw DatabaseError.OsmError("user or timestamp is empty")
-			}
-			#endif
+		while try db.step(relationStatement, hasResult: Sqlite.ROW) {
+            let ident = db.columnInt64(relationStatement, 0)
+            let user = db.columnText(relationStatement, 1)
+            let timestamp = db.columnText(relationStatement, 2)
+            let version = db.columnInt32(relationStatement, 3)
+            let changeset = db.columnInt64(relationStatement, 4)
+            let uid = db.columnInt32(relationStatement, 5)
+            let membercount = db.columnInt32(relationStatement, 6)
 
 			let tags = tagsDict[ ident ] ?? [:]
 
 			let relation = OsmRelation(
 				withVersion: Int(version),
                 changeset: changeset,
-                user: String(cString: user!),
+                user: user,
 				uid: Int(uid),
                 ident: ident,
-                timestamp: String(cString: timestamp!),
+                timestamp: timestamp,
 				tags: tags)
 
 			let builder = OsmRelationBuilder(with: relation, memberCount: Int(membercount))
@@ -817,25 +617,22 @@ final class Database {
 	}
     
     func queryMembers(forRelations relations: [OsmIdentifier : OsmRelationBuilder]) throws {
-		let memberStatement = try SqlPrepare("SELECT ident,type,ref,role,member_index FROM relation_members")
-		defer {
-			sqlite3_finalize(memberStatement)
-		}
+		let memberStatement = try db.prepare("SELECT ident,type,ref,role,member_index FROM relation_members")
 
-		while try SqlStep(memberStatement, hasResult: SQLITE_ROW) {
-			let ident = sqlite3_column_int64(memberStatement, 0)
-            let type = sqlite3_column_text(memberStatement, 1)
-            let ref = sqlite3_column_int64(memberStatement, 2)
-            let role = sqlite3_column_text(memberStatement, 3)
-            let member_index = sqlite3_column_int(memberStatement, 4)
+		while try db.step(memberStatement, hasResult: Sqlite.ROW) {
+			let ident = db.columnInt64(memberStatement, 0)
+            let type = db.columnText(memberStatement, 1)
+            let ref = db.columnInt64(memberStatement, 2)
+            let role = db.columnText(memberStatement, 3)
+            let member_index = db.columnInt32(memberStatement, 4)
 
 			guard let relation = relations[ident] else {
-				throw DatabaseError.OsmError("relation referenced by relation member does not exist")
+				throw SqliteError.OsmError("relation referenced by relation member does not exist")
 			}
 			let member = OsmMember(
-				type: type != nil ? String(cString: type!) : nil,
+				type: type,
 				ref: ref,
-				role: role != nil ? String(cString: role!) : nil)
+				role: role)
 
 			relation.members[Int(member_index)] = member
         }

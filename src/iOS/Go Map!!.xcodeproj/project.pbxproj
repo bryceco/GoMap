@@ -40,6 +40,7 @@
 		027EDC72206F3EED00D349D6 /* DDXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC65206F3EED00D349D6 /* DDXMLNode.m */; };
 		027EDC73206F3EED00D349D6 /* DDXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC66206F3EED00D349D6 /* DDXMLDocument.m */; };
 		027EDC74206F3EED00D349D6 /* NSString+DDXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC6C206F3EED00D349D6 /* NSString+DDXML.m */; };
+		0282C4C7265F32E800F2D282 /* Sqlite3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282C4C6265F32E800F2D282 /* Sqlite3.swift */; };
 		0286EAA52656F15A007CFEE9 /* EditorMapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */; };
 		0286EAA62656FEAC007CFEE9 /* EditorMapLayer+Ocean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */; };
 		0286EAA726570382007CFEE9 /* LayerProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096D1263EA7E100E3B129 /* LayerProperties.swift */; };
@@ -235,6 +236,7 @@
 		027EDC6B206F3EED00D349D6 /* NSString+DDXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DDXML.h"; sourceTree = "<group>"; };
 		027EDC6C206F3EED00D349D6 /* NSString+DDXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DDXML.m"; sourceTree = "<group>"; };
 		027EDC6F206F3EED00D349D6 /* DDXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLNode.h; sourceTree = "<group>"; };
+		0282C4C6265F32E800F2D282 /* Sqlite3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sqlite3.swift; sourceTree = "<group>"; };
 		0288169C265895FA00C30EA2 /* OsmMapData+Edit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "OsmMapData+Edit.swift"; path = "../Shared/OsmMapData+Edit.swift"; sourceTree = "<group>"; };
 		0288169D265895FA00C30EA2 /* OsmMapData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OsmMapData.swift; path = ../Shared/OsmMapData.swift; sourceTree = "<group>"; };
 		028816A02659B4A600C30EA2 /* GZip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GZip.swift; path = ../Shared/GZip.swift; sourceTree = "<group>"; };
@@ -687,6 +689,7 @@
 				02354F79246349E100878A04 /* CurvedGlyphLayer.swift */,
 				0216636C2470AFAB00B0B0F6 /* CurvedTextLayer.swift */,
 				028816A2265AD9D100C30EA2 /* Database.swift */,
+				0282C4C6265F32E800F2D282 /* Sqlite3.swift */,
 				C3D096C1263E567200E3B129 /* DisplayLink.swift */,
 				0289D0DD16A88BA300F86151 /* DLog.h */,
 				C381C308263FD294003142BA /* DLog.swift */,
@@ -1096,6 +1099,7 @@
 				C3004F4D263A6306006BF313 /* NominatimViewController.swift in Sources */,
 				024233101674FDB4008A3B6A /* VectorMath.m in Sources */,
 				0286EAA52656F15A007CFEE9 /* EditorMapLayer.swift in Sources */,
+				0282C4C7265F32E800F2D282 /* Sqlite3.swift in Sources */,
 				6442666922540EDF00C0D545 /* Observable.swift in Sources */,
 				02A123EA264C8BA3005638C1 /* AerialList.swift in Sources */,
 				C3D096AC263D48F700E3B129 /* AppDelegate.swift in Sources */,
