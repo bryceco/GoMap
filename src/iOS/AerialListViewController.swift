@@ -102,7 +102,7 @@ class AerialListViewController: UITableViewController {
     
         // set selection
         var title = aerial.name
-        if aerial == aerials.currentAerial {
+        if aerial === aerials.currentAerial {
             title = "\u{2714} " + title // add checkmark
         }
     

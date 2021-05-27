@@ -114,7 +114,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
         }
     }
     
-    // look for a pair of non-integer numbers in the string, and jump to it if found
+    /// Looks for a pair of non-integer numbers in the string, and jump to it if found
     func containsLatLon(_ text: String) -> Bool {
 		let text = text.trimmingCharacters(in: .whitespacesAndNewlines)
 
@@ -133,7 +133,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 
         let scanner = Scanner(string: text)
         let digits = CharacterSet(charactersIn: "-0123456789")
-        let comma = CharacterSet(charactersIn: ",/")
+        let comma = CharacterSet(charactersIn: ",°/")
         scanner.charactersToBeSkipped = CharacterSet.whitespaces
 
 		while !scanner.isAtEnd {
@@ -141,7 +141,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
             let pos = scanner.scanLocation
 			var lat: Double = 0.0
 			var lon: Double = 0.0
-            if scanner.scanDouble( &lat) && lat != Double(Int(lat)) && lat > -90 && lat < 90,
+            if scanner.scanDouble(&lat) && lat != Double(Int(lat)) && lat > -90 && lat < 90,
 			   scanner.scanCharacters(from: comma, into: nil),
 			   scanner.scanDouble(&lon) && lon != Double(Int(lon)) && lon >= -180 && lon <= 180
 			{

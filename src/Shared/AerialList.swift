@@ -12,9 +12,9 @@ import Foundation
 
 private let BING_MAPS_KEY: String = "ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk"
 
-private var CUSTOMAERIALLIST_KEY = "AerialList"
-private var CUSTOMAERIALSELECTION_KEY = "AerialListSelection"
-private var RECENTLY_USED_KEY = "AerialListRecentlyUsed"
+private let CUSTOMAERIALLIST_KEY = "AerialList"
+private let CUSTOMAERIALSELECTION_KEY = "AerialListSelection"
+private let RECENTLY_USED_KEY = "AerialListRecentlyUsed"
 
 private let BING_IDENTIFIER = "BingIdentifier"
 private let MAPNIK_IDENTIFIER = "MapnikIdentifier"
@@ -26,7 +26,13 @@ private let MAXAR_STANDARD_IDENTIFIER = "Maxar-Standard"
 
 @objcMembers
 class AerialService: NSObject {
-    
+
+	private static let iconCache: PersistentWebCache<UIImage> = {
+		let cache = PersistentWebCache<UIImage>(name: "AerialServiceIconCache", memorySize: 10000)
+		cache.removeObjectsAsyncOlderThan(Date(timeIntervalSinceNow: -30.0*(24.0*60.0*60.0)))
+		return cache
+	}()
+
     private(set) var name: String
     private(set) var identifier: String
     private(set) var url: String
@@ -141,6 +147,21 @@ class AerialService: NSObject {
         return nil
     }
     
+	static let none = AerialService(
+			withName: "<none>",
+			identifier: "",
+			url: "",
+			maxZoom: 0,
+			roundUp: false,
+			startDate: nil,
+			endDate: nil,
+			wmsProjection: nil,
+			polygon: nil,
+			attribString: "",
+			attribIcon: nil,
+			attribUrl: nil
+		)
+
     static let bingAerial = AerialService(
             withName: "Bing Aerial",
             identifier: BING_IDENTIFIER,
@@ -299,35 +320,31 @@ class AerialService: NSObject {
         return nil
     }
     
-    private var _placeholderImage: Data?
-    var placeholderImage: Data? {
-        if let _placeholderImage = _placeholderImage {
-            return _placeholderImage.count != 0 ? _placeholderImage : nil
-        }
-        var name: String? = nil
-        if isBingAerial() {
-            name = "BingPlaceholderImage"
-        } else if identifier == "EsriWorldImagery" {
-            name = "EsriPlaceholderImage"
-        }
-        if let name = name {
-            var path = Bundle.main.path(forResource: name, ofType: "png")
-            if path == nil {
-                path = Bundle.main.path(forResource: name, ofType: "jpg")
-            }
-            let data = NSData(contentsOfFile: path ?? "") as Data?
-            if (data?.count ?? 0) != 0 {
-                DispatchQueue.main.sync(execute: {
-                    _placeholderImage = data
-                })
-            }
-            return _placeholderImage
-        }
-        _placeholderImage = Data()
-        return nil
-    }
-    
-    func scaleAttributionIcon(toHeight height: CGFloat) {
+	private func getPlaceholderImage() -> Data? {
+		let name: String?
+		if self.isBingAerial() {
+			name = "BingPlaceholderImage"
+		} else if identifier == "EsriWorldImagery" {
+			name = "EsriPlaceholderImage"
+		} else {
+			return nil
+		}
+		if let path = Bundle.main.path(forResource: name, ofType: "png") ??
+					Bundle.main.path(forResource: name, ofType: "jpg"),
+		   let data = try? Data(contentsOf: URL(fileURLWithPath: path)),
+		   data.count > 0
+		{
+			return data
+		}
+		return nil
+	}
+	private lazy var placeholderImage: Data? = getPlaceholderImage()
+
+	func isPlaceholderImage(_ data: Data) -> Bool {
+		return self.placeholderImage?.elementsEqual( data ) ?? false
+	}
+
+	func scaleAttributionIcon(toHeight height: CGFloat) {
         if attributionIcon != nil && abs(Float((attributionIcon?.size.height ?? 0.0) - height)) > 0.1 {
             let scale = (attributionIcon?.size.height ?? 0.0) / height
 #if os(iOS)
@@ -354,40 +371,26 @@ class AerialService: NSObject {
     }
     
     func loadIcon(fromWeb url: String) {
-        var request: URLRequest? = nil
-        if let url1 = URL(string: url) {
-            request = URLRequest(
-                url: url1,
-                cachePolicy: .returnCacheDataElseLoad,
-                timeoutInterval: 60)
-        }
-        var task: URLSessionDataTask? = nil
-        if let request = request {
-            task = URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
-                if let data = data {
-                    let image = UIImage(data: data)
-                    DispatchQueue.main.async(execute: { [self] in
-                        attributionIcon = image
-                    })
-                }
-            })
-        }
-        task?.resume()
-    }
+		self.attributionIcon = AerialService.iconCache.object(withKey: self.identifier,
+															  fallbackURL: { URL(string: url) },
+															  objectForData: { return UIImage(data: $0) },
+															  completion: {	self.attributionIcon = $0 })
+	}
     
     override var description: String {
         return name
     }
 }
 
+
 @objcMembers
 class AerialList: NSObject {
     
-    var userDefinedList: [AerialService] = [] // user-defined tile servers
-    var downloadedList: [AerialService] = [] // downloaded on each launch
-    var _recentlyUsed: [AerialService] = []
+	private var userDefinedList: [AerialService] = [] // user-defined tile servers
+	private var downloadedList: [AerialService] = [] // downloaded on each launch
+	private var _recentlyUsed: [AerialService] = []
     private(set) var lastDownloadDate: Date?
-    
+
     override init() {
         super.init()
         fetchOsmLabAerials({ [self] in
@@ -406,7 +409,7 @@ class AerialList: NSObject {
         return userDefinedList
     }
     
-    func pathToExternalAerialsCache() -> String {
+	private func pathToExternalAerialsCache() -> String {
         // get tile cache folder
         let paths = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).map(\.path)
         if paths.count != 0 {
@@ -421,9 +424,12 @@ class AerialList: NSObject {
         return ""
     }
     
-	func addPoints(_ points: [[NSNumber]], to path: CGMutablePath) {
+	private func addPoints(_ points: [[NSNumber]], to path: CGMutablePath) {
 		var first = true
 		for pt in points {
+			if pt.count != 2 {
+				continue
+			}
 			let lon = CGFloat( pt[0].doubleValue )
 			let lat = CGFloat( pt[1].doubleValue )
 			let cgPoint = CGPoint( x: lon, y: lat )
@@ -437,7 +443,7 @@ class AerialList: NSObject {
 		path.closeSubpath()
 	}
     
-     func processOsmLabAerialsList(_ featureArray: [AnyHashable]?, isGeoJSON: Bool) -> [AerialService] {
+	private func processOsmLabAerialsList(_ featureArray: [AnyHashable]?, isGeoJSON: Bool) -> [AerialService] {
          let categories = [
              "photo": true,
              "elevation": true
@@ -616,7 +622,7 @@ class AerialList: NSObject {
 		return externalAerials
 	}
     
-    func processOsmLabAerialsData(_ data: Data?) -> [AerialService] {
+	private func processOsmLabAerialsData(_ data: Data?) -> [AerialService] {
 		guard let data = data,
 			  data.count > 0
 		else { return [] }
@@ -643,7 +649,7 @@ class AerialList: NSObject {
 		return []
     }
     
-    func fetchOsmLabAerials(_ completion: @escaping () -> Void) {
+	private func fetchOsmLabAerials(_ completion: @escaping () -> Void) {
         // get cached data
 		let cachedData = NSData(contentsOfFile: pathToExternalAerialsCache()) as Data?
         let now = Date()
@@ -683,7 +689,7 @@ class AerialList: NSObject {
         completion()
     }
     
-    func load() {
+	private func load() {
 		let list = UserDefaults.standard.object(forKey: CUSTOMAERIALLIST_KEY) as? [[String:Any]] ?? []
 		for dict in list {
 			let entry = AerialService(dictionary: dict)
@@ -706,11 +712,11 @@ class AerialList: NSObject {
         }
         
         let recentIdentiers: [String] = UserDefaults.standard.object(forKey: RECENTLY_USED_KEY) as? [String] ?? []
-        for identifier in recentIdentiers {
+		for identifier in recentIdentiers {
 			if let service = dict[identifier] {
-                _recentlyUsed.append(service)
-            }
-        }
+				_recentlyUsed.append(service)
+			}
+		}
 
 		let currentIdentifier = (UserDefaults.standard.object(forKey: CUSTOMAERIALSELECTION_KEY) as? String?) ?? BING_IDENTIFIER
 
@@ -749,22 +755,16 @@ class AerialList: NSObject {
 		return result
     }
     
-    private var _currentAerial: AerialService?
-    var currentAerial: AerialService {
-        get {
-            return _currentAerial!
-        }
-        set(currentAerial) {
-            _currentAerial = currentAerial
-            
-            // update recently used
-            let MAX_ITEMS = 6
-            _recentlyUsed.removeAll { $0 === currentAerial }
+	var currentAerial = AerialService.bingAerial {
+		didSet(currentAerial) {
+			// update recently used
+			let MAX_ITEMS = 6
+			_recentlyUsed.removeAll { $0 === currentAerial }
 			_recentlyUsed.insert(currentAerial, at: 0)
 
-            while _recentlyUsed.count > MAX_ITEMS {
-                _recentlyUsed.removeLast()
-            }
+			while _recentlyUsed.count > MAX_ITEMS {
+				_recentlyUsed.removeLast()
+			}
         }
     }
     

@@ -22,8 +22,8 @@ class BingMetadataViewController: UIViewController {
         let viewRect = appDelegate.mapView.screenLongitudeLatitude()
         var zoomLevel = appDelegate.mapView.aerialLayer.zoomLevel()
         let aerialService = appDelegate.mapView.aerialLayer.aerialService
-        if zoomLevel > (aerialService?.maxZoom ?? 0) {
-            zoomLevel = aerialService?.maxZoom ?? 0
+        if zoomLevel > aerialService.maxZoom {
+            zoomLevel = aerialService.maxZoom
         }
 
         appDelegate.mapView.aerialLayer.metadata({ data, error in

@@ -8,9 +8,7 @@
 
 import UIKit
 
-if !Rocket_VectorMath_h {
-//#define Rocket_VectorMath_h
-
+// https://developer.apple.com/library/mac/#samplecode/glut/Listings/gle_vvector_h.html
 
 let TRANSFORM_3D = 0
 
@@ -94,8 +92,8 @@ struct OSMTransform {
 }
 
 @inline(__always) func UnitVector(_ a: OSMPoint) -> OSMPoint {
-    let d = CGFloat(Mag(a))
-    return OSMPointMake(Double(a.x / d), Double(a.y / d))
+    let d = Mag(a)
+    return OSMPointMake(a.x / d, a.y / d)
 }
 
 @inline(__always) func CrossMag(_ a: OSMPoint, _ b: OSMPoint) -> Double {
@@ -240,29 +238,6 @@ func LineSegmentIntersectsRectangle(_ p1: OSMPoint, _ p2: OSMPoint, _ rect: OSMR
     return true
 }
 
-// http://mathforum.org/library/drmath/view/63767.html
-let SurfaceAreaEarthRadius: Double = 6378137
-
-func SurfaceArea(_ latLon: OSMRect) -> Double {
-    let lon1 = latLon.origin.x
-    let lat1 = latLon.origin.y
-    let lon2: Double = latLon.origin.x + latLon.size.width
-    let lat2: Double = latLon.origin.y + latLon.size.height
-    let A = .pi * SurfaceAreaEarthRadius * SurfaceAreaEarthRadius * Double(abs(sin(lat1 * (.pi / 180)) - sin(lat2 * (.pi / 180)))) * Double(abs(Float(lon1 - lon2))) / 180
-    return A
-}
-
-func GreatCircleDistance(_ p1: OSMPoint, _ p2: OSMPoint) -> Double {
-    let earthRadius = 6378137.0 // meters
-    // haversine formula
-    let dlon = (p2.x - p1.x) * .pi / 180
-    let dlat = (p2.y - p1.y) * .pi / 180
-    let a: Double = pow(sin(dlat / 2), 2) + cos(p1.y * .pi / 180) * cos(p2.y * .pi / 180) * pow(sin(dlon / 2), 2)
-    let c: Double = 2 * atan2(sqrt(a), sqrt(1 - a))
-    let meters = earthRadius * c
-    return meters
-}
-
 // MARK: Rect
 @inline(__always) func CGRectCenter(_ rc: CGRect) -> CGPoint {
     let c = CGPoint(x: Double(rc.origin.x + rc.size.width / 2), y: Double(rc.origin.y + rc.size.height / 2))
@@ -384,7 +359,7 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
 }
 
 // point is 0..256
-@inline(__always) private func LongitudeLatitudeFromMapPoint(_ point: OSMPoint) -> OSMPoint {
+@inline(__always) func LongitudeLatitudeFromMapPoint(_ point: OSMPoint) -> OSMPoint {
     var x: Double = point.x / 256
     var y: Double = point.y / 256
     x = x - floor(x) // modulus
@@ -398,7 +373,7 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
     return loc
 }
 
-@inline(__always) private func MapPointForLatitudeLongitude(_ latitude: Double, _ longitude: Double) -> OSMPoint {
+@inline(__always) func MapPointForLatitudeLongitude(_ latitude: Double, _ longitude: Double) -> OSMPoint {
     let x = (longitude + 180) / 360
     let sinLatitude = sin(latitude * .pi / 180)
     let y = 0.5 - log((1 + sinLatitude) / (1 - sinLatitude)) / (4 * .pi)
@@ -406,7 +381,7 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
     return point
 }
 
-@inline(__always) private func CGAffineTransformFromOSMTransform(_ transform: OSMTransform) -> CGAffineTransform {
+@inline(__always) func CGAffineTransformFromOSMTransform(_ transform: OSMTransform) -> CGAffineTransform {
     if TRANSFORM_3D {
     return CATransform3DGetAffineTransform(transform)
     } else {
@@ -421,7 +396,7 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
     }
 }
 
-@inline(__always) private func OSMTransformIdentity() -> OSMTransform {
+@inline(__always) func OSMTransformIdentity() -> OSMTransform {
     if TRANSFORM_3D {
     return CATransform3DIdentity
     } else {
@@ -432,13 +407,13 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
     }
 }
 
-@inline(__always) private func OSMTransformEqual(_ t1: OSMTransform, _ t2: OSMTransform) -> Bool {
+@inline(__always) func OSMTransformEqual(_ t1: OSMTransform, _ t2: OSMTransform) -> Bool {
     var t1 = t1
     var t2 = t2
     return memcmp(&t1, &t2, MemoryLayout.size(ofValue: t1)) == 0
 }
 
-@inline(__always) private func OSMTransformScaleX(_ t: OSMTransform) -> Double {
+@inline(__always) func OSMTransformScaleX(_ t: OSMTransform) -> Double {
     if TRANSFORM_3D {
     let d = sqrt(t.m11 * t.m11 + t.m12 * t.m12 + t.m13 * t.m13)
     return d
@@ -447,7 +422,7 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
     }
 }
 
-@inline(__always) private func OSMTransformConcat(_ a: OSMTransform, _ b: OSMTransform) -> OSMTransform {
+@inline(__always) func OSMTransformConcat(_ a: OSMTransform, _ b: OSMTransform) -> OSMTransform {
     if TRANSFORM_3D {
     return CATransform3DConcat(a, b)
     } else {
@@ -465,7 +440,7 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
     }
 }
 
-@inline(__always) private func OSMTransformRotation(_ t: OSMTransform) -> Double {
+@inline(__always) func OSMTransformRotation(_ t: OSMTransform) -> Double {
     if TRANSFORM_3D {
     return atan2(t.m12, t.m11)
     } else {
@@ -473,7 +448,7 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
     }
 }
 
-@inline(__always) private func OSMTransformMakeTranslation(_ dx: Double, _ dy: Double) -> OSMTransform {
+@inline(__always) func OSMTransformMakeTranslation(_ dx: Double, _ dy: Double) -> OSMTransform {
     if TRANSFORM_3D {
     return CATransform3DMakeTranslation(CGFloat(dx), CGFloat(dy), 0)
     } else {
@@ -482,7 +457,7 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
     }
 }
 
-@inline(__always) private func OSMTransformTranslate(_ t: OSMTransform, _ dx: Double, _ dy: Double) -> OSMTransform {
+@inline(__always) func OSMTransformTranslate(_ t: OSMTransform, _ dx: Double, _ dy: Double) -> OSMTransform {
     if TRANSFORM_3D {
     return CATransform3DTranslate(t, CGFloat(dx), CGFloat(dy), 0)
     } else {
@@ -492,7 +467,7 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
     }
 }
 
-@inline(__always) private func OSMTransformScale(_ t: OSMTransform, _ scale: Double) -> OSMTransform {
+@inline(__always) func OSMTransformScale(_ t: OSMTransform, _ scale: Double) -> OSMTransform {
     if TRANSFORM_3D {
     return CATransform3DScale(t, CGFloat(scale), CGFloat(scale), CGFloat(scale))
     } else {
@@ -504,7 +479,7 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
     }
 }
 
-@inline(__always) private func OSMTransformScaleXY(_ t: OSMTransform, _ scaleX: Double, _ scaleY: Double) -> OSMTransform {
+@inline(__always) func OSMTransformScaleXY(_ t: OSMTransform, _ scaleX: Double, _ scaleY: Double) -> OSMTransform {
     if TRANSFORM_3D {
     return CATransform3DScale(t, CGFloat(scaleX), CGFloat(scaleY), 1.0)
     } else {
@@ -516,7 +491,7 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
     }
 }
 
-@inline(__always) private func OSMTransformRotate(_ transform: OSMTransform, _ angle: Double) -> OSMTransform {
+@inline(__always) func OSMTransformRotate(_ transform: OSMTransform, _ angle: Double) -> OSMTransform {
     if TRANSFORM_3D {
     return CATransform3DRotate(transform, CGFloat(angle), 0, 0, 1)
     } else {
@@ -527,7 +502,7 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
     }
 }
 
-@inline(__always) private func OSMPointApplyTransform(_ pt: OSMPoint, _ t: OSMTransform) -> OSMPoint {
+@inline(__always) func OSMPointApplyTransform(_ pt: OSMPoint, _ t: OSMTransform) -> OSMPoint {
     if TRANSFORM_3D {
     let zp = 0.0
     var x = t.m11 * pt.x + t.m21 * pt.y + t.m31 * zp + t.m41
@@ -554,14 +529,14 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
     }
 }
 
-@inline(__always) private func OSMRectApplyTransform(_ rc: OSMRect, _ transform: OSMTransform) -> OSMRect {
+@inline(__always) func OSMRectApplyTransform(_ rc: OSMRect, _ transform: OSMTransform) -> OSMRect {
     let p1 = OSMPointApplyTransform(rc.origin, transform)
     let p2 = OSMPointApplyTransform(OSMPointMake(rc.origin.x + rc.size.width, rc.origin.y + rc.size.height), transform)
     let r2 = OSMRect(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y)
     return r2
 }
 
-@inline(__always) private func UnitX(_ t: OSMTransform) -> OSMPoint {
+@inline(__always) func UnitX(_ t: OSMTransform) -> OSMPoint {
     if TRANSFORM_3D {
     let p = UnitVector(OSMPointMake(t.m11, t.m12))
     return p
@@ -570,7 +545,7 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
     }
 }
 
-@inline(__always) private func Translation(_ t: OSMTransform) -> OSMPoint {
+@inline(__always) func Translation(_ t: OSMTransform) -> OSMPoint {
     if TRANSFORM_3D {
     let p = OSMPointMake(t.m41, t.m42)
     return p
@@ -579,23 +554,43 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
     }
 }
 
-@inline(__always) private func latp2lat(_ a: Double) -> Double {
+@inline(__always) func latp2lat(_ a: Double) -> Double {
     return 180 / .pi * (2 * atan(exp(a * .pi / 180)) - .pi / 2)
 }
 
-@inline(__always) private func lat2latp(_ a: Double) -> Double {
+@inline(__always) func lat2latp(_ a: Double) -> Double {
     return 180 / .pi * log(tan(.pi / 4 + a * (.pi / 180) / 2))
 }
 
 // MARK: miscellaneous
-@inline(__always) private func radiansFromDegrees(_ degrees: Double) -> Double {
+@inline(__always) func radiansFromDegrees(_ degrees: Double) -> Double {
     return degrees * (.pi / 180)
 }
-
-// https://developer.apple.com/library/mac/#samplecode/glut/Listings/gle_vvector_h.html
 
 func Determinant(_ t: OSMTransform) -> Double {
     return t.a * t.d - t.b * t.c
 }
 
-// area in square meters// http://www.movable-type.co.uk/scripts/latlong.html
+// area in square meters
+func SurfaceArea(_ latLon: OSMRect) -> Double {
+	// http://mathforum.org/library/drmath/view/63767.html
+	let SurfaceAreaEarthRadius: Double = 6378137
+	let lon1 = latLon.origin.x
+	let lat1 = latLon.origin.y
+	let lon2: Double = latLon.origin.x + latLon.size.width
+	let lat2: Double = latLon.origin.y + latLon.size.height
+	let A = .pi * SurfaceAreaEarthRadius * SurfaceAreaEarthRadius * Double(abs(sin(lat1 * (.pi / 180)) - sin(lat2 * (.pi / 180)))) * Double(abs(Float(lon1 - lon2))) / 180
+	return A
+}
+
+// http://www.movable-type.co.uk/scripts/latlong.html
+func GreatCircleDistance(_ p1: OSMPoint, _ p2: OSMPoint) -> Double {
+	let earthRadius = 6378137.0 // meters
+	// haversine formula
+	let dlon = (p2.x - p1.x) * .pi / 180
+	let dlat = (p2.y - p1.y) * .pi / 180
+	let a: Double = pow(sin(dlat / 2), 2) + cos(p1.y * .pi / 180) * cos(p2.y * .pi / 180) * pow(sin(dlon / 2), 2)
+	let c: Double = 2 * atan2(sqrt(a), sqrt(1 - a))
+	let meters = earthRadius * c
+	return meters
+}

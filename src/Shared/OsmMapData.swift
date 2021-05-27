@@ -763,11 +763,8 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         let mergePartialResults: ((_ query: ServerQuery?, _ mapData: OsmMapData?, _ error: Error?) -> Void) = { [self] query, mapData, error in
             progress?.progressDecrement()
             activeRequests -= 1
-            if activeRequests == 0 {
+			if activeRequests == 0 {
             }
-			if let mapData = mapData {
-				DLog("begin merge \(Int(mapData.nodeCount()) + Int(mapData.wayCount()) + Int(mapData.relationCount())) objects")
-			}
 			merge(mapData, fromDownload: true, quadList: query?.quadList ?? [], success: (mapData != nil && error == nil))
             completion(activeRequests > 0, error)
         }
@@ -1884,7 +1881,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         region = QuadMap()
         
         Database.dispatchQueue.async(execute: {
-            Database.delete(withName: "")
+            try? Database.delete(withName: "")
         })
     }
     
@@ -1994,7 +1991,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 							 deleteNodes: deleteNodes, deleteWays: deleteWays, deleteRelations: deleteRelations,
 							 isUpdate: isUpdate)
 			} catch {
-				Database.delete(withName: "")
+				try? Database.delete(withName: "")
 				ok = false
 			}
             t = CACurrentMediaTime() - t
@@ -2170,7 +2167,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 			let tmpPath: String
             do {
                 // its faster to create a brand new database than to update the existing one, because SQLite deletes are slow
-                Database.delete(withName: "tmp")
+                try? Database.delete(withName: "tmp")
 				guard let db2 = Database(name: "tmp") else {
 					throw NSError()
 				}
@@ -2301,7 +2298,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 		} catch {
             // database couldn't be read
             print("Unable to read database: recreating from scratch\n")
-			Database.delete(withName: "")
+			try? Database.delete(withName: "")
             // need to download all regions
 			decode.region = QuadMap()
         }

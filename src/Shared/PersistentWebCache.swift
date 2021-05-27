@@ -40,10 +40,6 @@ class PersistentWebCache<T: AnyObject>: NSObject {
 		return a
 	}
 
-	convenience override init() {
-		self.init(name: "", memorySize: 0)
-	}
-
     init(name: String, memorySize: Int) {
 		let name = PersistentWebCache.encodeKey(forFilesystem: name)
 		let bundleName = Bundle.main.infoDictionary?["CFBundleIdentifier"] as? String
@@ -74,20 +70,14 @@ class PersistentWebCache<T: AnyObject>: NSObject {
     }
     
     func removeObjectsAsyncOlderThan(_ expiration: Date) {
-        DispatchQueue.global(qos: .default).async(execute: { [self] in
-            for url in fileEnumerator(withAttributes: [URLResourceKey.contentModificationDateKey]) {
-                guard let url = url as? NSURL else {
-                    continue
-                }
-                var date: AnyObject? = nil
-                do {
-                    try url.getResourceValue(&date, forKey: URLResourceKey.contentModificationDateKey)
-                    if (date as? Date)?.compare(expiration).rawValue ?? 0 < 0 {
-                        do {
-                            try FileManager.default.removeItem(at: url as URL)
-                        } catch {}
-                    }
-                } catch {}
+		DispatchQueue.global(qos: .background).async(execute: { [self] in
+			for url in fileEnumerator(withAttributes: [.contentModificationDateKey]) {
+				if let url = url as? URL,
+				   let date = try? url.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate,
+				   date < expiration
+				{
+					try? FileManager.default.removeItem(at: url)
+				}
             }
         })
     }
@@ -112,7 +102,7 @@ class PersistentWebCache<T: AnyObject>: NSObject {
     
     func object(
         withKey cacheKey: String,
-        fallbackURL urlFunction: @escaping () -> URL,
+        fallbackURL urlFunction: @escaping () -> URL?,
         objectForData: @escaping (_ data: Data) -> T?,
         completion: @escaping (_ object: T?) -> Void
     ) -> T? {
@@ -153,7 +143,10 @@ class PersistentWebCache<T: AnyObject>: NSObject {
 				_ = processData( data )
             } else {
                 // fetch from server
-                let url = urlFunction()
+				guard let url = urlFunction() else {
+					_ = processData( nil )
+					return
+				}
                 let request = URLRequest(url: url)
                 let task = URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
 					let data = ((response as? HTTPURLResponse)?.statusCode ?? 404) < 300 ? data : nil

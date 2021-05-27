@@ -348,7 +348,7 @@ class POIAllTagsViewController: UITableViewController {
         textFieldEditingDidEnd(pair.text2)
     }
     
-    func getSurveyDateButton(for cell: TextPairTableCell?) -> UIView? {
+    func getSurveyDateButton(for cell: TextPairTableCell) -> UIView? {
         let synonyms = [
             "check_date",
             "survey_date",
@@ -356,9 +356,12 @@ class POIAllTagsViewController: UITableViewController {
             "survey",
             "lastcheck",
             "last_checked",
-            "updated"
+            "updated",
+			"checked_exists:date"
         ]
-        if synonyms.contains(cell?.text1.text ?? "") {
+		if let text = cell.text1.text,
+		   synonyms.contains(text)
+		{
             let button = UIButton(type: .contactAdd)
             button.addTarget(self, action: #selector(setSurveyDate(_:)), for: .touchUpInside)
             return button
@@ -382,12 +385,14 @@ class POIAllTagsViewController: UITableViewController {
         present(directionViewController, animated: true)
     }
     
-    func getDirectionButton(for cell: TextPairTableCell?) -> UIView? {
+    func getDirectionButton(for cell: TextPairTableCell) -> UIView? {
         let synonyms = [
             "direction",
             "camera:direction"
         ]
-        if synonyms.contains(cell?.text1.text ?? "") {
+		if let text = cell.text1.text,
+		   synonyms.contains(text)
+		{
             let button = UIButton(type: .contactAdd)
             button.addTarget(self, action: #selector(setDirection(_:)), for: .touchUpInside)
             return button
@@ -412,8 +417,8 @@ class POIAllTagsViewController: UITableViewController {
         childViewPresented = true
     }
     
-    func getHeightButton(for cell: TextPairTableCell?) -> UIView? {
-        if cell?.text1.text == "height" {
+    func getHeightButton(for cell: TextPairTableCell) -> UIView? {
+        if cell.text1.text == "height" {
             let button = UIButton(type: .contactAdd)
             button.addTarget(self, action: #selector(setHeight(_:)), for: .touchUpInside)
             return button
@@ -561,10 +566,10 @@ class POIAllTagsViewController: UITableViewController {
         _ = updateWithRecomendations(forFeature: true)
     }
     
-    @IBAction func textFieldEditingDidBegin(_ textField: AutocompleteTextField?) {
+    @IBAction func textFieldEditingDidBegin(_ textField: AutocompleteTextField) {
         currentTextField = textField
         
-		guard let pair: TextPairTableCell = textField?.superviewOfType(),
+		guard let pair: TextPairTableCell = textField.superviewOfType(),
 			  let indexPath = tableView.indexPath(for: pair)
 		else { return }
 
@@ -582,13 +587,13 @@ class POIAllTagsViewController: UITableViewController {
 					let values = appDelegate.mapView.editorLayer.mapData.tagValues(forKey: key)
 					set = set.union(values)
 					let list: [String] = Array(set)
-                    textField?.autocompleteStrings = list
+                    textField.autocompleteStrings = list
                 }
             } else {
                 // get list of keys
                 let set = PresetsDatabase.shared.allTagKeys()
                 let list = Array(set)
-                textField?.autocompleteStrings = list
+                textField.autocompleteStrings = list
             }
         }
     }
@@ -628,9 +633,9 @@ class POIAllTagsViewController: UITableViewController {
         }
         return nil
     }
-    
-    func textFieldEditingDidEnd(_ textField: UITextField?) {
-		guard let pair: TextPairTableCell = textField?.superviewOfType(),
+
+    func textFieldEditingDidEnd(_ textField: UITextField) {
+		guard let pair: TextPairTableCell = textField.superviewOfType(),
 			  let indexPath = tableView.indexPath(for: pair)
 		else { return }
 
@@ -691,9 +696,8 @@ class POIAllTagsViewController: UITableViewController {
         }
     }
     
-    @IBAction func textFieldChanged(_ textField: UITextField?) {
-		guard let textField = textField,
-			  let pair: TextPairTableCell = textField.superviewOfType(),
+    @IBAction func textFieldChanged(_ textField: UITextField) {
+		guard let pair: TextPairTableCell = textField.superviewOfType(),
 			  let indexPath = tableView.indexPath(for: pair)
 		else { return }
 

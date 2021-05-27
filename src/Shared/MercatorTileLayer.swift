@@ -37,23 +37,26 @@ private func TileToWMSCoords(_ tx: Int, _ ty: Int, _ z: Int, _ projection: Strin
 @objcMembers
 class MercatorTileLayer: CALayer, GetDiskCacheSize {
     
-    var _webCache = PersistentWebCache<UIImage>()
-    var _logoUrl: String = ""
-    var _layerDict: [String : CALayer] = [:] // map of tiles currently displayed
+	private var _webCache = PersistentWebCache<UIImage>(name: "", memorySize: 0)
+	private var _layerDict: [String : CALayer] = [:] // map of tiles currently displayed
     
-    var mapView = MapView()
-    var isPerformingLayout = AtomicInt(0)
+	let mapView: MapView
+	private var isPerformingLayout = AtomicInt(0)
     
     // MARK: Implementation
-    
-    override init(layer: Any) {
-        super.init(layer: layer)
-    }
-    
+
+	override init(layer: Any) {
+		let layer = layer as! MercatorTileLayer
+		self.mapView = layer.mapView
+		self.aerialService = layer.aerialService
+		super.init(layer: layer)
+	}
+
     init(mapView: MapView) {
-        super.init(layer: CALayer())
-        //self.opaque = YES;
-        
+		self.mapView = mapView
+		self.aerialService = AerialService.none	// arbitrary, just need a default value
+		super.init()
+
         needsDisplayOnBoundsChange = true
         
         // disable animations
@@ -68,40 +71,30 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
             "transform": NSNull(),
             "isHidden": NSNull()
         ]
-        
-        self.mapView = mapView
-        
+
         self.mapView.addObserver(self, forKeyPath: "screenFromMapTransform", options: [], context: nil)
     }
     
-//    deinit {
-//        mapView.removeObserver(self, forKeyPath: "screenFromMapTransform")
-//    }
+	deinit {
+		// mapView.removeObserver(self, forKeyPath: "screenFromMapTransform")
+	}
 
-    private var _aerialService: AerialService?
-    var aerialService: AerialService? {
-        get {
-            _aerialService
-        }
-        set(service) {
-            if service == _aerialService {
+	var aerialService: AerialService {
+        willSet(service) {
+            if service === aerialService {
                 return
             }
             
             // remove previous data
-            sublayers = nil
-//            webCache = nil
-            _layerDict.removeAll()
+			sublayers = nil
+			_layerDict.removeAll()
             
-            // update service
-            _aerialService = service
-            if let service = service {
-                _webCache = PersistentWebCache(name: service.identifier, memorySize: 20 * 1000 * 1000)
-            }
-            
-            let expirationDate = Date(timeIntervalSinceNow: -7 * 24 * 60 * 60)
-            purgeOldCacheItemsAsync(expirationDate)
-            setNeedsLayout()
+			// update service
+			_webCache = PersistentWebCache(name: service.identifier, memorySize: 20 * 1000 * 1000)
+
+			let expirationDate = Date(timeIntervalSinceNow: -7 * 24 * 60 * 60)
+			purgeOldCacheItemsAsync(expirationDate)
+			setNeedsLayout()
         }
     }
     
@@ -121,32 +114,32 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
     }
     
     func zoomLevel() -> Int {
-        return aerialService!.roundZoomUp ? Int(ceil(mapView.zoom())): Int(floor(mapView.zoom()))
+        return aerialService.roundZoomUp ? Int(ceil(mapView.zoom())): Int(floor(mapView.zoom()))
     }
     
     func metadata(_ callback: @escaping (Data?, Error?) -> Void) {
-        if aerialService?.metadataUrl == nil {
-            callback(nil, nil)
-        } else {
-            let rc = mapView.screenLongitudeLatitude()
-            
-            var zoomLevel = self.zoomLevel()
-            if zoomLevel > 21 {
-                zoomLevel = 21
-            }
-            
-            let url = String(format: (aerialService?.metadataUrl)!, rc.origin.y + rc.size.height / 2, rc.origin.x + rc.size.width / 2, zoomLevel)
-            
-            var task: URLSessionDataTask? = nil
-            if let url1 = URL(string: url) {
-                task = URLSession.shared.dataTask(with: url1, completionHandler: { data, response, error in
-                    DispatchQueue.main.async(execute: {
-                        callback(data, error)
-                    })
-                })
-            }
-            task?.resume()
+        guard let metadataUrl = aerialService.metadataUrl else {
+			callback(nil, nil)
+			return
         }
+
+		let rc = mapView.screenLongitudeLatitude()
+
+		var zoomLevel = self.zoomLevel()
+		if zoomLevel > 21 {
+			zoomLevel = 21
+		}
+
+		let url = String(format: metadataUrl, rc.origin.y + rc.size.height / 2, rc.origin.x + rc.size.width / 2, zoomLevel)
+
+		if let url = URL(string: url) {
+			let task = URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
+				DispatchQueue.main.async(execute: {
+					callback(data, error)
+				})
+			})
+			task.resume()
+		}
     }
     
     func purgeTileCache() {
@@ -165,7 +158,7 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
         _webCache.getDiskCacheSize(&pSize, count: &pCount)
     }
 
-    func layerOverlapsScreen(_ layer: CALayer) -> Bool {
+    private func layerOverlapsScreen(_ layer: CALayer) -> Bool {
         let rc = layer.frame
         let center = CGRectCenter(rc)
         
@@ -183,7 +176,7 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
         return OSMRectContainsPoint(rect, p1) || OSMRectContainsPoint(rect, p2) || OSMRectContainsPoint(rect, p3) || OSMRectContainsPoint(rect, p4)
     }
 
-    func removeUnneededTiles(for rect: OSMRect, zoomLevel: Int) {
+	private func removeUnneededTiles(for rect: OSMRect, zoomLevel: Int) {
 		guard let sublayers = self.sublayers else { return }
 
 		let MAX_ZOOM = 30
@@ -255,19 +248,12 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		}
 	}
 
-    func isPlaceholderImage(_ data: Data?) -> Bool {
-        if let data = data {
-            return (aerialService!.placeholderImage as NSData?)?.isEqual(to: data) ?? false
-        }
-        return false
-    }
-    
-    func quadKey(forZoom zoom: Int, tileX: Int, tileY: Int) -> String {
+	private func quadKey(forZoom zoom: Int, tileX: Int, tileY: Int) -> String {
         return TileXYToQuadKey(tileX, tileY, zoom)
     }
     
-    func url(forZoom zoom: Int, tileX: Int, tileY: Int) -> URL {
-        var url = aerialService!.url
+    private func url(forZoom zoom: Int, tileX: Int, tileY: Int) -> URL {
+        var url = aerialService.url
         
         // handle switch in URL
 		if let begin = url.range(of: "{switch:"),
@@ -280,10 +266,9 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
 			}
 		}
 
-        if let projection = aerialService?.wmsProjection,
-		   !projection.isEmpty
-		{
-            // WMS
+        let projection = aerialService.wmsProjection
+		if projection != "" {
+			// WMS
             let minXmaxY = TileToWMSCoords(Int(tileX), Int(tileY), Int(zoom), projection)
             let maxXminY = TileToWMSCoords(Int(tileX + 1), Int(tileY + 1), Int(zoom), projection)
             var bbox: String = ""
@@ -329,7 +314,7 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
         return URL(string: urlString)!
     }
 
-    func fetchTile(
+	private func fetchTile(
         forTileX tileX: Int,
         tileY: Int,
         minZoom: Int,
@@ -372,7 +357,7 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
                     return url(forZoom: zoomLevel, tileX: tileModX, tileY: tileModY)
                 },
                 objectForData: { data in
-					if data.count == 0 || self.isPlaceholderImage(data) {
+					if data.count == 0 || self.aerialService.isPlaceholderImage(data) {
 						return nil
 					}
 					return UIImage(data: data)
@@ -451,7 +436,7 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
     }
     
 //#if CUSTOM_TRANSFORM
-    func setSublayerPositions(_ _layerDict: [String : CALayer]) {
+	private func setSublayerPositions(_ _layerDict: [String : CALayer]) {
         // update locations of tiles
         let tRotation = OSMTransformRotation(mapView.screenFromMapTransform)
         let tScale = OSMTransformScaleX(mapView.screenFromMapTransform)
@@ -477,8 +462,7 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
     }
 //#endif
 
-    func layoutSublayersSafe() {
-		guard let aerialService = aerialService else { return }
+	private func layoutSublayersSafe() {
         let rect = mapView.boundingMapRectForScreen()
         var zoomLevel = self.zoomLevel()
         
@@ -538,7 +522,8 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
         layoutSublayersSafe()
 		isPerformingLayout.decrement()
     }
-    
+
+	// this function is used for bulk downloading tiles
     func downloadTile(forKey cacheKey: String, completion: @escaping () -> Void) {
         var tileX = Int()
         var tileY = Int()
@@ -549,7 +534,7 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
 				return self.url(forZoom: zoomLevel, tileX: tileX, tileY: tileY)
 			},
 			objectForData: { data in
-				if data.count == 0 || self.isPlaceholderImage(data) {
+				if data.count == 0 || self.aerialService.isPlaceholderImage(data) {
 					return nil
 				}
 				return UIImage(data: data)
@@ -576,7 +561,7 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
             minZoomLevel = 31 // shouldn't be necessary, except to shup up the Xcode analyzer
         }
         
-        var maxZoomLevel = aerialService?.maxZoom ?? 0
+        var maxZoomLevel = aerialService.maxZoom
         if maxZoomLevel > minZoomLevel + 2 {
             maxZoomLevel = minZoomLevel + 2
         }
@@ -618,19 +603,14 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
     }
     
     override var isHidden: Bool {
-        get {
-            return super.isHidden
-        }
-        set(isHidden) {
-            super.isHidden = isHidden
-            
-            if !isHidden {
-                setNeedsLayout()
-            }
-        }
-    }
-    
+        didSet(isHidden) {
+			if !isHidden {
+				setNeedsLayout()
+			}
+		}
+	}
+
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+		fatalError()
     }
 }

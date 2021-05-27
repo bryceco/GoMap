@@ -10,6 +10,7 @@ import Foundation
 
 /// An object that parses `geo:` URLs
 class LocationURLParser: NSObject {
+
     /// Attempts to parse the given URL.
     /// @param url The URL to parse.
     /// @return The parser result, if the URL was parsed successfully, or `nil` if the parser was not able to process the URL.

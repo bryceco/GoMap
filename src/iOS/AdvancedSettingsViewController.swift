@@ -42,8 +42,8 @@ class AdvancedSettingsViewController: UITableViewController {
     
         let appDelegate = AppDelegate.shared
         let mapData = appDelegate.mapView.editorLayer.mapData
-        if !(hostname.text == originalHostname) {
-            mapData.setServer(hostname.text!)
+        if hostname.text != originalHostname {
+            mapData.setServer( hostname.text! )
         }
     }
     

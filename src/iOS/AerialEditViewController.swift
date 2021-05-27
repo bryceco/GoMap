@@ -14,8 +14,8 @@ class AerialEditViewController: UITableViewController {
     @IBOutlet var zoomField: UITextField!
     @IBOutlet var projectionField: UITextField!
     var picker =  UIPickerView()
-    var projectionList: [String]?
-    
+
+	// these are initialized by the segue manager:
     var name: String?
     var url: String?
     var zoom: Int = 0
@@ -30,12 +30,12 @@ class AerialEditViewController: UITableViewController {
         nameField.text = name
         urlField.text = url
         zoomField.text = "\(zoom)"
-        projectionField.text = projection
+        projectionField.text = projection ?? ""
         picker.delegate = self
         
         picker.reloadAllComponents()
         var row: Int = 0
-        if self.projection?.count == 0 {
+		if (self.projection?.count ?? 0) == 0 {
             row = 0
         } else {
             if let indexInSupportedProjection = AerialService.supportedProjections.firstIndex(of: projection ?? "") {
@@ -48,15 +48,13 @@ class AerialEditViewController: UITableViewController {
         projectionField.inputView = picker
     }
     
-    func isBannedURL(_ url: String) -> Bool {
-		let pattern = ".*\\.google(apis)?\\..*/(vt|kh)[\\?/].*([xyz]=.*){3}.*"
-		let regex = try! NSRegularExpression(pattern: pattern, options: .caseInsensitive)
-		let range = regex.rangeOfFirstMatch(in: url, options: [], range: NSRange(location: 0, length: url.count))
-		if range.location != NSNotFound {
-			return true
-        }
-        return false
-    }
+	func isBannedURL(_ url: String) -> Bool {
+		// http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}
+		let regex = ".*\\.google(apis)?\\..*/(vt|kh)[\\?/].*([xyz]=.*){3}.*"
+		let range = url.range(of: regex, options: [.regularExpression,.caseInsensitive])
+		return range != nil
+	}
+
     
     @IBAction func done(_ sender: Any) {
         // remove white space from subdomain list
@@ -74,12 +72,13 @@ class AerialEditViewController: UITableViewController {
 		if projection == TMS_PROJECTION_NAME {
 			projection = ""
         }
+		let maxZoom = Int(zoomField.text ?? "0") ?? 0
 
 		let service = AerialService(
 			withName: nameField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? "",
             identifier: identifier,
             url: url,
-            maxZoom: zoomField.text?.intValue ?? 0,
+			maxZoom: maxZoom,
             roundUp: true,
             startDate: nil,
             endDate: nil,
@@ -106,66 +105,23 @@ class AerialEditViewController: UITableViewController {
         }
         navigationItem.rightBarButtonItem?.isEnabled = allowed
     }
-    
-
-
 }
 
 extension AerialEditViewController: UIPickerViewDataSource {
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        AerialService.supportedProjections.count + 1
-    }
+	func numberOfComponents(in pickerView: UIPickerView) -> Int {
+		return 1
+	}
+	func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+		return AerialService.supportedProjections.count + 1
+	}
 }
 
 extension AerialEditViewController: UIPickerViewDelegate {
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        row == 0 ? TMS_PROJECTION_NAME : AerialService.supportedProjections[row - 1]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        projectionField.text = row == 0 ? TMS_PROJECTION_NAME : AerialService.supportedProjections[row - 1]
-        contentChanged(projectionField ?? "")
-    }
-}
-
-//TODO: Move to another file sometime later
-//https://stackoverflow.com/a/55763210/
-extension String {
-    //Converts String to Int
-    var intValue: Int? {
-        if let num = NumberFormatter().number(from: self) {
-            return num.intValue
-        } else {
-            return nil
-        }
-    }
-    
-    //    //Converts String to Double
-    //    public func toDouble() -> Double? {
-    //        if let num = NumberFormatter().number(from: self) {
-    //            return num.doubleValue
-    //        } else {
-    //            return nil
-    //        }
-    //    }
-    //
-    //    /// EZSE: Converts String to Float
-    //    public func toFloat() -> Float? {
-    //        if let num = NumberFormatter().number(from: self) {
-    //            return num.floatValue
-    //        } else {
-    //            return nil
-    //        }
-    //    }
-    //
-    //    //Converts String to Bool
-    //    public func toBool() -> Bool? {
-    //        return (self as NSString).boolValue
-    //    }
+	func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+		return row == 0 ? TMS_PROJECTION_NAME : AerialService.supportedProjections[row - 1]
+	}
+	func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+		projectionField.text = row == 0 ? TMS_PROJECTION_NAME : AerialService.supportedProjections[row - 1]
+		contentChanged(projectionField ?? "")
+	}
 }
