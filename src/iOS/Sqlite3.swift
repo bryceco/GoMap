@@ -46,10 +46,11 @@ final class Sqlite {
 	class func pathForName(_ name: String) -> String {
 		let paths = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).map(\.path)
 		let bundleName = Bundle.main.infoDictionary?["CFBundleIdentifier"] as! String
+		let basename = "data.sqlite3"
+		let name = name.isEmpty ? basename : "\(name).\(basename)"
 		let url = URL(fileURLWithPath: paths[0])
-			.appendingPathComponent(bundleName)
-			.appendingPathComponent("\(name)")
-			.appendingPathComponent("data.sqlite3")
+			.appendingPathComponent(bundleName, isDirectory: true)
+			.appendingPathComponent(name, isDirectory: false)
 		try? FileManager.default.createDirectory(atPath: url.deletingLastPathComponent().path, withIntermediateDirectories: true, attributes: nil)
 		return url.path
 	}
@@ -139,6 +140,7 @@ final class Sqlite {
 	}
 	func columnText(_ statement: SqliteStatement, _ index: Int32) -> String {
 		let text = sqlite3_column_text(statement.value, index)
+		assert( text != nil )
 		return String(cString: text!)
 	}
 	func columnInt32(_ statement: SqliteStatement, _ index: Int32) -> Int32 {

@@ -23,10 +23,16 @@ final class OsmRelation: OsmBaseObject {
         return "OsmRelation \(super.description)"
     }
 
-    func constructMember(_ member: OsmMember) {
-        assert(!_constructed)
+	func constructMember(_ member: OsmMember) {
+		assert(!_constructed)
+		assert(member.obj == nil)
 		members.append( member )
-    }
+	}
+	func constructMembers(_ members: [OsmMember]) {
+		assert(!_constructed)
+		assert(members.first == nil || members.first!.obj == nil)	// things added here shouldn't be resolved yet
+		self.members = members
+	}
 
     override func isRelation() -> OsmRelation? {
 		return self

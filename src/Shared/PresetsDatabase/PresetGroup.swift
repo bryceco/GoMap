@@ -8,20 +8,19 @@
 
 import Foundation
 
+enum PresetKeyOrGroup {
+	case key(PresetKey)
+	case group(PresetGroup)
+}
 
 // A group of related tags, such as address tags, organized for display purposes
 // A group becomes a Section in UITableView
 final class PresetGroup {
 	let name: String?				// e.g. Address
-	let presetKeys: [AnyObject]	// either PresetKey or PresetGroup
+	let presetKeys: [PresetKeyOrGroup]
 	let isDrillDown: Bool
 
-	init(name: String?, tags: [AnyObject], isDrillDown: Bool = false) {
-#if DEBUG
-		if tags.count > 0 {
-			assert((tags.last is PresetKey) || (tags.last is PresetGroup)) // second case for drill down group
-		}
-#endif
+	init(name: String?, tags: [PresetKeyOrGroup], isDrillDown: Bool = false) {
 		self.name = name
 		self.presetKeys = tags
 		self.isDrillDown = isDrillDown
@@ -34,7 +33,10 @@ final class PresetGroup {
 	var description: String {
 		var text = "\(name ?? "<unknown>"):\n"
 		for key in presetKeys {
-			text += "   \((key as? PresetKey)?.description ?? "<>")\n"
+			switch key {
+			case let .key(key):	text += "   \(key.description)\n"
+			case let .group(group):	text += "   \(group.description)\n"
+			}
 		}
 		return text
 	}

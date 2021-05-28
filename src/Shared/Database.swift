@@ -611,8 +611,13 @@ final class Database {
 			relations[relation.ident] = builder
 		}
 
+		// set the member objects for relations
 		try queryMembers(forRelations: relations)
+		for builder in relations.values {
+			builder.relation.constructMembers( builder.members.map({ $0! }) )
+		}
 
+		// build the dictionary
 		return Dictionary<OsmIdentifier,OsmRelation>( uniqueKeysWithValues: zip(relations.keys, relations.values.map({ $0.relation })) )
 	}
     

@@ -9,7 +9,7 @@
 class FeaturePresetCell: UITableViewCell {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var valueField: AutocompleteTextField!
-    var presetKey: AnyObject?	// either PresetKey or PresetGroup
+    var presetKey: PresetKeyOrGroup?
 }
 
 class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegate, POITypeViewControllerDelegate {
@@ -203,7 +203,8 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
         
 		let rowObject = (self.drillDownGroup != nil) ? self.drillDownGroup!.presetKeys[indexPath.row] : allPresets!.presetAtIndexPath(indexPath)
 
-		if let presetKey = rowObject as? PresetKey {
+		switch rowObject {
+		case let PresetKeyOrGroup.key(presetKey):
 			let key = presetKey.tagKey
             let cellName = key == "" ? "CommonTagType"
 						: key == "name" ? "CommonTagName"
@@ -213,7 +214,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			cell.nameLabel.text = presetKey.name
             cell.valueField.placeholder = presetKey.placeholder
             cell.valueField.delegate = self
-            cell.presetKey = presetKey
+			cell.presetKey = .key(presetKey)
 
 			cell.valueField.keyboardType = presetKey.keyboardType
 			cell.valueField.autocapitalizationType = presetKey.autocapitalizationType
@@ -287,17 +288,16 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
             }
             return cell
 
-        } else {
-    
+		case let PresetKeyOrGroup.group(drillDownGroup):
+
             // drill down cell
-            let drillDownGroup = rowObject as! PresetGroup
 			let cell = tableView.dequeueReusableCell(withIdentifier: "CommonTagSingle", for: indexPath) as! FeaturePresetCell
 			cell.nameLabel.text = drillDownGroup.name
             cell.valueField.text = drillDownGroup.multiComboSummary(ofDict: keyValueDict, isPlaceholder: false)
             cell.valueField.placeholder = drillDownGroup.multiComboSummary(ofDict: nil, isPlaceholder: true)
             cell.valueField.isEnabled = false
             cell.valueField.rightView = nil
-            cell.presetKey = drillDownGroup
+			cell.presetKey = .group(drillDownGroup)
             cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
     
             return cell

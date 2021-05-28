@@ -927,9 +927,9 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
                 } else if current!.version < node.version {
                     // already exists, so do an in-place update
                     let bbox = current!.boundingBox
-                        current!.serverUpdate(inPlace: node)
-                        spatial.updateMember(current!, fromBox: bbox, undo: nil)
-                        newNodes.append(current!)
+					current!.serverUpdate(inPlace: node)
+					spatial.updateMember(current!, fromBox: bbox, undo: nil)
+					newNodes.append(current!)
                 }
             }
             

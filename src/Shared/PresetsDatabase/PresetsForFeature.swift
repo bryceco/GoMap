@@ -35,13 +35,13 @@ class PresetsForFeature: NSObject {
 		return _sectionList[index]
 	}
 
-	func presetAtSection(_ section: Int, row: Int) -> Any {
+	func presetAtSection(_ section: Int, row: Int) -> PresetKeyOrGroup {
 		let group = _sectionList[section]
 		let tag = group.presetKeys[row]
 		return tag
 	}
 
-	func presetAtIndexPath(_ indexPath: IndexPath) -> Any {
+	func presetAtIndexPath(_ indexPath: IndexPath) -> PresetKeyOrGroup {
 		return presetAtSection( indexPath.section, row: indexPath.row)
 	}
 
@@ -123,11 +123,11 @@ class PresetsForFeature: NSObject {
 				keyboard: UIKeyboardType.default,
 				capitalize: UITextAutocapitalizationType.words,
 				presets:nil)
-		let typeGroup = PresetGroup(name: "Type", tags: [typeTag, nameTag].compactMap { $0 })
+		let typeGroup = PresetGroup(name: "Type", tags: [.key(typeTag), .key(nameTag)])
 		_sectionList = [typeGroup]
 
 		// Add user-defined presets
-		var customGroup: [AnyObject] = []
+		var customGroup: [PresetKeyOrGroup] = []
 		for custom in PresetKeyUserDefinedList.shared.list {
 			if custom.appliesToKey == "" {
 				// accept all
@@ -140,7 +140,7 @@ class PresetsForFeature: NSObject {
 			} else {
 				continue
 			}
-			customGroup.append(custom)
+			customGroup.append(.key(custom))
 		}
 		if customGroup.count != 0 {
 			let group = PresetGroup(name: nil, tags: customGroup)
@@ -163,7 +163,7 @@ class PresetsForFeature: NSObject {
 			ignore: ignoreTags,
 			dupSet: &dupSet,
 			update: update)
-		_sectionList.append(PresetGroup(name: nil, tags: [AnyObject]())) // Create a break between the common items and the rare items
+		_sectionList.append(PresetGroup(name: nil, tags: [PresetKeyOrGroup]())) // Create a break between the common items and the rare items
 		addPresetsForFields(
 			inFeatureID: feature.featureID,
 			geometry: geometry,

@@ -305,14 +305,14 @@ extension PresetsDatabase {
 						defaultValue:String?, placeholder:String?, keyboard:UIKeyboardType, capitalize:UITextAutocapitalizationType) -> PresetGroup
 	{
 		let prefix = commonPrefixOfMultiKeys( options )
-		var tags: [PresetKey] = []
+		var tags: [PresetKeyOrGroup] = []
 		for i in keys.indices {
 			let name = strings?[options[i]] ?? OsmTags.PrettyTag(String(options[i].dropFirst(prefix.count)))
 			let tag = yesNoWith(label:name, key:keys[i], defaultValue:defaultValue, placeholder:nil, keyboard:keyboard, capitalize:capitalize)
-			tags.append(tag)
+			tags.append(.key(tag))
 		}
 		let group = PresetGroup(name: label, tags: tags, isDrillDown: true)
-		let group2 = PresetGroup(name: nil, tags: [group], isDrillDown: true)
+		let group2 = PresetGroup(name: nil, tags: [.group(group)], isDrillDown: true)
 		return group2
 	}
 
@@ -382,7 +382,7 @@ extension PresetsDatabase {
 		case "defaultcheck", "check", "onewayCheck":
 			let key = dict["key"] as! String
 			let tag = yesNoWith(label: label, key: key, defaultValue:defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: capitalize)
-			let group = PresetGroup(name:nil, tags:[tag])
+			let group = PresetGroup(name:nil, tags:[.key(tag)])
 			return group
 
 		case "radio", "structureRadio", "manyCombo", "multiCombo":
@@ -408,7 +408,7 @@ extension PresetsDatabase {
 					let option = options![0]
 					let name = strings?[option] ?? OsmTags.PrettyTag(option)
 					let tag = yesNoWith(label: name, key: key, defaultValue:defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: capitalize)
-					let group = PresetGroup(name:nil, tags:[tag])
+					let group = PresetGroup(name:nil, tags:[.key(tag)])
 					return group
 				}
 				let group = multiComboWith(label:label, keys:keys, options:options!, strings:strings,
@@ -418,7 +418,7 @@ extension PresetsDatabase {
 				// a multiple selection
 				let key = dict["key"] as! String
 				let tag = comboWith(label:label, key: key, options: options!, strings: strings, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: capitalize)
-				let group = PresetGroup(name: nil, tags: [tag])
+				let group = PresetGroup(name: nil, tags: [.key(tag)])
 				return group
 			}
 
@@ -431,12 +431,12 @@ extension PresetsDatabase {
 			let options = dict["options"] as? [String] ?? taginfoFor(key:key, searchKeys:false, update:update)
 			let strings = dict["strings"] as? [String:String]
 			let tag = comboWith(label: label, key:key, options:options, strings:strings, defaultValue:defaultValue, placeholder:placeholder, keyboard:keyboard, capitalize:capitalize)
-			let group = PresetGroup(name: nil, tags: [tag])
+			let group = PresetGroup(name: nil, tags: [.key(tag)])
 			return group
 
 		case "access", "cycleway":
 
-			var tagList: [PresetKey] = []
+			var tagList: [PresetKeyOrGroup] = []
 
 			let keys = dict["keys"] as! [String]
 			let types = dict["types"] as! [String:String]
@@ -445,7 +445,7 @@ extension PresetsDatabase {
 			for key in keys {
 				let name = types[key] ?? OsmTags.PrettyTag(key)
 				let tag = comboWith(label: name, key: key, options: options, strings: strings, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: capitalize)
-				tagList.append(tag)
+				tagList.append(.key(tag))
 			}
 			let group = PresetGroup(name: label, tags: tagList)
 			return group
@@ -479,7 +479,7 @@ extension PresetsDatabase {
 			}
 
 			let placeholders = dict["placeholders"] as? [String : Any]
-			var addrs: [PresetKey] = []
+			var addrs: [PresetKeyOrGroup] = []
 			for addressGroup in keysForCountry ?? [] {
 				for addressKey in addressGroup {
 					var name: String?
@@ -492,7 +492,7 @@ extension PresetsDatabase {
 					keyboard = numericFields.contains(addressKey) ? .numbersAndPunctuation : .default
 					let tagKey = "\(addressPrefix):\(addressKey)"
 					let tag = PresetKey(name: name!, tagKey: tagKey, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: UITextAutocapitalizationType.words, presets: nil)
-					addrs.append(tag)
+					addrs.append(.key(tag))
 				}
 			}
 			let group = PresetGroup(name: label, tags: addrs)
@@ -518,7 +518,7 @@ extension PresetsDatabase {
 			}
 			let key = dict["key"] as! String
 			let tag = PresetKey(name: label, tagKey: key, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: capitalize, presets: nil)
-			let group = PresetGroup(name: nil, tags: [tag])
+			let group = PresetGroup(name: nil, tags: [.key(tag)])
 			return group
 
 		case "localized", "restrictions":
