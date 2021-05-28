@@ -371,10 +371,13 @@ class AerialService: NSObject {
     }
     
     func loadIcon(fromWeb url: String) {
-		self.attributionIcon = AerialService.iconCache.object(withKey: self.identifier,
-															  fallbackURL: { URL(string: url) },
-															  objectForData: { return UIImage(data: $0) },
-															  completion: {	self.attributionIcon = $0 })
+		DispatchQueue.main.async(execute: {
+			// FIXME: cache requires requests to start on main thread. We should have the cache use its own queue
+			self.attributionIcon = AerialService.iconCache.object(withKey: self.identifier,
+																  fallbackURL: { URL(string: url) },
+																  objectForData: { return UIImage(data: $0) },
+																  completion: {	self.attributionIcon = $0 })
+		})
 	}
     
     override var description: String {

@@ -45,7 +45,7 @@ final class PresetGroup {
 	{
 		var summary = ""
 		for preset in presetKeys {
-			if let preset = preset as? PresetKey,
+			if case let .key(preset) = preset,
 			   let values = preset.presetList,
 			   values.count == 2,
 			   values[0].tagValue == "yes",

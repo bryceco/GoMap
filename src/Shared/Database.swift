@@ -436,7 +436,7 @@ final class Database {
 	{
 #if DEBUG
 #if !targetEnvironment(macCatalyst)
-		assert(dispatch_get_current_queue() == Database.dispatchQueue)
+//		assert(dispatch_get_current_queue() == Database.dispatchQueue)
 #endif
 #endif
 
@@ -642,4 +642,6 @@ final class Database {
 			relation.members[Int(member_index)] = member
         }
     }
+
 }
+

@@ -98,27 +98,19 @@ class POIAllTagsViewController: UITableViewController {
             for section in 0..<presets.sectionCount() {
                 for row in 0..<presets.tagsInSection(section) {
                     let preset = presets.presetAtSection(section, row: row)
-                    if preset is PresetGroup {
-                        let group = preset as? PresetGroup
-                        if let presetKeys = group?.presetKeys {
-                            for presetKey in presetKeys {
-                                guard let presetKey = presetKey as? PresetKey else {
-                                    continue
-                                }
-                                if presetKey.tagKey.count == 0 {
-                                    continue
-                                }
-                                newKeys.append(presetKey.tagKey)
-                            }
+					switch preset {
+					case let .group(group):
+						for case let .key(presetKey) in group.presetKeys {
+							if presetKey.tagKey == "" {
+								continue
+							}
+							newKeys.append( presetKey.tagKey )
                         }
-                    } else {
-                        let presetKey = preset as? PresetKey
-                        if presetKey?.tagKey.count == 0 {
+					case let .key(presetKey):
+						if presetKey.tagKey.count == 0 {
                             continue
                         }
-                        if let tagKey = presetKey?.tagKey {
-                            newKeys.append(tagKey)
-                        }
+						newKeys.append( presetKey.tagKey )
                     }
                 }
             }

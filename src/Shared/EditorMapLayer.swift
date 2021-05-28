@@ -1337,8 +1337,6 @@ class EditorMapLayer: CALayer {
         // get objects in visible rect
         var objects = getVisibleObjects()
 
-		let rel = objects.filter({ $0 is OsmRelation })
-        
         atVisibleObjectLimit = objects.count >= objectLimit // we want this to reflect the unfiltered count
         
 		if objectFilters.enableObjectFilters {

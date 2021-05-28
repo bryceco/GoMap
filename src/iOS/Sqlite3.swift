@@ -74,7 +74,7 @@ final class Sqlite {
 
 	func errorMessage() -> String {
 		if let msg = sqlite3_errmsg(db) {
-			return "\(msg)"
+			return String(cString: msg)
 		}
 		return ""
 	}

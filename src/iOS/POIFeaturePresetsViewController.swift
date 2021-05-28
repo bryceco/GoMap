@@ -104,8 +104,10 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
                     DispatchQueue.main.async(execute: {
                         let index = IndexPath(row: 1, section: 0)
                         let cell = self.tableView.cellForRow(at: index) as? FeaturePresetCell
-                        if (cell?.presetKey as? PresetKey)?.tagKey == "name" {
-                            cell?.valueField.becomeFirstResponder()
+						if case let .key(presetKey) = cell?.presetKey,
+						   presetKey.tagKey == "name"
+						{
+							cell?.valueField.becomeFirstResponder()
                         }
                     })
                 }
@@ -315,21 +317,21 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 
 		if drillDownGroup == nil && indexPath.section == 0 && indexPath.row == 0 {
 			performSegue(withIdentifier: "POITypeSegue", sender: cell)
-        } else if let group = cell.presetKey as? PresetGroup {
+		} else if case let .group(group) = cell.presetKey {
             // special case for drill down
 			let sub = storyboard?.instantiateViewController(withIdentifier: "PoiCommonTagsViewController") as! POIFeaturePresetsViewController
 			sub.drillDownGroup = group
 			navigationController?.pushViewController(sub, animated: true)
-		} else if let presetKey = cell.presetKey as? PresetKey,
+		} else if case let .key(presetKey) = cell.presetKey,
 				  canMeasureDirection(for: presetKey)
 		{
 			self.measureDirection(forKey: presetKey.tagKey,
 								  value: cell.valueField.text ?? "")
-		} else if let presetKey = cell.presetKey as? PresetKey,
+		} else if case let .key(presetKey) = cell.presetKey,
 				  canMeasureHeight(for: presetKey)
 		{
 			measureHeight(forKey: presetKey.tagKey)
-		} else if let presetKey = cell.presetKey as? PresetKey,
+		} else if case let .key(presetKey) = cell.presetKey,
 				  canRecognizeOpeningHours(for: presetKey)
 		{
 			recognizeOpeningHours(forKey: presetKey.tagKey)
@@ -342,7 +344,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
         let cell = sender as? FeaturePresetCell
         if segue.destination is POIPresetValuePickerController {
 			if let preset = segue.destination as? POIPresetValuePickerController,
-			   let presetKey = cell?.presetKey as? PresetKey
+			   case let .key(presetKey) = cell?.presetKey
 			{
 				preset.tag = presetKey.tagKey
 				preset.valueDefinitions = presetKey.presetList
@@ -388,7 +390,8 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
         if let textField = textField {
             // get list of values for current key
 			let cell: FeaturePresetCell = textField.superviewOfType()!
-			if let key = (cell.presetKey as? PresetKey)?.tagKey {
+			if case let .key(presetKey) = cell.presetKey {
+				let key = presetKey.tagKey
                 if PresetsDatabase.shared.eligibleForAutocomplete(key) {
 					var values = AppDelegate.shared.mapView.editorLayer.mapData.tagValues(forKey: key)
 					let set = PresetsDatabase.shared.allTagValuesForKey(key)
@@ -410,7 +413,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
     
     @IBAction func textFieldDidEndEditing(_ textField: UITextField) {
 		guard let cell: FeaturePresetCell = textField.superviewOfType(),
-			  let presetKey = cell.presetKey as? PresetKey
+			  case let .key(presetKey) = cell.presetKey
 		else { return }
     
         let prettyValue = textField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""

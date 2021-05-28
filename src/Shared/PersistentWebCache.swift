@@ -106,7 +106,7 @@ class PersistentWebCache<T: AnyObject>: NSObject {
         objectForData: @escaping (_ data: Data) -> T?,
         completion: @escaping (_ object: T?) -> Void
     ) -> T? {
-        DbgAssert(Thread.isMainThread)
+        DbgAssert(Thread.isMainThread)	// since we update our data structures on the main thread we need this true
 		assert( _memoryCache.totalCostLimit != 0 )
 		if let cachedObject = _memoryCache.object(forKey: cacheKey as NSString) {
 			return cachedObject
