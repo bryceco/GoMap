@@ -16,9 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     var window: UIWindow?
     weak var mapView: MapView!
-    var userName: String?
-    var userPassword: String?
-    private(set) var isAppUpgrade = false
+    var userName: String = ""
+    var userPassword: String = ""
+	private(set) var isAppUpgrade = false
     var externalGPS: ExternalGPS?
 
 	override init() {

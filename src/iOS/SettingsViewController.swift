@@ -33,8 +33,8 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
         // set username, but then validate it
         let appDelegate = AppDelegate.shared
 
-        _username.text = ""
-        if (appDelegate.userName?.count ?? 0) > 0 {
+		_username.text = ""
+        if appDelegate.userName.count > 0 {
 			appDelegate.mapView.editorLayer.mapData.verifyUserCredentials(withCompletion: { [self] errorMessage in
                 if errorMessage != nil {
                     _username.text = NSLocalizedString("<unknown>", comment: "unknown user name")

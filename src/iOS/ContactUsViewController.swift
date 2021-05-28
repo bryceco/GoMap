@@ -147,10 +147,8 @@ class ContactUsViewController: UITableViewController, MFMailComposeViewControlle
                 mail.setToRecipients(["bryceco@yahoo.com"])
                 var body = "Device: \(deviceModel())\n"
                 body += "iOS version: \(UIDevice.current.systemVersion)\n"
-				if let userName = appDelegate.userName,
-				   userName.count > 0
-				{
-                    body += "OSM ID: \(userName)\n\n"
+				if appDelegate.userName.count > 0 {
+					body += "OSM ID: \(appDelegate.userName)\n\n"
 				}
 				mail.setMessageBody(body, isHTML: false)
                 navigationController?.present(mail, animated: true)

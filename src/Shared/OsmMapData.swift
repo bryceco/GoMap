@@ -48,9 +48,6 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
     var spatial = QuadMap() // spatial index of osm data
     var undoManager = MyUndoManager()
     var periodicSaveTimer: Timer?
-    
-    var credentialsUserName: String = ""
-    var credentialsPassword: String = ""
 
     // undo comments
     var undoContextForComment: ((_ comment: String) -> [String : Any])? = nil
@@ -385,7 +382,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
     }
     
     func createNode(atLocation loc: CLLocationCoordinate2D) -> OsmNode {
-        let node = OsmNode(asUserCreated: credentialsUserName)
+		let node = OsmNode(asUserCreated: AppDelegate.shared.userName)
         node.setLongitude(loc.longitude, latitude: loc.latitude, undo: nil)
         node.setDeleted(true, undo: nil)
         setConstructed(node)
@@ -398,7 +395,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
     }
     
     func createWay() -> OsmWay {
-		let way = OsmWay(asUserCreated: credentialsUserName)
+		let way = OsmWay(asUserCreated: AppDelegate.shared.userName)
 		way.setDeleted(true, undo: nil)
 		setConstructed(way)
 		ways[way.ident] = way
@@ -409,7 +406,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
     }
     
     func createRelation() -> OsmRelation {
-        let relation = OsmRelation(asUserCreated: credentialsUserName)
+        let relation = OsmRelation(asUserCreated: AppDelegate.shared.userName)
         relation.setDeleted(true, undo: nil)
         setConstructed(relation)
         relations[relation.ident] = relation
@@ -1388,8 +1385,8 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         }
         // request.timeoutInterval = 15*60;
 
-        var auth = "\(credentialsUserName):\(credentialsPassword)"
-        auth = OsmMapData.encodeBase64(auth)
+        var auth = "\(AppDelegate.shared.userName):\(AppDelegate.shared.userPassword)"
+		auth = OsmMapData.encodeBase64(auth)
         auth = "Basic \(auth)"
         request.setValue(auth, forHTTPHeaderField: "Authorization")
 
@@ -1517,11 +1514,8 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
     func verifyUserCredentials(withCompletion completion: @escaping (_ errorMessage: String?) -> Void) {
         let appDelegate = AppDelegate.shared
         
-        credentialsUserName = appDelegate.userName ?? ""
-        credentialsPassword = appDelegate.userPassword ?? ""
-        
         let url = OSM_API_URL + "api/0.6/user/details"
-        putRequest(url, method: "GET", xml: nil) { [self] data, errorMessage in
+        putRequest(url, method: "GET", xml: nil) { data, errorMessage in
             var ok = false
             var errorMsg = errorMessage
             if let data = data {
@@ -1529,14 +1523,12 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
                 if let doc = try? DDXMLDocument(xmlString: text ?? "", options: 0),
 				   let users = doc.rootElement()?.elements(forName: "user"),
 				   let user = users.last,
-				   let displayName = user.attribute(forName: "display_name")?.stringValue
+				   let displayName = user.attribute(forName: "display_name")?.stringValue,
+				   displayName.compare(appDelegate.userName, options: .caseInsensitive) == .orderedSame
 				{
-					if displayName.compare(credentialsUserName, options: .caseInsensitive, range: nil, locale: .current) == .orderedSame {
-						// update display name to have proper case:
-                        credentialsUserName = displayName
-                        appDelegate.userName = displayName
-                        ok = true
-                    }
+					// update display name to have proper case:
+					appDelegate.userName = displayName
+					ok = true
                 }
             }
             if ok {

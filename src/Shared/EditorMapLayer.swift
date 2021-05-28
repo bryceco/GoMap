@@ -87,10 +87,6 @@ class EditorMapLayer: CALayer {
 
 		OsmMapData.setEditorMapLayerForArchive(self)
         
-		let appDelegate = AppDelegate.shared
-        mapData.credentialsUserName = appDelegate.userName ?? ""
-        mapData.credentialsPassword = appDelegate.userPassword ?? ""
-        
         weak var weakSelf = self
         mapData.undoContextForComment = { comment in
 			guard let strongSelf = weakSelf else { return [:] }

@@ -40,12 +40,12 @@ class LoginViewController: UITableViewController {
             return
         }
 
-        let _username = self._username.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-        let _password = self._password.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-
 		let appDelegate = AppDelegate.shared
-        appDelegate.userName = _username
-        appDelegate.userPassword = _password
+
+		let username = self._username.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
+        let password = self._password.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
+        appDelegate.userName = username
+        appDelegate.userPassword = password
 
         _activityIndicator.color = UIColor.darkGray
         _activityIndicator.startAnimating()
@@ -56,7 +56,7 @@ class LoginViewController: UITableViewController {
             if errorMessage != nil {
 
                 // warn that email addresses don't work
-                if appDelegate.userName?.contains("@") ?? false {
+                if appDelegate.userName.contains("@") {
                     errorMessage = NSLocalizedString("You must provide your OSM user name, not an email address.", comment: "")
                 }
                 let alert = UIAlertController(title: NSLocalizedString("Bad login", comment: ""), message: errorMessage, preferredStyle: .alert)
@@ -64,12 +64,12 @@ class LoginViewController: UITableViewController {
                 self.present(alert, animated: true)
             } else {
                 // verifying credentials may update the appDelegate values when we subsitute name for correct case:
-                self._username.text = _username
-                self._password.text = _password
+                self._username.text = username
+                self._password.text = password
                 self._username.resignFirstResponder()
                 self._password.resignFirstResponder()
 
-                self.saveVerifiedCredentials(username: _username ?? "", password: _password ?? "")
+                self.saveVerifiedCredentials(username: username, password: password)
 
                 let alert = UIAlertController(title: NSLocalizedString("Login successful", comment: ""), message: nil, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: { action in

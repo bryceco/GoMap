@@ -91,9 +91,9 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
     
     @IBAction func commit(_ sender: Any?) {
 		let appDelegate = AppDelegate.shared
-		if (appDelegate.userName?.count ?? 0) == 0 || appDelegate.userPassword?.count == 0 {
-            performSegue(withIdentifier: "loginSegue", sender: self)
-            return
+		if appDelegate.userName.count == 0 || appDelegate.userPassword.count == 0 {
+			performSegue(withIdentifier: "loginSegue", sender: self)
+			return
         }
         
         if !UserDefaults.standard.bool(forKey: "userDidPreviousUpload") {
@@ -109,10 +109,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
             present(alert, animated: true)
             return
         }
-        
-        mapData?.credentialsUserName = appDelegate.userName ?? ""
-        mapData?.credentialsPassword = appDelegate.userPassword ?? ""
-        
+                
         _progressView.startAnimating()
         _commitButton.isEnabled = false
         _cancelButton.isEnabled = false

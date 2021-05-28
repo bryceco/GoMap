@@ -133,10 +133,7 @@ class GpxViewController: UITableViewController {
             request.httpBody = body
             request.setValue(String(format: "%ld", body.count), forHTTPHeaderField: "Content-Length")
             
-			guard let userName = appDelegate.userName,
-				let userPassword = appDelegate.userPassword
-			else { return }
-			var auth = "\(userName):\(userPassword)"
+			var auth = "\(appDelegate.userName):\(appDelegate.userPassword)"
             auth = OsmMapData.encodeBase64(auth)
 			auth = "Basic \(auth)"
             request.setValue(auth, forHTTPHeaderField: "Authorization")
