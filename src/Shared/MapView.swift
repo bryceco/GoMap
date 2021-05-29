@@ -3618,19 +3618,17 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
     // MARK: Mouse movment
 
-    @objc func handleScrollWheelGesture(_ pan: UIPanGestureRecognizer?) {
-        if pan?.state == .changed {
-            let delta = pan?.translation(in: self)
-            var center = pan?.location(in: self)
-            center?.y -= delta?.y ?? 0.0
-            let zoom = (delta?.y ?? 0.0) >= 0 ? (1000 + (delta?.y ?? 0.0)) / 1000 : 1000 / (1000 - (delta?.y ?? 0.0))
-            adjustZoom(by: zoom, aroundScreenPoint: center ?? CGPoint.zero)
+    @objc func handleScrollWheelGesture(_ pan: UIPanGestureRecognizer) {
+        if pan.state == .changed {
+            let delta = pan.translation(in: self)
+            var center = pan.location(in: self)
+            center.y -= delta.y
+			let zoom = delta.y >= 0 ? (1000.0 + delta.y) / 1000.0 : 1000.0 / (1000.0 - delta.y)
+			adjustZoom(by: zoom, aroundScreenPoint: center)
         }
     }
 
     func singleClick(_ point: CGPoint) {
-        var point = point
-        var hit: OsmBaseObject? = nil
 
         // disable rotation if in action
         if isRotateObjectMode {
@@ -3639,59 +3637,57 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
         unblinkObject() // used by Mac Catalyst, harmless otherwise
 
-        if ((editorLayer.selectedWay) != nil) {
+        if editorLayer.selectedWay != nil,
+			let hit = editorLayer.osmHitTestNode(inSelectedWay: point, radius: DefaultHitTestRadius)
+		{
             // check for selecting node inside way
-            hit = editorLayer.osmHitTestNode(inSelectedWay: point, radius: DefaultHitTestRadius)
-        }
-        if let hit = hit {
-            editorLayer.selectedNode = hit as? OsmNode
-        } else {
+			editorLayer.selectedNode = hit
+
+		} else {
 
             // hit test anything
-            hit = editorLayer.osmHitTest(point, radius: DefaultHitTestRadius, isDragConnect: false, ignoreList: [], segment: nil)
-            if hit != nil {
-                if hit!.isNode() != nil {
-                    editorLayer.selectedNode = hit as? OsmNode
+			if let hit = editorLayer.osmHitTest(point, radius: DefaultHitTestRadius, isDragConnect: false, ignoreList: [], segment: nil) {
+                if let hit = hit as? OsmNode {
+                    editorLayer.selectedNode = hit
                     editorLayer.selectedWay = nil
                     editorLayer.selectedRelation = nil
-                } else if hit!.isWay() != nil {
-                    if let selectedRelation = editorLayer.selectedRelation {
-                        if editorLayer.selectedRelation != nil && hit!.isWay()?.parentRelations.contains(selectedRelation) ?? false {
-                            // selecting way inside previously selected relation
-                            editorLayer.selectedNode = nil
-                            editorLayer.selectedWay = hit as? OsmWay
-                        } else if (hit!.parentRelations.count) > 0 {
-                            // select relation the way belongs to
-                            var relations = hit!.parentRelations.filter { relation in
-                                return relation.isMultipolygon() || relation.isBoundary() || relation.isWaterway()
-                            }
-                            if relations.count == 0 && !(hit!.hasInterestingTags()) {
-                                relations = hit!.parentRelations // if the way doesn't have tags then always promote to containing relation
-                            }
-//MARK:                      let relation = ((relations?.count ?? 0) > 0 ? relations?.first : nil) as? OsmRelation
-                            let relation = ((relations.count > 0) ? relations.first : nil)
-                            if let relation = relation {
-                                hit = relation // convert hit to relation
-                                editorLayer.selectedNode = nil
-                                editorLayer.selectedWay = nil
-                                editorLayer.selectedRelation = hit as? OsmRelation
-                            } else {
-                                editorLayer.selectedNode = nil
-                                editorLayer.selectedWay = hit as? OsmWay
-                                editorLayer.selectedRelation = nil
-                            }
-                        } else {
-                            editorLayer.selectedNode = nil
-                            editorLayer.selectedWay = hit as? OsmWay
-                            editorLayer.selectedRelation = nil
-                        }
-                    }
-                } else {
+                } else if let hit = hit as? OsmWay {
+					if let selectedRelation = editorLayer.selectedRelation,
+						hit.parentRelations.contains(selectedRelation)
+					{
+						// selecting way inside previously selected relation
+						editorLayer.selectedNode = nil
+						editorLayer.selectedWay = hit
+					} else if hit.parentRelations.count > 0 {
+						// select relation the way belongs to
+						var relations = hit.parentRelations.filter { relation in
+							return relation.isMultipolygon() || relation.isBoundary() || relation.isWaterway()
+						}
+						if relations.count == 0 && !hit.hasInterestingTags() {
+							relations = hit.parentRelations // if the way doesn't have tags then always promote to containing relation
+						}
+						if let relation = relations.first {
+							editorLayer.selectedNode = nil
+							editorLayer.selectedWay = nil
+							editorLayer.selectedRelation = relation
+						} else {
+							editorLayer.selectedNode = nil
+							editorLayer.selectedWay = hit
+							editorLayer.selectedRelation = nil
+						}
+					} else {
+						editorLayer.selectedNode = nil
+						editorLayer.selectedWay = hit
+						editorLayer.selectedRelation = nil
+					}
+                } else if let hit = hit as? OsmRelation {
                     editorLayer.selectedNode = nil
                     editorLayer.selectedWay = nil
-                    editorLayer.selectedRelation = hit as? OsmRelation
-                }
-            } else {
+                    editorLayer.selectedRelation = hit
+				} else {
+					fatalError()
+				}
+			} else {
                 editorLayer.selectedNode = nil
                 editorLayer.selectedWay = nil
                 editorLayer.selectedRelation = nil
@@ -3707,7 +3703,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             if let point1 = editorLayer.selectedPrimary?.pointOnObjectForPoint(pt) {
                 pt = point1
             }
-            point = screenPoint(forLatitude: pt.y, longitude: pt.x, birdsEye: true)
+			let point = screenPoint(forLatitude: pt.y, longitude: pt.x, birdsEye: true)
 
             placePushpin(at: point, object: editorLayer.selectedPrimary)
 
