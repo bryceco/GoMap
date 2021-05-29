@@ -12,7 +12,6 @@ import Foundation
 private let MAP_RECT = OSMRect(origin: OSMPoint(x:-180.0, y:-90.0),
 							   size: OSMSize(width: 360.0, height: 180.0))
 
-@objcMembers
 class QuadMap: NSObject, NSCoding {
     let rootQuad: QuadBox
 
@@ -90,7 +89,7 @@ class QuadMap: NSObject, NSCoding {
 
     // MARK: Spatial
 
-	func addMember(_ member: OsmBaseObject, undo: MyUndoManager?) {
+	@objc func addMember(_ member: OsmBaseObject, undo: MyUndoManager?) {
         if let undo = undo {
             undo.registerUndo(withTarget: self, selector: #selector(removeMember(_:undo:)), objects: [member, undo])
         }
@@ -98,7 +97,7 @@ class QuadMap: NSObject, NSCoding {
 		rootQuad.addMember(member, bbox: boundingBox)
     }
 
-	func removeMember(_ member: OsmBaseObject, undo: MyUndoManager?) -> Bool {
+	@objc func removeMember(_ member: OsmBaseObject, undo: MyUndoManager?) -> Bool {
         let boundingBox = member.boundingBox
 		let ok = rootQuad.removeMember(member, bbox: boundingBox)
         if ok && undo != nil {
@@ -148,6 +147,10 @@ class QuadMap: NSObject, NSCoding {
     func findObjects(inArea bbox: OSMRect, block: @escaping (OsmBaseObject) -> Void) {
         rootQuad.findObjects(inArea: bbox, block: block)
     }
+
+	func enumerate( _ block: @escaping (OsmBaseObject,OSMRect) -> Void ) {
+		rootQuad.enumerate( block )
+	}
 
     // these are for purging old data:
 

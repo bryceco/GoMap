@@ -10,7 +10,6 @@ import Foundation
 
 typealias UndoManagerChangeCallback = () -> Void
 
-@objcMembers
 class MyUndoManager: NSObject, NSCoding {
     var runLoopObserver: CFRunLoopObserver?
     var undoStack: [UndoAction] = []

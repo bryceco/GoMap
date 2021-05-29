@@ -21,8 +21,6 @@ private let MinIconSizeInMeters: CGFloat = 2.0
 private let Pixels_Per_Character: CGFloat = 8.0
 private let NodeHighlightRadius: CGFloat = 6.0
 
-
-@objcMembers
 class EditorMapLayer: CALayer {
     var iconSize = CGSize.zero
 	var highwayScale: CGFloat = 2.0
@@ -32,9 +30,11 @@ class EditorMapLayer: CALayer {
     var isPerformingLayout = false
     var baseLayer: CATransformLayer?
 
+	var observations: [NSKeyValueObservation] = []
+
 	let objectFilters = EditorFilters()
 
-	var mapView: MapView
+	@objc var mapView: MapView	// mark as objc for KVO
 	var whiteText = false {
 		didSet {
 			CurvedGlyphLayer.whiteOnBlack = self.whiteText
@@ -82,8 +82,10 @@ class EditorMapLayer: CALayer {
 		objectFilters.onChange = { self.mapData.clearCachedProperties() }
         whiteText = true
 
-        // observe changes to geometry
-		self.mapView.addObserver(self, forKeyPath: "screenFromMapTransform", options: [], context: nil)
+        // observe changes to screen
+		self.observations.append( observe( \.mapView.screenFromMapTransform ) { object, change in
+			self.updateMapLocation()
+		})
 
 		OsmMapData.setEditorMapLayerForArchive(self)
         
@@ -114,8 +116,10 @@ class EditorMapLayer: CALayer {
         if let baseLayer = baseLayer {
             addSublayer(baseLayer)
         }
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(fontSizeDidChange(_:)), name: UIContentSizeCategory.didChangeNotification, object: nil)
+
+		NotificationCenter.default.addObserver(forName: UIContentSizeCategory.didChangeNotification, object: nil, queue: nil, using: {_ in
+			self.resetDisplayLayers()
+		})
     }
 
 	override init(layer: Any) {
@@ -132,19 +136,7 @@ class EditorMapLayer: CALayer {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-
-	@objc override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-		if (object as? NSObject) == mapView && (keyPath == "screenFromMapTransform") {
-            updateMapLocation()
-        } else {
-            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
-        }
-    }
     
-    @objc func fontSizeDidChange(_ notification: Notification?) {
-        resetDisplayLayers()
-    }
-
 	override var bounds: CGRect {
 		get { super.bounds }
 		set {
@@ -1243,10 +1235,9 @@ class EditorMapLayer: CALayer {
         })
         baseLayer!.sublayers = nil
         setNeedsLayout()
-    }
+	}
     
     // MARK: Select objects and draw
-    
     
     func getVisibleObjects() -> [OsmBaseObject] {
         let box = mapView.screenLongitudeLatitude()

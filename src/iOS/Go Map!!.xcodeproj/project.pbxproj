@@ -11,7 +11,6 @@
 		020EBA7926506156001D56F4 /* MercatorTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925326411C2B000A2A99 /* MercatorTileLayer.swift */; };
 		020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */; };
 		020F4ADE24AAD4E700D9E34A /* PresetsDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */; };
-		0216636D2470AFAB00B0B0F6 /* CurvedTextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0216636C2470AFAB00B0B0F6 /* CurvedTextLayer.swift */; };
 		021C6AB3168768C800FB17B0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021C6AB2168768C800FB17B0 /* MessageUI.framework */; };
 		021FADBB258591D000F6E1C0 /* PresetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADBA258591D000F6E1C0 /* PresetKey.swift */; };
 		021FADC0258594EE00F6E1C0 /* PresetValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADBF258594EE00F6E1C0 /* PresetValue.swift */; };
@@ -186,7 +185,6 @@
 		020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsDatabase.swift; sourceTree = "<group>"; };
 		02128F7B2575D925003D2551 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Height.strings"; sourceTree = "<group>"; };
 		02128F7C2575D925003D2551 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Display.strings"; sourceTree = "<group>"; };
-		0216636C2470AFAB00B0B0F6 /* CurvedTextLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CurvedTextLayer.swift; path = ../Shared/CurvedTextLayer.swift; sourceTree = "<group>"; };
 		021C6AB2168768C800FB17B0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		021FADBA258591D000F6E1C0 /* PresetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetKey.swift; sourceTree = "<group>"; };
 		021FADBF258594EE00F6E1C0 /* PresetValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetValue.swift; sourceTree = "<group>"; };
@@ -683,7 +681,6 @@
 				02ACBA7016713F2A00BB4414 /* changeset.xsl */,
 				02D5B5F2248F154D00FEE448 /* Colors.swift */,
 				02354F79246349E100878A04 /* CurvedGlyphLayer.swift */,
-				0216636C2470AFAB00B0B0F6 /* CurvedTextLayer.swift */,
 				028816A2265AD9D100C30EA2 /* Database.swift */,
 				C3D096C1263E567200E3B129 /* DisplayLink.swift */,
 				0289D0DD16A88BA300F86151 /* DLog.h */,
@@ -1151,7 +1148,6 @@
 				02A123EF264EE7BC005638C1 /* aes.swift in Sources */,
 				6442666722540EDF00C0D545 /* Lock.swift in Sources */,
 				028816A12659B4A600C30EA2 /* GZip.swift in Sources */,
-				0216636D2470AFAB00B0B0F6 /* CurvedTextLayer.swift in Sources */,
 				C3D096D0263EA76500E3B129 /* GeekbenchScoreProvider.swift in Sources */,
 				020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */,
 				021FADC0258594EE00F6E1C0 /* PresetValue.swift in Sources */,

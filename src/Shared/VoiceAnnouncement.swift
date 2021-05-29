@@ -10,7 +10,6 @@ import AVFoundation
 import Foundation
 import CoreLocation
 
-@objcMembers
 class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
     var synthesizer: AVSpeechSynthesizer?
     var previousObjects = [OsmIdentifier : Date]()

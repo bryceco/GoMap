@@ -34,14 +34,14 @@ private func TileToWMSCoords(_ tx: Int, _ ty: Int, _ z: Int, _ projection: Strin
     return loc
 }
 
-@objcMembers
 class MercatorTileLayer: CALayer, GetDiskCacheSize {
     
 	private var _webCache = PersistentWebCache<UIImage>(name: "", memorySize: 0)
 	private var _layerDict: [String : CALayer] = [:] // map of tiles currently displayed
     
-	let mapView: MapView
+	@objc let mapView: MapView	// mark as objc for KVO
 	private var isPerformingLayout = AtomicInt(0)
+	private var observations: [NSKeyValueObservation] = []
     
     // MARK: Implementation
 
@@ -72,7 +72,13 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
             "isHidden": NSNull()
         ]
 
-        self.mapView.addObserver(self, forKeyPath: "screenFromMapTransform", options: [], context: nil)
+		self.observations.append( observe( \.mapView.screenFromMapTransform ) { object, change in
+			var t = CATransform3DIdentity
+			t.m34 = -1 / (mapView.birdsEyeDistance)
+			t = CATransform3DRotate(t, mapView.birdsEyeRotation, 1, 0, 0)
+			self.sublayerTransform = t
+			self.setNeedsLayout()
+		})
     }
     
 	deinit {
@@ -95,21 +101,6 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
 			let expirationDate = Date(timeIntervalSinceNow: -7 * 24 * 60 * 60)
 			purgeOldCacheItemsAsync(expirationDate)
 			setNeedsLayout()
-        }
-    }
-    
-    
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if (object as? MapView) == mapView && (keyPath == "screenFromMapTransform") {
-//#if !CUSTOM_TRANSFORM
-//            setAffineTransform(CGAffineTransformFromOSMTransform(mapView.screenFromMapTransform))
-//#endif
-            var t = CATransform3DIdentity
-            t.m34 = -1 / (mapView.birdsEyeDistance)
-            t = CATransform3DRotate(t, mapView.birdsEyeRotation, 1, 0, 0)
-            sublayerTransform = t
-            
-            setNeedsLayout()
         }
     }
     

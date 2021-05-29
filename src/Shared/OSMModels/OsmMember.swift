@@ -6,7 +6,6 @@
 //  Copyright © 2020 Bryce. All rights reserved.
 //
 
-@objcMembers
 final class OsmMember: NSObject, NSCoding {
 
 	let ref: OsmIdentifier

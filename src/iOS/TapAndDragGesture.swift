@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum EnumA : Int {
+fileprivate enum EnumA : Int {
     case need_FIRST_TAP
     case need_SECOND_TAP
     case need_DRAG
@@ -26,7 +26,6 @@ private func TouchTranslation(_ touch: UITouch?, _ view: UIView?) -> CGPoint {
     return delta
 }
 
-@objcMembers
 class TapAndDragGesture: UIGestureRecognizer {
     var tapState = 0
     var tapPoint = CGPoint.zero

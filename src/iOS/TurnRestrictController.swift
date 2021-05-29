@@ -11,7 +11,6 @@ import UIKit
 //width of the way line e.g 12, 17, 18 AND shadow width is +4 e.g 16, 21, 22
 let DEFAULT_POPUPLINEWIDTH = 12
 
-@objcMembers
 class TurnRestrictController: UIViewController {
     private var _parentWays: [OsmWay] = []
     private var _highwayViewArray = [TurnRestrictHwyView]() //	Array of TurnRestrictHwyView to Store number of ways

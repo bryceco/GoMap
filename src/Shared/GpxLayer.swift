@@ -140,57 +140,44 @@ class GpxTrack: NSObject, NSCoding {
         let dateFormatter = OsmBaseObject.rfc3339DateFormatter()
 
 #if os(iOS)
-        var doc: DDXMLDocument? = nil
-        do {
-            doc = try DDXMLDocument(xmlString: "<gpx creator=\"Go Map!!\" version=\"1.4\"></gpx>", options: 0)
-        } catch {
-        }
-        let root = doc?.rootElement()
+		guard let doc: DDXMLDocument = try? DDXMLDocument(xmlString: "<gpx creator=\"Go Map!!\" version=\"1.4\"></gpx>", options: 0),
+			  let root = doc.rootElement(),
+			  let trkElement = DDXMLNode.element(withName: "trk") as? DDXMLElement
+		else { return nil }
 #else
         let root = DDXMLNode.element(withName: "gpx") as? DDXMLElement
         let doc = DDXMLDocument(rootElement: root)
         doc.characterEncoding = "UTF-8"
 #endif
-        let trkElement = DDXMLNode.element(withName: "trk") as? DDXMLElement
-        if let trkElement = trkElement {
-            root?.addChild(trkElement)
-        }
-        let segElement = DDXMLNode.element(withName: "trkseg") as? DDXMLElement
-        if let segElement = segElement {
-            trkElement?.addChild(segElement)
-        }
+		root.addChild(trkElement)
+
+		guard let segElement = DDXMLNode.element(withName: "trkseg") as? DDXMLElement
+		else { return nil }
+		trkElement.addChild(segElement)
 
         for pt in points {
-            let ptElement = DDXMLNode.element(withName: "trkpt") as? DDXMLElement
-            if let ptElement = ptElement {
-                segElement?.addChild(ptElement)
-            }
+			guard let ptElement = DDXMLNode.element(withName: "trkpt") as? DDXMLElement,
+				  let attrLat = DDXMLNode.attribute(withName: "lat", stringValue: "\(pt.latitude)") as? DDXMLNode,
+				  let attrLon = DDXMLNode.attribute(withName: "lon", stringValue: "\(pt.longitude)") as? DDXMLNode,
+				  let eleElement = DDXMLNode.element(withName: "ele") as? DDXMLElement
+			else { return nil }
 
-            let attrLat = DDXMLNode.attribute(withName: "lat", stringValue: "\(pt.latitude)") as? DDXMLNode
-            let attrLon = DDXMLNode.attribute(withName: "lon", stringValue: "\(pt.longitude)") as? DDXMLNode
-            if let attrLat = attrLat {
-                ptElement?.addAttribute(attrLat)
-            }
-            if let attrLon = attrLon {
-                ptElement?.addAttribute(attrLon)
-            }
+			segElement.addChild(ptElement)
+			ptElement.addAttribute(attrLat)
+			ptElement.addAttribute(attrLon)
 
-            let timeElement = DDXMLNode.element(withName: "time") as? DDXMLElement
-            if let timestamp1 = pt.timestamp {
-                timeElement?.stringValue = dateFormatter.string(from: timestamp1)
-            }
-            if let timeElement = timeElement {
-                ptElement?.addChild(timeElement)
-            }
+			if let timestamp = pt.timestamp,
+				let timeElement = DDXMLNode.element(withName: "time") as? DDXMLElement
+			{
+				timeElement.stringValue = dateFormatter.string(from: timestamp)
+				ptElement.addChild(timeElement)
+			}
 
-            let eleElement = DDXMLNode.element(withName: "ele") as? DDXMLElement
-            eleElement?.stringValue = "\(pt.elevation)"
-            if let eleElement = eleElement {
-                ptElement?.addChild(eleElement)
-            }
+			eleElement.stringValue = "\(pt.elevation)"
+			ptElement.addChild(eleElement)
         }
 
-        let string = doc?.xmlString
+        let string = doc.xmlString
         return string
     }
 
@@ -200,32 +187,21 @@ class GpxTrack: NSObject, NSCoding {
     }
 
     convenience init?(xmlData data: Data?) {
-        if data == nil || (data?.count ?? 0) == 0 {
-            return nil
-        }
+		guard let data = data,
+			  data.count > 0,
+			  let doc = try? DDXMLDocument(data: data, options: 0)
+		else {
+			return nil
+		}
 
-        self.init()
-        var doc: DDXMLDocument? = nil
-        do {
-            if let data = data {
-                doc = try DDXMLDocument(data: data, options: 0)
-            }
-        } catch {
-            return nil
-        }
+		guard let namespace1 = DDXMLElement.namespace(withName: "ns1", stringValue: "http://www.topografix.com/GPX/1/0") as? DDXMLElement,
+			  let namespace2 = DDXMLElement.namespace(withName: "ns2", stringValue: "http://www.topografix.com/GPX/1/1") as? DDXMLElement,
+			  let namespace3 = DDXMLElement.namespace(withName: "ns3", stringValue: "http://topografix.com/GPX/1/1") as? DDXMLElement // HOT OSM uses this
+		else { return nil }
 
-        let namespace1 = DDXMLElement.namespace(withName: "ns1", stringValue: "http://www.topografix.com/GPX/1/0") as? DDXMLElement
-        let namespace2 = DDXMLElement.namespace(withName: "ns2", stringValue: "http://www.topografix.com/GPX/1/1") as? DDXMLElement
-        let namespace3 = DDXMLElement.namespace(withName: "ns3", stringValue: "http://topografix.com/GPX/1/1") as? DDXMLElement // HOT OSM uses this
-        if let namespace1 = namespace1 {
-            doc?.rootElement()?.addNamespace(namespace1)
-        }
-        if let namespace2 = namespace2 {
-            doc?.rootElement()?.addNamespace(namespace2)
-        }
-        if let namespace3 = namespace3 {
-            doc?.rootElement()?.addNamespace(namespace3)
-        }
+		doc.rootElement()?.addNamespace(namespace1)
+		doc.rootElement()?.addNamespace(namespace2)
+		doc.rootElement()?.addNamespace(namespace3)
 
         let nsList = [
             "ns1:",
@@ -233,46 +209,48 @@ class GpxTrack: NSObject, NSCoding {
             "ns3:",
             ""
         ]
-        var a: [DDXMLNode]?
-        for ns in nsList {
-            let xpath = "./\(ns)gpx/\(ns)trk/\(ns)trkseg/\(ns)trkpt"
-            do {
-                a = try doc?.nodes(forXPath: xpath)
-            } catch {
-            }
-            if (a?.count ?? 0) != 0 {
-                break
-            }
-        }
-        if (a?.count ?? 0) == 0 {
-            return nil
-        }
+        var a: [DDXMLNode] = []
+		for ns in nsList {
+			let xpath = "./\(ns)gpx/\(ns)trk/\(ns)trkseg/\(ns)trkpt"
+			a = (try? doc.nodes(forXPath: xpath)) ?? []
+			if a.count > 0 {
+				break
+			}
+		}
+		if a.count == 0 {
+			return nil
+		}
 
         var points: [GpxPoint] = []
         let dateFormatter = OsmBaseObject.rfc3339DateFormatter()
-        for pt in a ?? [] {
-            guard let pt = pt as? DDXMLElement else {
-                continue
-            }
-            let point = GpxPoint()
-            point.latitude = Double(pt.attribute(forName: "lat")?.stringValue ?? "") ?? 0.0
-            point.longitude = Double(pt.attribute(forName: "lon")?.stringValue ?? "") ?? 0.0
-            let time = pt.elements(forName: "time")
-            if time.count != 0 {
-                let s = time.last?.stringValue
-                point.timestamp = dateFormatter.date(from: s ?? "")
-            }
-            let ele = pt.elements(forName: "ele")
-            if ele.count != 0 {
-                point.elevation = Double(ele.last?.stringValue ?? "") ?? 0.0
-            }
-            points.append(point)
+        for pt in a {
+			guard let pt = pt as? DDXMLElement,
+				  let lat = pt.attribute(forName: "lat")?.stringValue,
+				  let lon = pt.attribute(forName: "lon")?.stringValue,
+				  let lat = Double(lat),
+				  let lon = Double(lon)
+		    else { return nil }
+
+			let point = GpxPoint()
+            point.latitude = lat
+            point.longitude = lon
+
+			if let time = pt.elements(forName: "time").last?.stringValue {
+                point.timestamp = dateFormatter.date(from: time)
+			}
+			if let ele = pt.elements(forName: "ele").last?.stringValue,
+			   let ele = Double(ele)
+			{
+				point.elevation = ele
+			}
+			points.append(point)
         }
         if points.count < 2 {
             return nil
         }
-        self.points = points
 
+		self.init()
+        self.points = points
         creationDate = Date()
     }
 
@@ -329,14 +307,14 @@ class GpxTrack: NSObject, NSCoding {
     }
 }
 
-@objcMembers
 class GpxLayer: CALayer, GetDiskCacheSize {
 
 	public static let USER_DEFAULTS_GPX_EXPIRATIION_KEY = "GpxTrackExpirationDays"
 	public static let USER_DEFAULTS_GPX_BACKGROUND_TRACKING = "GpxTrackBackgroundTracking"
 
-    var mapView = MapView()
+	@objc var mapView = MapView()	// mark as objc for KVO
     var stabilizingCount = 0
+	var observations: [NSKeyValueObservation] = []
 
     private(set) var activeTrack: GpxTrack? // track currently being recorded
 
@@ -385,7 +363,9 @@ class GpxLayer: CALayer, GetDiskCacheSize {
         ]
 
         // observe changes to geometry
-        self.mapView.addObserver(self, forKeyPath: "screenFromMapTransform", options: [], context: nil)
+		self.observations.append( self.observe( \.mapView.screenFromMapTransform ) { _,_  in
+			self.setNeedsLayout()
+		})
 
         uploadedTracks = UserDefaults.standard.object(forKey: "GpxUploads") as? [String : Any] ?? [:]
 
@@ -432,7 +412,7 @@ class GpxLayer: CALayer, GetDiskCacheSize {
             }
             NSKeyedArchiver.archiveRootObject(track, toFile: path)
             time = TimeInterval(CACurrentMediaTime() - time)
-            DLog("GPX track \(track.points.count) points, save time = \(time)\n")
+            DLog("GPX track \(track.points.count) points, save time = \(time)")
         }
     }
 
@@ -540,14 +520,6 @@ class GpxLayer: CALayer, GetDiskCacheSize {
             }
 
             setNeedsLayout()
-        }
-    }
-
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if (object as? MapView) == mapView && (keyPath == "screenFromMapTransform") {
-            setNeedsLayout()
-        } else {
-            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
     }
 
@@ -861,7 +833,9 @@ class GpxLayer: CALayer, GetDiskCacheSize {
     }
 
     override func layoutSublayers() {
-        layoutSublayersSafe()
+		if !isHidden {
+			layoutSublayersSafe()
+		}
     }
 
     // MARK: Properties

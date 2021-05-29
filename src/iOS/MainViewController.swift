@@ -15,7 +15,6 @@ enum BUTTON_LAYOUT : Int {
     case _ADD_ON_RIGHT
 }
 
-@objcMembers
 class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureRecognizerDelegate, UIContextMenuInteractionDelegate {
     @IBOutlet var _uploadButton: UIButton!
     @IBOutlet var _undoButton: UIButton!

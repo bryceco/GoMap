@@ -24,8 +24,7 @@ private let NO_NAME_IDENTIFIER = "No Name Identifier"
 private let MAXAR_PREMIUM_IDENTIFIER = "Maxar-Premium"
 private let MAXAR_STANDARD_IDENTIFIER = "Maxar-Standard"
 
-@objcMembers
-class AerialService: NSObject {
+class AerialService {
 
 	private static let iconCache: PersistentWebCache<UIImage> = {
 		let cache = PersistentWebCache<UIImage>(name: "AerialServiceIconCache", memorySize: 10000)
@@ -85,8 +84,6 @@ class AerialService: NSObject {
 		self.wmsProjection = projection ?? ""
 		self.attributionString = attribString.count != 0 ? attribString : name
 		self.attributionUrl = attribUrl
-
-		super.init()
 
         self.maxZoom = maxZoom ?? 21
 		self.roundZoomUp = roundUp
@@ -384,22 +381,20 @@ class AerialService: NSObject {
 		})
 	}
     
-    override var description: String {
+    var description: String {
         return name
     }
 }
 
 
-@objcMembers
-class AerialList: NSObject {
+class AerialList {
     
 	private var userDefinedList: [AerialService] = [] // user-defined tile servers
 	private var downloadedList: [AerialService] = [] // downloaded on each launch
 	private var _recentlyUsed: [AerialService] = []
     private(set) var lastDownloadDate: Date?
 
-    override init() {
-        super.init()
+    init() {
         fetchOsmLabAerials({ [self] in
             // if a non-builtin aerial service is current then we need to select it once the list is loaded
             load()
@@ -808,7 +803,7 @@ class AerialList: NSObject {
         }
         let s = userDefinedList[index]
         userDefinedList.remove(at: index)
-        if s == currentAerial {
+        if s === currentAerial {
             currentAerial = builtinServices()[0]
         }
         _recentlyUsed.removeAll { $0 as AnyObject === s as AnyObject }

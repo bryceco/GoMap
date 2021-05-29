@@ -237,18 +237,13 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
     }
 
     func enumerateObjects(usingBlock block: @escaping (_ obj: OsmBaseObject) -> Void) {
-        for (_, value) in nodes.enumerated() {
-            let node = value.value
+        for (_, node) in nodes {
             block(node)
         }
-        
-        for (_, value) in ways.enumerated() {
-            let way = value.value
+        for (_, way) in ways {
             block(way)
         }
-        
-        for (_, value) in relations.enumerated() {
-            let relation = value.value
+        for (_, relation) in relations {
             block(relation)
         }
     }
@@ -271,30 +266,25 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
     func tagValues(forKey key: String) -> Set<String> {
         var set = Set<String>()
         
-        for (_, val) in nodes.enumerated() {
-            let object = val.value
+        for (_, object) in nodes {
             if let value = object.tags[key] {
                 set.insert(value)
             }
         }
-        
-        for (_, val) in nodes.enumerated() {
-            let object = val.value
-            if let value = object.tags[key] {
+        for (_, object) in nodes {
+			if let value = object.tags[key] {
                 set.insert(value)
             }
         }
-
-        for (_, val) in relations.enumerated() {
-            if let value = val.value.tags[key] {
+        for (_, object) in relations {
+			if let value = object.tags[key] {
                 set.insert(value)
             }
         }
 
         // special case for street names
         if key == "addr:street" {
-            for (_, val) in ways.enumerated() {
-                let object = val.value
+            for (_, object) in ways {
                 if object.tags["highway"] != nil {
                     if let nameValue = object.tags["name"] {
                         set.insert(nameValue)
@@ -973,16 +963,16 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
                 }
             }
             
-            for (_, node) in newData.nodes.enumerated() {
-                node.value.setConstructed()
+            for (_, node) in newData.nodes {
+                node.setConstructed()
             }
             
-            for (_, way) in newData.ways.enumerated() {
-                way.value.setConstructed()
+            for (_, way) in newData.ways {
+                way.setConstructed()
             }
             
-            for (_, relation) in newData.relations.enumerated() {
-                relation.value.setConstructed()
+            for (_, relation) in newData.relations {
+                relation.setConstructed()
             }
             
             // store new nodes in database
@@ -1432,7 +1422,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
             root?.addChild(typeElement)
         }
         
-        for (_ ,(key, value)) in dictionary.enumerated() {
+        for (key, value) in dictionary {
             let tag = DDXMLNode.element(withName: "tag") as? DDXMLElement
             if let tag = tag {
                 typeElement?.addChild(tag)
@@ -2302,10 +2292,11 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 	}
 
     func consistencyCheckRelationMembers() {
-        for (_, relation) in relations.enumerated() {
-            for member in relation.value.members {
-                let object = member.obj
-                assert((object?.parentRelations.contains(relation.value) ?? false))
+        for (_, relation) in relations {
+            for member in relation.members {
+				if let object = member.obj {
+					assert(object.parentRelations.contains(relation))
+				}
             }
         }
     }

@@ -537,6 +537,20 @@ public:
 		}
 	}
 
+	void enumerate( void (^block)(OsmBaseObject *,OSMRect) ) const
+	{
+		for ( const auto & obj : _members ) {
+			block( obj, _rect );
+		}
+		for ( int c = 0; c <= QUAD_LAST; ++c ) {
+			QuadBoxCC * child = _children[ c ];
+			if ( child ) {
+				child->enumerate( block );
+			}
+		}
+
+	}
+
 	QuadBoxCC * getQuadBoxMember(OsmBaseObject * member, const OSMRect & bbox) const
 	{
 		auto iter = std::find(_members.begin(), _members.end(), member);
@@ -752,6 +766,10 @@ public:
 -(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject *))block
 {
 	_cpp->findObjectsInAreaNonRecurse(_cpp,bbox,block);
+}
+-(void)enumerate:(void (^ _Nonnull)(OsmBaseObject * _Nonnull obj, OSMRect rect))block
+{
+	_cpp->enumerate( block );
 }
 
 -(void)consistencyCheckObject:(OsmBaseObject *)object

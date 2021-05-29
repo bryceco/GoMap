@@ -32,28 +32,23 @@ class GpxTrackTableCell: UITableViewCell, UIActionSheetDelegate {
             let creationDate = self.gpxTrack.creationDate
 			let appName = AppDelegate.shared.appName()
             let fileName = "\(appName) \(creationDate).gpx"
+
+			guard let gpx = self.gpxTrack.gpxXmlString() else { return }
+
             let url = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
-            let gpx = self.gpxTrack.gpxXmlString()
-            do {
-                try FileManager.default.removeItem(at: url)
-            } catch {
-            }
-            do {
-                try gpx?.write(to: url, atomically: true, encoding: .utf8)
-                
-                if try gpx?.write(to: url, atomically: true, encoding: .utf8) != nil {
-                    let controller = UIActivityViewController(activityItems: [fileName, url].compactMap { $0 }, applicationActivities: nil)
-                    controller.completionWithItemsHandler = { activityType, completed, returnedItems, activityError in
-                        if completed {
-                            let gpxLayer = AppDelegate.shared.mapView.gpxLayer
-                            gpxLayer.markTrackUploaded(self.gpxTrack)
-                            self.tableView?.tableView.reloadData()
-                        }
-                    }
-                    self.tableView?.present(controller, animated: true)
-                }
-            } catch {
-            }
+			try? FileManager.default.removeItem(at: url)
+
+			if (try? gpx.write(to: url, atomically: true, encoding: .utf8)) != nil {
+				let controller = UIActivityViewController(activityItems: [fileName, url].compactMap { $0 }, applicationActivities: nil)
+				controller.completionWithItemsHandler = { activityType, completed, returnedItems, activityError in
+					if completed {
+						let gpxLayer = AppDelegate.shared.mapView.gpxLayer
+						gpxLayer.markTrackUploaded(self.gpxTrack)
+						self.tableView?.tableView.reloadData()
+					}
+				}
+				self.tableView?.present(controller, animated: true)
+			}
         }))
         
         tableView?.present(alert, animated: true)

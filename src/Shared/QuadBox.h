@@ -28,6 +28,7 @@
 -(BOOL)removeMember:(OsmBaseObject * _Nonnull)member bbox:(OSMRect)bbox;
 -(instancetype _Nullable)getQuadBoxMember:(OsmBaseObject * _Nonnull)member bbox:(OSMRect)bbox;
 -(void)findObjectsInArea:(OSMRect)bbox block:(void (^ _Nonnull)(OsmBaseObject * _Nonnull obj))block;
+-(void)enumerate:(void (^ _Nonnull)(OsmBaseObject * _Nonnull obj, OSMRect rect))block;
 
 // region specific
 -(void)missingPieces:(NSMutableArray<QuadBox *> * _Nonnull)pieces intersectingRect:(OSMRect)target;

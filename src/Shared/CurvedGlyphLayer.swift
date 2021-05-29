@@ -80,16 +80,14 @@ private final class StringGlyphs {
     public static var uiFont = UIFont.preferredFont(forTextStyle: .subheadline)
 
     private static let cache = { () -> NSCache<NSString, StringGlyphs> in
-        NotificationCenter.default.addObserver(StringGlyphs.self, selector: #selector(StringGlyphs.fontSizeDidChange), name: UIContentSizeCategory.didChangeNotification, object: nil)
         let c = NSCache<NSString, StringGlyphs>()
         c.countLimit = 100
-        return c
+		NotificationCenter.default.addObserver(forName: UIContentSizeCategory.didChangeNotification, object: nil, queue: nil, using: {_ in
+			StringGlyphs.uiFont = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.subheadline)
+			c.removeAllObjects()
+		})
+		return c
     }()
-
-	@objc private class func fontSizeDidChange() {
-        StringGlyphs.uiFont = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.subheadline)
-        StringGlyphs.cache.removeAllObjects()
-    }
 
     // objects
 
@@ -160,8 +158,8 @@ final class CurvedGlyphLayer {
     static var whiteOnBlack: Bool = true {
         willSet(newValue) {
             if newValue != whiteOnBlack {
-                GlyphLayer.fontSizeDidChange()
-                CurvedGlyphLayer.foreColor = newValue ? UIColor.white : UIColor.black
+                GlyphLayer.clearCache()
+				CurvedGlyphLayer.foreColor = newValue ? UIColor.white : UIColor.black
                 CurvedGlyphLayer.backColor = (newValue ? UIColor.black : UIColor.white).withAlphaComponent(0.3)
             }
         }
@@ -327,9 +325,11 @@ final class CurvedGlyphLayer {
 
 final class GlyphLayer: CALayerWithProperties {
     private static let cache = { () -> NSCache<NSData, GlyphLayer> in
-        NotificationCenter.default.addObserver(StringGlyphs.self, selector: #selector(GlyphLayer.fontSizeDidChange), name: UIContentSizeCategory.didChangeNotification, object: nil)
         let c = NSCache<NSData, GlyphLayer>()
         c.countLimit = 200
+		NotificationCenter.default.addObserver(forName: UIContentSizeCategory.didChangeNotification, object: nil, queue: nil, using: {_ in
+			GlyphLayer.clearCache()
+		})
         return c
     }()
 
@@ -349,14 +349,14 @@ final class GlyphLayer: CALayerWithProperties {
         super.removeFromSuperlayer()
     }
 
-	@objc static func fontSizeDidChange() {
-        cache.removeAllObjects()
-    }
-
     override func action(forKey _: String) -> CAAction? {
         // we don't want any animated actions
         return NSNull()
     }
+
+	static func clearCache() {
+		cache.removeAllObjects()
+	}
 
     private init(withFont font: CTFont, glyphs: [CGGlyph], positions: [CGPoint]) {
         self.glyphs = glyphs

@@ -9,8 +9,7 @@
 import Foundation
 import CoreVideo
 
-@objcMembers
-class DisplayLink: NSObject{
+class DisplayLink {
     
 #if os(iOS)
 	var _displayLink: CADisplayLink!
@@ -26,8 +25,7 @@ class DisplayLink: NSObject{
         return g_shared
     }
     
-    override init() {
-		super.init()
+    init() {
 		_displayLink = CADisplayLink(target: self, selector: #selector(step))
 #if os(iOS)
         _displayLink.isPaused = true

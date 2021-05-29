@@ -898,8 +898,8 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     }
 
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if (object as? MercatorTileLayer) == aerialLayer && (keyPath == "hidden") {
-            let hidden = (change?[.newKey] as? NSNumber)?.boolValue ?? false
+        if (object as? MercatorTileLayer) == aerialLayer && keyPath == "hidden" {
+			let hidden = (change?[.newKey] as? NSNumber)?.boolValue ?? false
             aerialServiceLogo.isHidden = hidden
         } else if (object as? EditorMapLayer) == editorLayer && (keyPath == "hidden") {
             let hidden = (change?[.newKey] as? NSNumber)?.boolValue ?? false
@@ -1734,7 +1734,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 			voiceAnnouncement.announce(forLocation: newLocation.coordinate)
         }
 
-		if (gpxLayer.activeTrack != nil) {
+		if (self.gpxLayer.activeTrack != nil) {
             gpxLayer.addPoint(newLocation)
         }
 
