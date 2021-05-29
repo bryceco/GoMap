@@ -28,7 +28,7 @@ class EditorMapLayer: CALayer {
     var fadingOutSet: [OsmBaseObject] = []
     var highlightLayers: [CALayer] = []
     var isPerformingLayout = false
-    var baseLayer: CATransformLayer?
+    var baseLayer: CATransformLayer
 
 	var observations: [NSKeyValueObservation] = []
 
@@ -58,7 +58,6 @@ class EditorMapLayer: CALayer {
 		var t = CACurrentMediaTime()
 		if let mapData = OsmMapData.withArchivedData() {
 			t = CACurrentMediaTime() - t
-#if os(iOS)
 			if mapView.enableAutomaticCacheManagement {
 				_=mapData.discardStaleData()
 			} else if t > 5.0 {
@@ -70,12 +69,20 @@ class EditorMapLayer: CALayer {
 					mapView.mainViewController.present(alertView, animated: true)
 				})
 			}
-#endif
 			self.mapData = mapData
 		} else {
 			self.mapData = OsmMapData()
 			self.mapData.purgeHard() // force database to get reset
+			DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+DispatchTimeInterval.milliseconds(500), execute: {
+				let alertView = UIAlertController(title: NSLocalizedString("Database error", comment: ""),
+												  message: NSLocalizedString("Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.", comment: ""),
+												  preferredStyle: .alert)
+				alertView.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+				mapView.mainViewController.present(alertView, animated: true)
+			})
 		}
+
+		self.baseLayer = CATransformLayer()
 
         super.init()
 
@@ -112,10 +119,7 @@ class EditorMapLayer: CALayer {
             return dict
         }
         
-        baseLayer = CATransformLayer()
-        if let baseLayer = baseLayer {
-            addSublayer(baseLayer)
-        }
+		addSublayer(baseLayer)
 
 		NotificationCenter.default.addObserver(forName: UIContentSizeCategory.didChangeNotification, object: nil, queue: nil, using: {_ in
 			self.resetDisplayLayers()
@@ -126,6 +130,7 @@ class EditorMapLayer: CALayer {
 		let layer = layer as! EditorMapLayer
 		self.mapView = layer.mapView
 		self.mapData = layer.mapData
+		self.baseLayer = CATransformLayer()	// not sure if we should provide the original or not?
 		super.init(layer: layer)
 	}
 
@@ -141,8 +146,8 @@ class EditorMapLayer: CALayer {
 		get { super.bounds }
 		set {
 			super.bounds = newValue
-			baseLayer!.frame = bounds
-			baseLayer!.bounds = bounds // need to set both of these so bounds stays in sync with superlayer bounds
+			baseLayer.frame = bounds
+			baseLayer.bounds = bounds // need to set both of these so bounds stays in sync with superlayer bounds
 			updateMapLocation()
 		}
     }
@@ -1233,7 +1238,7 @@ class EditorMapLayer: CALayer {
 		mapData.enumerateObjects(usingBlock: { obj in
             obj.shapeLayers = nil
         })
-        baseLayer!.sublayers = nil
+        baseLayer.sublayers = nil
         setNeedsLayout()
 	}
     
@@ -1370,9 +1375,9 @@ class EditorMapLayer: CALayer {
 			var t = CATransform3DIdentity
             t.m34 = -1.0 / mapView.birdsEyeDistance
             t = CATransform3DRotate(t, mapView.birdsEyeRotation, 1.0, 0, 0)
-            baseLayer!.sublayerTransform = t
+            baseLayer.sublayerTransform = t
         } else {
-            baseLayer!.sublayerTransform = CATransform3DIdentity
+            baseLayer.sublayerTransform = CATransform3DIdentity
         }
         
         let previousObjects = shownObjects
@@ -1510,7 +1515,7 @@ class EditorMapLayer: CALayer {
                     layer.removeAllAnimations()
                     layer.opacity = 1.0
                     #endif
-                    baseLayer!.addSublayer(layer)
+                    baseLayer.addSublayer(layer)
                 }
             }
         }
@@ -1535,7 +1540,7 @@ class EditorMapLayer: CALayer {
         }
         for layer in highlightLayers {
             // add new highlights
-            baseLayer!.addSublayer(layer)
+            baseLayer.addSublayer(layer)
         }
         
         // NSLog(@"%ld layers", (long)self.sublayers.count);

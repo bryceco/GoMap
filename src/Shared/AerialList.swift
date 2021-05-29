@@ -32,21 +32,22 @@ class AerialService {
 		return cache
 	}()
 
-    private(set) var name: String
-    private(set) var identifier: String
-    private(set) var url: String
-    private(set) var maxZoom: Int = 0
-    
-    
-    private(set) var polygon: CGPath?
-    private(set) var roundZoomUp = false
-    private(set) var startDate: String?
-    private(set) var endDate: String?
-    private(set) var wmsProjection: String
-    private(set) var attributionString: String
-    private(set) var attributionIcon: UIImage?
-    private(set) var attributionUrl: String
-    
+    let name: String
+    let identifier: String
+    let url: String
+	let maxZoom: Int
+
+    let polygon: CGPath?
+	let roundZoomUp: Bool
+	let startDate: String?
+    let endDate: String?
+    let wmsProjection: String
+    let attributionString: String
+    let attributionUrl: String
+	let placeholderImage: Data?
+
+	private(set) var attributionIcon: UIImage?
+
     static let supportedProjections = [
                 "EPSG:3857",
                 "EPSG:4326",
@@ -91,6 +92,8 @@ class AerialService {
         self.endDate = endDate
         self.polygon = polygon?.copy()
 		self.attributionIcon = attribIcon
+
+		self.placeholderImage = AerialService.getPlaceholderImage(forIdentifier: identifier )
     }
 
     func isBingAerial() -> Bool {
@@ -321,17 +324,15 @@ class AerialService {
         return nil
     }
     
-	private func getPlaceholderImage() -> Data? {
-		let name: String?
-		if self.isBingAerial() {
-			name = "BingPlaceholderImage"
-		} else if identifier == "EsriWorldImagery" {
-			name = "EsriPlaceholderImage"
-		} else {
-			return nil
+	static private func getPlaceholderImage(forIdentifier ident: String) -> Data? {
+		let name: String
+		switch ident {
+		case BING_IDENTIFIER:		name = "BingPlaceholderImage"
+		case "EsriWorldImagery":	name = "EsriPlaceholderImage"
+		default:					return nil
 		}
 		if let path = Bundle.main.path(forResource: name, ofType: "png") ??
-					Bundle.main.path(forResource: name, ofType: "jpg"),
+					  Bundle.main.path(forResource: name, ofType: "jpg"),
 		   let data = try? Data(contentsOf: URL(fileURLWithPath: path)),
 		   data.count > 0
 		{
@@ -339,7 +340,6 @@ class AerialService {
 		}
 		return nil
 	}
-	private lazy var placeholderImage: Data? = getPlaceholderImage()
 
 	func isPlaceholderImage(_ data: Data) -> Bool {
 		return self.placeholderImage?.elementsEqual( data ) ?? false

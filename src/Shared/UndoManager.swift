@@ -11,13 +11,13 @@ import Foundation
 typealias UndoManagerChangeCallback = () -> Void
 
 class MyUndoManager: NSObject, NSCoding {
-    var runLoopObserver: CFRunLoopObserver?
-    var undoStack: [UndoAction] = []
-    var redoStack: [UndoAction] = []
-    var groupingStack: [Int] = []
-	var commentList: [[String:Any]] = []
+	private var runLoopObserver: CFRunLoopObserver?
+	private var undoStack: [UndoAction] = []
+	private var redoStack: [UndoAction] = []
+	private var groupingStack: [Int] = []
+	private var commentList: [[String:Any]] = []
     
-    private(set) var isUndoing = false
+	private(set) var isUndoing = false
     private(set) var isRedoing = false
 
 	public static let UndoManagerDidChangeNotification = "UndoManagerDidChangeNotification"
@@ -153,12 +153,12 @@ class MyUndoManager: NSObject, NSCoding {
     class func doActionGroup(fromStack stack: inout [UndoAction]) {
 		guard let currentGroup = stack.last?.group else { return }
 
-		while let action = stack.popLast(),
-			  action.group == currentGroup
+		while stack.last?.group == currentGroup,
+			  let action = stack.popLast()
 		{
-            //		DLog(@"-- Undo action: '%@' %@", action.selector, [action.target description] );
-            action.perform()
-        }
+			//		DLog(@"-- Undo action: '%@' %@", action.selector, [action.target description] );
+			action.perform()
+		}
     }
     
     // returns the oldest comment registered within the undo group
