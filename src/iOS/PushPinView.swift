@@ -9,9 +9,8 @@
 import QuartzCore
 import UIKit
 
-typealias PushPinViewDragCallback = (Int, CGFloat, CGFloat, UIGestureRecognizer) -> Void
+typealias PushPinViewDragCallback = (UIGestureRecognizer.State, CGFloat, CGFloat, UIGestureRecognizer) -> Void
 
-@objcMembers
 class PushPinView: UIButton, CAAnimationDelegate {
     private var _panCoord = CGPoint.zero
 	private let _shapeLayer: CAShapeLayer // shape for balloon
@@ -314,7 +313,7 @@ class PushPinView: UIButton, CAAnimationDelegate {
         }
 
         if let dragCallback = dragCallback {
-			dragCallback(gesture.state.rawValue, dX, dY, gesture)
+			dragCallback(gesture.state, dX, dY, gesture)
         }
     }
 

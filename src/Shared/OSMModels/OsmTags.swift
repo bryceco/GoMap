@@ -83,10 +83,10 @@ final class OsmTags : NSObject {
 	}
 
 	static func StringTruncatedTo255(_ s: String) -> String {
-		var s = s
-		let last = s.index(s.startIndex, offsetBy: 256)
-		s.removeSubrange(last...)
-		return s
+		guard s.count < 256 else {
+			return s
+		}
+		return String(s.prefix( 255 ))
 	}
 
 	static func DictWithTagsTruncatedTo255(_ tags: [String : String]) -> [String : String] {

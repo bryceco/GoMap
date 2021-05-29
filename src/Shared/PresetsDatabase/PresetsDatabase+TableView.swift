@@ -114,7 +114,7 @@ extension PresetsDatabase {
 		return set
 	}()
 
-	func allFeatureKeys() -> Set<String>? {
+	func allFeatureKeys() -> Set<String> {
 		return PresetsDatabase.allFeatureKeysSet
 	}
 

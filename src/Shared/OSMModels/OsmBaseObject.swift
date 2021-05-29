@@ -213,22 +213,19 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
     }
     
 	public func computeBoundingBox() {
-        assert(false)
+        fatalError()
     }
     
     func distance(toLineSegment point1: OSMPoint, point point2: OSMPoint) -> Double {
-        assert(false)
-        return 1000000.0
+        fatalError()
     }
     
     func selectionPoint() -> OSMPoint {
-        assert(false)
-        return OSMPointMake(0, 0)
+        fatalError()
     }
     
     func pointOnObjectForPoint(_ target: OSMPoint) -> OSMPoint {
-		assert(false)
-        return OSMPointMake(0, 0)
+		fatalError()
     }
 
     func linePathForObject(withOptionalRefPoint refPoint: UnsafeMutablePointer<OSMPoint>?) -> CGPath? {
@@ -311,11 +308,9 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
     }
 
 	// result is nil only if allowConflicts==false
-	static func MergeTagsWith(ourTags: [String : String]?, otherTags: [String : String]?, allowConflicts: Bool) -> [String : String]? {
-		guard let ourTags = ourTags,
-			  !ourTags.isEmpty else { return otherTags ?? [:] }
-		guard let otherTags = otherTags,
-			  !otherTags.isEmpty else { return ourTags }
+	static func MergeTagsWith(ourTags: [String : String], otherTags: [String : String], allowConflicts: Bool) -> [String : String]? {
+		guard !ourTags.isEmpty else { return otherTags }
+		guard !otherTags.isEmpty else { return ourTags }
 
 		var merged = ourTags
         for (otherKey, otherValue) in otherTags {
@@ -455,25 +450,21 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		self._deleted = deleted
     }
     
-    @objc func setTags(_ tags: [String : String]?, undo: MyUndoManager?) {
+    @objc func setTags(_ tags: [String : String], undo: MyUndoManager?) {
         if _constructed {
             assert(undo != nil)
 			incrementModifyCount(undo!)
             undo!.registerUndo(withTarget: self, selector: #selector(setTags(_:undo:)), objects: [self.tags, undo!])
 		}
-		self._tags = tags ?? [:]
+		self._tags = tags
         clearCachedProperties()
     }
     
     // get all keys that contain another part, like "restriction:conditional"
     func extendedKeys(forKey key: String) -> [String] {
-        var keys: [String] = []
-        for (k,_) in tags {
-			if k.hasPrefix(key) && k.dropFirst(key.count).first == ":" {
-				keys.append( k )
-			}
-		}
-		return keys
+		return tags.keys.filter({
+			$0.hasPrefix(key) && $0.dropFirst(key.count).first == ":"
+		})
     }
     
     func nodeSet() -> Set<OsmNode> {
@@ -567,7 +558,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
         }
         
 		// look for a feature key
-        let featureKeys = PresetsDatabase.shared.allFeatureKeys()!
+        let featureKeys = PresetsDatabase.shared.allFeatureKeys()
 		for (key,value) in tags {
 			if featureKeys.contains(key) {
 				return "\(key) = \(value)"

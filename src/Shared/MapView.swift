@@ -12,20 +12,19 @@ import QuartzCore
 import SafariServices
 import StoreKit
 
-enum MAPVIEW : Int {
-	case NONE = -1	// only used as a placeholder when the state is undefined
+enum MapViewState : Int {
 	case EDITOR
 	case EDITORAERIAL
 	case AERIAL
 	case MAPNIK
 }
 
-struct VIEW_OVERLAY : OptionSet {
+struct MapViewOverlays : OptionSet {
 	let rawValue: Int
-	static let LOCATOR	= VIEW_OVERLAY(rawValue: 1 << 0)
-	static let GPSTRACE	= VIEW_OVERLAY(rawValue: 1 << 1)
-	static let NOTES  	= VIEW_OVERLAY(rawValue: 1 << 2)
-	static let NONAME	= VIEW_OVERLAY(rawValue: 1 << 3)
+	static let LOCATOR	= MapViewOverlays(rawValue: 1 << 0)
+	static let GPSTRACE	= MapViewOverlays(rawValue: 1 << 1)
+	static let NOTES  	= MapViewOverlays(rawValue: 1 << 2)
+	static let NONAME	= MapViewOverlays(rawValue: 1 << 3)
 }
 
 enum GPS_STATE : Int {
@@ -56,9 +55,6 @@ enum EDIT_ACTION : Int {
     case CREATE_RELATION
 }
 
-typealias MapViewState = MAPVIEW
-typealias ViewOverlayMask = VIEW_OVERLAY
-
 private let Z_AERIAL: CGFloat = -100
 private let Z_NONAME: CGFloat = -99
 private let Z_MAPNIK: CGFloat = -98
@@ -77,44 +73,42 @@ private let Z_FLASH: CGFloat = 110
 let DefaultHitTestRadius: CGFloat = 10.0 // how close to an object do we need to tap to select it
 let DragConnectHitTestRadius = (DefaultHitTestRadius * 0.6) // how close to an object do we need to drag a node to connect to it
 
-class MapLocation: NSObject {
+class MapLocation {
     var longitude = 0.0
     var latitude = 0.0
     var zoom = 0.0
-    var viewState: MapViewState!
+    var viewState: MapViewState? = nil
 }
 
-protocol MapViewProgress: NSObjectProtocol {
+protocol MapViewProgress {
     func progressIncrement()
     func progressDecrement()
     func progressAnimate()
 }
 
-let kEditControlCornerRadius: CGFloat = 4
-let DisplayLinkHeading = "Heading"
 // MARK: Gestures
 
-let DisplayLinkPanning = "Panning" // disable gestures inside toolbar buttons
+private let DisplayLinkHeading = "Heading"
+private let DisplayLinkPanning = "Panning" // disable gestures inside toolbar buttons
 
-@inline(__always) private func StateFor(_ state: MapViewState, _ `override`: Bool) -> MapViewState {
-
-    if `override` && state == .EDITOR {
+@inline(__always) private func StateFor(_ state: MapViewState, zoomedOut: Bool) -> MapViewState {
+	if zoomedOut && state == .EDITOR {
         return .MAPNIK
     }
-    if `override` && state == .EDITORAERIAL {
+    if zoomedOut && state == .EDITORAERIAL {
         return .AERIAL
     }
     return state
 }
 
-@inline(__always) private func OverlaysFor(_ state: MapViewState, _ mask: ViewOverlayMask, _ zoomedOut: Bool) -> ViewOverlayMask? {
-    if zoomedOut && state == .EDITORAERIAL {
-        return ViewOverlayMask(rawValue: mask.rawValue | VIEW_OVERLAY.LOCATOR.rawValue)
-    }
-    if !zoomedOut {
-        return (ViewOverlayMask(rawValue: mask.rawValue & VIEW_OVERLAY.NONAME.rawValue))
-    }
-    return mask
+@inline(__always) private func OverlaysFor(_ state: MapViewState, overlays: MapViewOverlays, zoomedOut: Bool) -> MapViewOverlays {
+	if zoomedOut && state == .EDITORAERIAL {
+		return overlays.union(.LOCATOR)
+	}
+	if !zoomedOut {
+		return overlays.subtracting(.NONAME)
+	}
+	return overlays
 }
 
 // MARK: Edit Actions
@@ -168,9 +162,9 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     var blinkSegment = 0
     var blinkLayer: CAShapeLayer?
     var isZoomScroll = false // Command-scroll zooms instead of scrolling (desktop only)
-    var isRotateObjectMode = false
-    var rotateObjectOverlay: CAShapeLayer?
-    var rotateObjectCenter: OSMPoint?
+
+	var isRotateObjectMode: (rotateObjectOverlay: CAShapeLayer, rotateObjectCenter: OSMPoint)? = nil
+
     var confirmDrag = false // should we confirm that the user wanted to drag the selected object? Only if they haven't modified it since selecting it
 
     var lastErrorDate: Date? // to prevent spamming of error dialogs
@@ -211,7 +205,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 			viewStateWillChangeTo(newValue, overlays: viewOverlayMask, zoomedOut: viewStateZoomedOut)
         }
 	}
-	public var viewOverlayMask: ViewOverlayMask = [] {
+	public var viewOverlayMask: MapViewOverlays = [] {
 		willSet(newValue) {
 			viewStateWillChangeTo(viewState, overlays: newValue, zoomedOut: viewStateZoomedOut)
 		}
@@ -702,7 +696,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             myself.editorLayer.selectedNode = context["selectedNode"] as? OsmNode
             if myself.editorLayer.selectedNode?.deleted ?? false {
                 myself.editorLayer.selectedNode = nil
-            }
+			}
 
 			if let pushpin = context["pushpin"] as? String,
 			   let primary = myself.editorLayer.selectedPrimary
@@ -725,13 +719,9 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        //        #if os(iOS)
-        //        NotificationCenter.default.addObserver(self, selector: #selector(UIApplicationDelegate.applicationWillTerminate(_:)), name: UIApplicationDelegate.willResignActiveNotification, object: nil)
-        //        #else
-        //        NotificationCenter.default.addObserver(self, selector: #selector(UIApplicationDelegate.applicationWillTerminate(_:)), name: NSApplication.willTerminateNotification, object: NSApplication.shared)
-        //        #endif
+		NotificationCenter.default.addObserver(self, selector: #selector(applicationWillTerminate(_:)), name: UIApplication.willResignActiveNotification, object: nil)
 
-        userInstructionLabel.layer.cornerRadius = 5
+		userInstructionLabel.layer.cornerRadius = 5
         userInstructionLabel.layer.masksToBounds = true
         userInstructionLabel.backgroundColor = UIColor(white: 0.0, alpha: 0.3)
         userInstructionLabel.textColor = UIColor.white
@@ -761,9 +751,9 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             ],
             for: .normal)
         editControl.layer.zPosition = Z_TOOLBAR
-        editControl.layer.cornerRadius = kEditControlCornerRadius
+		editControl.layer.cornerRadius = 4.0
 
-        // long press for selecting from multiple objects (for multipolygon members)
+		// long press for selecting from multiple objects (for multipolygon members)
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_:)))
         longPress.delegate = self
         addGestureRecognizer(longPress)
@@ -826,8 +816,8 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         #endif
 
         // these need to be loaded late because assigning to them changes the view
-		viewState = MapViewState(rawValue: UserDefaults.standard.integer(forKey: "mapViewState")) ?? MAPVIEW.EDITORAERIAL
-		viewOverlayMask = ViewOverlayMask(rawValue: UserDefaults.standard.integer(forKey: "mapViewOverlays"))
+		viewState = MapViewState(rawValue: UserDefaults.standard.integer(forKey: "mapViewState")) ?? MapViewState.EDITORAERIAL
+		viewOverlayMask = MapViewOverlays(rawValue: UserDefaults.standard.integer(forKey: "mapViewOverlays"))
 
         enableRotation = UserDefaults.standard.bool(forKey: "mapViewEnableRotation")
         enableBirdsEye = UserDefaults.standard.bool(forKey: "mapViewEnableBirdsEye")
@@ -1024,7 +1014,8 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             if let data = html.data(using: .utf8) {
                 attrText = try? NSAttributedString(
                     data: data,
-                    options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: NSNumber(value: String.Encoding.utf8.rawValue)],
+                    options: [.documentType: NSAttributedString.DocumentType.html,
+							  .characterEncoding: NSNumber(value: String.Encoding.utf8.rawValue)],
                     documentAttributes: nil)
             }
             if let attrText = attrText {
@@ -1242,54 +1233,48 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     // MARK: Rotate object
 
     func startObjectRotation() {
-        isRotateObjectMode = true
-        rotateObjectCenter = (editorLayer.selectedNode != nil)
-            ? editorLayer.selectedNode?.location()
-            : (editorLayer.selectedWay != nil)
-            ? editorLayer.selectedWay?.centerPoint()
-            : (editorLayer.selectedRelation != nil)
-            ? editorLayer.selectedRelation?.centerPoint()
-            : OSMPointMake(0, 0)
+		guard let rotateObjectCenter = editorLayer.selectedNode?.location()
+									?? editorLayer.selectedWay?.centerPoint()
+									?? editorLayer.selectedRelation?.centerPoint()
+		else {
+			return
+		}
         removePin()
-        rotateObjectOverlay = CAShapeLayer()
+		let rotateObjectOverlay = CAShapeLayer()
         let radiusInner: CGFloat = 70
         let radiusOuter: CGFloat = 90
         let arrowWidth: CGFloat = 60
-        let center = screenPoint(forLatitude: rotateObjectCenter?.y ?? 0.0, longitude: rotateObjectCenter?.x ?? 0.0, birdsEye: true)
+        let center = screenPoint(forLatitude: rotateObjectCenter.y, longitude: rotateObjectCenter.x, birdsEye: true)
         let path = UIBezierPath(arcCenter: center, radius: radiusInner, startAngle: .pi / 2, endAngle: .pi, clockwise: false)
         path.addLine(to: CGPoint(x: center.x - (radiusOuter + radiusInner) / 2 + arrowWidth / 2, y: center.y))
         path.addLine(to: CGPoint(x: center.x - (radiusOuter + radiusInner) / 2, y: center.y + arrowWidth / sqrt(2.0)))
         path.addLine(to: CGPoint(x: center.x - (radiusOuter + radiusInner) / 2 - arrowWidth / 2, y: center.y))
-        path.addArc(withCenter: center, radius: radiusOuter, startAngle: .pi, endAngle: .pi / 2, clockwise: true)
+		path.addArc(withCenter: center, radius: radiusOuter, startAngle: .pi, endAngle: .pi / 2, clockwise: true)
         path.close()
-        rotateObjectOverlay?.path = path.cgPath
-        rotateObjectOverlay?.fillColor = UIColor(red: 0.0, green: 1.0, blue: 1.0, alpha: 0.4).cgColor
-        rotateObjectOverlay?.zPosition = Z_ROTATEGRAPHIC
-        if let rotateObjectOverlay = rotateObjectOverlay {
-            layer.addSublayer(rotateObjectOverlay)
-        }
+        rotateObjectOverlay.path = path.cgPath
+        rotateObjectOverlay.fillColor = UIColor(red: 0.0, green: 1.0, blue: 1.0, alpha: 0.4).cgColor
+        rotateObjectOverlay.zPosition = Z_ROTATEGRAPHIC
+		layer.addSublayer(rotateObjectOverlay)
+
+		self.isRotateObjectMode = (rotateObjectOverlay,rotateObjectCenter)
     }
 
     func endObjectRotation() {
-        isRotateObjectMode = false
-        rotateObjectOverlay?.removeFromSuperlayer()
-        rotateObjectOverlay = nil
+		isRotateObjectMode?.rotateObjectOverlay.removeFromSuperlayer()
         placePushpinForSelection()
         confirmDrag = false
-    }
+		isRotateObjectMode = nil
+	}
 
-    func viewStateWillChangeTo(_ state: MapViewState, overlays: ViewOverlayMask, zoomedOut: Bool) {
+    func viewStateWillChangeTo(_ state: MapViewState, overlays: MapViewOverlays, zoomedOut: Bool) {
         if viewState == state && viewOverlayMask == overlays && viewStateZoomedOut == zoomedOut {
             return
-        }
+		}
 
-		let oldState = StateFor(viewState, viewStateZoomedOut)
-		let newState = StateFor(state, zoomedOut)
-        let oldOverlays = OverlaysFor(viewState, viewOverlayMask, viewStateZoomedOut)
-        let newOverlays = OverlaysFor(state, overlays, zoomedOut)
-//        viewState = state
-//        viewOverlayMask = overlays
-//        viewStateZoomedOut = zoomedOut
+		let oldState = StateFor(viewState, zoomedOut: viewStateZoomedOut)
+		let newState = StateFor(state, zoomedOut: zoomedOut)
+		let oldOverlays = OverlaysFor(viewState, overlays: viewOverlayMask, zoomedOut: viewStateZoomedOut)
+		let newOverlays = OverlaysFor(state, overlays: overlays, zoomedOut: zoomedOut)
         if newState == oldState && newOverlays == oldOverlays {
             return
         }
@@ -1297,21 +1282,18 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         CATransaction.begin()
         CATransaction.setAnimationDuration(0.5)
 
-        if let newOverlays = newOverlays {
+		locatorLayer.isHidden 	= !newOverlays.contains(.LOCATOR)
+		gpsTraceLayer.isHidden 	= !newOverlays.contains(.GPSTRACE)
+		noNameLayer.isHidden	= !newOverlays.contains(.NONAME)
 
-            locatorLayer.isHidden = (newOverlays.rawValue & VIEW_OVERLAY.LOCATOR.rawValue) == 0
-            gpsTraceLayer.isHidden = (newOverlays.rawValue & VIEW_OVERLAY.GPSTRACE.rawValue) == 0
-            noNameLayer.isHidden = (newOverlays.rawValue & VIEW_OVERLAY.NONAME.rawValue) == 0
-        }
-
-        switch newState {
-            case MAPVIEW.EDITOR:
+		switch newState {
+            case MapViewState.EDITOR:
                 editorLayer.isHidden = false
                 aerialLayer.isHidden = true
                 mapnikLayer.isHidden = true
                 userInstructionLabel.isHidden = true
                 editorLayer.whiteText = true
-            case MAPVIEW.EDITORAERIAL:
+            case MapViewState.EDITORAERIAL:
                 aerialLayer.aerialService = customAerials.currentAerial
                 editorLayer.isHidden = false
                 aerialLayer.isHidden = false
@@ -1319,14 +1301,14 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                 userInstructionLabel.isHidden = true
                 aerialLayer.opacity = 0.75
                 editorLayer.whiteText = true
-            case MAPVIEW.AERIAL:
+            case MapViewState.AERIAL:
                 aerialLayer.aerialService = customAerials.currentAerial
                 editorLayer.isHidden = true
                 aerialLayer.isHidden = false
                 mapnikLayer.isHidden = true
                 userInstructionLabel?.isHidden = true
                 aerialLayer.opacity = 1.0
-            case MAPVIEW.MAPNIK:
+            case MapViewState.MAPNIK:
                 editorLayer.isHidden = true
                 aerialLayer.isHidden = true
                 mapnikLayer.isHidden = false
@@ -1334,11 +1316,6 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                 if !userInstructionLabel.isHidden {
                     userInstructionLabel.text = NSLocalizedString("Zoom to Edit", comment: "")
                 }
-            case MAPVIEW.NONE:
-                // shouldn't occur
-                editorLayer.isHidden = true
-                aerialLayer.isHidden = true
-                mapnikLayer.isHidden = true
         }
         updateNotesFromServer(withDelay: 0)
 
@@ -1544,9 +1521,9 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 		let zoom = location.zoom > 0 ? location.zoom : 18.0
 		let scale = pow(2, zoom)
 		self.setTransformForLatitude(location.latitude, longitude: location.longitude, scale: scale)
-		if location.viewState != MAPVIEW.NONE {
-			self.viewState = location.viewState
-        }
+		if let state = location.viewState {
+			self.viewState = state
+		}
     }
 
     func setTransformForLatitude(_ latitude: Double, longitude: Double, zoom: Double) {
@@ -1736,8 +1713,8 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             return
         }
 
-        if (newLocation.timestamp.compare(Date(timeIntervalSinceNow: -10.0)).rawValue) < 0 {
-            // its old data
+		if newLocation.timestamp < Date(timeIntervalSinceNow: -10.0) {
+			// its old data
             DLog("discard old GPS data: \(newLocation.timestamp), \(Date())\n")
             return
         }
@@ -1893,29 +1870,29 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     }
 
     func adjustZoom(by ratio: CGFloat, aroundScreenPoint zoomCenter: CGPoint) {
-        var ratio = ratio
-        if isRotateObjectMode {
-            return
+		guard ratio != 1.0,
+			  isRotateObjectMode == nil
+		else {
+			return
         }
 
         let maxZoomIn: Double = Double(Int(1) << 30)
-        if ratio == 1.0 {
-            return
+
+		let scale = OSMTransformScaleX(screenFromMapTransform)
+		var ratio = Double(ratio)
+        if ratio * scale < 1.0 {
+            ratio = 1.0 / scale
         }
-        let scale = OSMTransformScaleX(screenFromMapTransform)
-        if Double(ratio) * scale < 1.0 {
-            ratio = CGFloat(1.0 / scale)
-        }
-        if Double(ratio) * scale > maxZoomIn {
-            ratio = CGFloat(maxZoomIn / scale)
-        }
+        if ratio * scale > maxZoomIn {
+            ratio = maxZoomIn / scale
+		}
 
         refreshNoteButtonsFromDatabase()
         let offset = mapPoint(fromScreenPoint: OSMPointFromCGPoint(zoomCenter), birdsEye: false)
         var t = screenFromMapTransform
         t = OSMTransformTranslate(t, offset.x, offset.y)
-        t = OSMTransformScale(t, Double(ratio))
-        t = OSMTransformTranslate(t, -offset.x, -offset.y)
+        t = OSMTransformScale(t, ratio)
+		t = OSMTransformTranslate(t, -offset.x, -offset.y)
         screenFromMapTransform = t
     }
 
@@ -1963,20 +1940,18 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         let startTime = CACurrentMediaTime()
 
         let duration = 0.4
-        weak var weakSelf = self
         var prevHeading: Double = 0
-        weak var displayLink = DisplayLink.shared()
-        displayLink?.addName(DisplayLinkHeading, block: {
-            let myself = weakSelf
-            if let myself = myself {
+        let displayLink = DisplayLink.shared()
+		weak var weakSelf = self
+		displayLink.addName(DisplayLinkHeading, block: {
+			if let myself = weakSelf {
                 var elapsedTime = CACurrentMediaTime() - startTime
                 if elapsedTime > duration {
                     elapsedTime = CFTimeInterval(duration) // don't want to over-rotate
                 }
                 // Rotate using an ease-in/out curve. This ensures that small changes in direction don't cause jerkiness.
                 // result = interpolated value, t = current time, b = initial value, c = delta value, d = duration
-                #if true
-                let easeInOutQuad: ((_ t: inout Double, _ b: Double, _ c: Double, _ d: Double) -> Double)? = { t, b, c, d in
+                let easeInOutQuad: ((_ t: inout Double, _ b: Double, _ c: Double, _ d: Double) -> Double) = { t, b, c, d in
                     t /= d / 2
                     if t < 1 {
                         return c / 2 * t * t + b
@@ -1984,16 +1959,11 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                     t -= 1
                     return -c / 2 * (t * (t - 2) - 1) + b
                 }
-                #else
-                let easeInOutQuad: ((_ t: Double, _ b: Double, _ c: Double, _ d: Double) -> Double)? = { t, b, c, d in
-                    return b + c * (t / d)
-                }
-                #endif
-                let miniHeading = easeInOutQuad?(&elapsedTime, 0, deltaHeading, duration)
-                myself.rotate(by: CGFloat(miniHeading ?? 0 - prevHeading), aroundScreenPoint: center)
-                prevHeading = miniHeading ?? 0
+                let miniHeading = easeInOutQuad(&elapsedTime, 0, deltaHeading, duration)
+				myself.rotate(by: CGFloat(miniHeading - prevHeading), aroundScreenPoint: center)
+                prevHeading = miniHeading
                 if elapsedTime >= duration {
-                    displayLink?.removeName(DisplayLinkHeading)
+                    displayLink.removeName(DisplayLinkHeading)
                 }
             }
         })
@@ -2157,7 +2127,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
     // show/hide edit control based on selection
     func updateEditControl() {
-        let show = pushpinView != nil || ((editorLayer.selectedPrimary) != nil)
+        let show = pushpinView != nil || editorLayer.selectedPrimary != nil
         editControl.isHidden = !show
         if show {
             if editorLayer.selectedPrimary == nil {
@@ -2168,11 +2138,11 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                     editControlActions = [.EDITTAGS, .ADDNOTE]
                 }
             } else {
-                if ((editorLayer.selectedPrimary?.isRelation()) != nil) {
-                    if ((editorLayer.selectedPrimary?.isRelation()?.isRestriction) != nil) {
-                        editControlActions = [.EDITTAGS, .PASTETAGS, .RESTRICT]
-					} else if ((editorLayer.selectedPrimary?.isRelation()?.isMultipolygon()) != nil) {
-                        editControlActions = [.EDITTAGS, .PASTETAGS, .MORE]
+                if let relation = editorLayer.selectedPrimary?.isRelation() {
+					if relation.isRestriction() {
+						editControlActions = [.EDITTAGS, .PASTETAGS, .RESTRICT]
+					} else if relation.isMultipolygon() {
+						editControlActions = [.EDITTAGS, .PASTETAGS, .MORE]
 					} else {
 						editControlActions = [.EDITTAGS, .PASTETAGS]
                     }
@@ -2199,9 +2169,9 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         }
     }
 
-    func presentEditActionSheet(_ sender: Any?) {
+	func presentEditActionSheet(_ sender: Any?) {
 		var actionList: [EDIT_ACTION] = []
-        if let selectedWay = editorLayer.selectedWay {
+		if let selectedWay = editorLayer.selectedWay {
             if let selectedNode = editorLayer.selectedNode {
                 // node in way
                 let parentWays: [OsmWay] = [] // [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode];
@@ -2434,7 +2404,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                 actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
 
                 // compute location for action sheet to originate. This will be the uppermost node in the polygon
-				var box = editorLayer.selectedPrimary!.boundingBox
+				guard var box = editorLayer.selectedPrimary?.boundingBox else { return }
 				box = MapView.mapRect(forLatLonRect: box)
                 let rc = boundingScreenRect(forMapRect: box)
 				actionSheet.popoverPresentationController?.sourceView = self
@@ -2589,34 +2559,35 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         confirmDrag = false
 		let pushpinView = PushPinView()
 		self.pushpinView = pushpinView
-		pushpinView.text = object?.friendlyDescription() ?? NSLocalizedString("(new object)", comment: "a newly created node/object")
+		self.refreshPushpinText()
 		pushpinView.layer.zPosition = Z_PUSHPIN
 
         pushpinView.arrowPoint = point
         if let object = object {
             pushpinView.dragCallback = { [self] state, dx, dy, gesture in
                 switch state {
-                    case UIPanGestureRecognizer.State.began.rawValue:
+                    case .began:
                         self.editorLayer.mapData.beginUndoGrouping()
                         pushpinDragTotalMove = CGPoint(x: 0, y: 0)
                         gestureDidMove = false
-                    case UIPanGestureRecognizer.State.cancelled.rawValue, UIPanGestureRecognizer.State.failed.rawValue:
-                        DLog("Gesture ended with cancel/fail\n")
-                    // fall through so we properly terminate gesture
-                    case UIPanGestureRecognizer.State.ended.rawValue:
+					case .ended, .cancelled, .failed:
                         self.editorLayer.mapData.endUndoGrouping()
                         DisplayLink.shared().removeName("dragScroll")
 
-                        let isRotate = self.isRotateObjectMode
-                        if isRotate {
-                            self.endObjectRotation()
-                        }
+                        let isRotate = self.isRotateObjectMode != nil
+						if isRotate {
+							self.endObjectRotation()
+						}
                         self.unblinkObject()
 
-                        if (object.isWay() != nil) {
-                            self.editorLayer.mapData.updateParentMultipolygonRelationRoles(for: object.isWay())
-                        } else if (self.editorLayer.selectedWay != nil) && (object.isNode() != nil) {
-                            self.editorLayer.mapData.updateParentMultipolygonRelationRoles(for: self.editorLayer.selectedWay)
+						if let way = object.isWay() {
+							// update things if we dragged a multipolygon inner member to become outer
+							self.editorLayer.mapData.updateParentMultipolygonRelationRoles(for: way)
+						} else if let selectedWay = self.editorLayer.selectedWay,
+								  object.isNode() != nil
+						{
+							// you can also move an inner to an outer by dragging nodes one at a time
+                            self.editorLayer.mapData.updateParentMultipolygonRelationRoles(for: selectedWay)
                         }
 
                         if let selectedWay = self.editorLayer.selectedWay,
@@ -2687,7 +2658,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                             }))
                             self.mainViewController.present(alertMove, animated: true)
                         }
-                    case UIPanGestureRecognizer.State.changed.rawValue:
+                    case .changed:
                         // define the drag function
                         let dragObject: ((_ dragx: CGFloat, _ dragy: CGFloat) -> Void) = { dragx, dragy in
                             // don't accumulate undo moves
@@ -2707,10 +2678,12 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                             self.gestureDidMove = true
 
                             // move all dragged nodes
-                            if self.isRotateObjectMode {
-                                // rotate object
+                            if let rotate = self.isRotateObjectMode {
+								// rotate object
                                 let delta = Double(-((self.pushpinDragTotalMove.x) + (self.pushpinDragTotalMove.y)) / 100)
-                                let axis = self.screenPoint(forLatitude: self.rotateObjectCenter?.y ?? 0.0, longitude: self.rotateObjectCenter?.x ?? 0.0, birdsEye: true)
+                                let axis = self.screenPoint(forLatitude: rotate.rotateObjectCenter.y,
+															longitude: rotate.rotateObjectCenter.x,
+															birdsEye: true)
                                 let nodeSet = (object.isNode() != nil) ? self.editorLayer.selectedWay?.nodeSet() : object.nodeSet()
 								for node in nodeSet ?? [] {
 									let pt = self.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: true)
@@ -2847,9 +2820,8 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     }
 
     func refreshPushpinText() {
-        var text = editorLayer.selectedPrimary?.friendlyDescription()
-        text = text ?? NSLocalizedString("(new object)", comment: "")
-        pushpinView?.text = text ?? ""
+		let text = editorLayer.selectedPrimary?.friendlyDescription() ?? NSLocalizedString("(new object)", comment: "")
+		pushpinView?.text = text
     }
 
     func extendSelectedWay(to newPoint: CGPoint) {
@@ -3169,8 +3141,8 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     // MARK: Notes
 
     func updateNotesFromServer(withDelay delay: CGFloat) {
-        if viewOverlayMask.rawValue & VIEW_OVERLAY.NOTES.rawValue != 0 {
-            let rc = screenLongitudeLatitude()
+		if viewOverlayMask.contains(.NOTES) {
+			let rc = screenLongitudeLatitude()
             notesDatabase.updateRegion(rc, withDelay: delay, fixmeData: editorLayer.mapData) { [self] in
                 refreshNoteButtonsFromDatabase()
             }
@@ -3200,7 +3172,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
                 // update new and existing buttons
                 notesDatabase.enumerateNotes({ [self] note in
-					if viewOverlayMask.contains( VIEW_OVERLAY.NOTES ) {
+					if viewOverlayMask.contains( MapViewOverlays.NOTES ) {
 
                         // hide unwanted keep right buttons
                         if note.isKeepRight && notesDatabase.isIgnored(note) {
@@ -3255,7 +3227,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                 })
             })
 
-            if (viewOverlayMask.rawValue & VIEW_OVERLAY.NOTES.rawValue) == 0 {
+			if !viewOverlayMask.contains(.NOTES) {
                 notesDatabase.reset()
             }
         })
@@ -3400,7 +3372,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         } else if pan.state == .failed {
             DLog("pan gesture failed")
         } else {
-            DLog("pan gesture \(pan.state.rawValue)")
+            DLog("pan gesture \(pan.state)")
         }
     }
 
@@ -3553,13 +3525,13 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         }
     }
 
-    @IBAction func handleRotationGesture(_ rotationGesture: UIRotationGestureRecognizer?) {
-        if isRotateObjectMode {
-            // Rotate object on screen
-            if rotationGesture?.state == .began {
+    @IBAction func handleRotationGesture(_ rotationGesture: UIRotationGestureRecognizer) {
+		if let rotate = self.isRotateObjectMode {
+			// Rotate object on screen
+            if rotationGesture.state == .began {
                 editorLayer.mapData.beginUndoGrouping()
                 gestureDidMove = false
-            } else if rotationGesture?.state == .changed {
+            } else if rotationGesture.state == .changed {
                 if gestureDidMove {
                     // don't allows undo list to accumulate
                     editorLayer.mapData.endUndoGrouping()
@@ -3570,9 +3542,9 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                 }
                 gestureDidMove = true
 
-                let delta = rotationGesture?.rotation ?? 0.0
-                let axis = screenPoint(forLatitude: rotateObjectCenter?.y ?? 0.0, longitude: rotateObjectCenter?.x ?? 0.0, birdsEye: true)
-                let rotatedObject = editorLayer.selectedRelation ?? editorLayer.selectedWay
+                let delta = rotationGesture.rotation
+				let axis = screenPoint(forLatitude: rotate.rotateObjectCenter.y, longitude: rotate.rotateObjectCenter.x, birdsEye: true)
+				let rotatedObject = editorLayer.selectedRelation ?? editorLayer.selectedWay
                 if let nodeSet = rotatedObject?.nodeSet() {
                     for node in nodeSet {
                         let pt = screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: true)
@@ -3596,18 +3568,18 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
         // Rotate screen
         if enableRotation {
-            if rotationGesture?.state == .began {
+            if rotationGesture.state == .began {
                 // ignore
-            } else if rotationGesture?.state == .changed {
-                let centerPoint = rotationGesture?.location(in: self)
-                let angle = rotationGesture?.rotation ?? 0.0
-                rotate(by: angle, aroundScreenPoint: centerPoint ?? CGPoint.zero)
-                rotationGesture?.rotation = 0.0
+            } else if rotationGesture.state == .changed {
+                let centerPoint = rotationGesture.location(in: self)
+                let angle = rotationGesture.rotation
+                rotate(by: angle, aroundScreenPoint: centerPoint)
+                rotationGesture.rotation = 0.0
 
                 if gpsState == .HEADING {
                     gpsState = .LOCATION
                 }
-            } else if rotationGesture?.state == .ended {
+            } else if rotationGesture.state == .ended {
                 updateNotesFromServer(withDelay: 0)
             }
         }
@@ -3631,16 +3603,16 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     func singleClick(_ point: CGPoint) {
 
         // disable rotation if in action
-        if isRotateObjectMode {
-            endObjectRotation()
+        if isRotateObjectMode != nil {
+			endObjectRotation()
         }
 
         unblinkObject() // used by Mac Catalyst, harmless otherwise
 
         if editorLayer.selectedWay != nil,
+			// check for selecting node inside previously selected way
 			let hit = editorLayer.osmHitTestNode(inSelectedWay: point, radius: DefaultHitTestRadius)
 		{
-            // check for selecting node inside way
 			editorLayer.selectedNode = hit
 
 		} else {
@@ -3696,20 +3668,18 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
         removePin()
 
-        if editorLayer.selectedPrimary != nil {
+        if let selectedPrimary = editorLayer.selectedPrimary {
             // adjust tap point to touch object
             let latLon = longitudeLatitude(forScreenPoint: point, birdsEye: true)
             var pt = OSMPoint(x: latLon.longitude, y: Double(latLon.latitude))
-            if let point1 = editorLayer.selectedPrimary?.pointOnObjectForPoint(pt) {
-                pt = point1
-            }
+			pt = selectedPrimary.pointOnObjectForPoint(pt)
 			let point = screenPoint(forLatitude: pt.y, longitude: pt.x, birdsEye: true)
 
-            placePushpin(at: point, object: editorLayer.selectedPrimary)
+			placePushpin(at: point, object: selectedPrimary)
 
-            if (editorLayer.selectedPrimary?.isWay() != nil) || (editorLayer.selectedPrimary?.isRelation() != nil) {
-                // if they later try to drag this way ask them if they really wanted to
-                confirmDrag = editorLayer.selectedPrimary?.modifyCount == 0
+            if selectedPrimary is OsmWay || selectedPrimary is OsmRelation {
+				// if they later try to drag this way ask them if they really wanted to
+                confirmDrag = selectedPrimary.modifyCount == 0
             }
         }
     }

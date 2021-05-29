@@ -56,10 +56,10 @@ class DisplayViewController: UITableViewController {
         }
         
         var mask: Int = 0
-		mask |= _notesSwitch.isOn ? Int(VIEW_OVERLAY.NOTES.rawValue) : 0
-		mask |= _gpsTraceSwitch.isOn ? Int(VIEW_OVERLAY.GPSTRACE.rawValue) : 0
-		mask |= _unnamedRoadSwitch.isOn ? Int(VIEW_OVERLAY.NONAME.rawValue) : 0
-		mapView.viewOverlayMask = ViewOverlayMask(rawValue: ViewOverlayMask.RawValue(mask))
+		mask |= _notesSwitch.isOn ? Int(MapViewOverlays.NOTES.rawValue) : 0
+		mask |= _gpsTraceSwitch.isOn ? Int(MapViewOverlays.GPSTRACE.rawValue) : 0
+		mask |= _unnamedRoadSwitch.isOn ? Int(MapViewOverlays.NONAME.rawValue) : 0
+		mapView.viewOverlayMask = MapViewOverlays(rawValue: MapViewOverlays.RawValue(mask))
 
         mapView.enableBirdsEye = _birdsEyeSwitch.isOn
         mapView.enableRotation = _rotationSwitch.isOn
@@ -95,7 +95,7 @@ class DisplayViewController: UITableViewController {
 
         if let viewOverlayMask = mapView?.viewOverlayMask {
             // Fix here
-			let bitwiseOperation = (viewOverlayMask.rawValue & VIEW_OVERLAY.NOTES.rawValue)
+			let bitwiseOperation = (viewOverlayMask.rawValue & MapViewOverlays.NOTES.rawValue)
             _notesSwitch.isOn = bitwiseOperation != 0
         }
         _gpsTraceSwitch.isOn = !(mapView?.gpsTraceLayer.isHidden)!

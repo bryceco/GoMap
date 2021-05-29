@@ -1407,14 +1407,12 @@ extension OsmMapData {
         }
     }
     
-    func updateParentMultipolygonRelationRoles(for way: OsmWay?) {
-        if let parentRelations = way?.parentRelations {
-            for relation in parentRelations {
-                // might have moved an inner outside a multipolygon
-                updateMultipolygonRelationRoles(relation)
-            }
-        }
-    }
+    func updateParentMultipolygonRelationRoles(for way: OsmWay) {
+		for relation in way.parentRelations {
+			// might have moved an inner outside a multipolygon
+			updateMultipolygonRelationRoles(relation)
+		}
+	}
     
     
     // MARK: splitWayAtNode

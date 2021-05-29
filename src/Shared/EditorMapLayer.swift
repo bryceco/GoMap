@@ -115,10 +115,15 @@ class EditorMapLayer: CALayer {
             addSublayer(baseLayer)
         }
         
-#if os(iOS)
         NotificationCenter.default.addObserver(self, selector: #selector(fontSizeDidChange(_:)), name: UIContentSizeCategory.didChangeNotification, object: nil)
-#endif
     }
+
+	override init(layer: Any) {
+		let layer = layer as! EditorMapLayer
+		self.mapView = layer.mapView
+		self.mapData = layer.mapData
+		super.init(layer: layer)
+	}
 
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")

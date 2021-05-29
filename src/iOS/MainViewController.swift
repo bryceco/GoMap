@@ -486,10 +486,10 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 				actionSheet.addAction(UIAlertAction(title: service.name, style: .default, handler: { [self] action in
 					aerialList.currentAerial = service
 					mapView.setAerialTileService(service)
-					if mapView.viewState == MAPVIEW.EDITOR {
-						mapView.viewState = MAPVIEW.EDITORAERIAL
-					} else if mapView.viewState == MAPVIEW.MAPNIK {
-						mapView.viewState = MAPVIEW.EDITORAERIAL
+					if mapView.viewState == MapViewState.EDITOR {
+						mapView.viewState = MapViewState.EDITORAERIAL
+					} else if mapView.viewState == MapViewState.MAPNIK {
+						mapView.viewState = MapViewState.EDITORAERIAL
 					}
 				}))
             }
@@ -500,26 +500,26 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 title: prefix + NSLocalizedString("Editor only", comment: ""),
                 style: .default,
                 handler: { [self] action in
-					mapView.viewState = MAPVIEW.EDITOR
+					mapView.viewState = MapViewState.EDITOR
                 })
             let aerialOnly = UIAlertAction(
                 title: prefix + NSLocalizedString("Aerial only", comment: ""),
                 style: .default,
                 handler: { [self] action in
-					mapView.viewState = MAPVIEW.AERIAL
+					mapView.viewState = MapViewState.AERIAL
                 })
             let editorAerial = UIAlertAction(
                 title: prefix + NSLocalizedString("Editor with Aerial", comment: ""),
                 style: .default,
                 handler: { [self] action in
-					mapView.viewState = MAPVIEW.EDITORAERIAL
+					mapView.viewState = MapViewState.EDITORAERIAL
                 })
             
             switch mapView.viewState {
 			case .EDITOR:
                 actionSheet.addAction(editorAerial)
                 actionSheet.addAction(aerialOnly)
-			case .EDITORAERIAL, .NONE:
+			case .EDITORAERIAL:
 				actionSheet.addAction(editorOnly)
                 actionSheet.addAction(aerialOnly)
 			case .AERIAL:
