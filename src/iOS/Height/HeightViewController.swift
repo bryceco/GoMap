@@ -33,7 +33,7 @@ class HeightViewController: UIViewController {
     var callback: ((_ newValue: String) -> Void)?
     
     class func unableToInstantiate(withUserWarning vc: UIViewController) -> Bool {
-        if AppDelegate.shared.mapView.gpsState == GPS_STATE_NONE {
+		if AppDelegate.shared.mapView.gpsState == GPS_STATE.NONE {
             let alert = UIAlertController(
                 title: NSLocalizedString("Error", comment: "Error dialog title"),
                 message: NSLocalizedString("This action requires GPS to be turned on", comment: ""),
@@ -326,14 +326,14 @@ class HeightViewController: UIViewController {
 		}
 		if object == nil {
 			// brand new object, so fake it
-			let latlon = delegate.mapView.longitudeLatitude(forScreenPoint: (delegate.mapView.pushpinView.arrowPoint), birdsEye: true)
+			let latlon = delegate.mapView.longitudeLatitude(forScreenPoint: delegate.mapView.pushpinView!.arrowPoint, birdsEye: true)
 			// this gets thrown away at the end of this method so the details aren't important
 			let node = OsmNode(withVersion: 0, changeset: 0, user: "", uid: 0, ident: 0, timestamp: "", tags: [:])
 			node.setLongitude( latlon.longitude, latitude: latlon.latitude, undo: nil)
             object = node
         }
 		guard let object = object else { return 0.0 }
-		let location = delegate.mapView.currentLocation!
+		let location = delegate.mapView.currentLocation
         let userPt = OSMPoint(x: location.coordinate.longitude, y: location.coordinate.latitude)
 		var dist: Double = Double(MAXFLOAT)
         var bearing: Double = 0

@@ -44,7 +44,7 @@ class LocationURLParser: NSObject {
             parserResult.longitude = lon
             parserResult.latitude = lat
             parserResult.zoom = zoom
-            parserResult.viewState = MAPVIEW_NONE
+			parserResult.viewState = MAPVIEW.NONE
             return parserResult
         }
 
@@ -57,7 +57,7 @@ class LocationURLParser: NSObject {
             var lat: Double = 0
             var lon: Double = 0
             var zoom: Double = 0
-            var view = MAPVIEW_NONE
+			var view = MAPVIEW.NONE
 
             for queryItem in urlComponents?.queryItems ?? [] {
                 if queryItem.name == "center" {
@@ -71,14 +71,14 @@ class LocationURLParser: NSObject {
                 } else if queryItem.name == "view" {
                     // scan view
                     if queryItem.value == "aerial+editor" {
-                        view = MAPVIEW_EDITORAERIAL
+						view = MAPVIEW.EDITORAERIAL
                     } else if queryItem.value == "aerial" {
-                        view = MAPVIEW_AERIAL
+						view = MAPVIEW.AERIAL
                     } else if queryItem.value == "mapnik" {
-                        view = MAPVIEW_MAPNIK
-                    } else if queryItem.value == "editor" {
-                        view = MAPVIEW_EDITOR
-                    }
+						view = MAPVIEW.MAPNIK
+					} else if queryItem.value == "editor" {
+						view = MAPVIEW.EDITOR
+					}
                 } else {
                     // unrecognized parameter
                 }

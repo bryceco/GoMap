@@ -101,7 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.removeObject(forKey: "password")
     }
 
-    func setMapLocation(_ location: MapLocation?) {
+    func setMapLocation(_ location: MapLocation) {
         let delayInSeconds = 0.1
         let popTime = DispatchTime.now() + Double(Int64(delayInSeconds * Double(NSEC_PER_SEC)))
         DispatchQueue.main.asyncAfter(deadline: popTime, execute: { [self] in
@@ -178,15 +178,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.shared.applicationIconBadgeNumber = pendingEdits
 
         // while in background don't update our location so we don't download tiles/OSM data when moving
-        mapView?.userOverrodeLocationPosition = true
+        mapView.userOverrodeLocationPosition = true
         mapView?.locationManager.stopUpdatingHeading()
     }
 
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     func applicationWillEnterForeground(_ application: UIApplication) {
         // allow gps to update our location
-        mapView?.userOverrodeLocationPosition = false
-        if mapView?.gpsState != GPS_STATE_NONE {
+        mapView.userOverrodeLocationPosition = false
+		if mapView?.gpsState != GPS_STATE.NONE {
             mapView?.locationManager.startUpdatingHeading()
         }
 

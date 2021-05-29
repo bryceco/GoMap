@@ -41,6 +41,7 @@
 		027EDC73206F3EED00D349D6 /* DDXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC66206F3EED00D349D6 /* DDXMLDocument.m */; };
 		027EDC74206F3EED00D349D6 /* NSString+DDXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC6C206F3EED00D349D6 /* NSString+DDXML.m */; };
 		0282C4C7265F32E800F2D282 /* Sqlite3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282C4C6265F32E800F2D282 /* Sqlite3.swift */; };
+		0282C4C926617E7400F2D282 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282C4C826617E7400F2D282 /* MapView.swift */; };
 		0286EAA52656F15A007CFEE9 /* EditorMapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */; };
 		0286EAA62656FEAC007CFEE9 /* EditorMapLayer+Ocean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */; };
 		0286EAA726570382007CFEE9 /* LayerProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096D1263EA7E100E3B129 /* LayerProperties.swift */; };
@@ -65,7 +66,6 @@
 		02ACBA3E16713CCB00BB4414 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA3C16713CCB00BB4414 /* InfoPlist.strings */; };
 		02ACBA4D16713CCB00BB4414 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */; };
 		02ACBBC116713F2B00BB4414 /* changeset.xsl in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA7016713F2A00BB4414 /* changeset.xsl */; };
-		02ACBBCA16713F2B00BB4414 /* MapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA8016713F2A00BB4414 /* MapView.m */; };
 		02ACBCFD16713F2B00BB4414 /* RenderInfo.json in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBBBB16713F2A00BB4414 /* RenderInfo.json */; };
 		02ACBD191671737300BB4414 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD181671737300BB4414 /* libxml2.dylib */; };
 		02ACBD1F16717BBB00BB4414 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */; };
@@ -97,7 +97,6 @@
 		02EDCC081683EC2D007F9934 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02EDCC071683EC2D007F9934 /* CFNetwork.framework */; };
 		02F2449A264F635800C42E41 /* PathUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA924C263FFEF9000A2A99 /* PathUtil.swift */; };
 		02FEDAF42651DCC100DF15D7 /* POIAllTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3004F61263B2524006BF313 /* POIAllTagsViewController.swift */; };
-		02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		64305F7423E723B200232BB9 /* LocationURLParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */; };
 		64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CEC225E7CD900ADE7FB /* GoMapTests.swift */; };
 		64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CF7225E867800ADE7FB /* HeadingProviderMock.swift */; };
@@ -237,6 +236,7 @@
 		027EDC6C206F3EED00D349D6 /* NSString+DDXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DDXML.m"; sourceTree = "<group>"; };
 		027EDC6F206F3EED00D349D6 /* DDXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLNode.h; sourceTree = "<group>"; };
 		0282C4C6265F32E800F2D282 /* Sqlite3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sqlite3.swift; sourceTree = "<group>"; };
+		0282C4C826617E7400F2D282 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = ../Shared/MapView.swift; sourceTree = "<group>"; };
 		0288169C265895FA00C30EA2 /* OsmMapData+Edit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "OsmMapData+Edit.swift"; path = "../Shared/OsmMapData+Edit.swift"; sourceTree = "<group>"; };
 		0288169D265895FA00C30EA2 /* OsmMapData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OsmMapData.swift; path = ../Shared/OsmMapData.swift; sourceTree = "<group>"; };
 		028816A02659B4A600C30EA2 /* GZip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GZip.swift; path = ../Shared/GZip.swift; sourceTree = "<group>"; };
@@ -258,8 +258,6 @@
 		02ACBA4116713CCB00BB4414 /* Go Map!!-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Go Map!!-Prefix.pch"; sourceTree = "<group>"; };
 		02ACBA6D16713F2A00BB4414 /* BingMapsGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = BingMapsGeometry.h; path = ../Shared/BingMapsGeometry.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02ACBA7016713F2A00BB4414 /* changeset.xsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = changeset.xsl; path = ../Shared/changeset.xsl; sourceTree = "<group>"; };
-		02ACBA7F16713F2A00BB4414 /* MapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapView.h; path = ../Shared/MapView.h; sourceTree = "<group>"; };
-		02ACBA8016713F2A00BB4414 /* MapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapView.m; path = ../Shared/MapView.m; sourceTree = "<group>"; };
 		02ACBBBB16713F2A00BB4414 /* RenderInfo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = RenderInfo.json; path = ../Shared/RenderInfo.json; sourceTree = "<group>"; };
 		02ACBBBD16713F2A00BB4414 /* VectorMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VectorMath.h; path = ../Shared/VectorMath.h; sourceTree = "<group>"; };
 		02ACBD0016713FCF00BB4414 /* iosapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iosapi.h; path = ../Shared/iosapi.h; sourceTree = "<group>"; };
@@ -368,8 +366,6 @@
 		02F0D9D72565FDBE00C7A3AD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Settings.strings"; sourceTree = "<group>"; };
 		02F0D9D82565FDBE00C7A3AD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Display.strings"; sourceTree = "<group>"; };
 		02F0D9D92565FDBE00C7A3AD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Changeset.strings"; sourceTree = "<group>"; };
-		02FFCE0916A7360B001A5B8A /* NSMutableArray+PartialSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+PartialSort.h"; path = "../Shared/NSMutableArray+PartialSort.h"; sourceTree = "<group>"; };
-		02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSMutableArray+PartialSort.mm"; path = "../Shared/NSMutableArray+PartialSort.mm"; sourceTree = "<group>"; };
 		64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationURLParserTestCase.swift; sourceTree = "<group>"; };
 		64348CEA225E7CD900ADE7FB /* GoMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		64348CEC225E7CD900ADE7FB /* GoMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoMapTests.swift; sourceTree = "<group>"; };
@@ -707,12 +703,9 @@
 				C3D096CE263EA0DB00E3B129 /* KeyChain.swift */,
 				C3D096D1263EA7E100E3B129 /* LayerProperties.swift */,
 				C3D096D4263EACFF00E3B129 /* LocationBallLayer.swift */,
-				02ACBA7F16713F2A00BB4414 /* MapView.h */,
-				02ACBA8016713F2A00BB4414 /* MapView.m */,
+				0282C4C826617E7400F2D282 /* MapView.swift */,
 				C3FA925326411C2B000A2A99 /* MercatorTileLayer.swift */,
 				C3D096D7263EAE1E00E3B129 /* MyApplication.swift */,
-				02FFCE0916A7360B001A5B8A /* NSMutableArray+PartialSort.h */,
-				02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */,
 				6442666322540EDF00C0D545 /* Observable */,
 				0288169D265895FA00C30EA2 /* OsmMapData.swift */,
 				0288169C265895FA00C30EA2 /* OsmMapData+Edit.swift */,
@@ -1059,7 +1052,6 @@
 				ED56E5B526026542000B368C /* ClearCacheViewController.swift in Sources */,
 				026FC7682650A17B005DDAFF /* VoiceAnnouncement.swift in Sources */,
 				ED56E5E426028181000B368C /* DisplayViewController.swift in Sources */,
-				02ACBBCA16713F2B00BB4414 /* MapView.m in Sources */,
 				020F4ADE24AAD4E700D9E34A /* PresetsDatabase.swift in Sources */,
 				02A123EB264C9B17005638C1 /* RenderInfo.swift in Sources */,
 				C3D096CB263E9A1100E3B129 /* DownloadThreadPool.swift in Sources */,
@@ -1144,7 +1136,7 @@
 				C341E15C2639DF440022E983 /* NearbyMappersViewController.swift in Sources */,
 				021FADC52585951E00F6E1C0 /* PresetGroup.swift in Sources */,
 				02CC01DC25843F2F004444EF /* PresetLanguages.swift in Sources */,
-				02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */,
+				0282C4C926617E7400F2D282 /* MapView.swift in Sources */,
 				02EDBF6826535B9D00B7072E /* OsmNode.swift in Sources */,
 				ED56E5C626027A50000B368C /* ContactUsViewController.swift in Sources */,
 				02A123E9264C8B60005638C1 /* GpxLayer.swift in Sources */,

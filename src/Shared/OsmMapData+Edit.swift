@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Bryce Cogswell. All rights reserved.
 //
 
+import CoreLocation
+
 // MARK: Rectangularize
 private var rectoThreshold = 0.0
 private var rectoLowerThreshold = 0.0
@@ -160,7 +162,7 @@ extension OsmMapData {
     }
     
     // MARK: canRemoveObject:fromRelation
-    func canRemove(_ obj: OsmBaseObject, from relation: OsmRelation, error: inout String) -> EditAction? {
+    func canRemove(_ obj: OsmBaseObject, from relation: OsmRelation, error: inout String?) -> EditAction? {
         if !relation.isMultipolygon() {
             error = NSLocalizedString("Only multipolygon relations are supported", comment: "")
             return nil

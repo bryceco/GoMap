@@ -568,8 +568,9 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
     // undo manager interface
     
     // MARK: Undo manager
-    
-    func undo() -> [AnyHashable : Any]? {
+
+	@discardableResult
+	func undo() -> [AnyHashable : Any]? {
         let comment = undoManager.undo()
         if let undoCommentCallback = undoCommentCallback {
             undoCommentCallback(true, comment ?? [:])
@@ -577,7 +578,8 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         return comment
     }
     
-    func redo() -> [AnyHashable : Any]? {
+	@discardableResult
+	func redo() -> [AnyHashable : Any]? {
         let comment = undoManager.redo()
         if let undoCommentCallback = undoCommentCallback {
             undoCommentCallback(false, comment ?? [:])

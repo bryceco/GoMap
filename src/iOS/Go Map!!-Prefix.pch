@@ -21,5 +21,6 @@
 	#import <CommonCrypto/CommonCryptor.h>
 	#import <AVFoundation/AVFoundation.h>
 	#import <CoreText/CoreText.h>
-    #import "Go_Map__-Swift.h"
+	#import <StoreKit/StoreKit.h>
+	#import "Go_Map__-Swift.h"
 #endif

@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+import CoreLocation
+
 // compile options:
 private let SHOW_3D = true
 private let FADE_INOUT = false
@@ -14,8 +16,6 @@ private let SINGLE_SIDED_WALLS = true
 // drawing options
 private let DEFAULT_LINECAP = CAShapeLayerLineCap.square
 private let DEFAULT_LINEJOIN = CAShapeLayerLineJoin.miter
-public let DefaultHitTestRadius: CGFloat = 10.0 // how close to an object do we need to tap to select it
-private let DragConnectHitTestRadius = DefaultHitTestRadius * 0.6 // how close to an object do we need to drag a node to connect to it
 private let MinIconSizeInPixels: CGFloat = 24.0
 private let MinIconSizeInMeters: CGFloat = 2.0
 private let Pixels_Per_Character: CGFloat = 8.0
@@ -95,9 +95,8 @@ class EditorMapLayer: CALayer {
             var dict: [String : Any] = [:]
 			dict["comment"] = comment
 			dict["location"] = location
-            let pushpin = strongSelf.mapView.pushpinPosition
-            if !pushpin.x.isNaN {
-                dict["pushpin"] = NSCoder.string(for: strongSelf.mapView.pushpinPosition)
+			if let pushpin = strongSelf.mapView.pushpinPosition {
+				dict["pushpin"] = NSCoder.string(for: pushpin)
             }
 			if let selectedRelation = strongSelf._selectedRelation {
 				dict["selectedRelation"] = selectedRelation
@@ -1588,7 +1587,7 @@ class EditorMapLayer: CALayer {
     }
     
     
-    static func osmHitTest(_ way: OsmWay, location: CLLocationCoordinate2D, maxDegrees: OSMSize, segment: UnsafeMutablePointer<Int>?) -> CGFloat {
+	private static func osmHitTest(_ way: OsmWay, location: CLLocationCoordinate2D, maxDegrees: OSMSize, segment: UnsafeMutablePointer<Int>?) -> CGFloat {
         var previous = CLLocationCoordinate2D()
 		var seg = -1
 		var bestDist: CGFloat = 1000000
@@ -1608,7 +1607,7 @@ class EditorMapLayer: CALayer {
         return bestDist
     }
     
-    static func osmHitTest(_ node: OsmNode, location: CLLocationCoordinate2D, maxDegrees: OSMSize) -> CGFloat {
+	private static func osmHitTest(_ node: OsmNode, location: CLLocationCoordinate2D, maxDegrees: OSMSize) -> CGFloat {
 		let delta = OSMPoint(x: (location.longitude - node.lon) / maxDegrees.width,
 							 y: (location.latitude - node.lat) / maxDegrees.height)
         let dist = hypot(delta.x, delta.y)
@@ -1616,7 +1615,7 @@ class EditorMapLayer: CALayer {
     }
     
     // distance is in units of the hit test radius (WayHitTestRadius)
-    static func osmHitTestEnumerate(
+	private static func osmHitTestEnumerate(
         _ point: CGPoint,
         radius: CGFloat,
         mapView: MapView,
@@ -1776,7 +1775,7 @@ class EditorMapLayer: CALayer {
     }
     
     // return all nearby objects
-    func osmHitTestMultiple(_ point: CGPoint, radius: CGFloat) -> [OsmBaseObject]? {
+	func osmHitTestMultiple(_ point: CGPoint, radius: CGFloat) -> [OsmBaseObject] {
 		var objectSet: Set<OsmBaseObject> = []
 		EditorMapLayer.osmHitTestEnumerate(point, radius: radius, mapView: mapView, objects: shownObjects, testNodes: true, ignoreList: [], block: { obj, dist, segment in
 			objectSet.insert(obj)
@@ -1861,7 +1860,7 @@ class EditorMapLayer: CALayer {
         setNeedsLayout()
     }
     
-    func duplicateObject(_ object: OsmBaseObject, withOffset offset: OSMPoint) -> OsmBaseObject {
+    func duplicateObject(_ object: OsmBaseObject, withOffset offset: OSMPoint) -> OsmBaseObject? {
         let newObject = mapData.duplicate(object, withOffset: offset)!
 		setNeedsLayout()
 		return newObject

@@ -13,10 +13,10 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
     var newComment: String?
 
     @IBOutlet var tableView: UITableView!
-    var note: OsmNote?
-    var mapView: MapView?
+    var note: OsmNote!
+    var mapView: MapView!
 
-    override func viewDidLoad() {
+	override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.estimatedRowHeight = 100
@@ -35,11 +35,11 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
     // MARK: - Table view data source
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return (note?.comments != nil) ? 2 : 1
+		return note.comments.count > 0 ? 2 : 1
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if (note?.comments != nil) && section == 0 {
+		if note.comments.count > 0 && section == 0 {
             return NSLocalizedString("Note History", comment: "OSM note")
         } else {
             return NSLocalizedString("Update", comment: "update an osm note")
@@ -121,13 +121,13 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 		let alert = UIAlertController(title: NSLocalizedString("Updating Note...", comment: "OSM Note"), message: nil, preferredStyle: .alert)
 		present(alert, animated: true)
 
-		mapView?.notesDatabase.update(note, close: resolve, comment: s) { [self] newNote, errorMessage in
+		mapView.notesDatabase.update(note, close: resolve, comment: s) { [self] newNote, errorMessage in
 			alert.dismiss(animated: true)
 			if let newNote = newNote {
 				note = newNote
 				DispatchQueue.main.async(execute: { [self] in
 					done(nil)
-					mapView?.refreshNoteButtonsFromDatabase()
+					mapView.refreshNoteButtonsFromDatabase()
 				})
 			} else {
 				let alert2 = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: errorMessage, preferredStyle: .alert)

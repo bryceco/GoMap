@@ -11,7 +11,7 @@
 //#import "AppDelegate.h"
 #import "ExternalGPS.h"
 #import "DLog.h"
-#import "MapView.h"
+//#import "MapView.h"
 
 @implementation ExternalGPS
 

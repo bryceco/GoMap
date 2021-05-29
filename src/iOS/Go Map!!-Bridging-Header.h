@@ -18,7 +18,7 @@
 #import "VectorMath.h"
 //#import "MercatorTileLayer.h"
 //#import "GpxLayer.h"
-#import "MapView.h"
+//#import "MapView.h"
 #import "OsmNotesDatabase.h"
 #import "BingMapsGeometry.h"
 #import "DLog.h"

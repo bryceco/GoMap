@@ -28,14 +28,16 @@ import Foundation
 
 let PATH_SCALING = (256*256.0)
 
+typealias  OsmIdentifier = Int64
+
 @objcMembers
 class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
-	final private(set) var ident: Int64
+	final private(set) var ident: OsmIdentifier
 	final private(set) var user: String
 	final private(set) var timestamp: String
 	final private(set) var version: Int
-	final private(set) var changeset: Int64
+	final private(set) var changeset: OsmIdentifier
 	final private(set) var uid: Int
 	final private(set) var visible: Bool
 

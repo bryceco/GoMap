@@ -44,9 +44,9 @@ class AerialService: NSObject {
     private(set) var startDate: String?
     private(set) var endDate: String?
     private(set) var wmsProjection: String
-    private(set) var attributionString: String?
+    private(set) var attributionString: String
     private(set) var attributionIcon: UIImage?
-    private(set) var attributionUrl: String?
+    private(set) var attributionUrl: String
     
     static let supportedProjections = [
                 "EPSG:3857",
@@ -70,9 +70,9 @@ class AerialService: NSObject {
         endDate: String?,
         wmsProjection projection: String?,
         polygon: CGPath?,
-        attribString: String?,
+        attribString: String,
         attribIcon: UIImage?,
-        attribUrl: String?
+        attribUrl: String
     ) {
 		// normalize URLs
 		var url = url
@@ -82,18 +82,18 @@ class AerialService: NSObject {
 		self.name = name
 		self.identifier = identifier
 		self.url = url
-		wmsProjection = projection ?? ""
+		self.wmsProjection = projection ?? ""
+		self.attributionString = attribString.count != 0 ? attribString : name
+		self.attributionUrl = attribUrl
 
 		super.init()
 
         self.maxZoom = maxZoom ?? 21
-        roundZoomUp = roundUp
+		self.roundZoomUp = roundUp
         self.startDate = startDate
         self.endDate = endDate
         self.polygon = polygon?.copy()
-        attributionString = (attribString?.count ?? 0) != 0 ? attribString : name
-        attributionIcon = attribIcon
-        attributionUrl = attribUrl
+		self.attributionIcon = attribIcon
     }
 
     func isBingAerial() -> Bool {
@@ -159,7 +159,7 @@ class AerialService: NSObject {
 			polygon: nil,
 			attribString: "",
 			attribIcon: nil,
-			attribUrl: nil
+			attribUrl: ""
 		)
 
     static let bingAerial = AerialService(
@@ -174,7 +174,7 @@ class AerialService: NSObject {
             polygon: nil,
             attribString: "",
             attribIcon: UIImage(named: "bing-logo-white"),
-            attribUrl: nil
+            attribUrl: ""
         )
 
 	static let maxarPremiumAerial: AerialService = {
@@ -227,9 +227,9 @@ class AerialService: NSObject {
             endDate: nil,
             wmsProjection: nil,
             polygon: nil,
-            attribString: nil,
+            attribString: "",
             attribIcon: nil,
-            attribUrl: nil
+            attribUrl: ""
         )
 
     static let gpsTrace = AerialService(
@@ -242,9 +242,9 @@ class AerialService: NSObject {
             endDate: nil,
             wmsProjection: nil,
             polygon: nil,
-            attribString: nil,
+            attribString: "",
             attribIcon: nil,
-            attribUrl: nil
+            attribUrl: ""
         )
     
     static let mapboxLocator = AerialService(
@@ -257,9 +257,9 @@ class AerialService: NSObject {
             endDate: nil,
             wmsProjection: nil,
             polygon: nil,
-            attribString: nil,
+            attribString: "",
             attribIcon: nil,
-            attribUrl: nil
+            attribUrl: ""
         )
     
     static let noName = AerialService(
@@ -272,9 +272,9 @@ class AerialService: NSObject {
             endDate: nil,
             wmsProjection: nil,
             polygon: nil,
-            attribString: nil,
+            attribString: "",
             attribIcon: nil,
-            attribUrl: nil
+            attribUrl: ""
         )
     
     func dictionary() -> [String : Any] {
@@ -310,7 +310,11 @@ class AerialService: NSObject {
 				  maxZoom: (dict["zoom"] as? NSNumber)?.intValue ?? 0,
 				  roundUp: (dict["roundUp"] as? NSNumber)?.boolValue ?? false,
 				  startDate: nil, endDate: nil,
-				  wmsProjection: projection, polygon: nil, attribString: nil, attribIcon: nil, attribUrl: nil)
+				  wmsProjection: projection,
+				  polygon: nil,
+				  attribString: "",
+				  attribIcon: nil,
+				  attribUrl: "")
     }
     
     var metadataUrl: String? {
@@ -521,8 +525,8 @@ class AerialList: NSObject {
 			var attribIconString = properties["icon"] as? String ?? ""
 
 			let attribDict = properties["attribution"] as? [String:Any] ?? [:]
-			let attribString = attribDict["text"] as? String
-			let attribUrl = attribDict["url"] as? String
+			let attribString = attribDict["text"] as? String ?? ""
+			let attribUrl = attribDict["url"] as? String ?? ""
 			let overlay = (properties["overlay"] as? NSNumber)?.intValue ?? 0
 			if let supported = supportedTypes[type],
 				supported == true
@@ -614,7 +618,18 @@ class AerialList: NSObject {
 				url = url.replacingOccurrences(of: "{apikey}", with: apikey)
 			}
 
-			let service = AerialService(withName: name, identifier: identifier, url: url, maxZoom: maxZoom, roundUp: true, startDate: startDateString, endDate: endDateString, wmsProjection: projection, polygon: polygon, attribString: attribString, attribIcon: attribIcon, attribUrl: attribUrl)
+			let service = AerialService(withName: name,
+										identifier: identifier,
+										url: url,
+										maxZoom: maxZoom,
+										roundUp: true,
+										startDate: startDateString,
+										endDate: endDateString,
+										wmsProjection: projection,
+										polygon: polygon,
+										attribString: attribString,
+										attribIcon: attribIcon,
+										attribUrl: attribUrl)
 			externalAerials.append(service)
 
 			if httpIcon {
@@ -771,7 +786,7 @@ class AerialList: NSObject {
         }
     }
     
-    func recentlyUsed() -> [AerialService]? {
+    func recentlyUsed() -> [AerialService] {
         return _recentlyUsed
     }
     
@@ -779,7 +794,7 @@ class AerialList: NSObject {
         return userDefinedList.count
     }
     
-    func service(at index: Int) -> AerialService? {
+    func service(at index: Int) -> AerialService {
         return userDefinedList[index]
     }
     

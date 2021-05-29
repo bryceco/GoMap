@@ -84,9 +84,9 @@ class AerialEditViewController: UITableViewController {
             endDate: nil,
             wmsProjection: projection,
             polygon: nil,
-            attribString: nil,
+            attribString: "",
             attribIcon: nil,
-            attribUrl: nil)
+            attribUrl: "")
         completion?(service)
         
         navigationController?.popViewController(animated: true)

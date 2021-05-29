@@ -18,7 +18,7 @@ class AerialListViewController: UITableViewController {
     
     override func viewDidLoad() {
         let appDelegate = AppDelegate.shared
-        aerials = appDelegate.mapView.customAerials!
+        aerials = appDelegate.mapView.customAerials
 
         let viewport = appDelegate.mapView.screenLongitudeLatitude()
 		imageryForRegion = aerials.services(forRegion: viewport)
@@ -35,7 +35,7 @@ class AerialListViewController: UITableViewController {
         super.viewWillDisappear(animated)
         
         if isMovingFromParent {
-			AppDelegate.shared.mapView.setAerialTileService( aerials?.currentAerial )
+			AppDelegate.shared.mapView.setAerialTileService( aerials.currentAerial )
         }
     }
     
@@ -184,7 +184,7 @@ class AerialListViewController: UITableViewController {
 		}
         aerials.currentAerial = service
     
-        mapView.setAerialTileService(aerials?.currentAerial)
+        mapView.setAerialTileService(aerials.currentAerial)
     
         // if popping all the way up we need to tell Settings to save changes
         displayViewController?.applyChanges()

@@ -163,7 +163,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
         }
         
         var imagery: String = ""
-		if appDelegate.mapView.viewState == MAPVIEW_EDITORAERIAL || appDelegate.mapView.viewState == MAPVIEW_AERIAL {
+		if appDelegate.mapView.viewState == MAPVIEW.EDITORAERIAL || appDelegate.mapView.viewState == MAPVIEW.AERIAL {
 			imagery = appDelegate.mapView.aerialLayer.aerialService.name
 		}
         

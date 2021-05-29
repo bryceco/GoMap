@@ -7,6 +7,7 @@
 //
 
 import QuartzCore
+import CoreLocation
 
 //private let PATH_SCALING = 256*256.0
 //private let MAX_AGE		= 7.0 * 24 * 60 * 60

@@ -68,7 +68,8 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
     @IBOutlet private weak var displayButton: UIButton!
     
     func updateUndoRedoButtonState() {
-        _undoButton.isEnabled = mapView.editorLayer.mapData.canUndo() && !mapView.editorLayer.isHidden
+		guard _undoButton != nil else { return }	// during init it can be null
+		_undoButton.isEnabled = mapView.editorLayer.mapData.canUndo() && !mapView.editorLayer.isHidden
         _redoButton.isEnabled = mapView.editorLayer.mapData.canRedo() && !mapView.editorLayer.isHidden
         _uploadButton.isHidden = !_undoButton.isEnabled
         _undoRedoView.isHidden = !_undoButton.isEnabled && !_redoButton.isEnabled
@@ -441,15 +442,15 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
     }
     
     @objc override func copy(_ sender: Any?) {
-        mapView.performEdit(ACTION_COPYTAGS)
+		mapView.performEdit(EDIT_ACTION.COPYTAGS)
     }
     
     @objc override func paste(_ sender: Any?) {
-        mapView.performEdit(ACTION_PASTETAGS)
+		mapView.performEdit(EDIT_ACTION.PASTETAGS)
     }
     
     @objc override func delete(_ sender: Any?) {
-        mapView.performEdit(ACTION_DELETE)
+		mapView.performEdit(EDIT_ACTION.DELETE)
     }
     
     @objc func showHelp(_ sender: Any?) {
@@ -481,18 +482,16 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 title: NSLocalizedString("Recent Aerial Imagery", comment: "Alert title message"),
                 message: nil,
                 preferredStyle: .actionSheet)
-            if let recentlyUsed = aerialList?.recentlyUsed {
-                for service in (recentlyUsed() ?? []) {
-                    actionSheet.addAction(UIAlertAction(title: service.name, style: .default, handler: { [self] action in
-                        aerialList?.currentAerial = service
-                        mapView.setAerialTileService(service)
-                        if mapView.viewState == MAPVIEW_EDITOR {
-                            mapView.viewState = MAPVIEW_EDITORAERIAL
-                        } else if mapView.viewState == MAPVIEW_MAPNIK {
-                            mapView.viewState = MAPVIEW_EDITORAERIAL
-                        }
-                    }))
-                }
+			for service in aerialList.recentlyUsed() {
+				actionSheet.addAction(UIAlertAction(title: service.name, style: .default, handler: { [self] action in
+					aerialList.currentAerial = service
+					mapView.setAerialTileService(service)
+					if mapView.viewState == MAPVIEW.EDITOR {
+						mapView.viewState = MAPVIEW.EDITORAERIAL
+					} else if mapView.viewState == MAPVIEW.MAPNIK {
+						mapView.viewState = MAPVIEW.EDITORAERIAL
+					}
+				}))
             }
             
             // add options for changing display
@@ -501,32 +500,32 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 title: prefix + NSLocalizedString("Editor only", comment: ""),
                 style: .default,
                 handler: { [self] action in
-                    mapView.viewState = MAPVIEW_EDITOR
+					mapView.viewState = MAPVIEW.EDITOR
                 })
             let aerialOnly = UIAlertAction(
                 title: prefix + NSLocalizedString("Aerial only", comment: ""),
                 style: .default,
                 handler: { [self] action in
-                    mapView.viewState = MAPVIEW_AERIAL
+					mapView.viewState = MAPVIEW.AERIAL
                 })
             let editorAerial = UIAlertAction(
                 title: prefix + NSLocalizedString("Editor with Aerial", comment: ""),
                 style: .default,
                 handler: { [self] action in
-                    mapView.viewState = MAPVIEW_EDITORAERIAL
+					mapView.viewState = MAPVIEW.EDITORAERIAL
                 })
             
             switch mapView.viewState {
-            case MAPVIEW_EDITOR:
+			case .EDITOR:
                 actionSheet.addAction(editorAerial)
                 actionSheet.addAction(aerialOnly)
-            case MAPVIEW_EDITORAERIAL:
-                actionSheet.addAction(editorOnly)
+			case .EDITORAERIAL, .NONE:
+				actionSheet.addAction(editorOnly)
                 actionSheet.addAction(aerialOnly)
-            case MAPVIEW_AERIAL:
+			case .AERIAL:
                 actionSheet.addAction(editorAerial)
                 actionSheet.addAction(editorOnly)
-            default:
+			case .MAPNIK:
                 actionSheet.addAction(editorAerial)
                 actionSheet.addAction(editorOnly)
                 actionSheet.addAction(aerialOnly)
@@ -555,7 +554,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
             mapView.gpsState = state
             
             // update GPS icon
-            let imageName = (mapView.gpsState == GPS_STATE_NONE) ? "location2" : "location.fill"
+			let imageName = (mapView.gpsState == GPS_STATE.NONE) ? "location2" : "location.fill"
             var image = UIImage(named: imageName)
             image = image?.withRenderingMode(.alwaysTemplate)
             locationButton.setImage(image, for: .normal)
@@ -564,13 +563,12 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     @IBAction func toggleLocation(_ sender: Any) {
         switch mapView.gpsState {
-        case GPS_STATE_NONE:
-            setGpsState(GPS_STATE_LOCATION)
+		case GPS_STATE.NONE:
+			setGpsState(GPS_STATE.LOCATION)
             mapView.rotateToNorth()
-        case GPS_STATE_LOCATION, GPS_STATE_HEADING:
-            setGpsState(GPS_STATE_NONE)
-        default:
-            break
+		case GPS_STATE.LOCATION,
+			 GPS_STATE.HEADING:
+			setGpsState(GPS_STATE.NONE)
         }
     }
     
@@ -580,8 +578,8 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			// allow GPS collection in background
         } else {
             // turn off GPS tracking
-			setGpsState(GPS_STATE_NONE)
-        }
+			setGpsState(GPS_STATE.NONE)
+		}
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

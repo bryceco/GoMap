@@ -46,7 +46,7 @@ class GpxTrackTableCell: UITableViewCell, UIActionSheetDelegate {
                     controller.completionWithItemsHandler = { activityType, completed, returnedItems, activityError in
                         if completed {
                             let gpxLayer = AppDelegate.shared.mapView.gpxLayer
-                            gpxLayer?.markTrackUploaded(self.gpxTrack)
+                            gpxLayer.markTrackUploaded(self.gpxTrack)
                             self.tableView?.tableView.reloadData()
                         }
                     }
@@ -151,7 +151,7 @@ class GpxViewController: UITableViewController {
 						self.present(success, animated: true)
 
 						// mark track as uploaded in UI
-						let gpxLayer = AppDelegate.shared.mapView.gpxLayer!
+						let gpxLayer = AppDelegate.shared.mapView.gpxLayer
 						gpxLayer.markTrackUploaded(track)
 						self.tableView?.reloadData()
 					} else {
@@ -333,9 +333,8 @@ class GpxViewController: UITableViewController {
         if editingStyle == .delete {
             // Delete the row from the data source
             let gpxLayer = AppDelegate.shared.mapView.gpxLayer
-			if let track = gpxLayer?.previousTracks[indexPath.row] {
-                gpxLayer?.delete(track)
-            }
+			let track = gpxLayer.previousTracks[indexPath.row]
+			gpxLayer.delete(track)
             
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
@@ -359,20 +358,18 @@ class GpxViewController: UITableViewController {
         if indexPath.section == SECTION_ACTIVE_TRACK {
             // active track
             let gpxLayer = AppDelegate.shared.mapView.gpxLayer
-            gpxLayer?.selectedTrack = gpxLayer?.activeTrack
-            if let selectedTrack = gpxLayer?.selectedTrack {
-                gpxLayer?.center(on: selectedTrack)
+            gpxLayer.selectedTrack = gpxLayer.activeTrack
+            if let selectedTrack = gpxLayer.selectedTrack {
+                gpxLayer.center(on: selectedTrack)
             }
             navigationController?.dismiss(animated: true)
         } else if indexPath.section == SECTION_CONFIGURE {
             // configuration
         } else if indexPath.section == SECTION_PREVIOUS_TRACKS {
             let gpxLayer = AppDelegate.shared.mapView.gpxLayer
-			if let track = gpxLayer?.previousTracks[indexPath.row] {
-                gpxLayer?.selectedTrack = track
-                gpxLayer?.selectedTrack = track
-                gpxLayer?.center(on: track)
-            }
+			let track = gpxLayer.previousTracks[indexPath.row]
+			gpxLayer.selectedTrack = track
+			gpxLayer.center(on: track)
             navigationController?.dismiss(animated: true)
         }
     }

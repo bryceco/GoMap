@@ -40,15 +40,15 @@ class DisplayViewController: UITableViewController {
     }
 
     func applyChanges() {
-        let mapView = AppDelegate.shared.mapView
+        let mapView = AppDelegate.shared.mapView!
 
         let maxRow = tableView.numberOfRows(inSection: BACKGROUND_SECTION)
         for row in 0..<maxRow {
             let indexPath = IndexPath(row: row, section: BACKGROUND_SECTION)
             if let cell = tableView.cellForRow(at: indexPath) {
                 if cell.accessoryType == .checkmark {
-                    mapView?.viewState = MapViewState.init(Int32(cell.tag))
-                    mapView?.setAerialTileService(mapView?.customAerials.currentAerial)
+					mapView.viewState = MapViewState.init(rawValue: cell.tag) ?? MapViewState.EDITORAERIAL
+                    mapView.setAerialTileService(mapView.customAerials.currentAerial)
                     break
                 }
             }
@@ -56,18 +56,18 @@ class DisplayViewController: UITableViewController {
         }
         
         var mask: Int = 0
-        mask |= _notesSwitch.isOn ? Int(VIEW_OVERLAY_NOTES.rawValue) : 0
-        mask |= _gpsTraceSwitch.isOn ? Int(VIEW_OVERLAY_GPSTRACE.rawValue) : 0
-        mask |= _unnamedRoadSwitch.isOn ? Int(VIEW_OVERLAY_NONAME.rawValue) : 0
-        mapView?.viewOverlayMask = ViewOverlayMask(rawValue: _ViewOverlayMask.RawValue(mask))
+		mask |= _notesSwitch.isOn ? Int(VIEW_OVERLAY.NOTES.rawValue) : 0
+		mask |= _gpsTraceSwitch.isOn ? Int(VIEW_OVERLAY.GPSTRACE.rawValue) : 0
+		mask |= _unnamedRoadSwitch.isOn ? Int(VIEW_OVERLAY.NONAME.rawValue) : 0
+		mapView.viewOverlayMask = ViewOverlayMask(rawValue: ViewOverlayMask.RawValue(mask))
 
-        mapView?.enableBirdsEye = _birdsEyeSwitch.isOn
-        mapView?.enableRotation = _rotationSwitch.isOn
-        mapView?.enableUnnamedRoadHalo = _unnamedRoadSwitch.isOn
-        mapView?.enableGpxLogging = _gpxLoggingSwitch.isOn
-        mapView?.enableTurnRestriction = _turnRestrictionSwitch.isOn
+        mapView.enableBirdsEye = _birdsEyeSwitch.isOn
+        mapView.enableRotation = _rotationSwitch.isOn
+        mapView.enableUnnamedRoadHalo = _unnamedRoadSwitch.isOn
+        mapView.enableGpxLogging = _gpxLoggingSwitch.isOn
+        mapView.enableTurnRestriction = _turnRestrictionSwitch.isOn
 
-        mapView?.editorLayer.setNeedsLayout()
+        mapView.editorLayer.setNeedsLayout()
     }
 
     @IBAction func gpsSwitchChanged(_ sender: Any) {
@@ -95,7 +95,7 @@ class DisplayViewController: UITableViewController {
 
         if let viewOverlayMask = mapView?.viewOverlayMask {
             // Fix here
-            let bitwiseOperation = (viewOverlayMask.rawValue & VIEW_OVERLAY_NOTES.rawValue)
+			let bitwiseOperation = (viewOverlayMask.rawValue & VIEW_OVERLAY.NOTES.rawValue)
             _notesSwitch.isOn = bitwiseOperation != 0
         }
         _gpsTraceSwitch.isOn = !(mapView?.gpsTraceLayer.isHidden)!
@@ -123,9 +123,8 @@ class DisplayViewController: UITableViewController {
 
         // set the name of the aerial provider
         if indexPath.section == BACKGROUND_SECTION && indexPath.row == 2 {
-            if let custom = cell as? CustomBackgroundCell,
-			   let aerials = AppDelegate.shared.mapView.customAerials
-			{
+            if let custom = cell as? CustomBackgroundCell {
+				let aerials = AppDelegate.shared.mapView.customAerials
 				custom.button.setTitle(aerials.currentAerial.name, for: .normal)
                 custom.button.sizeToFit()
             }
