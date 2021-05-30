@@ -140,10 +140,10 @@ extension CGPath {
 		// Find the point with the maximum distance
 		var dmax: CGFloat = 0.0
 		var index: Int = 0
-		let end1 = OSMPointFromCGPoint(points[first])
-		let end2 = OSMPointFromCGPoint(points[last])
+		let end1 = OSMPoint(points[first])
+		let end2 = OSMPoint(points[last])
 		for i in (first + 1)..<last {
-			let p = OSMPointFromCGPoint(points[i])
+			let p = OSMPoint(points[i])
 			let d = DistanceFromPointToLineSegment(p, end1, end2)
 			if d > dmax {
 				index = i

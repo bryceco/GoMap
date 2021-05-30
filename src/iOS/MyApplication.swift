@@ -42,9 +42,9 @@ class MyApplication: UIApplication {
 
         for touch in event.allTouches ?? [] {
 
-            var pos = touch.location(in: nil)
+			var pos: CGPoint = touch.location(in: nil)
             // if we double-tap then the second tap will be captured by our own window
-            pos = touch.window?.convert(pos, to: nil) ?? CGPoint.zero
+			pos = touch.window!.convert(pos, to: nil)
 
             if UIDevice.current.userInterfaceIdiom == .phone {
                 // Translate coordinates in case screen is rotated. On iPad the tranform is done for us.

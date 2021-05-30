@@ -67,8 +67,8 @@ final class OsmNode: OsmBaseObject {
 	override func distance(toLineSegment point1: OSMPoint, point point2: OSMPoint) -> Double {
         var point1 = point1
         var point2 = point2
-        let metersPerDegree = OSMPoint(x: MetersPerDegreeLongitude(lat), y: MetersPerDegreeLatitude(lat))
-        point1.x = (point1.x - lon) * metersPerDegree.x
+		let metersPerDegree = MetersPerDegree(atLatitude: lat)
+		point1.x = (point1.x - lon) * metersPerDegree.x
         point1.y = (point1.y - lat) * metersPerDegree.y
         point2.x = (point2.x - lon) * metersPerDegree.x
         point2.y = (point2.y - lat) * metersPerDegree.y

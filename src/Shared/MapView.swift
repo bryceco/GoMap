@@ -909,7 +909,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
     func save() {
         // save defaults firs
-        var center = OSMPointFromCGPoint(crossHairs.position)
+        var center = OSMPoint(crossHairs.position)
         center = mapPoint(fromScreenPoint: center, birdsEye: false)
         center = LongitudeLatitudeFromMapPoint(center)
         let scale = OSMTransformScaleX(screenFromMapTransform)
@@ -1713,9 +1713,9 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         }
 
         // check if we moved an appreciable distance
-        var delta = hypot( newLocation.coordinate.latitude - currentLocation.coordinate.latitude,
-						   newLocation.coordinate.longitude - currentLocation.coordinate.longitude)
-        delta *= MetersPerDegree(newLocation.coordinate.latitude)
+		let p1 = OSMPoint( newLocation.coordinate )
+		let p2 = OSMPoint( currentLocation.coordinate )
+		let delta = GreatCircleDistance(p1, p2)
 		if locationBallLayer != nil && delta < 0.1 && abs(newLocation.horizontalAccuracy - currentLocation.horizontalAccuracy) < 1.0 {
 			return
         }
@@ -1881,7 +1881,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 		}
 
         refreshNoteButtonsFromDatabase()
-        let offset = mapPoint(fromScreenPoint: OSMPointFromCGPoint(zoomCenter), birdsEye: false)
+        let offset = mapPoint(fromScreenPoint: OSMPoint(zoomCenter), birdsEye: false)
         var t = screenFromMapTransform
         t = OSMTransformTranslate(t, offset.x, offset.y)
         t = OSMTransformScale(t, ratio)
@@ -1896,7 +1896,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
         refreshNoteButtonsFromDatabase()
 
-        let offset = mapPoint(fromScreenPoint: OSMPointFromCGPoint(zoomCenter), birdsEye: false)
+        let offset = mapPoint(fromScreenPoint: OSMPoint(zoomCenter), birdsEye: false)
         var t = screenFromMapTransform
         t = OSMTransformTranslate(t, offset.x, offset.y)
         t = OSMTransformRotate(t, Double(angle))
@@ -1980,7 +1980,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         }
 
         let center = CGRectCenter(bounds)
-        let offset = mapPoint(fromScreenPoint: OSMPointFromCGPoint(center), birdsEye: false)
+        let offset = mapPoint(fromScreenPoint: OSMPoint(center), birdsEye: false)
 
         t = OSMTransformTranslate(t, offset.x, offset.y)
         #if TRANSFORM_3D
@@ -2735,7 +2735,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
                             // if we're dragging at a diagonal then scroll diagonally as well, in the direction the user is dragging
                             let center = CGRectCenter(self.bounds)
-                            let v = UnitVector(Sub(OSMPointFromCGPoint(arrow), OSMPointFromCGPoint(center)))
+                            let v = UnitVector(Sub(OSMPoint(arrow), OSMPoint(center)))
                             scrollx = SCROLL_SPEED * CGFloat(v.x)
                             scrolly = SCROLL_SPEED * CGFloat(v.y)
 
@@ -2900,7 +2900,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                     }
                     let np1 = OSMPoint(x: Double(arrowPoint.x - delta.y), y: Double(arrowPoint.y + delta.x))
                     let np2 = OSMPoint(x: Double(arrowPoint.x + delta.y), y: Double(arrowPoint.y - delta.x))
-                    if DistanceFromPointToPoint(np1, OSMPointFromCGPoint(newPoint)) < DistanceFromPointToPoint(np2, OSMPointFromCGPoint(newPoint)) {
+                    if DistanceFromPointToPoint(np1, OSMPoint(newPoint)) < DistanceFromPointToPoint(np2, OSMPoint(newPoint)) {
                         newPoint = CGPoint(x: np1.x, y: np1.y)
                     } else {
                         newPoint = CGPoint(x: np2.x, y: np2.y)

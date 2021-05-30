@@ -87,6 +87,7 @@
 		02E6267219973A0700565D62 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02E6267119973A0700565D62 /* Security.framework */; };
 		02E8436519B39FAD0044AC1D /* OsmNotesDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E8436419B39FAD0044AC1D /* OsmNotesDatabase.m */; };
 		02EA1C6B26631D0D00A0F827 /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C381C305263FD0CA003142BA /* VectorMath.swift */; };
+		02EA1C6C2663398C00A0F827 /* BingMapsGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925126411557000A2A99 /* BingMapsGeometry.swift */; };
 		02ED19811BBF119C00A57CF4 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */; };
 		02EDBF672653306400B7072E /* OsmBaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096F1263EBE5E00E3B129 /* OsmBaseObject.swift */; };
 		02EDBF6826535B9D00B7072E /* OsmNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096EF263EBE5D00E3B129 /* OsmNode.swift */; };
@@ -253,7 +254,6 @@
 		02ACBA3716713CCB00BB4414 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		02ACBA3B16713CCB00BB4414 /* Go Map!!-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Go Map!!-Info.plist"; sourceTree = "<group>"; };
 		02ACBA4116713CCB00BB4414 /* Go Map!!-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Go Map!!-Prefix.pch"; sourceTree = "<group>"; };
-		02ACBA6D16713F2A00BB4414 /* BingMapsGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = BingMapsGeometry.h; path = ../Shared/BingMapsGeometry.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02ACBA7016713F2A00BB4414 /* changeset.xsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = changeset.xsl; path = ../Shared/changeset.xsl; sourceTree = "<group>"; };
 		02ACBBBB16713F2A00BB4414 /* RenderInfo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = RenderInfo.json; path = ../Shared/RenderInfo.json; sourceTree = "<group>"; };
 		02ACBBBD16713F2A00BB4414 /* VectorMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VectorMath.h; path = ../Shared/VectorMath.h; sourceTree = "<group>"; };
@@ -675,7 +675,6 @@
 				C3FA924F2640329B000A2A99 /* AerialList.swift */,
 				C3D096BD263E178600E3B129 /* aes.swift */,
 				02A123EC264CAE6F005638C1 /* Atomic.swift */,
-				02ACBA6D16713F2A00BB4414 /* BingMapsGeometry.h */,
 				C3FA925126411557000A2A99 /* BingMapsGeometry.swift */,
 				02ACBA7016713F2A00BB4414 /* changeset.xsl */,
 				02D5B5F2248F154D00FEE448 /* Colors.swift */,
@@ -1119,6 +1118,7 @@
 				C3D096DB263EB73E00E3B129 /* main.swift in Sources */,
 				C3FA9249263FF95B000A2A99 /* LocationURLParser.swift in Sources */,
 				ED56E5EB26028B5F000B368C /* GpxConfigureViewController.swift in Sources */,
+				02EA1C6C2663398C00A0F827 /* BingMapsGeometry.swift in Sources */,
 				021FADD725873D0100F6E1C0 /* PresetsForFeature.swift in Sources */,
 				02A123ED264CAE6F005638C1 /* Atomic.swift in Sources */,
 				02008650265B25DC008F37DD /* Database.swift in Sources */,

@@ -516,10 +516,7 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
 
 	// this function is used for bulk downloading tiles
     func downloadTile(forKey cacheKey: String, completion: @escaping () -> Void) {
-        var tileX = Int()
-        var tileY = Int()
-        var zoomLevel = Int()
-        QuadKeyToTileXY(cacheKey, &tileX, &tileY, &zoomLevel)
+		let (tileX, tileY, zoomLevel) = QuadKeyToTileXY(cacheKey)
         let data2 = _webCache.object(withKey: cacheKey,
 			fallbackURL: {
 				return self.url(forZoom: zoomLevel, tileX: tileX, tileY: tileY)

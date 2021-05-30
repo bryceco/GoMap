@@ -30,7 +30,7 @@ class TurnRestrictHwyView: UIView {
     var restriction: TURN_RESTRICT!
 
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        let dist = DistanceFromPointToLineSegment(OSMPointFromCGPoint(point), OSMPointFromCGPoint(centerPoint), OSMPointFromCGPoint(endPoint))
+        let dist = DistanceFromPointToLineSegment(OSMPoint(point), OSMPoint(centerPoint), OSMPoint(endPoint))
         return dist < 10.0 // touch within 10 pixels
     }
 

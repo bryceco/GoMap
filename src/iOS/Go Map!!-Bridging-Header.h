@@ -20,7 +20,7 @@
 //#import "GpxLayer.h"
 //#import "MapView.h"
 #import "OsmNotesDatabase.h"
-#import "BingMapsGeometry.h"
+//#import "BingMapsGeometry.h"
 #import "DLog.h"
 //#import "SpeechBalloonView.h"
 //#import "PersistentWebCache.h"

@@ -335,7 +335,7 @@ class EditorMapLayer: CALayer {
         
 		for node in way.nodes {
 
-			let pt = OSMPointFromCGPoint(mapView.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false))
+			let pt = OSMPoint(mapView.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false))
 			let inside = viewRect.containsPoint( pt)
 			defer {
 				prev = pt
@@ -651,10 +651,10 @@ class EditorMapLayer: CALayer {
 							var prevPoint: OSMPoint = OSMPoint.zero
 							path.apply(action: { [self] element in
 								if element.type == .moveToPoint {
-									prevPoint = Add(refPoint, Mult(OSMPointFromCGPoint(element.points[0]), 1 / PATH_SCALING))
+									prevPoint = Add(refPoint, Mult(OSMPoint(element.points[0]), 1 / PATH_SCALING))
 									hasPrev = true
 								} else if element.type == .addLineToPoint && hasPrev {
-									let pt = Add(refPoint, Mult(OSMPointFromCGPoint(element.points[0]), 1 / PATH_SCALING))
+									let pt = Add(refPoint, Mult(OSMPoint(element.points[0]), 1 / PATH_SCALING))
 									let wall = buildingWallLayer(for: pt, point: prevPoint, height: height, hue: hue)
 									if let wall = wall {
 										layers.append(wall)

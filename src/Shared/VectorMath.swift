@@ -6,7 +6,13 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+// On 32-bit systems the CoreGraphics CGFloat (e.g. float not double) doesn't have
+// enough precision for a lot of values we work with. Therefore we define our own
+// OsmPoint, etc that is explicitely 64-bit double
+
+
 import UIKit
+import CoreLocation
 
 // https://developer.apple.com/library/mac/#samplecode/glut/Listings/gle_vvector_h.html
 
@@ -47,17 +53,14 @@ struct OSMTransform {
 
 // MARK: Point
 extension CGPoint {
+	static let zero = CGPoint(x: 0.0, y: 0.0)
+
 	@inline(__always) func withOffset(_ dx: CGFloat, _ dy: CGFloat) -> CGPoint {
 		return CGPoint(x: self.x + dx, y: self.y + dy)
 	}
 	@inline(__always) func minus(_ b: CGPoint) -> CGPoint {
 		return CGPoint(x: self.x - b.x, y: self.y - b.y)
 	}
-}
-
-@inline(__always) func OSMPointFromCGPoint(_ pt: CGPoint) -> OSMPoint {
-	let point = OSMPoint(x: Double(pt.x), y: Double(pt.y))
-    return point
 }
 
 @inline(__always) func CGPointFromOSMPoint(_ pt: OSMPoint) -> CGPoint {
@@ -262,12 +265,15 @@ extension OSMPoint {
 	static let zero = OSMPoint(x: 0.0, y: 0.0)
 
 	@inline(__always) init(_ pt: CGPoint) {
-		self.init( x: Double(pt.x), y: Double(pt.y) )
+		self.init(x: Double(pt.x), y: Double(pt.y))
+	}
+	@inline(__always) init(_ loc: CLLocationCoordinate2D) {
+		self.init( x: Double(loc.longitude), y: Double(loc.latitude) )
 	}
 }
 
 extension OSMSize {
-	static let zero = OSMRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
+	static let zero = OSMSize(width: 0.0, height: 0.0)
 
 	@inline(__always) init(_ sz: CGSize) {
 		self.init(width: Double(sz.width), height: Double(sz.height))
@@ -607,6 +613,7 @@ func SurfaceArea(_ latLon: OSMRect) -> Double {
 }
 
 // http://www.movable-type.co.uk/scripts/latlong.html
+/// Distance between two lon,lat  points in degrees, result in meters
 func GreatCircleDistance(_ p1: OSMPoint, _ p2: OSMPoint) -> Double {
 	let earthRadius = 6378137.0 // meters
 	// haversine formula

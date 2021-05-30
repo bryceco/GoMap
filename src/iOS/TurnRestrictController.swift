@@ -154,10 +154,10 @@ class TurnRestrictController: UIViewController {
             // force highway segment to extend from center node to edge of view
             let size = detailView.bounds.size
 			let direction = OSMPoint(x: Double(nodePoint.x - detailViewCenter.x), y: Double(nodePoint.y - detailViewCenter.y))
-			let distTop = DistanceToVector(OSMPointFromCGPoint(detailViewCenter), direction, OSMPoint.zero, OSMPoint(x: Double(size.width), y: 0))
-			let distLeft = DistanceToVector(OSMPointFromCGPoint(detailViewCenter), direction, OSMPoint.zero, OSMPoint(x: 0, y: Double(size.height)))
-			let distRight = DistanceToVector(OSMPointFromCGPoint(detailViewCenter), direction, OSMPoint(x: Double(size.width), y: 0), OSMPoint(x: 0, y: Double(size.height)))
-			let distBottom = DistanceToVector(OSMPointFromCGPoint(detailViewCenter), direction, OSMPoint(x: 0, y: Double(size.height)), OSMPoint(x: Double(size.width), y: 0))
+			let distTop = DistanceToVector(OSMPoint(detailViewCenter), direction, OSMPoint.zero, OSMPoint(x: Double(size.width), y: 0))
+			let distLeft = DistanceToVector(OSMPoint(detailViewCenter), direction, OSMPoint.zero, OSMPoint(x: 0, y: Double(size.height)))
+			let distRight = DistanceToVector(OSMPoint(detailViewCenter), direction, OSMPoint(x: Double(size.width), y: 0), OSMPoint(x: 0, y: Double(size.height)))
+			let distBottom = DistanceToVector(OSMPoint(detailViewCenter), direction, OSMPoint(x: 0, y: Double(size.height)), OSMPoint(x: Double(size.width), y: 0))
             var best: Double = Double(Float.greatestFiniteMagnitude)
             if distTop > 0 && distTop < best {
                 best = distTop

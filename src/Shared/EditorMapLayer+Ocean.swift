@@ -229,7 +229,7 @@ extension EditorMapLayer {
         }
         let pointlist = nodeList.map { (node) -> OSMPoint in
             let pt = self.mapView.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false)
-            return OSMPointFromCGPoint(pt)
+            return OSMPoint(pt)
         }
         return pointlist
     }
@@ -398,7 +398,7 @@ extension EditorMapLayer {
 
         let cgViewRect = bounds
         let viewRect = OSMRect(cgViewRect)
-        let viewCenter = OSMPointFromCGPoint(CGRectCenter(cgViewRect))
+        let viewCenter = OSMPoint(CGRectCenter(cgViewRect))
 
         // trim nodes in segments to only visible paths
         var visibleSegments = [[OSMPoint]]()

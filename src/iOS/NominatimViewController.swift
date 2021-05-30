@@ -76,9 +76,9 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
     
     func jump(toLat lat: Double, lon: Double) {
         let appDelegate = AppDelegate.shared
-        let metersPerDegree = MetersPerDegree(lat)
+        let metersPerDegree = MetersPerDegree(atLatitude: lat)
         let minMeters: Double = 50
-        let widthDegrees = minMeters / metersPerDegree
+		let widthDegrees = minMeters / metersPerDegree.y
         
         // disable GPS
 		while appDelegate.mapView.gpsState != GPS_STATE.NONE {

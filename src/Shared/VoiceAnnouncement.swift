@@ -83,7 +83,7 @@ class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
 
         isNewUpdate = true
 
-        let metersPerDegree = CGPoint(x: MetersPerDegreeLongitude(coord.latitude), y: MetersPerDegreeLatitude(coord.latitude))
+		let metersPerDegree = MetersPerDegree(atLatitude:coord.latitude)
 		if previousCoord.latitude == 0.0 && previousCoord.longitude == 0.0 {
             previousCoord = coord
         }
