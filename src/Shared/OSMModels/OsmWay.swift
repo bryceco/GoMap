@@ -491,7 +491,10 @@ final class OsmWay: OsmBaseObject {
 		_constructed = true
 		#if DEBUG
 		for node in nodes {
-			assert(node.wayCount > 0)
+			if node.wayCount == 0 {
+				print("node \(node.ident) @ \(Unmanaged.passUnretained(node).toOpaque()) waycount = \(node.wayCount)")
+				assert(node.wayCount > 0)
+			}
 		}
 		#endif
     }
@@ -514,7 +517,11 @@ final class OsmWay: OsmBaseObject {
     override func encode(with coder: NSCoder) {
 		#if DEBUG
 		for node in nodes {
-			assert(node.wayCount > 0)
+			if node.wayCount == 0 {
+				print("way \(self.ident) @ \(self.address()) nodes = \(self.nodes.count)")
+				print("node \(node.ident) @ \(node.address()) waycount = \(node.wayCount)")
+				assert(node.wayCount > 0)
+			}
 		}
 		#endif
 		super.encode(with: coder)

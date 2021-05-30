@@ -190,7 +190,7 @@ static NSInteger g_nextTagID = 1;
 	if ( self ) {
 		OSMPoint center = object.selectionPoint;
 		_tagId		= g_nextTagID++;
-		_noteId		= @(object.extendedIdentifier);
+		_noteId		= @(object.extendedIdentifierFixme);
 		_lat		= center.y;
 		_lon		= center.x;
 		_created	= object.timestamp;

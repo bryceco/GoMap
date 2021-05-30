@@ -41,6 +41,4 @@
 -(BOOL)nodesAreCovered:(NSArray * _Nonnull)nodeList;
 -(void)deleteObjectsWithPredicate:(BOOL(^ _Nonnull)(OsmBaseObject * _Nonnull obj))predicate;
 
--(void)consistencyCheckObject:(OsmBaseObject * _Nonnull)object;
-
 @end

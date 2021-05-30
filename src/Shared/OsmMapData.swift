@@ -190,10 +190,11 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         return relations[ref]
     }
     
-    func object(withExtendedIdentifier extendedIdentifier: OsmIdentifier) -> OsmBaseObject? {
-		var ident: OsmIdentifier = 0
-		var type: OSM_TYPE = ._NODE
-		OsmBaseObject.decomposeExtendedIdentifier(extendedIdentifier, type: &type, ident: &ident)
+	// FIXME: use OsmExtendedIdentifier
+    func object(withExtendedIdentifier extendedIdentifier: Int64) -> OsmBaseObject? {
+		let ext = OsmExtendedIdentifier(extendedIdentifier)
+		let ident: OsmIdentifier = ext.ident
+		let type: OSM_TYPE = ext.type
 		switch type {
             case OSM_TYPE._NODE:
                 return nodes[ident];
@@ -902,7 +903,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
     }
     
 	func merge(_ newData: OsmMapData?, fromDownload downloaded: Bool, quadList: [QuadBox], success: Bool) {
-        if let newData = newData {
+		if let newData = newData {
             var newNodes: [OsmNode] = []
             var newWays: [OsmWay] = []
             var newRelations: [OsmRelation] = []
@@ -966,11 +967,9 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
             for (_, node) in newData.nodes {
                 node.setConstructed()
             }
-            
             for (_, way) in newData.ways {
                 way.setConstructed()
             }
-            
             for (_, relation) in newData.relations {
                 relation.setConstructed()
             }
@@ -1993,8 +1992,9 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
     
     func discardStaleData() -> Bool {
         if modificationCount() > 0 {
-            return false
+			return false
         }
+		let undoObjects = undoManager.objectRefs()
         
         // don't discard too frequently
         let now = Date()
@@ -2048,11 +2048,14 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
             var removeRelations: [OsmIdentifier] = []
             var removeWays: [OsmIdentifier] = []
             var removeNodes: [OsmIdentifier] = []
-            
-            for (ident, relation) in relations {
-                let objects = relation.allMemberObjects()
+
+			// only remove relation if no members are covered by region
+			for (ident, relation) in relations
+			where !relation.isModified() && !undoObjects.contains(relation)
+			{
+				let memberObjects = relation.allMemberObjects()
                 var covered = false
-                for obj in objects {
+                for obj in memberObjects {
                     if obj.isNode() != nil {
                         if region.pointIsCovered(obj.isNode()!.location()) {
                             covered = true
@@ -2071,8 +2074,11 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
                 }
             }
             
-            for (ident, way) in ways {
-                if !region.nodesAreCovered(way.nodes) {
+			// only remove way if no nodes are covered by region
+			for (ident, way) in ways
+			where !way.isModified() && !undoObjects.contains(way)
+			{
+				if !region.nodesAreCovered(way.nodes) {
                     removeWays.append(ident)
                     for node in way.nodes {
                         DbgAssert(node.wayCount > 0)
@@ -2080,11 +2086,14 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
                     }
                 }
             }
-            
-            for (ident, node) in nodes {
-                if node.wayCount == 0 {
+
+			// only remove nodes if they are not covered and they don't belong to a way
+			for (ident, node) in nodes
+			where !node.isModified() && !undoObjects.contains(node)
+			{
+				if node.wayCount == 0 {
                     if !region.pointIsCovered(node.location()) {
-                        removeNodes.append(ident)
+						removeNodes.append(ident)
                     }
                 }
             }
@@ -2094,7 +2103,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
                 nodes.removeValue(forKey: k)
             }
             for k in removeWays {
-                ways.removeValue(forKey: k)
+				ways.removeValue(forKey: k)
             }
             for k in removeRelations {
                 relations.removeValue(forKey: k)
@@ -2178,7 +2187,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
                 previousDiscardDate = Date()
             })
         })
-        
+
         return true
     }
     
@@ -2259,6 +2268,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 		guard let decode = archiver.loadArchive() else { return nil }
 		if decode.spatial.count() > 0 {
 			print("spatial accidentally saved, please fix")
+			decode.spatial = QuadMap()
 		}
 
 		// rebuild spatial database
@@ -2302,13 +2312,26 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
     }
     
     func consistencyCheck() {
-#if DEBUG && false
+#if DEBUG
         // This is extremely expensive: DEBUG only!
         print("Checking spatial database consistency")
+
         consistencyCheckRelationMembers()
-        spatial?.consistencyCheckNodes(nodes?.values, ways: ways?.values, relations: relations?.values)
+		spatial.consistencyCheckNodes(Array(nodes.values), ways: Array(ways.values), relations: Array(relations.values))
+
+		// make sure that if the undo manager is holding an object that it's consistent with mapData
+		let undoObjects = undoManager.objectRefs()
+		for obj in undoObjects {
+			if let node = obj as? OsmNode {
+				assert( self.nodes[node.ident] === node )
+			} else if let way = obj as? OsmWay {
+				assert( self.ways[way.ident] === way )
+			} else if let relation = obj as? OsmRelation {
+				assert( self.relations[relation.ident] === relation )
+			}
+		}
 #endif
-    }
+	}
 }
 
 class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
@@ -2316,6 +2339,9 @@ class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 	func saveArchive( mapData: OsmMapData ) -> Bool {
 		let path = OsmMapData.pathToArchiveFile()
 		let data = NSMutableData()
+		#if DEBUG
+		assert(mapData.spatial.count() == 0)
+		#endif
 		let archiver = NSKeyedArchiver(forWritingWith: data)
 		archiver.encode(mapData, forKey: "OsmMapData")
 		archiver.finishEncoding()

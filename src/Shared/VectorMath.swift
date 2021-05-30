@@ -603,24 +603,23 @@ func Determinant(_ t: OSMTransform) -> Double {
 // area in square meters
 func SurfaceArea(_ latLon: OSMRect) -> Double {
 	// http://mathforum.org/library/drmath/view/63767.html
-	let SurfaceAreaEarthRadius: Double = 6378137
-	let lon1 = latLon.origin.x
-	let lat1 = latLon.origin.y
-	let lon2: Double = latLon.origin.x + latLon.size.width
-	let lat2: Double = latLon.origin.y + latLon.size.height
-	let A = .pi * SurfaceAreaEarthRadius * SurfaceAreaEarthRadius * Double(abs(sin(lat1 * (.pi / 180)) - sin(lat2 * (.pi / 180)))) * Double(abs(Float(lon1 - lon2))) / 180
+	let SurfaceAreaEarthRadius: Double = 6378137.0
+	let lon1 = latLon.origin.x * .pi / 180.0
+	let lat1 = latLon.origin.y * .pi / 180.0
+	let lon2: Double = (latLon.origin.x + latLon.size.width) * .pi / 180.0
+	let lat2: Double = (latLon.origin.y + latLon.size.height) * .pi / 180.0
+	let A = SurfaceAreaEarthRadius * SurfaceAreaEarthRadius * abs(sin(lat1) - sin(lat2)) * abs(lon1 - lon2)
 	return A
 }
 
 // http://www.movable-type.co.uk/scripts/latlong.html
 /// Distance between two lon,lat  points in degrees, result in meters
 func GreatCircleDistance(_ p1: OSMPoint, _ p2: OSMPoint) -> Double {
-	let earthRadius = 6378137.0 // meters
 	// haversine formula
 	let dlon = (p2.x - p1.x) * .pi / 180
 	let dlat = (p2.y - p1.y) * .pi / 180
 	let a: Double = pow(sin(dlat / 2), 2) + cos(p1.y * .pi / 180) * cos(p2.y * .pi / 180) * pow(sin(dlon / 2), 2)
 	let c: Double = 2 * atan2(sqrt(a), sqrt(1 - a))
-	let meters = earthRadius * c
+	let meters = EarthRadius * c
 	return meters
 }

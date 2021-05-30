@@ -472,6 +472,12 @@ public:
 			_children[index]->addMember(member,bbox,depth+1);
 		} else {
 			// add to self
+			if ( std::find(_members.begin(), _members.end(), member) != _members.end()) {
+#if DEBUG
+				assert(NO);	// duplicate entry
+#endif
+				return;
+			}
 			_members.push_back(member);
 		}
 	}
@@ -579,35 +585,6 @@ public:
 				child->deleteObjectsWithPredicate( predicate );
 			}
 		}
-	}
-
-	static void consistencyCheck( const QuadBoxCC * top, OsmBaseObject * object )
-	{
-		std::vector<const QuadBoxCC *>	stack;
-		stack.reserve(32);
-		stack.push_back(top);
-		int foundCount = 0;
-
-		while ( !stack.empty() ) {
-
-			const QuadBoxCC * q = stack.back();
-			stack.pop_back();
-
-			for ( const auto & member : q->_members ) {
-				if ( member == object ) {
-					++foundCount;
-					assert( foundCount == 1 );
-					assert( OSMRectContainsRect( q->_rect, object.boundingBox ) );
-				}
-			}
-			for ( int c = 0; c <= QUAD_LAST; ++c ) {
-				QuadBoxCC * child = q->_children[ c ];
-				if ( child ) {
-					stack.push_back(child);
-				}
-			}
-		}
-		assert( foundCount == 1 );
 	}
 };
 
@@ -772,11 +749,6 @@ public:
 -(void)enumerate:(void (^ _Nonnull)(OsmBaseObject * _Nonnull obj, OSMRect rect))block
 {
 	_cpp->enumerate( block );
-}
-
--(void)consistencyCheckObject:(OsmBaseObject *)object
-{
-	_cpp->consistencyCheck( _cpp, object );
 }
 
 #pragma mark Discard objects

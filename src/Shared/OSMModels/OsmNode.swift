@@ -8,8 +8,8 @@
 
 final class OsmNode: OsmBaseObject {
     
-    private(set) var lat: Double = 0.0
-    private(set) var lon: Double = 0.0
+    private(set) var lat: Double
+    private(set) var lon: Double
 
     private var _wayCount = 0
     var wayCount: Int {
@@ -17,7 +17,7 @@ final class OsmNode: OsmBaseObject {
             return _wayCount
         } set(wayCount) {
             _wayCount = wayCount
-        }
+		}
     }
     
 	var turnRestrictionParentWay: OsmWay! = nil // temporarily used during turn restriction processing
@@ -94,6 +94,8 @@ final class OsmNode: OsmBaseObject {
     }
 
 	override init(withVersion version: Int, changeset: Int64, user: String, uid: Int, ident: Int64, timestamp: String, tags: [String:String]) {
+		self.lat = 0.0
+		self.lon = 0.0
 		super.init(withVersion: version, changeset: changeset, user: user, uid: uid, ident: ident, timestamp: timestamp, tags: tags)
 	}
 
@@ -103,16 +105,18 @@ final class OsmNode: OsmBaseObject {
 	}
 
 	override init?(fromXmlDict attributeDict: [String : Any]) {
+		self.lat = 0.0
+		self.lon = 0.0
 		super.init(fromXmlDict: attributeDict)
 	}
 
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
 		lat = coder.decodeDouble(forKey: "lat")
 		lon = coder.decodeDouble(forKey: "lon")
+		super.init(coder: coder)
 		wayCount = coder.decodeInteger(forKey: "wayCount")
 		_constructed = true
-    }
+   }
 
     override func encode(with coder: NSCoder) {
         super.encode(with: coder)

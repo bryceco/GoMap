@@ -916,8 +916,7 @@ class EditorMapLayer: CALayer {
 		let fieldOfViewRadius = Double(direction.length != 0 ? direction.length : 55)
 		let path = CGMutablePath()
         path.addArc(
-            center: CGPoint(x: 0.0,
-                            y: 0.0),
+			center: CGPoint.zero,
             radius: radius,
             startAngle: CGFloat(radiansFromDegrees(heading - fieldOfViewRadius / 2)),
             endAngle: CGFloat(radiansFromDegrees(heading + fieldOfViewRadius / 2)),

@@ -144,63 +144,63 @@ final class EditorFilters {
 		var predLevel: ((OsmBaseObject) -> Bool)? = nil
 
 		if showLevel {
-			 // set level predicate dynamically since it depends on the the text range
-			 let levelFilter = FilterObjectsViewController.levels(for: showLevelRange)
-			 if levelFilter.count != 0 {
-				 predLevel = { object in
-					 guard let objectLevel = object.tags["level"] else {
-						 return true
-					 }
-					 var floorSet: [String]? = nil
-					 var floor = 0.0
-					 if objectLevel.contains(";") {
-						 floorSet = objectLevel.components(separatedBy: ";")
-					 } else {
-						 floor = Double(objectLevel) ?? 0.0
-					 }
-					 for filterRange in levelFilter {
-						 if filterRange.count == 1 {
-							 // filter is a single floor
-							 let filterValue = filterRange[0].doubleValue
-							 if let floorSet = floorSet {
-								 // object spans multiple floors
-								 for s in floorSet {
-									 let f = Double(s) ?? 0.0
-									 if f == filterValue {
-										 return true
-									 }
-								 }
-							 } else {
-								 if floor == filterValue {
-									 return true
-								 }
-							 }
-						 } else if filterRange.count == 2 {
-							 // filter is a range
-							 let filterLow = filterRange[0].doubleValue
-							 let filterHigh = filterRange[1].doubleValue
-							 if let floorSet = floorSet {
-								 // object spans multiple floors
-								 for s in floorSet {
-									 let f = Double(s) ?? 0.0
-									 if f >= filterLow && f <= filterHigh {
-										 return true
-									 }
-								 }
-							 } else {
-								 // object is a single value
-								 if floor >= filterLow && floor <= filterHigh {
-									 return true
-								 }
-							 }
-						 } else {
-							 assert(false)
-						 }
-					 }
-					 return false
-				 }
-			 }
-		 }
+			// set level predicate dynamically since it depends on the the text range
+			let levelFilter = FilterObjectsViewController.levels(for: showLevelRange)
+			if levelFilter.count != 0 {
+				predLevel = { object in
+					guard let objectLevel = object.tags["level"] else {
+						return true
+					}
+					var floorSet: [String]? = nil
+					var floor = 0.0
+					if objectLevel.contains(";") {
+						floorSet = objectLevel.components(separatedBy: ";")
+					} else {
+						floor = Double(objectLevel) ?? 0.0
+					}
+					for filterRange in levelFilter {
+						if filterRange.count == 1 {
+							// filter is a single floor
+							let filterValue = filterRange[0].doubleValue
+							if let floorSet = floorSet {
+								// object spans multiple floors
+								for s in floorSet {
+									let f = Double(s) ?? 0.0
+									if f == filterValue {
+										return true
+									}
+								}
+							} else {
+								if floor == filterValue {
+									return true
+								}
+							}
+						} else if filterRange.count == 2 {
+							// filter is a range
+							let filterLow = filterRange[0].doubleValue
+							let filterHigh = filterRange[1].doubleValue
+							if let floorSet = floorSet {
+								// object spans multiple floors
+								for s in floorSet {
+									let f = Double(s) ?? 0.0
+									if f >= filterLow && f <= filterHigh {
+										return true
+									}
+								}
+							} else {
+								// object is a single value
+								if floor >= filterLow && floor <= filterHigh {
+									return true
+								}
+							}
+						} else {
+							assert(false)
+						}
+					}
+					return false
+				}
+			}
+		}
 		let predPoints: ((OsmBaseObject) -> Bool) = { object in
 			if let node = object as? OsmNode {
 				return node.wayCount == 0

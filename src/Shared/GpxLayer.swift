@@ -668,16 +668,16 @@ class GpxLayer: CALayer, GetDiskCacheSize {
         }
     }
 
-    func center(on track: GpxTrack) {
-        // get midpoint
-        var mid = track.points.count / 2
-        if mid >= track.points.count {
-            mid = 0
-        }
-        let pt = track.points[mid]
-        let widthDegrees = 20.0 / Double(EarthRadius) * 360
-        mapView.setTransformForLatitude(pt.latitude, longitude: pt.longitude, width: widthDegrees)
-    }
+	func center(on track: GpxTrack) {
+		// get midpoint
+		var mid = track.points.count / 2
+		if mid >= track.points.count {
+			mid = 0
+		}
+		let pt = track.points[mid]
+		let widthDegrees = (20.0 /*meters*/ / EarthRadius) * 360.0
+		mapView.setTransformForLatitude(pt.latitude, longitude: pt.longitude, width: widthDegrees)
+	}
 
     // Load a GPX trace from an external source
     func loadGPXData(_ data: Data, center: Bool) -> Bool {

@@ -12,7 +12,7 @@ import CoreLocation
 
 class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
     var synthesizer: AVSpeechSynthesizer?
-    var previousObjects = [OsmIdentifier : Date]()
+    var previousObjects = [OsmExtendedIdentifier : Date]()
     var previousCoord = CLLocationCoordinate2D()
     var currentHighway: OsmWay? = nil
     var previousClosestHighway: OsmWay? = nil
@@ -127,7 +127,7 @@ class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
 		a.sort { obj1,obj2 in return obj1.0 < obj2.0 }
 
         let now = Date()
-        var currentObjects: [OsmIdentifier : Date] = [:]
+        var currentObjects: [OsmExtendedIdentifier : Date] = [:]
         var closestHighwayWay: OsmWay? = nil
         var closestHighwayDist = 1000000.0
         var newCurrentHighway: OsmWay? = nil

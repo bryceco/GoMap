@@ -30,6 +30,29 @@ let PATH_SCALING = (256*256.0)
 
 typealias  OsmIdentifier = Int64
 
+
+struct OsmExtendedIdentifier: Equatable, Hashable {
+	let rawValue: Int64
+	init(_ type: OSM_TYPE, _ ident: OsmIdentifier ) {
+		rawValue = (Int64(type.rawValue) << 62) | ident
+	}
+	init(_ obj: OsmBaseObject) {
+		let type: OSM_TYPE = obj is OsmNode ? ._NODE : obj is OsmWay ? ._WAY : ._RELATION
+		self.init( type, obj.ident )
+	}
+	// FIXME: backward compat
+	init(_ raw: Int64) {
+		self.rawValue = raw
+	}
+	var type: OSM_TYPE {
+		return OSM_TYPE(rawValue: Int(rawValue >> 62) & 3)!
+	}
+	var ident: OsmIdentifier {
+		return OsmIdentifier(rawValue & ((Int64(1) << 62) - 1))
+	}
+}
+
+
 @objcMembers
 class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
@@ -134,13 +157,25 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 			return nil
 		}
 	}
-    
-    var extendedIdentifier: OsmIdentifier {
-		return (OsmIdentifier(self.extendedType.rawValue) << 62) | OsmIdentifier(ident)
+
+	#if DEBUG
+	// sometimes we end up with duplicates of objects and they need to be disambiguated:
+	func address() -> UnsafeRawPointer {
+		return UnsafeRawPointer( Unmanaged.passUnretained(self).toOpaque() )
 	}
-    var extendedType: OSM_TYPE! {
-        return isNode() != nil ? ._NODE : isWay() != nil ? ._WAY : ._RELATION
-    }
+	#endif
+
+	// FIXME: delete this function
+	@objc var extendedIdentifierFixme: Int64 {
+		return OsmExtendedIdentifier(self).rawValue
+	}
+	var extendedIdentifier: OsmExtendedIdentifier {
+		return OsmExtendedIdentifier(self)
+	}
+	// FIXME: back compat, delete this function
+	@objc static func extendedIdentifierForType(_ type: OSM_TYPE, identifier: Int64) -> Int64 {
+		return OsmExtendedIdentifier(type,identifier).rawValue
+	}
 
     // attributes
     
@@ -656,14 +691,5 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
             }
         }
         return ""
-    }
-    
-	static func extendedIdentifierForType(_ type: OSM_TYPE, identifier: OsmIdentifier) -> OsmIdentifier {
-        return (Int64(identifier) & ((Int64(1) << 62) - 1)) | (OsmIdentifier(type.rawValue) << 62)
-    }
-    
-	class func decomposeExtendedIdentifier(_ extendedIdentifier: OsmIdentifier, type pType: UnsafeMutablePointer<OSM_TYPE>, ident pIdent: UnsafeMutablePointer<OsmIdentifier>) {
-		pType.pointee = OSM_TYPE(rawValue: Int((extendedIdentifier >> 62) & 3))!
-		pIdent.pointee = extendedIdentifier & ((Int64(1) << 62) - 1)
     }
 }

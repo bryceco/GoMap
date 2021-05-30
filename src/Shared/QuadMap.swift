@@ -177,16 +177,18 @@ class QuadMap: NSObject, NSCoding {
     }
 
     func consistencyCheckNodes(_ nodes: [OsmNode], ways: [OsmWay], relations: [OsmRelation]) {
-        // check that every object appears exactly one in the object tree
-        for object in nodes {
-            rootQuad.consistencyCheck(object)
-        }
-        for object in ways {
-            rootQuad.consistencyCheck(object)
-        }
-        for object in relations {
-            rootQuad.consistencyCheck(object)
-        }
-		assert(rootQuad.count() == nodes.count + ways.count + relations.count)
+        // check that every object appears exactly once in the object tree
+		var count: [OsmExtendedIdentifier : Int] = [:]
+		rootQuad.enumerate { obj, rect in
+			let id = obj.extendedIdentifier
+			if let cnt = count[id] {
+				count[id] = cnt + 1
+			} else {
+				count[id] = 1
+			}
+			assert( OSMRectContainsRect( rect, obj.boundingBox ) )
+		}
+		assert( count.first(where: {$0.value != 1}) == nil )
+		assert( count.count == nodes.count + ways.count + relations.count)
     }
 }
