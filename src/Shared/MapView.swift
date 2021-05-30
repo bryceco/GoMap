@@ -377,7 +377,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     }
     private(set) var pushpinView: PushPinView?
     var silentUndo = false // don't flash message about undo
-    var customAerials = AerialList()
+	let customAerials: AerialList
     private(set) var birdsEyeRotation: CGFloat = 0.0
     private(set) var birdsEyeDistance: CGFloat = 0.0
 
@@ -548,14 +548,10 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
     // MARK: initialization
 
-    init() {
-		self.crossHairs = CAShapeLayer()
-        super.init(frame: .zero)
-    }
-    
     required init?(coder: NSCoder) {
 
 		self.crossHairs = CAShapeLayer()
+		self.customAerials = AerialList()
 
 		super.init(coder: coder)
 
@@ -581,9 +577,6 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
         // this option needs to be set before the editor is initialized
         enableAutomaticCacheManagement = UserDefaults.standard.bool(forKey: "automaticCacheManagement")
-
-        // get aerial database
-        customAerials = AerialList()
 
         var bg: [CALayer] = []
 

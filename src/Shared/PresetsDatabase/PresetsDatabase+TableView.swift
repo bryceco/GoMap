@@ -331,7 +331,7 @@ extension PresetsDatabase {
 				let desc = info?["description"] ?? ""
 				presets.append(PresetValue(name: name, details: desc, tagValue: value))
 			} else {
-				print("missing strings definition: \(key)")
+				// print("missing strings definition: \(key)")
 				let name = OsmTags.PrettyTag(value)
 				presets.append(PresetValue(name: name, details: nil, tagValue: value))
 			}
@@ -366,7 +366,7 @@ extension PresetsDatabase {
 
 		if let _ = dict["prerequisiteTag"] as? [String:String] {
 			// supporting this would require us to dynamically add/remove fields as tags are set
-			print("preset \(fieldName) doesn't honor prerequisiteTag")
+			// print("preset \(fieldName) doesn't honor prerequisiteTag")
 		}
 
 		let type 			= dict["type"] as! String

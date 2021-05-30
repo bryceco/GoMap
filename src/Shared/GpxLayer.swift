@@ -312,8 +312,8 @@ class GpxLayer: CALayer, GetDiskCacheSize {
 	public static let USER_DEFAULTS_GPX_EXPIRATIION_KEY = "GpxTrackExpirationDays"
 	public static let USER_DEFAULTS_GPX_BACKGROUND_TRACKING = "GpxTrackBackgroundTracking"
 
-	@objc var mapView = MapView()	// mark as objc for KVO
-    var stabilizingCount = 0
+	@objc let mapView: MapView	// mark as objc for KVO
+	var stabilizingCount = 0
 	var observations: [NSKeyValueObservation] = []
 
     private(set) var activeTrack: GpxTrack? // track currently being recorded
@@ -341,8 +341,8 @@ class GpxLayer: CALayer, GetDiskCacheSize {
     private(set) var uploadedTracks: [String : Any] = [:] // track name -> upload date
 
     init(mapView: MapView) {
+		self.mapView = mapView
         super.init()
-        self.mapView = mapView
 
         UserDefaults.standard.register(
             defaults: [
@@ -856,7 +856,7 @@ class GpxLayer: CALayer, GetDiskCacheSize {
     }
 
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+		fatalError()
     }
 }
 
