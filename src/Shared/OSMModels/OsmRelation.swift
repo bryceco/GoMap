@@ -185,11 +185,11 @@ final class OsmRelation: OsmBaseObject {
 		})
 		if var box = boxList.first {
 			for rc in boxList.dropFirst() {
-				box = OSMRectUnion(box, rc)
+				box = box.union(rc)
 			}
 			_boundingBox = box
 		} else {
-			_boundingBox = OSMRectZero()
+			_boundingBox = OSMRect.zero
 		}
 	}
 

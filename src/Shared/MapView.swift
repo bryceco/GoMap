@@ -836,7 +836,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             if !latitude.isNaN && !longitude.isNaN && !scale.isNaN {
                 setTransformForLatitude(latitude, longitude: longitude, scale: scale)
             } else {
-                let rc = OSMRectFromCGRect(layer.bounds)
+                let rc = OSMRect(layer.bounds)
                 screenFromMapTransform = OSMTransformMakeTranslation(rc.origin.x + rc.size.width / 2 - 128, rc.origin.y + rc.size.height / 2 - 128)
                 // turn on GPS which will move us to current location
                 mainViewController.setGpsState(GPS_STATE.LOCATION)
@@ -1457,7 +1457,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     }
 
     func boundingMapRectForScreen() -> OSMRect {
-        let rc = OSMRectFromCGRect(layer.bounds)
+        let rc = OSMRect(layer.bounds)
         return boundingMapRect(forScreenRect: rc)
     }
 
@@ -1531,7 +1531,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
     func point(on object: OsmBaseObject?, for point: CGPoint) -> CGPoint {
         let latLon = longitudeLatitude(forScreenPoint: point, birdsEye: true)
-        let latLon2 = object?.pointOnObjectForPoint(OSMPointMake(latLon.longitude, latLon.latitude))
+		let latLon2 = object?.pointOnObjectForPoint(OSMPoint(x: latLon.longitude, y: latLon.latitude))
         let pos = screenPoint(forLatitude: latLon2?.y ?? 0.0, longitude: latLon2?.x ?? 0.0, birdsEye: true)
         return pos
     }
@@ -2286,9 +2286,9 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                     // move to position of crosshairs
                     let p1 = longitudeLatitude(forScreenPoint: pushpinView.arrowPoint, birdsEye: true)
                     let p2 = longitudeLatitude(forScreenPoint: crossHairs.position, birdsEye: true)
-                    offset = OSMPointMake(p2.longitude - p1.longitude, p2.latitude - p1.latitude)
+					offset = OSMPoint(x: p2.longitude - p1.longitude, y: p2.latitude - p1.latitude)
                 } else {
-					offset = OSMPointMake(0.00005, -0.00005)
+					offset = OSMPoint(x: 0.00005, y: -0.00005)
                 }
 				guard let newObject = editorLayer.duplicateObject(primary, withOffset: offset)
 				else {
@@ -2751,11 +2751,13 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                                 self.adjustOrigin(by: CGPoint(x: -sx, y: -sy))
                                 dragObject(sx, sy)
                                 // update position of pushpin
-                                var pt = CGPointWithOffset(self.pushpinView?.arrowPoint ?? CGPoint(), sx, sy)
-                                self.pushpinView?.arrowPoint = pt
+								if let pt = self.pushpinView?.arrowPoint.withOffset(sx, sy) {
+									self.pushpinView?.arrowPoint = pt
+								}
                                 // update position of blink layer
-                                pt = CGPointWithOffset((blinkLayer?.position ?? .zero), -sx, -sy)
-                                self.blinkLayer?.position = pt
+								if let pt = blinkLayer?.position.withOffset(-sx, -sy) {
+									self.blinkLayer?.position = pt
+								}
                             })
                         } else {
                             DisplayLink.shared().removeName("dragScroll")
@@ -3239,7 +3241,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                     editorLayer.selectedWay = object.isWay()
                     editorLayer.selectedRelation = object.isRelation()
 
-                    let pt = object.pointOnObjectForPoint(OSMPointMake(note.lon, note.lat))
+					let pt = object.pointOnObjectForPoint(OSMPoint(x: note.lon, y: note.lat))
                     let point = screenPoint(forLatitude: pt.y, longitude: pt.x, birdsEye: true)
                     placePushpin(at: point, object: object)
                 }

@@ -129,7 +129,7 @@ class TurnRestrictController: UIViewController {
     func createHighwayViews(_ adjacentNodesArray: [OsmNode]) {
         let centerNodePos = screenPoint(forLatitude: centralNode!.lat, longitude: centralNode!.lon)
 		let detailViewCenter = CGPoint(x: detailView.bounds.midX, y: detailView.bounds.midY)
-        let positionOffset = CGPointSubtract(centerNodePos, detailViewCenter)
+		let positionOffset = centerNodePos.minus(detailViewCenter)
 
         detailText.text = NSLocalizedString("Select a highway approaching the intersection", comment: "")
 
@@ -149,15 +149,15 @@ class TurnRestrictController: UIViewController {
         for node in adjacentNodesArray {
             // get location of node
             var nodePoint = screenPoint(forLatitude: node.lat, longitude: node.lon)
-            nodePoint = CGPointSubtract(nodePoint, positionOffset)
+			nodePoint = nodePoint.minus(positionOffset)
 
             // force highway segment to extend from center node to edge of view
             let size = detailView.bounds.size
-            let direction = OSMPointMake(Double(nodePoint.x - detailViewCenter.x), Double(nodePoint.y - detailViewCenter.y))
-            let distTop = DistanceToVector(OSMPointFromCGPoint(detailViewCenter), direction, OSMPointMake(0, 0), OSMPointMake(Double(size.width), 0))
-            let distLeft = DistanceToVector(OSMPointFromCGPoint(detailViewCenter), direction, OSMPointMake(0, 0), OSMPointMake(0, Double(size.height)))
-            let distRight = DistanceToVector(OSMPointFromCGPoint(detailViewCenter), direction, OSMPointMake(Double(size.width), 0), OSMPointMake(0, Double(size.height)))
-            let distBottom = DistanceToVector(OSMPointFromCGPoint(detailViewCenter), direction, OSMPointMake(0, Double(size.height)), OSMPointMake(Double(size.width), 0))
+			let direction = OSMPoint(x: Double(nodePoint.x - detailViewCenter.x), y: Double(nodePoint.y - detailViewCenter.y))
+			let distTop = DistanceToVector(OSMPointFromCGPoint(detailViewCenter), direction, OSMPoint.zero, OSMPoint(x: Double(size.width), y: 0))
+			let distLeft = DistanceToVector(OSMPointFromCGPoint(detailViewCenter), direction, OSMPoint.zero, OSMPoint(x: 0, y: Double(size.height)))
+			let distRight = DistanceToVector(OSMPointFromCGPoint(detailViewCenter), direction, OSMPoint(x: Double(size.width), y: 0), OSMPoint(x: 0, y: Double(size.height)))
+			let distBottom = DistanceToVector(OSMPointFromCGPoint(detailViewCenter), direction, OSMPoint(x: 0, y: Double(size.height)), OSMPoint(x: Double(size.width), y: 0))
             var best: Double = Double(Float.greatestFiniteMagnitude)
             if distTop > 0 && distTop < best {
                 best = distTop

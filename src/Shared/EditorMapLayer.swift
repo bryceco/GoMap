@@ -328,7 +328,7 @@ class EditorMapLayer: CALayer {
     
     
     func invoke(alongScreenClippedWay way: OsmWay, block: @escaping (_ p1: OSMPoint, _ p2: OSMPoint, _ isEntry: Bool, _ isExit: Bool) -> Bool) {
-		let viewRect = OSMRectFromCGRect(bounds)
+		let viewRect = OSMRect(bounds)
         var prevInside: Bool = false
 		var prev = OSMPoint()
         var first = true
@@ -336,7 +336,7 @@ class EditorMapLayer: CALayer {
 		for node in way.nodes {
 
 			let pt = OSMPointFromCGPoint(mapView.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false))
-			let inside = OSMRectContainsPoint(viewRect, pt)
+			let inside = viewRect.containsPoint( pt)
 			defer {
 				prev = pt
 				prevInside = inside

@@ -281,7 +281,7 @@ final class OsmWay: OsmBaseObject {
 
     override func computeBoundingBox() {
 		guard let first = nodes.first?.location() else {
-			_boundingBox = OSMRectZero()
+			_boundingBox = OSMRect.zero
 			return
 		}
 
@@ -350,11 +350,11 @@ final class OsmWay: OsmBaseObject {
 			pArea = 0.0
 			let n1 = nodes[0]
             let n2 = nodes[1]
-            return OSMPointMake((n1.lon + n2.lon) / 2, (n1.lat + n2.lat) / 2)
+			return OSMPoint(x: (n1.lon + n2.lon) / 2, y: (n1.lat + n2.lat) / 2)
         } else if nodeCount == 1 {
 			pArea = 0.0
 			let node = nodes.last!
-			return OSMPointMake(node.lon, node.lat)
+			return OSMPoint(x: node.lon, y: node.lat)
         } else {
 			pArea = 0.0
 			let pt = OSMPoint(x: 0, y: 0)

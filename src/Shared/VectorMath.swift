@@ -46,18 +46,13 @@ struct OSMTransform {
 #endif
 
 // MARK: Point
-@inline(__always) func CGPointWithOffset(_ pt: CGPoint, _ dx: CGFloat, _ dy: CGFloat) -> CGPoint {
-    return CGPoint(x: pt.x + dx, y: pt.y + dy)
-}
-
-@inline(__always) func CGPointSubtract(_ a: CGPoint, _ b: CGPoint) -> CGPoint {
-    let pt = CGPoint(x: Double(a.x - b.x), y: Double(a.y - b.y))
-    return pt
-}
-
-@inline(__always) func OSMPointMake(_ x: Double, _ y: Double) -> OSMPoint {
-	let pt = OSMPoint(x: x, y: y)
-    return pt
+extension CGPoint {
+	@inline(__always) func withOffset(_ dx: CGFloat, _ dy: CGFloat) -> CGPoint {
+		return CGPoint(x: self.x + dx, y: self.y + dy)
+	}
+	@inline(__always) func minus(_ b: CGPoint) -> CGPoint {
+		return CGPoint(x: self.x - b.x, y: self.y - b.y)
+	}
 }
 
 @inline(__always) func OSMPointFromCGPoint(_ pt: CGPoint) -> OSMPoint {
@@ -83,20 +78,24 @@ struct OSMTransform {
 }
 
 @inline(__always) func Add(_ a: OSMPoint, _ b: OSMPoint) -> OSMPoint {
-    return OSMPointMake(a.x + b.x, a.y + b.y)
+	return OSMPoint(x: a.x + b.x,
+					y: a.y + b.y)
 }
 
 @inline(__always) func Sub(_ a: OSMPoint, _ b: OSMPoint) -> OSMPoint {
-    return OSMPointMake(a.x - b.x, a.y - b.y)
+	return OSMPoint(x: a.x - b.x,
+					y: a.y - b.y)
 }
 
 @inline(__always) func Mult(_ a: OSMPoint, _ c: Double) -> OSMPoint {
-    return OSMPointMake(a.x * c, a.y * c)
+	return OSMPoint(x: a.x * c,
+					y: a.y * c)
 }
 
 @inline(__always) func UnitVector(_ a: OSMPoint) -> OSMPoint {
     let d = Mag(a)
-    return OSMPointMake(a.x / d, a.y / d)
+	return OSMPoint(x: a.x / d,
+					y: a.y / d)
 }
 
 @inline(__always) func CrossMag(_ a: OSMPoint, _ b: OSMPoint) -> Double {
@@ -252,11 +251,6 @@ func LineSegmentIntersectsRectangle(_ p1: OSMPoint, _ p2: OSMPoint, _ rect: OSMR
     return r
 }
 
-@inline(__always) func OSMRectZero() -> OSMRect {
-	let rc = OSMRect(origin: OSMPoint(x: 0.0, y: 0.0), size: OSMSize(width: 0.0, height: 0.0))
-	return rc
-}
-
 @inline(__always) func OSMRectOffset(_ rect: OSMRect, _ dx: Double, _ dy: Double) -> OSMRect {
     var rect = rect
 	rect.origin.x += dx
@@ -281,6 +275,8 @@ extension OSMSize {
 }
 
 extension OSMRect {
+	static let zero = OSMRect(origin: OSMPoint(x: 0.0, y: 0.0), size: OSMSize(width: 0.0, height: 0.0))
+
 	@inline(__always) init(x: Double, y: Double, width: Double, height: Double) {
 		self.init(origin: OSMPoint(x: x, y: y), size: OSMSize(width: width, height: height))
 	}
@@ -290,53 +286,42 @@ extension OSMRect {
 	@inline(__always) init(origin: CGPoint, size: CGSize) {
 		self.init(origin: OSMPoint(origin), size: OSMSize(size))
 	}
-}
+	@inline(__always) init(_ cg: CGRect) {
+		self.init(x: cg.origin.x, y: cg.origin.y, width: cg.size.width, height: cg.size.height)
+	}
+	@inline(__always) func containsPoint(_ pt: OSMPoint) -> Bool {
+		return pt.x >= self.origin.x &&
+			pt.x <= self.origin.x + self.size.width &&
+			pt.y >= self.origin.y &&
+			pt.y <= self.origin.y + self.size.height
+	}
+	@inline(__always) func intersectsRect(_ b: OSMRect) -> Bool {
+		if self.origin.x >= b.origin.x + b.size.width {		return false	}
+		if self.origin.x + self.size.width < b.origin.x {	return false	}
+		if self.origin.y >= b.origin.y + b.size.height {	return false	}
+		if self.origin.y + self.size.height < b.origin.y {	return false	}
+		return true
+	}
+	@inline(__always) func union(_ b: OSMRect) -> OSMRect {
+		let minX = Double(min(self.origin.x, b.origin.x))
+		let minY = Double(min(self.origin.y, b.origin.y))
+		let maxX = Double(max(self.origin.x + self.size.width, b.origin.x + b.size.width))
+		let maxY = Double(max(self.origin.y + self.size.height, b.origin.y + b.size.height))
+		let r = OSMRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
+		return r
+	}
 
-func OSMRectMake(_ x: Double, _ y: Double, _ width: Double, _ height: Double) -> OSMRect
-{
-	return OSMRect( x: x, y: y, width: width, height: height)
+	@inline(__always) func containsRect(_ b: OSMRect) -> Bool {
+		return self.origin.x <= b.origin.x &&
+			self.origin.y <= b.origin.y &&
+			self.origin.x + self.size.width >= b.origin.x + b.size.width &&
+			self.origin.y + self.size.height >= b.origin.y + b.size.height
+	}
+
 }
 
 extension OSMTransform {
 	static let identity = OSMTransform(a: 1.0, b: 0.0, c: 0.0, d: 1.0, tx: 0.0, ty: 0.0)
-}
-
-@inline(__always) func OSMRectFromCGRect(_ cg: CGRect) -> OSMRect {
-	let rc = OSMRect(x: cg.origin.x, y: cg.origin.y, width: cg.size.width, height: cg.size.height)
-    return rc
-}
-
-@inline(__always) func OSMRectContainsPoint(_ rc: OSMRect, _ pt: OSMPoint) -> Bool {
-    return pt.x >= rc.origin.x && pt.x <= rc.origin.x + rc.size.width && pt.y >= rc.origin.y && pt.y <= rc.origin.y + rc.size.height
-}
-
-@inline(__always) func OSMRectIntersectsRect(_ a: OSMRect, _ b: OSMRect) -> Bool {
-    if a.origin.x >= b.origin.x + b.size.width {
-        return false
-    }
-    if a.origin.x + a.size.width < b.origin.x {
-        return false
-    }
-    if a.origin.y >= b.origin.y + b.size.height {
-        return false
-    }
-    if a.origin.y + a.size.height < b.origin.y {
-        return false
-    }
-    return true
-}
-
-@inline(__always) func OSMRectUnion(_ a: OSMRect, _ b: OSMRect) -> OSMRect {
-    let minX = Double(min(a.origin.x, b.origin.x))
-    let minY = Double(min(a.origin.y, b.origin.y))
-    let maxX = Double(max(a.origin.x + a.size.width, b.origin.x + b.size.width))
-    let maxY = Double(max(a.origin.y + a.size.height, b.origin.y + b.size.height))
-	let r = OSMRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
-    return r
-}
-
-@inline(__always) func OSMRectContainsRect(_ a: OSMRect, _ b: OSMRect) -> Bool {
-    return a.origin.x <= b.origin.x && a.origin.y <= b.origin.y && a.origin.x + a.size.width >= b.origin.x + b.size.width && a.origin.y + a.size.height >= b.origin.y + b.size.height
 }
 
 // MARK: Transform
@@ -560,7 +545,7 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
 			y += -ey / ez
 		}
     }
-    return OSMPointMake(x, y)
+    return OSMPoint(x, y)
 	#else
 	return OSMPoint( x: pt.x * t.a + pt.y * t.c + t.tx,
 					 y: pt.x * t.b + pt.y * t.d + t.ty )
@@ -569,26 +554,26 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
 
 @inline(__always) func OSMRectApplyTransform(_ rc: OSMRect, _ transform: OSMTransform) -> OSMRect {
     let p1 = OSMPointApplyTransform(rc.origin, transform)
-    let p2 = OSMPointApplyTransform(OSMPointMake(rc.origin.x + rc.size.width, rc.origin.y + rc.size.height), transform)
+	let p2 = OSMPointApplyTransform(OSMPoint(x: rc.origin.x + rc.size.width, y: rc.origin.y + rc.size.height), transform)
 	let r2 = OSMRect(x: p1.x, y: p1.y, width: p2.x - p1.x, height: p2.y - p1.y)
     return r2
 }
 
 @inline(__always) func UnitX(_ t: OSMTransform) -> OSMPoint {
 	#if TRANSFORM_3D
-    let p = UnitVector(OSMPointMake(t.m11, t.m12))
+    let p = UnitVector(OSMPoint(t.m11, t.m12))
     return p
 	#else
-    return UnitVector(OSMPointMake(t.a, t.b))
+	return UnitVector(OSMPoint(x: t.a, y: t.b))
 	#endif
 }
 
 @inline(__always) func Translation(_ t: OSMTransform) -> OSMPoint {
 	#if TRANSFORM_3D
-    let p = OSMPointMake(t.m41, t.m42)
+    let p = OSMPoint(t.m41, t.m42)
     return p
 	#else
-    return OSMPointMake(t.tx, t.ty)
+	return OSMPoint(x: t.tx, y: t.ty)
 	#endif
 }
 

@@ -272,8 +272,8 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
             if !bbox.origin.x.isInfinite {
                 var tran = CGAffineTransform(translationX: -bbox.origin.x, y: -bbox.origin.y)
 				let path2 = path.copy(using: &tran)!
-				refPoint!.pointee = OSMPointMake(initial.x + Double(bbox.origin.x) / PATH_SCALING,
-												 initial.y + Double(bbox.origin.y) / PATH_SCALING)
+				refPoint!.pointee = OSMPoint(x: initial.x + Double(bbox.origin.x) / PATH_SCALING,
+											 y: initial.y + Double(bbox.origin.y) / PATH_SCALING)
 				return path2
 			} else {
 #if DEBUG

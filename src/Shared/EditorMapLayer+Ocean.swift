@@ -104,7 +104,7 @@ extension EditorMapLayer {
         loop.removeLast()
         var index = 0
         for point in loop {
-            if !OSMRectContainsPoint(viewRect, point) {
+			if !viewRect.containsPoint( point) {
                 break
             }
             index += 1
@@ -254,7 +254,7 @@ extension EditorMapLayer {
         }
 
         for pt in way {
-            let isInside = OSMRectContainsPoint(viewRect, pt)
+			let isInside = viewRect.containsPoint( pt)
             if first {
                 first = false
             } else {
@@ -397,7 +397,7 @@ extension EditorMapLayer {
         }
 
         let cgViewRect = bounds
-        let viewRect = OSMRectFromCGRect(cgViewRect)
+        let viewRect = OSMRect(cgViewRect)
         let viewCenter = OSMPointFromCGPoint(CGRectCenter(cgViewRect))
 
         // trim nodes in segments to only visible paths

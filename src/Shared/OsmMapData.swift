@@ -30,7 +30,7 @@ class OsmUserStatistics: NSObject {
 
 fileprivate class ServerQuery: NSObject {
 	var quadList: [QuadBox] = []
-	var rect = OSMRectZero()
+	var rect = OSMRect.zero
 }
 
 @objcMembers

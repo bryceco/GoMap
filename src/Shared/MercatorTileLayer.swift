@@ -163,9 +163,9 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
         p3 = ToBirdsEye(p3, center, Double(mapView.birdsEyeDistance), Double(mapView.birdsEyeRotation))
         p4 = ToBirdsEye(p4, center, Double(mapView.birdsEyeDistance), Double(mapView.birdsEyeRotation))
         
-        let rect = OSMRectFromCGRect(rc)
-        return OSMRectContainsPoint(rect, p1) || OSMRectContainsPoint(rect, p2) || OSMRectContainsPoint(rect, p3) || OSMRectContainsPoint(rect, p4)
-    }
+        let rect = OSMRect(rc)
+		return rect.containsPoint(p1) || rect.containsPoint(p2) || rect.containsPoint(p3) || rect.containsPoint(p4)
+	}
 
 	private func removeUnneededTiles(for rect: OSMRect, zoomLevel: Int) {
 		guard let sublayers = self.sublayers else { return }
@@ -496,7 +496,7 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
 //#if CUSTOM_TRANSFORM
         // update locations of tiles
         setSublayerPositions(_layerDict)
-        removeUnneededTiles(for: OSMRectFromCGRect(bounds), zoomLevel: zoomLevel)
+        removeUnneededTiles(for: OSMRect(bounds), zoomLevel: zoomLevel)
 //#else
 //        let rc = mapView.boundingMapRectForScreen()
 //        removeUnneededTiles(for: rc, zoomLevel: Int(zoomLevel))

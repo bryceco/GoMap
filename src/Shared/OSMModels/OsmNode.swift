@@ -31,15 +31,15 @@ final class OsmNode: OsmBaseObject {
     }
 
     func location() -> OSMPoint {
-        return OSMPointMake(lon, lat)
+		return OSMPoint(x: lon, y: lat)
     }
 
     override func selectionPoint() -> OSMPoint {
-        return OSMPointMake(lon, lat)
+		return OSMPoint(x: lon, y: lat)
     }
 
 	override func pointOnObjectForPoint(_ target: OSMPoint) -> OSMPoint {
-        return OSMPointMake(lon, lat)
+		return OSMPoint(x: lon, y: lat)
     }
 
     func isBetter(toKeepThan node: OsmNode) -> Bool {
@@ -72,7 +72,7 @@ final class OsmNode: OsmBaseObject {
         point1.y = (point1.y - lat) * metersPerDegree.y
         point2.x = (point2.x - lon) * metersPerDegree.x
         point2.y = (point2.y - lat) * metersPerDegree.y
-        let dist = Double(DistanceFromPointToLineSegment(OSMPointMake(0, 0), point1, point2))
+		let dist = Double(DistanceFromPointToLineSegment(OSMPoint.zero, point1, point2))
         return dist
     }
 
