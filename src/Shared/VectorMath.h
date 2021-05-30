@@ -28,6 +28,39 @@ typedef struct _OSMRect {
 	OSMSize		size;
 } OSMRect;
 
+static inline OSMRect OSMRectMake(double x, double y, double w, double h)
+{
+	OSMRect rc = { x, y, w, h };
+	return rc;
+}
+
+static inline BOOL OSMRectContainsPoint( OSMRect rc, OSMPoint pt )
+{
+	return	pt.x >= rc.origin.x &&
+			pt.x <= rc.origin.x + rc.size.width &&
+			pt.y >= rc.origin.y &&
+			pt.y <= rc.origin.y + rc.size.height;
+}
+static inline BOOL OSMRectContainsRect( OSMRect a, OSMRect b )
+{
+	return	a.origin.x <= b.origin.x &&
+			a.origin.y <= b.origin.y &&
+			a.origin.x + a.size.width >= b.origin.x + b.size.width &&
+			a.origin.y + a.size.height >= b.origin.y + b.size.height;
+}
+static inline BOOL OSMRectIntersectsRect( OSMRect a, OSMRect b )
+{
+	if ( a.origin.x >= b.origin.x + b.size.width )
+		return NO;
+	if ( a.origin.x + a.size.width < b.origin.x )
+		return NO;
+	if ( a.origin.y >= b.origin.y + b.size.height )
+		return NO;
+	if ( a.origin.y + a.size.height < b.origin.y )
+		return NO;
+	return YES;
+}
+
 #if TRANSFORM_3D
 typedef CATransform3D OSMTransform;
 #else
@@ -40,6 +73,7 @@ typedef struct _OSMTransform {
 } OSMTransform;
 #endif
 
+#if 0
 @interface OSMPointBoxed : NSObject
 @property (readonly,nonatomic) OSMPoint	point;
 +(OSMPointBoxed *)pointWithPoint:(OSMPoint)point;
@@ -460,4 +494,5 @@ static inline double radiansFromDegrees(double degrees)
 	return degrees * (M_PI / 180);
 }
 
+#endif
 #endif

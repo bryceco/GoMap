@@ -9,7 +9,7 @@
 import CoreLocation
 
 // compile options:
-private let SHOW_3D = true
+public let SHOW_3D = true
 private let FADE_INOUT = false
 private let SINGLE_SIDED_WALLS = true
 
@@ -444,7 +444,7 @@ class EditorMapLayer: CALayer {
     private let Z_HIGHLIGHT_NODE 	= Z_BASE + 13 * ZSCALE
     private let Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE
     
-    func buildingWallLayer(for p1: OSMPoint, point p2: OSMPoint, height: Double, hue: Double) -> CALayer? {
+    func buildingWallLayer(for p1: OSMPoint, point p2: OSMPoint, height: Double, hue: CGFloat) -> CALayerWithProperties? {
         var dir = Sub(p2, p1)
         let length = Mag(dir)
         let angle = atan2(dir.y, dir.x)
@@ -456,7 +456,7 @@ class EditorMapLayer: CALayer {
         if intensity < 0 {
             intensity += 1
         }
-        let color = UIColor(hue: CGFloat((37 + hue) / 360.0), saturation: 0.61, brightness: CGFloat(0.5 + intensity / 2), alpha: 1.0)
+        let color = UIColor(hue: (37 + hue) / 360.0, saturation: 0.61, brightness: CGFloat(0.5 + intensity / 2), alpha: 1.0)
         
         let wall = CALayerWithProperties()
         wall.anchorPoint = CGPoint(x: 0, y: 0)
@@ -610,97 +610,87 @@ class EditorMapLayer: CALayer {
                     props.position = refPoint
                     
                     layers.append(layer)
-                    #if SHOW_3D
-                    // if its a building then add walls for 3D
-                    if object.tags["building"] != nil {
-                        
-                        // calculate height in meters
-                        let value = object.tags["height"] as? String
-                        var height = Double(value ?? "") ?? 0.0
-                        if height != 0.0 {
-                            // height in meters?
-                            var v1: Double = 0
-                            var v2: Double = 0
-                            let scanner = Scanner(string: value ?? "")
-                            if scanner.scanDouble(UnsafeMutablePointer<Double>(mutating: &v1)) {
-                                scanner.scanCharacters(from: CharacterSet.whitespacesAndNewlines, into: nil)
-                                if scanner.scanString("'", into: nil) {
-                                    // feet
-                                    if scanner.scanDouble(UnsafeMutablePointer<Double>(mutating: &v2)) {
-                                        if scanner.scanString("\"", into: nil) {
-                                            // inches
-                                        } else {
-                                            // malformed
-                                        }
-                                    }
-                                    height = (v1 * 12 + v2) * 0.0254 // meters/inch
-                                } else if scanner.scanString("ft", into: nil) {
-                                    height *= 0.3048 // meters/foot
-                                } else if scanner.scanString("yd", into: nil) {
-                                    height *= 0.9144 // meters/yard
-                                }
-                            }
-                        } else {
-                            height = (object.tags["building:levels"] as? NSNumber).doubleValue
-                            #if DEBUG
-                            if height == 0 {
-                                let layerNum = object.tags["layer"] as? String
-                                if let layerNum = layerNum {
-                                    height = Double(layerNum) ?? 0.0 + 1
-                                }
-                            }
-                            #endif
-                            if height == 0 {
-                                height = 1
-                            }
-                            height *= 3
-                        }
-                        let hue = Double(object.ident.int64Value % 20 - 10)
-                        var hasPrev = false
-                        var prevPoint: OSMPoint
-                        CGPathApplyBlockEx(path, { [self] type, points in
-                            if type == .moveToPoint {
-                                prevPoint = Add(refPoint, Mult(OSMPointFromCGPoint(points?[0]), 1 / PATH_SCALING))
-                                hasPrev = true
-                            } else if type == .addLineToPoint && hasPrev {
-                                let pt = Add(refPoint, Mult(OSMPointFromCGPoint(points?[0]), 1 / PATH_SCALING))
-                                let wall = buildingWallLayer(for: pt, point: prevPoint, height: height, hue: hue)
-                                if let wall = wall {
-                                    layers.append(wall)
-                                }
-                                prevPoint = pt
-                            } else {
-                                hasPrev = false
-                            }
-                        })
-                        if true {
-                            // get roof
-                            let color = UIColor(hue: 0, saturation: 0.05, brightness: 0.75 + hue / 100, alpha: 1.0)
-                            let roof = CAShapeLayerWithProperties()
-                            roof.anchorPoint = CGPoint(x: 0, y: 0)
-                            let bbox = path.boundingBoxOfPath
-                            roof.bounds = CGRect(x: 0, y: 0, width: bbox.size.width, height: bbox.size.height)
-                            roof.position = CGPointFromOSMPoint(refPoint)
-                            roof.path = path
-                            roof.fillColor = color.cgColor
-                            roof.strokeColor = UIColor.black.cgColor
-                            roof.lineWidth = 1.0
-                            roof.lineCap = DEFAULT_LINECAP
-                            roof.lineJoin = DEFAULT_LINEJOIN
-                            roof.zPosition = Z_BUILDING_ROOF
-                            roof.doubleSided = true
-                            
-                            let t = CATransform3DMakeTranslation(0, 0, height)
-                            props = roof.properties
-                            props.position = refPoint
-                            props.transform = t
-                            props.is3D = true
-                            props.lineWidth = 1.0
-                            roof.transform = t
-                            layers.append(roof)
-                        }
-                    }
-                    #endif    // SHOW_3D
+					if SHOW_3D {
+						// if its a building then add walls for 3D
+						if object.tags["building"] != nil {
+
+							// calculate height in meters
+							var height: Double = 0.0
+							if let value = object.tags["height"] {
+								// height in meters?
+								var v1: Double = 0
+								var v2: Double = 0
+								let scanner = Scanner(string: value)
+								if scanner.scanDouble(&v1) {
+									scanner.scanCharacters(from: CharacterSet.whitespacesAndNewlines, into: nil)
+									if scanner.scanString("'", into: nil) {
+										// feet
+										if scanner.scanDouble(&v2) {
+											if scanner.scanString("\"", into: nil) {
+												// inches
+											} else {
+												// malformed
+											}
+										}
+										height = (v1 * 12 + v2) * 0.0254 // meters/inch
+									} else if scanner.scanString("ft", into: nil) {
+										height = v1 * 0.3048 // meters/foot
+									} else if scanner.scanString("yd", into: nil) {
+										height = v1 * 0.9144 // meters/yard
+									}
+								}
+							} else {
+								var levels = Double(object.tags["building:levels"] ?? "0") ?? 0.0
+								if levels == 0 {
+									levels = 1
+								}
+								height = 3 * levels	// 3 meters per level
+							}
+							let hue = CGFloat(object.ident % 20 - 10)
+							var hasPrev = false
+							var prevPoint: OSMPoint = OSMPoint.zero
+							path.apply(action: { [self] element in
+								if element.type == .moveToPoint {
+									prevPoint = Add(refPoint, Mult(OSMPointFromCGPoint(element.points[0]), 1 / PATH_SCALING))
+									hasPrev = true
+								} else if element.type == .addLineToPoint && hasPrev {
+									let pt = Add(refPoint, Mult(OSMPointFromCGPoint(element.points[0]), 1 / PATH_SCALING))
+									let wall = buildingWallLayer(for: pt, point: prevPoint, height: height, hue: hue)
+									if let wall = wall {
+										layers.append(wall)
+									}
+									prevPoint = pt
+								} else {
+									hasPrev = false
+								}
+							})
+							if true {
+								// get roof
+								let color = UIColor(hue: 0, saturation: 0.05, brightness: 0.75 + hue / 100, alpha: 1.0)
+								let roof = CAShapeLayerWithProperties()
+								roof.anchorPoint = CGPoint(x: 0, y: 0)
+								let bbox = path.boundingBoxOfPath
+								roof.bounds = CGRect(x: 0, y: 0, width: bbox.size.width, height: bbox.size.height)
+								roof.position = CGPointFromOSMPoint(refPoint)
+								roof.path = path
+								roof.fillColor = color.cgColor
+								roof.strokeColor = UIColor.black.cgColor
+								roof.lineWidth = 1.0
+								roof.lineCap = DEFAULT_LINECAP
+								roof.lineJoin = DEFAULT_LINEJOIN
+								roof.zPosition = Z_BUILDING_ROOF
+								roof.isDoubleSided = true
+
+								let t = CATransform3DMakeTranslation(0, 0, CGFloat(height))
+								roof.properties.position = refPoint
+								roof.properties.transform = t
+								roof.properties.is3D = true
+								roof.properties.lineWidth = 1.0
+								roof.transform = t
+								layers.append(roof)
+							}
+						}
+					} // SHOW_3D
                     
                 }
             }

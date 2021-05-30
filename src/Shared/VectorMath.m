@@ -8,7 +8,7 @@
 
 #import "VectorMath.h"
 
-
+#if 0
 // https://developer.apple.com/library/mac/#samplecode/glut/Listings/gle_vvector_h.html
 
 
@@ -273,3 +273,4 @@ double GreatCircleDistance( OSMPoint p1, OSMPoint p2 )
 	double meters = earthRadius * c;
 	return meters;
 }
+#endif

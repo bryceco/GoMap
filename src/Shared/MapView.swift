@@ -1329,7 +1329,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         var rc = latLon
         let p1 = MapPointForLatitudeLongitude(rc.origin.y + rc.size.height, rc.origin.x) // latitude increases opposite of map
         let p2 = MapPointForLatitudeLongitude(rc.origin.y, rc.origin.x + rc.size.width)
-        rc = OSMRectMake(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y) // map size
+		rc = OSMRect(x: p1.x, y: p1.y, width: p2.x - p1.x, height: p2.y - p1.y) // map size
         return rc
     }
 
@@ -1427,7 +1427,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             minY = Double(min(minY, corners[i].y))
             maxY = Double(max(maxY, corners[i].y))
         }
-        rc = OSMRectMake(minX, minY, maxX - minX, maxY - minY)
+		rc = OSMRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
         return rc
     }
 
@@ -1452,7 +1452,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             maxY = Double(max(maxY, corners[i].y))
         }
 
-        rc = OSMRectMake(minX, minY, maxX - minX, maxY - minY)
+		rc = OSMRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
         return rc
     }
 
@@ -3325,15 +3325,15 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             displayLink.removeName(DisplayLinkPanning)
         } else if pan.state == .changed {
             // move pan
-            #if SHOW_3D
-            // multi-finger drag to initiate 3-D view
-            if enableBirdsEye && pan?.numberOfTouches == 3 {
-                var translation = pan?.translation(in: self)
-                let delta = Double(-(translation?.y ?? 0.0) / 40 / 180 * .pi)
-                rotateBirdsEye(by: CGFloat(delta))
-                return
-            }
-            #endif
+			if SHOW_3D {
+				// multi-finger drag to initiate 3-D view
+				if enableBirdsEye && pan.numberOfTouches == 3 {
+					let translation = pan.translation(in: self)
+					let delta = Double(-(translation.y) / 40 / 180 * .pi)
+					rotateBirdsEye(by: CGFloat(delta))
+					return
+				}
+			}
             let translation = pan.translation(in: self)
             adjustOrigin(by: translation)
             pan.setTranslation(CGPoint(x: 0, y: 0), in: self)

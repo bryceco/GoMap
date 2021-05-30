@@ -87,6 +87,7 @@
 		02E049BE2651D1750028B57F /* UndoAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E049BD2651D1750028B57F /* UndoAction.m */; };
 		02E6267219973A0700565D62 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02E6267119973A0700565D62 /* Security.framework */; };
 		02E8436519B39FAD0044AC1D /* OsmNotesDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E8436419B39FAD0044AC1D /* OsmNotesDatabase.m */; };
+		02EA1C6B26631D0D00A0F827 /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C381C305263FD0CA003142BA /* VectorMath.swift */; };
 		02ED19811BBF119C00A57CF4 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */; };
 		02EDBF672653306400B7072E /* OsmBaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096F1263EBE5E00E3B129 /* OsmBaseObject.swift */; };
 		02EDBF6826535B9D00B7072E /* OsmNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096EF263EBE5D00E3B129 /* OsmNode.swift */; };
@@ -1099,6 +1100,7 @@
 				C3D0969C263CBC1100E3B129 /* POIFeaturePickerViewController.swift in Sources */,
 				02CD9974265C65C200213AD6 /* EditorFilters.swift in Sources */,
 				647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */,
+				02EA1C6B26631D0D00A0F827 /* VectorMath.swift in Sources */,
 				021FADE22588474300F6E1C0 /* PresetCategory.swift in Sources */,
 				C3004F52263A6CA5006BF313 /* MainViewController.swift in Sources */,
 				64348D01225E8D3F00ADE7FB /* OsmNode+Direction.swift in Sources */,

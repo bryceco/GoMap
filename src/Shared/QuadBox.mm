@@ -664,6 +664,7 @@ public:
 	_cpp = NULL;
 }
 
+#if false
 -(NSString *)description
 {
 #if TARGET_OS_IPHONE
@@ -672,6 +673,7 @@ public:
 	return NSStringFromRect(CGRectFromOSMRect(_cpp->rect()));
 #endif
 }
+#endif
 
 -(OSMRect)rect
 {

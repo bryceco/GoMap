@@ -12,6 +12,7 @@ import UIKit
 
 let TRANSFORM_3D = 0
 
+#if false
 struct OSMPoint {
     var x: Double
     var y: Double
@@ -27,9 +28,9 @@ struct OSMRect {
     var size: OSMSize
 }
 
-if TRANSFORM_3D {
+#if TRANSFORM_3D
 typealias OSMTransform = CATransform3D
-} else {
+#else
 struct OSMTransform {
     //	|  a   b   0  |
     //	|  c   d   0  |
@@ -41,6 +42,8 @@ struct OSMTransform {
     var tx: Double
     var ty: Double
 }
+#endif
+#endif
 
 // MARK: Point
 @inline(__always) func CGPointWithOffset(_ pt: CGPoint, _ dx: CGFloat, _ dy: CGFloat) -> CGPoint {
@@ -53,12 +56,12 @@ struct OSMTransform {
 }
 
 @inline(__always) func OSMPointMake(_ x: Double, _ y: Double) -> OSMPoint {
-    let pt = OSMPoint(x, y)
+	let pt = OSMPoint(x: x, y: y)
     return pt
 }
 
 @inline(__always) func OSMPointFromCGPoint(_ pt: CGPoint) -> OSMPoint {
-    let point = OSMPoint(pt.x, pt.y)
+	let point = OSMPoint(x: Double(pt.x), y: Double(pt.y))
     return point
 }
 
@@ -105,7 +108,7 @@ struct OSMTransform {
 }
 
 @inline(__always) func OffsetPoint(_ p: OSMPoint, _ dx: Double, _ dy: Double) -> OSMPoint {
-    let p2 = OSMPoint(p.x + dx, p.y + dy)
+	let p2 = OSMPoint(x: p.x + dx, y: p.y + dy)
     return p2
 }
 
@@ -127,7 +130,7 @@ func ClosestPointOnLineToPoint(_ a: OSMPoint, _ b: OSMPoint, _ p: OSMPoint) -> O
     return Add(a, Mult(ab, t))
 }
 
-func DistanceFromPointToLineSegment(_ point: OSMPoint, _ line1: OSMPoint, _ line2: OSMPoint) -> CGFloat {
+public func DistanceFromPointToLineSegment(_ point: OSMPoint, _ line1: OSMPoint, _ line2: OSMPoint) -> CGFloat {
     let length2 = CGFloat(MagSquared(Sub(line1, line2)))
     if length2 == 0.0 {
         return CGFloat(DistanceFromPointToPoint(point, line1))
@@ -250,18 +253,56 @@ func LineSegmentIntersectsRectangle(_ p1: OSMPoint, _ p2: OSMPoint, _ rect: OSMR
 }
 
 @inline(__always) func OSMRectZero() -> OSMRect {
-    let rc = OSMRect(0)
-    return rc
+	let rc = OSMRect(origin: OSMPoint(x: 0.0, y: 0.0), size: OSMSize(width: 0.0, height: 0.0))
+	return rc
 }
 
 @inline(__always) func OSMRectOffset(_ rect: OSMRect, _ dx: Double, _ dy: Double) -> OSMRect {
-    rect.origin.x += dx
-    rect.origin.y += dy
+    var rect = rect
+	rect.origin.x += dx
+	rect.origin.y += dy
     return rect
 }
 
+extension OSMPoint {
+	static let zero = OSMPoint(x: 0.0, y: 0.0)
+
+	@inline(__always) init(_ pt: CGPoint) {
+		self.init( x: Double(pt.x), y: Double(pt.y) )
+	}
+}
+
+extension OSMSize {
+	static let zero = OSMRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
+
+	@inline(__always) init(_ sz: CGSize) {
+		self.init(width: Double(sz.width), height: Double(sz.height))
+	}
+}
+
+extension OSMRect {
+	@inline(__always) init(x: Double, y: Double, width: Double, height: Double) {
+		self.init(origin: OSMPoint(x: x, y: y), size: OSMSize(width: width, height: height))
+	}
+	@inline(__always) init(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat) {
+		self.init(origin: OSMPoint(x: Double(x), y: Double(y)), size: OSMSize(width: Double(width), height: Double(height)))
+	}
+	@inline(__always) init(origin: CGPoint, size: CGSize) {
+		self.init(origin: OSMPoint(origin), size: OSMSize(size))
+	}
+}
+
+func OSMRectMake(_ x: Double, _ y: Double, _ width: Double, _ height: Double) -> OSMRect
+{
+	return OSMRect( x: x, y: y, width: width, height: height)
+}
+
+extension OSMTransform {
+	static let identity = OSMTransform(a: 1.0, b: 0.0, c: 0.0, d: 1.0, tx: 0.0, ty: 0.0)
+}
+
 @inline(__always) func OSMRectFromCGRect(_ cg: CGRect) -> OSMRect {
-    let rc = OSMRect(cg.origin.x, cg.origin.y, cg.size.width, cg.size.height)
+	let rc = OSMRect(x: cg.origin.x, y: cg.origin.y, width: cg.size.width, height: cg.size.height)
     return rc
 }
 
@@ -290,7 +331,7 @@ func LineSegmentIntersectsRectangle(_ p1: OSMPoint, _ p2: OSMPoint, _ rect: OSMR
     let minY = Double(min(a.origin.y, b.origin.y))
     let maxX = Double(max(a.origin.x + a.size.width, b.origin.x + b.size.width))
     let maxY = Double(max(a.origin.y + a.size.height, b.origin.y + b.size.height))
-    let r = OSMRect(minX, minY, maxX - minX, maxY - minY)
+	let r = OSMRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
     return r
 }
 
@@ -300,26 +341,26 @@ func LineSegmentIntersectsRectangle(_ p1: OSMPoint, _ p2: OSMPoint, _ rect: OSMR
 
 // MARK: Transform
 func OSMTransformInvert(_ t: OSMTransform) -> OSMTransform {
-    if TRANSFORM_3D {
-		return CATransform3DInvert(t)
-    } else {
-		//	|  a   b   0  |
-		//	|  c   d   0  |
-		//	| tx  ty   1  |
+#if TRANSFORM_3D
+	return CATransform3DInvert(t)
+#else
+	//	|  a   b   0  |
+	//	|  c   d   0  |
+	//	| tx  ty   1  |
 
-		let det = Determinant(t)
-		let s = 1.0 / det
-		let a: OSMTransform
+	let det = Determinant(t)
+	let s = 1.0 / det
 
-		a.a = s * t.d
-		a.c = s * -t.c
-		a.tx = s * (t.c * t.ty - t.d * t.tx)
-		a.b = s * -t.b
-		a.d = s * t.a
-		a.ty = s * (t.b * t.tx - t.a * t.ty)
+	let a = s * t.d
+	let c = s * -t.c
+	let tx = s * (t.c * t.ty - t.d * t.tx)
+	let b = s * -t.b
+	let d = s * t.a
+	let ty = s * (t.b * t.tx - t.a * t.ty)
 
-		return a
-    }
+	let r = OSMTransform(a: a, b: b, c: c, d: d, tx: tx, ty: ty)
+	return r
+#endif
 }
 
 func FromBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double, _ birdsEyeRotation: Double) -> OSMPoint {
@@ -327,14 +368,14 @@ func FromBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Doub
     let D = birdsEyeDistance // distance from eye to center of screen
     let r = birdsEyeRotation
 
-    point.x -= center.x
-    point.y -= center.y
+    point.x -= Double(center.x)
+    point.y -= Double(center.y)
 
     point.y *= D / (D * cos(r) + point.y * sin(r))
     point.x -= point.x * point.y * sin(r) / D
 
-    point.x += center.x
-    point.y += center.y
+    point.x += Double(center.x)
+    point.y += Double(center.y)
     return point
 }
 
@@ -342,8 +383,8 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
     var point = point
     // narrow things toward top of screen
     let D = birdsEyeDistance // distance from eye to center of screen
-    point.x -= center.x
-    point.y -= center.y
+    point.x -= Double(center.x)
+    point.y -= Double(center.y)
 
     let z: Double = point.y * -sin(birdsEyeRotation) // rotation around x axis gives a z value from y offset
     var scale = D / (D + z)
@@ -353,8 +394,8 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
     point.x *= scale
     point.y *= scale * cos(birdsEyeRotation)
 
-    point.x += center.x
-    point.y += center.y
+    point.x += Double(center.x)
+    point.y += Double(center.y)
     return point
 }
 
@@ -367,44 +408,40 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
     x = x - 0.5
     y = y - 0.5
 
-    var loc: OSMPoint
-    loc.y = 90 - 360 * atan(exp(y * 2 * .pi)) / .pi
-    loc.x = 360 * x
-    return loc
+	return OSMPoint( x: 360 * x,
+					 y: 90 - 360 * atan(exp(y * 2 * .pi)) / .pi )
 }
 
 @inline(__always) func MapPointForLatitudeLongitude(_ latitude: Double, _ longitude: Double) -> OSMPoint {
     let x = (longitude + 180) / 360
     let sinLatitude = sin(latitude * .pi / 180)
     let y = 0.5 - log((1 + sinLatitude) / (1 - sinLatitude)) / (4 * .pi)
-    let point = OSMPoint(x * 256, y * 256)
+	let point = OSMPoint(x: x * 256, y: y * 256)
     return point
 }
 
 @inline(__always) func CGAffineTransformFromOSMTransform(_ transform: OSMTransform) -> CGAffineTransform {
-    if TRANSFORM_3D {
+	#if TRANSFORM_3D
     return CATransform3DGetAffineTransform(transform)
-    } else {
-    let t: CGAffineTransform
-    t.a = transform.a
-    t.b = transform.b
-    t.c = transform.c
-    t.d = transform.d
-    t.tx = transform.tx
-    t.ty = transform.ty
+	#else
+    let t = CGAffineTransform(
+		a: CGFloat(transform.a),
+		b: CGFloat(transform.b),
+		c: CGFloat(transform.c),
+		d: CGFloat(transform.d),
+		tx: CGFloat(transform.tx),
+		ty: CGFloat(transform.ty)
+	)
     return t
-    }
+	#endif
 }
 
 @inline(__always) func OSMTransformIdentity() -> OSMTransform {
-    if TRANSFORM_3D {
+	#if TRANSFORM_3D
     return CATransform3DIdentity
-    } else {
-    let transform = OSMTransform(0)
-    transform.d = 1.0
-    transform.a = transform.d
-    return transform
-    }
+	#else
+	return OSMTransform.identity
+	#endif
 }
 
 @inline(__always) func OSMTransformEqual(_ t1: OSMTransform, _ t2: OSMTransform) -> Bool {
@@ -414,151 +451,152 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
 }
 
 @inline(__always) func OSMTransformScaleX(_ t: OSMTransform) -> Double {
-    if TRANSFORM_3D {
+	#if TRANSFORM_3D
     let d = sqrt(t.m11 * t.m11 + t.m12 * t.m12 + t.m13 * t.m13)
     return d
-    } else {
+	#else
     return hypot(t.a, t.c)
-    }
+	#endif
 }
 
 @inline(__always) func OSMTransformConcat(_ a: OSMTransform, _ b: OSMTransform) -> OSMTransform {
-    if TRANSFORM_3D {
+	#if TRANSFORM_3D
     return CATransform3DConcat(a, b)
-    } else {
+	#else
     //	|  a   b   0  |
     //	|  c   d   0  |
     //	| tx  ty   1  |
-    let c: OSMTransform
-    c.a = a.a * b.a + a.b * b.c
-    c.b = a.a * b.b + a.b * b.d
-    c.c = a.c * b.a + a.d * b.c
-    c.d = a.c * b.b + a.d * b.d
-    c.tx = a.tx * b.a + a.ty * b.c + b.tx
-    c.ty = a.tx * b.b + a.ty * b.d + b.ty
-    return c
-    }
+	let t = OSMTransform(
+		a: a.a * b.a + a.b * b.c,
+		b: a.a * b.b + a.b * b.d,
+		c: a.c * b.a + a.d * b.c,
+		d: a.c * b.b + a.d * b.d,
+		tx: a.tx * b.a + a.ty * b.c + b.tx,
+		ty: a.tx * b.b + a.ty * b.d + b.ty)
+    return t
+	#endif
 }
 
 @inline(__always) func OSMTransformRotation(_ t: OSMTransform) -> Double {
-    if TRANSFORM_3D {
-    return atan2(t.m12, t.m11)
-    } else {
+	#if TRANSFORM_3D
+	return atan2(t.m12, t.m11)
+	#else
     return atan2(t.b, t.a)
-    }
+	#endif
 }
 
 @inline(__always) func OSMTransformMakeTranslation(_ dx: Double, _ dy: Double) -> OSMTransform {
-    if TRANSFORM_3D {
+	#if TRANSFORM_3D
     return CATransform3DMakeTranslation(CGFloat(dx), CGFloat(dy), 0)
-    } else {
-    let t = OSMTransform(1, 0, 0, 1, dx, dy)
+	#else
+	let t = OSMTransform(a: 1, b: 0, c: 0, d: 1, tx: dx, ty: dy)
     return t
-    }
+	#endif
 }
 
 @inline(__always) func OSMTransformTranslate(_ t: OSMTransform, _ dx: Double, _ dy: Double) -> OSMTransform {
-    if TRANSFORM_3D {
+	#if TRANSFORM_3D
     return CATransform3DTranslate(t, CGFloat(dx), CGFloat(dy), 0)
-    } else {
+	#else
+	var t = t
     t.tx += t.a * dx + t.c * dy
     t.ty += t.b * dx + t.d * dy
     return t
-    }
+	#endif
 }
 
 @inline(__always) func OSMTransformScale(_ t: OSMTransform, _ scale: Double) -> OSMTransform {
-    if TRANSFORM_3D {
+	#if TRANSFORM_3D
     return CATransform3DScale(t, CGFloat(scale), CGFloat(scale), CGFloat(scale))
-    } else {
+	#else
+	var t = t
     t.a *= scale
     t.b *= scale
     t.c *= scale
     t.d *= scale
     return t
-    }
+	#endif
 }
 
 @inline(__always) func OSMTransformScaleXY(_ t: OSMTransform, _ scaleX: Double, _ scaleY: Double) -> OSMTransform {
-    if TRANSFORM_3D {
+	#if TRANSFORM_3D
     return CATransform3DScale(t, CGFloat(scaleX), CGFloat(scaleY), 1.0)
-    } else {
+	#else
+	var t = t
     t.a *= scaleX
     t.b *= scaleY
     t.c *= scaleX
     t.d *= scaleY
     return t
-    }
+	#endif
 }
 
 @inline(__always) func OSMTransformRotate(_ transform: OSMTransform, _ angle: Double) -> OSMTransform {
-    if TRANSFORM_3D {
+	#if TRANSFORM_3D
     return CATransform3DRotate(transform, CGFloat(angle), 0, 0, 1)
-    } else {
+	#else
     let s = sin(angle)
     let c = cos(angle)
-    let t = OSMTransform(c, s, -s, c, 0, 0)
-    return OSMTransformConcat(t, transform)
-    }
+	let t = OSMTransform(a: c, b: s, c: -s, d: c, tx: 0.0, ty: 0.0)
+	return OSMTransformConcat(t, transform)
+	#endif
 }
 
 @inline(__always) func OSMPointApplyTransform(_ pt: OSMPoint, _ t: OSMTransform) -> OSMPoint {
-    if TRANSFORM_3D {
+	#if TRANSFORM_3D
     let zp = 0.0
     var x = t.m11 * pt.x + t.m21 * pt.y + t.m31 * zp + t.m41
     var y = t.m12 * pt.x + t.m22 * pt.y + t.m32 * zp + t.m42
     if false {
-    if t.m34 {
-        let z = t.m13 * pt.x + t.m23 * pt.y + t.m33 * zp + t.m43
-        // use z and m34 to "shrink" objects as they get farther away (perspective)
-        // http://en.wikipedia.org/wiki/3D_projection
-        let ex = x // eye position
-        let ey = y
-        let ez: Double = -1 / t.m34
-        var p = OSMTransform(1, 0, 0, 0, 0, 1, 0, 0, -ex / ez, -ey / ez, 1, 1 / ez, 0, 0, 0, 0)
-        x += -ex / ez
-        y += -ey / ez
-    }
+		if t.m34 {
+			let z = t.m13 * pt.x + t.m23 * pt.y + t.m33 * zp + t.m43
+			// use z and m34 to "shrink" objects as they get farther away (perspective)
+			// http://en.wikipedia.org/wiki/3D_projection
+			let ex = x // eye position
+			let ey = y
+			let ez: Double = -1 / t.m34
+			var p = OSMTransform(1, 0, 0, 0, 0, 1, 0, 0, -ex / ez, -ey / ez, 1, 1 / ez, 0, 0, 0, 0)
+			x += -ex / ez
+			y += -ey / ez
+		}
     }
     return OSMPointMake(x, y)
-    } else {
-    var p: OSMPoint
-    p.x = pt.x * t.a + pt.y * t.c + t.tx
-    p.y = pt.x * t.b + pt.y * t.d + t.ty
-    return p
-    }
+	#else
+	return OSMPoint( x: pt.x * t.a + pt.y * t.c + t.tx,
+					 y: pt.x * t.b + pt.y * t.d + t.ty )
+	#endif
 }
 
 @inline(__always) func OSMRectApplyTransform(_ rc: OSMRect, _ transform: OSMTransform) -> OSMRect {
     let p1 = OSMPointApplyTransform(rc.origin, transform)
     let p2 = OSMPointApplyTransform(OSMPointMake(rc.origin.x + rc.size.width, rc.origin.y + rc.size.height), transform)
-    let r2 = OSMRect(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y)
+	let r2 = OSMRect(x: p1.x, y: p1.y, width: p2.x - p1.x, height: p2.y - p1.y)
     return r2
 }
 
 @inline(__always) func UnitX(_ t: OSMTransform) -> OSMPoint {
-    if TRANSFORM_3D {
+	#if TRANSFORM_3D
     let p = UnitVector(OSMPointMake(t.m11, t.m12))
     return p
-    } else {
+	#else
     return UnitVector(OSMPointMake(t.a, t.b))
-    }
+	#endif
 }
 
 @inline(__always) func Translation(_ t: OSMTransform) -> OSMPoint {
-    if TRANSFORM_3D {
+	#if TRANSFORM_3D
     let p = OSMPointMake(t.m41, t.m42)
     return p
-    } else {
+	#else
     return OSMPointMake(t.tx, t.ty)
-    }
+	#endif
 }
 
-@inline(__always) func latp2lat(_ a: Double) -> Double {
+@inline(__always) public func latp2lat(_ a: Double) -> Double {
     return 180 / .pi * (2 * atan(exp(a * .pi / 180)) - .pi / 2)
 }
 
-@inline(__always) func lat2latp(_ a: Double) -> Double {
+@inline(__always) public func lat2latp(_ a: Double) -> Double {
     return 180 / .pi * log(tan(.pi / 4 + a * (.pi / 180) / 2))
 }
 
