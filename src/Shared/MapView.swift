@@ -176,7 +176,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     var gestureDidMove = false // to maintain undo stack
 
     var addNodeButtonLongPressGestureRecognizer: UILongPressGestureRecognizer?
-    var addNodeButtonTimestamp: TimeInterval = 0.0
+    var plusButtonTimestamp: TimeInterval = 0.0
 
 
     var windowPresented = false
@@ -749,7 +749,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 		editControl.layer.cornerRadius = 4.0
 
 		// long press for selecting from multiple objects (for multipolygon members)
-        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_:)))
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(screenLongPressGesture(_:)))
         longPress.delegate = self
         addGestureRecognizer(longPress)
 
@@ -759,7 +759,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         addGestureRecognizer(rotationGesture)
 
         // long-press on + for adding nodes via taps
-        addNodeButtonLongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(addNodeButtonLongPressHandler(_:)))
+        addNodeButtonLongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(plusButtonLongPressHandler(_:)))
         addNodeButtonLongPressGestureRecognizer?.minimumPressDuration = 0.001
         addNodeButtonLongPressGestureRecognizer?.delegate = self
         if let addNodeButtonLongPressGestureRecognizer = addNodeButtonLongPressGestureRecognizer {
@@ -803,10 +803,10 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
         #if false
         // Support zoom via tap and drag
-        tapAndDragGesture = TapAndDragGesture(target: self, action: #selector(handle(_:)))
-        tapAndDragGesture?.delegate = self
-        if let tapAndDragGesture = tapAndDragGesture {
-            addGestureRecognizer(tapAndDragGesture)
+        handleTapAndDragGesture = TapAndDragGesture(target: self, action: #selector(handleTapAndDragGesture(_:)))
+        handleTapAndDragGesture?.delegate = self
+        if let handleTapAndDragGesture = handleTapAndDragGesture {
+            addGestureRecognizer(handleTapAndDragGesture)
         }
         #endif
 
@@ -2976,7 +2976,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
     //    #endif
 
-    func dropPin(at dropPoint: CGPoint) {
+    func createNode(at dropPoint: CGPoint) {
         if editorLayer.isHidden {
             flashMessage(NSLocalizedString("Editing layer not visible", comment: ""))
             return
@@ -3386,7 +3386,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         }
     }
 
-    @objc func handle(_ tapAndDrag: TapAndDragGesture) {
+    @objc func handleTapAndDragGesture(_ tapAndDrag: TapAndDragGesture) {
         // do single-finger zooming
         if tapAndDrag.state == .changed {
             userOverrodeLocationZoom = true
@@ -3404,39 +3404,41 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         }
     }
 
-    @IBAction func handleTapGesture(_ tap: UITapGestureRecognizer) {
+	/// Invoked to select an object on the screen
+    @IBAction func screenTapGesture(_ tap: UITapGestureRecognizer) {
         if tap.state == .ended {
             let point = tap.location(in: self)
-            if addNodeButtonTimestamp != 0.0 {
-				dropPin(at: point)
+            if plusButtonTimestamp != 0.0 {
+				// user is doing a long-press on + button
+				createNode(at: point)
             } else {
-				singleClick(point)
+				selectObjectAtPoint(point)
             }
         }
     }
 
-    @objc func addNodeButtonLongPressHandler(_ recognizer: UILongPressGestureRecognizer) {
+    @objc func plusButtonLongPressHandler(_ recognizer: UILongPressGestureRecognizer) {
         switch recognizer.state {
             case .began:
-                addNodeButtonTimestamp = TimeInterval(CACurrentMediaTime())
+                plusButtonTimestamp = TimeInterval(CACurrentMediaTime())
             case .ended:
-                if Double(CACurrentMediaTime() - addNodeButtonTimestamp) < 0.5 {
+                if CACurrentMediaTime() - plusButtonTimestamp < 0.5 {
                     // treat as tap, but make sure it occured inside the button
                     let touch = recognizer.location(in: recognizer.view)
 					if recognizer.view?.bounds.contains(touch) ?? false {
-                        dropPin(at: crossHairs.position)
+                        createNode(at: crossHairs.position)
                     }
                 }
-                addNodeButtonTimestamp = 0.0
+                plusButtonTimestamp = 0.0
             case .cancelled, .failed:
-                addNodeButtonTimestamp = 0.0
+                plusButtonTimestamp = 0.0
             default:
                 break
         }
     }
 
     // long press on map allows selection of various objects near the location
-    @IBAction func handleLongPressGesture(_ longPress: UILongPressGestureRecognizer) {
+    @IBAction func screenLongPressGesture(_ longPress: UILongPressGestureRecognizer) {
         if longPress.state == .began && !editorLayer.isHidden {
             let point = longPress.location(in: self)
 
@@ -3589,7 +3591,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         }
     }
 
-    func singleClick(_ point: CGPoint) {
+    func selectObjectAtPoint(_ point: CGPoint) {
 
         // disable rotation if in action
         if isRotateObjectMode != nil {
@@ -3676,6 +3678,6 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
     func rightClick(atLocation location: CGPoint) {
         // right-click is equivalent to holding + and clicking
-        dropPin(at: location)
+        createNode(at: location)
     }
 }
