@@ -1577,8 +1577,8 @@ class EditorMapLayer: CALayer {
     }
     
     
-	private static func osmHitTest(_ way: OsmWay, location: CLLocationCoordinate2D, maxDegrees: OSMSize, segment: UnsafeMutablePointer<Int>?) -> CGFloat {
-        var previous = CLLocationCoordinate2D()
+	private static func osmHitTest(way: OsmWay, location: CLLocationCoordinate2D, maxDegrees: OSMSize, segment: inout Int) -> CGFloat {
+		var previous = CLLocationCoordinate2D()
 		var seg = -1
 		var bestDist: CGFloat = 1000000
 		for node in way.nodes {
@@ -1587,7 +1587,7 @@ class EditorMapLayer: CALayer {
 				let dist = HitTestLineSegment(location, maxDegrees, coord, previous)
 				if dist < bestDist {
 					bestDist = dist
-					segment?.pointee = seg
+					segment = seg
 				}
 			}
 			seg += 1
@@ -1597,7 +1597,7 @@ class EditorMapLayer: CALayer {
         return bestDist
     }
     
-	private static func osmHitTest(_ node: OsmNode, location: CLLocationCoordinate2D, maxDegrees: OSMSize) -> CGFloat {
+	private static func osmHitTest(node: OsmNode, location: CLLocationCoordinate2D, maxDegrees: OSMSize) -> CGFloat {
 		let delta = OSMPoint(x: (location.longitude - node.lon) / maxDegrees.width,
 							 y: (location.latitude - node.lat) / maxDegrees.height)
         let dist = hypot(delta.x, delta.y)
@@ -1632,7 +1632,7 @@ class EditorMapLayer: CALayer {
 			if let node = object as? OsmNode {
 				if !ignoreList.contains(node) {
 					if testNodes || node.wayCount == 0 {
-						var dist = self.osmHitTest(node, location: location, maxDegrees: maxDegrees)
+						var dist = self.osmHitTest(node: node, location: location, maxDegrees: maxDegrees)
 						dist *= CGFloat(NODE_BIAS)
 						if dist <= 1.0 {
 							block(node, dist, 0)
@@ -1643,7 +1643,7 @@ class EditorMapLayer: CALayer {
 			} else if let way = object as? OsmWay {
 				if !ignoreList.contains(way) {
 					var seg = 0
-					let distToWay = self.osmHitTest(way, location: location, maxDegrees: maxDegrees, segment: &seg)
+					let distToWay = self.osmHitTest(way: way, location: location, maxDegrees: maxDegrees, segment: &seg)
 					if distToWay <= 1.0 {
 						block(way, distToWay, seg)
 						parentRelations.formUnion(Set(way.parentRelations))
@@ -1654,7 +1654,7 @@ class EditorMapLayer: CALayer {
 						if ignoreList.contains(node) {
 							continue
 						}
-						var dist = self.osmHitTest(node, location: location, maxDegrees: maxDegrees)
+						var dist = self.osmHitTest(node: node, location: location, maxDegrees: maxDegrees)
 						dist *= CGFloat(NODE_BIAS)
 						if dist < 1.0 {
 							block(node, dist, 0)
@@ -1672,7 +1672,7 @@ class EditorMapLayer: CALayer {
 							if !ignoreList.contains(way) {
 								if (member.role == "inner") || (member.role == "outer") {
 									var seg = 0
-									let dist = self.osmHitTest(way, location: location, maxDegrees: maxDegrees, segment: &seg)
+									let dist = self.osmHitTest(way: way, location: location, maxDegrees: maxDegrees, segment: &seg)
 									if dist < bestDist {
 										bestDist = dist
 									}
@@ -1697,7 +1697,7 @@ class EditorMapLayer: CALayer {
 					radius: CGFloat,
 					isDragConnect: Bool,
 					ignoreList: [OsmBaseObject],
-					segment pSegment: UnsafeMutablePointer<Int>?) -> OsmBaseObject?
+					segment pSegment: inout Int) -> OsmBaseObject?
 	{
 		if self.isHidden {
 			return nil
@@ -1719,49 +1719,44 @@ class EditorMapLayer: CALayer {
         }
         
         var pick: OsmBaseObject? = nil
-        if best.count > 1 {
-            if isDragConnect {
-                // prefer to connecct to a way in a relation over the relation itself, which is opposite what we do when selecting by tap
-				for obj in best.keys {
-					if obj.isRelation() == nil {
-						pick = obj
-                        break
-                    }
+		if isDragConnect {
+			// prefer to connecct to a way in a relation over the relation itself, which is opposite what we do when selecting by tap
+			for obj in best.keys {
+				if obj.isRelation() == nil {
+					pick = obj
+					break
 				}
-            } else {
-                // performing selection by tap
-                if pick == nil,
-				   let relation = selectedRelation {
-					// pick a way that is a member of the relation if possible
-					for member in relation.members {
-						if let obj = member.obj,
-						   best[obj] != nil
-						{
-							pick = obj
-							break
-                        }
-                    }
-                }
-                if pick == nil && selectedPrimary == nil {
-                    // nothing currently selected, so prefer relations
-					for obj in best.keys {
-						if obj.isRelation() != nil {
-							pick = obj
-                            break
-                        }
-                    }
-                }
-            }
-        }
-        if pick == nil {
+			}
+		} else {
+			// performing selection by tap
+			if pick == nil,
+			   let relation = selectedRelation {
+				// pick a way that is a member of the relation if possible
+				for member in relation.members {
+					if let obj = member.obj,
+					   best[obj] != nil
+					{
+						pick = obj
+						break
+					}
+				}
+			}
+			if pick == nil && selectedPrimary == nil {
+				// nothing currently selected, so prefer relations
+				for obj in best.keys {
+					if obj.isRelation() != nil {
+						pick = obj
+						break
+					}
+				}
+			}
+		}
+		if pick == nil {
 			pick = best.first!.key
 		}
-		if pSegment != nil {
-            if let pick = pick {
-				pSegment?.pointee = best[pick]!
-            }
-        }
-        return pick
+		guard let pick = pick else { return nil }
+		pSegment = best[pick]!
+		return pick
     }
     
     // return all nearby objects

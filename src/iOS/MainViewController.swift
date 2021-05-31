@@ -541,7 +541,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
-        DLog("memory warning: \(MemoryUsedMB()) MB used")
+		DLog("memory warning: \(MemoryUsed()/1000000.0) MB used")
         
         mapView.flashMessage(NSLocalizedString("Low memory: clearing cache", comment: ""))
         

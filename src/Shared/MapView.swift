@@ -2496,43 +2496,39 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         }
     }
 
-    func dragConnection(for node: OsmNode, segment: UnsafeMutablePointer<Int>) -> OsmBaseObject? {
-        assert((node.isNode() != nil))
-        assert((editorLayer.selectedWay != nil))
+    func dragConnection(for node: OsmNode, segment: inout Int) -> OsmBaseObject? {
+		guard let way = editorLayer.selectedWay,
+			  let index = way.nodes.firstIndex(of: node)
+		else { return nil }
 
-        let way = editorLayer.selectedWay
-
-        var ignoreList: [OsmBaseObject] = []
-        var index: Int = 0
-        index = way?.nodes.firstIndex(of: node) ?? NSNotFound
-        let wayArray : [OsmWay] = [way].compactMap {$0}
-        let parentWays = (node.wayCount == 1 ? wayArray : editorLayer.mapData.waysContaining(node))
-        if (way?.nodes.count ?? 0) < 3 {
-            if !parentWays.isEmpty, let nodes = way?.nodes {
-                ignoreList = parentWays + nodes
-            }
+		var ignoreList: [OsmBaseObject] = []
+		let parentWays = node.wayCount == 1 ? [way] : editorLayer.mapData.waysContaining(node)
+		if way.nodes.count < 3 {
+			ignoreList = parentWays + way.nodes
         } else if index == 0 {
             // if end-node then okay to connect to self-nodes except for adjacent
-            if !parentWays.isEmpty, let nodes = [way?.nodes[0], way?.nodes[1], way?.nodes[2]] as? [OsmBaseObject] {
-                ignoreList = parentWays + nodes
-            }
-        } else if index == (way?.nodes.count ?? 0) - 1 {
-            // if end-node then okay to connect to self-nodes except for adjacent
-            if !parentWays.isEmpty, let nodes = [way?.nodes[index], way?.nodes[index - 1], way?.nodes[index - 2]] as? [OsmBaseObject] {
-                ignoreList = parentWays + nodes
-            }
+			let nodes = [way.nodes[0],
+						 way.nodes[1],
+						 way.nodes[2]]
+			ignoreList = parentWays + nodes
+		} else if index == way.nodes.count - 1 {
+			// if end-node then okay to connect to self-nodes except for adjacent
+			let nodes = [way.nodes[index],
+						 way.nodes[index - 1],
+						 way.nodes[index - 2]]
+			ignoreList = parentWays + nodes
         } else {
-            // if middle node then never connect to self
-            if !parentWays.isEmpty, let nodes = way?.nodes {
-                ignoreList = parentWays + nodes
+			// if middle node then never connect to self
+            if !parentWays.isEmpty {
+				ignoreList = parentWays + way.nodes
             }
         }
-        let hit = editorLayer.osmHitTest(
-            pushpinView?.arrowPoint ?? CGPoint(),
-            radius: DragConnectHitTestRadius,
+		let hit = editorLayer.osmHitTest(
+			pushpinView?.arrowPoint ?? CGPoint.zero,
+			radius: DragConnectHitTestRadius,
             isDragConnect: true,
             ignoreList: ignoreList,
-            segment: segment
+            segment: &segment
         )
         return hit
     }
@@ -3288,11 +3284,8 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         // http://stackoverflow.com/questions/3344341/uibutton-inside-a-view-that-has-a-uitapgesturerecognizer
         var view = touch.view
-        while (view != nil) {
-            if (view is UIControl) || (view is UIToolbar) {
-                break
-            }
-            view = view?.superview
+		while view != nil && !((view is UIControl) || (view is UIToolbar)) {
+			view = view?.superview
         }
         if view != nil {
             // we touched a button, slider, or other UIControl
@@ -3301,7 +3294,6 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             }
             return false // ignore the touch
         }
-
         return true // handle the touch
     }
 
@@ -3613,7 +3605,8 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 		} else {
 
             // hit test anything
-			if let hit = editorLayer.osmHitTest(point, radius: DefaultHitTestRadius, isDragConnect: false, ignoreList: [], segment: nil) {
+			var segment = -1
+			if let hit = editorLayer.osmHitTest(point, radius: DefaultHitTestRadius, isDragConnect: false, ignoreList: [], segment: &segment) {
                 if let hit = hit as? OsmNode {
                     editorLayer.selectedNode = hit
                     editorLayer.selectedWay = nil
