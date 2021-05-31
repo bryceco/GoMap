@@ -12,6 +12,7 @@ import QuartzCore
 import SafariServices
 import StoreKit
 
+/// The main map display: Editor, Aerial, Mapnik etc.
 enum MapViewState : Int {
 	case EDITOR
 	case EDITORAERIAL
@@ -19,6 +20,7 @@ enum MapViewState : Int {
 	case MAPNIK
 }
 
+/// Overlays on top of the map: Locator when zoomed, GPS traces, etc.
 struct MapViewOverlays : OptionSet {
 	let rawValue: Int
 	static let LOCATOR	= MapViewOverlays(rawValue: 1 << 0)
@@ -91,7 +93,7 @@ protocol MapViewProgress {
 private let DisplayLinkHeading = "Heading"
 private let DisplayLinkPanning = "Panning" // disable gestures inside toolbar buttons
 
-@inline(__always) private func StateFor(_ state: MapViewState, zoomedOut: Bool) -> MapViewState {
+private func StateFor(_ state: MapViewState, zoomedOut: Bool) -> MapViewState {
 	if zoomedOut && state == .EDITOR {
         return .MAPNIK
     }
@@ -100,8 +102,7 @@ private let DisplayLinkPanning = "Panning" // disable gestures inside toolbar bu
     }
     return state
 }
-
-@inline(__always) private func OverlaysFor(_ state: MapViewState, overlays: MapViewOverlays, zoomedOut: Bool) -> MapViewOverlays {
+private func OverlaysFor(_ state: MapViewState, overlays: MapViewOverlays, zoomedOut: Bool) -> MapViewOverlays {
 	if zoomedOut && state == .EDITORAERIAL {
 		return overlays.union(.LOCATOR)
 	}
@@ -111,8 +112,8 @@ private let DisplayLinkPanning = "Panning" // disable gestures inside toolbar bu
 	return overlays
 }
 
-// MARK: Edit Actions
-func ActionTitle(_ action: EDIT_ACTION, _ abbrev: Bool) -> String {
+/// Localized names of edit actions
+private func ActionTitle(_ action: EDIT_ACTION, _ abbrev: Bool) -> String {
     switch action {
         case .SPLIT:
             return NSLocalizedString("Split", comment: "Edit action")
@@ -151,7 +152,6 @@ func ActionTitle(_ action: EDIT_ACTION, _ abbrev: Bool) -> String {
     }
 }
 
-//#if os(iOS)
 class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheetDelegate, UIGestureRecognizerDelegate, SKStoreProductViewControllerDelegate {
 
     var lastMouseDragPos = CGPoint.zero
@@ -253,12 +253,11 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             }
 
             // save pushpinView coordinates
-            var pp = CLLocationCoordinate2D()
-            if pushpinView != nil {
-                pp = longitudeLatitude(forScreenPoint: pushpinView?.arrowPoint ?? CGPoint.zero, birdsEye: true)
-            }
+			var pp: CLLocationCoordinate2D? = nil
+			if let pushpinView = pushpinView {
+				pp = longitudeLatitude(forScreenPoint: pushpinView.arrowPoint, birdsEye: true)
+			}
 
-            #if true
             // Wrap around if we translate too far
             let unitX = UnitX(t)
             let unitY = OSMPoint(x: -unitX.y, y: unitX.x)
@@ -281,7 +280,6 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                 let mul = floor(-dy / mapSize)
                 _screenFromMapTransform = OSMTransformTranslate(t, 0, mul * mapSize / scale)
             }
-            #endif
 
             // update transform
 			_screenFromMapTransform = t
@@ -301,9 +299,13 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             updateCountryCodeForLocationUsingNominatim()
 
             // update pushpin location
-            if let pushpinView = pushpinView {
-                pushpinView.arrowPoint = screenPoint(forLatitude: pp.latitude, longitude: pp.longitude, birdsEye: true)
-            }
+			if let pushpinView = pushpinView,
+			   let pp = pp
+			{
+				pushpinView.arrowPoint = screenPoint(forLatitude: pp.latitude,
+													 longitude: pp.longitude,
+													 birdsEye: true)
+			}
         }
     }
 
@@ -2242,7 +2244,8 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 		segmentedControl.selectedSegmentIndex = UISegmentedControl.noSegment
     }
 
-    func performEdit(_ action: EDIT_ACTION) {
+	/// Performs the selected action on the currently selected editor objects
+	func performEdit(_ action: EDIT_ACTION) {
         // if trying to edit a node in a way that has no tags assume user wants to edit the way instead
         switch action {
             case .RECTANGULARIZE, .STRAIGHTEN, .REVERSE, .DUPLICATE, .ROTATE, .CIRCULARIZE, .COPYTAGS, .PASTETAGS, .EDITTAGS, .CREATE_RELATION:
@@ -2842,39 +2845,43 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                 showAlert(NSLocalizedString("Error", comment: ""), message: error)
             }
         } else {
-            if node != nil && way != nil && ((way?.nodes.count) != nil) && (way?.isClosed() ?? false || (node != way?.nodes[0] && node != way?.nodes.last)) {
-                // both a node and way are selected but selected node is not an endpoint (or way is closed), so we will create a new way from that node
-                if let node = node {
-                    way = editorLayer.createWay(with: node)
-                }
+            if let node = node,
+			   let way2 = way,
+			   way2.nodes.count > 0,
+			   way2.isClosed() || (node != way2.nodes[0] && node != way2.nodes.last)
+			{
+                // both a node and way are selected but selected node is not an endpoint (or way is closed),
+				// so we will create a new way "T" from that node
+				way = editorLayer.createWay(with: node)
             } else {
                 if node == nil {
                     node = editorLayer.createNode(at: arrowPoint)
                 }
                 if way == nil {
-                    if let node = node {
-                        way = editorLayer.createWay(with: node)
-                    }
-                }
-            }
-            var prevIndex: Int? = nil
-            if let node = node {
-                prevIndex = way?.nodes.firstIndex(of: node) ?? NSNotFound
-            }
-            var nextIndex = prevIndex ?? 0
-            if nextIndex == (way?.nodes.count ?? 0) - 1 {
+					way = editorLayer.createWay(with: node!)
+				}
+			}
+			guard let way = way,
+				  let node = node
+			else { fatalError() }
+
+            let prevIndex = way.nodes.firstIndex(of: node)!
+			var nextIndex = prevIndex
+            if nextIndex == way.nodes.count - 1 {
                 nextIndex += 1
             }
-            // add new node at point
-            let prevPrevNode = ((way?.nodes.count ?? 0) >= 2 ? way?.nodes[(way?.nodes.count ?? 0) - 2] : nil)
-            let prevPrevPoint = prevPrevNode != nil ? screenPoint(forLatitude: prevPrevNode?.lat ?? 0.0, longitude: prevPrevNode?.lon ?? 0.0, birdsEye: true) : CGPoint(x: 0, y: 0)
+			// add new node at point
+			let prevPrevNode = (way.nodes.count >= 2 ? way.nodes[way.nodes.count - 2] : nil)
+			let prevPrevPoint = prevPrevNode != nil ? screenPoint(forLatitude: prevPrevNode!.lat, longitude: prevPrevNode!.lon, birdsEye: true) : CGPoint.zero
 
-            if hypot(arrowPoint.x - newPoint.x, arrowPoint.y - newPoint.y) > 10.0 && (prevPrevNode == nil || hypot(prevPrevPoint.x - newPoint.x, prevPrevPoint.y - newPoint.y) > 10.0) {
+            if hypot(arrowPoint.x - newPoint.x, arrowPoint.y - newPoint.y) > 10.0 &&
+				(prevPrevNode == nil || hypot(prevPrevPoint.x - newPoint.x, prevPrevPoint.y - newPoint.y) > 10.0)
+			{
                 // it's far enough from previous point to use
             } else {
 
                 // compute a good place for next point
-                if (way?.nodes.count ?? 0) < 2 {
+                if way.nodes.count < 2 {
                     // create 2nd point in the direction of the center of the screen
                     let vert = abs(Float(arrowPoint.x - newPoint.x)) < abs(Float(arrowPoint.y - newPoint.y))
                     if vert {
@@ -2884,37 +2891,37 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                         newPoint.x = abs(Float(newPoint.x - arrowPoint.x)) < 30 ? arrowPoint.x + 60 : 2 * newPoint.x - arrowPoint.x
                         newPoint.y = arrowPoint.y
                     }
-                } else if way?.nodes.count == 2 {
+				} else if way.nodes.count == 2 {
                     // create 3rd point 90 degrees from first 2
-                    let n1 = way?.nodes[1 - (prevIndex ?? 0)]
-                    let p1 = screenPoint(forLatitude: n1?.lat ?? 0.0, longitude: n1?.lon ?? 0.0, birdsEye: true)
-                    var delta = CGPoint(x: Double(p1.x - arrowPoint.x), y: Double(p1.y - arrowPoint.y))
-                    let len = hypot(delta.x, delta.y)
-                    if len > 100 {
-                        delta.x *= CGFloat(100 / len)
-                        delta.y *= CGFloat(100 / len)
+					let n1 = way.nodes[1 - prevIndex]
+                    let p1 = screenPoint(forLatitude: n1.lat, longitude: n1.lon, birdsEye: true)
+					var delta = CGPoint(x: Double(p1.x - arrowPoint.x), y: Double(p1.y - arrowPoint.y))
+					let len = hypot(delta.x, delta.y)
+					if len > 100 {
+						delta.x *= CGFloat(100 / len)
+						delta.y *= CGFloat(100 / len)
                     }
-                    let np1 = OSMPoint(x: Double(arrowPoint.x - delta.y), y: Double(arrowPoint.y + delta.x))
-                    let np2 = OSMPoint(x: Double(arrowPoint.x + delta.y), y: Double(arrowPoint.y - delta.x))
-                    if DistanceFromPointToPoint(np1, OSMPoint(newPoint)) < DistanceFromPointToPoint(np2, OSMPoint(newPoint)) {
-                        newPoint = CGPoint(x: np1.x, y: np1.y)
-                    } else {
-                        newPoint = CGPoint(x: np2.x, y: np2.y)
-                    }
+					let np1 = OSMPoint(x: Double(arrowPoint.x - delta.y), y: Double(arrowPoint.y + delta.x))
+					let np2 = OSMPoint(x: Double(arrowPoint.x + delta.y), y: Double(arrowPoint.y - delta.x))
+					if DistanceFromPointToPoint(np1, OSMPoint(newPoint)) < DistanceFromPointToPoint(np2, OSMPoint(newPoint)) {
+						newPoint = CGPoint(x: np1.x, y: np1.y)
+					} else {
+						newPoint = CGPoint(x: np2.x, y: np2.y)
+					}
                 } else {
                     // create 4th point and beyond following angle of previous 3
-                    let n1 = (prevIndex == 0 ? way?.nodes[1] : way?.nodes[(prevIndex ?? 0) - 1])
-                    let n2 = (prevIndex == 0 ? way?.nodes[2] : way?.nodes[(prevIndex ?? 0) - 2])
-                    let p1 = screenPoint(forLatitude: n1?.lat ?? 0.0, longitude: n1?.lon ?? 0.0, birdsEye: true)
-                    let p2 = screenPoint(forLatitude: n2?.lat ?? 0.0, longitude: n2?.lon ?? 0.0, birdsEye: true)
-                    let d1 = OSMPoint(x: Double(arrowPoint.x - p1.x), y: Double(arrowPoint.y - p1.y))
+                    let n1 = prevIndex == 0 ? way.nodes[1] : way.nodes[prevIndex - 1]
+					let n2 = prevIndex == 0 ? way.nodes[2] : way.nodes[prevIndex - 2]
+                    let p1 = screenPoint(forLatitude: n1.lat, longitude: n1.lon, birdsEye: true)
+                    let p2 = screenPoint(forLatitude: n2.lat, longitude: n2.lon, birdsEye: true)
+					let d1 = OSMPoint(x: Double(arrowPoint.x - p1.x), y: Double(arrowPoint.y - p1.y))
                     let d2 = OSMPoint(x: Double(p1.x - p2.x), y: Double(p1.y - p2.y))
                     var a1 = atan2(d1.y, d1.x)
                     let a2 = atan2(d2.y, d2.x)
                     var dist = hypot(d1.x, d1.y)
                     // if previous angle was 90 degrees then match length of first leg to make a rectangle
-                    if (way?.nodes.count == 3 || way?.nodes.count == 4) && abs(fmod(abs(Float(a1 - a2)), .pi) - .pi / 2) < 0.1 {
-                        dist = hypot(d2.x, d2.y)
+                    if (way.nodes.count == 3 || way.nodes.count == 4) && abs(fmod(abs(Float(a1 - a2)), .pi) - .pi / 2) < 0.1 {
+						dist = hypot(d2.x, d2.y)
                     } else if dist > 100 {
                         dist = 100
                     }
@@ -2933,23 +2940,19 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                 newPoint.y = CGFloat(min(newPoint.y, rc.origin.y + rc.size.height))
             }
 
-            if (way?.nodes.count ?? 0) >= 2 {
-                let start = (prevIndex == 0 ? way?.nodes.last : way?.nodes[0])
-                let s = screenPoint(forLatitude: start?.lat ?? 0.0, longitude: start?.lon ?? 0.0, birdsEye: true)
+            if way.nodes.count >= 2 {
+				let start = prevIndex == 0 ? way.nodes.last! : way.nodes[0]
+				let s = screenPoint(forLatitude: start.lat, longitude: start.lon, birdsEye: true)
                 let d = hypot(s.x - newPoint.x, s.y - newPoint.y)
                 if d < 3.0 {
                     // join first to last
                     var error: String? = nil
-					let action: EditActionWithNode? = editorLayer.canAddNode(toWay: way!, atIndex:nextIndex, error:&error)
+					let action: EditActionWithNode? = editorLayer.canAddNode(toWay: way, atIndex:nextIndex, error:&error)
 					if let action = action {
-                        if let start = start {
-                            action(start)
-                        }
+						action(start)
                         editorLayer.selectedWay = way
                         editorLayer.selectedNode = nil
-                        if let way = way {
-                            placePushpin(at: s, object: way)
-                        }
+						placePushpin(at: s, object: way)
                     } else {
                         // don't bother showing an error message
                     }
@@ -2957,9 +2960,8 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                 }
             }
 
-
             var error: String? = nil
-			guard let addNodeToWay: EditActionWithNode = editorLayer.canAddNode(toWay: way!, atIndex:nextIndex, error:&error)
+			guard let addNodeToWay: EditActionWithNode = editorLayer.canAddNode(toWay: way, atIndex:nextIndex, error:&error)
 			else {
 				showAlert(NSLocalizedString("Can't extend way", comment: ""), message: error)
 				return
