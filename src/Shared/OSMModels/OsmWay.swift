@@ -240,7 +240,7 @@ final class OsmWay: OsmBaseObject {
                 break
         }
 		var bestPoint = OSMPoint(x: 0, y: 0)
-        var bestDist: Double = 360 * 360
+		var bestDist = Double.greatestFiniteMagnitude
         for i in 1..<nodes.count {
             let p1 = nodes[i-1].location()
             let p2 = nodes[i].location()
@@ -473,7 +473,7 @@ final class OsmWay: OsmBaseObject {
     func segmentClosestToPoint(_ point: OSMPoint) -> Int {
         var best = -1
 		var bestDist: CGFloat = 100000000.0
-		for index in nodes.indices.dropFirst() {
+		for index in nodes.indices.dropLast() {
 			let this = nodes[index]
             let next = nodes[index+1]
 			let dist = DistanceFromPointToLineSegment(point, this.location(), next.location())

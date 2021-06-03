@@ -8,12 +8,6 @@
 
 import Foundation
 
-extension OSMPoint: Equatable {
-    public static func == (lhs: OSMPoint, rhs: OSMPoint) -> Bool {
-        return lhs.x == rhs.x && lhs.y == rhs.y
-    }
-}
-
 extension OSMPoint: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(x)

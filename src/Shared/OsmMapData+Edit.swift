@@ -713,7 +713,7 @@ extension OsmMapData {
                 }
             } else if needAreaFixup {
                 // special case where deleted node is first & last node of an area
-                addNodeUnsafe(way.nodes.first, to: way, at: way.nodes.count)
+                addNodeUnsafe(way.nodes.first!, to: way, at: way.nodes.count)
             }
             updateParentMultipolygonRelationRoles(for: way)
         }
@@ -798,13 +798,13 @@ extension OsmMapData {
                 
                 // rebase A so it starts with selected node
                 while wayA.nodes.first != node {
-                    addNodeUnsafe(wayA.nodes.first, to: wayA, at: wayA.nodes.count)
+                    addNodeUnsafe(wayA.nodes.first!, to: wayA, at: wayA.nodes.count)
                     deleteNode(inWayUnsafe: wayA, index: 0, preserveNode: false)
                 }
                 
                 // add shared endpoints
-                addNodeUnsafe(wayB.nodes.first, to: wayA, at: wayA.nodes.count)
-                addNodeUnsafe(wayA.nodes.first, to: wayB, at: wayB.nodes.count)
+                addNodeUnsafe(wayB.nodes.first!, to: wayA, at: wayA.nodes.count)
+                addNodeUnsafe(wayA.nodes.first!, to: wayB, at: wayB.nodes.count)
             } else {
                 
                 // place common node in new way
@@ -1217,14 +1217,14 @@ extension OsmMapData {
     
     // MARK: Duplicate
 
-    func duplicateNode(_ node: OsmNode, withOffset offset: OSMPoint) -> OsmNode? {
+    func duplicateNode(_ node: OsmNode, withOffset offset: OSMPoint) -> OsmNode {
         let loc = CLLocationCoordinate2D(latitude: node.lat + offset.y, longitude: node.lon + offset.x)
         let newNode = createNode(atLocation: loc)
         setTags(node.tags, for: newNode)
         return newNode
     }
 
-    func duplicateWay(_ way: OsmWay, withOffset offset: OSMPoint) -> OsmWay? {
+    func duplicateWay(_ way: OsmWay, withOffset offset: OSMPoint) -> OsmWay {
         let newWay = createWay()
 		for index in way.nodes.indices {
 			let node = way.nodes[index]

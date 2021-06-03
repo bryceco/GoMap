@@ -187,6 +187,9 @@ class QuadMap: NSObject, NSCoding {
 				count[id] = 1
 			}
 			assert( OSMRectContainsRect( rect, obj.boundingBox ) )
+			if let rel = obj as? OsmRelation {
+				print("rel = \(rel.ident)")
+			}
 		}
 		assert( count.first(where: {$0.value != 1}) == nil )
 		assert( count.count == nodes.count + ways.count + relations.count)

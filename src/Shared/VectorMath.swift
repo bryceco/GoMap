@@ -270,6 +270,9 @@ extension OSMPoint {
 	@inline(__always) init(_ loc: CLLocationCoordinate2D) {
 		self.init( x: Double(loc.longitude), y: Double(loc.latitude) )
 	}
+	@inline(__always) public static func ==(_ a: OSMPoint, _ b: OSMPoint) -> Bool {
+		return a.x == b.x && a.y == b.y
+	}
 }
 
 extension OSMSize {
@@ -277,6 +280,10 @@ extension OSMSize {
 
 	@inline(__always) init(_ sz: CGSize) {
 		self.init(width: Double(sz.width), height: Double(sz.height))
+	}
+
+	@inline(__always) public static func ==(_ a: OSMSize, _ b: OSMSize) -> Bool {
+		return a.width == b.width && a.height == b.height
 	}
 }
 
@@ -323,7 +330,9 @@ extension OSMRect {
 			self.origin.x + self.size.width >= b.origin.x + b.size.width &&
 			self.origin.y + self.size.height >= b.origin.y + b.size.height
 	}
-
+	@inline(__always) public static func ==(_ a: OSMRect, _ b: OSMRect) -> Bool {
+		return a.origin == b.origin && a.size == b.size
+	}
 }
 
 extension OSMTransform {

@@ -1799,19 +1799,25 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
     // MARK: Undo/Redo
 
-    func placePushpinForSelection() {
-        let selection = editorLayer.selectedPrimary
-        if selection == nil {
-            removePin()
-            return
-        }
-        let loc = selection?.selectionPoint
-        let point = screenPoint(forLatitude: loc?().y ?? 0.0, longitude: loc?().x ?? 0.0, birdsEye: true)
-        placePushpin(at: point, object: selection!)
+	func placePushpinForSelection(at point: CGPoint? = nil) {
+		guard let selection = editorLayer.selectedPrimary
+		else {
+			removePin()
+			return
+		}
+		let loc: OSMPoint
+		if let point = point {
+			let latLon = longitudeLatitude(forScreenPoint:point, birdsEye: true)
+			loc = selection.pointOnObjectForPoint(OSMPoint(latLon))
+		} else {
+			loc = selection.selectionPoint()
+		}
+        let point = screenPoint(forLatitude: loc.y, longitude: loc.x, birdsEye: true)
+        placePushpin(at: point, object: selection)
 
-        if !bounds.contains(pushpinView?.arrowPoint ?? CGPoint.zero) {
+        if !bounds.contains(pushpinView!.arrowPoint) {
             // need to zoom to location
-            setTransformForLatitude(loc?().y ?? 0.0, longitude: loc?().x ?? 0.0)
+            setTransformForLatitude(loc.y, longitude: loc.x)
         }
     }
 
@@ -2371,7 +2377,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             case .RESTRICT:
                 restrictOptionSelected()
             case .CREATE_RELATION:
-                let create: ((_ type: String?) -> Void)? = { [self] type in
+                let create: ((_ type: String?) -> Void) = { [self] type in
                     let relation = editorLayer.mapData.createRelation()
                     var tags = editorLayer.selectedPrimary?.tags
                     if tags == nil {
@@ -2379,7 +2385,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                     }
                     tags?["type"] = type
                     editorLayer.mapData.setTags(tags ?? [:], for: relation)
-                    editorLayer.mapData.setTags([:], for: editorLayer.selectedPrimary)
+                    editorLayer.mapData.setTags([:], for: editorLayer.selectedPrimary!)
 
 					var error: String? = nil
 					let add: EditAction? = editorLayer.mapData.canAdd( editorLayer.selectedPrimary!, to:relation, withRole:"outer", error:&error)
@@ -2395,7 +2401,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                 }
                 let actionSheet = UIAlertController(title: NSLocalizedString("Create Relation Type", comment: ""), message: nil, preferredStyle: .actionSheet)
                 actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Multipolygon", comment: ""), style: .default, handler: { action2 in
-                    create?("multipolygon")
+                    create("multipolygon")
                 }))
                 actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
 
@@ -2537,11 +2543,11 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     }
 
     func removePin() {
-        if pushpinView != nil {
-            pushpinView?.removeFromSuperview()
-            pushpinView = nil
+        if let pushpinView = pushpinView {
+            pushpinView.removeFromSuperview()
             updateEditControl()
         }
+		self.pushpinView = nil
     }
 
     func placePushpin(at point: CGPoint, object: OsmBaseObject?) {
@@ -2818,214 +2824,70 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 		pushpinView?.text = text
     }
 
-    func extendSelectedWay(to newPoint: CGPoint) {
-        var newPoint = newPoint
-        if pushpinView == nil {
-            return
-        }
-        var way = editorLayer.selectedWay
-        var node = editorLayer.selectedNode
-        let arrowPoint = pushpinView?.arrowPoint ?? .zero
-
-        if let way = way,
-		   node == nil
-		{
-            // insert a new node into way at point
-            let pt = longitudeLatitude(forScreenPoint: arrowPoint, birdsEye: true)
-            let pt2 = OSMPoint(x: pt.longitude, y: pt.latitude)
-            let segment = way.segmentClosestToPoint(pt2)
-            var error: String? = nil
-			let add: EditActionWithNode? = editorLayer.canAddNode(toWay: way, atIndex:segment+1, error:&error )
-			if let add = add {
-                let newNode = editorLayer.createNode(at: arrowPoint)
-                add(newNode)
-                editorLayer.selectedNode = newNode
-                placePushpinForSelection()
-            } else {
-                showAlert(NSLocalizedString("Error", comment: ""), message: error)
-            }
-        } else {
-            if let node = node,
-			   let way2 = way,
-			   way2.nodes.count > 0,
-			   way2.isClosed() || (node != way2.nodes[0] && node != way2.nodes.last)
-			{
-                // both a node and way are selected but selected node is not an endpoint (or way is closed),
-				// so we will create a new way "T" from that node
-				way = editorLayer.createWay(with: node)
-            } else {
-                if node == nil {
-                    node = editorLayer.createNode(at: arrowPoint)
-                }
-                if way == nil {
-					way = editorLayer.createWay(with: node!)
-				}
-			}
-			guard let way = way,
-				  let node = node
-			else { fatalError() }
-
-            let prevIndex = way.nodes.firstIndex(of: node)!
-			var nextIndex = prevIndex
-            if nextIndex == way.nodes.count - 1 {
-                nextIndex += 1
-            }
-			// add new node at point
-			let prevPrevNode = (way.nodes.count >= 2 ? way.nodes[way.nodes.count - 2] : nil)
-			let prevPrevPoint = prevPrevNode != nil ? screenPoint(forLatitude: prevPrevNode!.lat, longitude: prevPrevNode!.lon, birdsEye: true) : CGPoint.zero
-
-            if hypot(arrowPoint.x - newPoint.x, arrowPoint.y - newPoint.y) > 10.0 &&
-				(prevPrevNode == nil || hypot(prevPrevPoint.x - newPoint.x, prevPrevPoint.y - newPoint.y) > 10.0)
-			{
-                // it's far enough from previous point to use
-            } else {
-
-                // compute a good place for next point
-                if way.nodes.count < 2 {
-                    // create 2nd point in the direction of the center of the screen
-                    let vert = abs(Float(arrowPoint.x - newPoint.x)) < abs(Float(arrowPoint.y - newPoint.y))
-                    if vert {
-                        newPoint.x = arrowPoint.x
-                        newPoint.y = abs(Float(newPoint.y - arrowPoint.y)) < 30 ? arrowPoint.y + 60 : 2 * newPoint.y - arrowPoint.y
-                    } else {
-                        newPoint.x = abs(Float(newPoint.x - arrowPoint.x)) < 30 ? arrowPoint.x + 60 : 2 * newPoint.x - arrowPoint.x
-                        newPoint.y = arrowPoint.y
-                    }
-				} else if way.nodes.count == 2 {
-                    // create 3rd point 90 degrees from first 2
-					let n1 = way.nodes[1 - prevIndex]
-                    let p1 = screenPoint(forLatitude: n1.lat, longitude: n1.lon, birdsEye: true)
-					var delta = CGPoint(x: Double(p1.x - arrowPoint.x), y: Double(p1.y - arrowPoint.y))
-					let len = hypot(delta.x, delta.y)
-					if len > 100 {
-						delta.x *= CGFloat(100 / len)
-						delta.y *= CGFloat(100 / len)
-                    }
-					let np1 = OSMPoint(x: Double(arrowPoint.x - delta.y), y: Double(arrowPoint.y + delta.x))
-					let np2 = OSMPoint(x: Double(arrowPoint.x + delta.y), y: Double(arrowPoint.y - delta.x))
-					if DistanceFromPointToPoint(np1, OSMPoint(newPoint)) < DistanceFromPointToPoint(np2, OSMPoint(newPoint)) {
-						newPoint = CGPoint(x: np1.x, y: np1.y)
-					} else {
-						newPoint = CGPoint(x: np2.x, y: np2.y)
-					}
-                } else {
-                    // create 4th point and beyond following angle of previous 3
-                    let n1 = prevIndex == 0 ? way.nodes[1] : way.nodes[prevIndex - 1]
-					let n2 = prevIndex == 0 ? way.nodes[2] : way.nodes[prevIndex - 2]
-                    let p1 = screenPoint(forLatitude: n1.lat, longitude: n1.lon, birdsEye: true)
-                    let p2 = screenPoint(forLatitude: n2.lat, longitude: n2.lon, birdsEye: true)
-					let d1 = OSMPoint(x: Double(arrowPoint.x - p1.x), y: Double(arrowPoint.y - p1.y))
-                    let d2 = OSMPoint(x: Double(p1.x - p2.x), y: Double(p1.y - p2.y))
-                    var a1 = atan2(d1.y, d1.x)
-                    let a2 = atan2(d2.y, d2.x)
-                    var dist = hypot(d1.x, d1.y)
-                    // if previous angle was 90 degrees then match length of first leg to make a rectangle
-                    if (way.nodes.count == 3 || way.nodes.count == 4) && abs(fmod(abs(Float(a1 - a2)), .pi) - .pi / 2) < 0.1 {
-						dist = hypot(d2.x, d2.y)
-                    } else if dist > 100 {
-                        dist = 100
-                    }
-                    a1 += a1 - a2
-                    newPoint = CGPoint(x: CGFloat(Double(arrowPoint.x) + dist * cos(a1)), y: CGFloat(Double(Double(arrowPoint.y) + dist * sin(a1))))
-                }
-                // make sure selected point is on-screen
-                var rc = bounds
-                rc.origin.x += 20
-                rc.origin.y += 20
-                rc.size.width -= 40
-                rc.size.height -= 190 + 20
-                newPoint.x = CGFloat(max(newPoint.x, rc.origin.x))
-                newPoint.x = CGFloat(min(newPoint.x, rc.origin.x + rc.size.width))
-                newPoint.y = CGFloat(max(newPoint.y, rc.origin.y))
-                newPoint.y = CGFloat(min(newPoint.y, rc.origin.y + rc.size.height))
-            }
-
-            if way.nodes.count >= 2 {
-				let start = prevIndex == 0 ? way.nodes.last! : way.nodes[0]
-				let s = screenPoint(forLatitude: start.lat, longitude: start.lon, birdsEye: true)
-                let d = hypot(s.x - newPoint.x, s.y - newPoint.y)
-                if d < 3.0 {
-                    // join first to last
-                    var error: String? = nil
-					let action: EditActionWithNode? = editorLayer.canAddNode(toWay: way, atIndex:nextIndex, error:&error)
-					if let action = action {
-						action(start)
-                        editorLayer.selectedWay = way
-                        editorLayer.selectedNode = nil
-						placePushpin(at: s, object: way)
-                    } else {
-                        // don't bother showing an error message
-                    }
-                    return
-                }
-            }
-
-            var error: String? = nil
-			guard let addNodeToWay: EditActionWithNode = editorLayer.canAddNode(toWay: way, atIndex:nextIndex, error:&error)
-			else {
-				showAlert(NSLocalizedString("Can't extend way", comment: ""), message: error)
-				return
-            }
-            let node2 = editorLayer.createNode(at: newPoint)
-            editorLayer.selectedWay = way // set selection before perfoming add-node action so selection is recorded in undo stack
-            editorLayer.selectedNode = node2
-            addNodeToWay(node2)
-            placePushpinForSelection()
-        }
-    }
-
-    //    #endif
-
     func createNode(at dropPoint: CGPoint) {
         if editorLayer.isHidden {
             flashMessage(NSLocalizedString("Editing layer not visible", comment: ""))
             return
         }
-        if pushpinView != nil {
 
-            let offscreenWarning: (() -> Bool)? = { [self] in
-                if !bounds.contains(pushpinView?.arrowPoint ?? CGPoint.zero) {
-                    // pushpin is off screen
-                    flashMessage(NSLocalizedString("Selected object is off screen", comment: ""))
-                    return true
-                } else {
-                    return false
-                }
-            }
+		// we are either creating a brand new node unconnected to an existing way,
+		// converting a dropped pin to a way by adding a new node
+		// or adding a node to a selected way/node combination
+		guard let pushpinView = pushpinView,
+			  editorLayer.selectedNode == nil || editorLayer.selectedWay != nil
+		else {
+			// drop a new pin
+			editorLayer.selectedNode = nil
+			editorLayer.selectedWay = nil
+			editorLayer.selectedRelation = nil
+			placePushpin(at: dropPoint, object: nil)
+			return
+		}
 
-            if (editorLayer.selectedWay != nil) && (editorLayer.selectedNode != nil) {
-                // already editing a way so try to extend it
-                var index: Int? = nil
-                if let selectedNode = editorLayer.selectedNode {
-                    index = editorLayer.selectedWay?.nodes.firstIndex(of: selectedNode) ?? NSNotFound
-                }
+		let prevPointIsOffScreen = !bounds.contains(pushpinView.arrowPoint)
+		let offscreenWarning: (()->Void) = {
+			self.flashMessage(NSLocalizedString("Selected object is off screen", comment: ""))
+		}
 
-                if ((editorLayer.selectedWay?.isClosed() ?? false) || !(index == 0 || index == (editorLayer.selectedWay?.nodes.count ?? 0) - 1)) && (offscreenWarning?() != nil) {
-                    return
-                }
-                extendSelectedWay(to: dropPoint)
-            } else if editorLayer.selectedPrimary == nil && pushpinView != nil {
-                // just dropped a pin, so convert it into a way
-                extendSelectedWay(to: dropPoint)
-            } else if editorLayer.selectedWay != nil && editorLayer.selectedNode == nil {
-                // add a new node to a way at location of pushpin
-                if ((offscreenWarning?()) != nil) {
-                    return
-                }
-                extendSelectedWay(to: dropPoint)
-            } else if (editorLayer.selectedPrimary?.isNode() != nil) {
-                // nothing selected, or just a single node selected, so drop a new pin
-            }
-        } else {
-            editorLayer.selectedWay = nil
-            editorLayer.selectedRelation = nil
+		if let selectedWay = editorLayer.selectedWay,
+		   let selectedNode = editorLayer.selectedNode
+		{
+			// already editing a way so try to extend it
+			if selectedWay.isClosed() || !(selectedNode == selectedWay.nodes.first || selectedNode == selectedWay.nodes.last) {
+				if prevPointIsOffScreen {
+					offscreenWarning()
+					return
+				}
+			}
+		} else if editorLayer.selectedPrimary == nil {
+			// just dropped a pin, so convert it into a way
+		} else if editorLayer.selectedWay != nil && editorLayer.selectedNode == nil {
+			// add a new node to a way at location of pushpin
+			if prevPointIsOffScreen {
+				offscreenWarning()
+				return
+			}
+		} else {
+			// not supported
+			return
+		}
+		switch editorLayer.extendSelectedWay(to: dropPoint, from: pushpinView.arrowPoint) {
+		case let .success(pt):
+			placePushpinForSelection(at: pt)
+		case let .failure(error):
+			if case .text(let text) = error {
+				showAlert(NSLocalizedString("Can't extend way", comment: ""), message: text)
+			}
+		}
+	}
 
-            placePushpin(at: dropPoint, object: nil)
-        }
-    }
-
-    func setTagsForCurrentObject(_ tags: [String : String]) {
-        if editorLayer.selectedPrimary == nil {
+	func setTagsForCurrentObject(_ tags: [String : String]) {
+        if let selectedPrimary = editorLayer.selectedPrimary {
+			// update current object
+			editorLayer.mapData.setTags(tags, for: selectedPrimary)
+			refreshPushpinText()
+			refreshNoteButtonsFromDatabase()
+		} else {
             // create new object
             assert((pushpinView != nil))
             let point = pushpinView?.arrowPoint
@@ -3034,15 +2896,9 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             editorLayer.selectedNode = node
             // create new pushpin for new object
             placePushpinForSelection()
-        } else {
-            // update current object
-            let object = editorLayer.selectedPrimary
-            editorLayer.mapData.setTags(tags, for: object)
-            refreshPushpinText()
-            refreshNoteButtonsFromDatabase()
-        }
+		}
         editorLayer.setNeedsLayout()
-        confirmDrag = false
+		confirmDrag = false
     }
 
     func unblinkObject() {

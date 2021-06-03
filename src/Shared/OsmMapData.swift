@@ -350,26 +350,21 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
     
     // MARK: Editing
     
-    @objc func incrementModifyCount(_ object: OsmBaseObject?) {
-        if let object = object {
-            undoManager.registerUndo(withTarget: self, selector: #selector(incrementModifyCount(_:)), objects: [object])
-            object.incrementModifyCount(undoManager)
-        }
+    @objc func incrementModifyCount(_ object: OsmBaseObject) {
+		undoManager.registerUndo(withTarget: self, selector: #selector(incrementModifyCount(_:)), objects: [object])
+		object.incrementModifyCount(undoManager)
     }
     
-    @objc func clearCachedProperties(_ object: OsmBaseObject?, undo: MyUndoManager?) {
-        if let object = object,
-           let undo = undo {
-            undo.registerUndo(withTarget: self, selector: #selector(clearCachedProperties(_:undo:)), objects: [object, undo])
-            object.clearCachedProperties()
-        }
+    @objc func clearCachedProperties(_ object: OsmBaseObject, undo: MyUndoManager) {
+		undo.registerUndo(withTarget: self, selector: #selector(clearCachedProperties(_:undo:)), objects: [object, undo])
+		object.clearCachedProperties()
     }
 
 	@objc
-    func setTags(_ dict: [String : String], for object: OsmBaseObject?) {
+    func setTags(_ dict: [String : String], for object: OsmBaseObject) {
 		let localDict = OsmTags.DictWithTagsTruncatedTo255( dict )
         registerUndoCommentString(NSLocalizedString("set tags", comment: ""))
-        object?.setTags(localDict, undo: undoManager)
+        object.setTags(localDict, undo: undoManager)
     }
     
     func createNode(atLocation loc: CLLocationCoordinate2D) -> OsmNode {
@@ -407,14 +402,14 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         return relation
     }
     
-    func remove(fromParentRelationsUnsafe object: OsmBaseObject?) {
-        while ((object?.parentRelations.count ?? 0) != 0) {
-            if let relation = object?.parentRelations.last {
+    func remove(fromParentRelationsUnsafe object: OsmBaseObject) {
+        while object.parentRelations.count != 0 {
+            if let relation = object.parentRelations.last {
                 var memberIndex = 0
                 while memberIndex < relation.members.count {
                     let member = relation.members[memberIndex]
                     if member.obj == object {
-                        deleteMember(inRelationUnsafe: relation, index: memberIndex)
+						deleteMember(inRelationUnsafe: relation, index: memberIndex)
                     } else {
                         memberIndex += 1
                     }
@@ -423,79 +418,69 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         }
     }
     
-    func deleteNodeUnsafe(_ node: OsmNode?) {
-        if let node = node {
-            assert(node.wayCount == 0)
-            registerUndoCommentString(NSLocalizedString("delete node", comment: ""))
-            remove(fromParentRelationsUnsafe: node)
-            node.setDeleted(true, undo: undoManager)
-            _  = spatial.removeMember(node, undo: undoManager)
-        }
+    func deleteNodeUnsafe(_ node: OsmNode) {
+		assert(node.wayCount == 0)
+		registerUndoCommentString(NSLocalizedString("delete node", comment: ""))
+		remove(fromParentRelationsUnsafe: node)
+		node.setDeleted(true, undo: undoManager)
+		_  = spatial.removeMember(node, undo: undoManager)
     }
     
-    func deleteWayUnsafe(_ way: OsmWay?) {
-        if let way = way {
-            registerUndoCommentString(NSLocalizedString("delete way", comment: ""))
-            _ = spatial.removeMember(way, undo: undoManager)
-            
-            remove(fromParentRelationsUnsafe: way)
-            
-            while way.nodes.count != 0 {
-                let node = way.nodes.last
-                deleteNode(inWayUnsafe: way, index: (way.nodes.count - 1), preserveNode: node?.hasInterestingTags() ?? false)
-            }
-            way.setDeleted(true, undo: undoManager)
-        }
+    func deleteWayUnsafe(_ way: OsmWay) {
+		registerUndoCommentString(NSLocalizedString("delete way", comment: ""))
+		_ = spatial.removeMember(way, undo: undoManager)
+
+		remove(fromParentRelationsUnsafe: way)
+
+		while way.nodes.count != 0 {
+			let node = way.nodes.last
+			deleteNode(inWayUnsafe: way, index: (way.nodes.count - 1), preserveNode: node?.hasInterestingTags() ?? false)
+		}
+		way.setDeleted(true, undo: undoManager)
     }
     
-    func deleteRelationUnsafe(_ relation: OsmRelation?) {
-        if let relation = relation {
-            let message = relation.isRestriction()
-                ? NSLocalizedString("delete restriction", comment: "")
-                : relation.isMultipolygon()
-                ? NSLocalizedString("delete multipolygon", comment: "")
-                : relation.isRoute()
-                ? NSLocalizedString("delete route", comment: "")
-                : NSLocalizedString("delete relation", comment: "")
-            registerUndoCommentString(message)
-            
-            _ = spatial.removeMember(relation, undo: undoManager)
-            
-            remove(fromParentRelationsUnsafe: relation)
-            
-            while relation.members.count != 0 {
-                relation.removeMemberAtIndex(relation.members.count - 1, undo: undoManager)
-            }
-            relation.setDeleted(true, undo: undoManager)
-        }
+    func deleteRelationUnsafe(_ relation: OsmRelation) {
+		let message = relation.isRestriction()
+			? NSLocalizedString("delete restriction", comment: "")
+			: relation.isMultipolygon()
+			? NSLocalizedString("delete multipolygon", comment: "")
+			: relation.isRoute()
+			? NSLocalizedString("delete route", comment: "")
+			: NSLocalizedString("delete relation", comment: "")
+		registerUndoCommentString(message)
+
+		_ = spatial.removeMember(relation, undo: undoManager)
+
+		remove(fromParentRelationsUnsafe: relation)
+
+		while relation.members.count != 0 {
+			relation.removeMemberAtIndex(relation.members.count - 1, undo: undoManager)
+		}
+		relation.setDeleted(true, undo: undoManager)
     }
     
-    func addNodeUnsafe(_ node: OsmNode?, to way: OsmWay?, at index: Int) {
-        if let node = node, let way = way {
-            registerUndoCommentString(NSLocalizedString("add node to way", comment: ""))
-            let origBox = way.boundingBox
-            way.addNode(node, atIndex: index, undo: undoManager)
-            spatial.updateMember(way, fromBox: origBox, undo: undoManager)
-        }
+    func addNodeUnsafe(_ node: OsmNode, to way: OsmWay, at index: Int) {
+		registerUndoCommentString(NSLocalizedString("add node to way", comment: ""))
+		let origBox = way.boundingBox
+		way.addNode(node, atIndex: index, undo: undoManager)
+		spatial.updateMember(way, fromBox: origBox, undo: undoManager)
     }
     
-    func deleteNode(inWayUnsafe way: OsmWay?, index: Int, preserveNode: Bool) {
-        if let way = way {
-            registerUndoCommentString(NSLocalizedString("delete node from way", comment: ""))
-            let node = way.nodes[index]
-            DbgAssert((node.wayCount) > 0)
-            
-            let bbox = way.boundingBox
-            way.removeNodeAtIndex(index, undo: undoManager)
-            // if removing the node leads to 2 identical nodes being consecutive delete one of them as well
-            while (index > 0 && index < way.nodes.count) && (way.nodes[index - 1] == way.nodes[index]) {
-                way.removeNodeAtIndex(index, undo: undoManager)
-            }
-            spatial.updateMember(way, fromBox: bbox, undo: undoManager)
-            
-            if node.wayCount == 0 && !preserveNode {
-                deleteNodeUnsafe(node)
-            }
+    func deleteNode(inWayUnsafe way: OsmWay, index: Int, preserveNode: Bool) {
+		registerUndoCommentString(NSLocalizedString("delete node from way", comment: ""))
+		let node = way.nodes[index]
+		DbgAssert((node.wayCount) > 0)
+
+		let bbox = way.boundingBox
+		way.removeNodeAtIndex(index, undo: undoManager)
+		// if removing the node leads to 2 identical nodes being consecutive delete one of them as well
+		while (index > 0 && index < way.nodes.count) && (way.nodes[index - 1] == way.nodes[index]) {
+			way.removeNodeAtIndex(index, undo: undoManager)
+		}
+		spatial.updateMember(way, fromBox: bbox, undo: undoManager)
+
+		if node.wayCount == 0 && !preserveNode {
+			deleteNodeUnsafe(node)
         }
     }
     
