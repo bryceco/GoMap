@@ -499,33 +499,33 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 
 	func canRecognizeOpeningHours(for key: PresetKey) -> Bool {
 		#if !targetEnvironment(macCatalyst)
+		#if (arch(arm64) || arch(x86_64))	// old architectures don't support SwiftUI
 		if #available(iOS 14.0, *) {
-			if Int.bitWidth == Int64.bitWidth {	// old architectures don't support SwiftUI
-				return key.tagKey == "opening_hours" ||	key.tagKey.hasSuffix( ":opening_hours" )
-			}
+			return key.tagKey == "opening_hours" ||	key.tagKey.hasSuffix( ":opening_hours" )
 		}
+		#endif
 		#endif
 		return false
 	}
 
 	func recognizeOpeningHours(forKey key: String) {
 		#if !targetEnvironment(macCatalyst)
+		#if (arch(arm64) || arch(x86_64))	// old architectures don't support SwiftUI
 		if #available(iOS 14.0, *) {
-			if Int.bitWidth == Int64.bitWidth {	// old architectures don't support SwiftUI
-				let feedback = UINotificationFeedbackGenerator()
+			let feedback = UINotificationFeedbackGenerator()
+			feedback.prepare()
+			let vc = OpeningHoursRecognizerController.with(onAccept: {newValue in
+				self.updateTag(withValue: newValue, forKey:key)
+				self.navigationController?.popViewController( animated: true )
+			}, onCancel: {
+				self.navigationController?.popViewController( animated: true )
+			}, onRecognize: {_ in
+				feedback.notificationOccurred(.success)
 				feedback.prepare()
-				let vc = OpeningHoursRecognizerController.with(onAccept: {newValue in
-					self.updateTag(withValue: newValue, forKey:key)
-					self.navigationController?.popViewController( animated: true )
-				}, onCancel: {
-					self.navigationController?.popViewController( animated: true )
-				}, onRecognize: {_ in
-					feedback.notificationOccurred(.success)
-					feedback.prepare()
-				})
-				self.navigationController?.pushViewController(vc, animated: true)
-			}
+			})
+			self.navigationController?.pushViewController(vc, animated: true)
 		}
+		#endif
 		#endif
 	}
 
