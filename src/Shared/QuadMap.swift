@@ -178,20 +178,19 @@ class QuadMap: NSObject, NSCoding {
 
     func consistencyCheckNodes(_ nodes: [OsmNode], ways: [OsmWay], relations: [OsmRelation]) {
         // check that every object appears exactly once in the object tree
-		var count: [OsmExtendedIdentifier : Int] = [:]
+		var dict: [OsmExtendedIdentifier : Int] = [:]
 		rootQuad.enumerate { obj, rect in
 			let id = obj.extendedIdentifier
-			if let cnt = count[id] {
-				count[id] = cnt + 1
+			if let cnt = dict[id] {
+				dict[id] = cnt + 1
 			} else {
-				count[id] = 1
+				dict[id] = 1
 			}
 			assert( OSMRectContainsRect( rect, obj.boundingBox ) )
-			if let rel = obj as? OsmRelation {
-				print("rel = \(rel.ident)")
-			}
 		}
-		assert( count.first(where: {$0.value != 1}) == nil )
-		assert( count.count == nodes.count + ways.count + relations.count)
+		assert( dict.first(where: {$0.value != 1}) == nil )
+		assert( dict.count == nodes.lazy.filter({!$0.deleted}).count
+							+ ways.lazy.filter({!$0.deleted}).count
+							+ relations.lazy.filter({!$0.deleted}).count )
     }
 }

@@ -183,7 +183,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0203473C26695B2A000A7C3D /* EditorMapLayer+Edit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorMapLayer+Edit.swift"; sourceTree = "<group>"; };
+		0203473C26695B2A000A7C3D /* EditorMapLayer+Edit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "EditorMapLayer+Edit.swift"; path = "../Shared/EditorMapLayer+Edit.swift"; sourceTree = "<group>"; };
 		02072AD51BD46B1700F1CAB4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsDatabase.swift; sourceTree = "<group>"; };
 		02128F7B2575D925003D2551 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Height.strings"; sourceTree = "<group>"; };
@@ -688,6 +688,7 @@
 				C3D096CA263E9A1100E3B129 /* DownloadThreadPool.swift */,
 				02CD9973265C65C200213AD6 /* EditorFilters.swift */,
 				C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */,
+				0203473C26695B2A000A7C3D /* EditorMapLayer+Edit.swift */,
 				022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */,
 				02401F371DE1369E00F32AF5 /* ExternalGPS.h */,
 				02401F381DE1369E00F32AF5 /* ExternalGPS.m */,
@@ -731,7 +732,6 @@
 				C381C305263FD0CA003142BA /* VectorMath.swift */,
 				C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */,
 				C341E1522639DECC0022E983 /* WikiPage.swift */,
-				0203473C26695B2A000A7C3D /* EditorMapLayer+Edit.swift */,
 			);
 			name = Shared;
 			sourceTree = "<group>";

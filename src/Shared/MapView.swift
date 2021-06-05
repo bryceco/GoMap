@@ -2059,10 +2059,10 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                 canDelete()
 				var pos = pushpinView.arrowPoint
                 removePin()
-                if ((editorLayer.selectedPrimary) != nil) {
-                    pos = point(on: editorLayer.selectedPrimary, for: pos)
-                    if let primary = editorLayer.selectedPrimary {
-                        placePushpin(at: pos, object: primary)
+                if editorLayer.selectedPrimary != nil {
+					pos = point(on: editorLayer.selectedPrimary, for: pos)
+					if let primary = editorLayer.selectedPrimary {
+						placePushpin(at: pos, object: primary)
                     }
                 }
             } else {
@@ -2550,6 +2550,221 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 		self.pushpinView = nil
     }
 
+	private func pushpinDragCallbackFor(object: OsmBaseObject) -> PushPinViewDragCallback {
+		return { [self] state, dx, dy, gesture in
+			switch state {
+				case .began:
+					self.editorLayer.mapData.beginUndoGrouping()
+					pushpinDragTotalMove = CGPoint(x: 0, y: 0)
+					gestureDidMove = false
+				case .ended, .cancelled, .failed:
+					self.editorLayer.mapData.endUndoGrouping()
+					DisplayLink.shared().removeName("dragScroll")
+
+					let isRotate = self.isRotateObjectMode != nil
+					if isRotate {
+						self.endObjectRotation()
+					}
+					self.unblinkObject()
+
+					if let way = object.isWay() {
+						// update things if we dragged a multipolygon inner member to become outer
+						self.editorLayer.mapData.updateParentMultipolygonRelationRoles(for: way)
+					} else if let selectedWay = self.editorLayer.selectedWay,
+							  object.isNode() != nil
+					{
+						// you can also move an inner to an outer by dragging nodes one at a time
+						self.editorLayer.mapData.updateParentMultipolygonRelationRoles(for: selectedWay)
+					}
+
+					if let selectedWay = self.editorLayer.selectedWay,
+					   let object = object.isNode()
+					{
+						// dragging a node that is part of a way
+						if let dragNode = object.isNode() {
+							let dragWay = selectedWay
+							var segment = -1
+							let hit = self.dragConnection(for: dragNode, segment: &segment)
+							if var hit = hit as? OsmNode {
+								// replace dragged node with hit node
+								var error: String? = nil
+								let merge: EditActionReturnNode? = editorLayer.mapData.canMerge( dragNode, into:hit, error:&error)
+								if merge == nil {
+									self.showAlert(error, message: nil)
+									return
+								}
+								hit = merge!()
+								if dragWay.isArea() {
+									self.editorLayer.selectedNode = nil
+									let pt = self.screenPoint(forLatitude: hit.lat, longitude: hit.lon, birdsEye: true)
+									self.placePushpin(at: pt, object: dragWay)
+								} else {
+									self.editorLayer.selectedNode = hit
+									self.placePushpinForSelection()
+								}
+							} else if let hit = hit as? OsmWay {
+								// add new node to hit way
+								let pt = hit.pointOnObjectForPoint(dragNode.location())
+								self.editorLayer.mapData.setLongitude(pt.x, latitude: pt.y, for: dragNode)
+								var error: String? = nil
+								let add: EditActionWithNode? = editorLayer.canAddNode(toWay: hit, atIndex:segment+1, error:&error)
+								if let add = add {
+									add(dragNode)
+								} else {
+									self.showAlert(NSLocalizedString("Error connecting to way", comment: ""), message: error)
+								}
+							}
+						}
+						return
+					}
+					if isRotate {
+						break
+					}
+					if self.editorLayer.selectedWay != nil && editorLayer.selectedWay?.tags.count ?? 0 == 0 && editorLayer.selectedWay?.parentRelations.count ?? 0 == 0 {
+						break
+					}
+					if self.editorLayer.selectedWay != nil && self.editorLayer.selectedNode != nil {
+						break
+					}
+					if self.confirmDrag {
+						self.confirmDrag = false
+
+						let alertMove = UIAlertController(title: NSLocalizedString("Confirm move", comment: ""), message: NSLocalizedString("Move selected object?", comment: ""), preferredStyle: .alert)
+						alertMove.addAction(UIAlertAction(title: NSLocalizedString("Undo", comment: ""), style: .cancel, handler: { action in
+							// cancel move
+							self.editorLayer.mapData.undo()
+							self.editorLayer.mapData.removeMostRecentRedo()
+							self.editorLayer.selectedNode = nil
+							self.editorLayer.selectedWay = nil
+							self.editorLayer.selectedRelation = nil
+							self.removePin()
+							self.editorLayer.setNeedsLayout()
+						}))
+						alertMove.addAction(UIAlertAction(title: NSLocalizedString("Move", comment: ""), style: .default, handler: { action in
+							// okay
+						}))
+						self.mainViewController.present(alertMove, animated: true)
+					}
+				case .changed:
+					// define the drag function
+					let dragObject: ((_ dragx: CGFloat, _ dragy: CGFloat) -> Void) = { dragx, dragy in
+						// don't accumulate undo moves
+						self.pushpinDragTotalMove.x += dragx
+						self.pushpinDragTotalMove.y += dragy
+						if self.gestureDidMove {
+							self.editorLayer.mapData.endUndoGrouping()
+							self.silentUndo = true
+							let dict = self.editorLayer.mapData.undo()
+							self.silentUndo = false
+							self.editorLayer.mapData.beginUndoGrouping()
+							if let dict = dict as? [String : String] {
+								// maintain the original pin location:
+								self.editorLayer.mapData.registerUndoCommentContext(dict)
+							}
+						}
+						self.gestureDidMove = true
+
+						// move all dragged nodes
+						if let rotate = self.isRotateObjectMode {
+							// rotate object
+							let delta = Double(-((self.pushpinDragTotalMove.x) + (self.pushpinDragTotalMove.y)) / 100)
+							let axis = self.screenPoint(forLatitude: rotate.rotateObjectCenter.y,
+														longitude: rotate.rotateObjectCenter.x,
+														birdsEye: true)
+							let nodeSet = (object.isNode() != nil) ? self.editorLayer.selectedWay?.nodeSet() : object.nodeSet()
+							for node in nodeSet ?? [] {
+								let pt = self.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: true)
+								let diff = OSMPoint(x: Double(pt.x - axis.x), y: Double(pt.y - axis.y))
+								let radius = hypot(diff.x, diff.y)
+								var angle = atan2(diff.y, diff.x)
+								angle += delta
+								let new = OSMPoint(x: Double(axis.x) + radius * Double(cos(angle)),y: Double(axis.y) + Double(radius * sin(angle)))
+								let dist = CGPoint(x: Double(new.x - Double(pt.x)), y: Double(-(Double(new.y) - Double(pt.y))))
+								self.editorLayer.adjust(node, byDistance: dist)
+							}
+						} else {
+							// drag object
+							let delta = CGPoint(x: Double(self.pushpinDragTotalMove.x), y: Double(-(self.pushpinDragTotalMove.y)))
+
+							for node in object.nodeSet() {
+								self.editorLayer.adjust(node, byDistance: delta)
+							}
+						}
+
+						// do hit testing for connecting to other objects
+						if (self.editorLayer.selectedWay != nil) && (object.isNode() != nil) {
+							var segment = -1
+							if let hit = self.dragConnection(for: object as! OsmNode, segment: &segment),
+							   hit.isWay() != nil || hit.isNode() != nil
+							{
+								self.blink(hit, segment: segment)
+							} else {
+								self.unblinkObject()
+							}
+						}
+					}
+
+					// scroll screen if too close to edge
+					let MinDistanceSide: CGFloat = 40.0
+					let MinDistanceTop = MinDistanceSide + 10.0
+					let MinDistanceBottom = MinDistanceSide + 120.0
+					let arrow = self.pushpinView?.arrowPoint ?? .zero
+					let screen = self.bounds
+					let SCROLL_SPEED: CGFloat = 10.0
+					var scrollx: CGFloat = 0
+					var scrolly: CGFloat = 0
+
+					if (arrow.x) < (screen.origin.x + MinDistanceSide) {
+						scrollx = -SCROLL_SPEED
+					} else if (arrow.x) > (screen.origin.x) + (screen.size.width) - MinDistanceSide {
+						scrollx = SCROLL_SPEED
+					}
+					if (arrow.y) < screen.origin.y + MinDistanceTop {
+						scrolly = -SCROLL_SPEED
+					} else if arrow.y > screen.origin.y + screen.size.height - MinDistanceBottom {
+						scrolly = SCROLL_SPEED
+					}
+
+					if scrollx != 0.0 || scrolly != 0.0 {
+
+						// if we're dragging at a diagonal then scroll diagonally as well, in the direction the user is dragging
+						let center = CGRectCenter(self.bounds)
+						let v = UnitVector(Sub(OSMPoint(arrow), OSMPoint(center)))
+						scrollx = SCROLL_SPEED * CGFloat(v.x)
+						scrolly = SCROLL_SPEED * CGFloat(v.y)
+
+						// scroll the screen to keep pushpin centered
+						let displayLink = DisplayLink.shared()
+						var prevTime = TimeInterval(CACurrentMediaTime())
+						displayLink.addName("dragScroll", block: { [self] in
+							let now = TimeInterval(CACurrentMediaTime())
+							let duration = now - prevTime
+							prevTime = now
+							let sx = scrollx * CGFloat(duration) * 60.0 // scale to 60 FPS assumption, need to move farther if framerate is slow
+							let sy = scrolly * CGFloat(duration) * 60.0
+							self.adjustOrigin(by: CGPoint(x: -sx, y: -sy))
+							dragObject(sx, sy)
+							// update position of pushpin
+							if let pt = self.pushpinView?.arrowPoint.withOffset(sx, sy) {
+								self.pushpinView?.arrowPoint = pt
+							}
+							// update position of blink layer
+							if let pt = blinkLayer?.position.withOffset(-sx, -sy) {
+								self.blinkLayer?.position = pt
+							}
+						})
+					} else {
+						DisplayLink.shared().removeName("dragScroll")
+					}
+
+					// move the object
+					dragObject(dx, dy)
+				default:
+					break
+			}
+		}
+	}
+
     func placePushpin(at point: CGPoint, object: OsmBaseObject?) {
         // drop in center of screen
         removePin()
@@ -2559,226 +2774,21 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 		self.pushpinView = pushpinView
 		self.refreshPushpinText()
 		pushpinView.layer.zPosition = Z_PUSHPIN
+		pushpinView.arrowPoint = point
 
-        pushpinView.arrowPoint = point
-        if let object = object {
-            pushpinView.dragCallback = { [self] state, dx, dy, gesture in
-                switch state {
-                    case .began:
-                        self.editorLayer.mapData.beginUndoGrouping()
-                        pushpinDragTotalMove = CGPoint(x: 0, y: 0)
-                        gestureDidMove = false
-					case .ended, .cancelled, .failed:
-                        self.editorLayer.mapData.endUndoGrouping()
-                        DisplayLink.shared().removeName("dragScroll")
+		if let object = object {
+			pushpinView.dragCallback = pushpinDragCallbackFor(object: object)
+		}
 
-                        let isRotate = self.isRotateObjectMode != nil
-						if isRotate {
-							self.endObjectRotation()
-						}
-                        self.unblinkObject()
+		if object == nil {
+			// do animation if creating a new object
+			pushpinView.animateMove(from: CGPoint(x: bounds.origin.x + bounds.size.width,
+												  y: bounds.origin.y))
+		}
 
-						if let way = object.isWay() {
-							// update things if we dragged a multipolygon inner member to become outer
-							self.editorLayer.mapData.updateParentMultipolygonRelationRoles(for: way)
-						} else if let selectedWay = self.editorLayer.selectedWay,
-								  object.isNode() != nil
-						{
-							// you can also move an inner to an outer by dragging nodes one at a time
-                            self.editorLayer.mapData.updateParentMultipolygonRelationRoles(for: selectedWay)
-                        }
-
-                        if let selectedWay = self.editorLayer.selectedWay,
-						   let object = object.isNode()
-						{
-							// dragging a node that is part of a way
-                            if let dragNode = object.isNode() {
-                                let dragWay = selectedWay
-                                var segment = -1
-								let hit = self.dragConnection(for: dragNode, segment: &segment)
-								if var hit = hit as? OsmNode {
-									// replace dragged node with hit node
-                                    var error: String? = nil
-									let merge: EditActionReturnNode? = editorLayer.mapData.canMerge( dragNode, into:hit, error:&error)
-									if merge == nil {
-										self.showAlert(error, message: nil)
-                                        return
-                                    }
-                                    hit = merge!()
-                                    if dragWay.isArea() {
-										self.editorLayer.selectedNode = nil
-                                        let pt = self.screenPoint(forLatitude: hit.lat, longitude: hit.lon, birdsEye: true)
-										self.placePushpin(at: pt, object: dragWay)
-                                    } else {
-                                        self.editorLayer.selectedNode = hit
-										self.placePushpinForSelection()
-                                    }
-                                } else if let hit = hit as? OsmWay {
-                                    // add new node to hit way
-                                    let pt = hit.pointOnObjectForPoint(dragNode.location())
-                                    self.editorLayer.mapData.setLongitude(pt.x, latitude: pt.y, for: dragNode)
-                                    var error: String? = nil
-									let add: EditActionWithNode? = editorLayer.canAddNode(toWay: hit, atIndex:segment+1, error:&error)
-									if let add = add {
-                                        add(dragNode)
-                                    } else {
-                                        self.showAlert(NSLocalizedString("Error connecting to way", comment: ""), message: error)
-                                    }
-                                }
-                            }
-                            return
-                        }
-                        if isRotate {
-							break
-						}
-                        if self.editorLayer.selectedWay != nil && editorLayer.selectedWay?.tags.count ?? 0 == 0 && editorLayer.selectedWay?.parentRelations.count ?? 0 == 0 {
-							break
-						}
-                        if self.editorLayer.selectedWay != nil && self.editorLayer.selectedNode != nil {
-							break
-						}
-                        if self.confirmDrag {
-                            self.confirmDrag = false
-
-                            let alertMove = UIAlertController(title: NSLocalizedString("Confirm move", comment: ""), message: NSLocalizedString("Move selected object?", comment: ""), preferredStyle: .alert)
-                            alertMove.addAction(UIAlertAction(title: NSLocalizedString("Undo", comment: ""), style: .cancel, handler: { action in
-                                // cancel move
-                                self.editorLayer.mapData.undo()
-                                self.editorLayer.mapData.removeMostRecentRedo()
-                                self.editorLayer.selectedNode = nil
-                                self.editorLayer.selectedWay = nil
-                                self.editorLayer.selectedRelation = nil
-                                self.removePin()
-                                self.editorLayer.setNeedsLayout()
-                            }))
-                            alertMove.addAction(UIAlertAction(title: NSLocalizedString("Move", comment: ""), style: .default, handler: { action in
-                                // okay
-                            }))
-                            self.mainViewController.present(alertMove, animated: true)
-                        }
-                    case .changed:
-                        // define the drag function
-                        let dragObject: ((_ dragx: CGFloat, _ dragy: CGFloat) -> Void) = { dragx, dragy in
-                            // don't accumulate undo moves
-                            self.pushpinDragTotalMove.x += dragx
-                            self.pushpinDragTotalMove.y += dragy
-                            if self.gestureDidMove {
-                                self.editorLayer.mapData.endUndoGrouping()
-                                self.silentUndo = true
-                                let dict = self.editorLayer.mapData.undo()
-                                self.silentUndo = false
-                                self.editorLayer.mapData.beginUndoGrouping()
-                                if let dict = dict as? [String : String] {
-                                    // maintain the original pin location:
-                                    self.editorLayer.mapData.registerUndoCommentContext(dict)
-                                }
-                            }
-                            self.gestureDidMove = true
-
-                            // move all dragged nodes
-                            if let rotate = self.isRotateObjectMode {
-								// rotate object
-                                let delta = Double(-((self.pushpinDragTotalMove.x) + (self.pushpinDragTotalMove.y)) / 100)
-                                let axis = self.screenPoint(forLatitude: rotate.rotateObjectCenter.y,
-															longitude: rotate.rotateObjectCenter.x,
-															birdsEye: true)
-                                let nodeSet = (object.isNode() != nil) ? self.editorLayer.selectedWay?.nodeSet() : object.nodeSet()
-								for node in nodeSet ?? [] {
-									let pt = self.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: true)
-									let diff = OSMPoint(x: Double(pt.x - axis.x), y: Double(pt.y - axis.y))
-									let radius = hypot(diff.x, diff.y)
-									var angle = atan2(diff.y, diff.x)
-									angle += delta
-									let new = OSMPoint(x: Double(axis.x) + radius * Double(cos(angle)),y: Double(axis.y) + Double(radius * sin(angle)))
-									let dist = CGPoint(x: Double(new.x - Double(pt.x)), y: Double(-(Double(new.y) - Double(pt.y))))
-									self.editorLayer.adjust(node, byDistance: dist)
-                                }
-                            } else {
-                                // drag object
-                                let delta = CGPoint(x: Double(self.pushpinDragTotalMove.x), y: Double(-(self.pushpinDragTotalMove.y)))
-
-                                for node in object.nodeSet() {
-                                    self.editorLayer.adjust(node, byDistance: delta)
-                                }
-                            }
-
-                            // do hit testing for connecting to other objects
-                            if (self.editorLayer.selectedWay != nil) && (object.isNode() != nil) {
-                                var segment = -1
-								if let hit = self.dragConnection(for: object as! OsmNode, segment: &segment),
-								   hit.isWay() != nil || hit.isNode() != nil
-								{
-									self.blink(hit, segment: segment)
-                                } else {
-                                    self.unblinkObject()
-                                }
-                            }
-                        }
-
-                        // scroll screen if too close to edge
-                        let MinDistanceSide: CGFloat = 40.0
-                        let MinDistanceTop = MinDistanceSide + 10.0
-                        let MinDistanceBottom = MinDistanceSide + 120.0
-                        let arrow = self.pushpinView?.arrowPoint ?? .zero
-                        let screen = self.bounds
-                        let SCROLL_SPEED: CGFloat = 10.0
-                        var scrollx: CGFloat = 0
-                        var scrolly: CGFloat = 0
-
-                        if (arrow.x) < (screen.origin.x + MinDistanceSide) {
-                            scrollx = -SCROLL_SPEED
-                        } else if (arrow.x) > (screen.origin.x) + (screen.size.width) - MinDistanceSide {
-                            scrollx = SCROLL_SPEED
-                        }
-                        if (arrow.y) < screen.origin.y + MinDistanceTop {
-                            scrolly = -SCROLL_SPEED
-                        } else if arrow.y > screen.origin.y + screen.size.height - MinDistanceBottom {
-                            scrolly = SCROLL_SPEED
-                        }
-
-                        if scrollx != 0.0 || scrolly != 0.0 {
-
-                            // if we're dragging at a diagonal then scroll diagonally as well, in the direction the user is dragging
-                            let center = CGRectCenter(self.bounds)
-                            let v = UnitVector(Sub(OSMPoint(arrow), OSMPoint(center)))
-                            scrollx = SCROLL_SPEED * CGFloat(v.x)
-                            scrolly = SCROLL_SPEED * CGFloat(v.y)
-
-                            // scroll the screen to keep pushpin centered
-                            let displayLink = DisplayLink.shared()
-                            var prevTime = TimeInterval(CACurrentMediaTime())
-                            displayLink.addName("dragScroll", block: { [self] in
-                                let now = TimeInterval(CACurrentMediaTime())
-                                let duration = now - prevTime
-                                prevTime = now
-                                let sx = scrollx * CGFloat(duration) * 60.0 // scale to 60 FPS assumption, need to move farther if framerate is slow
-                                let sy = scrolly * CGFloat(duration) * 60.0
-                                self.adjustOrigin(by: CGPoint(x: -sx, y: -sy))
-                                dragObject(sx, sy)
-                                // update position of pushpin
-								if let pt = self.pushpinView?.arrowPoint.withOffset(sx, sy) {
-									self.pushpinView?.arrowPoint = pt
-								}
-                                // update position of blink layer
-								if let pt = blinkLayer?.position.withOffset(-sx, -sy) {
-									self.blinkLayer?.position = pt
-								}
-                            })
-                        } else {
-                            DisplayLink.shared().removeName("dragScroll")
-                        }
-
-                        // move the object
-                        dragObject(dx, dy)
-                    default:
-                        break
-                }
-            }
-        }
-
-        updateEditControl()
 
         if object == nil {
+			// Need (?) graphic at arrow point
             let layer = pushpinView.placeholderLayer
             if (layer.sublayers?.count ?? 0) == 0 {
                 layer.bounds = CGRect(x: 0, y: 0, width: 24, height: 24)
@@ -2813,10 +2823,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
 		addSubview(pushpinView)
 
-        if object == nil {
-            // do animation if creating a new object
-            pushpinView.animateMove(from: CGPoint(x: bounds.origin.x + bounds.size.width, y: bounds.origin.y))
-        }
+		updateEditControl()
     }
 
     func refreshPushpinText() {
