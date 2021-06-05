@@ -25,7 +25,7 @@
 //#import "SpeechBalloonView.h"
 //#import "PersistentWebCache.h"
 //#import "OsmMapData+Edit.h"
-#import "ExternalGPS.h"
+//#import "ExternalGPS.h"
 #import "DDXML.h"
 //#import "DisplayLink.h"
 //#import "OsmBaseObject.h"

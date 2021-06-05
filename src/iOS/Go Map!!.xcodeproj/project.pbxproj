@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		02008650265B25DC008F37DD /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028816A2265AD9D100C30EA2 /* Database.swift */; };
 		0203473D26695B2A000A7C3D /* EditorMapLayer+Edit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0203473C26695B2A000A7C3D /* EditorMapLayer+Edit.swift */; };
+		0203473F266C1EDD000A7C3D /* ExternalGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0203473E266C1EDD000A7C3D /* ExternalGPS.swift */; };
 		020EBA7926506156001D56F4 /* MercatorTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925326411C2B000A2A99 /* MercatorTileLayer.swift */; };
 		020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */; };
 		020F4ADE24AAD4E700D9E34A /* PresetsDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */; };
@@ -25,7 +26,6 @@
 		02354F7A246349E100878A04 /* CurvedGlyphLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02354F79246349E100878A04 /* CurvedGlyphLayer.swift */; };
 		023B892B19C148790060CDB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B892A19C148790060CDB5 /* Images.xcassets */; };
 		02401F361DE021EE00F32AF5 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */; };
-		02401F391DE1369E00F32AF5 /* ExternalGPS.m in Sources */ = {isa = PBXBuildFile; fileRef = 02401F381DE1369E00F32AF5 /* ExternalGPS.m */; };
 		0266DE862655A21F007A502E /* Superview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0266DE852655A21F007A502E /* Superview.swift */; };
 		026FC76726509D6E005DDAFF /* SpeechBalloonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */; };
 		026FC7682650A17B005DDAFF /* VoiceAnnouncement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */; };
@@ -184,6 +184,7 @@
 
 /* Begin PBXFileReference section */
 		0203473C26695B2A000A7C3D /* EditorMapLayer+Edit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "EditorMapLayer+Edit.swift"; path = "../Shared/EditorMapLayer+Edit.swift"; sourceTree = "<group>"; };
+		0203473E266C1EDD000A7C3D /* ExternalGPS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExternalGPS.swift; path = ../Shared/ExternalGPS.swift; sourceTree = "<group>"; };
 		02072AD51BD46B1700F1CAB4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsDatabase.swift; sourceTree = "<group>"; };
 		02128F7B2575D925003D2551 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Height.strings"; sourceTree = "<group>"; };
@@ -205,8 +206,6 @@
 		02354F79246349E100878A04 /* CurvedGlyphLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CurvedGlyphLayer.swift; path = ../Shared/CurvedGlyphLayer.swift; sourceTree = "<group>"; };
 		023B892A19C148790060CDB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
 		02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
-		02401F371DE1369E00F32AF5 /* ExternalGPS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ExternalGPS.h; path = ../Shared/ExternalGPS.h; sourceTree = "<group>"; };
-		02401F381DE1369E00F32AF5 /* ExternalGPS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = ExternalGPS.m; path = ../Shared/ExternalGPS.m; sourceTree = "<group>"; };
 		02401F3A1DE157B800F32AF5 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		024E6D2E24CBBCE500E1E2A3 /* apple-app-site-association */ = {isa = PBXFileReference; lastKnownFileType = text; name = "apple-app-site-association"; path = "../apple-app-site-association"; sourceTree = "<group>"; };
 		0254C6CD2579CD88000705B4 /* POI-Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "POI-Icons"; path = "../POI-Icons"; sourceTree = "<group>"; };
@@ -690,8 +689,7 @@
 				C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */,
 				0203473C26695B2A000A7C3D /* EditorMapLayer+Edit.swift */,
 				022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */,
-				02401F371DE1369E00F32AF5 /* ExternalGPS.h */,
-				02401F381DE1369E00F32AF5 /* ExternalGPS.m */,
+				0203473E266C1EDD000A7C3D /* ExternalGPS.swift */,
 				C341E1552639DEFC0022E983 /* FpsLabel.swift */,
 				C341E1572639DF090022E983 /* GeekbenchScoreProvider.swift */,
 				02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */,
@@ -1064,6 +1062,7 @@
 				C365A569263FCC9C007DEC94 /* TapAndDragGesture.swift in Sources */,
 				ED91352526020945006A637A /* OfflineViewController.swift in Sources */,
 				ED9649DB2601CB7A00EC0A60 /* SettingsViewController.swift in Sources */,
+				0203473F266C1EDD000A7C3D /* ExternalGPS.swift in Sources */,
 				C365A563263FC53F007DEC94 /* TurnRestrictHwyView.swift in Sources */,
 				ED9649E62601CE3100EC0A60 /* RotatingNavigationController.swift in Sources */,
 				C3D096B3263D618E00E3B129 /* HeightViewController.swift in Sources */,
@@ -1127,7 +1126,6 @@
 				02A123ED264CAE6F005638C1 /* Atomic.swift in Sources */,
 				02008650265B25DC008F37DD /* Database.swift in Sources */,
 				02E049BE2651D1750028B57F /* UndoAction.m in Sources */,
-				02401F391DE1369E00F32AF5 /* ExternalGPS.m in Sources */,
 				026FC76726509D6E005DDAFF /* SpeechBalloonView.swift in Sources */,
 				ED56E5C526027A50000B368C /* CustomPresetListViewController.swift in Sources */,
 				C3D096CF263EA0DB00E3B129 /* KeyChain.swift in Sources */,
