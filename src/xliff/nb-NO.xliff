@@ -2577,7 +2577,7 @@ https://glyphish.com
       </trans-unit>
       <trans-unit id="CHj-a3-gC9.text" xml:space="preserve">
         <source>Weblate - Translations</source>
-        <target>Weblate - Oversettelser</target>
+        <target>Weblate – Oversettelser</target>
         <note>Class = "UILabel"; text = "Weblate - Translations"; ObjectID = "CHj-a3-gC9";</note>
       </trans-unit>
       <trans-unit id="DY5-Ls-XZ1.normalTitle" xml:space="preserve">
