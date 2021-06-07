@@ -162,7 +162,3 @@ class PersistentWebCache<T: AnyObject>: NSObject {
         return nil
     }
 }
-
-func DbgAssert(_ x: Bool) {
-    assert(x, "unspecified")
-}

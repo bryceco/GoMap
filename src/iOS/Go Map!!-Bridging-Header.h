@@ -3,6 +3,7 @@
 //
 
 @class MyUndoManager;
+@class OsmBaseObject;
 
 //#import "MyUndoManager.h"
 #import "UndoAction.h"
@@ -19,9 +20,9 @@
 //#import "MercatorTileLayer.h"
 //#import "GpxLayer.h"
 //#import "MapView.h"
-#import "OsmNotesDatabase.h"
+//#import "OsmNotesDatabase.h"
 //#import "BingMapsGeometry.h"
-#import "DLog.h"
+//#import "DLog.h"
 //#import "SpeechBalloonView.h"
 //#import "PersistentWebCache.h"
 //#import "OsmMapData+Edit.h"

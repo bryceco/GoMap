@@ -12,7 +12,6 @@
 
 -(instancetype)initWithTarget:(id)target selector:(SEL)selector objects:(NSArray *)objects
 {
-	DbgAssert( target && selector );
 	self = [super init];
 	if ( self ) {
 		_target = target;
@@ -25,7 +24,6 @@
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
-	DbgAssert(_target);
 	[coder encodeObject:_target		forKey:@"target"];
 	[coder encodeObject:_selector  	forKey:@"selector"];
 	[coder encodeObject:_objects   	forKey:@"objects"];
@@ -39,7 +37,6 @@
 	_selector	= [coder decodeObjectForKey:@"selector"];
 	_objects	= [coder decodeObjectForKey:@"objects"];
 	_group		= [coder decodeIntegerForKey:@"group"];
-	DbgAssert(_target);
 	return self;
 }
 

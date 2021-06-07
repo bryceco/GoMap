@@ -724,8 +724,6 @@ public:
 
 -(void)addMember:(OsmBaseObject *)member bbox:(OSMRect)bbox
 {
-	if ( bbox.origin.x == 0 && bbox.origin.y == 0 && bbox.size.width == 0 && bbox.size.height == 0 )
-		return;
 	_cpp->addMember(member, bbox, 0);
 }
 

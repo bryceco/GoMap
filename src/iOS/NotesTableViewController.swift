@@ -54,42 +54,41 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ((note?.comments != nil) && section == 0 ? note?.comments.count : 2) ?? 0
-    }
+        return section == 0 && note.comments.count > 0 ? note.comments.count : 2
+	}
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (note?.comments != nil) && indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "noteCommentCell", for: indexPath) as? NotesCommentCell
-            let comment = note?.comments[indexPath.row] as? OsmNoteComment
-            cell?.date.text = comment?.date
-            if let action = comment?.action {
-                cell?.user.text = "\(comment?.user ?? "anonymous") - \(action)"
-            }
-            if comment?.text.count == 0 {
-                cell?.commentBackground.isHidden = true
-                cell?.comment.text = nil
+		if indexPath.section == 0 && note.comments.count > 0 {
+			let cell = tableView.dequeueReusableCell(withIdentifier: "noteCommentCell", for: indexPath) as! NotesCommentCell
+			let comment = note.comments[indexPath.row]
+			let user = comment.user.count > 0 ? comment.user : "anonymous"
+			cell.date.text = comment.date
+			cell.user.text = "\(user) - \(comment.action)"
+			if comment.text.count == 0 {
+				cell.commentBackground.isHidden = true
+				cell.comment.text = nil
             } else {
-                cell?.commentBackground.isHidden = false
-                cell?.commentBackground.layer.cornerRadius = 5
-                cell?.commentBackground.layer.borderColor = UIColor.black.cgColor
-                cell?.commentBackground.layer.borderWidth = 1.0
-                cell?.commentBackground.layer.masksToBounds = true
-                cell?.comment.text = comment?.text
+                cell.commentBackground.isHidden = false
+                cell.commentBackground.layer.cornerRadius = 5
+                cell.commentBackground.layer.borderColor = UIColor.black.cgColor
+                cell.commentBackground.layer.borderWidth = 1.0
+                cell.commentBackground.layer.masksToBounds = true
+                cell.comment.text = comment.text
             }
-            return cell!
-        } else if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "noteResolveCell", for: indexPath) as? NotesResolveCell
-            cell?._text.layer.cornerRadius = 5.0
-            cell?._text.layer.borderColor = UIColor.black.cgColor
-            cell?._text.layer.borderWidth = 1.0
-            cell?._text.delegate = self
-            cell?._text.text = newComment
-            cell?.commentButton.isEnabled = false
-            cell?.resolveButton.isEnabled = note?.comments != nil
-            return cell!
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "noteDirectionsCell", for: indexPath) as UITableViewCell
             return cell
+		} else if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "noteResolveCell", for: indexPath) as! NotesResolveCell
+			cell._text.layer.cornerRadius = 5.0
+            cell._text.layer.borderColor = UIColor.black.cgColor
+            cell._text.layer.borderWidth = 1.0
+            cell._text.delegate = self
+            cell._text.text = newComment
+            cell.commentButton.isEnabled = false
+            cell.resolveButton.isEnabled = note?.comments != nil
+            return cell
+        } else {
+			let cell = tableView.dequeueReusableCell(withIdentifier: "noteDirectionsCell", for: indexPath) as UITableViewCell
+			return cell
         }
     }
 

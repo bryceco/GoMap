@@ -6,6 +6,7 @@
 //  Copyright © 2020 Bryce. All rights reserved.
 //
 
+// This class is used as a temporary object while reading relations from Sqlite3 and building member lists
 class OsmRelationBuilder: NSObject {
 	var relation: OsmRelation
 	var members: [OsmMember?]
@@ -38,7 +39,7 @@ final class OsmRelation: OsmBaseObject {
 		return self
     }
 
-    func forAllMemberObjectsRecurse(_ callback: @escaping (OsmBaseObject) -> Void, relations: inout Set<OsmRelation>) {
+	private func forAllMemberObjectsRecurse(_ callback: @escaping (OsmBaseObject) -> Void, relations: inout Set<OsmRelation>) {
 		for member in members {
 			if let obj = member.obj {
 				if let rel = obj.isRelation() {
@@ -157,8 +158,8 @@ final class OsmRelation: OsmBaseObject {
 		if _constructed {
             assert(undo != nil)
             incrementModifyCount(undo!)
-            undo?.registerUndo(withTarget: self, selector: #selector(removeMemberAtIndex(_:undo:)), objects: [NSNumber(value: index), undo!])
-        }
+            undo!.registerUndo(withTarget: self, selector: #selector(removeMemberAtIndex(_:undo:)), objects: [NSNumber(value: index), undo!])
+		}
 		members.insert(member, at: index)
 		if let obj = member.obj {
 			obj.addParentRelation(self, undo: nil)
@@ -188,6 +189,7 @@ final class OsmRelation: OsmBaseObject {
 				box = box.union(rc)
 			}
 			_boundingBox = box
+			assert( !(_boundingBox! == .zero) )
 		} else {
 			_boundingBox = OSMRect.zero
 		}
@@ -195,19 +197,16 @@ final class OsmRelation: OsmBaseObject {
 
     override func nodeSet() -> Set<OsmNode> {
 		var set: Set<OsmNode> = []
-        for member in members {
-			if let node = member.obj as? OsmNode {
+		for obj in allMemberObjects() {
+			if let node = obj as? OsmNode {
 				set.insert(node)
-			} else if let way = member.obj as? OsmWay {
-                set.formUnion(Set(way.nodes))
-			} else if let relation = member.obj as? OsmRelation {
-				let all = relation.allMemberObjects().compactMap({ $0 as? OsmNode })
-				set.formUnion(all)
+			} else if let way = obj as? OsmWay {
+				set.formUnion(Set(way.nodes))
 			} else {
-				// unresolved
+				// relations have already been expanded into member nodes/ways
 			}
 		}
-        return set
+		return set
     }
 
     func member(byRole role: String?) -> OsmMember? {

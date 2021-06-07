@@ -23,7 +23,7 @@
 
 #import <Foundation/Foundation.h>
 #import "mach/mach.h"
-inline static double MemoryUsed(void)
+inline static double MemoryUsedFixme(void)
 {
 	struct task_basic_info info;
 	mach_msg_type_number_t size = sizeof(info);

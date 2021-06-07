@@ -2545,9 +2545,9 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     func removePin() {
         if let pushpinView = pushpinView {
             pushpinView.removeFromSuperview()
-            updateEditControl()
         }
 		self.pushpinView = nil
+		updateEditControl()
     }
 
 	private func pushpinDragCallbackFor(object: OsmBaseObject) -> PushPinViewDragCallback {
@@ -3058,7 +3058,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
                         if note.status == "closed" {
                             button.removeFromSuperview()
-                        } else if note.isFixme && editorLayer.mapData.object(withExtendedIdentifier: note.noteId.int64Value)?.tags["fixme"] == nil {
+                        } else if note.isFixme && editorLayer.mapData.object(withExtendedIdentifier: note.noteId)?.tags["fixme"] == nil {
                             button.removeFromSuperview()
                         } else {
                             let offsetX = note.isKeepRight || note.isFixme ? 0.00001 : 0.0
@@ -3096,7 +3096,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
         if note.isWaypoint || note.isKeepRight {
             if !editorLayer.isHidden {
-                let object = editorLayer.mapData.object(withExtendedIdentifier: note.noteId.int64Value)
+                let object = editorLayer.mapData.object(withExtendedIdentifier: note.noteId)
                 if let object = object {
                     editorLayer.selectedNode = object.isNode()
                     editorLayer.selectedWay = object.isWay()
@@ -3107,22 +3107,19 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                     placePushpin(at: point, object: object)
                 }
             }
-            let comment = note.comments.lastObject as? OsmNoteComment
+            let comment = note.comments.last!
             let title = note.isWaypoint ? "Waypoint" : "Keep Right"
 
             // use regular alertview
-            var text = comment?.text
-            let r1 = (text as NSString?)?.range(of: "<a ")
-            if (r1?.length ?? 0) > 0 {
-                let r2 = (text as NSString?)?.range(of: "\">")
-                if (r2?.length ?? 0) > 0 {
-                    text = (text as NSString?)?.replacingCharacters(in: NSRange(location: r1?.location ?? 0, length: (r2?.location ?? 0) + (r2?.length ?? 0) - (r1?.location ?? 0)), with: "")
-                    text = text?.replacingOccurrences(of: "</a>", with: "")
-                }
+			var text = comment.text
+			if let r1 = text.range(of: "<a "),
+			   let r2 = text.range(of: "\">")
+			{
+				text.removeSubrange(r1.lowerBound..<r2.upperBound)
             }
-            text = text?.replacingOccurrences(of: "&quot;", with: "\"")
+			text = text.replacingOccurrences(of: "&quot;", with: "\"")
 
-            let alertKeepRight = UIAlertController(title: title, message: text, preferredStyle: .alert)
+			let alertKeepRight = UIAlertController(title: title, message: text, preferredStyle: .alert)
             alertKeepRight.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: { action in
             }))
             alertKeepRight.addAction(UIAlertAction(title: NSLocalizedString("Ignore", comment: ""), style: .default, handler: { [self] action in
@@ -3135,12 +3132,13 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                 removePin()
             }))
             mainViewController.present(alertKeepRight, animated: true)
-        } else if note.isFixme {
-			let object = editorLayer.mapData.object(withExtendedIdentifier: note.noteId.int64Value)
-            editorLayer.selectedNode = object?.isNode()
-            editorLayer.selectedWay = object?.isWay()
-            editorLayer.selectedRelation = object?.isRelation()
-            presentTagEditor(nil)
+		} else if note.isFixme {
+			guard let object = editorLayer.mapData.object(withExtendedIdentifier: note.noteId)
+			else { return }
+			editorLayer.selectedNode = object.isNode()
+            editorLayer.selectedWay = object.isWay()
+            editorLayer.selectedRelation = object.isRelation()
+			presentTagEditor(nil)
         } else {
             mainViewController.performSegue(withIdentifier: "NotesSegue", sender: note)
         }

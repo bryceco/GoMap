@@ -165,10 +165,6 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	}
 	#endif
 
-	// FIXME: delete this function
-	@objc var extendedIdentifierFixme: Int64 {
-		return OsmExtendedIdentifier(self).rawValue
-	}
 	var extendedIdentifier: OsmExtendedIdentifier {
 		return OsmExtendedIdentifier(self)
 	}
