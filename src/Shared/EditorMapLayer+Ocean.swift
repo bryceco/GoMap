@@ -314,7 +314,7 @@ extension EditorMapLayer {
             if p.x.isInfinite {
                 break
             }
-            let pt = CGPointFromOSMPoint(p)
+            let pt = CGPoint(p)
             if first {
                 first = false
                 path.move(to: pt)
@@ -392,7 +392,7 @@ extension EditorMapLayer {
 
         let cgViewRect = bounds
         let viewRect = OSMRect(cgViewRect)
-        let viewCenter = OSMPoint(CGRectCenter(cgViewRect))
+		let viewCenter = OSMPoint(cgViewRect.center())
 
         // trim nodes in segments to only visible paths
         var visibleSegments = [[OSMPoint]]()
@@ -474,28 +474,28 @@ extension EditorMapLayer {
                                 break wall_loop
                             }
 							point1 = OSMPoint(x: viewRect.origin.x, y: viewRect.origin.y)
-                            path.addLine(to: CGPointFromOSMPoint(point1))
+                            path.addLine(to: CGPoint(point1))
                             fallthrough
                         case .TOP:
                             if wall2 == .TOP, point1.x < point2.x {
                                 break wall_loop
                             }
 							point1 = OSMPoint(x: viewRect.origin.x + viewRect.size.width, y: viewRect.origin.y)
-                            path.addLine(to: CGPointFromOSMPoint(point1))
+                            path.addLine(to: CGPoint(point1))
                             fallthrough
                         case .RIGHT:
                             if wall2 == .RIGHT, point1.y < point2.y {
                                 break wall_loop
                             }
 							point1 = OSMPoint(x: viewRect.origin.x + viewRect.size.width, y: viewRect.origin.y + viewRect.size.height)
-                            path.addLine(to: CGPointFromOSMPoint(point1))
+                            path.addLine(to: CGPoint(point1))
                             fallthrough
                         case .BOTTOM:
                             if wall2 == .BOTTOM, point1.x > point2.x {
                                 break wall_loop
                             }
 							point1 = OSMPoint(x: viewRect.origin.x, y: viewRect.origin.y + viewRect.size.height)
-                            path.addLine(to: CGPointFromOSMPoint(point1))
+                            path.addLine(to: CGPoint(point1))
                             wall1 = .LEFT
                         }
                     }
@@ -509,7 +509,7 @@ extension EditorMapLayer {
                     return nil
                 }
                 for pt in nextOutline! {
-                    path.addLine(to: CGPointFromOSMPoint(pt))
+                    path.addLine(to: CGPoint(pt))
                 }
 
                 exit = nextOutline!.last!

@@ -74,8 +74,8 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
 
 		self.observations.append( observe( \.mapView.screenFromMapTransform ) { object, change in
 			var t = CATransform3DIdentity
-			t.m34 = -1 / (mapView.birdsEyeDistance)
-			t = CATransform3DRotate(t, mapView.birdsEyeRotation, 1, 0, 0)
+			t.m34 = -1 / CGFloat(mapView.birdsEyeDistance)
+			t = CATransform3DRotate(t, CGFloat(mapView.birdsEyeRotation), 1, 0, 0)
 			self.sublayerTransform = t
 			self.setNeedsLayout()
 		})
@@ -151,7 +151,7 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
 
     private func layerOverlapsScreen(_ layer: CALayer) -> Bool {
         let rc = layer.frame
-        let center = CGRectCenter(rc)
+		let center = rc.center()
         
         var p1 = OSMPoint(x: Double(rc.origin.x), y: Double(rc.origin.y))
         var p2 = OSMPoint(x: Double(rc.origin.x), y: Double(rc.origin.y + rc.size.height))
@@ -437,12 +437,10 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
             let tileX: Int32 = Int32(splitTileKey[1]) ?? 0
             let tileY: Int32 = Int32(splitTileKey[2]) ?? 0
             
-//            sscanf(tileKey?.utf8CString, "%d,%d,%d", &tileZ, &tileX, &tileY)
-            
             var scale = 256.0 / Double((1 << tileZ))
             var pt = OSMPoint(x: Double(tileX) * scale, y: Double(tileY) * scale)
             pt = mapView.screenPoint(fromMapPoint: pt, birdsEye: false)
-            layer.position = CGPointFromOSMPoint(pt)
+            layer.position = CGPoint(pt)
             layer.bounds = CGRect(x: 0, y: 0, width: 256, height: 256)
             layer.anchorPoint = CGPoint(x: 0, y: 0)
             

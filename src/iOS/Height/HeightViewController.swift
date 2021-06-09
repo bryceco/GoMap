@@ -188,7 +188,7 @@ class HeightViewController: UIViewController {
 		guard let previewLayer = _previewLayer else { return false }
 		previewLayer.videoGravity = .resizeAspectFill
         previewLayer.bounds = view.layer.bounds
-		previewLayer.position = CGRectCenter(view.layer.bounds)
+		previewLayer.position = view.layer.bounds.center()
 		previewLayer.zPosition = -1 // buttons and labels need to be above video
 		view.layer.addSublayer(previewLayer)
 

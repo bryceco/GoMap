@@ -329,13 +329,13 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
                 if gpsState == .HEADING {
                     // rotate to heading
-                    let center = CGRectCenter(bounds)
+					let center = bounds.center()
 					let screenAngle = screenFromMapTransform.rotation()
                     let heading = self.heading(for: locationManager.heading)
                     animateRotation(by: -(screenAngle + heading), aroundPoint: center)
                 } else if gpsState == .LOCATION {
                     // orient toward north
-                    let center = CGRectCenter(bounds)
+					let center = bounds.center()
 					let rotation = screenFromMapTransform.rotation()
 					animateRotation(by: -rotation, aroundPoint: center)
                 } else {
@@ -379,8 +379,8 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     private(set) var pushpinView: PushPinView?
     var silentUndo = false // don't flash message about undo
 	let customAerials: AerialList
-    private(set) var birdsEyeRotation: CGFloat = 0.0
-    private(set) var birdsEyeDistance: CGFloat = 0.0
+    private(set) var birdsEyeRotation = 0.0
+    private(set) var birdsEyeDistance = 0.0
 
     private var _enableBirdsEye = false
     var enableBirdsEye: Bool {
@@ -402,7 +402,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 		didSet {
 			if !enableRotation {
 				// remove rotation
-				let centerPoint = CGRectCenter(bounds)
+				let centerPoint = bounds.center()
 				let angle = CGFloat(screenFromMapTransform.rotation())
 				rotate(by: -angle, aroundScreenPoint: centerPoint)
             }
@@ -653,7 +653,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             crossHairs.shadowRadius = 0
             crossHairs.shadowOffset = CGSize(width: 0, height: 0)
 
-            crossHairs.position = CGRectCenter(bounds)
+			crossHairs.position = bounds.center()
 			layer.addSublayer(crossHairs)
         }
 
@@ -961,7 +961,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 			layer.bounds = bounds
         }
 
-        crossHairs.position = CGRectCenter(bounds)
+		crossHairs.position = bounds.center()
 
         statusBarBackground.isHidden = UIApplication.shared.isStatusBarHidden
     }
@@ -1340,18 +1340,21 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     func mapPoint(fromScreenPoint point: OSMPoint, birdsEye: Bool) -> OSMPoint {
         var point = point
         if birdsEyeRotation != 0.0 && birdsEye {
-            let center = CGRectCenter(layer.bounds)
-            point = FromBirdsEye(point, center, Double(birdsEyeDistance), Double(birdsEyeRotation))
+			let center = layer.bounds.center()
+			point = FromBirdsEye(point,
+								 center: center,
+								 birdsEyeDistance: Double(birdsEyeDistance),
+								 birdsEyeRotation: Double(birdsEyeRotation))
         }
-        point = OSMPointApplyTransform(point, mapFromScreenTransform)
+		point = point.withTransform( mapFromScreenTransform )
         return point
     }
 
     func screenPoint(fromMapPoint point: OSMPoint, birdsEye: Bool) -> OSMPoint {
         var point = point
-        point = OSMPointApplyTransform(point, screenFromMapTransform)
+		point = point.withTransform( screenFromMapTransform )
         if birdsEyeRotation != 0.0 && birdsEye {
-            let center = CGRectCenter(layer.bounds)
+			let center = layer.bounds.center()
             point = ToBirdsEye(point, center, Double(birdsEyeDistance), Double(birdsEyeRotation))
         }
         return point
@@ -1385,11 +1388,11 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     }
 
     func mapRect(fromScreenRect rect: OSMRect) -> OSMRect {
-        return OSMRectApplyTransform(rect, mapFromScreenTransform)
+		return rect.withTransform( mapFromScreenTransform )
     }
 
     func screenRect(fromMapRect rect: OSMRect) -> OSMRect {
-        return OSMRectApplyTransform(rect, screenFromMapTransform)
+		return rect.withTransform( screenFromMapTransform )
     }
 
     func longitudeLatitude(forScreenPoint point: CGPoint, birdsEye: Bool) -> CLLocationCoordinate2D {
@@ -1491,7 +1494,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     func screenPoint(forLatitude latitude: Double, longitude: Double, birdsEye: Bool) -> CGPoint {
         var pt = MapPointForLatitudeLongitude(latitude, longitude)
         pt = screenPoint(fromMapPoint: pt, birdsEye: birdsEye)
-        return CGPointFromOSMPoint(pt)
+        return CGPoint(pt)
     }
 
     func setTransformFor( latitude: Double, longitude: Double) {
@@ -1673,7 +1676,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
         if gpsState == .HEADING {
             // rotate to new heading
-            let center = CGRectCenter(bounds)
+			let center = bounds.center()
             let delta = -(heading + CGFloat(screenAngle))
             rotate(by: CGFloat(delta), aroundScreenPoint: center)
         } else if locationBallLayer != nil {
@@ -1985,7 +1988,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         })
     }
 
-    func rotateBirdsEye(by angle: CGFloat) {
+    func rotateBirdsEye(by angle: Double) {
         var angle = angle
         // limit maximum rotation
         var t = screenFromMapTransform
@@ -1995,14 +1998,14 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         #else
         let currentRotation = Double(birdsEyeRotation)
         #endif
-        if currentRotation + Double(angle) > maxRotation {
-            angle = CGFloat(maxRotation - currentRotation)
+        if currentRotation + angle > maxRotation {
+            angle = maxRotation - currentRotation
         }
         if currentRotation + Double(angle) < 0 {
-            angle = CGFloat(-currentRotation)
+            angle = -currentRotation
         }
 
-        let center = CGRectCenter(bounds)
+		let center = bounds.center()
         let offset = mapPoint(fromScreenPoint: OSMPoint(center), birdsEye: false)
 
 		t = t.translatedBy(dx: offset.x, dy: offset.y)
@@ -2021,7 +2024,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
     func rotateToNorth() {
         // Rotate to face North
-        let center = CGRectCenter(bounds)
+		let center = bounds.center()
 		let rotation = screenFromMapTransform.rotation()
 		animateRotation(by: -rotation, aroundPoint: center)
     }
@@ -2426,7 +2429,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 				box = MapView.mapRect(forLatLonRect: box)
                 let rc = boundingScreenRect(forMapRect: box)
 				actionSheet.popoverPresentationController?.sourceView = self
-				actionSheet.popoverPresentationController?.sourceRect = CGRectFromOSMRect(rc)
+				actionSheet.popoverPresentationController?.sourceRect = CGRect(rc)
                 mainViewController.present(actionSheet, animated: true)
                 return
         }
@@ -2744,7 +2747,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 					if scrollx != 0.0 || scrolly != 0.0 {
 
 						// if we're dragging at a diagonal then scroll diagonally as well, in the direction the user is dragging
-						let center = CGRectCenter(self.bounds)
+						let center = self.bounds.center()
 						let v = UnitVector(Sub(OSMPoint(arrow), OSMPoint(center)))
 						scrollx = SCROLL_SPEED * CGFloat(v.x)
 						scrolly = SCROLL_SPEED * CGFloat(v.y)
@@ -3198,7 +3201,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 				if enableBirdsEye && pan.numberOfTouches == 3 {
 					let translation = pan.translation(in: self)
 					let delta = Double(-(translation.y) / 40 / 180 * .pi)
-					rotateBirdsEye(by: CGFloat(delta))
+					rotateBirdsEye(by: delta)
 					return
 				}
 			}
@@ -3267,9 +3270,8 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             displayLink.removeName(DisplayLinkPanning)
 
             let delta = tapAndDrag.translation(in: self)
-            //        CGPoint delta = [tapAndDrag translationInView:self];
 			let scale = 1.0 + delta.y * 0.01
-			let zoomCenter = CGRectCenter(bounds)
+			let zoomCenter = bounds.center()
             adjustZoom(by: scale, aroundScreenPoint: zoomCenter)
         } else if tapAndDrag.state == .ended {
             updateNotesFromServer(withDelay: 0)

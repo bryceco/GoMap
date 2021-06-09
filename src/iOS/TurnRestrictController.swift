@@ -580,7 +580,7 @@ class TurnRestrictController: UIViewController {
     // Convert location point to CGPoint
     func screenPoint(forLatitude latitude: Double, longitude: Double) -> CGPoint {
         var pt = MapPointForLatitudeLongitude(latitude, longitude)
-            pt = OSMPointApplyTransform(pt, screenFromMapTransform)
-        return CGPointFromOSMPoint(pt)
+		pt = pt.withTransform( screenFromMapTransform )
+        return CGPoint(pt)
     }
 }

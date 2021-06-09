@@ -469,7 +469,7 @@ class EditorMapLayer: CALayer {
         wall.isOpaque = true
         wall.frame = CGRect(x: 0, y: 0, width: CGFloat(length * PATH_SCALING), height: CGFloat(height))
         wall.backgroundColor = color.cgColor
-        wall.position = CGPointFromOSMPoint(p1)
+        wall.position = CGPoint(p1)
         wall.borderWidth = 1.0
         wall.borderColor = UIColor.black.cgColor
         
@@ -509,7 +509,7 @@ class EditorMapLayer: CALayer {
                     do {
                         let layer = CAShapeLayerWithProperties()
                         layer.anchorPoint = CGPoint(x: 0, y: 0)
-                        layer.position = CGPointFromOSMPoint(refPoint)
+                        layer.position = CGPoint(refPoint)
                         layer.path = path
                         layer.strokeColor = UIColor.black.cgColor
                         layer.fillColor = nil
@@ -540,7 +540,7 @@ class EditorMapLayer: CALayer {
                         // it lacks a name
                         let haloLayer = CAShapeLayerWithProperties()
                         haloLayer.anchorPoint = CGPoint(x: 0, y: 0)
-                        haloLayer.position = CGPointFromOSMPoint(refPoint)
+                        haloLayer.position = CGPoint(refPoint)
                         haloLayer.path = path
                         haloLayer.strokeColor = UIColor.red.cgColor
                         haloLayer.fillColor = nil
@@ -572,7 +572,7 @@ class EditorMapLayer: CALayer {
                 layer.anchorPoint = CGPoint(x: 0, y: 0)
                 let bbox = path.boundingBoxOfPath
                 layer.bounds = CGRect(x: 0, y: 0, width: bbox.size.width, height: bbox.size.height)
-                layer.position = CGPointFromOSMPoint(refPoint)
+                layer.position = CGPoint(refPoint)
                 layer.path = path
                 layer.strokeColor = (renderInfo.lineColor ?? UIColor.black).cgColor
                 layer.fillColor = nil
@@ -601,7 +601,7 @@ class EditorMapLayer: CALayer {
                     let layer = CAShapeLayerWithProperties()
                     layer.anchorPoint = CGPoint(x: 0, y: 0)
                     layer.path = path
-                    layer.position = CGPointFromOSMPoint(refPoint)
+                    layer.position = CGPoint(refPoint)
                     layer.fillColor = areaColor.withAlphaComponent(alpha).cgColor
                     layer.lineCap = DEFAULT_LINECAP
                     layer.lineJoin = DEFAULT_LINEJOIN
@@ -671,7 +671,7 @@ class EditorMapLayer: CALayer {
 								roof.anchorPoint = CGPoint(x: 0, y: 0)
 								let bbox = path.boundingBoxOfPath
 								roof.bounds = CGRect(x: 0, y: 0, width: bbox.size.width, height: bbox.size.height)
-								roof.position = CGPointFromOSMPoint(refPoint)
+								roof.position = CGPoint(refPoint)
 								roof.path = path
 								roof.fillColor = color.cgColor
 								roof.strokeColor = UIColor.black.cgColor
@@ -1362,8 +1362,8 @@ class EditorMapLayer: CALayer {
     func layoutSublayersSafe() {
         if mapView.birdsEyeRotation != 0 {
 			var t = CATransform3DIdentity
-            t.m34 = -1.0 / mapView.birdsEyeDistance
-            t = CATransform3DRotate(t, mapView.birdsEyeRotation, 1.0, 0, 0)
+            t.m34 = CGFloat(-1.0 / mapView.birdsEyeDistance)
+            t = CATransform3DRotate(t, CGFloat(mapView.birdsEyeRotation), 1.0, 0, 0)
             baseLayer.sublayerTransform = t
         } else {
             baseLayer.sublayerTransform = CATransform3DIdentity

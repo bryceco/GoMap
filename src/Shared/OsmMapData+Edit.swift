@@ -1357,9 +1357,9 @@ extension OsmMapData {
         var innerSet : [OsmMember] = []
         for loop in loopList {
             var refPoint = OSMPoint()
-            let path = OsmWay.shapePath(forNodes: loop, forward: true, withRefPoint: &refPoint)
-            if path == nil {
-                continue
+            guard let path = OsmWay.shapePath(forNodes: loop, forward: true, withRefPoint: &refPoint)
+			else {
+				continue
             }
             for m in 0 ..< members.count {
                 let member = members[m]
@@ -1378,7 +1378,7 @@ extension OsmMapData {
                 var pt = MapPointForLatitudeLongitude(node!.lat, node!.lon)
                 pt = Sub(pt, refPoint)
                 pt = Mult(pt, PATH_SCALING)
-                let isInner = path?.contains(CGPointFromOSMPoint(pt), using: .winding, transform: .identity) ?? false
+                let isInner = path.contains(CGPoint(pt), using: .winding)
                 if isInner {
                     innerSet.append(member)
                 }

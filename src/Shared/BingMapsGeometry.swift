@@ -8,13 +8,6 @@
 
 let EarthRadius: Double = 6378137.0
 
-func MetersPerDegree(atLatitude latitude: Double) -> OSMPoint {
-	let latitude = latitude * .pi / 180
-	let lat = 111132.954 - 559.822 * cos(2 * latitude) + 1.175 * cos(4 * latitude)
-	let lon = 111132.954 * cos(latitude)
-	return OSMPoint( x: lon, y: lat)
-}
-
 /// Converts tile XY coordinates into a QuadKey at a specified level of detail.
 func TileXYToQuadKey(_ tileX: Int, _ tileY: Int, _ levelOfDetail: Int) -> String {
     var quadKey = ""

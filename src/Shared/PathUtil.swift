@@ -157,8 +157,8 @@ extension CGPath {
 			result.removeLast()
 			DouglasPeuckerCore(points, index, last, epsilon, &result)
 		} else {
-			result.append( CGPointFromOSMPoint(end1) )
-			result.append( CGPointFromOSMPoint(end2) )
+			result.append( CGPoint(end1) )
+			result.append( CGPoint(end2) )
 		}
 	}
 

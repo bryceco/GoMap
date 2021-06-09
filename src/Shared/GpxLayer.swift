@@ -764,8 +764,8 @@ class GpxLayer: CALayer, GetDiskCacheSize {
         let color = track == selectedTrack ? UIColor.red : UIColor(red: 1.0, green: 99 / 255.0, blue: 249 / 255.0, alpha: 1.0)
 
         let layer = GpxTrackLayerWithProperties()
-        layer.anchorPoint = CGPoint(x: 0, y: 0)
-        layer.position = CGPointFromOSMPoint(refPoint)
+		layer.anchorPoint = CGPoint.zero
+        layer.position = CGPoint(refPoint)
         layer.path = path
         layer.strokeColor = color.cgColor
         layer.fillColor = nil
@@ -824,8 +824,8 @@ class GpxLayer: CALayer, GetDiskCacheSize {
         
         if mapView.birdsEyeRotation != 0 {
             var t = CATransform3DIdentity
-            t.m34 = -1.0 / mapView.birdsEyeDistance
-            t = CATransform3DRotate(t, mapView.birdsEyeRotation, 1.0, 0, 0)
+            t.m34 = -1.0 / CGFloat(mapView.birdsEyeDistance)
+            t = CATransform3DRotate(t, CGFloat(mapView.birdsEyeRotation), 1.0, 0, 0)
             sublayerTransform = t
         } else {
             sublayerTransform = CATransform3DIdentity
