@@ -336,31 +336,177 @@ extension OSMRect {
 }
 
 extension OSMTransform {
+
+#if TRANSFORM_3D
+	static let identity = CATransform3DIdentity
+#else
 	static let identity = OSMTransform(a: 1.0, b: 0.0, c: 0.0, d: 1.0, tx: 0.0, ty: 0.0)
+#endif
+
+	/// Rotation around Z-axis
+	@inline(__always) func rotation() -> Double {
+		#if TRANSFORM_3D
+		return atan2(self.m12, self.m11)
+		#else
+		return atan2(self.b, self.a)
+		#endif
+	}
+
+	// Scaling factor: 1.0 == identity
+	@inline(__always) func scale() -> Double {
+		#if TRANSFORM_3D
+		let d = sqrt(self.m11 * self.m11 + self.m12 * self.m12 + self.m13 * self.m13)
+		return d
+		#else
+		return hypot(self.a, self.c)
+		#endif
+	}
+
+	// Inverse transform
+	func inverse() -> OSMTransform {
+	#if TRANSFORM_3D
+		return CATransform3DInvert(self)
+	#else
+		//	|  a   b   0  |
+		//	|  c   d   0  |
+		//	| tx  ty   1  |
+
+		let det = Determinant(self)
+		let s = 1.0 / det
+
+		let a = s * self.d
+		let c = s * -self.c
+		let tx = s * (self.c * self.ty - self.d * self.tx)
+		let b = s * -self.b
+		let d = s * self.a
+		let ty = s * (self.b * self.tx - self.a * self.ty)
+
+		let r = OSMTransform(a: a, b: b, c: c, d: d, tx: tx, ty: ty)
+		return r
+	#endif
+	}
+
+	// Return CGFloat equivalent
+	@inline(__always) func cgAffineTransform() -> CGAffineTransform {
+		#if TRANSFORM_3D
+		return CATransform3DGetAffineTransform(self)
+		#else
+		let t = CGAffineTransform(
+					 a: CGFloat(self.a),
+					 b: CGFloat(self.b),
+					 c: CGFloat(self.c),
+					 d: CGFloat(self.d),
+					 tx: CGFloat(self.tx),
+					 ty: CGFloat(self.ty))
+		return t
+		#endif
+	}
+
+	@inline(__always) static func ==(_ t1: OSMTransform, _ t2: OSMTransform) -> Bool {
+		var t1 = t1
+		var t2 = t2
+		return memcmp(&t1, &t2, MemoryLayout.size(ofValue: t1)) == 0
+	}
+
+	@inline(__always) func unitX() -> OSMPoint {
+		#if TRANSFORM_3D
+		let p = UnitVector(OSMPoint(self.m11, self.m12))
+		return p
+		#else
+		return UnitVector(OSMPoint(x: self.a, y: self.b))
+		#endif
+	}
+
+	@inline(__always) func translation() -> OSMPoint {
+		#if TRANSFORM_3D
+		let p = OSMPoint(self.m41, self.m42)
+		return p
+		#else
+		return OSMPoint(x: self.tx, y: self.ty)
+		#endif
+	}
+
+	@inline(__always) func scaledBy(_ scale: Double) -> OSMTransform {
+		#if TRANSFORM_3D
+		return CATransform3DScale(self, CGFloat(scale), CGFloat(scale), CGFloat(scale))
+		#else
+		var t = self
+		t.a *= scale
+		t.b *= scale
+		t.c *= scale
+		t.d *= scale
+		return t
+		#endif
+	}
+
+	@inline(__always) func translatedBy( dx: Double, dy: Double) -> OSMTransform {
+		#if TRANSFORM_3D
+		return CATransform3DTranslate(self, CGFloat(dx), CGFloat(dy), 0)
+		#else
+		var t = self
+		t.tx += t.a * dx + t.c * dy
+		t.ty += t.b * dx + t.d * dy
+		return t
+		#endif
+	}
+
+	@inline(__always) func rotatedBy(_ angle: Double) -> OSMTransform {
+		#if TRANSFORM_3D
+		return CATransform3DRotate(self, CGFloat(angle), 0, 0, 1)
+		#else
+		let s = sin(angle)
+		let c = cos(angle)
+		let t = OSMTransform(a: c, b: s, c: -s, d: c, tx: 0.0, ty: 0.0)
+		return t.concat( self )
+		#endif
+	}
+
+	@inline(__always) static func Translation(_ dx: Double, _ dy: Double) -> OSMTransform {
+		#if TRANSFORM_3D
+		return CATransform3DMakeTranslation(CGFloat(dx), CGFloat(dy), 0)
+		#else
+		let t = OSMTransform(a: 1, b: 0, c: 0, d: 1, tx: dx, ty: dy)
+		return t
+		#endif
+	}
+
+
+	@inline(__always) func concat(_ b: OSMTransform) -> OSMTransform {
+		#if TRANSFORM_3D
+		return CATransform3DConcat(self, b)
+		#else
+		//	|  a   b   0  |
+		//	|  c   d   0  |
+		//	| tx  ty   1  |
+		let a = self
+		let t = OSMTransform(
+			 a: a.a * b.a + a.b * b.c,
+			 b: a.a * b.b + a.b * b.d,
+			 c: a.c * b.a + a.d * b.c,
+			 d: a.c * b.b + a.d * b.d,
+			 tx: a.tx * b.a + a.ty * b.c + b.tx,
+			 ty: a.tx * b.b + a.ty * b.d + b.ty)
+		return t
+		#endif
+ }
 }
 
-// MARK: Transform
-func OSMTransformInvert(_ t: OSMTransform) -> OSMTransform {
-#if TRANSFORM_3D
-	return CATransform3DInvert(t)
-#else
-	//	|  a   b   0  |
-	//	|  c   d   0  |
-	//	| tx  ty   1  |
+struct Coordinates {
+	var lon: Double
+	var lat: Double
 
-	let det = Determinant(t)
-	let s = 1.0 / det
+	init( lon: Double, lat: Double ) {
+		self.lon = lon
+		self.lat = lat
+	}
 
-	let a = s * t.d
-	let c = s * -t.c
-	let tx = s * (t.c * t.ty - t.d * t.tx)
-	let b = s * -t.b
-	let d = s * t.a
-	let ty = s * (t.b * t.tx - t.a * t.ty)
+	init(_ cl: CLLocationCoordinate2D) {
+		self.init(lon: cl.longitude, lat: cl.latitude)
+	}
 
-	let r = OSMTransform(a: a, b: b, c: c, d: d, tx: tx, ty: ty)
-	return r
-#endif
+	init(_ pt: OSMPoint) {
+		self.init(lon: pt.x, lat: pt.y)
+	}
 }
 
 func FromBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double, _ birdsEyeRotation: Double) -> OSMPoint {
@@ -420,107 +566,10 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
     return point
 }
 
-@inline(__always) func CGAffineTransformFromOSMTransform(_ transform: OSMTransform) -> CGAffineTransform {
-	#if TRANSFORM_3D
-    return CATransform3DGetAffineTransform(transform)
-	#else
-    let t = CGAffineTransform(
-		a: CGFloat(transform.a),
-		b: CGFloat(transform.b),
-		c: CGFloat(transform.c),
-		d: CGFloat(transform.d),
-		tx: CGFloat(transform.tx),
-		ty: CGFloat(transform.ty)
-	)
-    return t
-	#endif
-}
-
-@inline(__always) func OSMTransformIdentity() -> OSMTransform {
-	#if TRANSFORM_3D
-    return CATransform3DIdentity
-	#else
-	return OSMTransform.identity
-	#endif
-}
-
-@inline(__always) func OSMTransformEqual(_ t1: OSMTransform, _ t2: OSMTransform) -> Bool {
-    var t1 = t1
-    var t2 = t2
-    return memcmp(&t1, &t2, MemoryLayout.size(ofValue: t1)) == 0
-}
-
-@inline(__always) func OSMTransformScaleX(_ t: OSMTransform) -> Double {
-	#if TRANSFORM_3D
-    let d = sqrt(t.m11 * t.m11 + t.m12 * t.m12 + t.m13 * t.m13)
-    return d
-	#else
-    return hypot(t.a, t.c)
-	#endif
-}
-
-@inline(__always) func OSMTransformConcat(_ a: OSMTransform, _ b: OSMTransform) -> OSMTransform {
-	#if TRANSFORM_3D
-    return CATransform3DConcat(a, b)
-	#else
-    //	|  a   b   0  |
-    //	|  c   d   0  |
-    //	| tx  ty   1  |
-	let t = OSMTransform(
-		a: a.a * b.a + a.b * b.c,
-		b: a.a * b.b + a.b * b.d,
-		c: a.c * b.a + a.d * b.c,
-		d: a.c * b.b + a.d * b.d,
-		tx: a.tx * b.a + a.ty * b.c + b.tx,
-		ty: a.tx * b.b + a.ty * b.d + b.ty)
-    return t
-	#endif
-}
-
-@inline(__always) func OSMTransformRotation(_ t: OSMTransform) -> Double {
-	#if TRANSFORM_3D
-	return atan2(t.m12, t.m11)
-	#else
-    return atan2(t.b, t.a)
-	#endif
-}
-
-@inline(__always) func OSMTransformMakeTranslation(_ dx: Double, _ dy: Double) -> OSMTransform {
-	#if TRANSFORM_3D
-    return CATransform3DMakeTranslation(CGFloat(dx), CGFloat(dy), 0)
-	#else
-	let t = OSMTransform(a: 1, b: 0, c: 0, d: 1, tx: dx, ty: dy)
-    return t
-	#endif
-}
-
-@inline(__always) func OSMTransformTranslate(_ t: OSMTransform, _ dx: Double, _ dy: Double) -> OSMTransform {
-	#if TRANSFORM_3D
-    return CATransform3DTranslate(t, CGFloat(dx), CGFloat(dy), 0)
-	#else
-	var t = t
-    t.tx += t.a * dx + t.c * dy
-    t.ty += t.b * dx + t.d * dy
-    return t
-	#endif
-}
-
-@inline(__always) func OSMTransformScale(_ t: OSMTransform, _ scale: Double) -> OSMTransform {
-	#if TRANSFORM_3D
-    return CATransform3DScale(t, CGFloat(scale), CGFloat(scale), CGFloat(scale))
-	#else
-	var t = t
-    t.a *= scale
-    t.b *= scale
-    t.c *= scale
-    t.d *= scale
-    return t
-	#endif
-}
 
 @inline(__always) func OSMTransformScaleXY(_ t: OSMTransform, _ scaleX: Double, _ scaleY: Double) -> OSMTransform {
 	#if TRANSFORM_3D
-    return CATransform3DScale(t, CGFloat(scaleX), CGFloat(scaleY), 1.0)
+    return CATransform3DScale(t, CGFloat(scale), CGFloat(scaleY), 1.0)
 	#else
 	var t = t
     t.a *= scaleX
@@ -528,17 +577,6 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
     t.c *= scaleX
     t.d *= scaleY
     return t
-	#endif
-}
-
-@inline(__always) func OSMTransformRotate(_ transform: OSMTransform, _ angle: Double) -> OSMTransform {
-	#if TRANSFORM_3D
-    return CATransform3DRotate(transform, CGFloat(angle), 0, 0, 1)
-	#else
-    let s = sin(angle)
-    let c = cos(angle)
-	let t = OSMTransform(a: c, b: s, c: -s, d: c, tx: 0.0, ty: 0.0)
-	return OSMTransformConcat(t, transform)
 	#endif
 }
 
@@ -572,24 +610,6 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
 	let p2 = OSMPointApplyTransform(OSMPoint(x: rc.origin.x + rc.size.width, y: rc.origin.y + rc.size.height), transform)
 	let r2 = OSMRect(x: p1.x, y: p1.y, width: p2.x - p1.x, height: p2.y - p1.y)
     return r2
-}
-
-@inline(__always) func UnitX(_ t: OSMTransform) -> OSMPoint {
-	#if TRANSFORM_3D
-    let p = UnitVector(OSMPoint(t.m11, t.m12))
-    return p
-	#else
-	return UnitVector(OSMPoint(x: t.a, y: t.b))
-	#endif
-}
-
-@inline(__always) func Translation(_ t: OSMTransform) -> OSMPoint {
-	#if TRANSFORM_3D
-    let p = OSMPoint(t.m41, t.m42)
-    return p
-	#else
-	return OSMPoint(x: t.tx, y: t.ty)
-	#endif
 }
 
 @inline(__always) public func latp2lat(_ a: Double) -> Double {

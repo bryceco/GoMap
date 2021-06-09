@@ -676,7 +676,7 @@ class GpxLayer: CALayer, GetDiskCacheSize {
 		}
 		let pt = track.points[mid]
 		let widthDegrees = (20.0 /*meters*/ / EarthRadius) * 360.0
-		mapView.setTransformForLatitude(pt.latitude, longitude: pt.longitude, width: widthDegrees)
+		mapView.setTransformFor(latitude: pt.latitude, longitude: pt.longitude, width: widthDegrees)
 	}
 
     // Load a GPX trace from an external source
@@ -781,9 +781,9 @@ class GpxLayer: CALayer, GetDiskCacheSize {
     }
 
     func layoutSublayersSafe() {
-        let tRotation = OSMTransformRotation(mapView.screenFromMapTransform)
-        let tScale = OSMTransformScaleX(mapView.screenFromMapTransform)
-        let pScale = tScale / PATH_SCALING
+		let tRotation = mapView.screenFromMapTransform.rotation()
+		let tScale = mapView.screenFromMapTransform.scale()
+		let pScale = tScale / PATH_SCALING
 		var scale = Int(floor(-log(pScale)))
 //        var scale = floor(-log(-Double.greatestFiniteMagnitude))
 //        var scale = floor(-log(Double.infinity))

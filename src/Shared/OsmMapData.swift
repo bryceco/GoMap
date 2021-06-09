@@ -2302,7 +2302,9 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         print("Checking spatial database consistency")
 
         consistencyCheckRelationMembers()
-		spatial.consistencyCheckNodes(Array(nodes.values), ways: Array(ways.values), relations: Array(relations.values))
+		spatial.consistencyCheck(nodes: Array(nodes.values),
+									  ways: Array(ways.values),
+									  relations: Array(relations.values))
 
 		// make sure that if the undo manager is holding an object that it's consistent with mapData
 		let undoObjects = undoManager.objectRefs()

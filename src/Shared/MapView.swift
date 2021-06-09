@@ -158,10 +158,10 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     var progressActive = 0
     var locationBallLayer: LocationBallLayer?
     var addWayProgressLayer: CAShapeLayer?
-    var blinkObject: Any? // used for creating a moving dots animation during selection
-    var blinkSegment = 0
-    var blinkLayer: CAShapeLayer?
-    var isZoomScroll = false // Command-scroll zooms instead of scrolling (desktop only)
+	var blinkObject: OsmBaseObject? // used for creating a moving dots animation during selection
+	var blinkSegment = 0
+	var blinkLayer: CAShapeLayer?
+	var isZoomScroll = false // Command-scroll zooms instead of scrolling (desktop only)
 
 	var isRotateObjectMode: (rotateObjectOverlay: CAShapeLayer, rotateObjectCenter: OSMPoint)? = nil
 
@@ -169,7 +169,6 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
     var lastErrorDate: Date? // to prevent spamming of error dialogs
     var ignoreNetworkErrorsUntilDate: Date?
-    var mailTimer: DispatchSource?
     var voiceAnnouncement: VoiceAnnouncement?
     var tapAndDragGesture: TapAndDragGesture?
     var pushpinDragTotalMove = CGPoint.zero // to maintain undo stack
@@ -242,13 +241,13 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
 	private(set) var backgroundLayers: [CALayer] = [] // list of all layers that need to be resized, etc.
 
-    private var _screenFromMapTransform: OSMTransform = OSMTransformIdentity()
+	private var _screenFromMapTransform: OSMTransform = OSMTransform.identity
     @objc dynamic var screenFromMapTransform: OSMTransform {	// must be "@objc dynamic" because it's observed
         get {
             return _screenFromMapTransform
         }
         set(t) {
-			if OSMTransformEqual(t, _screenFromMapTransform) {
+			if t == _screenFromMapTransform {
                 return
             }
 
@@ -259,27 +258,27 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 			}
 
             // Wrap around if we translate too far
-            let unitX = UnitX(t)
-            let unitY = OSMPoint(x: -unitX.y, y: unitX.x)
-            let tran = Translation(t)
-            let dx = Dot(tran, unitX) // translation distance in x direction
+			let unitX = t.unitX()
+			let unitY = OSMPoint(x: -unitX.y, y: unitX.x)
+			let tran = t.translation()
+			let dx = Dot(tran, unitX) // translation distance in x direction
             let dy = Dot(tran, unitY)
-            let scale = OSMTransformScaleX(t)
-            let mapSize = 256 * scale
+			let scale = t.scale()
+			let mapSize = 256 * scale
             if dx > 0 {
                 let mul = ceil(dx / mapSize)
-                _screenFromMapTransform = OSMTransformTranslate(t, -mul * mapSize / scale, 0)
-            } else if dx < -mapSize {
+				_screenFromMapTransform = t.translatedBy(dx: -mul * mapSize / scale, dy: 0.0)
+			} else if dx < -mapSize {
                 let mul = floor(-dx / mapSize)
-                _screenFromMapTransform = OSMTransformTranslate(t, mul * mapSize / scale, 0)
-            }
+				_screenFromMapTransform = t.translatedBy(dx: mul * mapSize / scale, dy: 0.0)
+			}
             if dy > 0 {
                 let mul = ceil(dy / mapSize)
-                _screenFromMapTransform = OSMTransformTranslate(t, 0, -mul * mapSize / scale)
-            } else if dy < -mapSize {
+				_screenFromMapTransform = t.translatedBy(dx: 0.0, dy: -mul * mapSize / scale)
+			} else if dy < -mapSize {
                 let mul = floor(-dy / mapSize)
-                _screenFromMapTransform = OSMTransformTranslate(t, 0, mul * mapSize / scale)
-            }
+				_screenFromMapTransform = t.translatedBy(dx: 0.0, dy: mul * mapSize / scale)
+			}
 
             // update transform
 			_screenFromMapTransform = t
@@ -310,8 +309,8 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     }
 
     var mapFromScreenTransform: OSMTransform {
-        return OSMTransformInvert(screenFromMapTransform)
-    }
+		return screenFromMapTransform.inverse()
+	}
 
     private var _gpsState: GPS_STATE = .NONE
     var gpsState: GPS_STATE {
@@ -331,14 +330,14 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                 if gpsState == .HEADING {
                     // rotate to heading
                     let center = CGRectCenter(bounds)
-                    let screenAngle = OSMTransformRotation(screenFromMapTransform)
+					let screenAngle = screenFromMapTransform.rotation()
                     let heading = self.heading(for: locationManager.heading)
                     animateRotation(by: -(screenAngle + heading), aroundPoint: center)
                 } else if gpsState == .LOCATION {
                     // orient toward north
                     let center = CGRectCenter(bounds)
-                    let rotation = OSMTransformRotation(screenFromMapTransform)
-                    animateRotation(by: -rotation, aroundPoint: center)
+					let rotation = screenFromMapTransform.rotation()
+					animateRotation(by: -rotation, aroundPoint: center)
                 } else {
                     // keep whatever rotation we had
                 }
@@ -404,7 +403,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 			if !enableRotation {
 				// remove rotation
 				let centerPoint = CGRectCenter(bounds)
-				let angle = CGFloat(OSMTransformRotation(screenFromMapTransform))
+				let angle = CGFloat(screenFromMapTransform.rotation())
 				rotate(by: -angle, aroundScreenPoint: centerPoint)
             }
         }
@@ -836,10 +835,13 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             let longitude = UserDefaults.standard.double(forKey: "view.longitude")
 
             if !latitude.isNaN && !longitude.isNaN && !scale.isNaN {
-                setTransformForLatitude(latitude, longitude: longitude, scale: scale)
+				setTransformFor(latitude: latitude,
+								longitude: longitude,
+								scale: scale)
             } else {
                 let rc = OSMRect(layer.bounds)
-                screenFromMapTransform = OSMTransformMakeTranslation(rc.origin.x + rc.size.width / 2 - 128, rc.origin.y + rc.size.height / 2 - 128)
+				screenFromMapTransform = OSMTransform.Translation(rc.origin.x + rc.size.width / 2 - 128,
+																  rc.origin.y + rc.size.height / 2 - 128)
                 // turn on GPS which will move us to current location
                 mainViewController.setGpsState(GPS_STATE.LOCATION)
             }
@@ -914,7 +916,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         var center = OSMPoint(crossHairs.position)
         center = mapPoint(fromScreenPoint: center, birdsEye: false)
         center = LongitudeLatitudeFromMapPoint(center)
-        let scale = OSMTransformScaleX(screenFromMapTransform)
+		let scale = screenFromMapTransform.scale()
         #if false && DEBUG
         assert(scale > 1.0)
         #endif
@@ -1361,10 +1363,10 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             // only need to do this if we're zoomed out all the way: pick the best world map on which to display location
 
             let rc = layer.bounds
-            let unitX = UnitX(screenFromMapTransform)
+			let unitX = screenFromMapTransform.unitX()
             let unitY = OSMPoint(x: -unitX.y, y: unitX.x)
-            let mapSize: Double = 256 * OSMTransformScaleX(screenFromMapTransform)
-            if pt.x >= rc.origin.x + rc.size.width {
+			let mapSize: Double = 256 * screenFromMapTransform.scale()
+			if pt.x >= rc.origin.x + rc.size.width {
                 pt.x -= CGFloat(mapSize * unitX.x)
                 pt.y -= CGFloat(mapSize * unitX.y)
             } else if pt.x < rc.origin.x {
@@ -1492,30 +1494,34 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         return CGPointFromOSMPoint(pt)
     }
 
-    func setTransformForLatitude(_ latitude: Double, longitude: Double) {
+    func setTransformFor( latitude: Double, longitude: Double) {
         let point = screenPoint(forLatitude: latitude, longitude: longitude, birdsEye: false)
         let center = crossHairs.position
         let delta = CGPoint(x: center.x - point.x, y: center.y - point.y)
 		adjustOrigin(by: delta)
     }
 
-    func setTransformForLatitude(_ latitude: Double, longitude: Double, scale: Double) {
+    func setTransformFor(latitude: Double, longitude: Double, scale: Double) {
         // translate
-        setTransformForLatitude(latitude, longitude: longitude)
+		setTransformFor(latitude: latitude, longitude: longitude)
 
-        let ratio = scale / OSMTransformScaleX(screenFromMapTransform)
-        adjustZoom(by: CGFloat(ratio), aroundScreenPoint: crossHairs.position)
+		let ratio = scale / screenFromMapTransform.scale()
+		adjustZoom(by: CGFloat(ratio), aroundScreenPoint: crossHairs.position)
     }
 
-    func setTransformForLatitude(_ latitude: Double, longitude: Double, width widthDegrees: Double) {
+    func setTransformFor(latitude: Double, longitude: Double, width widthDegrees: Double) {
         let scale = 360 / (widthDegrees / 2)
-        setTransformForLatitude(latitude, longitude: longitude, scale: scale)
+		setTransformFor(latitude: latitude,
+						longitude: longitude,
+						scale: scale)
     }
 
     func setMapLocation(_ location: MapLocation) {
 		let zoom = location.zoom > 0 ? location.zoom : 18.0
 		let scale = pow(2, zoom)
-		self.setTransformForLatitude(location.latitude, longitude: location.longitude, scale: scale)
+		self.setTransformFor(latitude: location.latitude,
+							 longitude: location.longitude,
+							 scale: scale)
 		if let state = location.viewState {
 			self.viewState = state
 		}
@@ -1523,12 +1529,14 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
     func setTransformForLatitude(_ latitude: Double, longitude: Double, zoom: Double) {
         let scale = pow(2, zoom)
-        setTransformForLatitude(latitude, longitude: longitude, scale: scale)
+		setTransformFor(latitude: latitude,
+						longitude: longitude,
+						scale: scale)
     }
 
     func zoom() -> Double {
-        let scaleX = OSMTransformScaleX(screenFromMapTransform)
-        return log2(scaleX)
+		let scaleX = screenFromMapTransform.scale()
+		return log2(scaleX)
     }
 
     func point(on object: OsmBaseObject?, for point: CGPoint) -> CGPoint {
@@ -1599,7 +1607,6 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                 ok = false
         }
         mainViewController.setGpsState(ok ? .LOCATION : .NONE)
-        //        mainViewController..gpsState = ok ? .LOCATION : .NONE
     }
 
     @IBAction func center(onGPS sender: Any) {
@@ -1608,8 +1615,10 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         }
 
         userOverrodeLocationPosition = false
-        let location = locationManager.location
-        setTransformForLatitude(location?.coordinate.latitude ?? 0.0, longitude: location?.coordinate.longitude ?? 0.0)
+		if let location = locationManager.location {
+			setTransformFor(latitude: location.coordinate.latitude,
+							longitude: location.coordinate.longitude)
+		}
     }
 
     @IBAction func compassPressed(_ sender: Any) {
@@ -1660,7 +1669,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     }
 
     func updateHeadingSmoothed(_ heading: CGFloat, accuracy: CGFloat) {
-        let screenAngle = OSMTransformRotation(screenFromMapTransform)
+		let screenAngle = screenFromMapTransform.rotation()
 
         if gpsState == .HEADING {
             // rotate to new heading
@@ -1742,10 +1751,13 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         if !userOverrodeLocationPosition {
             // move view to center on new location
             if userOverrodeLocationZoom {
-                setTransformForLatitude(newLocation.coordinate.latitude, longitude: newLocation.coordinate.longitude)
+				setTransformFor(latitude: newLocation.coordinate.latitude,
+								longitude: newLocation.coordinate.longitude)
 			} else {
 				let widthDegrees: Double = Double(20.0 /*meters*/ / EarthRadius * 360.0)
-				setTransformForLatitude(newLocation.coordinate.latitude, longitude: newLocation.coordinate.longitude, width: widthDegrees)
+				setTransformFor(latitude: newLocation.coordinate.latitude,
+								longitude: newLocation.coordinate.longitude,
+								width: widthDegrees)
 			}
         }
 
@@ -1778,7 +1790,9 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             controller.setGpsState(GPS_STATE.NONE)
             if !isLocationSpecified() {
                 // go home
-                setTransformForLatitude(47.6858, longitude: -122.1917, width: 0.01)
+				setTransformFor(latitude: 47.6858,
+								longitude: -122.1917,
+								width: 0.01)
             }
 			var text = String.localizedStringWithFormat(NSLocalizedString("Ensure Location Services is enabled and you have granted this application access.\n\nError: %@",	comment: ""),
 														error.localizedDescription)
@@ -1817,7 +1831,8 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
         if !bounds.contains(pushpinView!.arrowPoint) {
             // need to zoom to location
-            setTransformForLatitude(loc.y, longitude: loc.x)
+			setTransformFor(latitude: loc.y,
+							longitude: loc.x)
         }
     }
 
@@ -1852,8 +1867,8 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     // MARK: Resize & movement
 
     func isLocationSpecified() -> Bool {
-        return !OSMTransformEqual(screenFromMapTransform, OSMTransformIdentity())
-    }
+		return !(screenFromMapTransform == .identity)
+	}
 
     func updateMouseCoordinates() {
     }
@@ -1865,8 +1880,8 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
         refreshNoteButtonsFromDatabase()
 
-        let o = OSMTransformMakeTranslation(Double(delta.x), Double(delta.y))
-        let t = OSMTransformConcat(screenFromMapTransform, o)
+		let o = OSMTransform.Translation(Double(delta.x), Double(delta.y))
+		let t = screenFromMapTransform.concat( o )
 		self.screenFromMapTransform = t
     }
 
@@ -1879,7 +1894,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
         let maxZoomIn: Double = Double(Int(1) << 30)
 
-		let scale = OSMTransformScaleX(screenFromMapTransform)
+		let scale = screenFromMapTransform.scale()
 		var ratio = Double(ratio)
         if ratio * scale < 1.0 {
             ratio = 1.0 / scale
@@ -1891,10 +1906,10 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         refreshNoteButtonsFromDatabase()
         let offset = mapPoint(fromScreenPoint: OSMPoint(zoomCenter), birdsEye: false)
         var t = screenFromMapTransform
-        t = OSMTransformTranslate(t, offset.x, offset.y)
-        t = OSMTransformScale(t, ratio)
-		t = OSMTransformTranslate(t, -offset.x, -offset.y)
-        screenFromMapTransform = t
+		t = t.translatedBy(dx: offset.x, dy: offset.y)
+		t = t.scaledBy( ratio )
+		t = t.translatedBy(dx: -offset.x, dy: -offset.y)
+		screenFromMapTransform = t
     }
 
     func rotate(by angle: CGFloat, aroundScreenPoint zoomCenter: CGPoint) {
@@ -1906,20 +1921,20 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
         let offset = mapPoint(fromScreenPoint: OSMPoint(zoomCenter), birdsEye: false)
         var t = screenFromMapTransform
-        t = OSMTransformTranslate(t, offset.x, offset.y)
-        t = OSMTransformRotate(t, Double(angle))
-        t = OSMTransformTranslate(t, -offset.x, -offset.y)
-        screenFromMapTransform = t
+		t = t.translatedBy(dx: offset.x, dy: offset.y)
+		t = t.rotatedBy( Double(angle) )
+		t = t.translatedBy(dx: -offset.x, dy: -offset.y)
+		screenFromMapTransform = t
 
-        let screenAngle = OSMTransformRotation(screenFromMapTransform)
+		let screenAngle = screenFromMapTransform.rotation()
         compassButton.transform = CGAffineTransform(rotationAngle: CGFloat(screenAngle))
-        if locationBallLayer != nil {
-            if gpsState == .HEADING && abs((locationBallLayer?.heading ?? 0.0) - -.pi / 2) < 0.0001 {
-                // don't pin location ball to North until we've animated our rotation to north
-                locationBallLayer?.heading = -.pi / 2
+        if let locationBallLayer = locationBallLayer {
+            if gpsState == .HEADING && abs(locationBallLayer.heading - -.pi / 2) < 0.0001 {
+				// don't pin location ball to North until we've animated our rotation to north
+				self.locationBallLayer!.heading = -.pi / 2
             } else {
                 let heading = self.heading(for: locationManager.heading)
-                locationBallLayer?.heading = CGFloat(screenAngle + heading - .pi / 2)
+				self.locationBallLayer!.heading = CGFloat(screenAngle + heading - .pi / 2)
             }
         }
     }
@@ -1934,7 +1949,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             deltaHeading -= 2 * .pi
         }
 
-        if abs(Float(deltaHeading)) < 0.00001 {
+        if abs(deltaHeading) < 0.00001 {
             return
         }
 
@@ -1990,14 +2005,14 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         let center = CGRectCenter(bounds)
         let offset = mapPoint(fromScreenPoint: OSMPoint(center), birdsEye: false)
 
-        t = OSMTransformTranslate(t, offset.x, offset.y)
-        #if TRANSFORM_3D
+		t = t.translatedBy(dx: offset.x, dy: offset.y)
+		#if TRANSFORM_3D
         t = CATransform3DRotate(t, delta, 1.0, 0.0, 0.0)
         #else
         birdsEyeRotation += angle
         #endif
-        t = OSMTransformTranslate(t, -offset.x, -offset.y)
-        screenFromMapTransform = t
+		t = t.translatedBy(dx: -offset.x, dy: -offset.y)
+		screenFromMapTransform = t
 
         if locationBallLayer != nil {
             updateUserLocationIndicator(nil)
@@ -2007,8 +2022,8 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     func rotateToNorth() {
         // Rotate to face North
         let center = CGRectCenter(bounds)
-        let rotation = OSMTransformRotation(screenFromMapTransform)
-        animateRotation(by: -rotation, aroundPoint: center)
+		let rotation = screenFromMapTransform.rotation()
+		animateRotation(by: -rotation, aroundPoint: center)
     }
 
     // MARK: Key presses
@@ -2016,15 +2031,16 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     /// Offers the option to either merge tags or replace them with the copied tags.
     /// - Parameter sender: nil
     override func paste(_ sender: Any?) {
-        let copyPasteTags = UserDefaults.standard.object(forKey: "copyPasteTags") as? [AnyHashable : Any]
-        if (copyPasteTags?.count ?? 0) == 0 {
+		guard let copyPasteTags = UserDefaults.standard.object(forKey: "copyPasteTags") as? [String : String],
+			copyPasteTags.count > 0
+		else {
             showAlert(NSLocalizedString("No tags to paste", comment: ""), message: nil)
             return
         }
 
         if (editorLayer.selectedPrimary?.tags.count ?? 0) > 0 {
-            let question = String.localizedStringWithFormat(NSLocalizedString("Pasting %ld tag(s)", comment: ""), copyPasteTags?.count ?? 0)
-            let alertPaste = UIAlertController(title: NSLocalizedString("Paste", comment: ""), message: question, preferredStyle: .alert)
+            let question = String.localizedStringWithFormat(NSLocalizedString("Pasting %ld tag(s)", comment: ""), copyPasteTags.count)
+			let alertPaste = UIAlertController(title: NSLocalizedString("Paste", comment: ""), message: question, preferredStyle: .alert)
             alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
             alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Merge Tags", comment: ""), style: .default, handler: { [self] alertAction in
                 if let selectedPrimary = editorLayer.selectedPrimary {
@@ -2916,71 +2932,68 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     }
 
     func blink(_ object: OsmBaseObject?, segment: Int) {
-        if object == nil {
-            unblinkObject()
-            return
+        guard let object = object else {
+			unblinkObject()
+			return
         }
-        if object == (blinkObject as? OsmBaseObject) && segment == blinkSegment {
-            return
+		if object == self.blinkObject && segment == blinkSegment {
+			return
         }
-        blinkLayer?.removeFromSuperlayer()
-        blinkObject = object
-        blinkSegment = segment
+		blinkLayer?.removeFromSuperlayer()
+		blinkObject = object
+		blinkSegment = segment
 
         // create a layer for the object
         let path = CGMutablePath()
-        if ((object?.isNode()) != nil) {
-            let node = object as? OsmNode
-            let center = screenPoint(forLatitude: node?.lat ?? 0.0, longitude: node?.lon ?? 0.0, birdsEye: true)
-            var rect = CGRect(x: center.x, y: center.y, width: 0, height: 0)
-            rect = rect.insetBy(dx: -10, dy: -10)
-            path.addEllipse(in: rect, transform: .identity)
-        } else if ((object?.isWay) != nil) {
-            let way = object as? OsmWay
-            if segment >= 0 {
-                assert((way?.nodes.count ?? 0) >= segment + 2)
-                let n1 = way?.nodes[segment]
-                let n2 = way?.nodes[segment + 1]
-                let p1 = screenPoint(forLatitude: n1?.lat ?? 0.0, longitude: n1?.lon ?? 0.0, birdsEye: true)
-                let p2 = screenPoint(forLatitude: n2?.lat ?? 0.0, longitude: n2?.lon ?? 0.0, birdsEye: true)
-                path.move(to: CGPoint(x: p1.x, y: p1.y), transform: .identity)
-                path.addLine(to: CGPoint(x: p2.x, y: p2.y), transform: .identity)
+		if let node = object as? OsmNode {
+			let center = screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: true)
+			var rect = CGRect(x: center.x, y: center.y, width: 0, height: 0)
+			rect = rect.insetBy(dx: -10, dy: -10)
+			path.addEllipse(in: rect, transform: .identity)
+		} else if let way = object as? OsmWay {
+			if segment >= 0 {
+                assert(way.nodes.count >= segment + 2)
+                let n1 = way.nodes[segment]
+                let n2 = way.nodes[segment + 1]
+                let p1 = screenPoint(forLatitude: n1.lat, longitude: n1.lon, birdsEye: true)
+                let p2 = screenPoint(forLatitude: n2.lat, longitude: n2.lon, birdsEye: true)
+                path.move(to: CGPoint(x: p1.x, y: p1.y))
+                path.addLine(to: CGPoint(x: p2.x, y: p2.y))
             } else {
                 var isFirst = true
-                if let nodes = way?.nodes {
-                    for node in nodes {
-                        let pt = screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: true)
-                        if isFirst {
-                            path.move(to: CGPoint(x: pt.x, y: pt.y), transform: .identity)
-                        } else {
-                            path.addLine(to: CGPoint(x: pt.x, y: pt.y), transform: .identity)
-                        }
-                        isFirst = false
-                    }
-                }
+				for node in way.nodes {
+					let pt = screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: true)
+					if isFirst {
+						path.move(to: CGPoint(x: pt.x, y: pt.y))
+					} else {
+						path.addLine(to: CGPoint(x: pt.x, y: pt.y))
+					}
+					isFirst = false
+				}
             }
         } else {
             assert(false)
         }
-        blinkLayer = CAShapeLayer()
-        blinkLayer?.path = path
-        blinkLayer?.fillColor = nil
-        blinkLayer?.lineWidth = 3.0
-        blinkLayer?.frame = CGRect(x: 0, y: 0, width: bounds.size.width, height: bounds.size.height)
-        blinkLayer?.zPosition = Z_BLINK
-        blinkLayer?.strokeColor = UIColor.black.cgColor
+		self.blinkLayer = CAShapeLayer()
+		guard let blinkLayer = self.blinkLayer else { fatalError() }
+		blinkLayer.path = path
+		blinkLayer.fillColor = nil
+		blinkLayer.lineWidth = 3.0
+		blinkLayer.frame = CGRect(x: 0, y: 0, width: bounds.size.width, height: bounds.size.height)
+		blinkLayer.zPosition = Z_BLINK
+		blinkLayer.strokeColor = UIColor.black.cgColor
 
         let dots = CAShapeLayer()
-        dots.path = blinkLayer?.path
+        dots.path = blinkLayer.path
         dots.fillColor = nil
-        dots.lineWidth = blinkLayer?.lineWidth ?? 0.0
-        dots.bounds = blinkLayer?.bounds ?? CGRect.zero
+        dots.lineWidth = blinkLayer.lineWidth
+        dots.bounds = blinkLayer.bounds
         dots.position = CGPoint.zero
         dots.anchorPoint = CGPoint.zero
         dots.strokeColor = UIColor.white.cgColor
         dots.lineDashPhase = 0.0
         dots.lineDashPattern = [NSNumber(value: 4), NSNumber(value: 4)]
-        blinkLayer?.addSublayer(dots)
+        blinkLayer.addSublayer(dots)
 
         let dashAnimation = CABasicAnimation(keyPath: "lineDashPhase")
         dashAnimation.fromValue = NSNumber(value: 0.0)
@@ -2989,9 +3002,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         dashAnimation.repeatCount = Float(CGFloat.greatestFiniteMagnitude)
         dots.add(dashAnimation, forKey: "linePhase")
 
-        if let blinkLayer = blinkLayer {
-            layer.addSublayer(blinkLayer)
-        }
+		layer.addSublayer(blinkLayer)
     }
 
     // MARK: Notes

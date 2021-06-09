@@ -176,13 +176,14 @@ class QuadMap: NSObject, NSCoding {
         rootQuad.deleteObjects(predicate: predicate)
     }
 
-    func consistencyCheckNodes(_ nodes: [OsmNode], ways: [OsmWay], relations: [OsmRelation]) {
+    func consistencyCheck(nodes: [OsmNode], ways: [OsmWay], relations: [OsmRelation]) {
         // check that every object appears exactly once in the object tree
 		var dict: [OsmExtendedIdentifier : Int] = [:]
 		var nCount = 0
 		var wCount = 0
 		var rCount = 0
 		rootQuad.enumerate { obj, rect in
+			assert( !(rect == .zero))
 			let id = obj.extendedIdentifier
 			if let cnt = dict[id] {
 				dict[id] = cnt + 1

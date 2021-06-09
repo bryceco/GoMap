@@ -429,9 +429,9 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
 //#if CUSTOM_TRANSFORM
 	private func setSublayerPositions(_ _layerDict: [String : CALayer]) {
         // update locations of tiles
-        let tRotation = OSMTransformRotation(mapView.screenFromMapTransform)
-        let tScale = OSMTransformScaleX(mapView.screenFromMapTransform)
-        for (tileKey, layer) in _layerDict {
+		let tRotation = mapView.screenFromMapTransform.rotation()
+		let tScale = mapView.screenFromMapTransform.scale()
+		for (tileKey, layer) in _layerDict {
             let splitTileKey : [String] = tileKey.components(separatedBy: ",")
             let tileZ: Int32 = Int32(splitTileKey[0]) ?? 0
             let tileX: Int32 = Int32(splitTileKey[1]) ?? 0

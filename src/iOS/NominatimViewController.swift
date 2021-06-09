@@ -85,7 +85,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			appDelegate.mapView.mainViewController.toggleLocation(self)
         }
         
-        appDelegate.mapView.setTransformForLatitude(lat, longitude: lon, width: widthDegrees)
+		appDelegate.mapView.setTransformFor(latitude: lat, longitude: lon, width: widthDegrees)
         
         dismiss(animated: true)
     }

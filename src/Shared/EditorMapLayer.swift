@@ -909,7 +909,7 @@ class EditorMapLayer: CALayer {
         
         let pt = MapPointForLatitudeLongitude(node.lat, node.lon)
         
-        let screenAngle = OSMTransformRotation(mapView.screenFromMapTransform)
+		let screenAngle = mapView.screenFromMapTransform.rotation()
         layer.setAffineTransform( CGAffineTransform(rotationAngle: CGFloat(screenAngle)) )
         
         let radius: CGFloat = 30.0
@@ -1416,8 +1416,8 @@ class EditorMapLayer: CALayer {
         CATransaction.setAnimationDuration(1.0)
         #endif
         
-        let tRotation = OSMTransformRotation(mapView.screenFromMapTransform)
-        let tScale = OSMTransformScaleX(mapView.screenFromMapTransform)
+		let tRotation = mapView.screenFromMapTransform.rotation()
+		let tScale = mapView.screenFromMapTransform.scale()
         let pScale = CGFloat( tScale / PATH_SCALING )
 		let pixelsPerMeter = 0.8 * 1.0 / mapView.metersPerPixel()
         
