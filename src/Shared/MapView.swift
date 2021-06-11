@@ -677,13 +677,10 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 			guard let action = context["comment"] as? String,
 				  let location = context["location"] as? Data
 			else { return }
+			// FIXME: Use Coder for OSMTransform
 			if location.count == MemoryLayout<OSMTransform>.size {
-				location.withUnsafeBytes({ bytes in
-                    let transform = bytes as AnyObject
-					if let transform = transform as? OSMTransform {
-                        weakSelf?.screenFromMapTransform = transform
-                    }
-                })
+				let transform: OSMTransform = location.withUnsafeBytes( { return $0.load(as: OSMTransform.self) } )
+				weakSelf?.screenFromMapTransform = transform
             }
 			let title = undo ? NSLocalizedString("Undo", comment: "") : NSLocalizedString("Redo", comment: "")
 

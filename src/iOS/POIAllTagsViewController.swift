@@ -626,7 +626,7 @@ class POIAllTagsViewController: UITableViewController {
         return nil
     }
 
-    func textFieldEditingDidEnd(_ textField: UITextField) {
+	@objc func textFieldEditingDidEnd(_ textField: UITextField) {
 		guard let pair: TextPairTableCell = textField.superviewOfType(),
 			  let indexPath = tableView.indexPath(for: pair)
 		else { return }
