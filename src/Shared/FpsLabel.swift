@@ -18,38 +18,33 @@ class FpsLabel: UILabel {
     
     private var timer: DispatchSourceTimer?
 
-    private var _showFPS = false
-    var showFPS: Bool {
-        get {
-            _showFPS
-        }
-        set(showFPS) {
-            if showFPS != _showFPS {
-                _showFPS = showFPS
+    public var showFPS: Bool = false {
+		didSet {
+            if showFPS == oldValue {
+				return
+			}
+			if showFPS {
+				isHidden = false
+				let displayLink = DisplayLink.shared()
+				displayLink.addName("FpsLabel", block: {
+					self.frameUpdated()
+				})
 
-                if showFPS {
-                    isHidden = false
-                    let displayLink = DisplayLink.shared()
-                    displayLink.addName("FpsLabel", block: {
-                        self.frameUpdated()
-                    })
-
-                    // create a timer to update the text twice a second
-                    timer = DispatchSource.makeTimerSource(queue: DispatchQueue.main)
-					timer?.schedule(deadline: .now(), repeating: .milliseconds(500))
-                    timer?.setEventHandler(handler: { [weak self] in
-                        self?.updateText()
-                    })
-                    timer?.activate()
-                    layer.backgroundColor = UIColor(white: 1.0, alpha: 0.6).cgColor
-                } else {
-                    text = nil
-                    isHidden = true
-                    let displayLink = DisplayLink.shared()
-                    displayLink.removeName("FpsLabel")
-                    timer?.cancel()
-                }
-            }
+				// create a timer to update the text twice a second
+				timer = DispatchSource.makeTimerSource(queue: DispatchQueue.main)
+				timer?.schedule(deadline: .now(), repeating: .milliseconds(500))
+				timer?.setEventHandler(handler: { [weak self] in
+					self?.updateText()
+				})
+				timer?.activate()
+				layer.backgroundColor = UIColor(white: 1.0, alpha: 0.6).cgColor
+			} else {
+				text = nil
+				isHidden = true
+				let displayLink = DisplayLink.shared()
+				displayLink.removeName("FpsLabel")
+				timer?.cancel()
+			}
         }
     }
 

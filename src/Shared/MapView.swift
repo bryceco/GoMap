@@ -156,7 +156,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
     var lastMouseDragPos = CGPoint.zero
     var progressActive = 0
-    var locationBallLayer: LocationBallLayer?
+    var locationBallLayer: LocationBallLayer
     var addWayProgressLayer: CAShapeLayer?
 	var blinkObject: OsmBaseObject? // used for creating a moving dots animation during selection
 	var blinkSegment = 0
@@ -315,49 +315,46 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 		return screenFromMapTransform.inverse()
 	}
 
-    private var _gpsState: GPS_STATE = .NONE
-    var gpsState: GPS_STATE {
-        get {
-            return _gpsState
-        }
-        set(gpsState) {
-            if gpsState != _gpsState {
-                // update collection of GPX points
-                if _gpsState == .NONE && gpsState != .NONE {
-                    // because recording GPX tracks is cheap we record them every time GPS is enabled
-                    gpxLayer.startNewTrack()
-                } else if gpsState == .NONE {
-                    gpxLayer.endActiveTrack()
-                }
+	var gpsState: GPS_STATE = .NONE {
+		didSet {
+            if gpsState != oldValue {
+				// update collection of GPX points
+				if oldValue == .NONE && gpsState != .NONE {
+					// because recording GPX tracks is cheap we record them every time GPS is enabled
+					gpxLayer.startNewTrack()
+				} else if gpsState == .NONE {
+					gpxLayer.endActiveTrack()
+				}
 
-                if gpsState == .HEADING {
-                    // rotate to heading
-					let center = bounds.center()
-					let screenAngle = screenFromMapTransform.rotation()
-                    let heading = self.heading(for: locationManager.heading)
-                    animateRotation(by: -(screenAngle + heading), aroundPoint: center)
-                } else if gpsState == .LOCATION {
-                    // orient toward north
+				if gpsState == .HEADING {
+					// rotate to heading
+					if let heading = locationManager.heading {
+						let center = bounds.center()
+						let screenAngle = screenFromMapTransform.rotation()
+						let heading = self.heading(for: heading)
+						animateRotation(by: -(screenAngle + heading), aroundPoint: center)
+					}
+				} else if gpsState == .LOCATION {
+					// orient toward north
 					let center = bounds.center()
 					let rotation = screenFromMapTransform.rotation()
 					animateRotation(by: -rotation, aroundPoint: center)
-                } else {
-                    // keep whatever rotation we had
-                }
+				} else {
+					// keep whatever rotation we had
+				}
 
-                if gpsState == .NONE {
-                    centerOnGPSButton.isHidden = true
-                    voiceAnnouncement?.enabled = false
-                } else {
-                    voiceAnnouncement?.enabled = true
-                }
+				if gpsState == .NONE {
+					centerOnGPSButton.isHidden = true
+					voiceAnnouncement?.enabled = false
+				} else {
+					voiceAnnouncement?.enabled = true
+				}
 
-                _gpsState = gpsState
-                if _gpsState != .NONE {
-                    locating = true
-                } else {
-                    locating = false
-                }
+				if gpsState != .NONE {
+					locating = true
+				} else {
+					locating = false
+				}
             }
         }
     }
@@ -505,17 +502,11 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         return pushpinView?.arrowPoint
 	}
 
-    private var _locating = false
-    var locating: Bool {
-        get {
-            _locating
-        }
-        set(locating) {
-            if _locating == locating {
+	private var locating: Bool {
+		didSet {
+			if oldValue == locating {
                 return
             }
-            _locating = locating
-
             if locating {
 
                 let status = CLLocationManager.authorizationStatus()
@@ -540,12 +531,12 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                 userOverrodeLocationZoom = false
                 locationManager.startUpdatingLocation()
                 locationManager.startUpdatingHeading()
+				locationBallLayer.isHidden = false
             } else {
                 locationManager.stopUpdatingLocation()
                 locationManager.stopUpdatingHeading()
-                locationBallLayer?.removeFromSuperlayer()
-                locationBallLayer = nil
-            }
+				locationBallLayer.isHidden = true
+			}
         }
     }
     @IBOutlet private var statusBarBackground: UIVisualEffectView!
@@ -556,6 +547,8 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
 		self.crossHairs = CAShapeLayer()
 		self.customAerials = AerialList()
+		self.locationBallLayer = LocationBallLayer()
+		self.locating = false
 
 		super.init(coder: coder)
 
@@ -629,36 +622,42 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 			self.layer.addSublayer(layer)
 		}
 
-        if true {
-            // implement crosshairs
-            var path = UIBezierPath()
-            let radius: CGFloat = 12
-            path.move(to: CGPoint(x: -radius, y: 0))
-            path.addLine(to: CGPoint(x: radius, y: 0))
-            path.move(to: CGPoint(x: 0, y: -radius))
-            path.addLine(to: CGPoint(x: 0, y: radius))
-            crossHairs.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-            crossHairs.path = path.cgPath
-            crossHairs.strokeColor = UIColor(red: 1.0, green: 1.0, blue: 0.5, alpha: 1.0).cgColor
-            crossHairs.bounds = CGRect(x: -radius, y: -radius, width: 2 * radius, height: 2 * radius)
-            crossHairs.lineWidth = 2.0
-            crossHairs.zPosition = Z_CROSSHAIRS
+		// implement crosshairs
+		do {
+			var path = UIBezierPath()
+			let radius: CGFloat = 12
+			path.move(to: CGPoint(x: -radius, y: 0))
+			path.addLine(to: CGPoint(x: radius, y: 0))
+			path.move(to: CGPoint(x: 0, y: -radius))
+			path.addLine(to: CGPoint(x: 0, y: radius))
+			crossHairs.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+			crossHairs.path = path.cgPath
+			crossHairs.strokeColor = UIColor(red: 1.0, green: 1.0, blue: 0.5, alpha: 1.0).cgColor
+			crossHairs.bounds = CGRect(x: -radius, y: -radius, width: 2 * radius, height: 2 * radius)
+			crossHairs.lineWidth = 2.0
+			crossHairs.zPosition = Z_CROSSHAIRS
 
-            path = UIBezierPath()
-            let shadowWidth: CGFloat = 2.0
-            let p1 = UIBezierPath(rect: CGRect(x: -(radius + shadowWidth - 1), y: -shadowWidth, width: 2 * (radius + shadowWidth - 1), height: 2 * shadowWidth))
-            let p2 = UIBezierPath(rect: CGRect(x: -shadowWidth, y: -(radius + shadowWidth - 1), width: 2 * shadowWidth, height: 2 * (radius + shadowWidth - 1)))
-            path.append(p1)
-            path.append(p2)
-            crossHairs.shadowColor = UIColor.black.cgColor
-            crossHairs.shadowOpacity = 1.0
-            crossHairs.shadowPath = path.cgPath
-            crossHairs.shadowRadius = 0
-            crossHairs.shadowOffset = CGSize(width: 0, height: 0)
+			path = UIBezierPath()
+			let shadowWidth: CGFloat = 2.0
+			let p1 = UIBezierPath(rect: CGRect(x: -(radius + shadowWidth - 1), y: -shadowWidth, width: 2 * (radius + shadowWidth - 1), height: 2 * shadowWidth))
+			let p2 = UIBezierPath(rect: CGRect(x: -shadowWidth, y: -(radius + shadowWidth - 1), width: 2 * shadowWidth, height: 2 * (radius + shadowWidth - 1)))
+			path.append(p1)
+			path.append(p2)
+			crossHairs.shadowColor = UIColor.black.cgColor
+			crossHairs.shadowOpacity = 1.0
+			crossHairs.shadowPath = path.cgPath
+			crossHairs.shadowRadius = 0
+			crossHairs.shadowOffset = CGSize(width: 0, height: 0)
 
 			crossHairs.position = bounds.center()
 			layer.addSublayer(crossHairs)
-        }
+		}
+
+		locationBallLayer.zPosition = Z_BALL
+		locationBallLayer.heading = 0.0
+		locationBallLayer.showHeading = true
+		locationBallLayer.isHidden = true
+		layer.addSublayer(locationBallLayer)
 
         #if false
         voiceAnnouncement = VoiceAnnouncement()
@@ -1312,7 +1311,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                 editorLayer.isHidden = true
                 aerialLayer.isHidden = true
                 mapnikLayer.isHidden = false
-                userInstructionLabel.isHidden = viewState != .EDITOR && viewState != .EDITORAERIAL
+                userInstructionLabel.isHidden = state != .EDITOR && state != .EDITORAERIAL
                 if !userInstructionLabel.isHidden {
                     userInstructionLabel.text = NSLocalizedString("Zoom to Edit", comment: "")
                 }
@@ -1595,7 +1594,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     }
 
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if locationManagerExtraneousNotification {
+		if locationManagerExtraneousNotification {
             // filter out extraneous notification we get when initializing CL
             //
             locationManagerExtraneousNotification = false
@@ -1638,79 +1637,78 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     }
 
     func updateUserLocationIndicator(_ location: CLLocation?) {
-        if locationBallLayer != nil {
+		if !locationBallLayer.isHidden {
             // set new position
-            let coord = location != nil ? location?.coordinate ?? CLLocationCoordinate2D() : locationManager.location?.coordinate ?? CLLocationCoordinate2D()
+			guard let location = location ?? locationManager.location else { return }
+			let coord = location.coordinate
             var point = screenPoint(forLatitude: coord.latitude, longitude: coord.longitude, birdsEye: true)
-
-            point = wrapScreenPoint(point)
-            locationBallLayer?.position = point
+			point = wrapScreenPoint(point)
+            locationBallLayer.position = point
 
             // set location accuracy
-            let meters = locationManager.location?.horizontalAccuracy ?? 0
+            let meters = location.horizontalAccuracy
             var pixels = CGFloat(meters / metersPerPixel())
             if pixels == 0.0 {
                 pixels = 100.0
             }
-            locationBallLayer?.radiusInPixels = pixels
+            locationBallLayer.radiusInPixels = pixels
         }
     }
 
-    func heading(for clHeading: CLHeading?) -> Double {
-        var heading = (clHeading?.trueHeading ?? 0.0) * .pi / 180
-        switch UIApplication.shared.statusBarOrientation {
-            case .portraitUpsideDown:
-                heading += .pi
-            case .landscapeLeft:
-                heading += .pi / 2
-            case .landscapeRight:
-                heading -= .pi / 2
-            case .portrait:
-                fallthrough
-            default:
-                break
-        }
-        return heading
+    func heading(for clHeading: CLHeading) -> Double {
+		var heading = clHeading.trueHeading * .pi / 180
+		switch UIApplication.shared.statusBarOrientation {
+			case .portraitUpsideDown:
+				heading += .pi
+			case .landscapeLeft:
+				heading += .pi / 2
+			case .landscapeRight:
+				heading -= .pi / 2
+			case .portrait:
+				fallthrough
+			default:
+				break
+		}
+		return heading
     }
 
-    func updateHeadingSmoothed(_ heading: CGFloat, accuracy: CGFloat) {
+    func updateHeadingSmoothed(_ heading: Double, accuracy: Double) {
 		let screenAngle = screenFromMapTransform.rotation()
 
         if gpsState == .HEADING {
             // rotate to new heading
 			let center = bounds.center()
-            let delta = -(heading + CGFloat(screenAngle))
+            let delta = -(heading + screenAngle)
             rotate(by: CGFloat(delta), aroundScreenPoint: center)
-        } else if locationBallLayer != nil {
-            // rotate location ball
-            locationBallLayer?.headingAccuracy = accuracy * (.pi / 180)
-            locationBallLayer?.showHeading = true
-            locationBallLayer?.heading = heading + CGFloat(screenAngle) - .pi / 2
+		} else if !locationBallLayer.isHidden {
+			// rotate location ball
+			locationBallLayer.headingAccuracy = CGFloat(accuracy * (.pi / 180))
+			locationBallLayer.showHeading = true
+			locationBallLayer.heading = CGFloat(heading + screenAngle - .pi / 2)
         }
     }
 
-    static var locationManagerSmoothHeading = 0.0
-
-    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+    private var locationManagerSmoothHeading = 0.0
+	func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         let accuracy = newHeading.headingAccuracy
         let heading = self.heading(for: newHeading)
 
         DisplayLink.shared().addName("smoothHeading", block: { [self] in
-            var delta = heading - MapView.locationManagerSmoothHeading
+            var delta = heading - self.locationManagerSmoothHeading
             if delta > .pi {
                 delta -= 2 * .pi
             } else if delta < -.pi {
                 delta += 2 * .pi
             }
             delta *= 0.15
-            if abs(Float(delta)) < 0.001 {
-                MapView.locationManagerSmoothHeading = heading
+            if abs(delta) < 0.001 {
+				self.locationManagerSmoothHeading = heading
             } else {
-                MapView.locationManagerSmoothHeading += delta
+                self.locationManagerSmoothHeading += delta
             }
-            updateHeadingSmoothed(CGFloat(MapView.locationManagerSmoothHeading), accuracy: CGFloat(accuracy))
-            if heading == MapView.locationManagerSmoothHeading {
-                DisplayLink.shared().removeName("smoothHeading")
+            updateHeadingSmoothed(self.locationManagerSmoothHeading, accuracy: accuracy)
+            if heading == self.locationManagerSmoothHeading {
+				DisplayLink.shared().removeName("smoothHeading")
             }
         })
     }
@@ -1732,7 +1730,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 		let p1 = OSMPoint( newLocation.coordinate )
 		let p2 = OSMPoint( currentLocation.coordinate )
 		let delta = GreatCircleDistance(p1, p2)
-		if locationBallLayer != nil && delta < 0.1 && abs(newLocation.horizontalAccuracy - currentLocation.horizontalAccuracy) < 1.0 {
+		if !locationBallLayer.isHidden && delta < 0.1 && abs(newLocation.horizontalAccuracy - currentLocation.horizontalAccuracy) < 1.0 {
 			return
         }
         currentLocation = newLocation
@@ -1767,14 +1765,6 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         }
 
 		pushpinView?.arrowPoint = screenPoint(forLatitude: pp.latitude, longitude: pp.longitude, birdsEye: false)
-
-		if locationBallLayer == nil {
-            locationBallLayer = LocationBallLayer()
-            locationBallLayer?.zPosition = Z_BALL
-            locationBallLayer?.heading = 0.0
-            locationBallLayer?.showHeading = true
-			layer.addSublayer(locationBallLayer!)
-		}
 		updateUserLocationIndicator(newLocation)
     }
 
@@ -1919,8 +1909,6 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             return
         }
 
-        refreshNoteButtonsFromDatabase()
-
         let offset = mapPoint(fromScreenPoint: OSMPoint(zoomCenter), birdsEye: false)
         var t = screenFromMapTransform
 		t = t.translatedBy(dx: offset.x, dy: offset.y)
@@ -1930,13 +1918,15 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
 		let screenAngle = screenFromMapTransform.rotation()
         compassButton.transform = CGAffineTransform(rotationAngle: CGFloat(screenAngle))
-        if let locationBallLayer = locationBallLayer {
-            if gpsState == .HEADING && abs(locationBallLayer.heading - -.pi / 2) < 0.0001 {
+		if !locationBallLayer.isHidden {
+			if gpsState == .HEADING && abs(locationBallLayer.heading - -.pi / 2) < 0.0001 {
 				// don't pin location ball to North until we've animated our rotation to north
-				self.locationBallLayer!.heading = -.pi / 2
+				self.locationBallLayer.heading = -.pi / 2
             } else {
-                let heading = self.heading(for: locationManager.heading)
-				self.locationBallLayer!.heading = CGFloat(screenAngle + heading - .pi / 2)
+				if let heading = locationManager.heading {
+					let heading = self.heading(for: heading)
+					self.locationBallLayer.heading = CGFloat(screenAngle + heading - .pi / 2)
+				}
             }
         }
     }
@@ -2016,9 +2006,9 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 		t = t.translatedBy(dx: -offset.x, dy: -offset.y)
 		screenFromMapTransform = t
 
-        if locationBallLayer != nil {
-            updateUserLocationIndicator(nil)
-        }
+		if !locationBallLayer.isHidden {
+			updateUserLocationIndicator(nil)
+		}
     }
 
     func rotateToNorth() {

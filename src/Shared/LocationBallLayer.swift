@@ -9,7 +9,7 @@
 import QuartzCore
 
 class LocationBallLayer: CALayer {
-    var _headingLayer: CAShapeLayer?
+    var _headingLayer: CAShapeLayer
     var _ringLayer: CAShapeLayer
     
     var showHeading = false {
@@ -31,17 +31,18 @@ class LocationBallLayer: CALayer {
 	}
     
 	var radiusInPixels: CGFloat = 0.0 {
-		willSet(newValue) {
-			if newValue == radiusInPixels {
+		didSet(oldValue) {
+			if oldValue == radiusInPixels {
 				return
 			}
-			let animation = ringAnimation(withRadius: newValue)
+			let animation = ringAnimation(withRadius: radiusInPixels)
 			_ringLayer.add(animation, forKey: "ring")
         }
     }
     
     override init() {
 		_ringLayer = CAShapeLayer()
+		_headingLayer = CAShapeLayer()
 
 		super.init()
         frame = CGRect(x: 0, y: 0, width: 16, height: 16)
@@ -76,13 +77,20 @@ class LocationBallLayer: CALayer {
 
         let imageLayer = CALayer()
         let image = UIImage(named: "BlueBall")!
-#if os(iOS)
         imageLayer.contents = image.cgImage
-#else
-        imageLayer.contents = image
-#endif
         imageLayer.frame = bounds
         addSublayer(imageLayer)
+
+		_headingLayer.isHidden = true
+		_headingLayer.fillColor = UIColor(red: 0.5, green: 1.0, blue: 0.5, alpha: 0.4).cgColor
+		_headingLayer.strokeColor = UIColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0).cgColor
+		_headingLayer.zPosition = -1
+		var rc = bounds
+		rc.origin.x += rc.size.width / 2
+		rc.origin.y += rc.size.height / 2
+		_headingLayer.frame = rc
+		addSublayer(_headingLayer)
+
     }
     
     func ringAnimation(withRadius radius: CGFloat) -> CABasicAnimation {
@@ -106,41 +114,20 @@ class LocationBallLayer: CALayer {
     
     override func layoutSublayers() {
         if showHeading && headingAccuracy > 0 {
-            if _headingLayer == nil {
-                _headingLayer = CAShapeLayer()
-#if os(iOS)
-                _headingLayer?.fillColor = UIColor(red: 0.5, green: 1.0, blue: 0.5, alpha: 0.4).cgColor
-                _headingLayer?.strokeColor = UIColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0).cgColor
-#else
-                headingLayer?.fillColor = NSColor(calibratedRed: 0.5, green: 1.0, blue: 0.5, alpha: 0.4).cgColor
-                headingLayer?.strokeColor = NSColor(calibratedRed: 0.0, green: 1.0, blue: 0.0, alpha: 1.0).cgColor
-#endif
-                _headingLayer?.zPosition = -1
-                var rc = bounds
-                rc.origin.x += rc.size.width / 2
-                rc.origin.y += rc.size.height / 2
-                _headingLayer?.frame = rc
-                if let headingLayer = _headingLayer {
-                    addSublayer(headingLayer)
-                }
-            }
-            
             // draw heading
             let radius: CGFloat = 40.0
             let path = CGMutablePath()
             path.addArc(center: CGPoint(x: 0.0, y: 0.0), radius: radius, startAngle: heading - headingAccuracy, endAngle: heading + headingAccuracy, clockwise: false, transform: .identity)
             path.addLine(to: CGPoint(x: 0, y: 0), transform: .identity)
             path.closeSubpath()
-            _headingLayer?.path = path
-        } else {
-            if _headingLayer != nil {
-                _headingLayer?.removeFromSuperlayer()
-                _headingLayer = nil
-            }
-        }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
+			_headingLayer.path = path
+			_headingLayer.isHidden = false
+		} else {
+			_headingLayer.isHidden = true
+		}
+	}
+
+	required init?(coder aDecoder: NSCoder) {
 		fatalError()
 	}
 }

@@ -78,7 +78,8 @@ class GpxTrack: NSObject, NSCoding {
     var name: String {
         get {
             return _name ?? fileName()
-        } set(name) {
+        }
+		set(name) {
             _name = name
         }
     }
@@ -318,25 +319,18 @@ class GpxLayer: CALayer, GetDiskCacheSize {
 
     private(set) var activeTrack: GpxTrack? // track currently being recorded
 
-    private weak var _selectedTrack: GpxTrack?
+	// track picked in view controller
     weak var selectedTrack: GpxTrack? {
-        get {
-            return _selectedTrack
-        }
-        set(selectedTrack) {
-            if selectedTrack != _selectedTrack {
-                _selectedTrack?.shapeLayer?.removeFromSuperlayer()
-                _selectedTrack?.shapeLayer = nil // color changes
-
-                _selectedTrack = selectedTrack
-
-                _selectedTrack?.shapeLayer?.removeFromSuperlayer()
-                _selectedTrack?.shapeLayer = nil // color changes
-
-                setNeedsLayout()
-            }
-        }
-    } // track picked in view controller
+		didSet {
+			if oldValue != selectedTrack {
+				oldValue?.shapeLayer?.removeFromSuperlayer()
+				oldValue?.shapeLayer = nil // color changes
+				selectedTrack?.shapeLayer?.removeFromSuperlayer()
+				selectedTrack?.shapeLayer = nil // color changes
+			}
+			setNeedsLayout()
+		}
+	}
     private(set) var previousTracks: [GpxTrack] = [] // sorted with most recent first
     private(set) var uploadedTracks: [String : Any] = [:] // track name -> upload date
 
