@@ -1306,7 +1306,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                 editorLayer.isHidden = true
                 aerialLayer.isHidden = false
                 mapnikLayer.isHidden = true
-                userInstructionLabel?.isHidden = true
+                userInstructionLabel.isHidden = true
                 aerialLayer.opacity = 1.0
             case MapViewState.MAPNIK:
                 editorLayer.isHidden = true

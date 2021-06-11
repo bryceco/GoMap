@@ -42,10 +42,6 @@ class EditorMapLayer: CALayer {
 		}
 	}
 
-    var _selectedNode: OsmNode?
-    var _selectedWay: OsmWay?
-    var _selectedRelation: OsmRelation?
-
     let mapData: OsmMapData
 
     var addNodeInProgress = false
@@ -107,13 +103,13 @@ class EditorMapLayer: CALayer {
 			if let pushpin = strongSelf.mapView.pushpinPosition {
 				dict["pushpin"] = NSCoder.string(for: pushpin)
             }
-			if let selectedRelation = strongSelf._selectedRelation {
+			if let selectedRelation = strongSelf.selectedRelation {
 				dict["selectedRelation"] = selectedRelation
 			}
-			if let selectedWay = strongSelf._selectedWay {
+			if let selectedWay = strongSelf.selectedWay {
 				dict["selectedWay"] = selectedWay
 			}
-			if let selectedNode = strongSelf._selectedNode {
+			if let selectedNode = strongSelf.selectedNode {
 				dict["selectedNode"] = selectedNode
 			}
             return dict
@@ -1779,15 +1775,15 @@ class EditorMapLayer: CALayer {
     
     // drill down to a node in the currently selected way
     func osmHitTestNode(inSelectedWay point: CGPoint, radius: CGFloat) -> OsmNode? {
-        if _selectedWay == nil {
-            return nil
+        guard let selectedWay = selectedWay	else {
+			return nil
         }
         var hit: OsmNode? = nil
         var bestDist: CGFloat = 1000000
         EditorMapLayer.osmHitTestEnumerate(point,
 										   radius: radius,
 										   mapView: mapView,
-										   objects: _selectedWay!.nodes,
+										   objects: selectedWay.nodes,
 										   testNodes: true,
 										   ignoreList: [],
 										   block: { obj, dist, segment in
@@ -1934,31 +1930,24 @@ class EditorMapLayer: CALayer {
     }
     
 	var selectedNode: OsmNode? {
-		get { return _selectedNode }
-		set {
-			 if ( newValue != _selectedNode ) {
-				_selectedNode = newValue
+		didSet {
+			if ( oldValue != selectedNode ) {
 				self.setNeedsDisplay()
 				self.mapView.updateEditControl()
 			 }
 		}
     }
 	var selectedWay: OsmWay? {
-		get { return _selectedWay }
-		set {
-			if ( newValue != _selectedWay ) {
-				_selectedWay = newValue
+		didSet {
+			if ( oldValue != selectedWay ) {
 				self.setNeedsDisplay()
 				self.mapView.updateEditControl()
 			}
-
 		}
     }
 	var selectedRelation: OsmRelation? {
-		get { return _selectedRelation }
-		set {
-			if ( newValue != _selectedRelation ) {
-				_selectedRelation = newValue
+		didSet {
+			if ( oldValue != selectedRelation ) {
 				self.setNeedsDisplay()
 				self.mapView.updateEditControl()
 			}
@@ -1968,11 +1957,8 @@ class EditorMapLayer: CALayer {
     // MARK: Properties
     
 	override var isHidden: Bool {
-		get { super.isHidden }
-		set {
-			let wasHidden = self.isHidden
-			super.isHidden = newValue
-			if wasHidden && !newValue {
+		didSet(wasHidden) {
+			if wasHidden && !isHidden {
 				updateMapLocation()
 			}
 		}
