@@ -19,19 +19,19 @@ final class EditorFilters {
 		}
 	}
 
-	var showLevel = false			{ didSet(value) { save("Level",value) }}
-	var showPoints = false			{ didSet(value) { save("Points",value) }}
-	var showTrafficRoads = false	{ didSet(value) { save("TrafficRoads",value) }}
-	var showServiceRoads = false	{ didSet(value) { save("ServiceRoads",value) }}
-	var showPaths = false			{ didSet(value) { save("Paths",value) }}
-	var showBuildings = false		{ didSet(value) { save("Buildings",value) }}
-	var showLanduse = false			{ didSet(value) { save("Landuse",value) }}
-	var showBoundaries = false		{ didSet(value) { save("Boundaries",value) }}
-	var showWater = false			{ didSet(value) { save("Water",value) }}
-	var showRail = false			{ didSet(value) { save("Rail",value) }}
-	var showPower = false			{ didSet(value) { save("Power",value) }}
-	var showPastFuture = false		{ didSet(value) { save("PastFuture",value) }}
-	var showOthers = false			{ didSet(value) { save("Others",value) }}
+	var showLevel = false			{ didSet { save("Level",showLevel) }}
+	var showPoints = false			{ didSet { save("Points",showPoints) }}
+	var showTrafficRoads = false	{ didSet { save("TrafficRoads",showTrafficRoads) }}
+	var showServiceRoads = false	{ didSet { save("ServiceRoads",showServiceRoads) }}
+	var showPaths = false			{ didSet { save("Paths",showPaths) }}
+	var showBuildings = false		{ didSet { save("Buildings",showBuildings) }}
+	var showLanduse = false			{ didSet { save("Landuse",showLanduse) }}
+	var showBoundaries = false		{ didSet { save("Boundaries",showBoundaries) }}
+	var showWater = false			{ didSet { save("Water",showWater) }}
+	var showRail = false			{ didSet { save("Rail",showRail) }}
+	var showPower = false			{ didSet { save("Power",showPower) }}
+	var showPastFuture = false		{ didSet { save("PastFuture",showPastFuture) }}
+	var showOthers = false			{ didSet { save("Others",showOthers) }}
 
 	var showLevelRange: String = "" { // range of levels for building level
 		didSet {

@@ -769,7 +769,7 @@ class AerialList {
     }
     
 	var currentAerial = AerialService.bingAerial {
-		didSet(currentAerial) {
+		didSet {
 			// update recently used
 			let MAX_ITEMS = 6
 			_recentlyUsed.removeAll { $0 === currentAerial }

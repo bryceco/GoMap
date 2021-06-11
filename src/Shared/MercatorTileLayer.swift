@@ -589,8 +589,8 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
     }
     
     override var isHidden: Bool {
-        didSet(isHidden) {
-			if !isHidden {
+		didSet(wasHidden) {
+			if wasHidden && !self.isHidden {
 				setNeedsLayout()
 			}
 		}

@@ -19,7 +19,7 @@ class LocationBallLayer: CALayer {
     }
     
 	var heading: CGFloat = 0.0 {	 // radians
-		didSet(heading) {
+		didSet {
 			setNeedsLayout()
 		}
     }
