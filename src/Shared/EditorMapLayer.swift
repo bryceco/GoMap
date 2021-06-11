@@ -1572,8 +1572,8 @@ class EditorMapLayer: CALayer {
         line2.x /= maxDegrees.width
         line2.y /= maxDegrees.height
         
-        let dist = DistanceFromPointToLineSegment(pt, line1, line2)
-        return dist
+		let dist = pt.distanceToLineSegment(line1, line2)
+        return CGFloat(dist)
     }
     
     

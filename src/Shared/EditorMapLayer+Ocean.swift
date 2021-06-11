@@ -267,7 +267,7 @@ extension EditorMapLayer {
                         isEntry = true
                     } else {
                         // if previous and current are both outside maybe we intersected
-                        if LineSegmentIntersectsRectangle(prevPoint, pt, viewRect),
+						if viewRect.intersectsLineSegment(prevPoint, pt),
                             !pt.x.isInfinite,
                             !prevPoint.x.isInfinite
                         {

@@ -136,15 +136,15 @@ extension CGPath {
 		})
 	}
 
-	private static func DouglasPeuckerCore(_ points: [CGPoint], _ first: Int, _ last: Int, _ epsilon: CGFloat, _ result: inout [CGPoint] ) {
+	private static func DouglasPeuckerCore(_ points: [CGPoint], _ first: Int, _ last: Int, _ epsilon: Double, _ result: inout [CGPoint] ) {
 		// Find the point with the maximum distance
-		var dmax: CGFloat = 0.0
+		var dmax = 0.0
 		var index: Int = 0
 		let end1 = OSMPoint(points[first])
 		let end2 = OSMPoint(points[last])
 		for i in (first + 1)..<last {
 			let p = OSMPoint(points[i])
-			let d = DistanceFromPointToLineSegment(p, end1, end2)
+			let d = p.distanceToLineSegment(end1, end2)
 			if d > dmax {
 				index = i
 				dmax = d
@@ -162,7 +162,7 @@ extension CGPath {
 		}
 	}
 
-	func pathWithReducePoints(_ epsilon: CGFloat) -> CGMutablePath {
+	func pathWithReducePoints(_ epsilon: Double) -> CGMutablePath {
 		let count = self.pointCount()
 		if count < 3 {
 			return self.mutableCopy()!

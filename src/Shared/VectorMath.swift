@@ -56,14 +56,16 @@ extension CGPoint {
 	static let zero = CGPoint(x: 0.0, y: 0.0)
 
 	@inline(__always) func withOffset(_ dx: CGFloat, _ dy: CGFloat) -> CGPoint {
-		return CGPoint(x: self.x + dx, y: self.y + dy)
+		return CGPoint(x: self.x + dx,
+					   y: self.y + dy)
 	}
 	@inline(__always) func minus(_ b: CGPoint) -> CGPoint {
-		return CGPoint(x: self.x - b.x, y: self.y - b.y)
+		return CGPoint(x: self.x - b.x,
+					   y: self.y - b.y)
 	}
-
 	@inline(__always) init(_ pt: OSMPoint) {
-		self.init(x: pt.x, y: pt.y)
+		self.init(x: pt.x,
+				  y: pt.y)
 	}
 }
 
@@ -94,66 +96,10 @@ extension CGPoint {
 					y: a.y * c)
 }
 
-@inline(__always) func UnitVector(_ a: OSMPoint) -> OSMPoint {
-    let d = Mag(a)
-	return OSMPoint(x: a.x / d,
-					y: a.y / d)
-}
-
 @inline(__always) func CrossMag(_ a: OSMPoint, _ b: OSMPoint) -> Double {
     return a.x * b.y - a.y * b.x
 }
 
-@inline(__always) func DistanceFromPointToPoint(_ a: OSMPoint, _ b: OSMPoint) -> Double {
-    return Mag(Sub(a, b))
-}
-
-@inline(__always) func OffsetPoint(_ p: OSMPoint, _ dx: Double, _ dy: Double) -> OSMPoint {
-	let p2 = OSMPoint(x: p.x + dx, y: p.y + dy)
-    return p2
-}
-
-func ClosestPointOnLineToPoint(_ a: OSMPoint, _ b: OSMPoint, _ p: OSMPoint) -> OSMPoint {
-    let ap = Sub(p, a)
-    let ab = Sub(b, a)
-
-    let ab2: Double = ab.x * ab.x + ab.y * ab.y
-
-    let ap_dot_ab = Dot(ap, ab)
-    let t = ap_dot_ab / ab2 // The normalized "distance" from a to point
-
-    if t <= 0 {
-        return a
-    }
-    if t >= 1.0 {
-        return b
-    }
-    return Add(a, Mult(ab, t))
-}
-
-public func DistanceFromPointToLineSegment(_ point: OSMPoint, _ line1: OSMPoint, _ line2: OSMPoint) -> CGFloat {
-    let length2 = CGFloat(MagSquared(Sub(line1, line2)))
-    if length2 == 0.0 {
-        return CGFloat(DistanceFromPointToPoint(point, line1))
-    }
-    let t = CGFloat(Dot(Sub(point, line1), Sub(line2, line1)) / Double(length2))
-    if t < 0.0 {
-        return CGFloat(DistanceFromPointToPoint(point, line1))
-    }
-    if t > 1.0 {
-        return CGFloat(DistanceFromPointToPoint(point, line2))
-    }
-
-    let projection = Add(line1, Mult(Sub(line2, line1), Double(t)))
-    return CGFloat(DistanceFromPointToPoint(point, projection))
-}
-
-func DistanceFromLineToPoint(_ lineStart: OSMPoint, _ lineDirection: OSMPoint, _ point: OSMPoint) -> CGFloat {
-    // note: lineDirection must be unit vector
-    let dir = Sub(lineStart, point)
-    let dist = CGFloat(Mag(Sub(dir, Mult(lineDirection, Dot(dir, lineDirection)))))
-    return dist
-}
 
 func LineSegmentsIntersect(_ p0: OSMPoint, _ p1: OSMPoint, _ p2: OSMPoint, _ p3: OSMPoint) -> Bool {
     let s1 = Sub(p1, p0)
@@ -179,68 +125,6 @@ func IntersectionOfTwoVectors(_ pos1: OSMPoint, _ dir1: OSMPoint, _ pos2: OSMPoi
     return pt
 }
 
-func LineSegmentIntersectsRectangle(_ p1: OSMPoint, _ p2: OSMPoint, _ rect: OSMRect) -> Bool {
-    let a_rectangleMinX = rect.origin.x
-    let a_rectangleMinY = rect.origin.y
-    let a_rectangleMaxX: Double = rect.origin.x + rect.size.width
-    let a_rectangleMaxY: Double = rect.origin.y + rect.size.height
-    let a_p1x = p1.x
-    let a_p1y = p1.y
-    let a_p2x = p2.x
-    let a_p2y = p2.y
-
-    // Find min and max X for the segment
-    var minX = a_p1x
-    var maxX = a_p2x
-
-    if a_p1x > a_p2x {
-        minX = a_p2x
-        maxX = a_p1x
-    }
-
-    // Find the intersection of the segment's and rectangle's x-projections
-    if maxX > a_rectangleMaxX {
-        maxX = a_rectangleMaxX
-    }
-    if minX < a_rectangleMinX {
-        minX = a_rectangleMinX
-    }
-    if minX > maxX {
-        // If their projections do not intersect return false
-        return false
-    }
-
-    // Find corresponding min and max Y for min and max X we found before
-    var minY = a_p1y
-    var maxY = a_p2y
-    let dx = a_p2x - a_p1x
-    if abs(Float(dx)) > 0.0000001 {
-        let a = (a_p2y - a_p1y) / dx
-        let b = a_p1y - a * a_p1x
-        minY = a * minX + b
-        maxY = a * maxX + b
-    }
-
-    if minY > maxY {
-        let tmp = maxY
-        maxY = minY
-        minY = tmp
-    }
-
-    // Find the intersection of the segment's and rectangle's y-projections
-    if maxY > a_rectangleMaxY {
-        maxY = a_rectangleMaxY
-    }
-    if minY < a_rectangleMinY {
-        minY = a_rectangleMinY
-    }
-    if minY > maxY {
-        // If Y-projections do not intersect return false
-        return false
-    }
-
-    return true
-}
 
 // MARK: CGRect
 extension CGRect {
@@ -295,7 +179,60 @@ extension OSMPoint {
 		return OSMPoint( x: self.x * t.a + self.y * t.c + t.tx,
 						 y: self.x * t.b + self.y * t.d + t.ty )
 		#endif
+	}
+
+	@inline(__always) func unitVector() -> OSMPoint {
+		let d = Mag(self)
+		return OSMPoint(x: self.x / d,
+						y: self.y / d)
+	}
+
+	@inline(__always) func distanceToPoint(_ b: OSMPoint) -> Double {
+		return Mag(Sub(self, b))
+	}
+
+	public func distanceToLineSegment(_ line1: OSMPoint, _ line2: OSMPoint) -> Double {
+		let length2 = MagSquared(Sub(line1, line2))
+		if length2 == 0.0 {
+			return self.distanceToPoint( line1 )
 		}
+		let t = Dot(Sub(self, line1), Sub(line2, line1)) / Double(length2)
+		if t < 0.0 {
+			return self.distanceToPoint( line1 )
+		}
+		if t > 1.0 {
+			return self.distanceToPoint( line2 )
+		}
+
+		let projection = Add(line1, Mult(Sub(line2, line1), Double(t)))
+		return self.distanceToPoint( projection )
+	}
+
+	func distanceFromLine(_ lineStart: OSMPoint, _ lineDirection: OSMPoint) -> Double {
+		// note: lineDirection must be unit vector
+		let dir = Sub(lineStart, self)
+		let dist = Mag(Sub(dir, Mult(lineDirection, Dot(dir, lineDirection))))
+		return dist
+	}
+
+	func nearestPointOnLineSegment( lineA: OSMPoint, lineB: OSMPoint) -> OSMPoint {
+		let ap = Sub(self, lineA)
+		let ab = Sub(lineB, lineA)
+
+		let ab2 = ab.x * ab.x + ab.y * ab.y
+
+		let ap_dot_ab = Dot(ap, ab)
+		let t = ap_dot_ab / ab2 // The normalized "distance" from a to point
+
+		if t <= 0 {
+			return lineA
+		}
+		if t >= 1.0 {
+			return lineB
+		}
+		return Add(lineA, Mult(ab, t))
+	}
+
 }
 
 // MARK: OSMSize
@@ -379,6 +316,68 @@ extension OSMRect {
 	}
 
 
+	func intersectsLineSegment(_ p1: OSMPoint, _ p2: OSMPoint) -> Bool {
+		let a_rectangleMinX = self.origin.x
+		let a_rectangleMinY = self.origin.y
+		let a_rectangleMaxX = self.origin.x + self.size.width
+		let a_rectangleMaxY = self.origin.y + self.size.height
+		let a_p1x = p1.x
+		let a_p1y = p1.y
+		let a_p2x = p2.x
+		let a_p2y = p2.y
+
+		// Find min and max X for the segment
+		var minX = a_p1x
+		var maxX = a_p2x
+
+		if a_p1x > a_p2x {
+			minX = a_p2x
+			maxX = a_p1x
+		}
+
+		// Find the intersection of the segment's and rectangle's x-projections
+		if maxX > a_rectangleMaxX {
+			maxX = a_rectangleMaxX
+		}
+		if minX < a_rectangleMinX {
+			minX = a_rectangleMinX
+		}
+		if minX > maxX {
+			// If their projections do not intersect return false
+			return false
+		}
+
+		// Find corresponding min and max Y for min and max X we found before
+		var minY = a_p1y
+		var maxY = a_p2y
+		let dx = a_p2x - a_p1x
+		if abs(dx) > 0.0000001 {
+			let a = (a_p2y - a_p1y) / dx
+			let b = a_p1y - a * a_p1x
+			minY = a * minX + b
+			maxY = a * maxX + b
+		}
+
+		if minY > maxY {
+			let tmp = maxY
+			maxY = minY
+			minY = tmp
+		}
+
+		// Find the intersection of the segment's and rectangle's y-projections
+		if maxY > a_rectangleMaxY {
+			maxY = a_rectangleMaxY
+		}
+		if minY < a_rectangleMinY {
+			minY = a_rectangleMinY
+		}
+		if minY > maxY {
+			// If Y-projections do not intersect return false
+			return false
+		}
+
+		return true
+	}
 }
 
 // MARK: OSMTransform
@@ -455,12 +454,13 @@ extension OSMTransform {
 		return memcmp(&t1, &t2, MemoryLayout.size(ofValue: t1)) == 0
 	}
 
+	/// Returns the unit vector for (1.0,0.0) rotated by the current transform
 	@inline(__always) func unitX() -> OSMPoint {
 		#if TRANSFORM_3D
 		let p = UnitVector(OSMPoint(self.m11, self.m12))
 		return p
 		#else
-		return UnitVector(OSMPoint(x: self.a, y: self.b))
+		return OSMPoint(x: self.a, y: self.b).unitVector()
 		#endif
 	}
 
@@ -521,7 +521,7 @@ extension OSMTransform {
 		#endif
 	}
 
-	@inline(__always) static func Translation(_ dx: Double, _ dy: Double) -> OSMTransform {
+	@inline(__always) static func translation(_ dx: Double, _ dy: Double) -> OSMTransform {
 		#if TRANSFORM_3D
 		return CATransform3DMakeTranslation(CGFloat(dx), CGFloat(dy), 0)
 		#else
@@ -622,25 +622,30 @@ func ToBirdsEye(_ point: OSMPoint, _ center: CGPoint, _ birdsEyeDistance: Double
 					 y: 90 - 360 * atan(exp(y * 2 * .pi)) / .pi )
 }
 
+// Convert longitude/latitude to a Web-Mercator projection of 0..256 x 0..256
 @inline(__always) func MapPointForLatitudeLongitude(_ latitude: Double, _ longitude: Double) -> OSMPoint {
     let x = (longitude + 180) / 360
     let sinLatitude = sin(latitude * .pi / 180)
     let y = 0.5 - log((1 + sinLatitude) / (1 - sinLatitude)) / (4 * .pi)
 	let point = OSMPoint(x: x * 256, y: y * 256)
-    return point
+	return point
 }
 
-
-
-@inline(__always) public func latp2lat(_ a: Double) -> Double {
-    return 180 / .pi * (2 * atan(exp(a * .pi / 180)) - .pi / 2)
-}
-
+/// Convert from latitude to Mercator projected latitude
 @inline(__always) public func lat2latp(_ a: Double) -> Double {
     return 180 / .pi * log(tan(.pi / 4 + a * (.pi / 180) / 2))
 }
 
+/// Convert Mercator projected latitude to latitude
+@inline(__always) public func latp2lat(_ a: Double) -> Double {
+	return 180 / .pi * (2 * atan(exp(a * .pi / 180)) - .pi / 2)
+}
+
 // MARK: miscellaneous
+
+/// Radius in meters
+let EarthRadius: Double = 6378137.0
+
 @inline(__always) func radiansFromDegrees(_ degrees: Double) -> Double {
     return degrees * (.pi / 180)
 }
@@ -653,14 +658,13 @@ func MetersPerDegreeAt(latitude: Double) -> OSMPoint {
 }
 
 // area in square meters
-func SurfaceArea(_ latLon: OSMRect) -> Double {
+func SurfaceAreaOfRect(_ latLon: OSMRect) -> Double {
 	// http://mathforum.org/library/drmath/view/63767.html
-	let SurfaceAreaEarthRadius: Double = 6378137.0
 	let lon1 = latLon.origin.x * .pi / 180.0
 	let lat1 = latLon.origin.y * .pi / 180.0
 	let lon2: Double = (latLon.origin.x + latLon.size.width) * .pi / 180.0
 	let lat2: Double = (latLon.origin.y + latLon.size.height) * .pi / 180.0
-	let A = SurfaceAreaEarthRadius * SurfaceAreaEarthRadius * abs(sin(lat1) - sin(lat2)) * abs(lon1 - lon2)
+	let A = EarthRadius * EarthRadius * abs(sin(lat1) - sin(lat2)) * abs(lon1 - lon2)
 	return A
 }
 

@@ -91,7 +91,7 @@ extension EditorMapLayer {
 				}
 				let np1 = CGPoint(x: pinPoint.x - delta.y, y: pinPoint.y + delta.x)
 				let np2 = CGPoint(x: pinPoint.x + delta.y, y: pinPoint.y - delta.x)
-				if DistanceFromPointToPoint(OSMPoint(np1), OSMPoint(newPoint)) < DistanceFromPointToPoint(OSMPoint(np2), OSMPoint(newPoint)) {
+				if OSMPoint(np1).distanceToPoint( OSMPoint(newPoint) ) < OSMPoint(np2).distanceToPoint( OSMPoint(newPoint) ) {
 					newPoint = np1
 				} else {
 					newPoint = np2

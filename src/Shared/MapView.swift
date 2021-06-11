@@ -250,8 +250,9 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 			if t == _screenFromMapTransform {
                 return
             }
+			var t = t
 
-            // save pushpinView coordinates
+			// save pushpinView coordinates
 			var pp: CLLocationCoordinate2D? = nil
 			if let pushpinView = pushpinView {
 				pp = longitudeLatitude(forScreenPoint: pushpinView.arrowPoint, birdsEye: true)
@@ -267,17 +268,17 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 			let mapSize = 256 * scale
             if dx > 0 {
                 let mul = ceil(dx / mapSize)
-				_screenFromMapTransform = t.translatedBy(dx: -mul * mapSize / scale, dy: 0.0)
+				t = t.translatedBy(dx: -mul * mapSize / scale, dy: 0.0)
 			} else if dx < -mapSize {
                 let mul = floor(-dx / mapSize)
-				_screenFromMapTransform = t.translatedBy(dx: mul * mapSize / scale, dy: 0.0)
+				t = t.translatedBy(dx: mul * mapSize / scale, dy: 0.0)
 			}
             if dy > 0 {
                 let mul = ceil(dy / mapSize)
-				_screenFromMapTransform = t.translatedBy(dx: 0.0, dy: -mul * mapSize / scale)
+				t = t.translatedBy(dx: 0.0, dy: -mul * mapSize / scale)
 			} else if dy < -mapSize {
                 let mul = floor(-dy / mapSize)
-				_screenFromMapTransform = t.translatedBy(dx: 0.0, dy: mul * mapSize / scale)
+				t = t.translatedBy(dx: 0.0, dy: mul * mapSize / scale)
 			}
 
             // update transform
@@ -285,7 +286,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
             // determine if we've zoomed out enough to disable editing
             let bbox = screenLongitudeLatitude()
-            let area = SurfaceArea(bbox)
+            let area = SurfaceAreaOfRect(bbox)
             var isZoomedOut = area > 2.0 * 1000 * 1000
 			if !editorLayer.isHidden && !editorLayer.atVisibleObjectLimit && area < 200.0 * 1000 * 1000 {
 				isZoomedOut = false
@@ -305,6 +306,8 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 													 longitude: pp.longitude,
 													 birdsEye: true)
 			}
+
+			refreshNoteButtonsFromDatabase()
         }
     }
 
@@ -840,7 +843,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 								scale: scale)
             } else {
                 let rc = OSMRect(layer.bounds)
-				screenFromMapTransform = OSMTransform.Translation(rc.origin.x + rc.size.width / 2 - 128,
+				screenFromMapTransform = OSMTransform.translation(rc.origin.x + rc.size.width / 2 - 128,
 																  rc.origin.y + rc.size.height / 2 - 128)
                 // turn on GPS which will move us to current location
                 mainViewController.setGpsState(GPS_STATE.LOCATION)
@@ -1351,8 +1354,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     }
 
     func screenPoint(fromMapPoint point: OSMPoint, birdsEye: Bool) -> OSMPoint {
-        var point = point
-		point = point.withTransform( screenFromMapTransform )
+        var point = point.withTransform( screenFromMapTransform )
         if birdsEyeRotation != 0.0 && birdsEye {
 			let center = layer.bounds.center()
             point = ToBirdsEye(point, center, Double(birdsEyeDistance), Double(birdsEyeRotation))
@@ -1881,9 +1883,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             return
         }
 
-        refreshNoteButtonsFromDatabase()
-
-		let o = OSMTransform.Translation(Double(delta.x), Double(delta.y))
+		let o = OSMTransform.translation(Double(delta.x), Double(delta.y))
 		let t = screenFromMapTransform.concat( o )
 		self.screenFromMapTransform = t
     }
@@ -1906,7 +1906,6 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             ratio = maxZoomIn / scale
 		}
 
-        refreshNoteButtonsFromDatabase()
         let offset = mapPoint(fromScreenPoint: OSMPoint(zoomCenter), birdsEye: false)
         var t = screenFromMapTransform
 		t = t.translatedBy(dx: offset.x, dy: offset.y)
@@ -2748,7 +2747,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
 						// if we're dragging at a diagonal then scroll diagonally as well, in the direction the user is dragging
 						let center = self.bounds.center()
-						let v = UnitVector(Sub(OSMPoint(arrow), OSMPoint(center)))
+						let v = Sub(OSMPoint(arrow), OSMPoint(center)).unitVector()
 						scrollx = SCROLL_SPEED * CGFloat(v.x)
 						scrolly = SCROLL_SPEED * CGFloat(v.y)
 

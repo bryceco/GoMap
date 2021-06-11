@@ -9,7 +9,6 @@
 import CoreLocation
 
 // MARK: Rectangularize
-private var rectoThreshold = 0.0
 private var rectoLowerThreshold = 0.0
 private var rectoUpperThreshold = 0.0
 
@@ -195,8 +194,8 @@ extension OsmMapData {
         return { [self] in
             registerUndoCommentString(NSLocalizedString("Make Rectangular", comment: ""))
             
-            rectoThreshold = 12 // degrees within right or straight to alter
-            rectoLowerThreshold = cos((90 - rectoThreshold) * .pi / 180)
+			let rectoThreshold = 12.0 // degrees within right or straight to alter
+			rectoLowerThreshold = cos((90 - rectoThreshold) * .pi / 180)
             rectoUpperThreshold = cos(rectoThreshold * .pi / 180)
             
             let count = way.nodes.count - 1
@@ -513,14 +512,14 @@ extension OsmMapData {
 		if count > 2 {
 			let startPoint = points[0]!
 			let endPoint = points[count - 1]!
-			let threshold = 0.2 * DistanceFromPointToPoint(startPoint, endPoint)
+			let threshold = 0.2 * startPoint.distanceToPoint( endPoint )
             for i in 1..<(count - 1) {
                 let node = way.nodes[i]
 				let point = points[i]!
 				let u = positionAlongWay(point, startPoint, endPoint)
 				let newPoint = Add(startPoint, Mult(Sub(endPoint, startPoint), u))
 
-				let dist = DistanceFromPointToPoint(newPoint, point)
+				let dist = newPoint.distanceToPoint( point )
 				if dist > threshold {
 					error = NSLocalizedString("The way is not sufficiently straight", comment: "")
 					return nil
@@ -1441,8 +1440,8 @@ extension OsmMapData {
         while i != idxA {
             let n1 = nodes[i]
             let n2 = nodes[(i - 1 + count) % count]
-            length += DistanceFromPointToPoint(n1.location(), n2.location())
-            lengths[i] = length
+			length += n1.location().distanceToPoint( n2.location() )
+			lengths[i] = length
             i = (i + 1) % count
         }
         lengths[idxA] = 0.0 // never used, but need it to convince static analyzer that it isn't an unitialized variable
@@ -1451,7 +1450,7 @@ extension OsmMapData {
         while i != idxA {
             let n1 = nodes[i]
             let n2 = nodes[(i + 1) % count]
-            length += DistanceFromPointToPoint(n1.location(), n2.location())
+			length += n1.location().distanceToPoint( n2.location() )
             if length < lengths[i] {
                 lengths[i] = length
             }
@@ -1465,8 +1464,8 @@ extension OsmMapData {
             }
             let n1 = nodes[idxA]
             let n2 = nodes[i]
-            let cost = lengths[i] / DistanceFromPointToPoint(n1.location(), n2.location())
-            if cost > best {
+			let cost = lengths[i] / n1.location().distanceToPoint( n2.location() )
+			if cost > best {
                 idxB = i
                 best = cost
             }
@@ -1494,10 +1493,10 @@ extension OsmMapData {
     }
     
     private func filterDotProduct(_ dotp: Double) -> Double {
-        if rectoLowerThreshold > Double(abs(Float(dotp))) || Double(abs(Float(dotp))) > rectoUpperThreshold {
+        if rectoLowerThreshold > abs(dotp) || abs(dotp) > rectoUpperThreshold {
             return dotp
         }
-        return 0
+		return 0.0
     }
     
     private func normalizedDotProduct(_ i: Int, _ points: [OSMPoint], _ count: Int) -> Double {
@@ -1507,8 +1506,8 @@ extension OsmMapData {
         var p = Sub(a, b)
         var q = Sub(c, b)
         
-        p = UnitVector(p)
-        q = UnitVector(q)
+		p = p.unitVector()
+		q = q.unitVector()
         
         return Dot(p, q)
     }
@@ -1518,8 +1517,8 @@ extension OsmMapData {
         for i in 0..<count {
             var dotp = normalizedDotProduct(i, points, count)
             dotp = filterDotProduct(dotp)
-            sum += 2.0 * Double(min(abs(Float(dotp - 1.0)), min(abs(Float(dotp)), abs(Float(dotp + 1)))))
-        }
+			sum += 2.0 * min(abs(dotp - 1.0), min(abs(dotp), abs(dotp + 1.0)))
+		}
         return sum
     }
     
@@ -1529,10 +1528,10 @@ extension OsmMapData {
         var p = Sub(a, b)
         var q = Sub(c, b)
         
-        let origin = OSMPoint(x: 0, y: 0)
-        let scale: Double = 2 * Double(min(DistanceFromPointToPoint(p, origin), DistanceFromPointToPoint(q, origin)))
-        p = UnitVector(p)
-        q = UnitVector(q)
+		let origin = OSMPoint.zero
+		let scale: Double = 2 * min(p.distanceToPoint( origin ), q.distanceToPoint( origin))
+		p = p.unitVector()
+		q = q.unitVector()
         
         if p.x.isNaN || q.x.isNaN {
             if pDotp != 0 {
@@ -1557,7 +1556,7 @@ extension OsmMapData {
             }
         }
         
-        var r = UnitVector(Add(p, q))
+		var r = Add(p, q).unitVector()
         r = Mult(r, 0.1 * dotp * scale)
         return r
     }

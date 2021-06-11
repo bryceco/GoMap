@@ -7,12 +7,7 @@
 //
 
 import struct Foundation.Data
-
-#if os(Linux)
-	import zlibLinux
-#else
-	import zlib
-#endif
+import zlib
 
 /// Compression level whose rawValue is based on the zlib's constants.
 public struct CompressionLevel: RawRepresentable {
@@ -23,21 +18,16 @@ public struct CompressionLevel: RawRepresentable {
 	public static let noCompression = CompressionLevel(Z_NO_COMPRESSION)
 	public static let bestSpeed = CompressionLevel(Z_BEST_SPEED)
 	public static let bestCompression = CompressionLevel(Z_BEST_COMPRESSION)
-
 	public static let defaultCompression = CompressionLevel(Z_DEFAULT_COMPRESSION)
 
 
 	public init(rawValue: Int32) {
-
 		self.rawValue = rawValue
 	}
-
 
 	public init(_ rawValue: Int32) {
-
 		self.rawValue = rawValue
 	}
-
 }
 
 

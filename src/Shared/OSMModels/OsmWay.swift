@@ -38,12 +38,12 @@ final class OsmWay: OsmBaseObject {
 		return self
     }
 
-    func resolveToMapData(_ mapData: OsmMapData) {
-		guard let nodeRefs = nodeRefs else { fatalError() }
+    func resolveToMapData(_ mapData: OsmMapData) throws {
+		guard let nodeRefs = nodeRefs else { throw NSError() }
 		assert( nodes.count == 0 )
 		nodes.reserveCapacity(nodeRefs.count)
 		for ref in nodeRefs {
-			guard let node = mapData.node(forRef: ref) else { fatalError() }
+			guard let node = mapData.nodes[ref] else { throw NSError() }
 			nodes.append( node )
 			node.setWayCount(node.wayCount + 1, undo: nil)
 		}
@@ -72,6 +72,7 @@ final class OsmWay: OsmBaseObject {
 
     override func serverUpdate(inPlace newerVersion: OsmBaseObject) {
         super.serverUpdate(inPlace: newerVersion)
+		nodeRefs = (newerVersion as! OsmWay).nodeRefs
         nodes = (newerVersion as! OsmWay).nodes
     }
 
@@ -244,7 +245,7 @@ final class OsmWay: OsmBaseObject {
         for i in 1..<nodes.count {
             let p1 = nodes[i-1].location()
             let p2 = nodes[i].location()
-            let linePoint = ClosestPointOnLineToPoint(p1, p2, target)
+			let linePoint = target.nearestPointOnLineSegment(lineA: p1, lineB: p2)
             let dist = MagSquared(Sub(linePoint, target))
             if dist < bestDist {
                 bestDist = dist
@@ -472,11 +473,11 @@ final class OsmWay: OsmBaseObject {
 
     func segmentClosestToPoint(_ point: OSMPoint) -> Int {
         var best = -1
-		var bestDist: CGFloat = 100000000.0
+		var bestDist: Double = 100000000.0
 		for index in nodes.indices.dropLast() {
 			let this = nodes[index]
             let next = nodes[index+1]
-			let dist = DistanceFromPointToLineSegment(point, this.location(), next.location())
+			let dist = point.distanceToLineSegment(this.location(), next.location())
             if dist < bestDist {
                 bestDist = dist
                 best = index

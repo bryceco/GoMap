@@ -6,10 +6,8 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
-let EarthRadius: Double = 6378137.0
-
 /// Converts tile XY coordinates into a QuadKey at a specified level of detail.
-func TileXYToQuadKey(_ tileX: Int, _ tileY: Int, _ levelOfDetail: Int) -> String {
+func TileToQuadKey(x tileX: Int, y tileY: Int, z levelOfDetail: Int) -> String {
     var quadKey = ""
     var i = levelOfDetail
     while i > 0 {

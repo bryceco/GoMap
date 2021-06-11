@@ -72,7 +72,7 @@ final class OsmNode: OsmBaseObject {
         point1.y = (point1.y - lat) * metersPerDegree.y
         point2.x = (point2.x - lon) * metersPerDegree.x
         point2.y = (point2.y - lat) * metersPerDegree.y
-		let dist = Double(DistanceFromPointToLineSegment(OSMPoint.zero, point1, point2))
+		let dist = OSMPoint.zero.distanceToLineSegment(point1, point2)
         return dist
     }
 

@@ -191,13 +191,13 @@ class OsmNote: NSObject {
 		switch osmType {
 		case "node":
 			type = OSM_TYPE._NODE
-			object = mapData.node(forRef: osmIdent)
+			object = mapData.nodes[osmIdent]
 		case "way":
 			type = OSM_TYPE._WAY
-			object = mapData.way(forRef: osmIdent)
+			object = mapData.ways[osmIdent]
 		case "relation":
 			type = OSM_TYPE._RELATION
-			object = mapData.relation(forRef: osmIdent)
+			object = mapData.relations[osmIdent]
 		default:
 			return nil
 		}

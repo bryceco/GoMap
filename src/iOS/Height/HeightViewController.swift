@@ -344,7 +344,7 @@ class HeightViewController: UIViewController {
 			if d < dist {
 				dist = d
 				var dir = OSMPoint(x: lat2latp(nodePt.y) - lat2latp(userPt.y), y: nodePt.x - userPt.x)
-				dir = UnitVector(dir)
+				dir = dir.unitVector()
 				bearing = atan2(dir.y, dir.x)
 			}
 		}

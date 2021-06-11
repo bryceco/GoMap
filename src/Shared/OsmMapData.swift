@@ -177,19 +177,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
     func relationCount() -> Int {
         return relations.count
     }
-    
-    func node(forRef ref: OsmIdentifier) -> OsmNode? {
-		return nodes[ref]
-    }
-    
-    func way(forRef ref: OsmIdentifier) -> OsmWay? {
-		return ways[ref]
-    }
-    
-    func relation(forRef ref: OsmIdentifier) -> OsmRelation? {
-        return relations[ref]
-    }
-    
+        
 	// FIXME: use OsmExtendedIdentifier
     func object(withExtendedIdentifier extendedIdentifier: Int64) -> OsmBaseObject? {
 		let ext = OsmExtendedIdentifier(extendedIdentifier)
@@ -738,9 +726,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         let mergePartialResults: ((_ query: ServerQuery?, _ mapData: OsmMapData?, _ error: Error?) -> Void) = { [self] query, mapData, error in
             progress?.progressDecrement()
             activeRequests -= 1
-			if activeRequests == 0 {
-            }
-			merge(mapData, fromDownload: true, quadList: query?.quadList ?? [], success: (mapData != nil && error == nil))
+			try? merge(mapData, fromDownload: true, quadList: query?.quadList ?? [], success: (mapData != nil && error == nil))
             completion(activeRequests > 0, error)
         }
         
@@ -887,7 +873,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         }
     }
     
-	func merge(_ newData: OsmMapData?, fromDownload downloaded: Bool, quadList: [QuadBox], success: Bool) {
+	func merge(_ newData: OsmMapData?, fromDownload downloaded: Bool, quadList: [QuadBox], success: Bool) throws {
 		if let newData = newData {
             var newNodes: [OsmNode] = []
             var newWays: [OsmWay] = []
@@ -912,13 +898,13 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
                 let current = ways[key]
                 if current == nil {
                     ways[key] = way
-                    way.resolveToMapData(self)
+                    try way.resolveToMapData(self)
                     spatial.addMember(way, undo: nil)
                     newWays.append(way)
                 } else if current!.version < way.version {
                     let bbox = current!.boundingBox
                     current!.serverUpdate(inPlace: way)
-                    current!.resolveToMapData(self)
+                    try current!.resolveToMapData(self)
 					spatial.updateMember(current!, fromBox: bbox, undo: nil)
                     newWays.append(current!)
                 }
@@ -1028,7 +1014,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 						url3 = url3 + "/full"
 					}
 					osmData(forUrl: url3, quads: nil, completion: { quads, mapData, error in
-						merge(mapData, fromDownload: true, quadList: [], success: true)
+						try? merge(mapData, fromDownload: true, quadList: [], success: true)
 						// try again:
 						uploadChangeset(changesetID, retries:retries-1, completion:completion)
 					})
@@ -1351,15 +1337,12 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         request.httpMethod = method
         if let xml = xml {
             var data = xml.xmlData(withOptions: 0)
-            if data.isGzipped {
-                data = try! data.gUnzipped()
-            }
-            request.httpBody = data
+			data = (try? data.gzipped()) ?? data
+			request.httpBody = data
             request.setValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
             request.setValue("gzip", forHTTPHeaderField: "Content-Encoding")
-            request.cachePolicy = .reloadIgnoringLocalCacheData
         }
-        // request.timeoutInterval = 15*60;
+		request.cachePolicy = .reloadIgnoringLocalCacheData
 
         var auth = "\(AppDelegate.shared.userName):\(AppDelegate.shared.userPassword)"
 		auth = OsmMapData.encodeBase64(auth)
@@ -2273,7 +2256,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 			newData.ways = try db.querySqliteWays()
 			newData.relations = try db.querySqliteRelations()
 
-			decode.merge(newData, fromDownload: false, quadList: [], success: true)
+			try decode.merge(newData, fromDownload: false, quadList: [], success: true)
 		} catch {
             // database couldn't be read
             print("Unable to read database: recreating from scratch\n")

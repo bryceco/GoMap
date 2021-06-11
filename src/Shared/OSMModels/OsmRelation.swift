@@ -79,7 +79,7 @@ final class OsmRelation: OsmBaseObject {
 			}
 
             if member.isWay() {
-				if let way = mapData.way(forRef: member.ref) {
+				if let way = mapData.ways[member.ref] {
 					member.resolveRef(to: way)
 					way.addParentRelation(self, undo: nil)
 					needsRedraw = true
@@ -87,7 +87,7 @@ final class OsmRelation: OsmBaseObject {
                     // way is not in current view
                 }
             } else if member.isNode() {
-				if let node = mapData.node(forRef: member.ref) {
+				if let node = mapData.nodes[member.ref] {
 					member.resolveRef(to: node)
 					node.addParentRelation(self, undo: nil)
 					needsRedraw = true
@@ -95,7 +95,7 @@ final class OsmRelation: OsmBaseObject {
 					// node is not in current view
                 }
             } else if member.isRelation() {
-				if let rel = mapData.relation(forRef: member.ref) {
+				if let rel = mapData.relations[member.ref] {
 					member.resolveRef(to: rel)
 					rel.addParentRelation(self, undo: nil)
                     needsRedraw = true
@@ -440,7 +440,7 @@ final class OsmRelation: OsmBaseObject {
         var bestDistance = 10000000.0
         for object in allMemberObjects() {
             let pt = object.pointOnObjectForPoint( target )
-            let dist = DistanceFromPointToPoint(target, pt)
+			let dist = target.distanceToPoint( pt )
             if dist < bestDistance {
                 bestDistance = dist
                 bestPoint = pt

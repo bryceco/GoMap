@@ -240,7 +240,7 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
 	}
 
 	private func quadKey(forZoom zoom: Int, tileX: Int, tileY: Int) -> String {
-        return TileXYToQuadKey(tileX, tileY, zoom)
+		return TileToQuadKey(x: tileX, y: tileY, z: zoom)
     }
     
     private func url(forZoom zoom: Int, tileX: Int, tileY: Int) -> URL {
