@@ -102,49 +102,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func setMapLocation(_ location: MapLocation) {
-        let delayInSeconds = 0.1
-        let popTime = DispatchTime.now() + Double(Int64(delayInSeconds * Double(NSEC_PER_SEC)))
-        DispatchQueue.main.asyncAfter(deadline: popTime, execute: { [self] in
-            mapView?.setMapLocation(location)
-        })
-    }
+		DispatchQueue.main.asyncAfter(deadline: .now()+0.1, execute: { [self] in
+			mapView.setMapLocation(location)
+		})
+	}
 
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        if url.isFileURL && (url.pathExtension == "gpx") {
+		let error = {
+			let alertView = UIAlertController(title: NSLocalizedString("Invalid URL", comment: ""), message: url.absoluteString, preferredStyle: .alert)
+			alertView.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+			self.mapView.mainViewController.present(alertView, animated: true)
+		}
+
+		if url.isFileURL && (url.pathExtension == "gpx") {
             // Load GPX
             _=url.startAccessingSecurityScopedResource()
-            let data: Data? = try? Data(contentsOf: url, options: [])
+            guard let data: Data = try? Data(contentsOf: url, options: []) else {
+				error()
+				return false
+			}
+
 			url.stopAccessingSecurityScopedResource()
 
-            let delayInSeconds = 1.0
-            let popTime = DispatchTime.now() + Double(Int64(delayInSeconds * Double(NSEC_PER_SEC)))
-            DispatchQueue.main.asyncAfter(deadline: popTime, execute: { [self] in
-                let ok = mapView?.gpxLayer.loadGPXData(data ?? Data(), center: true) ?? false
-                if !ok {
-                    let alert = UIAlertController(
-                        title: NSLocalizedString("Open URL", comment: ""),
-                        message: NSLocalizedString("Sorry, an error occurred while loading the GPX file", comment: ""),
-                        preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
-                    mapView?.mainViewController.present(alert, animated: true)
-                }
+			DispatchQueue.main.asyncAfter(deadline: .now()+1.0, execute: { [self] in
+				let ok = mapView.gpxLayer.loadGPXData(data, center: true)
+				if !ok {
+					let alert = UIAlertController(
+						title: NSLocalizedString("Open URL", comment: ""),
+						message: NSLocalizedString("Sorry, an error occurred while loading the GPX file", comment: ""),
+						preferredStyle: .alert)
+					alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+					mapView.mainViewController.present(alert, animated: true)
+				}
             })
             return true
         } else if url.absoluteString.count > 0 {
             // geo: and gomaposm: support
-            let urlParser = LocationURLParser()
-            let parserResult = urlParser.parseURL(url)
-            if let parserResult = parserResult {
-                let delayInSeconds = 1.0
-                let popTime = DispatchTime.now() + Double(Int64(delayInSeconds * Double(NSEC_PER_SEC)))
-                DispatchQueue.main.asyncAfter(deadline: popTime, execute: { [self] in
+			if let parserResult = LocationURLParser.parseURL(url) {
+				DispatchQueue.main.asyncAfter(deadline: .now()+1.0, execute: { [self] in
                     setMapLocation(parserResult)
                 })
                 return true
             } else {
-                let alertView = UIAlertController(title: NSLocalizedString("Invalid URL", comment: ""), message: url.absoluteString, preferredStyle: .alert)
-                alertView.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
-                mapView?.mainViewController.present(alertView, animated: true)
+				error()
                 return false
             }
         }

@@ -9,12 +9,12 @@
 import Foundation
 
 /// An object that parses `geo:` URLs
-class LocationURLParser: NSObject {
+class LocationURLParser {
 
     /// Attempts to parse the given URL.
     /// @param url The URL to parse.
     /// @return The parser result, if the URL was parsed successfully, or `nil` if the parser was not able to process the URL.
-    func parseURL(_ url: URL) -> MapLocation? {
+    class func parseURL(_ url: URL) -> MapLocation? {
         if url.absoluteString.hasPrefix("geo:") {
             // geo:47.75538,-122.15979?z=18
             var lat: Double = 0
