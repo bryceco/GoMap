@@ -3,7 +3,7 @@
 //  Go Map!!
 //
 //  Created by Wolfgang Timme on 1/18/20.
-//  Copyright © 2020 Bryce. All rights reserved.
+//  Copyright © 2020 Bryce Cogswell. All rights reserved.
 //
 
 final class OsmMember: NSObject, NSCoding {

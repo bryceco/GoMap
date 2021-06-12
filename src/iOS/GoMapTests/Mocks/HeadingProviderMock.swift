@@ -3,7 +3,7 @@
 //  GoMapTests
 //
 //  Created by Wolfgang Timme on 4/2/19.
-//  Copyright © 2019 Bryce. All rights reserved.
+//  Copyright © 2019 Bryce Cogswell. All rights reserved.
 //
 
 import Foundation

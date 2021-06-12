@@ -3,7 +3,7 @@
 //  GoMapTests
 //
 //  Created by Wolfgang Timme on 4/15/19.
-//  Copyright © 2019 Bryce. All rights reserved.
+//  Copyright © 2019 Bryce Cogswell. All rights reserved.
 //
 
 @testable import Go_Map__

@@ -3,7 +3,7 @@
 //  Go Map!!
 //
 //  Created by Wolfgang Timme on 4/10/19.
-//  Copyright © 2019 Bryce. All rights reserved.
+//  Copyright © 2019 Bryce Cogswell. All rights reserved.
 //
 
 import Foundation

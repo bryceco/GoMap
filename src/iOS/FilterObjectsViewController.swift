@@ -3,7 +3,7 @@
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 5/20/18.
-//  Copyright © 2018 Bryce. All rights reserved.
+//  Copyright © 2018 Bryce Cogswell. All rights reserved.
 //
 
 import UIKit

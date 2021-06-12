@@ -3,7 +3,7 @@
 //  Go Map!!
 //
 //  Created by Mukul Bakshi on 02/11/17.
-//  Copyright © 2017 Bryce. All rights reserved.
+//  Copyright © 2017 Bryce Cogswell. All rights reserved.
 //
 
 enum TURN_RESTRICT : Int {

@@ -2,8 +2,7 @@
 //  AerialEditViewController.swift
 //  Go Map!!
 //
-//  Created by Ibrahim Hassan on 07/03/21.
-//  Copyright © 2021 Bryce. All rights reserved.
+//  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
 
