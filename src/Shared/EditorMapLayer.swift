@@ -24,7 +24,7 @@ private let NodeHighlightRadius: CGFloat = 6.0
 class EditorMapLayer: CALayer {
     var iconSize = CGSize.zero
 	var highwayScale: CGFloat = 2.0
-    var shownObjects: [OsmBaseObject] = []
+    var shownObjects: ContiguousArray<OsmBaseObject> = []
     var fadingOutSet: [OsmBaseObject] = []
     var highlightLayers: [CALayer] = []
     var isPerformingLayout = false
@@ -1229,15 +1229,16 @@ class EditorMapLayer: CALayer {
     
     // MARK: Select objects and draw
     
-    func getVisibleObjects() -> [OsmBaseObject] {
-        let box = mapView.screenLongitudeLatitude()
-		var a: [OsmBaseObject] = []
+    func getVisibleObjects() -> ContiguousArray<OsmBaseObject> {
+		let box = mapView.screenLongitudeLatitude()
+		var a: ContiguousArray<OsmBaseObject> = []
+		a.reserveCapacity( 4000 )
 		mapData.enumerateObjects(inRegion: box, block: { obj in
             var show = obj.isShown
 			if show == TRISTATE._UNKNOWN {
                 if !obj.deleted {
-                    if obj.isNode() != nil {
-						if (obj as? OsmNode)?.wayCount == 0 || obj.hasInterestingTags() {
+                    if let node = obj as? OsmNode {
+						if node.wayCount == 0 || node.hasInterestingTags() {
 							show = TRISTATE._YES
                         }
 					} else if obj.isWay() != nil {
@@ -1256,7 +1257,7 @@ class EditorMapLayer: CALayer {
     }
 
 
-    func filterObjects(_ objects: inout [OsmBaseObject]) {
+    func filterObjects(_ objects: inout ContiguousArray<OsmBaseObject>) {
 
         // filter everything
 		let predicate = objectFilters.predicateForFilters()
@@ -1300,7 +1301,7 @@ class EditorMapLayer: CALayer {
         }
     }
     
-    func getObjectsToDisplay() -> [OsmBaseObject] {
+    func getObjectsToDisplay() -> ContiguousArray<OsmBaseObject> {
         #if os(iOS)
         let geekScore = geekbenchScoreProvider.geekbenchScore()
         #if true || DEBUG
@@ -1605,7 +1606,7 @@ class EditorMapLayer: CALayer {
         _ point: CGPoint,
         radius: CGFloat,
         mapView: MapView,
-		objects: [OsmBaseObject],
+		objects: ContiguousArray<OsmBaseObject>,
         testNodes: Bool,
         ignoreList: [OsmBaseObject],
 		block: @escaping (_ obj: OsmBaseObject, _ dist: CGFloat, _ segment: Int) -> Void
@@ -1783,7 +1784,7 @@ class EditorMapLayer: CALayer {
         EditorMapLayer.osmHitTestEnumerate(point,
 										   radius: radius,
 										   mapView: mapView,
-										   objects: selectedWay.nodes,
+										   objects: ContiguousArray<OsmBaseObject>(selectedWay.nodes),
 										   testNodes: true,
 										   ignoreList: [],
 										   block: { obj, dist, segment in
@@ -1799,35 +1800,34 @@ class EditorMapLayer: CALayer {
     }
     
     // MARK: Copy/Paste
-    
-    func copyTags(_ object: OsmBaseObject) -> Bool {
-        UserDefaults.standard.set(object.tags, forKey: "copyPasteTags")
-        return object.tags.count > 0
+
+	var copyPasteTags: [String:String] {
+		get { return UserDefaults.standard.object(forKey: "copyPasteTags") as? [String : String] ?? [:] }
+		set { UserDefaults.standard.set(newValue, forKey: "copyPasteTags") }
+	}
+
+	func copyTags(_ object: OsmBaseObject) -> Bool {
+		guard object.tags.count > 0 else { return false }
+		copyPasteTags = object.tags
+		return true
 	}
     
-    func canPasteTags() -> Bool {
-		if let copyPasteTags = UserDefaults.standard.object(forKey: "copyPasteTags") as? [String : String] {
-			return copyPasteTags.count > 0
-		}
-		return false
-    }
+	func canPasteTags() -> Bool {
+		return self.copyPasteTags.count > 0
+	}
     
     func pasteTagsMerge(_ object: OsmBaseObject) {
         // Merge tags
-		if let copyPasteTags = UserDefaults.standard.object(forKey: "copyPasteTags") as? [String : String] {
-			let newTags = OsmBaseObject.MergeTagsWith(ourTags: object.tags, otherTags: copyPasteTags, allowConflicts: true)!
-			mapData.setTags(newTags, for: object)
-			setNeedsLayout()
-		}
+		let newTags = OsmTags.Merge(ourTags: object.tags, otherTags: self.copyPasteTags, allowConflicts: true)!
+		mapData.setTags(newTags, for: object)
+		setNeedsLayout()
     }
     
     func pasteTagsReplace(_ object: OsmBaseObject) {
-        // Replace all tags
-		if let copyPasteTags = UserDefaults.standard.object(forKey: "copyPasteTags") as? [String : String] {
-			mapData.setTags(copyPasteTags, for: object)
-			setNeedsLayout()
-		}
-    }
+		// Replace all tags
+		mapData.setTags(self.copyPasteTags, for: object)
+		setNeedsLayout()
+	}
     
     // MARK: Editing
     

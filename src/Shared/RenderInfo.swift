@@ -163,7 +163,7 @@ final class RenderInfo {
         return priority
     }
 
-	static func sortByPriority( list: [OsmBaseObject], keepingFirst k: Int ) -> [OsmBaseObject]
+	static func sortByPriority( list: ContiguousArray<OsmBaseObject>, keepingFirst k: Int ) -> ContiguousArray<OsmBaseObject>
 	{
 		let listCount = list.count
 		var countOfPriority = [Int](repeating: 0, count: RenderInfoMaxPriority)
@@ -183,7 +183,8 @@ final class RenderInfo {
 				}
 			}
 		}
-		var output = [OsmBaseObject?](repeating: nil, count: max)
+		let tmp = OsmNode(asUserCreated: "")
+		var output = ContiguousArray<OsmBaseObject>(repeating: tmp, count: max)
 		for obj in list {
 			let index = (RenderInfoMaxPriority-1) - obj.renderPriorityCached
 			let dest = countOfPriority[index] - 1
@@ -192,7 +193,7 @@ final class RenderInfo {
 				output[ dest ] = obj
 			}
 		}
-		return output.map({ $0! })
+		return output
 	}
 }
 

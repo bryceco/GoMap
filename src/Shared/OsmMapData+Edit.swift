@@ -191,111 +191,107 @@ extension OsmMapData {
         }
 #endif
         
-        return { [self] in
-            registerUndoCommentString(NSLocalizedString("Make Rectangular", comment: ""))
-            
+		return { [self] in
+			registerUndoCommentString(NSLocalizedString("Make Rectangular", comment: ""))
+
 			let rectoThreshold = 12.0 // degrees within right or straight to alter
 			rectoLowerThreshold = cos((90 - rectoThreshold) * .pi / 180)
-            rectoUpperThreshold = cos(rectoThreshold * .pi / 180)
-            
-            let count = way.nodes.count - 1
-            var points = [OSMPoint](repeating: OSMPoint(), count: count)
-            for i in 0..<count {
-                let node = way.nodes[i]
-                points[i].x = node.lon
-                points[i].y = lat2latp(node.lat)
-            }
-            
-            let epsilon = 1e-4
-            
-            if count == 3 {
-                var score = 0.0
-                var corner: Int = 0
-                var dotp: Double = 1.0
-                
-                for _ in 0 ..< 1000 {
-                    var motions = [OSMPoint](repeating: OSMPoint(), count: count)
-                    for i in 0..<count {
-                        motions[i] = calcMotion(points[i], i, points, count, &corner, &dotp)
-                    }
-                    points[corner] = Add(points[corner], motions[corner])
-                    score = dotp
-                    if score < epsilon {
-                        break
-                    }
-                }
-                
-                // apply new position
-                let node = way.nodes[corner]
-                setLongitude(points[corner].x, latitude: latp2lat(points[corner].y), for: node)
-            } else {
-                var originalPoints = [OSMPoint](repeating: OSMPoint(), count: count)
-                memcpy(&originalPoints, points, MemoryLayout.size(ofValue: points))
-                var bestScore = 1e9
-                var bestPoints = [OSMPoint](repeating: OSMPoint(), count: count)
-                
-                for step in 0 ..< 1000 {
-                    var motions = [OSMPoint](repeating: OSMPoint(), count: count)
-                    var tempInt = 0, tempDouble = 0.0
-                    for i in 0 ..< count {
-                        motions[i] = calcMotion(points[i], i, points, count, &tempInt, &tempDouble)
-                    }
-                    for i in 0 ..< count {
-                        if !motions[i].x.isNaN {
-                            points[i] = Add(points[i], motions[i])
-                        }
-                    }
-                    let newScore = squareness(points, count)
-                    if newScore < bestScore {
-                        memcpy(&bestPoints, points, MemoryLayout.size(ofValue: points))
-                        bestScore = newScore
-                    }
-                    if bestScore < epsilon {
-                        print("Straighten steps = \(step)")
-                        break
-                    }
-                }
-                
-                memcpy(&points, bestPoints, MemoryLayout.size(ofValue: points))
-                
-                for i in 0 ..< way.nodes.count {
-                    let modi = i < count ? i : 0
-                    let node = way.nodes[i]
-                    if points[i].x != originalPoints[i].x || points[i].y != originalPoints[i].y {
-                        setLongitude(points[modi].x, latitude: latp2lat(points[modi].y), for: node)
-                    }
-                }
-                
-                // remove empty nodes on straight sections
-                // * deleting nodes that are referenced by non-downloaded ways could case data loss
-                var i = count - 1
-                while i >= 0 {
-                    let node = way.nodes[i]
-                    
-                    if (node.wayCount) > 1 || (node.parentRelations.count) > 0 || node.hasInterestingTags() {
-                        continue
-                    }
-                    
-                    let dotp = normalizedDotProduct(i, points, count)
-                    if dotp < -1 + epsilon {
-                        var dummy: String? = nil
-                        let canDeleteNode = canDelete(node, from: way, error: &dummy)
-                        if canDeleteNode != nil {
-                            canDeleteNode!()
-                        } else {
-                            // oh well...
-                        }
-                    }
-                    i -= 1
-                }
-            }
-        }
-    }
+			rectoUpperThreshold = cos(rectoThreshold * .pi / 180)
+
+			let count = way.nodes.count - 1
+			var points = way.nodes.dropLast().map({
+				return OSMPoint( x: $0.lon, y: lat2latp($0.lat))
+			})
+
+			let epsilon = 1e-4
+
+			if count == 3 {
+				var score = 0.0
+				var corner: Int = 0
+				var dotp: Double = 1.0
+
+				for _ in 0 ..< 1000 {
+					var motions = [OSMPoint](repeating: OSMPoint(), count: count)
+					for i in 0..<count {
+						motions[i] = calcMotion(points[i], i, points, count, &corner, &dotp)
+					}
+					points[corner] = Add(points[corner], motions[corner])
+					score = dotp
+					if score < epsilon {
+						break
+					}
+				}
+
+				// apply new position
+				let node = way.nodes[corner]
+				setLongitude(points[corner].x, latitude: latp2lat(points[corner].y), for: node)
+			} else {
+				let originalPoints = points
+				var bestScore = 1e9
+				var bestPoints = [OSMPoint](repeating: OSMPoint(), count: count)
+
+				for step in 0 ..< 1000 {
+					var motions = [OSMPoint](repeating: OSMPoint(), count: count)
+					var tempInt = 0, tempDouble = 0.0
+					for i in 0 ..< count {
+						motions[i] = calcMotion(points[i], i, points, count, &tempInt, &tempDouble)
+					}
+					for i in 0 ..< count {
+						if !motions[i].x.isNaN {
+							points[i] = Add(points[i], motions[i])
+						}
+					}
+					let newScore = squareness(points, count)
+					if newScore < bestScore {
+						bestPoints = points
+						bestScore = newScore
+					}
+					if bestScore < epsilon {
+						print("Straighten steps = \(step)")
+						break
+					}
+				}
+
+				memcpy(&points, bestPoints, MemoryLayout.size(ofValue: points))
+
+				for i in 0 ..< way.nodes.count {
+					let modi = i < count ? i : 0
+					let node = way.nodes[i]
+					if points[i].x != originalPoints[i].x || points[i].y != originalPoints[i].y {
+						setLongitude(points[modi].x, latitude: latp2lat(points[modi].y), for: node)
+					}
+				}
+
+				// remove empty nodes on straight sections
+				// * deleting nodes that are referenced by non-downloaded ways could case data loss
+				var i = count - 1
+				while i >= 0 {
+					let node = way.nodes[i]
+
+					if (node.wayCount) > 1 || (node.parentRelations.count) > 0 || node.hasInterestingTags() {
+						continue
+					}
+
+					let dotp = normalizedDotProduct(i, points, count)
+					if dotp < -1 + epsilon {
+						var dummy: String? = nil
+						let canDeleteNode = canDelete(node, from: way, error: &dummy)
+						if canDeleteNode != nil {
+							canDeleteNode!()
+						} else {
+							// oh well...
+						}
+					}
+					i -= 1
+				}
+			}
+		}
+	}
 
     // MARK: canMergeNode:intoNode
     // used when dragging a node into another node
     func canMerge(_ node1: OsmNode, into node2: OsmNode, error: inout String?) -> EditActionReturnNode? {
-        guard let mergedTags = OsmBaseObject.MergeTagsWith(
+        guard let mergedTags = OsmTags.Merge(
             ourTags: node1.tags,
             otherTags: node2.tags,
             allowConflicts: false
@@ -884,7 +880,7 @@ extension OsmMapData {
                     // 2. But must be inserted as a pair
                     
                     if relation == wayIsOuter {
-                        if let merged = OsmBaseObject.MergeTagsWith(ourTags: relation.tags, otherTags: wayA.tags, allowConflicts: true) {
+                        if let merged = OsmTags.Merge(ourTags: relation.tags, otherTags: wayA.tags, allowConflicts: true) {
                             setTags(merged, for: relation)
                             setTags([:], for: wayA)
                             setTags([:], for: wayB)
@@ -1073,17 +1069,16 @@ extension OsmMapData {
         }
         
         // check if extending the way would break something
-        var loc: Int? = nil
-        loc = selectedWay.nodes.firstIndex(of: selectedNode) ?? NSNotFound
-        if canAddNode(to: selectedWay, at: loc ?? (loc ?? 0) + 1, error: &error) == nil {
-            return nil
-        }
-        loc = otherWay.nodes.firstIndex(of: selectedNode) ?? NSNotFound
-        if canAddNode(to: otherWay, at: loc ?? (loc ?? 0) + 1, error: &error) == nil {
-            return nil
-        }
+        var loc = selectedWay.nodes.firstIndex(of: selectedNode) ?? 0
+		if canAddNode(to: selectedWay, at: loc > 0 ? loc : loc+1, error: &error) == nil {
+			return nil
+		}
+		loc = otherWay.nodes.firstIndex(of: selectedNode) ?? 0
+		if canAddNode(to: otherWay, at: loc > 0 ? loc : loc+1, error: &error) == nil {
+			return nil
+		}
         
-        let newTags = OsmBaseObject.MergeTagsWith(ourTags: selectedWay.tags, otherTags: otherWay.tags, allowConflicts: false)
+        let newTags = OsmTags.Merge(ourTags: selectedWay.tags, otherTags: otherWay.tags, allowConflicts: false)
         if newTags == nil {
             // tag conflict
             error = NSLocalizedString("The ways contain incompatible tags", comment: "")
@@ -1159,14 +1154,14 @@ extension OsmMapData {
         return { [self] in
             var center = way.centerPoint()
             center.y = lat2latp(center.y)
-            var radius: Double? = nil
-            radius = AverageDistanceToCenter(way, center)
+            let radius = AverageDistanceToCenter(way, center)
             
             for i in 0..<(way.nodes.count - 1) {
                 let n = way.nodes[i]
-                let c = hypot(n.lon - center.x, lat2latp(n.lat) - center.y)
-                let lat = latp2lat((center.y ) + (lat2latp(n.lat) - center.y) / c * (radius ?? 0.0))
-                let lon = center.x + (n.lon - center.x) / c * (radius ?? 0.0)
+                let c = hypot(n.lon - center.x,
+							  lat2latp(n.lat) - center.y)
+                let lat = latp2lat((center.y ) + (lat2latp(n.lat) - center.y) / c * radius)
+                let lon = center.x + (n.lon - center.x) / c * radius
                 setLongitude(lon, latitude: lat, for: n)
             }
             
@@ -1189,7 +1184,7 @@ extension OsmMapData {
                     if diff > 20 {
                         var ang = a1 - 20
                         while ang > a2 + 10 {
-                            InsertNode(self, way, center, ang, radius ?? 0.0, i + 1)
+                            InsertNode(self, way, center, ang, radius, i + 1)
                             j += 1
                             i += 1
                             ang -= 20
@@ -1203,7 +1198,7 @@ extension OsmMapData {
                     if diff > 20 {
                         var ang = a1 + 20
                         while ang < a2 - 10 {
-                            InsertNode(self, way, center, ang, radius ?? 0.0, i + 1)
+                            InsertNode(self, way, center, ang, radius, i + 1)
                             j += 1
                             i += 1
                             ang += 20

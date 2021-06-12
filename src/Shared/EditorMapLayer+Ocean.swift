@@ -324,7 +324,7 @@ extension EditorMapLayer {
         }
     }
 
-	public func getOceanLayer(_ objectList: [OsmBaseObject]) -> CAShapeLayer? {
+	public func getOceanLayer(_ objectList: ContiguousArray<OsmBaseObject>) -> CAShapeLayer? {
         // get all coastline ways
         var outerWays = [OsmWay]()
         var innerWays = [OsmWay]()

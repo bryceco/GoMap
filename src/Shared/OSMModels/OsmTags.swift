@@ -98,4 +98,26 @@ final class OsmTags : NSObject {
 		}
 		return newDict
 	}
+
+	// result is nil only if allowConflicts==false
+	static func Merge(ourTags: [String : String], otherTags: [String : String], allowConflicts: Bool) -> [String : String]? {
+		guard !ourTags.isEmpty else { return otherTags }
+		guard !otherTags.isEmpty else { return ourTags }
+
+		var merged = ourTags
+		for (otherKey, otherValue) in otherTags {
+			let ourValue = merged[otherKey]
+			if ourValue == nil || allowConflicts {
+				merged[otherKey] = otherValue
+			} else if ourValue == otherValue {
+				// we already have it but replacement is the same
+			} else if OsmTags.IsInterestingKey(otherKey) {
+				// conflict, so return error
+				return nil
+			} else {
+				// we don't allow conflicts, but its not an interesting key/value so just ignore the conflict
+			}
+		}
+		return merged
+	}
 }
