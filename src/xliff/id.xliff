@@ -64,24 +64,26 @@
     <body>
       <trans-unit id="&#9;Relation " xml:space="preserve">
         <source>	Relation </source>
-        <target/>
+        <target>	Hubungan </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="&#9;Way " xml:space="preserve">
         <source>	Way </source>
-        <target/>
+        <target>	Jalan </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;" xml:space="preserve">
         <source> (%d members)
 </source>
-        <target/>
+        <target> (%d anggota)
+</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;" xml:space="preserve">
         <source> (%d nodes)
 </source>
-        <target/>
+        <target> (%d titik)
+</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (node)" xml:space="preserve">
@@ -1978,7 +1980,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="wev-ax-u4C.headerTitle" xml:space="preserve">
         <source>Reset</source>
-        <target/>
+        <target>Setel ulang</target>
         <note>Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C";</note>
       </trans-unit>
       <trans-unit id="xve-fW-qM7.text" xml:space="preserve">
@@ -2015,7 +2017,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
     <body>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
         <source>Get Directions</source>
-        <target/>
+        <target>Dapatkan Petunjuk Arah</target>
         <note>Class = "UILabel"; text = "Get Directions"; ObjectID = "1xx-L0-hKm";</note>
       </trans-unit>
       <trans-unit id="2.title" xml:space="preserve">
@@ -2065,7 +2067,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="FaM-WV-S6I.title" xml:space="preserve">
         <source>Search for Location</source>
-        <target/>
+        <target>Cari Lokasi</target>
         <note>Class = "UINavigationItem"; title = "Search for Location"; ObjectID = "FaM-WV-S6I";</note>
       </trans-unit>
       <trans-unit id="Fo4-Nq-pAz.normalTitle" xml:space="preserve">
@@ -2075,7 +2077,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="HeZ-95-3K1.text" xml:space="preserve">
         <source>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</source>
-        <target/>
+        <target>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</target>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "HeZ-95-3K1";</note>
       </trans-unit>
       <trans-unit id="MBY-TK-Wuy.title" xml:space="preserve">
@@ -2090,7 +2092,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="OJ0-aO-ri1.normalTitle" xml:space="preserve">
         <source>Resolve</source>
-        <target/>
+        <target>Diselesaikan</target>
         <note>Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1";</note>
       </trans-unit>
       <trans-unit id="PHk-s9-onx.text" xml:space="preserve">
@@ -2150,7 +2152,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="xw9-Ro-Fai.placeholder" xml:space="preserve">
         <source>Niagara Falls</source>
-        <target/>
+        <target>Air terjun Niagara</target>
         <note>Class = "UISearchBar"; placeholder = "Niagara Falls"; ObjectID = "xw9-Ro-Fai";</note>
       </trans-unit>
       <trans-unit id="zrW-uc-hfQ.segmentTitles[0]" xml:space="preserve">
@@ -2589,12 +2591,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.headerTitle" xml:space="preserve">
         <source>OpenStreetMap Server</source>
-        <target/>
+        <target>Peladen OpenStreetMap</target>
         <note>Class = "UITableViewSection"; headerTitle = "OpenStreetMap Server"; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6Lj-wh-z9f.text" xml:space="preserve">
         <source>Detail</source>
-        <target/>
+        <target>Rincian</target>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "6Lj-wh-z9f";</note>
       </trans-unit>
       <trans-unit id="7cc-E7-pzw.text" xml:space="preserve">
@@ -2604,7 +2606,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="34N-Ep-rpf.text" xml:space="preserve">
         <source>OpenStreetMap Login</source>
-        <target/>
+        <target>Login OpenStreetMap</target>
         <note>Class = "UILabel"; text = "OpenStreetMap Login"; ObjectID = "34N-Ep-rpf";</note>
       </trans-unit>
       <trans-unit id="66J-ih-Lfh.placeholder" xml:space="preserve">
@@ -2658,7 +2660,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="DY5-Ls-XZ1.normalTitle" xml:space="preserve">
         <source>Register new account</source>
-        <target/>
+        <target>Buat akun baru</target>
         <note>Class = "UIButton"; normalTitle = "Register new account"; ObjectID = "DY5-Ls-XZ1";</note>
       </trans-unit>
       <trans-unit id="DiU-tt-U7H.text" xml:space="preserve">
@@ -2673,7 +2675,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Gxc-44-SzR.title" xml:space="preserve">
         <source>Advanced Settings</source>
-        <target/>
+        <target>Pengaturan Lanjutan</target>
         <note>Class = "UINavigationItem"; title = "Advanced Settings"; ObjectID = "Gxc-44-SzR";</note>
       </trans-unit>
       <trans-unit id="HNj-kK-OCP.text" xml:space="preserve">
@@ -2688,22 +2690,22 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="KIO-8j-QsO.text" xml:space="preserve">
         <source>Subtitle</source>
-        <target/>
+        <target>Subtitel</target>
         <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "KIO-8j-QsO";</note>
       </trans-unit>
       <trans-unit id="LaB-Et-hHT.text" xml:space="preserve">
         <source>Details</source>
-        <target/>
+        <target>Rincian-rincian</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "LaB-Et-hHT";</note>
       </trans-unit>
       <trans-unit id="Mus-SG-1Sz.text" xml:space="preserve">
         <source>Detail</source>
-        <target/>
+        <target>Rincian</target>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "Mus-SG-1Sz";</note>
       </trans-unit>
       <trans-unit id="O6E-f1-A1k.title" xml:space="preserve">
         <source>Login</source>
-        <target/>
+        <target>Masuk</target>
         <note>Class = "UINavigationItem"; title = "Login"; ObjectID = "O6E-f1-A1k";</note>
       </trans-unit>
       <trans-unit id="TGa-tJ-nrC.text" xml:space="preserve">
@@ -2718,37 +2720,37 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Tkc-bW-kNS.headerTitle" xml:space="preserve">
         <source>OpenStreetMap account</source>
-        <target/>
+        <target>Akun OpenStreetMap</target>
         <note>Class = "UITableViewSection"; headerTitle = "OpenStreetMap account"; ObjectID = "Tkc-bW-kNS";</note>
       </trans-unit>
       <trans-unit id="TrT-Nn-WKe.text" xml:space="preserve">
         <source>Join the TestFlight Beta</source>
-        <target/>
+        <target>Gabung TestFlight Beta</target>
         <note>Class = "UILabel"; text = "Join the TestFlight Beta"; ObjectID = "TrT-Nn-WKe";</note>
       </trans-unit>
       <trans-unit id="UeH-ME-EV8.text" xml:space="preserve">
         <source>Show FPS</source>
-        <target/>
+        <target>Tampilkan FPS</target>
         <note>Class = "UILabel"; text = "Show FPS"; ObjectID = "UeH-ME-EV8"; Note = "Display the app's frames/second while running";</note>
       </trans-unit>
       <trans-unit id="UvN-Qa-roL.text" xml:space="preserve">
         <source>Frames/Second</source>
-        <target/>
+        <target>Frame/Detik</target>
         <note>Class = "UILabel"; text = "Frames/Second"; ObjectID = "UvN-Qa-roL";</note>
       </trans-unit>
       <trans-unit id="VDO-HW-SLB.title" xml:space="preserve">
         <source>Nearby Mappers</source>
-        <target/>
+        <target>Pemeta terdekat</target>
         <note>Class = "UINavigationItem"; title = "Nearby Mappers"; ObjectID = "VDO-HW-SLB";</note>
       </trans-unit>
       <trans-unit id="YQ4-05-lQz.placeholder" xml:space="preserve">
         <source>username</source>
-        <target/>
+        <target>nama pengguna</target>
         <note>Class = "UITextField"; placeholder = "username"; ObjectID = "YQ4-05-lQz";</note>
       </trans-unit>
       <trans-unit id="ags-Mx-c1q.text" xml:space="preserve">
         <source>Contact Us</source>
-        <target/>
+        <target>Kontak Kami</target>
         <note>Class = "UILabel"; text = "Contact Us"; ObjectID = "ags-Mx-c1q";</note>
       </trans-unit>
       <trans-unit id="bt0-CH-HbH.normalTitle" xml:space="preserve">
@@ -2763,7 +2765,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="dbi-X6-Day.headerTitle" xml:space="preserve">
         <source>Bug Reports &amp; Suggestions</source>
-        <target/>
+        <target>Laporan Bug &amp; Saran</target>
         <note>Class = "UITableViewSection"; headerTitle = "Bug Reports &amp; Suggestions"; ObjectID = "dbi-X6-Day";</note>
       </trans-unit>
       <trans-unit id="e7I-rE-dAW.placeholder" xml:space="preserve">
@@ -2773,22 +2775,22 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="fbD-Hr-HNI.headerTitle" xml:space="preserve">
         <source>Credentials</source>
-        <target/>
+        <target>Kredensial</target>
         <note>Class = "UITableViewSection"; headerTitle = "Credentials"; ObjectID = "fbD-Hr-HNI";</note>
       </trans-unit>
       <trans-unit id="gec-8l-k4H.text" xml:space="preserve">
         <source>Advanced Settings</source>
-        <target/>
+        <target>Pengaturan Lanjutan</target>
         <note>Class = "UILabel"; text = "Advanced Settings"; ObjectID = "gec-8l-k4H";</note>
       </trans-unit>
       <trans-unit id="gh3-sb-yuZ.headerTitle" xml:space="preserve">
         <source>Advanced</source>
-        <target/>
+        <target>Lanjutan</target>
         <note>Class = "UITableViewSection"; headerTitle = "Advanced"; ObjectID = "gh3-sb-yuZ";</note>
       </trans-unit>
       <trans-unit id="iR4-av-Q7M.text" xml:space="preserve">
         <source>Email Feedback</source>
-        <target/>
+        <target>Umpan Balik Email</target>
         <note>Class = "UILabel"; text = "Email Feedback"; ObjectID = "iR4-av-Q7M";</note>
       </trans-unit>
       <trans-unit id="ib9-wt-IzD.title" xml:space="preserve">
@@ -2818,17 +2820,17 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="m7D-wn-3MP.title" xml:space="preserve">
         <source>Prepare for Offline</source>
-        <target/>
+        <target>Bersiap untuk Offline</target>
         <note>Class = "UINavigationItem"; title = "Prepare for Offline"; ObjectID = "m7D-wn-3MP";</note>
       </trans-unit>
       <trans-unit id="m7u-CH-jgg.headerTitle" xml:space="preserve">
         <source>Become a Tester</source>
-        <target/>
+        <target>Menjadi Penguji</target>
         <note>Class = "UITableViewSection"; headerTitle = "Become a Tester"; ObjectID = "m7u-CH-jgg";</note>
       </trans-unit>
       <trans-unit id="nIn-2k-PYG.headerTitle" xml:space="preserve">
         <source>Miscellaneous</source>
-        <target/>
+        <target>Lain-Lain</target>
         <note>Class = "UITableViewSection"; headerTitle = "Miscellaneous"; ObjectID = "nIn-2k-PYG";</note>
       </trans-unit>
       <trans-unit id="oIj-UV-kLH.headerTitle" xml:space="preserve">
@@ -2853,12 +2855,12 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="whL-SZ-HD5.text" xml:space="preserve">
         <source>Email Feedback</source>
-        <target/>
+        <target>Umpan balik Email</target>
         <note>Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5";</note>
       </trans-unit>
       <trans-unit id="x4m-oT-EG8.text" xml:space="preserve">
         <source>GitHub - Issues &amp; Source Code</source>
-        <target/>
+        <target>GitHub - Masalah &amp; Kode Sumber</target>
         <note>Class = "UILabel"; text = "GitHub - Issues &amp; Source Code"; ObjectID = "x4m-oT-EG8";</note>
       </trans-unit>
       <trans-unit id="yAO-9B-CTd.headerTitle" xml:space="preserve">
@@ -2905,17 +2907,17 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="hcE-yO-3eH.normalTitle" xml:space="preserve">
         <source>Edit</source>
-        <target/>
+        <target>Sunting</target>
         <note>Class = "UIButton"; normalTitle = "Edit"; ObjectID = "hcE-yO-3eH";</note>
       </trans-unit>
       <trans-unit id="ikj-u9-9Bn.text" xml:space="preserve">
         <source>Changeset comment:</source>
-        <target/>
+        <target>Komentar changeset:</target>
         <note>Class = "UILabel"; text = "Changeset comment:"; ObjectID = "ikj-u9-9Bn";</note>
       </trans-unit>
       <trans-unit id="ps9-Hb-Vow.placeholder" xml:space="preserve">
         <source>survey, Bing, etc.</source>
-        <target/>
+        <target>survey, Bing, lainnya.</target>
         <note>Class = "UITextField"; placeholder = "survey, Bing, etc."; ObjectID = "ps9-Hb-Vow";</note>
       </trans-unit>
       <trans-unit id="yZR-tZ-66S.text" xml:space="preserve">
