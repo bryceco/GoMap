@@ -10,7 +10,7 @@ class OfflineTableViewCell: UITableViewCell {
     @IBOutlet var detailLabel: UILabel!
     @IBOutlet var button: UIButton!
     @IBOutlet var activityView: UIActivityIndicatorView!
-    var tileList: [String]?
+    var tileList: [String] = []
     var tileLayer: MercatorTileLayer?
 }
 
@@ -20,16 +20,16 @@ class OfflineViewController: UITableViewController {
     var activityCount = 0
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+		super.viewDidLoad()
         
-        tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableView.automaticDimension
-        _aerialCell.tileLayer = AppDelegate.shared.mapView.aerialLayer
-        _mapnikCell.tileLayer = AppDelegate.shared.mapView.mapnikLayer
-        for cell in [_aerialCell, _mapnikCell] {
-            cell?.tileList = cell?.tileLayer?.allTilesIntersectingVisibleRect()
-			cell?.detailLabel.text = String.localizedStringWithFormat(NSLocalizedString("%lu tiles needed", comment: ""), UInt(cell?.tileList?.count ?? 0))
-            cell?.button.isEnabled = (cell?.tileList?.count ?? 0) > 0
+		tableView.estimatedRowHeight = 100
+		tableView.rowHeight = UITableView.automaticDimension
+		_aerialCell.tileLayer = AppDelegate.shared.mapView.aerialLayer
+		_mapnikCell.tileLayer = AppDelegate.shared.mapView.mapnikLayer
+		for cell in [_aerialCell!, _mapnikCell!] {
+			cell.tileList = cell.tileLayer!.allTilesIntersectingVisibleRect()
+			cell.detailLabel.text = String.localizedStringWithFormat(NSLocalizedString("%lu tiles needed", comment: ""), UInt(cell.tileList.count))
+			cell.button.isEnabled = cell.tileList.count > 0
         }
     }
     
@@ -42,24 +42,24 @@ class OfflineViewController: UITableViewController {
     
     // MARK: - Table view delegate
     func downloadFile(for cell: OfflineTableViewCell) {
-        if (cell.tileList?.count ?? 0) == 0 {
-            cell.button.setTitle(NSLocalizedString("Start", comment: "Begin downloading tiles"), for: .normal)
-            cell.activityView.stopAnimating()
-            activityCount -= 1
-            if activityCount == 0 {
-                navigationItem.setHidesBackButton(false, animated: true)
-            }
-            return
-        }
-        let cacheKey = cell.tileList?.last ?? ""
-//        let cacheKey = NSString(string: cell.tileList?.last ?? "")
-        cell.tileList?.removeLast()
-        cell.tileLayer?.downloadTile(forKey: cacheKey) {
-            cell.detailLabel.text = String.localizedStringWithFormat(NSLocalizedString("%lu tiles needed", comment: "Always plural"), UInt(cell.tileList?.count ?? 0))
-            if cell.activityView.isAnimating {
-                self.downloadFile(for: cell)
-            }
-        }
+		if let cacheKey = cell.tileList.popLast() {
+			cell.tileLayer?.downloadTile(forKey: cacheKey,
+										 completion: {
+				cell.detailLabel.text = String.localizedStringWithFormat(NSLocalizedString("%lu tiles needed", comment: "Always plural"), UInt(cell.tileList.count))
+				if cell.activityView.isAnimating {
+					// recurse
+					self.downloadFile(for: cell)
+				}
+			})
+		} else {
+			// finished
+			cell.button.setTitle(NSLocalizedString("Start", comment: "Begin downloading tiles"), for: .normal)
+			cell.activityView.stopAnimating()
+			activityCount -= 1
+			if activityCount == 0 {
+				navigationItem.setHidesBackButton(false, animated: true)
+			}
+		}
     }
     
     

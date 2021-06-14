@@ -14,6 +14,15 @@ enum EditError: Error {
 
 extension EditorMapLayer {
 
+	func undo() {
+		self.mapData.undo()
+		self.setNeedsLayout()
+	}
+	func redo() {
+		self.mapData.redo()
+		self.setNeedsLayout()
+	}
+
 	func extendSelectedWay(to newPoint: CGPoint, from pinPoint: CGPoint) -> Result<CGPoint,EditError> {
 
 		if let way = self.selectedWay,

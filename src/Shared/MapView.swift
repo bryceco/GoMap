@@ -1840,9 +1840,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 		}
 
         removePin()
-
-        editorLayer.mapData.undo()
-        editorLayer.setNeedsLayout()
+		editorLayer.undo()
     }
 
     @IBAction func redo(_ sender: Any?) {
@@ -1851,9 +1849,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             return
         }
         removePin()
-
-        editorLayer.mapData.redo()
-        editorLayer.setNeedsLayout()
+        editorLayer.redo()
     }
 
     // MARK: Resize & movement
@@ -2512,7 +2508,8 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
     func dragConnection(for node: OsmNode, segment: inout Int) -> OsmBaseObject? {
 		guard let way = editorLayer.selectedWay,
-			  let index = way.nodes.firstIndex(of: node)
+			  let index = way.nodes.firstIndex(of: node),
+			  let point = pushpinView?.arrowPoint
 		else { return nil }
 
 		var ignoreList: [OsmBaseObject] = []
@@ -2537,13 +2534,11 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 				ignoreList = parentWays + way.nodes
             }
         }
-		let hit = editorLayer.osmHitTest(
-			pushpinView?.arrowPoint ?? CGPoint.zero,
-			radius: DragConnectHitTestRadius,
-            isDragConnect: true,
-            ignoreList: ignoreList,
-            segment: &segment
-        )
+		let hit = editorLayer.osmHitTest( point,
+										  radius: DragConnectHitTestRadius,
+										  isDragConnect: true,
+										  ignoreList: ignoreList,
+										  segment: &segment )
         return hit
     }
 
@@ -2771,8 +2766,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 	}
 
     func placePushpin(at point: CGPoint, object: OsmBaseObject?) {
-        // drop in center of screen
-        removePin()
+		removePin()
 
         confirmDrag = false
 		let pushpinView = PushPinView()
@@ -2790,7 +2784,6 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 			pushpinView.animateMove(from: CGPoint(x: bounds.origin.x + bounds.size.width,
 												  y: bounds.origin.y))
 		}
-
 
         if object == nil {
 			// Need (?) graphic at arrow point

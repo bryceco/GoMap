@@ -112,7 +112,7 @@ class EditorMapLayer: CALayer {
 			if let selectedNode = strongSelf.selectedNode {
 				dict["selectedNode"] = selectedNode
 			}
-            return dict
+			return dict
         }
         
 		addSublayer(baseLayer)

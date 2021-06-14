@@ -565,9 +565,8 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
             
             for tileX in tileWest..<tileEast {
                 for tileY in tileNorth..<tileSouth {
-                    let cacheKey = String(quadKey(forZoom: zoomLevel, tileX: tileX, tileY: tileY))
-                    let file = cacheKey + ".jpg"
-                    if currentSet.contains(file) {
+                    let cacheKey = quadKey(forZoom: zoomLevel, tileX: tileX, tileY: tileY)
+                    if currentSet.contains(cacheKey) {
                         // already have it
                     } else {
                         neededTiles.append(cacheKey)
