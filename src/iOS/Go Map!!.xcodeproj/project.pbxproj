@@ -24,7 +24,7 @@
 		021FADD725873D0100F6E1C0 /* PresetsForFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADD625873D0100F6E1C0 /* PresetsForFeature.swift */; };
 		021FADE22588474300F6E1C0 /* PresetCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADE12588474300F6E1C0 /* PresetCategory.swift */; };
 		021FADEF25884BB900F6E1C0 /* OsmTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADEE25884BB900F6E1C0 /* OsmTags.swift */; };
-		022B09A719BD3F7B0041687B /* QuadBox.mm in Sources */ = {isa = PBXBuildFile; fileRef = 022B09A619BD3F7B0041687B /* QuadBox.mm */; };
+		02263CDF2677F93A002BA72F /* QuadBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02263CDE2677F93A002BA72F /* QuadBox.swift */; };
 		02354F7A246349E100878A04 /* CurvedGlyphLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02354F79246349E100878A04 /* CurvedGlyphLayer.swift */; };
 		023B892B19C148790060CDB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B892A19C148790060CDB5 /* Images.xcassets */; };
 		02401F361DE021EE00F32AF5 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */; };
@@ -204,6 +204,7 @@
 		02231F8925C4CB38000E7C07 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Changeset.strings"; sourceTree = "<group>"; };
 		02248A032568C3E2004272B2 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		02248A042568C3E2004272B2 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		02263CDE2677F93A002BA72F /* QuadBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QuadBox.swift; path = ../Shared/QuadBox.swift; sourceTree = "<group>"; };
 		022B09A619BD3F7B0041687B /* QuadBox.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = QuadBox.mm; path = ../Shared/QuadBox.mm; sourceTree = "<group>"; };
 		02354F79246349E100878A04 /* CurvedGlyphLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CurvedGlyphLayer.swift; path = ../Shared/CurvedGlyphLayer.swift; sourceTree = "<group>"; };
 		023B892A19C148790060CDB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
@@ -711,6 +712,7 @@
 				C381C30A263FE518003142BA /* PushPinView.swift */,
 				02A123F3264EF3DD005638C1 /* QuadBox.h */,
 				022B09A619BD3F7B0041687B /* QuadBox.mm */,
+				02263CDE2677F93A002BA72F /* QuadBox.swift */,
 				C3FA924A263FFD7E000A2A99 /* QuadMap.swift */,
 				02ACBBBB16713F2A00BB4414 /* RenderInfo.json */,
 				C3D096B8263DFA2A00E3B129 /* RenderInfo.swift */,
@@ -1069,6 +1071,7 @@
 				021FADEF25884BB900F6E1C0 /* OsmTags.swift in Sources */,
 				02EDBF672653306400B7072E /* OsmBaseObject.swift in Sources */,
 				0288169F265895FA00C30EA2 /* OsmMapData.swift in Sources */,
+				02263CDF2677F93A002BA72F /* QuadBox.swift in Sources */,
 				027EDC72206F3EED00D349D6 /* DDXMLNode.m in Sources */,
 				02EDBF6B26535BEB00B7072E /* OsmMember.swift in Sources */,
 				0286EAA726570382007CFEE9 /* LayerProperties.swift in Sources */,
@@ -1102,7 +1105,6 @@
 				02CC01D12584195E004444EF /* PresetFeature.swift in Sources */,
 				C31315232644292700C0AD86 /* LocationBallLayer.swift in Sources */,
 				ED964A012601D6A900EC0A60 /* POIFeaturePresetsViewController.swift in Sources */,
-				022B09A719BD3F7B0041687B /* QuadBox.mm in Sources */,
 				020EBA7926506156001D56F4 /* MercatorTileLayer.swift in Sources */,
 				02354F7A246349E100878A04 /* CurvedGlyphLayer.swift in Sources */,
 				ED56E5B426026542000B368C /* BingMetadataViewController.swift in Sources */,

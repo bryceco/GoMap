@@ -481,8 +481,8 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
     }
     
     func overlapsBox(_ box: OSMRect) -> Bool {
-		return OSMRectIntersectsRect( self.boundingBox, box )
-    }
+		return self.boundingBox.intersectsRect( box )
+	}
     
 	private enum Uses : Int {
 		case name = 1

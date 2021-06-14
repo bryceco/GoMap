@@ -143,6 +143,11 @@ extension CGRect {
 }
 
 // MARK: OSMPoint
+struct OSMPoint: Codable {
+	var x: Double
+	var y: Double
+}
+
 extension OSMPoint {
 	static let zero = OSMPoint(x: 0.0, y: 0.0)
 
@@ -236,6 +241,12 @@ extension OSMPoint {
 }
 
 // MARK: OSMSize
+
+struct OSMSize: Codable {
+	var width: Double
+	var height: Double
+}
+
 extension OSMSize {
 	static let zero = OSMSize(width: 0.0, height: 0.0)
 
@@ -249,6 +260,12 @@ extension OSMSize {
 }
 
 // MARK: OSMRect
+
+struct OSMRect: Codable {
+	var origin: OSMPoint
+	var size: OSMSize
+}
+
 extension OSMRect {
 	static let zero = OSMRect(origin: OSMPoint(x: 0.0, y: 0.0), size: OSMSize(width: 0.0, height: 0.0))
 
@@ -277,6 +294,14 @@ extension OSMRect {
 		if self.origin.y + self.size.height < b.origin.y {	return false	}
 		return true
 	}
+
+	@inline(__always) func containsRect( b: OSMRect ) -> Bool {
+		return	self.origin.x <= b.origin.x &&
+				self.origin.y <= b.origin.y &&
+				self.origin.x + self.size.width >= b.origin.x + b.size.width &&
+				self.origin.y + self.size.height >= b.origin.y + b.size.height
+	}
+
 	@inline(__always) func union(_ b: OSMRect) -> OSMRect {
 		let minX = Double(min(self.origin.x, b.origin.x))
 		let minY = Double(min(self.origin.y, b.origin.y))

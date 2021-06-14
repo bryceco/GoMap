@@ -326,7 +326,7 @@ class EditorMapLayer: CALayer {
     func invoke(alongScreenClippedWay way: OsmWay, block: @escaping (_ p1: OSMPoint, _ p2: OSMPoint, _ isEntry: Bool, _ isExit: Bool) -> Bool) {
 		let viewRect = OSMRect(bounds)
         var prevInside: Bool = false
-		var prev = OSMPoint()
+		var prev = OSMPoint.zero
         var first = true
         
 		for node in way.nodes {
@@ -390,8 +390,8 @@ class EditorMapLayer: CALayer {
     func pathClipped(toViewRect way: OsmWay, length pLength: UnsafeMutablePointer<CGFloat>?) -> CGPath? {
 		var path: CGMutablePath? = nil
         var length = 0.0
-        var firstPoint = OSMPoint()
-        var lastPoint = OSMPoint()
+		var firstPoint = OSMPoint.zero
+		var lastPoint = OSMPoint.zero
         
         invoke(alongScreenClippedWay: way, block: { p1, p2, isEntry, isExit in
             if path == nil {
@@ -498,7 +498,7 @@ class EditorMapLayer: CALayer {
 		// casing
         if object.isWay() != nil || (object.isRelation()?.isMultipolygon() ?? false) {
 			if renderInfo.lineWidth != 0.0 && !(object.isWay()?.isArea() ?? false) {
-				var refPoint: OSMPoint = OSMPoint()
+				var refPoint: OSMPoint = OSMPoint.zero
 				let path = object.linePathForObject(withRefPoint: &refPoint)
                 if let path = path {
                     
@@ -589,7 +589,7 @@ class EditorMapLayer: CALayer {
 			if let areaColor = renderInfo.areaColor,
 			   !object.isCoastline()
 			{
-				var refPoint = OSMPoint()
+				var refPoint = OSMPoint.zero
 				let path = object.shapePathForObject(withRefPoint: &refPoint)
                 if let path = path {
                     // draw

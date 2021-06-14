@@ -18,16 +18,12 @@ class QuadMap: NSObject, NSCoding {
     // MARK: Common
 
     init(rect: OSMRect) {
-		rootQuad = QuadBox(rect: rect)
-        super.init()
+		rootQuad = QuadBox(rect: rect, parent: nil)
+		super.init()
     }
 
 	override convenience init() {
         self.init(rect: MAP_RECT)
-    }
-
-    deinit {
-        rootQuad.deleteCpp() // cpp has a strong reference to this so we need to reset it manually
     }
 
     func count() -> Int {
@@ -68,19 +64,19 @@ class QuadMap: NSObject, NSCoding {
     // Region
     func newQuads(forRect newRect: OSMRect) -> [QuadBox] {
 		var newRect = newRect
-        let quads = NSMutableArray()
+		var quads: [QuadBox] = []
 
-        assert(newRect.origin.x >= -180.0 && newRect.origin.x <= 180.0)
+		assert(newRect.origin.x >= -180.0 && newRect.origin.x <= 180.0)
         if newRect.origin.x + newRect.size.width > 180 {
 			let half = OSMRect( origin: OSMPoint(x: -180.0,
 												 y: newRect.origin.y ),
 								size: OSMSize(width: newRect.origin.x + newRect.size.width - 180.0,
 											  height: newRect.size.height) )
-			rootQuad.missingPieces(quads, intersecting: half)
+			rootQuad.missingPieces(&quads, intersecting: half)
             newRect.size.width = 180 - newRect.origin.x
         }
-		rootQuad.missingPieces(quads, intersecting: newRect)
-        return quads as! [QuadBox]
+		rootQuad.missingPieces(&quads, intersecting: newRect)
+        return quads
     }
 
     func makeWhole(_ quad: QuadBox, success: Bool) {
@@ -111,7 +107,7 @@ class QuadMap: NSObject, NSCoding {
         var fromBox = fromBox
         let fromQuad = rootQuad.getMember(member, bbox: fromBox)
         if let fromQuad = fromQuad {
-            if OSMRectContainsRect(fromQuad.rect, toBox) {
+			if fromQuad.rect.containsRect( toBox ) {
                 // It fits in its current box. It might fit into a child, but this path is rare and not worth optimizing.
                 return
             }
@@ -173,7 +169,7 @@ class QuadMap: NSObject, NSCoding {
     }
 
     func deleteObjects(withPredicate predicate: @escaping (_ obj: OsmBaseObject) -> Bool) {
-        rootQuad.deleteObjects(predicate: predicate)
+		rootQuad.deleteObjects(withPredicate: predicate)
     }
 
     func consistencyCheck(nodes: [OsmNode], ways: [OsmWay], relations: [OsmRelation]) {
@@ -190,7 +186,7 @@ class QuadMap: NSObject, NSCoding {
 			} else {
 				dict[id] = 1
 			}
-			assert( OSMRectContainsRect( rect, obj.boundingBox ) )
+			assert( rect.containsRect( obj.boundingBox ) )
 			if obj is OsmNode { nCount += 1 }
 			if obj is OsmWay { wCount += 1 }
 			if obj is OsmRelation { rCount += 1 }

@@ -10,7 +10,7 @@ import Foundation
 
 final class LayerProperties {
     public var transform: CATransform3D = CATransform3DIdentity
-    public var position: OSMPoint = OSMPoint()
+	public var position: OSMPoint = OSMPoint.zero
     public var offset = CGPoint.zero
 	public var lineWidth: CGFloat = 0.0
     public var is3D = false

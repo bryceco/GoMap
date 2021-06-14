@@ -2316,8 +2316,9 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                     startObjectRotation()
                 }
             case .RECTANGULARIZE:
-                if (editorLayer.selectedWay?.ident ?? 0) >= 0 && !OSMRectContainsRect(screenLongitudeLatitude(), editorLayer.selectedWay?.boundingBox ?? OSMRect()) {
-                    error = NSLocalizedString("The selected way must be completely visible", comment: "") // avoid bugs where nodes are deleted from other objects
+				guard let selectedWay = editorLayer.selectedWay else { return }
+				if selectedWay.ident >= 0 && !screenLongitudeLatitude().containsRect( selectedWay.boundingBox) {
+					error = NSLocalizedString("The selected way must be completely visible", comment: "") // avoid bugs where nodes are deleted from other objects
                 } else {
 					let rect: EditAction? = editorLayer.mapData.canOrthogonalizeWay(editorLayer.selectedWay!, error:&error)
                     if let rect = rect {
@@ -2348,7 +2349,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             case .STRAIGHTEN:
 				if let selectedWay = editorLayer.selectedWay {
 					let boundingBox = selectedWay.boundingBox
-					if selectedWay.ident >= 0 && !OSMRectContainsRect(screenLongitudeLatitude(), boundingBox) {
+					if selectedWay.ident >= 0 && !screenLongitudeLatitude().containsRect( boundingBox) {
 						error = NSLocalizedString("The selected way must be completely visible", comment: "") // avoid bugs where nodes are deleted from other objects
                     } else {
 						let straighten: EditAction? = editorLayer.mapData.canStraightenWay(selectedWay, error:&error)
