@@ -12,7 +12,6 @@
       </trans-unit>
       <trans-unit id="CFBundleGetInfoString" xml:space="preserve">
         <source/>
-        <target/>
         <note>Get Info string</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
@@ -37,7 +36,6 @@
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
         <source/>
-        <target/>
         <note>Copyright (human-readable)</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
@@ -155,7 +153,7 @@
       <trans-unit id="(new object)" xml:space="preserve">
         <source>(new object)</source>
         <target>(new object)</target>
-        <note>No comment provided by engineer.</note>
+        <note>a newly created node/object</note>
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
         <source>(node in way)</source>
@@ -444,11 +442,6 @@
         <target>Data not available</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Database error" xml:space="preserve">
-        <source>Database error</source>
-        <target>Database error</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
       <trans-unit id="Delete" xml:space="preserve">
         <source>Delete</source>
         <target>Delete</target>
@@ -633,7 +626,7 @@ Error: %@</target>
       <trans-unit id="Left" xml:space="preserve">
         <source>Left</source>
         <target>Left</target>
-        <note>No comment provided by engineer.</note>
+        <note>Left side of screen</note>
       </trans-unit>
       <trans-unit id="Left side" xml:space="preserve">
         <source>Left side</source>
@@ -643,6 +636,11 @@ Error: %@</target>
       <trans-unit id="Length" xml:space="preserve">
         <source>Length</source>
         <target>Length</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Location services timed out." xml:space="preserve">
+        <source>Location services timed out.</source>
+        <target>Location services timed out.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
@@ -1025,7 +1023,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       <trans-unit id="Right" xml:space="preserve">
         <source>Right</source>
         <target>Right</target>
-        <note>No comment provided by engineer.</note>
+        <note>Right side of screen</note>
       </trans-unit>
       <trans-unit id="Right side" xml:space="preserve">
         <source>Right side</source>
@@ -1076,11 +1074,6 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       <trans-unit id="Show Recent Items" xml:space="preserve">
         <source>Show Recent Items</source>
         <target>Show Recent Items</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." xml:space="preserve">
-        <source>Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.</source>
-        <target>Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Sorry, an error occurred while loading the GPX file" xml:space="preserve">

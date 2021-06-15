@@ -30,6 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		NSKeyedUnarchiver.setClass(QuadMap.classForKeyedArchiver(), 				forClassName: "QuadMap")
 		NSKeyedUnarchiver.setClass(QuadBox.classForKeyedArchiver(), 				forClassName: "QuadBox")
 		NSKeyedUnarchiver.setClass(MyUndoManager.classForKeyedArchiver(), 			forClassName: "UndoManager")
+		NSKeyedUnarchiver.setClass(OsmNode.classForKeyedArchiver(), 				forClassName: "OsmNode")
+		NSKeyedUnarchiver.setClass(OsmWay.classForKeyedArchiver(), 					forClassName: "OsmWay")
+		NSKeyedUnarchiver.setClass(OsmRelation.classForKeyedArchiver(), 			forClassName: "OsmRelation")
 		NSKeyedUnarchiver.setClass(OsmMapData.classForKeyedArchiver(), 				forClassName: "OsmMapData")
 	}
 

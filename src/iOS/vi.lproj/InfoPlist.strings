@@ -1,0 +1,24 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Go Map!!";
+
+/* Bundle name */
+"CFBundleName" = "Go Map!!";
+
+/* (No Comment) */
+"GPS Exchange Format (GPX)" = "Định dạng Trao đổi GPS (GPX)";
+
+/* Privacy - Bluetooth Peripheral Usage Description */
+"NSBluetoothPeripheralUsageDescription" = "Kết nối với các thiết bị GPS Bluetooth";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "Máy ảnh được sử dụng để đo chiều cao các tòa nhà hoặc đối tượng";
+
+/* Privacy - Location Always and When In Use Usage Description */
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Chế độ theo dõi luôn luôn cho phép ứng dụng ghi các tập tin GPX ngay cả khi không sử dụng tích cực.";
+
+/* Privacy - Location Always Usage Description */
+"NSLocationAlwaysUsageDescription" = "Hiển thị và theo dõi vị trí của bạn trên bản đồ.";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "Hiển thị và theo dõi vị trí của bạn trên bản đồ.";
+

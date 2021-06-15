@@ -380,6 +380,9 @@
 /* coordinates */
 "Lat/Lon" = "Lat/Lon";
 
+/* No comment provided by engineer. */
+"Left" = "Gauche";
+
 /* Left-hand side of screen */
 "Left side" = "Côté gauche";
 
@@ -505,10 +508,16 @@
 "node %@ (in way)" = "nœud %@ (partie d'un chemin)";
 
 /* No comment provided by engineer. */
+"Node Attributes" = "Attributs du nœud";
+
+/* No comment provided by engineer. */
 "Node is not an element of way" = "Le nœud n'est pas un élément du chemin";
 
 /* No comment provided by engineer. */
 "Node must be the first or last node of the way" = "Le nœud doit être le premier ou le dernier du chemin";
+
+/* No comment provided by engineer. */
+"Node Tags" = "Balises du nœud";
 
 /* User credentials not found */
 "Not found" = "Introuvable";
@@ -589,6 +598,12 @@
 "relation" = "relation";
 
 /* No comment provided by engineer. */
+"Relation Attributes" = "Attributs de la relation";
+
+/* No comment provided by engineer. */
+"Relation Tags" = "Balises de la relation";
+
+/* No comment provided by engineer. */
 "Relation: %@" = "Relation : %@";
 
 /* No comment provided by engineer. */
@@ -614,6 +629,9 @@
 
 /* Edit action */
 "Reverse" = "Inverser";
+
+/* No comment provided by engineer. */
+"Right" = "Droite";
 
 /* Right-hand side of screen */
 "Right side" = "Côté droit";
@@ -804,6 +822,12 @@
 
 /* No comment provided by engineer. */
 "way %@" = "chemin %@";
+
+/* No comment provided by engineer. */
+"Way Attributes" = "Attributs du chemin";
+
+/* No comment provided by engineer. */
+"Way Tags" = "Balises du chemin";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Vous vous apprêtez à faire des changements à la base de données OpenStreetMap. Vos changements seront visibles de quiconque dans le monde.\n\nPour continuer, appuyer de nouveau sur Valider, sinon, appuyez sur Annuler.";

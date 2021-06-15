@@ -119,6 +119,9 @@
 /* node/way/relation attributes */
 "Attributes" = "Attributter";
 
+/* Automatic selection of presets languages */
+"Automatic" = "Automatisk";
+
 /* identifies current aerial imagery */
 "Background imagery %@" = "Bakgrunnsbildemateriale %@";
 
@@ -416,6 +419,9 @@
 
 /* No comment provided by engineer. */
 "node %@ (in way)" = "node %@ (i vei)";
+
+/* User credentials not found */
+"Not found" = "Ikke funnet";
 
 /* OSM note */
 "Note History" = "Node-historikk";

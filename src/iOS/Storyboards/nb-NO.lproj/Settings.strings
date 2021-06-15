@@ -49,6 +49,9 @@
 /* Class = "UIButton"; normalTitle = "Start"; ObjectID = "bt0-CH-HbH"; */
 "bt0-CH-HbH.normalTitle" = "Start";
 
+/* Class = "UILabel"; text = "Weblate - Translations"; ObjectID = "CHj-a3-gC9"; */
+"CHj-a3-gC9.text" = "Weblate – Oversettelser";
+
 /* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "ctb-pg-pM9"; */
 "ctb-pg-pM9.title" = "Lagre";
 
@@ -126,6 +129,9 @@
 
 /* Class = "UILabel"; text = "Prepare for Offline"; ObjectID = "rfX-TP-V0l"; */
 "rfX-TP-V0l.text" = "Klargjør for frakoblet bruk";
+
+/* Class = "UIButton"; normalTitle = "Start"; ObjectID = "snH-kp-6ib"; */
+"snH-kp-6ib.normalTitle" = "Start";
 
 /* Class = "UILabel"; text = "Credits"; ObjectID = "TGa-tJ-nrC"; */
 "TGa-tJ-nrC.text" = "Bidragsytere";

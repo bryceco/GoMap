@@ -380,6 +380,9 @@
 /* coordinates */
 "Lat/Lon" = "Zemljopisna širina/dužina";
 
+/* No comment provided by engineer. */
+"Left" = "Lijevo";
+
 /* Left-hand side of screen */
 "Left side" = "Lijeva strana";
 
@@ -505,10 +508,16 @@
 "node %@ (in way)" = "čvor %@ (na putu)";
 
 /* No comment provided by engineer. */
+"Node Attributes" = "Svojstva čvora";
+
+/* No comment provided by engineer. */
 "Node is not an element of way" = "Čvor nije element puta";
 
 /* No comment provided by engineer. */
 "Node must be the first or last node of the way" = "Čvor mora biti prvi ili zadnji čvor puta";
+
+/* No comment provided by engineer. */
+"Node Tags" = "Oznake čvora";
 
 /* User credentials not found */
 "Not found" = "Nije pronađeno";
@@ -589,6 +598,12 @@
 "relation" = "veza";
 
 /* No comment provided by engineer. */
+"Relation Attributes" = "Svojstva veze";
+
+/* No comment provided by engineer. */
+"Relation Tags" = "Oznake veze";
+
+/* No comment provided by engineer. */
 "Relation: %@" = "Veza: %@";
 
 /* No comment provided by engineer. */
@@ -614,6 +629,9 @@
 
 /* Edit action */
 "Reverse" = "Preokreni";
+
+/* No comment provided by engineer. */
+"Right" = "Desno";
 
 /* Right-hand side of screen */
 "Right side" = "Desna strana";
@@ -804,6 +822,12 @@
 
 /* No comment provided by engineer. */
 "way %@" = "put %@";
+
+/* No comment provided by engineer. */
+"Way Attributes" = "Svojstva puta";
+
+/* No comment provided by engineer. */
+"Way Tags" = "Oznake puta";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Promijenit ćeš podatke u aktivnoj OpenStreetMap bazi podataka. Tvoje promjene će vidjeti svi na svijetu.\n\nZa nastavak pritisni još jednom „Spremi”, inače pritisni „Odustani”.";

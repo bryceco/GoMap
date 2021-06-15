@@ -55,6 +55,9 @@
 /* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eFa-yZ-YZl"; */
 "eFa-yZ-YZl.text" = "Flyfoto-flis";
 
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F"; */
+"el8-h8-H1F.normalTitle" = "Knapp";
+
 /* Class = "UILabel"; text = "Details"; ObjectID = "EmS-9F-1qc"; */
 "EmS-9F-1qc.text" = "Detaljer";
 

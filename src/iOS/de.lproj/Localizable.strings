@@ -102,6 +102,9 @@
 "Additional imagery" = "Zusätzliche Luftbilder";
 
 /* No comment provided by engineer. */
+"Aerial only" = "Nur Luftbild";
+
+/* No comment provided by engineer. */
 "All choices" = "Alle Auswahlmöglichkeiten";
 
 /* No comment provided by engineer. */
@@ -279,10 +282,19 @@
 "Edit" = "Bearbeiten";
 
 /* No comment provided by engineer. */
+"Edit restrictions" = "Beschränkungen bearbeiten";
+
+/* No comment provided by engineer. */
 "Edit XML" = "XML bearbeiten";
 
 /* No comment provided by engineer. */
 "Editing layer not visible" = "Bearbeitungsebene nicht sichtbar";
+
+/* No comment provided by engineer. */
+"Editor only" = "Nur Editor";
+
+/* No comment provided by engineer. */
+"Editor with Aerial" = "Editor mit Luftbild";
 
 /* No comment provided by engineer. */
 "Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "Stelle sicher, dass Ortungsdienste aktiviert sind und du dieser Anwendung Zugriff erlaubt hast\n\nError: %@";
@@ -449,6 +461,9 @@
 
 /* No comment provided by engineer. */
 "Node must be the first or last node of the way" = "Der Knoten muss der erste oder letzte Knoten des Wegs sein";
+
+/* User credentials not found */
+"Not found" = "Nicht gefunden";
 
 /* OSM note */
 "Note History" = "Hinweis-Verlauf";

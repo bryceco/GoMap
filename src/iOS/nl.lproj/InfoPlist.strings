@@ -1,0 +1,24 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Go Map!!";
+
+/* Bundle name */
+"CFBundleName" = "Go Map!!";
+
+/* (No Comment) */
+"GPS Exchange Format (GPX)" = "GPS Exchange Format (GPX)";
+
+/* Privacy - Bluetooth Peripheral Usage Description */
+"NSBluetoothPeripheralUsageDescription" = "Verbind met externe Bluetooth GPS-apparaten";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "De camera wordt gebruikt om de hoogte van gebouwen of objecten te meten";
+
+/* Privacy - Location Always and When In Use Usage Description */
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "De permanent actieve locatiebepaling staat de app toe om GPX-bestanden op te nemen wanneer deze inactief is.";
+
+/* Privacy - Location Always Usage Description */
+"NSLocationAlwaysUsageDescription" = "Je locatie wordt weergegeven en gevolgd op de kaart.";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "Je locatie wordt weergegeven en gevolgd op de kaart.";
+

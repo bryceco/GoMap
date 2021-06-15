@@ -380,6 +380,9 @@
 /* coordinates */
 "Lat/Lon" = "緯度/経度";
 
+/* No comment provided by engineer. */
+"Left" = "左";
+
 /* Left-hand side of screen */
 "Left side" = "左側";
 
@@ -505,10 +508,16 @@
 "node %@ (in way)" = "ノード %@ (ウェイ内)";
 
 /* No comment provided by engineer. */
+"Node Attributes" = "ノードの属性";
+
+/* No comment provided by engineer. */
 "Node is not an element of way" = "ノードがウェイの要素ではありません";
 
 /* No comment provided by engineer. */
 "Node must be the first or last node of the way" = "ノードはウェイの最初か最後のノードでなければなりません";
+
+/* No comment provided by engineer. */
+"Node Tags" = "ノードのタグ";
 
 /* User credentials not found */
 "Not found" = "見つかりません";
@@ -589,6 +598,12 @@
 "relation" = "リレーション";
 
 /* No comment provided by engineer. */
+"Relation Attributes" = "リレーションの属性";
+
+/* No comment provided by engineer. */
+"Relation Tags" = "リレーションのタグ";
+
+/* No comment provided by engineer. */
 "Relation: %@" = "リレーション: %@";
 
 /* No comment provided by engineer. */
@@ -614,6 +629,9 @@
 
 /* Edit action */
 "Reverse" = "反転";
+
+/* No comment provided by engineer. */
+"Right" = "右";
 
 /* Right-hand side of screen */
 "Right side" = "右側";
@@ -804,6 +822,12 @@
 
 /* No comment provided by engineer. */
 "way %@" = "ウェイ %@";
+
+/* No comment provided by engineer. */
+"Way Attributes" = "ウェイの属性";
+
+/* No comment provided by engineer. */
+"Way Tags" = "ウェイのタグ";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "あなたはOpenStreetMapデータベースの本番環境に変更を加えようとしています。この変更は世界中で閲覧されます。\n\n続ける場合はコミットを再度押してください。やめる場合は中止を押してください。";

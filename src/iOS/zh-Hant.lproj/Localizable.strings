@@ -380,6 +380,9 @@
 /* coordinates */
 "Lat/Lon" = "緯/經";
 
+/* No comment provided by engineer. */
+"Left" = "左";
+
 /* Left-hand side of screen */
 "Left side" = "左邊";
 
@@ -505,10 +508,16 @@
 "node %@ (in way)" = "節點 %@ (在線段中)";
 
 /* No comment provided by engineer. */
+"Node Attributes" = "節點屬性";
+
+/* No comment provided by engineer. */
 "Node is not an element of way" = "節點不屬於線段";
 
 /* No comment provided by engineer. */
 "Node must be the first or last node of the way" = "節點必須在線段的首或尾";
+
+/* No comment provided by engineer. */
+"Node Tags" = "節點標籤";
 
 /* User credentials not found */
 "Not found" = "找不到";
@@ -589,6 +598,12 @@
 "relation" = "關係";
 
 /* No comment provided by engineer. */
+"Relation Attributes" = "關係屬性";
+
+/* No comment provided by engineer. */
+"Relation Tags" = "關係標籤";
+
+/* No comment provided by engineer. */
 "Relation: %@" = "關係： %@";
 
 /* No comment provided by engineer. */
@@ -614,6 +629,9 @@
 
 /* Edit action */
 "Reverse" = "反轉方向";
+
+/* No comment provided by engineer. */
+"Right" = "右";
 
 /* Right-hand side of screen */
 "Right side" = "右邊";
@@ -804,6 +822,12 @@
 
 /* No comment provided by engineer. */
 "way %@" = "線段 %@";
+
+/* No comment provided by engineer. */
+"Way Attributes" = "路徑屬性";
+
+/* No comment provided by engineer. */
+"Way Tags" = "路徑標籤";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "您即將要修改真的 OSM 資料庫，全世界所有人都會看到您的修改。\n\n如要繼續請請再次點擊提交，否則請點擊取消。";

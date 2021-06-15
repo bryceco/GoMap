@@ -94,7 +94,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	}
 
 	func encode(with coder: NSCoder) {
-		coder.encode(ident, forKey: "ident")
+		coder.encode(NSNumber(value: ident), forKey: "ident")
 		coder.encode(user, forKey: "user")
 		coder.encode(timestamp, forKey: "timestamp")
 		coder.encode(Int(version), forKey: "version")
@@ -107,7 +107,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	}
 
 	required init?(coder: NSCoder) {
-		ident = coder.decodeInt64(forKey: "ident")
+		ident = (coder.decodeObject(forKey: "ident") as? NSNumber)?.int64Value ?? 0
 		user = coder.decodeObject(forKey: "user") as? String ?? ""
 		timestamp = coder.decodeObject(forKey: "timestamp") as? String ?? ""
 		version = Int(coder.decodeInt32(forKey: "version"))

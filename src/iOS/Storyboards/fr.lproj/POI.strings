@@ -118,6 +118,9 @@
 /* Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz"; */
 "lPv-s6-uEz.title" = "Tags courants";
 
+/* Class = "UINavigationItem"; title = "Common tags"; ObjectID = "mAb-DX-pqb"; */
+"mAb-DX-pqb.title" = "Balises communes";
+
 /* Class = "UILabel"; text = "Name"; ObjectID = "mcN-gM-s7u"; */
 "mcN-gM-s7u.text" = "Nom";
 

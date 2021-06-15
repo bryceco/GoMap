@@ -67,8 +67,14 @@
 /* Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ"; */
 "lwG-AE-nIZ.headerTitle" = "背景";
 
+/* Class = "UILabel"; text = "Enable Filters"; ObjectID = "LxX-tl-ZLH"; */
+"LxX-tl-ZLH.text" = "启用过滤器";
+
 /* Class = "UILabel"; text = "Editor with Aerial"; ObjectID = "MPq-PX-jf0"; */
 "MPq-PX-jf0.text" = "卫星影像和编辑图层";
+
+/* Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "O0U-6M-7AT"; */
+"O0U-6M-7AT.text" = "注释与修正";
 
 /* Class = "UINavigationItem"; title = "Configure GPX Tracks"; ObjectID = "oSD-0y-Vt0"; */
 "oSD-0y-Vt0.title" = "配置GPX轨迹";
@@ -100,6 +106,12 @@
 /* Class = "UILabel"; text = "Aerial only"; ObjectID = "uOd-BB-zEq"; */
 "uOd-BB-zEq.text" = "只有卫星影像";
 
+/* Class = "UILabel"; text = "Enable Rotation"; ObjectID = "VUR-wT-knn"; */
+"VUR-wT-knn.text" = "启用旋转";
+
 /* Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C"; */
 "wev-ax-u4C.headerTitle" = "重置";
+
+/* Class = "UILabel"; text = "Unnamed Roads"; ObjectID = "ZP1-qY-kXe"; */
+"ZP1-qY-kXe.text" = "无名道路";
 
