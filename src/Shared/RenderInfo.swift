@@ -63,12 +63,7 @@ final class RenderInfo {
             }
         }
         
-//        assert(sscanf(text?.utf8CString, "%2x%2x%2x", &r2, &g2, &b2) == 3)
-//        let r: CGFloat = CGFloat(r2) / 255.0
-//        let g: CGFloat = CGFloat(g2) / 255.0
-//        let b: CGFloat = CGFloat(b2) / 255.0
-#if os(iOS)
-        if #available(iOS 13.0, *) {
+        if #available(iOS 13.0, *) {	// Dark Mode
             let color = UIColor(dynamicProvider: { traitCollection in
                 if traitCollection.userInterfaceStyle == .dark {
                     // lighten colors for dark mode
@@ -84,76 +79,67 @@ final class RenderInfo {
         } else {
             return UIColor(red: r, green: g, blue: b, alpha: 1.0)
         }
-#else
-        return UIColor(calibratedRed: r, green: g, blue: b, alpha: 1.0)
-#endif
     }
-    
-    func renderPriorityForObject(_ object: OsmBaseObject?) -> Int {
-        var highwayDict: [String : NSNumber] = [:]
-        highwayDict = [
-            "motorway": NSNumber(value: 29),
-            "trunk": NSNumber(value: 28),
-            "motorway_link": NSNumber(value: 27),
-            "primary": NSNumber(value: 26),
-            "trunk_link": NSNumber(value: 25),
-            "secondary": NSNumber(value: 24),
-            "tertiary": NSNumber(value: 23),
-            // railway
-            "primary_link": NSNumber(value: 21),
-            "residential": NSNumber(value: 20),
-            "raceway": NSNumber(value: 19),
-            "secondary_link": NSNumber(value: 10),
-            "tertiary_link": NSNumber(value: 17),
-            "living_street": NSNumber(value: 16),
-            "road": NSNumber(value: 15),
-            "unclassified": NSNumber(value: 14),
-            "service": NSNumber(value: 13),
-            "bus_guideway": NSNumber(value: 12),
-            "track": NSNumber(value: 11),
-            "pedestrian": NSNumber(value: 10),
-            "cycleway": NSNumber(value: 9),
-            "path": NSNumber(value: 8),
-            "bridleway": NSNumber(value: 7),
-            "footway": NSNumber(value: 6),
-            "steps": NSNumber(value: 5),
-            "construction": NSNumber(value: 4),
-            "proposed": NSNumber(value: 3)
-        ]
+
+	// The priority is a small integer bounded by RenderInfoMaxPriority which
+	// allows us to sort them quickly using a Counting Sort algorithm.
+	// The priority is cached per-object in renderPriority
+	func renderPriorityForObject(_ object: OsmBaseObject) -> Int {
+
         var priority: Int
-        if object?.modifyCount != 0 {
+        if object.modifyCount > 0 {
             priority = 33
         } else {
             if renderPriority == 0 {
-                if (key == "natural") && (value == "coastline") {
-                    renderPriority = 32
-                } else if (key == "natural") && (value == "water") {
-                    renderPriority = 31
-                } else if (key == "waterway") && (value == "riverbank") {
-                    renderPriority = 30
-                } else if key == "landuse" {
-                    renderPriority = 29
-                } else if (key == "highway") && (value != nil) {
-                    if let integerFromHighwayDict = highwayDict[value!]?.intValue {
-                        if integerFromHighwayDict > 0 {
-                            renderPriority = integerFromHighwayDict
-                        }
-                    }
-                } else if key == "railway" {
-                    renderPriority = 22
-                } else if self === g_AddressRender {
-                    renderPriority = 1
-                } else {
-                    renderPriority = 2
+				switch (key,value) {
+				case ("natural","coastline"): 		renderPriority = 32
+				case ("natural","water"):			renderPriority = 31
+				case ("waterway","riverbank"):		renderPriority = 30
+				case ("landuse",_):					renderPriority = 29
+
+				case ("highway","motorway"):		renderPriority = 29
+				case ("highway","trunk"):			renderPriority = 28
+				case ("highway","motorway_link"):	renderPriority = 27
+				case ("highway","primary"):			renderPriority = 26
+				case ("highway","trunk_link"):		renderPriority = 25
+				case ("highway","secondary"):		renderPriority = 24
+				case ("highway","tertiary"):		renderPriority = 23
+				case ("railway",_):					renderPriority = 22
+				case ("highway","primary_link"):	renderPriority = 21
+				case ("highway","residential"):		renderPriority = 20
+				case ("highway","raceway"):			renderPriority = 19
+				case ("highway","secondary_link"):	renderPriority = 18
+				case ("highway","tertiary_link"):	renderPriority = 17
+				case ("highway","living_street"):	renderPriority = 16
+				case ("highway","road"):			renderPriority = 15
+				case ("highway","unclassified"):	renderPriority = 14
+				case ("highway","service"):			renderPriority = 13
+				case ("highway","bus_guideway"):	renderPriority = 12
+				case ("highway","track"):			renderPriority = 11
+				case ("highway","pedestrian"):		renderPriority = 10
+				case ("highway","cycleway"):		renderPriority = 9
+				case ("highway","path"):			renderPriority = 8
+				case ("highway","bridleway"):		renderPriority = 7
+				case ("highway","footway"):			renderPriority = 6
+				case ("highway","steps"):			renderPriority = 5
+				case ("highway","construction"):	renderPriority = 4
+				case ("highway","proposed"):		renderPriority = 3
+				case ("highway",_):					renderPriority = 3
+				default:
+					if self.isAddressPoint() {
+													renderPriority = 1
+					} else {
+													renderPriority = 2
+					}
                 }
             }
             priority = renderPriority
         }
 
-        var bonus: Int
-        if ((object?.isWay()) != nil) || ((object?.isRelation()?.isMultipolygon()) != nil) {
+        let bonus: Int
+        if ((object.isWay()) != nil) || ((object.isRelation()?.isMultipolygon()) ?? false) {
             bonus = 2
-        } else if ((object?.isRelation()) != nil) {
+        } else if ((object.isRelation()) != nil) {
             bonus = 1
         } else {
             bonus = 0
@@ -189,7 +175,7 @@ final class RenderInfo {
 			let index = (RenderInfoMaxPriority-1) - obj.renderPriorityCached
 			let dest = countOfPriority[index] - 1
 			countOfPriority[index] = dest
-			if ( dest < max ) {
+			if dest < max {
 				output[ dest ] = obj
 			}
 		}
@@ -292,7 +278,7 @@ final class RenderInfoDatabase {
         // check if it is an address point
 		if object.isNode() != nil,
 		   !object.tags.isEmpty,
-		   tags.first(where: { key,_ in return OsmTags.IsInterestingKey(key) && !key.hasPrefix("addr:") }) != nil
+		   tags.first(where:{ key,_ in return OsmTags.IsInterestingKey(key) && !key.hasPrefix("addr:")}) == nil
 		{
 			return g_AddressRender
         }

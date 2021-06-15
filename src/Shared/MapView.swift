@@ -437,23 +437,26 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     }
     var enableAutomaticCacheManagement = false
 
-	private let NAME = "autoScroll"
+	private let AUTOSCROLL_DISPLAYLINK_NAME = "autoScroll"
     var automatedFramerateTestActive: Bool {
         get {
-            return DisplayLink.shared.hasName(NAME)
+            return DisplayLink.shared.hasName(AUTOSCROLL_DISPLAYLINK_NAME)
         }
         set(enable) {
             let displayLink = DisplayLink.shared
 
-            if enable == displayLink.hasName(NAME) {
-                // nothing to do
-            } else if enable {
+            if enable == displayLink.hasName(AUTOSCROLL_DISPLAYLINK_NAME) {
+				// unchanged
+				return
+			}
+
+			if enable {
                 // automaatically scroll view for frame rate testing
                 fpsLabel.showFPS = true
 
                 // this set's the starting center point
                 let startLatLon = OSMPoint(x: -122.205831, y: 47.675024)
-                let startZoom = 17.302591
+				let startZoom = 18.0 // 17.302591
                 setTransformForLatitude(startLatLon.y, longitude: startLatLon.x, zoom: startZoom)
 
                 // sets the size of the circle
@@ -467,7 +470,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                 var prevTime = CACurrentMediaTime()
                 weak var weakSelf = self
 
-                displayLink.addName(NAME, block: {
+                displayLink.addName(AUTOSCROLL_DISPLAYLINK_NAME, block: {
 					guard let myself = weakSelf else { return }
 					let time = CACurrentMediaTime()
                     let delta = time - prevTime
@@ -495,7 +498,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                 })
             } else {
                 fpsLabel.showFPS = false
-                displayLink.removeName(NAME)
+                displayLink.removeName(AUTOSCROLL_DISPLAYLINK_NAME)
             }
         }
     }

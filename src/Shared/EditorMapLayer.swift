@@ -1302,20 +1302,9 @@ class EditorMapLayer: CALayer {
     }
     
     func getObjectsToDisplay() -> ContiguousArray<OsmBaseObject> {
-        #if os(iOS)
-        let geekScore = geekbenchScoreProvider.geekbenchScore()
-        #if true || DEBUG
-        var objectLimit = Int(50 + (geekScore - 500) / 40) // 500 -> 50, 2500 -> 10
-        objectLimit *= 3
-        #else
-        let minObj = 50 // score = 500
-        let maxObj = 300 // score = 2500
-        var objectLimit = Int(Double(minObj) + Double((maxObj - minObj)) * (geekScore - 500) / 2000)
-        #endif
-        #else
-        var objectLimit = 500
-        #endif
-        
+        let geekScore = Int(geekbenchScoreProvider.geekbenchScore())
+        var objectLimit = 3*(50 + (geekScore - 500) / 40)	// 500 -> 50, 2500 -> 10
+
         // get objects in visible rect
         var objects = getVisibleObjects()
 

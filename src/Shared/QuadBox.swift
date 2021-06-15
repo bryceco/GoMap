@@ -489,11 +489,11 @@ final class QuadBox: NSObject, Codable, NSCoding {
 		return nil
 	}
 
-	static func findObjectsInAreaNonRecurse( _ top: QuadBox, bbox: OSMRect, block: (OsmBaseObject)->Void )
+	func findObjects(inArea bbox: OSMRect, block: (OsmBaseObject)->Void )
 	{
 		var stack: [QuadBox] = []
 		stack.reserveCapacity( 32 )
-		stack.append( top )
+		stack.append( self )
 
 		while let q = stack.popLast() {
 
@@ -512,7 +512,7 @@ final class QuadBox: NSObject, Codable, NSCoding {
 		}
 	}
 
-	func findObjects(inArea bbox: OSMRect, block: (OsmBaseObject)->Void )
+	func findObjects2(inArea bbox: OSMRect, block: (OsmBaseObject)->Void )
 	{
 		for obj in members where obj.boundingBox.intersectsRect( bbox ) {
 			block( obj );
