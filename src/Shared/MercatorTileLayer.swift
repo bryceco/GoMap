@@ -173,7 +173,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		let MAX_ZOOM = 30
 
         var removeList: [CALayer] = []
-        
+
         // remove any tiles that don't intersect the current view
         for layer in sublayers {
 			if !layerOverlapsScreen(layer) {
@@ -206,7 +206,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 				print("oops")
 			}
         }
-        
+
         // remove tiles at zoom levels less than us if we don't have any transparent tiles (we've tiled everything in greater detail)
         var remove = false
 		for z in (0...zoomLevel).reversed() {
@@ -230,12 +230,10 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		}
         
         for layer in removeList {
-			if let key = layer.value(forKey: "tileKey") as? String {
-				// DLog("prune \(key): \(layer)")
-				_layerDict.removeValue(forKey: key)
-				layer.removeFromSuperlayer()
-				layer.contents = nil
-            }
+			let key = layer.value(forKey: "tileKey") as! String
+			_layerDict.removeValue(forKey: key)
+			layer.removeFromSuperlayer()
+			layer.contents = nil
 		}
 	}
 
@@ -363,7 +361,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 	#endif
 							layer.isHidden = false
 							//#if CUSTOM_TRANSFORM
-							setSublayerPositions([tileKey: layer])
+							setNeedsLayout()
 							//#else
 							//                    let rc = mapView.boundingMapRectForScreen()
 							//                    removeUnneededTiles(for: rc, zoomLevel: Int(zoomLevel))
