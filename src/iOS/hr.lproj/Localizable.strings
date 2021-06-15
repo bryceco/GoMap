@@ -16,7 +16,7 @@
 /* No comment provided by engineer. */
 " (way)" = " (put)";
 
-/* a newly created node/object */
+/* No comment provided by engineer. */
 "(new object)" = "(novi objekt)";
 
 /* No comment provided by engineer. */
@@ -387,9 +387,6 @@
 "Length" = "Duljina";
 
 /* No comment provided by engineer. */
-"Location services timed out." = "Vrijeme usluge određivanja mjesta je isteklo.";
-
-/* No comment provided by engineer. */
 "Location unavailable" = "Mjesto nedostupno";
 
 /* No comment provided by engineer. */
@@ -508,16 +505,10 @@
 "node %@ (in way)" = "čvor %@ (na putu)";
 
 /* No comment provided by engineer. */
-"Node attributes" = "Svojstva čvora";
-
-/* No comment provided by engineer. */
 "Node is not an element of way" = "Čvor nije element puta";
 
 /* No comment provided by engineer. */
 "Node must be the first or last node of the way" = "Čvor mora biti prvi ili zadnji čvor puta";
-
-/* No comment provided by engineer. */
-"Node tags" = "Oznake čvora";
 
 /* User credentials not found */
 "Not found" = "Nije pronađeno";
@@ -596,12 +587,6 @@
 
 /* No comment provided by engineer. */
 "relation" = "veza";
-
-/* No comment provided by engineer. */
-"Relation attributes" = "Svojstva veze";
-
-/* No comment provided by engineer. */
-"Relation tags" = "Oznake veza";
 
 /* No comment provided by engineer. */
 "Relation: %@" = "Veza: %@";
@@ -819,12 +804,6 @@
 
 /* No comment provided by engineer. */
 "way %@" = "put %@";
-
-/* No comment provided by engineer. */
-"Way attributes" = "Svojstva puta";
-
-/* No comment provided by engineer. */
-"Way tags" = "Oznake puta";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Promijenit ćeš podatke u aktivnoj OpenStreetMap bazi podataka. Tvoje promjene će vidjeti svi na svijetu.\n\nZa nastavak pritisni još jednom „Spremi”, inače pritisni „Odustani”.";

@@ -16,7 +16,7 @@
 /* No comment provided by engineer. */
 " (way)" = " (ウェイ)";
 
-/* a newly created node/object */
+/* No comment provided by engineer. */
 "(new object)" = "(新規オブジェクト)";
 
 /* No comment provided by engineer. */
@@ -387,9 +387,6 @@
 "Length" = "長さ";
 
 /* No comment provided by engineer. */
-"Location services timed out." = "位置サービスがタイムアウトしました。";
-
-/* No comment provided by engineer. */
 "Location unavailable" = "位置を取得できません";
 
 /* No comment provided by engineer. */
@@ -508,16 +505,10 @@
 "node %@ (in way)" = "ノード %@ (ウェイ内)";
 
 /* No comment provided by engineer. */
-"Node attributes" = "ノードの属性";
-
-/* No comment provided by engineer. */
 "Node is not an element of way" = "ノードがウェイの要素ではありません";
 
 /* No comment provided by engineer. */
 "Node must be the first or last node of the way" = "ノードはウェイの最初か最後のノードでなければなりません";
-
-/* No comment provided by engineer. */
-"Node tags" = "ノードのタグ";
 
 /* User credentials not found */
 "Not found" = "見つかりません";
@@ -596,12 +587,6 @@
 
 /* No comment provided by engineer. */
 "relation" = "リレーション";
-
-/* No comment provided by engineer. */
-"Relation attributes" = "リレーションの属性";
-
-/* No comment provided by engineer. */
-"Relation tags" = "リレーションのタグ";
 
 /* No comment provided by engineer. */
 "Relation: %@" = "リレーション: %@";
@@ -819,12 +804,6 @@
 
 /* No comment provided by engineer. */
 "way %@" = "ウェイ %@";
-
-/* No comment provided by engineer. */
-"Way attributes" = "ウェイの属性";
-
-/* No comment provided by engineer. */
-"Way tags" = "ウェイのタグ";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "あなたはOpenStreetMapデータベースの本番環境に変更を加えようとしています。この変更は世界中で閲覧されます。\n\n続ける場合はコミットを再度押してください。やめる場合は中止を押してください。";

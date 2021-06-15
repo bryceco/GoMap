@@ -127,9 +127,6 @@
 /* Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz"; */
 "lPv-s6-uEz.title" = "Распространённые теги";
 
-/* Class = "UINavigationItem"; title = "Common Tags"; ObjectID = "mAb-DX-pqb"; */
-"mAb-DX-pqb.title" = "Распространённые теги";
-
 /* Class = "UILabel"; text = "Name"; ObjectID = "mcN-gM-s7u"; */
 "mcN-gM-s7u.text" = "Наименование";
 
@@ -180,9 +177,6 @@
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "TK4-E8-1q7"; Note = "Do not translate"; */
 "TK4-E8-1q7.text" = "Заголовок";
-
-/* Class = "UILabel"; text = "Payment"; ObjectID = "tPF-m9-RtO"; */
-"tPF-m9-RtO.text" = "Оплата";
 
 /* Class = "UITextField"; placeholder = "relation"; ObjectID = "Urd-9O-Mte"; Note = "Do not translate"; */
 "Urd-9O-Mte.placeholder" = "отношение";

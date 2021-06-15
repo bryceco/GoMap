@@ -16,7 +16,7 @@
 /* No comment provided by engineer. */
 " (way)" = " (Weg)";
 
-/* a newly created node/object */
+/* No comment provided by engineer. */
 "(new object)" = "(neues Objekt)";
 
 /* No comment provided by engineer. */
@@ -445,16 +445,10 @@
 "node %@ (in way)" = "Knoten %@ (in Weg)";
 
 /* No comment provided by engineer. */
-"Node attributes" = "Knoten-Attribute";
-
-/* No comment provided by engineer. */
 "Node is not an element of way" = "Knoten ist kein Element von Weg";
 
 /* No comment provided by engineer. */
 "Node must be the first or last node of the way" = "Der Knoten muss der erste oder letzte Knoten des Wegs sein";
-
-/* No comment provided by engineer. */
-"Node tags" = "Knoten-Attribute";
 
 /* OSM note */
 "Note History" = "Hinweis-Verlauf";
@@ -503,12 +497,6 @@
 
 /* No comment provided by engineer. */
 "relation" = "Relation";
-
-/* No comment provided by engineer. */
-"Relation attributes" = "Relations-Attribute";
-
-/* No comment provided by engineer. */
-"Relation tags" = "Relations-Attribute";
 
 /* No comment provided by engineer. */
 "Relation: %@" = "Relation: %@";
@@ -648,9 +636,6 @@
 
 /* No comment provided by engineer. */
 "way %@" = "Weg %@";
-
-/* No comment provided by engineer. */
-"Way attributes" = "Weg Attribute";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Du bist gerade dabei, Änderungen an der live-geschalteten OpenStreetMap Datenbank zu machen. Die Änderungen werden für jeden auf der Welt sichtbar.\n\nZum Fortfahren drücke noch einmal Hochladen, sonst drücke Abbrechen.";

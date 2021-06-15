@@ -13,7 +13,7 @@
 /* No comment provided by engineer. */
 " (way)" = " (vei)";
 
-/* a newly created node/object */
+/* No comment provided by engineer. */
 "(new object)" = "(nytt objekt)";
 
 /* No comment provided by engineer. */
@@ -417,9 +417,6 @@
 /* No comment provided by engineer. */
 "node %@ (in way)" = "node %@ (i vei)";
 
-/* No comment provided by engineer. */
-"Node tags" = "Node-etiketter";
-
 /* OSM note */
 "Note History" = "Node-historikk";
 
@@ -473,12 +470,6 @@
 
 /* No comment provided by engineer. */
 "relation" = "relasjon";
-
-/* No comment provided by engineer. */
-"Relation attributes" = "Relasjon";
-
-/* No comment provided by engineer. */
-"Relation tags" = "Relasjonsetiketter";
 
 /* No comment provided by engineer. */
 "Relation: %@" = "Relasjon: %@";
@@ -639,9 +630,6 @@
 
 /* No comment provided by engineer. */
 "way %@" = "vei %@";
-
-/* No comment provided by engineer. */
-"Way tags" = "Vei-etiketter";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Du er i ferd med å gjøre endringer i OpenStreetMap-sanntidsdatabasen. Dine endringer vil bli synlige for alle og enhver.\n\nFor å fortsette, trykk «Send inn» igjen, ellers trykk «Avbryt».";

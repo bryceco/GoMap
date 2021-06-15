@@ -16,7 +16,7 @@
 /* No comment provided by engineer. */
 " (way)" = " (线)";
 
-/* a newly created node/object */
+/* No comment provided by engineer. */
 "(new object)" = "(新建对象)";
 
 /* No comment provided by engineer. */
@@ -297,9 +297,6 @@
 "Length" = "长度";
 
 /* No comment provided by engineer. */
-"Location services timed out." = "定位服务超时";
-
-/* No comment provided by engineer. */
 "Location unavailable" = "位置不可用";
 
 /* No comment provided by engineer. */
@@ -378,12 +375,6 @@
 /* No comment provided by engineer. */
 "Node" = "节点";
 
-/* No comment provided by engineer. */
-"Node attributes" = "节点属性";
-
-/* No comment provided by engineer. */
-"Node tags" = "节点标签";
-
 /* OSM note */
 "Note History" = "日志历史";
 
@@ -431,12 +422,6 @@
 
 /* No comment provided by engineer. */
 "Redo" = "重做";
-
-/* No comment provided by engineer. */
-"Relation attributes" = "关系属性";
-
-/* No comment provided by engineer. */
-"Relation tags" = "关系标签";
 
 /* No comment provided by engineer. */
 "Relation: %@" = "关系: %@";
@@ -549,12 +534,6 @@
 
 /* No comment provided by engineer. */
 "Warning" = "警告";
-
-/* No comment provided by engineer. */
-"Way attributes" = "路径属性";
-
-/* No comment provided by engineer. */
-"Way tags" = "路径标签";
 
 /* POI editor presets */
 "You can define your own custom presets here" = "您可以在这里定义自己的自定义预设";

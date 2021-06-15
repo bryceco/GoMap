@@ -2,7 +2,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="hr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.4" build-num="12D4e"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -57,7 +57,7 @@
   </file>
   <file original="en.lproj/Localizable.strings" source-language="en" target-language="hr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.4" build-num="12D4e"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
     </header>
     <body>
       <trans-unit id="&#9;Relation " xml:space="preserve">
@@ -153,7 +153,7 @@
       <trans-unit id="(new object)" xml:space="preserve">
         <source>(new object)</source>
         <target>(novi objekt)</target>
-        <note>a newly created node/object</note>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
         <source>(node in way)</source>
@@ -442,6 +442,10 @@
         <target>Nema podataka</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Database error" xml:space="preserve">
+        <source>Database error</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Delete" xml:space="preserve">
         <source>Delete</source>
         <target>Izbriši</target>
@@ -623,6 +627,10 @@ Greška: %@</target>
         <target>Zemljopisna širina/dužina</target>
         <note>coordinates</note>
       </trans-unit>
+      <trans-unit id="Left" xml:space="preserve">
+        <source>Left</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Left side" xml:space="preserve">
         <source>Left side</source>
         <target>Lijeva strana</target>
@@ -631,11 +639,6 @@ Greška: %@</target>
       <trans-unit id="Length" xml:space="preserve">
         <source>Length</source>
         <target>Duljina</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Location services timed out." xml:space="preserve">
-        <source>Location services timed out.</source>
-        <target>Vrijeme usluge određivanja mjesta je isteklo.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
@@ -820,9 +823,12 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
         <target>Čvor</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Node attributes" xml:space="preserve">
-        <source>Node attributes</source>
-        <target>Svojstva čvora</target>
+      <trans-unit id="Node Attributes" xml:space="preserve">
+        <source>Node Attributes</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Node Tags" xml:space="preserve">
+        <source>Node Tags</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node is not an element of way" xml:space="preserve">
@@ -833,11 +839,6 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       <trans-unit id="Node must be the first or last node of the way" xml:space="preserve">
         <source>Node must be the first or last node of the way</source>
         <target>Čvor mora biti prvi ili zadnji čvor puta</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Node tags" xml:space="preserve">
-        <source>Node tags</source>
-        <target>Oznake čvora</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Not found" xml:space="preserve">
@@ -960,14 +961,12 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
         <target>Ponovi</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Relation attributes" xml:space="preserve">
-        <source>Relation attributes</source>
-        <target>Svojstva veze</target>
+      <trans-unit id="Relation Attributes" xml:space="preserve">
+        <source>Relation Attributes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Relation tags" xml:space="preserve">
-        <source>Relation tags</source>
-        <target>Oznake veza</target>
+      <trans-unit id="Relation Tags" xml:space="preserve">
+        <source>Relation Tags</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation: %@" xml:space="preserve">
@@ -1014,6 +1013,10 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
         <source>Reverse</source>
         <target>Preokreni</target>
         <note>Edit action</note>
+      </trans-unit>
+      <trans-unit id="Right" xml:space="preserve">
+        <source>Right</source>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Right side" xml:space="preserve">
         <source>Right side</source>
@@ -1064,6 +1067,10 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       <trans-unit id="Show Recent Items" xml:space="preserve">
         <source>Show Recent Items</source>
         <target>Prikaži nedavne stavke</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." xml:space="preserve">
+        <source>Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Sorry, an error occurred while loading the GPX file" xml:space="preserve">
@@ -1310,14 +1317,12 @@ Odaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu 
         <target>Upozorenje</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Way attributes" xml:space="preserve">
-        <source>Way attributes</source>
-        <target>Svojstva puta</target>
+      <trans-unit id="Way Attributes" xml:space="preserve">
+        <source>Way Attributes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Way tags" xml:space="preserve">
-        <source>Way tags</source>
-        <target>Oznake puta</target>
+      <trans-unit id="Way Tags" xml:space="preserve">
+        <source>Way Tags</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.&#10;&#10;To continue press Commit once again, otherwise press Cancel." xml:space="preserve">
@@ -1523,7 +1528,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
   </file>
   <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="hr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.4" build-num="12D4e"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
     </header>
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
@@ -1550,7 +1555,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
   </file>
   <file original="Storyboards/Base.lproj/Display.storyboard" source-language="en" target-language="hr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.4" build-num="12D4e"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
     </header>
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
@@ -2019,7 +2024,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
   </file>
   <file original="Storyboards/Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="hr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.4" build-num="12D4e"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
     </header>
     <body>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
@@ -2180,7 +2185,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
   </file>
   <file original="Storyboards/Base.lproj/POI.storyboard" source-language="en" target-language="hr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.4" build-num="12D4e"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
     </header>
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
@@ -2464,9 +2469,8 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
         <note>Class = "UILabel"; text = "Value 5"; ObjectID = "li7-oV-pgT";</note>
       </trans-unit>
       <trans-unit id="mAb-DX-pqb.title" xml:space="preserve">
-        <source>Common Tags</source>
-        <target>Uobičajene oznake</target>
-        <note>Class = "UINavigationItem"; title = "Common Tags"; ObjectID = "mAb-DX-pqb";</note>
+        <source>Common tags</source>
+        <note>Class = "UINavigationItem"; title = "Common tags"; ObjectID = "mAb-DX-pqb";</note>
       </trans-unit>
       <trans-unit id="mcN-gM-s7u.text" xml:space="preserve">
         <source>Name</source>
@@ -2518,11 +2522,6 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
         <target>uloga</target>
         <note>Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ"; Note = "Do not translate";</note>
       </trans-unit>
-      <trans-unit id="tPF-m9-RtO.text" xml:space="preserve">
-        <source>Payment</source>
-        <target>Plaćanje</target>
-        <note>Class = "UILabel"; text = "Payment"; ObjectID = "tPF-m9-RtO";</note>
-      </trans-unit>
       <trans-unit id="teB-9L-Nrf.text" xml:space="preserve">
         <source>Key</source>
         <target>Ključ</target>
@@ -2557,7 +2556,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
   </file>
   <file original="Storyboards/Base.lproj/Settings.storyboard" source-language="en" target-language="hr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.4" build-num="12D4e"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
@@ -2902,7 +2901,7 @@ http://glyphish.com
   </file>
   <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="hr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.4" build-num="12D4e"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
     </header>
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">
