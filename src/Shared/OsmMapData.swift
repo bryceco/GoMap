@@ -45,10 +45,11 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 	private(set) var nodes: [OsmIdentifier : OsmNode] = [:]
 	private(set) var ways: [OsmIdentifier : OsmWay] = [:]
 	private(set) var relations: [OsmIdentifier : OsmRelation] = [:]
-    var region = QuadMap() // currently downloaded region
-    var spatial = QuadMap() // spatial index of osm data
-    var undoManager = MyUndoManager()
-    var periodicSaveTimer: Timer?
+	var periodicSaveTimer: Timer?
+
+	let region: QuadMap
+	let spatial: QuadMap
+	let undoManager: MyUndoManager
 
     // undo comments
     var undoContextForComment: ((_ comment: String) -> [String : Any])? = nil
@@ -73,20 +74,27 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         setupPeriodicSaveTimer()
     }
     
-	override init() {
-        parserStack = []
+	init(region: QuadMap, spatial: QuadMap, undoManager: MyUndoManager) {
+		parserStack = []
 		nodes = [:]
 		ways = [:]
 		relations = [:]
-        region = QuadMap()
-        spatial = QuadMap()
-        undoManager = MyUndoManager()
 		undoContextForComment = nil
+
+		self.region = region
+		self.spatial = spatial
+		self.undoManager = undoManager
 
 		super.init()
 
         initCommon()
     }
+
+	override convenience init() {
+		self.init(region: QuadMap(encodingContentsOnSave: true),
+				  spatial: QuadMap(encodingContentsOnSave: false),
+				  undoManager: MyUndoManager())
+	}
 
     deinit {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(MyUndoManager.UndoManagerDidChangeNotification), object: undoManager)
@@ -1771,24 +1779,24 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
     }
     
     required convenience init?(coder: NSCoder) {
-		self.init()
 
 		guard
 			let nodes = coder.decodeObject(forKey: "nodes") as? [OsmIdentifier : OsmNode],
 			let ways = coder.decodeObject(forKey: "ways") as? [OsmIdentifier : OsmWay],
 			let relations = coder.decodeObject(forKey: "relations") as? [OsmIdentifier : OsmRelation],
 			let region = coder.decodeObject(forKey: "region") as? QuadMap,
-			// let spatial = coder.decodeObject(forKey: "spatial") as? QuadMap,
+			let spatial = coder.decodeObject(forKey: "spatial") as? QuadMap,
 			let undoManager = coder.decodeObject(forKey: "undoManager") as? MyUndoManager
 		else { return nil }
+
+		self.init(region: region,
+				  spatial: spatial,
+				  undoManager: undoManager)
 
 		self.nodes = nodes
 		self.ways = ways
 		self.relations = relations
-		self.region = region
-		self.spatial = QuadMap()	// spatial doesn't get saved, we rebuild it explicitly
-		self.undoManager = undoManager
-        
+
         initCommon()
         
 		if region.isEmpty() {
@@ -1829,9 +1837,9 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         nodes.removeAll()
         ways.removeAll()
         relations.removeAll()
-        spatial.rootQuad.reset()
-        region = QuadMap()
-        
+		region.rootQuad.reset()
+		spatial.rootQuad.reset()
+
         Database.dispatchQueue.async(execute: {
             try? Database.delete(withName: "")
         })
@@ -1952,8 +1960,8 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
                 DLog("\(t > 1.0 ? "*** " : "")sql save \(saveNodes.count + saveWays.count + saveRelations.count) objects, time = \(t) (\(Int(nodeCount()) + Int(wayCount()) + Int(relationCount()))) objects total)")
                 if !ok {
                     // database failure
-                    region = QuadMap()
-                }
+					region.rootQuad.reset()
+				}
                 archiveModifiedData()
             })
         })
@@ -2205,14 +2213,13 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 		let origNodes = self.nodes
 		let origWays = self.ways
 		let origRelations = self.relations
-		let origSpatial = self.spatial
 
 		// update self with minimized versions appropriate for saving
 		let modified = self.modifiedObjects()
 		self.nodes = modified.nodes
 		self.ways = modified.ways
 		self.relations = modified.relations
-		self.spatial = QuadMap()
+		// the spatial used to be handled here as well, but now it simply never saves it's contents
 
 		// Do the save.
 		let archiver = OsmMapDataArchiver()
@@ -2222,7 +2229,6 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 		self.nodes = origNodes
 		self.ways = origWays
 		self.relations = origRelations
-		self.spatial = origSpatial
 
         t = CACurrentMediaTime() - t
 		DLog("Archive save \(modified.nodeCount()),\(modified.wayCount()),\(modified.relationCount()),\(undoManager.countUndoGroups),\(region.countOfObjects()) = \(t)")
@@ -2237,7 +2243,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 		guard let decode = archiver.loadArchive() else { return nil }
 		if decode.spatial.countOfObjects() > 0 {
 			print("spatial accidentally saved, please fix")
-			decode.spatial = QuadMap()
+			decode.spatial.rootQuad.reset()
 		}
 
 		// rebuild spatial database
@@ -2263,8 +2269,8 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
             print("Unable to read database: recreating from scratch\n")
 			try? Database.delete(withName: "")
             // need to download all regions
-			decode.region = QuadMap()
-        }
+			decode.region.rootQuad.reset()
+		}
         
 		decode.consistencyCheck()
 		return decode
@@ -2310,9 +2316,6 @@ class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 	func saveArchive( mapData: OsmMapData ) -> Bool {
 		let path = OsmMapData.pathToArchiveFile()
 		let data = NSMutableData()
-		#if DEBUG
-		assert(mapData.spatial.countOfObjects() == 0)
-		#endif
 		let archiver = NSKeyedArchiver(forWritingWith: data)
 		archiver.encode(mapData, forKey: "OsmMapData")
 		archiver.finishEncoding()

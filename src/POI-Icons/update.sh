@@ -16,7 +16,7 @@ for index in "${!NAME[@]}"; do
 	files=${FILES[index]}
 
 	rm -rf /tmp/$name
-	(cd /tmp/ && git clone $git)
+	(cd /tmp/ && git clone --depth 1 $git)
 	for f in /tmp/$name/$files; do
 		f2=${f##*/}
 		mv -f $f ./$name"-"$(echo $f2 | sed 's/-15//')

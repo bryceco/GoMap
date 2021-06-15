@@ -10,11 +10,13 @@ import Foundation
 
 class QuadMap: NSObject, NSCoding {
     let rootQuad: QuadBox
+	let encodingContentsOnSave: Bool
 
-    // MARK: Common
+	// MARK: Common
 
-	override init() {
-		rootQuad = QuadBox()
+	init(encodingContentsOnSave: Bool) {
+		self.rootQuad = QuadBox()
+		self.encodingContentsOnSave = encodingContentsOnSave
 		super.init()
     }
 
@@ -27,29 +29,25 @@ class QuadMap: NSObject, NSCoding {
 	}
 
     func encode(with coder: NSCoder) {
-        coder.encode(rootQuad, forKey: "rootQuad")
+		if encodingContentsOnSave {
+			coder.encode(rootQuad, forKey: "rootQuad")
+		}
     }
 
     required init?(coder: NSCoder) {
 		if let root = coder.decodeObject(forKey: "rootQuad") as? QuadBox {
 			rootQuad = root
+			encodingContentsOnSave = true
 		} else {
-			// we end up here when loading an old ObjC save that set the spatial rootQuad to nil
-			// and then the undo manager has an action that references the spatial
-			print("bad rootQuad")
+			// we end up here when loading a spatial (which doesn't save it's rootQuad)
 			rootQuad = QuadBox()
+			encodingContentsOnSave = false
 		}
 		super.init()
     }
 
     // MARK: Regions
 
-    func mergeDerivedRegion(_ other: QuadMap, success: Bool) {
-		DbgAssert(other.countOfObjects() == 1)
-        makeWhole(other.rootQuad, success: success)
-    }
-
-    // Region
     func newQuads(forRect newRect: OSMRect) -> [QuadBox] {
 		var newRect = newRect
 		var quads: [QuadBox] = []
