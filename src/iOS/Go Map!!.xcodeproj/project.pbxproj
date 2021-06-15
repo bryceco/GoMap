@@ -579,17 +579,6 @@
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
-		029343BD263245B800483862 /* OpeningHours */ = {
-			isa = PBXGroup;
-			children = (
-				029343C02632460800483862 /* CameraView.swift */,
-				029343C12632460800483862 /* HoursRecognizer.swift */,
-				029343BE2632460800483862 /* LevenshteinDistance.swift */,
-				029343BF2632460800483862 /* OpeningHoursRecognizerView.swift */,
-			);
-			path = OpeningHours;
-			sourceTree = "<group>";
-		};
 		02ACBA2416713CCB00BB4414 = {
 			isa = PBXGroup;
 			children = (
@@ -1140,7 +1129,6 @@
 				021FADE22588474300F6E1C0 /* PresetCategory.swift in Sources */,
 				C3004F52263A6CA5006BF313 /* MainViewController.swift in Sources */,
 				64348D01225E8D3F00ADE7FB /* OsmNode+Direction.swift in Sources */,
-				029343C42632460800483862 /* CameraView.swift in Sources */,
 				02CC01D12584195E004444EF /* PresetFeature.swift in Sources */,
 				C31315232644292700C0AD86 /* LocationBallLayer.swift in Sources */,
 				ED964A012601D6A900EC0A60 /* POIFeaturePresetsViewController.swift in Sources */,
@@ -1181,7 +1169,6 @@
 				0266DE862655A21F007A502E /* Superview.swift in Sources */,
 				02CB2408265DB7CB00835F32 /* HoursRecognizer.swift in Sources */,
 				02D5B5F3248F154D00FEE448 /* Colors.swift in Sources */,
-				029343C22632460800483862 /* LevenshteinDistance.swift in Sources */,
 				021FADCD25873C8200F6E1C0 /* PresetsDatabase+TableView.swift in Sources */,
 				027EDC70206F3EED00D349D6 /* DDXMLElement.m in Sources */,
 				02CB2406265DB7CB00835F32 /* CameraView.swift in Sources */,
@@ -1551,7 +1538,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Go Map!!/Go Map!!.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 2200;
+				CURRENT_PROJECT_VERSION = 2300;
 				DEVELOPMENT_TEAM = MKTTC6734C;
 				DISPLAY_NAME = "Go Map!! Debug";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1560,7 +1547,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.1.2;
+				MARKETING_VERSION = 2.3.0;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-DDEBUG ";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap;
 				PRODUCT_NAME = "Go Map!!";
@@ -1587,7 +1574,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Go Map!!/Go Map!!.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 2200;
+				CURRENT_PROJECT_VERSION = 2300;
 				DEVELOPMENT_TEAM = MKTTC6734C;
 				DISPLAY_NAME = "Go Map!!";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1596,7 +1583,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap;
 				PRODUCT_NAME = "Go Map!!";
 				PROVISIONING_PROFILE = "";
