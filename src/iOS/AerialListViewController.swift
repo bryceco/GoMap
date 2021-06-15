@@ -5,6 +5,8 @@
 //  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
+import UIKit
+
 class AerialListViewController: UITableViewController {
     var aerials: AerialList!
     var imageryForRegion: [AerialService] = []

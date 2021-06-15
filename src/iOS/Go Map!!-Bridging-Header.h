@@ -16,7 +16,7 @@
 //#import "OsmWay.h"
 //#import "PathUtil.h"
 //#import "RenderInfo.h"
-#import "VectorMath.h"
+//#import "VectorMath.h"
 //#import "MercatorTileLayer.h"
 //#import "GpxLayer.h"
 //#import "MapView.h"
@@ -31,5 +31,5 @@
 //#import "DisplayLink.h"
 //#import "OsmBaseObject.h"
 //#import "aes.h"
-#import "QuadBox.h"
+//#import "QuadBox.h"
 

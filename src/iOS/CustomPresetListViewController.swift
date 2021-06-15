@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Bryce Cogswell. All rights reserved.
 //
 
+import UIKit
+
 class CustomPresetListViewController: UITableViewController {
     var customPresets: PresetKeyUserDefinedList?
     

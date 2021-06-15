@@ -6,7 +6,9 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+import CoreGraphics
 import CoreLocation
+import UIKit
 
 // compile options:
 public let SHOW_3D = true
@@ -29,8 +31,6 @@ class EditorMapLayer: CALayer {
     var highlightLayers: [CALayer] = []
     var isPerformingLayout = false
     var baseLayer: CATransformLayer
-
-	var observations: [NSKeyValueObservation] = []
 
 	let objectFilters = EditorFilters()
 
@@ -86,9 +86,9 @@ class EditorMapLayer: CALayer {
         whiteText = true
 
         // observe changes to screen
-		self.observations.append( observe( \.mapView.screenFromMapTransform ) { object, change in
+		mapView.screenFromMapTransformObservors[ self ] = { _ in
 			self.updateMapLocation()
-		})
+		}
 
 		OsmMapData.setEditorMapLayerForArchive(self)
         

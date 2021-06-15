@@ -8,6 +8,8 @@
 
 // http://www.microsoft.com/maps/attribution.aspx
 
+import UIKit
+
 class BingMetadataViewController: UIViewController {
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var textView: UITextView!

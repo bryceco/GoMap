@@ -6,6 +6,8 @@
 //  Copyright © 2017 Bryce Cogswell. All rights reserved.
 //
 
+import UIKit
+
 enum TURN_RESTRICT : Int {
     case NONE = 0
     case NO = 1

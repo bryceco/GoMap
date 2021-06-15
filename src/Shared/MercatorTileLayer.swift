@@ -7,6 +7,7 @@
 //
 
 import QuartzCore
+import UIKit
 
 //let CUSTOM_TRANSFORM = 1
 
@@ -41,7 +42,6 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
     
 	@objc let mapView: MapView	// mark as objc for KVO
 	private var isPerformingLayout = AtomicInt(0)
-	private var observations: [NSKeyValueObservation] = []
     
     // MARK: Implementation
 
@@ -72,13 +72,13 @@ class MercatorTileLayer: CALayer, GetDiskCacheSize {
             "isHidden": NSNull()
         ]
 
-		self.observations.append( observe( \.mapView.screenFromMapTransform ) { object, change in
+		mapView.screenFromMapTransformObservors[ self ] = { _ in
 			var t = CATransform3DIdentity
 			t.m34 = -1 / CGFloat(mapView.birdsEyeDistance)
 			t = CATransform3DRotate(t, CGFloat(mapView.birdsEyeRotation), 1, 0, 0)
 			self.sublayerTransform = t
 			self.setNeedsLayout()
-		})
+		}
     }
     
 	deinit {

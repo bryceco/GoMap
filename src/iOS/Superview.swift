@@ -6,7 +6,7 @@
 //  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension UIView {
 	func superviewOfType<T:AnyObject>() -> T? {

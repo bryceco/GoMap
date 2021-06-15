@@ -7,9 +7,10 @@
 //
 
 import QuartzCore
+import UIKit
 
-let arrowWidth: CGFloat = 16
-let arrowHeight: CGFloat = 16
+private let arrowWidth: CGFloat = 16
+private let arrowHeight: CGFloat = 16
 
 class SpeechBalloonLayer: CAShapeLayer {
     var textLayer: CATextLayer?

@@ -8,7 +8,7 @@
 
 
 import CommonCrypto
-import Foundation
+import UIKit
 
 private let BING_MAPS_KEY: String = "ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk"
 

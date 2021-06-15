@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum EditError: Error {
 	case text(String)

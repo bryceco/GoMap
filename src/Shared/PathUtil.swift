@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Bryce Cogswell. All rights reserved.
 //
 
+import CoreGraphics
+
 extension CGPath {
 
 	func apply(action: (CGPathElement)->Void) {

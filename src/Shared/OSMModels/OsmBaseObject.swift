@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 @objc enum OSM_TYPE : Int {
     case _NODE = 1

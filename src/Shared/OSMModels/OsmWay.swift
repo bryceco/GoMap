@@ -6,6 +6,8 @@
 //  Copyright © 2020 Bryce Cogswell. All rights reserved.
 //
 
+import UIKit
+
 final class OsmWay: OsmBaseObject {
 	var nodeRefs: [OsmIdentifier]?	// only used during construction
 	private(set) var nodes: [OsmNode]

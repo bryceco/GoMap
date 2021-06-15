@@ -5,6 +5,8 @@
 //  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
+import UIKit
+
 class OfflineTableViewCell: UITableViewCell {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var detailLabel: UILabel!

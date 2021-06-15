@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class Colors {
     static func cssColorForColorName(_ string: String) -> UIColor? {

@@ -6,6 +6,8 @@
 //  Copyright © 2020 Bryce Cogswell. All rights reserved.
 //
 
+import UIKit
+
 // This class is used as a temporary object while reading relations from Sqlite3 and building member lists
 class OsmRelationBuilder: NSObject {
 	var relation: OsmRelation

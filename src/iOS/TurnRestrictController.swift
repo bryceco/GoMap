@@ -27,8 +27,6 @@ class TurnRestrictController: UIViewController {
     @IBOutlet var infoButton: UIButton!
     @IBOutlet var detailText: UILabel!
     var centralNode: OsmNode! // the central node
-    // these are used for screen calculations:
-    var screenFromMapTransform = OSMTransform()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -578,9 +576,10 @@ class TurnRestrictController: UIViewController {
     }
 
     // Convert location point to CGPoint
-    func screenPoint(forLatitude latitude: Double, longitude: Double) -> CGPoint {
-        var pt = MapPointForLatitudeLongitude(latitude, longitude)
-		pt = pt.withTransform( screenFromMapTransform )
-        return CGPoint(pt)
-    }
+	func screenPoint(forLatitude latitude: Double, longitude: Double) -> CGPoint {
+		// why doesn't this use the mapView function directly?
+		var pt = MapPointForLatitudeLongitude(latitude, longitude)
+		pt = pt.withTransform( AppDelegate.shared.mapView.screenFromMapTransform )
+		return CGPoint(pt)
+	}
 }

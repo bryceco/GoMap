@@ -5,6 +5,8 @@
 //  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
+import UIKit
+
 class POITabBarController: UITabBarController {
     var keyValueDict = [String : String]()
     var relationList: [OsmRelation] = []

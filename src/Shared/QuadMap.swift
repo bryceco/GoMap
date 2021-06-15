@@ -26,8 +26,8 @@ class QuadMap: NSObject, NSCoding {
         self.init(rect: MAP_RECT)
     }
 
-    func count() -> Int {
-        return rootQuad.count()
+    func countOfObjects() -> Int {
+        return rootQuad.countOfObjects()
     }
 
 	func isEmpty() -> Bool {
@@ -57,7 +57,7 @@ class QuadMap: NSObject, NSCoding {
     // MARK: Regions
 
     func mergeDerivedRegion(_ other: QuadMap, success: Bool) {
-        assert(other.count() == 1)
+        assert(other.countOfObjects() == 1)
         makeWhole(other.rootQuad, success: success)
     }
 
@@ -80,7 +80,7 @@ class QuadMap: NSObject, NSCoding {
     }
 
     func makeWhole(_ quad: QuadBox, success: Bool) {
-        quad.makeWhole(success)
+		quad.makeWhole(success: success)
     }
 
     // MARK: Spatial
@@ -105,8 +105,7 @@ class QuadMap: NSObject, NSCoding {
     func updateMember(_ member: OsmBaseObject, toBox: OSMRect, fromBox: OSMRect, undo: MyUndoManager?) {
         var toBox = toBox
         var fromBox = fromBox
-        let fromQuad = rootQuad.getMember(member, bbox: fromBox)
-        if let fromQuad = fromQuad {
+		if let fromQuad = rootQuad.getQuadBoxContaining(member, bbox: fromBox) {
 			if fromQuad.rect.containsRect( toBox ) {
                 // It fits in its current box. It might fit into a child, but this path is rare and not worth optimizing.
                 return
@@ -157,15 +156,15 @@ class QuadMap: NSObject, NSCoding {
     }
 
     func discardOldestQuads(_ fraction: Double, oldest: Date) -> Date? {
-		return rootQuad.discardOldestQuads(fraction, oldest: oldest)
+		return rootQuad.discardOldestQuads(fraction: fraction, oldest: oldest)
     }
 
     func pointIsCovered(_ point: OSMPoint) -> Bool {
         return rootQuad.pointIsCovered(point)
     }
 
-    func nodesAreCovered(_ nodeList: [OsmNode]) -> Bool {
-        return rootQuad.nodesAreCovered(nodeList)
+    func anyNodeIsCovered(_ nodeList: [OsmNode]) -> Bool {
+		return rootQuad.anyNodeIsCovered(nodeList: nodeList)
     }
 
     func deleteObjects(withPredicate predicate: @escaping (_ obj: OsmBaseObject) -> Bool) {

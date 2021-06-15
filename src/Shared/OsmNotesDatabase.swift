@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 private let FixMeList: [String] = [ "fixme", "FIXME" ]    // there are many others but not frequently used
 

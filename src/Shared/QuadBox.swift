@@ -21,17 +21,24 @@ enum QUAD_ENUM: Int, CaseIterable {
 	case NW = 3
 }
 
-class QuadBox: Codable {
+final class QuadBox: NSObject, Codable, NSCoding {
+
+	static let emptyChildren: [QuadBox?] = [nil,nil,nil,nil]
+
 	let rect: OSMRect
 	var parent: QuadBox? = nil
 
-	var children: [QuadBox?] = [nil,nil,nil,nil]
+	var children: [QuadBox?] = QuadBox.emptyChildren
 	var downloadDate = 0.0
-	var whole = false				// this quad has already been processed
-	var busy = false				// this quad is currently being processed
+	var whole = false				// this quad successfully downloaded all of its data, so we don't need to track children anymore
+	var busy = false				// this quad is currently being downloaded
 	var isSplit = false
 	// member is used only for spatial
 	var members: [OsmBaseObject] = []
+	#if SHOW_DOWNLOAD_QUADS
+	// for debugging purposes we abuse the Gpx code to draw squares representing quads
+	var gpxTrack: GpxTrack? = nil
+	#endif
 
 	init(rect: OSMRect, parent: QuadBox?) {
 		self.rect = rect
@@ -39,7 +46,7 @@ class QuadBox: Codable {
 	}
 
 	func reset() {
-		children = [nil,nil,nil,nil]
+		children = QuadBox.emptyChildren
 		whole = false
 		busy = false
 		isSplit = false
@@ -76,13 +83,59 @@ class QuadBox: Codable {
 		rect			= try values.decode(OSMRect.self, forKey: .rect)
 		downloadDate	= try values.decode(Double.self, forKey: .downloadDate)
 		busy			= false
+		super.init()
 		for child in children {
 			if let child = child {
 				child.parent = self
 			}
 		}
 	}
+	func encode(with coder: NSCoder) {
+		if let child = children[0] { coder.encode(child, forKey: "child0") }
+		if let child = children[1] { coder.encode(child, forKey: "child1") }
+		if let child = children[2] { coder.encode(child, forKey: "child2") }
+		if let child = children[3] { coder.encode(child, forKey: "child3") }
+		coder.encode( whole, forKey: "whole")
+		var rect = rect
+		coder.encode( Data(bytes: &rect, count: MemoryLayout.size(ofValue: rect)), forKey: "rect")
+		coder.encode( isSplit, forKey: "split")
+		coder.encode( downloadDate, forKey: "date")
+	}
 
+	init?(coder: NSCoder) {
+		children[0]	= coder.decodeObject( forKey: "child0" ) as? QuadBox
+		children[1] = coder.decodeObject( forKey: "child1" ) as? QuadBox
+		children[2] = coder.decodeObject( forKey: "child2" ) as? QuadBox
+		children[3] = coder.decodeObject( forKey: "child3" ) as? QuadBox
+		whole			= coder.decodeBool(forKey: "whole" )
+		isSplit        	= coder.decodeBool(forKey: "split" )
+		guard let rectData	= coder.decodeObject(forKey: "rect" ) as? Data else { return nil }
+		rect           	= rectData.withUnsafeBytes( { $0.load(as: OSMRect.self) } )
+		downloadDate   	= coder.decodeDouble(forKey: "date" )
+		parent	   	    = nil
+		busy            = false
+
+		super.init()
+
+		for child in children {
+			if let child = child {
+				child.parent = self
+			}
+		}
+
+		// if we just upgraded from an older install then we may need to set a download date
+		if whole && downloadDate == 0.0 {
+			downloadDate = NSDate.timeIntervalSinceReferenceDate
+		}
+	}
+
+	func hasChildren() -> Bool
+	{
+		return children[0] != nil ||
+				children[1] != nil ||
+				children[2] != nil ||
+				children[3] != nil
+	}
 
 	func enumerateWithBlock(_ block:(QuadBox)->Void )
 	{
@@ -94,7 +147,116 @@ class QuadBox: Codable {
 		}
 	}
 
-	func count() -> Int {
+	func quadForRect(_ target: OSMRect) -> QuadBox
+	{
+		for child in children where child != nil {
+			if child!.rect.containsRect( target ) {
+				// recurse down to find smallest quad
+				return child!.quadForRect(target)
+			}
+		}
+		return self
+	}
+
+	// MARK: Region
+
+	func missingPieces(_ missing: inout [QuadBox], intersecting needed: OSMRect )
+	{
+		if whole || busy {
+			return
+		}
+		if !needed.intersectsRect( rect ) {
+			return
+		}
+		if rect.size.width <= MinRectSize ||
+			rect.size.width <= needed.size.width/2 ||
+			rect.size.height <= needed.size.height/2
+		{
+			busy = true
+			missing.append( self )
+			return
+		}
+		if needed.containsRect( rect ) {
+			if !hasChildren() {
+				busy = true
+				missing.append( self )
+				return
+			}
+		}
+
+		for child in QUAD_ENUM.allCases {
+			let rc = QuadBox.ChildRect( child, rect )
+			if needed.intersectsRect( rc ) {
+
+				if children[child.rawValue] == nil {
+					children[child.rawValue] = QuadBox( rect: rc, parent: self )
+				}
+
+				children[child.rawValue]!.missingPieces( &missing, intersecting: needed )
+			}
+		}
+	}
+
+	// Delete ourself from the quad tree
+	private func delete()
+	{
+		if let parent = parent {
+			// remove parent's pointer to us
+			if let index = parent.children.firstIndex(where: { $0 === self }) {
+				parent.children[index] = nil
+			}
+			self.parent = nil
+		}
+
+		// delete any children
+		children = []
+
+#if SHOW_DOWNLOAD_QUADS
+		if let gpxTrack = gpxTrack {
+			AppDelegate.getAppDelegate.mapView.gpxLayer.deleteTrack( gpxTrack )
+		}
+#endif
+	}
+
+	// This runs after we attempted to download a quad.
+	// If the download succeeded we can mark this region and its children as whole.
+	func makeWhole( success: Bool )
+	{
+		if let parent = parent,
+		   parent.whole
+		{
+			// parent was made whole (somehow) before we completed, so nothing to do
+			if self.countBusy() == 0 {
+				self.delete()	// remove parent reference so we don't have a retain cycle
+			}
+			return
+		}
+
+		busy = false
+
+		if ( success ) {
+			downloadDate = Date.timeIntervalSinceReferenceDate
+			whole = true
+#if SHOW_DOWNLOAD_QUADS	// Display query regions as GPX lines
+			gpxTrack = AppDelegate.getAppDelegate.mapView.gpxLayer.createGpxRect( CGRectFromOSMRect(rect) )
+#endif
+			children = QuadBox.emptyChildren
+			if let parent = parent {
+				// if all children of parent exist and are whole then parent is whole as well
+				let childrenComplete = parent.children.allSatisfy( { $0?.whole ?? false })
+				if childrenComplete {
+#if true
+					// we want to have fine granularity during discard phase, so don't delete children by taking the makeWhole() path
+					parent.whole = true
+#else
+					parent.makeWhole(success)
+#endif
+				}
+			}
+		}
+	}
+
+	func countOfObjects() -> Int {
 		var count = 0
 		enumerateWithBlock({ count += $0.members.count })
 		return count
@@ -102,6 +264,112 @@ class QuadBox: Codable {
 
 	func isEmpty() -> Bool {
 		return members.isEmpty && children.firstIndex(where: { $0 != nil } ) == nil
+	}
+
+	func countBusy() -> Int
+	{
+		var c = busy ? 1 : 0
+		for child in children where child != nil {
+			c += child!.countBusy()
+		}
+		return c;
+	}
+
+	func discardQuadsOlderThan(referenceDate date: Double ) -> Bool
+	{
+		if busy {
+			return false
+		}
+
+		if downloadDate != 0.0 && downloadDate < date {
+			parent?.whole = false
+			self.delete()
+			return true
+		} else {
+			var changed = false
+			for c in QUAD_ENUM.allCases {
+				if let child = children[c.rawValue] {
+					let del = child.discardQuadsOlderThan(referenceDate: date )
+					if del {
+						changed = true
+					}
+				}
+			}
+			if changed && !whole && downloadDate == 0.0 && !hasChildren() && parent != nil {
+				self.delete()
+			}
+			return changed
+		}
+	}
+
+	func discardQuadsOlderThanDate(_ date: Date ) -> Bool {
+		return discardQuadsOlderThan(referenceDate: date.timeIntervalSinceReferenceDate)
+	}
+
+	// discard the oldest "fraction" of quads, or oldestDate, whichever is more
+	// return the cutoff date selected
+	func discardOldestQuads( fraction: Double, oldest: Date ) -> Date?
+	{
+		var oldest = oldest
+
+		if fraction > 0.0 {
+			// get a list of all quads that have downloads
+			var list: [QuadBox] = []
+			enumerateWithBlock({
+				if $0.downloadDate > 0.0 {
+					list.append( $0 )
+				}
+			})
+			// sort ascending by date
+			list.sort(by: { $0.downloadDate < $1.downloadDate })
+
+			let index = Int( Double(list.count) * fraction )
+			let date2 = list[ index ].downloadDate
+			if date2 > oldest.timeIntervalSinceReferenceDate {
+				oldest = Date(timeIntervalSinceReferenceDate: date2)	// be more aggressive and prune even more
+			}
+		}
+		return self.discardQuadsOlderThan(referenceDate: oldest.timeIntervalSinceReferenceDate) ? oldest : nil
+	}
+
+	func pointIsCovered(_ point: OSMPoint ) -> Bool {
+		if downloadDate != 0.0 {
+			return true
+		} else {
+			let c = childForPoint( point )
+			if let child = children[c.rawValue],
+			   child.pointIsCovered( point )
+			{
+				return true
+			}
+			return false
+		}
+	}
+	// if any node is covered then return true (don't delete object)
+	// should only be called on root quad
+	func anyNodeIsCovered( nodeList: [OsmNode] ) -> Bool
+	{
+		// rather than searching the entire tree for each node we start the search at the location of the previous node
+		var quad = self
+
+		node_loop:
+		for node in nodeList {
+			let point = node.location()
+			// move up until we find a quad containing the point
+			while !quad.rect.containsPoint( point ) && quad.parent != nil {
+				quad = quad.parent!
+			}
+			// recurse down until we find a quad with a download date
+			while quad.downloadDate == 0.0 {
+				let c = quad.childForPoint( point )
+				guard let child = quad.children[c.rawValue] else {
+					continue node_loop
+				}
+				quad = child
+			}
+			return true
+		}
+		return false
 	}
 
 	private static func ChildRect( _ child: QUAD_ENUM, _ parent: OSMRect ) -> OSMRect
@@ -207,12 +475,55 @@ class QuadBox: Codable {
 		return false
 	}
 
-
-	func getMember(_ member: OsmBaseObject, bbox: OSMRect) -> Self? {
+	func getQuadBoxContaining(_ member: OsmBaseObject, bbox: OSMRect) -> QuadBox? {
+		if members.firstIndex(of: member) != nil {
+			return self
+		}
+		// find a child member could fit into
+		for child in QUAD_ENUM.allCases {
+			let rc = Self.ChildRect( child, rect )
+			if bbox.intersectsRect( rc ) {
+				return children[child.rawValue]?.getQuadBoxContaining( member, bbox: bbox)
+			}
+		}
 		return nil
 	}
 
-	func findObjects(inArea bbox: OSMRect, block: @escaping (_ obj: OsmBaseObject) -> Void) {
+	static func findObjectsInAreaNonRecurse( _ top: QuadBox, bbox: OSMRect, block: (OsmBaseObject)->Void )
+	{
+		var stack: [QuadBox] = []
+		stack.reserveCapacity( 32 )
+		stack.append( top )
+
+		while let q = stack.popLast() {
+
+			for obj in q.members {
+				if obj.boundingBox.intersectsRect( bbox ) {
+					block( obj )
+				}
+			}
+			for child in q.children {
+				if let child = child,
+				   bbox.intersectsRect( child.rect )
+				{
+					stack.append( child )
+				}
+			}
+		}
+	}
+
+	func findObjects(inArea bbox: OSMRect, block: (OsmBaseObject)->Void )
+	{
+		for obj in members where obj.boundingBox.intersectsRect( bbox ) {
+			block( obj );
+		}
+		for child in children {
+			if let child = child,
+			   bbox.intersectsRect( child.rect )
+			{
+				child.findObjects(inArea: bbox, block: block )
+			}
+		}
 	}
 
 	func enumerate(_ block: (_ obj: OsmBaseObject, _ rect: OSMRect) -> Void) {
@@ -224,29 +535,12 @@ class QuadBox: Codable {
 		}
 	}
 
-	// region specific
-	func missingPieces(_ pieces: inout [QuadBox], intersecting target: OSMRect) {
-	}
-	func makeWhole(_ success: Bool) {
-	}
-
-	// these are for discarding old data:
-	func discardQuadsOlderThanDate(_ date: Date) -> Bool {
-		return false
-	}
-
-	func discardOldestQuads(_ fraction: Double, oldest: Date) -> Date? {
-		return nil
-	}
-
-	func pointIsCovered(_ point: OSMPoint) -> Bool {
-		return false
-	}
-
-	func nodesAreCovered(_ nodeList: [AnyHashable]) -> Bool {
-		return false
-	}
-
-	func deleteObjects(withPredicate predicate: @escaping (_ obj: OsmBaseObject) -> Bool) {
+	func deleteObjects(withPredicate predicate: (_ obj: OsmBaseObject) -> Bool) {
+		members.removeAll(where: { predicate($0) })
+		for child in children {
+			if let child = child {
+				child.deleteObjects(withPredicate: predicate )
+			}
+		}
 	}
 }

@@ -5,6 +5,8 @@
 //  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
+import UIKit
+
 class FeaturePresetCell: UITableViewCell {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var valueField: AutocompleteTextField!

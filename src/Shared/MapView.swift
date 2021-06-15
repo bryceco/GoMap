@@ -11,6 +11,7 @@ import Foundation
 import QuartzCore
 import SafariServices
 import StoreKit
+import UIKit
 
 /// The main map display: Editor, Aerial, Mapnik etc.
 enum MapViewState : Int {
@@ -155,8 +156,8 @@ private func ActionTitle(_ action: EDIT_ACTION, _ abbrev: Bool) -> String {
 class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheetDelegate, UIGestureRecognizerDelegate, SKStoreProductViewControllerDelegate {
 
     var lastMouseDragPos = CGPoint.zero
-    var progressActive = 0
-    var locationBallLayer: LocationBallLayer
+    var progressActive = AtomicInt(0)
+	var locationBallLayer: LocationBallLayer
     var addWayProgressLayer: CAShapeLayer?
 	var blinkObject: OsmBaseObject? // used for creating a moving dots animation during selection
 	var blinkSegment = 0
@@ -242,7 +243,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 	private(set) var backgroundLayers: [CALayer] = [] // list of all layers that need to be resized, etc.
 
 	private var _screenFromMapTransform: OSMTransform = OSMTransform.identity
-    @objc dynamic var screenFromMapTransform: OSMTransform {	// must be "@objc dynamic" because it's observed
+	var screenFromMapTransform: OSMTransform {	// must be "@objc dynamic" because it's observed
         get {
             return _screenFromMapTransform
         }
@@ -308,10 +309,15 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 			}
 
 			refreshNoteButtonsFromDatabase()
+
+			for (_,block) in screenFromMapTransformObservors {
+				block( _screenFromMapTransform )
+			}
         }
     }
+	var screenFromMapTransformObservors: [AnyHashable:(OSMTransform)->Void] = [:]
 
-    var mapFromScreenTransform: OSMTransform {
+	var mapFromScreenTransform: OSMTransform {
 		return screenFromMapTransform.inverse()
 	}
 
@@ -1563,31 +1569,20 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     // MARK: Progress indicator
 
     func progressIncrement() {
-        assert(progressActive >= 0)
-        progressActive += 1
+		progressActive.increment()
     }
 
     func progressDecrement() {
-        assert(progressActive > 0)
-        progressActive -= 1
-        if progressActive == 0 {
-            //            #if os(iOS)
-            progressIndicator.stopAnimating()
-            //            #else
-            //            progressIndicator.stopAnimation()
-            //            #endif
+		progressActive.decrement()
+		if progressActive.value() == 0 {
+			progressIndicator.stopAnimating()
         }
     }
 
     func progressAnimate() {
-        assert(progressActive >= 0)
-        if progressActive > 0 {
-            //            #if os(iOS)
-            progressIndicator.startAnimating()
-            //            #else
-            //            progressIndicator.startAnimating()
-            //            #endif
-        }
+		if progressActive.value() > 0 {
+			progressIndicator.startAnimating()
+		}
     }
 
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -2431,19 +2426,17 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
     // Turn restriction panel
     func restrictOptionSelected() {
         let showRestrictionEditor: (() -> Void) = { [self] in
-            let myVc = mainViewController.storyboard?.instantiateViewController(withIdentifier: "TurnRestrictController") as? TurnRestrictController
-            myVc?.centralNode = editorLayer.selectedNode
-            myVc?.screenFromMapTransform = screenFromMapTransform
-            myVc?.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-            if let myVc = myVc {
-                mainViewController.present(myVc, animated: true)
-            }
+			guard let myVc = mainViewController.storyboard?.instantiateViewController(withIdentifier: "TurnRestrictController") as? TurnRestrictController
+			else { return }
+			myVc.centralNode = editorLayer.selectedNode
+			myVc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+			mainViewController.present(myVc, animated: true)
 
             // if GPS is running don't keep moving around
             userOverrodeLocationPosition = true
 
             // scroll view so intersection stays visible
-            let rc = myVc?.viewWithTitle.frame ?? .zero
+            let rc = myVc.viewWithTitle.frame
             let pt = pushpinView?.arrowPoint ?? .zero
             let delta = CGPoint(x: Double(bounds.midX - pt.x), y: Double(bounds.midY - (rc.size.height) / 2 - pt.y))
             adjustOrigin(by: delta)

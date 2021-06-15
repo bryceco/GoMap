@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import UIKit
 
 // All presets for a feature, for presentation in Common Tags table view
 class PresetsForFeature: NSObject {

@@ -6,12 +6,9 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
-#if os(iOS)
-    import Foundation
-#else
-    import Cocoa
-#endif
 
+import Foundation
+import UIKit
 
 class SpeechBalloonView: UIView {
     let path: CGPath

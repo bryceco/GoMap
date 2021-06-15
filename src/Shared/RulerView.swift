@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
-import QuartzCore
+import UIKit
 
 func roundToEvenValue(_ value: Double) -> Double {
     var scale: Double = 1
@@ -30,9 +30,11 @@ class RulerView: UIView {
     var _metricTextLayer: CATextLayer
     var _britishTextLayer: CATextLayer
 	@objc var mapView: MapView? {
-		willSet(newValue) {
-			mapView?.removeObserver(self, forKeyPath: "screenFromMapTransform")
-            newValue?.addObserver(self, forKeyPath: "screenFromMapTransform", options: [], context: nil)
+		didSet(oldValue) {
+			oldValue?.screenFromMapTransformObservors.removeValue(forKey: self)
+			mapView?.screenFromMapTransformObservors[ self ] = { _ in
+				self.setNeedsLayout()
+			}
         }
     }
 
@@ -77,12 +79,6 @@ class RulerView: UIView {
 		layer.addSublayer(_shapeLayer)
 		layer.addSublayer(_metricTextLayer)
 		layer.addSublayer(_britishTextLayer)
-    }
-
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if (object as? MapView) == mapView && (keyPath == "screenFromMapTransform") {
-            setNeedsLayout()
-        }
     }
 
     override var frame: CGRect {

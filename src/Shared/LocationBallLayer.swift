@@ -7,6 +7,7 @@
 //
 
 import QuartzCore
+import UIKit
 
 class LocationBallLayer: CALayer {
     var _headingLayer: CAShapeLayer

@@ -7,6 +7,7 @@
 //
 
 import CoreLocation
+import UIKit
 
 // MARK: Rectangularize
 private var rectoLowerThreshold = 0.0

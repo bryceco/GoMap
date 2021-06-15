@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class TristateButton : UISegmentedControl{
 	var onSelect: ((String?) -> Void)? = nil

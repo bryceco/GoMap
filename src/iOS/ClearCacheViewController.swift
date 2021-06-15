@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+import UIKit
+
 enum Row : Int {
     case osmData = 0
     case mapnik = 1

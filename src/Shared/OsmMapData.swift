@@ -6,9 +6,10 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+import Compression
 import CoreLocation
 import Foundation
-import Compression
+import UIKit
 
 typealias EditAction = () -> Void
 typealias EditActionWithNode = (OsmNode) -> Void
@@ -2029,7 +2030,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
                             covered = true
                         }
                     } else if obj.isWay() != nil {
-                        if region.nodesAreCovered(obj.isWay()!.nodes) {
+                        if region.anyNodeIsCovered(obj.isWay()!.nodes) {
                             covered = true
                         }
                     }
@@ -2046,7 +2047,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 			for (ident, way) in ways
 			where !way.isModified() && !undoObjects.contains(way)
 			{
-				if !region.nodesAreCovered(way.nodes) {
+				if !region.anyNodeIsCovered(way.nodes) {
                     removeWays.append(ident)
                     for node in way.nodes {
                         DbgAssert(node.wayCount > 0)
@@ -2224,7 +2225,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 		self.spatial = origSpatial
 
         t = CACurrentMediaTime() - t
-		DLog("Archive save \(modified.nodeCount()),\(modified.wayCount()),\(modified.relationCount()),\(undoManager.countUndoGroups),\(region.count()) = \(t)")
+		DLog("Archive save \(modified.nodeCount()),\(modified.wayCount()),\(modified.relationCount()),\(undoManager.countUndoGroups),\(region.countOfObjects()) = \(t)")
 
         periodicSaveTimer?.invalidate()
         periodicSaveTimer = nil
@@ -2234,7 +2235,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 
 		let archiver = OsmMapDataArchiver()
 		guard let decode = archiver.loadArchive() else { return nil }
-		if decode.spatial.count() > 0 {
+		if decode.spatial.countOfObjects() > 0 {
 			print("spatial accidentally saved, please fix")
 			decode.spatial = QuadMap()
 		}
@@ -2310,12 +2311,12 @@ class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 		let path = OsmMapData.pathToArchiveFile()
 		let data = NSMutableData()
 		#if DEBUG
-		assert(mapData.spatial.count() == 0)
+		assert(mapData.spatial.countOfObjects() == 0)
 		#endif
 		let archiver = NSKeyedArchiver(forWritingWith: data)
 		archiver.encode(mapData, forKey: "OsmMapData")
 		archiver.finishEncoding()
-		let ok = NSData(data: data as Data).write(toFile: path, atomically: true)
+		let ok = data.write(toFile: path, atomically: true)
 		return ok
 	}
 

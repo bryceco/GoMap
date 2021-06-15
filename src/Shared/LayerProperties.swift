@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class LayerProperties {
     public var transform: CATransform3D = CATransform3DIdentity

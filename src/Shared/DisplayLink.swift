@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import CoreVideo
+import UIKit
 
 class DisplayLink {
     

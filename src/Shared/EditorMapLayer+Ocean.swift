@@ -6,7 +6,9 @@
 //  Copyright © 2020 Bryce Cogswell. All rights reserved.
 //
 
+import CoreGraphics
 import Foundation
+import UIKit
 
 extension OSMPoint: Hashable {
     public func hash(into hasher: inout Hasher) {

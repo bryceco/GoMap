@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import UIKit
 
 // A preset the user defined as a custom preset
 class PresetKeyUserDefined: PresetKey {

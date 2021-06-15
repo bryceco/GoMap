@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import UIKit
 
 // The entire presets database from iD
 extension PresetsDatabase {

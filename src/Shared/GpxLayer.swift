@@ -8,9 +8,7 @@
 
 import QuartzCore
 import CoreLocation
-
-//private let PATH_SCALING = 256*256.0
-//private let MAX_AGE		= 7.0 * 24 * 60 * 60
+import UIKit
 
 
 // Distance in meters
@@ -315,7 +313,6 @@ class GpxLayer: CALayer, GetDiskCacheSize {
 
 	@objc let mapView: MapView	// mark as objc for KVO
 	var stabilizingCount = 0
-	var observations: [NSKeyValueObservation] = []
 
     private(set) var activeTrack: GpxTrack? // track currently being recorded
 
@@ -357,9 +354,9 @@ class GpxLayer: CALayer, GetDiskCacheSize {
         ]
 
         // observe changes to geometry
-		self.observations.append( self.observe( \.mapView.screenFromMapTransform ) { _,_  in
+		mapView.screenFromMapTransformObservors[ self ] = { _ in
 			self.setNeedsLayout()
-		})
+		}
 
         uploadedTracks = UserDefaults.standard.object(forKey: "GpxUploads") as? [String : Any] ?? [:]
 

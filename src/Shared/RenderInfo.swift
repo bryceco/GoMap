@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 private let RenderInfoMaxPriority = (33 + 1) * 3
 

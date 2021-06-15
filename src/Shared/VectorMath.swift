@@ -406,6 +406,19 @@ extension OSMRect {
 }
 
 // MARK: OSMTransform
+
+#if TRANSFORM_3D
+typealias OSMTransform = CATransform3D
+#else
+struct OSMTransform {
+//      |  a   b   0  |
+//      |  c   d   0  |
+//      | tx  ty   1  |
+	var a, b, c, d: Double
+	var tx, ty: Double
+}
+#endif
+
 extension OSMTransform {
 
 #if TRANSFORM_3D
