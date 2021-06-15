@@ -40,9 +40,13 @@ final class QuadBox: NSObject, Codable, NSCoding {
 	var gpxTrack: GpxTrack? = nil
 	#endif
 
-	init(rect: OSMRect, parent: QuadBox?) {
+	private init(rect: OSMRect, parent: QuadBox?) {
 		self.rect = rect
 		self.parent = parent
+	}
+
+	override convenience init() {
+		self.init(rect:MAP_RECT, parent: nil)
 	}
 
 	func reset() {

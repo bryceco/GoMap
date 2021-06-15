@@ -1778,7 +1778,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 			let ways = coder.decodeObject(forKey: "ways") as? [OsmIdentifier : OsmWay],
 			let relations = coder.decodeObject(forKey: "relations") as? [OsmIdentifier : OsmRelation],
 			let region = coder.decodeObject(forKey: "region") as? QuadMap,
-			let spatial = coder.decodeObject(forKey: "spatial") as? QuadMap,
+			// let spatial = coder.decodeObject(forKey: "spatial") as? QuadMap,
 			let undoManager = coder.decodeObject(forKey: "undoManager") as? MyUndoManager
 		else { return nil }
 
@@ -1786,7 +1786,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 		self.ways = ways
 		self.relations = relations
 		self.region = region
-		self.spatial = spatial
+		self.spatial = QuadMap()	// spatial doesn't get saved, we rebuild it explicitly
 		self.undoManager = undoManager
         
         initCommon()
@@ -2326,7 +2326,6 @@ class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 		guard let data = try? Data(contentsOf: url) else {
 			return nil
 		}
-
 		let unarchiver = NSKeyedUnarchiver(forReadingWith: data )
 		unarchiver.delegate = self
 		guard let decode = unarchiver.decodeObject(forKey: "OsmMapData") as? OsmMapData else {

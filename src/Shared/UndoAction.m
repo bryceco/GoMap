@@ -37,6 +37,7 @@
 	_selector	= [coder decodeObjectForKey:@"selector"];
 	_objects	= [coder decodeObjectForKey:@"objects"];
 	_group		= [coder decodeIntegerForKey:@"group"];
+	assert( _target && _selector && _objects );
 	return self;
 }
 

@@ -8,22 +8,14 @@
 
 import Foundation
 
-
-private let MAP_RECT = OSMRect(origin: OSMPoint(x:-180.0, y:-90.0),
-							   size: OSMSize(width: 360.0, height: 180.0))
-
 class QuadMap: NSObject, NSCoding {
     let rootQuad: QuadBox
 
     // MARK: Common
 
-    init(rect: OSMRect) {
-		rootQuad = QuadBox(rect: rect, parent: nil)
+	override init() {
+		rootQuad = QuadBox()
 		super.init()
-    }
-
-	override convenience init() {
-        self.init(rect: MAP_RECT)
     }
 
     func countOfObjects() -> Int {
@@ -39,25 +31,21 @@ class QuadMap: NSObject, NSCoding {
     }
 
     required init?(coder: NSCoder) {
-		let ok = coder.containsValue(forKey: "rootQuad")
-		assert(ok)
-		guard let root = coder.decodeObject(forKey: "rootQuad") else {
+		if let root = coder.decodeObject(forKey: "rootQuad") as? QuadBox {
+			rootQuad = root
+		} else {
+			// we end up here when loading an old ObjC save that set the spatial rootQuad to nil
+			// and then the undo manager has an action that references the spatial
 			print("bad rootQuad")
-			let _ = coder.decodeObject(forKey: "rootQuad")
-			return nil
+			rootQuad = QuadBox()
 		}
-		guard let root2 = root as? QuadBox else {
-			print("bad rootQuad")
-			return nil
-		}
-		rootQuad = root2
-        super.init()
+		super.init()
     }
 
     // MARK: Regions
 
     func mergeDerivedRegion(_ other: QuadMap, success: Bool) {
-        assert(other.countOfObjects() == 1)
+		DbgAssert(other.countOfObjects() == 1)
         makeWhole(other.rootQuad, success: success)
     }
 
