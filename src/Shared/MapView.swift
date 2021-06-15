@@ -440,11 +440,10 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 	private let NAME = "autoScroll"
     var automatedFramerateTestActive: Bool {
         get {
-            let displayLink = DisplayLink.shared()
-            return displayLink.hasName(NAME)
+            return DisplayLink.shared.hasName(NAME)
         }
         set(enable) {
-            let displayLink = DisplayLink.shared()
+            let displayLink = DisplayLink.shared
 
             if enable == displayLink.hasName(NAME) {
                 // nothing to do
@@ -1685,7 +1684,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         let accuracy = newHeading.headingAccuracy
         let heading = self.heading(for: newHeading)
 
-        DisplayLink.shared().addName("smoothHeading", block: { [self] in
+        DisplayLink.shared.addName("smoothHeading", block: { [self] in
             var delta = heading - self.locationManagerSmoothHeading
             if delta > .pi {
                 delta -= 2 * .pi
@@ -1700,7 +1699,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
             }
             updateHeadingSmoothed(self.locationManagerSmoothHeading, accuracy: accuracy)
             if heading == self.locationManagerSmoothHeading {
-				DisplayLink.shared().removeName("smoothHeading")
+				DisplayLink.shared.removeName("smoothHeading")
             }
         })
     }
@@ -1937,9 +1936,8 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
         let duration = 0.4
         var prevHeading: Double = 0
-        let displayLink = DisplayLink.shared()
 		weak var weakSelf = self
-		displayLink.addName(DisplayLinkHeading, block: {
+		DisplayLink.shared.addName(DisplayLinkHeading, block: {
 			if let myself = weakSelf {
                 var elapsedTime = CACurrentMediaTime() - startTime
                 if elapsedTime > duration {
@@ -1959,7 +1957,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 				myself.rotate(by: CGFloat(miniHeading - prevHeading), aroundScreenPoint: center)
                 prevHeading = miniHeading
                 if elapsedTime >= duration {
-                    displayLink.removeName(DisplayLinkHeading)
+					DisplayLink.shared.removeName(DisplayLinkHeading)
                 }
             }
         })
@@ -2553,7 +2551,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 					gestureDidMove = false
 				case .ended, .cancelled, .failed:
 					self.editorLayer.mapData.endUndoGrouping()
-					DisplayLink.shared().removeName("dragScroll")
+					DisplayLink.shared.removeName("dragScroll")
 
 					let isRotate = self.isRotateObjectMode != nil
 					if isRotate {
@@ -2728,9 +2726,8 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 						scrolly = SCROLL_SPEED * CGFloat(v.y)
 
 						// scroll the screen to keep pushpin centered
-						let displayLink = DisplayLink.shared()
 						var prevTime = TimeInterval(CACurrentMediaTime())
-						displayLink.addName("dragScroll", block: { [self] in
+						DisplayLink.shared.addName("dragScroll", block: { [self] in
 							let now = TimeInterval(CACurrentMediaTime())
 							let duration = now - prevTime
 							prevTime = now
@@ -2748,7 +2745,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 							}
 						})
 					} else {
-						DisplayLink.shared().removeName("dragScroll")
+						DisplayLink.shared.removeName("dragScroll")
 					}
 
 					// move the object
@@ -3165,8 +3162,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
         if pan.state == .began {
             // start pan
-            let displayLink = DisplayLink.shared()
-            displayLink.removeName(DisplayLinkPanning)
+            DisplayLink.shared.removeName(DisplayLinkPanning)
         } else if pan.state == .changed {
             // move pan
 			if SHOW_3D {
@@ -3191,11 +3187,11 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
                 // don't use inertia for small movements because it interferes with dropping the pin precisely
             } else {
                 let startTime = CACurrentMediaTime()
-                let displayLink = DisplayLink.shared()
-                displayLink.addName(DisplayLinkPanning, block: {
+				let displayLink = DisplayLink.shared
+				displayLink.addName(DisplayLinkPanning, block: {
                     let timeOffset = CACurrentMediaTime() - startTime
                     if timeOffset >= duration {
-                        displayLink.removeName(DisplayLinkPanning)
+						displayLink.removeName(DisplayLinkPanning)
                     } else {
                         var translation = CGPoint()
                         let t = timeOffset / duration // time [0..1]
@@ -3222,8 +3218,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
 
             userOverrodeLocationZoom = true
 
-            let displayLink = DisplayLink.shared()
-            displayLink.removeName(DisplayLinkPanning)
+			DisplayLink.shared.removeName(DisplayLinkPanning)
 
             let zoomCenter = pinch.location(in: self)
             adjustZoom(by: pinch.scale, aroundScreenPoint: zoomCenter)
@@ -3239,8 +3234,7 @@ class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheet
         if tapAndDrag.state == .changed {
             userOverrodeLocationZoom = true
 
-            let displayLink = DisplayLink.shared()
-            displayLink.removeName(DisplayLinkPanning)
+            DisplayLink.shared.removeName(DisplayLinkPanning)
 
             let delta = tapAndDrag.translation(in: self)
 			let scale = 1.0 + delta.y * 0.01

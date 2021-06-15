@@ -16,7 +16,7 @@ class FpsLabel: UILabel {
     private var historyPos = 0
     private var frameTimestamp = [CFTimeInterval](repeating: 0, count: FRAME_COUNT) // average last 60 frames
     
-    private var timer: DispatchSourceTimer?
+    private var timer: DispatchSourceTimer!
 
     public var showFPS: Bool = false {
 		didSet {
@@ -25,15 +25,14 @@ class FpsLabel: UILabel {
 			}
 			if showFPS {
 				isHidden = false
-				let displayLink = DisplayLink.shared()
-				displayLink.addName("FpsLabel", block: {
+				DisplayLink.shared.addName("FpsLabel", block: {
 					self.frameUpdated()
 				})
 
 				// create a timer to update the text twice a second
 				timer = DispatchSource.makeTimerSource(queue: DispatchQueue.main)
-				timer?.schedule(deadline: .now(), repeating: .milliseconds(500))
-				timer?.setEventHandler(handler: { [weak self] in
+				timer.schedule(deadline: .now(), repeating: .milliseconds(500))
+				timer.setEventHandler(handler: { [weak self] in
 					self?.updateText()
 				})
 				timer?.activate()
@@ -41,8 +40,7 @@ class FpsLabel: UILabel {
 			} else {
 				text = nil
 				isHidden = true
-				let displayLink = DisplayLink.shared()
-				displayLink.removeName("FpsLabel")
+				DisplayLink.shared.removeName("FpsLabel")
 				timer?.cancel()
 			}
         }

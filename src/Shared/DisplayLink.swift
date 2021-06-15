@@ -10,31 +10,18 @@ import Foundation
 import UIKit
 
 class DisplayLink {
-    
-#if os(iOS)
-	var _displayLink: CADisplayLink!
-#else
-    let _displayLink: CVDisplayLink
-#endif
+
+	static let shared: DisplayLink = DisplayLink()
+
+	var displayLink: CADisplayLink!
 	var blockDict = [String : (()->Void)]()
     
     private static let g_shared = DisplayLink()
-    
-    class func shared() -> DisplayLink {
-        // `dispatch_once()` call was converted to a static variable initializer
-        return g_shared
-    }
-    
+
     init() {
-		_displayLink = CADisplayLink(target: self, selector: #selector(step))
-#if os(iOS)
-        _displayLink.isPaused = true
-        _displayLink.add(to: RunLoop.main, forMode: .default)
-#else
-        let displayID = CGMainDisplayID()
-        CVDisplayLinkCreateWithCGDisplay(displayID, &displayLink)
-        CVDisplayLinkSetOutputCallback(displayLink, displayLinkCallback, &self)
-#endif
+		displayLink = CADisplayLink(target: self, selector: #selector(step))
+        displayLink.isPaused = true
+        displayLink.add(to: RunLoop.main, forMode: .default)
     }
 
 	@objc func step() {
@@ -43,37 +30,17 @@ class DisplayLink {
 		}
 	}
 
-#if os(iOS)
-#else
-    func displayLinkOutputCallback(displayLink: CVDisplayLink, _ inNow: UnsafePointer<CVTimeStamp>, _ inOutputTime: UnsafePointer<CVTimeStamp>, _ flagsIn: CVOptionFlags, _ flagsOut: UnsafeMutablePointer<CVOptionFlags>, _ displayLinkContext: UnsafeMutablePointer<Void>) -> CVReturn {
-        let myself = displayLinkContext as? DisplayLink
-        myself?.update(nil)
-    }
-#endif
-    
     func duration() -> Double {
-#if os(iOS)
-        return _displayLink.duration
-#else
-        return CVDisplayLinkGetActualOutputVideoRefreshPeriod(displayLink)
-#endif
+        return displayLink.duration
     }
     
     func timestamp() -> CFTimeInterval {
-#if os(iOS)
-        return _displayLink.timestamp
-#else
-        return CACurrentMediaTime()
-#endif
+        return displayLink.timestamp
     }
     
     func addName(_ name: String, block: @escaping () -> Void) {
         blockDict[name] = block
-#if os(iOS)
-        _displayLink.isPaused = false
-#else
-        CVDisplayLinkStart(displayLink)
-#endif
+        displayLink.isPaused = false
     }
     
     func hasName(_ name: String) -> Bool {
@@ -84,19 +51,11 @@ class DisplayLink {
 		blockDict.removeValue(forKey: name)
         
         if blockDict.count == 0 {
-#if os(iOS)
-            _displayLink.isPaused = true
-#else
-            CVDisplayLinkStop(displayLink)
-#endif
+            displayLink.isPaused = true
         }
     }
     
     deinit {
-#if os(iOS)
-        _displayLink.remove(from: RunLoop.main, forMode: .default)
-#else
-        CVDisplayLinkRelease(displayLink)
-#endif
+        displayLink.remove(from: RunLoop.main, forMode: .default)
     }
 }
