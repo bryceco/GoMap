@@ -246,11 +246,13 @@ final class AerialService {
             attribIcon: nil,
             attribUrl: ""
         )
-    
-    static let mapboxLocator = AerialService(
+
+	static let mapboxToken = Bundle.main.object(forInfoDictionaryKey: "MBXLocatorToken") as? String ?? ""
+
+	static let mapboxLocator = AerialService(
             withName: "Mapbox Locator",
             identifier: MAPBOX_LOCATOR_IDENTIFIER,
-			url: "https://api.mapbox.com/styles/v1/openstreetmap/ckasmteyi1tda1ipfis6wqhuq/tiles/256/{zoom}/{x}/{y}{@2x}?access_token=pk.eyJ1IjoiYnJ5Y2VjbyIsImEiOiJja212YzlybTkwM28xMm9waGFtcmdiNzgyIn0.jdhZilCebOXBDoTuzmTYRA",
+			url: "https://api.mapbox.com/styles/v1/openstreetmap/ckasmteyi1tda1ipfis6wqhuq/tiles/256/{zoom}/{x}/{y}{@2x}?access_token=" + mapboxToken,
             maxZoom: 20,
             roundUp: false,
             startDate: nil,
@@ -261,7 +263,7 @@ final class AerialService {
             attribIcon: nil,
             attribUrl: ""
         )
-    
+
     static let noName = AerialService(
             withName: "QA Poole No Name",
             identifier: NO_NAME_IDENTIFIER,
