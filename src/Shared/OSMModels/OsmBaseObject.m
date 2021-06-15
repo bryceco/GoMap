@@ -129,11 +129,11 @@ BOOL IsInterestingKey(NSString * key)
 {
     NSArray * wayList = self.isWay ? @[ self ] : self.isRelation ? self.isRelation.waysInMultipolygon : nil;
     if ( wayList == nil )
-        return nil;
+        return NULL;
 
-    CGMutablePathRef    path        = CGPathCreateMutable();
-    OSMPoint            initial        = { 0, 0 };
-    BOOL                haveInitial    = NO;
+	CGMutablePathRef    path        = CGPathCreateMutable();
+	OSMPoint            initial        = { 0, 0 };
+	BOOL                haveInitial    = NO;
 
     for ( OsmWay * way in wayList ) {
 

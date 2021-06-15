@@ -17,6 +17,10 @@ class TristateButton : UISegmentedControl{
 		return ["no", nil, "yes"][ self.selectedSegmentIndex ]
 	}
 
+	override init(frame: CGRect) {
+		super.init(frame: frame)
+	}
+
 	init() {
 		super.init(items: [PresetsDatabase.shared.noForLocale, "-", PresetsDatabase.shared.yesForLocale])
 		self.apportionsSegmentWidthsByContent = true

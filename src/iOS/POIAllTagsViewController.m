@@ -398,6 +398,8 @@
 	TextPairTableCell * pair = (id)sender;
 	while ( pair && ![pair isKindOfClass:[UITableViewCell class]])
 		pair = (id)pair.superview;
+	if ( pair == nil )
+		return;
 	DirectionViewController *directionViewController = [[DirectionViewController alloc] initWithKey:pair.text1.text
 																							  value:pair.text2.text
 																						   setValue:^(NSString * newValue) {

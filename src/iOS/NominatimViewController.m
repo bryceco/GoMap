@@ -131,6 +131,25 @@
 // look for a pair of non-integer numbers in the string, and jump to it if found
 -(BOOL)containsLatLon:(NSString *)text
 {
+	text = [text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
+	
+	NSURLComponents * comps = [NSURLComponents componentsWithString:text];
+	if ( comps.queryItems.count >= 2 ) {
+		double lat = 0.0, lon = 0.0;
+		for ( NSURLQueryItem * item in comps.queryItems ) {
+			if ( [item.name isEqualToString:@"lat"] ) {
+				lat = item.value.doubleValue;
+			} else if ( [item.name isEqualToString:@"lon"] ) {
+				lon = item.value.doubleValue;
+			}
+		}
+		if ( lat && lon ) {
+			[self updateHistoryWithString:[NSString stringWithFormat:@"%g,%g",lat,lon]];
+			[self jumpToLat:lat lon:lon];
+			return YES;
+		}
+	}
+
 	NSScanner * scanner = [NSScanner scannerWithString:text];
 	NSCharacterSet * digits = [NSCharacterSet characterSetWithCharactersInString:@"-0123456789"];
 	NSCharacterSet * comma = [NSCharacterSet characterSetWithCharactersInString:@",/"];

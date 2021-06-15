@@ -335,6 +335,8 @@
 							   value:cell.valueField.text];
 	} else if ([self canMeasureHeightForKey:presetKey]) {
 		[self measureHeightForKey:cell.presetKey.tagKey];
+	} else if ([self canRecognizeOpeningHoursForKey:presetKey]) {
+		[self recognizeOpeningHoursForKey:cell.presetKey.tagKey];
 	} else {
 		[self performSegueWithIdentifier:@"POIPresetSegue" sender:cell];
 	}
@@ -513,6 +515,39 @@
 		[self updateTagWithValue:newValue forKey:key];
 	};
 	[self.navigationController pushViewController:vc animated:YES];
+}
+
+- (BOOL)canRecognizeOpeningHoursForKey:(PresetKey *)key
+{
+#if !TARGET_OS_MACCATALYST
+#if __LP64__	// old architectures don't support SwiftUI
+	if (@available(iOS 14.0, *)) {
+		return [key.tagKey isEqualToString:@"opening_hours"] ||
+			   [key.tagKey hasSuffix:@":opening_hours"];
+	}
+#endif
+#endif
+	return NO;
+}
+
+- (void)recognizeOpeningHoursForKey:(NSString *)key
+{
+#if __LP64__	// old architectures don't support SwiftUI
+	if (@available(iOS 14.0, *)) {
+		UINotificationFeedbackGenerator * feedback = [UINotificationFeedbackGenerator new];
+		[feedback prepare];
+		UIViewController * vc = [OpeningHoursRecognizerController withOnAccept:^(NSString * _Nonnull newValue) {
+			[self updateTagWithValue:newValue forKey:key];
+			[self.navigationController popViewControllerAnimated:YES];
+		} onCancel:^{
+			[self.navigationController popViewControllerAnimated:YES];
+		} onRecognize:^(NSString * _Nonnull newValue) {
+			[feedback notificationOccurred:UINotificationFeedbackTypeSuccess];
+			[feedback prepare];
+		}];
+		[self.navigationController pushViewController:vc animated:YES];
+	}
+#endif
 }
 
 @end

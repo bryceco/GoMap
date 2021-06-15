@@ -49,7 +49,7 @@ static const NSInteger CACHE_SECTION			= 3;
 
 -(void)setButtonLayoutTitle
 {
-	NSString * title = AppDelegate.shared.mapView.mainViewController.buttonLayout == BUTTON_LAYOUT_ADD_ON_LEFT ? @"Left" : @"Right";
+	NSString * title = AppDelegate.shared.mapView.mainViewController.buttonLayout == BUTTON_LAYOUT_ADD_ON_LEFT ? NSLocalizedString(@"Left",@"Left side of screen") : NSLocalizedString(@"Right",@"Right side of screen");
 	[_addButtonPosition setTitle:title forState:UIControlStateNormal];
 }
 
