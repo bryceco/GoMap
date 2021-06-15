@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class DisplayLink {
+final class DisplayLink {
 
 	static let shared: DisplayLink = DisplayLink()
 

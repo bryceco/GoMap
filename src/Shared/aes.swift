@@ -11,7 +11,7 @@ import Foundation
 
 private let privateKey: [__uint8_t] = [250, 157, 60, 79, 142, 134, 229, 129, 138, 126, 210, 129, 29, 71, 160, 208]
 
-class aes {
+final class aes {
     class func encryptData(_ data: Data, key: UnsafePointer<UInt8>) -> Data? {
         return self.aesOperation(CCOperation(kCCEncrypt), on: data, key: key)
     }

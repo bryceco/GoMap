@@ -10,7 +10,7 @@ import Foundation
 
 @testable import Go_Map__
 
-class HeadingProviderMock: NSObject, HeadingProviding {
+class HeadingProviderMock: HeadingProviding {
     var startUpdatingHeadingCalled = false
     var stopUpdatingHeadingCalled = false
 

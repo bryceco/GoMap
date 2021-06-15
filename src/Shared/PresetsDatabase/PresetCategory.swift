@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 // A top-level group such as road, building, for building hierarchical menus
-class PresetCategory {
+final class PresetCategory {
 	let categoryID: String
 	let members: [PresetFeature]
 

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 // All presets for a feature, for presentation in Common Tags table view
-class PresetsForFeature: NSObject {
+final class PresetsForFeature {
 	var _featureName: String
 	var _sectionList: [PresetGroup]
 
@@ -146,8 +146,6 @@ class PresetsForFeature: NSObject {
 			let group = PresetGroup(name: nil, tags: customGroup)
 			_sectionList.append(group)
 		}
-
-		super.init()
 
 		// Add presets specific to the type
 		guard let feature = feature else {

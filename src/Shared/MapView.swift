@@ -76,11 +76,11 @@ private let Z_FLASH: CGFloat = 110
 let DefaultHitTestRadius: CGFloat = 10.0 // how close to an object do we need to tap to select it
 let DragConnectHitTestRadius = (DefaultHitTestRadius * 0.6) // how close to an object do we need to drag a node to connect to it
 
-class MapLocation {
-    var longitude = 0.0
-    var latitude = 0.0
-    var zoom = 0.0
-    var viewState: MapViewState? = nil
+struct MapLocation {
+	var longitude = 0.0
+	var latitude = 0.0
+	var zoom = 0.0
+	var viewState: MapViewState? = nil
 }
 
 protocol MapViewProgress {
@@ -153,7 +153,7 @@ private func ActionTitle(_ action: EDIT_ACTION, _ abbrev: Bool) -> String {
     }
 }
 
-class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheetDelegate, UIGestureRecognizerDelegate, SKStoreProductViewControllerDelegate {
+final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheetDelegate, UIGestureRecognizerDelegate, SKStoreProductViewControllerDelegate {
 
     var lastMouseDragPos = CGPoint.zero
     var progressActive = AtomicInt(0)

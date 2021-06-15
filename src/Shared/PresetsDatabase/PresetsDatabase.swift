@@ -9,7 +9,7 @@
 import Foundation
 
 
-class PresetsDatabase {
+final class PresetsDatabase {
 
 	static var shared = PresetsDatabase()
 	class func reload()

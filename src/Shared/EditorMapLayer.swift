@@ -23,7 +23,7 @@ private let MinIconSizeInMeters: CGFloat = 2.0
 private let Pixels_Per_Character: CGFloat = 8.0
 private let NodeHighlightRadius: CGFloat = 6.0
 
-class EditorMapLayer: CALayer {
+final class EditorMapLayer: CALayer {
     var iconSize = CGSize.zero
 	var highwayScale: CGFloat = 2.0
     var shownObjects: ContiguousArray<OsmBaseObject> = []

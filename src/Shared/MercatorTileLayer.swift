@@ -35,7 +35,7 @@ private func TileToWMSCoords(_ tx: Int, _ ty: Int, _ z: Int, _ projection: Strin
     return loc
 }
 
-class MercatorTileLayer: CALayer, GetDiskCacheSize {
+final class MercatorTileLayer: CALayer, GetDiskCacheSize {
     
 	private var _webCache = PersistentWebCache<UIImage>(name: "", memorySize: 0)
 	private var _layerDict: [String : CALayer] = [:] // map of tiles currently displayed

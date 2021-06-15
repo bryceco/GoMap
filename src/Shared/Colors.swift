@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class Colors {
+final class Colors {
     static func cssColorForColorName(_ string: String) -> UIColor? {
         guard string.count > 0 else { return nil }
 

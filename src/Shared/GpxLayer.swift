@@ -27,7 +27,7 @@ private func metersApart(_ lat1: Double, _ lon1: Double, _ lat2: Double, _ lon2:
     return d * 1000
 }
 
-class GpxTrackLayerWithProperties: CAShapeLayer {
+final class GpxTrackLayerWithProperties: CAShapeLayer {
 	struct Properties {
 		var position: OSMPoint?
 		var lineWidth: CGFloat
@@ -35,7 +35,7 @@ class GpxTrackLayerWithProperties: CAShapeLayer {
 	var props = Properties(position: nil, lineWidth: 0.0)
 }
 
-class GpxPoint: NSObject, NSCoding {
+final class GpxPoint: NSObject, NSCoding {
     var longitude = 0.0
     var latitude = 0.0
     var accuracy = 0.0
@@ -65,7 +65,7 @@ class GpxPoint: NSObject, NSCoding {
 }
 
 // MARK: Track
-class GpxTrack: NSObject, NSCoding {
+final class GpxTrack: NSObject, NSCoding {
 
     var recording = false
     var _distance = 0.0
@@ -306,7 +306,7 @@ class GpxTrack: NSObject, NSCoding {
     }
 }
 
-class GpxLayer: CALayer, GetDiskCacheSize {
+final class GpxLayer: CALayer, GetDiskCacheSize {
 
 	public static let USER_DEFAULTS_GPX_EXPIRATIION_KEY = "GpxTrackExpirationDays"
 	public static let USER_DEFAULTS_GPX_BACKGROUND_TRACKING = "GpxTrackBackgroundTracking"

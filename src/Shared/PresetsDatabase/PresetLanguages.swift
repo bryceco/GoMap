@@ -8,10 +8,10 @@
 
 import Foundation
 
-class PresetLanguages : NSObject {
+final class PresetLanguages {
 	private let codeList : [String]
 
-	override init() {
+	init() {
 
 		let path = Bundle.main.resourcePath! + "/presets/translations"
 		var languageFiles = [String]()
@@ -30,8 +30,6 @@ class PresetLanguages : NSObject {
 			return s1.caseInsensitiveCompare(s2) == ComparisonResult.orderedAscending
 		})
 		self.codeList = list
-
-		super.init()
 	}
 
 	func preferredLanguageIsDefault() -> Bool {

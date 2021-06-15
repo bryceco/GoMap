@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GeekbenchScoreProvider {
+final class GeekbenchScoreProvider {
 
 	func geekbenchScore() -> Double {
 		return GeekbenchScoreProvider.score

@@ -17,14 +17,13 @@ let STATUS_WAYPOINT = "waypoint"
 
 private var g_nextTagID = 1
 
-class OsmNoteComment: NSObject {
+final class OsmNoteComment {
     private(set) var date = ""
     private(set) var action = ""
     private(set) var text = ""
     private(set) var user = ""
     
     init(noteXml noteElement: DDXMLElement) {
-        super.init()
         for child in noteElement.children ?? [] {
             guard let child = child as? DDXMLElement else {
                 continue
@@ -42,7 +41,6 @@ class OsmNoteComment: NSObject {
     }
     
 	init(fixmeObject object: OsmBaseObject, fixmeKey fixme: String) {
-        super.init()
         date = object.timestamp
         user = object.user
 		action = "fixme"
@@ -53,19 +51,18 @@ class OsmNoteComment: NSObject {
     }
     
     init(gpxWaypoint objectName: String, description: String) {
-        super.init()
         date = ""
         user = ""
         action = "waypoint"
         text = "\(objectName): \(description)"
 	}
     
-    override var description: String {
+	var description: String {
 		return "\(action): \(text)"
     }
 }
 
-class OsmNote: NSObject {
+final class OsmNote {
 	let lat: Double
 	let lon: Double
 	let tagId: Int // a unique value we assign to track note buttons. If > 0 this is the noteID, otherwise it is assigned by us.
@@ -106,7 +103,6 @@ class OsmNote: NSObject {
 
 		self.lat = lat
 		self.lon = lon
-		super.init()
     }
     
     init?(noteXml noteElement: DDXMLElement?) {
@@ -134,7 +130,6 @@ class OsmNote: NSObject {
             }
         }
 		if noteId == 0 { return nil }
-		super.init()
     }
     
     init?(gpxWaypointXml waypointElement: DDXMLElement, status: String, namespace ns: String, mapData: OsmMapData) {
@@ -212,8 +207,6 @@ class OsmNote: NSObject {
 		self.noteId = OsmBaseObject.extendedIdentifierForType(type, identifier: osmIdent)
 		let comment = OsmNoteComment(gpxWaypoint: objectName, description: description)
 		self.comments = [comment]
-
-		super.init()
     }
     
     init(fixmeObject object: OsmBaseObject, fixmeKey fixme: String) {
@@ -227,10 +220,9 @@ class OsmNote: NSObject {
 		status = STATUS_FIXME
         let comment = OsmNoteComment(fixmeObject: object, fixmeKey: fixme)
         comments = [comment]
-		super.init()
     }
     
-    override var description: String {
+    var description: String {
         var text = "Note \(noteId) - \(status):\n"
         for comment in comments {
             text += "  \(comment.description)\n"
@@ -239,7 +231,7 @@ class OsmNote: NSObject {
     }
 }
 
-class OsmNotesDatabase: NSObject {
+final class OsmNotesDatabase: NSObject {
 	let workQueue = OperationQueue()
 	var keepRightIgnoreList: [Int : Bool]? = nil
 	var noteForTag: [Int : OsmNote] = [:]

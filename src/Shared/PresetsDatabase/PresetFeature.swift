@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 // A feature-defining tag such as amenity=shop
-class PresetFeature {
+final class PresetFeature {
 
 	static let uninitializedImage = UIImage()
 

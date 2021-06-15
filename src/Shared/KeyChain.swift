@@ -12,7 +12,7 @@ import Security
 
 private let APP_NAME = "Go Map"
 
-class KeyChain: NSObject {
+final class KeyChain {
     class func searchDictionary(forIdentifier identifier: String) -> [String : Any] {
 		guard let encodedIdentifier = identifier.data(using: .utf8) else { return [:] }
         // Setup dictionary to access keychain.

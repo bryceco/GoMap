@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PersistentWebCache<T: AnyObject>: NSObject {
+final class PersistentWebCache<T: AnyObject> {
     private let _cacheDirectory: URL
     private let _memoryCache: NSCache<NSString, T>
 	private var _pending: [ String: [(T?) -> Void] ] // track objects we're already downloading so we don't issue multiple requests
@@ -50,8 +50,6 @@ class PersistentWebCache<T: AnyObject>: NSObject {
         _memoryCache.totalCostLimit = memorySize
 
 		_pending = [:]
-
-		super.init()
 
 		try! FileManager.default.createDirectory(at: _cacheDirectory, withIntermediateDirectories: true, attributes: nil)
 	}

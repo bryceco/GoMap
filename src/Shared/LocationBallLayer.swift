@@ -9,7 +9,7 @@
 import QuartzCore
 import UIKit
 
-class LocationBallLayer: CALayer {
+final class LocationBallLayer: CALayer {
     var _headingLayer: CAShapeLayer
     var _ringLayer: CAShapeLayer
     

@@ -11,7 +11,7 @@ import UIKit
 
 typealias PushPinViewDragCallback = (UIGestureRecognizer.State, CGFloat, CGFloat, UIGestureRecognizer) -> Void
 
-class PushPinView: UIButton, CAAnimationDelegate {
+final class PushPinView: UIButton, CAAnimationDelegate {
     private var _panCoord = CGPoint.zero
 	private let _shapeLayer: CAShapeLayer // shape for balloon
 	private let _textLayer: CATextLayer // text in balloon

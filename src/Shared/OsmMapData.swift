@@ -20,7 +20,7 @@ typealias EditActionReturnNode = () -> OsmNode
 let OSM_SERVER_KEY = "OSM Server"
 var OSM_API_URL: String = ""
 
-class OsmUserStatistics: NSObject {
+final class OsmUserStatistics {
     var user = ""
     var lastEdit: Date!
     var editCount = 0
@@ -29,7 +29,7 @@ class OsmUserStatistics: NSObject {
 }
 
 
-fileprivate class ServerQuery: NSObject {
+final fileprivate class ServerQuery {
 	var quadList: [QuadBox] = []
 	var rect = OSMRect.zero
 }

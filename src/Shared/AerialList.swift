@@ -24,7 +24,7 @@ private let NO_NAME_IDENTIFIER = "No Name Identifier"
 private let MAXAR_PREMIUM_IDENTIFIER = "Maxar-Premium"
 private let MAXAR_STANDARD_IDENTIFIER = "Maxar-Standard"
 
-class AerialService {
+final class AerialService {
 
 	private static let iconCache: PersistentWebCache<UIImage> = {
 		let cache = PersistentWebCache<UIImage>(name: "AerialServiceIconCache", memorySize: 10000)
@@ -387,7 +387,7 @@ class AerialService {
 }
 
 
-class AerialList {
+final class AerialList {
     
 	private var userDefinedList: [AerialService] = [] // user-defined tile servers
 	private var downloadedList: [AerialService] = [] // downloaded on each launch

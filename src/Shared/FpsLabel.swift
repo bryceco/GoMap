@@ -12,7 +12,7 @@ fileprivate let ENABLE_FPS = 0
 
 fileprivate let FRAME_COUNT = 2 * 60
 
-class FpsLabel: UILabel {
+final class FpsLabel: UILabel {
     private var historyPos = 0
     private var frameTimestamp = [CFTimeInterval](repeating: 0, count: FRAME_COUNT) // average last 60 frames
     

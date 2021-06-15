@@ -137,10 +137,10 @@ final class RenderInfo {
         }
 
         let bonus: Int
-        if ((object.isWay()) != nil) || ((object.isRelation()?.isMultipolygon()) ?? false) {
+        if object.isWay() != nil || ((object.isRelation()?.isMultipolygon()) ?? false) {
             bonus = 2
-        } else if ((object.isRelation()) != nil) {
-            bonus = 1
+        } else if object.isRelation() != nil {
+			bonus = 1
         } else {
             bonus = 0
         }

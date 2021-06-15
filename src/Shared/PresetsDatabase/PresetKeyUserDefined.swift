@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 // A preset the user defined as a custom preset
-class PresetKeyUserDefined: PresetKey {
+final class PresetKeyUserDefined: PresetKey {
 	override public class var supportsSecureCoding: Bool { return true }
 
 	let appliesToKey: String		// "" if not used

@@ -40,12 +40,7 @@ class LocationURLParser {
                 scanner.scanDouble(&zoom)
             }
 
-            let parserResult = MapLocation()
-            parserResult.longitude = lon
-            parserResult.latitude = lat
-            parserResult.zoom = zoom
-			parserResult.viewState = nil
-			return parserResult
+			return MapLocation(longitude: lon, latitude: lat, zoom: zoom, viewState: nil)
         }
 
         let urlComponents = NSURLComponents(url: url, resolvingAgainstBaseURL: false)
@@ -84,12 +79,10 @@ class LocationURLParser {
                 }
             }
             if hasCenter {
-                let parserResult = MapLocation()
-                parserResult.longitude = lon
-                parserResult.latitude = lat
-                parserResult.zoom = hasZoom ? zoom : 0.0
-                parserResult.viewState = view
-                return parserResult
+				return MapLocation(longitude: lon,
+								   latitude: lat,
+								   zoom: hasZoom ? zoom : 0.0,
+								   viewState: view)
             }
         }
         return nil
