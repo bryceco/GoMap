@@ -2128,7 +2128,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
     // Turn restriction panel
     func restrictOptionSelected() {
-        let showRestrictionEditor: (() -> Void) = { [self] in
+		guard let selectedPrimary = editorLayer.selectedPrimary,
+			  let pushPin = self.pushPin
+		else { return }
+
+		let showRestrictionEditor: (() -> Void) = { [self] in
 			guard let myVc = mainViewController.storyboard?.instantiateViewController(withIdentifier: "TurnRestrictController") as? TurnRestrictController
 			else { return }
 			myVc.centralNode = editorLayer.selectedNode
@@ -2140,9 +2144,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
             // scroll view so intersection stays visible
             let rc = myVc.viewWithTitle.frame
-            let pt = pushPin?.arrowPoint ?? .zero
-            let delta = CGPoint(x: Double(bounds.midX - pt.x), y: Double(bounds.midY - (rc.size.height) / 2 - pt.y))
-            adjustOrigin(by: delta)
+            let pt = pushPin.arrowPoint
+			let delta = CGPoint(x: Double(bounds.midX - pt.x), y: Double(bounds.midY - (rc.size.height) / 2 - pt.y))
+			adjustOrigin(by: delta)
         }
 
         // check if this is a fancy relation type we don't support well
@@ -2176,68 +2180,30 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
             }
         }
 
-
         // if we currently have a relation selected then select the via node instead
 
-        if editorLayer.selectedPrimary?.isRelation() != nil {
-            let relation = editorLayer.selectedPrimary?.isRelation()
-            let fromWay = relation?.member(byRole: "from")?.obj?.isWay()
-            let viaNode = relation?.member(byRole: "via")?.obj?.isNode()
+		if let relation = selectedPrimary.isRelation() {
+			let fromWay = relation.member(byRole: "from")?.obj?.isWay()
+			let viaNode = relation.member(byRole: "via")?.obj?.isNode()
 
 			if viaNode == nil {
-                // not supported yet
-                showAlert(
-                    NSLocalizedString("Unsupported turn restriction type", comment: ""),
-                    message: NSLocalizedString("This app does not yet support editing turn restrictions without a node as the 'via' member", comment: ""))
-                return
-            }
+				// not supported yet
+				showAlert(
+					NSLocalizedString("Unsupported turn restriction type", comment: ""),
+					message: NSLocalizedString("This app does not yet support editing turn restrictions without a node as the 'via' member", comment: ""))
+				return
+			}
 
-            editorLayer.selectedWay = fromWay
-            editorLayer.selectedNode = viaNode
-            if (editorLayer.selectedNode != nil) {
+			editorLayer.selectedWay = fromWay
+			editorLayer.selectedNode = viaNode
+			if editorLayer.selectedNode != nil {
 				placePushpinForSelection()
 				restrictionEditWarning(editorLayer.selectedNode)
-            }
-        } else if ((editorLayer.selectedPrimary?.isNode()) != nil) {
-            restrictionEditWarning(editorLayer.selectedNode)
-        }
-    }
-
-    func dragConnection(for node: OsmNode, segment: inout Int) -> OsmBaseObject? {
-		guard let way = editorLayer.selectedWay,
-			  let index = way.nodes.firstIndex(of: node),
-			  let point = pushPin?.arrowPoint
-		else { return nil }
-
-		var ignoreList: [OsmBaseObject] = []
-		let parentWays = node.wayCount == 1 ? [way] : editorLayer.mapData.waysContaining(node)
-		if way.nodes.count < 3 {
-			ignoreList = parentWays + way.nodes
-        } else if index == 0 {
-            // if end-node then okay to connect to self-nodes except for adjacent
-			let nodes = [way.nodes[0],
-						 way.nodes[1],
-						 way.nodes[2]]
-			ignoreList = parentWays + nodes
-		} else if index == way.nodes.count - 1 {
-			// if end-node then okay to connect to self-nodes except for adjacent
-			let nodes = [way.nodes[index],
-						 way.nodes[index - 1],
-						 way.nodes[index - 2]]
-			ignoreList = parentWays + nodes
-        } else {
-			// if middle node then never connect to self
-            if !parentWays.isEmpty {
-				ignoreList = parentWays + way.nodes
-            }
-        }
-		let hit = editorLayer.osmHitTest( point,
-										  radius: DragConnectHitTestRadius,
-										  isDragConnect: true,
-										  ignoreList: ignoreList,
-										  segment: &segment )
-        return hit
-    }
+			}
+		} else if selectedPrimary.isNode() != nil {
+			restrictionEditWarning(editorLayer.selectedNode)
+		}
+	}
 
     func removePin() {
         if let pushpinView = pushPin {
@@ -2281,7 +2247,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 						if let dragNode = object.isNode() {
 							let dragWay = selectedWay
 							var segment = -1
-							let hit = self.dragConnection(for: dragNode, segment: &segment)
+							let hit = editorLayer.hitTestDragConnection(for: dragNode, segment: &segment)
 							if var hit = hit as? OsmNode {
 								// replace dragged node with hit node
 								var error: String? = nil
@@ -2317,7 +2283,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					if isRotate {
 						break
 					}
-					if self.editorLayer.selectedWay != nil && editorLayer.selectedWay?.tags.count ?? 0 == 0 && editorLayer.selectedWay?.parentRelations.count ?? 0 == 0 {
+					if let selectedWay = self.editorLayer.selectedWay,
+					   selectedWay.tags.count == 0,
+					   selectedWay.parentRelations.count == 0
+					{
 						break
 					}
 					if self.editorLayer.selectedWay != nil && self.editorLayer.selectedNode != nil {
@@ -2391,7 +2360,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 						// do hit testing for connecting to other objects
 						if (self.editorLayer.selectedWay != nil) && (object.isNode() != nil) {
 							var segment = -1
-							if let hit = self.dragConnection(for: object as! OsmNode, segment: &segment),
+							if let hit = editorLayer.hitTestDragConnection(for: object as! OsmNode, segment: &segment),
 							   hit.isWay() != nil || hit.isNode() != nil
 							{
 								self.blink(hit, segment: segment)

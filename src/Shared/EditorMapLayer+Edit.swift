@@ -101,8 +101,7 @@ extension EditorMapLayer {
 		owner.didSetTagsOnObject()
 	}
 
-	/// Selection
-
+	/// MARK: Selection
 
 	func selectObjectAtPoint(_ point: CGPoint) {
 
@@ -187,6 +186,42 @@ extension EditorMapLayer {
 				mapView.confirmDrag = selectedPrimary.modifyCount == 0
 			}
 		}
+	}
+
+	func hitTestDragConnection(for node: OsmNode, segment: inout Int) -> OsmBaseObject? {
+		guard let way = self.selectedWay,
+			  let index = way.nodes.firstIndex(of: node),
+			  let point = owner.pushpinView()?.arrowPoint
+		else { return nil }
+
+		var ignoreList: [OsmBaseObject] = []
+		let parentWays = node.wayCount == 1 ? [way] : self.mapData.waysContaining(node)
+		if way.nodes.count < 3 {
+			ignoreList = parentWays + way.nodes
+		} else if index == 0 {
+			// if end-node then okay to connect to self-nodes except for adjacent
+			let nodes = [way.nodes[0],
+						 way.nodes[1],
+						 way.nodes[2]]
+			ignoreList = parentWays + nodes
+		} else if index == way.nodes.count - 1 {
+			// if end-node then okay to connect to self-nodes except for adjacent
+			let nodes = [way.nodes[index],
+						 way.nodes[index - 1],
+						 way.nodes[index - 2]]
+			ignoreList = parentWays + nodes
+		} else {
+			// if middle node then never connect to self
+			if !parentWays.isEmpty {
+				ignoreList = parentWays + way.nodes
+			}
+		}
+		let hit = self.osmHitTest( point,
+								  radius: DragConnectHitTestRadius,
+								  isDragConnect: true,
+								  ignoreList: ignoreList,
+								  segment: &segment )
+		return hit
 	}
 
 	// MARK: Editing

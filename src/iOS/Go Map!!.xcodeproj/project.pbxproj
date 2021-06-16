@@ -99,6 +99,7 @@
 		02EDBF6B26535BEB00B7072E /* OsmMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096EE263EBE5D00E3B129 /* OsmMember.swift */; };
 		02EDCC081683EC2D007F9934 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02EDCC071683EC2D007F9934 /* CFNetwork.framework */; };
 		02F2449A264F635800C42E41 /* PathUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA924C263FFEF9000A2A99 /* PathUtil.swift */; };
+		02F53298267AB41C0088DF41 /* EditorMapLayer+HitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F53297267AB41C0088DF41 /* EditorMapLayer+HitTest.swift */; };
 		02FEDAF42651DCC100DF15D7 /* POIAllTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3004F61263B2524006BF313 /* POIAllTagsViewController.swift */; };
 		64305F7423E723B200232BB9 /* LocationURLParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */; };
 		64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CEC225E7CD900ADE7FB /* GoMapTests.swift */; };
@@ -384,6 +385,7 @@
 		02F0D9D72565FDBE00C7A3AD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Settings.strings"; sourceTree = "<group>"; };
 		02F0D9D82565FDBE00C7A3AD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Display.strings"; sourceTree = "<group>"; };
 		02F0D9D92565FDBE00C7A3AD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Changeset.strings"; sourceTree = "<group>"; };
+		02F53297267AB41C0088DF41 /* EditorMapLayer+HitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "EditorMapLayer+HitTest.swift"; path = "../Shared/EditorMapLayer+HitTest.swift"; sourceTree = "<group>"; };
 		02F8DE8D26790A830022460C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		02F8DE8E26790A830022460C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		02F8DE8F26790A830022460C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Height.strings; sourceTree = "<group>"; };
@@ -713,6 +715,7 @@
 				02CD9973265C65C200213AD6 /* EditorFilters.swift */,
 				C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */,
 				0203473C26695B2A000A7C3D /* EditorMapLayer+Edit.swift */,
+				02F53297267AB41C0088DF41 /* EditorMapLayer+HitTest.swift */,
 				022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */,
 				0203473E266C1EDD000A7C3D /* ExternalGPS.swift */,
 				C341E1552639DEFC0022E983 /* FpsLabel.swift */,
@@ -1193,6 +1196,7 @@
 				ED56E5AB26024DA5000B368C /* AutocompleteTextField.swift in Sources */,
 				027EDC73206F3EED00D349D6 /* DDXMLDocument.m in Sources */,
 				0266DE862655A21F007A502E /* Superview.swift in Sources */,
+				02F53298267AB41C0088DF41 /* EditorMapLayer+HitTest.swift in Sources */,
 				02CB2408265DB7CB00835F32 /* HoursRecognizer.swift in Sources */,
 				02D5B5F3248F154D00FEE448 /* Colors.swift in Sources */,
 				021FADCD25873C8200F6E1C0 /* PresetsDatabase+TableView.swift in Sources */,

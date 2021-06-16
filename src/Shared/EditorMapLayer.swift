@@ -19,7 +19,6 @@ private let SINGLE_SIDED_WALLS = true
 private let DEFAULT_LINECAP = CAShapeLayerLineCap.square
 private let DEFAULT_LINEJOIN = CAShapeLayerLineJoin.miter
 private let MinIconSizeInPixels: CGFloat = 24.0
-private let MinIconSizeInMeters: CGFloat = 2.0
 private let Pixels_Per_Character: CGFloat = 8.0
 private let NodeHighlightRadius: CGFloat = 6.0
 
@@ -65,8 +64,7 @@ protocol EditorMapOwner: UIView {
 }
 
 final class EditorMapLayer: CALayer {
-    var iconSize = CGSize.zero
-	var highwayScale: CGFloat = 2.0
+	let highwayScale: CGFloat = 2.0
     var shownObjects: ContiguousArray<OsmBaseObject> = []
     var fadingOutSet: [OsmBaseObject] = []
     var highlightLayers: [CALayer] = []
@@ -196,28 +194,6 @@ final class EditorMapLayer: CALayer {
     }
 
     // MARK: Map data
-
-    func updateIconSize() {
-        let metersPerPixel = CGFloat( mapView.metersPerPixel() )
-		if MinIconSizeInPixels * metersPerPixel < MinIconSizeInMeters {
-            iconSize.width = round(MinIconSizeInMeters / metersPerPixel)
-            iconSize.height = round(MinIconSizeInMeters / metersPerPixel)
-        } else {
-			iconSize.width = MinIconSizeInPixels
-			iconSize.height = MinIconSizeInPixels
-        }
-        
-#if true
-		highwayScale = 2.0
-#else
-		let laneWidth = 1.0 // meters per lane
-		var scale = laneWidth / metersPerPixel
-		if scale < 1 {
-			scale = 1
-		}
-		highwayScale = scale
-#endif
-    }
     
     func purgeCachedDataHard(_ hard: Bool) {
 		self.selectedNode = nil
@@ -244,11 +220,9 @@ final class EditorMapLayer: CALayer {
         }
         
         let box = mapView.screenLongitudeLatitude()
-		if (box.size.height <= 0) || (box.size.width <= 0) {
+		if box.size.height <= 0 || box.size.width <= 0 {
 			return
 		}
-
-		updateIconSize()
 
 		mapData.update(withBox: box, progressDelegate: mapView) { [self] partial, error in
 			if let error = error {
@@ -275,7 +249,6 @@ final class EditorMapLayer: CALayer {
 
     // MARK: Common Drawing
     static func ImageScaledToSize(_ image: UIImage, _ iconSize: CGFloat) -> UIImage {
-        #if os(iOS)
         var size = CGSize(width: Int(iconSize * UIScreen.main.scale), height: Int(iconSize * UIScreen.main.scale))
         let ratio = image.size.height / image.size.width
         if ratio < 1.0 {
@@ -288,16 +261,6 @@ final class EditorMapLayer: CALayer {
         let newIcon = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         return newIcon
-        #else
-        let newSize = NSSize(size, size)
-        let smallImage = NSImage(size: newSize)
-        smallImage.lockFocus()
-        icon.size = newSize
-        NSGraphicsContext.current?.imageInterpolation = .high
-        icon.draw(at: NSPoint.zero, from: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height), operation: NSCompositeCopy, fraction: 1.0)
-        smallImage.unlockFocus()
-        return smallImage
-        #endif
     }
     
 	static func IconScaledForDisplay(_ icon: UIImage) -> UIImage {
@@ -802,15 +765,12 @@ final class EditorMapLayer: CALayer {
     }
     
     // use the "marker" icon
-    static let genericIconMarkerIcon: UIImage = {
+    static let genericMarkerIcon: UIImage = {
         var markerIcon = UIImage(named: "maki-marker-stroked")!
 		markerIcon = EditorMapLayer.IconScaledForDisplay( markerIcon )
 		return markerIcon
     }()
-    func genericIcon() -> UIImage {
-		return EditorMapLayer.genericIconMarkerIcon
-    }
-    
+
     /// Determines the `CALayer` instances required to present the given `node` on the map.
     /// - Parameter node: The `OsmNode` instance to get the layers for.
     /// - Returns: A list of `CALayer` instances that are used to represent the given `node` on the map.
@@ -830,7 +790,7 @@ final class EditorMapLayer: CALayer {
 		var icon = feature?.iconScaled24()
 		if icon == nil {
 			if node.tags["amenity"] != nil || node.tags["name"] != nil {
-				icon = genericIcon()
+				icon = Self.genericMarkerIcon
             }
         }
         if let icon = icon {
@@ -1569,11 +1529,6 @@ final class EditorMapLayer: CALayer {
             return
         }
         
-        if highwayScale == 0.0 {
-            // Make sure stuff is initialized for current view. This is only necessary because layout code is called before bounds are set
-            updateIconSize()
-        }
-        
         isPerformingLayout = true
         CATransaction.begin()
         CATransaction.setDisableActions(true)
@@ -1588,249 +1543,6 @@ final class EditorMapLayer: CALayer {
         }
         super.setNeedsLayout()
     }
-    
-    // MARK: Hit Testing
-    @inline(__always) static private func HitTestLineSegment(_ point: CLLocationCoordinate2D, _ maxDegrees: OSMSize, _ coord1: CLLocationCoordinate2D, _ coord2: CLLocationCoordinate2D) -> CGFloat {
-		var line1 = OSMPoint(x: coord1.longitude - point.longitude, y: coord1.latitude - point.latitude)
-		var line2 = OSMPoint(x: coord2.longitude - point.longitude, y: coord2.latitude - point.latitude)
-		let pt = OSMPoint(x: 0, y: 0)
-        
-        // adjust scale
-        line1.x /= maxDegrees.width
-        line1.y /= maxDegrees.height
-        line2.x /= maxDegrees.width
-        line2.y /= maxDegrees.height
-        
-		let dist = pt.distanceToLineSegment(line1, line2)
-        return CGFloat(dist)
-    }
-    
-    
-	private static func osmHitTest(way: OsmWay, location: CLLocationCoordinate2D, maxDegrees: OSMSize, segment: inout Int) -> CGFloat {
-		var previous = CLLocationCoordinate2D()
-		var seg = -1
-		var bestDist: CGFloat = 1000000
-		for node in way.nodes {
-			if seg >= 0 {
-				let coord = CLLocationCoordinate2D(latitude: node.lat, longitude: node.lon)
-				let dist = HitTestLineSegment(location, maxDegrees, coord, previous)
-				if dist < bestDist {
-					bestDist = dist
-					segment = seg
-				}
-			}
-			seg += 1
-			previous.latitude = node.lat
-			previous.longitude = node.lon
-        }
-        return bestDist
-    }
-    
-	private static func osmHitTest(node: OsmNode, location: CLLocationCoordinate2D, maxDegrees: OSMSize) -> CGFloat {
-		let delta = OSMPoint(x: (location.longitude - node.lon) / maxDegrees.width,
-							 y: (location.latitude - node.lat) / maxDegrees.height)
-        let dist = hypot(delta.x, delta.y)
-        return CGFloat(dist)
-    }
-    
-    // distance is in units of the hit test radius (WayHitTestRadius)
-	private static func osmHitTestEnumerate(
-        _ point: CGPoint,
-        radius: CGFloat,
-        mapView: MapView,
-		objects: ContiguousArray<OsmBaseObject>,
-        testNodes: Bool,
-        ignoreList: [OsmBaseObject],
-		block: @escaping (_ obj: OsmBaseObject, _ dist: CGFloat, _ segment: Int) -> Void
-    ) {
-        let location = mapView.longitudeLatitude(forScreenPoint: point, birdsEye: true)
-        let viewCoord = mapView.screenLongitudeLatitude()
-		let pixelsPerDegree = OSMSize(width: Double(mapView.bounds.size.width) / viewCoord.size.width,
-									  height: Double(mapView.bounds.size.height) / viewCoord.size.height)
-        
-		let maxDegrees = OSMSize(width: Double(radius) / pixelsPerDegree.width,
-								 height: Double(radius) / pixelsPerDegree.height)
-        let NODE_BIAS = 0.5 // make nodes appear closer so they can be selected
-        
-		var parentRelations: Set<OsmRelation> = []
-		for object in objects {
-            if object.deleted {
-                continue
-            }
-            
-			if let node = object as? OsmNode {
-				if !ignoreList.contains(node) {
-					if testNodes || node.wayCount == 0 {
-						var dist = self.osmHitTest(node: node, location: location, maxDegrees: maxDegrees)
-						dist *= CGFloat(NODE_BIAS)
-						if dist <= 1.0 {
-							block(node, dist, 0)
-							parentRelations.formUnion(Set(node.parentRelations))
-						}
-					}
-                }
-			} else if let way = object as? OsmWay {
-				if !ignoreList.contains(way) {
-					var seg = 0
-					let distToWay = self.osmHitTest(way: way, location: location, maxDegrees: maxDegrees, segment: &seg)
-					if distToWay <= 1.0 {
-						block(way, distToWay, seg)
-						parentRelations.formUnion(Set(way.parentRelations))
-					}
-				}
-				if testNodes {
-					for node in way.nodes {
-						if ignoreList.contains(node) {
-							continue
-						}
-						var dist = self.osmHitTest(node: node, location: location, maxDegrees: maxDegrees)
-						dist *= CGFloat(NODE_BIAS)
-						if dist < 1.0 {
-							block(node, dist, 0)
-							parentRelations.formUnion(Set(node.parentRelations))
-						}
-					}
-				}
-            } else if let relation = object as? OsmRelation,
-					  relation.isMultipolygon()
-			{
-				if !ignoreList.contains(relation) {
-					var bestDist: CGFloat = 10000.0
-					for member in relation.members {
-						if let way = member.obj as? OsmWay {
-							if !ignoreList.contains(way) {
-								if (member.role == "inner") || (member.role == "outer") {
-									var seg = 0
-									let dist = self.osmHitTest(way: way, location: location, maxDegrees: maxDegrees, segment: &seg)
-									if dist < bestDist {
-										bestDist = dist
-									}
-								}
-							}
-						}
-					}
-					if bestDist <= 1.0 {
-						block(relation, bestDist, 0)
-					}
-                }
-            }
-        }
-        for relation in parentRelations {
-			// for non-multipolygon relations, like turn restrictions
-			block(relation, 1.0, 0)
-        }
-    }
-    
-    // default hit test when clicking on the map, or drag-connecting
-    func osmHitTest(_ point: CGPoint,
-					radius: CGFloat,
-					isDragConnect: Bool,
-					ignoreList: [OsmBaseObject],
-					segment pSegment: inout Int) -> OsmBaseObject?
-	{
-		if self.isHidden {
-			return nil
-        }
-        
-		var bestDist: CGFloat = 1000000
-		var best: [OsmBaseObject : Int] = [:]
-		EditorMapLayer.osmHitTestEnumerate(point, radius: radius, mapView: mapView, objects: shownObjects, testNodes: isDragConnect, ignoreList: ignoreList, block: { obj, dist, segment in
-            if dist < bestDist {
-                bestDist = dist
-                best.removeAll()
-                best[obj] = segment
-            } else if dist == bestDist {
-                best[obj] = segment
-			}
-        })
-        if bestDist > 1.0 {
-            return nil
-        }
-        
-        var pick: OsmBaseObject? = nil
-		if isDragConnect {
-			// prefer to connecct to a way in a relation over the relation itself, which is opposite what we do when selecting by tap
-			for obj in best.keys {
-				if obj.isRelation() == nil {
-					pick = obj
-					break
-				}
-			}
-		} else {
-			// performing selection by tap
-			if pick == nil,
-			   let relation = selectedRelation {
-				// pick a way that is a member of the relation if possible
-				for member in relation.members {
-					if let obj = member.obj,
-					   best[obj] != nil
-					{
-						pick = obj
-						break
-					}
-				}
-			}
-			if pick == nil && selectedPrimary == nil {
-				// nothing currently selected, so prefer relations
-				for obj in best.keys {
-					if obj.isRelation() != nil {
-						pick = obj
-						break
-					}
-				}
-			}
-		}
-		if pick == nil {
-			pick = best.first!.key
-		}
-		guard let pick = pick else { return nil }
-		pSegment = best[pick]!
-		return pick
-    }
-    
-    // return all nearby objects
-	func osmHitTestMultiple(_ point: CGPoint, radius: CGFloat) -> [OsmBaseObject] {
-		var objectSet: Set<OsmBaseObject> = []
-		EditorMapLayer.osmHitTestEnumerate(point, radius: radius, mapView: mapView, objects: shownObjects, testNodes: true, ignoreList: [], block: { obj, dist, segment in
-			objectSet.insert(obj)
-        })
-        var objectList = Array(objectSet)
-		objectList.sort(by: { o1, o2 in
-			let diff = (o1.isRelation() != nil ? 2 : o1.isWay() != nil ? 1 : 0) - (o2.isRelation() != nil ? 2 : o2.isWay() != nil ? 1 : 0)
-			if diff != 0 {
-				return -diff < 0
-			}
-			let diff2 = o1.ident - o2.ident
-			return diff2 < 0
-		})
-		return objectList
-    }
-    
-    // drill down to a node in the currently selected way
-    func osmHitTestNode(inSelectedWay point: CGPoint, radius: CGFloat) -> OsmNode? {
-        guard let selectedWay = selectedWay	else {
-			return nil
-        }
-        var hit: OsmNode? = nil
-        var bestDist: CGFloat = 1000000
-        EditorMapLayer.osmHitTestEnumerate(point,
-										   radius: radius,
-										   mapView: mapView,
-										   objects: ContiguousArray<OsmBaseObject>(selectedWay.nodes),
-										   testNodes: true,
-										   ignoreList: [],
-										   block: { obj, dist, segment in
-			if dist < bestDist {
-                bestDist = dist
-				hit = (obj as! OsmNode)
-			}
-        })
-        if bestDist <= 1.0 {
-			return hit
-		}
-		return nil
-    }
-    
     
     // MARK: Highlighting and Selection
 
@@ -1876,5 +1588,6 @@ final class EditorMapLayer: CALayer {
     // MARK: Coding
     
     override func encode(with coder: NSCoder) {
+		fatalError()
     }
 }
