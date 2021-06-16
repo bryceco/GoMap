@@ -476,15 +476,15 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
     @objc func displayButtonLongPressGesture(_ recognizer: UILongPressGestureRecognizer?) {
         if recognizer?.state == .began {
             // show the most recently used aerial imagery
-            let aerialList = mapView.customAerials
+            let tileServerlList = mapView.tileServerList
             let actionSheet = UIAlertController(
                 title: NSLocalizedString("Recent Aerial Imagery", comment: "Alert title message"),
                 message: nil,
                 preferredStyle: .actionSheet)
-			for service in aerialList.recentlyUsed() {
+			for service in tileServerlList.recentlyUsed() {
 				actionSheet.addAction(UIAlertAction(title: service.name, style: .default, handler: { [self] action in
-					aerialList.currentAerial = service
-					mapView.setAerialTileService(service)
+					tileServerlList.currentServer = service
+					mapView.setAerialTileServer(service)
 					if mapView.viewState == MapViewState.EDITOR {
 						mapView.viewState = MapViewState.EDITORAERIAL
 					} else if mapView.viewState == MapViewState.MAPNIK {

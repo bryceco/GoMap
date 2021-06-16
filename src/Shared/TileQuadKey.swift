@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+// QuadKey is a Microsoft alternative to the standard x,y,z notation for specifying a tile
+
 /// Converts tile XY coordinates into a QuadKey at a specified level of detail.
 func TileToQuadKey(x tileX: Int, y tileY: Int, z levelOfDetail: Int) -> String {
     var quadKey = ""

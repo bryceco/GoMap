@@ -1,5 +1,5 @@
 //
-//  AerialListViewController.swift
+//  TileServerListViewController.swift
 //  Go Map!!
 //
 //  Copyright © 2021 Bryce Cogswell. All rights reserved.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-class AerialListViewController: UITableViewController {
-    var aerials: AerialList!
-    var imageryForRegion: [AerialService] = []
+class TileServerListViewController: UITableViewController {
+    var serverList: TileServerList!
+    var imageryForRegion: [TileServer] = []
 
     weak var displayViewController: DisplayViewController?
     
@@ -19,10 +19,10 @@ class AerialListViewController: UITableViewController {
     
     override func viewDidLoad() {
         let appDelegate = AppDelegate.shared
-        aerials = appDelegate.mapView.customAerials
+        serverList = appDelegate.mapView.tileServerList
 
         let viewport = appDelegate.mapView.screenLongitudeLatitude()
-		imageryForRegion = aerials.services(forRegion: viewport)
+		imageryForRegion = serverList.services(forRegion: viewport)
 
         super.viewDidLoad()
         
@@ -36,18 +36,18 @@ class AerialListViewController: UITableViewController {
         super.viewWillDisappear(animated)
         
         if isMovingFromParent {
-			AppDelegate.shared.mapView.setAerialTileService( aerials.currentAerial )
+			AppDelegate.shared.mapView.setAerialTileServer( serverList.currentServer )
         }
     }
     
     // MARK: - Table view data source
     
-    func aerialList(forSection section: Int) -> [AerialService] {
+    func tileServerList(forSection section: Int) -> [TileServer] {
         if section == SECTION_BUILTIN {
-            return aerials.builtinServices()
+            return serverList.builtinServers()
         }
         if section == SECTION_USER {
-            return aerials.userDefinedServices()
+            return serverList.userDefinedServices()
         }
         if section == SECTION_EXTERNAL {
             return imageryForRegion
@@ -73,7 +73,7 @@ class AerialListViewController: UITableViewController {
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .medium
             dateFormatter.timeStyle = .none
-            if let lastDownloadDate = aerials?.lastDownloadDate {
+            if let lastDownloadDate = serverList?.lastDownloadDate {
                 let date = dateFormatter.string(from: lastDownloadDate)
                 return String.localizedStringWithFormat(NSLocalizedString("Last updated %@", comment: ""), date)
             }
@@ -86,29 +86,29 @@ class AerialListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let a = aerialList(forSection: section)
+        let a = tileServerList(forSection: section)
         let offSet = (section == SECTION_USER) ? 1: 0
         return a.count + offSet
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == SECTION_USER && indexPath.row == (aerials?.userDefinedServices().count ?? 0) {
+        if indexPath.section == SECTION_USER && indexPath.row == (serverList?.userDefinedServices().count ?? 0) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "addNewCell", for: indexPath)
             return cell
         }
     
-        let list = aerialList(forSection: indexPath.section)
+        let list = tileServerList(forSection: indexPath.section)
         let cell = tableView.dequeueReusableCell(withIdentifier: "backgroundCell", for: indexPath)
-        let aerial = list[indexPath.row]
+        let tileServer = list[indexPath.row]
     
         // set selection
-        var title = aerial.name
-        if aerial === aerials.currentAerial {
+        var title = tileServer.name
+        if tileServer === serverList.currentServer {
             title = "\u{2714} " + title // add checkmark
         }
     
         // get details
-        var urlDetail = aerial.isMaxar() ? "" : aerial.url
+        var urlDetail = tileServer.isMaxar() ? "" : tileServer.url
 		if urlDetail.hasPrefix("https://") {
 			urlDetail = String( urlDetail.dropFirst( 8 ) )
         } else if urlDetail.hasPrefix("http://") {
@@ -116,14 +116,14 @@ class AerialListViewController: UITableViewController {
 		}
     
         var dateDetail: String? = nil
-        if aerial.startDate != nil && aerial.endDate != nil && !(aerial.startDate == aerial.endDate) {
-            if let startDate = aerial.startDate,
-			   let endDate = aerial.endDate
+        if tileServer.startDate != nil && tileServer.endDate != nil && !(tileServer.startDate == tileServer.endDate) {
+            if let startDate = tileServer.startDate,
+			   let endDate = tileServer.endDate
 			{
                 dateDetail = String.localizedStringWithFormat(NSLocalizedString("vintage %@ - %@", comment: "Years aerial imagery was created"), startDate, endDate)
             }
-        } else if aerial.startDate != nil || aerial.endDate != nil {
-            if let startDate = aerial.startDate ?? aerial.endDate {
+        } else if tileServer.startDate != nil || tileServer.endDate != nil {
+            if let startDate = tileServer.startDate ?? tileServer.endDate {
 				dateDetail = String.localizedStringWithFormat(NSLocalizedString("vintage %@", comment: "Year aerial imagery was created"), startDate)
             }
         }
@@ -136,7 +136,7 @@ class AerialListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.section == SECTION_USER && indexPath.row < (aerials?.userDefinedServices().count ?? 0) {
+        if indexPath.section == SECTION_USER && indexPath.row < (serverList?.userDefinedServices().count ?? 0) {
             return true
         }
         return false
@@ -145,7 +145,7 @@ class AerialListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            aerials!.removeUserDefinedService(at: indexPath.row)
+            serverList!.removeUserDefinedService(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -153,13 +153,13 @@ class AerialListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to toIndexPath: IndexPath) {
-		let service = aerials!.userDefinedServices()[fromIndexPath.row]
-        aerials!.removeUserDefinedService(at: fromIndexPath.row)
-        aerials!.addUserDefinedService(service, at: toIndexPath.row)
+		let service = serverList!.userDefinedServices()[fromIndexPath.row]
+        serverList!.removeUserDefinedService(at: fromIndexPath.row)
+        serverList!.addUserDefinedService(service, at: toIndexPath.row)
     }
     
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.section == SECTION_USER && indexPath.row < aerials!.userDefinedServices().count {
+        if indexPath.section == SECTION_USER && indexPath.row < serverList!.userDefinedServices().count {
             return true
         }
         return false
@@ -169,7 +169,7 @@ class AerialListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         // don't allow selection the Add button
-        if indexPath.section == SECTION_USER && indexPath.row == (aerials?.userDefinedServices().count ?? 0) {
+        if indexPath.section == SECTION_USER && indexPath.row == (serverList?.userDefinedServices().count ?? 0) {
             return nil
         }
         return indexPath
@@ -179,13 +179,13 @@ class AerialListViewController: UITableViewController {
         let appDelegate = AppDelegate.shared
         let mapView = appDelegate.mapView!
     
-        let list = aerialList(forSection: indexPath.section)
+        let list = tileServerList(forSection: indexPath.section)
 		guard let service = (indexPath.row < list.count ? list[indexPath.row] : nil) else {
 			return
 		}
-        aerials.currentAerial = service
+        serverList.currentServer = service
     
-        mapView.setAerialTileService(aerials.currentAerial)
+        mapView.setAerialTileServer(serverList.currentServer)
     
         // if popping all the way up we need to tell Settings to save changes
         displayViewController?.applyChanges()
@@ -193,14 +193,14 @@ class AerialListViewController: UITableViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let controller = segue.destination as? AerialEditViewController,
+        guard let controller = segue.destination as? TileServerEditViewController,
 			  let sender = sender as? UIView
 		else { return }
 
 		var editRow: IndexPath? = nil
 		if sender is UIButton {
 			// add new
-			editRow = IndexPath(row: aerials?.userDefinedServices().count ?? 0, section: SECTION_USER)
+			editRow = IndexPath(row: serverList?.userDefinedServices().count ?? 0, section: SECTION_USER)
 		} else {
 			// edit existing service
 			guard let cell:UITableViewCell = sender.superviewOfType(),
@@ -208,7 +208,7 @@ class AerialListViewController: UITableViewController {
 			else {
 				return
 			}
-			let list = aerialList(forSection: indexPath.section )
+			let list = tileServerList(forSection: indexPath.section )
 			guard let service = (indexPath.row < list.count ? list[indexPath.row] : nil) else {
 				return
 			}
@@ -227,11 +227,11 @@ class AerialListViewController: UITableViewController {
 			guard let editRow = editRow else {
 				return
 			}
-			if editRow.row == self.aerials?.userDefinedServices().count {
-				self.aerials?.addUserDefinedService(service, at: self.aerials?.userDefinedServices().count ?? 0)
+			if editRow.row == self.serverList?.userDefinedServices().count {
+				self.serverList?.addUserDefinedService(service, at: self.serverList?.userDefinedServices().count ?? 0)
 			} else {
-				self.aerials?.removeUserDefinedService(at: editRow.row )
-				self.aerials?.addUserDefinedService(service, at: editRow.row)
+				self.serverList?.removeUserDefinedService(at: editRow.row )
+				self.serverList?.addUserDefinedService(service, at: editRow.row)
 			}
 			self.tableView.reloadData()
 			self.tableView(self.tableView, didSelectRowAt: editRow)

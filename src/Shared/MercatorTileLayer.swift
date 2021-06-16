@@ -33,13 +33,13 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 	override init(layer: Any) {
 		let layer = layer as! MercatorTileLayer
 		self.mapView = layer.mapView
-		self.aerialService = layer.aerialService
+		self.tileServer = layer.tileServer
 		super.init(layer: layer)
 	}
 
     init(mapView: MapView) {
 		self.mapView = mapView
-		self.aerialService = AerialService.none	// arbitrary, just need a default value
+		self.tileServer = TileServer.none	// arbitrary, just need a default value
 		super.init()
 
         needsDisplayOnBoundsChange = true
@@ -70,9 +70,9 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		// mapView.removeObserver(self, forKeyPath: "screenFromMapTransform")
 	}
 
-	var aerialService: AerialService {
+	var tileServer: TileServer {
         willSet(service) {
-            if service === aerialService {
+            if service === tileServer {
                 return
             }
             
@@ -90,11 +90,11 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
     }
     
     func zoomLevel() -> Int {
-        return aerialService.roundZoomUp ? Int(ceil(mapView.zoom())): Int(floor(mapView.zoom()))
+        return tileServer.roundZoomUp ? Int(ceil(mapView.zoom())): Int(floor(mapView.zoom()))
     }
     
     func metadata(_ callback: @escaping (Data?, Error?) -> Void) {
-        guard let metadataUrl = aerialService.metadataUrl else {
+        guard let metadataUrl = tileServer.metadataUrl else {
 			callback(nil, nil)
 			return
         }
@@ -266,10 +266,10 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
             let cachedImage: UIImage? = _webCache.object(
                 withKey: cacheKey,
                 fallbackURL: { [self] in
-					return self.aerialService.url(forZoom: zoomLevel, tileX: tileModX, tileY: tileModY)
+					return self.tileServer.url(forZoom: zoomLevel, tileX: tileModX, tileY: tileModY)
 				},
                 objectForData: { data in
-					if data.count == 0 || self.aerialService.isPlaceholderImage(data) {
+					if data.count == 0 || self.tileServer.isPlaceholderImage(data) {
 						return nil
 					}
 					return UIImage(data: data)
@@ -378,8 +378,8 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
         
         if zoomLevel < 1 {
             zoomLevel = 1
-        } else if zoomLevel > aerialService.maxZoom {
-            zoomLevel = aerialService.maxZoom
+        } else if zoomLevel > tileServer.maxZoom {
+            zoomLevel = tileServer.maxZoom
         }
         
         let zoom = Double((1 << zoomLevel)) / 256.0
@@ -438,10 +438,10 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		let (tileX, tileY, zoomLevel) = QuadKeyToTileXY(cacheKey)
         let data2 = _webCache.object(withKey: cacheKey,
 			fallbackURL: {
-				return self.aerialService.url(forZoom: zoomLevel, tileX: tileX, tileY: tileY)
+				return self.tileServer.url(forZoom: zoomLevel, tileX: tileX, tileY: tileY)
 			},
 			objectForData: { data in
-				if data.count == 0 || self.aerialService.isPlaceholderImage(data) {
+				if data.count == 0 || self.tileServer.isPlaceholderImage(data) {
 					return nil
 				}
 				return UIImage(data: data)
@@ -468,7 +468,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
             minZoomLevel = 31 // shouldn't be necessary, except to shup up the Xcode analyzer
         }
         
-        var maxZoomLevel = aerialService.maxZoom
+        var maxZoomLevel = tileServer.maxZoom
         if maxZoomLevel > minZoomLevel + 2 {
             maxZoomLevel = minZoomLevel + 2
         }

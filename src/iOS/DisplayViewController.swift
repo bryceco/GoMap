@@ -48,7 +48,7 @@ class DisplayViewController: UITableViewController {
             if let cell = tableView.cellForRow(at: indexPath) {
                 if cell.accessoryType == .checkmark {
 					mapView.viewState = MapViewState.init(rawValue: cell.tag) ?? MapViewState.EDITORAERIAL
-                    mapView.setAerialTileService(mapView.customAerials.currentAerial)
+                    mapView.setAerialTileServer(mapView.tileServerList.currentServer)
                     break
                 }
             }
@@ -124,8 +124,8 @@ class DisplayViewController: UITableViewController {
         // set the name of the aerial provider
         if indexPath.section == BACKGROUND_SECTION && indexPath.row == 2 {
             if let custom = cell as? CustomBackgroundCell {
-				let aerials = AppDelegate.shared.mapView.customAerials
-				custom.button.setTitle(aerials.currentAerial.name, for: .normal)
+				let servers = AppDelegate.shared.mapView.tileServerList
+				custom.button.setTitle(servers.currentServer.name, for: .normal)
                 custom.button.sizeToFit()
             }
         }
@@ -169,13 +169,6 @@ class DisplayViewController: UITableViewController {
             let cell = tableView.cellForRow(at: indexPath)
             cell?.accessoryType = .none
         }
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //	if ( [segue.destinationViewController isKindOfClass:[AerialListViewController class]] ) {
-        //		AerialListViewController * aerialList = segue.destinationViewController;
-        //		aerialList.displayViewController = self;
-        //	}
     }
 }
 

@@ -8,13 +8,13 @@
 
 import UIKit
 
-enum Row : Int {
+private enum Row : Int {
     case osmData = 0
     case mapnik = 1
     case aerial = 2
-    case breadcrumb = 3
-    case locator = 4
-    case gps = 5
+    case userGPX = 3
+    case mapboxLocator = 4
+    case osmGPS = 5
 }
 
 protocol GetDiskCacheSize {
@@ -64,16 +64,16 @@ class ClearCacheViewController: UITableViewController {
         case Row.mapnik.rawValue:
             title = NSLocalizedString("Clear Mapnik Tiles", comment: "Delete cached data")
 			object = mapView.mapnikLayer
-        case Row.breadcrumb.rawValue:
+        case Row.userGPX.rawValue:
             title = NSLocalizedString("Clear GPX Tracks", comment: "Delete cached data")
             object = mapView.gpxLayer
         case Row.aerial.rawValue:
             title = NSLocalizedString("Clear Aerial Tiles", comment: "Delete cached data")
             object = mapView.aerialLayer
-        case Row.locator.rawValue:
+        case Row.mapboxLocator.rawValue:
             title = NSLocalizedString("Clear Locator Overlay Tiles", comment: "Delete cached data")
             object = mapView.locatorLayer
-        case Row.gps.rawValue:
+        case Row.osmGPS.rawValue:
             title = NSLocalizedString("Clear GPS Overlay Tiles", comment: "Delete cached data")
             object = mapView.gpsTraceLayer
         default:
@@ -127,13 +127,13 @@ class ClearCacheViewController: UITableViewController {
             appDelegate.mapView.removePin()
         case Row.mapnik.rawValue /* Mapnik */:
             appDelegate.mapView.mapnikLayer.purgeTileCache()
-        case Row.breadcrumb.rawValue /* Breadcrumb */:
+        case Row.userGPX.rawValue /* Breadcrumb */:
             appDelegate.mapView.gpxLayer.purgeTileCache()
         case Row.aerial.rawValue /* Bing */:
             appDelegate.mapView.aerialLayer.purgeTileCache()
-        case Row.locator.rawValue /* Locator Overlay */:
+        case Row.mapboxLocator.rawValue /* Locator Overlay */:
             appDelegate.mapView.locatorLayer.purgeTileCache()
-        case Row.gps.rawValue /* GPS Overlay */:
+        case Row.osmGPS.rawValue /* GPS Overlay */:
             appDelegate.mapView.gpsTraceLayer.purgeTileCache()
         default:
             break

@@ -384,7 +384,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
     }
     private(set) var pushpinView: PushPinView?
     var silentUndo = false // don't flash message about undo
-	let customAerials: AerialList
+	let tileServerList: TileServerList
     private(set) var birdsEyeRotation = 0.0
     private(set) var birdsEyeDistance = 0.0
 
@@ -554,7 +554,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
     required init?(coder: NSCoder) {
 
 		self.crossHairs = CAShapeLayer()
-		self.customAerials = AerialList()
+		self.tileServerList = TileServerList()
 		self.locationBallLayer = LocationBallLayer()
 		self.locating = false
 
@@ -587,31 +587,31 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		locatorLayer = MercatorTileLayer(mapView: self)
         locatorLayer.zPosition = Z_LOCATOR
-        locatorLayer.aerialService = AerialService.mapboxLocator
+        locatorLayer.tileServer = TileServer.mapboxLocator
         locatorLayer.isHidden = true
         bg.append(locatorLayer)
 
         gpsTraceLayer = MercatorTileLayer(mapView: self)
         gpsTraceLayer.zPosition = Z_GPSTRACE
-        gpsTraceLayer.aerialService = AerialService.gpsTrace
+        gpsTraceLayer.tileServer = TileServer.gpsTrace
         gpsTraceLayer.isHidden = true
         bg.append(gpsTraceLayer)
 
         noNameLayer = MercatorTileLayer(mapView: self)
         noNameLayer.zPosition = Z_NONAME
-        noNameLayer.aerialService = AerialService.noName
+        noNameLayer.tileServer = TileServer.noName
         noNameLayer.isHidden = true
         bg.append(noNameLayer)
 
         aerialLayer = MercatorTileLayer(mapView: self)
         aerialLayer.zPosition = Z_AERIAL
         aerialLayer.opacity = 0.75
-        aerialLayer.aerialService = customAerials.currentAerial
+        aerialLayer.tileServer = tileServerList.currentServer
         aerialLayer.isHidden = true
         bg.append(aerialLayer)
 
         mapnikLayer = MercatorTileLayer(mapView: self)
-        mapnikLayer.aerialService = AerialService.mapnikAerialService
+        mapnikLayer.tileServer = TileServer.mapnik
         mapnikLayer.zPosition = Z_MAPNIK
         mapnikLayer.isHidden = true
         bg.append(mapnikLayer)
@@ -902,10 +902,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
     }
 
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if (object as? MercatorTileLayer) == aerialLayer && keyPath == "hidden" {
+        if (object as? MercatorTileLayer) === aerialLayer && keyPath == "hidden" {
 			let hidden = (change?[.newKey] as? NSNumber)?.boolValue ?? false
             aerialServiceLogo.isHidden = hidden
-        } else if (object as? EditorMapLayer) == editorLayer && (keyPath == "hidden") {
+        } else if (object as? EditorMapLayer) === editorLayer && keyPath == "hidden" {
             let hidden = (change?[.newKey] as? NSNumber)?.boolValue ?? false
             if hidden {
                 editorLayer.selectedNode = nil
@@ -945,7 +945,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
         UserDefaults.standard.synchronize()
 
-        customAerials.save()
+        tileServerList.save()
         gpxLayer.saveActiveTrack()
 
         // then save data
@@ -992,7 +992,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
     }
 
     func updateAerialAttributionButton() {
-        let service = aerialLayer.aerialService
+        let service = aerialLayer.tileServer
 		aerialServiceLogo.isHidden = aerialLayer.isHidden || (service.attributionString.count == 0 && service.attributionIcon == nil)
 		if !aerialServiceLogo.isHidden {
             // For Bing maps, the attribution icon is part of the app's assets and already has the desired size,
@@ -1180,7 +1180,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
     }
 
     @IBAction func requestAerialServiceAttribution(_ sender: Any) {
-        let aerial = aerialLayer.aerialService
+        let aerial = aerialLayer.tileServer
         if aerial.isBingAerial() {
             // present bing metadata
             mainViewController.performSegue(withIdentifier: "BingMetadataSegue", sender: self)
@@ -1298,7 +1298,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
                 userInstructionLabel.isHidden = true
                 editorLayer.whiteText = true
             case MapViewState.EDITORAERIAL:
-                aerialLayer.aerialService = customAerials.currentAerial
+                aerialLayer.tileServer = tileServerList.currentServer
                 editorLayer.isHidden = false
                 aerialLayer.isHidden = false
                 mapnikLayer.isHidden = true
@@ -1306,7 +1306,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
                 aerialLayer.opacity = 0.75
                 editorLayer.whiteText = true
             case MapViewState.AERIAL:
-                aerialLayer.aerialService = customAerials.currentAerial
+                aerialLayer.tileServer = tileServerList.currentServer
                 editorLayer.isHidden = true
                 aerialLayer.isHidden = false
                 mapnikLayer.isHidden = true
@@ -1331,8 +1331,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
         addNodeButton.isHidden = editorLayer.isHidden
     }
 
-    func setAerialTileService(_ service: AerialService) {
-        aerialLayer.aerialService = service
+    func setAerialTileServer(_ service: TileServer) {
+        aerialLayer.tileServer = service
         updateAerialAttributionButton()
     }
 

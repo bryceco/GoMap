@@ -1,5 +1,5 @@
 //
-//  AerialEditViewController.swift
+//  TileServerEditViewController.swift
 //  Go Map!!
 //
 //  Copyright © 2021 Bryce Cogswell. All rights reserved.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AerialEditViewController: UITableViewController {
+class TileServerEditViewController: UITableViewController {
     
     @IBOutlet var nameField: UITextField!
     @IBOutlet var urlField: UITextField!
@@ -20,7 +20,7 @@ class AerialEditViewController: UITableViewController {
     var url: String?
     var zoom: Int = 0
     var projection: String?
-    var completion: ((_ service: AerialService) -> Void)?
+    var completion: ((_ service: TileServer) -> Void)?
     
     private let TMS_PROJECTION_NAME = "(TMS)"
     
@@ -38,7 +38,7 @@ class AerialEditViewController: UITableViewController {
 		if (self.projection?.count ?? 0) == 0 {
             row = 0
         } else {
-            if let indexInSupportedProjection = AerialService.supportedProjections.firstIndex(of: projection ?? "") {
+            if let indexInSupportedProjection = TileServer.supportedProjections.firstIndex(of: projection ?? "") {
                 row = indexInSupportedProjection + 1
             }
         }
@@ -74,7 +74,7 @@ class AerialEditViewController: UITableViewController {
         }
 		let maxZoom = Int(zoomField.text ?? "0") ?? 0
 
-		let service = AerialService(
+		let service = TileServer(
 			withName: nameField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? "",
             identifier: identifier,
             url: url,
@@ -107,21 +107,21 @@ class AerialEditViewController: UITableViewController {
     }
 }
 
-extension AerialEditViewController: UIPickerViewDataSource {
+extension TileServerEditViewController: UIPickerViewDataSource {
 	func numberOfComponents(in pickerView: UIPickerView) -> Int {
 		return 1
 	}
 	func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-		return AerialService.supportedProjections.count + 1
+		return TileServer.supportedProjections.count + 1
 	}
 }
 
-extension AerialEditViewController: UIPickerViewDelegate {
+extension TileServerEditViewController: UIPickerViewDelegate {
 	func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-		return row == 0 ? TMS_PROJECTION_NAME : AerialService.supportedProjections[row - 1]
+		return row == 0 ? TMS_PROJECTION_NAME : TileServer.supportedProjections[row - 1]
 	}
 	func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-		projectionField.text = row == 0 ? TMS_PROJECTION_NAME : AerialService.supportedProjections[row - 1]
+		projectionField.text = row == 0 ? TMS_PROJECTION_NAME : TileServer.supportedProjections[row - 1]
 		contentChanged(projectionField ?? "")
 	}
 }

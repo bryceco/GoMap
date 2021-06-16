@@ -12,6 +12,7 @@
 		0203473F266C1EDD000A7C3D /* ExternalGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0203473E266C1EDD000A7C3D /* ExternalGPS.swift */; };
 		02034743266C2CB9000A7C3D /* OsmNotesDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02034742266C2CB9000A7C3D /* OsmNotesDatabase.swift */; };
 		02034744266D83DB000A7C3D /* DLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C381C308263FD294003142BA /* DLog.swift */; };
+		020E160B267A82050037DE49 /* TileServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020E160A267A82050037DE49 /* TileServer.swift */; };
 		020EBA7926506156001D56F4 /* MercatorTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925326411C2B000A2A99 /* MercatorTileLayer.swift */; };
 		020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */; };
 		020F4ADE24AAD4E700D9E34A /* PresetsDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */; };
@@ -54,7 +55,7 @@
 		0291D83724427AFA00F793BE /* Display.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0291D83524427AFA00F793BE /* Display.storyboard */; };
 		029A17C8257AB8A70035C6ED /* POI-Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */; };
 		02A123E9264C8B60005638C1 /* GpxLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925626416BF5000A2A99 /* GpxLayer.swift */; };
-		02A123EA264C8BA3005638C1 /* AerialList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA924F2640329B000A2A99 /* AerialList.swift */; };
+		02A123EA264C8BA3005638C1 /* TileServerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA924F2640329B000A2A99 /* TileServerList.swift */; };
 		02A123EB264C9B17005638C1 /* RenderInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096B8263DFA2A00E3B129 /* RenderInfo.swift */; };
 		02A123ED264CAE6F005638C1 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A123EC264CAE6F005638C1 /* Atomic.swift */; };
 		02A123EE264CBBE5005638C1 /* DisplayLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096C1263E567200E3B129 /* DisplayLink.swift */; };
@@ -89,7 +90,7 @@
 		02E049BE2651D1750028B57F /* UndoAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E049BD2651D1750028B57F /* UndoAction.m */; };
 		02E6267219973A0700565D62 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02E6267119973A0700565D62 /* Security.framework */; };
 		02EA1C6B26631D0D00A0F827 /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C381C305263FD0CA003142BA /* VectorMath.swift */; };
-		02EA1C6C2663398C00A0F827 /* BingMapsGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925126411557000A2A99 /* BingMapsGeometry.swift */; };
+		02EA1C6C2663398C00A0F827 /* TileQuadKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925126411557000A2A99 /* TileQuadKey.swift */; };
 		02ED19811BBF119C00A57CF4 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */; };
 		02EDBF672653306400B7072E /* OsmBaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096F1263EBE5E00E3B129 /* OsmBaseObject.swift */; };
 		02EDBF6826535B9D00B7072E /* OsmNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096EF263EBE5D00E3B129 /* OsmNode.swift */; };
@@ -154,8 +155,8 @@
 		ED56E5EC26028B5F000B368C /* FilterObjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5E926028B5F000B368C /* FilterObjectsViewController.swift */; };
 		ED91352526020945006A637A /* OfflineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED91352426020945006A637A /* OfflineViewController.swift */; };
 		ED9649C12601C33E00EC0A60 /* AdvancedSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649BF2601C33E00EC0A60 /* AdvancedSettingsViewController.swift */; };
-		ED9649C22601C33E00EC0A60 /* AerialEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649C02601C33E00EC0A60 /* AerialEditViewController.swift */; };
-		ED9649D32601C4CE00EC0A60 /* AerialListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649D22601C4CE00EC0A60 /* AerialListViewController.swift */; };
+		ED9649C22601C33E00EC0A60 /* TileServerEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649C02601C33E00EC0A60 /* TileServerEditViewController.swift */; };
+		ED9649D32601C4CE00EC0A60 /* TileServerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649D22601C4CE00EC0A60 /* TileServerListViewController.swift */; };
 		ED9649DB2601CB7A00EC0A60 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649DA2601CB7A00EC0A60 /* SettingsViewController.swift */; };
 		ED9649E62601CE3100EC0A60 /* RotatingNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649E52601CE3100EC0A60 /* RotatingNavigationController.swift */; };
 		ED9649F12601CEC800EC0A60 /* POITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649F02601CEC800EC0A60 /* POITabBarController.swift */; };
@@ -188,6 +189,7 @@
 		0203473E266C1EDD000A7C3D /* ExternalGPS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExternalGPS.swift; path = ../Shared/ExternalGPS.swift; sourceTree = "<group>"; };
 		02034742266C2CB9000A7C3D /* OsmNotesDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OsmNotesDatabase.swift; path = ../Shared/OsmNotesDatabase.swift; sourceTree = "<group>"; };
 		02072AD51BD46B1700F1CAB4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		020E160A267A82050037DE49 /* TileServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TileServer.swift; path = ../Shared/TileServer.swift; sourceTree = "<group>"; };
 		020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsDatabase.swift; sourceTree = "<group>"; };
 		02128F7B2575D925003D2551 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Height.strings"; sourceTree = "<group>"; };
 		02128F7C2575D925003D2551 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Display.strings"; sourceTree = "<group>"; };
@@ -457,8 +459,8 @@
 		C3FA9248263FF95B000A2A99 /* LocationURLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationURLParser.swift; sourceTree = "<group>"; };
 		C3FA924A263FFD7E000A2A99 /* QuadMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QuadMap.swift; path = ../Shared/QuadMap.swift; sourceTree = "<group>"; };
 		C3FA924C263FFEF9000A2A99 /* PathUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PathUtil.swift; path = ../Shared/PathUtil.swift; sourceTree = "<group>"; };
-		C3FA924F2640329B000A2A99 /* AerialList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AerialList.swift; path = ../Shared/AerialList.swift; sourceTree = "<group>"; };
-		C3FA925126411557000A2A99 /* BingMapsGeometry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BingMapsGeometry.swift; path = ../Shared/BingMapsGeometry.swift; sourceTree = "<group>"; };
+		C3FA924F2640329B000A2A99 /* TileServerList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TileServerList.swift; path = ../Shared/TileServerList.swift; sourceTree = "<group>"; };
+		C3FA925126411557000A2A99 /* TileQuadKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TileQuadKey.swift; path = ../Shared/TileQuadKey.swift; sourceTree = "<group>"; };
 		C3FA925326411C2B000A2A99 /* MercatorTileLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MercatorTileLayer.swift; path = ../Shared/MercatorTileLayer.swift; sourceTree = "<group>"; };
 		C3FA925626416BF5000A2A99 /* GpxLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GpxLayer.swift; path = ../Shared/GpxLayer.swift; sourceTree = "<group>"; };
 		ED56E5AA26024DA5000B368C /* AutocompleteTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteTextField.swift; sourceTree = "<group>"; };
@@ -474,8 +476,8 @@
 		ED56E5EA26028B5F000B368C /* GpxViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxViewController.swift; sourceTree = "<group>"; };
 		ED91352426020945006A637A /* OfflineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineViewController.swift; sourceTree = "<group>"; };
 		ED9649BF2601C33E00EC0A60 /* AdvancedSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedSettingsViewController.swift; sourceTree = "<group>"; };
-		ED9649C02601C33E00EC0A60 /* AerialEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AerialEditViewController.swift; sourceTree = "<group>"; };
-		ED9649D22601C4CE00EC0A60 /* AerialListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AerialListViewController.swift; sourceTree = "<group>"; };
+		ED9649C02601C33E00EC0A60 /* TileServerEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileServerEditViewController.swift; sourceTree = "<group>"; };
+		ED9649D22601C4CE00EC0A60 /* TileServerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileServerListViewController.swift; sourceTree = "<group>"; };
 		ED9649DA2601CB7A00EC0A60 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		ED9649E52601CE3100EC0A60 /* RotatingNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotatingNavigationController.swift; sourceTree = "<group>"; };
 		ED9649F02601CEC800EC0A60 /* POITabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POITabBarController.swift; sourceTree = "<group>"; };
@@ -632,8 +634,8 @@
 			isa = PBXGroup;
 			children = (
 				ED9649BF2601C33E00EC0A60 /* AdvancedSettingsViewController.swift */,
-				ED9649C02601C33E00EC0A60 /* AerialEditViewController.swift */,
-				ED9649D22601C4CE00EC0A60 /* AerialListViewController.swift */,
+				ED9649C02601C33E00EC0A60 /* TileServerEditViewController.swift */,
+				ED9649D22601C4CE00EC0A60 /* TileServerListViewController.swift */,
 				C3D096AB263D48F700E3B129 /* AppDelegate.swift */,
 				ED56E5AA26024DA5000B368C /* AutocompleteTextField.swift */,
 				ED56E5B226026541000B368C /* BingMetadataViewController.swift */,
@@ -699,10 +701,8 @@
 		02ACBCFF16713F7F00BB4414 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				C3FA924F2640329B000A2A99 /* AerialList.swift */,
 				C3D096BD263E178600E3B129 /* aes.swift */,
 				02A123EC264CAE6F005638C1 /* Atomic.swift */,
-				C3FA925126411557000A2A99 /* BingMapsGeometry.swift */,
 				02ACBA7016713F2A00BB4414 /* changeset.xsl */,
 				02D5B5F2248F154D00FEE448 /* Colors.swift */,
 				02354F79246349E100878A04 /* CurvedGlyphLayer.swift */,
@@ -744,6 +744,9 @@
 				C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */,
 				0282C4C6265F32E800F2D282 /* Sqlite3.swift */,
 				C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */,
+				C3FA925126411557000A2A99 /* TileQuadKey.swift */,
+				020E160A267A82050037DE49 /* TileServer.swift */,
+				C3FA924F2640329B000A2A99 /* TileServerList.swift */,
 				C365A562263FC53F007DEC94 /* TurnRestrictHwyView.swift */,
 				02E049BC2651D1750028B57F /* UndoAction.h */,
 				02E049BD2651D1750028B57F /* UndoAction.m */,
@@ -1099,8 +1102,8 @@
 				02A123EB264C9B17005638C1 /* RenderInfo.swift in Sources */,
 				C3D096CB263E9A1100E3B129 /* DownloadThreadPool.swift in Sources */,
 				C3D096FC263F118500E3B129 /* FpsLabel.swift in Sources */,
-				ED9649D32601C4CE00EC0A60 /* AerialListViewController.swift in Sources */,
-				ED9649C22601C33E00EC0A60 /* AerialEditViewController.swift in Sources */,
+				ED9649D32601C4CE00EC0A60 /* TileServerListViewController.swift in Sources */,
+				ED9649C22601C33E00EC0A60 /* TileServerEditViewController.swift in Sources */,
 				02CB2405265DB7CB00835F32 /* OpeningHoursRecognizerView.swift in Sources */,
 				C3D096B6263DF82F00E3B129 /* RulerView.swift in Sources */,
 				C341E15A2639DF210022E983 /* NotesTableViewController.swift in Sources */,
@@ -1138,7 +1141,7 @@
 				0282C4C7265F32E800F2D282 /* Sqlite3.swift in Sources */,
 				6442666922540EDF00C0D545 /* Observable.swift in Sources */,
 				0203473D26695B2A000A7C3D /* EditorMapLayer+Edit.swift in Sources */,
-				02A123EA264C8BA3005638C1 /* AerialList.swift in Sources */,
+				02A123EA264C8BA3005638C1 /* TileServerList.swift in Sources */,
 				C3D096AC263D48F700E3B129 /* AppDelegate.swift in Sources */,
 				02F2449A264F635800C42E41 /* PathUtil.swift in Sources */,
 				C341E1532639DECC0022E983 /* WikiPage.swift in Sources */,
@@ -1170,10 +1173,11 @@
 				02034743266C2CB9000A7C3D /* OsmNotesDatabase.swift in Sources */,
 				C3FA9249263FF95B000A2A99 /* LocationURLParser.swift in Sources */,
 				ED56E5EB26028B5F000B368C /* GpxConfigureViewController.swift in Sources */,
-				02EA1C6C2663398C00A0F827 /* BingMapsGeometry.swift in Sources */,
+				02EA1C6C2663398C00A0F827 /* TileQuadKey.swift in Sources */,
 				021FADD725873D0100F6E1C0 /* PresetsForFeature.swift in Sources */,
 				02A123ED264CAE6F005638C1 /* Atomic.swift in Sources */,
 				02008650265B25DC008F37DD /* Database.swift in Sources */,
+				020E160B267A82050037DE49 /* TileServer.swift in Sources */,
 				02E049BE2651D1750028B57F /* UndoAction.m in Sources */,
 				026FC76726509D6E005DDAFF /* SpeechBalloonView.swift in Sources */,
 				ED56E5C526027A50000B368C /* CustomPresetListViewController.swift in Sources */,
