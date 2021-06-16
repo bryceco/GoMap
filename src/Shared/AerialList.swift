@@ -348,30 +348,20 @@ final class AerialService {
 	}
 
 	func scaleAttributionIcon(toHeight height: CGFloat) {
-        if attributionIcon != nil && abs(Float((attributionIcon?.size.height ?? 0.0) - height)) > 0.1 {
-            let scale = (attributionIcon?.size.height ?? 0.0) / height
-#if os(iOS)
-            var size = attributionIcon?.size
-            size?.height /= scale
-            size?.width /= scale
-            UIGraphicsBeginImageContext(size ?? CGSize.zero)
-            attributionIcon?.draw(in: CGRect(x: 0.0, y: 0.0, width: size?.width ?? 0.0, height: size?.height ?? 0.0))
+        if let attributionIcon = attributionIcon,
+		   abs(attributionIcon.size.height - height) > 0.1
+		{
+            let scale = attributionIcon.size.height / height
+            var size = attributionIcon.size
+            size.height /= scale
+            size.width /= scale
+            UIGraphicsBeginImageContext(size)
+            attributionIcon.draw(in: CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height))
             let imageCopy = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-            attributionIcon = imageCopy
-#else
-            var size = NSSize((attributionIcon?.size.width ?? 0.0) * scale, (attributionIcon?.size.height ?? 0.0) * scale)
-            let result = NSImage(size: size)
-            result.lockFocus()
-            var transform = AffineTransform()
-            transform.scale(scale)
-            (transform as NSAffineTransform).concat()
-            attributionIcon?.draw(at: NSPoint.zero, from: NSRect.zero, operation: .copy, fraction: 1.0)
-            result.unlockFocus()
-            attributionIcon = result
-#endif
-        }
-    }
+			self.attributionIcon = imageCopy
+		}
+	}
     
     func loadIcon(fromWeb url: String) {
 		DispatchQueue.main.async(execute: {
@@ -386,6 +376,82 @@ final class AerialService {
     var description: String {
         return name
     }
+
+	private static func TileToWMSCoords(_ tx: Int, _ ty: Int, _ z: Int, _ projection: String) -> OSMPoint {
+		let zoomSize = Double(1 << z)
+		let lon = Double(tx) / zoomSize * .pi * 2 - .pi
+		let lat = atan(sinh(.pi * (1 - Double(2 * ty) / zoomSize)))
+		var loc: OSMPoint
+		if projection == "EPSG:4326" {
+			loc = OSMPoint(x: lon * 180 / .pi, y: lat * 180 / .pi)
+		} else {
+			// EPSG:3857 and others
+			loc = OSMPoint(x: lon, y: log(tan((.pi / 2 + lat) / 2))) // mercatorRaw
+			loc = Mult(loc, 20037508.34 / .pi)
+		}
+		return loc
+	}
+
+	func url(forZoom zoom: Int, tileX: Int, tileY: Int) -> URL {
+		var url = self.url
+
+		// handle switch in URL
+		if let begin = url.range(of: "{switch:"),
+		   let end = url[begin.upperBound...].range(of: "}")
+		{
+			let list = url[begin.upperBound..<end.lowerBound].components(separatedBy: ",")
+			if list.count > 0 {
+				let t = list[(tileX+tileY) % list.count]
+				url.replaceSubrange(begin.lowerBound..<end.upperBound, with: t)
+			}
+		}
+
+		if !wmsProjection.isEmpty {
+			// WMS
+			let minXmaxY = Self.TileToWMSCoords(tileX, tileY, zoom, wmsProjection)
+			let maxXminY = Self.TileToWMSCoords(tileX + 1, tileY + 1, zoom, wmsProjection)
+			var bbox: String = ""
+			if (wmsProjection == "EPSG:4326") && url.lowercased().contains("crs={proj}") {
+				// reverse lat/lon for EPSG:4326 when WMS version is 1.3 (WMS 1.1 uses srs=epsg:4326 instead
+				bbox = "\(maxXminY.y),\(minXmaxY.x),\(minXmaxY.y),\(maxXminY.x)" // lat,lon
+			} else {
+				bbox = "\(minXmaxY.x),\(maxXminY.y),\(maxXminY.x),\(minXmaxY.y)" // lon,lat
+			}
+
+			url = url.replacingOccurrences(of: "{width}", with: "256")
+			url = url.replacingOccurrences(of: "{height}", with: "256")
+			url = url.replacingOccurrences(of: "{proj}", with: wmsProjection)
+			url = url.replacingOccurrences(of: "{bbox}", with: bbox)
+			url = url.replacingOccurrences(of: "{wkid}", with: wmsProjection.replacingOccurrences(of: "EPSG:", with: ""))
+			url = url.replacingOccurrences(of: "{w}", with: "\(minXmaxY.x)")
+			url = url.replacingOccurrences(of: "{s}", with: "\(maxXminY.y)")
+			url = url.replacingOccurrences(of: "{n}", with: "\(maxXminY.x)")
+			url = url.replacingOccurrences(of: "{e}", with: "\(minXmaxY.y)")
+		} else {
+			// TMS
+			let u = TileToQuadKey(x: tileX, y: tileY, z: zoom)
+			let x = "\(tileX)"
+			let y = "\(tileY)"
+			let negY = "\((1 << zoom) - tileY - 1)"
+			let z = "\(zoom)"
+
+			url = url.replacingOccurrences(of: "{u}", with: u)
+			url = url.replacingOccurrences(of: "{x}", with: x)
+			url = url.replacingOccurrences(of: "{y}", with: y)
+			url = url.replacingOccurrences(of: "{-y}", with: negY)
+			url = url.replacingOccurrences(of: "{z}", with: z)
+		}
+		// retina screen
+		let retina = UIScreen.main.scale > 1 ? "@2x" : ""
+		url = url.replacingOccurrences(of: "{@2x}", with: retina)
+
+		let urlString = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? url
+		//https://ecn.t1.tiles.virtualearth.net/tiles/a12313302102001233031.jpeg?g=587&key=ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk
+		//https://ecn.%7Bswitch:t0,t1,t2,t3%7D.tiles.virtualearth.net/tiles/a%7Bu%7D.jpeg?g=587&key=ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk
+		//https://ecn.{switch:t0,t1,t2,t3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=587&key=ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk
+
+		return URL(string: urlString)!
+	}
 }
 
 

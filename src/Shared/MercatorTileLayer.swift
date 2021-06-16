@@ -20,21 +20,6 @@ import UIKit
 	return m
 }
 
-private func TileToWMSCoords(_ tx: Int, _ ty: Int, _ z: Int, _ projection: String) -> OSMPoint {
-    let zoomSize = Double(1 << z)
-    let lon = Double(tx) / zoomSize * .pi * 2 - .pi
-    let lat = atan(sinh(.pi * (1 - Double(2 * ty) / zoomSize)))
-    var loc: OSMPoint
-    if projection == "EPSG:4326" {
-		loc = OSMPoint(x: lon * 180 / .pi, y: lat * 180 / .pi)
-    } else {
-        // EPSG:3857 and others
-		loc = OSMPoint(x: lon, y: log(tan((.pi / 2 + lat) / 2))) // mercatorRaw
-        loc = Mult(loc, 20037508.34 / .pi)
-    }
-    return loc
-}
-
 final class MercatorTileLayer: CALayer, GetDiskCacheSize {
     
 	private var _webCache = PersistentWebCache<UIImage>(name: "", memorySize: 0)
@@ -240,68 +225,6 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 	private func quadKey(forZoom zoom: Int, tileX: Int, tileY: Int) -> String {
 		return TileToQuadKey(x: tileX, y: tileY, z: zoom)
     }
-    
-    private func url(forZoom zoom: Int, tileX: Int, tileY: Int) -> URL {
-        var url = aerialService.url
-        
-        // handle switch in URL
-		if let begin = url.range(of: "{switch:"),
-		   let end = url[begin.upperBound...].range(of: "}")
-		{
-			let list = url[begin.upperBound..<end.lowerBound].components(separatedBy: ",")
-			if list.count > 0 {
-				let t = list[(tileX+tileY) % list.count]
-				url.replaceSubrange(begin.lowerBound..<end.upperBound, with: t)
-			}
-		}
-
-        let projection = aerialService.wmsProjection
-		if projection != "" {
-			// WMS
-            let minXmaxY = TileToWMSCoords(Int(tileX), Int(tileY), Int(zoom), projection)
-            let maxXminY = TileToWMSCoords(Int(tileX + 1), Int(tileY + 1), Int(zoom), projection)
-            var bbox: String = ""
-			if (projection == "EPSG:4326") && url.lowercased().contains("crs={proj}") {
-                // reverse lat/lon for EPSG:4326 when WMS version is 1.3 (WMS 1.1 uses srs=epsg:4326 instead
-                bbox = "\(maxXminY.y),\(minXmaxY.x),\(minXmaxY.y),\(maxXminY.x)" // lat,lon
-            } else {
-                bbox = "\(minXmaxY.x),\(maxXminY.y),\(maxXminY.x),\(minXmaxY.y)" // lon,lat
-            }
-
-			url = url.replacingOccurrences(of: "{width}", with: "256")
-            url = url.replacingOccurrences(of: "{height}", with: "256")
-            url = url.replacingOccurrences(of: "{proj}", with: projection)
-            url = url.replacingOccurrences(of: "{bbox}", with: bbox)
-            url = url.replacingOccurrences(of: "{wkid}", with: projection.replacingOccurrences(of: "EPSG:", with: ""))
-            url = url.replacingOccurrences(of: "{w}", with: "\(minXmaxY.x)")
-            url = url.replacingOccurrences(of: "{s}", with: "\(maxXminY.y)")
-            url = url.replacingOccurrences(of: "{n}", with: "\(maxXminY.x)")
-            url = url.replacingOccurrences(of: "{e}", with: "\(minXmaxY.y)")
-        } else {
-            // TMS
-            let u = quadKey(forZoom: zoom, tileX: tileX, tileY: tileY)
-            let x = "\(tileX)"
-            let y = "\(tileY)"
-            let negY = "\((1 << zoom) - tileY - 1)"
-            let z = "\(zoom)"
-            
-            url = url.replacingOccurrences(of: "{u}", with: u)
-            url = url.replacingOccurrences(of: "{x}", with: x)
-            url = url.replacingOccurrences(of: "{y}", with: y)
-            url = url.replacingOccurrences(of: "{-y}", with: negY)
-            url = url.replacingOccurrences(of: "{z}", with: z)
-        }
-        // retina screen
-        let retina = UIScreen.main.scale > 1 ? "@2x" : ""
-        url = url.replacingOccurrences(of: "{@2x}", with: retina)
-
-        let urlString = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? url
-		//https://ecn.t1.tiles.virtualearth.net/tiles/a12313302102001233031.jpeg?g=587&key=ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk
-		//https://ecn.%7Bswitch:t0,t1,t2,t3%7D.tiles.virtualearth.net/tiles/a%7Bu%7D.jpeg?g=587&key=ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk
-		//https://ecn.{switch:t0,t1,t2,t3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=587&key=ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk
-
-        return URL(string: urlString)!
-    }
 
 	private func fetchTile(
         forTileX tileX: Int,
@@ -343,8 +266,8 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
             let cachedImage: UIImage? = _webCache.object(
                 withKey: cacheKey,
                 fallbackURL: { [self] in
-                    return url(forZoom: zoomLevel, tileX: tileModX, tileY: tileModY)
-                },
+					return self.aerialService.url(forZoom: zoomLevel, tileX: tileModX, tileY: tileModY)
+				},
                 objectForData: { data in
 					if data.count == 0 || self.aerialService.isPlaceholderImage(data) {
 						return nil
@@ -515,7 +438,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		let (tileX, tileY, zoomLevel) = QuadKeyToTileXY(cacheKey)
         let data2 = _webCache.object(withKey: cacheKey,
 			fallbackURL: {
-				return self.url(forZoom: zoomLevel, tileX: tileX, tileY: tileY)
+				return self.aerialService.url(forZoom: zoomLevel, tileX: tileX, tileY: tileY)
 			},
 			objectForData: { data in
 				if data.count == 0 || self.aerialService.isPlaceholderImage(data) {
