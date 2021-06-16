@@ -886,7 +886,7 @@ class POIAllTagsViewController: UITableViewController {
         mapView.editorLayer.selectedWay = object.isWay()
         mapView.editorLayer.selectedRelation = object.isRelation()
         
-        var newPoint = mapView.pushpinView!.arrowPoint
+        var newPoint = mapView.pushPin!.arrowPoint
         let clLatLon = mapView.longitudeLatitude(forScreenPoint: newPoint, birdsEye: true)
         var latLon = OSMPoint(x: clLatLon.longitude, y: clLatLon.latitude)
 		latLon = object.pointOnObjectForPoint( latLon )

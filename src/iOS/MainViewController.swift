@@ -441,15 +441,15 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
     }
     
     @objc override func copy(_ sender: Any?) {
-		mapView.performEdit(EDIT_ACTION.COPYTAGS)
+		mapView.editorLayer.performEdit(EDIT_ACTION.COPYTAGS)
     }
     
     @objc override func paste(_ sender: Any?) {
-		mapView.performEdit(EDIT_ACTION.PASTETAGS)
+		mapView.editorLayer.performEdit(EDIT_ACTION.PASTETAGS)
     }
     
     @objc override func delete(_ sender: Any?) {
-		mapView.performEdit(EDIT_ACTION.DELETE)
+		mapView.editorLayer.performEdit(EDIT_ACTION.DELETE)
     }
     
     @objc func showHelp(_ sender: Any?) {

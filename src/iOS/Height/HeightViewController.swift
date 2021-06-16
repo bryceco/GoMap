@@ -319,14 +319,14 @@ class HeightViewController: UIViewController {
     func distanceToObject(error: inout Double, direction pDirection: inout Double) -> Double {
 		let delegate = AppDelegate.shared
         var object = delegate.mapView.editorLayer.selectedPrimary
-		if object == nil && delegate.mapView.pushpinView == nil {
+		if object == nil && delegate.mapView.pushPin == nil {
 			error = .nan
 			pDirection = .nan
 			return .nan
 		}
 		if object == nil {
 			// brand new object, so fake it
-			let latlon = delegate.mapView.longitudeLatitude(forScreenPoint: delegate.mapView.pushpinView!.arrowPoint, birdsEye: true)
+			let latlon = delegate.mapView.longitudeLatitude(forScreenPoint: delegate.mapView.pushPin!.arrowPoint, birdsEye: true)
 			// this gets thrown away at the end of this method so the details aren't important
 			let node = OsmNode(withVersion: 0, changeset: 0, user: "", uid: 0, ident: 0, timestamp: "", tags: [:])
 			node.setLongitude( latlon.longitude, latitude: latlon.latitude, undo: nil)

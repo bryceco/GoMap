@@ -79,7 +79,7 @@ class POITabBarController: UITabBarController {
     }
 
     func commitChanges() {
-        AppDelegate.shared.mapView.setTagsForCurrentObject( keyValueDict )
+		AppDelegate.shared.mapView.editorLayer.setTagsForCurrentObject( keyValueDict )
     }
     
     func isTagDictChanged(_ newDictionary: [String : String]) -> Bool {

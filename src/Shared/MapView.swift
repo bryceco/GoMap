@@ -255,7 +255,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 			// save pushpinView coordinates
 			var pp: CLLocationCoordinate2D? = nil
-			if let pushpinView = pushpinView {
+			if let pushpinView = pushPin {
 				pp = longitudeLatitude(forScreenPoint: pushpinView.arrowPoint, birdsEye: true)
 			}
 
@@ -300,7 +300,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
             updateCountryCodeForLocationUsingNominatim()
 
             // update pushpin location
-			if let pushpinView = pushpinView,
+			if let pushpinView = pushPin,
 			   let pp = pp
 			{
 				pushpinView.arrowPoint = screenPoint(forLatitude: pp.latitude,
@@ -382,7 +382,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
             }
         }
     }
-    private(set) var pushpinView: PushPinView?
+    private(set) var pushPin: PushPinView?
     var silentUndo = false // don't flash message about undo
 	let tileServerList: TileServerList
     private(set) var birdsEyeRotation = 0.0
@@ -507,7 +507,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
     private(set) var countryCodeLocation: CLLocationCoordinate2D?
 
     var pushpinPosition: CGPoint? {
-        return pushpinView?.arrowPoint
+        return pushPin?.arrowPoint
 	}
 
 	private var locating: Bool {
@@ -1006,7 +1006,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
         }
     }
 
-    func showAlert(_ title: String?, message: String?) {
+    func showAlert(_ title: String, message: String?) {
         let alertError = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertError.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
         mainViewController.present(alertError, animated: true)
@@ -1743,7 +1743,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
             locating = false
         }
 
-        let pp = longitudeLatitude(forScreenPoint: pushpinView?.arrowPoint ?? CGPoint.zero, birdsEye: false)
+        let pp = longitudeLatitude(forScreenPoint: pushPin?.arrowPoint ?? CGPoint.zero, birdsEye: false)
 
         if !userOverrodeLocationPosition {
             // move view to center on new location
@@ -1758,7 +1758,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			}
         }
 
-		pushpinView?.arrowPoint = screenPoint(forLatitude: pp.latitude, longitude: pp.longitude, birdsEye: false)
+		pushPin?.arrowPoint = screenPoint(forLatitude: pp.latitude, longitude: pp.longitude, birdsEye: false)
 		updateUserLocationIndicator(newLocation)
     }
 
@@ -1818,7 +1818,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
         let point = screenPoint(forLatitude: loc.y, longitude: loc.x, birdsEye: true)
         placePushpin(at: point, object: selection)
 
-        if !bounds.contains(pushpinView!.arrowPoint) {
+        if !bounds.contains(pushPin!.arrowPoint) {
             // need to zoom to location
 			setTransformFor(latitude: loc.y,
 							longitude: loc.x)
@@ -1831,7 +1831,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			return
 		}
 		// if just dropped a pin then undo removes the pin
-		if pushpinView != nil && editorLayer.selectedPrimary == nil {
+		if pushPin != nil && editorLayer.selectedPrimary == nil {
 			removePin()
 			return
 		}
@@ -2012,95 +2012,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
     /// Offers the option to either merge tags or replace them with the copied tags.
     /// - Parameter sender: nil
     override func paste(_ sender: Any?) {
-		guard let copyPasteTags = UserDefaults.standard.object(forKey: "copyPasteTags") as? [String : String],
-			copyPasteTags.count > 0
-		else {
-            showAlert(NSLocalizedString("No tags to paste", comment: ""), message: nil)
-            return
-        }
-
-        if (editorLayer.selectedPrimary?.tags.count ?? 0) > 0 {
-            let question = String.localizedStringWithFormat(NSLocalizedString("Pasting %ld tag(s)", comment: ""), copyPasteTags.count)
-			let alertPaste = UIAlertController(title: NSLocalizedString("Paste", comment: ""), message: question, preferredStyle: .alert)
-            alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
-            alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Merge Tags", comment: ""), style: .default, handler: { [self] alertAction in
-                if let selectedPrimary = editorLayer.selectedPrimary {
-                    editorLayer.pasteTagsMerge(selectedPrimary)
-                }
-                refreshPushpinText()
-            }))
-            alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Replace Tags", comment: ""), style: .default, handler: { [self] alertAction in
-                if let selectedPrimary = editorLayer.selectedPrimary {
-                    editorLayer.pasteTagsReplace(selectedPrimary)
-                }
-                refreshPushpinText()
-            }))
-            mainViewController.present(alertPaste, animated: true)
-        } else {
-            if let selectedPrimary = editorLayer.selectedPrimary {
-                editorLayer.pasteTagsReplace(selectedPrimary)
-            }
-            refreshPushpinText()
-        }
+		editorLayer.pasteTags()
     }
 
     override func delete(_ sender: Any?) {
-		guard let selectedPrimary = editorLayer.selectedPrimary,
-			  let pushpinView = pushpinView
-		else { return }
-
-        let deleteHandler: ((_ action: UIAlertAction?) -> Void) = { [self] action in
-            var error: String? = nil
-			let canDelete: EditAction? = editorLayer.canDeleteSelectedObject(&error)
-            if let canDelete = canDelete {
-                canDelete()
-				var pos = pushpinView.arrowPoint
-                removePin()
-                if editorLayer.selectedPrimary != nil {
-					pos = point(on: editorLayer.selectedPrimary, for: pos)
-					if let primary = editorLayer.selectedPrimary {
-						placePushpin(at: pos, object: primary)
-                    }
-                }
-            } else {
-                showAlert(NSLocalizedString("Delete failed", comment: ""), message: error)
-            }
-        }
-
-        let alertDelete: UIAlertController
-		if (editorLayer.selectedRelation?.isMultipolygon() ?? false) && (selectedPrimary.isWay() != nil) {
-            // delete way from relation
-			alertDelete = UIAlertController(title: NSLocalizedString("Delete", comment: ""), message: NSLocalizedString("Member of multipolygon relation", comment: ""), preferredStyle: .actionSheet)
-            alertDelete.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { action in
-            }))
-            alertDelete.addAction(UIAlertAction(title: NSLocalizedString("Delete completely", comment: ""), style: .default, handler: deleteHandler))
-            alertDelete.addAction(UIAlertAction(title: NSLocalizedString("Detach from relation", comment: ""), style: .default, handler: { [self] action in
-                var error: String? = nil
-				if let canRemove: EditAction = editorLayer.mapData.canRemove(selectedPrimary, from:editorLayer.selectedRelation!, error:&error) {
-					canRemove()
-					editorLayer.selectedRelation = nil
-					refreshPushpinText()
-                } else {
-					showAlert(NSLocalizedString("Delete failed", comment: ""), message: error)
-                }
-            }))
-
-			// compute location for action sheet to originate
-            var button = editControl.bounds
-            let segmentWidth = button.size.width / CGFloat(editControl.numberOfSegments) // hack because we can't get the frame for an individual segment
-            button.origin.x += button.size.width - 2 * segmentWidth
-            button.size.width = segmentWidth
-            alertDelete.popoverPresentationController?.sourceView = editControl
-            alertDelete.popoverPresentationController?.sourceRect = button
-        } else {
-            // regular delete
-            let name = editorLayer.selectedPrimary?.friendlyDescription()
-            let question = "Delete \(name ?? "")?"
-            alertDelete = UIAlertController(title: NSLocalizedString("Delete", comment: ""), message: question, preferredStyle: .alert)
-            alertDelete.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
-            alertDelete.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive, handler: deleteHandler))
-        }
-		mainViewController.present(alertDelete, animated: true)
+		editorLayer.deleteCurrentSelection()
     }
 
     #if !os(iOS)
@@ -2125,7 +2041,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
     // show/hide edit control based on selection
     func updateEditControl() {
-        let show = pushpinView != nil || editorLayer.selectedPrimary != nil
+        let show = pushPin != nil || editorLayer.selectedPrimary != nil
         editControl.isHidden = !show
         if show {
             if editorLayer.selectedPrimary == nil {
@@ -2168,59 +2084,17 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
     }
 
 	func presentEditActionSheet(_ sender: Any?) {
-		var actionList: [EDIT_ACTION] = []
-		if let selectedWay = editorLayer.selectedWay {
-            if let selectedNode = editorLayer.selectedNode {
-                // node in way
-                let parentWays: [OsmWay] = [] // [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode];
-                let disconnect = parentWays.count > 1 || selectedNode.hasInterestingTags() || selectedWay.isSelfIntersection(selectedNode)
-				let split = selectedWay.isClosed() || (selectedNode != selectedWay.nodes[0] && selectedNode != selectedWay.nodes.last)
-				let join = parentWays.count > 1
-				let restriction = enableTurnRestriction && editorLayer.selectedWay?.tags["highway"] != nil && parentWays.count > 1
-
-				actionList = [.COPYTAGS]
-
-                if disconnect {
-					actionList.append(.DISCONNECT)
-                }
-                if split {
-					actionList.append(.SPLIT)
-                }
-                if join {
-					actionList.append(.JOIN)
-                }
-				actionList.append(.ROTATE)
-                if restriction {
-					actionList.append(.RESTRICT)
-                }
-			} else {
-                if selectedWay.isClosed() {
-                    // polygon
-					actionList = [.COPYTAGS, .RECTANGULARIZE, .CIRCULARIZE, .ROTATE, .DUPLICATE, .REVERSE, .CREATE_RELATION ]
-				} else {
-                    // line
-					actionList = [ .COPYTAGS, .STRAIGHTEN, .REVERSE, .DUPLICATE, .CREATE_RELATION ]
-				}
-            }
-        } else if editorLayer.selectedNode != nil {
-			// node
-            actionList = [ .COPYTAGS, .DUPLICATE ]
-        } else if let selectedRelation = editorLayer.selectedRelation {
-			// relation
-            if selectedRelation.isMultipolygon() {
-				actionList = [ .COPYTAGS, .ROTATE, .DUPLICATE ]
-			} else {
-				actionList = [ .COPYTAGS, .PASTETAGS ]
-            }
-		} else {
+		let actionList = editorLayer.editActionsAvailable()
+		if actionList.isEmpty {
 			// nothing selected
 			return
-        }
+		}
+
         let actionSheet = UIAlertController(title: NSLocalizedString("Perform Action", comment: ""), message: nil, preferredStyle: .actionSheet)
         for value in actionList {
 			let title = ActionTitle(value, false)
             actionSheet.addAction(UIAlertAction(title: title, style: .default, handler: { [self] action in
-				performEdit(value)
+				editorLayer.performEdit(value)
             }))
         }
         actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { action in
@@ -2242,183 +2116,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		let segment = segmentedControl.selectedSegmentIndex
 		if segment < editControlActions.count {
 			let action = editControlActions[segment]
-			performEdit(action)
+			editorLayer.performEdit(action)
         }
 		segmentedControl.selectedSegmentIndex = UISegmentedControl.noSegment
     }
 
-	/// Performs the selected action on the currently selected editor objects
-	func performEdit(_ action: EDIT_ACTION) {
-        // if trying to edit a node in a way that has no tags assume user wants to edit the way instead
-        switch action {
-            case .RECTANGULARIZE, .STRAIGHTEN, .REVERSE, .DUPLICATE, .ROTATE, .CIRCULARIZE, .COPYTAGS, .PASTETAGS, .EDITTAGS, .CREATE_RELATION:
-                if (editorLayer.selectedWay != nil) && (editorLayer.selectedNode != nil) && (editorLayer.selectedNode?.tags.count ?? 0) == 0 && (editorLayer.selectedWay?.tags.count ?? 0) == 0 && !(editorLayer.selectedWay?.isMultipolygonMember() ?? false) {
-                    // promote the selection to the way
-                    editorLayer.selectedNode = nil
-                    refreshPushpinText()
-                }
-            case .SPLIT, .JOIN, .DISCONNECT, .RESTRICT, .ADDNOTE, .DELETE, .MORE:
-                break
-        }
-
-        var error: String? = nil
-        switch action {
-            case .COPYTAGS:
-                if let selectedPrimary = editorLayer.selectedPrimary {
-                    if !editorLayer.copyTags(selectedPrimary) {
-                        error = NSLocalizedString("The object does not contain any tags", comment: "")
-                    }
-                }
-            case .PASTETAGS:
-                if editorLayer.selectedPrimary == nil {
-                    // pasting to brand new object, so we need to create it first
-                    setTagsForCurrentObject([:])
-                }
-
-                if editorLayer.selectedWay != nil && editorLayer.selectedNode != nil && editorLayer.selectedWay?.tags.count ?? 0 == 0 {
-                    // if trying to edit a node in a way that has no tags assume user wants to edit the way instead
-                    editorLayer.selectedNode = nil
-                    refreshPushpinText()
-                }
-                paste(nil)
-            case .DUPLICATE:
-				guard let primary = editorLayer.selectedPrimary,
-					  let pushpinView = pushpinView
-				else { return }
-				let delta = CGPoint(x: crossHairs.position.x - pushpinView.arrowPoint.x,
-									y: crossHairs.position.y - pushpinView.arrowPoint.y)
-                var offset: OSMPoint
-                if hypot(delta.x, delta.y) > 20 {
-                    // move to position of crosshairs
-                    let p1 = longitudeLatitude(forScreenPoint: pushpinView.arrowPoint, birdsEye: true)
-                    let p2 = longitudeLatitude(forScreenPoint: crossHairs.position, birdsEye: true)
-					offset = OSMPoint(x: p2.longitude - p1.longitude, y: p2.latitude - p1.latitude)
-                } else {
-					offset = OSMPoint(x: 0.00005, y: -0.00005)
-                }
-				guard let newObject = editorLayer.duplicateObject(primary, withOffset: offset)
-				else {
-					error = NSLocalizedString("Could not duplicate object", comment: "")
-					break
-				}
-				editorLayer.selectedNode = newObject.isNode()
-				editorLayer.selectedWay = newObject.isWay()
-				editorLayer.selectedRelation = newObject.isRelation()
-				placePushpinForSelection()
-            case .ROTATE:
-                if editorLayer.selectedWay == nil && !(editorLayer.selectedRelation?.isMultipolygon() ?? false) {
-                    error = NSLocalizedString("Only ways/multipolygons can be rotated", comment: "")
-                } else {
-                    startObjectRotation()
-                }
-            case .RECTANGULARIZE:
-				guard let selectedWay = editorLayer.selectedWay else { return }
-				if selectedWay.ident >= 0 && !screenLongitudeLatitude().containsRect( selectedWay.boundingBox) {
-					error = NSLocalizedString("The selected way must be completely visible", comment: "") // avoid bugs where nodes are deleted from other objects
-                } else {
-					let rect: EditAction? = editorLayer.mapData.canOrthogonalizeWay(editorLayer.selectedWay!, error:&error)
-                    if let rect = rect {
-                        rect()
-                    }
-                }
-            case .REVERSE:
-				let reverse: EditAction? = editorLayer.mapData.canReverse( editorLayer.selectedWay!, error:&error)
-				if let reverse = reverse {
-                    reverse()
-                }
-            case .JOIN:
-				let join: EditAction? = editorLayer.mapData.canJoin(editorLayer.selectedWay!, at:editorLayer.selectedNode!, error:&error)
-				if let join = join {
-					join()
-                }
-            case .DISCONNECT:
-				let disconnect: EditActionReturnNode? = editorLayer.mapData.canDisconnectWay( editorLayer.selectedWay!, at:editorLayer.selectedNode!, error:&error)
-				if let disconnect = disconnect {
-					editorLayer.selectedNode = disconnect()
-					placePushpinForSelection()
-				}
-            case .SPLIT:
-				let split: EditActionReturnWay? = editorLayer.mapData.canSplitWay(editorLayer.selectedWay!, at:editorLayer.selectedNode!, error:&error)
-				if let split = split {
-					_ = split()
-                }
-            case .STRAIGHTEN:
-				if let selectedWay = editorLayer.selectedWay {
-					let boundingBox = selectedWay.boundingBox
-					if selectedWay.ident >= 0 && !screenLongitudeLatitude().containsRect( boundingBox) {
-						error = NSLocalizedString("The selected way must be completely visible", comment: "") // avoid bugs where nodes are deleted from other objects
-                    } else {
-						let straighten: EditAction? = editorLayer.mapData.canStraightenWay(selectedWay, error:&error)
-						if let straighten = straighten {
-							straighten()
-                        }
-                    }
-                }
-            case .CIRCULARIZE:
-				let circle: EditAction? = editorLayer.mapData.canCircularizeWay( editorLayer.selectedWay!, error:&error)
-				if let circle = circle {
-					circle()
-                }
-            case .EDITTAGS:
-                presentTagEditor(nil)
-            case .ADDNOTE:
-				if let pushpinView = pushpinView {
-					let pos = longitudeLatitude(forScreenPoint: pushpinView.arrowPoint, birdsEye: true)
-					let note = OsmNote(lat: pos.latitude, lon: pos.longitude)
-					mainViewController.performSegue(withIdentifier: "NotesSegue", sender: note)
-					removePin()
-				}
-            case .DELETE:
-                delete(nil)
-            case .MORE:
-                presentEditActionSheet(nil)
-            case .RESTRICT:
-                restrictOptionSelected()
-            case .CREATE_RELATION:
-                let create: ((_ type: String?) -> Void) = { [self] type in
-                    let relation = editorLayer.mapData.createRelation()
-                    var tags = editorLayer.selectedPrimary?.tags
-                    if tags == nil {
-                        tags = [:]
-                    }
-                    tags?["type"] = type
-                    editorLayer.mapData.setTags(tags ?? [:], for: relation)
-                    editorLayer.mapData.setTags([:], for: editorLayer.selectedPrimary!)
-
-					var error: String? = nil
-					let add: EditAction? = editorLayer.mapData.canAdd( editorLayer.selectedPrimary!, to:relation, withRole:"outer", error:&error)
-					add?()
-                    editorLayer.selectedNode = nil
-                    editorLayer.selectedWay = nil
-                    editorLayer.selectedRelation = relation
-                    editorLayer.setNeedsLayout()
-                    refreshPushpinText()
-                    showAlert(
-                        NSLocalizedString("Adding members:", comment: ""),
-                        message: NSLocalizedString("To add another member to the relation 'long press' on the way to be added", comment: ""))
-                }
-                let actionSheet = UIAlertController(title: NSLocalizedString("Create Relation Type", comment: ""), message: nil, preferredStyle: .actionSheet)
-                actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Multipolygon", comment: ""), style: .default, handler: { action2 in
-                    create("multipolygon")
-                }))
-                actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
-
-                // compute location for action sheet to originate. This will be the uppermost node in the polygon
-				guard var box = editorLayer.selectedPrimary?.boundingBox else { return }
-				box = MapView.mapRect(forLatLonRect: box)
-                let rc = boundingScreenRect(forMapRect: box)
-				actionSheet.popoverPresentationController?.sourceView = self
-				actionSheet.popoverPresentationController?.sourceRect = CGRect(rc)
-                mainViewController.present(actionSheet, animated: true)
-                return
-        }
-        if let error = error {
-            showAlert(error, message: nil)
-        }
-
-        editorLayer.setNeedsLayout()
-        refreshPushpinText()
-    }
 
     @IBAction func presentTagEditor(_ sender: Any?) {
         mainViewController.performSegue(withIdentifier: "poiSegue", sender: nil)
@@ -2438,7 +2140,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
             // scroll view so intersection stays visible
             let rc = myVc.viewWithTitle.frame
-            let pt = pushpinView?.arrowPoint ?? .zero
+            let pt = pushPin?.arrowPoint ?? .zero
             let delta = CGPoint(x: Double(bounds.midX - pt.x), y: Double(bounds.midY - (rc.size.height) / 2 - pt.y))
             adjustOrigin(by: delta)
         }
@@ -2504,7 +2206,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
     func dragConnection(for node: OsmNode, segment: inout Int) -> OsmBaseObject? {
 		guard let way = editorLayer.selectedWay,
 			  let index = way.nodes.firstIndex(of: node),
-			  let point = pushpinView?.arrowPoint
+			  let point = pushPin?.arrowPoint
 		else { return nil }
 
 		var ignoreList: [OsmBaseObject] = []
@@ -2538,10 +2240,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
     }
 
     func removePin() {
-        if let pushpinView = pushpinView {
+        if let pushpinView = pushPin {
             pushpinView.removeFromSuperview()
         }
-		self.pushpinView = nil
+		self.pushPin = nil
 		updateEditControl()
     }
 
@@ -2585,7 +2287,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 								var error: String? = nil
 								let merge: EditActionReturnNode? = editorLayer.mapData.canMerge( dragNode, into:hit, error:&error)
 								if merge == nil {
-									self.showAlert(error, message: nil)
+									self.showAlert(error!, message: nil)
 									return
 								}
 								hit = merge!()
@@ -2703,7 +2405,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					let MinDistanceSide: CGFloat = 40.0
 					let MinDistanceTop = MinDistanceSide + 10.0
 					let MinDistanceBottom = MinDistanceSide + 120.0
-					let arrow = self.pushpinView?.arrowPoint ?? .zero
+					let arrow = self.pushPin?.arrowPoint ?? .zero
 					let screen = self.bounds
 					let SCROLL_SPEED: CGFloat = 10.0
 					var scrollx: CGFloat = 0
@@ -2739,8 +2441,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 							self.adjustOrigin(by: CGPoint(x: -sx, y: -sy))
 							dragObject(sx, sy)
 							// update position of pushpin
-							if let pt = self.pushpinView?.arrowPoint.withOffset(sx, sy) {
-								self.pushpinView?.arrowPoint = pt
+							if let pt = self.pushPin?.arrowPoint.withOffset(sx, sy) {
+								self.pushPin?.arrowPoint = pt
 							}
 							// update position of blink layer
 							if let pt = blinkLayer?.position.withOffset(-sx, -sy) {
@@ -2764,7 +2466,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
         confirmDrag = false
 		let pushpinView = PushPinView()
-		self.pushpinView = pushpinView
+		self.pushPin = pushpinView
 		self.refreshPushpinText()
 		pushpinView.layer.zPosition = Z_PUSHPIN
 		pushpinView.arrowPoint = point
@@ -2820,85 +2522,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
     func refreshPushpinText() {
 		let text = editorLayer.selectedPrimary?.friendlyDescription() ?? NSLocalizedString("(new object)", comment: "")
-		pushpinView?.text = text
+		pushPin?.text = text
     }
 
-    func createNode(at dropPoint: CGPoint) {
-        if editorLayer.isHidden {
-            flashMessage(NSLocalizedString("Editing layer not visible", comment: ""))
-            return
-        }
-
-		// we are either creating a brand new node unconnected to an existing way,
-		// converting a dropped pin to a way by adding a new node
-		// or adding a node to a selected way/node combination
-		guard let pushpinView = pushpinView,
-			  editorLayer.selectedNode == nil || editorLayer.selectedWay != nil
-		else {
-			// drop a new pin
-			editorLayer.selectedNode = nil
-			editorLayer.selectedWay = nil
-			editorLayer.selectedRelation = nil
-			placePushpin(at: dropPoint, object: nil)
-			return
-		}
-
-		let prevPointIsOffScreen = !bounds.contains(pushpinView.arrowPoint)
-		let offscreenWarning: (()->Void) = {
-			self.flashMessage(NSLocalizedString("Selected object is off screen", comment: ""))
-		}
-
-		if let selectedWay = editorLayer.selectedWay,
-		   let selectedNode = editorLayer.selectedNode
-		{
-			// already editing a way so try to extend it
-			if selectedWay.isClosed() || !(selectedNode == selectedWay.nodes.first || selectedNode == selectedWay.nodes.last) {
-				if prevPointIsOffScreen {
-					offscreenWarning()
-					return
-				}
-			}
-		} else if editorLayer.selectedPrimary == nil {
-			// just dropped a pin, so convert it into a way
-		} else if editorLayer.selectedWay != nil && editorLayer.selectedNode == nil {
-			// add a new node to a way at location of pushpin
-			if prevPointIsOffScreen {
-				offscreenWarning()
-				return
-			}
-		} else {
-			// not supported
-			return
-		}
-		switch editorLayer.extendSelectedWay(to: dropPoint, from: pushpinView.arrowPoint) {
-		case let .success(pt):
-			placePushpinForSelection(at: pt)
-		case let .failure(error):
-			if case .text(let text) = error {
-				showAlert(NSLocalizedString("Can't extend way", comment: ""), message: text)
-			}
-		}
-	}
-
-	func setTagsForCurrentObject(_ tags: [String : String]) {
-        if let selectedPrimary = editorLayer.selectedPrimary {
-			// update current object
-			editorLayer.mapData.setTags(tags, for: selectedPrimary)
-			refreshPushpinText()
-			refreshNoteButtonsFromDatabase()
-		} else {
-            // create new object
-            assert((pushpinView != nil))
-            let point = pushpinView?.arrowPoint
-            let node = editorLayer.createNode(at: point ?? CGPoint())
-            editorLayer.mapData.setTags(tags, for: node)
-            editorLayer.selectedNode = node
-            // create new pushpin for new object
-            placePushpinForSelection()
-		}
-        editorLayer.setNeedsLayout()
-		confirmDrag = false
-    }
 
     func unblinkObject() {
         blinkLayer?.removeFromSuperlayer()
@@ -3254,9 +2880,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
             let point = tap.location(in: self)
             if plusButtonTimestamp != 0.0 {
 				// user is doing a long-press on + button
-				createNode(at: point)
+				editorLayer.addNode(at: point)
             } else {
-				selectObjectAtPoint(point)
+				editorLayer.selectObjectAtPoint(point)
             }
         }
     }
@@ -3270,7 +2896,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
                     // treat as tap, but make sure it occured inside the button
                     let touch = recognizer.location(in: recognizer.view)
 					if recognizer.view?.bounds.contains(touch) ?? false {
-                        createNode(at: crossHairs.position)
+						editorLayer.addNode(at: crossHairs.position)
                     }
                 }
                 plusButtonTimestamp = 0.0
@@ -3283,82 +2909,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
     // long press on map allows selection of various objects near the location
     @IBAction func screenLongPressGesture(_ longPress: UILongPressGestureRecognizer) {
-        if longPress.state == .began && !editorLayer.isHidden {
-            let point = longPress.location(in: self)
-
-			let objects = editorLayer.osmHitTestMultiple(point, radius: DefaultHitTestRadius)
-			if objects.count == 0 {
-                return
-            }
-
-            // special case for adding members to relations:
-            if editorLayer.selectedPrimary?.isRelation()?.isMultipolygon() ?? false {
-				let ways = objects.compactMap({ $0 as? OsmWay })
-				if ways.count == 1 {
-                    let confirm = UIAlertController(title: NSLocalizedString("Add way to multipolygon?", comment: ""), message: nil, preferredStyle: .alert)
-                    let addMmember: ((String?) -> Void) = { [self] role in
-                        var error: String? = nil
-						let add: EditAction? = editorLayer.mapData.canAdd( ways[0], to:editorLayer.selectedRelation!, withRole:role, error:&error)
-						if let add = add {
-                            add()
-                            flashMessage(NSLocalizedString("added to multipolygon relation", comment: ""))
-                            editorLayer.setNeedsLayout()
-                        } else {
-                            showAlert(NSLocalizedString("Error", comment: ""), message: error)
-                        }
-                    }
-                    confirm.addAction(UIAlertAction(title: NSLocalizedString("Add outer member", comment: "Add to relation"), style: .default, handler: { action in
-                        addMmember("outer")
-                    }))
-                    confirm.addAction(UIAlertAction(title: NSLocalizedString("Add inner member", comment: "Add to relation"), style: .default, handler: { action in
-                        addMmember("inner")
-                    }))
-                    confirm.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
-                    mainViewController.present(confirm, animated: true)
-                }
-                return
-            }
-
-            let multiSelectSheet = UIAlertController(title: NSLocalizedString("Select Object", comment: ""), message: nil, preferredStyle: .actionSheet)
-            for object in objects {
-				var title = object.friendlyDescription()
-                if !title.hasPrefix("(") {
-                    // indicate what type of object it is
-                    if (object.isNode() != nil) {
-                        title = title + NSLocalizedString(" (node)", comment: "")
-                    } else if (object.isWay() != nil) {
-                        title = title + NSLocalizedString(" (way)", comment: "")
-                    } else if (object.isRelation() != nil) {
-                        let type = object.tags["type"] ?? NSLocalizedString("relation", comment: "")
-                        title = title + " (\(type))"
-                    }
-                }
-                multiSelectSheet.addAction(UIAlertAction(title: title, style: .default, handler: { [self] action in
-                    // processing for selecting one of multipe objects
-                    editorLayer.selectedNode = nil
-                    editorLayer.selectedWay = nil
-                    editorLayer.selectedRelation = nil
-                    if let node = object.isNode() {
-						// select the way containing the node, then select the node in the way
-						editorLayer.selectedWay  = objects.first(where: { ($0 as? OsmWay)?.nodes.contains(node) ?? false}) as? OsmWay
-						editorLayer.selectedNode = node
-					} else if object.isWay() != nil {
-						editorLayer.selectedWay = object.isWay()
-					} else if object.isRelation() != nil {
-						editorLayer.selectedRelation = object.isRelation()
-					}
-					let pos = self.point(on: object, for: point)
-					placePushpin(at: pos, object: object)
-                }))
-            }
-            multiSelectSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
-            mainViewController.present(multiSelectSheet, animated: true)
-            // set position
-			let rc = CGRect(x: point.x, y: point.y, width: 0.0, height: 0.0)
-			multiSelectSheet.popoverPresentationController?.sourceView = self
-            multiSelectSheet.popoverPresentationController?.sourceRect = rc
-        }
-    }
+		if longPress.state == .began && !self.isHidden {
+			let point = longPress.location(in: self)
+			editorLayer.longPressAtPoint( point )
+		}
+	}
 
     @IBAction func handleRotationGesture(_ rotationGesture: UIRotationGestureRecognizer) {
 		if let rotate = self.isRotateObjectMode {
@@ -3435,93 +2990,57 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
         }
     }
 
-    func selectObjectAtPoint(_ point: CGPoint) {
-
-        // disable rotation if in action
-        if isRotateObjectMode != nil {
-			endObjectRotation()
-        }
-
-        unblinkObject() // used by Mac Catalyst, harmless otherwise
-
-        if editorLayer.selectedWay != nil,
-			// check for selecting node inside previously selected way
-			let hit = editorLayer.osmHitTestNode(inSelectedWay: point, radius: DefaultHitTestRadius)
-		{
-			editorLayer.selectedNode = hit
-
-		} else {
-
-            // hit test anything
-			var segment = -1
-			if let hit = editorLayer.osmHitTest(point, radius: DefaultHitTestRadius, isDragConnect: false, ignoreList: [], segment: &segment) {
-                if let hit = hit as? OsmNode {
-                    editorLayer.selectedNode = hit
-                    editorLayer.selectedWay = nil
-                    editorLayer.selectedRelation = nil
-                } else if let hit = hit as? OsmWay {
-					if let selectedRelation = editorLayer.selectedRelation,
-						hit.parentRelations.contains(selectedRelation)
-					{
-						// selecting way inside previously selected relation
-						editorLayer.selectedNode = nil
-						editorLayer.selectedWay = hit
-					} else if hit.parentRelations.count > 0 {
-						// select relation the way belongs to
-						var relations = hit.parentRelations.filter { relation in
-							return relation.isMultipolygon() || relation.isBoundary() || relation.isWaterway()
-						}
-						if relations.count == 0 && !hit.hasInterestingTags() {
-							relations = hit.parentRelations // if the way doesn't have tags then always promote to containing relation
-						}
-						if let relation = relations.first {
-							editorLayer.selectedNode = nil
-							editorLayer.selectedWay = nil
-							editorLayer.selectedRelation = relation
-						} else {
-							editorLayer.selectedNode = nil
-							editorLayer.selectedWay = hit
-							editorLayer.selectedRelation = nil
-						}
-					} else {
-						editorLayer.selectedNode = nil
-						editorLayer.selectedWay = hit
-						editorLayer.selectedRelation = nil
-					}
-                } else if let hit = hit as? OsmRelation {
-                    editorLayer.selectedNode = nil
-                    editorLayer.selectedWay = nil
-                    editorLayer.selectedRelation = hit
-				} else {
-					fatalError()
-				}
-			} else {
-                editorLayer.selectedNode = nil
-                editorLayer.selectedWay = nil
-                editorLayer.selectedRelation = nil
-            }
-        }
-
-        removePin()
-
-        if let selectedPrimary = editorLayer.selectedPrimary {
-            // adjust tap point to touch object
-            let latLon = longitudeLatitude(forScreenPoint: point, birdsEye: true)
-            var pt = OSMPoint(x: latLon.longitude, y: Double(latLon.latitude))
-			pt = selectedPrimary.pointOnObjectForPoint(pt)
-			let point = screenPoint(forLatitude: pt.y, longitude: pt.x, birdsEye: true)
-
-			placePushpin(at: point, object: selectedPrimary)
-
-            if selectedPrimary is OsmWay || selectedPrimary is OsmRelation {
-				// if they later try to drag this way ask them if they really wanted to
-                confirmDrag = selectedPrimary.modifyCount == 0
-            }
-        }
-    }
 
     func rightClick(atLocation location: CGPoint) {
         // right-click is equivalent to holding + and clicking
-        createNode(at: location)
+		editorLayer.addNode(at: location)
     }
+}
+
+// EditorMap extensions
+extension MapView: EditorMapOwner {
+
+	func didSetTagsOnObject() {
+		confirmDrag = false
+		refreshNoteButtonsFromDatabase()
+	}
+
+	func crosshairs() -> CGPoint {
+		return crossHairs.position
+	}
+
+	func editTurnRestrictions() -> Bool {
+		return enableTurnRestriction
+	}
+
+	func pushpinView() -> PushPinView? {
+		return self.pushPin
+	}
+
+	func presentAlert(alert: UIAlertController, location: MenuLocation) {
+		switch location {
+		case .none:
+			break
+		case .editBar:
+			var button = editControl.bounds
+			let segmentWidth = button.size.width / CGFloat(editControl.numberOfSegments) // hack because we can't get the frame for an individual segment
+			button.origin.x += button.size.width - 2 * segmentWidth
+			button.size.width = segmentWidth
+			alert.popoverPresentationController?.sourceView = editControl
+			alert.popoverPresentationController?.sourceRect = button
+		case let .rect(rc):
+			alert.popoverPresentationController?.sourceView = self
+			alert.popoverPresentationController?.sourceRect = rc
+		}
+		mainViewController.present(alert, animated: true)
+	}
+
+	func addNote() {
+		if let pushpinView = pushPin {
+			let pos = self.longitudeLatitude(forScreenPoint: pushpinView.arrowPoint, birdsEye: true)
+			let note = OsmNote(lat: pos.latitude, lon: pos.longitude)
+			mainViewController.performSegue(withIdentifier: "NotesSegue", sender: note)
+			removePin()
+		}
+	}
 }

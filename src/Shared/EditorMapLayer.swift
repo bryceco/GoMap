@@ -23,6 +23,47 @@ private let MinIconSizeInMeters: CGFloat = 2.0
 private let Pixels_Per_Character: CGFloat = 8.0
 private let NodeHighlightRadius: CGFloat = 6.0
 
+enum MenuLocation {
+	case none
+	case editBar
+	case rect(CGRect)
+}
+
+protocol EditorMapOwner: UIView {
+	func pushpinView() -> PushPinView?	// fetch the pushpin from owner
+	func removePin()
+	func refreshPushpinText()
+	func placePushpin(at: CGPoint, object: OsmBaseObject?)
+	func placePushpinForSelection(at point: CGPoint?)
+
+	func flashMessage(_ message: String)
+	func showAlert(_ title: String, message: String?)
+	func presentAlert( alert: UIAlertController, location: MenuLocation)
+
+	func crosshairs() -> CGPoint
+
+	func point(on object: OsmBaseObject?, for point: CGPoint) -> CGPoint
+	func longitudeLatitude(forScreenPoint point: CGPoint, birdsEye: Bool) -> CLLocationCoordinate2D
+	func screenPoint(forLatitude latitude: Double, longitude: Double, birdsEye: Bool) -> CGPoint
+	func screenLongitudeLatitude() -> OSMRect
+
+	func editTurnRestrictions() -> Bool
+	func restrictOptionSelected()
+
+	func presentTagEditor(_ sender: Any?)
+	func presentEditActionSheet(_ sender: Any?)
+
+	// FIXME: We should take over this functionality
+	func unblinkObject()
+	func startObjectRotation()
+
+	// FIXME: this shouldn't be in the editor layer
+	func addNote()
+
+	// notify owner that tags changed so it can refresh e.g. FIXME buttons
+	func didSetTagsOnObject()
+}
+
 final class EditorMapLayer: CALayer {
     var iconSize = CGSize.zero
 	var highwayScale: CGFloat = 2.0
@@ -42,14 +83,15 @@ final class EditorMapLayer: CALayer {
 		}
 	}
 
-    let mapData: OsmMapData
+	let mapData: OsmMapData
+	let owner: EditorMapOwner
 
-    var addNodeInProgress = false
     private(set) var atVisibleObjectLimit = false
     private let geekbenchScoreProvider = GeekbenchScoreProvider()
 
     init(mapView: MapView) {
 		self.mapView = mapView
+		self.owner = mapView
 
 		var t = CACurrentMediaTime()
 		if let mapData = OsmMapData.withArchivedData() {
@@ -125,6 +167,7 @@ final class EditorMapLayer: CALayer {
 	override init(layer: Any) {
 		let layer = layer as! EditorMapLayer
 		self.mapView = layer.mapView
+		self.owner = layer.owner
 		self.mapData = layer.mapData
 		self.baseLayer = CATransformLayer()	// not sure if we should provide the original or not?
 		super.init(layer: layer)
@@ -1788,129 +1831,6 @@ final class EditorMapLayer: CALayer {
 		return nil
     }
     
-    // MARK: Copy/Paste
-
-	var copyPasteTags: [String:String] {
-		get { return UserDefaults.standard.object(forKey: "copyPasteTags") as? [String : String] ?? [:] }
-		set { UserDefaults.standard.set(newValue, forKey: "copyPasteTags") }
-	}
-
-	func copyTags(_ object: OsmBaseObject) -> Bool {
-		guard object.tags.count > 0 else { return false }
-		copyPasteTags = object.tags
-		return true
-	}
-    
-	func canPasteTags() -> Bool {
-		return self.copyPasteTags.count > 0
-	}
-    
-    func pasteTagsMerge(_ object: OsmBaseObject) {
-        // Merge tags
-		let newTags = OsmTags.Merge(ourTags: object.tags, otherTags: self.copyPasteTags, allowConflicts: true)!
-		mapData.setTags(newTags, for: object)
-		setNeedsLayout()
-    }
-    
-    func pasteTagsReplace(_ object: OsmBaseObject) {
-		// Replace all tags
-		mapData.setTags(self.copyPasteTags, for: object)
-		setNeedsLayout()
-	}
-    
-    // MARK: Editing
-    
-    func adjust(_ node: OsmNode, byDistance delta: CGPoint) {
-        var pt = mapView.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: true)
-        pt.x += delta.x
-        pt.y -= delta.y
-        let loc = mapView.longitudeLatitude(forScreenPoint: pt, birdsEye: true)
-        mapData.setLongitude(loc.longitude, latitude: loc.latitude, for: node)
-        
-        setNeedsLayout()
-    }
-    
-    func duplicateObject(_ object: OsmBaseObject, withOffset offset: OSMPoint) -> OsmBaseObject? {
-        let newObject = mapData.duplicate(object, withOffset: offset)!
-		setNeedsLayout()
-		return newObject
-    }
-    
-	func createNode(at point: CGPoint) -> OsmNode {
-        let loc = mapView.longitudeLatitude(forScreenPoint: point, birdsEye: true)
-        let node = mapData.createNode(atLocation: loc)
-        setNeedsLayout()
-        return node
-    }
-    
-    func createWay(with node: OsmNode) -> OsmWay {
-        let way = mapData.createWay()
-        var dummy: String? = nil
-		let add = mapData.canAddNode(to: way, at: 0, error: &dummy)
-        add?(node)
-        setNeedsLayout()
-        return way
-    }
-    
-    // MARK: Editing actions that modify data and can fail
-
-    func canAddNode(toWay way: OsmWay, atIndex index: Int, error: inout String?) -> EditActionWithNode? {
-		guard let action = mapData.canAddNode(to: way, at: index, error: &error) else {
-			return nil
-		}
-        return { [self] node in
-			action(node)
-			setNeedsLayout()
-        }
-    }
-    
-    func canDeleteSelectedObject(_ error: inout String?) -> EditAction? {
-		if let selectedNode = selectedNode {
-            
-			// delete node from selected way
-			let action: EditAction?
-			if let selectedWay = selectedWay {
-				action = mapData.canDelete(selectedNode, from: selectedWay, error: &error)
-            } else {
-				action = mapData.canDelete(selectedNode, error: &error)
-			}
-            if let action = action {
-                let way = selectedWay
-                return { [self] in
-                    // deselect node after we've removed it from ways
-                    action()
-                    self.selectedNode = nil
-                    if way?.deleted ?? false {
-						self.selectedWay = nil
-                    }
-                    setNeedsLayout()
-                }
-            }
-        } else if let selectedWay = selectedWay {
-            
-			// delete way
-			if let action = mapData.canDelete(selectedWay, error: &error) {
-				return { [self] in
-                    action()
-                    self.selectedNode = nil
-                    self.selectedWay = nil
-                    setNeedsLayout()
-                }
-            }
-        } else if let selectedRelation = selectedRelation {
-			if let action = mapData.canDelete(selectedRelation, error: &error) {
-				return { [self] in
-                    action()
-                    self.selectedNode = nil
-                    self.selectedWay = nil
-                    self.selectedRelation = nil
-                    setNeedsLayout()
-                }
-            }
-        }
-        
-        return nil
-    }
     
     // MARK: Highlighting and Selection
 
