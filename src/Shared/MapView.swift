@@ -166,14 +166,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	var isRotateObjectMode: (rotateObjectOverlay: CAShapeLayer, rotateObjectCenter: OSMPoint)? = nil
 
-    var confirmDrag = false // should we confirm that the user wanted to drag the selected object? Only if they haven't modified it since selecting it
-
     var lastErrorDate: Date? // to prevent spamming of error dialogs
     var ignoreNetworkErrorsUntilDate: Date?
     var voiceAnnouncement: VoiceAnnouncement?
     var tapAndDragGesture: TapAndDragGesture?
-    var pushpinDragTotalMove = CGPoint.zero // to maintain undo stack
-    var gestureDidMove = false // to maintain undo stack
 
     var addNodeButtonLongPressGestureRecognizer: UILongPressGestureRecognizer?
     var plusButtonTimestamp: TimeInterval = 0.0
@@ -243,7 +239,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	private(set) var backgroundLayers: [CALayer] = [] // list of all layers that need to be resized, etc.
 
 	private var _screenFromMapTransform: OSMTransform = OSMTransform.identity
-	var screenFromMapTransform: OSMTransform {	// must be "@objc dynamic" because it's observed
+	var screenFromMapTransform: OSMTransform {
         get {
             return _screenFromMapTransform
         }
@@ -383,7 +379,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
         }
     }
     private(set) var pushPin: PushPinView?
-    var silentUndo = false // don't flash message about undo
+
 	let tileServerList: TileServerList
     private(set) var birdsEyeRotation = 0.0
     private(set) var birdsEyeDistance = 0.0
@@ -417,8 +413,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
     var enableUnnamedRoadHalo: Bool = false {
 		didSet {
-			editorLayer.mapData.clearCachedProperties() // reset layers associated with objects
-			editorLayer.setNeedsLayout()
+			editorLayer.clearCachedProperties()
         }
     }
 
@@ -431,10 +426,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
     var enableTurnRestriction: Bool = false {
 		didSet {
-			editorLayer.mapData.clearCachedProperties() // reset layers associated with objects
-			editorLayer.setNeedsLayout()
-        }
-    }
+			editorLayer.clearCachedProperties()
+		}
+	}
     var enableAutomaticCacheManagement = false
 
 	private let AUTOSCROLL_DISPLAYLINK_NAME = "autoScroll"
@@ -672,49 +666,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
         voiceAnnouncement?.mapView = self
         voiceAnnouncement?.radius = 30 // meters
         #endif
-
-        weak var weakSelf = self
-        editorLayer.mapData.undoCommentCallback = { undo, context in
-
-			guard let myself = weakSelf,
-				  !myself.silentUndo
-			else {
-				return
-            }
-
-			guard let action = context["comment"] as? String,
-				  let location = context["location"] as? Data
-			else { return }
-			// FIXME: Use Coder for OSMTransform
-			if location.count == MemoryLayout<OSMTransform>.size {
-				let transform: OSMTransform = location.withUnsafeBytes( { return $0.load(as: OSMTransform.self) } )
-				weakSelf?.screenFromMapTransform = transform
-            }
-			let title = undo ? NSLocalizedString("Undo", comment: "") : NSLocalizedString("Redo", comment: "")
-
-            myself.editorLayer.selectedRelation = context["selectedRelation"] as? OsmRelation
-            myself.editorLayer.selectedWay = context["selectedWay"] as? OsmWay
-            myself.editorLayer.selectedNode = context["selectedNode"] as? OsmNode
-            if myself.editorLayer.selectedNode?.deleted ?? false {
-                myself.editorLayer.selectedNode = nil
-			}
-
-			if let pushpin = context["pushpin"] as? String,
-			   let primary = myself.editorLayer.selectedPrimary
-			{
-                // since we don't record the pushpin location until after a drag has begun we need to re-center on the object:
-                var pt = NSCoder.cgPoint(for: pushpin)
-                let loc = myself.longitudeLatitude(forScreenPoint: pt, birdsEye: true)
-                let pos = primary.pointOnObjectForPoint(OSMPoint(x: loc.longitude, y: loc.latitude))
-				pt = myself.screenPoint(forLatitude: pos.y, longitude: pos.x, birdsEye: true)
-                // place pushpin
-				myself.placePushpin(at: pt, object: primary)
-            } else {
-                myself.removePin()
-            }
-            let message = "\(title) \(action)"
-            myself.flashMessage(message)
-        }
     }
 
     override func awakeFromNib() {
@@ -785,12 +736,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
         notesDatabase.mapData = editorLayer.mapData
         notesViewDict = [:]
 
-        // observe changes to aerial visibility so we can show/hide bing logo
-        aerialLayer.addObserver(self, forKeyPath: "hidden", options: .new, context: nil)
-        editorLayer.addObserver(self, forKeyPath: "hidden", options: .new, context: nil)
-
-        editorLayer.whiteText = !aerialLayer.isHidden
-
         // center button
         centerOnGPSButton.isHidden = true
 
@@ -829,6 +774,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
         countryCodeForLocation = UserDefaults.standard.object(forKey: "countryCodeForLocation") as? String
 
         updateAerialAttributionButton()
+
+		editorLayer.whiteText = !aerialLayer.isHidden
     }
 
     func viewDidAppear() {
@@ -899,23 +846,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
     func acceptsFirstResponder() -> Bool {
         return true
-    }
-
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if (object as? MercatorTileLayer) === aerialLayer && keyPath == "hidden" {
-			let hidden = (change?[.newKey] as? NSNumber)?.boolValue ?? false
-            aerialServiceLogo.isHidden = hidden
-        } else if (object as? EditorMapLayer) === editorLayer && keyPath == "hidden" {
-            let hidden = (change?[.newKey] as? NSNumber)?.boolValue ?? false
-            if hidden {
-                editorLayer.selectedNode = nil
-                editorLayer.selectedWay = nil
-                editorLayer.selectedRelation = nil
-                removePin()
-            }
-        } else {
-            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
-        }
     }
 
     func save() {
@@ -1266,7 +1196,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
     func endObjectRotation() {
 		isRotateObjectMode?.rotateObjectOverlay.removeFromSuperlayer()
         placePushpinForSelection()
-        confirmDrag = false
+		editorLayer.dragState.confirmDrag = false
 		isRotateObjectMode = nil
 	}
 
@@ -1329,6 +1259,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
         mainViewController.updateUndoRedoButtonState()
         updateAerialAttributionButton()
         addNodeButton.isHidden = editorLayer.isHidden
+
+		editorLayer.whiteText = !aerialLayer.isHidden
     }
 
     func setAerialTileServer(_ service: TileServer) {
@@ -1559,8 +1491,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
     func discardStaleData() {
         if enableAutomaticCacheManagement {
-            let mapData = editorLayer.mapData
-            let changed = mapData.discardStaleData()
+			let changed = editorLayer.mapData.discardStaleData()
             if changed {
                 flashMessage(NSLocalizedString("Cache trimmed", comment: ""))
                 editorLayer.updateMapLocation() // download data if necessary
@@ -2217,157 +2148,22 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		return { [self] state, dx, dy, gesture in
 			switch state {
 				case .began:
-					self.editorLayer.mapData.beginUndoGrouping()
-					pushpinDragTotalMove = CGPoint(x: 0, y: 0)
-					gestureDidMove = false
+					editorLayer.dragBegin()
 				case .ended, .cancelled, .failed:
-					self.editorLayer.mapData.endUndoGrouping()
 					DisplayLink.shared.removeName("dragScroll")
-
 					let isRotate = self.isRotateObjectMode != nil
 					if isRotate {
 						self.endObjectRotation()
 					}
 					self.unblinkObject()
+					editorLayer.dragFinish(object: object, isRotate: isRotate )
+					break
 
-					if let way = object.isWay() {
-						// update things if we dragged a multipolygon inner member to become outer
-						self.editorLayer.mapData.updateParentMultipolygonRelationRoles(for: way)
-					} else if let selectedWay = self.editorLayer.selectedWay,
-							  object.isNode() != nil
-					{
-						// you can also move an inner to an outer by dragging nodes one at a time
-						self.editorLayer.mapData.updateParentMultipolygonRelationRoles(for: selectedWay)
-					}
-
-					if let selectedWay = self.editorLayer.selectedWay,
-					   let object = object.isNode()
-					{
-						// dragging a node that is part of a way
-						if let dragNode = object.isNode() {
-							let dragWay = selectedWay
-							var segment = -1
-							let hit = editorLayer.hitTestDragConnection(for: dragNode, segment: &segment)
-							if var hit = hit as? OsmNode {
-								// replace dragged node with hit node
-								var error: String? = nil
-								let merge: EditActionReturnNode? = editorLayer.mapData.canMerge( dragNode, into:hit, error:&error)
-								if merge == nil {
-									self.showAlert(error!, message: nil)
-									return
-								}
-								hit = merge!()
-								if dragWay.isArea() {
-									self.editorLayer.selectedNode = nil
-									let pt = self.screenPoint(forLatitude: hit.lat, longitude: hit.lon, birdsEye: true)
-									self.placePushpin(at: pt, object: dragWay)
-								} else {
-									self.editorLayer.selectedNode = hit
-									self.placePushpinForSelection()
-								}
-							} else if let hit = hit as? OsmWay {
-								// add new node to hit way
-								let pt = hit.pointOnObjectForPoint(dragNode.location())
-								self.editorLayer.mapData.setLongitude(pt.x, latitude: pt.y, for: dragNode)
-								var error: String? = nil
-								let add: EditActionWithNode? = editorLayer.canAddNode(toWay: hit, atIndex:segment+1, error:&error)
-								if let add = add {
-									add(dragNode)
-								} else {
-									self.showAlert(NSLocalizedString("Error connecting to way", comment: ""), message: error)
-								}
-							}
-						}
-						return
-					}
-					if isRotate {
-						break
-					}
-					if let selectedWay = self.editorLayer.selectedWay,
-					   selectedWay.tags.count == 0,
-					   selectedWay.parentRelations.count == 0
-					{
-						break
-					}
-					if self.editorLayer.selectedWay != nil && self.editorLayer.selectedNode != nil {
-						break
-					}
-					if self.confirmDrag {
-						self.confirmDrag = false
-
-						let alertMove = UIAlertController(title: NSLocalizedString("Confirm move", comment: ""), message: NSLocalizedString("Move selected object?", comment: ""), preferredStyle: .alert)
-						alertMove.addAction(UIAlertAction(title: NSLocalizedString("Undo", comment: ""), style: .cancel, handler: { action in
-							// cancel move
-							self.editorLayer.mapData.undo()
-							self.editorLayer.mapData.removeMostRecentRedo()
-							self.editorLayer.selectedNode = nil
-							self.editorLayer.selectedWay = nil
-							self.editorLayer.selectedRelation = nil
-							self.removePin()
-							self.editorLayer.setNeedsLayout()
-						}))
-						alertMove.addAction(UIAlertAction(title: NSLocalizedString("Move", comment: ""), style: .default, handler: { action in
-							// okay
-						}))
-						self.mainViewController.present(alertMove, animated: true)
-					}
 				case .changed:
 					// define the drag function
 					let dragObject: ((_ dragx: CGFloat, _ dragy: CGFloat) -> Void) = { dragx, dragy in
 						// don't accumulate undo moves
-						self.pushpinDragTotalMove.x += dragx
-						self.pushpinDragTotalMove.y += dragy
-						if self.gestureDidMove {
-							self.editorLayer.mapData.endUndoGrouping()
-							self.silentUndo = true
-							let dict = self.editorLayer.mapData.undo()
-							self.silentUndo = false
-							self.editorLayer.mapData.beginUndoGrouping()
-							if let dict = dict as? [String : String] {
-								// maintain the original pin location:
-								self.editorLayer.mapData.registerUndoCommentContext(dict)
-							}
-						}
-						self.gestureDidMove = true
-
-						// move all dragged nodes
-						if let rotate = self.isRotateObjectMode {
-							// rotate object
-							let delta = Double(-((self.pushpinDragTotalMove.x) + (self.pushpinDragTotalMove.y)) / 100)
-							let axis = self.screenPoint(forLatitude: rotate.rotateObjectCenter.y,
-														longitude: rotate.rotateObjectCenter.x,
-														birdsEye: true)
-							let nodeSet = (object.isNode() != nil) ? self.editorLayer.selectedWay?.nodeSet() : object.nodeSet()
-							for node in nodeSet ?? [] {
-								let pt = self.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: true)
-								let diff = OSMPoint(x: Double(pt.x - axis.x), y: Double(pt.y - axis.y))
-								let radius = hypot(diff.x, diff.y)
-								var angle = atan2(diff.y, diff.x)
-								angle += delta
-								let new = OSMPoint(x: Double(axis.x) + radius * Double(cos(angle)),y: Double(axis.y) + Double(radius * sin(angle)))
-								let dist = CGPoint(x: Double(new.x - Double(pt.x)), y: Double(-(Double(new.y) - Double(pt.y))))
-								self.editorLayer.adjust(node, byDistance: dist)
-							}
-						} else {
-							// drag object
-							let delta = CGPoint(x: Double(self.pushpinDragTotalMove.x), y: Double(-(self.pushpinDragTotalMove.y)))
-
-							for node in object.nodeSet() {
-								self.editorLayer.adjust(node, byDistance: delta)
-							}
-						}
-
-						// do hit testing for connecting to other objects
-						if (self.editorLayer.selectedWay != nil) && (object.isNode() != nil) {
-							var segment = -1
-							if let hit = editorLayer.hitTestDragConnection(for: object as! OsmNode, segment: &segment),
-							   hit.isWay() != nil || hit.isNode() != nil
-							{
-								self.blink(hit, segment: segment)
-							} else {
-								self.unblinkObject()
-							}
-						}
+						editorLayer.dragContinue(object: object, dragx: dragx, dragy: dragy, isRotateObjectMode: isRotateObjectMode)
 					}
 
 					// scroll screen if too close to edge
@@ -2433,7 +2229,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
     func placePushpin(at point: CGPoint, object: OsmBaseObject?) {
 		removePin()
 
-        confirmDrag = false
+		editorLayer.dragState.confirmDrag = false
 		let pushpinView = PushPinView()
 		self.pushPin = pushpinView
 		self.refreshPushpinText()
@@ -2888,39 +2684,13 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		if let rotate = self.isRotateObjectMode {
 			// Rotate object on screen
             if rotationGesture.state == .began {
-                editorLayer.mapData.beginUndoGrouping()
-                gestureDidMove = false
+				editorLayer.rotateBegin()
             } else if rotationGesture.state == .changed {
-                if gestureDidMove {
-                    // don't allows undo list to accumulate
-                    editorLayer.mapData.endUndoGrouping()
-                    silentUndo = true
-                    editorLayer.mapData.undo()
-                    silentUndo = false
-                    editorLayer.mapData.beginUndoGrouping()
-                }
-                gestureDidMove = true
-
-                let delta = rotationGesture.rotation
-				let axis = screenPoint(forLatitude: rotate.rotateObjectCenter.y, longitude: rotate.rotateObjectCenter.x, birdsEye: true)
-				let rotatedObject = editorLayer.selectedRelation ?? editorLayer.selectedWay
-                if let nodeSet = rotatedObject?.nodeSet() {
-                    for node in nodeSet {
-                        let pt = screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: true)
-                        let diff = OSMPoint(x: Double(CGFloat(pt.x - axis.x)), y: Double(CGFloat(pt.y - axis.y)))
-                        let radius = hypot(diff.x, diff.y)
-                        var angle = atan2(diff.y, diff.x)
-
-                        angle += Double(delta)
-                        let new = OSMPoint(x: Double(axis.x) + radius * cos(angle), y: Double(axis.y) + radius * sin(angle))
-                        let dist = CGPoint(x: CGFloat(new.x) - pt.x, y: -(CGFloat(new.y) - pt.y))
-                        editorLayer.adjust(node, byDistance: dist)
-                    }
-                }
+				editorLayer.rotateContinue(delta: rotationGesture.rotation, rotate: rotate)
             } else {
                 // ended
                 endObjectRotation()
-                editorLayer.mapData.endUndoGrouping()
+				editorLayer.rotateFinish()
             }
             return
         }
@@ -2969,8 +2739,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 // EditorMap extensions
 extension MapView: EditorMapOwner {
 
-	func didSetTagsOnObject() {
-		confirmDrag = false
+	func didUpdateObject() {
+		refreshPushpinText()
 		refreshNoteButtonsFromDatabase()
 	}
 

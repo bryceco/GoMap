@@ -31,7 +31,6 @@ enum MenuLocation {
 protocol EditorMapOwner: UIView {
 	func pushpinView() -> PushPinView?	// fetch the pushpin from owner
 	func removePin()
-	func refreshPushpinText()
 	func placePushpin(at: CGPoint, object: OsmBaseObject?)
 	func placePushpinForSelection(at point: CGPoint?)
 
@@ -53,6 +52,7 @@ protocol EditorMapOwner: UIView {
 	func presentEditActionSheet(_ sender: Any?)
 
 	// FIXME: We should take over this functionality
+	func blink(_ object: OsmBaseObject?, segment: Int)
 	func unblinkObject()
 	func startObjectRotation()
 
@@ -60,7 +60,7 @@ protocol EditorMapOwner: UIView {
 	func addNote()
 
 	// notify owner that tags changed so it can refresh e.g. FIXME buttons
-	func didSetTagsOnObject()
+	func didUpdateObject()
 }
 
 final class EditorMapLayer: CALayer {
@@ -71,20 +71,31 @@ final class EditorMapLayer: CALayer {
     var isPerformingLayout = false
     var baseLayer: CATransformLayer
 
+	struct DragState {
+		var totalMovement: CGPoint	// to update note positions
+		var didMove: Bool 			// to maintain undo stack
+		var confirmDrag: Bool		// should we confirm that the user wanted to drag the selected object? Only if they haven't modified it since selecting it
+	}
+	var dragState = DragState(totalMovement: .zero, didMove: false, confirmDrag: false)
+
 	let objectFilters = EditorFilters()
 
-	@objc var mapView: MapView	// mark as objc for KVO
+	var mapView: MapView
 	var whiteText = false {
 		didSet {
-			CurvedGlyphLayer.whiteOnBlack = self.whiteText
-			resetDisplayLayers()
+			if oldValue != whiteText {
+				CurvedGlyphLayer.whiteOnBlack = self.whiteText
+				resetDisplayLayers()
+			}
 		}
 	}
 
 	let mapData: OsmMapData
 	let owner: EditorMapOwner
 
-    private(set) var atVisibleObjectLimit = false
+	var silentUndo = false // don't flash message about undo
+
+	private(set) var atVisibleObjectLimit = false
     private let geekbenchScoreProvider = GeekbenchScoreProvider()
 
     init(mapView: MapView) {
@@ -154,7 +165,44 @@ final class EditorMapLayer: CALayer {
 			}
 			return dict
         }
-        
+		mapData.undoCommentCallback = { undo, context in
+			if self.silentUndo {
+				return
+			}
+
+			guard let action = context["comment"] as? String,
+				  let location = context["location"] as? Data
+			else { return }
+			// FIXME: Use Coder for OSMTransform
+			if location.count == MemoryLayout<OSMTransform>.size {
+				let transform: OSMTransform = location.withUnsafeBytes( { return $0.load(as: OSMTransform.self) } )
+				mapView.screenFromMapTransform = transform
+			}
+			let title = undo ? NSLocalizedString("Undo", comment: "") : NSLocalizedString("Redo", comment: "")
+
+			self.selectedRelation = context["selectedRelation"] as? OsmRelation
+			self.selectedWay = context["selectedWay"] as? OsmWay
+			self.selectedNode = context["selectedNode"] as? OsmNode
+			if self.selectedNode?.deleted ?? false {
+				self.selectedNode = nil
+			}
+
+			if let pushpin = context["pushpin"] as? String,
+			   let primary = self.selectedPrimary
+			{
+				// since we don't record the pushpin location until after a drag has begun we need to re-center on the object:
+				var pt = NSCoder.cgPoint(for: pushpin)
+				let loc = self.owner.longitudeLatitude(forScreenPoint: pt, birdsEye: true)
+				let pos = primary.pointOnObjectForPoint(OSMPoint(x: loc.longitude, y: loc.latitude))
+				pt = self.owner.screenPoint(forLatitude: pos.y, longitude: pos.x, birdsEye: true)
+				// place pushpin
+				self.owner.placePushpin(at: pt, object: primary)
+			} else {
+				self.owner.removePin()
+			}
+			let message = "\(title) \(action)"
+			self.owner.flashMessage(message)
+		}
 		addSublayer(baseLayer)
 
 		NotificationCenter.default.addObserver(forName: UIContentSizeCategory.didChangeNotification, object: nil, queue: nil, using: {_ in
@@ -194,6 +242,11 @@ final class EditorMapLayer: CALayer {
     }
 
     // MARK: Map data
+
+	func clearCachedProperties() {
+		self.mapData.clearCachedProperties() // reset layers associated with objects
+		self.setNeedsLayout()
+	}
     
     func purgeCachedDataHard(_ hard: Bool) {
 		self.selectedNode = nil
@@ -1581,6 +1634,12 @@ final class EditorMapLayer: CALayer {
 		didSet(wasHidden) {
 			if wasHidden && !isHidden {
 				updateMapLocation()
+			}
+			if !wasHidden && isHidden {
+				self.selectedNode = nil
+				self.selectedWay = nil
+				self.selectedRelation = nil
+				owner.removePin()
 			}
 		}
 	}
