@@ -28,7 +28,8 @@ enum MenuLocation {
 	case rect(CGRect)
 }
 
-protocol EditorMapOwner: UIView {
+// The UIView that hosts us.
+protocol EditorMapLayerOwner: UIView, MapViewProgress {
 	func pushpinView() -> PushPinView?	// fetch the pushpin from owner
 	func removePin()
 	func placePushpin(at: CGPoint, object: OsmBaseObject?)
@@ -37,19 +38,31 @@ protocol EditorMapOwner: UIView {
 	func flashMessage(_ message: String)
 	func showAlert(_ title: String, message: String?)
 	func presentAlert( alert: UIAlertController, location: MenuLocation)
+	func presentError(_ error: Error, flash: Bool)
 
 	func crosshairs() -> CGPoint
+
+	func screenFromMap() -> OSMTransform
+	func setScreenFromMap( transform: OSMTransform )	// used when undo/redo change the location
+	func observeTransform(withCallback: @escaping (OSMTransform)->Void)
 
 	func point(on object: OsmBaseObject?, for point: CGPoint) -> CGPoint
 	func longitudeLatitude(forScreenPoint point: CGPoint, birdsEye: Bool) -> CLLocationCoordinate2D
 	func screenPoint(forLatitude latitude: Double, longitude: Double, birdsEye: Bool) -> CGPoint
 	func screenLongitudeLatitude() -> OSMRect
+	func boundingScreenRect(forMapRect mapRect: OSMRect) -> OSMRect
+	func screenPoint(fromMapPoint point: OSMPoint, birdsEye: Bool) -> OSMPoint
+	func metersPerPixel() -> Double
 
-	func editTurnRestrictions() -> Bool
-	func restrictOptionSelected()
+	func birdsEye() -> (distance: Double, rotation: Double)?
+
+	func useTurnRestrictions() -> Bool
+	func useAutomaticCacheManagement() -> Bool
+	func useUnnamedRoadHalo() -> Bool
 
 	func presentTagEditor(_ sender: Any?)
 	func presentEditActionSheet(_ sender: Any?)
+	func presentTurnRestrictionEditor()
 
 	// FIXME: We should take over this functionality
 	func blink(_ object: OsmBaseObject?, segment: Int)
@@ -59,8 +72,9 @@ protocol EditorMapOwner: UIView {
 	// FIXME: this shouldn't be in the editor layer
 	func addNote()
 
-	// notify owner that tags changed so it can refresh e.g. FIXME buttons
+	// notify owner that tags changed so it can refresh e.g. fixme= buttons
 	func didUpdateObject()
+	func selectionDidChange()
 }
 
 final class EditorMapLayer: CALayer {
@@ -80,7 +94,6 @@ final class EditorMapLayer: CALayer {
 
 	let objectFilters = EditorFilters()
 
-	var mapView: MapView
 	var whiteText = false {
 		didSet {
 			if oldValue != whiteText {
@@ -91,22 +104,21 @@ final class EditorMapLayer: CALayer {
 	}
 
 	let mapData: OsmMapData
-	let owner: EditorMapOwner
+	let owner: EditorMapLayerOwner
 
 	var silentUndo = false // don't flash message about undo
 
 	private(set) var atVisibleObjectLimit = false
     private let geekbenchScoreProvider = GeekbenchScoreProvider()
 
-    init(mapView: MapView) {
-		self.mapView = mapView
-		self.owner = mapView
+    init(owner: EditorMapLayerOwner) {
+		self.owner = owner
 
 		var t = CACurrentMediaTime()
 		var alert: UIAlertController? = nil
 		if let mapData = OsmMapData.withArchivedData() {
 			t = CACurrentMediaTime() - t
-			if mapView.enableAutomaticCacheManagement {
+			if owner.useAutomaticCacheManagement() {
 				_=mapData.discardStaleData()
 			} else if t > 5.0 {
 				// need to pause before posting the alert because the view controller isn't ready here yet
@@ -139,14 +151,12 @@ final class EditorMapLayer: CALayer {
         whiteText = true
 
         // observe changes to screen
-		mapView.screenFromMapTransformObservors[ self ] = { _ in
-			self.updateMapLocation()
-		}
+		owner.observeTransform(withCallback: {_ in self.updateMapLocation() })
 
 		OsmMapData.setEditorMapLayerForArchive(self)
         
         mapData.undoContextForComment = { comment in
-            var trans = self.mapView.screenFromMapTransform
+			var trans = self.owner.screenFromMap()
 			let location = Data(bytes: &trans, count: MemoryLayout.size(ofValue: trans))
             var dict: [String : Any] = [:]
 			dict["comment"] = comment
@@ -176,7 +186,7 @@ final class EditorMapLayer: CALayer {
 			// FIXME: Use Coder for OSMTransform
 			if location.count == MemoryLayout<OSMTransform>.size {
 				let transform: OSMTransform = location.withUnsafeBytes( { return $0.load(as: OSMTransform.self) } )
-				mapView.screenFromMapTransform = transform
+				owner.setScreenFromMap(transform: transform)
 			}
 			let title = undo ? NSLocalizedString("Undo", comment: "") : NSLocalizedString("Redo", comment: "")
 
@@ -212,7 +222,6 @@ final class EditorMapLayer: CALayer {
 
 	override init(layer: Any) {
 		let layer = layer as! EditorMapLayer
-		self.mapView = layer.mapView
 		self.owner = layer.owner
 		self.mapData = layer.mapData
 		self.baseLayer = CATransformLayer()	// not sure if we should provide the original or not?
@@ -268,8 +277,8 @@ final class EditorMapLayer: CALayer {
             return
         }
         
-        if mapView.screenFromMapTransform.a == 1.0 {
-            return // identity, we haven't been initialized yet
+        if owner.screenFromMap().a == 1.0 {
+			return // identity, we haven't been initialized yet
         }
         
         let box = owner.screenLongitudeLatitude()
@@ -277,13 +286,13 @@ final class EditorMapLayer: CALayer {
 			return
 		}
 
-		mapData.update(withBox: box, progressDelegate: mapView) { [self] partial, error in
+		mapData.update(withBox: box, progressDelegate: owner) { [self] partial, error in
 			if let error = error {
 				DispatchQueue.main.async(execute: { [self] in
 					// present error asynchrounously so we don't interrupt the current UI action
 					if !isHidden {
 						// if we've been hidden don't bother displaying errors
-						mapView.presentError(error, flash: true)
+						owner.presentError(error, flash: true)
 					}
 				})
 			} else {
@@ -386,7 +395,7 @@ final class EditorMapLayer: CALayer {
         
 		for node in way.nodes {
 
-			let pt = OSMPoint(mapView.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false))
+			let pt = OSMPoint(owner.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false))
 			let inside = viewRect.containsPoint( pt)
 			defer {
 				prev = pt
@@ -587,7 +596,7 @@ final class EditorMapLayer: CALayer {
                     }
                     
                     // provide a halo for streets that don't have a name
-                    if mapView.enableUnnamedRoadHalo && (object.isWay()?.needsNoNameHighlight() ?? false) {
+                    if owner.useUnnamedRoadHalo() && (object.isWay()?.needsNoNameHighlight() ?? false) {
                         // it lacks a name
                         let haloLayer = CAShapeLayerWithProperties()
                         haloLayer.anchorPoint = CGPoint(x: 0, y: 0)
@@ -781,7 +790,7 @@ final class EditorMapLayer: CALayer {
         }
         
         // Turn Restrictions
-        if mapView.enableTurnRestriction {
+		if owner.useTurnRestrictions() {
 			if object.isRelation()?.isRestriction() ?? false {
 				let viaMembers = object.isRelation()?.members(byRole: "via") ?? []
                 for viaMember in viaMembers {
@@ -957,8 +966,8 @@ final class EditorMapLayer: CALayer {
         
         let pt = MapPointForLatitudeLongitude(node.lat, node.lon)
         
-		let screenAngle = mapView.screenFromMapTransform.rotation()
-        layer.setAffineTransform( CGAffineTransform(rotationAngle: CGFloat(screenAngle)) )
+		let screenAngle = owner.screenFromMap().rotation()
+		layer.setAffineTransform( CGAffineTransform(rotationAngle: CGFloat(screenAngle)) )
         
         let radius: CGFloat = 30.0
 		let fieldOfViewRadius = Double(direction.length != 0 ? direction.length : 55)
@@ -1097,7 +1106,7 @@ final class EditorMapLayer: CALayer {
                 layers.append(layer)
                 
                 // Turn Restrictions
-                if mapView.enableTurnRestriction {
+				if owner.useTurnRestrictions() {
                     for relation in object.parentRelations {
                         if relation.isRestriction() && relation.member(byRole: "from")?.obj == object {
 							// the From member of the turn restriction is the selected way
@@ -1147,7 +1156,7 @@ final class EditorMapLayer: CALayer {
 									  y: -NodeHighlightRadius,
 									  width: 2 * NodeHighlightRadius,
 									  height: 2 * NodeHighlightRadius)
-                    layer2.position = mapView.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false)
+                    layer2.position = owner.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false)
                     layer2.strokeColor = node == selectedNode ? UIColor.yellow.cgColor : UIColor.green.cgColor
                     layer2.fillColor = UIColor.clear.cgColor
                     layer2.lineWidth = 3.0
@@ -1165,7 +1174,7 @@ final class EditorMapLayer: CALayer {
                 }
 			} else if let node = object as? OsmNode {
 				// draw square around selected node
-                let pt = mapView.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false)
+                let pt = owner.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false)
                 
                 let layer = CAShapeLayerWithProperties()
                 var rect = CGRect(x: -MinIconSizeInPixels / 2,
@@ -1397,10 +1406,10 @@ final class EditorMapLayer: CALayer {
     }
     
     func layoutSublayersSafe() {
-        if mapView.birdsEyeRotation != 0 {
+		if let birdsEye = owner.birdsEye() {
 			var t = CATransform3DIdentity
-            t.m34 = CGFloat(-1.0 / mapView.birdsEyeDistance)
-            t = CATransform3DRotate(t, CGFloat(mapView.birdsEyeRotation), 1.0, 0, 0)
+			t.m34 = CGFloat(-1.0 / birdsEye.distance)
+			t = CATransform3DRotate(t, CGFloat(birdsEye.rotation), 1.0, 0, 0)
             baseLayer.sublayerTransform = t
         } else {
             baseLayer.sublayerTransform = CATransform3DIdentity
@@ -1453,12 +1462,12 @@ final class EditorMapLayer: CALayer {
         CATransaction.setAnimationDuration(1.0)
         #endif
         
-		let tRotation = mapView.screenFromMapTransform.rotation()
-		let tScale = mapView.screenFromMapTransform.scale()
-        let pScale = CGFloat( tScale / PATH_SCALING )
-		let pixelsPerMeter = 0.8 * 1.0 / mapView.metersPerPixel()
+		let tRotation = owner.screenFromMap().rotation()
+		let tScale = owner.screenFromMap().scale()
+		let pScale = CGFloat( tScale / PATH_SCALING )
+		let pixelsPerMeter = 0.8 * 1.0 / owner.metersPerPixel()
         
-        for object in shownObjects {
+		for object in shownObjects {
             
             let layers = getShapeLayers(for: object)
             
@@ -1467,13 +1476,13 @@ final class EditorMapLayer: CALayer {
                 let isShapeLayer = layer is CAShapeLayer
                 let props = layer.properties
                 let pt = props.position
-                var pt2 = mapView.screenPoint(fromMapPoint: pt, birdsEye: false)
+                var pt2 = owner.screenPoint(fromMapPoint: pt, birdsEye: false)
                 
                 if props.is3D || (isShapeLayer && object.isNode() == nil) {
                     
                     // way or area -- need to rotate and scale
                     if props.is3D {
-                        if mapView.birdsEyeRotation == 0.0 {
+						if owner.birdsEye() == nil {
                             layer.removeFromSuperlayer()
                             continue
                         }
@@ -1512,7 +1521,7 @@ final class EditorMapLayer: CALayer {
                         } else {
                             // its a label on a building or polygon
                             let rcMap = MapView.mapRect(forLatLonRect: object.boundingBox)
-                            let rcScreen = mapView.boundingScreenRect(forMapRect: rcMap)
+							let rcScreen = owner.boundingScreenRect(forMapRect: rcMap)
                             if layer.bounds.size.width >= CGFloat(1.1 * rcScreen.size.width) {
                                 // text label is too big so hide it
                                 layer.removeFromSuperlayer()
@@ -1597,12 +1606,12 @@ final class EditorMapLayer: CALayer {
 	var selectedPrimary: OsmBaseObject? {
 		get { selectedNode ?? selectedWay ?? selectedRelation }
     }
-    
+
 	var selectedNode: OsmNode? {
 		didSet {
 			if ( oldValue != selectedNode ) {
 				self.setNeedsDisplay()
-				self.mapView.updateEditControl()
+				owner.selectionDidChange()
 			 }
 		}
     }
@@ -1610,7 +1619,7 @@ final class EditorMapLayer: CALayer {
 		didSet {
 			if ( oldValue != selectedWay ) {
 				self.setNeedsDisplay()
-				self.mapView.updateEditControl()
+				owner.selectionDidChange()
 			}
 		}
     }
@@ -1618,7 +1627,7 @@ final class EditorMapLayer: CALayer {
 		didSet {
 			if ( oldValue != selectedRelation ) {
 				self.setNeedsDisplay()
-				self.mapView.updateEditControl()
+				owner.selectionDidChange()
 			}
 		}
     }

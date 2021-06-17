@@ -106,11 +106,6 @@ extension EditorMapLayer {
 
 	func selectObjectAtPoint(_ point: CGPoint) {
 
-		// disable rotation if in action
-		if mapView.isRotateObjectMode != nil {
-			mapView.endObjectRotation()
-		}
-
 		owner.unblinkObject() // used by Mac Catalyst, harmless otherwise
 
 		if self.selectedWay != nil,
@@ -422,10 +417,10 @@ extension EditorMapLayer {
 	// MARK: Editing
 
 	func adjust(_ node: OsmNode, byDistance delta: CGPoint) {
-		var pt = mapView.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: true)
+		var pt = owner.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: true)
 		pt.x += delta.x
 		pt.y -= delta.y
-		let loc = mapView.longitudeLatitude(forScreenPoint: pt, birdsEye: true)
+		let loc = owner.longitudeLatitude(forScreenPoint: pt, birdsEye: true)
 		mapData.setLongitude(loc.longitude, latitude: loc.latitude, for: node)
 
 		setNeedsLayout()
@@ -438,7 +433,7 @@ extension EditorMapLayer {
 	}
 
 	func createNode(at point: CGPoint) -> OsmNode {
-		let loc = mapView.longitudeLatitude(forScreenPoint: point, birdsEye: true)
+		let loc = owner.longitudeLatitude(forScreenPoint: point, birdsEye: true)
 		let node = mapData.createNode(atLocation: loc)
 		setNeedsLayout()
 		return node
@@ -573,7 +568,7 @@ extension EditorMapLayer {
 				let disconnect = parentWays.count > 1 || selectedNode.hasInterestingTags() || selectedWay.isSelfIntersection(selectedNode)
 				let split = selectedWay.isClosed() || (selectedNode != selectedWay.nodes[0] && selectedNode != selectedWay.nodes.last)
 				let join = parentWays.count > 1
-				let restriction = owner.editTurnRestrictions() && self.selectedWay?.tags["highway"] != nil && parentWays.count > 1
+				let restriction = owner.useTurnRestrictions() && self.selectedWay?.tags["highway"] != nil && parentWays.count > 1
 
 				actionList = [.COPYTAGS]
 
@@ -737,7 +732,7 @@ extension EditorMapLayer {
 			case .MORE:
 				owner.presentEditActionSheet(nil)
 			case .RESTRICT:
-				owner.restrictOptionSelected()
+				owner.presentTurnRestrictionEditor()
 			case .CREATE_RELATION:
 				guard let selectedPrimary = self.selectedPrimary else { return }
 				let create: ((_ type: String?) -> Void) = { [self] type in
@@ -856,7 +851,7 @@ extension EditorMapLayer {
 		   self.selectedNode == nil
 		{
 			// insert a new node into way at arrowPoint
-			let pt = mapView.longitudeLatitude(forScreenPoint: pinPoint, birdsEye: true)
+			let pt = owner.longitudeLatitude(forScreenPoint: pinPoint, birdsEye: true)
 			let pt2 = OSMPoint(x: pt.longitude, y: pt.latitude)
 			let segment = way.segmentClosestToPoint(pt2)
 			var error: String? = nil
@@ -896,7 +891,7 @@ extension EditorMapLayer {
 		// add new node at point
 		var newPoint = newPoint
 		let prevPrevNode = way.nodes.count >= 2 ? way.nodes[way.nodes.count-2] : nil
-		let prevPrevPoint = prevPrevNode != nil ? mapView.screenPoint(forLatitude: prevPrevNode!.lat, longitude: prevPrevNode!.lon, birdsEye: true) : CGPoint.zero
+		let prevPrevPoint = prevPrevNode != nil ? owner.screenPoint(forLatitude: prevPrevNode!.lat, longitude: prevPrevNode!.lon, birdsEye: true) : CGPoint.zero
 
 		if hypot(pinPoint.x - newPoint.x, pinPoint.y - newPoint.y) > 10.0 &&
 			(prevPrevNode == nil || hypot(prevPrevPoint.x - newPoint.x, prevPrevPoint.y - newPoint.y) > 10.0)
@@ -918,7 +913,7 @@ extension EditorMapLayer {
 			} else if way.nodes.count == 2 {
 				// create 3rd point 90 degrees from first 2
 				let n1 = way.nodes[1 - prevIndex]
-				let p1 = mapView.screenPoint(forLatitude: n1.lat, longitude: n1.lon, birdsEye: true)
+				let p1 = owner.screenPoint(forLatitude: n1.lat, longitude: n1.lon, birdsEye: true)
 				var delta = CGPoint(x: p1.x - pinPoint.x, y: p1.y - pinPoint.y)
 				let len = hypot(delta.x, delta.y)
 				if len > 100 {
@@ -936,8 +931,8 @@ extension EditorMapLayer {
 				// create 4th point and beyond following angle of previous 3
 				let n1 = prevIndex == 0 ? way.nodes[1] : way.nodes[prevIndex - 1]
 				let n2 = prevIndex == 0 ? way.nodes[2] : way.nodes[prevIndex - 2]
-				let p1 = mapView.screenPoint(forLatitude: n1.lat, longitude: n1.lon, birdsEye: true)
-				let p2 = mapView.screenPoint(forLatitude: n2.lat, longitude: n2.lon, birdsEye: true)
+				let p1 = owner.screenPoint(forLatitude: n1.lat, longitude: n1.lon, birdsEye: true)
+				let p2 = owner.screenPoint(forLatitude: n2.lat, longitude: n2.lon, birdsEye: true)
 				let d1 = OSMPoint(x: Double(pinPoint.x - p1.x), y: Double(pinPoint.y - p1.y))
 				let d2 = OSMPoint(x: Double(p1.x - p2.x), y: Double(p1.y - p2.y))
 				var a1 = atan2(d1.y, d1.x)
@@ -964,7 +959,7 @@ extension EditorMapLayer {
 
 		if way.nodes.count >= 2 {
 			let start = prevIndex == 0 ? way.nodes.last! : way.nodes[0]
-			let s = mapView.screenPoint(forLatitude: start.lat, longitude: start.lon, birdsEye: true)
+			let s = owner.screenPoint(forLatitude: start.lat, longitude: start.lon, birdsEye: true)
 			let d = hypot(s.x - newPoint.x, s.y - newPoint.y)
 			if d < 3.0 {
 				// join first to last

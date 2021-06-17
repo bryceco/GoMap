@@ -229,7 +229,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	private(set) lazy var aerialLayer: MercatorTileLayer = { MercatorTileLayer(mapView: self) }()
     private(set) lazy var mapnikLayer: MercatorTileLayer = { MercatorTileLayer(mapView: self) }()
 	private(set) lazy var noNameLayer: MercatorTileLayer = { MercatorTileLayer(mapView: self) }()
-    private (set) lazy var editorLayer: EditorMapLayer = { EditorMapLayer(mapView: self) }()
+    private(set) lazy var editorLayer: EditorMapLayer = { EditorMapLayer(owner: self) }()
     private(set) lazy var gpxLayer: GpxLayer = { GpxLayer(mapView: self) }()
 
     // overlays
@@ -382,21 +382,14 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	let tileServerList: TileServerList
     private(set) var birdsEyeRotation = 0.0
-    private(set) var birdsEyeDistance = 0.0
+	let birdsEyeDistance = 1000.0
 
-    private var _enableBirdsEye = false
-    var enableBirdsEye: Bool {
-        get {
-            _enableBirdsEye
-        }
-        set(enableBirdsEye) {
-            if _enableBirdsEye != enableBirdsEye {
-                _enableBirdsEye = enableBirdsEye
-                if !enableBirdsEye {
-                    // remove birdsEye
-                    rotateBirdsEye(by: -birdsEyeRotation)
-                }
-            }
+    var enableBirdsEye: Bool = false {
+		didSet {
+			if !enableBirdsEye {
+				// remove birdsEye
+				rotateBirdsEye(by: -birdsEyeRotation)
+			}
         }
     }
 
@@ -557,8 +550,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
             backgroundColor = UIColor(white: 0.85, alpha: 1.0)
         }
 
-        birdsEyeDistance = 1000.0
-
         UserDefaults.standard.register(
 			defaults: [
 				"view.scale": NSNumber(value: Double.nan),
@@ -606,8 +597,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
         mapnikLayer.isHidden = true
         bg.append(mapnikLayer)
 
-        editorLayer = EditorMapLayer(mapView: self)
-        editorLayer.zPosition = Z_EDITOR
+        editorLayer = EditorMapLayer(owner: self)
+		editorLayer.zPosition = Z_EDITOR
         bg.append(editorLayer)
 
         gpxLayer = GpxLayer(mapView: self)
@@ -2053,7 +2044,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
     }
 
     // Turn restriction panel
-    func restrictOptionSelected() {
+    func presentTurnRestrictionEditor() {
 		guard let selectedPrimary = editorLayer.selectedPrimary,
 			  let pushPin = self.pushPin
 		else { return }
@@ -2637,6 +2628,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	/// Invoked to select an object on the screen
     @IBAction func screenTapGesture(_ tap: UITapGestureRecognizer) {
         if tap.state == .ended {
+			// disable rotation if in action
+			if self.isRotateObjectMode != nil {
+				self.endObjectRotation()
+			}
+
             let point = tap.location(in: self)
             if plusButtonTimestamp != 0.0 {
 				// user is doing a long-press on + button
@@ -2732,20 +2728,47 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 }
 
 // EditorMap extensions
-extension MapView: EditorMapOwner {
+extension MapView: EditorMapLayerOwner {
+	func screenFromMap() -> OSMTransform {
+		return self.screenFromMapTransform
+	}
+	func setScreenFromMap(transform: OSMTransform) {
+		self.screenFromMapTransform = transform
+	}
+	func observeTransform(withCallback block: @escaping (OSMTransform)->Void) {
+		screenFromMapTransformObservors[ editorLayer ] = block
+	}
+
+	func birdsEye() -> (distance: Double, rotation: Double)? {
+		if enableBirdsEye && birdsEyeRotation != 0.0 {
+			return (distance: birdsEyeDistance, rotation: birdsEyeRotation)
+		} else {
+			return nil
+		}
+	}
 
 	func didUpdateObject() {
 		refreshPushpinText()
 		refreshNoteButtonsFromDatabase()
+	}
+	func selectionDidChange() {
+		self.updateEditControl()
 	}
 
 	func crosshairs() -> CGPoint {
 		return crossHairs.position
 	}
 
-	func editTurnRestrictions() -> Bool {
+	func useTurnRestrictions() -> Bool {
 		return enableTurnRestriction
 	}
+	func useUnnamedRoadHalo() -> Bool {
+		return enableUnnamedRoadHalo
+	}
+	func useAutomaticCacheManagement() -> Bool {
+		return enableAutomaticCacheManagement
+	}
+
 
 	func pushpinView() -> PushPinView? {
 		return self.pushPin

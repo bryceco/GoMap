@@ -59,16 +59,16 @@ extension EditorMapLayer {
 	private static func osmHitTestEnumerate(
 		_ point: CGPoint,
 		radius: CGFloat,
-		mapView: MapView,
+		owner: EditorMapLayerOwner,
 		objects: ContiguousArray<OsmBaseObject>,
 		testNodes: Bool,
 		ignoreList: [OsmBaseObject],
 		block: @escaping (_ obj: OsmBaseObject, _ dist: CGFloat, _ segment: Int) -> Void
 	) {
-		let location = mapView.longitudeLatitude(forScreenPoint: point, birdsEye: true)
-		let viewCoord = mapView.screenLongitudeLatitude()
-		let pixelsPerDegree = OSMSize(width: Double(mapView.bounds.size.width) / viewCoord.size.width,
-									  height: Double(mapView.bounds.size.height) / viewCoord.size.height)
+		let location = owner.longitudeLatitude(forScreenPoint: point, birdsEye: true)
+		let viewCoord = owner.screenLongitudeLatitude()
+		let pixelsPerDegree = OSMSize(width: Double(owner.bounds.size.width) / viewCoord.size.width,
+									  height: Double(owner.bounds.size.height) / viewCoord.size.height)
 
 		let maxDegrees = OSMSize(width: Double(radius) / pixelsPerDegree.width,
 								 height: Double(radius) / pixelsPerDegree.height)
@@ -156,7 +156,7 @@ extension EditorMapLayer {
 
 		var bestDist: CGFloat = 1000000
 		var best: [OsmBaseObject : Int] = [:]
-		EditorMapLayer.osmHitTestEnumerate(point, radius: radius, mapView: mapView, objects: shownObjects, testNodes: isDragConnect, ignoreList: ignoreList, block: { obj, dist, segment in
+		EditorMapLayer.osmHitTestEnumerate(point, radius: radius, owner: owner, objects: shownObjects, testNodes: isDragConnect, ignoreList: ignoreList, block: { obj, dist, segment in
 			if dist < bestDist {
 				bestDist = dist
 				best.removeAll()
@@ -213,7 +213,7 @@ extension EditorMapLayer {
 	// return all nearby objects
 	func osmHitTestMultiple(_ point: CGPoint, radius: CGFloat) -> [OsmBaseObject] {
 		var objectSet: Set<OsmBaseObject> = []
-		EditorMapLayer.osmHitTestEnumerate(point, radius: radius, mapView: mapView, objects: shownObjects, testNodes: true, ignoreList: [], block: { obj, dist, segment in
+		EditorMapLayer.osmHitTestEnumerate(point, radius: radius, owner: owner, objects: shownObjects, testNodes: true, ignoreList: [], block: { obj, dist, segment in
 			objectSet.insert(obj)
 		})
 		var objectList = Array(objectSet)
@@ -237,7 +237,7 @@ extension EditorMapLayer {
 		var bestDist: CGFloat = 1000000
 		EditorMapLayer.osmHitTestEnumerate(point,
 										   radius: radius,
-										   mapView: mapView,
+										   owner: owner,
 										   objects: ContiguousArray<OsmBaseObject>(selectedWay.nodes),
 										   testNodes: true,
 										   ignoreList: [],
