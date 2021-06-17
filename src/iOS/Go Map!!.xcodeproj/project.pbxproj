@@ -186,11 +186,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0203473C26695B2A000A7C3D /* EditorMapLayer+Edit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "EditorMapLayer+Edit.swift"; path = "../Shared/EditorMapLayer+Edit.swift"; sourceTree = "<group>"; };
+		0203473C26695B2A000A7C3D /* EditorMapLayer+Edit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorMapLayer+Edit.swift"; sourceTree = "<group>"; };
 		0203473E266C1EDD000A7C3D /* ExternalGPS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExternalGPS.swift; path = ../Shared/ExternalGPS.swift; sourceTree = "<group>"; };
 		02034742266C2CB9000A7C3D /* OsmNotesDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OsmNotesDatabase.swift; path = ../Shared/OsmNotesDatabase.swift; sourceTree = "<group>"; };
 		02072AD51BD46B1700F1CAB4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		020E160A267A82050037DE49 /* TileServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TileServer.swift; path = ../Shared/TileServer.swift; sourceTree = "<group>"; };
+		020E160A267A82050037DE49 /* TileServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileServer.swift; sourceTree = "<group>"; };
 		020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsDatabase.swift; sourceTree = "<group>"; };
 		02128F7B2575D925003D2551 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Height.strings"; sourceTree = "<group>"; };
 		02128F7C2575D925003D2551 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Display.strings"; sourceTree = "<group>"; };
@@ -203,12 +203,12 @@
 		021FADD625873D0100F6E1C0 /* PresetsForFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsForFeature.swift; sourceTree = "<group>"; };
 		021FADE12588474300F6E1C0 /* PresetCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetCategory.swift; sourceTree = "<group>"; };
 		021FADEE25884BB900F6E1C0 /* OsmTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmTags.swift; sourceTree = "<group>"; };
-		022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "EditorMapLayer+Ocean.swift"; path = "../Shared/EditorMapLayer+Ocean.swift"; sourceTree = "<group>"; };
+		022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorMapLayer+Ocean.swift"; sourceTree = "<group>"; };
 		02231F8925C4CB38000E7C07 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Changeset.strings"; sourceTree = "<group>"; };
 		02248A032568C3E2004272B2 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		02248A042568C3E2004272B2 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		02263CDE2677F93A002BA72F /* QuadBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QuadBox.swift; path = ../Shared/QuadBox.swift; sourceTree = "<group>"; };
-		02354F79246349E100878A04 /* CurvedGlyphLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CurvedGlyphLayer.swift; path = ../Shared/CurvedGlyphLayer.swift; sourceTree = "<group>"; };
+		02263CDE2677F93A002BA72F /* QuadBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadBox.swift; sourceTree = "<group>"; };
+		02354F79246349E100878A04 /* CurvedGlyphLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurvedGlyphLayer.swift; sourceTree = "<group>"; };
 		023B892A19C148790060CDB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
 		02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		02401F3A1DE157B800F32AF5 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
@@ -245,14 +245,14 @@
 		027EDC6F206F3EED00D349D6 /* DDXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLNode.h; sourceTree = "<group>"; };
 		0282C4C6265F32E800F2D282 /* Sqlite3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sqlite3.swift; sourceTree = "<group>"; };
 		0282C4C826617E7400F2D282 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = ../Shared/MapView.swift; sourceTree = "<group>"; };
-		0288169C265895FA00C30EA2 /* OsmMapData+Edit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "OsmMapData+Edit.swift"; path = "../Shared/OsmMapData+Edit.swift"; sourceTree = "<group>"; };
-		0288169D265895FA00C30EA2 /* OsmMapData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OsmMapData.swift; path = ../Shared/OsmMapData.swift; sourceTree = "<group>"; };
-		028816A02659B4A600C30EA2 /* GZip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GZip.swift; path = ../Shared/GZip.swift; sourceTree = "<group>"; };
-		028816A2265AD9D100C30EA2 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Database.swift; path = ../Shared/Database.swift; sourceTree = "<group>"; };
+		0288169C265895FA00C30EA2 /* OsmMapData+Edit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OsmMapData+Edit.swift"; sourceTree = "<group>"; };
+		0288169D265895FA00C30EA2 /* OsmMapData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OsmMapData.swift; sourceTree = "<group>"; };
+		028816A02659B4A600C30EA2 /* GZip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GZip.swift; sourceTree = "<group>"; };
+		028816A2265AD9D100C30EA2 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		028C51E525CB7A23004A88F7 /* TristateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TristateButton.swift; sourceTree = "<group>"; };
 		028F504619BA2F460093C423 /* presets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = presets; path = ../presets; sourceTree = "<group>"; };
 		029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "POI-Icons.xcassets"; path = "../POI-Icons/POI-Icons.xcassets"; sourceTree = "<group>"; };
-		02A123EC264CAE6F005638C1 /* Atomic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Atomic.swift; path = ../Shared/Atomic.swift; sourceTree = "<group>"; };
+		02A123EC264CAE6F005638C1 /* Atomic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
 		02A194B119C6A432002338DA /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		02A41837256A2026005BF1AB /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/Height.strings; sourceTree = "<group>"; };
 		02A41838256A2026005BF1AB /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/Changeset.strings; sourceTree = "<group>"; };
@@ -263,7 +263,7 @@
 		02ACBA3B16713CCB00BB4414 /* Go Map!!-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Go Map!!-Info.plist"; sourceTree = "<group>"; };
 		02ACBA4116713CCB00BB4414 /* Go Map!!-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Go Map!!-Prefix.pch"; sourceTree = "<group>"; };
 		02ACBA7016713F2A00BB4414 /* changeset.xsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = changeset.xsl; path = ../Shared/changeset.xsl; sourceTree = "<group>"; };
-		02ACBBBB16713F2A00BB4414 /* RenderInfo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = RenderInfo.json; path = ../Shared/RenderInfo.json; sourceTree = "<group>"; };
+		02ACBBBB16713F2A00BB4414 /* RenderInfo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RenderInfo.json; sourceTree = "<group>"; };
 		02ACBD181671737300BB4414 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		02ACBD2016717BC500BB4414 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -320,8 +320,8 @@
 		02CB2404265DB7CB00835F32 /* HoursRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoursRecognizer.swift; sourceTree = "<group>"; };
 		02CC01D02584195E004444EF /* PresetFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetFeature.swift; sourceTree = "<group>"; };
 		02CC01DB25843F2F004444EF /* PresetLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetLanguages.swift; sourceTree = "<group>"; };
-		02CD9973265C65C200213AD6 /* EditorFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EditorFilters.swift; path = ../Shared/EditorFilters.swift; sourceTree = "<group>"; };
-		02D5B5F2248F154D00FEE448 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Colors.swift; path = ../Shared/Colors.swift; sourceTree = "<group>"; };
+		02CD9973265C65C200213AD6 /* EditorFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorFilters.swift; sourceTree = "<group>"; };
+		02D5B5F2248F154D00FEE448 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		02D75AD126790A97008DAA53 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		02D75AD226790A97008DAA53 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		02D75AD326790A97008DAA53 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Height.strings; sourceTree = "<group>"; };
@@ -339,8 +339,8 @@
 		02D7DF8726790A80003EE233 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Settings.strings; sourceTree = "<group>"; };
 		02D7DF8826790A80003EE233 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Changeset.strings; sourceTree = "<group>"; };
 		02DC59801671B79100213558 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		02E049BC2651D1750028B57F /* UndoAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UndoAction.h; path = ../Shared/UndoAction.h; sourceTree = "<group>"; };
-		02E049BD2651D1750028B57F /* UndoAction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = UndoAction.m; path = ../Shared/UndoAction.m; sourceTree = "<group>"; };
+		02E049BC2651D1750028B57F /* UndoAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UndoAction.h; sourceTree = "<group>"; };
+		02E049BD2651D1750028B57F /* UndoAction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UndoAction.m; sourceTree = "<group>"; };
 		02E6267119973A0700565D62 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Go Map!!-Bridging-Header.h"; sourceTree = "<group>"; };
 		02EC2EA225902E8D00B7B4B9 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/MainStoryboard.strings"; sourceTree = "<group>"; };
@@ -385,7 +385,7 @@
 		02F0D9D72565FDBE00C7A3AD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Settings.strings"; sourceTree = "<group>"; };
 		02F0D9D82565FDBE00C7A3AD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Display.strings"; sourceTree = "<group>"; };
 		02F0D9D92565FDBE00C7A3AD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Changeset.strings"; sourceTree = "<group>"; };
-		02F53297267AB41C0088DF41 /* EditorMapLayer+HitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "EditorMapLayer+HitTest.swift"; path = "../Shared/EditorMapLayer+HitTest.swift"; sourceTree = "<group>"; };
+		02F53297267AB41C0088DF41 /* EditorMapLayer+HitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorMapLayer+HitTest.swift"; sourceTree = "<group>"; };
 		02F8DE8D26790A830022460C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		02F8DE8E26790A830022460C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		02F8DE8F26790A830022460C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Height.strings; sourceTree = "<group>"; };
@@ -432,23 +432,23 @@
 		C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeechBalloonView.swift; path = ../Shared/SpeechBalloonView.swift; sourceTree = "<group>"; };
 		C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapAndDragGesture.swift; sourceTree = "<group>"; };
 		C381C305263FD0CA003142BA /* VectorMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VectorMath.swift; path = ../Shared/VectorMath.swift; sourceTree = "<group>"; };
-		C381C306263FD0E8003142BA /* UndoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UndoManager.swift; path = ../Shared/UndoManager.swift; sourceTree = "<group>"; };
-		C381C308263FD294003142BA /* DLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DLog.swift; path = ../Shared/DLog.swift; sourceTree = "<group>"; };
+		C381C306263FD0E8003142BA /* UndoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UndoManager.swift; sourceTree = "<group>"; };
+		C381C308263FD294003142BA /* DLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLog.swift; sourceTree = "<group>"; };
 		C381C30A263FE518003142BA /* PushPinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushPinView.swift; sourceTree = "<group>"; };
 		C3D0969B263CBC1100E3B129 /* POIFeaturePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POIFeaturePickerViewController.swift; sourceTree = "<group>"; };
 		C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistentWebCache.swift; path = ../Shared/PersistentWebCache.swift; sourceTree = "<group>"; };
-		C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditorMapLayer.swift; path = ../Shared/EditorMapLayer.swift; sourceTree = "<group>"; };
+		C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorMapLayer.swift; sourceTree = "<group>"; };
 		C3D096AB263D48F700E3B129 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C3D096AD263D4BFB00E3B129 /* UploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 		C3D096AF263D4FF500E3B129 /* TurnRestrictController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurnRestrictController.swift; sourceTree = "<group>"; };
 		C3D096B2263D618E00E3B129 /* HeightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightViewController.swift; sourceTree = "<group>"; };
 		C3D096B5263DF82F00E3B129 /* RulerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RulerView.swift; path = ../Shared/RulerView.swift; sourceTree = "<group>"; };
-		C3D096B8263DFA2A00E3B129 /* RenderInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RenderInfo.swift; path = ../Shared/RenderInfo.swift; sourceTree = "<group>"; };
-		C3D096BD263E178600E3B129 /* aes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = aes.swift; path = ../Shared/aes.swift; sourceTree = "<group>"; };
+		C3D096B8263DFA2A00E3B129 /* RenderInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderInfo.swift; sourceTree = "<group>"; };
+		C3D096BD263E178600E3B129 /* aes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = aes.swift; sourceTree = "<group>"; };
 		C3D096C1263E567200E3B129 /* DisplayLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DisplayLink.swift; path = ../Shared/DisplayLink.swift; sourceTree = "<group>"; };
 		C3D096CA263E9A1100E3B129 /* DownloadThreadPool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadThreadPool.swift; path = ../Shared/DownloadThreadPool.swift; sourceTree = "<group>"; };
-		C3D096CE263EA0DB00E3B129 /* KeyChain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeyChain.swift; path = ../Shared/KeyChain.swift; sourceTree = "<group>"; };
-		C3D096D1263EA7E100E3B129 /* LayerProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LayerProperties.swift; path = ../Shared/LayerProperties.swift; sourceTree = "<group>"; };
+		C3D096CE263EA0DB00E3B129 /* KeyChain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
+		C3D096D1263EA7E100E3B129 /* LayerProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerProperties.swift; sourceTree = "<group>"; };
 		C3D096D4263EACFF00E3B129 /* LocationBallLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationBallLayer.swift; path = ../Shared/LocationBallLayer.swift; sourceTree = "<group>"; };
 		C3D096D7263EAE1E00E3B129 /* MyApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyApplication.swift; sourceTree = "<group>"; };
 		C3D096DA263EB73E00E3B129 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -459,11 +459,11 @@
 		C3D096F2263EBE5E00E3B129 /* OsmRelation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OsmRelation.swift; sourceTree = "<group>"; };
 		C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VoiceAnnouncement.swift; path = ../Shared/VoiceAnnouncement.swift; sourceTree = "<group>"; };
 		C3FA9248263FF95B000A2A99 /* LocationURLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationURLParser.swift; sourceTree = "<group>"; };
-		C3FA924A263FFD7E000A2A99 /* QuadMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QuadMap.swift; path = ../Shared/QuadMap.swift; sourceTree = "<group>"; };
-		C3FA924C263FFEF9000A2A99 /* PathUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PathUtil.swift; path = ../Shared/PathUtil.swift; sourceTree = "<group>"; };
-		C3FA924F2640329B000A2A99 /* TileServerList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TileServerList.swift; path = ../Shared/TileServerList.swift; sourceTree = "<group>"; };
-		C3FA925126411557000A2A99 /* TileQuadKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TileQuadKey.swift; path = ../Shared/TileQuadKey.swift; sourceTree = "<group>"; };
-		C3FA925326411C2B000A2A99 /* MercatorTileLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MercatorTileLayer.swift; path = ../Shared/MercatorTileLayer.swift; sourceTree = "<group>"; };
+		C3FA924A263FFD7E000A2A99 /* QuadMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuadMap.swift; sourceTree = "<group>"; };
+		C3FA924C263FFEF9000A2A99 /* PathUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathUtil.swift; sourceTree = "<group>"; };
+		C3FA924F2640329B000A2A99 /* TileServerList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileServerList.swift; sourceTree = "<group>"; };
+		C3FA925126411557000A2A99 /* TileQuadKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileQuadKey.swift; sourceTree = "<group>"; };
+		C3FA925326411C2B000A2A99 /* MercatorTileLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercatorTileLayer.swift; sourceTree = "<group>"; };
 		C3FA925626416BF5000A2A99 /* GpxLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GpxLayer.swift; path = ../Shared/GpxLayer.swift; sourceTree = "<group>"; };
 		ED56E5AA26024DA5000B368C /* AutocompleteTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteTextField.swift; sourceTree = "<group>"; };
 		ED56E5B226026541000B368C /* BingMetadataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BingMetadataViewController.swift; sourceTree = "<group>"; };
@@ -703,57 +703,31 @@
 		02ACBCFF16713F7F00BB4414 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				C3D096BD263E178600E3B129 /* aes.swift */,
-				02A123EC264CAE6F005638C1 /* Atomic.swift */,
 				02ACBA7016713F2A00BB4414 /* changeset.xsl */,
-				02D5B5F2248F154D00FEE448 /* Colors.swift */,
-				02354F79246349E100878A04 /* CurvedGlyphLayer.swift */,
-				028816A2265AD9D100C30EA2 /* Database.swift */,
+				02F5329B267AD0A50088DF41 /* Database */,
 				C3D096C1263E567200E3B129 /* DisplayLink.swift */,
-				C381C308263FD294003142BA /* DLog.swift */,
 				C3D096CA263E9A1100E3B129 /* DownloadThreadPool.swift */,
-				02CD9973265C65C200213AD6 /* EditorFilters.swift */,
-				C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */,
-				0203473C26695B2A000A7C3D /* EditorMapLayer+Edit.swift */,
-				02F53297267AB41C0088DF41 /* EditorMapLayer+HitTest.swift */,
-				022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */,
+				02F53299267ACFBB0088DF41 /* EditorLayer */,
 				0203473E266C1EDD000A7C3D /* ExternalGPS.swift */,
 				C341E1552639DEFC0022E983 /* FpsLabel.swift */,
-				C341E1572639DF090022E983 /* GeekbenchScoreProvider.swift */,
 				02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */,
 				C3FA925626416BF5000A2A99 /* GpxLayer.swift */,
-				028816A02659B4A600C30EA2 /* GZip.swift */,
-				C3D096CE263EA0DB00E3B129 /* KeyChain.swift */,
-				C3D096D1263EA7E100E3B129 /* LayerProperties.swift */,
 				C3D096D4263EACFF00E3B129 /* LocationBallLayer.swift */,
 				0282C4C826617E7400F2D282 /* MapView.swift */,
-				C3FA925326411C2B000A2A99 /* MercatorTileLayer.swift */,
 				C3D096D7263EAE1E00E3B129 /* MyApplication.swift */,
 				6442666322540EDF00C0D545 /* Observable */,
-				0288169D265895FA00C30EA2 /* OsmMapData.swift */,
-				0288169C265895FA00C30EA2 /* OsmMapData+Edit.swift */,
 				6453776323D38D1F00656A1C /* OSMModels */,
 				02034742266C2CB9000A7C3D /* OsmNotesDatabase.swift */,
-				C3FA924C263FFEF9000A2A99 /* PathUtil.swift */,
 				C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */,
 				02CC01CF2584190A004444EF /* PresetsDatabase */,
 				C381C30A263FE518003142BA /* PushPinView.swift */,
-				02263CDE2677F93A002BA72F /* QuadBox.swift */,
-				C3FA924A263FFD7E000A2A99 /* QuadMap.swift */,
-				02ACBBBB16713F2A00BB4414 /* RenderInfo.json */,
-				C3D096B8263DFA2A00E3B129 /* RenderInfo.swift */,
 				C3D096B5263DF82F00E3B129 /* RulerView.swift */,
 				C365A564263FC943007DEC94 /* SpeechBalloonLayer.swift */,
 				C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */,
-				0282C4C6265F32E800F2D282 /* Sqlite3.swift */,
 				C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */,
-				C3FA925126411557000A2A99 /* TileQuadKey.swift */,
-				020E160A267A82050037DE49 /* TileServer.swift */,
-				C3FA924F2640329B000A2A99 /* TileServerList.swift */,
+				02F5329A267AD0250088DF41 /* Tiles */,
 				C365A562263FC53F007DEC94 /* TurnRestrictHwyView.swift */,
-				02E049BC2651D1750028B57F /* UndoAction.h */,
-				02E049BD2651D1750028B57F /* UndoAction.m */,
-				C381C306263FD0E8003142BA /* UndoManager.swift */,
+				02F5329C267AD2B20088DF41 /* Utility */,
 				C381C305263FD0CA003142BA /* VectorMath.swift */,
 				C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */,
 				C341E1522639DECC0022E983 /* WikiPage.swift */,
@@ -797,6 +771,61 @@
 			);
 			name = PresetsDatabase;
 			path = ../Shared/PresetsDatabase;
+			sourceTree = "<group>";
+		};
+		02F53299267ACFBB0088DF41 /* EditorLayer */ = {
+			isa = PBXGroup;
+			children = (
+				02D5B5F2248F154D00FEE448 /* Colors.swift */,
+				02354F79246349E100878A04 /* CurvedGlyphLayer.swift */,
+				02CD9973265C65C200213AD6 /* EditorFilters.swift */,
+				C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */,
+				0203473C26695B2A000A7C3D /* EditorMapLayer+Edit.swift */,
+				02F53297267AB41C0088DF41 /* EditorMapLayer+HitTest.swift */,
+				022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */,
+				C3D096D1263EA7E100E3B129 /* LayerProperties.swift */,
+				02ACBBBB16713F2A00BB4414 /* RenderInfo.json */,
+				C3D096B8263DFA2A00E3B129 /* RenderInfo.swift */,
+			);
+			name = EditorLayer;
+			path = ../Shared/EditorLayer;
+			sourceTree = "<group>";
+		};
+		02F5329A267AD0250088DF41 /* Tiles */ = {
+			isa = PBXGroup;
+			children = (
+				C3FA925326411C2B000A2A99 /* MercatorTileLayer.swift */,
+				C3FA925126411557000A2A99 /* TileQuadKey.swift */,
+				020E160A267A82050037DE49 /* TileServer.swift */,
+				C3FA924F2640329B000A2A99 /* TileServerList.swift */,
+			);
+			name = Tiles;
+			path = ../Shared/Tiles;
+			sourceTree = "<group>";
+		};
+		02F5329B267AD0A50088DF41 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				028816A2265AD9D100C30EA2 /* Database.swift */,
+				0282C4C6265F32E800F2D282 /* Sqlite3.swift */,
+			);
+			name = Database;
+			path = ../Shared/Database;
+			sourceTree = "<group>";
+		};
+		02F5329C267AD2B20088DF41 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				C3D096BD263E178600E3B129 /* aes.swift */,
+				02A123EC264CAE6F005638C1 /* Atomic.swift */,
+				C381C308263FD294003142BA /* DLog.swift */,
+				C341E1572639DF090022E983 /* GeekbenchScoreProvider.swift */,
+				028816A02659B4A600C30EA2 /* GZip.swift */,
+				C3D096CE263EA0DB00E3B129 /* KeyChain.swift */,
+				C3FA924C263FFEF9000A2A99 /* PathUtil.swift */,
+			);
+			name = Utility;
+			path = ../Shared/Utility;
 			sourceTree = "<group>";
 		};
 		64305F6C23E71F5700232BB9 /* URLParsing */ = {
@@ -858,11 +887,18 @@
 			isa = PBXGroup;
 			children = (
 				C3D096F1263EBE5E00E3B129 /* OsmBaseObject.swift */,
-				C3D096EF263EBE5D00E3B129 /* OsmNode.swift */,
-				C3D096F0263EBE5D00E3B129 /* OsmWay.swift */,
-				C3D096F2263EBE5E00E3B129 /* OsmRelation.swift */,
+				0288169D265895FA00C30EA2 /* OsmMapData.swift */,
+				0288169C265895FA00C30EA2 /* OsmMapData+Edit.swift */,
 				C3D096EE263EBE5D00E3B129 /* OsmMember.swift */,
+				C3D096EF263EBE5D00E3B129 /* OsmNode.swift */,
+				C3D096F2263EBE5E00E3B129 /* OsmRelation.swift */,
 				021FADEE25884BB900F6E1C0 /* OsmTags.swift */,
+				C3D096F0263EBE5D00E3B129 /* OsmWay.swift */,
+				02263CDE2677F93A002BA72F /* QuadBox.swift */,
+				C3FA924A263FFD7E000A2A99 /* QuadMap.swift */,
+				02E049BC2651D1750028B57F /* UndoAction.h */,
+				02E049BD2651D1750028B57F /* UndoAction.m */,
+				C381C306263FD0E8003142BA /* UndoManager.swift */,
 			);
 			name = OSMModels;
 			path = ../Shared/OSMModels;
