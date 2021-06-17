@@ -67,7 +67,6 @@
 		02ACBA3816713CCB00BB4414 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3716713CCB00BB4414 /* CoreGraphics.framework */; };
 		02ACBA3E16713CCB00BB4414 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA3C16713CCB00BB4414 /* InfoPlist.strings */; };
 		02ACBA4D16713CCB00BB4414 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */; };
-		02ACBBC116713F2B00BB4414 /* changeset.xsl in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA7016713F2A00BB4414 /* changeset.xsl */; };
 		02ACBCFD16713F2B00BB4414 /* RenderInfo.json in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBBBB16713F2A00BB4414 /* RenderInfo.json */; };
 		02ACBD191671737300BB4414 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD181671737300BB4414 /* libxml2.dylib */; };
 		02ACBD1F16717BBB00BB4414 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */; };
@@ -262,7 +261,6 @@
 		02ACBA3716713CCB00BB4414 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		02ACBA3B16713CCB00BB4414 /* Go Map!!-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Go Map!!-Info.plist"; sourceTree = "<group>"; };
 		02ACBA4116713CCB00BB4414 /* Go Map!!-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Go Map!!-Prefix.pch"; sourceTree = "<group>"; };
-		02ACBA7016713F2A00BB4414 /* changeset.xsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = changeset.xsl; path = ../Shared/changeset.xsl; sourceTree = "<group>"; };
 		02ACBBBB16713F2A00BB4414 /* RenderInfo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RenderInfo.json; sourceTree = "<group>"; };
 		02ACBD181671737300BB4414 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -703,7 +701,6 @@
 		02ACBCFF16713F7F00BB4414 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				02ACBA7016713F2A00BB4414 /* changeset.xsl */,
 				02F5329B267AD0A50088DF41 /* Database */,
 				C3D096C1263E567200E3B129 /* DisplayLink.swift */,
 				C3D096CA263E9A1100E3B129 /* DownloadThreadPool.swift */,
@@ -1075,7 +1072,6 @@
 				02AFBF242458C1E800BE43F4 /* BingPlaceholderImage.png in Resources */,
 				02BE6190245D1F9D00E92662 /* EsriPlaceholderImage.jpg in Resources */,
 				02ACBA4D16713CCB00BB4414 /* MainStoryboard.storyboard in Resources */,
-				02ACBBC116713F2B00BB4414 /* changeset.xsl in Resources */,
 				0291D83724427AFA00F793BE /* Display.storyboard in Resources */,
 				027AB4FA250E9C8000C404CD /* Settings.storyboard in Resources */,
 				64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */,
