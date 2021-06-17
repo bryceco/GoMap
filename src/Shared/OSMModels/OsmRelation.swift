@@ -361,9 +361,11 @@ final class OsmRelation: OsmBaseObject {
 					if refPoint == nil {
 						refPoint = pt
                     }
-                    path.move(to: CGPoint(x: CGFloat((pt.x - refPoint!.x) * PATH_SCALING), y: CGFloat((pt.y - refPoint!.y) * PATH_SCALING)), transform: .identity)
+                    path.move(to: CGPoint(x: CGFloat((pt.x - refPoint!.x) * PATH_SCALING),
+										  y: CGFloat((pt.y - refPoint!.y) * PATH_SCALING)))
                 } else {
-                    path.addLine(to: CGPoint(x: CGFloat((pt.x - refPoint!.x) * PATH_SCALING), y: CGFloat((pt.y - refPoint!.y) * PATH_SCALING)), transform: .identity)
+                    path.addLine(to: CGPoint(x: CGFloat((pt.x - refPoint!.x) * PATH_SCALING),
+											 y: CGFloat((pt.y - refPoint!.y) * PATH_SCALING)))
 				}
             }
         }

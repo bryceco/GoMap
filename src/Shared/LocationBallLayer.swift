@@ -98,10 +98,10 @@ final class LocationBallLayer: CALayer {
         let startRadius: CGFloat = 5
         let finishRadius = radius
         let startPath = CGMutablePath()
-        startPath.addEllipse(in: CGRect(x: -startRadius, y: -startRadius, width: 2 * startRadius, height: 2 * startRadius), transform: .identity)
+        startPath.addEllipse(in: CGRect(x: -startRadius, y: -startRadius, width: 2 * startRadius, height: 2 * startRadius))
         
         let finishPath = CGMutablePath()
-        finishPath.addEllipse(in: CGRect(x: -finishRadius, y: -finishRadius, width: 2 * finishRadius, height: 2 * finishRadius), transform: .identity)
+        finishPath.addEllipse(in: CGRect(x: -finishRadius, y: -finishRadius, width: 2 * finishRadius, height: 2 * finishRadius))
         let anim = CABasicAnimation(keyPath: "path")
         anim.duration = 2.0
         anim.fromValue = startPath
@@ -118,8 +118,8 @@ final class LocationBallLayer: CALayer {
             // draw heading
             let radius: CGFloat = 40.0
             let path = CGMutablePath()
-            path.addArc(center: CGPoint(x: 0.0, y: 0.0), radius: radius, startAngle: heading - headingAccuracy, endAngle: heading + headingAccuracy, clockwise: false, transform: .identity)
-            path.addLine(to: CGPoint(x: 0, y: 0), transform: .identity)
+            path.addArc(center: CGPoint(x: 0.0, y: 0.0), radius: radius, startAngle: heading - headingAccuracy, endAngle: heading + headingAccuracy, clockwise: false)
+			path.addLine(to: CGPoint(x: 0, y: 0))
             path.closeSubpath()
 			_headingLayer.path = path
 			_headingLayer.isHidden = false

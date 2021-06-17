@@ -500,10 +500,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
     private(set) var countryCodeForLocation: String?
     private(set) var countryCodeLocation: CLLocationCoordinate2D?
 
-    var pushpinPosition: CGPoint? {
-        return pushPin?.arrowPoint
-	}
-
 	private var locating: Bool {
 		didSet {
 			if oldValue == locating {
@@ -1475,10 +1471,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 						scale: scale)
     }
 
-    func zoom() -> Double {
-		let scaleX = screenFromMapTransform.scale()
-		return log2(scaleX)
-    }
+	func zoom() -> Double {
+		return screenFromMapTransform.zoom()
+	}
 
     func point(on object: OsmBaseObject?, for point: CGPoint) -> CGPoint {
         let latLon = longitudeLatitude(forScreenPoint: point, birdsEye: true)

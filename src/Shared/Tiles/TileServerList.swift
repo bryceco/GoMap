@@ -61,10 +61,10 @@ final class TileServerList {
 			let lat = CGFloat( pt[1].doubleValue )
 			let cgPoint = CGPoint( x: lon, y: lat )
 			if first {
-				path.move(to: cgPoint, transform: .identity)
+				path.move(to: cgPoint)
 				first = false
 			} else {
-				path.addLine(to: cgPoint, transform: .identity)
+				path.addLine(to: cgPoint)
 			}
 		}
 		path.closeSubpath()
@@ -382,7 +382,7 @@ final class TileServerList {
         let center = CGPoint(x: rect.origin.x + rect.size.width / 2, y: rect.origin.y + rect.size.height / 2)
         var result: [TileServer] = []
         for service in downloadedList {
-            if service.polygon == nil || (service.polygon?.contains(center, using: .winding, transform: .identity) ?? false) {
+            if service.polygon == nil || (service.polygon?.contains(center, using: .winding) ?? false) {
                 result.append(service)
             }
         }

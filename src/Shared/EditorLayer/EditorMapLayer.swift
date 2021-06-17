@@ -103,35 +103,37 @@ final class EditorMapLayer: CALayer {
 		self.owner = mapView
 
 		var t = CACurrentMediaTime()
+		var alert: UIAlertController? = nil
 		if let mapData = OsmMapData.withArchivedData() {
 			t = CACurrentMediaTime() - t
 			if mapView.enableAutomaticCacheManagement {
 				_=mapData.discardStaleData()
 			} else if t > 5.0 {
 				// need to pause before posting the alert because the view controller isn't ready here yet
-				DispatchQueue.main.async(execute: {
-					let text = NSLocalizedString("Your OSM data cache is getting large, which may lead to slow startup and shutdown times.\n\nYou may want to clear the cache (under Display settings) to improve performance.", comment: "")
-					let alertView = UIAlertController(title: NSLocalizedString("Cache size warning", comment: ""), message: text, preferredStyle: .alert)
-					alertView.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
-					mapView.mainViewController.present(alertView, animated: true)
-				})
+				let text = NSLocalizedString("Your OSM data cache is getting large, which may lead to slow startup and shutdown times.\n\nYou may want to clear the cache (under Display settings) to improve performance.", comment: "")
+				alert = UIAlertController(title: NSLocalizedString("Cache size warning", comment: ""), message: text, preferredStyle: .alert)
+				alert!.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
 			}
 			self.mapData = mapData
 		} else {
 			self.mapData = OsmMapData()
 			self.mapData.purgeHard() // force database to get reset
-			DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+DispatchTimeInterval.milliseconds(500), execute: {
-				let alertView = UIAlertController(title: NSLocalizedString("Database error", comment: ""),
-												  message: NSLocalizedString("Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.", comment: ""),
-												  preferredStyle: .alert)
-				alertView.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
-				mapView.mainViewController.present(alertView, animated: true)
-			})
+			alert = UIAlertController(title: NSLocalizedString("Database error", comment: ""),
+										message: NSLocalizedString("Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.", comment: ""),
+										preferredStyle: .alert)
+			alert!.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
 		}
 
 		self.baseLayer = CATransformLayer()
 
         super.init()
+
+		if let alert = alert {
+			// this has to occur after super.init()
+			DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+DispatchTimeInterval.milliseconds(500), execute: {
+				self.owner.presentAlert(alert: alert, location: .none)
+			})
+		}
 
 		objectFilters.onChange = { self.mapData.clearCachedProperties() }
         whiteText = true
@@ -143,24 +145,22 @@ final class EditorMapLayer: CALayer {
 
 		OsmMapData.setEditorMapLayerForArchive(self)
         
-        weak var weakSelf = self
         mapData.undoContextForComment = { comment in
-			guard let strongSelf = weakSelf else { return [:] }
-            var trans = strongSelf.mapView.screenFromMapTransform
-            let location = Data(bytes: &trans, count: MemoryLayout.size(ofValue: trans))
+            var trans = self.mapView.screenFromMapTransform
+			let location = Data(bytes: &trans, count: MemoryLayout.size(ofValue: trans))
             var dict: [String : Any] = [:]
 			dict["comment"] = comment
 			dict["location"] = location
-			if let pushpin = strongSelf.mapView.pushpinPosition {
+			if let pushpin = self.owner.pushpinView()?.arrowPoint {
 				dict["pushpin"] = NSCoder.string(for: pushpin)
             }
-			if let selectedRelation = strongSelf.selectedRelation {
+			if let selectedRelation = self.selectedRelation {
 				dict["selectedRelation"] = selectedRelation
 			}
-			if let selectedWay = strongSelf.selectedWay {
+			if let selectedWay = self.selectedWay {
 				dict["selectedWay"] = selectedWay
 			}
-			if let selectedNode = strongSelf.selectedNode {
+			if let selectedNode = self.selectedNode {
 				dict["selectedNode"] = selectedNode
 			}
 			return dict
@@ -272,7 +272,7 @@ final class EditorMapLayer: CALayer {
             return // identity, we haven't been initialized yet
         }
         
-        let box = mapView.screenLongitudeLatitude()
+        let box = owner.screenLongitudeLatitude()
 		if box.size.height <= 0 || box.size.width <= 0 {
 			return
 		}
@@ -325,22 +325,18 @@ final class EditorMapLayer: CALayer {
 		let path = CGMutablePath()
         var first = true
 		for node in way.nodes {
-			let pt = mapView.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false)
+			let pt = owner.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false)
 			if pt.x.isInfinite {
 				break
 			}
 			if first {
-				path.move(to: CGPoint(x: pt.x, y: pt.y), transform: .identity)
+				path.move(to: CGPoint(x: pt.x, y: pt.y))
 				first = false
 			} else {
-				path.addLine(to: CGPoint(x: pt.x, y: pt.y), transform: .identity)
+				path.addLine(to: CGPoint(x: pt.x, y: pt.y))
 			}
 		}
         return path
-    }
-    
-    func zoomLevel() -> Int {
-        return Int(floor(mapView.zoom()))
     }
 
 	static let shopColor = 		UIColor(red: 0xac / 255.0, green: 0x39 / 255.0, blue: 0xac / 255.0, alpha: 1.0)
@@ -455,10 +451,10 @@ final class EditorMapLayer: CALayer {
         invoke(alongScreenClippedWay: way, block: { p1, p2, isEntry, isExit in
             if path == nil {
                 path = CGMutablePath()
-                path!.move(to: CGPoint(x: p1.x, y: p1.y), transform: .identity)
+                path!.move(to: CGPoint(x: p1.x, y: p1.y))
                 firstPoint = p1
             }
-            path!.addLine(to: CGPoint(x: p2.x, y: p2.y), transform: .identity)
+            path!.addLine(to: CGPoint(x: p2.x, y: p2.y))
             lastPoint = p2
             length += hypot(p1.x - p2.x, p1.y - p2.y)
             if isExit {
@@ -972,9 +968,8 @@ final class EditorMapLayer: CALayer {
             radius: radius,
             startAngle: CGFloat(radiansFromDegrees(heading - fieldOfViewRadius / 2)),
             endAngle: CGFloat(radiansFromDegrees(heading + fieldOfViewRadius / 2)),
-			clockwise: false,
-            transform: .identity)
-        path.addLine(to: CGPoint(x: 0, y: 0), transform: .identity)
+			clockwise: false)
+        path.addLine(to: CGPoint(x: 0, y: 0))
         path.closeSubpath()
         layer.path = path
         
@@ -1213,10 +1208,10 @@ final class EditorMapLayer: CALayer {
 									  y: loc.y - dir.y * len + dir.x * width)
                     
                     let arrowPath = CGMutablePath()
-                    arrowPath.move(to: CGPoint(x: p1.x, y: p1.y), transform: .identity)
-                    arrowPath.addLine(to: CGPoint(x: loc.x, y: loc.y), transform: .identity)
-                    arrowPath.addLine(to: CGPoint(x: p2.x, y: p2.y), transform: .identity)
-                    arrowPath.addLine(to: CGPoint(x: CGFloat(loc.x - dir.x * len * 0.5), y: CGFloat(loc.y - dir.y * len * 0.5)), transform: .identity)
+                    arrowPath.move(to: CGPoint(x: p1.x, y: p1.y))
+                    arrowPath.addLine(to: CGPoint(x: loc.x, y: loc.y))
+                    arrowPath.addLine(to: CGPoint(x: p2.x, y: p2.y))
+                    arrowPath.addLine(to: CGPoint(x: CGFloat(loc.x - dir.x * len * 0.5), y: CGFloat(loc.y - dir.y * len * 0.5)))
                     arrowPath.closeSubpath()
                     
                     let arrow = CAShapeLayerWithProperties()
@@ -1286,7 +1281,7 @@ final class EditorMapLayer: CALayer {
     // MARK: Select objects and draw
     
     func getVisibleObjects() -> ContiguousArray<OsmBaseObject> {
-		let box = mapView.screenLongitudeLatitude()
+		let box = owner.screenLongitudeLatitude()
 		var a: ContiguousArray<OsmBaseObject> = []
 		a.reserveCapacity( 4000 )
 		mapData.enumerateObjects(inRegion: box, block: { obj in

@@ -290,10 +290,10 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
                 pt.x *= PATH_SCALING
                 pt.y *= PATH_SCALING
                 if first {
-                    path.move(to: CGPoint(x: pt.x, y: pt.y), transform: .identity)
+                    path.move(to: CGPoint(x: pt.x, y: pt.y))
                     first = false
                 } else {
-                    path.addLine(to: CGPoint(x: pt.x, y: pt.y), transform: .identity)
+                    path.addLine(to: CGPoint(x: pt.x, y: pt.y))
                 }
             }
         }

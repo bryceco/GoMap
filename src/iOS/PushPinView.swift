@@ -154,22 +154,22 @@ final class PushPinView: UIButton, CAAnimationDelegate {
         let viewPath = CGMutablePath()
         if labelOnBottom {
             _hittestRect = CGRect(x: 0, y: arrowHeight, width: boxSize.width, height: boxSize.height)
-            viewPath.move(to: CGPoint(x: boxSize.width / 2, y: 0), transform: .identity) // arrow top
-            viewPath.addLine(to: CGPoint(x: boxSize.width / 2 - arrowWidth / 2, y: arrowHeight), transform: .identity) // arrow top-left
-            viewPath.addArc(tangent1End: CGPoint(x: 0, y: arrowHeight), tangent2End: CGPoint(x: 0, y: boxSize.height + arrowHeight), radius: cornerRadius, transform: .identity) // bottom right corner
-            viewPath.addArc(tangent1End: CGPoint(x: 0, y: boxSize.height + arrowHeight), tangent2End: CGPoint(x: boxSize.width, y: boxSize.height + arrowHeight), radius: cornerRadius, transform: .identity) // top left corner
-            viewPath.addArc(tangent1End: CGPoint(x: boxSize.width, y: boxSize.height + arrowHeight), tangent2End: CGPoint(x: boxSize.width, y: arrowHeight), radius: cornerRadius, transform: .identity) // top right corner
-            viewPath.addArc(tangent1End: CGPoint(x: boxSize.width, y: arrowHeight), tangent2End: CGPoint(x: 0, y: arrowHeight), radius: cornerRadius, transform: .identity) // bottom right corner
-            viewPath.addLine(to: CGPoint(x: boxSize.width / 2 + arrowWidth / 2, y: arrowHeight), transform: .identity) // arrow top-right
+            viewPath.move(to: CGPoint(x: boxSize.width / 2, y: 0)) // arrow top
+            viewPath.addLine(to: CGPoint(x: boxSize.width / 2 - arrowWidth / 2, y: arrowHeight)) // arrow top-left
+            viewPath.addArc(tangent1End: CGPoint(x: 0, y: arrowHeight), tangent2End: CGPoint(x: 0, y: boxSize.height + arrowHeight), radius: cornerRadius) // bottom right corner
+            viewPath.addArc(tangent1End: CGPoint(x: 0, y: boxSize.height + arrowHeight), tangent2End: CGPoint(x: boxSize.width, y: boxSize.height + arrowHeight), radius: cornerRadius) // top left corner
+            viewPath.addArc(tangent1End: CGPoint(x: boxSize.width, y: boxSize.height + arrowHeight), tangent2End: CGPoint(x: boxSize.width, y: arrowHeight), radius: cornerRadius) // top right corner
+            viewPath.addArc(tangent1End: CGPoint(x: boxSize.width, y: arrowHeight), tangent2End: CGPoint(x: 0, y: arrowHeight), radius: cornerRadius) // bottom right corner
+            viewPath.addLine(to: CGPoint(x: boxSize.width / 2 + arrowWidth / 2, y: arrowHeight)) // arrow top-right
             viewPath.closeSubpath()
         } else {
-            viewPath.move(to: CGPoint(x: boxSize.width / 2, y: boxSize.height + arrowHeight), transform: .identity) // arrow bottom
-            viewPath.addLine(to: CGPoint(x: boxSize.width / 2 - arrowWidth / 2, y: boxSize.height), transform: .identity) // arrow top-left
-            viewPath.addArc(tangent1End: CGPoint(x: 0, y: boxSize.height), tangent2End: CGPoint(x: 0, y: 0), radius: cornerRadius, transform: .identity) // bottom right corner
-            viewPath.addArc(tangent1End: CGPoint(x: 0, y: 0), tangent2End: CGPoint(x: boxSize.width, y: 0), radius: cornerRadius, transform: .identity) // top left corner
-            viewPath.addArc(tangent1End: CGPoint(x: boxSize.width, y: 0), tangent2End: CGPoint(x: boxSize.width, y: boxSize.height), radius: cornerRadius, transform: .identity) // top right corner
-            viewPath.addArc(tangent1End: CGPoint(x: boxSize.width, y: boxSize.height), tangent2End: CGPoint(x: 0, y: boxSize.height), radius: cornerRadius, transform: .identity) // bottom right corner
-            viewPath.addLine(to: CGPoint(x: boxSize.width / 2 + arrowWidth / 2, y: boxSize.height), transform: .identity) // arrow top-right
+            viewPath.move(to: CGPoint(x: boxSize.width / 2, y: boxSize.height + arrowHeight)) // arrow bottom
+            viewPath.addLine(to: CGPoint(x: boxSize.width / 2 - arrowWidth / 2, y: boxSize.height)) // arrow top-left
+            viewPath.addArc(tangent1End: CGPoint(x: 0, y: boxSize.height), tangent2End: CGPoint(x: 0, y: 0), radius: cornerRadius) // bottom right corner
+            viewPath.addArc(tangent1End: CGPoint(x: 0, y: 0), tangent2End: CGPoint(x: boxSize.width, y: 0), radius: cornerRadius) // top left corner
+            viewPath.addArc(tangent1End: CGPoint(x: boxSize.width, y: 0), tangent2End: CGPoint(x: boxSize.width, y: boxSize.height), radius: cornerRadius) // top right corner
+            viewPath.addArc(tangent1End: CGPoint(x: boxSize.width, y: boxSize.height), tangent2End: CGPoint(x: 0, y: boxSize.height), radius: cornerRadius) // bottom right corner
+            viewPath.addLine(to: CGPoint(x: boxSize.width / 2 + arrowWidth / 2, y: boxSize.height)) // arrow top-right
             viewPath.closeSubpath()
         }
 
@@ -226,20 +226,23 @@ final class PushPinView: UIButton, CAAnimationDelegate {
             start.y += CGFloat(15 * dy / dist)
             end.x -= CGFloat(15 * dx / dist)
             end.y -= CGFloat(15 * dy / dist)
-            buttonPath.move(to: CGPoint(x: start.x, y: start.y), transform: .identity)
-            buttonPath.addLine(to: CGPoint(x: end.x, y: end.y), transform: .identity)
+            buttonPath.move(to: CGPoint(x: start.x, y: start.y))
+            buttonPath.addLine(to: CGPoint(x: end.x, y: end.y))
             line.path = buttonPath
 
             // get union of subviews
             rc = rc.union(buttonRect)
         }
 
-        placeholderLayer.position = CGPoint(x: viewRect.size.width / 2, y: labelOnBottom ? topGap : viewRect.size.height)
+        placeholderLayer.position = CGPoint(x: viewRect.size.width / 2,
+											y: labelOnBottom ? topGap : viewRect.size.height)
 
         if labelOnBottom {
-            frame = CGRect(x: arrowPoint.x - viewRect.size.width / 2, y: arrowPoint.y - topGap, width: rc.size.width, height: rc.size.height)
+            frame = CGRect(x: arrowPoint.x - viewRect.size.width / 2,
+						   y: arrowPoint.y - topGap, width: rc.size.width, height: rc.size.height)
         } else {
-            frame = CGRect(x: arrowPoint.x - viewRect.size.width / 2, y: arrowPoint.y - viewRect.size.height, width: rc.size.width, height: rc.size.height)
+            frame = CGRect(x: arrowPoint.x - viewRect.size.width / 2,
+						   y: arrowPoint.y - viewRect.size.height, width: rc.size.width, height: rc.size.height)
         }
     }
     
@@ -275,8 +278,8 @@ final class PushPinView: UIButton, CAAnimationDelegate {
         let posB = CGPoint(x: Double(posC.x), y: Double(posA.y))
 
         let path = CGMutablePath()
-        path.move(to: CGPoint(x: posA.x, y: posA.y), transform: .identity)
-        path.addQuadCurve(to: CGPoint(x: posC.x, y: posC.y), control: CGPoint(x: posB.x, y: posB.y), transform: .identity)
+        path.move(to: posA)
+        path.addQuadCurve(to: posC, control: posB)
 
         var theAnimation: CAKeyframeAnimation?
         theAnimation = CAKeyframeAnimation(keyPath: "position")

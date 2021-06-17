@@ -446,6 +446,11 @@ extension OSMTransform {
 		#endif
 	}
 
+	@inline(__always) func zoom() -> Double {
+		let scaleX = self.scale()
+		return log2(scaleX)
+	}
+
 	// Inverse transform
 	func inverse() -> OSMTransform {
 	#if TRANSFORM_3D

@@ -438,9 +438,10 @@ final class OsmWay: OsmBaseObject {
 			if first {
 				first = false
 				pRefPoint.pointee = pt
-				path.move(to: CGPoint(x: 0, y: 0), transform: .identity)
+				path.move(to: CGPoint(x: 0, y: 0))
 			} else {
-				path.addLine(to: CGPoint(x: CGFloat((pt.x - pRefPoint.pointee.x) * PATH_SCALING), y: CGFloat((pt.y - pRefPoint.pointee.y) * PATH_SCALING)), transform: .identity)
+				path.addLine(to: CGPoint(x: CGFloat((pt.x - pRefPoint.pointee.x) * PATH_SCALING),
+										 y: CGFloat((pt.y - pRefPoint.pointee.y) * PATH_SCALING)))
 			}
 		}
         return path

@@ -141,16 +141,18 @@ class RulerView: UIView {
 
         // metric bar on bottom
         let path = CGMutablePath()
-        path.move(to: CGPoint(x: rc.origin.x, y: rc.origin.y + rc.size.height), transform: .identity)
-        path.addLine(to: CGPoint(x: rc.origin.x, y: rc.origin.y + rc.size.height / 2), transform: .identity)
-        path.addLine(to: CGPoint(x: CGFloat(Double(rc.origin.x) + metricPixels), y: rc.origin.y + rc.size.height / 2), transform: .identity)
-        path.addLine(to: CGPoint(x: CGFloat(Double(rc.origin.x) + metricPixels), y: rc.origin.y + rc.size.height), transform: .identity)
+        path.move(to: CGPoint(x: rc.origin.x, y: rc.origin.y + rc.size.height))
+        path.addLine(to: CGPoint(x: rc.origin.x, y: rc.origin.y + rc.size.height / 2))
+        path.addLine(to: CGPoint(x: CGFloat(Double(rc.origin.x) + metricPixels), y: rc.origin.y + rc.size.height / 2))
+        path.addLine(to: CGPoint(x: CGFloat(Double(rc.origin.x) + metricPixels), y: rc.origin.y + rc.size.height))
 
         // british bar on top
-        path.move(to: CGPoint(x: rc.origin.x, y: rc.origin.y), transform: .identity)
-        path.addLine(to: CGPoint(x: rc.origin.x, y: rc.origin.y + rc.size.height / 2), transform: .identity)
-        path.addLine(to: CGPoint(x: CGFloat(Double(rc.origin.x) + britishPixels), y: rc.origin.y + rc.size.height / 2), transform: .identity)
-        path.addLine(to: CGPoint(x: CGFloat(Double(rc.origin.x) + britishPixels), y: rc.origin.y), transform: .identity)
+        path.move(to: CGPoint(x: rc.origin.x, y: rc.origin.y))
+        path.addLine(to: CGPoint(x: rc.origin.x, y: rc.origin.y + rc.size.height / 2))
+        path.addLine(to: CGPoint(x: CGFloat(Double(rc.origin.x) + britishPixels),
+								 y: rc.origin.y + rc.size.height / 2))
+        path.addLine(to: CGPoint(x: CGFloat(Double(rc.origin.x) + britishPixels),
+								 y: rc.origin.y))
 
         _shapeLayer.path = path
 

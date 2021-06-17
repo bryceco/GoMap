@@ -48,13 +48,13 @@ class SpeechBalloonView: UIView {
         let cornerRadius: CGFloat = 14
         let center = 0.35
 		let path = CGMutablePath()
-        path.move(to: CGPoint(x: boxSize.width / 2, y: boxSize.height + arrowHeight), transform: .identity) // arrow bottom
-        path.addLine(to: CGPoint(x: CGFloat(Double(boxSize.width) * center - Double(arrowWidth / 2)), y: boxSize.height), transform: .identity) // arrow top-left
-        path.addArc(tangent1End: CGPoint(x: 0, y: boxSize.height), tangent2End: CGPoint(x: 0, y: 0), radius: cornerRadius, transform: .identity) // bottom right corner
-        path.addArc(tangent1End: CGPoint(x: 0, y: 0), tangent2End: CGPoint(x: boxSize.width, y: 0), radius: cornerRadius, transform: .identity) // top left corner
-        path.addArc(tangent1End: CGPoint(x: boxSize.width, y: 0), tangent2End: CGPoint(x: boxSize.width, y: boxSize.height), radius: cornerRadius, transform: .identity) // top right corner
-        path.addArc(tangent1End: CGPoint(x: boxSize.width, y: boxSize.height), tangent2End: CGPoint(x: 0, y: boxSize.height), radius: cornerRadius, transform: .identity) // bottom right corner
-        path.addLine(to: CGPoint(x: CGFloat(Double(boxSize.width) * center + Double(arrowWidth / 2)), y: boxSize.height), transform: .identity) // arrow top-right
+        path.move(to: CGPoint(x: boxSize.width / 2, y: boxSize.height + arrowHeight)) // arrow bottom
+        path.addLine(to: CGPoint(x: CGFloat(Double(boxSize.width) * center - Double(arrowWidth / 2)), y: boxSize.height)) // arrow top-left
+        path.addArc(tangent1End: CGPoint(x: 0, y: boxSize.height), tangent2End: CGPoint(x: 0, y: 0), radius: cornerRadius) // bottom right corner
+        path.addArc(tangent1End: CGPoint(x: 0, y: 0), tangent2End: CGPoint(x: boxSize.width, y: 0), radius: cornerRadius) // top left corner
+        path.addArc(tangent1End: CGPoint(x: boxSize.width, y: 0), tangent2End: CGPoint(x: boxSize.width, y: boxSize.height), radius: cornerRadius) // top right corner
+        path.addArc(tangent1End: CGPoint(x: boxSize.width, y: boxSize.height), tangent2End: CGPoint(x: 0, y: boxSize.height), radius: cornerRadius) // bottom right corner
+        path.addLine(to: CGPoint(x: CGFloat(Double(boxSize.width) * center + Double(arrowWidth / 2)), y: boxSize.height)) // arrow top-right
         path.closeSubpath()
 		self.path = path
 

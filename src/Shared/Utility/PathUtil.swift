@@ -174,7 +174,7 @@ extension CGPath {
 		CGPath.DouglasPeuckerCore(points, 0, count - 1, epsilon, &result)
 
 		let newPath = CGMutablePath()
-		newPath.addLines(between: result, transform: .identity)
+		newPath.addLines(between: result)
 		return newPath
 	}
 
