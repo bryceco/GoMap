@@ -326,7 +326,7 @@ class HeightViewController: UIViewController {
 		}
 		if object == nil {
 			// brand new object, so fake it
-			let latlon = delegate.mapView.mapTransform.longitudeLatitude(forScreenPoint: delegate.mapView.pushPin!.arrowPoint, birdsEye: true)
+			let latlon = delegate.mapView.mapTransform.latLon(forScreenPoint: delegate.mapView.pushPin!.arrowPoint)
 			// this gets thrown away at the end of this method so the details aren't important
 			let node = OsmNode(withVersion: 0, changeset: 0, user: "", uid: 0, ident: 0, timestamp: "", tags: [:])
 			node.setLongitude( latlon.longitude, latitude: latlon.latitude, undo: nil)
@@ -334,16 +334,17 @@ class HeightViewController: UIViewController {
         }
 		guard let object = object else { return 0.0 }
 		let location = delegate.mapView.currentLocation
-        let userPt = OSMPoint(x: location.coordinate.longitude, y: location.coordinate.latitude)
+        let userPt = LatLon( location.coordinate )
 		var dist: Double = Double(MAXFLOAT)
         var bearing: Double = 0
         
 		for node in object.nodeSet() {
-			let nodePt = OSMPoint(x: node.lon, y: node.lat)
+			let nodePt = node.latLon
 			let d = GreatCircleDistance(userPt, nodePt)
 			if d < dist {
 				dist = d
-				var dir = OSMPoint(x: lat2latp(nodePt.y) - lat2latp(userPt.y), y: nodePt.x - userPt.x)
+				var dir = OSMPoint(x: lat2latp(nodePt.latitude) - lat2latp(userPt.latitude),
+								   y: nodePt.longitude - userPt.longitude)
 				dir = dir.unitVector()
 				bearing = atan2(dir.y, dir.x)
 			}

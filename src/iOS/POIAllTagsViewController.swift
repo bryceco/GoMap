@@ -887,11 +887,10 @@ class POIAllTagsViewController: UITableViewController {
         mapView.editorLayer.selectedRelation = object.isRelation()
         
         var newPoint = mapView.pushPin!.arrowPoint
-		let clLatLon = mapView.mapTransform.longitudeLatitude(forScreenPoint: newPoint, birdsEye: true)
-        var latLon = OSMPoint(x: clLatLon.longitude, y: clLatLon.latitude)
-		latLon = object.pointOnObjectForPoint( latLon )
+		let latLon1 = mapView.mapTransform.latLon(forScreenPoint: newPoint)
+		let latLon = object.pointOnObjectForPoint( latLon1 )
 
-		newPoint = mapView.mapTransform.screenPoint(forLatitude: latLon.y, longitude: latLon.x, birdsEye: true)
+		newPoint = mapView.mapTransform.screenPoint(forLatLon: latLon, birdsEye: true)
 		if !mapView.bounds.contains(newPoint) {
             // new object is far away
             mapView.placePushpinForSelection()

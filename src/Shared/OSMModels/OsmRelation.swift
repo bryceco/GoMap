@@ -355,8 +355,8 @@ final class OsmRelation: OsmBaseObject {
 		for loop in loopList {
 			var first = true
             for n in loop {
-                let pt = MapPointForLatitudeLongitude(n.lat, n.lon)
-                if first {
+				let pt = MapTransform.mapPoint(forLatLon: n.latLon)
+				if first {
                     first = false
 					if refPoint == nil {
 						refPoint = pt
@@ -373,7 +373,7 @@ final class OsmRelation: OsmBaseObject {
 		return path
     }
 
-    func centerPoint() -> OSMPoint {
+    func centerPoint() -> LatLon {
 		let outerSet: [OsmWay] = members.compactMap({
 			if $0.role == "outer" {
 				return $0.obj as? OsmWay
@@ -384,15 +384,15 @@ final class OsmRelation: OsmBaseObject {
             return outerSet[0].centerPoint()
         } else {
 			let rc = self.boundingBox
-			return OSMPoint(x: rc.origin.x + rc.size.width / 2,
-							y: rc.origin.y + rc.size.height / 2)
+			return LatLon(x: rc.origin.x + rc.size.width / 2,
+						  y: rc.origin.y + rc.size.height / 2)
         }
     }
 
-    override func selectionPoint() -> OSMPoint {
+    override func selectionPoint() -> LatLon {
 		let bbox = self.boundingBox
-		let center = OSMPoint(x: bbox.origin.x + bbox.size.width / 2,
-							  y: bbox.origin.y + bbox.size.height / 2)
+		let center = LatLon(x: bbox.origin.x + bbox.size.width / 2,
+							y: bbox.origin.y + bbox.size.height / 2)
 		if isMultipolygon() {
             // pick a point on an outer polygon that is close to the center of the bbox
             for member in members {
@@ -439,12 +439,12 @@ final class OsmRelation: OsmBaseObject {
         return dist
     }
 
-	override func pointOnObjectForPoint(_ target: OSMPoint) -> OSMPoint {
-        var bestPoint = target
+	override func pointOnObjectForPoint(_ target: LatLon) -> LatLon {
+		var bestPoint = target
         var bestDistance = 10000000.0
         for object in allMemberObjects() {
             let pt = object.pointOnObjectForPoint( target )
-			let dist = target.distanceToPoint( pt )
+			let dist = OSMPoint(target).distanceToPoint( OSMPoint(pt) )
             if dist < bestDistance {
                 bestDistance = dist
                 bestPoint = pt

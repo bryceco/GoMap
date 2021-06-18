@@ -47,7 +47,6 @@ protocol EditorMapLayerOwner: UIView, MapViewProgress {
 	func setScreenFromMap( transform: OSMTransform )	// used when undo/redo change the location
 	func screenLongitudeLatitude() -> OSMRect
 	func metersPerPixel() -> Double
-	func boundingScreenRect(forMapRect mapRect: OSMRect) -> OSMRect
 
 	func useTurnRestrictions() -> Bool
 	func useAutomaticCacheManagement() -> Bool
@@ -204,9 +203,9 @@ final class EditorMapLayer: CALayer {
 			{
 				// since we don't record the pushpin location until after a drag has begun we need to re-center on the object:
 				var pt = NSCoder.cgPoint(for: pushpin)
-				let loc = self.owner.mapTransform.longitudeLatitude(forScreenPoint: pt, birdsEye: true)
-				let pos = primary.pointOnObjectForPoint(OSMPoint(x: loc.longitude, y: loc.latitude))
-				pt = self.owner.mapTransform.screenPoint(forLatitude: pos.y, longitude: pos.x, birdsEye: true)
+				let loc = self.owner.mapTransform.latLon(forScreenPoint: pt)
+				let pos = primary.pointOnObjectForPoint(loc)
+				pt = self.owner.mapTransform.screenPoint(forLatLon: pos, birdsEye: true)
 				// place pushpin
 				self.owner.placePushpin(at: pt, object: primary)
 			} else {
@@ -336,7 +335,7 @@ final class EditorMapLayer: CALayer {
 		let path = CGMutablePath()
         var first = true
 		for node in way.nodes {
-			let pt = owner.mapTransform.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false)
+			let pt = owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false)
 			if pt.x.isInfinite {
 				break
 			}
@@ -397,7 +396,7 @@ final class EditorMapLayer: CALayer {
         
 		for node in way.nodes {
 
-			let pt = OSMPoint(owner.mapTransform.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false))
+			let pt = OSMPoint(owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false))
 			let inside = viewRect.containsPoint( pt)
 			defer {
 				prev = pt
@@ -776,7 +775,7 @@ final class EditorMapLayer: CALayer {
                 } else {
                     
                     let point = object.isWay() != nil ? object.isWay()!.centerPoint() : object.isRelation()!.centerPoint()
-					let pt = MapPointForLatitudeLongitude(point.y, point.x)
+					let pt = MapTransform.mapPoint( forLatLon: point )
                     
 					let layer = CurvedGlyphLayer.layerWithString( name )
                     layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -800,7 +799,7 @@ final class EditorMapLayer: CALayer {
 						viaMemberObject.isNode() != nil || viaMemberObject.isWay() != nil
 					{
 						let latLon = viaMemberObject.selectionPoint()
-						let pt = MapPointForLatitudeLongitude(latLon.y, latLon.x)
+						let pt = MapTransform.mapPoint(forLatLon: latLon)
 
 						let restrictionLayerIcon = CALayerWithProperties()
 						restrictionLayerIcon.bounds = CGRect(x: 0, y: 0, width: CGFloat(MinIconSizeInPixels), height: CGFloat(MinIconSizeInPixels))
@@ -840,8 +839,8 @@ final class EditorMapLayer: CALayer {
 		let directionLayers = directionShapeLayers(with: node)
 		layers.append(contentsOf: directionLayers)
 
-        let pt = MapPointForLatitudeLongitude(node.lat, node.lon)
-        var drawRef = true
+		let pt = MapTransform.mapPoint(forLatLon: node.latLon)
+		var drawRef = true
         
         // fetch icon
         let feature = PresetsDatabase.shared.matchObjectTagsToFeature( node.tags,
@@ -966,7 +965,7 @@ final class EditorMapLayer: CALayer {
         
         layer.zPosition = Z_NODE
         
-        let pt = MapPointForLatitudeLongitude(node.lat, node.lon)
+		let pt = MapTransform.mapPoint(forLatLon: node.latLon)
         
 		let screenAngle = owner.mapTransform.transform.rotation()
 		layer.setAffineTransform( CGAffineTransform(rotationAngle: CGFloat(screenAngle)) )
@@ -997,8 +996,8 @@ final class EditorMapLayer: CALayer {
 		}
 		let nextNode = way.nodes[second]
 		// compute angle to next node
-        let p1 = MapPointForLatitudeLongitude(node.lat, node.lon)
-        let p2 = MapPointForLatitudeLongitude(nextNode.lat, nextNode.lon)
+		let p1 = MapTransform.mapPoint(forLatLon: node.latLon)
+		let p2 = MapTransform.mapPoint(forLatLon: nextNode.latLon)
 		let angle = atan2(p2.y - p1.y, p2.x - p1.x)
         var direction = 90 + Int(round(angle * 180 / .pi)) // convert to north-facing clockwise direction
         if direction < 0 {
@@ -1158,8 +1157,8 @@ final class EditorMapLayer: CALayer {
 									  y: -NodeHighlightRadius,
 									  width: 2 * NodeHighlightRadius,
 									  height: 2 * NodeHighlightRadius)
-					layer2.position = owner.mapTransform.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false)
-                    layer2.strokeColor = node == selectedNode ? UIColor.yellow.cgColor : UIColor.green.cgColor
+					layer2.position = owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false)
+					layer2.strokeColor = node == selectedNode ? UIColor.yellow.cgColor : UIColor.green.cgColor
                     layer2.fillColor = UIColor.clear.cgColor
                     layer2.lineWidth = 3.0
                     layer2.shadowColor = UIColor.black.cgColor
@@ -1176,7 +1175,7 @@ final class EditorMapLayer: CALayer {
                 }
 			} else if let node = object as? OsmNode {
 				// draw square around selected node
-				let pt = owner.mapTransform.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false)
+				let pt = owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false)
                 
                 let layer = CAShapeLayerWithProperties()
                 var rect = CGRect(x: -MinIconSizeInPixels / 2,
@@ -1467,7 +1466,7 @@ final class EditorMapLayer: CALayer {
 		let tRotation = owner.mapTransform.rotation()
 		let tScale = owner.mapTransform.scale()
 		let pScale = CGFloat( tScale / PATH_SCALING )
-		let pixelsPerMeter = 0.8 * 1.0 / owner.mapTransform.metersPerPixel(at: self.bounds.center())
+		let pixelsPerMeter = 0.8 * 1.0 / owner.mapTransform.metersPerPixel(atScreenPoint: self.bounds.center())
         
 		for object in shownObjects {
             
@@ -1478,7 +1477,7 @@ final class EditorMapLayer: CALayer {
                 let isShapeLayer = layer is CAShapeLayer
                 let props = layer.properties
                 let pt = props.position
-				var pt2 = owner.mapTransform.screenPoint(fromMapPoint: pt, birdsEye: false)
+				var pt2 = owner.mapTransform.screenPoint(forMapPoint: pt, birdsEye: false)
                 
                 if props.is3D || (isShapeLayer && object.isNode() == nil) {
                     
@@ -1523,11 +1522,11 @@ final class EditorMapLayer: CALayer {
                         } else {
                             // its a label on a building or polygon
 							let rcMap = MapTransform.mapRect(forLatLonRect: object.boundingBox)
-							let rcScreen = owner.boundingScreenRect(forMapRect: rcMap)
-                            if layer.bounds.size.width >= CGFloat(1.1 * rcScreen.size.width) {
-                                // text label is too big so hide it
-                                layer.removeFromSuperlayer()
-                                continue
+							let rcScreen = owner.mapTransform.boundingScreenRect(forMapRect: rcMap)
+                            if layer.bounds.size.width >= 1.1 * rcScreen.size.width {
+								// text label is too big so hide it
+								layer.removeFromSuperlayer()
+								continue
                             }
                         }
                     } else if layer.properties.isDirectional {

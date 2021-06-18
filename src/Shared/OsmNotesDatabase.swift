@@ -214,8 +214,8 @@ final class OsmNote {
 		tagId = g_nextTagID
 		g_nextTagID += 1
 		noteId = object.extendedIdentifier.rawValue
-		lon = center.x
-		lat = center.y
+		lon = center.longitude
+		lat = center.latitude
         created = object.timestamp
 		status = STATUS_FIXME
         let comment = OsmNoteComment(fixmeObject: object, fixmeKey: fixme)

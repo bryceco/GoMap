@@ -13,8 +13,8 @@ import CoreLocation
 class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
     var synthesizer: AVSpeechSynthesizer?
     var previousObjects = [OsmExtendedIdentifier : Date]()
-    var previousCoord = CLLocationCoordinate2D()
-    var currentHighway: OsmWay? = nil
+	var previousCoord = LatLon.zero
+	var currentHighway: OsmWay? = nil
     var previousClosestHighway: OsmWay? = nil
     var utteranceMap = NSMapTable<AVSpeechUtterance, OsmBaseObject>(keyOptions: .opaquePersonality, valueOptions: .opaquePersonality)
 
@@ -75,7 +75,7 @@ class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
         utteranceMap.removeAllObjects()
     }
 
-    func announce(forLocation coord: CLLocationCoordinate2D) {
+    func announce(forLocation coord: LatLon) {
 		guard let mapView = mapView else { return }
         if !enabled {
             return
@@ -224,7 +224,7 @@ class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
     }
 }
 
-@inline(__always) private func OSMPointFromCoordinate(_ coord: CLLocationCoordinate2D) -> OSMPoint {
+@inline(__always) private func OSMPointFromCoordinate(_ coord: LatLon) -> OSMPoint {
     let point = OSMPoint(x: coord.longitude, y: coord.latitude)
     return point
 }

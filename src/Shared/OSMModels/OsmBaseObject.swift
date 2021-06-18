@@ -252,11 +252,11 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
         fatalError()
     }
     
-    func selectionPoint() -> OSMPoint {
+    func selectionPoint() -> LatLon {
         fatalError()
     }
     
-    func pointOnObjectForPoint(_ target: OSMPoint) -> OSMPoint {
+    func pointOnObjectForPoint(_ target: LatLon) -> LatLon {
 		fatalError()
     }
 
@@ -277,8 +277,8 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
         for way in wayList {
             var first = true
             for node in way.nodes {
-                var pt = MapPointForLatitudeLongitude(node.lat, node.lon)
-                if pt.x.isInfinite {
+				var pt = MapTransform.mapPoint(forLatLon: node.latLon)
+				if pt.x.isInfinite {
                     break
                 }
                 if !haveInitial {

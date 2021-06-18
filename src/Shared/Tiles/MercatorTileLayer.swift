@@ -143,10 +143,10 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
         var p3 = OSMPoint(x: Double(rc.origin.x + rc.size.width), y: Double(rc.origin.y + rc.size.height))
         var p4 = OSMPoint(x: Double(rc.origin.x + rc.size.width), y: Double(rc.origin.y))
         
-		p1 = ToBirdsEye(p1, center, Double(mapView.mapTransform.birdsEyeDistance), Double(mapView.mapTransform.birdsEyeRotation))
-		p2 = ToBirdsEye(p2, center, Double(mapView.mapTransform.birdsEyeDistance), Double(mapView.mapTransform.birdsEyeRotation))
-		p3 = ToBirdsEye(p3, center, Double(mapView.mapTransform.birdsEyeDistance), Double(mapView.mapTransform.birdsEyeRotation))
-		p4 = ToBirdsEye(p4, center, Double(mapView.mapTransform.birdsEyeDistance), Double(mapView.mapTransform.birdsEyeRotation))
+		p1 = mapView.mapTransform.toBirdsEye(p1, center)
+		p2 = mapView.mapTransform.toBirdsEye(p2, center)
+		p3 = mapView.mapTransform.toBirdsEye(p3, center)
+		p4 = mapView.mapTransform.toBirdsEye(p4, center)
         
         let rect = OSMRect(rc)
 		return rect.containsPoint(p1) || rect.containsPoint(p2) || rect.containsPoint(p3) || rect.containsPoint(p4)
@@ -360,7 +360,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
             
             var scale = 256.0 / Double((1 << tileZ))
             var pt = OSMPoint(x: Double(tileX) * scale, y: Double(tileY) * scale)
-			pt = mapView.mapTransform.screenPoint(fromMapPoint: pt, birdsEye: false)
+			pt = mapView.mapTransform.screenPoint(forMapPoint: pt, birdsEye: false)
             layer.position = CGPoint(pt)
             layer.bounds = CGRect(x: 0, y: 0, width: 256, height: 256)
             layer.anchorPoint = CGPoint(x: 0, y: 0)

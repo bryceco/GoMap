@@ -364,7 +364,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         object.setTags(localDict, undo: undoManager)
     }
     
-    func createNode(atLocation loc: CLLocationCoordinate2D) -> OsmNode {
+    func createNode(atLocation loc: LatLon) -> OsmNode {
 		let node = OsmNode(asUserCreated: AppDelegate.shared.userName)
         node.setLongitude(loc.longitude, latitude: loc.latitude, undo: nil)
         node.setDeleted(true, undo: nil)
@@ -1205,11 +1205,11 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
             } else if node.isModified() && !node.deleted {
                 // added/modified
                 let element = OsmMapData.element(for: node)
-                if let attribute = DDXMLNode.attribute(withName: "lat", stringValue: NSNumber(value: node.lat).stringValue) as? DDXMLNode {
+				if let attribute = DDXMLNode.attribute(withName: "lat", stringValue: NSNumber(value: node.latLon.latitude).stringValue) as? DDXMLNode {
                     element.addAttribute(attribute)
                 }
-                if let attribute = DDXMLNode.attribute(withName: "lon", stringValue: NSNumber(value: node.lon).stringValue) as? DDXMLNode {
-                    element.addAttribute(attribute)
+				if let attribute = DDXMLNode.attribute(withName: "lon", stringValue: NSNumber(value: node.latLon.longitude).stringValue) as? DDXMLNode {
+					element.addAttribute(attribute)
                 }
                 OsmMapData.addTags(for: node, element: element)
                 if node.ident < 0 {

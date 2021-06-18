@@ -99,7 +99,7 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
             // ignore
         } else if indexPath.row == 1 {
             // get directions
-            let coordinate = CLLocationCoordinate2DMake(self.note?.lat ?? 0, self.note?.lon ?? 0)
+            let coordinate = CLLocationCoordinate2DMake(self.note.lat, self.note.lon)
             let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
             let note = MKMapItem(placemark: placemark)
             note.name = "OSM Note"

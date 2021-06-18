@@ -224,7 +224,7 @@ extension EditorMapLayer {
             return []
         }
         let pointlist = nodeList.map { (node) -> OSMPoint in
-			let pt = self.owner.mapTransform.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false)
+			let pt = self.owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false)
             return OSMPoint(pt)
         }
         return pointlist

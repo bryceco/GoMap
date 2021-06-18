@@ -125,7 +125,7 @@ class TurnRestrictController: UIViewController {
 
     //MARK: Create Path From Points
     func createHighwayViews(_ adjacentNodesArray: [OsmNode]) {
-        let centerNodePos = screenPoint(forLatitude: centralNode!.lat, longitude: centralNode!.lon)
+		let centerNodePos = screenPoint(forLatitude: centralNode!.latLon.latitude, longitude: centralNode!.latLon.longitude)
 		let detailViewCenter = CGPoint(x: detailView.bounds.midX, y: detailView.bounds.midY)
 		let positionOffset = centerNodePos.minus(detailViewCenter)
 
@@ -146,7 +146,7 @@ class TurnRestrictController: UIViewController {
         // create highway views
         for node in adjacentNodesArray {
             // get location of node
-            var nodePoint = screenPoint(forLatitude: node.lat, longitude: node.lon)
+			var nodePoint = screenPoint(forLatitude: node.latLon.latitude, longitude: node.latLon.longitude)
 			nodePoint = nodePoint.minus(positionOffset)
 
             // force highway segment to extend from center node to edge of view
@@ -577,8 +577,8 @@ class TurnRestrictController: UIViewController {
 
     // Convert location point to CGPoint
 	func screenPoint(forLatitude latitude: Double, longitude: Double) -> CGPoint {
-		// why doesn't this use the mapView function directly?
-		var pt = MapPointForLatitudeLongitude(latitude, longitude)
+		// FIXME: why doesn't this use the mapView function directly?
+		var pt = MapTransform.mapPoint(forLatLon: LatLon(latitude: latitude, longitude: longitude))
 		pt = pt.withTransform( AppDelegate.shared.mapView.screenFromMapTransform )
 		return CGPoint(pt)
 	}

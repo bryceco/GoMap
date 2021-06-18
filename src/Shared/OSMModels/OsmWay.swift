@@ -233,29 +233,30 @@ final class OsmWay: OsmBaseObject {
     }
 
     // return the point on the way closest to the supplied point
-	override func pointOnObjectForPoint(_ target: OSMPoint) -> OSMPoint {
+	override func pointOnObjectForPoint(_ target: LatLon) -> LatLon {
         switch nodes.count {
             case 0:
                 return target
             case 1:
-                return nodes.last!.location()
-            default:
+				return nodes.last!.latLon
+			default:
                 break
         }
+		let target = OSMPoint(target)
 		var bestPoint = OSMPoint(x: 0, y: 0)
 		var bestDist = Double.greatestFiniteMagnitude
         for i in 1..<nodes.count {
             let p1 = nodes[i-1].location()
             let p2 = nodes[i].location()
 			let linePoint = target.nearestPointOnLineSegment(lineA: p1, lineB: p2)
-            let dist = MagSquared(Sub(linePoint, target))
+			let dist = MagSquared(Sub(linePoint, target))
             if dist < bestDist {
                 bestDist = dist
                 bestPoint = linePoint
             }
         }
-        return bestPoint
-    }
+        return LatLon(bestPoint)
+	}
 
     override func distance(toLineSegment point1: OSMPoint, point point2: OSMPoint) -> Double {
         if nodes.count == 1 {
@@ -283,10 +284,11 @@ final class OsmWay: OsmBaseObject {
     }
 
     override func computeBoundingBox() {
-		guard let first = nodes.first?.location() else {
+		guard let firstLatLon = nodes.first?.location() else {
 			_boundingBox = OSMRect.zero
 			return
 		}
+		let first = firstLatLon
 
 		var minX = first.x
 		var maxX = first.x
@@ -311,8 +313,8 @@ final class OsmWay: OsmBaseObject {
 							   size: OSMSize(width: maxX - minX, height: maxY - minY))
     }
 
-    func centerPointWithArea(_ pArea: inout Double) -> OSMPoint {
-        let isClosed = self.isClosed()
+    func centerPointWithArea(_ pArea: inout Double) -> LatLon {
+		let isClosed = self.isClosed()
 
         let nodeCount = isClosed ? nodes.count - 1 : nodes.count
 
@@ -325,8 +327,8 @@ final class OsmWay: OsmBaseObject {
 				let offset = nodes.first!.location()
 				var previous = OSMPoint(x: 0.0, y: 0.0)
 				for node in nodes.dropFirst() {
-					let current = OSMPoint(x: node.lon - offset.x,
-										   y: node.lat - offset.y)
+					let current = OSMPoint(x: node.latLon.longitude - offset.x,
+										   y: node.latLon.latitude - offset.y)
 					let partialSum = previous.x * current.y - previous.y * current.x
 					sum += partialSum
 					sumX += (previous.x + current.x) * partialSum
@@ -337,35 +339,36 @@ final class OsmWay: OsmBaseObject {
 				var point = OSMPoint(x: sumX / 6 / pArea, y: sumY / 6 / pArea)
                 point.x += offset.x
 				point.y += offset.y
-                return point
-            } else {
+                return LatLon(point)
+			} else {
                 // compute average
                 var sumX: Double = 0
                 var sumY: Double = 0
                 for node in nodes {
-                    sumX += node.lon
-                    sumY += node.lat
-                }
+					sumX += node.latLon.longitude
+					sumY += node.latLon.latitude
+				}
 				let point = OSMPoint(x: sumX / Double(nodeCount), y: sumY / Double(nodeCount))
-                return point
+                return LatLon(point)
             }
         } else if nodeCount == 2 {
 			pArea = 0.0
 			let n1 = nodes[0]
             let n2 = nodes[1]
-			return OSMPoint(x: (n1.lon + n2.lon) / 2, y: (n1.lat + n2.lat) / 2)
+			return LatLon(x: (n1.latLon.longitude + n2.latLon.longitude) / 2,
+							y: (n1.latLon.latitude + n2.latLon.latitude) / 2)
         } else if nodeCount == 1 {
 			pArea = 0.0
 			let node = nodes.last!
-			return OSMPoint(x: node.lon, y: node.lat)
-        } else {
+			return node.latLon
+		} else {
 			pArea = 0.0
-			let pt = OSMPoint(x: 0, y: 0)
-            return pt
+			let pt = LatLon.zero
+			return pt
         }
     }
 
-    func centerPoint() -> OSMPoint {
+    func centerPoint() -> LatLon {
 		var area: Double = 0.0
         return centerPointWithArea( &area )
 	}
@@ -373,38 +376,38 @@ final class OsmWay: OsmBaseObject {
     func lengthInMeters() -> Double {
         var first = true
         var len: Double = 0
-		var prev = OSMPoint(x: 0, y: 0)
-        for node in nodes {
-            let pt = node.location()
-            if !first {
-                len += GreatCircleDistance(pt, prev)
+		var prev = LatLon.zero
+		for node in nodes {
+            let pt = node.latLon
+			if !first {
+				len += GreatCircleDistance(pt, prev)
             }
-            first = false
-            prev = pt
+			first = false
+			prev = pt
         }
         return len
     }
 
     // pick a point close to the center of the way
-    override func selectionPoint() -> OSMPoint {
+    override func selectionPoint() -> LatLon {
         var dist = lengthInMeters() / 2
         var first = true
-		var prev = OSMPoint(x: 0, y: 0)
+		var prev = OSMPoint.zero
         for node in nodes {
             let pt = node.location()
-            if !first {
-                let segment = GreatCircleDistance(pt, prev)
-                if segment >= dist {
-                    let pos = Add(prev, Mult(Sub(pt, prev), dist / segment))
-                    return pos
-                }
-                dist -= segment
-            }
-            first = false
-            prev = pt
-        }
-        return prev // dummy value, shouldn't ever happen
-    }
+			if !first {
+				let segment = GreatCircleDistance(LatLon(pt), LatLon(prev))
+				if segment >= dist {
+					let pos = Add(prev, Mult(Sub(pt, prev), dist / segment))
+					return LatLon(pos)
+				}
+				dist -= segment
+			}
+			first = false
+			prev = pt
+		}
+		return LatLon(prev) // dummy value, shouldn't ever happen
+	}
 
     class func isClockwiseArrayOfNodes(_ nodes: [OsmNode]) -> Bool {
         if nodes.count < 4 || nodes[0] != nodes.last {
@@ -415,7 +418,7 @@ final class OsmWay: OsmBaseObject {
 		var previous = OSMPoint(x: 0.0, y: 0.0)
 		for node in nodes.dropFirst() {
 			let point = node.location()
-			let current = OSMPoint(x: point.x - offset.x, y: point.y - offset.y)
+			let current = Sub(point, offset)
 			sum += previous.x * current.y - previous.y * current.x
 			previous = current
         }
@@ -434,7 +437,7 @@ final class OsmWay: OsmBaseObject {
         var first = true
         // want loops to run clockwise
 		for n in forward ? nodes : nodes.reversed() {
-			let pt = MapPointForLatitudeLongitude(n.lat, n.lon)
+			let pt = MapTransform.mapPoint(forLatLon: n.latLon)
 			if first {
 				first = false
 				pRefPoint.pointee = pt
@@ -474,14 +477,15 @@ final class OsmWay: OsmBaseObject {
         return nil
     }
 
-    func segmentClosestToPoint(_ point: OSMPoint) -> Int {
-        var best = -1
+    func segmentClosestToPoint(_ point: LatLon) -> Int {
+		let point = OSMPoint(point)
+		var best = -1
 		var bestDist: Double = 100000000.0
 		for index in nodes.indices.dropLast() {
 			let this = nodes[index]
             let next = nodes[index+1]
 			let dist = point.distanceToLineSegment(this.location(), next.location())
-            if dist < bestDist {
+			if dist < bestDist {
                 bestDist = dist
                 best = index
             }

@@ -10,23 +10,6 @@ import QuartzCore
 import CoreLocation
 import UIKit
 
-
-// Distance in meters
-private func metersApart(_ lat1: Double, _ lon1: Double, _ lat2: Double, _ lon2: Double) -> Double {
-    var lat1 = lat1
-    var lat2 = lat2
-    let R: Double = 6371 // km
-    lat1 *= .pi / 180
-    lat2 *= .pi / 180
-    let dLat = lat2 - lat1
-    let dLon = (lon2 - lon1) * .pi / 180
-
-    let a: Double = sin(dLat / 2) * sin(dLat / 2) + sin(dLon / 2) * sin(dLon / 2) * cos(lat1) * cos(lat2)
-    let c: Double = 2 * atan2(sqrt(a), sqrt(1 - a))
-    let d = R * c
-    return d * 1000
-}
-
 final class GpxTrackLayerWithProperties: CAShapeLayer {
 	struct Properties {
 		var position: OSMPoint?
@@ -36,16 +19,15 @@ final class GpxTrackLayerWithProperties: CAShapeLayer {
 }
 
 final class GpxPoint: NSObject, NSCoding {
-    var longitude = 0.0
-    var latitude = 0.0
+	var latLon = LatLon.zero
     var accuracy = 0.0
     var elevation = 0.0
     var timestamp: Date?
 
     required init(coder aDecoder: NSCoder) {
         super.init()
-        latitude = aDecoder.decodeDouble(forKey: "lat")
-        longitude = aDecoder.decodeDouble(forKey: "lon")
+		latLon.latitude = aDecoder.decodeDouble(forKey: "lat")
+		latLon.longitude = aDecoder.decodeDouble(forKey: "lon")
         accuracy = aDecoder.decodeDouble(forKey: "acc")
         elevation = aDecoder.decodeDouble(forKey: "ele")
         timestamp = aDecoder.decodeObject(forKey: "time") as? Date
@@ -56,8 +38,8 @@ final class GpxPoint: NSObject, NSCoding {
     }
 
     func encode(with aCoder: NSCoder) {
-        aCoder.encode(latitude, forKey: "lat")
-        aCoder.encode(longitude, forKey: "lon")
+		aCoder.encode(latLon.latitude, forKey: "lat")
+		aCoder.encode(latLon.longitude, forKey: "lon")
         aCoder.encode(accuracy, forKey: "acc")
         aCoder.encode(elevation, forKey: "ele")
         aCoder.encode(timestamp, forKey: "time")
@@ -85,29 +67,31 @@ final class GpxTrack: NSObject, NSCoding {
     private(set) var points: [GpxPoint] = []
     var shapeLayer: GpxTrackLayerWithProperties?
 
-    func addPoint(_ location: CLLocation?) {
+    func addPoint(_ location: CLLocation) {
         recording = true
 
-        let coordinate = location?.coordinate
-        let prev = points.last
-        
-        if prev != nil && prev?.latitude == coordinate?.latitude && prev?.longitude == coordinate?.longitude {
-            return
+        let coordinate = LatLon( location.coordinate )
+		let prev = points.last
+
+		if let prev = prev,
+		   prev.latLon.latitude == coordinate.latitude,
+		   prev.latLon.longitude == coordinate.longitude
+		{
+			return
         }
 
-        if let prev = prev {
-            let d = metersApart(coordinate?.latitude ?? 0.0, coordinate?.longitude ?? 0.0, prev.latitude, prev.longitude)
-            _distance += d
+		if let prev = prev {
+            let d = GreatCircleDistance( coordinate, prev.latLon)
+			_distance += d
         }
 
-        let pt = GpxPoint()
-        pt.latitude = coordinate?.latitude ?? 0.0
-        pt.longitude = coordinate?.longitude ?? 0.0
-        pt.timestamp = location?.timestamp
-        pt.elevation = location?.altitude ?? 0.0
-        pt.accuracy = location?.horizontalAccuracy ?? 0.0
+		let pt = GpxPoint()
+		pt.latLon = coordinate
+        pt.timestamp = location.timestamp
+        pt.elevation = location.altitude
+        pt.accuracy = location.horizontalAccuracy
 
-        points.append(pt)
+		points.append(pt)
 
         //	DLog( @"%f,%f (%f): %lu gpx points", coordinate.longitude, coordinate.latitude, location.horizontalAccuracy, (unsigned long)_points.count );
     }
@@ -156,8 +140,8 @@ final class GpxTrack: NSObject, NSCoding {
 
         for pt in points {
 			guard let ptElement = DDXMLNode.element(withName: "trkpt") as? DDXMLElement,
-				  let attrLat = DDXMLNode.attribute(withName: "lat", stringValue: "\(pt.latitude)") as? DDXMLNode,
-				  let attrLon = DDXMLNode.attribute(withName: "lon", stringValue: "\(pt.longitude)") as? DDXMLNode,
+				  let attrLat = DDXMLNode.attribute(withName: "lat", stringValue: "\(pt.latLon.latitude)") as? DDXMLNode,
+				  let attrLon = DDXMLNode.attribute(withName: "lon", stringValue: "\(pt.latLon.longitude)") as? DDXMLNode,
 				  let eleElement = DDXMLNode.element(withName: "ele") as? DDXMLElement
 			else { return nil }
 
@@ -231,8 +215,7 @@ final class GpxTrack: NSObject, NSCoding {
 		    else { return nil }
 
 			let point = GpxPoint()
-            point.latitude = lat
-            point.longitude = lon
+			point.latLon = LatLon(latitude: lat, longitude: lon)
 
 			if let time = pt.elements(forName: "time").last?.stringValue {
                 point.timestamp = dateFormatter.date(from: time)
@@ -266,8 +249,8 @@ final class GpxTrack: NSObject, NSCoding {
             var prev: GpxPoint? = nil
             for pt in points {
                 if let prev = prev {
-                    let d = metersApart(pt.latitude, pt.longitude, prev.latitude, prev.longitude)
-                    _distance += d
+					let d = GreatCircleDistance(pt.latLon, prev.latLon)
+					_distance += d
                 }
                 prev = pt
             }
@@ -492,24 +475,10 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 
             activeTrack.addPoint(location)
 
-#if DEBUG && false
-            // for debugging only: magnify number of GPS points to test performance
-            for i in 1..<1000 {
-                var loc: CLLocation? = nil
-                if let timestamp1 = location?.timestamp {
-                    loc = CLLocation(coordinate: CLLocationCoordinate2DMake((location?.coordinate.latitude ?? 0.0) + Double(i) / 1000000.0, location?.coordinate.longitude ?? 0), altitude: location?.altitude ?? 0, horizontalAccuracy: location?.horizontalAccuracy ?? 0, verticalAccuracy: location?.verticalAccuracy ?? 0, course: location?.course ?? 0, speed: location?.speed ?? 0, timestamp: timestamp1)
-                }
-                activeTrack.addPoint(loc)
-            }
-#endif
-
             // automatically save periodically
-#if os(iOS)
             let saveInterval = UIApplication.shared.applicationState == .active ? 30 : 180 // save less frequently if we're in the background
-#else
-            let saveInterval = 30
-#endif
-            if activeTrack.points.count % saveInterval == 0 {
+
+			if activeTrack.points.count % saveInterval == 0 {
                 saveActiveTrack()
             }
 
@@ -683,7 +652,7 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 		}
 		let pt = track.points[mid]
 		let widthDegrees = (20.0 /*meters*/ / EarthRadius) * 360.0
-		mapView.setTransformFor(latitude: pt.latitude, longitude: pt.longitude, width: widthDegrees)
+		mapView.setTransformFor(latLon: pt.latLon, width: widthDegrees)
 	}
 
     // Load a GPX trace from an external source
@@ -722,7 +691,7 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
         var first = true
 
         for point in track.points {
-            var pt = MapPointForLatitudeLongitude(point.latitude, point.longitude)
+			var pt = MapTransform.mapPoint(forLatLon: point.latLon)
             if pt.x.isInfinite {
                 break
             }
@@ -812,7 +781,7 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
             
             // configure the layer for presentation
 			guard let pt = layer.props.position else { return }
-			let pt2 = mapView.mapTransform.screenPoint(fromMapPoint: pt, birdsEye: false)
+			let pt2 = mapView.mapTransform.screenPoint(forMapPoint: pt, birdsEye: false)
             
             // rotate and scale
             var t = CGAffineTransform(translationX: CGFloat(pt2.x - pt.x), y: CGFloat(pt2.y - pt.y))

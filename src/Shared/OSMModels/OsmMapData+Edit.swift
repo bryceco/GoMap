@@ -200,7 +200,7 @@ extension OsmMapData {
 			rectoUpperThreshold = cos(rectoThreshold * .pi / 180)
 
 			var points = way.nodes.dropLast().map({
-				return OSMPoint( x: $0.lon, y: lat2latp($0.lat))
+				return OSMPoint( x: $0.latLon.longitude, y: lat2latp($0.latLon.latitude))
 			})
 
 			let epsilon = 1e-4
@@ -467,7 +467,7 @@ extension OsmMapData {
         return { [self] in
             if survivor == node1 {
                 // update survivor to have location of other node
-                setLongitude(node2.lon, latitude: node2.lat, for: survivor)
+				setLongitude(node2.latLon.longitude, latitude: node2.latLon.latitude, for: survivor)
             }
             
             setTags(mergedTags, for: survivor)
@@ -501,7 +501,7 @@ extension OsmMapData {
 
     func canStraightenWay(_ way: OsmWay, error: inout String?) -> EditAction? {
         let count = way.nodes.count
-		var points: [OSMPoint?] = way.nodes.map({ OSMPoint( x: $0.lon, y: lat2latp($0.lat)) })
+		var points: [OSMPoint?] = way.nodes.map({ OSMPoint( x: $0.latLon.longitude, y: lat2latp($0.latLon.latitude)) })
 		if count > 2 {
 			let startPoint = points[0]!
 			let endPoint = points[count - 1]!
@@ -730,8 +730,8 @@ extension OsmMapData {
         return { [self] in
             registerUndoCommentString(NSLocalizedString("Disconnect", comment: ""))
             
-            let loc = CLLocationCoordinate2D(latitude: node.lat, longitude: node.lon)
-            let newNode = createNode(atLocation: loc)
+            let loc = node.latLon
+			let newNode = createNode(atLocation: loc)
             setTags(node.tags, for: newNode)
             
             if waysContaining(node).count > 1 {
@@ -1145,24 +1145,24 @@ extension OsmMapData {
             return nil
         }
 
-		func insertNode(in way: OsmWay, withCenter center: OSMPoint, angle: Double, radius: Double, atIndex index: Int) {
-			let point = CLLocationCoordinate2D(latitude: latp2lat(center.y + cos(angle * .pi / 180) * radius),
-											   longitude: center.x + sin(angle * .pi / 180) * radius)
+		func insertNode(in way: OsmWay, withCenter center: LatLon, angle: Double, radius: Double, atIndex index: Int) {
+			let point = LatLon(latitude: latp2lat(center.latitude + cos(angle * .pi / 180) * radius),
+								longitude: center.longitude + sin(angle * .pi / 180) * radius)
 			let node = self.createNode(atLocation: point)
 			self.addNodeUnsafe(node, to: way, at: index)
 		}
 
 		return { [self] in
             var center = way.centerPoint()
-            center.y = lat2latp(center.y)
-            let radius = AverageDistanceToCenter(way, center)
+            center.latitude = lat2latp(center.latitude)
+			let radius = AverageDistanceToCenter(way, center)
             
             for n in way.nodes.dropLast() {
-				let c = hypot(n.lon - center.x,
-							  lat2latp(n.lat) - center.y)
-                let lat = latp2lat((center.y ) + (lat2latp(n.lat) - center.y) / c * radius)
-                let lon = center.x + (n.lon - center.x) / c * radius
-                setLongitude(lon, latitude: lat, for: n)
+				let c = hypot(n.latLon.longitude - center.longitude,
+							  lat2latp(n.latLon.latitude) - center.latitude)
+				let lat = latp2lat(center.latitude + (lat2latp(n.latLon.latitude) - center.latitude) / c * radius)
+				let lon = center.longitude + (n.latLon.longitude - center.longitude) / c * radius
+				setLongitude(lon, latitude: lat, for: n)
             }
             
             // Insert extra nodes to make circle
@@ -1175,8 +1175,8 @@ extension OsmMapData {
 				let n1 = way.nodes[i]
 				let n2 = way.nodes[j]
 
-				var a1 = atan2(n1.lon - center.x, lat2latp(n1.lat) - center.y) * (180 / .pi)
-				var a2 = atan2(n2.lon - center.x, lat2latp(n2.lat) - center.y) * (180 / .pi)
+				var a1 = atan2(n1.latLon.longitude - center.longitude, lat2latp(n1.latLon.latitude) - center.latitude) * (180 / .pi)
+				var a2 = atan2(n2.latLon.longitude - center.longitude, lat2latp(n2.latLon.latitude) - center.latitude) * (180 / .pi)
 				if clockwise {
 					if a2 > a1 {
 						a2 -= 360
@@ -1214,7 +1214,8 @@ extension OsmMapData {
     // MARK: Duplicate
 
     func duplicateNode(_ node: OsmNode, withOffset offset: OSMPoint) -> OsmNode {
-        let loc = CLLocationCoordinate2D(latitude: node.lat + offset.y, longitude: node.lon + offset.x)
+		let loc = LatLon(latitude: node.latLon.latitude + offset.y,
+						 longitude: node.latLon.longitude + offset.x)
         let newNode = createNode(atLocation: loc)
         setTags(node.tags, for: newNode)
         return newNode
@@ -1371,7 +1372,7 @@ extension OsmMapData {
                     }
                 }
                 let PATH_SCALING: Double = 0.0
-                var pt = MapPointForLatitudeLongitude(node!.lat, node!.lon)
+				var pt = MapTransform.mapPoint(forLatLon: node!.latLon)
                 pt = Sub(pt, refPoint)
                 pt = Mult(pt, PATH_SCALING)
                 let isInner = path.contains(CGPoint(pt), using: .winding)
@@ -1472,13 +1473,14 @@ extension OsmMapData {
     }
     
     // MARK: Circularize
-    private func AverageDistanceToCenter(_ way: OsmWay, _ center: OSMPoint) -> Double {
+    private func AverageDistanceToCenter(_ way: OsmWay, _ center: LatLon) -> Double {
         var d: Double = 0
         for i in 0..<(way.nodes.count - 1) {
             let n = way.nodes[i]
-            d += hypot(n.lon - center.x, lat2latp(n.lat) - center.y)
-        }
-        d /= Double((way.nodes.count - 1))
+			d += hypot(n.latLon.longitude - center.longitude,
+					   lat2latp(n.latLon.latitude) - center.latitude)
+		}
+        d /= Double(way.nodes.count - 1)
         return d
     }
     

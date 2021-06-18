@@ -12,7 +12,7 @@ import CoreLocation
 extension EditorMapLayer {
 
 	// MARK: Hit Testing
-	@inline(__always) static private func HitTestLineSegment(_ point: CLLocationCoordinate2D, _ maxDegrees: OSMSize, _ coord1: CLLocationCoordinate2D, _ coord2: CLLocationCoordinate2D) -> CGFloat {
+	@inline(__always) static private func HitTestLineSegment(_ point: LatLon, _ maxDegrees: OSMSize, _ coord1: LatLon, _ coord2: LatLon) -> CGFloat {
 		var line1 = OSMPoint(x: coord1.longitude - point.longitude, y: coord1.latitude - point.latitude)
 		var line2 = OSMPoint(x: coord2.longitude - point.longitude, y: coord2.latitude - point.latitude)
 		let pt = OSMPoint(x: 0, y: 0)
@@ -28,29 +28,27 @@ extension EditorMapLayer {
 	}
 
 
-	private static func osmHitTest(way: OsmWay, location: CLLocationCoordinate2D, maxDegrees: OSMSize, segment: inout Int) -> CGFloat {
-		var previous = CLLocationCoordinate2D()
+	private static func osmHitTest(way: OsmWay, location: LatLon, maxDegrees: OSMSize, segment: inout Int) -> CGFloat {
+		var previous = LatLon.zero
 		var seg = -1
 		var bestDist: CGFloat = 1000000
 		for node in way.nodes {
 			if seg >= 0 {
-				let coord = CLLocationCoordinate2D(latitude: node.lat, longitude: node.lon)
-				let dist = HitTestLineSegment(location, maxDegrees, coord, previous)
+				let dist = HitTestLineSegment(location, maxDegrees, node.latLon, previous)
 				if dist < bestDist {
 					bestDist = dist
 					segment = seg
 				}
 			}
 			seg += 1
-			previous.latitude = node.lat
-			previous.longitude = node.lon
+			previous = node.latLon
 		}
 		return bestDist
 	}
 
-	private static func osmHitTest(node: OsmNode, location: CLLocationCoordinate2D, maxDegrees: OSMSize) -> CGFloat {
-		let delta = OSMPoint(x: (location.longitude - node.lon) / maxDegrees.width,
-							 y: (location.latitude - node.lat) / maxDegrees.height)
+	private static func osmHitTest(node: OsmNode, location: LatLon, maxDegrees: OSMSize) -> CGFloat {
+		let delta = OSMPoint(x: (location.longitude - node.latLon.longitude) / maxDegrees.width,
+							 y: (location.latitude - node.latLon.latitude) / maxDegrees.height)
 		let dist = hypot(delta.x, delta.y)
 		return CGFloat(dist)
 	}
@@ -65,7 +63,7 @@ extension EditorMapLayer {
 		ignoreList: [OsmBaseObject],
 		block: @escaping (_ obj: OsmBaseObject, _ dist: CGFloat, _ segment: Int) -> Void
 	) {
-		let location = owner.mapTransform.longitudeLatitude(forScreenPoint: point, birdsEye: true)
+		let location = owner.mapTransform.latLon(forScreenPoint: point)
 		let viewCoord = owner.screenLongitudeLatitude()
 		let pixelsPerDegree = OSMSize(width: Double(owner.bounds.size.width) / viewCoord.size.width,
 									  height: Double(owner.bounds.size.height) / viewCoord.size.height)
