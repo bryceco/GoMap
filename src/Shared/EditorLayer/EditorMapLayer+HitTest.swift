@@ -65,7 +65,7 @@ extension EditorMapLayer {
 		ignoreList: [OsmBaseObject],
 		block: @escaping (_ obj: OsmBaseObject, _ dist: CGFloat, _ segment: Int) -> Void
 	) {
-		let location = owner.longitudeLatitude(forScreenPoint: point, birdsEye: true)
+		let location = owner.mapTransform.longitudeLatitude(forScreenPoint: point, birdsEye: true)
 		let viewCoord = owner.screenLongitudeLatitude()
 		let pixelsPerDegree = OSMSize(width: Double(owner.bounds.size.width) / viewCoord.size.width,
 									  height: Double(owner.bounds.size.height) / viewCoord.size.height)

@@ -29,12 +29,9 @@ class RulerView: UIView {
     var _shapeLayer: CAShapeLayer
     var _metricTextLayer: CATextLayer
     var _britishTextLayer: CATextLayer
-	@objc var mapView: MapView? {
-		didSet(oldValue) {
-			oldValue?.screenFromMapTransformObservors.removeValue(forKey: self)
-			mapView?.screenFromMapTransformObservors[ self ] = { _ in
-				self.setNeedsLayout()
-			}
+	var mapView: MapView? {
+		didSet {
+			mapView?.mapTransform.observe(by: self, callback: { self.setNeedsLayout() })
         }
     }
 

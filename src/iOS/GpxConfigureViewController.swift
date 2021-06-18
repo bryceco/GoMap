@@ -10,10 +10,10 @@ import UIKit
 
 class GpxConfigureViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     @IBOutlet var pickerView: UIPickerView!
-    var expirationValue: NSNumber?
-    var completion: ((_ pick: NSNumber?) -> Void)?
+    var expirationValue: Int = 0
+	var completion: ((_ pick: Int) -> Void)?
 
-    override func viewDidLoad() {
+	override func viewDidLoad() {
         super.viewDidLoad()
         pickerView.delegate = self
     }
@@ -21,7 +21,7 @@ class GpxConfigureViewController: UIViewController, UIPickerViewDelegate, UIPick
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        pickerView.selectRow(expirationValue?.intValue ?? 0, inComponent: 0, animated: false)
+        pickerView.selectRow(expirationValue, inComponent: 0, animated: false)
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -35,10 +35,10 @@ class GpxConfigureViewController: UIViewController, UIPickerViewDelegate, UIPick
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        expirationValue = NSNumber(value: row)
-    }
+        expirationValue = row
+	}
 
-    // returns the number of 'columns' to display.
+	// returns the number of 'columns' to display.
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }

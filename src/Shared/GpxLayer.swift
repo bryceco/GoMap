@@ -308,10 +308,11 @@ final class GpxTrack: NSObject, NSCoding {
 
 final class GpxLayer: CALayer, GetDiskCacheSize {
 
-	public static let USER_DEFAULTS_GPX_EXPIRATIION_KEY = "GpxTrackExpirationDays"
-	public static let USER_DEFAULTS_GPX_BACKGROUND_TRACKING = "GpxTrackBackgroundTracking"
+	private static let DefaultExpirationDays = 7
+	private static let USER_DEFAULTS_GPX_EXPIRATIION_KEY = "GpxTrackExpirationDays"
+	private static let USER_DEFAULTS_GPX_BACKGROUND_TRACKING = "GpxTrackBackgroundTracking"
 
-	@objc let mapView: MapView	// mark as objc for KVO
+	let mapView: MapView
 	var stabilizingCount = 0
 
     private(set) var activeTrack: GpxTrack? // track currently being recorded
@@ -329,15 +330,24 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 		}
 	}
     private(set) var previousTracks: [GpxTrack] = [] // sorted with most recent first
-    private(set) var uploadedTracks: [String : Any] = [:] // track name -> upload date
+
+	override init(layer: Any) {
+		let layer = layer as! GpxLayer
+		self.mapView = layer.mapView
+		self.uploadedTracks = [:]
+		super.init(layer: layer)
+	}
 
     init(mapView: MapView) {
 		self.mapView = mapView
+		let uploads = UserDefaults.standard.object(forKey: "GpxUploads") as? [String : NSNumber] ?? [:]
+		self.uploadedTracks = uploads.mapValues({ $0.boolValue })
+
         super.init()
 
         UserDefaults.standard.register(
             defaults: [
-				GpxLayer.USER_DEFAULTS_GPX_EXPIRATIION_KEY: NSNumber(value: 7),
+				GpxLayer.USER_DEFAULTS_GPX_EXPIRATIION_KEY: NSNumber(value: GpxLayer.DefaultExpirationDays),
 				GpxLayer.USER_DEFAULTS_GPX_BACKGROUND_TRACKING: NSNumber(value: false)
             ])
 
@@ -354,14 +364,18 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
         ]
 
         // observe changes to geometry
-		mapView.screenFromMapTransformObservors[ self ] = { _ in
-			self.setNeedsLayout()
-		}
+		mapView.mapTransform.observe(by: self, callback: { self.setNeedsLayout() })
 
-        uploadedTracks = UserDefaults.standard.object(forKey: "GpxUploads") as? [String : Any] ?? [:]
-
-        setNeedsLayout()
+		setNeedsLayout()
     }
+
+	var uploadedTracks: [String:Bool] {
+		didSet {
+			let dict = uploadedTracks.mapValues({ NSNumber(value: $0) })
+			UserDefaults.standard.set(dict, forKey: "GpxUploads")
+
+		}
+	}
 
     func startNewTrack() {
         if activeTrack != nil {
@@ -425,13 +439,11 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 
         if uploadedTracks[track.name] != nil {
             uploadedTracks.removeValue(forKey: track.name)
-            UserDefaults.standard.set(uploadedTracks, forKey: "GpxUploads")
         }
     }
 
     func markTrackUploaded(_ track: GpxTrack) {
-        uploadedTracks[track.name] = NSNumber(value: true)
-        UserDefaults.standard.set(uploadedTracks, forKey: "GpxUploads")
+        uploadedTracks[track.name] = true
     }
 
     func trimTracksOlderThan(_ date: Date) {
@@ -551,6 +563,21 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
     }
 
     // MARK: Caching
+
+	// Number of days after which we automatically delete tracks
+	// If zero then never delete them
+	static var expirationDays: Int {
+		get { (UserDefaults.standard.object(forKey: GpxLayer.USER_DEFAULTS_GPX_EXPIRATIION_KEY) as? NSNumber)?.intValue ?? Self.DefaultExpirationDays }
+		set { UserDefaults.standard.set(NSNumber(value: newValue), forKey: GpxLayer.USER_DEFAULTS_GPX_EXPIRATIION_KEY) }
+	}
+
+	static var backgroundTracking: Bool {
+		get { (UserDefaults.standard.object(forKey: GpxLayer.USER_DEFAULTS_GPX_BACKGROUND_TRACKING) as? NSNumber)?.boolValue ?? false }
+		set { UserDefaults.standard.set(NSNumber(value: newValue), forKey: GpxLayer.USER_DEFAULTS_GPX_BACKGROUND_TRACKING) }
+	}
+
+
+
     // load data if not already loaded
 	var didLoadSavedTracks = false
     func loadTracksInBackground(withProgress progressCallback: (() -> Void)?) {
@@ -560,9 +587,8 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 		}
 		didLoadSavedTracks = true
 
-		let expiration = UserDefaults.standard.object(forKey: GpxLayer.USER_DEFAULTS_GPX_EXPIRATIION_KEY) as? NSNumber
-        
-        let deleteIfCreatedBefore = expiration?.doubleValue ?? 0.0 == 0 ? Date.distantPast : Date(timeIntervalSinceNow: TimeInterval(-(expiration?.doubleValue ?? 0.0) * 24 * 60 * 60))
+		let expiration = GpxLayer.expirationDays
+        let deleteIfCreatedBefore = expiration == 0 ? Date.distantPast : Date(timeIntervalSinceNow: TimeInterval(-expiration * 24 * 60 * 60))
         
         DispatchQueue.global(qos: .default).async(execute: { [self] in
             let dir = saveDirectory()
@@ -578,36 +604,26 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
             for file in files {
                 if file.hasSuffix(".track") {
                     let path = URL(fileURLWithPath: dir).appendingPathComponent(file).path
-                    let track = NSKeyedUnarchiver.unarchiveObject(withFile: path) as? GpxTrack
-                    if let track = track {
-                        if track.creationDate.timeIntervalSince(deleteIfCreatedBefore) < 0 {
-                            // skip because its too old
-                            DispatchQueue.main.async(execute: { [self] in
-                                delete(track)
-                            })
-                            continue
-                        }
-                    }
-                    DispatchQueue.main.async(execute: { [self] in
-                        // DLog(@"track %@: %@, %ld points\n",file,track.creationDate, (long)track.points.count);
-                        
-                        if let track = track {
-                            previousTracks.append(track)
-                        }
-                        setNeedsLayout()
-                        if let progressCallback = progressCallback {
-                            progressCallback()
-                        }
-#if true
-                        if track?.creationDate == nil {
-                            let first = track?.points[0]
-                            track?.creationDate = first?.timestamp ?? Date()
-                            if let track = track {
-                                save(toDisk: track)
-                            }
-                        }
-#endif
-                    })
+					guard let track = NSKeyedUnarchiver.unarchiveObject(withFile: path) as? GpxTrack else {
+						continue
+					}
+
+					if track.creationDate.timeIntervalSince(deleteIfCreatedBefore) < 0 {
+						// skip because its too old
+						DispatchQueue.main.async(execute: { [self] in
+							delete(track)
+						})
+						continue
+					}
+					DispatchQueue.main.async(execute: { [self] in
+						// DLog(@"track %@: %@, %ld points\n",file,track.creationDate, (long)track.points.count);
+
+						previousTracks.append(track)
+						setNeedsLayout()
+						if let progressCallback = progressCallback {
+							progressCallback()
+						}
+					})
                 }
             }
         })
@@ -796,7 +812,7 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
             
             // configure the layer for presentation
 			guard let pt = layer.props.position else { return }
-            let pt2 = mapView.screenPoint(fromMapPoint: pt, birdsEye: false)
+			let pt2 = mapView.mapTransform.screenPoint(fromMapPoint: pt, birdsEye: false)
             
             // rotate and scale
             var t = CGAffineTransform(translationX: CGFloat(pt2.x - pt.x), y: CGFloat(pt2.y - pt.y))
@@ -813,10 +829,10 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 			}
         }
         
-        if mapView.birdsEyeRotation != 0 {
+		if mapView.mapTransform.birdsEyeRotation != 0 {
             var t = CATransform3DIdentity
-            t.m34 = -1.0 / CGFloat(mapView.birdsEyeDistance)
-            t = CATransform3DRotate(t, CGFloat(mapView.birdsEyeRotation), 1.0, 0, 0)
+			t.m34 = -1.0 / CGFloat(mapView.mapTransform.birdsEyeDistance)
+			t = CATransform3DRotate(t, CGFloat(mapView.mapTransform.birdsEyeRotation), 1.0, 0, 0)
             sublayerTransform = t
         } else {
             sublayerTransform = CATransform3DIdentity

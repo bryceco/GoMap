@@ -326,7 +326,7 @@ class HeightViewController: UIViewController {
 		}
 		if object == nil {
 			// brand new object, so fake it
-			let latlon = delegate.mapView.longitudeLatitude(forScreenPoint: delegate.mapView.pushPin!.arrowPoint, birdsEye: true)
+			let latlon = delegate.mapView.mapTransform.longitudeLatitude(forScreenPoint: delegate.mapView.pushPin!.arrowPoint, birdsEye: true)
 			// this gets thrown away at the end of this method so the details aren't important
 			let node = OsmNode(withVersion: 0, changeset: 0, user: "", uid: 0, ident: 0, timestamp: "", tags: [:])
 			node.setLongitude( latlon.longitude, latitude: latlon.latitude, undo: nil)

@@ -30,6 +30,10 @@ enum MenuLocation {
 
 // The UIView that hosts us.
 protocol EditorMapLayerOwner: UIView, MapViewProgress {
+	var mapTransform: MapTransform { get }
+
+	func crosshairs() -> CGPoint
+
 	func pushpinView() -> PushPinView?	// fetch the pushpin from owner
 	func removePin()
 	func placePushpin(at: CGPoint, object: OsmBaseObject?)
@@ -40,21 +44,10 @@ protocol EditorMapLayerOwner: UIView, MapViewProgress {
 	func presentAlert( alert: UIAlertController, location: MenuLocation)
 	func presentError(_ error: Error, flash: Bool)
 
-	func crosshairs() -> CGPoint
-
-	func screenFromMap() -> OSMTransform
 	func setScreenFromMap( transform: OSMTransform )	// used when undo/redo change the location
-	func observeTransform(withCallback: @escaping (OSMTransform)->Void)
-
-	func point(on object: OsmBaseObject?, for point: CGPoint) -> CGPoint
-	func longitudeLatitude(forScreenPoint point: CGPoint, birdsEye: Bool) -> CLLocationCoordinate2D
-	func screenPoint(forLatitude latitude: Double, longitude: Double, birdsEye: Bool) -> CGPoint
 	func screenLongitudeLatitude() -> OSMRect
-	func boundingScreenRect(forMapRect mapRect: OSMRect) -> OSMRect
-	func screenPoint(fromMapPoint point: OSMPoint, birdsEye: Bool) -> OSMPoint
 	func metersPerPixel() -> Double
-
-	func birdsEye() -> (distance: Double, rotation: Double)?
+	func boundingScreenRect(forMapRect mapRect: OSMRect) -> OSMRect
 
 	func useTurnRestrictions() -> Bool
 	func useAutomaticCacheManagement() -> Bool
@@ -151,12 +144,12 @@ final class EditorMapLayer: CALayer {
         whiteText = true
 
         // observe changes to screen
-		owner.observeTransform(withCallback: {_ in self.updateMapLocation() })
+		owner.mapTransform.observe(by: self, callback: { self.updateMapLocation() })
 
 		OsmMapData.setEditorMapLayerForArchive(self)
         
         mapData.undoContextForComment = { comment in
-			var trans = self.owner.screenFromMap()
+			var trans = self.owner.mapTransform.transform
 			let location = Data(bytes: &trans, count: MemoryLayout.size(ofValue: trans))
             var dict: [String : Any] = [:]
 			dict["comment"] = comment
@@ -202,9 +195,9 @@ final class EditorMapLayer: CALayer {
 			{
 				// since we don't record the pushpin location until after a drag has begun we need to re-center on the object:
 				var pt = NSCoder.cgPoint(for: pushpin)
-				let loc = self.owner.longitudeLatitude(forScreenPoint: pt, birdsEye: true)
+				let loc = self.owner.mapTransform.longitudeLatitude(forScreenPoint: pt, birdsEye: true)
 				let pos = primary.pointOnObjectForPoint(OSMPoint(x: loc.longitude, y: loc.latitude))
-				pt = self.owner.screenPoint(forLatitude: pos.y, longitude: pos.x, birdsEye: true)
+				pt = self.owner.mapTransform.screenPoint(forLatitude: pos.y, longitude: pos.x, birdsEye: true)
 				// place pushpin
 				self.owner.placePushpin(at: pt, object: primary)
 			} else {
@@ -277,11 +270,11 @@ final class EditorMapLayer: CALayer {
             return
         }
         
-        if owner.screenFromMap().a == 1.0 {
+        if owner.mapTransform.transform.a == 1.0 {
 			return // identity, we haven't been initialized yet
         }
         
-        let box = owner.screenLongitudeLatitude()
+		let box = owner.screenLongitudeLatitude()
 		if box.size.height <= 0 || box.size.width <= 0 {
 			return
 		}
@@ -334,7 +327,7 @@ final class EditorMapLayer: CALayer {
 		let path = CGMutablePath()
         var first = true
 		for node in way.nodes {
-			let pt = owner.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false)
+			let pt = owner.mapTransform.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false)
 			if pt.x.isInfinite {
 				break
 			}
@@ -395,7 +388,7 @@ final class EditorMapLayer: CALayer {
         
 		for node in way.nodes {
 
-			let pt = OSMPoint(owner.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false))
+			let pt = OSMPoint(owner.mapTransform.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false))
 			let inside = viewRect.containsPoint( pt)
 			defer {
 				prev = pt
@@ -966,7 +959,7 @@ final class EditorMapLayer: CALayer {
         
         let pt = MapPointForLatitudeLongitude(node.lat, node.lon)
         
-		let screenAngle = owner.screenFromMap().rotation()
+		let screenAngle = owner.mapTransform.transform.rotation()
 		layer.setAffineTransform( CGAffineTransform(rotationAngle: CGFloat(screenAngle)) )
         
         let radius: CGFloat = 30.0
@@ -1156,7 +1149,7 @@ final class EditorMapLayer: CALayer {
 									  y: -NodeHighlightRadius,
 									  width: 2 * NodeHighlightRadius,
 									  height: 2 * NodeHighlightRadius)
-                    layer2.position = owner.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false)
+					layer2.position = owner.mapTransform.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false)
                     layer2.strokeColor = node == selectedNode ? UIColor.yellow.cgColor : UIColor.green.cgColor
                     layer2.fillColor = UIColor.clear.cgColor
                     layer2.lineWidth = 3.0
@@ -1174,7 +1167,7 @@ final class EditorMapLayer: CALayer {
                 }
 			} else if let node = object as? OsmNode {
 				// draw square around selected node
-                let pt = owner.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false)
+				let pt = owner.mapTransform.screenPoint(forLatitude: node.lat, longitude: node.lon, birdsEye: false)
                 
                 let layer = CAShapeLayerWithProperties()
                 var rect = CGRect(x: -MinIconSizeInPixels / 2,
@@ -1406,7 +1399,7 @@ final class EditorMapLayer: CALayer {
     }
     
     func layoutSublayersSafe() {
-		if let birdsEye = owner.birdsEye() {
+		if let birdsEye = owner.mapTransform.birdsEye() {
 			var t = CATransform3DIdentity
 			t.m34 = CGFloat(-1.0 / birdsEye.distance)
 			t = CATransform3DRotate(t, CGFloat(birdsEye.rotation), 1.0, 0, 0)
@@ -1462,10 +1455,10 @@ final class EditorMapLayer: CALayer {
         CATransaction.setAnimationDuration(1.0)
         #endif
         
-		let tRotation = owner.screenFromMap().rotation()
-		let tScale = owner.screenFromMap().scale()
+		let tRotation = owner.mapTransform.rotation()
+		let tScale = owner.mapTransform.scale()
 		let pScale = CGFloat( tScale / PATH_SCALING )
-		let pixelsPerMeter = 0.8 * 1.0 / owner.metersPerPixel()
+		let pixelsPerMeter = 0.8 * 1.0 / owner.mapTransform.metersPerPixel(at: self.bounds.center())
         
 		for object in shownObjects {
             
@@ -1476,13 +1469,13 @@ final class EditorMapLayer: CALayer {
                 let isShapeLayer = layer is CAShapeLayer
                 let props = layer.properties
                 let pt = props.position
-                var pt2 = owner.screenPoint(fromMapPoint: pt, birdsEye: false)
+				var pt2 = owner.mapTransform.screenPoint(fromMapPoint: pt, birdsEye: false)
                 
                 if props.is3D || (isShapeLayer && object.isNode() == nil) {
                     
                     // way or area -- need to rotate and scale
                     if props.is3D {
-						if owner.birdsEye() == nil {
+						if owner.mapTransform.birdsEye() == nil {
                             layer.removeFromSuperlayer()
                             continue
                         }
@@ -1520,7 +1513,7 @@ final class EditorMapLayer: CALayer {
 							// its a node with text, such as an address node
                         } else {
                             // its a label on a building or polygon
-                            let rcMap = MapView.mapRect(forLatLonRect: object.boundingBox)
+							let rcMap = MapTransform.mapRect(forLatLonRect: object.boundingBox)
 							let rcScreen = owner.boundingScreenRect(forMapRect: rcMap)
                             if layer.bounds.size.width >= CGFloat(1.1 * rcScreen.size.width) {
                                 // text label is too big so hide it

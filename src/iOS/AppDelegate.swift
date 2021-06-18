@@ -34,6 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		NSKeyedUnarchiver.setClass(OsmWay.classForKeyedArchiver(), 					forClassName: "OsmWay")
 		NSKeyedUnarchiver.setClass(OsmRelation.classForKeyedArchiver(), 			forClassName: "OsmRelation")
 		NSKeyedUnarchiver.setClass(OsmMapData.classForKeyedArchiver(), 				forClassName: "OsmMapData")
+		NSKeyedUnarchiver.setClass(GpxTrack.classForKeyedArchiver(), 				forClassName: "GpxTrack")
+		NSKeyedUnarchiver.setClass(GpxPoint.classForKeyedArchiver(), 				forClassName: "GpxPoint")
 	}
 
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {

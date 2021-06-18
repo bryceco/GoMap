@@ -42,6 +42,8 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		self.tileServer = TileServer.none	// arbitrary, just need a default value
 		super.init()
 
+		print("Mercator init()")
+
         needsDisplayOnBoundsChange = true
         
         // disable animations
@@ -57,13 +59,13 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
             "isHidden": NSNull()
         ]
 
-		mapView.screenFromMapTransformObservors[ self ] = { _ in
+		mapView.mapTransform.observe(by: self, callback: {
 			var t = CATransform3DIdentity
-			t.m34 = -1 / CGFloat(mapView.birdsEyeDistance)
-			t = CATransform3DRotate(t, CGFloat(mapView.birdsEyeRotation), 1, 0, 0)
+			t.m34 = -1 / CGFloat(mapView.mapTransform.birdsEyeDistance)
+			t = CATransform3DRotate(t, CGFloat(mapView.mapTransform.birdsEyeRotation), 1, 0, 0)
 			self.sublayerTransform = t
 			self.setNeedsLayout()
-		}
+		})
     }
     
 	deinit {
@@ -90,7 +92,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
     }
     
     func zoomLevel() -> Int {
-        return tileServer.roundZoomUp ? Int(ceil(mapView.zoom())): Int(floor(mapView.zoom()))
+		return tileServer.roundZoomUp ? Int(ceil(mapView.mapTransform.zoom())): Int(floor(mapView.mapTransform.zoom()))
     }
     
     func metadata(_ callback: @escaping (Data?, Error?) -> Void) {
@@ -143,10 +145,10 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
         var p3 = OSMPoint(x: Double(rc.origin.x + rc.size.width), y: Double(rc.origin.y + rc.size.height))
         var p4 = OSMPoint(x: Double(rc.origin.x + rc.size.width), y: Double(rc.origin.y))
         
-        p1 = ToBirdsEye(p1, center, Double(mapView.birdsEyeDistance), Double(mapView.birdsEyeRotation))
-        p2 = ToBirdsEye(p2, center, Double(mapView.birdsEyeDistance), Double(mapView.birdsEyeRotation))
-        p3 = ToBirdsEye(p3, center, Double(mapView.birdsEyeDistance), Double(mapView.birdsEyeRotation))
-        p4 = ToBirdsEye(p4, center, Double(mapView.birdsEyeDistance), Double(mapView.birdsEyeRotation))
+		p1 = ToBirdsEye(p1, center, Double(mapView.mapTransform.birdsEyeDistance), Double(mapView.mapTransform.birdsEyeRotation))
+		p2 = ToBirdsEye(p2, center, Double(mapView.mapTransform.birdsEyeDistance), Double(mapView.mapTransform.birdsEyeRotation))
+		p3 = ToBirdsEye(p3, center, Double(mapView.mapTransform.birdsEyeDistance), Double(mapView.mapTransform.birdsEyeRotation))
+		p4 = ToBirdsEye(p4, center, Double(mapView.mapTransform.birdsEyeDistance), Double(mapView.mapTransform.birdsEyeRotation))
         
         let rect = OSMRect(rc)
 		return rect.containsPoint(p1) || rect.containsPoint(p2) || rect.containsPoint(p3) || rect.containsPoint(p4)
@@ -360,7 +362,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
             
             var scale = 256.0 / Double((1 << tileZ))
             var pt = OSMPoint(x: Double(tileX) * scale, y: Double(tileY) * scale)
-            pt = mapView.screenPoint(fromMapPoint: pt, birdsEye: false)
+			pt = mapView.mapTransform.screenPoint(fromMapPoint: pt, birdsEye: false)
             layer.position = CGPoint(pt)
             layer.bounds = CGRect(x: 0, y: 0, width: 256, height: 256)
             layer.anchorPoint = CGPoint(x: 0, y: 0)

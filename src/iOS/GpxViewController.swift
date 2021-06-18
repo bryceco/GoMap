@@ -272,9 +272,9 @@ class GpxViewController: UITableViewController {
             if indexPath.row == 0 {
                 // days before deleting
                 let cell = tableView.dequeueReusableCell(withIdentifier: "GpxTrackExpirationCell", for: indexPath) as! GpxTrackExpirationCell
-				let expirationDays = UserDefaults.standard.object(forKey: GpxLayer.USER_DEFAULTS_GPX_EXPIRATIION_KEY) as? NSNumber
-                let expiration = expirationDays?.intValue ?? 0
-                let title = expiration <= 0 ? NSLocalizedString("Never", comment: "Never delete old tracks") : String.localizedStringWithFormat(NSLocalizedString("%ld Days", comment: "One or more days"), expiration)
+				let expirationDays = GpxLayer.expirationDays
+				let expiration = expirationDays
+				let title = expiration <= 0 ? NSLocalizedString("Never", comment: "Never delete old tracks") : String.localizedStringWithFormat(NSLocalizedString("%ld Days", comment: "One or more days"), expiration)
                 cell.expirationButton.setTitle(title, for: .normal)
                 cell.expirationButton.sizeToFit()
                 return cell
@@ -373,20 +373,15 @@ class GpxViewController: UITableViewController {
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.destination is GpxConfigureViewController {
-            let dest = segue.destination as? GpxConfigureViewController
-			dest?.expirationValue = UserDefaults.standard.object(forKey: GpxLayer.USER_DEFAULTS_GPX_EXPIRATIION_KEY) as? NSNumber
-            dest?.completion = { pick in
-				UserDefaults.standard.set(pick, forKey: GpxLayer.USER_DEFAULTS_GPX_EXPIRATIION_KEY)
+        if let dest = segue.destination as? GpxConfigureViewController {
+			dest.expirationValue = GpxLayer.expirationDays
+			dest.completion = { pick in
+				GpxLayer.expirationDays = pick
                 
-                if let pickValue = pick?.doubleValue {
-                    if pickValue > 0 {
-                        let appDelegate = AppDelegate.shared
-                        
-                        let cutoff = Date(timeIntervalSinceNow: TimeInterval(-pickValue * 24 * 60 * 60))
-                        appDelegate.mapView.gpxLayer.trimTracksOlderThan(cutoff)
-                    }
-                }
+				if pick > 0 {
+					let cutoff = Date(timeIntervalSinceNow: TimeInterval(-pick * 24 * 60 * 60))
+					AppDelegate.shared.mapView.gpxLayer.trimTracksOlderThan(cutoff)
+				}
                 self.tableView?.reloadData()
             }
         }
