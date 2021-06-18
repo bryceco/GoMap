@@ -84,10 +84,8 @@ class PresetKeyUserDefinedList {
 	func save() {
 		let path = PresetKeyUserDefinedList.archivePath()
 		if #available(iOS 11.0, *) {
-			do {
-				let data = try? NSKeyedArchiver.archivedData(withRootObject: list as NSArray, requiringSecureCoding:true)
-				try data?.write(to: URL(fileURLWithPath: path))
-			} catch {}
+			let data = try? NSKeyedArchiver.archivedData(withRootObject: list as NSArray, requiringSecureCoding:true)
+			try? data?.write(to: URL(fileURLWithPath: path))
 		} else {
 			NSKeyedArchiver.archiveRootObject(list as NSArray, toFile: path)
 		}

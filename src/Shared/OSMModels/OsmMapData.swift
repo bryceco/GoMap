@@ -2333,7 +2333,7 @@ class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 	func loadArchive() throws -> OsmMapData {
 		let path = OsmMapData.pathToArchiveFile()
 		let url = URL(fileURLWithPath: path)
-		if try !url.checkResourceIsReachable() {
+		if (try? url.checkResourceIsReachable()) != true {
 			print("Archive file doesn't exist")
 			throw MapDataError.archiveDoesNotExist
 		}
