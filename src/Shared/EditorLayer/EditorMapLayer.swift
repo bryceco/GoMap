@@ -109,7 +109,8 @@ final class EditorMapLayer: CALayer {
 
 		var t = CACurrentMediaTime()
 		var alert: UIAlertController? = nil
-		if let mapData = OsmMapData.withArchivedData() {
+		do {
+			let mapData = try OsmMapData.withArchivedData()
 			t = CACurrentMediaTime() - t
 			if owner.useAutomaticCacheManagement() {
 				_=mapData.discardStaleData()
@@ -120,13 +121,21 @@ final class EditorMapLayer: CALayer {
 				alert!.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
 			}
 			self.mapData = mapData
-		} else {
+		} catch {
 			self.mapData = OsmMapData()
 			self.mapData.purgeHard() // force database to get reset
-			alert = UIAlertController(title: NSLocalizedString("Database error", comment: ""),
-										message: NSLocalizedString("Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.", comment: ""),
-										preferredStyle: .alert)
-			alert!.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+
+			if let error = error as? MapDataError,
+			   error == MapDataError.archiveDoesNotExist
+			{
+				// a clean install
+			} else {
+				print("Database error: \(error)")
+				alert = UIAlertController(title: NSLocalizedString("Database error", comment: ""),
+											message: NSLocalizedString("Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.", comment: ""),
+											preferredStyle: .alert)
+				alert!.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+			}
 		}
 
 		self.baseLayer = CATransformLayer()

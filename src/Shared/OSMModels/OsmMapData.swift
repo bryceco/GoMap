@@ -730,10 +730,10 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
     }
     
     // download data
-    func update(withBox box: OSMRect, progressDelegate progress: (NSObjectProtocol & MapViewProgress)?, completion: @escaping (_ partial: Bool, _ error: Error?) -> Void) {
-        var activeRequests = 0
+    func update(withBox box: OSMRect, progressDelegate progress: (NSObjectProtocol & MapViewProgress), completion: @escaping (_ partial: Bool, _ error: Error?) -> Void) {
+		var activeRequests = 0
         let mergePartialResults: ((_ query: ServerQuery?, _ mapData: OsmMapData?, _ error: Error?) -> Void) = { [self] query, mapData, error in
-            progress?.progressDecrement()
+            progress.progressDecrement()
             activeRequests -= 1
 			try? merge(mapData, fromDownload: true, quadList: query?.quadList ?? [], success: (mapData != nil && error == nil))
             completion(activeRequests > 0, error)
@@ -743,18 +743,18 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         let newQuads = region.newQuads(forRect: box)
 		if newQuads.count == 0 {
 			activeRequests += 1
-			progress?.progressIncrement()
+			progress.progressIncrement()
 			mergePartialResults(nil, nil, nil)
 		} else {
 			let queryList = OsmMapData.coalesceQuadQueries(newQuads)
 			for query in queryList {
 				activeRequests += 1
-				progress?.progressIncrement()
+				progress.progressIncrement()
 				osmData(forBox: query, completion: mergePartialResults)
 			}
 		}
         
-        progress?.progressAnimate()
+        progress.progressAnimate()
     }
     
     func cancelCurrentDownloads() {
@@ -2236,11 +2236,11 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         periodicSaveTimer?.invalidate()
         periodicSaveTimer = nil
     }
-    
-    static func withArchivedData() -> OsmMapData? {
+
+	static func withArchivedData() throws -> OsmMapData {
 
 		let archiver = OsmMapDataArchiver()
-		guard let decode = archiver.loadArchive() else { return nil }
+		let decode = try archiver.loadArchive()
 		if decode.spatial.countOfObjects() > 0 {
 			print("spatial accidentally saved, please fix")
 			decode.spatial.rootQuad.reset()
@@ -2311,6 +2311,13 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 	}
 }
 
+
+enum MapDataError: Error {
+	case archiveDoesNotExist
+	case archiveCannotBeRead	// I/O error
+	case archiveCannotBeDecoded	// NSKeyedUnarchiver problem
+}
+
 class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 
 	func saveArchive( mapData: OsmMapData ) -> Bool {
@@ -2323,16 +2330,22 @@ class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 		return ok
 	}
 
-	func loadArchive() -> OsmMapData? {
+	func loadArchive() throws -> OsmMapData {
 		let path = OsmMapData.pathToArchiveFile()
 		let url = URL(fileURLWithPath: path)
+		if try !url.checkResourceIsReachable() {
+			print("Archive file doesn't exist")
+			throw MapDataError.archiveDoesNotExist
+		}
 		guard let data = try? Data(contentsOf: url) else {
-			return nil
+			print("Archive file doesn't exist")
+			throw MapDataError.archiveCannotBeRead
 		}
 		let unarchiver = NSKeyedUnarchiver(forReadingWith: data )
 		unarchiver.delegate = self
 		guard let decode = unarchiver.decodeObject(forKey: "OsmMapData") as? OsmMapData else {
-			return nil
+			print("Couldn't decode archive file")
+			throw MapDataError.archiveCannotBeDecoded
 		}
 		return decode
 	}

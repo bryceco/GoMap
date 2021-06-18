@@ -42,8 +42,6 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		self.tileServer = TileServer.none	// arbitrary, just need a default value
 		super.init()
 
-		print("Mercator init()")
-
         needsDisplayOnBoundsChange = true
         
         // disable animations
