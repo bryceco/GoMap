@@ -48,7 +48,7 @@ class QuadMap: NSObject, NSCoding {
 
     // MARK: Regions
 
-    func newQuads(forRect newRect: OSMRect) -> [QuadBox] {
+    func missingQuads(forRect newRect: OSMRect) -> [QuadBox] {
 		var newRect = newRect
 		var quads: [QuadBox] = []
 

@@ -683,68 +683,50 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         return queries
     }
     
-    // http://wiki.openstreetmap.org/wiki/API_v0.6#Retrieving_map_data_by_bounding_box:_GET_.2Fapi.2F0.6.2Fmap
-    private func osmData(forUrl url: String, quads: ServerQuery?, completion: @escaping (_ quads: ServerQuery?, _ data: OsmMapData?, _ error: Error?) -> Void) {
-        DownloadThreadPool.osmPool().stream(forUrl: url, callback: { stream, error2 in
-            if error2 != nil || stream?.streamError != nil {
-                
-                DispatchQueue.main.async(execute: {
-                    completion(quads, nil, (stream?.streamError ?? error2)!)
-                })
-            } else {
-				let stream = stream!
-				var mapData: OsmMapData? = OsmMapData()
-				var err: Error? = nil
-                do {
-                    try mapData!.parseXmlStream(stream)
-                } catch {
-					if stream.streamError != nil {
-                        err = stream.streamError
-                    } else if err != nil {
-                        // use the parser's reported error
-                    } else {
-                        err = NSError(domain: "parser", code: 100, userInfo: [
-                            NSLocalizedDescriptionKey: NSLocalizedString("Data not available", comment: "")
-                        ])
-                    }
-                }
-                if err != nil {
-                    mapData = nil
-                }
-                DispatchQueue.main.async(execute: {
-                    completion(quads, mapData, err)
-                })
-            }
-            
-        })
-    }
-    
-	private func osmData(forBox query: ServerQuery, completion: @escaping (_ query: ServerQuery?, _ data: OsmMapData?, _ error: Error?) -> Void) {
+	private func osmData(forBox query: ServerQuery, completion: @escaping (_ query: ServerQuery?, _ result: Result<OsmDownloadData,Error>) -> Void) {
 		let box = query.rect
         let x = box.origin.x
 		let y = box.origin.y
 		let width = box.size.width
 		let height = box.size.height
 		let url = OSM_API_URL + "api/0.6/map?bbox=\(x),\(y),\(x + width),\(y + height)"
-		self.osmData(forUrl: url, quads: query, completion: completion)
+
+		OsmDownloader.osmData(forUrl: url, completion: { result in
+			completion( query, result )
+		})
     }
     
     // download data
-    func update(withBox box: OSMRect, progressDelegate progress: (NSObjectProtocol & MapViewProgress), completion: @escaping (_ partial: Bool, _ error: Error?) -> Void) {
+    func update(withBox box: OSMRect,
+				progressDelegate progress: (NSObjectProtocol & MapViewProgress),
+				completion: @escaping (_ partial: Bool, _ error: Error?) -> Void)
+	{
 		var activeRequests = 0
-        let mergePartialResults: ((_ query: ServerQuery?, _ mapData: OsmMapData?, _ error: Error?) -> Void) = { [self] query, mapData, error in
-            progress.progressDecrement()
+        let mergePartialResults: ((_ query: ServerQuery?, _ result: Result<OsmDownloadData,Error>) -> Void) = { [self] query, result in
+			progress.progressDecrement()
             activeRequests -= 1
-			try? merge(mapData, fromDownload: true, quadList: query?.quadList ?? [], success: (mapData != nil && error == nil))
-            completion(activeRequests > 0, error)
+			switch result {
+			case .success(let data):
+				try? merge(data,
+						   fromDownload: true,
+						   quadList: query?.quadList ?? [],
+						   success: true)
+				completion(activeRequests > 0, nil)
+			case .failure(let error):
+				try? merge(nil,
+						   fromDownload: true,
+						   quadList: query?.quadList ?? [],
+						   success: false)
+				completion(activeRequests > 0, error)
+			}
         }
         
         // get list of new quads to fetch
-        let newQuads = region.newQuads(forRect: box)
+        let newQuads = region.missingQuads(forRect: box)
 		if newQuads.count == 0 {
 			activeRequests += 1
 			progress.progressIncrement()
-			mergePartialResults(nil, nil, nil)
+			mergePartialResults(nil, .success(OsmDownloadData()))
 		} else {
 			let queryList = OsmMapData.coalesceQuadQueries(newQuads)
 			for query in queryList {
@@ -763,126 +745,9 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         }
     }
     
-    // MARK: Download parsing
-    
-    
-    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName: String?, attributes attributeDict: [String : String] = [:]) {
-        parserCurrentElementText = nil
+    // MARK: Download
 
-        if elementName == "node" {
-            let lat = Double(attributeDict["lat"] ?? "") ?? 0.0
-            let lon = Double(attributeDict["lon"] ?? "") ?? 0.0
-            let node = OsmNode(fromXmlDict: attributeDict)!
-			node.setLongitude(lon, latitude: lat, undo: nil)
-            nodes[node.ident] = node
-            parserStack.append(node)
-        } else if elementName == "way" {
-            let way = OsmWay(fromXmlDict: attributeDict)!
-            ways[way.ident] = way
-            parserStack.append(way)
-        } else if elementName == "tag" {
-            let key = attributeDict["k"]!
-            let value = attributeDict["v"]!
-			let object = parserStack.last as! OsmBaseObject
-            object.constructTag(key, value: value)
-            parserStack.append("tag")
-        } else if elementName == "nd" {
-            let way = parserStack.last as? OsmWay
-            let ref = attributeDict["ref"]
-            assert((ref != nil))
-            way?.constructNode(NSNumber(value: Int64(ref ?? "") ?? 0))
-            parserStack.append("nd")
-        } else if elementName == "relation" {
-            let relation = OsmRelation(fromXmlDict: attributeDict)!
-            relations[relation.ident] = relation
-            parserStack.append(relation)
-        } else if elementName == "member" {
-            let type = attributeDict["type"]
-            let ref = NSNumber(value: Int64(attributeDict["ref"] ?? "") ?? 0)
-            let role = attributeDict["role"]
-            let member = OsmMember(type: type, ref: ref.int64Value, role: role)
-            let relation = parserStack.last as! OsmRelation
-            relation.constructMember(member)
-            parserStack.append(member)
-        } else if elementName == "osm" {
-            
-            // osm header
-            let version = attributeDict["version"]
-            if version != "0.6" {
-                parseError = NSError(domain: "Parser", code: 102, userInfo: [
-                    NSLocalizedDescriptionKey: String.localizedStringWithFormat(NSLocalizedString("OSM data must be version 0.6 (fetched '%@')", comment: ""), version ?? "")
-                ])
-                parser.abortParsing()
-            }
-            parserStack.append("osm")
-        } else if elementName == "bounds" {
-#if false
-            let minLat = Double(attributeDict["minlat"] ?? "") ?? 0.0
-            let minLon = Double(attributeDict["minlon"] ?? "") ?? 0.0
-            let maxLat = Double(attributeDict["maxlat"] ?? "") ?? 0.0
-            let maxLon = Double(attributeDict["maxlon"] ?? "") ?? 0.0
-#endif
-            parserStack.append("bounds")
-        } else if elementName == "note" {
-            
-            // issued by Overpass API server
-            parserStack.append(elementName)
-        } else if elementName == "meta" {
-            
-            // issued by Overpass API server
-            parserStack.append(elementName)
-        } else {
-            
-            DLog("OSM parser: Unknown tag '%@'", elementName)
-            parserStack.append(elementName)
-#if false
-            parseError = NSError(domain: "Parser", code: 102, userInfo: [
-                NSLocalizedDescriptionKey: "OSM parser: Unknown tag '\(elementName)'"
-            ])
-            parser.abortParsing()
-#endif
-        }
-    }
-    
-    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        parserStack.removeLast()
-    }
-    
-    func parser(_ parser: XMLParser, foundCharacters string: String) {
-        if parserCurrentElementText == nil {
-            parserCurrentElementText = string
-        } else {
-			parserCurrentElementText!.append( string )
-        }
-    }
-    
-    func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
-        DLog("Parse error: \(parseError.localizedDescription), line \(parser.lineNumber), column \(parser.columnNumber)")
-        self.parseError = parseError
-    }
-    
-    func parserDidEndDocument(_ parser: XMLParser) {
-        assert(parserStack.count == 0 || parseError != nil)
-        parserCurrentElementText = nil
-        parserStack = []
-    }
-    
-    func parseXmlStream(_ stream: InputStream) throws {
-		defer {
-			stream.close()
-		}
-
-		let parser = XMLParser(stream: stream)
-		parser.delegate = self
-        parseError = nil
-
-        let ok = parser.parse() && parseError == nil
-		if !ok {
-			throw parseError!
-        }
-    }
-    
-	func merge(_ newData: OsmMapData?, fromDownload downloaded: Bool, quadList: [QuadBox], success: Bool) throws {
+	func merge(_ newData: OsmDownloadData?, fromDownload downloaded: Bool, quadList: [QuadBox], success: Bool) throws {
 		if let newData = newData {
             var newNodes: [OsmNode] = []
             var newWays: [OsmWay] = []
@@ -1003,7 +868,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 				DLog( "Upload error: \(response)")
 				var localVersion = 0
 				var serverVersion = 0
-				var serverType: NSString? = ""
+				var objType: NSString? = ""
 				var objId: OsmIdentifier = 0
 				// "Version mismatch: Provided %d, server had: %d of %[a-zA-Z] %lld"
 				let scanner = Scanner(string: response)
@@ -1012,20 +877,25 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 				   scanner.scanString(", server had:", into: nil),
 				   scanner.scanInt(&serverVersion),
 				   scanner.scanString("of", into: nil),
-				   scanner.scanCharacters(from: CharacterSet.alphanumerics, into: &serverType),
+				   scanner.scanCharacters(from: CharacterSet.alphanumerics, into: &objType),
 				   scanner.scanInt64(&objId),
-				   let serverType = serverType
+				   let objType = objType
 				{
-					var serverType = serverType as String
-					serverType = serverType.lowercased()
-					var url3 = OSM_API_URL + "api/0.6/\(serverType)/\(objId)"
-					if serverType == "way" || serverType == "relation" {
+					let objType = (objType as String).lowercased()
+					var url3 = OSM_API_URL + "api/0.6/\(objType)/\(objId)"
+					if objType == "way" || objType == "relation" {
 						url3 = url3 + "/full"
 					}
-					osmData(forUrl: url3, quads: nil, completion: { quads, mapData, error in
-						try? merge(mapData, fromDownload: true, quadList: [], success: true)
-						// try again:
-						uploadChangeset(changesetID, retries:retries-1, completion:completion)
+					OsmDownloader.osmData(forUrl: url3, completion: { result in
+						switch result {
+						case .success(let data):
+							// update the bad element
+							try? merge(data, fromDownload: true, quadList: [], success: true)
+							// try again:
+							uploadChangeset(changesetID, retries:retries-1, completion:completion)
+						case .failure(let error):
+							completion("\(error)")
+						}
 					})
 					return;
 				}
@@ -2258,7 +2128,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 			guard let db = Database(name: "") else {
 				throw NSError()
 			}
-			let newData = OsmMapData()
+			var newData = OsmDownloadData()
 			newData.nodes = try db.querySqliteNodes()
 			newData.ways = try db.querySqliteWays()
 			newData.relations = try db.querySqliteRelations()
