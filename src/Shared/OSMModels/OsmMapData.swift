@@ -702,9 +702,9 @@ final class OsmMapData: NSObject, NSCoding {
 	///	- We then combine (coalesceQuadQueries) adjacent quads into a single rectangle
 	///	- We submit the rect to the server
 	///	- Once we've successfully fetched the data for the rect we tell the QuadMap that it can mark the given QuadBoxes as downloaded
-	func update(withBox box: OSMRect,
-				progressDelegate progress: (NSObjectProtocol & MapViewProgress),
-				completion: @escaping (_ error: Error?) -> Void)
+	func downloadMissingData(inRect box: OSMRect,
+							 withProgress progress: (NSObjectProtocol & MapViewProgress),
+							 didChange: @escaping (_ error: Error?) -> Void)
 	{
 		// get list of new quads to fetch
 		let newQuads = region.missingQuads(forRect: box)
@@ -725,10 +725,10 @@ final class OsmMapData: NSObject, NSCoding {
 					// merge data
 					try? merge(data, savingToDatabase: true)
 					didGetData = true
-					completion(nil)		// data was updated
+					didChange(nil)		// data was updated
 				case .failure(let error):
 					didGetData = false
-					completion(error)	// error fetching data
+					didChange(error)	// error fetching data
 				}
 				for quadBox in query.quadList {
 					region.makeWhole(quadBox, success: didGetData)
@@ -739,8 +739,8 @@ final class OsmMapData: NSObject, NSCoding {
     }
     
     func cancelCurrentDownloads() {
-        if DownloadThreadPool.osmPool().downloadsInProgress() > 0 {
-            DownloadThreadPool.osmPool().cancelAllDownloads()
+        if DownloadThreadPool.osmPool.downloadsInProgress() > 0 {
+            DownloadThreadPool.osmPool.cancelAllDownloads()
         }
     }
     

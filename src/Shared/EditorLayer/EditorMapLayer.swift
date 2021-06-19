@@ -294,19 +294,19 @@ final class EditorMapLayer: CALayer {
 			return
 		}
 
-		mapData.update(withBox: box, progressDelegate: owner) { [self] error in
+		mapData.downloadMissingData(inRect: box, withProgress: owner, didChange: { [self] error in
 			if let error = error {
+				// present error asynchrounously so we don't interrupt the current UI action
 				DispatchQueue.main.async(execute: { [self] in
-					// present error asynchrounously so we don't interrupt the current UI action
+					// if we've been hidden don't bother displaying errors
 					if !isHidden {
-						// if we've been hidden don't bother displaying errors
 						owner.presentError(error, flash: true)
 					}
 				})
 			} else {
 				setNeedsLayout()
 			}
-		}
+		})
         setNeedsLayout()
     }
     

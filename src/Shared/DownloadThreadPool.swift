@@ -10,69 +10,74 @@ import Foundation
 
 final class DownloadThreadPool: NSObject, URLSessionDataDelegate, URLSessionTaskDelegate {
     
-    var _urlSession: URLSession!
-    var _downloadCount: AtomicInt
+    var urlSession: URLSession!
+    var inProgress: AtomicInt
     
     override init() {
-		_downloadCount = AtomicInt(0)
+		inProgress = AtomicInt(0)
         super.init()
-		let config = URLSessionConfiguration.default
-		_urlSession = URLSession(configuration: config, delegate: self, delegateQueue: nil)
+
+		// Since we do our own caching we use an ephemeral configuration, which
+		// uses no persistent storage for caches, cookies, or credentials.
+		// This prevents the systems from duplicating our own caching efforts.
+		let config = URLSessionConfiguration.ephemeral
+		urlSession = URLSession(configuration: config, delegate: self, delegateQueue: nil)
     }
     
-    static var pool = DownloadThreadPool()
+    static let osmPool = DownloadThreadPool()
     
-    class func osmPool() -> DownloadThreadPool {
-        return pool
-    }
-    
-    func stream(forUrl url: String, callback: @escaping (_ stream: InputStream?, _ error: Error?) -> Void) {
+
+	func stream(forUrl url: String, callback: @escaping (_ result: Result<InputStream,Error>) -> Void) {
 		let url1 = URL(string: url)!
 		var request = URLRequest(url: url1)
 		request.httpMethod = "GET"
         request.addValue("8bit", forHTTPHeaderField: "Content-Transfer-Encoding")
         request.cachePolicy = .reloadIgnoringLocalCacheData
         
-		_downloadCount.increment()
+		inProgress.increment()
         
-        let task = _urlSession.dataTask(with: request, completionHandler: { [self] data, response, error in
-			_downloadCount.decrement()
-			var data = data
-			var error = error
-			let httpResponse = response as? HTTPURLResponse
+        let task = urlSession.dataTask(with: request, completionHandler: { [self] data, response, error in
+			inProgress.decrement()
 			if let error = error {
 				DLog("Error: \(error.localizedDescription)")
-				data = nil
-			} else if (httpResponse != nil) && (httpResponse?.statusCode ?? 0) >= 400 {
-				DLog("HTTP error \(httpResponse?.statusCode ?? 0): \(HTTPURLResponse.localizedString(forStatusCode: httpResponse?.statusCode ?? 0))")
-				DLog("URL: \(url)")
-				var text: String? = nil
-				if let data = data {
-					text = String(data: data, encoding: .utf8)
-				}
-				if (text?.count ?? 0) == 0 {
-					text = HTTPURLResponse.localizedString(forStatusCode: httpResponse?.statusCode ?? 0)
-				}
-				error = NSError(domain: "HTTP", code: httpResponse?.statusCode ?? 0, userInfo: [
-					NSLocalizedDescriptionKey: text ?? ""
-				])
-				data = nil
+				callback(.failure(error))
+				return
 			}
 
-			if let data = data,
-			   error == nil
+			if let httpResponse = response as? HTTPURLResponse,
+			   httpResponse.statusCode >= 400
 			{
-				let inputStream = InputStream(data: data)
-				callback(inputStream, nil)
-			} else {
-				callback(nil, error!)
+				DLog("HTTP error \(httpResponse.statusCode): \(HTTPURLResponse.localizedString(forStatusCode: httpResponse.statusCode))")
+				DLog("URL: \(url)")
+				var text: String = ""
+				if let data = data {
+					if let dataText = String(data: data, encoding: .utf8) {
+						text = dataText
+					}
+				}
+				if text.isEmpty {
+					text = HTTPURLResponse.localizedString(forStatusCode: httpResponse.statusCode)
+				}
+				let error = NSError(domain: "HTTP", code: httpResponse.statusCode, userInfo: [
+					NSLocalizedDescriptionKey: text
+				])
+				callback(.failure(error))
+				return
 			}
+
+			guard let data = data else {
+				callback(.failure(NSError()))
+				return
+			}
+
+			let inputStream = InputStream(data: data)
+			callback(.success(inputStream))
 		})
         task.resume()
     }
     
     func cancelAllDownloads() {
-        _urlSession.getAllTasks(completionHandler: { tasks in
+        urlSession.getAllTasks(completionHandler: { tasks in
             for task in tasks {
                 task.cancel()
             }
@@ -80,6 +85,6 @@ final class DownloadThreadPool: NSObject, URLSessionDataDelegate, URLSessionTask
     }
     
     func downloadsInProgress() -> Int {
-		return _downloadCount.value()
+		return inProgress.value()
     }
 }
