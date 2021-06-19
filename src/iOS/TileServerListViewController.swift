@@ -21,7 +21,7 @@ class TileServerListViewController: UITableViewController {
         let appDelegate = AppDelegate.shared
         serverList = appDelegate.mapView.tileServerList
 
-        let viewport = appDelegate.mapView.screenLongitudeLatitude()
+        let viewport = appDelegate.mapView.screenLatLonRect()
 		imageryForRegion = serverList.services(forRegion: viewport)
 
         super.viewDidLoad()

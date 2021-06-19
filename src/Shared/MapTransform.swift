@@ -10,41 +10,6 @@ import Foundation
 import CoreGraphics
 import CoreLocation
 
-private func FromBirdsEye(screenPoint point: OSMPoint, screenCenter center: CGPoint, birdsEyeDistance: Double, birdsEyeRotation: Double) -> OSMPoint {
-	var point = point
-	let D = birdsEyeDistance // distance from eye to center of screen
-	let r = birdsEyeRotation
-
-	point.x -= Double(center.x)
-	point.y -= Double(center.y)
-
-	point.y *= D / (D * cos(r) + point.y * sin(r))
-	point.x -= point.x * point.y * sin(r) / D
-
-	point.x += Double(center.x)
-	point.y += Double(center.y)
-	return point
-}
-
-private func ToBirdsEye(screenPoint point: OSMPoint, screenCenter center: CGPoint, _ birdsEyeDistance: Double, _ birdsEyeRotation: Double) -> OSMPoint {
-	var point = point
-	// narrow things toward top of screen
-	let D = birdsEyeDistance // distance from eye to center of screen
-	point.x -= Double(center.x)
-	point.y -= Double(center.y)
-
-	let z: Double = point.y * -sin(birdsEyeRotation) // rotation around x axis gives a z value from y offset
-	var scale = D / (D + z)
-	if scale < 0 {
-		scale = 1.0 / 0.0
-	}
-	point.x *= scale
-	point.y *= scale * cos(birdsEyeRotation)
-
-	point.x += Double(center.x)
-	point.y += Double(center.y)
-	return point
-}
 
 /// Convert from latitude to Mercator projected latitude
 @inline(__always) public func lat2latp(_ a: Double) -> Double {
@@ -62,17 +27,74 @@ final class MapTransform {
 
 	var center: CGPoint = .zero	// screen center, needed for bird's eye calculations
 
-	// This matrix translates between a "map point" (a 256x256 square) and the screen
+	// This matrix translates between a "mapPoint" (a 256x256 mercator map of the world) and the screen
 	var transform: OSMTransform = OSMTransform.identity {
 		didSet {
-			observers.removeAll(where: {$0.object == nil})
-			observers.forEach({ $0.callback() })
+			notifyObservers()
 		}
 	}
 
+	// MARK: Observers
+
+	private struct Observer {
+		weak var object: AnyObject?
+		var callback: () -> Void
+	}
+	private var observers: [Observer] = []
+
+	func observe(by object: AnyObject, callback: @escaping ()->Void) {
+		observers.append( Observer(object: object, callback: callback) )
+	}
+	func notifyObservers() {
+		observers.removeAll(where: {$0.object == nil})
+		observers.forEach({ $0.callback() })
+	}
+
+	// MARK: Bird's eye view
+
 	// These are used for 3-D effects. Rotation is the amount of tilt off the z-axis.
-	var birdsEyeRotation = 0.0
 	let birdsEyeDistance = 1000.0
+	var birdsEyeRotation = 0.0 {
+		didSet {
+			notifyObservers()
+		}
+	}
+
+	static private func FromBirdsEye(screenPoint point: OSMPoint, screenCenter center: CGPoint, birdsEyeDistance: Double, birdsEyeRotation: Double) -> OSMPoint {
+		var point = point
+		let D = birdsEyeDistance // distance from eye to center of screen
+		let r = birdsEyeRotation
+
+		point.x -= Double(center.x)
+		point.y -= Double(center.y)
+
+		point.y *= D / (D * cos(r) + point.y * sin(r))
+		point.x -= point.x * point.y * sin(r) / D
+
+		point.x += Double(center.x)
+		point.y += Double(center.y)
+		return point
+	}
+
+	static private func ToBirdsEye(screenPoint point: OSMPoint, screenCenter center: CGPoint, _ birdsEyeDistance: Double, _ birdsEyeRotation: Double) -> OSMPoint {
+		var point = point
+		// narrow things toward top of screen
+		let D = birdsEyeDistance // distance from eye to center of screen
+		point.x -= Double(center.x)
+		point.y -= Double(center.y)
+
+		let z: Double = point.y * -sin(birdsEyeRotation) // rotation around x axis gives a z value from y offset
+		var scale = D / (D + z)
+		if scale < 0 {
+			scale = 1.0 / 0.0
+		}
+		point.x *= scale
+		point.y *= scale * cos(birdsEyeRotation)
+
+		point.x += Double(center.x)
+		point.y += Double(center.y)
+		return point
+	}
 
 	func birdsEye() -> (distance: Double, rotation: Double)? {
 		if self.birdsEyeRotation != 0.0 {
@@ -83,18 +105,7 @@ final class MapTransform {
 	}
 
 	func toBirdsEye(_ point: OSMPoint, _ center: CGPoint) -> OSMPoint {
-		return ToBirdsEye( screenPoint: point, screenCenter: center, self.birdsEyeDistance, self.birdsEyeRotation)
-	}
-
-	// MARK: Observation
-	private struct Observer {
-		weak var object: AnyObject?
-		var callback: () -> Void
-	}
-	private var observers: [Observer] = []
-
-	func observe(by object: AnyObject, callback: @escaping ()->Void) {
-		observers.append( Observer(object: object, callback: callback) )
+		return Self.ToBirdsEye( screenPoint: point, screenCenter: center, self.birdsEyeDistance, self.birdsEyeRotation)
 	}
 
 	// MARK: Transform screenPoint <--> mapPoint
@@ -102,17 +113,17 @@ final class MapTransform {
 	func screenPoint(forMapPoint point: OSMPoint, birdsEye: Bool) -> CGPoint {
 		var point = point.withTransform( transform )
 		if birdsEyeRotation != 0.0 && birdsEye {
-			point = ToBirdsEye(screenPoint: point, screenCenter: center, birdsEyeDistance, birdsEyeRotation)
+			point = Self.ToBirdsEye(screenPoint: point, screenCenter: center, birdsEyeDistance, birdsEyeRotation)
 		}
 		return CGPoint(point)
 	}
 	func mapPoint(forScreenPoint point: OSMPoint, birdsEye: Bool) -> OSMPoint {
 		var point = point
 		if birdsEyeRotation != 0.0 && birdsEye {
-			point = FromBirdsEye(screenPoint: point,
-								 screenCenter: center,
-								 birdsEyeDistance: Double(birdsEyeDistance),
-								 birdsEyeRotation: Double(birdsEyeRotation))
+			point = Self.FromBirdsEye(screenPoint: point,
+									 screenCenter: center,
+									 birdsEyeDistance: Double(birdsEyeDistance),
+									 birdsEyeRotation: Double(birdsEyeRotation))
 		}
 		point = point.withTransform( transform.inverse() )
 		return point
@@ -209,7 +220,7 @@ final class MapTransform {
 		return OSMRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
 	}
 	func boundingScreenRect(forMapRect rc: OSMRect) -> CGRect {
-		let corners = rc.corners().map { OSMPoint( screenPoint(forMapPoint: $0, birdsEye: false) ) }
+		let corners = rc.corners().map { OSMPoint( screenPoint(forMapPoint: $0, birdsEye: true) ) }
 		let rect = Self.boundingRectFor(points: corners)
 		return CGRect(rect)
 	}

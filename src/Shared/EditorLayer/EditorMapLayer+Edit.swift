@@ -291,7 +291,7 @@ extension EditorMapLayer {
 				} else if let hit = hit as? OsmWay {
 					// add new node to hit way
 					let pt = hit.latLonOnObject(forLatLon: dragNode.latLon)
-					self.mapData.setLongitude(pt.lon, latitude: pt.lat, for: dragNode)
+					self.mapData.setLatLon(pt, forNode: dragNode)
 					var error: String? = nil
 					let add: EditActionWithNode? = self.canAddNode(toWay: hit, atIndex:segment+1, error:&error)
 					if let add = add {
@@ -419,7 +419,7 @@ extension EditorMapLayer {
 		pt.x += delta.x
 		pt.y -= delta.y
 		let loc = owner.mapTransform.latLon(forScreenPoint: pt)
-		mapData.setLongitude(loc.lon, latitude: loc.lat, for: node)
+		mapData.setLatLon(loc, forNode: node)
 
 		setNeedsLayout()
 	}
@@ -675,7 +675,7 @@ extension EditorMapLayer {
 				}
 			case .RECTANGULARIZE:
 				guard let selectedWay = self.selectedWay else { return }
-				if selectedWay.ident >= 0 && !owner.screenLongitudeLatitude().containsRect( selectedWay.boundingBox) {
+				if selectedWay.ident >= 0 && !owner.screenLatLonRect().containsRect( selectedWay.boundingBox) {
 					error = NSLocalizedString("The selected way must be completely visible", comment: "") // avoid bugs where nodes are deleted from other objects
 				} else {
 					let rect: EditAction? = self.mapData.canOrthogonalizeWay(self.selectedWay!, error:&error)
@@ -707,7 +707,7 @@ extension EditorMapLayer {
 			case .STRAIGHTEN:
 				if let selectedWay = self.selectedWay {
 					let boundingBox = selectedWay.boundingBox
-					if selectedWay.ident >= 0 && !owner.screenLongitudeLatitude().containsRect( boundingBox) {
+					if selectedWay.ident >= 0 && !owner.screenLatLonRect().containsRect( boundingBox) {
 						error = NSLocalizedString("The selected way must be completely visible", comment: "") // avoid bugs where nodes are deleted from other objects
 					} else {
 						let straighten: EditAction? = self.mapData.canStraightenWay(selectedWay, error:&error)

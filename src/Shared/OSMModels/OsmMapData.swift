@@ -484,13 +484,13 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
     // MARK: external editing commands
     
     
-    func setLongitude(_ longitude: Double, latitude: Double, for node: OsmNode) {
-        registerUndoCommentString(NSLocalizedString("move", comment: ""))
+    func setLatLon(_ latLon: LatLon, forNode node: OsmNode) {
+		registerUndoCommentString(NSLocalizedString("move", comment: ""))
         
         // need to update all ways/relation which contain the node
 		let parents = objectsContaining(node).map({ ($0, $0.boundingBox) })
 		let bboxNode = node.boundingBox
-        node.setLongitude(longitude, latitude: latitude, undo: undoManager)
+		node.setLongitude(latLon.lon, latitude: latLon.lat, undo: undoManager)
         spatial.updateMember(node, fromBox: bboxNode, undo: undoManager)
         
         for i in 0..<parents.count {

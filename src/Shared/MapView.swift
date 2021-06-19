@@ -266,7 +266,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			mapTransform.transform = t
 
             // determine if we've zoomed out enough to disable editing
-            let bbox = screenLongitudeLatitude()
+            let bbox = screenLatLonRect()
             let area = SurfaceAreaOfRect(bbox)
             var isZoomedOut = area > 2.0 * 1000 * 1000
 			if !editorLayer.isHidden && !editorLayer.atVisibleObjectLimit && area < 200.0 * 1000 * 1000 {
@@ -1241,7 +1241,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		return mapTransform.boundingMapRect(forScreenRect: rc)
 	}
 
-	func screenLongitudeLatitude() -> OSMRect {
+	func screenLatLonRect() -> OSMRect {
 		let rc = boundingMapRectForScreen()
 		return MapTransform.latLon(forMapRect: rc)
     }
@@ -2171,7 +2171,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
     func updateNotesFromServer(withDelay delay: CGFloat) {
 		if viewOverlayMask.contains(.NOTES) {
-			let rc = screenLongitudeLatitude()
+			let rc = screenLatLonRect()
             notesDatabase.updateRegion(rc, withDelay: delay, fixmeData: editorLayer.mapData) { [self] in
                 refreshNoteButtonsFromDatabase()
             }

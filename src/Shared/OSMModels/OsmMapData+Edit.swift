@@ -223,7 +223,9 @@ extension OsmMapData {
 
 				// apply new position
 				let node = way.nodes[corner]
-				setLongitude(points[corner].x, latitude: latp2lat(points[corner].y), for: node)
+				let latLon = LatLon(x: points[corner].x,
+									y: latp2lat(points[corner].y))
+				setLatLon(latLon, forNode: node)
 			} else {
 				let originalPoints = points
 				var bestScore = 1e9
@@ -257,7 +259,8 @@ extension OsmMapData {
 					let modi = i < points.count ? i : 0
 					let node = way.nodes[i]
 					if !(points[modi] == originalPoints[modi]) {
-						setLongitude(points[modi].x, latitude: latp2lat(points[modi].y), for: node)
+						let latLon = LatLon(x: points[modi].x, y: latp2lat(points[modi].y))
+						setLatLon(latLon, forNode: node)
 					}
 				}
 
@@ -467,7 +470,7 @@ extension OsmMapData {
         return { [self] in
             if survivor == node1 {
                 // update survivor to have location of other node
-				setLongitude(node2.latLon.lon, latitude: node2.latLon.lat, for: survivor)
+				setLatLon(node2.latLon, forNode: survivor)
             }
             
             setTags(mergedTags, for: survivor)
@@ -536,7 +539,9 @@ extension OsmMapData {
 				if let point = points[i] {
 					// update position
 					let node = way.nodes[i]
-					setLongitude(point.x, latitude: latp2lat(point.y), for: node)
+					let latLon = LatLon(x: point.x,
+										y: latp2lat(point.y))
+					setLatLon(latLon, forNode: node)
 				} else {
 					// remove point
 					let node = way.nodes[i]
@@ -1162,8 +1167,9 @@ extension OsmMapData {
 							  lat2latp(n.latLon.lat) - center.lat)
 				let lat = latp2lat(center.lat + (lat2latp(n.latLon.lat) - center.lat) / c * radius)
 				let lon = center.lon + (n.latLon.lon - center.lon) / c * radius
-				setLongitude(lon, latitude: lat, for: n)
-            }
+				let latLon = LatLon(x: lon, y: lat)
+				setLatLon(latLon, forNode: n)
+			}
             
             // Insert extra nodes to make circle
             // clockwise: angles decrease, wrapping round from -170 to 170

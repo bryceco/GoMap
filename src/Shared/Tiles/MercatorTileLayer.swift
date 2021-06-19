@@ -99,7 +99,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 			return
         }
 
-		let rc = mapView.screenLongitudeLatitude()
+		let rc = mapView.screenLatLonRect()
 
 		var zoomLevel = self.zoomLevel()
 		if zoomLevel > 21 {

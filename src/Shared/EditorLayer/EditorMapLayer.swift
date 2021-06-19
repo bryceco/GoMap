@@ -45,7 +45,7 @@ protocol EditorMapLayerOwner: UIView, MapViewProgress {
 	func presentError(_ error: Error, flash: Bool)
 
 	func setScreenFromMap( transform: OSMTransform )	// used when undo/redo change the location
-	func screenLongitudeLatitude() -> OSMRect
+	func screenLatLonRect() -> OSMRect
 	func metersPerPixel() -> Double
 
 	func useTurnRestrictions() -> Bool
@@ -282,7 +282,7 @@ final class EditorMapLayer: CALayer {
 			return // identity, we haven't been initialized yet
         }
         
-		let box = owner.screenLongitudeLatitude()
+		let box = owner.screenLatLonRect()
 		if box.size.height <= 0 || box.size.width <= 0 {
 			return
 		}
@@ -1291,7 +1291,7 @@ final class EditorMapLayer: CALayer {
     // MARK: Select objects and draw
     
     func getVisibleObjects() -> ContiguousArray<OsmBaseObject> {
-		let box = owner.screenLongitudeLatitude()
+		let box = owner.screenLatLonRect()
 		var a: ContiguousArray<OsmBaseObject> = []
 		a.reserveCapacity( 4000 )
 		mapData.enumerateObjects(inRegion: box, block: { obj in
