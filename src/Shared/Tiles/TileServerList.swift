@@ -329,15 +329,15 @@ final class TileServerList {
     
 	private func load() {
 		let list = UserDefaults.standard.object(forKey: CUSTOMAERIALLIST_KEY) as? [[String:Any]] ?? []
-		for dict in list {
-			let entry = TileServer(dictionary: dict)
-			userDefinedList.append( entry )
-        }
-        
-        // fetch and decode recently used list
+		self.userDefinedList = list.map({ TileServer(withDictionary: $0) })
+
+        // build a dictionary of all known sources
         var dict: [String : TileServer] = [:]
-        for service in downloadedList {
-            dict[service.identifier] = service
+		for service in builtinServers() {
+			dict[service.identifier] = service
+		}
+		for service in downloadedList {
+			dict[service.identifier] = service
         }
         for service in userDefinedList {
             dict[service.identifier] = service
@@ -348,23 +348,16 @@ final class TileServerList {
         ] {
             dict[service.identifier] = service
         }
-        
+
+		// fetch and decode recently used list
         let recentIdentiers: [String] = UserDefaults.standard.object(forKey: RECENTLY_USED_KEY) as? [String] ?? []
-		for identifier in recentIdentiers {
-			if let service = dict[identifier] {
-				_recentlyUsed.append(service)
-			}
-		}
+		_recentlyUsed = recentIdentiers.compactMap({ dict[$0] })
 
-		let currentIdentifier = (UserDefaults.standard.object(forKey: CUSTOMAERIALSELECTION_KEY) as? String?) ?? TileServer.defaultServer
-
-		let allServices = builtinServers() + userDefinedServices() + downloadedList
-		currentServer = allServices.first(where: {
-			currentIdentifier == $0.identifier
-		}) ??  builtinServers()[0]
-    }
+		let currentIdentifier: String = (UserDefaults.standard.object(forKey: CUSTOMAERIALSELECTION_KEY) as? String) ?? TileServer.defaultServer
+		currentServer = dict[ currentIdentifier ] ?? dict[ TileServer.defaultServer ] ?? builtinServers()[0]
+	}
     
-    func save() {
+	func save() {
         let defaults = UserDefaults.standard
 		let a = userDefinedList.map({ $0.dictionary() })
         defaults.set(a, forKey: CUSTOMAERIALLIST_KEY)

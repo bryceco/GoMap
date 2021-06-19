@@ -286,7 +286,7 @@ final class TileServer {
 		]
 	}
 
-	convenience init(dictionary dict: [String : Any]) {
+	convenience init(withDictionary dict: [String : Any]) {
 		var url = dict["url"] as! String
 
 		// convert a saved aerial that uses a subdomain list to the new format
