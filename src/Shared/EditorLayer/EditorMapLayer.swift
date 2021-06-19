@@ -303,9 +303,9 @@ final class EditorMapLayer: CALayer {
 						owner.presentError(error, flash: true)
 					}
 				})
-			} else {
-				setNeedsLayout()
+				return
 			}
+			setNeedsLayout()
 		})
         setNeedsLayout()
     }

@@ -676,19 +676,6 @@ final class OsmMapData: NSObject, NSCoding {
         return queries
     }
     
-	private func osmData(forRect rect: OSMRect, completion: @escaping (_ result: Result<OsmDownloadData,Error>) -> Void) {
-		let box = rect
-        let x = box.origin.x
-		let y = box.origin.y
-		let width = box.size.width
-		let height = box.size.height
-		let url = OSM_API_URL + "api/0.6/map?bbox=\(x),\(y),\(x + width),\(y + height)"
-
-		OsmDownloader.osmData(forUrl: url, completion: { result in
-			completion( result )
-		})
-    }
-    
     /// Download any data not yet downloaded for the given region
 	/// Because a single request may be converted to multiple server requests the completion callback
 	/// may be called one or more times, indicating whether all requests have been satisfied, along with an error value
@@ -702,12 +689,12 @@ final class OsmMapData: NSObject, NSCoding {
 	///	- We then combine (coalesceQuadQueries) adjacent quads into a single rectangle
 	///	- We submit the rect to the server
 	///	- Once we've successfully fetched the data for the rect we tell the QuadMap that it can mark the given QuadBoxes as downloaded
-	func downloadMissingData(inRect box: OSMRect,
+	func downloadMissingData(inRect rect: OSMRect,
 							 withProgress progress: (NSObjectProtocol & MapViewProgress),
 							 didChange: @escaping (_ error: Error?) -> Void)
 	{
 		// get list of new quads to fetch
-		let newQuads = region.missingQuads(forRect: box)
+		let newQuads = region.missingQuads(forRect: rect)
 		if newQuads.count == 0 {
 			return
 		}
@@ -718,12 +705,16 @@ final class OsmMapData: NSObject, NSCoding {
 		// submit each query to the server and process the results
 		for query in queryList {
 			progress.progressIncrement()
-			osmData(forRect: query.rect, completion: { [self] result in
+
+			let rc = query.rect
+			let url = OSM_API_URL + "api/0.6/map?bbox=\(rc.origin.x),\(rc.origin.y),\(rc.origin.x+rc.size.width),\(rc.origin.y+rc.size.height)"
+
+			OsmDownloader.osmData(forUrl: url, completion: { result in
 				let didGetData: Bool
 				switch result {
 				case .success(let data):
 					// merge data
-					try? merge(data, savingToDatabase: true)
+					try? self.merge(data, savingToDatabase: true)
 					didGetData = true
 					didChange(nil)		// data was updated
 				case .failure(let error):
@@ -731,7 +722,7 @@ final class OsmMapData: NSObject, NSCoding {
 					didChange(error)	// error fetching data
 				}
 				for quadBox in query.quadList {
-					region.makeWhole(quadBox, success: didGetData)
+					self.region.makeWhole(quadBox, success: didGetData)
 				}
 				progress.progressDecrement()
 			})
