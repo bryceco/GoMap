@@ -420,8 +420,6 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 //        let rc = mapView.boundingMapRectForScreen()
 //        removeUnneededTiles(for: rc, zoomLevel: Int(zoomLevel))
 //#endif
-        
-        mapView.progressAnimate()
     }
     
     override func layoutSublayers() {

@@ -84,9 +84,8 @@ struct MapLocation {
 }
 
 protocol MapViewProgress {
-    func progressIncrement()
-    func progressDecrement()
-    func progressAnimate()
+	func progressIncrement()
+	func progressDecrement()
 }
 
 // MARK: Gestures
@@ -1299,20 +1298,18 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
     // MARK: Progress indicator
 
     func progressIncrement() {
+		if progressActive.value() == 0 {
+			progressIndicator.startAnimating()
+		}
 		progressActive.increment()
     }
 
     func progressDecrement() {
+		DbgAssert( progressActive.value() > 0 )
 		progressActive.decrement()
 		if progressActive.value() == 0 {
 			progressIndicator.stopAnimating()
         }
-    }
-
-    func progressAnimate() {
-		if progressActive.value() > 0 {
-			progressIndicator.startAnimating()
-		}
     }
 
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

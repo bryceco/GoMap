@@ -889,8 +889,8 @@
 			isa = PBXGroup;
 			children = (
 				C3D096F1263EBE5E00E3B129 /* OsmBaseObject.swift */,
-				0288169D265895FA00C30EA2 /* OsmMapData.swift */,
 				024909CA267D99190027E531 /* OsmDownloader.swift */,
+				0288169D265895FA00C30EA2 /* OsmMapData.swift */,
 				0288169C265895FA00C30EA2 /* OsmMapData+Edit.swift */,
 				C3D096EE263EBE5D00E3B129 /* OsmMember.swift */,
 				C3D096EF263EBE5D00E3B129 /* OsmNode.swift */,

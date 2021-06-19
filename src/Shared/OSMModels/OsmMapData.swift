@@ -28,19 +28,13 @@ final class OsmUserStatistics {
 	var changeSetsCount = 0
 }
 
-
 final fileprivate class ServerQuery {
 	var quadList: [QuadBox] = []
 	var rect = OSMRect.zero
 }
 
-@objcMembers
-final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
+final class OsmMapData: NSObject, NSCoding {
 	fileprivate static var g_EditorMapLayerForArchive: EditorMapLayer? = nil
-
-	private var parserCurrentElementText: String?
-	private var parserStack: [AnyHashable] = []
-	private var parseError: Error?
 
 	private(set) var nodes: [OsmIdentifier : OsmNode] = [:]
 	private(set) var ways: [OsmIdentifier : OsmWay] = [:]
@@ -75,7 +69,6 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
     }
     
 	init(region: QuadMap, spatial: QuadMap, undoManager: MyUndoManager) {
-		parserStack = []
 		nodes = [:]
 		ways = [:]
 		relations = [:]
@@ -234,7 +227,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         return a
     }
 
-    func enumerateObjects(usingBlock block: @escaping (_ obj: OsmBaseObject) -> Void) {
+    func enumerateObjects(usingBlock block: (_ obj: OsmBaseObject) -> Void) {
         for (_, node) in nodes {
             block(node)
         }
@@ -246,7 +239,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         }
     }
     
-    func enumerateObjects(inRegion bbox: OSMRect, block: @escaping (_ obj: OsmBaseObject) -> Void) {
+    func enumerateObjects(inRegion bbox: OSMRect, block: (_ obj: OsmBaseObject) -> Void) {
 #if false && DEBUG
         print("box = \(NSCoder.string(for: CGRectFromOSMRect(bbox)))")
 #endif
@@ -683,8 +676,8 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
         return queries
     }
     
-	private func osmData(forBox query: ServerQuery, completion: @escaping (_ query: ServerQuery?, _ result: Result<OsmDownloadData,Error>) -> Void) {
-		let box = query.rect
+	private func osmData(forRect rect: OSMRect, completion: @escaping (_ result: Result<OsmDownloadData,Error>) -> Void) {
+		let box = rect
         let x = box.origin.x
 		let y = box.origin.y
 		let width = box.size.width
@@ -692,51 +685,57 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 		let url = OSM_API_URL + "api/0.6/map?bbox=\(x),\(y),\(x + width),\(y + height)"
 
 		OsmDownloader.osmData(forUrl: url, completion: { result in
-			completion( query, result )
+			completion( result )
 		})
     }
     
-    // download data
-    func update(withBox box: OSMRect,
+    /// Download any data not yet downloaded for the given region
+	/// Because a single request may be converted to multiple server requests the completion callback
+	/// may be called one or more times, indicating whether all requests have been satisfied, along with an error value
+	///
+	/// The process for performing a download is:
+	/// - The user moves the screen, which creates a new viewable region
+	///	- We ask QuadMap for a set of QuadBoxes that tile the region, less any quads that we already downloaded (missingQuads)
+	///		- The returned quads are marked as "busy" by QuadMap, meaning it won't return them on a subsequent query
+	///			before the current query completes. The quads must be marked non-busy via a call to makeWhole()
+	///			once we're done with them. makeWhole() takes a success flag indicating that the quad now contains data.
+	///	- We then combine (coalesceQuadQueries) adjacent quads into a single rectangle
+	///	- We submit the rect to the server
+	///	- Once we've successfully fetched the data for the rect we tell the QuadMap that it can mark the given QuadBoxes as downloaded
+	func update(withBox box: OSMRect,
 				progressDelegate progress: (NSObjectProtocol & MapViewProgress),
-				completion: @escaping (_ partial: Bool, _ error: Error?) -> Void)
+				completion: @escaping (_ error: Error?) -> Void)
 	{
-		var activeRequests = 0
-        let mergePartialResults: ((_ query: ServerQuery?, _ result: Result<OsmDownloadData,Error>) -> Void) = { [self] query, result in
-			progress.progressDecrement()
-            activeRequests -= 1
-			switch result {
-			case .success(let data):
-				try? merge(data,
-						   fromDownload: true,
-						   quadList: query?.quadList ?? [],
-						   success: true)
-				completion(activeRequests > 0, nil)
-			case .failure(let error):
-				try? merge(nil,
-						   fromDownload: true,
-						   quadList: query?.quadList ?? [],
-						   success: false)
-				completion(activeRequests > 0, error)
-			}
-        }
-        
-        // get list of new quads to fetch
-        let newQuads = region.missingQuads(forRect: box)
+		// get list of new quads to fetch
+		let newQuads = region.missingQuads(forRect: box)
 		if newQuads.count == 0 {
-			activeRequests += 1
-			progress.progressIncrement()
-			mergePartialResults(nil, .success(OsmDownloadData()))
-		} else {
-			let queryList = OsmMapData.coalesceQuadQueries(newQuads)
-			for query in queryList {
-				activeRequests += 1
-				progress.progressIncrement()
-				osmData(forBox: query, completion: mergePartialResults)
-			}
+			return
 		}
-        
-        progress.progressAnimate()
+
+		// Convert the list of quads into server queries
+		let queryList = OsmMapData.coalesceQuadQueries(newQuads)
+
+		// submit each query to the server and process the results
+		for query in queryList {
+			progress.progressIncrement()
+			osmData(forRect: query.rect, completion: { [self] result in
+				let didGetData: Bool
+				switch result {
+				case .success(let data):
+					// merge data
+					try? merge(data, savingToDatabase: true)
+					didGetData = true
+					completion(nil)		// data was updated
+				case .failure(let error):
+					didGetData = false
+					completion(error)	// error fetching data
+				}
+				for quadBox in query.quadList {
+					region.makeWhole(quadBox, success: didGetData)
+				}
+				progress.progressDecrement()
+			})
+		}
     }
     
     func cancelCurrentDownloads() {
@@ -747,93 +746,87 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
     
     // MARK: Download
 
-	func merge(_ newData: OsmDownloadData?, fromDownload downloaded: Bool, quadList: [QuadBox], success: Bool) throws {
-		if let newData = newData {
-            var newNodes: [OsmNode] = []
-            var newWays: [OsmWay] = []
-            var newRelations: [OsmRelation] = []
-            
-			for (key, node) in newData.nodes {
-				let current = nodes[key]
-				if current == nil {
-                    nodes[key] = node
-					spatial.addMember(node, undo: nil)
-                    newNodes.append(node)
-                } else if current!.version < node.version {
-                    // already exists, so do an in-place update
-                    let bbox = current!.boundingBox
-					current!.serverUpdate(inPlace: node)
-					spatial.updateMember(current!, fromBox: bbox, undo: nil)
-					newNodes.append(current!)
-                }
-            }
-            
-            for (key, way) in newData.ways {
-                let current = ways[key]
-                if current == nil {
-                    ways[key] = way
-                    try way.resolveToMapData(self)
-                    spatial.addMember(way, undo: nil)
-                    newWays.append(way)
-                } else if current!.version < way.version {
-                    let bbox = current!.boundingBox
-                    current!.serverUpdate(inPlace: way)
-                    try current!.resolveToMapData(self)
-					spatial.updateMember(current!, fromBox: bbox, undo: nil)
-                    newWays.append(current!)
-                }
-            }
-            
-			for (key, relation) in newData.relations {
-				let current = relations[key]
-				if current == nil {
-					relations[key] = relation
-					spatial.addMember(relation, undo: nil)
-					newRelations.append(relation)
-				} else if current!.version < relation.version {
-					let bbox = current!.boundingBox
-					current!.serverUpdate(inPlace: relation)
-					spatial.updateMember(current!, fromBox: bbox, undo: nil)
-					newRelations.append(current!)
-				}
-            }
-            
-            // all relations, including old ones, need to be resolved against new objects
-            var didChange: Bool = true
-			while didChange {
-                didChange = false
-				for (_, relation) in relations {
-					let bbox = relation.boundingBox
-                    didChange = relation.resolveToMapData(self) || didChange
-                    spatial.updateMember(relation, fromBox: bbox, undo: nil)
-                }
-            }
-            
-            for (_, node) in newData.nodes {
-                node.setConstructed()
-            }
-            for (_, way) in newData.ways {
-                way.setConstructed()
-            }
-            for (_, relation) in newData.relations {
-                relation.setConstructed()
-            }
-            
-            // store new nodes in database
-            if downloaded {
-                sqlSaveNodes(newNodes, saveWays: newWays, saveRelations: newRelations, deleteNodes: [], deleteWays: [], deleteRelations: [], isUpdate: false)
-                
-                // purge old data
-                DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 1.0), execute: {
-                    AppDelegate.shared.mapView.discardStaleData()
-                })
-            }
-        }
-        
-        for q in quadList {
-            region.makeWhole(q, success: success)
-        }
-    }
+	func merge(_ newData: OsmDownloadData, savingToDatabase save: Bool) throws {
+		var newNodes: [OsmNode] = []
+		var newWays: [OsmWay] = []
+		var newRelations: [OsmRelation] = []
+
+		for (key, node) in newData.nodes {
+			let current = nodes[key]
+			if current == nil {
+				nodes[key] = node
+				spatial.addMember(node, undo: nil)
+				newNodes.append(node)
+			} else if current!.version < node.version {
+				// already exists, so do an in-place update
+				let bbox = current!.boundingBox
+				current!.serverUpdate(inPlace: node)
+				spatial.updateMember(current!, fromBox: bbox, undo: nil)
+				newNodes.append(current!)
+			}
+		}
+
+		for (key, way) in newData.ways {
+			let current = ways[key]
+			if current == nil {
+				ways[key] = way
+				try way.resolveToMapData(self)
+				spatial.addMember(way, undo: nil)
+				newWays.append(way)
+			} else if current!.version < way.version {
+				let bbox = current!.boundingBox
+				current!.serverUpdate(inPlace: way)
+				try current!.resolveToMapData(self)
+				spatial.updateMember(current!, fromBox: bbox, undo: nil)
+				newWays.append(current!)
+			}
+		}
+
+		for (key, relation) in newData.relations {
+			let current = relations[key]
+			if current == nil {
+				relations[key] = relation
+				spatial.addMember(relation, undo: nil)
+				newRelations.append(relation)
+			} else if current!.version < relation.version {
+				let bbox = current!.boundingBox
+				current!.serverUpdate(inPlace: relation)
+				spatial.updateMember(current!, fromBox: bbox, undo: nil)
+				newRelations.append(current!)
+			}
+		}
+
+		// all relations, including old ones, need to be resolved against new objects
+		var didChange: Bool = true
+		while didChange {
+			didChange = false
+			for (_, relation) in relations {
+				let bbox = relation.boundingBox
+				didChange = relation.resolveToMapData(self) || didChange
+				spatial.updateMember(relation, fromBox: bbox, undo: nil)
+			}
+		}
+
+		for (_, node) in newData.nodes {
+			node.setConstructed()
+		}
+		for (_, way) in newData.ways {
+			way.setConstructed()
+		}
+		for (_, relation) in newData.relations {
+			relation.setConstructed()
+		}
+
+		// store new nodes in database
+		if save {
+			sqlSaveNodes(newNodes, saveWays: newWays, saveRelations: newRelations, deleteNodes: [], deleteWays: [], deleteRelations: [], isUpdate: false)
+
+			// purge old data
+			DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 1.0), execute: {
+				AppDelegate.shared.mapView.discardStaleData()
+			})
+		}
+	}
     
     class func updateChangesetXml(_ xmlDoc: DDXMLDocument, withChangesetID changesetID: Int64) {
 		let osmChange = xmlDoc.rootElement()
@@ -890,7 +883,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 						switch result {
 						case .success(let data):
 							// update the bad element
-							try? merge(data, fromDownload: true, quadList: [], success: true)
+							try? merge(data, savingToDatabase: true)
 							// try again:
 							uploadChangeset(changesetID, retries:retries-1, completion:completion)
 						case .failure(let error):
@@ -2133,7 +2126,7 @@ final class OsmMapData: NSObject, XMLParserDelegate, NSCoding {
 			newData.ways = try db.querySqliteWays()
 			newData.relations = try db.querySqliteRelations()
 
-			try decode.merge(newData, fromDownload: false, quadList: [], success: true)
+			try decode.merge(newData, savingToDatabase: false)
 		} catch {
             // database couldn't be read
             print("Unable to read database: recreating from scratch\n")

@@ -125,11 +125,11 @@ class QuadMap: NSObject, NSCoding {
 		updateMember(member, toBox: boundingBox, fromBox: bbox, undo: undo)
     }
 
-    func findObjects(inArea bbox: OSMRect, block: @escaping (OsmBaseObject) -> Void) {
+    func findObjects(inArea bbox: OSMRect, block: (OsmBaseObject) -> Void) {
         rootQuad.findObjects(inArea: bbox, block: block)
     }
 
-	func enumerate( _ block: @escaping (OsmBaseObject,OSMRect) -> Void ) {
+	func enumerate( _ block: (OsmBaseObject,OSMRect) -> Void ) {
 		rootQuad.enumerate( block )
 	}
 

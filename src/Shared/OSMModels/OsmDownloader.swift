@@ -149,13 +149,18 @@ class OsmDownloader {
 	static func osmData(forUrl url: String,
 				 completion: @escaping (_ r: Result<OsmDownloadData,Error>) -> Void)
 	{
-		DownloadThreadPool.osmPool().stream(forUrl: url, callback: { stream, error2 in
-			guard error2 == nil,
-				  let stream = stream,
+		DownloadThreadPool.osmPool().stream(forUrl: url, callback: { stream, error in
+			if let error = error {
+				DispatchQueue.main.async(execute: {
+					completion(.failure(error))
+				})
+				return
+			}
+			guard let stream = stream,
 				  stream.streamError == nil
 			else {
 				DispatchQueue.main.async(execute: {
-					completion(.failure(stream?.streamError ?? error2 ?? NSError()))
+					completion(.failure(stream?.streamError ?? NSError()))
 				})
 				return
 			}

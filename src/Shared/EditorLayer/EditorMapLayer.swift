@@ -294,7 +294,7 @@ final class EditorMapLayer: CALayer {
 			return
 		}
 
-		mapData.update(withBox: box, progressDelegate: owner) { [self] partial, error in
+		mapData.update(withBox: box, progressDelegate: owner) { [self] error in
 			if let error = error {
 				DispatchQueue.main.async(execute: { [self] in
 					// present error asynchrounously so we don't interrupt the current UI action
