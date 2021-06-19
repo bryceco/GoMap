@@ -25,17 +25,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		super.init()
 
 		// do translations from old Obj-C names to Swift names
-		NSKeyedUnarchiver.setClass(PresetKeyUserDefined.classForKeyedArchiver(), 	forClassName: "CustomPreset")
-		NSKeyedUnarchiver.setClass(PresetValue.classForKeyedArchiver(), 		 	forClassName: "PresetValue")
 		NSKeyedUnarchiver.setClass(QuadMap.classForKeyedArchiver(), 				forClassName: "QuadMap")
 		NSKeyedUnarchiver.setClass(QuadBox.classForKeyedArchiver(), 				forClassName: "QuadBox")
+
 		NSKeyedUnarchiver.setClass(MyUndoManager.classForKeyedArchiver(), 			forClassName: "UndoManager")
+
 		NSKeyedUnarchiver.setClass(OsmNode.classForKeyedArchiver(), 				forClassName: "OsmNode")
 		NSKeyedUnarchiver.setClass(OsmWay.classForKeyedArchiver(), 					forClassName: "OsmWay")
 		NSKeyedUnarchiver.setClass(OsmRelation.classForKeyedArchiver(), 			forClassName: "OsmRelation")
+		NSKeyedUnarchiver.setClass(OsmMember.classForKeyedArchiver(), 				forClassName: "OsmMember")
+
 		NSKeyedUnarchiver.setClass(OsmMapData.classForKeyedArchiver(), 				forClassName: "OsmMapData")
+
+		NSKeyedUnarchiver.setClass(PresetKeyUserDefined.classForKeyedArchiver(), 	forClassName: "CustomPreset")	// was renamed
+		NSKeyedUnarchiver.setClass(PresetValue.classForKeyedArchiver(), 		 	forClassName: "PresetValue")
+
 		NSKeyedUnarchiver.setClass(GpxTrack.classForKeyedArchiver(), 				forClassName: "GpxTrack")
 		NSKeyedUnarchiver.setClass(GpxPoint.classForKeyedArchiver(), 				forClassName: "GpxPoint")
+
 	}
 
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
