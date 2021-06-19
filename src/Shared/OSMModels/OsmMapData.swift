@@ -2359,8 +2359,7 @@ class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 	}
 
 	func unarchiver(_ unarchiver: NSKeyedUnarchiver, cannotDecodeObjectOfClassName name: String, originalClasses classNames: [String]) -> AnyClass? {
-		DLog("archive error: %@", name)
-		return nil
+		fatalError("archive error: cannotDecodeObjectOfClassName \(name)")
 	}
 
 	func unarchiver(_ unarchiver: NSKeyedUnarchiver, willReplace object: Any, with newObject: Any) {

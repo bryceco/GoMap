@@ -60,13 +60,13 @@ final class OsmMember: NSObject, NSCoding {
 
     func encode(with coder: NSCoder) {
 		coder.encode(type, forKey: "type")
-		coder.encode(ref, forKey: "ref")
+		coder.encode(NSNumber(value: ref), forKey: "ref")
 		coder.encode(role, forKey: "role")
     }
 
     required init?(coder: NSCoder) {
         type = coder.decodeObject(forKey: "type") as? String
-        ref = coder.decodeInt64(forKey: "ref")
+		ref = (coder.decodeObject(forKey: "ref") as! NSNumber).int64Value
         role = coder.decodeObject(forKey: "role") as? String
 		obj = nil
 		super.init()
