@@ -21,6 +21,7 @@
       </trans-unit>
       <trans-unit id="GPS Exchange Format (GPX)" xml:space="preserve">
         <source>GPS Exchange Format (GPX)</source>
+        <target>GPS Exchange Format (GPX)</target>
         <note/>
       </trans-unit>
       <trans-unit id="NSBluetoothPeripheralUsageDescription" xml:space="preserve">
