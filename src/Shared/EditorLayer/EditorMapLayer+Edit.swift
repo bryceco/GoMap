@@ -91,7 +91,7 @@ extension EditorMapLayer {
 		} else {
 			// create new object
 			let point = owner.pushpinView()!.arrowPoint
-			let node = self.createNode(at: point)
+			let node = self.createNode(atScreenPoint: point)
 			self.mapData.setTags(tags, for: node)
 			self.selectedNode = node
 			// create new pushpin for new object
@@ -225,7 +225,7 @@ extension EditorMapLayer {
 				angle += delta
 				let new = OSMPoint(x: Double(axis.x) + radius * Double(cos(angle)),y: Double(axis.y) + Double(radius * sin(angle)))
 				let dist = CGPoint(x: new.x - Double(pt.x), y: -(new.y - Double(pt.y)))
-				self.adjust(node, byDistance: dist)
+				self.adjust(node, byScreenDistance: dist)
 			}
 		} else {
 			// drag object
@@ -233,7 +233,7 @@ extension EditorMapLayer {
 								y: -self.dragState.totalMovement.y)
 
 			for node in object.nodeSet() {
-				self.adjust(node, byDistance: delta)
+				self.adjust(node, byScreenDistance: delta)
 			}
 		}
 
@@ -404,7 +404,7 @@ extension EditorMapLayer {
 				angle += Double(delta)
 				let new = OSMPoint(x: Double(axis.x) + radius * cos(angle), y: Double(axis.y) + radius * sin(angle))
 				let dist = CGPoint(x: CGFloat(new.x) - pt.x, y: -(CGFloat(new.y) - pt.y))
-				self.adjust(node, byDistance: dist)
+				self.adjust(node, byScreenDistance: dist)
 			}
 		}
 	}
@@ -414,7 +414,7 @@ extension EditorMapLayer {
 
 	// MARK: Editing
 
-	func adjust(_ node: OsmNode, byDistance delta: CGPoint) {
+	func adjust(_ node: OsmNode, byScreenDistance delta: CGPoint) {
 		var pt = owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
 		pt.x += delta.x
 		pt.y -= delta.y
@@ -430,7 +430,7 @@ extension EditorMapLayer {
 		return newObject
 	}
 
-	func createNode(at point: CGPoint) -> OsmNode {
+	func createNode(atScreenPoint point: CGPoint) -> OsmNode {
 		let loc = owner.mapTransform.latLon(forScreenPoint: point)
 		let node = mapData.createNode(atLocation: loc)
 		setNeedsLayout()
@@ -856,7 +856,7 @@ extension EditorMapLayer {
 			else {
 				return .failure(.text(error!))
 			}
-			let newNode = self.createNode(at: pinPoint)
+			let newNode = self.createNode(atScreenPoint: pinPoint)
 			add(newNode)
 			self.selectedNode = newNode
 			return .success(newPoint)
@@ -876,7 +876,7 @@ extension EditorMapLayer {
 		} else {
 			// we're either extending a way from it's end, or creating a new way with
 			// the pushpin as one end of it and crosshairs (or mouse click) as the other
-			prevNode = self.selectedNode ?? self.createNode(at: pinPoint)
+			prevNode = self.selectedNode ?? self.createNode(atScreenPoint: pinPoint)
 			way = self.selectedWay ?? self.createWay(with: prevNode)
 		}
 
@@ -977,7 +977,7 @@ extension EditorMapLayer {
 		else {
 			return .failure(.text(error!))
 		}
-		let node2 = self.createNode(at: newPoint)
+		let node2 = self.createNode(atScreenPoint: newPoint)
 		self.selectedWay = way // set selection before perfoming add-node action so selection is recorded in undo stack
 		self.selectedNode = node2
 		addNodeToWay(node2)
