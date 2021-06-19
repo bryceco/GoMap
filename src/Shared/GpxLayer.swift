@@ -781,7 +781,7 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
             
             // configure the layer for presentation
 			guard let pt = layer.props.position else { return }
-			let pt2 = mapView.mapTransform.screenPoint(forMapPoint: pt, birdsEye: false)
+			let pt2 = OSMPoint( mapView.mapTransform.screenPoint(forMapPoint: pt, birdsEye: false) )
             
             // rotate and scale
             var t = CGAffineTransform(translationX: CGFloat(pt2.x - pt.x), y: CGFloat(pt2.y - pt.y))

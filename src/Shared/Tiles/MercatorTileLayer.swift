@@ -359,10 +359,10 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
             let tileY: Int32 = Int32(splitTileKey[2]) ?? 0
             
             var scale = 256.0 / Double((1 << tileZ))
-            var pt = OSMPoint(x: Double(tileX) * scale, y: Double(tileY) * scale)
-			pt = mapView.mapTransform.screenPoint(forMapPoint: pt, birdsEye: false)
-            layer.position = CGPoint(pt)
-            layer.bounds = CGRect(x: 0, y: 0, width: 256, height: 256)
+            let pt = OSMPoint(x: Double(tileX) * scale, y: Double(tileY) * scale)
+			let cgPt = mapView.mapTransform.screenPoint(forMapPoint: pt, birdsEye: false)
+            layer.position = cgPt
+			layer.bounds = CGRect(x: 0, y: 0, width: 256, height: 256)
             layer.anchorPoint = CGPoint(x: 0, y: 0)
             
             scale *= tScale / 256

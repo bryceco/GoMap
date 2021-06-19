@@ -1477,7 +1477,7 @@ final class EditorMapLayer: CALayer {
                 let isShapeLayer = layer is CAShapeLayer
                 let props = layer.properties
                 let pt = props.position
-				var pt2 = owner.mapTransform.screenPoint(forMapPoint: pt, birdsEye: false)
+				var pt2 = OSMPoint( owner.mapTransform.screenPoint(forMapPoint: pt, birdsEye: false) )
                 
                 if props.is3D || (isShapeLayer && object.isNode() == nil) {
                     

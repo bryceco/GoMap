@@ -99,12 +99,12 @@ final class MapTransform {
 
 	// MARK: transform screenPoint <--> mapPoint
 
-	func screenPoint(forMapPoint point: OSMPoint, birdsEye: Bool) -> OSMPoint {
+	func screenPoint(forMapPoint point: OSMPoint, birdsEye: Bool) -> CGPoint {
 		var point = point.withTransform( transform )
 		if birdsEyeRotation != 0.0 && birdsEye {
 			point = ToBirdsEye(screenPoint: point, screenCenter: center, birdsEyeDistance, birdsEyeRotation)
 		}
-		return point
+		return CGPoint(point)
 	}
 	func mapPoint(forScreenPoint point: OSMPoint, birdsEye: Bool) -> OSMPoint {
 		var point = point
@@ -150,9 +150,8 @@ final class MapTransform {
 		return coord
 	}
 	func screenPoint(forLatLon latLon: LatLon, birdsEye: Bool) -> CGPoint {
-		var pt = Self.mapPoint(forLatLon: latLon)
-		pt = screenPoint(forMapPoint: pt, birdsEye: birdsEye)
-		return CGPoint(pt)
+		let pt = Self.mapPoint(forLatLon: latLon)
+		return screenPoint(forMapPoint: pt, birdsEye: birdsEye)
 	}
 
 	// MARK: transform screenRect <--> mapRect
@@ -196,44 +195,27 @@ final class MapTransform {
 
 	// MARK: transform screenRect <--> mapRect
 
-	func boundingScreenRect(forMapRect rc: OSMRect) -> CGRect {
-		let corners2 = [OSMPoint(x: rc.origin.x, y: rc.origin.y),
-						OSMPoint(x: rc.origin.x + rc.size.width, y: rc.origin.y),
-						OSMPoint(x: rc.origin.x + rc.size.width, y: rc.origin.y + rc.size.height),
-						OSMPoint(x: rc.origin.x, y: rc.origin.y + rc.size.height)]
-
-		let corners = corners2.map { screenPoint(forMapPoint: $0, birdsEye: false) }
-
-		var minX = corners[0].x
-		var minY = corners[0].y
+	static func boundingRectFor(points: [OSMPoint]) -> OSMRect {
+		var minX = points[0].x
+		var minY = points[0].y
 		var maxX = minX
 		var maxY = minY
-		for i in 1..<4 {
-			minX = Double(min(minX, corners[i].x))
-			maxX = Double(max(maxX, corners[i].x))
-			minY = Double(min(minY, corners[i].y))
-			maxY = Double(max(maxY, corners[i].y))
-		}
-		return CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
-	}
-
-	func boundingMapRect(forScreenRect rc: OSMRect) -> OSMRect {
-		let corners2 = [OSMPoint(x: rc.origin.x, y: rc.origin.y),
-						OSMPoint(x: rc.origin.x + rc.size.width, y: rc.origin.y),
-						OSMPoint(x: rc.origin.x + rc.size.width, y: rc.origin.y + rc.size.height),
-						OSMPoint(x: rc.origin.x, y: rc.origin.y + rc.size.height)]
-		let corners = corners2.map { mapPoint(forScreenPoint: $0, birdsEye: true) }
-		var minX = corners[0].x
-		var minY = corners[0].y
-		var maxX = minX
-		var maxY = minY
-		for i in 1..<4 {
-			minX = Double(min(minX, corners[i].x))
-			maxX = Double(max(maxX, corners[i].x))
-			minY = Double(min(minY, corners[i].y))
-			maxY = Double(max(maxY, corners[i].y))
+		for pt in points.dropFirst() {
+			minX = min(minX, pt.x)
+			maxX = max(maxX, pt.x)
+			minY = min(minY, pt.y)
+			maxY = max(maxY, pt.y)
 		}
 		return OSMRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
+	}
+	func boundingScreenRect(forMapRect rc: OSMRect) -> CGRect {
+		let corners = rc.corners().map { OSMPoint( screenPoint(forMapPoint: $0, birdsEye: false) ) }
+		let rect = Self.boundingRectFor(points: corners)
+		return CGRect(rect)
+	}
+	func boundingMapRect(forScreenRect rc: OSMRect) -> OSMRect {
+		let corners = rc.corners().map { mapPoint(forScreenPoint: $0, birdsEye: true) }
+		return Self.boundingRectFor(points: corners)
 	}
 
 	// MARK: miscellaneous
@@ -250,8 +232,7 @@ final class MapTransform {
 
 	func wrapScreenPoint(_ pt: CGPoint, screenBounds: CGRect) -> CGPoint {
 		var pt = pt
-		if true /*fabs(_screenFromMapTransform.a) < 16 && fabs(_screenFromMapTransform.c) < 16*/ {
-			// only need to do this if we're zoomed out all the way: pick the best world map on which to display location
+		if self.zoom() < 4 {
 
 			let rc = screenBounds
 			let unitX = transform.unitX()

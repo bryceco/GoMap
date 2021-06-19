@@ -333,6 +333,13 @@ extension OSMRect {
 		return r2
 	}
 
+	func corners() -> [OSMPoint] {
+		return [OSMPoint(x: origin.x, y: origin.y),
+				OSMPoint(x: origin.x + size.width, y: origin.y),
+				OSMPoint(x: origin.x + size.width, y: origin.y + size.height),
+				OSMPoint(x: origin.x, y: origin.y + size.height)]
+	}
+
 	@inline(__always) func offsetBy( dx: Double, dy: Double) -> OSMRect {
 		var rect = self
 		rect.origin.x += dx
