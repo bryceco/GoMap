@@ -13,8 +13,8 @@ extension EditorMapLayer {
 
 	// MARK: Hit Testing
 	@inline(__always) static private func HitTestLineSegment(_ point: LatLon, _ maxDegrees: OSMSize, _ coord1: LatLon, _ coord2: LatLon) -> CGFloat {
-		var line1 = OSMPoint(x: coord1.longitude - point.longitude, y: coord1.latitude - point.latitude)
-		var line2 = OSMPoint(x: coord2.longitude - point.longitude, y: coord2.latitude - point.latitude)
+		var line1 = OSMPoint(x: coord1.lon - point.lon, y: coord1.lat - point.lat)
+		var line2 = OSMPoint(x: coord2.lon - point.lon, y: coord2.lat - point.lat)
 		let pt = OSMPoint(x: 0, y: 0)
 
 		// adjust scale
@@ -47,8 +47,8 @@ extension EditorMapLayer {
 	}
 
 	private static func osmHitTest(node: OsmNode, location: LatLon, maxDegrees: OSMSize) -> CGFloat {
-		let delta = OSMPoint(x: (location.longitude - node.latLon.longitude) / maxDegrees.width,
-							 y: (location.latitude - node.latLon.latitude) / maxDegrees.height)
+		let delta = OSMPoint(x: (location.lon - node.latLon.lon) / maxDegrees.width,
+							 y: (location.lat - node.latLon.lat) / maxDegrees.height)
 		let dist = hypot(delta.x, delta.y)
 		return CGFloat(dist)
 	}

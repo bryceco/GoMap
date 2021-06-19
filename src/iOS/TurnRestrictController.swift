@@ -125,7 +125,7 @@ class TurnRestrictController: UIViewController {
 
     //MARK: Create Path From Points
     func createHighwayViews(_ adjacentNodesArray: [OsmNode]) {
-		let centerNodePos = screenPoint(forLatitude: centralNode!.latLon.latitude, longitude: centralNode!.latLon.longitude)
+		let centerNodePos = screenPoint(forLatitude: centralNode!.latLon.lat, longitude: centralNode!.latLon.lon)
 		let detailViewCenter = CGPoint(x: detailView.bounds.midX, y: detailView.bounds.midY)
 		let positionOffset = centerNodePos.minus(detailViewCenter)
 
@@ -146,7 +146,7 @@ class TurnRestrictController: UIViewController {
         // create highway views
         for node in adjacentNodesArray {
             // get location of node
-			var nodePoint = screenPoint(forLatitude: node.latLon.latitude, longitude: node.latLon.longitude)
+			var nodePoint = screenPoint(forLatitude: node.latLon.lat, longitude: node.latLon.lon)
 			nodePoint = nodePoint.minus(positionOffset)
 
             // force highway segment to extend from center node to edge of view

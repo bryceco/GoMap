@@ -86,7 +86,7 @@ final class MapTransform {
 		return ToBirdsEye( screenPoint: point, screenCenter: center, self.birdsEyeDistance, self.birdsEyeRotation)
 	}
 
-	// MARK: observe
+	// MARK: Observation
 	private struct Observer {
 		weak var object: AnyObject?
 		var callback: () -> Void
@@ -97,7 +97,7 @@ final class MapTransform {
 		observers.append( Observer(object: object, callback: callback) )
 	}
 
-	// MARK: transform screenPoint <--> mapPoint
+	// MARK: Transform screenPoint <--> mapPoint
 
 	func screenPoint(forMapPoint point: OSMPoint, birdsEye: Bool) -> CGPoint {
 		var point = point.withTransform( transform )
@@ -118,7 +118,7 @@ final class MapTransform {
 		return point
 	}
 
-	// MARK: transform mapPoint <--> latLon
+	// MARK: Transform mapPoint <--> latLon
 
 	/// Convert Web-Mercator projection of 0..256 x 0..256 to longitude/latitude
 	static func latLon(forMapPoint point: OSMPoint) -> LatLon {
@@ -135,14 +135,14 @@ final class MapTransform {
 
 	 /// Convert longitude/latitude to a Web-Mercator projection of 0..256 x 0..256
 	 static func mapPoint(forLatLon pt: LatLon) -> OSMPoint {
-		 let x = (pt.longitude + 180) / 360
-		 let sinLatitude = sin(pt.latitude * .pi / 180)
+		 let x = (pt.lon + 180) / 360
+		 let sinLatitude = sin(pt.lat * .pi / 180)
 		 let y = 0.5 - log((1 + sinLatitude) / (1 - sinLatitude)) / (4 * .pi)
 		 let point = OSMPoint(x: x * 256, y: y * 256)
 		 return point
 	 }
 
-	// MARK: transform screenPoint <--> latLon
+	// MARK: Transform screenPoint <--> latLon
 
 	func latLon(forScreenPoint point: CGPoint) -> LatLon {
 		let mapPoint = self.mapPoint(forScreenPoint: OSMPoint(point), birdsEye: true)
@@ -154,7 +154,7 @@ final class MapTransform {
 		return screenPoint(forMapPoint: pt, birdsEye: birdsEye)
 	}
 
-	// MARK: transform screenRect <--> mapRect
+	// MARK: Transform screenRect <--> mapRect
 
 	func screenRect(fromMapRect rect: OSMRect) -> OSMRect {
 		return rect.withTransform( transform )
@@ -163,7 +163,7 @@ final class MapTransform {
 		return rect.withTransform( transform.inverse() )
 	}
 
-	// MARK: transform screenRect <--> latLonRect
+	// MARK: Transform screenRect <--> latLonRect
 
 	static func mapRect(forLatLonRect rc: OSMRect) -> OSMRect {
 		let ll1 = LatLon( latitude: rc.origin.y + rc.size.height, longitude: rc.origin.x )
@@ -193,7 +193,7 @@ final class MapTransform {
 		return rc
 	}
 
-	// MARK: transform screenRect <--> mapRect
+	// MARK: Transform screenRect <--> mapRect
 
 	static func boundingRectFor(points: [OSMPoint]) -> OSMRect {
 		var minX = points[0].x
@@ -218,7 +218,7 @@ final class MapTransform {
 		return Self.boundingRectFor(points: corners)
 	}
 
-	// MARK: miscellaneous
+	// MARK: Miscellaneous
 
 	func zoom() -> Double {
 		return transform.zoom()
@@ -230,28 +230,30 @@ final class MapTransform {
 		return transform.rotation()
 	}
 
-	func wrapScreenPoint(_ pt: CGPoint, screenBounds: CGRect) -> CGPoint {
+	/// When fully zoomed out there can be multiple instances of the earth on-screen.
+	/// This function relocates the point to be on the "best" one for purposes of
+	/// displaying the user location.
+	func wrappedScreenPoint(_ pt: CGPoint, screenBounds rc: CGRect) -> CGPoint {
+		guard self.zoom() < 4 else {
+			return pt
+		}
 		var pt = pt
-		if self.zoom() < 4 {
-
-			let rc = screenBounds
-			let unitX = transform.unitX()
-			let unitY = OSMPoint(x: -unitX.y, y: unitX.x)
-			let mapSize: Double = 256 * transform.scale()
-			if pt.x >= rc.origin.x + rc.size.width {
-				pt.x -= CGFloat(mapSize * unitX.x)
-				pt.y -= CGFloat(mapSize * unitX.y)
-			} else if pt.x < rc.origin.x {
-				pt.x += CGFloat(mapSize * unitX.x)
-				pt.y += CGFloat(mapSize * unitX.y)
-			}
-			if pt.y >= rc.origin.y + rc.size.height {
-				pt.x -= CGFloat(mapSize * unitY.x)
-				pt.y -= CGFloat(mapSize * unitY.y)
-			} else if pt.y < rc.origin.y {
-				pt.x += CGFloat(mapSize * unitY.x)
-				pt.y += CGFloat(mapSize * unitY.y)
-			}
+		let unitX = transform.unitX()
+		let unitY = OSMPoint(x: -unitX.y, y: unitX.x)
+		let mapSize: Double = 256 * transform.scale()
+		if pt.x >= rc.origin.x + rc.size.width {
+			pt.x -= CGFloat(mapSize * unitX.x)
+			pt.y -= CGFloat(mapSize * unitX.y)
+		} else if pt.x < rc.origin.x {
+			pt.x += CGFloat(mapSize * unitX.x)
+			pt.y += CGFloat(mapSize * unitX.y)
+		}
+		if pt.y >= rc.origin.y + rc.size.height {
+			pt.x -= CGFloat(mapSize * unitY.x)
+			pt.y -= CGFloat(mapSize * unitY.y)
+		} else if pt.y < rc.origin.y {
+			pt.x += CGFloat(mapSize * unitY.x)
+			pt.y += CGFloat(mapSize * unitY.y)
 		}
 		return pt
 	}
@@ -265,9 +267,9 @@ final class MapTransform {
 		return meters
 	}
 
-	func point(on object: OsmBaseObject, for point: CGPoint) -> CGPoint {
+	func screenPoint(on object: OsmBaseObject, forScreenPoint point: CGPoint) -> CGPoint {
 		let latLon = latLon(forScreenPoint: point)
-		let latLon2 = object.pointOnObjectForPoint( latLon )
+		let latLon2 = object.latLonOnObject( forLatLon: latLon )
 		let pos = screenPoint(forLatLon: latLon2, birdsEye: true)
 		return pos
 	}

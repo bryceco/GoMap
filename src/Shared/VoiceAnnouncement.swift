@@ -83,16 +83,16 @@ class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
 
         isNewUpdate = true
 
-		let metersPerDegree = MetersPerDegreeAt(latitude:coord.latitude)
-		if previousCoord.latitude == 0.0 && previousCoord.longitude == 0.0 {
+		let metersPerDegree = MetersPerDegreeAt(latitude:coord.lat)
+		if previousCoord.lat == 0.0 && previousCoord.lon == 0.0 {
             previousCoord = coord
         }
         
 //        OSMRect.init(origin: OSMPoint(x: min(previousCoord?.longitude, coord.longitude), y: min(previousCoord?.latitude, coord.latitude)), size: OSMSize(width: abs(), height: ))
-		var box = OSMRect(origin:OSMPoint(x:min(previousCoord.longitude, coord.longitude),
-										  y:min(previousCoord.latitude, coord.latitude)),
-						  size:OSMSize(width: abs(previousCoord.longitude - coord.longitude),
-									   height: abs(previousCoord.latitude - coord.latitude)))
+		var box = OSMRect(origin:OSMPoint(x:min(previousCoord.lon, coord.lon),
+										  y:min(previousCoord.lat, coord.lat)),
+						  size:OSMSize(width: abs(previousCoord.lon - coord.lon),
+									   height: abs(previousCoord.lat - coord.lat)))
         box.origin.x -= radius / Double(metersPerDegree.x)
         box.origin.y -= radius / Double(metersPerDegree.y)
         box.size.width += 2 * radius / Double(metersPerDegree.x)
@@ -225,6 +225,6 @@ class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
 }
 
 @inline(__always) private func OSMPointFromCoordinate(_ coord: LatLon) -> OSMPoint {
-    let point = OSMPoint(x: coord.longitude, y: coord.latitude)
+    let point = OSMPoint(x: coord.lon, y: coord.lat)
     return point
 }

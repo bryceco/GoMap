@@ -133,7 +133,7 @@ class POIAttributesViewController: UITableViewController {
         } else if let node = object.isNode() {
             if indexPath.section == SectionType.nodeLatlon.getRawValue() {
 				cell.title.text = NSLocalizedString("Lat/Lon", comment: "coordinates")
-				cell.value.text = "\(node.latLon.latitude),\(node.latLon.longitude)"
+				cell.value.text = "\(node.latLon.lat),\(node.latLon.lon)"
             }
         } else if let way = object.isWay() {
             if indexPath.section == SectionType.wayExtra.getRawValue() {

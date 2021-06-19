@@ -248,8 +248,8 @@ final class Database {
 			try db.bindInt32(nodeStatement, 3, Int32(node.version))
 			try db.bindInt64(nodeStatement, 4, node.changeset)
 			try db.bindInt32(nodeStatement, 5, Int32(node.uid))
-			try db.bindDouble(nodeStatement, 6, node.latLon.longitude)
-			try db.bindDouble(nodeStatement, 7, node.latLon.latitude)
+			try db.bindDouble(nodeStatement, 6, node.latLon.lon)
+			try db.bindDouble(nodeStatement, 7, node.latLon.lat)
 			try db.bindInt64(nodeStatement, 8, node.ident)
 
 			while try db.step(nodeStatement, hasResult: Sqlite.CONSTRAINT) {

@@ -821,8 +821,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
         assert(scale > 1.0)
         #endif
         UserDefaults.standard.set(scale, forKey: "view.scale")
-        UserDefaults.standard.set(latLon.latitude, forKey: "view.latitude")
-        UserDefaults.standard.set(latLon.longitude, forKey: "view.longitude")
+        UserDefaults.standard.set(latLon.lat, forKey: "view.latitude")
+        UserDefaults.standard.set(latLon.lon, forKey: "view.longitude")
 
         UserDefaults.standard.set(viewState.rawValue, forKey: "mapViewState")
         UserDefaults.standard.set(viewOverlayMask.rawValue, forKey: "mapViewOverlays")
@@ -1099,7 +1099,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
         }
         countryCodeLocation = loc
 
-        let url = "https://nominatim.openstreetmap.org/reverse?zoom=13&addressdetails=1&format=json&lat=\(loc.latitude)&lon=\(loc.longitude)"
+        let url = "https://nominatim.openstreetmap.org/reverse?zoom=13&addressdetails=1&format=json&lat=\(loc.lat)&lon=\(loc.lon)"
         var task: URLSessionDataTask? = nil
         if let url1 = URL(string: url) {
             task = URLSession.shared.dataTask(with: url1, completionHandler: { data, response, error in
@@ -1363,7 +1363,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			guard let location = location ?? locationManager.location else { return }
 			let coord = LatLon(location.coordinate)
 			var point = mapTransform.screenPoint(forLatLon: coord, birdsEye: true)
-			point = mapTransform.wrapScreenPoint(point, screenBounds: self.bounds)
+			point = mapTransform.wrappedScreenPoint(point, screenBounds: self.bounds)
             locationBallLayer.position = point
 
             // set location accuracy
@@ -1535,7 +1535,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		let loc: LatLon
 		if let point = point {
 			let latLon = mapTransform.latLon(forScreenPoint:point)
-			loc = selection.pointOnObjectForPoint(latLon)
+			loc = selection.latLonOnObject(forLatLon: latLon)
 		} else {
 			loc = selection.selectionPoint()
 		}
@@ -2276,7 +2276,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
                     editorLayer.selectedWay = object.isWay()
                     editorLayer.selectedRelation = object.isRelation()
 
-					let pt = object.pointOnObjectForPoint(LatLon(x: note.lon, y: note.lat))
+					let pt = object.latLonOnObject(forLatLon: LatLon(x: note.lon, y: note.lat))
 					let point = mapTransform.screenPoint(forLatLon: pt, birdsEye: true)
 					placePushpin(at: point, object: object)
                 }
@@ -2592,7 +2592,7 @@ extension MapView: EditorMapLayerOwner {
 	func addNote() {
 		if let pushpinView = pushPin {
 			let pos = self.mapTransform.latLon(forScreenPoint: pushpinView.arrowPoint)
-			let note = OsmNote(lat: pos.latitude, lon: pos.longitude)
+			let note = OsmNote(lat: pos.lat, lon: pos.lon)
 			mainViewController.performSegue(withIdentifier: "NotesSegue", sender: note)
 			removePin()
 		}

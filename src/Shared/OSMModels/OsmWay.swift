@@ -233,7 +233,7 @@ final class OsmWay: OsmBaseObject {
     }
 
     // return the point on the way closest to the supplied point
-	override func pointOnObjectForPoint(_ target: LatLon) -> LatLon {
+	override func latLonOnObject(forLatLon target: LatLon) -> LatLon {
         switch nodes.count {
             case 0:
                 return target
@@ -327,8 +327,8 @@ final class OsmWay: OsmBaseObject {
 				let offset = nodes.first!.location()
 				var previous = OSMPoint(x: 0.0, y: 0.0)
 				for node in nodes.dropFirst() {
-					let current = OSMPoint(x: node.latLon.longitude - offset.x,
-										   y: node.latLon.latitude - offset.y)
+					let current = OSMPoint(x: node.latLon.lon - offset.x,
+										   y: node.latLon.lat - offset.y)
 					let partialSum = previous.x * current.y - previous.y * current.x
 					sum += partialSum
 					sumX += (previous.x + current.x) * partialSum
@@ -345,8 +345,8 @@ final class OsmWay: OsmBaseObject {
                 var sumX: Double = 0
                 var sumY: Double = 0
                 for node in nodes {
-					sumX += node.latLon.longitude
-					sumY += node.latLon.latitude
+					sumX += node.latLon.lon
+					sumY += node.latLon.lat
 				}
 				let point = OSMPoint(x: sumX / Double(nodeCount), y: sumY / Double(nodeCount))
                 return LatLon(point)
@@ -355,8 +355,8 @@ final class OsmWay: OsmBaseObject {
 			pArea = 0.0
 			let n1 = nodes[0]
             let n2 = nodes[1]
-			return LatLon(x: (n1.latLon.longitude + n2.latLon.longitude) / 2,
-							y: (n1.latLon.latitude + n2.latLon.latitude) / 2)
+			return LatLon(x: (n1.latLon.lon + n2.latLon.lon) / 2,
+							y: (n1.latLon.lat + n2.latLon.lat) / 2)
         } else if nodeCount == 1 {
 			pArea = 0.0
 			let node = nodes.last!

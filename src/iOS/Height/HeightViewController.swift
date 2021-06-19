@@ -329,7 +329,7 @@ class HeightViewController: UIViewController {
 			let latlon = delegate.mapView.mapTransform.latLon(forScreenPoint: delegate.mapView.pushPin!.arrowPoint)
 			// this gets thrown away at the end of this method so the details aren't important
 			let node = OsmNode(withVersion: 0, changeset: 0, user: "", uid: 0, ident: 0, timestamp: "", tags: [:])
-			node.setLongitude( latlon.longitude, latitude: latlon.latitude, undo: nil)
+			node.setLongitude( latlon.lon, latitude: latlon.lat, undo: nil)
             object = node
         }
 		guard let object = object else { return 0.0 }
@@ -343,8 +343,8 @@ class HeightViewController: UIViewController {
 			let d = GreatCircleDistance(userPt, nodePt)
 			if d < dist {
 				dist = d
-				var dir = OSMPoint(x: lat2latp(nodePt.latitude) - lat2latp(userPt.latitude),
-								   y: nodePt.longitude - userPt.longitude)
+				var dir = OSMPoint(x: lat2latp(nodePt.lat) - lat2latp(userPt.lat),
+								   y: nodePt.lon - userPt.lon)
 				dir = dir.unitVector()
 				bearing = atan2(dir.y, dir.x)
 			}

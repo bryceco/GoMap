@@ -27,11 +27,7 @@ class SpeechBalloonView: UIView {
         // text layer
         let textLayer = CATextLayer()
         textLayer.contentsScale = UIScreen.main.scale
-        #if os(iOS)
         let font = UIFont.preferredFont(forTextStyle: .headline)
-        #else
-        let font = NSFont.labelFont(ofSize: 12)
-        #endif
         textLayer.font = font
         textLayer.fontSize = 18
         textLayer.alignmentMode = .center
@@ -90,15 +86,9 @@ class SpeechBalloonView: UIView {
     }
 
 	override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        #if os(iOS)
         if !super.point(inside: point, with: event) {
             return false
         }
-        #endif
 		return path.contains(point)
     }
-
-    deinit {
-    }
-
 }

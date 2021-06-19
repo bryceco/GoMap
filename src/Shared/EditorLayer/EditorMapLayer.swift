@@ -204,7 +204,7 @@ final class EditorMapLayer: CALayer {
 				// since we don't record the pushpin location until after a drag has begun we need to re-center on the object:
 				var pt = NSCoder.cgPoint(for: pushpin)
 				let loc = self.owner.mapTransform.latLon(forScreenPoint: pt)
-				let pos = primary.pointOnObjectForPoint(loc)
+				let pos = primary.latLonOnObject(forLatLon: loc)
 				pt = self.owner.mapTransform.screenPoint(forLatLon: pos, birdsEye: true)
 				// place pushpin
 				self.owner.placePushpin(at: pt, object: primary)

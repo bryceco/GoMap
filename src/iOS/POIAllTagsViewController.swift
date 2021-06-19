@@ -888,7 +888,7 @@ class POIAllTagsViewController: UITableViewController {
         
         var newPoint = mapView.pushPin!.arrowPoint
 		let latLon1 = mapView.mapTransform.latLon(forScreenPoint: newPoint)
-		let latLon = object.pointOnObjectForPoint( latLon1 )
+		let latLon = object.latLonOnObject( forLatLon: latLon1 )
 
 		newPoint = mapView.mapTransform.screenPoint(forLatLon: latLon, birdsEye: true)
 		if !mapView.bounds.contains(newPoint) {

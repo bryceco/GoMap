@@ -155,7 +155,7 @@ extension OSMPoint {
 		self.init(x: Double(pt.x), y: Double(pt.y))
 	}
 	@inline(__always) init(_ loc: LatLon) {
-		self.init( x: loc.longitude, y: loc.latitude )
+		self.init( x: loc.lon, y: loc.lat )
 	}
 	@inline(__always) public static func ==(_ a: OSMPoint, _ b: OSMPoint) -> Bool {
 		return a.x == b.x && a.y == b.y
@@ -606,27 +606,27 @@ extension OSMTransform {
 }
 
 struct LatLon {
-	var longitude: Double
-	var latitude: Double
+	var lon: Double
+	var lat: Double
 
 	static let zero = LatLon(lon: 0.0, lat: 0.0)
 
 	init( lon: Double, lat: Double ) {
-		self.longitude = lon
-		self.latitude = lat
+		self.lon = lon
+		self.lat = lat
 	}
 	init( x: Double, y: Double ) {
-		self.longitude = x
-		self.latitude = y
+		self.lon = x
+		self.lat = y
 	}
 	init( latitude: Double, longitude: Double ) {
-		self.longitude = longitude
-		self.latitude = latitude
+		self.lon = longitude
+		self.lat = latitude
 	}
 
 	init( _ loc: CLLocationCoordinate2D ) {
-		self.longitude = loc.longitude
-		self.latitude = loc.latitude
+		self.lon = loc.longitude
+		self.lat = loc.latitude
 	}
 
 	init(_ pt: OSMPoint) {
@@ -666,9 +666,9 @@ func SurfaceAreaOfRect(_ latLon: OSMRect) -> Double {
 /// Distance between two lon,lat  points in degrees, result in meters
 func GreatCircleDistance(_ p1: LatLon, _ p2: LatLon) -> Double {
 	// haversine formula
-	let dlon = (p2.longitude - p1.longitude) * .pi / 180
-	let dlat = (p2.latitude - p1.latitude) * .pi / 180
-	let a: Double = pow(sin(dlat / 2), 2) + cos(p1.latitude * .pi / 180) * cos(p2.latitude * .pi / 180) * pow(sin(dlon / 2), 2)
+	let dlon = (p2.lon - p1.lon) * .pi / 180
+	let dlat = (p2.lat - p1.lat) * .pi / 180
+	let a: Double = pow(sin(dlat / 2), 2) + cos(p1.lat * .pi / 180) * cos(p2.lat * .pi / 180) * pow(sin(dlon / 2), 2)
 	let c: Double = 2 * atan2(sqrt(a), sqrt(1 - a))
 	let meters = EarthRadius * c
 	return meters

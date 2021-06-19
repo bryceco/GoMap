@@ -112,7 +112,7 @@ final class PushPinView: UIButton, CAAnimationDelegate {
         }
 #if targetEnvironment(macCatalyst)
         // also hit the arrow point
-        if abs(Float(point.y)) < 12 && abs(Float(point.x - _hittestRect.origin.x - _hittestRect.size.width / 2)) < 12 {
+        if abs(Float(screenPoint.y)) < 12 && abs(Float(screenPoint.x - _hittestRect.origin.x - _hittestRect.size.width / 2)) < 12 {
             return self
         }
 #endif

@@ -400,7 +400,7 @@ final class OsmRelation: OsmBaseObject {
 				   let way = member.obj as? OsmWay,
 				   way.nodes.count > 0
 				{
-					return way.pointOnObjectForPoint( center )
+					return way.latLonOnObject( forLatLon: center )
                 }
             }
         }
@@ -439,11 +439,11 @@ final class OsmRelation: OsmBaseObject {
         return dist
     }
 
-	override func pointOnObjectForPoint(_ target: LatLon) -> LatLon {
+	override func latLonOnObject(forLatLon target: LatLon) -> LatLon {
 		var bestPoint = target
         var bestDistance = 10000000.0
         for object in allMemberObjects() {
-            let pt = object.pointOnObjectForPoint( target )
+            let pt = object.latLonOnObject( forLatLon: target )
 			let dist = OSMPoint(target).distanceToPoint( OSMPoint(pt) )
             if dist < bestDistance {
                 bestDistance = dist

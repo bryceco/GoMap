@@ -171,7 +171,7 @@ extension EditorMapLayer {
 		if let selectedPrimary = self.selectedPrimary {
 			// adjust tap point to touch object
 			var latLon = owner.mapTransform.latLon(forScreenPoint: point)
-			latLon = selectedPrimary.pointOnObjectForPoint( latLon )
+			latLon = selectedPrimary.latLonOnObject( forLatLon: latLon )
 			let point = owner.mapTransform.screenPoint(forLatLon: latLon, birdsEye: true)
 
 			owner.placePushpin(at: point, object: selectedPrimary)
@@ -290,8 +290,8 @@ extension EditorMapLayer {
 					}
 				} else if let hit = hit as? OsmWay {
 					// add new node to hit way
-					let pt = hit.pointOnObjectForPoint(dragNode.latLon)
-					self.mapData.setLongitude(pt.longitude, latitude: pt.latitude, for: dragNode)
+					let pt = hit.latLonOnObject(forLatLon: dragNode.latLon)
+					self.mapData.setLongitude(pt.lon, latitude: pt.lat, for: dragNode)
 					var error: String? = nil
 					let add: EditActionWithNode? = self.canAddNode(toWay: hit, atIndex:segment+1, error:&error)
 					if let add = add {
@@ -419,7 +419,7 @@ extension EditorMapLayer {
 		pt.x += delta.x
 		pt.y -= delta.y
 		let loc = owner.mapTransform.latLon(forScreenPoint: pt)
-		mapData.setLongitude(loc.longitude, latitude: loc.latitude, for: node)
+		mapData.setLongitude(loc.lon, latitude: loc.lat, for: node)
 
 		setNeedsLayout()
 	}
@@ -517,7 +517,7 @@ extension EditorMapLayer {
 				var pos = pushpinView.arrowPoint
 				owner.removePin()
 				if self.selectedPrimary != nil {
-					pos = owner.mapTransform.point(on: selectedPrimary, for: pos)
+					pos = owner.mapTransform.screenPoint(on: selectedPrimary, forScreenPoint: pos)
 					if let primary = self.selectedPrimary {
 						owner.placePushpin(at: pos, object: primary)
 					}
@@ -654,7 +654,7 @@ extension EditorMapLayer {
 					// move to position of crosshairs
 					let p1 = owner.mapTransform.latLon(forScreenPoint: pushpinView.arrowPoint)
 					let p2 = owner.mapTransform.latLon(forScreenPoint: owner.crosshairs())
-					offset = OSMPoint(x: p2.longitude - p1.longitude, y: p2.latitude - p1.latitude)
+					offset = OSMPoint(x: p2.lon - p1.lon, y: p2.lat - p1.lat)
 				} else {
 					offset = OSMPoint(x: 0.00005, y: -0.00005)
 				}
@@ -834,7 +834,7 @@ extension EditorMapLayer {
 				} else if object.isRelation() != nil {
 					self.selectedRelation = object.isRelation()
 				}
-				let pos = owner.mapTransform.point(on: object, for: point)
+				let pos = owner.mapTransform.screenPoint(on: object, forScreenPoint: point)
 				owner.placePushpin(at: pos, object: object)
 			}))
 		}

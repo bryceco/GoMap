@@ -200,7 +200,7 @@ extension OsmMapData {
 			rectoUpperThreshold = cos(rectoThreshold * .pi / 180)
 
 			var points = way.nodes.dropLast().map({
-				return OSMPoint( x: $0.latLon.longitude, y: lat2latp($0.latLon.latitude))
+				return OSMPoint( x: $0.latLon.lon, y: lat2latp($0.latLon.lat))
 			})
 
 			let epsilon = 1e-4
@@ -467,7 +467,7 @@ extension OsmMapData {
         return { [self] in
             if survivor == node1 {
                 // update survivor to have location of other node
-				setLongitude(node2.latLon.longitude, latitude: node2.latLon.latitude, for: survivor)
+				setLongitude(node2.latLon.lon, latitude: node2.latLon.lat, for: survivor)
             }
             
             setTags(mergedTags, for: survivor)
@@ -501,7 +501,7 @@ extension OsmMapData {
 
     func canStraightenWay(_ way: OsmWay, error: inout String?) -> EditAction? {
         let count = way.nodes.count
-		var points: [OSMPoint?] = way.nodes.map({ OSMPoint( x: $0.latLon.longitude, y: lat2latp($0.latLon.latitude)) })
+		var points: [OSMPoint?] = way.nodes.map({ OSMPoint( x: $0.latLon.lon, y: lat2latp($0.latLon.lat)) })
 		if count > 2 {
 			let startPoint = points[0]!
 			let endPoint = points[count - 1]!
@@ -1146,22 +1146,22 @@ extension OsmMapData {
         }
 
 		func insertNode(in way: OsmWay, withCenter center: LatLon, angle: Double, radius: Double, atIndex index: Int) {
-			let point = LatLon(latitude: latp2lat(center.latitude + cos(angle * .pi / 180) * radius),
-								longitude: center.longitude + sin(angle * .pi / 180) * radius)
+			let point = LatLon(latitude: latp2lat(center.lat + cos(angle * .pi / 180) * radius),
+								longitude: center.lon + sin(angle * .pi / 180) * radius)
 			let node = self.createNode(atLocation: point)
 			self.addNodeUnsafe(node, to: way, at: index)
 		}
 
 		return { [self] in
             var center = way.centerPoint()
-            center.latitude = lat2latp(center.latitude)
+            center.lat = lat2latp(center.lat)
 			let radius = AverageDistanceToCenter(way, center)
             
             for n in way.nodes.dropLast() {
-				let c = hypot(n.latLon.longitude - center.longitude,
-							  lat2latp(n.latLon.latitude) - center.latitude)
-				let lat = latp2lat(center.latitude + (lat2latp(n.latLon.latitude) - center.latitude) / c * radius)
-				let lon = center.longitude + (n.latLon.longitude - center.longitude) / c * radius
+				let c = hypot(n.latLon.lon - center.lon,
+							  lat2latp(n.latLon.lat) - center.lat)
+				let lat = latp2lat(center.lat + (lat2latp(n.latLon.lat) - center.lat) / c * radius)
+				let lon = center.lon + (n.latLon.lon - center.lon) / c * radius
 				setLongitude(lon, latitude: lat, for: n)
             }
             
@@ -1175,8 +1175,8 @@ extension OsmMapData {
 				let n1 = way.nodes[i]
 				let n2 = way.nodes[j]
 
-				var a1 = atan2(n1.latLon.longitude - center.longitude, lat2latp(n1.latLon.latitude) - center.latitude) * (180 / .pi)
-				var a2 = atan2(n2.latLon.longitude - center.longitude, lat2latp(n2.latLon.latitude) - center.latitude) * (180 / .pi)
+				var a1 = atan2(n1.latLon.lon - center.lon, lat2latp(n1.latLon.lat) - center.lat) * (180 / .pi)
+				var a2 = atan2(n2.latLon.lon - center.lon, lat2latp(n2.latLon.lat) - center.lat) * (180 / .pi)
 				if clockwise {
 					if a2 > a1 {
 						a2 -= 360
@@ -1214,8 +1214,8 @@ extension OsmMapData {
     // MARK: Duplicate
 
     func duplicateNode(_ node: OsmNode, withOffset offset: OSMPoint) -> OsmNode {
-		let loc = LatLon(latitude: node.latLon.latitude + offset.y,
-						 longitude: node.latLon.longitude + offset.x)
+		let loc = LatLon(latitude: node.latLon.lat + offset.y,
+						 longitude: node.latLon.lon + offset.x)
         let newNode = createNode(atLocation: loc)
         setTags(node.tags, for: newNode)
         return newNode
@@ -1477,8 +1477,8 @@ extension OsmMapData {
         var d: Double = 0
         for i in 0..<(way.nodes.count - 1) {
             let n = way.nodes[i]
-			d += hypot(n.latLon.longitude - center.longitude,
-					   lat2latp(n.latLon.latitude) - center.latitude)
+			d += hypot(n.latLon.lon - center.lon,
+					   lat2latp(n.latLon.lat) - center.lat)
 		}
         d /= Double(way.nodes.count - 1)
         return d

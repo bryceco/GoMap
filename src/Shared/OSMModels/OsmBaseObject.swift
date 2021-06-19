@@ -256,7 +256,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
         fatalError()
     }
     
-    func pointOnObjectForPoint(_ target: LatLon) -> LatLon {
+    func latLonOnObject(forLatLon target: LatLon) -> LatLon {
 		fatalError()
     }
 

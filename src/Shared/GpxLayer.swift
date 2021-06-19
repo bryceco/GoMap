@@ -26,8 +26,8 @@ final class GpxPoint: NSObject, NSCoding {
 
     required init(coder aDecoder: NSCoder) {
         super.init()
-		latLon.latitude = aDecoder.decodeDouble(forKey: "lat")
-		latLon.longitude = aDecoder.decodeDouble(forKey: "lon")
+		latLon.lat = aDecoder.decodeDouble(forKey: "lat")
+		latLon.lon = aDecoder.decodeDouble(forKey: "lon")
         accuracy = aDecoder.decodeDouble(forKey: "acc")
         elevation = aDecoder.decodeDouble(forKey: "ele")
         timestamp = aDecoder.decodeObject(forKey: "time") as? Date
@@ -38,8 +38,8 @@ final class GpxPoint: NSObject, NSCoding {
     }
 
     func encode(with aCoder: NSCoder) {
-		aCoder.encode(latLon.latitude, forKey: "lat")
-		aCoder.encode(latLon.longitude, forKey: "lon")
+		aCoder.encode(latLon.lat, forKey: "lat")
+		aCoder.encode(latLon.lon, forKey: "lon")
         aCoder.encode(accuracy, forKey: "acc")
         aCoder.encode(elevation, forKey: "ele")
         aCoder.encode(timestamp, forKey: "time")
@@ -74,8 +74,8 @@ final class GpxTrack: NSObject, NSCoding {
 		let prev = points.last
 
 		if let prev = prev,
-		   prev.latLon.latitude == coordinate.latitude,
-		   prev.latLon.longitude == coordinate.longitude
+		   prev.latLon.lat == coordinate.lat,
+		   prev.latLon.lon == coordinate.lon
 		{
 			return
         }
@@ -140,8 +140,8 @@ final class GpxTrack: NSObject, NSCoding {
 
         for pt in points {
 			guard let ptElement = DDXMLNode.element(withName: "trkpt") as? DDXMLElement,
-				  let attrLat = DDXMLNode.attribute(withName: "lat", stringValue: "\(pt.latLon.latitude)") as? DDXMLNode,
-				  let attrLon = DDXMLNode.attribute(withName: "lon", stringValue: "\(pt.latLon.longitude)") as? DDXMLNode,
+				  let attrLat = DDXMLNode.attribute(withName: "lat", stringValue: "\(pt.latLon.lat)") as? DDXMLNode,
+				  let attrLon = DDXMLNode.attribute(withName: "lon", stringValue: "\(pt.latLon.lon)") as? DDXMLNode,
 				  let eleElement = DDXMLNode.element(withName: "ele") as? DDXMLElement
 			else { return nil }
 
