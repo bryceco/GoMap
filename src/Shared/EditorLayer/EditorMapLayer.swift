@@ -22,11 +22,16 @@ private let MinIconSizeInPixels: CGFloat = 24.0
 private let Pixels_Per_Character: CGFloat = 8.0
 private let NodeHighlightRadius: CGFloat = 6.0
 
+// MARK: MenuLocation enum
+
+// Specifies where the owner should places UIAlert messages and menus
 enum MenuLocation {
 	case none
 	case editBar
 	case rect(CGRect)
 }
+
+// MARK: EditorMapLayerOwner protocol
 
 // The UIView that hosts us.
 protocol EditorMapLayerOwner: UIView, MapViewProgress {
@@ -68,6 +73,8 @@ protocol EditorMapLayerOwner: UIView, MapViewProgress {
 	func didUpdateObject()
 	func selectionDidChange()
 }
+
+// MARK: EditorMapLayer
 
 final class EditorMapLayer: CALayer {
 	let highwayScale: CGFloat = 2.0
@@ -184,7 +191,7 @@ final class EditorMapLayer: CALayer {
 			guard let action = context["comment"] as? String,
 				  let location = context["location"] as? Data
 			else { return }
-			// FIXME: Use Coder for OSMTransform
+			// FIXME: Use Coder for OSMTransform (warning: doing this will break backwards compatibility)
 			if location.count == MemoryLayout<OSMTransform>.size {
 				let transform: OSMTransform = location.withUnsafeBytes( { return $0.load(as: OSMTransform.self) } )
 				owner.setScreenFromMap(transform: transform)
