@@ -170,13 +170,13 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
         if _xmlTextView.isEditable {
             
             // upload user-edited text
-            let xmlText = _xmlTextView.text
-            let xmlDoc: DDXMLDocument
+            let xmlText = _xmlTextView.text ?? ""
+			let xmlDoc: DDXMLDocument
 			do {
-                xmlDoc = try DDXMLDocument(xmlString: xmlText ?? "", options: 0)
+                xmlDoc = try DDXMLDocument(xmlString: xmlText, options: 0)
             } catch {
-                completion(NSLocalizedString("The XML is improperly formed", comment: ""))
-                return
+				completion(NSLocalizedString("The XML is improperly formed", comment: ""))
+				return
             }
 			mapData?.uploadChangesetXml(xmlDoc, comment: comment, source: source, imagery: imagery, completion: completion)
         } else {
@@ -186,8 +186,8 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
     }
     
     @IBAction func editXml(_ sender: Any) {
-        var xml = mapData?.changesetAsXml()
-        xml = (xml ?? "") + "\n\n\n\n\n\n\n\n\n\n\n\n"
+        var xml = mapData?.changesetAsXml() ?? ""
+        xml = xml + "\n\n\n\n\n\n\n\n\n\n\n\n"
         _xmlTextView.attributedText = nil
         _xmlTextView.text = xml
         _xmlTextView.isEditable = true
