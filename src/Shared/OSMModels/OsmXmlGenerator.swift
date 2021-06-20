@@ -16,11 +16,8 @@ final class OsmXmlGenerator {
 	/// Creates the changeset XML (but not the changeset data XML)
 	static func createXml(withType type: String, tags dictionary: [String : String]) -> DDXMLDocument? {
 #if os(iOS)
-		guard let doc = try? DDXMLDocument(xmlString: "<osm></osm>", options: 0),
-			let root = doc.rootElement()
-		else {
-			return nil
-		}
+		let doc = try! DDXMLDocument(xmlString: "<osm></osm>", options: 0)
+		let root = doc.rootElement()!
 #else
 		let root = DDXMLNode.element(withName: "osm") as? DDXMLElement
 		let doc = DDXMLDocument(rootElement: root)
@@ -48,15 +45,9 @@ final class OsmXmlGenerator {
 			fatalError()
 		}
 		let element = DDXMLNode.element(withName: type) as! DDXMLElement
-		if let attribute = DDXMLNode.attribute(withName: "id", stringValue: NSNumber(value: object.ident).stringValue) as? DDXMLNode {
-			element.addAttribute(attribute)
-		}
-		if let attribute = DDXMLNode.attribute(withName: "timestamp", stringValue: object.timestamp) as? DDXMLNode {
-			element.addAttribute(attribute)
-		}
-		if let attribute = DDXMLNode.attribute(withName: "version", stringValue: NSNumber(value: object.version).stringValue) as? DDXMLNode {
-			element.addAttribute(attribute)
-		}
+		element.addAttribute( DDXMLNode.attribute(withName: "id", stringValue: NSNumber(value: object.ident).stringValue) as! DDXMLNode )
+		element.addAttribute( DDXMLNode.attribute(withName: "timestamp", stringValue: object.timestamp) as! DDXMLNode )
+		element.addAttribute( DDXMLNode.attribute(withName: "version", stringValue: NSNumber(value: object.version).stringValue) as! DDXMLNode )
 		return element
 	}
 
@@ -105,12 +96,8 @@ final class OsmXmlGenerator {
 			} else if node.isModified() && !node.deleted {
 				// added/modified
 				let element = Self.element(for: node)
-				if let attribute = DDXMLNode.attribute(withName: "lat", stringValue: NSNumber(value: node.latLon.lat).stringValue) as? DDXMLNode {
-					element.addAttribute(attribute)
-				}
-				if let attribute = DDXMLNode.attribute(withName: "lon", stringValue: NSNumber(value: node.latLon.lon).stringValue) as? DDXMLNode {
-					element.addAttribute(attribute)
-				}
+				element.addAttribute( DDXMLNode.attribute(withName: "lat", stringValue: NSNumber(value: node.latLon.lat).stringValue) as! DDXMLNode )
+				element.addAttribute( DDXMLNode.attribute(withName: "lon", stringValue: NSNumber(value: node.latLon.lon).stringValue) as! DDXMLNode )
 				Self.addTags(for: node, element: element)
 				if node.ident < 0 {
 					createNodeElement.addChild(element)
@@ -133,9 +120,7 @@ final class OsmXmlGenerator {
 				let element = Self.element(for: way)
 				for node in way.nodes {
 					let refElement = DDXMLElement.element(withName: "nd") as! DDXMLElement
-					if let attribute = DDXMLNode.attribute(withName: "ref", stringValue: NSNumber(value: node.ident).stringValue) as? DDXMLNode {
-						refElement.addAttribute(attribute)
-					}
+					refElement.addAttribute( DDXMLNode.attribute(withName: "ref", stringValue: NSNumber(value: node.ident).stringValue) as! DDXMLNode )
 					element.addChild(refElement)
 				}
 				Self.addTags(for: way, element: element)
@@ -155,17 +140,10 @@ final class OsmXmlGenerator {
 				// added/modified
 				let element = Self.element(for: relation)
 				for member in relation.members {
-					guard let memberElement = DDXMLElement.element(withName: "member") as? DDXMLElement
-					else { continue }
-					if let attribute = DDXMLNode.attribute(withName: "type", stringValue: (member.type ?? "")) as? DDXMLNode {
-						memberElement.addAttribute(attribute)
-					}
-					if let attribute = DDXMLNode.attribute(withName: "ref", stringValue: NSNumber(value: member.ref).stringValue) as? DDXMLNode {
-						memberElement.addAttribute(attribute)
-					}
-					if let attribute = DDXMLNode.attribute(withName: "role", stringValue: (member.role ?? "")) as? DDXMLNode {
-						memberElement.addAttribute(attribute)
-					}
+					let memberElement = DDXMLElement.element(withName: "member") as! DDXMLElement
+					memberElement.addAttribute( DDXMLNode.attribute(withName: "type", stringValue: (member.type ?? "")) as! DDXMLNode )
+					memberElement.addAttribute( DDXMLNode.attribute(withName: "ref", stringValue: NSNumber(value: member.ref).stringValue) as! DDXMLNode )
+					memberElement.addAttribute( DDXMLNode.attribute(withName: "role", stringValue: (member.role ?? "")) as! DDXMLNode )
 					element.addChild(memberElement)
 				}
 				Self.addTags(for: relation, element: element)

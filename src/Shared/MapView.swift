@@ -1046,9 +1046,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
     }
 
     func showInAppStore() {
+		let appStoreId = 592990211
         #if true
-        let urlText = "itms-apps://itunes.apple.com/app/id\(NSNumber(value: 592990211))"
-        let url = URL(string: urlText)
+        let urlText = "itms-apps://itunes.apple.com/app/id\(appStoreId)"
+		let url = URL(string: urlText)
         if let url = url {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
@@ -1057,7 +1058,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
         spvc.delegate = self //self is the view controller to present spvc
         spvc.loadProduct(
             withParameters: [
-                SKStoreProductParameterITunesItemIdentifier: NSNumber(value: 592990211)
+                SKStoreProductParameterITunesItemIdentifier: NSNumber(value: appStoreId)
             ],
             completionBlock: { [self] result, error in
                 if result {

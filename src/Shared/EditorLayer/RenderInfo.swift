@@ -206,16 +206,16 @@ final class RenderInfoDatabase {
         var renderList: [RenderInfo] = []
         
         for (feature, dict) in features {
-            let keyValue = feature.components(separatedBy: "/")
-            let render = RenderInfo()
-            render.key = keyValue[0]
-            render.value = keyValue.count > 1 ? keyValue[1] : ""
-            render.lineColor = RenderInfo.color(forHexString: dict["lineColor"] as? String)
-            render.areaColor = RenderInfo.color(forHexString: dict["areaColor"] as? String)
-            render.lineWidth = CGFloat((dict["lineWidth"] as? NSNumber)?.doubleValue ?? 0.0)
-            renderList.append(render)
-        }
-        return renderList
+			let keyValue = feature.components(separatedBy: "/")
+			let render = RenderInfo()
+			render.key = keyValue[0]
+			render.value = keyValue.count > 1 ? keyValue[1] : ""
+			render.lineColor = RenderInfo.color(forHexString: dict["lineColor"] as? String)
+			render.areaColor = RenderInfo.color(forHexString: dict["areaColor"] as? String)
+			render.lineWidth = CGFloat((dict["lineWidth"] as! NSNumber).doubleValue)
+			renderList.append(render)
+		}
+		return renderList
     }
 
     required init() {

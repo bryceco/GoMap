@@ -88,11 +88,11 @@ final class PersistentWebCache<T: AnyObject> {
                 continue
             }
             var len: AnyObject? = nil
-            do {
-                try url.getResourceValue(&len, forKey: URLResourceKey.fileAllocatedSizeKey)
-            } catch {}
+			try? url.getResourceValue(&len, forKey: URLResourceKey.fileAllocatedSizeKey)
             count += 1
-            size += (len as? NSNumber)?.intValue ?? 0
+			if let len = len as? NSNumber {
+				size += len.intValue
+			}
         }
         pSize.pointee = size
         pCount.pointee = count

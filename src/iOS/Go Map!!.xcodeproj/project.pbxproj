@@ -141,7 +141,7 @@
 		C3D096B6263DF82F00E3B129 /* RulerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096B5263DF82F00E3B129 /* RulerView.swift */; };
 		C3D096CB263E9A1100E3B129 /* DownloadThreadPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096CA263E9A1100E3B129 /* DownloadThreadPool.swift */; };
 		C3D096CF263EA0DB00E3B129 /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096CE263EA0DB00E3B129 /* KeyChain.swift */; };
-		C3D096D0263EA76500E3B129 /* GeekbenchScoreProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341E1572639DF090022E983 /* GeekbenchScoreProvider.swift */; };
+		C3D096D0263EA76500E3B129 /* Geekbench.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341E1572639DF090022E983 /* Geekbench.swift */; };
 		C3D096DB263EB73E00E3B129 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096DA263EB73E00E3B129 /* main.swift */; };
 		C3D096DC263EB7DE00E3B129 /* MyApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096D7263EAE1E00E3B129 /* MyApplication.swift */; };
 		C3D096FC263F118500E3B129 /* FpsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341E1552639DEFC0022E983 /* FpsLabel.swift */; };
@@ -428,7 +428,7 @@
 		C3004F61263B2524006BF313 /* POIAllTagsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POIAllTagsViewController.swift; sourceTree = "<group>"; };
 		C341E1522639DECC0022E983 /* WikiPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WikiPage.swift; path = ../Shared/WikiPage.swift; sourceTree = "<group>"; };
 		C341E1552639DEFC0022E983 /* FpsLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FpsLabel.swift; path = ../Shared/FpsLabel.swift; sourceTree = "<group>"; };
-		C341E1572639DF090022E983 /* GeekbenchScoreProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeekbenchScoreProvider.swift; sourceTree = "<group>"; };
+		C341E1572639DF090022E983 /* Geekbench.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Geekbench.swift; sourceTree = "<group>"; };
 		C341E1592639DF210022E983 /* NotesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotesTableViewController.swift; sourceTree = "<group>"; };
 		C341E15B2639DF440022E983 /* NearbyMappersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyMappersViewController.swift; sourceTree = "<group>"; };
 		C365A562263FC53F007DEC94 /* TurnRestrictHwyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurnRestrictHwyView.swift; sourceTree = "<group>"; };
@@ -823,7 +823,7 @@
 				C3D096BD263E178600E3B129 /* aes.swift */,
 				02A123EC264CAE6F005638C1 /* Atomic.swift */,
 				C381C308263FD294003142BA /* DLog.swift */,
-				C341E1572639DF090022E983 /* GeekbenchScoreProvider.swift */,
+				C341E1572639DF090022E983 /* Geekbench.swift */,
 				028816A02659B4A600C30EA2 /* GZip.swift */,
 				C3D096CE263EA0DB00E3B129 /* KeyChain.swift */,
 				C3FA924C263FFEF9000A2A99 /* PathUtil.swift */,
@@ -1248,7 +1248,7 @@
 				02A123EF264EE7BC005638C1 /* aes.swift in Sources */,
 				6442666722540EDF00C0D545 /* Lock.swift in Sources */,
 				028816A12659B4A600C30EA2 /* GZip.swift in Sources */,
-				C3D096D0263EA76500E3B129 /* GeekbenchScoreProvider.swift in Sources */,
+				C3D096D0263EA76500E3B129 /* Geekbench.swift in Sources */,
 				024909CF267EADC70027E531 /* OsmXmlGenerator.swift in Sources */,
 				020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */,
 				021FADC0258594EE00F6E1C0 /* PresetValue.swift in Sources */,

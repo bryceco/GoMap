@@ -552,7 +552,7 @@ final class Database {
                 timestamp: timestamp,
 				tags: tags)
 
-			let nodeRefs = [NSNumber].init(repeating: NSNumber(value: -1), count: Int(nodecount))
+			let nodeRefs = [OsmIdentifier].init(repeating: -1, count: Int(nodecount))
             way.constructNodeList(nodeRefs)
 
 			ways[way.ident] = way

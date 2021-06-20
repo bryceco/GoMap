@@ -356,7 +356,6 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 		didSet {
 			let dict = uploadedTracks.mapValues({ NSNumber(value: $0) })
 			UserDefaults.standard.set(dict, forKey: "GpxUploads")
-
 		}
 	}
 

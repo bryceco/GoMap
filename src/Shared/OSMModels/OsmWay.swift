@@ -31,9 +31,9 @@ final class OsmWay: OsmBaseObject {
 		}
     }
 
-    func constructNodeList(_ nodes: [NSNumber]) {
+    func constructNodeList(_ nodes: [OsmIdentifier]) {
 		assert(!self._constructed)
-		self.nodeRefs = nodes.map({ OsmIdentifier($0.int64Value) })
+		self.nodeRefs = nodes
 	}
 
     override func isWay() -> OsmWay? {
