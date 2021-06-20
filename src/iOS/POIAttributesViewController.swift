@@ -51,13 +51,12 @@ class POIAttributesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let appDelegate = AppDelegate.shared
-        let object = appDelegate.mapView.editorLayer.selectedPrimary
-        title = object?.isNode != nil
+		let object = AppDelegate.shared.mapView.editorLayer.selectedPrimary
+		title = object?.isNode() != nil
             ? NSLocalizedString("Node Attributes", comment: "")
-            : object?.isWay != nil
+            : object?.isWay() != nil
             ? NSLocalizedString("Way Attributes", comment: "")
-            : object?.isRelation != nil
+            : object?.isRelation() != nil
             ? NSLocalizedString("Relation Attributes", comment: "")
             : NSLocalizedString("Attributes", comment: "node/way/relation attributes")
     }
@@ -71,7 +70,7 @@ class POIAttributesViewController: UITableViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         let object = AppDelegate.shared.mapView.editorLayer.selectedPrimary
-        return object?.isNode != nil ? 2 : object?.isWay != nil ? 3 : 1
+        return object?.isNode() != nil ? 2 : object?.isWay() != nil ? 3 : 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -184,7 +183,7 @@ class POIAttributesViewController: UITableViewController {
         var urlString: String? = nil
         
         if indexPath.row == ROW.identifier.rawValue {
-            let type = object?.isNode != nil ? "node" : object?.isWay != nil ? "way" : object?.isRelation != nil ? "relation" : "?"
+            let type = object?.isNode() != nil ? "node" : object?.isWay() != nil ? "way" : object?.isRelation() != nil ? "relation" : "?"
             if let ident = object?.ident {
                 urlString = "https://www.openstreetmap.org/browse/\(type)/\(ident)"
             }
@@ -193,8 +192,8 @@ class POIAttributesViewController: UITableViewController {
                 urlString = "https://www.openstreetmap.org/user/\(user)"
             }
         } else if indexPath.row == ROW.version.rawValue {
-            let type = object?.isNode != nil ? "node" : object?.isWay != nil ? "way" : object?.isRelation != nil ? "relation" : "?"
-            if let ident = object?.ident {
+            let type = object?.isNode() != nil ? "node" : object?.isWay() != nil ? "way" : object?.isRelation() != nil ? "relation" : "?"
+			if let ident = object?.ident {
                 urlString = "https://www.openstreetmap.org/browse/\(type)/\(ident)/history"
             }
         } else if indexPath.row == ROW.changeset.rawValue {
