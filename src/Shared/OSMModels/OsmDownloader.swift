@@ -16,7 +16,7 @@ struct OsmDownloadData {
 
 class OsmDownloadParser: NSObject, XMLParserDelegate {
 
-	private var parserCurrentElementText: String = ""
+	private var parserCurrentElementText: String = ""	// not currently used, it's mostly whitespace
 	private var parserStack: [AnyHashable] = []
 	private var parseError: Error?
 
@@ -48,25 +48,37 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 		} else if elementName == "tag" {
 			let key = attributeDict["k"]!
 			let value = attributeDict["v"]!
-			let object = parserStack.last as! OsmBaseObject
+			guard let object = parserStack.last as? OsmBaseObject else {
+				parser.abortParsing()
+				return
+			}
 			object.constructTag(key, value: value)
 			parserStack.append("tag")
 		} else if elementName == "nd" {
-			let way = parserStack.last as? OsmWay
-			let ref = attributeDict["ref"]
-			assert((ref != nil))
-			way?.constructNode(NSNumber(value: Int64(ref ?? "") ?? 0))
+			guard let way = parserStack.last as? OsmWay,
+				  let ref = attributeDict["ref"],
+				  let ref = Int64(ref)
+			else {
+				parser.abortParsing()
+				return
+			}
+			way.constructNode(ref)
 			parserStack.append("nd")
 		} else if elementName == "relation" {
 			let relation = OsmRelation(fromXmlDict: attributeDict)!
 			result.relations.append( relation )
 			parserStack.append(relation)
 		} else if elementName == "member" {
+			guard let relation = parserStack.last as? OsmRelation,
+				  let ref = attributeDict["ref"],
+				  let ref = Int64(ref)
+			else {
+				parser.abortParsing()
+				return
+			}
 			let type = attributeDict["type"]
-			let ref = NSNumber(value: Int64(attributeDict["ref"] ?? "") ?? 0)
 			let role = attributeDict["role"]
-			let member = OsmMember(type: type, ref: ref.int64Value, role: role)
-			let relation = parserStack.last as! OsmRelation
+			let member = OsmMember(type: type, ref: ref, role: role)
 			relation.constructMember(member)
 			parserStack.append(member)
 		} else if elementName == "osm" {

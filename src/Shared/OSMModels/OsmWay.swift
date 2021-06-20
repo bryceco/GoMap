@@ -20,9 +20,9 @@ final class OsmWay: OsmBaseObject {
 		return nodeRefs?.count ?? 0
 	}
 
-	func constructNode(_ node: NSNumber) {
+	func constructNode(_ node: Int64) {
 		assert(!self._constructed && nodes.isEmpty)
-		let ref = OsmIdentifier( node.int64Value )
+		let ref = OsmIdentifier( node )
 		assert( ref > 0 )
 		if nodeRefs == nil {
 			self.nodeRefs = [ref]
