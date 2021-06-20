@@ -18,39 +18,6 @@ import CoreLocation
 
 let TRANSFORM_3D = 0
 
-#if false
-struct OSMPoint {
-    var x: Double
-    var y: Double
-}
-
-struct OSMSize {
-    var width: Double
-    var height: Double
-}
-
-struct OSMRect {
-    var origin: OSMPoint
-    var size: OSMSize
-}
-
-#if TRANSFORM_3D
-typealias OSMTransform = CATransform3D
-#else
-struct OSMTransform {
-    //	|  a   b   0  |
-    //	|  c   d   0  |
-    //	| tx  ty   1  |
-    var a: Double
-    var b: Double
-    var c: Double
-    var d: Double
-    var tx: Double
-    var ty: Double
-}
-#endif
-#endif
-
 // MARK: Point
 extension CGPoint {
 	static let zero = CGPoint(x: 0.0, y: 0.0)
@@ -143,7 +110,7 @@ extension CGRect {
 }
 
 // MARK: OSMPoint
-struct OSMPoint: Codable {
+struct OSMPoint: Equatable, Codable {
 	var x: Double
 	var y: Double
 }
@@ -242,7 +209,7 @@ extension OSMPoint {
 
 // MARK: OSMSize
 
-struct OSMSize: Codable {
+struct OSMSize: Equatable, Codable {
 	var width: Double
 	var height: Double
 }
@@ -261,7 +228,7 @@ extension OSMSize {
 
 // MARK: OSMRect
 
-struct OSMRect: Codable {
+struct OSMRect: Equatable, Codable {
 	var origin: OSMPoint
 	var size: OSMSize
 }
@@ -417,10 +384,10 @@ extension OSMRect {
 #if TRANSFORM_3D
 typealias OSMTransform = CATransform3D
 #else
-struct OSMTransform {
-//      |  a   b   0  |
-//      |  c   d   0  |
-//      | tx  ty   1  |
+struct OSMTransform: Equatable {
+	//      |  a   b   0  |
+	//      |  c   d   0  |
+	//      | tx  ty   1  |
 	var a, b, c, d: Double
 	var tx, ty: Double
 }
