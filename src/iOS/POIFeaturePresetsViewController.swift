@@ -162,7 +162,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return (drillDownGroup != nil) ? 1 : allPresets?.sectionCount() ?? 0 + 1
+        return (drillDownGroup != nil) ? 1 : (allPresets?.sectionCount() ?? 0) + 1
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -378,7 +378,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
         
         for cell in self.tableView.visibleCells {
             if let featureCell = cell as? FeaturePresetCell {
-                featureCell.valueField.resignFirstResponder()
+                featureCell.valueField?.resignFirstResponder()
             }
         }
     }
