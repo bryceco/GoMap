@@ -212,7 +212,7 @@ final class RenderInfoDatabase {
 			render.value = keyValue.count > 1 ? keyValue[1] : ""
 			render.lineColor = RenderInfo.color(forHexString: dict["lineColor"] as? String)
 			render.areaColor = RenderInfo.color(forHexString: dict["areaColor"] as? String)
-			render.lineWidth = CGFloat((dict["lineWidth"] as! NSNumber).doubleValue)
+			render.lineWidth = CGFloat((dict["lineWidth"] as? NSNumber ?? NSNumber(value:0)).doubleValue)
 			renderList.append(render)
 		}
 		return renderList

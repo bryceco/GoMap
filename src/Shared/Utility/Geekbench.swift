@@ -1,5 +1,5 @@
 //
-//  GeekbenchScoreProvider.swift
+//  Geekbench.swift
 //  Go Map!!
 //
 //  Created by Wolfgang Timme on 2/16/20.
