@@ -54,13 +54,28 @@
 "Add Note" = "Tambahkan Catatan";
 
 /* No comment provided by engineer. */
+"All choices" = "Semua pilihan";
+
+/* No comment provided by engineer. */
+"All Tags" = "Semua Tag";
+
+/* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "Sebuah kesalahan yang tak diketahui terjadi ketika mengambil metadata";
+
+/* No comment provided by engineer. */
+"Attention" = "Atensi";
 
 /* node/way/relation attributes */
 "Attributes" = "Atribut-atribut";
 
 /* Automatic selection of presets languages */
 "Automatic" = "Otomatis";
+
+/* identifies current aerial imagery */
+"Background imagery %@" = "Gambar latar %@";
+
+/* No comment provided by engineer. */
+"Cache size warning" = "Peringatan ukuran cache";
 
 /* No comment provided by engineer. */
 "Cancel" = "Batal";
@@ -94,9 +109,6 @@
 
 /* No comment provided by engineer. */
 "create turn restriction" = "buat batasan belokan";
-
-/* No comment provided by engineer. */
-"Data not available" = "Data tidak tersedia";
 
 /* Edit action */
 "Delete" = "Hapus";

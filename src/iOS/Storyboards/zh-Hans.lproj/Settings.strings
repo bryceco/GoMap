@@ -37,6 +37,9 @@
 /* Class = "UIButton"; normalTitle = "Start"; ObjectID = "bt0-CH-HbH"; */
 "bt0-CH-HbH.normalTitle" = "开始";
 
+/* Class = "UILabel"; text = "Weblate - Translations"; ObjectID = "CHj-a3-gC9"; */
+"CHj-a3-gC9.text" = "Weblate 翻译";
+
 /* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "ctb-pg-pM9"; */
 "ctb-pg-pM9.title" = "保存";
 
@@ -51,6 +54,9 @@
 
 /* Class = "UITableViewSection"; headerTitle = "Credentials"; ObjectID = "fbD-Hr-HNI"; */
 "fbD-Hr-HNI.headerTitle" = "证书";
+
+/* Class = "UILabel"; text = "Touches for screen recording"; ObjectID = "Gcr-zK-nDq"; Note = "Display the user's touches when they tap the screen"; */
+"Gcr-zK-nDq.text" = "用于录制触摸动作";
 
 /* Class = "UILabel"; text = "Advanced Settings"; ObjectID = "gec-8l-k4H"; */
 "gec-8l-k4H.text" = "高级设置";

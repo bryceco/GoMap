@@ -152,9 +152,6 @@
 /* current GPX track */
 "Current Track" = "Traccia Corrente";
 
-/* No comment provided by engineer. */
-"Data not available" = "Dati non disponibili";
-
 /* Edit action */
 "Delete" = "Cancella";
 

@@ -125,7 +125,7 @@
       </trans-unit>
       <trans-unit id="(new object)" xml:space="preserve">
         <source>(new object)</source>
-        <note>a newly created node/object</note>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
         <source>(node in way)</source>
@@ -352,8 +352,8 @@
         <source>Current Track</source>
         <note>current GPX track</note>
       </trans-unit>
-      <trans-unit id="Data not available" xml:space="preserve">
-        <source>Data not available</source>
+      <trans-unit id="Database error" xml:space="preserve">
+        <source>Database error</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Delete" xml:space="preserve">
@@ -501,7 +501,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Left" xml:space="preserve">
         <source>Left</source>
-        <note>Left side of screen</note>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Left side" xml:space="preserve">
         <source>Left side</source>
@@ -509,10 +509,6 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Length" xml:space="preserve">
         <source>Length</source>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Location services timed out." xml:space="preserve">
-        <source>Location services timed out.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
@@ -817,7 +813,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Right" xml:space="preserve">
         <source>Right</source>
-        <note>Right side of screen</note>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Right side" xml:space="preserve">
         <source>Right side</source>
@@ -858,6 +854,10 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Show Recent Items" xml:space="preserve">
         <source>Show Recent Items</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." xml:space="preserve">
+        <source>Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Sorry, an error occurred while loading the GPX file" xml:space="preserve">
@@ -2318,42 +2318,52 @@ http://glyphish.com
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">
         <source>Changes:</source>
+        <target/>
         <note>Class = "UILabel"; text = "Changes:"; ObjectID = "ArV-4u-j7D";</note>
       </trans-unit>
       <trans-unit id="BAY-7z-hwv.text" xml:space="preserve">
         <source>Lorem ipsum dolor sit er elit lamet,</source>
+        <target/>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "BAY-7z-hwv";</note>
       </trans-unit>
       <trans-unit id="Mdj-M0-0mZ.title" xml:space="preserve">
         <source>Upload</source>
+        <target/>
         <note>Class = "UINavigationItem"; title = "Upload"; ObjectID = "Mdj-M0-0mZ";</note>
       </trans-unit>
       <trans-unit id="Plh-7W-ceY.text" xml:space="preserve">
         <source>Lorem ipsum dolor sit er elit lamet,</source>
+        <target/>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "Plh-7W-ceY";</note>
       </trans-unit>
       <trans-unit id="Rqu-ny-n3F.normalTitle" xml:space="preserve">
         <source>Mail</source>
+        <target/>
         <note>Class = "UIButton"; normalTitle = "Mail"; ObjectID = "Rqu-ny-n3F";</note>
       </trans-unit>
       <trans-unit id="feW-AK-msn.title" xml:space="preserve">
         <source>Commit</source>
+        <target/>
         <note>Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "feW-AK-msn";</note>
       </trans-unit>
       <trans-unit id="hcE-yO-3eH.normalTitle" xml:space="preserve">
         <source>Edit</source>
+        <target/>
         <note>Class = "UIButton"; normalTitle = "Edit"; ObjectID = "hcE-yO-3eH";</note>
       </trans-unit>
       <trans-unit id="ikj-u9-9Bn.text" xml:space="preserve">
         <source>Changeset comment:</source>
+        <target/>
         <note>Class = "UILabel"; text = "Changeset comment:"; ObjectID = "ikj-u9-9Bn";</note>
       </trans-unit>
       <trans-unit id="ps9-Hb-Vow.placeholder" xml:space="preserve">
         <source>survey, Bing, etc.</source>
+        <target/>
         <note>Class = "UITextField"; placeholder = "survey, Bing, etc."; ObjectID = "ps9-Hb-Vow";</note>
       </trans-unit>
       <trans-unit id="yZR-tZ-66S.text" xml:space="preserve">
         <source>Source:</source>
+        <target/>
         <note>Class = "UILabel"; text = "Source:"; ObjectID = "yZR-tZ-66S";</note>
       </trans-unit>
     </body>

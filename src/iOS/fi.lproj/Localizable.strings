@@ -131,9 +131,6 @@
 /* current GPX track */
 "Current Track" = "Nykyinen jälki";
 
-/* No comment provided by engineer. */
-"Data not available" = "Dataa ei ole saatavilla";
-
 /* Edit action */
 "Delete" = "Poista";
 

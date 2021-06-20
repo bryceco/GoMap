@@ -212,9 +212,6 @@
 /* current GPX track */
 "Current Track" = "当前轨迹";
 
-/* No comment provided by engineer. */
-"Data not available" = "数据不可用";
-
 /* Edit action */
 "Delete" = "删除";
 

@@ -16,6 +16,9 @@
 /* Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u"; */
 "9t5-wq-j1u.text" = "66.6 FPS";
 
+/* Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt"; */
+"E22-sL-sNt.accessibilityHint" = "Arahkan ulang peta ke utara";
+
 /* Class = "UIButton"; accessibilityLabel = "Compass"; ObjectID = "E22-sL-sNt"; */
 "E22-sL-sNt.accessibilityLabel" = "Kompas";
 
@@ -42,6 +45,15 @@
 
 /* Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1"; */
 "OJ0-aO-ri1.normalTitle" = "Diselesaikan";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "qP9-Sc-sc4"; */
+"qP9-Sc-sc4.text" = "Label";
+
+/* Class = "UINavigationItem"; title = "Bing Maps"; ObjectID = "Qz0-Ce-YCX"; */
+"Qz0-Ce-YCX.title" = "Peta Bing";
+
+/* Class = "UIViewController"; title = "Search for Location"; ObjectID = "siu-I6-IEp"; */
+"siu-I6-IEp.title" = "Cari Lokasi";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "stf-JU-iga"; */
 "stf-JU-iga.text" = "Tajuk";

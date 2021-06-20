@@ -245,9 +245,6 @@
 /* current GPX track */
 "Current Track" = "當前的航跡";
 
-/* No comment provided by engineer. */
-"Data not available" = "資料無法取用";
-
 /* Edit action */
 "Delete" = "刪除";
 

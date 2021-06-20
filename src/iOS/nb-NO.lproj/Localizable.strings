@@ -215,9 +215,6 @@
 /* current GPX track */
 "Current Track" = "Nåværende spor";
 
-/* No comment provided by engineer. */
-"Data not available" = "Data ikke tilgjengelig";
-
 /* Edit action */
 "Delete" = "Slett";
 

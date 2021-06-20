@@ -245,9 +245,6 @@
 /* current GPX track */
 "Current Track" = "Текущий трек";
 
-/* No comment provided by engineer. */
-"Data not available" = "Данные недоступны";
-
 /* Edit action */
 "Delete" = "Удалить";
 

@@ -138,7 +138,7 @@
       </trans-unit>
       <trans-unit id="(new object)" xml:space="preserve">
         <source>(new object)</source>
-        <note>a newly created node/object</note>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
         <source>(node in way)</source>
@@ -365,8 +365,8 @@
         <source>Current Track</source>
         <note>current GPX track</note>
       </trans-unit>
-      <trans-unit id="Data not available" xml:space="preserve">
-        <source>Data not available</source>
+      <trans-unit id="Database error" xml:space="preserve">
+        <source>Database error</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Delete" xml:space="preserve">
@@ -514,7 +514,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Left" xml:space="preserve">
         <source>Left</source>
-        <note>Left side of screen</note>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Left side" xml:space="preserve">
         <source>Left side</source>
@@ -522,10 +522,6 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Length" xml:space="preserve">
         <source>Length</source>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Location services timed out." xml:space="preserve">
-        <source>Location services timed out.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
@@ -830,7 +826,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Right" xml:space="preserve">
         <source>Right</source>
-        <note>Right side of screen</note>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Right side" xml:space="preserve">
         <source>Right side</source>
@@ -871,6 +867,10 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Show Recent Items" xml:space="preserve">
         <source>Show Recent Items</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." xml:space="preserve">
+        <source>Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Sorry, an error occurred while loading the GPX file" xml:space="preserve">

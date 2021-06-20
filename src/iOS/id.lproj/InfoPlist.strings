@@ -4,6 +4,9 @@
 /* Bundle name */
 "CFBundleName" = "Go Map!!";
 
+/* (No Comment) */
+"GPS Exchange Format (GPX)" = "GPS Exchange Format (GPX)";
+
 /* Privacy - Bluetooth Peripheral Usage Description */
 "NSBluetoothPeripheralUsageDescription" = "Hubungkan dengan perangkat GPS Bluetooth eksternal";
 

@@ -34,17 +34,50 @@
 /* Class = "UILabel"; text = "Add New"; ObjectID = "Bnh-U0-D7i"; */
 "Bnh-U0-D7i.text" = "Buat Baru";
 
+/* Class = "UINavigationItem"; title = "All Tags"; ObjectID = "cN9-3h-H3l"; */
+"cN9-3h-H3l.title" = "Semua Tag";
+
 /* Class = "UITextField"; placeholder = "value"; ObjectID = "cP3-lR-lzM"; Note = "Do not translate"; */
 "cP3-lR-lzM.placeholder" = "nilai";
+
+/* Class = "UITableViewSection"; headerTitle = "Preset Key"; ObjectID = "cTf-Rc-vqr"; */
+"cTf-Rc-vqr.headerTitle" = "Kunci Preset";
+
+/* Class = "UILabel"; text = "Value 8"; ObjectID = "CXe-gQ-Zda"; */
+"CXe-gQ-Zda.text" = "Nilai 8";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh"; Note = "Do not translate"; */
+"daQ-tl-pKh.text" = "Label";
+
+/* Class = "UITableViewSection"; headerTitle = "Applies To"; ObjectID = "Dfv-TT-J6i"; */
+"Dfv-TT-J6i.headerTitle" = "Berlaku Untuk";
+
+/* Class = "UILabel"; text = "Value 9"; ObjectID = "dsA-B6-s7R"; */
+"dsA-B6-s7R.text" = "Nilai 9";
 
 /* Class = "UITextField"; placeholder = "Dogs Allowed"; ObjectID = "eG3-Xz-Nnp"; */
 "eG3-Xz-Nnp.placeholder" = "Anjing Diizinkan";
 
+/* Class = "UILabel"; text = "Key"; ObjectID = "Eou-a6-V4g"; */
+"Eou-a6-V4g.text" = "Kunci";
+
 /* Class = "UITabBarController"; title = "Attributes"; ObjectID = "f5t-25-IXF"; */
 "f5t-25-IXF.title" = "Atribut-atribut";
 
+/* Class = "UILabel"; text = "Value 3"; ObjectID = "Fcv-4Q-gpE"; */
+"Fcv-4Q-gpE.text" = "Nilai 3";
+
+/* Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3"; */
+"G5R-oP-lp3.title" = "Tag Kustom";
+
+/* Class = "UINavigationItem"; title = "Custom Presets"; ObjectID = "GIO-W7-q5U"; */
+"GIO-W7-q5U.title" = "Preset Kustom";
+
 /* Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw"; Note = "Do not translate"; */
 "gv7-b8-wUw.text" = "Label";
+
+/* Class = "UITextField"; text = "value"; ObjectID = "hfr-Mf-ZHv"; */
+"hfr-Mf-ZHv.text" = "nilai";
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "Hgu-iP-FnG"; */
 "Hgu-iP-FnG.title" = "Kembali";
@@ -52,14 +85,29 @@
 /* Class = "UINavigationItem"; title = "Attributes"; ObjectID = "hKU-EH-qxp"; */
 "hKU-EH-qxp.title" = "Atribut-atribut";
 
+/* Class = "UILabel"; text = "Changeset"; ObjectID = "ijx-N9-1eO"; */
+"ijx-N9-1eO.text" = "Perubahan";
+
+/* Class = "UILabel"; text = "Value 1"; ObjectID = "JAT-qD-dTS"; */
+"JAT-qD-dTS.text" = "Nilai 1";
+
 /* Class = "UINavigationItem"; title = "POI Type"; ObjectID = "Jsm-mO-hgo"; */
 "Jsm-mO-hgo.title" = "Jenis POI";
+
+/* Class = "UITableViewSection"; footerTitle = "The possible values for the preset"; ObjectID = "jv1-BF-p2a"; */
+"jv1-BF-p2a.footerTitle" = "Nilai yang mungkin untuk preset";
+
+/* Class = "UITableViewSection"; headerTitle = "Preset values"; ObjectID = "jv1-BF-p2a"; */
+"jv1-BF-p2a.headerTitle" = "Nilai Preset";
 
 /* Class = "UITextField"; placeholder = "leisure "; ObjectID = "kPA-ky-U48"; Note = "Do not translate"; */
 "kPA-ky-U48.placeholder" = "rekreasi ";
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "KX3-hG-OyE"; */
 "KX3-hG-OyE.title" = "Kembali";
+
+/* Class = "UILabel"; text = "Value 5"; ObjectID = "li7-oV-pgT"; */
+"li7-oV-pgT.text" = "Nilai 5";
 
 /* Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz"; */
 "lPv-s6-uEz.title" = "Tag Umum";
@@ -70,17 +118,35 @@
 /* Class = "UILabel"; text = "Name"; ObjectID = "mcN-gM-s7u"; */
 "mcN-gM-s7u.text" = "Nama";
 
+/* Class = "UILabel"; text = "Value 4"; ObjectID = "ng7-T9-SJ6"; */
+"ng7-T9-SJ6.text" = "Nilai 4";
+
 /* Class = "UILabel"; text = "Value 2"; ObjectID = "nKt-LG-cSw"; */
 "nKt-LG-cSw.text" = "Nilai 2";
+
+/* Class = "UILabel"; text = "Value 11"; ObjectID = "o63-qY-4vl"; */
+"o63-qY-4vl.text" = "Nilai 11";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "omf-S9-Yjq"; */
 "omf-S9-Yjq.text" = "Nama";
 
+/* Class = "UINavigationItem"; title = "Custom Preset"; ObjectID = "OND-s7-I6f"; */
+"OND-s7-I6f.title" = "Preset Kustom";
+
 /* Class = "UILabel"; text = "Type"; ObjectID = "P3A-5n-1Iq"; */
 "P3A-5n-1Iq.text" = "Jenis";
 
+/* Class = "UIButton"; normalTitle = "Customize Presets"; ObjectID = "pHA-2B-6DC"; */
+"pHA-2B-6DC.normalTitle" = "Sesuaikan Preset";
+
 /* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "pxY-di-zg7"; */
 "pxY-di-zg7.placeholder" = "Restoran";
+
+/* Class = "UITableViewSection"; headerTitle = "Preset Name"; ObjectID = "QDv-7w-nbx"; */
+"QDv-7w-nbx.headerTitle" = "Nama Preset";
+
+/* Class = "UILabel"; text = "Value 6"; ObjectID = "R0q-aM-ULf"; */
+"R0q-aM-ULf.text" = "Nilai 6";
 
 /* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "Rfe-SO-p0w"; */
 "Rfe-SO-p0w.title" = "Batal";
@@ -88,11 +154,17 @@
 /* Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ"; Note = "Do not translate"; */
 "sVp-1S-TjJ.placeholder" = "peran";
 
+/* Class = "UILabel"; text = "Key"; ObjectID = "teB-9L-Nrf"; */
+"teB-9L-Nrf.text" = "Kunci";
+
 /* Class = "UILabel"; text = "Title"; ObjectID = "TK4-E8-1q7"; Note = "Do not translate"; */
 "TK4-E8-1q7.text" = "Judul";
 
 /* Class = "UITextField"; placeholder = "relation"; ObjectID = "Urd-9O-Mte"; Note = "Do not translate"; */
 "Urd-9O-Mte.placeholder" = "hubungan";
+
+/* Class = "UINavigationItem"; title = "Presets"; ObjectID = "v1b-PG-XxE"; */
+"v1b-PG-XxE.title" = "Preset";
 
 /* Class = "UILabel"; text = "Wheelchair Access"; ObjectID = "Vli-Ct-Lpz"; */
 "Vli-Ct-Lpz.text" = "Akses Kursi Roda";
@@ -102,6 +174,15 @@
 
 /* Class = "UILabel"; text = "Value 12"; ObjectID = "wFE-f1-sQa"; */
 "wFE-f1-sQa.text" = "Nilai 12";
+
+/* Class = "UILabel"; text = "Value 10"; ObjectID = "Wim-Qa-dYQ"; */
+"Wim-Qa-dYQ.text" = "Nilai 10";
+
+/* Class = "UILabel"; text = "Value 7"; ObjectID = "WoH-od-iKL"; */
+"WoH-od-iKL.text" = "Nilai 7";
+
+/* Class = "UITextField"; placeholder = "key"; ObjectID = "X1y-nK-nVJ"; Note = "Do not translate"; */
+"X1y-nK-nVJ.placeholder" = "kunci";
 
 /* Class = "UILabel"; text = "Food & Drink"; ObjectID = "XBV-Ie-LDT"; Note = "Do not translate"; */
 "XBV-Ie-LDT.text" = "Makanan & Minuman";

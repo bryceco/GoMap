@@ -245,9 +245,6 @@
 /* current GPX track */
 "Current Track" = "Suivi actuel";
 
-/* No comment provided by engineer. */
-"Data not available" = "Données non disponibles";
-
 /* Edit action */
 "Delete" = "Supprimer";
 

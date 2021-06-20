@@ -245,9 +245,6 @@
 /* current GPX track */
 "Current Track" = "現在のトラック";
 
-/* No comment provided by engineer. */
-"Data not available" = "データは利用できません";
-
 /* Edit action */
 "Delete" = "削除";
 

@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="nb-NO" datatype="plaintext">
     <header>
@@ -152,7 +152,7 @@
       <trans-unit id="(new object)" xml:space="preserve">
         <source>(new object)</source>
         <target>(nytt objekt)</target>
-        <note>a newly created node/object</note>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
         <source>(node in way)</source>
@@ -428,9 +428,8 @@
         <target>Nåværende spor</target>
         <note>current GPX track</note>
       </trans-unit>
-      <trans-unit id="Data not available" xml:space="preserve">
-        <source>Data not available</source>
-        <target>Data ikke tilgjengelig</target>
+      <trans-unit id="Database error" xml:space="preserve">
+        <source>Database error</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Delete" xml:space="preserve">
@@ -609,7 +608,7 @@ Feil: %@</target>
       </trans-unit>
       <trans-unit id="Left" xml:space="preserve">
         <source>Left</source>
-        <note>Left side of screen</note>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Left side" xml:space="preserve">
         <source>Left side</source>
@@ -619,10 +618,6 @@ Feil: %@</target>
       <trans-unit id="Length" xml:space="preserve">
         <source>Length</source>
         <target>Lengde</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Location services timed out." xml:space="preserve">
-        <source>Location services timed out.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
@@ -977,7 +972,7 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="Right" xml:space="preserve">
         <source>Right</source>
-        <note>Right side of screen</note>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Right side" xml:space="preserve">
         <source>Right side</source>
@@ -1027,6 +1022,10 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       <trans-unit id="Show Recent Items" xml:space="preserve">
         <source>Show Recent Items</source>
         <target>Vis nylige elementer</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." xml:space="preserve">
+        <source>Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Sorry, an error occurred while loading the GPX file" xml:space="preserve">

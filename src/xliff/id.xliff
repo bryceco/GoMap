@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="id" datatype="plaintext">
     <header>
@@ -146,7 +146,7 @@
       <trans-unit id="(new object)" xml:space="preserve">
         <source>(new object)</source>
         <target>(obyek baru)</target>
-        <note>a newly created node/object</note>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
         <source>(node in way)</source>
@@ -395,9 +395,8 @@
         <source>Current Track</source>
         <note>current GPX track</note>
       </trans-unit>
-      <trans-unit id="Data not available" xml:space="preserve">
-        <source>Data not available</source>
-        <target>Data tidak tersedia</target>
+      <trans-unit id="Database error" xml:space="preserve">
+        <source>Database error</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Delete" xml:space="preserve">
@@ -520,7 +519,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="I'll do it!" xml:space="preserve">
         <source>I'll do it!</source>
-        <target state="needs-translation">Akan saya lakukan!</target>
+        <target>Akan saya lakukan!</target>
         <note>rate the app now</note>
       </trans-unit>
       <trans-unit id="Identifier" xml:space="preserve">
@@ -568,7 +567,7 @@ Error: %@</source>
       <trans-unit id="Left" xml:space="preserve">
         <source>Left</source>
         <target>Kiri</target>
-        <note>Left side of screen</note>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Left side" xml:space="preserve">
         <source>Left side</source>
@@ -578,10 +577,6 @@ Error: %@</source>
       <trans-unit id="Length" xml:space="preserve">
         <source>Length</source>
         <target>Panjang</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Location services timed out." xml:space="preserve">
-        <source>Location services timed out.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
@@ -866,7 +861,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." xml:space="preserve">
         <source>Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap.</source>
-        <target state="needs-translation">Menilai aplikasi ini membuat lebih mudah penyunting peta lain untuk menemukannya dan meningkatkan visibilitas OpenStreetMap.</target>
+        <target>Menilai aplikasi ini membuat lebih mudah penyunting peta lain untuk menemukannya dan meningkatkan visibilitas OpenStreetMap.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Recent Aerial Imagery" xml:space="preserve">
@@ -930,7 +925,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       <trans-unit id="Right" xml:space="preserve">
         <source>Right</source>
         <target>Kanan</target>
-        <note>Right side of screen</note>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Right side" xml:space="preserve">
         <source>Right side</source>
@@ -980,6 +975,10 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Show Recent Items" xml:space="preserve">
         <source>Show Recent Items</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." xml:space="preserve">
+        <source>Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Sorry, an error occurred while loading the GPX file" xml:space="preserve">
