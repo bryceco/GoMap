@@ -58,7 +58,7 @@ final class Database {
 	deinit {
     }
     
-    func dropTables() throws {
+	private func dropTables() throws {
 		try db.exec("drop table node_tags;")
 		try db.exec("drop table nodes;")
 		try db.exec("drop table way_tags;")
@@ -73,7 +73,7 @@ final class Database {
 		try db.exec("vacuum;") // compact database
 	}
     
-    func createTables() throws {
+	func createTables() throws {
 
         // nodes
         
@@ -187,7 +187,7 @@ final class Database {
     // MARK: spatial
     
 #if USE_RTREE
-    func deleteSpatial(_ object: OsmBaseObject?) -> Bool {
+	private func deleteSpatial(_ object: OsmBaseObject?) -> Bool {
         var rc: Int32
         if spatialDelete == nil {
             rc = sqlite3_prepare_v2(db, "INSERT INTO spatial (ident) VALUES (?,?);", -1, &spatialDelete, nil)
@@ -204,7 +204,7 @@ final class Database {
         return rc == SQLITE_DONE
     }
     
-    func add(toSpatial object: OsmBaseObject?) throws {
+	private func add(toSpatial object: OsmBaseObject?) throws {
         if spatialInsert == nil {
 			DbgOk( sqlite3_prepare_v2(db, "INSERT INTO spatial (ident,minX, maxX,minY, maxY) VALUES (?,?,?,?,?);", -1, &spatialInsert, nil) )
 		}
@@ -231,7 +231,7 @@ final class Database {
     
     // MARK: save
     
-    func saveNodes(_ nodes: [OsmNode]) throws {
+	private func saveNodes(_ nodes: [OsmNode]) throws {
 
         if nodes.count == 0 {
             return
@@ -272,7 +272,7 @@ final class Database {
 		}
     }
     
-    func saveWays(_ ways: [OsmWay]) throws {
+	private func saveWays(_ ways: [OsmWay]) throws {
 
         if ways.count == 0 {
             return
@@ -323,7 +323,7 @@ final class Database {
 		}
     }
     
-    func saveRelations(_ relations: [OsmRelation]) throws {
+	private func saveRelations(_ relations: [OsmRelation]) throws {
         if relations.count == 0 {
             return
         }
@@ -377,7 +377,7 @@ final class Database {
     
     // MARK: delete
 
-    func deleteNodes(_ nodes: [OsmNode]) throws {
+	private func deleteNodes(_ nodes: [OsmNode]) throws {
 		if nodes.count == 0 {
             return
         }
@@ -392,7 +392,7 @@ final class Database {
 		}
     }
 
-    func deleteWays(_ ways: [OsmWay]) throws {
+	private func deleteWays(_ ways: [OsmWay]) throws {
         if ways.count == 0 {
             return
 		}
@@ -407,7 +407,7 @@ final class Database {
 		}
     }
 
-    func deleteRelations(_ relations: [OsmRelation]) throws {
+	private func deleteRelations(_ relations: [OsmRelation]) throws {
 		if relations.count == 0 {
             return
         }
@@ -463,7 +463,7 @@ final class Database {
     
     // MARK: query
     
-	func queryTagTable(_ tableName: String) throws -> [OsmIdentifier:[String:String]] {
+	private func queryTagTable(_ tableName: String) throws -> [OsmIdentifier:[String:String]] {
 
 		let query = "SELECT key,value,ident FROM \(tableName)"
 		let tagStatement = try db.prepare(query)
@@ -486,12 +486,12 @@ final class Database {
 		return list
     }
 
-	func querySqliteNodes() throws -> [OsmIdentifier : OsmNode] {
+	func querySqliteNodes() throws -> [OsmNode] {
 		let nodeStatement = try db.prepare("SELECT ident,user,timestamp,version,changeset,uid,longitude,latitude FROM nodes;")
 
 		let tagDict = try queryTagTable("node_tags")
 
-		var nodes: [OsmIdentifier : OsmNode] = [:]
+		var nodes: [OsmNode] = []
         
 		while try db.step(nodeStatement, hasResult: Sqlite.ROW) {
 			let ident = db.columnInt64(nodeStatement, 0)
@@ -515,17 +515,17 @@ final class Database {
 				tags: tags)
             node.setLongitude(longitude, latitude: latitude, undo: nil)
 
-            nodes[node.ident] = node
+			nodes.append( node )
 		}
 
-		for (_,obj) in nodes {
+		for obj in nodes {
 			obj.setConstructed()
 		}
 
 		return nodes
 	}
     
-    func querySqliteWays() throws -> [OsmIdentifier : OsmWay] {
+    func querySqliteWays() throws -> [OsmWay] {
 
 		let wayStatement = try db.prepare("SELECT ident,user,timestamp,version,changeset,uid,nodecount FROM ways")
 
@@ -560,10 +560,10 @@ final class Database {
 
 		try queryNodes(forWays: ways)
 
-		return ways
+		return Array(ways.values)
     }
     
-    func queryNodes(forWays ways: [OsmIdentifier : OsmWay]) throws {
+	private func queryNodes(forWays ways: [OsmIdentifier : OsmWay]) throws {
 
 		let nodeStatement = try db.prepare("SELECT ident,node_id,node_index FROM way_nodes")
 
@@ -580,7 +580,7 @@ final class Database {
 		}
     }
     
-    func querySqliteRelations() throws -> [OsmIdentifier : OsmRelation] {
+    func querySqliteRelations() throws -> [OsmRelation] {
 
 		let relationStatement = try db.prepare("SELECT ident,user,timestamp,version,changeset,uid,membercount FROM relations")
 
@@ -618,10 +618,10 @@ final class Database {
 		}
 
 		// build the dictionary
-		return Dictionary<OsmIdentifier,OsmRelation>( uniqueKeysWithValues: zip(relations.keys, relations.values.map({ $0.relation })) )
+		return relations.values.map({ $0.relation })
 	}
     
-    func queryMembers(forRelations relations: [OsmIdentifier : OsmRelationBuilder]) throws {
+	private func queryMembers(forRelations relations: [OsmIdentifier : OsmRelationBuilder]) throws {
 		let memberStatement = try db.prepare("SELECT ident,type,ref,role,member_index FROM relation_members")
 
 		while try db.step(memberStatement, hasResult: Sqlite.ROW) {

@@ -9,9 +9,9 @@
 import Foundation
 
 struct OsmDownloadData {
-	var nodes: [OsmIdentifier:OsmNode] = [:]
-	var ways: [OsmIdentifier:OsmWay] = [:]
-	var relations: [OsmIdentifier:OsmRelation] = [:]
+	var nodes: [OsmNode] = []
+	var ways: [OsmWay] = []
+	var relations: [OsmRelation] = []
 }
 
 class OsmDownloadParser: NSObject, XMLParserDelegate {
@@ -26,15 +26,24 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 		parserCurrentElementText = ""
 
 		if elementName == "node" {
-			let lat = Double(attributeDict["lat"] ?? "") ?? 0.0
-			let lon = Double(attributeDict["lon"] ?? "") ?? 0.0
+			guard let latText = attributeDict["lat"],
+				  let lonText = attributeDict["lon"],
+				  let lat = Double( latText ),
+				  let lon = Double( lonText )
+			else {
+				parseError = NSError(domain: "Parser", code: 102, userInfo: [
+					NSLocalizedDescriptionKey: "OSM parser: missing lat/lon"
+				])
+				parser.abortParsing()
+				return
+			}
 			let node = OsmNode(fromXmlDict: attributeDict)!
 			node.setLongitude(lon, latitude: lat, undo: nil)
-			result.nodes[node.ident] = node
+			result.nodes.append( node )
 			parserStack.append(node)
 		} else if elementName == "way" {
 			let way = OsmWay(fromXmlDict: attributeDict)!
-			result.ways[way.ident] = way
+			result.ways.append( way )
 			parserStack.append(way)
 		} else if elementName == "tag" {
 			let key = attributeDict["k"]!
@@ -50,7 +59,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			parserStack.append("nd")
 		} else if elementName == "relation" {
 			let relation = OsmRelation(fromXmlDict: attributeDict)!
-			result.relations[relation.ident] = relation
+			result.relations.append( relation )
 			parserStack.append(relation)
 		} else if elementName == "member" {
 			let type = attributeDict["type"]

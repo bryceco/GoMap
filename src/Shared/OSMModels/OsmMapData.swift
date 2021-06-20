@@ -742,10 +742,10 @@ final class OsmMapData: NSObject, NSCoding {
 		var newWays: [OsmWay] = []
 		var newRelations: [OsmRelation] = []
 
-		for (key, node) in newData.nodes {
-			let current = nodes[key]
+		for node in newData.nodes {
+			let current = nodes[node.ident]
 			if current == nil {
-				nodes[key] = node
+				nodes[node.ident] = node
 				spatial.addMember(node, undo: nil)
 				newNodes.append(node)
 			} else if current!.version < node.version {
@@ -757,10 +757,10 @@ final class OsmMapData: NSObject, NSCoding {
 			}
 		}
 
-		for (key, way) in newData.ways {
-			let current = ways[key]
+		for way in newData.ways {
+			let current = ways[way.ident]
 			if current == nil {
-				ways[key] = way
+				ways[way.ident] = way
 				try way.resolveToMapData(self)
 				spatial.addMember(way, undo: nil)
 				newWays.append(way)
@@ -773,10 +773,10 @@ final class OsmMapData: NSObject, NSCoding {
 			}
 		}
 
-		for (key, relation) in newData.relations {
-			let current = relations[key]
+		for relation in newData.relations {
+			let current = relations[relation.ident]
 			if current == nil {
-				relations[key] = relation
+				relations[relation.ident] = relation
 				spatial.addMember(relation, undo: nil)
 				newRelations.append(relation)
 			} else if current!.version < relation.version {
@@ -798,13 +798,13 @@ final class OsmMapData: NSObject, NSCoding {
 			}
 		}
 
-		for (_, node) in newData.nodes {
+		for node in newData.nodes {
 			node.setConstructed()
 		}
-		for (_, way) in newData.ways {
+		for way in newData.ways {
 			way.setConstructed()
 		}
-		for (_, relation) in newData.relations {
+		for relation in newData.relations {
 			relation.setConstructed()
 		}
 
