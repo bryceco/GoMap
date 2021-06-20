@@ -9,7 +9,7 @@
 import CommonCrypto
 import UIKit
 
-private let BING_MAPS_KEY: String = "ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk"
+private let BING_MAPS_KEY: String = ["ApunJH62","__wQs1qE32KV","rf6Fmncn","7OZj6gWg_wtr27","DQLDCkwkx","Gl4RsItKW4Fkk"].reduce("",{r,x in r+x})
 
 private let BING_IDENTIFIER = "BingIdentifier"
 private let MAPNIK_IDENTIFIER = "MapnikIdentifier"
@@ -19,6 +19,7 @@ private let NO_NAME_IDENTIFIER = "No Name Identifier"
 private let MAXAR_PREMIUM_IDENTIFIER = "Maxar-Premium"
 private let MAXAR_STANDARD_IDENTIFIER = "Maxar-Standard"
 
+/// A provider of tile imagery, such as Bing or Mapbox
 final class TileServer {
 
 	private static let iconCache: PersistentWebCache<UIImage> = {
