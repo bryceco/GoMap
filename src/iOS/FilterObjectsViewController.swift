@@ -25,9 +25,9 @@ class FilterObjectsViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var switchOthers: UISwitch!
 
     // return a list of arrays, each array containing either a single integer or a first-last pair of integers
-	class func levels(for text: String?) -> [[NSNumber]] {
+	class func levels(for text: String?) -> [[Double]] {
 		guard let text = text else { return [] }
-		var list: [[NSNumber]] = []
+		var list: [[Double]] = []
 		let scanner = Scanner(string: text)
         scanner.charactersToBeSkipped = CharacterSet.whitespacesAndNewlines
 
@@ -36,18 +36,18 @@ class FilterObjectsViewController: UITableViewController, UITextFieldDelegate {
         }
 
         while true {
-            var first = Int()
-            var last = Int()
-            if !scanner.scanInt(&first) {
+            var first = Double()
+            var last = Double()
+			if !scanner.scanDouble(&first) {
                 return []
 			}
             if scanner.scanString("..", into: nil) {
-                if !scanner.scanInt(&last) {
-                    return []
+                if !scanner.scanDouble(&last) {
+					return []
                 }
-				list.append([NSNumber(value: first),NSNumber(value:last)])
+				list.append([first,last])
 			} else {
-				list.append([NSNumber(value: first)])
+				list.append([first])
 			}
 			if scanner.isAtEnd {
                 return list

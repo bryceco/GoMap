@@ -161,7 +161,7 @@ final class EditorFilters {
 					for filterRange in levelFilter {
 						if filterRange.count == 1 {
 							// filter is a single floor
-							let filterValue = filterRange[0].doubleValue
+							let filterValue = filterRange[0]
 							if let floorSet = floorSet {
 								// object spans multiple floors
 								for s in floorSet {
@@ -177,8 +177,8 @@ final class EditorFilters {
 							}
 						} else if filterRange.count == 2 {
 							// filter is a range
-							let filterLow = filterRange[0].doubleValue
-							let filterHigh = filterRange[1].doubleValue
+							let filterLow = filterRange[0]
+							let filterHigh = filterRange[1]
 							if let floorSet = floorSet {
 								// object spans multiple floors
 								for s in floorSet {
