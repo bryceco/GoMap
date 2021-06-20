@@ -68,14 +68,14 @@ class POITabBarController: UITabBarController {
         }
     }
 
-    func setFeatureKey(_ key: String?, value: String?) {
-        if let key = key {
-            if let value = value {
-                keyValueDict[key] = value
-            } else {
-                keyValueDict.removeValue(forKey: key)
-            }
-        }
+    func setFeatureKey(_ key: String, value: String?) {
+		if let value = value,
+		   value.count > 0
+		{
+			keyValueDict[key] = value
+		} else {
+			keyValueDict.removeValue(forKey: key)
+		}
     }
 
     func commitChanges() {

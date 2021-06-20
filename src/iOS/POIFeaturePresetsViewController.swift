@@ -132,9 +132,9 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		for key in addTags.keys {
 			removeTags.removeValue(forKey: key)
         }
-        for (key, value) in removeTags {
-			tabController.setFeatureKey(key, value: value)
-        }
+		for key in removeTags.keys {
+			tabController.setFeatureKey(key, value: nil)
+		}
         
         // add new feature tags
         for (key, value) in newFeature.addTags() {
