@@ -21,6 +21,7 @@
       </trans-unit>
       <trans-unit id="GPS Exchange Format (GPX)" xml:space="preserve">
         <source>GPS Exchange Format (GPX)</source>
+        <target>GPS Exchange Format (GPX)</target>
         <note/>
       </trans-unit>
       <trans-unit id="NSBluetoothPeripheralUsageDescription" xml:space="preserve">
@@ -218,10 +219,12 @@
       </trans-unit>
       <trans-unit id="All Tags" xml:space="preserve">
         <source>All Tags</source>
+        <target>Semua Tag</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="All choices" xml:space="preserve">
         <source>All choices</source>
+        <target>Semua pilihan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="An unknown error occurred fetching metadata" xml:space="preserve">
@@ -231,6 +234,7 @@
       </trans-unit>
       <trans-unit id="Attention" xml:space="preserve">
         <source>Attention</source>
+        <target>Atensi</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Attributes" xml:space="preserve">
@@ -245,6 +249,7 @@
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
         <source>Background imagery %@</source>
+        <target>Gambar latar %@</target>
         <note>identifies current aerial imagery</note>
       </trans-unit>
       <trans-unit id="Bad login" xml:space="preserve">
@@ -253,6 +258,7 @@
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
         <source>Cache size warning</source>
+        <target>Peringatan ukuran cache</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache trimmed" xml:space="preserve">
@@ -1554,26 +1560,32 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="SNa-W1-wga.headerTitle" xml:space="preserve">
         <source>Discard &amp; Refresh</source>
+        <target>Buang &amp; Segarkan</target>
         <note>Class = "UITableViewSection"; headerTitle = "Discard &amp; Refresh"; ObjectID = "SNa-W1-wga";</note>
       </trans-unit>
       <trans-unit id="Uum-Wn-9CF.text" xml:space="preserve">
         <source>Others</source>
+        <target>Lainnya</target>
         <note>Class = "UILabel"; text = "Others"; ObjectID = "Uum-Wn-9CF";</note>
       </trans-unit>
       <trans-unit id="VUR-wT-knn.text" xml:space="preserve">
         <source>Enable Rotation</source>
+        <target>Aktifkan Rotasi</target>
         <note>Class = "UILabel"; text = "Enable Rotation"; ObjectID = "VUR-wT-knn";</note>
       </trans-unit>
       <trans-unit id="WnI-tY-WWa.text" xml:space="preserve">
         <source>Delete tracks after:</source>
+        <target>Hapus trek setelah:</target>
         <note>Class = "UILabel"; text = "Delete tracks after:"; ObjectID = "WnI-tY-WWa";</note>
       </trans-unit>
       <trans-unit id="Z8C-Ef-iJE.title" xml:space="preserve">
         <source>GPX Tracks</source>
+        <target>Trek GPX</target>
         <note>Class = "UINavigationItem"; title = "GPX Tracks"; ObjectID = "Z8C-Ef-iJE";</note>
       </trans-unit>
       <trans-unit id="ZP1-qY-kXe.text" xml:space="preserve">
         <source>Unnamed Roads</source>
+        <target>Jalan Tanpa Nama</target>
         <note>Class = "UILabel"; text = "Unnamed Roads"; ObjectID = "ZP1-qY-kXe";</note>
       </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.footerTitle" xml:space="preserve">
@@ -1582,6 +1594,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.headerTitle" xml:space="preserve">
         <source>WMS Projection</source>
+        <target>Proyeksi WMS</target>
         <note>Class = "UITableViewSection"; headerTitle = "WMS Projection"; ObjectID = "Zn9-Sg-9fS";</note>
       </trans-unit>
       <trans-unit id="Zzc-4t-QhT.text" xml:space="preserve">
@@ -1590,14 +1603,17 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.footerTitle" xml:space="preserve">
         <source>Go Map!! will automatically discard old data to optimize performance.</source>
+        <target>Go Map!! akan secara otomatis membuang data lama untuk mengoptimalkan kinerja.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Go Map!! will automatically discard old data to optimize performance."; ObjectID = "bmY-Hw-jv6";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.headerTitle" xml:space="preserve">
         <source>Cache Management</source>
+        <target>Manajemen Cache</target>
         <note>Class = "UITableViewSection"; headerTitle = "Cache Management"; ObjectID = "bmY-Hw-jv6";</note>
       </trans-unit>
       <trans-unit id="cXC-ij-AMQ.title" xml:space="preserve">
         <source>Show Objects</source>
+        <target>Tampilkan Objek</target>
         <note>Class = "UINavigationItem"; title = "Show Objects"; ObjectID = "cXC-ij-AMQ";</note>
       </trans-unit>
       <trans-unit id="cpC-iE-1Dm.text" xml:space="preserve">
@@ -1626,18 +1642,22 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="eFa-yZ-YZl.text" xml:space="preserve">
         <source>Aerial Tiles</source>
+        <target>Ubin Udara</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eFa-yZ-YZl";</note>
       </trans-unit>
       <trans-unit id="eLW-GB-ugG.text" xml:space="preserve">
         <source>Position + Button on </source>
+        <target>Posisi + Tombol aktif </target>
         <note>Class = "UILabel"; text = "Position + Button on "; ObjectID = "eLW-GB-ugG"; Note = "The location on the screen where the user prefers the + (add node) button to appear";</note>
       </trans-unit>
       <trans-unit id="eN6-SZ-99I.text" xml:space="preserve">
         <source>Editor only</source>
+        <target>Hanya editor</target>
         <note>Class = "UILabel"; text = "Editor only"; ObjectID = "eN6-SZ-99I";</note>
       </trans-unit>
       <trans-unit id="eTY-48-gab.text" xml:space="preserve">
         <source>Aerial Tiles</source>
+        <target>Ubin Udara</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eTY-48-gab";</note>
       </trans-unit>
       <trans-unit id="eac-Db-EaW.normalTitle" xml:space="preserve">
@@ -1652,10 +1672,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="fFT-hv-mKl.text" xml:space="preserve">
         <source>Aerial Tiles</source>
+        <target>Ubin Udara</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fFT-hv-mKl";</note>
       </trans-unit>
       <trans-unit id="fHH-rC-iGa.text" xml:space="preserve">
         <source>Aerial Tiles</source>
+        <target>Ubin Udara</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fHH-rC-iGa";</note>
       </trans-unit>
       <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve">
@@ -1665,10 +1687,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="g46-cV-NBw.text" xml:space="preserve">
         <source>Aerial Tiles</source>
+        <target>Ubin Udara</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "g46-cV-NBw";</note>
       </trans-unit>
       <trans-unit id="gdL-Os-R6R.text" xml:space="preserve">
         <source>Points</source>
+        <target>Poin</target>
         <note>Class = "UILabel"; text = "Points"; ObjectID = "gdL-Os-R6R";</note>
       </trans-unit>
       <trans-unit id="gre-3S-iPA.text" xml:space="preserve">
@@ -1683,15 +1707,19 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="hMJ-yP-XJe.text" xml:space="preserve">
         <source>OpenStreetMap GPS Traces</source>
+        <target>Jejak GPS OpenStreetMap</target>
         <note>Class = "UILabel"; text = "OpenStreetMap GPS Traces"; ObjectID = "hMJ-yP-XJe";</note>
       </trans-unit>
       <trans-unit id="hkr-kO-jbt.text" xml:space="preserve">
         <source>Traffic Roads</source>
+        <target>Jalan Raya</target>
         <note>Class = "UILabel"; text = "Traffic Roads"; ObjectID = "hkr-kO-jbt";</note>
       </trans-unit>
       <trans-unit id="hsp-Xj-TU6.text" xml:space="preserve">
         <source>Simon Poole Map Data © OpenStreetMap contributors
 </source>
+        <target>Simon Poole Data Peta © Kontributor OpenStreetMap
+</target>
         <note>Class = "UITextView"; text = "Simon Poole Map Data © OpenStreetMap contributors\n"; ObjectID = "hsp-Xj-TU6";</note>
       </trans-unit>
       <trans-unit id="iuk-Fk-3Fw.placeholder" xml:space="preserve">
@@ -1716,6 +1744,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="oSD-0y-Vt0.title" xml:space="preserve">
         <source>Configure GPX Tracks</source>
+        <target>Konfigurasikan Trek GPX</target>
         <note>Class = "UINavigationItem"; title = "Configure GPX Tracks"; ObjectID = "oSD-0y-Vt0";</note>
       </trans-unit>
       <trans-unit id="pQK-9y-t4z.text" xml:space="preserve">
@@ -1730,6 +1759,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="qdV-Je-jXT.text" xml:space="preserve">
         <source>Boundaries</source>
+        <target>Batas</target>
         <note>Class = "UILabel"; text = "Boundaries"; ObjectID = "qdV-Je-jXT";</note>
       </trans-unit>
       <trans-unit id="r6a-cT-Ufa.text" xml:space="preserve">
@@ -1759,10 +1789,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="twn-Ve-8vl.text" xml:space="preserve">
         <source>Water Features</source>
+        <target>Fitur Air</target>
         <note>Class = "UILabel"; text = "Water Features"; ObjectID = "twn-Ve-8vl";</note>
       </trans-unit>
       <trans-unit id="uOd-BB-zEq.text" xml:space="preserve">
         <source>Aerial only</source>
+        <target>Hanya udara</target>
         <note>Class = "UILabel"; text = "Aerial only"; ObjectID = "uOd-BB-zEq";</note>
       </trans-unit>
       <trans-unit id="uQ3-vb-l3H.placeholder" xml:space="preserve">
@@ -1772,6 +1804,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="uZo-P0-sR7.text" xml:space="preserve">
         <source>Building Level</source>
+        <target>Tingkat Bangunan</target>
         <note>Class = "UILabel"; text = "Building Level"; ObjectID = "uZo-P0-sR7";</note>
       </trans-unit>
       <trans-unit id="v6h-g5-fka.text" xml:space="preserve">
@@ -1809,6 +1842,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.headerTitle" xml:space="preserve">
         <source>Template URL of the tile server</source>
+        <target>URL templat server ubin</target>
         <note>Class = "UITableViewSection"; headerTitle = "Template URL of the tile server"; ObjectID = "zD6-m4-1PD";</note>
       </trans-unit>
       <trans-unit id="zI2-YM-qbl.normalTitle" xml:space="preserve">
@@ -1863,6 +1897,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityHint" xml:space="preserve">
         <source>Reorient map north</source>
+        <target>Arahkan ulang peta ke utara</target>
         <note>Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt";</note>
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityLabel" xml:space="preserve">
@@ -1906,6 +1941,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Qz0-Ce-YCX.title" xml:space="preserve">
         <source>Bing Maps</source>
+        <target>Peta Bing</target>
         <note>Class = "UINavigationItem"; title = "Bing Maps"; ObjectID = "Qz0-Ce-YCX";</note>
       </trans-unit>
       <trans-unit id="ach-1A-88x.text" xml:space="preserve">
@@ -1928,10 +1964,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="qP9-Sc-sc4.text" xml:space="preserve">
         <source>Label</source>
+        <target>Label</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "qP9-Sc-sc4";</note>
       </trans-unit>
       <trans-unit id="siu-I6-IEp.title" xml:space="preserve">
         <source>Search for Location</source>
+        <target>Cari Lokasi</target>
         <note>Class = "UIViewController"; title = "Search for Location"; ObjectID = "siu-I6-IEp";</note>
       </trans-unit>
       <trans-unit id="stf-JU-iga.text" xml:space="preserve">
@@ -2036,6 +2074,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="CXe-gQ-Zda.text" xml:space="preserve">
         <source>Value 8</source>
+        <target>Nilai 8</target>
         <note>Class = "UILabel"; text = "Value 8"; ObjectID = "CXe-gQ-Zda";</note>
       </trans-unit>
       <trans-unit id="Dfv-TT-J6i.footerTitle" xml:space="preserve">
@@ -2044,14 +2083,17 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Dfv-TT-J6i.headerTitle" xml:space="preserve">
         <source>Applies To</source>
+        <target>Berlaku Untuk</target>
         <note>Class = "UITableViewSection"; headerTitle = "Applies To"; ObjectID = "Dfv-TT-J6i";</note>
       </trans-unit>
       <trans-unit id="Eou-a6-V4g.text" xml:space="preserve">
         <source>Key</source>
+        <target>Kunci</target>
         <note>Class = "UILabel"; text = "Key"; ObjectID = "Eou-a6-V4g";</note>
       </trans-unit>
       <trans-unit id="Fcv-4Q-gpE.text" xml:space="preserve">
         <source>Value 3</source>
+        <target>Nilai 3</target>
         <note>Class = "UILabel"; text = "Value 3"; ObjectID = "Fcv-4Q-gpE";</note>
       </trans-unit>
       <trans-unit id="Fe2-dc-zgA.placeholder" xml:space="preserve">
@@ -2060,10 +2102,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="G5R-oP-lp3.title" xml:space="preserve">
         <source>Custom Tags</source>
+        <target>Tag Kustom</target>
         <note>Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3";</note>
       </trans-unit>
       <trans-unit id="GIO-W7-q5U.title" xml:space="preserve">
         <source>Custom Presets</source>
+        <target>Preset Kustom</target>
         <note>Class = "UINavigationItem"; title = "Custom Presets"; ObjectID = "GIO-W7-q5U";</note>
       </trans-unit>
       <trans-unit id="Hgu-iP-FnG.title" xml:space="preserve">
@@ -2073,6 +2117,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="JAT-qD-dTS.text" xml:space="preserve">
         <source>Value 1</source>
+        <target>Nilai 1</target>
         <note>Class = "UILabel"; text = "Value 1"; ObjectID = "JAT-qD-dTS";</note>
       </trans-unit>
       <trans-unit id="Jsm-mO-hgo.title" xml:space="preserve">
@@ -2087,6 +2132,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="OND-s7-I6f.title" xml:space="preserve">
         <source>Custom Preset</source>
+        <target>Preset Kustom</target>
         <note>Class = "UINavigationItem"; title = "Custom Preset"; ObjectID = "OND-s7-I6f";</note>
       </trans-unit>
       <trans-unit id="P3A-5n-1Iq.text" xml:space="preserve">
@@ -2096,10 +2142,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="QDv-7w-nbx.headerTitle" xml:space="preserve">
         <source>Preset Name</source>
+        <target>Nama Preset</target>
         <note>Class = "UITableViewSection"; headerTitle = "Preset Name"; ObjectID = "QDv-7w-nbx";</note>
       </trans-unit>
       <trans-unit id="R0q-aM-ULf.text" xml:space="preserve">
         <source>Value 6</source>
+        <target>Nilai 6</target>
         <note>Class = "UILabel"; text = "Value 6"; ObjectID = "R0q-aM-ULf";</note>
       </trans-unit>
       <trans-unit id="Rfe-SO-p0w.title" xml:space="preserve">
@@ -2124,14 +2172,17 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Wim-Qa-dYQ.text" xml:space="preserve">
         <source>Value 10</source>
+        <target>Nilai 10</target>
         <note>Class = "UILabel"; text = "Value 10"; ObjectID = "Wim-Qa-dYQ";</note>
       </trans-unit>
       <trans-unit id="WoH-od-iKL.text" xml:space="preserve">
         <source>Value 7</source>
+        <target>Nilai 7</target>
         <note>Class = "UILabel"; text = "Value 7"; ObjectID = "WoH-od-iKL";</note>
       </trans-unit>
       <trans-unit id="X1y-nK-nVJ.placeholder" xml:space="preserve">
         <source>key</source>
+        <target>kunci</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "X1y-nK-nVJ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="XBV-Ie-LDT.text" xml:space="preserve">
@@ -2155,6 +2206,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="cN9-3h-H3l.title" xml:space="preserve">
         <source>All Tags</source>
+        <target>Semua Tag</target>
         <note>Class = "UINavigationItem"; title = "All Tags"; ObjectID = "cN9-3h-H3l";</note>
       </trans-unit>
       <trans-unit id="cP3-lR-lzM.placeholder" xml:space="preserve">
@@ -2164,14 +2216,17 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="cTf-Rc-vqr.headerTitle" xml:space="preserve">
         <source>Preset Key</source>
+        <target>Kunci Preset</target>
         <note>Class = "UITableViewSection"; headerTitle = "Preset Key"; ObjectID = "cTf-Rc-vqr";</note>
       </trans-unit>
       <trans-unit id="daQ-tl-pKh.text" xml:space="preserve">
         <source>Label</source>
+        <target>Label</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="dsA-B6-s7R.text" xml:space="preserve">
         <source>Value 9</source>
+        <target>Nilai 9</target>
         <note>Class = "UILabel"; text = "Value 9"; ObjectID = "dsA-B6-s7R";</note>
       </trans-unit>
       <trans-unit id="eG3-Xz-Nnp.placeholder" xml:space="preserve">
@@ -2200,18 +2255,22 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="hfr-Mf-ZHv.text" xml:space="preserve">
         <source>value</source>
+        <target>nilai</target>
         <note>Class = "UITextField"; text = "value"; ObjectID = "hfr-Mf-ZHv";</note>
       </trans-unit>
       <trans-unit id="ijx-N9-1eO.text" xml:space="preserve">
         <source>Changeset</source>
+        <target>Perubahan</target>
         <note>Class = "UILabel"; text = "Changeset"; ObjectID = "ijx-N9-1eO";</note>
       </trans-unit>
       <trans-unit id="jv1-BF-p2a.footerTitle" xml:space="preserve">
         <source>The possible values for the preset</source>
+        <target>Nilai yang mungkin untuk preset</target>
         <note>Class = "UITableViewSection"; footerTitle = "The possible values for the preset"; ObjectID = "jv1-BF-p2a";</note>
       </trans-unit>
       <trans-unit id="jv1-BF-p2a.headerTitle" xml:space="preserve">
         <source>Preset values</source>
+        <target>Nilai Preset</target>
         <note>Class = "UITableViewSection"; headerTitle = "Preset values"; ObjectID = "jv1-BF-p2a";</note>
       </trans-unit>
       <trans-unit id="kPA-ky-U48.placeholder" xml:space="preserve">
@@ -2226,6 +2285,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="li7-oV-pgT.text" xml:space="preserve">
         <source>Value 5</source>
+        <target>Nilai 5</target>
         <note>Class = "UILabel"; text = "Value 5"; ObjectID = "li7-oV-pgT";</note>
       </trans-unit>
       <trans-unit id="mAb-DX-pqb.title" xml:space="preserve">
@@ -2245,10 +2305,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="ng7-T9-SJ6.text" xml:space="preserve">
         <source>Value 4</source>
+        <target>Nilai 4</target>
         <note>Class = "UILabel"; text = "Value 4"; ObjectID = "ng7-T9-SJ6";</note>
       </trans-unit>
       <trans-unit id="o63-qY-4vl.text" xml:space="preserve">
         <source>Value 11</source>
+        <target>Nilai 11</target>
         <note>Class = "UILabel"; text = "Value 11"; ObjectID = "o63-qY-4vl";</note>
       </trans-unit>
       <trans-unit id="oC6-w7-cwN.placeholder" xml:space="preserve">
@@ -2266,6 +2328,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="pHA-2B-6DC.normalTitle" xml:space="preserve">
         <source>Customize Presets</source>
+        <target>Sesuaikan Preset</target>
         <note>Class = "UIButton"; normalTitle = "Customize Presets"; ObjectID = "pHA-2B-6DC";</note>
       </trans-unit>
       <trans-unit id="pxY-di-zg7.placeholder" xml:space="preserve">
@@ -2280,10 +2343,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="teB-9L-Nrf.text" xml:space="preserve">
         <source>Key</source>
+        <target>Kunci</target>
         <note>Class = "UILabel"; text = "Key"; ObjectID = "teB-9L-Nrf";</note>
       </trans-unit>
       <trans-unit id="v1b-PG-XxE.title" xml:space="preserve">
         <source>Presets</source>
+        <target>Preset</target>
         <note>Class = "UINavigationItem"; title = "Presets"; ObjectID = "v1b-PG-XxE";</note>
       </trans-unit>
       <trans-unit id="vpk-jC-yxl.placeholder" xml:space="preserve">
@@ -2315,6 +2380,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
         <source>Mapnik Tiles</source>
+        <target>Ubin Mapnik</target>
         <note>Class = "UILabel"; text = "Mapnik Tiles"; ObjectID = "0Hk-5U-2Kg";</note>
       </trans-unit>
       <trans-unit id="1Mo-xe-IbY.headerTitle" xml:space="preserve">
@@ -2333,10 +2399,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="2TW-mO-uX2.headerTitle" xml:space="preserve">
         <source>Download zoomed tiles</source>
+        <target>Unduh ubin yang diperbesar</target>
         <note>Class = "UITableViewSection"; headerTitle = "Download zoomed tiles"; ObjectID = "2TW-mO-uX2";</note>
       </trans-unit>
       <trans-unit id="2Zi-cz-7Va.text" xml:space="preserve">
         <source>Show Touches</source>
+        <target>Tampilkan Sentuhan</target>
         <note>Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va"; Note = "Display the user's touches when they tap the screen";</note>
       </trans-unit>
       <trans-unit id="3qk-15-BUc.text" xml:space="preserve">
@@ -2385,6 +2453,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="AVI-04-hFN.text" xml:space="preserve">
         <source>Aerial Tiles</source>
+        <target>Ubin Udara</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "AVI-04-hFN";</note>
       </trans-unit>
       <trans-unit id="BHr-ta-k6F.text" xml:space="preserve">
@@ -2408,10 +2477,31 @@ http://www.sjjb.co.uk/mapicons
 Other icons by Glyphish:
 http://glyphish.com
 </source>
+        <target>Hak © 2012-2020 Bryce Cogswell. 
+Semua hak dilindungi undang-undang.
+
+Data OpenStreetMap dilisensikan di bawah Lisensi Database Terbuka Open Data Commons (ODbL):
+https://www.openstreetmap.com/copyright
+
+Hak cipta citra udara Bing Microsoft dan pemasoknya:
+https://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx
+
+Mapbox hak cipta citra udara Mapbox dan pemasoknya: https://www.mapbox.com/tos
+
+XML parsing courtesy dari KissXML Robbie Hanson:
+https://github.com/robbiehanson/KissXML
+
+Ikon peta oleh SJJB:
+http://www.sjjb.co.uk/mapicons
+
+Ikon lain oleh Glyphish:
+http://glyphish.com
+</target>
         <note>Class = "UITextView"; text = "Copyright © 2012-2020 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F";</note>
       </trans-unit>
       <trans-unit id="CHj-a3-gC9.text" xml:space="preserve">
         <source>Weblate - Translations</source>
+        <target>Weblate - Terjemahan</target>
         <note>Class = "UILabel"; text = "Weblate - Translations"; ObjectID = "CHj-a3-gC9";</note>
       </trans-unit>
       <trans-unit id="DY5-Ls-XZ1.normalTitle" xml:space="preserve">
@@ -2425,6 +2515,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Gcr-zK-nDq.text" xml:space="preserve">
         <source>Touches for screen recording</source>
+        <target>Sentuhan untuk perekaman layar</target>
         <note>Class = "UILabel"; text = "Touches for screen recording"; ObjectID = "Gcr-zK-nDq"; Note = "Display the user's touches when they tap the screen";</note>
       </trans-unit>
       <trans-unit id="Gxc-44-SzR.title" xml:space="preserve">
@@ -2468,6 +2559,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Tkc-bW-kNS.footerTitle" xml:space="preserve">
         <source>In order to upload changes to the map you need a user name and password registered at openstreetmap.org. </source>
+        <target>Untuk mengunggah perubahan ke peta, Anda memerlukan nama pengguna dan kata sandi yang terdaftar di openstreetmap.org. </target>
         <note>Class = "UITableViewSection"; footerTitle = "In order to upload changes to the map you need a user name and password registered at openstreetmap.org. "; ObjectID = "Tkc-bW-kNS";</note>
       </trans-unit>
       <trans-unit id="Tkc-bW-kNS.headerTitle" xml:space="preserve">
@@ -2552,6 +2644,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="jcn-Lx-tj3.text" xml:space="preserve">
         <source>Nearby Mappers</source>
+        <target>Pemeta Terdekat</target>
         <note>Class = "UILabel"; text = "Nearby Mappers"; ObjectID = "jcn-Lx-tj3";</note>
       </trans-unit>
       <trans-unit id="k0y-gf-6DY.text" xml:space="preserve">
@@ -2596,6 +2689,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="rfX-TP-V0l.text" xml:space="preserve">
         <source>Prepare for Offline</source>
+        <target>Bersiap untuk Offline</target>
         <note>Class = "UILabel"; text = "Prepare for Offline"; ObjectID = "rfX-TP-V0l";</note>
       </trans-unit>
       <trans-unit id="snH-kp-6ib.normalTitle" xml:space="preserve">
@@ -2642,7 +2736,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Plh-7W-ceY.text" xml:space="preserve">
         <source>Lorem ipsum dolor sit er elit lamet,</source>
-        <target>Cicak cicak di dingding, diam diam merayap,</target>
+        <target>Lorem ipsum dolor sit er elit lamet,</target>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "Plh-7W-ceY";</note>
       </trans-unit>
       <trans-unit id="Rqu-ny-n3F.normalTitle" xml:space="preserve">
