@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="id" datatype="plaintext">
     <header>
@@ -2476,7 +2476,7 @@ http://www.sjjb.co.uk/mapicons
 Other icons by Glyphish:
 http://glyphish.com
 </source>
-        <target>Hak © 2012-2020 Bryce Cogswell. 
+        <target state="needs-translation">Hak © 2012-2020 Bryce Cogswell. 
 Semua hak dilindungi undang-undang.
 
 Data OpenStreetMap dilisensikan di bawah Lisensi Database Terbuka Open Data Commons (ODbL):
