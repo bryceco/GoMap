@@ -36,20 +36,20 @@ class BingMetadataViewController: UIViewController {
 
 				var attrList: [String] = []
 
-				let resourceSets = (json as? [AnyHashable : Any])?["resourceSets"] as? [AnyHashable]
+				let resourceSets = (json as? [String : Any])?["resourceSets"] as? [Any]
                 for resourceSet in resourceSets ?? [] {
-					let resources = (resourceSet as? [AnyHashable : Any])?["resources"]
+					let resources = (resourceSet as? [String : Any])?["resources"]
 					guard let resources = resources as? [Any] else { continue }
 					for resource in resources {
-						let vintageStart = ((resource as? [AnyHashable : Any])?["vintageStart"] as? String) ?? ""
-						let vintageEnd = ((resource as? [AnyHashable : Any])?["vintageEnd"] as? String) ?? ""
-						guard let providers = (resource as? [AnyHashable : Any])?["imageryProviders"] else { continue }
+						let vintageStart = ((resource as? [String : Any])?["vintageStart"] as? String) ?? ""
+						let vintageEnd = ((resource as? [String : Any])?["vintageEnd"] as? String) ?? ""
+						guard let providers = (resource as? [String : Any])?["imageryProviders"] else { continue }
 						guard let providers = providers as? [Any] else { continue }
 						for provider in providers {
-							var attribution = ((provider as? [AnyHashable : Any])?["attribution"] as? String) ?? ""
-							let areas = (provider as? [AnyHashable : Any])?["coverageAreas"] as? [AnyHashable]
+							var attribution = ((provider as? [String : Any])?["attribution"] as? String) ?? ""
+							let areas = (provider as? [String : Any])?["coverageAreas"] as? [Any]
 							for area in areas ?? [] {
-								guard let area = area as? [AnyHashable : Any] else { continue }
+								guard let area = area as? [String : Any] else { continue }
 								let zoomMin = (area["zoomMin"] as? NSNumber)?.intValue ?? 0
 								let zoomMax = (area["zoomMax"] as? NSNumber)?.intValue ?? 0
 								guard let bbox = area["bbox"] as? [NSNumber],

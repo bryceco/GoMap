@@ -15,7 +15,7 @@ final class PresetCategory {
 	let members: [PresetFeature]
 
 	var friendlyName: String? {
-		let dict = PresetsDatabase.shared.jsonCategories[categoryID] as? [AnyHashable : Any]
+		let dict = PresetsDatabase.shared.jsonCategories[categoryID] as? [String : Any]
 		return dict?["name"] as? String
 	}
 
@@ -26,7 +26,7 @@ final class PresetCategory {
 	init(categoryID: String) {
 		self.categoryID = categoryID
 		self.members = {
-			guard let dict = PresetsDatabase.shared.jsonCategories[categoryID] as? [AnyHashable : Any],
+			guard let dict = PresetsDatabase.shared.jsonCategories[categoryID] as? [String : Any],
 				  let members = dict["members"] as? [String]
 				else { return [] }
 			var result: [PresetFeature] = []

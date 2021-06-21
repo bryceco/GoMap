@@ -17,7 +17,7 @@ struct OsmDownloadData {
 class OsmDownloadParser: NSObject, XMLParserDelegate {
 
 	private var parserCurrentElementText: String = ""	// not currently used, it's mostly whitespace
-	private var parserStack: [AnyHashable] = []
+	private var parserStack: [Any] = []
 	private var parseError: Error?
 
 	private (set) var result: OsmDownloadData = OsmDownloadData()

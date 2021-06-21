@@ -216,7 +216,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 						 */
 
 						let json = try? JSONSerialization.jsonObject(with: data, options: [])
-						_resultsArray = json as? [[String:AnyHashable]] ?? []
+						_resultsArray = json as? [[String:Any]] ?? []
 						_tableView.reloadData()
 
 						if _resultsArray.count > 0 {

@@ -383,15 +383,14 @@ final class EditorMapLayer: CALayer {
         return nil
     }
     
-    private func HouseNumberForObjectTags(_ tags: [AnyHashable : Any]?) -> String? {
-        let houseNumber = tags?["addr:housenumber"] as? String
-        if let houseNumber = houseNumber {
-            let unitNumber = tags?["addr:unit"] as? String
-            if let unitNumber = unitNumber {
-                return "\(houseNumber)/\(unitNumber)"
-            }
-        }
-        return houseNumber
+    private func HouseNumberForObjectTags(_ tags: [String : String]) -> String? {
+		guard let houseNumber = tags["addr:housenumber"] else {
+			return nil
+		}
+		if let unitNumber = tags["addr:unit"] {
+			return "\(houseNumber)/\(unitNumber)"
+		}
+		return houseNumber
     }
     
     

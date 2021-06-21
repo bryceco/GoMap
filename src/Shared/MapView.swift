@@ -93,25 +93,6 @@ protocol MapViewProgress {
 private let DisplayLinkHeading = "Heading"
 private let DisplayLinkPanning = "Panning" // disable gestures inside toolbar buttons
 
-private func StateFor(_ state: MapViewState, zoomedOut: Bool) -> MapViewState {
-	if zoomedOut && state == .EDITOR {
-        return .MAPNIK
-    }
-    if zoomedOut && state == .EDITORAERIAL {
-        return .AERIAL
-    }
-    return state
-}
-private func OverlaysFor(_ state: MapViewState, overlays: MapViewOverlays, zoomedOut: Bool) -> MapViewOverlays {
-	if zoomedOut && state == .EDITORAERIAL {
-		return overlays.union(.LOCATOR)
-	}
-	if !zoomedOut {
-		return overlays.subtracting(.NONAME)
-	}
-	return overlays
-}
-
 /// Localized names of edit actions
 private func ActionTitle(_ action: EDIT_ACTION, _ abbrev: Bool) -> String {
     switch action {
@@ -264,10 +245,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
             // update transform
 			mapTransform.transform = t
 
-            // determine if we've zoomed out enough to disable editing
-            let bbox = screenLatLonRect()
-            let area = SurfaceAreaOfRect(bbox)
-            var isZoomedOut = area > 2.0 * 1000 * 1000
+            // Determine if we've zoomed out enough to disable editing
+			// We can only compute a precise surface area size at high zoom since it's possible
+			// for the earth to be larger than the screen
+			let area = mapTransform.zoom() > 12 ? SurfaceAreaOfRect(screenLatLonRect()) : Double.greatestFiniteMagnitude
+			var isZoomedOut = area > 2.0 * 1000 * 1000
 			if !editorLayer.isHidden && !editorLayer.atVisibleObjectLimit && area < 200.0 * 1000 * 1000 {
 				isZoomedOut = false
             }
@@ -1168,6 +1150,21 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
             return
 		}
 
+		func StateFor(_ state: MapViewState, zoomedOut: Bool) -> MapViewState {
+			if zoomedOut && state == .EDITOR 		{	return .MAPNIK	}
+			if zoomedOut && state == .EDITORAERIAL 	{	return .AERIAL	}
+			return state
+		}
+		func OverlaysFor(_ state: MapViewState, overlays: MapViewOverlays, zoomedOut: Bool) -> MapViewOverlays {
+			if zoomedOut && state == .EDITORAERIAL	{	return overlays.union(.LOCATOR)		}
+			if !zoomedOut 							{	return overlays.subtracting(.NONAME)}
+			return overlays
+		}
+
+		// Things are complicated because the user has their own preference for the view
+		// but when they zoom out we make automatic substitutions:
+		// 	Editor only --> Mapnik
+		//	Editor+Aerial --> Aerial+Locator
 		let oldState = StateFor(viewState, zoomedOut: viewStateZoomedOut)
 		let newState = StateFor(state, zoomedOut: zoomedOut)
 		let oldOverlays = OverlaysFor(viewState, overlays: viewOverlayMask, zoomedOut: viewStateZoomedOut)

@@ -114,7 +114,7 @@ final class PresetsForFeature {
 				keyboard: UIKeyboardType.default,
 				capitalize: UITextAutocapitalizationType.none,
 				presets: nil)
-		let name = PresetsDatabase.shared.jsonFields["name"] as? [AnyHashable:Any]
+		let name = PresetsDatabase.shared.jsonFields["name"] as? [String:Any]
 		let nameTag = PresetKey(
 				name: name?["label"] as? String ?? "Name",
 				tagKey: "name",

@@ -404,7 +404,7 @@ final class OsmXmlGenerator {
 		}
 	}
 
-	static private func update(_ string: NSMutableAttributedString, withHeader header: String, objects: [AnyHashable]?) {
+	static private func update(_ string: NSMutableAttributedString, withHeader header: String, objects: [Any]?) {
 		guard let objects = objects,
 			  objects.count > 0
 		else {

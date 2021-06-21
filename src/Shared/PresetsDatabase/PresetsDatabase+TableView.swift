@@ -252,8 +252,8 @@ extension PresetsDatabase {
 				  let rawData = try? Data(contentsOf: url)
 			else { return }
 
-			let json = try? JSONSerialization.jsonObject(with: rawData, options: []) as? [AnyHashable : Any]
-			let results = json?["data"] as? [[AnyHashable : Any]] ?? []
+			let json = try? JSONSerialization.jsonObject(with: rawData, options: []) as? [String : Any]
+			let results = json?["data"] as? [[String : Any]] ?? []
 			var resultList: [String] = []
 			if searchKeys {
 				for v in results {
@@ -353,7 +353,7 @@ extension PresetsDatabase {
 
 	func groupForField( fieldName: String, geometry: String, ignore: [String]?, update: (() -> Void)?) -> PresetGroup?
 	{
-		guard let dict = jsonFields[fieldName] as? [AnyHashable : Any] else { return nil }
+		guard let dict = jsonFields[fieldName] as? [String : Any] else { return nil }
 		if dict.count == 0 {
 			return nil
 		}

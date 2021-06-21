@@ -17,7 +17,10 @@ final class TileServerList {
 	private var userDefinedList: [TileServer] = [] // user-defined tile servers
 	private var downloadedList: [TileServer] = [] // downloaded on each launch
 	private var _recentlyUsed: [TileServer] = []
-    private(set) var lastDownloadDate: Date?
+    private(set) var lastDownloadDate: Date? {
+		get { UserDefaults.standard.object(forKey: "lastImageryDownloadDate") as? Date }
+		set { UserDefaults.standard.set(newValue, forKey: "lastImageryDownloadDate") }
+	}
 
     init() {
         fetchOsmLabAerials({ [self] in
@@ -70,7 +73,7 @@ final class TileServerList {
 		path.closeSubpath()
 	}
     
-	private func processOsmLabAerialsList(_ featureArray: [AnyHashable]?, isGeoJSON: Bool) -> [TileServer] {
+	private func processOsmLabAerialsList(_ featureArray: [Any]?, isGeoJSON: Bool) -> [TileServer] {
          let categories = [
              "photo": true,
              "elevation": true
@@ -170,15 +173,15 @@ final class TileServerList {
 				}
 			}
 
-			 var polygonPoints: [AnyHashable]? = nil
+			 var polygonPoints: [Any]? = nil
 			 var isMultiPolygon = false // a GeoJSON multipolygon, which has an extra layer of nesting
 			 if isGeoJSON {
 				if let geometry = entry["geometry"] as? [String : Any] {
-					polygonPoints = geometry["coordinates"] as? [AnyHashable]
+					polygonPoints = geometry["coordinates"] as? [Any]
 					isMultiPolygon = (geometry["type"] as? String ?? "") == "MultiPolygon"
 				}
 			} else {
-				polygonPoints = propExtent["polygon"] as? [AnyHashable]
+				polygonPoints = propExtent["polygon"] as? [Any]
 			}
 
 			var polygon: CGPath? = nil
@@ -264,9 +267,9 @@ final class TileServerList {
 		guard let data = data,
 			  data.count > 0
 		else { return [] }
-        
+
 		let json = try? JSONSerialization.jsonObject(with: data, options: [])
-		if let json = json as? [AnyHashable] {
+		if let json = json as? [Any] {
 			// unversioned (old ELI) variety
 			return processOsmLabAerialsList(json, isGeoJSON: false)
 		}
@@ -281,7 +284,7 @@ final class TileServerList {
 			} else {
 				// josm variety
 			}
-			let features = json["features"] as? [AnyHashable]
+			let features = json["features"] as? [Any]
 			return processOsmLabAerialsList(features, isGeoJSON: true)
 		}
 		return []
@@ -289,44 +292,63 @@ final class TileServerList {
     
 	private func fetchOsmLabAerials(_ completion: @escaping () -> Void) {
         // get cached data
-		let cachedData = NSData(contentsOfFile: pathToExternalAerialsCache()) as Data?
-        let now = Date()
-		self.lastDownloadDate = UserDefaults.standard.object(forKey: "lastImageryDownloadDate") as? Date
-		if cachedData == nil || (lastDownloadDate != nil && now.timeIntervalSince(lastDownloadDate!) >= 60 * 60 * 24 * 7) {
+		var cachedData = NSData(contentsOfFile: pathToExternalAerialsCache()) as Data?
+		if let data = cachedData {
+			var delta = CACurrentMediaTime()
+			let externalAerials = processOsmLabAerialsData(data)
+			delta = CACurrentMediaTime() - delta
+			print("TileServerList decode time = \(delta)")
+			downloadedList = externalAerials
+			completion()
+
+			if externalAerials.count < 100 {
+				// something went wrong, so we need to download
+				cachedData = nil
+			}
+		}
+
+		if let last = lastDownloadDate {
+			if -last.timeIntervalSinceNow >= 60 * 60 * 24 * 7 {
+				cachedData = nil
+			}
+		} else {
+			cachedData = nil
+		}
+
+		if cachedData == nil {
 			// download newer version periodically
 			let urlString = "https://josm.openstreetmap.de/maps?format=geojson"
 			//NSString * urlString = @"https://osmlab.github.io/editor-layer-index/imagery.geojson";
-			let downloadUrl = URL(string: urlString)
-			var downloadTask: URLSessionDataTask? = nil
-			if let downloadUrl = downloadUrl {
-				downloadTask = URLSession.shared.dataTask(with: downloadUrl, completionHandler: { [self] data, response, error in
-					UserDefaults.standard.set(now, forKey: "lastImageryDownloadDate")
-					let externalAerials = processOsmLabAerialsData(data)
-					if externalAerials.count > 100 {
-						// cache download for next time
-						do {
-							let fileUrl = URL(fileURLWithPath: pathToExternalAerialsCache())
-							try data?.write(to: fileUrl, options: .atomic)
-						} catch {
+			if let downloadUrl = URL(string: urlString) {
+				let downloadTask = URLSession.shared.dataTask(with: downloadUrl, completionHandler: { [self] data, response, error in
+					if let data = data,
+					   let httpResponse = response as? HTTPURLResponse,
+					   httpResponse.statusCode >= 200 && httpResponse.statusCode < 300,
+					   error == nil
+					{
+						if data.count > 100_000 {
+							// if the data is large then only download again periodically
+							self.lastDownloadDate = Date()
 						}
-						// notify caller of update
-						DispatchQueue.main.async(execute: { [self] in
-							downloadedList = externalAerials
-							completion()
-						})
+						let externalAerials = processOsmLabAerialsData(data)
+						if externalAerials.count > 100 {
+							// cache download for next time
+							let fileUrl = URL(fileURLWithPath: pathToExternalAerialsCache())
+							try? data.write(to: fileUrl, options: .atomic)
+
+							// notify caller of update
+							DispatchQueue.main.async(execute: { [self] in
+								downloadedList = externalAerials
+								completion()
+							})
+						}
 					}
 				})
+				downloadTask.resume()
 			}
-			downloadTask?.resume()
-			self.lastDownloadDate = now
         }
-        
-        // read cached version
-        let externalAerials = processOsmLabAerialsData(cachedData)
-        downloadedList = externalAerials
-        completion()
-    }
-    
+	}
+
 	private func load() {
 		let list = UserDefaults.standard.object(forKey: CUSTOMAERIALLIST_KEY) as? [[String:Any]] ?? []
 		self.userDefinedList = list.map({ TileServer(withDictionary: $0) })
@@ -363,7 +385,7 @@ final class TileServerList {
         defaults.set(a, forKey: CUSTOMAERIALLIST_KEY)
         defaults.set(currentServer.identifier, forKey: CUSTOMAERIALSELECTION_KEY)
         
-        var recents: [AnyHashable] = []
+        var recents: [Any] = []
         for service in _recentlyUsed {
 			recents.append(service.identifier )
         }

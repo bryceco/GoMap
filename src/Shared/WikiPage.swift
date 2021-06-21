@@ -148,12 +148,12 @@ class WikiPage {
                                 }
                             } catch {
                             }
-                            let entitiesDict = json?["entities"] as? [AnyHashable : Any]
+                            let entitiesDict = json?["entities"] as? [String : Any]
                             (entitiesDict as NSDictionary?)?.enumerateKeysAndObjects({ name, entityDict, stop in
-                                let claims = entityDict["claims"] as? [AnyHashable : Any]
+                                let claims = entityDict["claims"] as? [String : Any]
                                 if let claim = claims?["P31"] {
                                     for lang in claim {
-                                        let value = lang["mainsnak"]["datavalue"]["value"] as? [AnyHashable : Any]
+                                        let value = lang["mainsnak"]["datavalue"]["value"] as? [String : Any]
                                         let pageTitle = value?["text"] as? String
                                         let pageLanguage = value?["language"] as? String
                                         print("\(pageLanguage ?? "") = \(pageTitle ?? "")")
