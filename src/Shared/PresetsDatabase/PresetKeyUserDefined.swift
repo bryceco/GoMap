@@ -13,8 +13,8 @@ import UIKit
 final class PresetKeyUserDefined: PresetKey {
 	override public class var supportsSecureCoding: Bool { return true }
 
-	let appliesToKey: String		// "" if not used
-	let appliesToValue: String	// "" if not used
+	let appliesToKey: String // "" if not used
+	let appliesToValue: String // "" if not used
 
 	required init?(coder: NSCoder) {
 		if let appliesToKey = coder.decodeObject(forKey: "appliesToKey") as? String,
@@ -28,24 +28,24 @@ final class PresetKeyUserDefined: PresetKey {
 		}
 	}
 
-	init(appliesToKey: String,	// empty string is possible
-			   appliesToValue: String,	// empty string is possible
-			   name: String,
-			   tagKey key: String,
-			   placeholder: String?,
-			   keyboard: UIKeyboardType,
-			   capitalize: UITextAutocapitalizationType,
-			   presets: [PresetValue])
+	init(appliesToKey: String, // empty string is possible
+	     appliesToValue: String, // empty string is possible
+	     name: String,
+	     tagKey key: String,
+	     placeholder: String?,
+	     keyboard: UIKeyboardType,
+	     capitalize: UITextAutocapitalizationType,
+	     presets: [PresetValue])
 	{
 		self.appliesToKey = appliesToKey
 		self.appliesToValue = appliesToValue
 		super.init(name: name,
-				   tagKey: key,
-				   defaultValue: nil,
-				   placeholder: placeholder,
-				   keyboard: keyboard,
-				   capitalize: capitalize,
-				   presets: presets)
+		           tagKey: key,
+		           defaultValue: nil,
+		           placeholder: placeholder,
+		           keyboard: keyboard,
+		           capitalize: capitalize,
+		           presets: presets)
 	}
 
 	override func encode(with coder: NSCoder) {
@@ -56,7 +56,7 @@ final class PresetKeyUserDefined: PresetKey {
 }
 
 class PresetKeyUserDefinedList {
-	private (set) var list: [PresetKeyUserDefined] = []
+	private(set) var list: [PresetKeyUserDefined] = []
 
 	public static let shared = PresetKeyUserDefinedList()
 
@@ -68,8 +68,8 @@ class PresetKeyUserDefinedList {
 			if #available(iOS 11.0, *) {
 				let data = try Data(contentsOf: URL(fileURLWithPath: path))
 				let classList = [NSArray.self,
-								 PresetKeyUserDefined.self,
-								 PresetValue.self]
+				                 PresetKeyUserDefined.self,
+				                 PresetValue.self]
 				list = try NSKeyedUnarchiver.unarchivedObject(ofClasses: classList, from: data) as? [PresetKeyUserDefined] ?? []
 			} else {
 				let oldList = NSKeyedUnarchiver.unarchiveObject(withFile: path)
@@ -84,7 +84,7 @@ class PresetKeyUserDefinedList {
 	func save() {
 		let path = PresetKeyUserDefinedList.archivePath()
 		if #available(iOS 11.0, *) {
-			let data = try? NSKeyedArchiver.archivedData(withRootObject: list as NSArray, requiringSecureCoding:true)
+			let data = try? NSKeyedArchiver.archivedData(withRootObject: list as NSArray, requiringSecureCoding: true)
 			try? data?.write(to: URL(fileURLWithPath: path))
 		} else {
 			NSKeyedArchiver.archiveRootObject(list as NSArray, toFile: path)
@@ -95,7 +95,7 @@ class PresetKeyUserDefinedList {
 		list.insert(preset, at: index)
 	}
 
-	func removePresetAtIndex(_ index: Int ) {
+	func removePresetAtIndex(_ index: Int) {
 		list.remove(at: index)
 	}
 

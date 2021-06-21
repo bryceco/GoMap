@@ -8,11 +8,10 @@
 
 import Foundation
 
-
 // A possible value for a preset key
 final class PresetValue: NSObject, NSSecureCoding {
 	static let supportsSecureCoding: Bool = true
-	
+
 	let name: String
 	let details: String?
 	let tagValue: String
@@ -20,7 +19,7 @@ final class PresetValue: NSObject, NSSecureCoding {
 	init(name: String?, details: String?, tagValue value: String) {
 		self.name = name ?? OsmTags.PrettyTag(value)
 		self.details = details
-		self.tagValue = value
+		tagValue = value
 	}
 
 	func encode(with coder: NSCoder) {
@@ -30,7 +29,7 @@ final class PresetValue: NSObject, NSSecureCoding {
 	}
 
 	required init?(coder: NSCoder) {
-		self.details = coder.decodeObject(forKey: "details") as? String
+		details = coder.decodeObject(forKey: "details") as? String
 		if let name = coder.decodeObject(forKey: "name") as? String,
 		   let tagValue = coder.decodeObject(forKey: "tagValue") as? String
 		{

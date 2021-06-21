@@ -11,7 +11,6 @@ import zlib
 
 /// Compression level whose rawValue is based on the zlib's constants.
 public struct CompressionLevel: RawRepresentable {
-
 	/// Compression level in the range of `0` (no compression) to `9` (maximum compression).
 	public let rawValue: Int32
 
@@ -19,7 +18,6 @@ public struct CompressionLevel: RawRepresentable {
 	public static let bestSpeed = CompressionLevel(Z_BEST_SPEED)
 	public static let bestCompression = CompressionLevel(Z_BEST_COMPRESSION)
 	public static let defaultCompression = CompressionLevel(Z_DEFAULT_COMPRESSION)
-
 
 	public init(rawValue: Int32) {
 		self.rawValue = rawValue
@@ -29,7 +27,6 @@ public struct CompressionLevel: RawRepresentable {
 		self.rawValue = rawValue
 	}
 }
-
 
 /// Errors on gzipping/gunzipping based on the zlib error codes.
 public struct GzipError: Swift.Error {
@@ -74,9 +71,7 @@ public struct GzipError: Swift.Error {
 	/// Returned message by zlib.
 	public let message: String
 
-
 	internal init(code: Int32, msg: UnsafePointer<CChar>?) {
-
 		self.message = {
 			guard let msg = msg, let message = String(validatingUTF8: msg) else {
 				return "Unknown gzip error"
@@ -102,20 +97,15 @@ public struct GzipError: Swift.Error {
 		}()
 	}
 
-
 	public var localizedDescription: String {
-
 		return self.message
 	}
-
 }
 
-
-extension Data {
+public extension Data {
 	/// Whether the receiver is compressed in gzip format.
-	public var isGzipped: Bool {
-
-		return self.starts(with: [0x1f, 0x8b])  // check magic number
+	var isGzipped: Bool {
+		return self.starts(with: [0x1F, 0x8B]) // check magic number
 	}
 
 	/// Create a new `Data` instance by compressing the receiver using zlib.
@@ -124,8 +114,7 @@ extension Data {
 	/// - Parameter level: Compression level.
 	/// - Returns: Gzip-compressed `Data` instance.
 	/// - Throws: `GzipError`
-	public func gzipped(level: CompressionLevel = .defaultCompression) throws -> Data {
-
+	func gzipped(level: CompressionLevel = .defaultCompression) throws -> Data {
 		guard !self.isEmpty else {
 			return Data()
 		}
@@ -180,14 +169,12 @@ extension Data {
 		return data
 	}
 
-
 	/// Create a new `Data` instance by decompressing the receiver using zlib.
 	/// Throws an error if decompression failed.
 	///
 	/// - Returns: Gzip-decompressed `Data` instance.
 	/// - Throws: `GzipError`
-	public func gUnzipped() throws -> Data {
-
+	func gUnzipped() throws -> Data {
 		guard !self.isEmpty else {
 			return Data()
 		}
@@ -247,9 +234,7 @@ extension Data {
 
 		return data
 	}
-
 }
-
 
 private enum DataSize {
 	static let chunk = 1 << 14

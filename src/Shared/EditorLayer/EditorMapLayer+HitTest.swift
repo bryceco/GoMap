@@ -10,9 +10,9 @@ import CoreGraphics
 import CoreLocation
 
 extension EditorMapLayer {
-
 	// MARK: Hit Testing
-	@inline(__always) static private func HitTestLineSegment(_ point: LatLon, _ maxDegrees: OSMSize, _ coord1: LatLon, _ coord2: LatLon) -> CGFloat {
+
+	@inline(__always) private static func HitTestLineSegment(_ point: LatLon, _ maxDegrees: OSMSize, _ coord1: LatLon, _ coord2: LatLon) -> CGFloat {
 		var line1 = OSMPoint(x: coord1.lon - point.lon, y: coord1.lat - point.lat)
 		var line2 = OSMPoint(x: coord2.lon - point.lon, y: coord2.lat - point.lat)
 		let pt = OSMPoint(x: 0, y: 0)
@@ -26,7 +26,6 @@ extension EditorMapLayer {
 		let dist = pt.distanceToLineSegment(line1, line2)
 		return CGFloat(dist)
 	}
-
 
 	private static func osmHitTest(way: OsmWay, location: LatLon, maxDegrees: OSMSize, segment: inout Int) -> CGFloat {
 		var previous = LatLon.zero
@@ -48,7 +47,7 @@ extension EditorMapLayer {
 
 	private static func osmHitTest(node: OsmNode, location: LatLon, maxDegrees: OSMSize) -> CGFloat {
 		let delta = OSMPoint(x: (location.lon - node.latLon.lon) / maxDegrees.width,
-							 y: (location.lat - node.latLon.lat) / maxDegrees.height)
+		                     y: (location.lat - node.latLon.lat) / maxDegrees.height)
 		let dist = hypot(delta.x, delta.y)
 		return CGFloat(dist)
 	}
@@ -61,15 +60,15 @@ extension EditorMapLayer {
 		objects: ContiguousArray<OsmBaseObject>,
 		testNodes: Bool,
 		ignoreList: [OsmBaseObject],
-		block: @escaping (_ obj: OsmBaseObject, _ dist: CGFloat, _ segment: Int) -> Void
-	) {
+		block: @escaping (_ obj: OsmBaseObject, _ dist: CGFloat, _ segment: Int) -> Void)
+	{
 		let location = owner.mapTransform.latLon(forScreenPoint: point)
 		let viewCoord = owner.screenLatLonRect()
 		let pixelsPerDegree = OSMSize(width: Double(owner.bounds.size.width) / viewCoord.size.width,
-									  height: Double(owner.bounds.size.height) / viewCoord.size.height)
+		                              height: Double(owner.bounds.size.height) / viewCoord.size.height)
 
 		let maxDegrees = OSMSize(width: Double(radius) / pixelsPerDegree.width,
-								 height: Double(radius) / pixelsPerDegree.height)
+		                         height: Double(radius) / pixelsPerDegree.height)
 		let NODE_BIAS = 0.5 // make nodes appear closer so they can be selected
 
 		var parentRelations: Set<OsmRelation> = []
@@ -81,7 +80,7 @@ extension EditorMapLayer {
 			if let node = object as? OsmNode {
 				if !ignoreList.contains(node) {
 					if testNodes || node.wayCount == 0 {
-						var dist = self.osmHitTest(node: node, location: location, maxDegrees: maxDegrees)
+						var dist = osmHitTest(node: node, location: location, maxDegrees: maxDegrees)
 						dist *= CGFloat(NODE_BIAS)
 						if dist <= 1.0 {
 							block(node, dist, 0)
@@ -92,7 +91,7 @@ extension EditorMapLayer {
 			} else if let way = object as? OsmWay {
 				if !ignoreList.contains(way) {
 					var seg = 0
-					let distToWay = self.osmHitTest(way: way, location: location, maxDegrees: maxDegrees, segment: &seg)
+					let distToWay = osmHitTest(way: way, location: location, maxDegrees: maxDegrees, segment: &seg)
 					if distToWay <= 1.0 {
 						block(way, distToWay, seg)
 						parentRelations.formUnion(Set(way.parentRelations))
@@ -103,7 +102,7 @@ extension EditorMapLayer {
 						if ignoreList.contains(node) {
 							continue
 						}
-						var dist = self.osmHitTest(node: node, location: location, maxDegrees: maxDegrees)
+						var dist = osmHitTest(node: node, location: location, maxDegrees: maxDegrees)
 						dist *= CGFloat(NODE_BIAS)
 						if dist < 1.0 {
 							block(node, dist, 0)
@@ -112,7 +111,7 @@ extension EditorMapLayer {
 					}
 				}
 			} else if let relation = object as? OsmRelation,
-					  relation.isMultipolygon()
+			          relation.isMultipolygon()
 			{
 				if !ignoreList.contains(relation) {
 					var bestDist: CGFloat = 10000.0
@@ -121,7 +120,7 @@ extension EditorMapLayer {
 							if !ignoreList.contains(way) {
 								if (member.role == "inner") || (member.role == "outer") {
 									var seg = 0
-									let dist = self.osmHitTest(way: way, location: location, maxDegrees: maxDegrees, segment: &seg)
+									let dist = osmHitTest(way: way, location: location, maxDegrees: maxDegrees, segment: &seg)
 									if dist < bestDist {
 										bestDist = dist
 									}
@@ -143,17 +142,17 @@ extension EditorMapLayer {
 
 	// default hit test when clicking on the map, or drag-connecting
 	func osmHitTest(_ point: CGPoint,
-					radius: CGFloat,
-					isDragConnect: Bool,
-					ignoreList: [OsmBaseObject],
-					segment pSegment: inout Int) -> OsmBaseObject?
+	                radius: CGFloat,
+	                isDragConnect: Bool,
+	                ignoreList: [OsmBaseObject],
+	                segment pSegment: inout Int) -> OsmBaseObject?
 	{
-		if self.isHidden {
+		if isHidden {
 			return nil
 		}
 
 		var bestDist: CGFloat = 1000000
-		var best: [OsmBaseObject : Int] = [:]
+		var best: [OsmBaseObject: Int] = [:]
 		EditorMapLayer.osmHitTestEnumerate(point, radius: radius, owner: owner, objects: shownObjects, testNodes: isDragConnect, ignoreList: ignoreList, block: { obj, dist, segment in
 			if dist < bestDist {
 				bestDist = dist
@@ -167,7 +166,7 @@ extension EditorMapLayer {
 			return nil
 		}
 
-		var pick: OsmBaseObject? = nil
+		var pick: OsmBaseObject?
 		if isDragConnect {
 			// prefer to connecct to a way in a relation over the relation itself, which is opposite what we do when selecting by tap
 			for obj in best.keys {
@@ -179,7 +178,8 @@ extension EditorMapLayer {
 		} else {
 			// performing selection by tap
 			if pick == nil,
-			   let relation = selectedRelation {
+			   let relation = selectedRelation
+			{
 				// pick a way that is a member of the relation if possible
 				for member in relation.members {
 					if let obj = member.obj,
@@ -190,7 +190,7 @@ extension EditorMapLayer {
 					}
 				}
 			}
-			if pick == nil && selectedPrimary == nil {
+			if pick == nil, selectedPrimary == nil {
 				// nothing currently selected, so prefer relations
 				for obj in best.keys {
 					if obj.isRelation() != nil {
@@ -211,7 +211,7 @@ extension EditorMapLayer {
 	// return all nearby objects
 	func osmHitTestMultiple(_ point: CGPoint, radius: CGFloat) -> [OsmBaseObject] {
 		var objectSet: Set<OsmBaseObject> = []
-		EditorMapLayer.osmHitTestEnumerate(point, radius: radius, owner: owner, objects: shownObjects, testNodes: true, ignoreList: [], block: { obj, dist, segment in
+		EditorMapLayer.osmHitTestEnumerate(point, radius: radius, owner: owner, objects: shownObjects, testNodes: true, ignoreList: [], block: { obj, _, _ in
 			objectSet.insert(obj)
 		})
 		var objectList = Array(objectSet)
@@ -228,27 +228,26 @@ extension EditorMapLayer {
 
 	// drill down to a node in the currently selected way
 	func osmHitTestNode(inSelectedWay point: CGPoint, radius: CGFloat) -> OsmNode? {
-		guard let selectedWay = selectedWay	else {
+		guard let selectedWay = selectedWay else {
 			return nil
 		}
-		var hit: OsmNode? = nil
+		var hit: OsmNode?
 		var bestDist: CGFloat = 1000000
 		EditorMapLayer.osmHitTestEnumerate(point,
-										   radius: radius,
-										   owner: owner,
-										   objects: ContiguousArray<OsmBaseObject>(selectedWay.nodes),
-										   testNodes: true,
-										   ignoreList: [],
-										   block: { obj, dist, segment in
-			if dist < bestDist {
-				bestDist = dist
-				hit = (obj as! OsmNode)
-			}
-		})
+		                                   radius: radius,
+		                                   owner: owner,
+		                                   objects: ContiguousArray<OsmBaseObject>(selectedWay.nodes),
+		                                   testNodes: true,
+		                                   ignoreList: [],
+		                                   block: { obj, dist, _ in
+		                                   	if dist < bestDist {
+		                                   		bestDist = dist
+		                                   		hit = (obj as! OsmNode)
+		                                   	}
+		                                   })
 		if bestDist <= 1.0 {
 			return hit
 		}
 		return nil
 	}
-
 }

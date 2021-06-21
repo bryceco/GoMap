@@ -8,13 +8,13 @@
 
 import Foundation
 
-//#define OpenStreetMap_DLog_h
+// #define OpenStreetMap_DLog_h
 
-//#define DLog(...) NSLog( __VA_ARGS__ )
+// #define DLog(...) NSLog( __VA_ARGS__ )
 func DbgAssert(_ x: Bool) {
-	#if DEBUG
+#if DEBUG
 	assert(x, "unspecified")
-	#endif
+#endif
 }
 
 func mach_task_self() -> task_t {
@@ -25,13 +25,12 @@ func MemoryUsed() -> Double {
 	var info = mach_task_basic_info()
 	var count = mach_msg_type_number_t(MemoryLayout.size(ofValue: info) / MemoryLayout<integer_t>.size)
 	let kerr = withUnsafeMutablePointer(to: &info) { infoPtr in
-		return infoPtr.withMemoryRebound(to: integer_t.self, capacity: Int(count)) { (machPtr: UnsafeMutablePointer<integer_t>) in
-			return task_info(
+		infoPtr.withMemoryRebound(to: integer_t.self, capacity: Int(count)) { (machPtr: UnsafeMutablePointer<integer_t>) in
+			task_info(
 				mach_task_self(),
 				task_flavor_t(MACH_TASK_BASIC_INFO),
 				machPtr,
-				&count
-			)
+				&count)
 		}
 	}
 	guard kerr == KERN_SUCCESS else {

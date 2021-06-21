@@ -10,12 +10,12 @@ import QuartzCore
 import UIKit
 
 class CreditsViewController: UIViewController {
-    @IBOutlet var _textView: UITextView!
+	@IBOutlet var _textView: UITextView!
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	override func viewDidLoad() {
+		super.viewDidLoad()
 
-        _textView.isEditable = false
-        _textView.layer.cornerRadius = 10.0
-    }
+		_textView.isEditable = false
+		_textView.layer.cornerRadius = 10.0
+	}
 }

@@ -8,9 +8,8 @@
 import UIKit
 
 UIApplicationMain(
-    CommandLine.argc,
-    CommandLine.unsafeArgv,
+	CommandLine.argc,
+	CommandLine.unsafeArgv,
 
-    NSStringFromClass(MyApplication.self), //was created at step 1
-    NSStringFromClass(AppDelegate.self)
-)
+	NSStringFromClass(MyApplication.self), // was created at step 1
+	NSStringFromClass(AppDelegate.self))

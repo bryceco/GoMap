@@ -10,15 +10,14 @@ import Foundation
 
 // not used as a class yet, maybe someday
 final class OsmTags {
-
-	static private let PrettyTagExpr: NSRegularExpression = {
+	private static let PrettyTagExpr: NSRegularExpression = {
 		do {
 			let e = try NSRegularExpression(
-					pattern: "^[abcdefghijklmnopqrstuvwxyz_:;]+$",
-					options: [])
-			 return e
+				pattern: "^[abcdefghijklmnopqrstuvwxyz_:;]+$",
+				options: [])
+			return e
 		} catch {
-			 abort()
+			abort()
 		}
 	}()
 
@@ -31,47 +30,46 @@ final class OsmTags {
 
 	@objc class func isOsmBooleanTrue(_ value: String?) -> Bool {
 		switch value {
-			case "true", "yes", "1":
-				return true
-			default:
-				return false
+		case "true", "yes", "1":
+			return true
+		default:
+			return false
 		}
 	}
 
 	@objc class func isOsmBooleanFalse(_ value: String?) -> Bool {
 		switch value {
-			case "false", "no", "0":
-				return true
-			default:
-				return false
+		case "false", "no", "0":
+			return true
+		default:
+			return false
 		}
 	}
 
-
 	// editing
 	static let tagsToAutomaticallyStrip: Set<String> =
-									 ["tiger:upload_uuid",
-									   "tiger:tlid",
-									   "tiger:source",
-									   "tiger:separated",
-									   "geobase:datasetName",
-									   "geobase:uuid",
-									   "sub_sea:type",
-									   "odbl",
-									   "odbl:note",
-									   "yh:LINE_NAME",
-									   "yh:LINE_NUM",
-									   "yh:STRUCTURE",
-									   "yh:TOTYUMONO",
-									   "yh:TYPE",
-									   "yh:WIDTH_RANK"]
+		["tiger:upload_uuid",
+		 "tiger:tlid",
+		 "tiger:source",
+		 "tiger:separated",
+		 "geobase:datasetName",
+		 "geobase:uuid",
+		 "sub_sea:type",
+		 "odbl",
+		 "odbl:note",
+		 "yh:LINE_NAME",
+		 "yh:LINE_NUM",
+		 "yh:STRUCTURE",
+		 "yh:TOTYUMONO",
+		 "yh:TYPE",
+		 "yh:WIDTH_RANK"]
 
 	@objc
 	static func IsInterestingKey(_ key: String) -> Bool {
 		if key == "attribution" ||
 			key == "created_by" ||
 			key == "source" ||
-			key == "odbl"	||
+			key == "odbl" ||
 			key.hasPrefix("tiger:") ||
 			key.hasPrefix("source:") ||
 			key.hasPrefix("source_ref") ||
@@ -86,11 +84,11 @@ final class OsmTags {
 		guard s.count < 256 else {
 			return s
 		}
-		return String(s.prefix( 255 ))
+		return String(s.prefix(255))
 	}
 
-	static func DictWithTagsTruncatedTo255(_ tags: [String : String]) -> [String : String] {
-		var newDict = [String : String](minimumCapacity: (tags.count))
+	static func DictWithTagsTruncatedTo255(_ tags: [String: String]) -> [String: String] {
+		var newDict = [String: String](minimumCapacity: tags.count)
 		for (key, value) in tags {
 			let keyInternal = StringTruncatedTo255(key)
 			let valueInternal = StringTruncatedTo255(value)
@@ -100,7 +98,7 @@ final class OsmTags {
 	}
 
 	// result is nil only if allowConflicts==false
-	static func Merge(ourTags: [String : String], otherTags: [String : String], allowConflicts: Bool) -> [String : String]? {
+	static func Merge(ourTags: [String: String], otherTags: [String: String], allowConflicts: Bool) -> [String: String]? {
 		guard !ourTags.isEmpty else { return otherTags }
 		guard !otherTags.isEmpty else { return ourTags }
 

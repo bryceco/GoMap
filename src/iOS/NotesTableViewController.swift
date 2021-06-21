@@ -10,55 +10,55 @@ import MapKit
 import UIKit
 
 class NotesTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
-    var newComment: String?
+	var newComment: String?
 
-    @IBOutlet var tableView: UITableView!
-    var note: OsmNote!
-    var mapView: MapView!
+	@IBOutlet var tableView: UITableView!
+	var note: OsmNote!
+	var mapView: MapView!
 
 	override func viewDidLoad() {
-        super.viewDidLoad()
+		super.viewDidLoad()
 
-        tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableView.automaticDimension
+		tableView.estimatedRowHeight = 100
+		tableView.rowHeight = UITableView.automaticDimension
 
-        // add extra space at bottom so keyboard doesn't cover elements
-        var rc = tableView.contentInset
-        rc.bottom += 70
-        tableView.contentInset = rc
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-
-    // MARK: - Table view data source
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-		return note.comments.count > 0 ? 2 : 1
-    }
-
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		if note.comments.count > 0 && section == 0 {
-            return NSLocalizedString("Note History", comment: "OSM note")
-        } else {
-            return NSLocalizedString("Update", comment: "update an osm note")
-        }
-    }
-
-    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        if section == 1 {
-            return "\n\n\n\n\n\n\n\n\n"
-        }
-        return nil
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 && note.comments.count > 0 ? note.comments.count : 2
+		// add extra space at bottom so keyboard doesn't cover elements
+		var rc = tableView.contentInset
+		rc.bottom += 70
+		tableView.contentInset = rc
 	}
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if indexPath.section == 0 && note.comments.count > 0 {
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+	}
+
+	// MARK: - Table view data source
+
+	func numberOfSections(in tableView: UITableView) -> Int {
+		return note.comments.count > 0 ? 2 : 1
+	}
+
+	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		if note.comments.count > 0, section == 0 {
+			return NSLocalizedString("Note History", comment: "OSM note")
+		} else {
+			return NSLocalizedString("Update", comment: "update an osm note")
+		}
+	}
+
+	func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+		if section == 1 {
+			return "\n\n\n\n\n\n\n\n\n"
+		}
+		return nil
+	}
+
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return section == 0 && note.comments.count > 0 ? note.comments.count : 2
+	}
+
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		if indexPath.section == 0, note.comments.count > 0 {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "noteCommentCell", for: indexPath) as! NotesCommentCell
 			let comment = note.comments[indexPath.row]
 			let user = comment.user.count > 0 ? comment.user : "anonymous"
@@ -67,52 +67,52 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 			if comment.text.count == 0 {
 				cell.commentBackground.isHidden = true
 				cell.comment.text = nil
-            } else {
-                cell.commentBackground.isHidden = false
-                cell.commentBackground.layer.cornerRadius = 5
-                cell.commentBackground.layer.borderColor = UIColor.black.cgColor
-                cell.commentBackground.layer.borderWidth = 1.0
-                cell.commentBackground.layer.masksToBounds = true
-                cell.comment.text = comment.text
-            }
-            return cell
+			} else {
+				cell.commentBackground.isHidden = false
+				cell.commentBackground.layer.cornerRadius = 5
+				cell.commentBackground.layer.borderColor = UIColor.black.cgColor
+				cell.commentBackground.layer.borderWidth = 1.0
+				cell.commentBackground.layer.masksToBounds = true
+				cell.comment.text = comment.text
+			}
+			return cell
 		} else if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "noteResolveCell", for: indexPath) as! NotesResolveCell
+			let cell = tableView.dequeueReusableCell(withIdentifier: "noteResolveCell", for: indexPath) as! NotesResolveCell
 			cell._text.layer.cornerRadius = 5.0
-            cell._text.layer.borderColor = UIColor.black.cgColor
-            cell._text.layer.borderWidth = 1.0
-            cell._text.delegate = self
-            cell._text.text = newComment
-            cell.commentButton.isEnabled = false
-            cell.resolveButton.isEnabled = note?.comments != nil
-            return cell
-        } else {
+			cell._text.layer.borderColor = UIColor.black.cgColor
+			cell._text.layer.borderWidth = 1.0
+			cell._text.delegate = self
+			cell._text.text = newComment
+			cell.commentButton.isEnabled = false
+			cell.resolveButton.isEnabled = note?.comments != nil
+			return cell
+		} else {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "noteDirectionsCell", for: indexPath) as UITableViewCell
 			return cell
-        }
-    }
+		}
+	}
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        view.endEditing(true)
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		view.endEditing(true)
 
-        if (self.note?.comments != nil) && indexPath.section == 0 {
-            // ignore
-        } else if indexPath.row == 1 {
-            // get directions
-            let coordinate = CLLocationCoordinate2DMake(self.note.lat, self.note.lon)
-            let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
-            let note = MKMapItem(placemark: placemark)
-            note.name = "OSM Note"
-            let current = MKMapItem.forCurrentLocation()
-            let options = [
-                MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
-            ]
-            MKMapItem.openMaps(with: [current, note], launchOptions: options)
-        }
-    }
+		if note?.comments != nil, indexPath.section == 0 {
+			// ignore
+		} else if indexPath.row == 1 {
+			// get directions
+			let coordinate = CLLocationCoordinate2DMake(self.note.lat, self.note.lon)
+			let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
+			let note = MKMapItem(placemark: placemark)
+			note.name = "OSM Note"
+			let current = MKMapItem.forCurrentLocation()
+			let options = [
+				MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
+			]
+			MKMapItem.openMaps(with: [current, note], launchOptions: options)
+		}
+	}
 
-    func commentAndResolve(_ resolve: Bool, sender: UIView?) {
-        view.endEditing(true)
+	func commentAndResolve(_ resolve: Bool, sender: UIView?) {
+		view.endEditing(true)
 		guard let cell: NotesResolveCell = sender?.superviewOfType()
 		else { return }
 
@@ -124,10 +124,10 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 			alert.dismiss(animated: true)
 			if let newNote = newNote {
 				note = newNote
-				DispatchQueue.main.async(execute: { [self] in
+				DispatchQueue.main.async { [self] in
 					done(nil)
 					mapView.refreshNoteButtonsFromDatabase()
-				})
+				}
 			} else {
 				let alert2 = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: errorMessage, preferredStyle: .alert)
 				alert2.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
@@ -152,20 +152,20 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 		}
 	}
 
-    @IBAction func done(_ sender: Any?) {
-        dismiss(animated: true)
-    }
+	@IBAction func done(_ sender: Any?) {
+		dismiss(animated: true)
+	}
 }
 
 class NotesCommentCell: UITableViewCell {
-    @IBOutlet var date: UILabel!
-    @IBOutlet var user: UILabel!
-    @IBOutlet var comment: UITextView!
-    @IBOutlet var commentBackground: UIView!
+	@IBOutlet var date: UILabel!
+	@IBOutlet var user: UILabel!
+	@IBOutlet var comment: UITextView!
+	@IBOutlet var commentBackground: UIView!
 }
 
 class NotesResolveCell: UITableViewCell {
-    @IBOutlet var _text: UITextView!
-    @IBOutlet var commentButton: UIButton!
-    @IBOutlet var resolveButton: UIButton!
+	@IBOutlet var _text: UITextView!
+	@IBOutlet var commentButton: UIButton!
+	@IBOutlet var resolveButton: UIButton!
 }

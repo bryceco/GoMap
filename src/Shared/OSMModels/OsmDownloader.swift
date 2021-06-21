@@ -15,21 +15,20 @@ struct OsmDownloadData {
 }
 
 class OsmDownloadParser: NSObject, XMLParserDelegate {
-
-	private var parserCurrentElementText: String = ""	// not currently used, it's mostly whitespace
+	private var parserCurrentElementText: String = "" // not currently used, it's mostly whitespace
 	private var parserStack: [Any] = []
 	private var parseError: Error?
 
-	private (set) var result: OsmDownloadData = OsmDownloadData()
+	private(set) var result = OsmDownloadData()
 
-	func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName: String?, attributes attributeDict: [String : String] = [:]) {
+	func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName: String?, attributes attributeDict: [String: String] = [:]) {
 		parserCurrentElementText = ""
 
 		if elementName == "node" {
 			guard let latText = attributeDict["lat"],
-				  let lonText = attributeDict["lon"],
-				  let lat = Double( latText ),
-				  let lon = Double( lonText )
+			      let lonText = attributeDict["lon"],
+			      let lat = Double(latText),
+			      let lon = Double(lonText)
 			else {
 				parseError = NSError(domain: "Parser", code: 102, userInfo: [
 					NSLocalizedDescriptionKey: "OSM parser: missing lat/lon"
@@ -39,11 +38,11 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			}
 			let node = OsmNode(fromXmlDict: attributeDict)!
 			node.setLongitude(lon, latitude: lat, undo: nil)
-			result.nodes.append( node )
+			result.nodes.append(node)
 			parserStack.append(node)
 		} else if elementName == "way" {
 			let way = OsmWay(fromXmlDict: attributeDict)!
-			result.ways.append( way )
+			result.ways.append(way)
 			parserStack.append(way)
 		} else if elementName == "tag" {
 			let key = attributeDict["k"]!
@@ -56,8 +55,8 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			parserStack.append("tag")
 		} else if elementName == "nd" {
 			guard let way = parserStack.last as? OsmWay,
-				  let ref = attributeDict["ref"],
-				  let ref = Int64(ref)
+			      let ref = attributeDict["ref"],
+			      let ref = Int64(ref)
 			else {
 				parser.abortParsing()
 				return
@@ -66,12 +65,12 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			parserStack.append("nd")
 		} else if elementName == "relation" {
 			let relation = OsmRelation(fromXmlDict: attributeDict)!
-			result.relations.append( relation )
+			result.relations.append(relation)
 			parserStack.append(relation)
 		} else if elementName == "member" {
 			guard let relation = parserStack.last as? OsmRelation,
-				  let ref = attributeDict["ref"],
-				  let ref = Int64(ref)
+			      let ref = attributeDict["ref"],
+			      let ref = Int64(ref)
 			else {
 				parser.abortParsing()
 				return
@@ -82,7 +81,6 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			relation.constructMember(member)
 			parserStack.append(member)
 		} else if elementName == "osm" {
-
 			// osm header
 			let version = attributeDict["version"]
 			if version != "0.6" {
@@ -101,15 +99,12 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 #endif
 			parserStack.append("bounds")
 		} else if elementName == "note" {
-
 			// issued by Overpass API server
 			parserStack.append(elementName)
 		} else if elementName == "meta" {
-
 			// issued by Overpass API server
 			parserStack.append(elementName)
 		} else {
-
 			DLog("OSM parser: Unknown tag '%@'", elementName)
 			parserStack.append(elementName)
 #if false
@@ -144,7 +139,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 		result = OsmDownloadData()
 	}
 
-	func parseStream(_ stream: InputStream) -> Result<OsmDownloadData,Error> {
+	func parseStream(_ stream: InputStream) -> Result<OsmDownloadData, Error> {
 		defer {
 			stream.close()
 		}
@@ -160,34 +155,33 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 		} else if !ok {
 			return .failure(NSError())
 		}
-		return .success( result )
+		return .success(result)
 	}
 }
 
-class OsmDownloader {
-
+enum OsmDownloader {
 	// http://wiki.openstreetmap.org/wiki/API_v0.6#Retrieving_map_data_by_bounding_box:_GET_.2Fapi.2F0.6.2Fmap
 	static func osmData(forUrl url: String,
-				 completion: @escaping (_ r: Result<OsmDownloadData,Error>) -> Void)
+	                    completion: @escaping (_ r: Result<OsmDownloadData, Error>) -> Void)
 	{
 		DownloadThreadPool.osmPool.stream(forUrl: url, callback: { result in
 			switch result {
-			case .success(let stream):
+			case let .success(stream):
 				if let error = stream.streamError {
-					DispatchQueue.main.async(execute: {
+					DispatchQueue.main.async {
 						completion(.failure(error))
-					})
+					}
 					return
 				}
 				let parser = OsmDownloadParser()
-				let result = parser.parseStream( stream )
-				DispatchQueue.main.async(execute: {
+				let result = parser.parseStream(stream)
+				DispatchQueue.main.async {
 					completion(result)
-				})
-			case .failure(let error):
-				DispatchQueue.main.async(execute: {
+				}
+			case let .failure(error):
+				DispatchQueue.main.async {
 					completion(.failure(error))
-				})
+				}
 				return
 			}
 		})

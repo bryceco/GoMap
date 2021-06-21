@@ -9,57 +9,57 @@
 import UIKit
 
 class NominatimViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
-    @IBOutlet var _searchBar: UISearchBar!
-	var _resultsArray: [[String:Any]] = []
-    @IBOutlet var _activityIndicator: UIActivityIndicatorView!
-    @IBOutlet var _tableView: UITableView!
-    var _historyArray: [String] = []
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        _activityIndicator.color = UIColor.black
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        _searchBar.becomeFirstResponder()
-        
-		_historyArray = UserDefaults.standard.object(forKey: "searchHistory") as? [String] ?? []
-	}
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        view.endEditing(true)
-        
-        super.viewWillDisappear(animated)
-        UserDefaults.standard.set(_historyArray, forKey: "searchHistory")
-    }
-    
-    // MARK: - Table view data source
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (_searchBar.text?.count ?? 0) != 0 ? _resultsArray.count : _historyArray.count
+	@IBOutlet var _searchBar: UISearchBar!
+	var _resultsArray: [[String: Any]] = []
+	@IBOutlet var _activityIndicator: UIActivityIndicatorView!
+	@IBOutlet var _tableView: UITableView!
+	var _historyArray: [String] = []
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		_activityIndicator.color = UIColor.black
 	}
 
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return UIView()
-    }
-    
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-    
-    static let tableViewCellIdentifier = "Cell"
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NominatimViewController.tableViewCellIdentifier, for: indexPath)
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		_searchBar.becomeFirstResponder()
+
+		_historyArray = UserDefaults.standard.object(forKey: "searchHistory") as? [String] ?? []
+	}
+
+	override func viewWillDisappear(_ animated: Bool) {
+		view.endEditing(true)
+
+		super.viewWillDisappear(animated)
+		UserDefaults.standard.set(_historyArray, forKey: "searchHistory")
+	}
+
+	// MARK: - Table view data source
+
+	func numberOfSections(in tableView: UITableView) -> Int {
+		return 1
+	}
+
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return (_searchBar.text?.count ?? 0) != 0 ? _resultsArray.count : _historyArray.count
+	}
+
+	func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+		return UIView()
+	}
+
+	func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+		return 44
+	}
+
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return UITableView.automaticDimension
+	}
+
+	static let tableViewCellIdentifier = "Cell"
+
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(withIdentifier: NominatimViewController.tableViewCellIdentifier, for: indexPath)
 
 		if _searchBar.text?.isEmpty ?? true {
 			cell.textLabel?.text = _historyArray[indexPath.row]
@@ -68,61 +68,61 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			cell.textLabel?.text = dict["display_name"] as? String
 		}
 		return cell
-    }
-    
-    @IBAction func cancel(_ sender: Any) {
-        dismiss(animated: true)
-    }
-    
-    func jump(toLat lat: Double, lon: Double) {
-        let appDelegate = AppDelegate.shared
-        let metersPerDegree = MetersPerDegreeAt(latitude: lat)
-        let minMeters: Double = 50
+	}
+
+	@IBAction func cancel(_ sender: Any) {
+		dismiss(animated: true)
+	}
+
+	func jump(toLat lat: Double, lon: Double) {
+		let appDelegate = AppDelegate.shared
+		let metersPerDegree = MetersPerDegreeAt(latitude: lat)
+		let minMeters: Double = 50
 		let widthDegrees = minMeters / metersPerDegree.y
-        
-        // disable GPS
+
+		// disable GPS
 		while appDelegate.mapView.gpsState != GPS_STATE.NONE {
 			appDelegate.mapView.mainViewController.toggleLocation(self)
-        }
-        
+		}
+
 		appDelegate.mapView.setTransformFor(latLon: LatLon(latitude: lat, longitude: lon),
-											width: widthDegrees)
-        
-        dismiss(animated: true)
-    }
-    
-    // MARK: - Table view delegate
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (_searchBar.text?.count ?? 0) == 0 {
-            // history item
-            _searchBar.text = _historyArray[indexPath.row]
+		                                    width: widthDegrees)
+
+		dismiss(animated: true)
+	}
+
+	// MARK: - Table view delegate
+
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		if (_searchBar.text?.count ?? 0) == 0 {
+			// history item
+			_searchBar.text = _historyArray[indexPath.row]
 			searchBarSearchButtonClicked(_searchBar)
-            return
-        }
-        
-        let dict = _resultsArray[indexPath.row]
-        if let box = dict["boundingbox"] as? [String] {
-            let lat1 = Double(box[0]) ?? 0.0
-            let lat2 = Double(box[1]) ?? 0.0
-            let lon1 = Double(box[2]) ?? 0.0
+			return
+		}
+
+		let dict = _resultsArray[indexPath.row]
+		if let box = dict["boundingbox"] as? [String] {
+			let lat1 = Double(box[0]) ?? 0.0
+			let lat2 = Double(box[1]) ?? 0.0
+			let lon1 = Double(box[2]) ?? 0.0
 			let lon2 = Double(box[3]) ?? 0.0
-            
+
 			let lat = (lat1 + lat2) / 2
 			let lon = (lon1 + lon2) / 2
-            
-            jump(toLat: lat, lon: lon)
-        }
-    }
-    
-    /// Looks for a pair of non-integer numbers in the string, and jump to it if found
-    func containsLatLon(_ text: String) -> Bool {
+
+			jump(toLat: lat, lon: lon)
+		}
+	}
+
+	/// Looks for a pair of non-integer numbers in the string, and jump to it if found
+	func containsLatLon(_ text: String) -> Bool {
 		let text = text.trimmingCharacters(in: .whitespacesAndNewlines)
 
 		// try parsing as a URL containing lat=,lon=
 		if let comps = URLComponents(string: text) {
-			if let lat = comps.queryItems?.first(where: {$0.name == "lat"})?.value,
-			   let lon = comps.queryItems?.first(where: {$0.name == "lon"})?.value,
+			if let lat = comps.queryItems?.first(where: { $0.name == "lat" })?.value,
+			   let lon = comps.queryItems?.first(where: { $0.name == "lon" })?.value,
 			   let lat = Double(lat),
 			   let lon = Double(lon)
 			{
@@ -132,59 +132,59 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			}
 		}
 
-        let scanner = Scanner(string: text)
-        let digits = CharacterSet(charactersIn: "-0123456789")
-        let comma = CharacterSet(charactersIn: ",°/")
-        scanner.charactersToBeSkipped = CharacterSet.whitespaces
+		let scanner = Scanner(string: text)
+		let digits = CharacterSet(charactersIn: "-0123456789")
+		let comma = CharacterSet(charactersIn: ",°/")
+		scanner.charactersToBeSkipped = CharacterSet.whitespaces
 
 		while !scanner.isAtEnd {
-            scanner.scanUpToCharacters(from: digits, into: nil)
-            let pos = scanner.scanLocation
+			scanner.scanUpToCharacters(from: digits, into: nil)
+			let pos = scanner.scanLocation
 			var lat: Double = 0.0
 			var lon: Double = 0.0
-            if scanner.scanDouble(&lat) && lat != Double(Int(lat)) && lat > -90 && lat < 90,
+			if scanner.scanDouble(&lat), lat != Double(Int(lat)), lat > -90, lat < 90,
 			   scanner.scanCharacters(from: comma, into: nil),
-			   scanner.scanDouble(&lon) && lon != Double(Int(lon)) && lon >= -180 && lon <= 180
+			   scanner.scanDouble(&lon), lon != Double(Int(lon)), lon >= -180, lon <= 180
 			{
-                updateHistory(with: "\(lat),\(lon)")
-                jump(toLat: lat, lon: lon)
-                return true
-            }
-            if scanner.scanLocation == pos && !scanner.isAtEnd {
-                scanner.scanLocation = pos + 1
-            }
-        }
-        return false
-    }
-    
-    func updateHistory(with string: String) {
+				updateHistory(with: "\(lat),\(lon)")
+				jump(toLat: lat, lon: lon)
+				return true
+			}
+			if scanner.scanLocation == pos, !scanner.isAtEnd {
+				scanner.scanLocation = pos + 1
+			}
+		}
+		return false
+	}
+
+	func updateHistory(with string: String) {
 		_historyArray.removeAll { $0 == string }
 		_historyArray.insert(string, at: 0)
-        while _historyArray.count > 20 {
+		while _historyArray.count > 20 {
 			_historyArray.removeLast()
-        }
-    }
-    
-    // MARK: Search bar delegate
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        dismiss(animated: true)
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-        
-        _resultsArray = []
-        guard let string = searchBar.text,
-			  !string.isEmpty
+		}
+	}
+
+	// MARK: Search bar delegate
+
+	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+		dismiss(animated: true)
+	}
+
+	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+		searchBar.resignFirstResponder()
+
+		_resultsArray = []
+		guard let string = searchBar.text,
+		      !string.isEmpty
 		else {
 			// no search
-			self._searchBar.perform(#selector(UIResponder.resignFirstResponder), with: nil, afterDelay: 0.1)
+			_searchBar.perform(#selector(UIResponder.resignFirstResponder), with: nil, afterDelay: 0.1)
 			return
 		}
 		if containsLatLon(string) {
-            return
-        }
+			return
+		}
 
 		// searching
 		_activityIndicator.startAnimating()
@@ -192,8 +192,8 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		let text = string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
 		let url = "https://nominatim.openstreetmap.org/search?q=\(text ?? "")&format=json&limit=50"
 		if let url1 = URL(string: url) {
-			let task = URLSession.shared.dataTask(with: url1, completionHandler: { [self] data, response, error in
-				DispatchQueue.main.async(execute: { [self] in
+			let task = URLSession.shared.dataTask(with: url1, completionHandler: { [self] data, _, error in
+				DispatchQueue.main.async { [self] in
 
 					_activityIndicator.stopAnimating()
 
@@ -216,7 +216,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 						 */
 
 						let json = try? JSONSerialization.jsonObject(with: data, options: [])
-						_resultsArray = json as? [[String:Any]] ?? []
+						_resultsArray = json as? [[String: Any]] ?? []
 						_tableView.reloadData()
 
 						if _resultsArray.count > 0 {
@@ -231,10 +231,10 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 						alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
 						present(alert, animated: true)
 					}
-				})
+				}
 			})
 			task.resume()
 		}
-        _tableView.reloadData()
-    }
+		_tableView.reloadData()
+	}
 }

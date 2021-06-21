@@ -10,20 +10,20 @@ import Foundation
 import UIKit
 
 final class LayerProperties {
-    public var transform: CATransform3D = CATransform3DIdentity
-	public var position: OSMPoint = OSMPoint.zero
-    public var offset = CGPoint.zero
+	public var transform: CATransform3D = CATransform3DIdentity
+	public var position = OSMPoint.zero
+	public var offset = CGPoint.zero
 	public var lineWidth: CGFloat = 0.0
-    public var is3D = false
-    public var isDirectional = false
+	public var is3D = false
+	public var isDirectional = false
 }
 
 protocol LayerPropertiesProviding: AnyObject {
-    var properties: LayerProperties { get }
+	var properties: LayerProperties { get }
 }
 
 class CALayerWithProperties: CALayer, LayerPropertiesProviding {
-    var properties = LayerProperties()
+	var properties = LayerProperties()
 }
 
 final class CAShapeLayerWithProperties: CAShapeLayer, LayerPropertiesProviding {

@@ -11,20 +11,20 @@ import Foundation
 @testable import Go_Map__
 
 class HeadingProviderMock: HeadingProviding {
-    var startUpdatingHeadingCalled = false
-    var stopUpdatingHeadingCalled = false
+	var startUpdatingHeadingCalled = false
+	var stopUpdatingHeadingCalled = false
 
-    // MARK: HeadingProviding
+	// MARK: HeadingProviding
 
-    var delegate: HeadingProviderDelegate?
+	var delegate: HeadingProviderDelegate?
 
-    var isHeadingAvailable: Bool = true
+	var isHeadingAvailable: Bool = true
 
-    func startUpdatingHeading() {
-        startUpdatingHeadingCalled = true
-    }
+	func startUpdatingHeading() {
+		startUpdatingHeadingCalled = true
+	}
 
-    func stopUpdatingHeading() {
-        stopUpdatingHeadingCalled = true
-    }
+	func stopUpdatingHeading() {
+		stopUpdatingHeadingCalled = true
+	}
 }

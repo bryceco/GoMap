@@ -9,27 +9,25 @@
 import Foundation
 
 final class PresetLanguages {
-	private let codeList : [String]
+	private let codeList: [String]
 
 	init() {
-
 		let path = Bundle.main.resourcePath! + "/presets/translations"
 		var languageFiles = [String]()
 		do {
 			languageFiles.append(contentsOf: try FileManager.default.contentsOfDirectory(atPath: path))
-		} catch {
-		}
+		} catch {}
 		var list = [String]()
 		for file in languageFiles {
 			let code = file.replacingOccurrences(of: ".json", with: "")
 			list.append(code)
 		}
-		list.sort(by: { (code1, code2) -> Bool in
+		list.sort(by: { code1, code2 -> Bool in
 			let s1 = PresetLanguages.languageNameForCode(code1) ?? ""
 			let s2 = PresetLanguages.languageNameForCode(code2) ?? ""
 			return s1.caseInsensitiveCompare(s2) == ComparisonResult.orderedAscending
 		})
-		self.codeList = list
+		codeList = list
 	}
 
 	func preferredLanguageIsDefault() -> Bool {
