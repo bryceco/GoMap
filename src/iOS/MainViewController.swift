@@ -298,14 +298,13 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			makeButtonNormal(view)
 
 			// background selection color
-			if view is UIButton {
-				let button = view as? UIButton
-				button?.addTarget(self, action: #selector(makeButtonHighlight(_:)), for: .touchDown)
-				button?.addTarget(self, action: #selector(makeButtonNormal(_:)), for: .touchUpInside)
-				button?.addTarget(self, action: #selector(makeButtonNormal(_:)), for: .touchUpOutside)
-				button?.addTarget(self, action: #selector(makeButtonNormal(_:)), for: .touchCancel)
+			if let button = view as? UIButton {
+				button.addTarget(self, action: #selector(makeButtonHighlight(_:)), for: .touchDown)
+				button.addTarget(self, action: #selector(makeButtonNormal(_:)), for: .touchUpInside)
+				button.addTarget(self, action: #selector(makeButtonNormal(_:)), for: .touchUpOutside)
+				button.addTarget(self, action: #selector(makeButtonNormal(_:)), for: .touchCancel)
 
-				button?.showsTouchWhenHighlighted = true
+				button.showsTouchWhenHighlighted = true
 			}
 		}
 	}
@@ -476,23 +475,15 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 	// MARK: Gesture recognizers
 
-	func addNodeQuick(_ recognizer: UILongPressGestureRecognizer?) {
-		if recognizer?.state == .began {
-			print("go")
-		}
-	}
-
-	func installGestureRecognizer(_ gesture: UIGestureRecognizer?, on button: UIButton?) {
+	func installGestureRecognizer(_ gesture: UIGestureRecognizer, on button: UIButton) {
 		let view = button
-		if (view?.gestureRecognizers?.count ?? 0) == 0 {
-			if let gesture = gesture {
-				view?.addGestureRecognizer(gesture)
-			}
+		if (view.gestureRecognizers?.count ?? 0) == 0 {
+			view.addGestureRecognizer(gesture)
 		}
 	}
 
-	@objc func displayButtonLongPressGesture(_ recognizer: UILongPressGestureRecognizer?) {
-		if recognizer?.state == .began {
+	@objc func displayButtonLongPressGesture(_ recognizer: UILongPressGestureRecognizer) {
+		if recognizer.state == .began {
 			// show the most recently used aerial imagery
 			let tileServerlList = mapView.tileServerList
 			let actionSheet = UIAlertController(
@@ -624,20 +615,23 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if sender is OsmNote {
-			var con: NotesTableViewController?
-			if segue.destination is NotesTableViewController {
+			let vc: NotesTableViewController
+			if let dest = segue.destination as? NotesTableViewController {
 				/// The `NotesTableViewController` is presented directly.
-				con = segue.destination as? NotesTableViewController
-			} else if segue.destination is UINavigationController {
-				let navigationController = segue.destination as? UINavigationController
-				if navigationController?.viewControllers.first is NotesTableViewController {
+				vc = dest
+			} else if let navigationController = segue.destination as? UINavigationController {
+				if let dest = navigationController.viewControllers.first as? NotesTableViewController {
 					/// The `NotesTableViewController` is wrapped in an `UINavigationController´.
-					con = navigationController?.viewControllers.first as? NotesTableViewController
+					vc = dest
+				} else {
+					return
 				}
+			} else {
+				return
 			}
 
-			con?.note = sender as? OsmNote
-			con?.mapView = mapView
+			vc.note = sender as? OsmNote
+			vc.mapView = mapView
 		}
 	}
 }
