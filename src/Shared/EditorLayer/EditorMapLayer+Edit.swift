@@ -14,20 +14,20 @@ enum EditError: Error {
 }
 
 extension EditorMapLayer {
-
 	func undo() {
-		self.mapData.undo()
-		self.setNeedsLayout()
+		mapData.undo()
+		setNeedsLayout()
 	}
+
 	func redo() {
-		self.mapData.redo()
-		self.setNeedsLayout()
+		mapData.redo()
+		setNeedsLayout()
 	}
 
 	// MARK: Copy/Paste
 
-	private var copyPasteTags: [String:String] {
-		get { return UserDefaults.standard.object(forKey: "copyPasteTags") as? [String : String] ?? [:] }
+	private var copyPasteTags: [String: String] {
+		get { return UserDefaults.standard.object(forKey: "copyPasteTags") as? [String: String] ?? [:] }
 		set { UserDefaults.standard.set(newValue, forKey: "copyPasteTags") }
 	}
 
@@ -38,12 +38,12 @@ extension EditorMapLayer {
 	}
 
 	func canPasteTags() -> Bool {
-		return self.copyPasteTags.count > 0
+		return copyPasteTags.count > 0
 	}
 
 	private func pasteTagsMerge(_ object: OsmBaseObject) {
 		// Merge tags
-		let newTags = OsmTags.Merge(ourTags: object.tags, otherTags: self.copyPasteTags, allowConflicts: true)!
+		let newTags = OsmTags.Merge(ourTags: object.tags, otherTags: copyPasteTags, allowConflicts: true)!
 		mapData.setTags(newTags, for: object)
 		setNeedsLayout()
 		owner.didUpdateObject()
@@ -51,7 +51,7 @@ extension EditorMapLayer {
 
 	private func pasteTagsReplace(_ object: OsmBaseObject) {
 		// Replace all tags
-		mapData.setTags(self.copyPasteTags, for: object)
+		mapData.setTags(copyPasteTags, for: object)
 		setNeedsLayout()
 		owner.didUpdateObject()
 	}
@@ -66,103 +66,118 @@ extension EditorMapLayer {
 		}
 
 		if selectedPrimary.tags.count > 0 {
-			let question = String.localizedStringWithFormat(NSLocalizedString("Pasting %ld tag(s)", comment: ""), copyPasteTags.count)
-			let alertPaste = UIAlertController(title: NSLocalizedString("Paste", comment: ""), message: question, preferredStyle: .alert)
-			alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
-			alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Merge Tags", comment: ""), style: .default, handler: { [self] alertAction in
-				self.pasteTagsMerge(selectedPrimary)
-			}))
-			alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Replace Tags", comment: ""), style: .default, handler: { [self] alertAction in
-				self.pasteTagsReplace(selectedPrimary)
-			}))
+			let question = String.localizedStringWithFormat(
+				NSLocalizedString("Pasting %ld tag(s)", comment: ""),
+				copyPasteTags.count)
+			let alertPaste = UIAlertController(
+				title: NSLocalizedString("Paste", comment: ""),
+				message: question,
+				preferredStyle: .alert)
+			alertPaste
+				.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
+			alertPaste
+				.addAction(UIAlertAction(title: NSLocalizedString("Merge Tags", comment: ""),
+				                         style: .default, handler: { [self] _ in
+				                         	self.pasteTagsMerge(selectedPrimary)
+				                         }))
+			alertPaste
+				.addAction(UIAlertAction(title: NSLocalizedString("Replace Tags", comment: ""), style: .default,
+				                         handler: { [self] _ in
+				                         	self.pasteTagsReplace(selectedPrimary)
+				                         }))
 			owner.presentAlert(alert: alertPaste, location: .none)
 		} else {
-			self.pasteTagsReplace(selectedPrimary)
+			pasteTagsReplace(selectedPrimary)
 		}
 	}
 
 	/// Called by the tag editor when user finally commits changes.
 	/// This method creates a node at the pushpin if there is nothing selected.
-	func setTagsForCurrentObject(_ tags: [String : String]) {
+	func setTagsForCurrentObject(_ tags: [String: String]) {
 		if let selectedPrimary = self.selectedPrimary {
 			// update current object
-			self.mapData.setTags(tags, for: selectedPrimary)
+			mapData.setTags(tags, for: selectedPrimary)
 			owner.didUpdateObject()
 		} else {
 			// create new object
 			let point = owner.pushpinView()!.arrowPoint
-			let node = self.createNode(atScreenPoint: point)
-			self.mapData.setTags(tags, for: node)
-			self.selectedNode = node
+			let node = createNode(atScreenPoint: point)
+			mapData.setTags(tags, for: node)
+			selectedNode = node
 			// create new pushpin for new object
 			owner.placePushpinForSelection(at: nil)
 		}
-		self.setNeedsLayout()
-		self.dragState.confirmDrag = false
+		setNeedsLayout()
+		dragState.confirmDrag = false
 		owner.didUpdateObject()
 	}
 
 	// MARK: Selection
 
 	func selectObjectAtPoint(_ point: CGPoint) {
-
 		owner.unblinkObject() // used by Mac Catalyst, harmless otherwise
 
-		if self.selectedWay != nil,
-			// check for selecting node inside previously selected way
-			let hit = self.osmHitTestNode(inSelectedWay: point, radius: DefaultHitTestRadius)
+		if selectedWay != nil,
+		   // check for selecting node inside previously selected way
+		   let hit = osmHitTestNode(inSelectedWay: point, radius: DefaultHitTestRadius)
 		{
-			self.selectedNode = hit
+			selectedNode = hit
 
 		} else {
-
 			// hit test anything
 			var segment = -1
-			if let hit = self.osmHitTest(point, radius: DefaultHitTestRadius, isDragConnect: false, ignoreList: [], segment: &segment) {
+			if let hit = osmHitTest(
+				point,
+				radius: DefaultHitTestRadius,
+				isDragConnect: false,
+				ignoreList: [],
+				segment: &segment)
+			{
 				if let hit = hit as? OsmNode {
-					self.selectedNode = hit
-					self.selectedWay = nil
-					self.selectedRelation = nil
+					selectedNode = hit
+					selectedWay = nil
+					selectedRelation = nil
 				} else if let hit = hit as? OsmWay {
 					if let selectedRelation = self.selectedRelation,
-						hit.parentRelations.contains(selectedRelation)
+					   hit.parentRelations.contains(selectedRelation)
 					{
 						// selecting way inside previously selected relation
-						self.selectedNode = nil
-						self.selectedWay = hit
+						selectedNode = nil
+						selectedWay = hit
 					} else if hit.parentRelations.count > 0 {
 						// select relation the way belongs to
 						var relations = hit.parentRelations.filter { relation in
-							return relation.isMultipolygon() || relation.isBoundary() || relation.isWaterway()
+							relation.isMultipolygon() || relation.isBoundary() || relation.isWaterway()
 						}
-						if relations.count == 0 && !hit.hasInterestingTags() {
-							relations = hit.parentRelations // if the way doesn't have tags then always promote to containing relation
+						if relations.count == 0, !hit.hasInterestingTags() {
+							relations = hit
+								.parentRelations // if the way doesn't have tags then always promote to containing relation
 						}
 						if let relation = relations.first {
-							self.selectedNode = nil
-							self.selectedWay = nil
-							self.selectedRelation = relation
+							selectedNode = nil
+							selectedWay = nil
+							selectedRelation = relation
 						} else {
-							self.selectedNode = nil
-							self.selectedWay = hit
-							self.selectedRelation = nil
+							selectedNode = nil
+							selectedWay = hit
+							selectedRelation = nil
 						}
 					} else {
-						self.selectedNode = nil
-						self.selectedWay = hit
-						self.selectedRelation = nil
+						selectedNode = nil
+						selectedWay = hit
+						selectedRelation = nil
 					}
 				} else if let hit = hit as? OsmRelation {
-					self.selectedNode = nil
-					self.selectedWay = nil
-					self.selectedRelation = hit
+					selectedNode = nil
+					selectedWay = nil
+					selectedRelation = hit
 				} else {
 					fatalError()
 				}
 			} else {
-				self.selectedNode = nil
-				self.selectedWay = nil
-				self.selectedRelation = nil
+				selectedNode = nil
+				selectedWay = nil
+				selectedRelation = nil
 			}
 		}
 
@@ -171,14 +186,14 @@ extension EditorMapLayer {
 		if let selectedPrimary = self.selectedPrimary {
 			// adjust tap point to touch object
 			var latLon = owner.mapTransform.latLon(forScreenPoint: point)
-			latLon = selectedPrimary.latLonOnObject( forLatLon: latLon )
+			latLon = selectedPrimary.latLonOnObject(forLatLon: latLon)
 			let point = owner.mapTransform.screenPoint(forLatLon: latLon, birdsEye: true)
 
 			owner.placePushpin(at: point, object: selectedPrimary)
 
 			if selectedPrimary is OsmWay || selectedPrimary is OsmRelation {
 				// if they later try to drag this way ask them if they really wanted to
-				self.dragState.confirmDrag = selectedPrimary.modifyCount == 0
+				dragState.confirmDrag = selectedPrimary.modifyCount == 0
 			}
 		}
 	}
@@ -186,61 +201,64 @@ extension EditorMapLayer {
 	// MARK: Dragging
 
 	func dragBegin() {
-		self.mapData.beginUndoGrouping()
-		self.dragState.totalMovement = .zero
-		self.dragState.didMove = false
+		mapData.beginUndoGrouping()
+		dragState.totalMovement = .zero
+		dragState.didMove = false
 	}
+
 	func dragContinue(object: OsmBaseObject,
-					 dragx: CGFloat, dragy: CGFloat,
-					 isRotateObjectMode: (rotateObjectOverlay: CAShapeLayer, rotateObjectCenter: LatLon)? )
+	                  dragx: CGFloat, dragy: CGFloat,
+	                  isRotateObjectMode: (rotateObjectOverlay: CAShapeLayer, rotateObjectCenter: LatLon)?)
 	{
 		// don't accumulate undo moves
-		self.dragState.totalMovement.x += dragx
-		self.dragState.totalMovement.y += dragy
-		if self.dragState.didMove {
-			self.mapData.endUndoGrouping()
-			self.silentUndo = true
-			let dict = self.mapData.undo()
-			self.silentUndo = false
-			self.mapData.beginUndoGrouping()
-			if let dict = dict as? [String : String] {
+		dragState.totalMovement.x += dragx
+		dragState.totalMovement.y += dragy
+		if dragState.didMove {
+			mapData.endUndoGrouping()
+			silentUndo = true
+			let dict = mapData.undo()
+			silentUndo = false
+			mapData.beginUndoGrouping()
+			if let dict = dict as? [String: String] {
 				// maintain the original pin location:
-				self.mapData.registerUndoCommentContext(dict)
+				mapData.registerUndoCommentContext(dict)
 			}
 		}
-		self.dragState.didMove = true
+		dragState.didMove = true
 
 		// move all dragged nodes
 		if let rotate = isRotateObjectMode {
 			// rotate object
-			let delta = Double(-((self.dragState.totalMovement.x) + (self.dragState.totalMovement.y)) / 100)
+			let delta = Double(-(dragState.totalMovement.x + dragState.totalMovement.y) / 100)
 			let axis = owner.mapTransform.screenPoint(forLatLon: rotate.rotateObjectCenter,
-													  birdsEye: true)
-			let nodeSet = (object.isNode() != nil) ? self.selectedWay?.nodeSet() : object.nodeSet()
+			                                          birdsEye: true)
+			let nodeSet = (object.isNode() != nil) ? selectedWay?.nodeSet() : object.nodeSet()
 			for node in nodeSet ?? [] {
 				let pt = owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
 				let diff = OSMPoint(x: Double(pt.x - axis.x), y: Double(pt.y - axis.y))
 				let radius = hypot(diff.x, diff.y)
 				var angle = atan2(diff.y, diff.x)
 				angle += delta
-				let new = OSMPoint(x: Double(axis.x) + radius * Double(cos(angle)),y: Double(axis.y) + Double(radius * sin(angle)))
+				let new = OSMPoint(
+					x: Double(axis.x) + radius * Double(cos(angle)),
+					y: Double(axis.y) + Double(radius * sin(angle)))
 				let dist = CGPoint(x: new.x - Double(pt.x), y: -(new.y - Double(pt.y)))
-				self.adjust(node, byScreenDistance: dist)
+				adjust(node, byScreenDistance: dist)
 			}
 		} else {
 			// drag object
-			let delta = CGPoint(x: self.dragState.totalMovement.x,
-								y: -self.dragState.totalMovement.y)
+			let delta = CGPoint(x: dragState.totalMovement.x,
+			                    y: -dragState.totalMovement.y)
 
 			for node in object.nodeSet() {
-				self.adjust(node, byScreenDistance: delta)
+				adjust(node, byScreenDistance: delta)
 			}
 		}
 
 		// do hit testing for connecting to other objects
-		if (self.selectedWay != nil) && (object.isNode() != nil) {
+		if selectedWay != nil, object.isNode() != nil {
 			var segment = -1
-			if let hit = self.hitTestDragConnection(for: object as! OsmNode, segment: &segment),
+			if let hit = hitTestDragConnection(for: object as! OsmNode, segment: &segment),
 			   hit.isWay() != nil || hit.isNode() != nil
 			{
 				owner.blink(hit, segment: segment)
@@ -249,18 +267,18 @@ extension EditorMapLayer {
 			}
 		}
 	}
-	
+
 	func dragFinish(object: OsmBaseObject, isRotate: Bool) {
-		self.mapData.endUndoGrouping()
+		mapData.endUndoGrouping()
 
 		if let way = object.isWay() {
 			// update things if we dragged a multipolygon inner member to become outer
-			self.mapData.updateParentMultipolygonRelationRoles(for: way)
+			mapData.updateParentMultipolygonRelationRoles(for: way)
 		} else if let selectedWay = self.selectedWay,
-				  object.isNode() != nil
+		          object.isNode() != nil
 		{
 			// you can also move an inner to an outer by dragging nodes one at a time
-			self.mapData.updateParentMultipolygonRelationRoles(for: selectedWay)
+			mapData.updateParentMultipolygonRelationRoles(for: selectedWay)
 		}
 
 		if let selectedWay = self.selectedWay,
@@ -270,30 +288,30 @@ extension EditorMapLayer {
 			if let dragNode = object.isNode() {
 				let dragWay = selectedWay
 				var segment = -1
-				let hit = self.hitTestDragConnection(for: dragNode, segment: &segment)
+				let hit = hitTestDragConnection(for: dragNode, segment: &segment)
 				if var hit = hit as? OsmNode {
 					// replace dragged node with hit node
-					var error: String? = nil
-					let merge: EditActionReturnNode? = self.mapData.canMerge( dragNode, into:hit, error:&error)
+					var error: String?
+					let merge: EditActionReturnNode? = mapData.canMerge(dragNode, into: hit, error: &error)
 					if merge == nil {
 						owner.showAlert(error!, message: nil)
 						return
 					}
 					hit = merge!()
 					if dragWay.isArea() {
-						self.selectedNode = nil
+						selectedNode = nil
 						let pt = owner.mapTransform.screenPoint(forLatLon: hit.latLon, birdsEye: true)
 						owner.placePushpin(at: pt, object: dragWay)
 					} else {
-						self.selectedNode = hit
+						selectedNode = hit
 						owner.placePushpinForSelection(at: nil)
 					}
 				} else if let hit = hit as? OsmWay {
 					// add new node to hit way
 					let pt = hit.latLonOnObject(forLatLon: dragNode.latLon)
-					self.mapData.setLatLon(pt, forNode: dragNode)
-					var error: String? = nil
-					let add: EditActionWithNode? = self.canAddNode(toWay: hit, atIndex:segment+1, error:&error)
+					mapData.setLatLon(pt, forNode: dragNode)
+					var error: String?
+					let add: EditActionWithNode? = canAddNode(toWay: hit, atIndex: segment + 1, error: &error)
 					if let add = add {
 						add(dragNode)
 					} else {
@@ -312,51 +330,56 @@ extension EditorMapLayer {
 		{
 			return
 		}
-		if self.selectedWay != nil && self.selectedNode != nil {
+		if selectedWay != nil, selectedNode != nil {
 			return
 		}
-		if self.dragState.confirmDrag {
-			self.dragState.confirmDrag = false
+		if dragState.confirmDrag {
+			dragState.confirmDrag = false
 
-			let alertMove = UIAlertController(title: NSLocalizedString("Confirm move", comment: ""), message: NSLocalizedString("Move selected object?", comment: ""), preferredStyle: .alert)
-			alertMove.addAction(UIAlertAction(title: NSLocalizedString("Undo", comment: ""), style: .cancel, handler: { action in
-				// cancel move
-				self.mapData.undo()
-				self.mapData.removeMostRecentRedo()
-				self.selectedNode = nil
-				self.selectedWay = nil
-				self.selectedRelation = nil
-				self.owner.removePin()
-				self.setNeedsLayout()
-			}))
-			alertMove.addAction(UIAlertAction(title: NSLocalizedString("Move", comment: ""), style: .default, handler: { action in
-				// okay
-			}))
+			let alertMove = UIAlertController(
+				title: NSLocalizedString("Confirm move", comment: ""),
+				message: NSLocalizedString("Move selected object?", comment: ""),
+				preferredStyle: .alert)
+			alertMove
+				.addAction(UIAlertAction(title: NSLocalizedString("Undo", comment: ""), style: .cancel, handler: { _ in
+					// cancel move
+					self.mapData.undo()
+					self.mapData.removeMostRecentRedo()
+					self.selectedNode = nil
+					self.selectedWay = nil
+					self.selectedRelation = nil
+					self.owner.removePin()
+					self.setNeedsLayout()
+				}))
+			alertMove
+				.addAction(UIAlertAction(title: NSLocalizedString("Move", comment: ""), style: .default, handler: { _ in
+					// okay
+				}))
 			owner.presentAlert(alert: alertMove, location: .none)
 		}
 	}
 
 	func hitTestDragConnection(for node: OsmNode, segment: inout Int) -> OsmBaseObject? {
-		guard let way = self.selectedWay,
-			  let index = way.nodes.firstIndex(of: node),
-			  let point = owner.pushpinView()?.arrowPoint
+		guard let way = selectedWay,
+		      let index = way.nodes.firstIndex(of: node),
+		      let point = owner.pushpinView()?.arrowPoint
 		else { return nil }
 
 		var ignoreList: [OsmBaseObject] = []
-		let parentWays = node.wayCount == 1 ? [way] : self.mapData.waysContaining(node)
+		let parentWays = node.wayCount == 1 ? [way] : mapData.waysContaining(node)
 		if way.nodes.count < 3 {
 			ignoreList = parentWays + way.nodes
 		} else if index == 0 {
 			// if end-node then okay to connect to self-nodes except for adjacent
 			let nodes = [way.nodes[0],
-						 way.nodes[1],
-						 way.nodes[2]]
+			             way.nodes[1],
+			             way.nodes[2]]
 			ignoreList = parentWays + nodes
 		} else if index == way.nodes.count - 1 {
 			// if end-node then okay to connect to self-nodes except for adjacent
 			let nodes = [way.nodes[index],
-						 way.nodes[index - 1],
-						 way.nodes[index - 2]]
+			             way.nodes[index - 1],
+			             way.nodes[index - 2]]
 			ignoreList = parentWays + nodes
 		} else {
 			// if middle node then never connect to self
@@ -364,36 +387,37 @@ extension EditorMapLayer {
 				ignoreList = parentWays + way.nodes
 			}
 		}
-		let hit = self.osmHitTest( point,
-								  radius: DragConnectHitTestRadius,
-								  isDragConnect: true,
-								  ignoreList: ignoreList,
-								  segment: &segment )
+		let hit = osmHitTest(point,
+		                     radius: DragConnectHitTestRadius,
+		                     isDragConnect: true,
+		                     ignoreList: ignoreList,
+		                     segment: &segment)
 		return hit
 	}
 
 	// MARK: Rotate
 
 	func rotateBegin() {
-		self.mapData.beginUndoGrouping()
-		self.dragState.didMove = false
+		mapData.beginUndoGrouping()
+		dragState.didMove = false
 	}
+
 	func rotateContinue(delta: CGFloat,
-						rotate: (rotateObjectOverlay: CAShapeLayer, rotateObjectCenter: LatLon))
+	                    rotate: (rotateObjectOverlay: CAShapeLayer, rotateObjectCenter: LatLon))
 	{
-		if self.dragState.didMove {
+		if dragState.didMove {
 			// don't allows undo list to accumulate
-			self.mapData.endUndoGrouping()
-			self.silentUndo = true
-			self.mapData.undo()
-			self.silentUndo = false
-			self.mapData.beginUndoGrouping()
+			mapData.endUndoGrouping()
+			silentUndo = true
+			mapData.undo()
+			silentUndo = false
+			mapData.beginUndoGrouping()
 		}
 
-		self.dragState.didMove = true
+		dragState.didMove = true
 
 		let axis = owner.mapTransform.screenPoint(forLatLon: rotate.rotateObjectCenter, birdsEye: true)
-		let rotatedObject = self.selectedRelation ?? self.selectedWay
+		let rotatedObject = selectedRelation ?? selectedWay
 		if let nodeSet = rotatedObject?.nodeSet() {
 			for node in nodeSet {
 				let pt = owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
@@ -404,12 +428,13 @@ extension EditorMapLayer {
 				angle += Double(delta)
 				let new = OSMPoint(x: Double(axis.x) + radius * cos(angle), y: Double(axis.y) + radius * sin(angle))
 				let dist = CGPoint(x: CGFloat(new.x) - pt.x, y: -(CGFloat(new.y) - pt.y))
-				self.adjust(node, byScreenDistance: dist)
+				adjust(node, byScreenDistance: dist)
 			}
 		}
 	}
+
 	func rotateFinish() {
-		self.mapData.endUndoGrouping()
+		mapData.endUndoGrouping()
 	}
 
 	// MARK: Editing
@@ -439,7 +464,7 @@ extension EditorMapLayer {
 
 	func createWay(with node: OsmNode) -> OsmWay {
 		let way = mapData.createWay()
-		var dummy: String? = nil
+		var dummy: String?
 		let add = mapData.canAddNode(to: way, at: 0, error: &dummy)
 		add?(node)
 		setNeedsLayout()
@@ -458,7 +483,6 @@ extension EditorMapLayer {
 
 	func canDeleteSelectedObject(_ error: inout String?) -> EditAction? {
 		if let selectedNode = selectedNode {
-
 			// delete node from selected way
 			let action: EditAction?
 			if let selectedWay = selectedWay {
@@ -479,7 +503,6 @@ extension EditorMapLayer {
 				}
 			}
 		} else if let selectedWay = selectedWay {
-
 			// delete way
 			if let action = mapData.canDelete(selectedWay, error: &error) {
 				return { [self] in
@@ -506,11 +529,11 @@ extension EditorMapLayer {
 
 	func deleteCurrentSelection() {
 		guard let selectedPrimary = self.selectedPrimary,
-			  let pushpinView = owner.pushpinView()
+		      let pushpinView = owner.pushpinView()
 		else { return }
 
-		let deleteHandler: ((_ action: UIAlertAction?) -> Void) = { [self] action in
-			var error: String? = nil
+		let deleteHandler: ((_ action: UIAlertAction?) -> Void) = { [self] _ in
+			var error: String?
 			let canDelete: EditAction? = self.canDeleteSelectedObject(&error)
 			if let canDelete = canDelete {
 				canDelete()
@@ -528,31 +551,52 @@ extension EditorMapLayer {
 		}
 
 		let alertDelete: UIAlertController
-		if (self.selectedRelation?.isMultipolygon() ?? false) && (selectedPrimary.isWay() != nil) {
+		if selectedRelation?.isMultipolygon() ?? false, selectedPrimary.isWay() != nil {
 			// delete way from relation
-			alertDelete = UIAlertController(title: NSLocalizedString("Delete", comment: ""), message: NSLocalizedString("Member of multipolygon relation", comment: ""), preferredStyle: .actionSheet)
-			alertDelete.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { action in
-			}))
-			alertDelete.addAction(UIAlertAction(title: NSLocalizedString("Delete completely", comment: ""), style: .default, handler: deleteHandler))
-			alertDelete.addAction(UIAlertAction(title: NSLocalizedString("Detach from relation", comment: ""), style: .default, handler: { [self] action in
-				var error: String? = nil
-				if let canRemove: EditAction = self.mapData.canRemove(selectedPrimary, from:self.selectedRelation!, error:&error) {
-					canRemove()
-					self.selectedRelation = nil
-					owner.didUpdateObject()
-				} else {
-					owner.showAlert(NSLocalizedString("Delete failed", comment: ""), message: error)
-				}
-			}))
+			alertDelete = UIAlertController(
+				title: NSLocalizedString("Delete", comment: ""),
+				message: NSLocalizedString("Member of multipolygon relation", comment: ""),
+				preferredStyle: .actionSheet)
+			alertDelete
+				.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel,
+				                         handler: { _ in
+				                         }))
+			alertDelete
+				.addAction(UIAlertAction(title: NSLocalizedString("Delete completely", comment: ""), style: .default,
+				                         handler: deleteHandler))
+			alertDelete
+				.addAction(UIAlertAction(title: NSLocalizedString("Detach from relation", comment: ""), style: .default,
+				                         handler: { [self] _ in
+				                         	var error: String?
+				                         	if let canRemove: EditAction = self.mapData.canRemove(
+				                         		selectedPrimary,
+				                         		from: self.selectedRelation!,
+				                         		error: &error)
+				                         	{
+				                         		canRemove()
+				                         		self.selectedRelation = nil
+				                         		owner.didUpdateObject()
+				                         	} else {
+				                         		owner.showAlert(
+				                         			NSLocalizedString("Delete failed", comment: ""),
+				                         			message: error)
+				                         	}
+				                         }))
 			owner.presentAlert(alert: alertDelete, location: .editBar)
 
 		} else {
 			// regular delete
 			let name = self.selectedPrimary?.friendlyDescription()
 			let question = "Delete \(name ?? "")?"
-			alertDelete = UIAlertController(title: NSLocalizedString("Delete", comment: ""), message: question, preferredStyle: .alert)
-			alertDelete.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
-			alertDelete.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive, handler: deleteHandler))
+			alertDelete = UIAlertController(
+				title: NSLocalizedString("Delete", comment: ""),
+				message: question,
+				preferredStyle: .alert)
+			alertDelete
+				.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
+			alertDelete
+				.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: ""),
+				                         style: .destructive, handler: deleteHandler))
 			owner.presentAlert(alert: alertDelete, location: .none)
 		}
 	}
@@ -563,10 +607,13 @@ extension EditorMapLayer {
 			if let selectedNode = self.selectedNode {
 				// node in way
 				let parentWays: [OsmWay] = [] // [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode];
-				let disconnect = parentWays.count > 1 || selectedNode.hasInterestingTags() || selectedWay.isSelfIntersection(selectedNode)
-				let split = selectedWay.isClosed() || (selectedNode != selectedWay.nodes[0] && selectedNode != selectedWay.nodes.last)
+				let disconnect = parentWays.count > 1 || selectedNode.hasInterestingTags() || selectedWay
+					.isSelfIntersection(selectedNode)
+				let split = selectedWay
+					.isClosed() || (selectedNode != selectedWay.nodes[0] && selectedNode != selectedWay.nodes.last)
 				let join = parentWays.count > 1
-				let restriction = owner.useTurnRestrictions() && self.selectedWay?.tags["highway"] != nil && parentWays.count > 1
+				let restriction = owner.useTurnRestrictions() && self.selectedWay?.tags["highway"] != nil && parentWays
+					.count > 1
 
 				actionList = [.COPYTAGS]
 
@@ -586,21 +633,29 @@ extension EditorMapLayer {
 			} else {
 				if selectedWay.isClosed() {
 					// polygon
-					actionList = [.COPYTAGS, .RECTANGULARIZE, .CIRCULARIZE, .ROTATE, .DUPLICATE, .REVERSE, .CREATE_RELATION ]
+					actionList = [
+						.COPYTAGS,
+						.RECTANGULARIZE,
+						.CIRCULARIZE,
+						.ROTATE,
+						.DUPLICATE,
+						.REVERSE,
+						.CREATE_RELATION
+					]
 				} else {
 					// line
-					actionList = [ .COPYTAGS, .STRAIGHTEN, .REVERSE, .DUPLICATE, .CREATE_RELATION ]
+					actionList = [.COPYTAGS, .STRAIGHTEN, .REVERSE, .DUPLICATE, .CREATE_RELATION]
 				}
 			}
-		} else if self.selectedNode != nil {
+		} else if selectedNode != nil {
 			// node
-			actionList = [ .COPYTAGS, .DUPLICATE ]
+			actionList = [.COPYTAGS, .DUPLICATE]
 		} else if let selectedRelation = self.selectedRelation {
 			// relation
 			if selectedRelation.isMultipolygon() {
-				actionList = [ .COPYTAGS, .ROTATE, .DUPLICATE ]
+				actionList = [.COPYTAGS, .ROTATE, .DUPLICATE]
 			} else {
-				actionList = [ .COPYTAGS, .PASTETAGS ]
+				actionList = [.COPYTAGS, .PASTETAGS]
 			}
 		} else {
 			// nothing selected
@@ -613,179 +668,206 @@ extension EditorMapLayer {
 	func performEdit(_ action: EDIT_ACTION) {
 		// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
 		switch action {
-			case .RECTANGULARIZE, .STRAIGHTEN, .REVERSE, .DUPLICATE, .ROTATE, .CIRCULARIZE, .COPYTAGS, .PASTETAGS, .EDITTAGS, .CREATE_RELATION:
-				if (self.selectedWay != nil) && (self.selectedNode != nil) && (self.selectedNode?.tags.count ?? 0) == 0 && (self.selectedWay?.tags.count ?? 0) == 0 && !(self.selectedWay?.isMultipolygonMember() ?? false) {
-					// promote the selection to the way
-					self.selectedNode = nil
-					owner.didUpdateObject()
-				}
-			case .SPLIT, .JOIN, .DISCONNECT, .RESTRICT, .ADDNOTE, .DELETE, .MORE:
-				break
+		case .RECTANGULARIZE, .STRAIGHTEN, .REVERSE, .DUPLICATE, .ROTATE, .CIRCULARIZE, .COPYTAGS, .PASTETAGS,
+		     .EDITTAGS, .CREATE_RELATION:
+			if selectedWay != nil, selectedNode != nil, (selectedNode?.tags.count ?? 0) == 0,
+			   (selectedWay?.tags.count ?? 0) == 0, !(selectedWay?.isMultipolygonMember() ?? false)
+			{
+				// promote the selection to the way
+				selectedNode = nil
+				owner.didUpdateObject()
+			}
+		case .SPLIT, .JOIN, .DISCONNECT, .RESTRICT, .ADDNOTE, .DELETE, .MORE:
+			break
 		}
 
-		var error: String? = nil
+		var error: String?
 		switch action {
-			case .COPYTAGS:
-				if let selectedPrimary = self.selectedPrimary {
-					if !self.copyTags(selectedPrimary) {
-						error = NSLocalizedString("The object does not contain any tags", comment: "")
-					}
+		case .COPYTAGS:
+			if let selectedPrimary = self.selectedPrimary {
+				if !copyTags(selectedPrimary) {
+					error = NSLocalizedString("The object does not contain any tags", comment: "")
 				}
-			case .PASTETAGS:
-				if self.selectedPrimary == nil {
-					// pasting to brand new object, so we need to create it first
-					setTagsForCurrentObject([:])
-				}
+			}
+		case .PASTETAGS:
+			if selectedPrimary == nil {
+				// pasting to brand new object, so we need to create it first
+				setTagsForCurrentObject([:])
+			}
 
-				if self.selectedWay != nil && self.selectedNode != nil && self.selectedWay?.tags.count ?? 0 == 0 {
-					// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
-					self.selectedNode = nil
-					owner.didUpdateObject()
+			if selectedWay != nil, selectedNode != nil, selectedWay?.tags.count ?? 0 == 0 {
+				// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
+				selectedNode = nil
+				owner.didUpdateObject()
+			}
+			pasteTags()
+		case .DUPLICATE:
+			guard let primary = selectedPrimary,
+			      let pushpinView = owner.pushpinView()
+			else { return }
+			let delta = CGPoint(x: owner.crosshairs().x - pushpinView.arrowPoint.x,
+			                    y: owner.crosshairs().y - pushpinView.arrowPoint.y)
+			var offset: OSMPoint
+			if hypot(delta.x, delta.y) > 20 {
+				// move to position of crosshairs
+				let p1 = owner.mapTransform.latLon(forScreenPoint: pushpinView.arrowPoint)
+				let p2 = owner.mapTransform.latLon(forScreenPoint: owner.crosshairs())
+				offset = OSMPoint(x: p2.lon - p1.lon, y: p2.lat - p1.lat)
+			} else {
+				offset = OSMPoint(x: 0.00005, y: -0.00005)
+			}
+			guard let newObject = duplicateObject(primary, withOffset: offset)
+			else {
+				error = NSLocalizedString("Could not duplicate object", comment: "")
+				break
+			}
+			selectedNode = newObject.isNode()
+			selectedWay = newObject.isWay()
+			selectedRelation = newObject.isRelation()
+			owner.placePushpinForSelection(at: nil)
+		case .ROTATE:
+			if selectedWay == nil, !(selectedRelation?.isMultipolygon() ?? false) {
+				error = NSLocalizedString("Only ways/multipolygons can be rotated", comment: "")
+			} else {
+				owner.startObjectRotation()
+			}
+		case .RECTANGULARIZE:
+			guard let selectedWay = self.selectedWay else { return }
+			if selectedWay.ident >= 0, !owner.screenLatLonRect().containsRect(selectedWay.boundingBox) {
+				error = NSLocalizedString("The selected way must be completely visible",
+				                          comment: "") // avoid bugs where nodes are deleted from other objects
+			} else {
+				let rect: EditAction? = mapData.canOrthogonalizeWay(self.selectedWay!, error: &error)
+				if let rect = rect {
+					rect()
 				}
-				pasteTags()
-			case .DUPLICATE:
-				guard let primary = self.selectedPrimary,
-					  let pushpinView = owner.pushpinView()
-				else { return }
-				let delta = CGPoint(x: owner.crosshairs().x - pushpinView.arrowPoint.x,
-									y: owner.crosshairs().y - pushpinView.arrowPoint.y)
-				var offset: OSMPoint
-				if hypot(delta.x, delta.y) > 20 {
-					// move to position of crosshairs
-					let p1 = owner.mapTransform.latLon(forScreenPoint: pushpinView.arrowPoint)
-					let p2 = owner.mapTransform.latLon(forScreenPoint: owner.crosshairs())
-					offset = OSMPoint(x: p2.lon - p1.lon, y: p2.lat - p1.lat)
-				} else {
-					offset = OSMPoint(x: 0.00005, y: -0.00005)
-				}
-				guard let newObject = self.duplicateObject(primary, withOffset: offset)
-				else {
-					error = NSLocalizedString("Could not duplicate object", comment: "")
-					break
-				}
-				self.selectedNode = newObject.isNode()
-				self.selectedWay = newObject.isWay()
-				self.selectedRelation = newObject.isRelation()
+			}
+		case .REVERSE:
+			let reverse: EditAction? = mapData.canReverse(selectedWay!, error: &error)
+			if let reverse = reverse {
+				reverse()
+			}
+		case .JOIN:
+			let join: EditAction? = mapData.canJoin(selectedWay!, at: selectedNode!, error: &error)
+			if let join = join {
+				join()
+			}
+		case .DISCONNECT:
+			let disconnect: EditActionReturnNode? = mapData.canDisconnectWay(
+				selectedWay!,
+				at: selectedNode!,
+				error: &error)
+			if let disconnect = disconnect {
+				selectedNode = disconnect()
 				owner.placePushpinForSelection(at: nil)
-			case .ROTATE:
-				if self.selectedWay == nil && !(self.selectedRelation?.isMultipolygon() ?? false) {
-					error = NSLocalizedString("Only ways/multipolygons can be rotated", comment: "")
+			}
+		case .SPLIT:
+			let split: EditActionReturnWay? = mapData.canSplitWay(selectedWay!, at: selectedNode!, error: &error)
+			if let split = split {
+				_ = split()
+			}
+		case .STRAIGHTEN:
+			if let selectedWay = self.selectedWay {
+				let boundingBox = selectedWay.boundingBox
+				if selectedWay.ident >= 0, !owner.screenLatLonRect().containsRect(boundingBox) {
+					error = NSLocalizedString("The selected way must be completely visible",
+					                          comment: "") // avoid bugs where nodes are deleted from other objects
 				} else {
-					owner.startObjectRotation()
-				}
-			case .RECTANGULARIZE:
-				guard let selectedWay = self.selectedWay else { return }
-				if selectedWay.ident >= 0 && !owner.screenLatLonRect().containsRect( selectedWay.boundingBox) {
-					error = NSLocalizedString("The selected way must be completely visible", comment: "") // avoid bugs where nodes are deleted from other objects
-				} else {
-					let rect: EditAction? = self.mapData.canOrthogonalizeWay(self.selectedWay!, error:&error)
-					if let rect = rect {
-						rect()
+					let straighten: EditAction? = mapData.canStraightenWay(selectedWay, error: &error)
+					if let straighten = straighten {
+						straighten()
 					}
 				}
-			case .REVERSE:
-				let reverse: EditAction? = self.mapData.canReverse( self.selectedWay!, error:&error)
-				if let reverse = reverse {
-					reverse()
-				}
-			case .JOIN:
-				let join: EditAction? = self.mapData.canJoin(self.selectedWay!, at:self.selectedNode!, error:&error)
-				if let join = join {
-					join()
-				}
-			case .DISCONNECT:
-				let disconnect: EditActionReturnNode? = self.mapData.canDisconnectWay( self.selectedWay!, at:self.selectedNode!, error:&error)
-				if let disconnect = disconnect {
-					self.selectedNode = disconnect()
-					owner.placePushpinForSelection(at: nil)
-				}
-			case .SPLIT:
-				let split: EditActionReturnWay? = self.mapData.canSplitWay(self.selectedWay!, at:self.selectedNode!, error:&error)
-				if let split = split {
-					_ = split()
-				}
-			case .STRAIGHTEN:
-				if let selectedWay = self.selectedWay {
-					let boundingBox = selectedWay.boundingBox
-					if selectedWay.ident >= 0 && !owner.screenLatLonRect().containsRect( boundingBox) {
-						error = NSLocalizedString("The selected way must be completely visible", comment: "") // avoid bugs where nodes are deleted from other objects
-					} else {
-						let straighten: EditAction? = self.mapData.canStraightenWay(selectedWay, error:&error)
-						if let straighten = straighten {
-							straighten()
-						}
-					}
-				}
-			case .CIRCULARIZE:
-				let circle: EditAction? = self.mapData.canCircularizeWay( self.selectedWay!, error:&error)
-				if let circle = circle {
-					circle()
-				}
-			case .EDITTAGS:
-				owner.presentTagEditor(nil)
-			case .ADDNOTE:
-				owner.addNote()
-			case .DELETE:
-				deleteCurrentSelection()
-			case .MORE:
-				owner.presentEditActionSheet(nil)
-			case .RESTRICT:
-				owner.presentTurnRestrictionEditor()
-			case .CREATE_RELATION:
-				guard let selectedPrimary = self.selectedPrimary else { return }
-				let create: ((_ type: String?) -> Void) = { [self] type in
-					let relation = self.mapData.createRelation()
-					var tags = selectedPrimary.tags
-					tags["type"] = type
-					self.mapData.setTags(tags, for: relation)
-					self.mapData.setTags([:], for: selectedPrimary)
+			}
+		case .CIRCULARIZE:
+			let circle: EditAction? = mapData.canCircularizeWay(selectedWay!, error: &error)
+			if let circle = circle {
+				circle()
+			}
+		case .EDITTAGS:
+			owner.presentTagEditor(nil)
+		case .ADDNOTE:
+			owner.addNote()
+		case .DELETE:
+			deleteCurrentSelection()
+		case .MORE:
+			owner.presentEditActionSheet(nil)
+		case .RESTRICT:
+			owner.presentTurnRestrictionEditor()
+		case .CREATE_RELATION:
+			guard let selectedPrimary = self.selectedPrimary else { return }
+			let create: ((_ type: String?) -> Void) = { [self] type in
+				let relation = self.mapData.createRelation()
+				var tags = selectedPrimary.tags
+				tags["type"] = type
+				self.mapData.setTags(tags, for: relation)
+				self.mapData.setTags([:], for: selectedPrimary)
 
-					var error: String? = nil
-					let add: EditAction? = self.mapData.canAdd( selectedPrimary, to:relation, withRole:"outer", error:&error)
-					add?()
-					self.selectedNode = nil
-					self.selectedWay = nil
-					self.selectedRelation = relation
-					self.setNeedsLayout()
-					owner.didUpdateObject()
-					owner.showAlert(
-						NSLocalizedString("Adding members:", comment: ""),
-						message: NSLocalizedString("To add another member to the relation 'long press' on the way to be added", comment: ""))
-				}
-				let actionSheet = UIAlertController(title: NSLocalizedString("Create Relation Type", comment: ""), message: nil, preferredStyle: .actionSheet)
-				actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Multipolygon", comment: ""), style: .default, handler: { action2 in
-					create("multipolygon")
-				}))
-				actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
+				var error: String?
+				let add: EditAction? = self.mapData.canAdd(
+					selectedPrimary,
+					to: relation,
+					withRole: "outer",
+					error: &error)
+				add?()
+				self.selectedNode = nil
+				self.selectedWay = nil
+				self.selectedRelation = relation
+				self.setNeedsLayout()
+				owner.didUpdateObject()
+				owner.showAlert(
+					NSLocalizedString("Adding members:", comment: ""),
+					message: NSLocalizedString(
+						"To add another member to the relation 'long press' on the way to be added",
+						comment: ""))
+			}
+			let actionSheet = UIAlertController(
+				title: NSLocalizedString("Create Relation Type", comment: ""),
+				message: nil,
+				preferredStyle: .actionSheet)
+			actionSheet
+				.addAction(UIAlertAction(title: NSLocalizedString("Multipolygon", comment: ""), style: .default,
+				                         handler: { _ in
+				                         	create("multipolygon")
+				                         }))
+			actionSheet
+				.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel,
+				                         handler: nil))
 
-				let rc = CGRect(origin: owner.pushpinView()?.arrowPoint ?? .zero, size: .zero)
-				owner.presentAlert(alert: actionSheet, location: .rect(rc))
-				return
+			let rc = CGRect(origin: owner.pushpinView()?.arrowPoint ?? .zero, size: .zero)
+			owner.presentAlert(alert: actionSheet, location: .rect(rc))
+			return
 		}
 		if let error = error {
 			owner.showAlert(error, message: nil)
 		}
-		self.setNeedsLayout()
+		setNeedsLayout()
 		owner.didUpdateObject()
 	}
 
 	// MARK: Create node/ways
 
 	func longPressAtPoint(_ point: CGPoint) {
-
-		let objects = self.osmHitTestMultiple(point, radius: DefaultHitTestRadius)
+		let objects = osmHitTestMultiple(point, radius: DefaultHitTestRadius)
 		if objects.count == 0 {
 			return
 		}
 
 		// special case for adding members to relations:
-		if self.selectedPrimary?.isRelation()?.isMultipolygon() ?? false {
+		if selectedPrimary?.isRelation()?.isMultipolygon() ?? false {
 			let ways = objects.compactMap({ $0 as? OsmWay })
 			if ways.count == 1 {
-				let confirm = UIAlertController(title: NSLocalizedString("Add way to multipolygon?", comment: ""), message: nil, preferredStyle: .alert)
+				let confirm = UIAlertController(
+					title: NSLocalizedString("Add way to multipolygon?", comment: ""),
+					message: nil,
+					preferredStyle: .alert)
 				let addMmember: ((String?) -> Void) = { [self] role in
-					var error: String? = nil
-					let add: EditAction? = self.mapData.canAdd( ways[0], to:self.selectedRelation!, withRole:role, error:&error)
+					var error: String?
+					let add: EditAction? = self.mapData.canAdd(
+						ways[0],
+						to: self.selectedRelation!,
+						withRole: role,
+						error: &error)
 					if let add = add {
 						add()
 						owner.flashMessage(NSLocalizedString("added to multipolygon relation", comment: ""))
@@ -794,40 +876,52 @@ extension EditorMapLayer {
 						owner.showAlert(NSLocalizedString("Error", comment: ""), message: error)
 					}
 				}
-				confirm.addAction(UIAlertAction(title: NSLocalizedString("Add outer member", comment: "Add to relation"), style: .default, handler: { action in
-					addMmember("outer")
-				}))
-				confirm.addAction(UIAlertAction(title: NSLocalizedString("Add inner member", comment: "Add to relation"), style: .default, handler: { action in
-					addMmember("inner")
-				}))
-				confirm.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
+				confirm.addAction(UIAlertAction(
+					title: NSLocalizedString("Add outer member", comment: "Add to relation"),
+					style: .default,
+					handler: { _ in
+						addMmember("outer")
+					}))
+				confirm.addAction(UIAlertAction(
+					title: NSLocalizedString("Add inner member", comment: "Add to relation"),
+					style: .default,
+					handler: { _ in
+						addMmember("inner")
+					}))
+				confirm
+					.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel,
+					                         handler: nil))
 				owner.presentAlert(alert: confirm, location: .none)
 			}
 			return
 		}
 
-		let multiSelectSheet = UIAlertController(title: NSLocalizedString("Select Object", comment: ""), message: nil, preferredStyle: .actionSheet)
+		let multiSelectSheet = UIAlertController(
+			title: NSLocalizedString("Select Object", comment: ""),
+			message: nil,
+			preferredStyle: .actionSheet)
 		for object in objects {
 			var title = object.friendlyDescription()
 			if !title.hasPrefix("(") {
 				// indicate what type of object it is
-				if (object.isNode() != nil) {
+				if object.isNode() != nil {
 					title = title + NSLocalizedString(" (node)", comment: "")
-				} else if (object.isWay() != nil) {
+				} else if object.isWay() != nil {
 					title = title + NSLocalizedString(" (way)", comment: "")
-				} else if (object.isRelation() != nil) {
+				} else if object.isRelation() != nil {
 					let type = object.tags["type"] ?? NSLocalizedString("relation", comment: "")
 					title = title + " (\(type))"
 				}
 			}
-			multiSelectSheet.addAction(UIAlertAction(title: title, style: .default, handler: { [self] action in
+			multiSelectSheet.addAction(UIAlertAction(title: title, style: .default, handler: { [self] _ in
 				// processing for selecting one of multipe objects
 				self.selectedNode = nil
 				self.selectedWay = nil
 				self.selectedRelation = nil
 				if let node = object.isNode() {
 					// select the way containing the node, then select the node in the way
-					self.selectedWay  = objects.first(where: { ($0 as? OsmWay)?.nodes.contains(node) ?? false}) as? OsmWay
+					self.selectedWay = objects
+						.first(where: { ($0 as? OsmWay)?.nodes.contains(node) ?? false }) as? OsmWay
 					self.selectedNode = node
 				} else if object.isWay() != nil {
 					self.selectedWay = object.isWay()
@@ -838,27 +932,27 @@ extension EditorMapLayer {
 				owner.placePushpin(at: pos, object: object)
 			}))
 		}
-		multiSelectSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
+		multiSelectSheet
+			.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
 		let rc = CGRect(x: point.x, y: point.y, width: 0.0, height: 0.0)
-		owner.presentAlert(alert: multiSelectSheet, location: .rect(rc) )
+		owner.presentAlert(alert: multiSelectSheet, location: .rect(rc))
 	}
 
-	func extendSelectedWay(to newPoint: CGPoint, from pinPoint: CGPoint) -> Result<CGPoint,EditError> {
-
-		if let way = self.selectedWay,
+	func extendSelectedWay(to newPoint: CGPoint, from pinPoint: CGPoint) -> Result<CGPoint, EditError> {
+		if let way = selectedWay,
 		   self.selectedNode == nil
 		{
 			// insert a new node into way at arrowPoint
 			let pt = owner.mapTransform.latLon(forScreenPoint: pinPoint)
 			let segment = way.segmentClosestToPoint(pt)
-			var error: String? = nil
-			guard let add = self.canAddNode(toWay: way, atIndex:segment+1, error:&error )
+			var error: String?
+			guard let add = canAddNode(toWay: way, atIndex: segment + 1, error: &error)
 			else {
 				return .failure(.text(error!))
 			}
-			let newNode = self.createNode(atScreenPoint: pinPoint)
+			let newNode = createNode(atScreenPoint: pinPoint)
 			add(newNode)
-			self.selectedNode = newNode
+			selectedNode = newNode
 			return .success(newPoint)
 		}
 
@@ -871,13 +965,13 @@ extension EditorMapLayer {
 		{
 			// both a node and way are selected but selected node is not an endpoint (or way is closed),
 			// so we will create a new way "T" from that node
-			prevNode = selectedNode	// use the existing node selected by user
-			way = self.createWay(with: selectedNode)	// create a new way extending off of it
+			prevNode = selectedNode // use the existing node selected by user
+			way = createWay(with: selectedNode) // create a new way extending off of it
 		} else {
 			// we're either extending a way from it's end, or creating a new way with
 			// the pushpin as one end of it and crosshairs (or mouse click) as the other
-			prevNode = self.selectedNode ?? self.createNode(atScreenPoint: pinPoint)
-			way = self.selectedWay ?? self.createWay(with: prevNode)
+			prevNode = selectedNode ?? createNode(atScreenPoint: pinPoint)
+			way = selectedWay ?? createWay(with: prevNode)
 		}
 
 		let prevIndex = way.nodes.firstIndex(of: prevNode)!
@@ -887,15 +981,16 @@ extension EditorMapLayer {
 		}
 		// add new node at point
 		var newPoint = newPoint
-		let prevPrevNode = way.nodes.count >= 2 ? way.nodes[way.nodes.count-2] : nil
-		let prevPrevPoint = prevPrevNode != nil ? owner.mapTransform.screenPoint(forLatLon: prevPrevNode!.latLon, birdsEye: true) : CGPoint.zero
+		let prevPrevNode = way.nodes.count >= 2 ? way.nodes[way.nodes.count - 2] : nil
+		let prevPrevPoint = prevPrevNode != nil ? owner.mapTransform.screenPoint(
+			forLatLon: prevPrevNode!.latLon,
+			birdsEye: true) : CGPoint.zero
 
-		if hypot(pinPoint.x - newPoint.x, pinPoint.y - newPoint.y) > 10.0 &&
-			(prevPrevNode == nil || hypot(prevPrevPoint.x - newPoint.x, prevPrevPoint.y - newPoint.y) > 10.0)
+		if hypot(pinPoint.x - newPoint.x, pinPoint.y - newPoint.y) > 10.0,
+		   prevPrevNode == nil || hypot(prevPrevPoint.x - newPoint.x, prevPrevPoint.y - newPoint.y) > 10.0
 		{
 			// it's far enough from previous point to use
 		} else {
-
 			// compute a good place for next point
 			if way.nodes.count < 2 {
 				// create 2nd point in the direction of the center of the screen
@@ -919,7 +1014,9 @@ extension EditorMapLayer {
 				}
 				let np1 = CGPoint(x: pinPoint.x - delta.y, y: pinPoint.y + delta.x)
 				let np2 = CGPoint(x: pinPoint.x + delta.y, y: pinPoint.y - delta.x)
-				if OSMPoint(np1).distanceToPoint( OSMPoint(newPoint) ) < OSMPoint(np2).distanceToPoint( OSMPoint(newPoint) ) {
+				if OSMPoint(np1).distanceToPoint(OSMPoint(newPoint)) < OSMPoint(np2)
+					.distanceToPoint(OSMPoint(newPoint))
+				{
 					newPoint = np1
 				} else {
 					newPoint = np2
@@ -936,14 +1033,14 @@ extension EditorMapLayer {
 				let a2 = atan2(d2.y, d2.x)
 				var dist = hypot(d1.x, d1.y)
 				// if previous angle was 90 degrees then match length of first leg to make a rectangle
-				if (way.nodes.count == 3 || way.nodes.count == 4) && abs(fmod(abs(Float(a1 - a2)), .pi) - .pi / 2) < 0.1 {
+				if way.nodes.count == 3 || way.nodes.count == 4, abs(fmod(abs(Float(a1 - a2)), .pi) - .pi / 2) < 0.1 {
 					dist = hypot(d2.x, d2.y)
 				} else if dist > 100 {
 					dist = 100
 				}
 				a1 += a1 - a2
 				newPoint = CGPoint(x: Double(pinPoint.x) + dist * cos(a1),
-								   y: Double(Double(pinPoint.y) + dist * sin(a1)))
+				                   y: Double(Double(pinPoint.y) + dist * sin(a1)))
 			}
 			// make sure selected point is on-screen
 			var rc = bounds.insetBy(dx: 20.0, dy: 20.0)
@@ -960,11 +1057,11 @@ extension EditorMapLayer {
 			let d = hypot(s.x - newPoint.x, s.y - newPoint.y)
 			if d < 3.0 {
 				// join first to last
-				var error: String? = nil
-				if let action = self.canAddNode(toWay: way, atIndex:nextIndex, error:&error) {
+				var error: String?
+				if let action = canAddNode(toWay: way, atIndex: nextIndex, error: &error) {
 					action(start)
-					self.selectedWay = way
-					self.selectedNode = nil
+					selectedWay = way
+					selectedNode = nil
 					return .success(s)
 				} else {
 					// fall through to non-joining case
@@ -972,20 +1069,20 @@ extension EditorMapLayer {
 			}
 		}
 
-		var error: String? = nil
-		guard let addNodeToWay: EditActionWithNode = self.canAddNode(toWay: way, atIndex:nextIndex, error:&error)
+		var error: String?
+		guard let addNodeToWay: EditActionWithNode = canAddNode(toWay: way, atIndex: nextIndex, error: &error)
 		else {
 			return .failure(.text(error!))
 		}
-		let node2 = self.createNode(atScreenPoint: newPoint)
-		self.selectedWay = way // set selection before perfoming add-node action so selection is recorded in undo stack
-		self.selectedNode = node2
+		let node2 = createNode(atScreenPoint: newPoint)
+		selectedWay = way // set selection before perfoming add-node action so selection is recorded in undo stack
+		selectedNode = node2
 		addNodeToWay(node2)
 		return .success(newPoint)
 	}
 
 	func addNode(at dropPoint: CGPoint) {
-		if self.isHidden {
+		if isHidden {
 			owner.flashMessage(NSLocalizedString("Editing layer not visible", comment: ""))
 			return
 		}
@@ -994,18 +1091,18 @@ extension EditorMapLayer {
 		// converting a dropped pin to a way by adding a new node
 		// or adding a node to a selected way/node combination
 		guard let pushpinView = owner.pushpinView(),
-			  self.selectedNode == nil || self.selectedWay != nil
+		      self.selectedNode == nil || selectedWay != nil
 		else {
 			// drop a new pin
-			self.selectedNode = nil
-			self.selectedWay = nil
-			self.selectedRelation = nil
+			selectedNode = nil
+			selectedWay = nil
+			selectedRelation = nil
 			owner.placePushpin(at: dropPoint, object: nil)
 			return
 		}
 
 		let prevPointIsOffScreen = !bounds.contains(pushpinView.arrowPoint)
-		let offscreenWarning: (()->Void) = {
+		let offscreenWarning: (() -> Void) = {
 			self.owner.flashMessage(NSLocalizedString("Selected object is off screen", comment: ""))
 		}
 
@@ -1013,15 +1110,17 @@ extension EditorMapLayer {
 		   let selectedNode = self.selectedNode
 		{
 			// already editing a way so try to extend it
-			if selectedWay.isClosed() || !(selectedNode == selectedWay.nodes.first || selectedNode == selectedWay.nodes.last) {
+			if selectedWay
+				.isClosed() || !(selectedNode == selectedWay.nodes.first || selectedNode == selectedWay.nodes.last)
+			{
 				if prevPointIsOffScreen {
 					offscreenWarning()
 					return
 				}
 			}
-		} else if self.selectedPrimary == nil {
+		} else if selectedPrimary == nil {
 			// just dropped a pin, so convert it into a way
-		} else if self.selectedWay != nil && self.selectedNode == nil {
+		} else if selectedWay != nil, selectedNode == nil {
 			// add a new node to a way at location of pushpin
 			if prevPointIsOffScreen {
 				offscreenWarning()
@@ -1031,15 +1130,14 @@ extension EditorMapLayer {
 			// not supported
 			return
 		}
-		
-		switch self.extendSelectedWay(to: dropPoint, from: pushpinView.arrowPoint) {
+
+		switch extendSelectedWay(to: dropPoint, from: pushpinView.arrowPoint) {
 		case let .success(pt):
 			owner.placePushpinForSelection(at: pt)
 		case let .failure(error):
-			if case .text(let text) = error {
+			if case let .text(text) = error {
 				owner.showAlert(NSLocalizedString("Can't extend way", comment: ""), message: text)
 			}
 		}
 	}
-
 }

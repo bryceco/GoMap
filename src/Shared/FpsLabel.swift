@@ -8,19 +8,19 @@
 
 import UIKit
 
-fileprivate let ENABLE_FPS = 0
+private let ENABLE_FPS = 0
 
-fileprivate let FRAME_COUNT = 2 * 60
+private let FRAME_COUNT = 2 * 60
 
 final class FpsLabel: UILabel {
-    private var historyPos = 0
-    private var frameTimestamp = [CFTimeInterval](repeating: 0, count: FRAME_COUNT) // average last 60 frames
-    
-    private var timer: DispatchSourceTimer!
+	private var historyPos = 0
+	private var frameTimestamp = [CFTimeInterval](repeating: 0, count: FRAME_COUNT) // average last 60 frames
 
-    public var showFPS: Bool = false {
+	private var timer: DispatchSourceTimer!
+
+	public var showFPS: Bool = false {
 		didSet {
-            if showFPS == oldValue {
+			if showFPS == oldValue {
 				return
 			}
 			if showFPS {
@@ -43,53 +43,53 @@ final class FpsLabel: UILabel {
 				DisplayLink.shared.removeName("FpsLabel")
 				timer?.cancel()
 			}
-        }
-    }
+		}
+	}
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        showFPS = false
-        isHidden = true
-    }
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		showFPS = false
+		isHidden = true
+	}
 
-    deinit {
-        showFPS = false
-    }
+	deinit {
+		showFPS = false
+	}
 
-    func updateText() {
-        // scan backward to see how many frames were drawn in the last second
-        let seconds = Double(FRAME_COUNT / 60)
-        var frameCount: Double = 0
-        var pos = (historyPos + FRAME_COUNT - 1) % FRAME_COUNT
-        let last = frameTimestamp[pos]
-        var prev: CFTimeInterval = 0.0
-        repeat {
-            pos -= 1
-            if pos < 0 {
-                pos = FRAME_COUNT - 1
-            }
-            prev = frameTimestamp[pos]
-            frameCount += 1
-            if last - prev >= seconds {
-                break
-            }
-        } while pos != historyPos
+	func updateText() {
+		// scan backward to see how many frames were drawn in the last second
+		let seconds = Double(FRAME_COUNT / 60)
+		var frameCount: Double = 0
+		var pos = (historyPos + FRAME_COUNT - 1) % FRAME_COUNT
+		let last = frameTimestamp[pos]
+		var prev: CFTimeInterval = 0.0
+		repeat {
+			pos -= 1
+			if pos < 0 {
+				pos = FRAME_COUNT - 1
+			}
+			prev = frameTimestamp[pos]
+			frameCount += 1
+			if last - prev >= seconds {
+				break
+			}
+		} while pos != historyPos
 
-        let average = CFTimeInterval(frameCount / (last - prev))
-        if average >= 10.0 {
-            text = String(format: "%.1f FPS", average)
-        } else {
-            text = String(format: "%.2f FPS", average)
-        }
-    }
+		let average = CFTimeInterval(frameCount / (last - prev))
+		if average >= 10.0 {
+			text = String(format: "%.1f FPS", average)
+		} else {
+			text = String(format: "%.2f FPS", average)
+		}
+	}
 
-    func frameUpdated() {
-        // add to history
-        let now = CACurrentMediaTime()
-        frameTimestamp[historyPos] = now
-        historyPos += 1
-        if historyPos >= FRAME_COUNT {
-            historyPos = 0
-        }
-    }
+	func frameUpdated() {
+		// add to history
+		let now = CACurrentMediaTime()
+		frameTimestamp[historyPos] = now
+		historyPos += 1
+		if historyPos >= FRAME_COUNT {
+			historyPos = 0
+		}
+	}
 }

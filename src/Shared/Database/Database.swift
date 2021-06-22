@@ -9,55 +9,50 @@
 import Foundation
 
 #if DEBUG && false
-	let USE_RTREE = 1
+let USE_RTREE = 1
 #else
-	let USE_RTREE = 0
+let USE_RTREE = 0
 #endif
 
-
 final class Database {
-
 	private let db: Sqlite
-	
+
 #if USE_RTREE
 	private var spatialInsert: SqliteStatement
-    private var spatialDelete: SqliteStatement
+	private var spatialDelete: SqliteStatement
 #endif
 
 	static let dispatchQueue = DispatchQueue(label: "com.bryceco.gomap.database",
-											 qos: .default,
-											 attributes: [])
+	                                         qos: .default,
+	                                         attributes: [])
 
-    // MARK: initialize
-    
+	// MARK: initialize
+
 	class func databasePath(withName name: String) -> String {
 		return Sqlite.pathForName(name)
 	}
-    
+
 	// return self if database can be opened
 	// return nil if database doesn't exist or is corrupted
-    init?(name: String) {
+	init?(name: String) {
 		guard let db = Sqlite(name: name) else { return nil }
 		self.db = db
 		if (try? db.exec("PRAGMA foreign_keys=ON;")) == nil {
 			return nil
 		}
-    }
-
-	var path: String {
-		get { db.path }
 	}
 
-    class func delete(withName name: String) throws {
+	var path: String { db.path }
+
+	class func delete(withName name: String) throws {
 		let path = Database.databasePath(withName: name)
 		if unlink(path) != 0 {
 			throw SqliteError.unlink
 		}
-    }
+	}
 
-	deinit {
-    }
-    
+	deinit {}
+
 	private func dropTables() throws {
 		try db.exec("drop table node_tags;")
 		try db.exec("drop table nodes;")
@@ -72,13 +67,12 @@ final class Database {
 #endif
 		try db.exec("vacuum;") // compact database
 	}
-    
-	func createTables() throws {
 
-        // nodes
-        
+	func createTables() throws {
+		// nodes
+
 		try db.exec(
-            """
+			"""
 				CREATE TABLE IF NOT EXISTS nodes(\
 					IDENT		INT8	unique PRIMARY KEY	NOT NULL,\
 					USER        varchar(255)	NOT NULL,\
@@ -92,7 +86,7 @@ final class Database {
 			""")
 
 		try db.exec(
-            """
+			"""
 				create table if not exists node_tags(\
 					ident	int8			not null,\
 					key		varchar(255)	not null,\
@@ -100,10 +94,10 @@ final class Database {
 					FOREIGN KEY(ident) REFERENCES nodes(ident) on delete cascade);
 			""")
 
-        // ways
-        
+		// ways
+
 		try db.exec(
-            """
+			"""
 				CREATE TABLE IF NOT EXISTS ways(\
 					IDENT		INT8	unique PRIMARY KEY	NOT NULL,\
 					USER        varchar(255)				NOT NULL,\
@@ -116,7 +110,7 @@ final class Database {
 			""")
 
 		try db.exec(
-            """
+			"""
 				create table if not exists way_nodes(\
 					ident		int8	not null,\
 					node_id		int8	not null,\
@@ -125,7 +119,7 @@ final class Database {
 			""")
 
 		try db.exec(
-            """
+			"""
 				create table if not exists way_tags(\
 					ident	int8			not null,\
 					key		varchar(255)	not null,\
@@ -133,10 +127,10 @@ final class Database {
 					FOREIGN KEY(ident) REFERENCES ways(ident) on delete cascade);
 			""")
 
-        // relations
-        
+		// relations
+
 		try db.exec(
-            """
+			"""
 				CREATE TABLE IF NOT EXISTS relations(\
 					IDENT		INT8	unique PRIMARY KEY	NOT NULL,\
 					USER        varchar(255)		NOT NULL,\
@@ -149,7 +143,7 @@ final class Database {
 			""")
 
 		try db.exec(
-            """
+			"""
 				create table if not exists relation_members(\
 					ident			int8			not null,\
 					type			varchar[255]	not null,\
@@ -160,7 +154,7 @@ final class Database {
 			""")
 
 		try db.exec(
-            """
+			"""
 				create table if not exists relation_tags(\
 					ident	int8			not null,\
 					key		varchar(255)	not null,\
@@ -168,8 +162,8 @@ final class Database {
 					FOREIGN KEY(ident) REFERENCES relations(ident) on delete cascade);
 			""")
 
-        // spatial
-        
+		// spatial
+
 #if USE_RTREE
 		try db.exec(
 			"""
@@ -182,62 +176,68 @@ final class Database {
 				);
 			""")
 #endif
-    }
-    
-    // MARK: spatial
-    
+	}
+
+	// MARK: spatial
+
 #if USE_RTREE
 	private func deleteSpatial(_ object: OsmBaseObject?) -> Bool {
-        var rc: Int32
-        if spatialDelete == nil {
-            rc = sqlite3_prepare_v2(db, "INSERT INTO spatial (ident) VALUES (?,?);", -1, &spatialDelete, nil)
-            if rc != SQLITE_OK {
-                DbgAssert(false)
-                return false
-            }
-        }
-        
-        sqlite3_reset(spatialDelete)
-        SqlOk(sqlite3_clear_bindings(spatialDelete))
-        SqlOk(sqlite3_bind_int64(spatialDelete, 1, TaggedObjectIdent(object)))
-        rc = sqlite3_step(spatialDelete)
-        return rc == SQLITE_DONE
-    }
-    
-	private func add(toSpatial object: OsmBaseObject?) throws {
-        if spatialInsert == nil {
-			DbgOk( sqlite3_prepare_v2(db, "INSERT INTO spatial (ident,minX, maxX,minY, maxY) VALUES (?,?,?,?,?);", -1, &spatialInsert, nil) )
+		var rc: Int32
+		if spatialDelete == nil {
+			rc = sqlite3_prepare_v2(db, "INSERT INTO spatial (ident) VALUES (?,?);", -1, &spatialDelete, nil)
+			if rc != SQLITE_OK {
+				DbgAssert(false)
+				return false
+			}
 		}
-        
-        let bbox = object?.boundingBox
-        sqlite3_reset(spatialInsert)
-        SqlOk(sqlite3_clear_bindings(spatialInsert))
-        SqlOk(sqlite3_bind_int64(spatialInsert, 1, TaggedObjectIdent(object)))
-        SqlOk(sqlite3_bind_double(spatialInsert, 2, bbox?.origin.x))
-        SqlOk(sqlite3_bind_double(spatialInsert, 3, bbox?.origin.x + bbox?.size.width))
-        SqlOk(sqlite3_bind_double(spatialInsert, 4, bbox?.origin.y))
-        SqlOk(sqlite3_bind_double(spatialInsert, 5, bbox?.origin.y + bbox?.size.height))
+
+		sqlite3_reset(spatialDelete)
+		SqlOk(sqlite3_clear_bindings(spatialDelete))
+		SqlOk(sqlite3_bind_int64(spatialDelete, 1, TaggedObjectIdent(object)))
+		rc = sqlite3_step(spatialDelete)
+		return rc == SQLITE_DONE
+	}
+
+	private func add(toSpatial object: OsmBaseObject?) throws {
+		if spatialInsert == nil {
+			DbgOk(sqlite3_prepare_v2(
+				db,
+				"INSERT INTO spatial (ident,minX, maxX,minY, maxY) VALUES (?,?,?,?,?);",
+				-1,
+				&spatialInsert,
+				nil))
+		}
+
+		let bbox = object?.boundingBox
+		sqlite3_reset(spatialInsert)
+		SqlOk(sqlite3_clear_bindings(spatialInsert))
+		SqlOk(sqlite3_bind_int64(spatialInsert, 1, TaggedObjectIdent(object)))
+		SqlOk(sqlite3_bind_double(spatialInsert, 2, bbox?.origin.x))
+		SqlOk(sqlite3_bind_double(spatialInsert, 3, bbox?.origin.x + bbox?.size.width))
+		SqlOk(sqlite3_bind_double(spatialInsert, 4, bbox?.origin.y))
+		SqlOk(sqlite3_bind_double(spatialInsert, 5, bbox?.origin.y + bbox?.size.height))
 		while true {
 			let rc = sqlite3_step(spatialInsert)
 			if rc != SQLITE_CONSTRAINT {
-				SqlOk( rc, SQLITE_DONE )
+				SqlOk(rc, SQLITE_DONE)
 				break
 			}
-            // tried to insert something already there. This might be an update to a later version from the server so delete what we have and retry
+			// tried to insert something already there. This might be an update to a later version from the server so delete what we have and retry
 			try? deleteSpatial(object)
-        }
-    }
+		}
+	}
 #endif
-    
-    // MARK: save
-    
-	private func saveNodes(_ nodes: [OsmNode]) throws {
 
-        if nodes.count == 0 {
-            return
-        }
-        
-		let nodeStatement = try db.prepare("INSERT INTO NODES (user,timestamp,version,changeset,uid,longitude,latitude,ident) VALUES (?,?,?,?,?,?,?,?);")
+	// MARK: save
+
+	private func saveNodes(_ nodes: [OsmNode]) throws {
+		if nodes.count == 0 {
+			return
+		}
+
+		let nodeStatement = try db
+			.prepare(
+				"INSERT INTO NODES (user,timestamp,version,changeset,uid,longitude,latitude,ident) VALUES (?,?,?,?,?,?,?,?);")
 		let tagStatement = try db.prepare("INSERT INTO node_tags (ident,key,value) VALUES (?,?,?);")
 
 		for node in nodes {
@@ -258,7 +258,7 @@ final class Database {
 				try? deleteNodes([node])
 			}
 
-			for (key,value) in node.tags {
+			for (key, value) in node.tags {
 				try db.reset(tagStatement)
 				try db.clearBindings(tagStatement)
 				try db.bindInt64(tagStatement, 1, node.ident)
@@ -270,16 +270,16 @@ final class Database {
 			add(toSpatial: node)
 #endif
 		}
-    }
-    
-	private func saveWays(_ ways: [OsmWay]) throws {
+	}
 
-        if ways.count == 0 {
-            return
-        }
-        
-        let wayStatement = try db.prepare("INSERT INTO ways (ident,user,timestamp,version,changeset,uid,nodecount) VALUES (?,?,?,?,?,?,?);")
-        let tagStatement = try db.prepare("INSERT INTO way_tags (ident,key,value) VALUES (?,?,?);")
+	private func saveWays(_ ways: [OsmWay]) throws {
+		if ways.count == 0 {
+			return
+		}
+
+		let wayStatement = try db
+			.prepare("INSERT INTO ways (ident,user,timestamp,version,changeset,uid,nodecount) VALUES (?,?,?,?,?,?,?);")
+		let tagStatement = try db.prepare("INSERT INTO way_tags (ident,key,value) VALUES (?,?,?);")
 		let nodeStatement = try db.prepare("INSERT INTO way_nodes (ident,node_id,node_index) VALUES (?,?,?);")
 
 		for way in ways {
@@ -298,7 +298,7 @@ final class Database {
 				try? deleteWays([way])
 			}
 
-			for (key,value) in way.tags {
+			for (key, value) in way.tags {
 				try db.reset(tagStatement)
 				try db.clearBindings(tagStatement)
 				try db.bindInt64(tagStatement, 1, way.ident)
@@ -321,16 +321,19 @@ final class Database {
 			add(toSpatial: way)
 #endif
 		}
-    }
-    
+	}
+
 	private func saveRelations(_ relations: [OsmRelation]) throws {
-        if relations.count == 0 {
-            return
-        }
-        
-		let baseStatement = try db.prepare("INSERT INTO relations (ident,user,timestamp,version,changeset,uid,membercount) VALUES (?,?,?,?,?,?,?);")
+		if relations.count == 0 {
+			return
+		}
+
+		let baseStatement = try db
+			.prepare(
+				"INSERT INTO relations (ident,user,timestamp,version,changeset,uid,membercount) VALUES (?,?,?,?,?,?,?);")
 		let tagStatement = try db.prepare("INSERT INTO relation_tags (ident,key,value) VALUES (?,?,?);")
-        let memberStatement = try db.prepare("INSERT INTO relation_members (ident,type,ref,role,member_index) VALUES (?,?,?,?,?);")
+		let memberStatement = try db
+			.prepare("INSERT INTO relation_members (ident,type,ref,role,member_index) VALUES (?,?,?,?,?);")
 
 		for relation in relations {
 			try db.reset(baseStatement)
@@ -348,7 +351,7 @@ final class Database {
 				try? deleteRelations([relation])
 			}
 
-			for (key,value) in relation.tags {
+			for (key, value) in relation.tags {
 				try db.reset(tagStatement)
 				try db.clearBindings(tagStatement)
 				try db.bindInt64(tagStatement, 1, relation.ident)
@@ -373,15 +376,15 @@ final class Database {
 			add(toSpatial: relation)
 #endif
 		}
-    }
-    
-    // MARK: delete
+	}
+
+	// MARK: delete
 
 	private func deleteNodes(_ nodes: [OsmNode]) throws {
 		if nodes.count == 0 {
-            return
-        }
-        
+			return
+		}
+
 		let nodeStatement = try db.prepare("DELETE from NODES where ident=?;")
 
 		for node in nodes {
@@ -390,13 +393,13 @@ final class Database {
 			try db.bindInt64(nodeStatement, 1, node.ident)
 			try db.step(nodeStatement)
 		}
-    }
+	}
 
 	private func deleteWays(_ ways: [OsmWay]) throws {
-        if ways.count == 0 {
-            return
+		if ways.count == 0 {
+			return
 		}
-        
+
 		let nodeStatement = try db.prepare("DELETE from WAYS where ident=?;")
 
 		for way in ways {
@@ -405,13 +408,13 @@ final class Database {
 			try db.bindInt64(nodeStatement, 1, way.ident)
 			try db.step(nodeStatement)
 		}
-    }
+	}
 
 	private func deleteRelations(_ relations: [OsmRelation]) throws {
 		if relations.count == 0 {
-            return
-        }
-        
+			return
+		}
+
 		let relationStatement = try db.prepare("DELETE from RELATIONS where ident=?;")
 
 		for relation in relations {
@@ -421,18 +424,17 @@ final class Database {
 			try db.step(relationStatement)
 		}
 	}
-    
-    // MARK: update
-    
-    func save(
-        saveNodes: [OsmNode],
-        saveWays: [OsmWay],
-        saveRelations: [OsmRelation],
-        deleteNodes: [OsmNode],
-        deleteWays: [OsmWay],
-        deleteRelations: [OsmRelation],
-        isUpdate: Bool
-			) throws
+
+	// MARK: update
+
+	func save(
+		saveNodes: [OsmNode],
+		saveWays: [OsmWay],
+		saveRelations: [OsmRelation],
+		deleteNodes: [OsmNode],
+		deleteWays: [OsmWay],
+		deleteRelations: [OsmRelation],
+		isUpdate: Bool) throws
 	{
 #if DEBUG
 #if !targetEnvironment(macCatalyst)
@@ -459,16 +461,15 @@ final class Database {
 			try db.exec("ROLLBACK")
 			throw error
 		}
-    }
-    
-    // MARK: query
-    
-	private func queryTagTable(_ tableName: String) throws -> [OsmIdentifier:[String:String]] {
+	}
 
+	// MARK: query
+
+	private func queryTagTable(_ tableName: String) throws -> [OsmIdentifier: [String: String]] {
 		let query = "SELECT key,value,ident FROM \(tableName)"
 		let tagStatement = try db.prepare(query)
 
-		var list = [OsmIdentifier:[String:String]]()
+		var list = [OsmIdentifier: [String: String]]()
 
 		try db.reset(tagStatement)
 		try db.clearBindings(tagStatement)
@@ -484,38 +485,39 @@ final class Database {
 		}
 
 		return list
-    }
+	}
 
 	func querySqliteNodes() throws -> [OsmNode] {
-		let nodeStatement = try db.prepare("SELECT ident,user,timestamp,version,changeset,uid,longitude,latitude FROM nodes;")
+		let nodeStatement = try db
+			.prepare("SELECT ident,user,timestamp,version,changeset,uid,longitude,latitude FROM nodes;")
 
 		let tagDict = try queryTagTable("node_tags")
 
 		var nodes: [OsmNode] = []
-        
+
 		while try db.step(nodeStatement, hasResult: Sqlite.ROW) {
 			let ident = db.columnInt64(nodeStatement, 0)
-            let user = db.columnText(nodeStatement, 1)
-            let timestamp = db.columnText(nodeStatement, 2)
-            let version = db.columnInt32(nodeStatement, 3)
-            let changeset = db.columnInt64(nodeStatement, 4)
+			let user = db.columnText(nodeStatement, 1)
+			let timestamp = db.columnText(nodeStatement, 2)
+			let version = db.columnInt32(nodeStatement, 3)
+			let changeset = db.columnInt64(nodeStatement, 4)
 			let uid = db.columnInt32(nodeStatement, 5)
 			let longitude = db.columnDouble(nodeStatement, 6)
-            let latitude = db.columnDouble(nodeStatement, 7)
+			let latitude = db.columnDouble(nodeStatement, 7)
 
-			let tags = tagDict[ident ] ?? [:]
+			let tags = tagDict[ident] ?? [:]
 
 			let node = OsmNode(
 				withVersion: Int(version),
 				changeset: Int64(changeset),
-                user: user,
+				user: user,
 				uid: Int(uid),
-                ident: ident,
-                timestamp: timestamp,
+				ident: ident,
+				timestamp: timestamp,
 				tags: tags)
-            node.setLongitude(longitude, latitude: latitude, undo: nil)
+			node.setLongitude(longitude, latitude: latitude, undo: nil)
 
-			nodes.append( node )
+			nodes.append(node)
 		}
 
 		for obj in nodes {
@@ -524,36 +526,35 @@ final class Database {
 
 		return nodes
 	}
-    
-    func querySqliteWays() throws -> [OsmWay] {
 
+	func querySqliteWays() throws -> [OsmWay] {
 		let wayStatement = try db.prepare("SELECT ident,user,timestamp,version,changeset,uid,nodecount FROM ways")
 
-		var ways: [OsmIdentifier : OsmWay] = [:]
+		var ways: [OsmIdentifier: OsmWay] = [:]
 		let tagDicts = try queryTagTable("way_tags")
 
 		while try db.step(wayStatement, hasResult: Sqlite.ROW) {
 			let ident = db.columnInt64(wayStatement, 0)
-            let user = db.columnText(wayStatement, 1)
-            let timestamp = db.columnText(wayStatement, 2)
-            let version = db.columnInt32(wayStatement, 3)
-            let changeset = db.columnInt64(wayStatement, 4)
+			let user = db.columnText(wayStatement, 1)
+			let timestamp = db.columnText(wayStatement, 2)
+			let version = db.columnInt32(wayStatement, 3)
+			let changeset = db.columnInt64(wayStatement, 4)
 			let uid = db.columnInt32(wayStatement, 5)
-            let nodecount = db.columnInt32(wayStatement, 6)
+			let nodecount = db.columnInt32(wayStatement, 6)
 
 			let tags = tagDicts[ident] ?? [:]
-            
+
 			let way = OsmWay(
 				withVersion: Int(version),
-                changeset: changeset,
+				changeset: changeset,
 				user: user,
 				uid: Int(uid),
-                ident: ident,
-                timestamp: timestamp,
+				ident: ident,
+				timestamp: timestamp,
 				tags: tags)
 
 			let nodeRefs = [OsmIdentifier].init(repeating: -1, count: Int(nodecount))
-            way.constructNodeList(nodeRefs)
+			way.constructNodeList(nodeRefs)
 
 			ways[way.ident] = way
 		}
@@ -561,50 +562,49 @@ final class Database {
 		try queryNodes(forWays: ways)
 
 		return Array(ways.values)
-    }
-    
-	private func queryNodes(forWays ways: [OsmIdentifier : OsmWay]) throws {
+	}
 
+	private func queryNodes(forWays ways: [OsmIdentifier: OsmWay]) throws {
 		let nodeStatement = try db.prepare("SELECT ident,node_id,node_index FROM way_nodes")
 
 		while try db.step(nodeStatement, hasResult: Sqlite.ROW) {
 			let ident = db.columnInt64(nodeStatement, 0)
 			let node_id = db.columnInt64(nodeStatement, 1)
 			let node_index = db.columnInt32(nodeStatement, 2)
-            
+
 			guard let way = ways[ident] else {
 				throw SqliteError.OsmError("way referenced by node does not exist")
 			}
 
 			way.nodeRefs![Int(node_index)] = node_id
 		}
-    }
-    
-    func querySqliteRelations() throws -> [OsmRelation] {
+	}
 
-		let relationStatement = try db.prepare("SELECT ident,user,timestamp,version,changeset,uid,membercount FROM relations")
+	func querySqliteRelations() throws -> [OsmRelation] {
+		let relationStatement = try db
+			.prepare("SELECT ident,user,timestamp,version,changeset,uid,membercount FROM relations")
 
 		let tagsDict = try queryTagTable("relation_tags")
 
-		var relations: [OsmIdentifier : OsmRelationBuilder] = [:]
+		var relations: [OsmIdentifier: OsmRelationBuilder] = [:]
 		while try db.step(relationStatement, hasResult: Sqlite.ROW) {
-            let ident = db.columnInt64(relationStatement, 0)
-            let user = db.columnText(relationStatement, 1)
-            let timestamp = db.columnText(relationStatement, 2)
-            let version = db.columnInt32(relationStatement, 3)
-            let changeset = db.columnInt64(relationStatement, 4)
-            let uid = db.columnInt32(relationStatement, 5)
-            let membercount = db.columnInt32(relationStatement, 6)
+			let ident = db.columnInt64(relationStatement, 0)
+			let user = db.columnText(relationStatement, 1)
+			let timestamp = db.columnText(relationStatement, 2)
+			let version = db.columnInt32(relationStatement, 3)
+			let changeset = db.columnInt64(relationStatement, 4)
+			let uid = db.columnInt32(relationStatement, 5)
+			let membercount = db.columnInt32(relationStatement, 6)
 
-			let tags = tagsDict[ ident ] ?? [:]
+			let tags = tagsDict[ident] ?? [:]
 
 			let relation = OsmRelation(
 				withVersion: Int(version),
-                changeset: changeset,
-                user: user,
+				changeset: changeset,
+				user: user,
 				uid: Int(uid),
-                ident: ident,
-                timestamp: timestamp,
+				ident: ident,
+				timestamp: timestamp,
 				tags: tags)
 
 			let builder = OsmRelationBuilder(with: relation, memberCount: Int(membercount))
@@ -614,22 +614,22 @@ final class Database {
 		// set the member objects for relations
 		try queryMembers(forRelations: relations)
 		for builder in relations.values {
-			builder.relation.constructMembers( builder.members.map({ $0! }) )
+			builder.relation.constructMembers(builder.members.map({ $0! }))
 		}
 
 		// build the dictionary
 		return relations.values.map({ $0.relation })
 	}
-    
-	private func queryMembers(forRelations relations: [OsmIdentifier : OsmRelationBuilder]) throws {
+
+	private func queryMembers(forRelations relations: [OsmIdentifier: OsmRelationBuilder]) throws {
 		let memberStatement = try db.prepare("SELECT ident,type,ref,role,member_index FROM relation_members")
 
 		while try db.step(memberStatement, hasResult: Sqlite.ROW) {
 			let ident = db.columnInt64(memberStatement, 0)
-            let type = db.columnText(memberStatement, 1)
-            let ref = db.columnInt64(memberStatement, 2)
-            let role = db.columnText(memberStatement, 3)
-            let member_index = db.columnInt32(memberStatement, 4)
+			let type = db.columnText(memberStatement, 1)
+			let ref = db.columnInt64(memberStatement, 2)
+			let role = db.columnText(memberStatement, 3)
+			let member_index = db.columnInt32(memberStatement, 4)
 
 			guard let relation = relations[ident] else {
 				throw SqliteError.OsmError("relation referenced by relation member does not exist")
@@ -640,8 +640,6 @@ final class Database {
 				role: role)
 
 			relation.members[Int(member_index)] = member
-        }
-    }
-
+		}
+	}
 }
-

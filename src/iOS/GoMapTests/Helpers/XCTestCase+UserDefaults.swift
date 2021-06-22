@@ -9,12 +9,12 @@
 import XCTest
 
 extension XCTestCase {
-    /// Creates `UserDefaults` that use the test case' name as the `suitename`.
-    ///
-    /// - Returns: A `UserDefaults` instance that is dedicated for this test case.
-    func createDedicatedUserDefaults() -> UserDefaults? {
-        let testCaseName = String(describing: self)
+	/// Creates `UserDefaults` that use the test case' name as the `suitename`.
+	///
+	/// - Returns: A `UserDefaults` instance that is dedicated for this test case.
+	func createDedicatedUserDefaults() -> UserDefaults? {
+		let testCaseName = String(describing: self)
 
-        return UserDefaults(suiteName: testCaseName)
-    }
+		return UserDefaults(suiteName: testCaseName)
+	}
 }

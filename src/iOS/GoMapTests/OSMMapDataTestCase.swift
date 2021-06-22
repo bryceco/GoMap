@@ -10,31 +10,31 @@
 import XCTest
 
 class OSMMapDataTestCase: XCTestCase {
-    var mapData: OsmMapData!
-    var userDefaults: UserDefaults!
+	var mapData: OsmMapData!
+	var userDefaults: UserDefaults!
 
-    override func setUp() {
-        userDefaults = createDedicatedUserDefaults()
-        mapData = OsmMapData(userDefaults: userDefaults)
-    }
+	override func setUp() {
+		userDefaults = createDedicatedUserDefaults()
+		mapData = OsmMapData(userDefaults: userDefaults)
+	}
 
-    override func tearDown() {
-        mapData = nil
-        userDefaults = nil
-    }
+	override func tearDown() {
+		mapData = nil
+		userDefaults = nil
+	}
 
-    func testSetServerShouldAddThePathSeparatorSuffixIfItDoesNotExist() {
-        let hostname = "https://example.com"
-        mapData.setServer(hostname)
+	func testSetServerShouldAddThePathSeparatorSuffixIfItDoesNotExist() {
+		let hostname = "https://example.com"
+		mapData.setServer(hostname)
 
-        let hostnameWithPathSeparatorSuffix = "\(hostname)/"
-        XCTAssertEqual(OSM_API_URL, hostnameWithPathSeparatorSuffix)
-    }
+		let hostnameWithPathSeparatorSuffix = "\(hostname)/"
+		XCTAssertEqual(OSM_API_URL, hostnameWithPathSeparatorSuffix)
+	}
 
-    func testSetServerShouldNotAddThePathSeparatorSuffixIfItAlreadyExists() {
-        let hostname = "https://example.com/"
-        mapData.setServer(hostname)
+	func testSetServerShouldNotAddThePathSeparatorSuffixIfItAlreadyExists() {
+		let hostname = "https://example.com/"
+		mapData.setServer(hostname)
 
-        XCTAssertEqual(OSM_API_URL, hostname)
-    }
+		XCTAssertEqual(OSM_API_URL, hostname)
+	}
 }

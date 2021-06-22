@@ -17,16 +17,19 @@ struct AtomicInt {
 	init(_ count: Int) {
 		self.count = count
 	}
-	mutating func increment() -> Void {
+
+	mutating func increment() {
 		wait(); defer { signal() }
-		self.count += 1
+		count += 1
 	}
-	mutating func decrement() -> Void {
+
+	mutating func decrement() {
 		wait(); defer { signal() }
-		self.count -= 1
+		count -= 1
 	}
+
 	func value() -> Int {
 		wait(); defer { signal() }
-		return self.count
+		return count
 	}
 }

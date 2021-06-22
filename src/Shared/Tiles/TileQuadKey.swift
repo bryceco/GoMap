@@ -10,22 +10,22 @@
 
 /// Converts tile XY coordinates into a QuadKey at a specified level of detail.
 func TileToQuadKey(x tileX: Int, y tileY: Int, z levelOfDetail: Int) -> String {
-    var quadKey = ""
-    var i = levelOfDetail
-    while i > 0 {
-        var digit = 0
-        let mask = 1 << (i - 1)
-        if (tileX & mask) != 0 {
-            digit += 1
-        }
-        if (tileY & mask) != 0 {
-            digit += 1
-            digit += 1
-        }
-        quadKey += "\(digit)"
-        i -= 1
-    }
-    return quadKey
+	var quadKey = ""
+	var i = levelOfDetail
+	while i > 0 {
+		var digit = 0
+		let mask = 1 << (i - 1)
+		if (tileX & mask) != 0 {
+			digit += 1
+		}
+		if (tileY & mask) != 0 {
+			digit += 1
+			digit += 1
+		}
+		quadKey += "\(digit)"
+		i -= 1
+	}
+	return quadKey
 }
 
 /// Converts a QuadKey into tile XY coordinates.
@@ -38,20 +38,19 @@ func QuadKeyToTileXY(_ quadKey: String) -> (x: Int, y: Int, z: Int) {
 	for char in quadKey.reversed() {
 		let mask = 1 << (i - 1)
 		switch char {
-			case "0":
-                break
-            case "1":
-                tileX |= mask
-            case "2":
-                tileY |= mask
-            case "3":
-				tileX |= mask
-                tileY |= mask
-			default:
-				assert(false)
-        }
+		case "0":
+			break
+		case "1":
+			tileX |= mask
+		case "2":
+			tileY |= mask
+		case "3":
+			tileX |= mask
+			tileY |= mask
+		default:
+			assert(false)
+		}
 		i -= 1
-    }
+	}
 	return (tileX, tileY, tileZ)
 }
-

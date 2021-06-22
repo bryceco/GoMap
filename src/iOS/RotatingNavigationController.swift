@@ -8,11 +8,11 @@
 import UIKit
 
 class RotatingNavigationController: UINavigationController {
-    override var shouldAutorotate: Bool {
-        return true
-    }
-    
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .all
-    }
+	override var shouldAutorotate: Bool {
+		return true
+	}
+
+	override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+		return .all
+	}
 }

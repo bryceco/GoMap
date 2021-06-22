@@ -9,12 +9,11 @@
 import Foundation
 import UIKit
 
-class TristateButton : UISegmentedControl{
-	var onSelect: ((String?) -> Void)? = nil
+class TristateButton: UISegmentedControl {
+	var onSelect: ((String?) -> Void)?
 
-	func stringForSelection() -> String?
-	{
-		return ["no", nil, "yes"][ self.selectedSegmentIndex ]
+	func stringForSelection() -> String? {
+		return ["no", nil, "yes"][selectedSegmentIndex]
 	}
 
 	override init(frame: CGRect) {
@@ -23,26 +22,24 @@ class TristateButton : UISegmentedControl{
 
 	init() {
 		super.init(items: [PresetsDatabase.shared.noForLocale, "-", PresetsDatabase.shared.yesForLocale])
-		self.apportionsSegmentWidthsByContent = true
+		apportionsSegmentWidthsByContent = true
 		setEnabled(true, forSegmentAt: 1)
-		self.addTarget(self, action: #selector(self.valueChanged(_:)), for:.valueChanged)
+		addTarget(self, action: #selector(valueChanged(_:)), for: .valueChanged)
 	}
 
-	@objc private func valueChanged(_ sender:Any?)
-	{
+	@objc private func valueChanged(_ sender: Any?) {
 		if let onSelect = onSelect {
-			onSelect(self.stringForSelection())
+			onSelect(stringForSelection())
 		}
 	}
 
-	func setSelection(forString value:String)
-	{
+	func setSelection(forString value: String) {
 		if OsmTags.isOsmBooleanFalse(value) {
-			super.selectedSegmentIndex = 0;
+			super.selectedSegmentIndex = 0
 		} else if OsmTags.isOsmBooleanTrue(value) {
-			super.selectedSegmentIndex = 2;
+			super.selectedSegmentIndex = 2
 		} else {
-			super.selectedSegmentIndex = 1;
+			super.selectedSegmentIndex = 1
 		}
 	}
 

@@ -34,11 +34,11 @@ let GEOMETRY_VERTEX = "vertex"
 class PresetKey: NSObject, NSSecureCoding {
 	public class var supportsSecureCoding: Bool { return true }
 
-	let name: String					// name of the preset, e.g. Hours
-	let tagKey: String				// the key being set, e.g. opening_hours
+	let name: String // name of the preset, e.g. Hours
+	let tagKey: String // the key being set, e.g. opening_hours
 	let defaultValue: String?
-	let placeholder: String			// placeholder text in the UITextField
-	let presetList: [PresetValue]?	// array of potential values, or nil if it's free-form text
+	let placeholder: String // placeholder text in the UITextField
+	let presetList: [PresetValue]? // array of potential values, or nil if it's free-form text
 	let keyboardType: UIKeyboardType
 	let autocapitalizationType: UITextAutocapitalizationType
 
@@ -49,14 +49,15 @@ class PresetKey: NSObject, NSSecureCoding {
 		placeholder: String?,
 		keyboard: UIKeyboardType,
 		capitalize: UITextAutocapitalizationType,
-		presets: [PresetValue]?
-	) {
+		presets: [PresetValue]?)
+	{
 		self.name = name
-		self.tagKey = tag
-		self.placeholder = placeholder ?? PresetKey.placeholderForPresets(presets) ?? PresetsDatabase.shared.unknownForLocale
-		self.keyboardType = keyboard
-		self.autocapitalizationType = capitalize
-		self.presetList = presets
+		tagKey = tag
+		self.placeholder = placeholder ?? PresetKey.placeholderForPresets(presets) ?? PresetsDatabase.shared
+			.unknownForLocale
+		keyboardType = keyboard
+		autocapitalizationType = capitalize
+		presetList = presets
 		self.defaultValue = defaultValue
 	}
 
@@ -66,7 +67,8 @@ class PresetKey: NSObject, NSSecureCoding {
 		   let placeholder = coder.decodeObject(forKey: "placeholder") as? String,
 		   let presetList = coder.decodeObject(forKey: "presetList") as? [PresetValue],
 		   let keyboardType = UIKeyboardType(rawValue: coder.decodeInteger(forKey: "keyboardType")),
-		   let autocapitalizationType = UITextAutocapitalizationType(rawValue: coder.decodeInteger(forKey: "capitalize"))
+		   let autocapitalizationType = UITextAutocapitalizationType(rawValue: coder
+		   	.decodeInteger(forKey: "capitalize"))
 		{
 			self.name = name
 			self.tagKey = tagKey
@@ -74,7 +76,7 @@ class PresetKey: NSObject, NSSecureCoding {
 			self.presetList = presetList
 			self.keyboardType = keyboardType
 			self.autocapitalizationType = autocapitalizationType
-			self.defaultValue = nil
+			defaultValue = nil
 		} else {
 			return nil
 		}
@@ -103,7 +105,11 @@ class PresetKey: NSObject, NSSecureCoding {
 	func tagValueForPrettyName(_ value: String) -> String {
 		if let presetList = presetList {
 			for presetValue in presetList {
-				let diff: ComparisonResult? = presetValue.name.compare(value, options: [.caseInsensitive, .diacriticInsensitive, .widthInsensitive], range: nil, locale: .current)
+				let diff: ComparisonResult? = presetValue.name.compare(
+					value,
+					options: [.caseInsensitive, .diacriticInsensitive, .widthInsensitive],
+					range: nil,
+					locale: .current)
 				if diff == .orderedSame {
 					return presetValue.tagValue
 				}
@@ -112,26 +118,24 @@ class PresetKey: NSObject, NSSecureCoding {
 		return value
 	}
 
-	func isYesNo() -> Bool
-	{
+	func isYesNo() -> Bool {
 		if let presetList = presetList,
-			presetList.count == 2,
-			presetList[0].tagValue == "yes",
-			presetList[1].tagValue == "no"
+		   presetList.count == 2,
+		   presetList[0].tagValue == "yes",
+		   presetList[1].tagValue == "no"
 		{
 			return true
 		}
 		return false
 	}
 
-	class private func placeholderForPresets(_ presets:[PresetValue]?) -> String?
-	{
+	private class func placeholderForPresets(_ presets: [PresetValue]?) -> String? {
 		// use the first 3 values as the placeholder text
 		if let presets = presets,
 		   presets.count > 1
 		{
 			var s = ""
-			for i in 0..<min(3,presets.count) {
+			for i in 0..<min(3, presets.count) {
 				let p = presets[i]
 				if p.name.count >= 20 {
 					continue

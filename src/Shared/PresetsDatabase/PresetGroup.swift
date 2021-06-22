@@ -16,13 +16,13 @@ enum PresetKeyOrGroup {
 // A group of related tags, such as address tags, organized for display purposes
 // A group becomes a Section in UITableView
 final class PresetGroup {
-	let name: String?				// e.g. Address
+	let name: String? // e.g. Address
 	let presetKeys: [PresetKeyOrGroup]
 	let isDrillDown: Bool
 
 	init(name: String?, tags: [PresetKeyOrGroup], isDrillDown: Bool = false) {
 		self.name = name
-		self.presetKeys = tags
+		presetKeys = tags
 		self.isDrillDown = isDrillDown
 	}
 
@@ -34,15 +34,14 @@ final class PresetGroup {
 		var text = "\(name ?? "<unknown>"):\n"
 		for key in presetKeys {
 			switch key {
-			case let .key(key):	text += "   \(key.description)\n"
-			case let .group(group):	text += "   \(group.description)\n"
+			case let .key(key): text += "   \(key.description)\n"
+			case let .group(group): text += "   \(group.description)\n"
 			}
 		}
 		return text
 	}
 
-	func multiComboSummary(ofDict dict:[String:String]?, isPlaceholder:Bool) -> String
-	{
+	func multiComboSummary(ofDict dict: [String: String]?, isPlaceholder: Bool) -> String {
 		var summary = ""
 		for preset in presetKeys {
 			if case let .key(preset) = preset,
@@ -51,8 +50,8 @@ final class PresetGroup {
 			   values[0].tagValue == "yes",
 			   values[1].tagValue == "no"
 			{
-				if let v = isPlaceholder ? "yes" : dict?[ preset.tagKey ],
-				   OsmTags.isOsmBooleanTrue( v )
+				if let v = isPlaceholder ? "yes" : dict?[preset.tagKey],
+				   OsmTags.isOsmBooleanTrue(v)
 				{
 					if summary.isEmpty {
 						summary = preset.name
@@ -68,4 +67,3 @@ final class PresetGroup {
 		return summary
 	}
 }
-
