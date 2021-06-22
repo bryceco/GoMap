@@ -131,7 +131,6 @@
 		C341E15A2639DF210022E983 /* NotesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341E1592639DF210022E983 /* NotesTableViewController.swift */; };
 		C341E15C2639DF440022E983 /* NearbyMappersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341E15B2639DF440022E983 /* NearbyMappersViewController.swift */; };
 		C365A563263FC53F007DEC94 /* TurnRestrictHwyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365A562263FC53F007DEC94 /* TurnRestrictHwyView.swift */; };
-		C365A565263FC943007DEC94 /* SpeechBalloonLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365A564263FC943007DEC94 /* SpeechBalloonLayer.swift */; };
 		C365A569263FCC9C007DEC94 /* TapAndDragGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */; };
 		C381C30B263FE518003142BA /* PushPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C381C30A263FE518003142BA /* PushPinView.swift */; };
 		C3D0969C263CBC1100E3B129 /* POIFeaturePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D0969B263CBC1100E3B129 /* POIFeaturePickerViewController.swift */; };
@@ -432,7 +431,6 @@
 		C341E1592639DF210022E983 /* NotesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotesTableViewController.swift; sourceTree = "<group>"; };
 		C341E15B2639DF440022E983 /* NearbyMappersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyMappersViewController.swift; sourceTree = "<group>"; };
 		C365A562263FC53F007DEC94 /* TurnRestrictHwyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurnRestrictHwyView.swift; sourceTree = "<group>"; };
-		C365A564263FC943007DEC94 /* SpeechBalloonLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeechBalloonLayer.swift; path = ../Shared/SpeechBalloonLayer.swift; sourceTree = "<group>"; };
 		C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeechBalloonView.swift; path = ../Shared/SpeechBalloonView.swift; sourceTree = "<group>"; };
 		C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapAndDragGesture.swift; sourceTree = "<group>"; };
 		C381C305263FD0CA003142BA /* VectorMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VectorMath.swift; path = ../Shared/VectorMath.swift; sourceTree = "<group>"; };
@@ -726,7 +724,6 @@
 				02CC01CF2584190A004444EF /* PresetsDatabase */,
 				C381C30A263FE518003142BA /* PushPinView.swift */,
 				C3D096B5263DF82F00E3B129 /* RulerView.swift */,
-				C365A564263FC943007DEC94 /* SpeechBalloonLayer.swift */,
 				C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */,
 				C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */,
 				02F5329A267AD0250088DF41 /* Tiles */,
@@ -1252,7 +1249,6 @@
 				024909CF267EADC70027E531 /* OsmXmlGenerator.swift in Sources */,
 				020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */,
 				021FADC0258594EE00F6E1C0 /* PresetValue.swift in Sources */,
-				C365A565263FC943007DEC94 /* SpeechBalloonLayer.swift in Sources */,
 				02E049BA2650B0E10028B57F /* TurnRestrictController.swift in Sources */,
 				ED9649F12601CEC800EC0A60 /* POITabBarController.swift in Sources */,
 			);
