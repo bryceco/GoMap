@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -260,7 +262,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="details" destination="daQ-tl-pKh" id="6bB-dQ-jtG"/>
-                                    <outlet property="image" destination="mTF-fy-t5D" id="Goe-PQ-ZMW"/>
+                                    <outlet property="pickerImage" destination="mTF-fy-t5D" id="Goe-PQ-ZMW"/>
                                     <outlet property="title" destination="gv7-b8-wUw" id="yg3-87-dxk"/>
                                 </connections>
                             </tableViewCell>
@@ -683,7 +685,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="_saveButton" destination="bil-7t-DpX" id="r5R-1i-iUL"/>
+                        <outlet property="saveButton" destination="bil-7t-DpX" id="r5R-1i-iUL"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Bu-dU-JxW" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -697,7 +699,7 @@
                     <tabBarItem key="tabBarItem" title="Attributes" image="751-eye-toolbar.png" id="2cB-FV-ozw"/>
                     <navigationItem key="navigationItem" id="cqT-tG-52T"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="67Q-Qp-h2y">
-                        <rect key="frame" x="0.0" y="44" width="428" height="44"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -715,7 +717,7 @@
                     <tabBarItem key="tabBarItem" title="Common Tags" image="982-food-toolbar.png" id="lPv-s6-uEz"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="mfX-v7-In3">
-                        <rect key="frame" x="0.0" y="44" width="428" height="44"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -734,7 +736,7 @@
                     <tabBarItem key="tabBarItem" title="All Tags" image="710-folder.png" id="19J-sp-UTX"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="itI-bf-xph">
-                        <rect key="frame" x="0.0" y="44" width="428" height="44"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
