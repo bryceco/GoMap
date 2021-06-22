@@ -14,6 +14,12 @@ let USE_RTREE = 1
 let USE_RTREE = 0
 #endif
 
+enum DatabaseError: Error {
+	case wayReferencedByNodeDoesNotExist
+	case relationReferencedByMemberDoesNotExist
+	case unlinkFailed
+}
+
 final class Database {
 	private let db: Sqlite
 
@@ -47,7 +53,7 @@ final class Database {
 	class func delete(withName name: String) throws {
 		let path = Database.databasePath(withName: name)
 		if unlink(path) != 0 {
-			throw SqliteError.unlink
+			throw DatabaseError.unlinkFailed
 		}
 	}
 
@@ -573,7 +579,7 @@ final class Database {
 			let node_index = db.columnInt32(nodeStatement, 2)
 
 			guard let way = ways[ident] else {
-				throw SqliteError.OsmError("way referenced by node does not exist")
+				throw DatabaseError.wayReferencedByNodeDoesNotExist
 			}
 
 			way.nodeRefs![Int(node_index)] = node_id
@@ -632,7 +638,7 @@ final class Database {
 			let member_index = db.columnInt32(memberStatement, 4)
 
 			guard let relation = relations[ident] else {
-				throw SqliteError.OsmError("relation referenced by relation member does not exist")
+				throw DatabaseError.relationReferencedByMemberDoesNotExist
 			}
 			let member = OsmMember(
 				type: type,

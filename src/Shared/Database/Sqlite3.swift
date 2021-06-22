@@ -10,14 +10,12 @@ import Foundation
 import SQLite3
 
 enum SqliteError: Error {
-	case unlink
 	case close
 	case exec(String)
 	case prepare(String)
 	case clearBindings
 	case bind
 	case step
-	case OsmError(String)
 }
 
 private typealias sqlite3_db = OpaquePointer
