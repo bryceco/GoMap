@@ -1811,6 +1811,19 @@ final class OsmMapData: NSObject, NSCoding {
 				assert(relations[relation.ident] === relation)
 			}
 		}
+
+		// check for duplicated/overlappying nodes
+		var locSet = [OSMPoint: OsmNode]()
+		for (ident, node) in nodes {
+			assert(ident == node.ident)
+			let loc = node.location()
+			if let dup = locSet[loc] {
+				print("Duplicate nodes: \(dup.ident), \(node.ident)")
+				// print("Duplicate node(s): \n    \(dup)\n    \(node)")
+			} else {
+				locSet[loc] = node
+			}
+		}
 #endif
 	}
 }
