@@ -9,9 +9,14 @@
 import Foundation
 import UIKit
 
+enum PresetFeatureOrCategory {
+	case category(PresetCategory)
+	case feature(PresetFeature)
+}
+
 // The entire presets database from iD
 extension PresetsDatabase {
-	func featuresAndCategoriesForGeometry(_ geometry: String) -> [AnyObject] {
+	func featuresAndCategoriesForGeometry(_ geometry: String) -> [PresetFeatureOrCategory] {
 		let list = jsonDefaults[geometry] as! [String]
 		let featureList = featuresAndCategoriesForMemberList(memberList: list)
 		return featureList
@@ -218,15 +223,15 @@ extension PresetsDatabase {
 		return true
 	}
 
-	func featuresAndCategoriesForMemberList(memberList: [String]) -> [AnyObject] {
-		var list: [AnyObject] = []
+	func featuresAndCategoriesForMemberList(memberList: [String]) -> [PresetFeatureOrCategory] {
+		var list: [PresetFeatureOrCategory] = []
 		for featureID in memberList {
 			if featureID.hasPrefix("category-") {
 				let category = PresetCategory(categoryID: featureID)
-				list.append(category)
+				list.append(.category(category))
 			} else {
 				if let feature = PresetsDatabase.shared.presetFeatureForFeatureID(featureID) {
-					list.append(feature)
+					list.append(.feature(feature))
 				}
 			}
 		}

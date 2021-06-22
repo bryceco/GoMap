@@ -29,7 +29,7 @@ private var mostRecentMaximum: Int = 0
 private var logoCache: PersistentWebCache<UIImage>? // static so memory cache persists each time we appear
 
 class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate {
-	private var featureList: [AnyObject] = []
+	private var featureList: [PresetFeatureOrCategory] = []
 	private var searchArrayRecent: [PresetFeature] = []
 	private var searchArrayAll: [PresetFeature] = []
 	@IBOutlet var searchBar: UISearchBar!
@@ -74,11 +74,11 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		let geometry: String = currentSelectionGeometry() ?? GEOMETRY_NODE // a brand new node
 		POIFeaturePickerViewController.loadMostRecent(forGeometry: geometry)
 
-		if parentCategory == nil {
+		if let parentCategory = parentCategory {
+			featureList = parentCategory.members.map({ .feature($0) })
+		} else {
 			isTopLevel = true
 			featureList = PresetsDatabase.shared.featuresAndCategoriesForGeometry(geometry)
-		} else {
-			featureList = parentCategory!.members
 		}
 	}
 
@@ -136,7 +136,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		var feature: PresetFeature?
+		let feature: PresetFeature
 		if searchArrayAll.count != 0 {
 			feature = (indexPath.section == 0 && isTopLevel) ? searchArrayRecent[indexPath.row] :
 				searchArrayAll[indexPath.row]
@@ -145,17 +145,16 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 			feature = mostRecentArray[indexPath.row]
 		} else {
 			// type array
-			let tagInfo = featureList[indexPath.row]
-			if tagInfo is PresetCategory {
-				let category = tagInfo as? PresetCategory
+			switch featureList[indexPath.row] {
+			case let .category(category):
 				let cell = tableView.dequeueReusableCell(withIdentifier: "SubCell", for: indexPath)
-				cell.textLabel?.text = category?.friendlyName
+				cell.textLabel?.text = category.friendlyName
 				return cell
-			} else {
-				feature = tagInfo as? PresetFeature
+			case let .feature(f):
+				feature = f
 			}
 		}
-		if feature?.nsiSuggestion ?? false, feature?.nsiLogo == nil, feature?.logoURL != nil {
+		if feature.nsiSuggestion, feature.nsiLogo == nil, feature.logoURL != nil {
 #if false
 			// use built-in logo files
 			if feature?.nsiLogo == nil {
@@ -167,16 +166,15 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 						.path(forResource: name, ofType: "png") ?? Bundle.main
 						.path(forResource: name, ofType: "gif") ?? Bundle.main
 						.path(forResource: name, ofType: "bmp") ?? nil
-					let pickerImage = UIImage(contentsOfFile: path ?? "")
-					if let pickerImage = pickerImage {
+					if let image = UIImage(contentsOfFile: path ?? "") {
 						DispatchQueue.main.async(execute: { [self] in
-							feature?.nsiLogo = pickerImage
+							feature?.nsiLogo = image
 							for cell in tableView.visibleCells {
 								guard let cell = cell as? FeaturePickerCell else {
 									continue
 								}
 								if cell.featureID == feature?.featureID {
-									cell.pickerImage.pickerImage = pickerImage
+									cell.pickerImage.image = image
 								}
 							}
 						})
@@ -184,11 +182,11 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 				})
 			}
 #else
-			feature?.nsiLogo = feature?.iconUnscaled()
-			let logo = logoCache?.object(withKey: feature?.featureID ?? "", fallbackURL: {
+			feature.nsiLogo = feature.iconUnscaled()
+			let logo = logoCache?.object(withKey: feature.featureID, fallbackURL: {
 				var returnUrl = NSURL()
 #if true
-				let name: String = feature?.featureID.replacingOccurrences(of: "/", with: "_") ?? ""
+				let name: String = feature.featureID.replacingOccurrences(of: "/", with: "_")
 				let url: String = "http://gomaposm.com/brandIcons/" + name
 				if let retURL = URL(string: url) {
 					returnUrl = retURL as NSURL
@@ -207,19 +205,19 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 				}
 			}, completion: { image in
 				DispatchQueue.main.async(execute: {
-					feature?.nsiLogo = image
+					feature.nsiLogo = image
 					for cell in tableView.visibleCells {
 						guard let cell = cell as? FeaturePickerCell else {
 							continue
 						}
-						if cell.featureID == feature?.featureID {
+						if cell.featureID == feature.featureID {
 							cell.pickerImage.image = image
 						}
 					}
 				})
 			})
 			if logo != nil {
-				feature?.nsiLogo = logo
+				feature.nsiLogo = logo
 			}
 #endif
 		}
@@ -231,11 +229,10 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 			geometry: geometry,
 			includeNSI: true)
 		let cell = tableView.dequeueReusableCell(withIdentifier: "FinalCell", for: indexPath) as! FeaturePickerCell
-		cell.title.text = (feature?.nsiSuggestion ?? false) ? (brand + (feature?.friendlyName() ?? "")) : feature?
-			.friendlyName()
-		cell.pickerImage.image = (feature?.nsiLogo != nil) && (feature?.nsiLogo != feature?.iconUnscaled())
-			? feature?.nsiLogo
-			: feature?.iconUnscaled()?.withRenderingMode(.alwaysTemplate)
+		cell.title.text = feature.nsiSuggestion ? (brand + feature.friendlyName()) : feature.friendlyName()
+		cell.pickerImage.image = (feature.nsiLogo != nil) && (feature.nsiLogo != feature.iconUnscaled())
+			? feature.nsiLogo
+			: feature.iconUnscaled()?.withRenderingMode(.alwaysTemplate)
 		if #available(iOS 13.0, *) {
 			cell.pickerImage.tintColor = UIColor.label
 		} else {
@@ -243,9 +240,9 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		}
 		cell.pickerImage.contentMode = .scaleAspectFit
 		cell.setNeedsUpdateConstraints()
-		cell.details.text = feature?.summary()
+		cell.details.text = feature.summary()
 		cell.accessoryType = currentFeature === feature ? .checkmark : .none
-		cell.featureID = feature?.featureID
+		cell.featureID = feature.featureID
 		return cell
 	}
 
@@ -283,22 +280,20 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 			navigationController?.popToRootViewController(animated: true)
 		} else {
 			// type list
-			let entry = featureList[indexPath.row]
-			if let category = entry as? PresetCategory {
-				let sub = storyboard?
-					.instantiateViewController(
-						withIdentifier: "PoiTypeViewController") as? POIFeaturePickerViewController
-				sub?.parentCategory = category
-				sub?.delegate = delegate
-				searchBar.resignFirstResponder()
-				if let sub = sub {
-					navigationController?.pushViewController(sub, animated: true)
+			switch featureList[indexPath.row] {
+			case let .category(category):
+				guard let sub = storyboard?.instantiateViewController(
+					withIdentifier: "PoiTypeViewController") as? POIFeaturePickerViewController
+				else {
+					return
 				}
-			} else if let feature = entry as? PresetFeature {
+				sub.parentCategory = category
+				sub.delegate = delegate
+				searchBar.resignFirstResponder()
+				navigationController?.pushViewController(sub, animated: true)
+			case let .feature(feature):
 				updateTags(with: feature)
 				navigationController?.popToRootViewController(animated: true)
-			} else {
-				fatalError()
 			}
 		}
 	}
