@@ -314,6 +314,9 @@ final class QuadBox: NSObject, Codable, NSCoding {
 					list.append($0)
 				}
 			})
+			if list.isEmpty {
+				return nil
+			}
 			// sort ascending by date
 			list.sort(by: { $0.downloadDate < $1.downloadDate })
 
