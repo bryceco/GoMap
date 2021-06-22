@@ -235,7 +235,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 	func setButtonAppearances() {
 		// update button styling
-		let buttons = [
+		let buttons: [UIView] = [
 			// these aren't actually buttons, but they get similar tinting and shadows
 			mapView.editControl,
 			undoRedoView,
@@ -258,38 +258,36 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 				// these buttons take care of themselves
 			} else if view == mapView.helpButton || view == mapView.addNodeButton {
 				// The button is a circle.
-				if let bounds = view?.bounds.size.width {
-					view?.layer.cornerRadius = bounds / 2
-				}
+				let bounds = view.bounds.size.width
+				view.layer.cornerRadius = bounds / 2
 			} else {
 				// rounded corners
-				view?.layer.cornerRadius = 10.0
+				view.layer.cornerRadius = 10.0
 			}
 			// shadow
-			if view?.superview != undoRedoView {
-				view?.layer.shadowColor = UIColor.black.cgColor
-				view?.layer.shadowOffset = CGSize(width: 0, height: 0)
-				view?.layer.shadowRadius = 3
-				view?.layer.shadowOpacity = 0.5
-				view?.layer.masksToBounds = false
+			if view.superview != undoRedoView {
+				view.layer.shadowColor = UIColor.black.cgColor
+				view.layer.shadowOffset = CGSize(width: 0, height: 0)
+				view.layer.shadowRadius = 3
+				view.layer.shadowOpacity = 0.5
+				view.layer.masksToBounds = false
 			}
 			// image blue tint
-			if view is UIButton {
-				let button = view as? UIButton
+			if let button = view as? UIButton {
 				if button != mapView.compassButton, button != mapView.helpButton {
-					let image = button?.currentImage?.withRenderingMode(.alwaysTemplate)
-					button?.setImage(image, for: .normal)
+					let image = button.currentImage?.withRenderingMode(.alwaysTemplate)
+					button.setImage(image, for: .normal)
 					if #available(iOS 13.0, *) {
-						button?.tintColor = UIColor.link
+						button.tintColor = UIColor.link
 					} else {
-						button?.tintColor = UIColor.systemBlue
+						button.tintColor = UIColor.systemBlue
 					}
 					if button == mapView.addNodeButton {
-						button?
+						button
 							.imageEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15,
 							                                right: 15) // resize images on button to be smaller
 					} else {
-						button?
+						button
 							.imageEdgeInsets = UIEdgeInsets(top: 9, left: 9, bottom: 9,
 							                                right: 9) // resize images on button to be smaller
 					}
