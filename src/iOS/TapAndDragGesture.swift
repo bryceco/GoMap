@@ -8,50 +8,43 @@
 
 import UIKit
 
-private enum EnumA: Int {
-	case need_FIRST_TAP
-	case need_SECOND_TAP
-	case need_DRAG
-	case is_DRAGGING
+private enum TapDragGestureState {
+	case needFirstTap
+	case needSecondTap
+	case needDrag
+	case isDragging
 }
 
 // #undef DEBUG
 
 private let DoubleTapTime: TimeInterval = 0.5
 
-private func TouchTranslation(_ touch: UITouch?, _ view: UIView?) -> CGPoint {
-	let newPoint = touch?.location(in: view)
-	let prevPoint = touch?.previousLocation(in: view)
-	let delta = CGPoint(
-		x: Double((newPoint?.x ?? 0.0) - (prevPoint?.x ?? 0.0)),
-		y: Double((newPoint?.y ?? 0.0) - (prevPoint?.y ?? 0.0)))
+private func TouchTranslation(_ touch: UITouch, _ view: UIView) -> CGPoint {
+	let newPoint = touch.location(in: view)
+	let prevPoint = touch.previousLocation(in: view)
+	let delta = CGPoint(x: newPoint.x - prevPoint.x,
+	                    y: newPoint.y - prevPoint.y)
 	return delta
 }
 
 class TapAndDragGesture: UIGestureRecognizer {
-	var tapState = 0
-	var tapPoint = CGPoint.zero
-	var lastTouchLocation = CGPoint.zero
-	var lastTouchTranslation = CGPoint.zero
-	var lastTouchTimestamp: TimeInterval = 0.0
+	private var tapState = TapDragGestureState.needFirstTap
+	private var tapPoint = CGPoint.zero
+	private var lastTouchLocation = CGPoint.zero
+	private var lastTouchTranslation = CGPoint.zero
+	private var lastTouchTimestamp: TimeInterval = 0.0
 
 #if DEBUG
 
-	func showState() {
-		var state: String?
+	private func showState() {
+		let state: String
 		switch tapState {
-		case EnumA.need_FIRST_TAP.rawValue:
-			state = "need first"
-		case EnumA.need_SECOND_TAP.rawValue:
-			state = "need second"
-		case EnumA.need_DRAG.rawValue:
-			state = "need drag"
-		case EnumA.is_DRAGGING.rawValue:
-			state = "dragging"
-		default:
-			state = nil
+		case .needFirstTap: state = "need first"
+		case .needSecondTap: state = "need second"
+		case .needDrag: state = "need drag"
+		case .isDragging: state = "dragging"
 		}
-		print("state = \(state ?? "")\n")
+		print("state = \(state)\n")
 	}
 
 #endif
@@ -62,25 +55,27 @@ class TapAndDragGesture: UIGestureRecognizer {
 		print("began\n")
 #endif
 		if touches.count != 1 {
-			state = tapState == EnumA.need_DRAG.rawValue ? .cancelled : .failed
+			state = tapState == .needDrag ? .cancelled : .failed
 			return
 		}
 
-		if tapState == EnumA.need_SECOND_TAP.rawValue, state == .possible {
-			let touch = touches.first
-			let loc = touch?.location(in: view)
+		if tapState == .needSecondTap,
+		   state == .possible
+		{
+			guard let touch = touches.first else { return }
+			let loc = touch.location(in: view)
 			if ProcessInfo.processInfo.systemUptime - lastTouchTimestamp < DoubleTapTime,
-			   abs(Float(lastTouchLocation.x - (loc?.x ?? 0.0))) < 100,
-			   abs(Float(lastTouchLocation.y - (loc?.y ?? 0.0))) < 100
+			   abs(Float(lastTouchLocation.x - loc.x)) < 100,
+			   abs(Float(lastTouchLocation.y - loc.y)) < 100
 			{
-				tapState = EnumA.need_DRAG.rawValue
+				tapState = .needDrag
 			} else {
 #if DEBUG
 				print("2nd tap too slow or too far away\n")
-				print("\(lastTouchLocation.x),\(lastTouchLocation.y) vs \(loc?.x ?? 0.0),\(loc?.y ?? 0.0)\n")
+				print("\(lastTouchLocation.x),\(lastTouchLocation.y) vs \(loc.x),\(loc.y)\n")
 #endif
-				tapState = EnumA.need_FIRST_TAP.rawValue
-				lastTouchLocation = touch?.location(in: view) ?? CGPoint.zero
+				tapState = .needFirstTap
+				lastTouchLocation = touch.location(in: view)
 			}
 		}
 #if DEBUG
@@ -93,22 +88,25 @@ class TapAndDragGesture: UIGestureRecognizer {
 #if DEBUG
 		print("ended\n")
 #endif
-		if state != .possible, state != .changed {
+		if state != .possible,
+		   state != .changed
+		{
 			return
 		}
-
-		if tapState == EnumA.need_DRAG.rawValue {
+		switch tapState {
+		case .needFirstTap:
+			if let touch = touches.first {
+				tapState = .needSecondTap
+				lastTouchTimestamp = touch.timestamp
+			}
+		case .needSecondTap:
+			break
+		case .needDrag:
 			state = .failed
 			return
-		}
-		if tapState == EnumA.is_DRAGGING.rawValue {
+		case .isDragging:
 			state = .ended
 			return
-		}
-		if tapState == EnumA.need_FIRST_TAP.rawValue {
-			tapState = EnumA.need_SECOND_TAP.rawValue
-			let touch = touches.first
-			lastTouchTimestamp = touch?.timestamp ?? 0.0
 		}
 #if DEBUG
 		showState()
@@ -118,7 +116,9 @@ class TapAndDragGesture: UIGestureRecognizer {
 	override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent) {
 		super.touchesMoved(touches, with: event)
 
-		let touch = touches.first
+		guard let touch = touches.first,
+		      let view = self.view
+		else { return }
 		let delta = TouchTranslation(touch, view)
 		if delta.x == 0, delta.y == 0 {
 			return
@@ -127,17 +127,19 @@ class TapAndDragGesture: UIGestureRecognizer {
 #if DEBUG
 		print("moved\n")
 #endif
-		if tapState != EnumA.need_DRAG.rawValue, tapState != EnumA.is_DRAGGING.rawValue {
+		switch tapState {
+		case .needDrag:
+			tapState = .isDragging
+			state = .began
+		case .isDragging:
+			state = .changed
+		case .needFirstTap,
+		     .needSecondTap:
 			state = .failed
 			return
 		}
-		if tapState == EnumA.need_DRAG.rawValue {
-			tapState = EnumA.is_DRAGGING.rawValue
-			state = .began
-		} else {
-			state = .changed
-		}
-		lastTouchTimestamp = touch?.timestamp ?? 0.0
+
+		lastTouchTimestamp = touch.timestamp
 		lastTouchTranslation = delta
 #if DEBUG
 		showState()
@@ -155,7 +157,7 @@ class TapAndDragGesture: UIGestureRecognizer {
 		print("reset\n")
 #endif
 		super.reset()
-		tapState = EnumA.need_FIRST_TAP.rawValue
+		tapState = .needFirstTap
 #if DEBUG
 		showState()
 #endif

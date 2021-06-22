@@ -1837,7 +1837,7 @@ final class OsmMapData: NSObject, NSCoding {
 		for way in ways.values {
 			let nodes = way.nodes
 			for index in nodes.indices.dropLast() {
-				assert( nodes[index].ident != nodes[index+1].ident )
+				assert(nodes[index].ident != nodes[index + 1].ident)
 			}
 		}
 #endif
