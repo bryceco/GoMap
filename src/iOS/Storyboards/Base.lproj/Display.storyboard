@@ -524,7 +524,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                         <barButtonItem key="backBarButtonItem" title="Back" id="pR1-M8-pXH"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="_automaticCacheManagement" destination="7lI-JG-n42" id="FWw-ba-xNI"/>
+                        <outlet property="automaticCacheManagement" destination="7lI-JG-n42" id="FWw-ba-xNI"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fez-n8-rk1" userLabel="First Responder" sceneMemberID="firstResponder"/>
