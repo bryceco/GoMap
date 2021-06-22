@@ -157,23 +157,23 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		if feature.nsiSuggestion, feature.nsiLogo == nil, feature.logoURL != nil {
 #if false
 			// use built-in logo files
-			if feature?.nsiLogo == nil {
-				feature?.nsiLogo = feature?.iconUnscaled()
-				DispatchQueue.global(qos: .default).async(execute: { [self] in
-					var name = feature?.featureID.replacingOccurrences(of: "/", with: "_") ?? ""
+			if feature.nsiLogo == nil {
+				feature.nsiLogo = feature.iconUnscaled()
+				DispatchQueue.global(qos: .default).async(execute: {
+					var name = feature.featureID.replacingOccurrences(of: "/", with: "_")
 					name = "presets/brandIcons/" + name
 					let path = Bundle.main.path(forResource: name, ofType: "jpg") ?? Bundle.main
 						.path(forResource: name, ofType: "png") ?? Bundle.main
 						.path(forResource: name, ofType: "gif") ?? Bundle.main
 						.path(forResource: name, ofType: "bmp") ?? nil
 					if let image = UIImage(contentsOfFile: path ?? "") {
-						DispatchQueue.main.async(execute: { [self] in
-							feature?.nsiLogo = image
+						DispatchQueue.main.async(execute: {
+							feature.nsiLogo = image
 							for cell in tableView.visibleCells {
 								guard let cell = cell as? FeaturePickerCell else {
 									continue
 								}
-								if cell.featureID == feature?.featureID {
+								if cell.featureID == feature.featureID {
 									cell.pickerImage.image = image
 								}
 							}
