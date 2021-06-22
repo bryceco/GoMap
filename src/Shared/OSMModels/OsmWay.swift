@@ -239,6 +239,14 @@ final class OsmWay: OsmBaseObject {
 		return 0
 	}
 
+	private var _isOneWay: ONEWAY?
+	var isOneWay: ONEWAY {
+		if _isOneWay == nil {
+			_isOneWay = self.computeIsOneWay()
+		}
+		return _isOneWay!
+	}
+
 	// return the point on the way closest to the supplied point
 	override func latLonOnObject(forLatLon target: LatLon) -> LatLon {
 		switch nodes.count {

@@ -1246,15 +1246,15 @@ final class EditorMapLayer: CALayer {
 
 		// Arrow heads and street names
 		for object in shownObjects {
-			if !(object is OsmWay) {
+			guard let way = object as? OsmWay else {
 				continue
 			}
-			let isHighlight = highlights.contains(object)
-			if object.isOneWay != ._NONE || isHighlight {
+			let isHighlight = highlights.contains(way)
+			if way.isOneWay != ._NONE || isHighlight {
 				// arrow heads
-				invoke(alongScreenClippedWay: object as! OsmWay, offset: 50, interval: 100, block: { loc, dir in
+				invoke(alongScreenClippedWay: way, offset: 50, interval: 100, block: { loc, dir in
 					// draw direction arrow at loc/dir
-					let reversed = object.isOneWay == ONEWAY._BACKWARD
+					let reversed = way.isOneWay == ONEWAY._BACKWARD
 					let len: Double = reversed ? -15 : 15
 					let width: Double = 5
 
@@ -1287,21 +1287,20 @@ final class EditorMapLayer: CALayer {
 			// street names
 			if nameLimit > 0 {
 				var parentRelation: OsmRelation?
-				for parent in object.isWay()?.parentRelations ?? [] {
+				for parent in way.isWay()?.parentRelations ?? [] {
 					if parent.isBoundary() || parent.isWaterway() {
 						parentRelation = parent
 						break
 					}
 				}
 
-				if let way = object as? OsmWay,
-				   !way.isArea() || parentRelation != nil,
-				   let name = object.givenName() ?? parentRelation?.givenName(),
+				if !way.isArea() || parentRelation != nil,
+				   let name = way.givenName() ?? parentRelation?.givenName(),
 				   !nameSet.contains(name),
 				   way.nodes.count >= 2
 				{
 					var length: CGFloat = 0.0
-					if let path = pathClipped(toViewRect: object.isWay()!, length: &length),
+					if let path = pathClipped(toViewRect: way.isWay()!, length: &length),
 					   length >= CGFloat(name.count) * Pixels_Per_Character
 					{
 						if let layer = CurvedGlyphLayer.layer(WithString: name as NSString, alongPath: path),

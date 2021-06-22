@@ -198,14 +198,6 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 	var shapeLayers: [CALayer & LayerPropertiesProviding]?
 
-	private var _isOneWay: ONEWAY?
-	var isOneWay: ONEWAY {
-		if _isOneWay == nil {
-			_isOneWay = (self as? OsmWay)?.computeIsOneWay() ?? ._NONE
-		}
-		return _isOneWay!
-	}
-
 	override var description: String {
 		var text =
 			"id=\(ident) constructed=\(_constructed ? "Yes" : "No") deleted=\(deleted ? "Yes" : "No") modifyCount=\(modifyCount)"
@@ -401,7 +393,6 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	func clearCachedProperties() {
 		renderInfo = nil
 		renderPriorityCached = 0
-		_isOneWay = nil
 		isShown = ._UNKNOWN
 		_boundingBox = nil
 
