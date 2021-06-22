@@ -33,6 +33,12 @@ private final class ServerQuery {
 	var rect = OSMRect.zero
 }
 
+enum OsmMapDataError: Error {
+	case unableToOpenDatabase
+	case osmWayResolveToMapDataFoundNilNodeRefs
+	case osmWayResolveToMapDataCouldntFindNodeRef
+}
+
 final class OsmMapData: NSObject, NSCoding {
 	fileprivate static var g_EditorMapLayerForArchive: EditorMapLayer?
 
@@ -1433,9 +1439,7 @@ final class OsmMapData: NSObject, NSCoding {
 			var t = CACurrentMediaTime()
 			var ok: Bool = false
 			do {
-				guard let db = Database(name: "") else {
-					throw NSError()
-				}
+				let db = try Database(name: "")
 				try db.createTables()
 				try db.save(saveNodes: saveNodes, saveWays: saveWays, saveRelations: saveRelations,
 				            deleteNodes: deleteNodes, deleteWays: deleteWays, deleteRelations: deleteRelations,
@@ -1631,9 +1635,7 @@ final class OsmMapData: NSObject, NSCoding {
 			do {
 				// its faster to create a brand new database than to update the existing one, because SQLite deletes are slow
 				try? Database.delete(withName: "tmp")
-				guard let db2 = Database(name: "tmp") else {
-					throw NSError()
-				}
+				let db2 = try Database(name: "tmp")
 				tmpPath = db2.path
 				try db2.createTables()
 				try db2.save(saveNodes: saveNodes, saveWays: saveWays, saveRelations: saveRelations,
@@ -1759,9 +1761,7 @@ final class OsmMapData: NSObject, NSCoding {
 
 		// merge info from SQL database
 		do {
-			guard let db = Database(name: "") else {
-				throw NSError()
-			}
+			let db = try Database(name: "")
 			var newData = OsmDownloadData()
 			newData.nodes = try db.querySqliteNodes()
 			newData.ways = try db.querySqliteWays()

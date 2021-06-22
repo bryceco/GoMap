@@ -10,12 +10,13 @@ import Foundation
 import SQLite3
 
 enum SqliteError: Error {
-	case close
-	case exec(String)
-	case prepare(String)
-	case clearBindings
-	case bind
-	case step
+	case open(Int32)
+	case close(Int32)
+	case exec(String, Int32)
+	case prepare(String, Int32)
+	case clearBindings(Int32)
+	case bind(Int32)
+	case step(Int32)
 }
 
 private typealias sqlite3_db = OpaquePointer
@@ -57,7 +58,7 @@ final class Sqlite {
 	}
 
 	// return self if database can be opened
-	init?(name: String) {
+	init(name: String) throws {
 		path = Sqlite.pathForName(name)
 
 		var db: sqlite3_db?
@@ -65,7 +66,7 @@ final class Sqlite {
 		guard rc == SQLITE_OK,
 		      let db = db
 		else {
-			return nil
+			throw SqliteError.open(rc)
 		}
 		self.db = db
 	}
@@ -84,7 +85,7 @@ final class Sqlite {
 	func exec(_ command: String) throws {
 		let result = sqlite3_exec(db, command, nil, nil, nil)
 		if result != SQLITE_OK {
-			throw SqliteError.exec(command)
+			throw SqliteError.exec(command, result)
 		}
 	}
 
@@ -92,44 +93,50 @@ final class Sqlite {
 		var statement: sqlite3_stmt?
 		let result = sqlite3_prepare_v2(db, command, -1, &statement, nil)
 		if result != SQLITE_OK || statement == nil {
-			throw SqliteError.prepare(command)
+			throw SqliteError.prepare(command, result)
 		}
 		return SqliteStatement(value: statement!)
 	}
 
 	func clearBindings(_ statement: SqliteStatement) throws {
-		if sqlite3_clear_bindings(statement.value) != SQLITE_OK {
-			throw SqliteError.clearBindings
+		let rc = sqlite3_clear_bindings(statement.value)
+		if rc != SQLITE_OK {
+			throw SqliteError.clearBindings(rc)
 		}
 	}
 
 	func reset(_ statement: SqliteStatement) throws {
-		if sqlite3_reset(statement.value) != SQLITE_OK {
-			throw SqliteError.clearBindings
+		let rc = sqlite3_reset(statement.value)
+		if rc != SQLITE_OK {
+			throw SqliteError.clearBindings(rc)
 		}
 	}
 
 	func bindText(_ statement: SqliteStatement, _ index: Int32, _ value: String?) throws {
-		if sqlite3_bind_text(statement.value, index, value, -1, SQLITE_TRANSIENT) != SQLITE_OK {
-			throw SqliteError.bind
+		let rc = sqlite3_bind_text(statement.value, index, value, -1, SQLITE_TRANSIENT)
+		if rc != SQLITE_OK {
+			throw SqliteError.bind(rc)
 		}
 	}
 
 	func bindInt32(_ statement: SqliteStatement, _ index: Int32, _ value: Int32) throws {
-		if sqlite3_bind_int(statement.value, index, value) != SQLITE_OK {
-			throw SqliteError.bind
+		let rc = sqlite3_bind_int(statement.value, index, value)
+		if rc != SQLITE_OK {
+			throw SqliteError.bind(rc)
 		}
 	}
 
 	func bindInt64(_ statement: SqliteStatement, _ index: Int32, _ value: Int64) throws {
-		if sqlite3_bind_int64(statement.value, index, value) != SQLITE_OK {
-			throw SqliteError.bind
+		let rc = sqlite3_bind_int64(statement.value, index, value)
+		if rc != SQLITE_OK {
+			throw SqliteError.bind(rc)
 		}
 	}
 
 	func bindDouble(_ statement: SqliteStatement, _ index: Int32, _ value: Double) throws {
-		if sqlite3_bind_double(statement.value, index, value) != SQLITE_OK {
-			throw SqliteError.bind
+		let rc = sqlite3_bind_double(statement.value, index, value)
+		if rc != SQLITE_OK {
+			throw SqliteError.bind(rc)
 		}
 	}
 
@@ -143,7 +150,7 @@ final class Sqlite {
 		{
 			return true
 		}
-		throw SqliteError.step
+		throw SqliteError.step(rc)
 	}
 
 	func step(_ statement: SqliteStatement) throws {

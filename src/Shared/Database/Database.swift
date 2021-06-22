@@ -40,12 +40,10 @@ final class Database {
 
 	// return self if database can be opened
 	// return nil if database doesn't exist or is corrupted
-	init?(name: String) {
-		guard let db = Sqlite(name: name) else { return nil }
+	init(name: String) throws {
+		let db = try Sqlite(name: name)
 		self.db = db
-		if (try? db.exec("PRAGMA foreign_keys=ON;")) == nil {
-			return nil
-		}
+		try db.exec("PRAGMA foreign_keys=ON;")
 	}
 
 	var path: String { db.path }
