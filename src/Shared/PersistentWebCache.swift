@@ -130,8 +130,8 @@ final class PersistentWebCache<T: AnyObject> {
 			DispatchQueue.main.async(execute: {
 				if let obj = obj {
 					self.memoryCache.setObject(obj,
-					                            forKey: cacheKey as NSString,
-					                            cost: data!.count)
+					                           forKey: cacheKey as NSString,
+					                           cost: data!.count)
 				}
 				for completion in self.pending[cacheKey] ?? [] {
 					completion(obj)

@@ -74,7 +74,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 	public final var renderPriorityCached = 0
 
-	final private(set) var deleted = false
+	private(set) final var deleted = false
 
 	final var renderInfo: RenderInfo?
 	private(set) final var modifyCount: Int32 = 0

@@ -97,7 +97,7 @@ class CustomPresetListViewController: UITableViewController {
 #if false
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
 #endif
-	
+
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		let controller = segue.destination as? UITableViewController
 		let c = controller as? CustomPresetController

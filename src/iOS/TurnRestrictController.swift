@@ -54,10 +54,6 @@ class TurnRestrictController: UIViewController {
 		viewWithTitle.layer.borderWidth = 1
 		viewWithTitle.layer.cornerRadius = 3
 
-		var x = 1
-		x = x+1
-		x = x+1
-
 		// get highways that contain selection
 		let mapData = AppDelegate.shared.mapView.editorLayer.mapData
 		var parentWays = mapData.waysContaining(centralNode)

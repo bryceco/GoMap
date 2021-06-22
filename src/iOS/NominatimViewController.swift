@@ -235,7 +235,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 							preferredStyle: .alert)
 						alert
 							.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
-													 style: .cancel,
+							                         style: .cancel,
 							                         handler: nil))
 						present(alert, animated: true)
 					}

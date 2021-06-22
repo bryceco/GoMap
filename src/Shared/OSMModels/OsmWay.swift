@@ -234,11 +234,6 @@ final class OsmWay: OsmBaseObject {
 		return true
 	}
 
-	func wayArea() -> Double {
-		assert(false)
-		return 0
-	}
-
 	private var _isOneWay: ONEWAY?
 	var isOneWay: ONEWAY {
 		if _isOneWay == nil {
