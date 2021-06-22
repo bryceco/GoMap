@@ -560,19 +560,23 @@ final class OsmMapData: NSObject, NSCoding {
 
 	@discardableResult
 	func undo() -> [String: Any]? {
+		consistencyCheck()
 		let comment = undoManager.undo()
 		if let undoCommentCallback = undoCommentCallback {
 			undoCommentCallback(true, comment ?? [:])
 		}
+		consistencyCheck()
 		return comment
 	}
 
 	@discardableResult
 	func redo() -> [String: Any]? {
+		consistencyCheck()
 		let comment = undoManager.redo()
 		if let undoCommentCallback = undoCommentCallback {
 			undoCommentCallback(false, comment ?? [:])
 		}
+		consistencyCheck()
 		return comment
 	}
 
@@ -1190,6 +1194,8 @@ final class OsmMapData: NSObject, NSCoding {
 		imagery: String,
 		completion: @escaping (_ error: String?) -> Void)
 	{
+		consistencyCheck()
+
 		createChangeset(withComment: comment, source: source, imagery: imagery) { [self] changesetID, errorMessage in
 			if let changesetID = changesetID {
 				OsmMapData.updateChangesetXml(xmlChanges, withChangesetID: changesetID)
@@ -1254,6 +1260,8 @@ final class OsmMapData: NSObject, NSCoding {
 	// MARK: Save/Restore
 
 	func encode(with coder: NSCoder) {
+		consistencyCheck()
+
 		coder.encode(nodes, forKey: "nodes")
 		coder.encode(ways, forKey: "ways")
 		coder.encode(relations, forKey: "relations")
@@ -1822,6 +1830,14 @@ final class OsmMapData: NSObject, NSCoding {
 				// print("Duplicate node(s): \n    \(dup)\n    \(node)")
 			} else {
 				locSet[loc] = node
+			}
+		}
+
+		// check for duplicate consecutive nodes in a way
+		for way in ways.values {
+			let nodes = way.nodes
+			for index in nodes.indices.dropLast() {
+				assert( nodes[index].ident != nodes[index+1].ident )
 			}
 		}
 #endif
