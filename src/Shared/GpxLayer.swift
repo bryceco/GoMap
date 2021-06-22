@@ -50,8 +50,8 @@ final class GpxPoint: NSObject, NSCoding {
 // MARK: Track
 
 final class GpxTrack: NSObject, NSCoding {
-	var recording = false
-	var _distance = 0.0
+	private var recording = false
+	private var distance = 0.0
 
 	public var shapePaths = [CGPath?](repeating: nil,
 	                                  count: 20) // an array of paths, each simplified according to zoom level so we have good performance when zoomed out
@@ -85,7 +85,7 @@ final class GpxTrack: NSObject, NSCoding {
 
 		if let prev = prev {
 			let d = GreatCircleDistance(coordinate, prev.latLon)
-			_distance += d
+			distance += d
 		}
 
 		let pt = GpxPoint()
@@ -261,18 +261,18 @@ final class GpxTrack: NSObject, NSCoding {
 		self.init(xmlData: data)
 	}
 
-	func distance() -> Double {
-		if _distance == 0 {
+	func lengthInMeters() -> Double {
+		if distance == 0 {
 			var prev: GpxPoint?
 			for pt in points {
 				if let prev = prev {
 					let d = GreatCircleDistance(pt.latLon, prev.latLon)
-					_distance += d
+					distance += d
 				}
 				prev = pt
 			}
 		}
-		return _distance
+		return distance
 	}
 
 	func fileName() -> String {

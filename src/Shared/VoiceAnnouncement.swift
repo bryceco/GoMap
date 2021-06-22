@@ -28,14 +28,9 @@ class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
 	var addresses = false
 	var shopsAndAmenities = false
 
-	private var _enabled = false
-	var enabled: Bool {
-		get {
-			_enabled
-		}
-		set(enabled) {
-			if enabled != _enabled {
-				_enabled = enabled
+	var enabled = false {
+		didSet {
+			if enabled != oldValue {
 				if !enabled {
 					removeAll()
 				}

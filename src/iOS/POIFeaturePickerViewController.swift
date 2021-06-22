@@ -21,19 +21,19 @@ class FeaturePickerCell: UITableViewCell {
 	var featureID: String?
 	@IBOutlet var title: UILabel!
 	@IBOutlet var details: UILabel!
-	@IBOutlet var _image: UIImageView!
+	@IBOutlet var pickerImage: UIImageView!
 }
 
-var mostRecentArray: [PresetFeature] = []
-var mostRecentMaximum: Int = 0
-var logoCache: PersistentWebCache<UIImage>? // static so memory cache persists each time we appear
+private var mostRecentArray: [PresetFeature] = []
+private var mostRecentMaximum: Int = 0
+private var logoCache: PersistentWebCache<UIImage>? // static so memory cache persists each time we appear
 
 class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate {
-	var _featureList: [AnyObject] = []
-	var _searchArrayRecent: [PresetFeature] = []
-	var _searchArrayAll: [PresetFeature] = []
-	@IBOutlet var _searchBar: UISearchBar!
-	var _isTopLevel = false
+	private var featureList: [AnyObject] = []
+	private var searchArrayRecent: [PresetFeature] = []
+	private var searchArrayAll: [PresetFeature] = []
+	@IBOutlet var searchBar: UISearchBar!
+	private var isTopLevel = false
 
 	var parentCategory: PresetCategory?
 	weak var delegate: POITypeViewControllerDelegate?
@@ -75,10 +75,10 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		POIFeaturePickerViewController.loadMostRecent(forGeometry: geometry)
 
 		if parentCategory == nil {
-			_isTopLevel = true
-			_featureList = PresetsDatabase.shared.featuresAndCategoriesForGeometry(geometry)
+			isTopLevel = true
+			featureList = PresetsDatabase.shared.featuresAndCategoriesForGeometry(geometry)
 		} else {
-			_featureList = parentCategory!.members
+			featureList = parentCategory!.members
 		}
 	}
 
@@ -87,11 +87,11 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return _isTopLevel ? 2 : 1
+		return isTopLevel ? 2 : 1
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		if _isTopLevel {
+		if isTopLevel {
 			return section == 0 ? NSLocalizedString("Most recent", comment: "") :
 				NSLocalizedString("All choices", comment: "")
 		} else {
@@ -100,7 +100,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	}
 
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-		if _isTopLevel, section == 1 {
+		if isTopLevel, section == 1 {
 			let countryCode = AppDelegate.shared.mapView.countryCodeForLocation
 			let locale = NSLocale.current as NSLocale
 			let countryName = locale.displayName(forKey: .countryCode, value: countryCode ?? "")
@@ -119,14 +119,14 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if _searchArrayAll.count != 0 {
-			return section == 0 && _isTopLevel ? _searchArrayRecent.count : _searchArrayAll.count
+		if searchArrayAll.count != 0 {
+			return section == 0 && isTopLevel ? searchArrayRecent.count : searchArrayAll.count
 		} else {
-			if _isTopLevel, section == 0 {
+			if isTopLevel, section == 0 {
 				let count = mostRecentArray.count
 				return count < mostRecentMaximum ? count : mostRecentMaximum
 			} else {
-				return _featureList.count
+				return featureList.count
 			}
 		}
 	}
@@ -137,15 +137,15 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		var feature: PresetFeature?
-		if _searchArrayAll.count != 0 {
-			feature = (indexPath.section == 0 && _isTopLevel) ? _searchArrayRecent[indexPath.row] :
-				_searchArrayAll[indexPath.row]
-		} else if _isTopLevel, indexPath.section == 0 {
+		if searchArrayAll.count != 0 {
+			feature = (indexPath.section == 0 && isTopLevel) ? searchArrayRecent[indexPath.row] :
+				searchArrayAll[indexPath.row]
+		} else if isTopLevel, indexPath.section == 0 {
 			// most recents
 			feature = mostRecentArray[indexPath.row]
 		} else {
 			// type array
-			let tagInfo = _featureList[indexPath.row]
+			let tagInfo = featureList[indexPath.row]
 			if tagInfo is PresetCategory {
 				let category = tagInfo as? PresetCategory
 				let cell = tableView.dequeueReusableCell(withIdentifier: "SubCell", for: indexPath)
@@ -167,16 +167,16 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 						.path(forResource: name, ofType: "png") ?? Bundle.main
 						.path(forResource: name, ofType: "gif") ?? Bundle.main
 						.path(forResource: name, ofType: "bmp") ?? nil
-					let _image = UIImage(contentsOfFile: path ?? "")
-					if let _image = _image {
+					let pickerImage = UIImage(contentsOfFile: path ?? "")
+					if let pickerImage = pickerImage {
 						DispatchQueue.main.async(execute: { [self] in
-							feature?.nsiLogo = _image
+							feature?.nsiLogo = pickerImage
 							for cell in tableView.visibleCells {
 								guard let cell = cell as? FeaturePickerCell else {
 									continue
 								}
 								if cell.featureID == feature?.featureID {
-									cell._image._image = _image
+									cell.pickerImage.pickerImage = pickerImage
 								}
 							}
 						})
@@ -213,7 +213,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 							continue
 						}
 						if cell.featureID == feature?.featureID {
-							cell._image.image = image
+							cell.pickerImage.image = image
 						}
 					}
 				})
@@ -233,15 +233,15 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		let cell = tableView.dequeueReusableCell(withIdentifier: "FinalCell", for: indexPath) as! FeaturePickerCell
 		cell.title.text = (feature?.nsiSuggestion ?? false) ? (brand + (feature?.friendlyName() ?? "")) : feature?
 			.friendlyName()
-		cell._image.image = (feature?.nsiLogo != nil) && (feature?.nsiLogo != feature?.iconUnscaled())
+		cell.pickerImage.image = (feature?.nsiLogo != nil) && (feature?.nsiLogo != feature?.iconUnscaled())
 			? feature?.nsiLogo
 			: feature?.iconUnscaled()?.withRenderingMode(.alwaysTemplate)
 		if #available(iOS 13.0, *) {
-			cell._image.tintColor = UIColor.label
+			cell.pickerImage.tintColor = UIColor.label
 		} else {
-			cell._image.tintColor = UIColor.black
+			cell.pickerImage.tintColor = UIColor.black
 		}
-		cell._image.contentMode = .scaleAspectFit
+		cell.pickerImage.contentMode = .scaleAspectFit
 		cell.setNeedsUpdateConstraints()
 		cell.details.text = feature?.summary()
 		cell.accessoryType = currentFeature === feature ? .checkmark : .none
@@ -268,29 +268,29 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		if _searchArrayAll.count != 0 {
+		if searchArrayAll.count != 0 {
 			let feature = indexPath
-				.section == 0 && _isTopLevel ? _searchArrayRecent[indexPath.row] : _searchArrayAll[indexPath.row]
+				.section == 0 && isTopLevel ? searchArrayRecent[indexPath.row] : searchArrayAll[indexPath.row]
 			updateTags(with: feature)
 			navigationController?.popToRootViewController(animated: true)
 			return
 		}
 
-		if _isTopLevel, indexPath.section == 0 {
+		if isTopLevel, indexPath.section == 0 {
 			// most recents
 			let feature = mostRecentArray[indexPath.row]
 			updateTags(with: feature)
 			navigationController?.popToRootViewController(animated: true)
 		} else {
 			// type list
-			let entry = _featureList[indexPath.row]
+			let entry = featureList[indexPath.row]
 			if let category = entry as? PresetCategory {
 				let sub = storyboard?
 					.instantiateViewController(
 						withIdentifier: "PoiTypeViewController") as? POIFeaturePickerViewController
 				sub?.parentCategory = category
 				sub?.delegate = delegate
-				_searchBar.resignFirstResponder()
+				searchBar.resignFirstResponder()
 				if let sub = sub {
 					navigationController?.pushViewController(sub, animated: true)
 				}
@@ -306,16 +306,16 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 		if searchText.count == 0 {
 			// no search
-			_searchArrayAll = []
-			_searchArrayRecent = []
+			searchArrayAll = []
+			searchArrayRecent = []
 		} else {
 			// searching
 			let geometry = currentSelectionGeometry()!
-			_searchArrayAll = PresetsDatabase.shared.featuresInCategory(
+			searchArrayAll = PresetsDatabase.shared.featuresInCategory(
 				parentCategory,
 				matching: searchText,
 				geometry: geometry)
-			_searchArrayRecent = mostRecentArray.filter { $0.matchesSearchText(searchText, geometry: geometry) }
+			searchArrayRecent = mostRecentArray.filter { $0.matchesSearchText(searchText, geometry: geometry) }
 		}
 		tableView.reloadData()
 	}

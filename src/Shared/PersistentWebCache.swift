@@ -9,9 +9,9 @@
 import Foundation
 
 final class PersistentWebCache<T: AnyObject> {
-	private let _cacheDirectory: URL
-	private let _memoryCache: NSCache<NSString, T>
-	private var _pending: [String: [(T?)
+	private let cacheDirectory: URL
+	private let memoryCache: NSCache<NSString, T>
+	private var pending: [String: [(T?)
 			-> Void]] // track objects we're already downloading so we don't issue multiple requests
 
 	class func encodeKey(forFilesystem string: String) -> String {
@@ -23,7 +23,7 @@ final class PersistentWebCache<T: AnyObject> {
 
 	func fileEnumerator(withAttributes attr: [URLResourceKey]) -> FileManager.DirectoryEnumerator {
 		return FileManager.default.enumerator(
-			at: _cacheDirectory,
+			at: cacheDirectory,
 			includingPropertiesForKeys: attr,
 			options: [.skipsSubdirectoryDescendants, .skipsPackageDescendants, .skipsHiddenFiles],
 			errorHandler: nil)!
@@ -44,21 +44,21 @@ final class PersistentWebCache<T: AnyObject> {
 	init(name: String, memorySize: Int) {
 		let name = PersistentWebCache.encodeKey(forFilesystem: name)
 		let bundleName = Bundle.main.infoDictionary?["CFBundleIdentifier"] as? String
-		_cacheDirectory = try! FileManager.default.url(
+		cacheDirectory = try! FileManager.default.url(
 			for: .cachesDirectory,
 			in: .userDomainMask,
 			appropriateFor: nil,
 			create: true).appendingPathComponent(bundleName ?? "", isDirectory: true)
 			.appendingPathComponent(name, isDirectory: true)
 
-		_memoryCache = NSCache<NSString, T>()
-		_memoryCache.countLimit = 10000
-		_memoryCache.totalCostLimit = memorySize
+		memoryCache = NSCache<NSString, T>()
+		memoryCache.countLimit = 10000
+		memoryCache.totalCostLimit = memorySize
 
-		_pending = [:]
+		pending = [:]
 
 		try! FileManager.default.createDirectory(
-			at: _cacheDirectory,
+			at: cacheDirectory,
 			withIntermediateDirectories: true,
 			attributes: nil)
 	}
@@ -72,7 +72,7 @@ final class PersistentWebCache<T: AnyObject> {
 				try FileManager.default.removeItem(at: url)
 			} catch {}
 		}
-		_memoryCache.removeAllObjects()
+		memoryCache.removeAllObjects()
 	}
 
 	func removeObjectsAsyncOlderThan(_ expiration: Date) {
@@ -113,30 +113,30 @@ final class PersistentWebCache<T: AnyObject> {
 		completion: @escaping (_ object: T?) -> Void) -> T?
 	{
 		DbgAssert(Thread.isMainThread) // since we update our data structures on the main thread we need this true
-		assert(_memoryCache.totalCostLimit != 0)
-		if let cachedObject = _memoryCache.object(forKey: cacheKey as NSString) {
+		assert(memoryCache.totalCostLimit != 0)
+		if let cachedObject = memoryCache.object(forKey: cacheKey as NSString) {
 			return cachedObject
 		}
 
-		if let plist = _pending[cacheKey] {
+		if let plist = pending[cacheKey] {
 			// already being downloaded
-			_pending[cacheKey] = plist + [completion]
+			pending[cacheKey] = plist + [completion]
 			return nil
 		}
-		_pending[cacheKey] = [completion]
+		pending[cacheKey] = [completion]
 
 		let processData: ((_ data: Data?) -> Bool) = { data in
 			let obj = data != nil ? objectForData(data!) : nil
 			DispatchQueue.main.async(execute: {
 				if let obj = obj {
-					self._memoryCache.setObject(obj,
+					self.memoryCache.setObject(obj,
 					                            forKey: cacheKey as NSString,
 					                            cost: data!.count)
 				}
-				for completion in self._pending[cacheKey] ?? [] {
+				for completion in self.pending[cacheKey] ?? [] {
 					completion(obj)
 				}
-				self._pending.removeValue(forKey: cacheKey)
+				self.pending.removeValue(forKey: cacheKey)
 			})
 			return obj != nil
 		}
@@ -144,7 +144,7 @@ final class PersistentWebCache<T: AnyObject> {
 		DispatchQueue.global(qos: .default).async(execute: { [self] in
 			// check disk cache
 			let fileName = PersistentWebCache.encodeKey(forFilesystem: cacheKey)
-			let filePath = _cacheDirectory.appendingPathComponent(fileName)
+			let filePath = cacheDirectory.appendingPathComponent(fileName)
 			if let data = try? Data(contentsOf: filePath) {
 				_ = processData(data)
 			} else {

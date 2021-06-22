@@ -9,14 +9,7 @@
 final class OsmNode: OsmBaseObject {
 	private(set) var latLon: LatLon
 
-	private var _wayCount = 0
-	var wayCount: Int {
-		get {
-			return _wayCount
-		} set(wayCount) {
-			_wayCount = wayCount
-		}
-	}
+	var wayCount = 0
 
 	var turnRestrictionParentWay: OsmWay! // temporarily used during turn restriction processing
 

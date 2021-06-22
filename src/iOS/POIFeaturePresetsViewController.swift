@@ -14,13 +14,13 @@ class FeaturePresetCell: UITableViewCell {
 }
 
 class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegate, POITypeViewControllerDelegate {
-	@IBOutlet var _saveButton: UIBarButtonItem!
+	@IBOutlet var saveButton: UIBarButtonItem!
 
-	var allPresets: PresetsForFeature?
-	var selectedFeature: PresetFeature? // the feature selected by the user, not derived from tags (e.g. Address)
-	var childPushed = false
-	var drillDownGroup: PresetGroup?
-	var textFieldIsEditing = false
+	private var allPresets: PresetsForFeature?
+	private var selectedFeature: PresetFeature? // the feature selected by the user, not derived from tags (e.g. Address)
+	private var childPushed = false
+	private var drillDownGroup: PresetGroup?
+	private var textFieldIsEditing = false
 
 	override func viewDidLoad() {
 		// have to update presets before call super because super asks for the number of sections
@@ -41,9 +41,9 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	func updatePresets() {
 		let tabController = tabBarController as! POITabBarController
 
-		_saveButton.isEnabled = tabController.isTagDictChanged()
+		saveButton.isEnabled = tabController.isTagDictChanged()
 		if #available(iOS 13.0, *) {
-			tabController.isModalInPresentation = _saveButton.isEnabled
+			tabController.isModalInPresentation = saveButton.isEnabled
 		}
 
 		if drillDownGroup == nil {
@@ -426,9 +426,9 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	}
 
 	@IBAction func textFieldChanged(_ textField: UITextField) {
-		_saveButton.isEnabled = true
+		saveButton.isEnabled = true
 		if #available(iOS 13.0, *) {
-			tabBarController?.isModalInPresentation = _saveButton.isEnabled
+			tabBarController?.isModalInPresentation = saveButton.isEnabled
 		}
 	}
 
@@ -460,9 +460,9 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			tabController.keyValueDict.removeValue(forKey: key)
 		}
 
-		_saveButton.isEnabled = tabController.isTagDictChanged()
+		saveButton.isEnabled = tabController.isTagDictChanged()
 		if #available(iOS 13.0, *) {
-			tabController.isModalInPresentation = _saveButton.isEnabled
+			tabController.isModalInPresentation = saveButton.isEnabled
 		}
 	}
 

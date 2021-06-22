@@ -11,10 +11,10 @@ import SafariServices
 import UIKit
 
 class ContactUsViewController: UITableViewController, MFMailComposeViewControllerDelegate {
-	@IBOutlet var _sendMailCell: UITableViewCell!
-	@IBOutlet var _testFlightCell: UITableViewCell!
-	@IBOutlet var _githubCell: UITableViewCell!
-	@IBOutlet var _weblateCell: UITableViewCell!
+	@IBOutlet var sendMailCell: UITableViewCell!
+	@IBOutlet var testFlightCell: UITableViewCell!
+	@IBOutlet var githubCell: UITableViewCell!
+	@IBOutlet var weblateCell: UITableViewCell!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -136,7 +136,7 @@ class ContactUsViewController: UITableViewController, MFMailComposeViewControlle
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let cell = tableView.cellForRow(at: indexPath)
 
-		if cell == _sendMailCell {
+		if cell == sendMailCell {
 			if MFMailComposeViewController.canSendMail() {
 				let appDelegate = AppDelegate.shared
 				let mail = MFMailComposeViewController()
@@ -159,7 +159,7 @@ class ContactUsViewController: UITableViewController, MFMailComposeViewControlle
 					.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
 				present(alert, animated: true)
 			}
-		} else if cell == _githubCell {
+		} else if cell == githubCell {
 			let url = URL(string: "https://github.com/bryceco/GoMap/issues")
 			var viewController: UIViewController?
 			if let url = url {
@@ -168,7 +168,7 @@ class ContactUsViewController: UITableViewController, MFMailComposeViewControlle
 			if let viewController = viewController {
 				present(viewController, animated: true)
 			}
-		} else if cell == _weblateCell {
+		} else if cell == weblateCell {
 			let url = URL(string: "https://hosted.weblate.org/projects/go-map/app/")
 			var viewController: UIViewController?
 			if let url = url {
@@ -177,7 +177,7 @@ class ContactUsViewController: UITableViewController, MFMailComposeViewControlle
 			if let viewController = viewController {
 				present(viewController, animated: true)
 			}
-		} else if cell == _testFlightCell {
+		} else if cell == testFlightCell {
 			openTestFlightURL()
 		}
 

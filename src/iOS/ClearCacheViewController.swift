@@ -22,7 +22,7 @@ protocol GetDiskCacheSize {
 }
 
 class ClearCacheViewController: UITableViewController {
-	@IBOutlet var _automaticCacheManagement: UISwitch!
+	@IBOutlet var automaticCacheManagement: UISwitch!
 
 	// MARK: - Table view data source
 
@@ -34,14 +34,14 @@ class ClearCacheViewController: UITableViewController {
 
 		let appDelegate = AppDelegate.shared
 
-		_automaticCacheManagement.isOn = appDelegate.mapView.enableAutomaticCacheManagement
+		automaticCacheManagement.isOn = appDelegate.mapView.enableAutomaticCacheManagement
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 
 		let appDelegate = AppDelegate.shared
-		appDelegate.mapView.enableAutomaticCacheManagement = _automaticCacheManagement.isOn
+		appDelegate.mapView.enableAutomaticCacheManagement = automaticCacheManagement.isOn
 	}
 
 	// MARK: - Table view delegate

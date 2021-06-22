@@ -11,20 +11,20 @@ import UIKit
 let TOUCH_RADIUS: CGFloat = 22
 
 class MyApplication: UIApplication {
-	var _touches: [UITouch: (UIWindow, TimeInterval)] = [:]
-	var _touchImage: UIImage?
+	private var touches: [UITouch: (UIWindow, TimeInterval)] = [:]
+	private var touchImage: UIImage?
 
 	var showTouchCircles = false
 
 	override init() {
 		super.init()
-		_touchImage = UIImage(named: "Finger")
+		touchImage = UIImage(named: "Finger")
 	}
 
 	func rect(forTouchPosition pos: CGPoint) -> CGRect {
-		if _touchImage != nil {
-			var rc = CGRect(origin: pos, size: _touchImage?.size ?? CGSize.zero)
-			rc = rc.offsetBy(dx: -(_touchImage?.size.width ?? 0.0) / 2, dy: -TOUCH_RADIUS)
+		if touchImage != nil {
+			var rc = CGRect(origin: pos, size: touchImage?.size ?? CGSize.zero)
+			rc = rc.offsetBy(dx: -(touchImage?.size.width ?? 0.0) / 2, dy: -TOUCH_RADIUS)
 			rc.origin.x += 15 // extra so rotated finger is aligned
 			rc.origin.y -= 10 // extra so touches on toolbar or easier to see
 			return rc
@@ -57,11 +57,11 @@ class MyApplication: UIApplication {
 			if touch.phase == .began {
 				let win = UIWindow(frame: rect(forTouchPosition: pos))
 
-				_touches[touch] = (win, touch.timestamp)
+				touches[touch] = (win, touch.timestamp)
 				win.windowLevel = .statusBar
 				win.isHidden = false
-				if _touchImage != nil {
-					win.layer.contents = _touchImage?.cgImage
+				if touchImage != nil {
+					win.layer.contents = touchImage?.cgImage
 					win.layer.setAffineTransform(CGAffineTransform(rotationAngle: -.pi / 4))
 				} else {
 					win.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 1.0, alpha: 1.0)
@@ -69,7 +69,7 @@ class MyApplication: UIApplication {
 					win.layer.opacity = 0.85
 				}
 			} else if touch.phase == .moved {
-				let (win, _) = _touches[touch]!
+				let (win, _) = touches[touch]!
 				win.layer.setAffineTransform(CGAffineTransform.identity)
 				win.frame = rect(forTouchPosition: pos)
 				win.layer.setAffineTransform(CGAffineTransform(rotationAngle: -.pi / 4))
@@ -79,7 +79,7 @@ class MyApplication: UIApplication {
 				// ended/cancelled
 				// remove window after a slight delay so quick taps are still visible
 				let MIN_DISPLAY_INTERVAL = 0.5
-				let (win, start) = _touches[touch]!
+				let (win, start) = touches[touch]!
 				var delta = TimeInterval(touch.timestamp - start)
 				if delta < MIN_DISPLAY_INTERVAL {
 					delta = TimeInterval(MIN_DISPLAY_INTERVAL - delta)
@@ -91,7 +91,7 @@ class MyApplication: UIApplication {
 							withExtendedLifetime(win) {}
 						})
 				}
-				_touches.removeValue(forKey: touch)
+				touches.removeValue(forKey: touch)
 			}
 		}
 	}

@@ -18,24 +18,18 @@ enum BUTTON_LAYOUT: Int {
 class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureRecognizerDelegate,
 	UIContextMenuInteractionDelegate
 {
-	@IBOutlet var _uploadButton: UIButton!
-	@IBOutlet var _undoButton: UIButton!
-	@IBOutlet var _redoButton: UIButton!
-	@IBOutlet var _undoRedoView: UIView!
-	@IBOutlet var _searchButton: UIButton!
+	@IBOutlet var uploadButton: UIButton!
+	@IBOutlet var undoButton: UIButton!
+	@IBOutlet var redoButton: UIButton!
+	@IBOutlet var undoRedoView: UIView!
+	@IBOutlet var searchButton: UIButton!
 
 	@IBOutlet var mapView: MapView!
 	@IBOutlet var locationButton: UIButton!
 
-	private var _buttonLayout: BUTTON_LAYOUT!
 	var buttonLayout: BUTTON_LAYOUT! {
-		get {
-			return _buttonLayout
-		}
-		set(buttonLayout) {
-			_buttonLayout = buttonLayout
-
-			UserDefaults.standard.set(_buttonLayout.rawValue, forKey: "buttonLayout")
+		didSet {
+			UserDefaults.standard.set(buttonLayout.rawValue, forKey: "buttonLayout")
 
 			let left = buttonLayout == ._ADD_ON_LEFT
 			let attribute: NSLayoutConstraint.Attribute = left ? .leading : .trailing
@@ -72,11 +66,11 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 	@IBOutlet private var displayButton: UIButton!
 
 	func updateUndoRedoButtonState() {
-		guard _undoButton != nil else { return } // during init it can be null
-		_undoButton.isEnabled = mapView.editorLayer.mapData.canUndo() && !mapView.editorLayer.isHidden
-		_redoButton.isEnabled = mapView.editorLayer.mapData.canRedo() && !mapView.editorLayer.isHidden
-		_uploadButton.isHidden = !_undoButton.isEnabled
-		_undoRedoView.isHidden = !_undoButton.isEnabled && !_redoButton.isEnabled
+		guard undoButton != nil else { return } // during init it can be null
+		undoButton.isEnabled = mapView.editorLayer.mapData.canUndo() && !mapView.editorLayer.isHidden
+		redoButton.isEnabled = mapView.editorLayer.mapData.canRedo() && !mapView.editorLayer.isHidden
+		uploadButton.isHidden = !undoButton.isEnabled
+		undoRedoView.isHidden = !undoButton.isEnabled && !redoButton.isEnabled
 	}
 
 	func updateUploadButtonState() {
@@ -91,8 +85,8 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		} else {
 			color = UIColor.red // red
 		}
-		_uploadButton.tintColor = color
-		_uploadButton.isEnabled = changeCount > 0
+		uploadButton.tintColor = color
+		uploadButton.isEnabled = changeCount > 0
 	}
 
 	override func viewDidLoad() {
@@ -127,10 +121,10 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 	func setupAccessibility() {
 		locationButton.accessibilityIdentifier = "location_button"
-		_undoButton.accessibilityLabel = NSLocalizedString("Undo", comment: "")
-		_redoButton.accessibilityLabel = NSLocalizedString("Redo", comment: "")
+		undoButton.accessibilityLabel = NSLocalizedString("Undo", comment: "")
+		redoButton.accessibilityLabel = NSLocalizedString("Redo", comment: "")
 		settingsButton.accessibilityLabel = NSLocalizedString("Settings", comment: "")
-		_uploadButton.accessibilityLabel = NSLocalizedString("Upload your changes", comment: "")
+		uploadButton.accessibilityLabel = NSLocalizedString("Upload your changes", comment: "")
 		displayButton.accessibilityLabel = NSLocalizedString("Display options", comment: "")
 	}
 
@@ -244,19 +238,19 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		let buttons = [
 			// these aren't actually buttons, but they get similar tinting and shadows
 			mapView.editControl,
-			_undoRedoView,
+			undoRedoView,
 			// these are buttons
 			locationButton,
-			_undoButton,
-			_redoButton,
+			undoButton,
+			redoButton,
 			mapView.addNodeButton,
 			mapView.compassButton,
 			mapView.centerOnGPSButton,
 			mapView.helpButton,
 			settingsButton,
-			_uploadButton,
+			uploadButton,
 			displayButton,
-			_searchButton
+			searchButton
 		]
 		for view in buttons {
 			// corners
@@ -272,7 +266,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 				view?.layer.cornerRadius = 10.0
 			}
 			// shadow
-			if view?.superview != _undoRedoView {
+			if view?.superview != undoRedoView {
 				view?.layer.shadowColor = UIColor.black.cgColor
 				view?.layer.shadowOffset = CGSize(width: 0, height: 0)
 				view?.layer.shadowRadius = 3
@@ -357,12 +351,12 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 	func makeMovableButtons() {
 		let buttons = [
 			//		_mapView.editControl,
-			_undoRedoView,
+			undoRedoView,
 			locationButton,
-			_searchButton,
+			searchButton,
 			mapView.addNodeButton,
 			settingsButton,
-			_uploadButton,
+			uploadButton,
 			displayButton,
 			mapView.compassButton,
 			mapView.helpButton,

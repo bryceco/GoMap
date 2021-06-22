@@ -13,15 +13,15 @@ private let OVERLAY_SECTION = 2
 private let CACHE_SECTION = 3
 
 class DisplayViewController: UITableViewController {
-	@IBOutlet var _birdsEyeSwitch: UISwitch!
-	@IBOutlet var _rotationSwitch: UISwitch!
-	@IBOutlet var _notesSwitch: UISwitch!
-	@IBOutlet var _gpsTraceSwitch: UISwitch!
-	@IBOutlet var _unnamedRoadSwitch: UISwitch!
-	@IBOutlet var _gpxLoggingSwitch: UISwitch!
-	@IBOutlet var _turnRestrictionSwitch: UISwitch!
-	@IBOutlet var _objectFiltersSwitch: UISwitch!
-	@IBOutlet var _addButtonPosition: UIButton!
+	@IBOutlet var birdsEyeSwitch: UISwitch!
+	@IBOutlet var rotationSwitch: UISwitch!
+	@IBOutlet var notesSwitch: UISwitch!
+	@IBOutlet var gpsTraceSwitch: UISwitch!
+	@IBOutlet var unnamedRoadSwitch: UISwitch!
+	@IBOutlet var gpxLoggingSwitch: UISwitch!
+	@IBOutlet var turnRestrictionSwitch: UISwitch!
+	@IBOutlet var objectFiltersSwitch: UISwitch!
+	@IBOutlet var addButtonPosition: UIButton!
 
 	@IBAction func chooseAddButtonPosition(_ sender: Any) {
 		let alert = UIAlertController(
@@ -63,16 +63,16 @@ class DisplayViewController: UITableViewController {
 		}
 
 		var mask: Int = 0
-		mask |= _notesSwitch.isOn ? Int(MapViewOverlays.NOTES.rawValue) : 0
-		mask |= _gpsTraceSwitch.isOn ? Int(MapViewOverlays.GPSTRACE.rawValue) : 0
-		mask |= _unnamedRoadSwitch.isOn ? Int(MapViewOverlays.NONAME.rawValue) : 0
+		mask |= notesSwitch.isOn ? Int(MapViewOverlays.NOTES.rawValue) : 0
+		mask |= gpsTraceSwitch.isOn ? Int(MapViewOverlays.GPSTRACE.rawValue) : 0
+		mask |= unnamedRoadSwitch.isOn ? Int(MapViewOverlays.NONAME.rawValue) : 0
 		mapView.viewOverlayMask = MapViewOverlays(rawValue: MapViewOverlays.RawValue(mask))
 
-		mapView.enableBirdsEye = _birdsEyeSwitch.isOn
-		mapView.enableRotation = _rotationSwitch.isOn
-		mapView.enableUnnamedRoadHalo = _unnamedRoadSwitch.isOn
-		mapView.enableGpxLogging = _gpxLoggingSwitch.isOn
-		mapView.enableTurnRestriction = _turnRestrictionSwitch.isOn
+		mapView.enableBirdsEye = birdsEyeSwitch.isOn
+		mapView.enableRotation = rotationSwitch.isOn
+		mapView.enableUnnamedRoadHalo = unnamedRoadSwitch.isOn
+		mapView.enableGpxLogging = gpxLoggingSwitch.isOn
+		mapView.enableTurnRestriction = turnRestrictionSwitch.isOn
 
 		mapView.editorLayer.setNeedsLayout()
 	}
@@ -80,7 +80,7 @@ class DisplayViewController: UITableViewController {
 	@IBAction func gpsSwitchChanged(_ sender: Any) {
 		// need this to take effect immediately in case they exit the app without dismissing this controller, and they want GPS enabled in background
 		let mapView = AppDelegate.shared.mapView
-		mapView?.enableGpxLogging = _gpxLoggingSwitch.isOn
+		mapView?.enableGpxLogging = gpxLoggingSwitch.isOn
 	}
 
 	@IBAction func toggleObjectFilters(_ sender: UISwitch) {
@@ -92,7 +92,7 @@ class DisplayViewController: UITableViewController {
 			._ADD_ON_LEFT ? NSLocalizedString(
 				"Left",
 				comment: "") : NSLocalizedString("Right", comment: "")
-		_addButtonPosition.setTitle(title, for: .normal)
+		addButtonPosition.setTitle(title, for: .normal)
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -106,16 +106,16 @@ class DisplayViewController: UITableViewController {
 		if let viewOverlayMask = mapView?.viewOverlayMask {
 			// Fix here
 			let bitwiseOperation = (viewOverlayMask.rawValue & MapViewOverlays.NOTES.rawValue)
-			_notesSwitch.isOn = bitwiseOperation != 0
+			notesSwitch.isOn = bitwiseOperation != 0
 		}
-		_gpsTraceSwitch.isOn = !(mapView?.gpsTraceLayer.isHidden)!
+		gpsTraceSwitch.isOn = !(mapView?.gpsTraceLayer.isHidden)!
 
-		_birdsEyeSwitch.isOn = mapView?.enableBirdsEye ?? false
-		_rotationSwitch.isOn = mapView?.enableRotation ?? false
-		_unnamedRoadSwitch.isOn = mapView?.enableUnnamedRoadHalo ?? false
-		_gpxLoggingSwitch.isOn = mapView?.enableGpxLogging ?? false
-		_turnRestrictionSwitch.isOn = mapView?.enableTurnRestriction ?? false
-		_objectFiltersSwitch.isOn = mapView?.editorLayer.objectFilters.enableObjectFilters ?? false
+		birdsEyeSwitch.isOn = mapView?.enableBirdsEye ?? false
+		rotationSwitch.isOn = mapView?.enableRotation ?? false
+		unnamedRoadSwitch.isOn = mapView?.enableUnnamedRoadHalo ?? false
+		gpxLoggingSwitch.isOn = mapView?.enableGpxLogging ?? false
+		turnRestrictionSwitch.isOn = mapView?.enableTurnRestriction ?? false
+		objectFiltersSwitch.isOn = mapView?.editorLayer.objectFilters.enableObjectFilters ?? false
 
 		setButtonLayoutTitle()
 	}

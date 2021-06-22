@@ -10,8 +10,8 @@ import QuartzCore
 import UIKit
 
 final class LocationBallLayer: CALayer {
-	var _headingLayer: CAShapeLayer
-	var _ringLayer: CAShapeLayer
+	private var headingLayer: CAShapeLayer
+	private var ringLayer: CAShapeLayer
 
 	var showHeading = false {
 		didSet {
@@ -37,13 +37,13 @@ final class LocationBallLayer: CALayer {
 				return
 			}
 			let animation = ringAnimation(withRadius: radiusInPixels)
-			_ringLayer.add(animation, forKey: "ring")
+			ringLayer.add(animation, forKey: "ring")
 		}
 	}
 
 	override init() {
-		_ringLayer = CAShapeLayer()
-		_headingLayer = CAShapeLayer()
+		ringLayer = CAShapeLayer()
+		headingLayer = CAShapeLayer()
 
 		super.init()
 		frame = CGRect(x: 0, y: 0, width: 16, height: 16)
@@ -61,20 +61,20 @@ final class LocationBallLayer: CALayer {
 		]
 
 #if os(iOS)
-		_ringLayer.fillColor = UIColor.clear.cgColor
-		_ringLayer.strokeColor = UIColor(red: 0.5, green: 0.5, blue: 1.0, alpha: 1.0).cgColor
+		ringLayer.fillColor = UIColor.clear.cgColor
+		ringLayer.strokeColor = UIColor(red: 0.5, green: 0.5, blue: 1.0, alpha: 1.0).cgColor
 #else
 		ringLayer.fillColor = NSColor(calibratedRed: 0.8, green: 0.8, blue: 1.0, alpha: 0.4).cgColor
 		ringLayer.strokeColor = NSColor(calibratedRed: 0.5, green: 0.5, blue: 1.0, alpha: 1.0).cgColor
 #endif
-		_ringLayer.lineWidth = 2.0
-		_ringLayer.frame = bounds
-		_ringLayer.position = CGPoint(x: 16, y: 16)
+		ringLayer.lineWidth = 2.0
+		ringLayer.frame = bounds
+		ringLayer.position = CGPoint(x: 16, y: 16)
 
 		let animation = ringAnimation(withRadius: 100)
-		_ringLayer.add(animation, forKey: "ring")
+		ringLayer.add(animation, forKey: "ring")
 
-		addSublayer(_ringLayer)
+		addSublayer(ringLayer)
 
 		let imageLayer = CALayer()
 		let image = UIImage(named: "BlueBall")!
@@ -82,15 +82,15 @@ final class LocationBallLayer: CALayer {
 		imageLayer.frame = bounds
 		addSublayer(imageLayer)
 
-		_headingLayer.isHidden = true
-		_headingLayer.fillColor = UIColor(red: 0.5, green: 1.0, blue: 0.5, alpha: 0.4).cgColor
-		_headingLayer.strokeColor = UIColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0).cgColor
-		_headingLayer.zPosition = -1
+		headingLayer.isHidden = true
+		headingLayer.fillColor = UIColor(red: 0.5, green: 1.0, blue: 0.5, alpha: 0.4).cgColor
+		headingLayer.strokeColor = UIColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0).cgColor
+		headingLayer.zPosition = -1
 		var rc = bounds
 		rc.origin.x += rc.size.width / 2
 		rc.origin.y += rc.size.height / 2
-		_headingLayer.frame = rc
-		addSublayer(_headingLayer)
+		headingLayer.frame = rc
+		addSublayer(headingLayer)
 	}
 
 	func ringAnimation(withRadius radius: CGFloat) -> CABasicAnimation {
@@ -128,10 +128,10 @@ final class LocationBallLayer: CALayer {
 				clockwise: false)
 			path.addLine(to: CGPoint(x: 0, y: 0))
 			path.closeSubpath()
-			_headingLayer.path = path
-			_headingLayer.isHidden = false
+			headingLayer.path = path
+			headingLayer.isHidden = false
 		} else {
-			_headingLayer.isHidden = true
+			headingLayer.isHidden = true
 		}
 	}
 

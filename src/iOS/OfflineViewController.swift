@@ -17,8 +17,8 @@ class OfflineTableViewCell: UITableViewCell {
 }
 
 class OfflineViewController: UITableViewController {
-	@IBOutlet var _aerialCell: OfflineTableViewCell!
-	@IBOutlet var _mapnikCell: OfflineTableViewCell!
+	@IBOutlet var aerialCell: OfflineTableViewCell!
+	@IBOutlet var mapnikCell: OfflineTableViewCell!
 	var activityCount = 0
 
 	override func viewDidLoad() {
@@ -26,9 +26,9 @@ class OfflineViewController: UITableViewController {
 
 		tableView.estimatedRowHeight = 100
 		tableView.rowHeight = UITableView.automaticDimension
-		_aerialCell.tileLayer = AppDelegate.shared.mapView.aerialLayer
-		_mapnikCell.tileLayer = AppDelegate.shared.mapView.mapnikLayer
-		for cell in [_aerialCell!, _mapnikCell!] {
+		aerialCell.tileLayer = AppDelegate.shared.mapView.aerialLayer
+		mapnikCell.tileLayer = AppDelegate.shared.mapView.mapnikLayer
+		for cell in [aerialCell!, mapnikCell!] {
 			cell.tileList = cell.tileLayer!.allTilesIntersectingVisibleRect()
 			cell.detailLabel.text = String.localizedStringWithFormat(
 				NSLocalizedString("%lu tiles needed", comment: ""),
@@ -39,7 +39,7 @@ class OfflineViewController: UITableViewController {
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
-		for cell in [_aerialCell, _mapnikCell] {
+		for cell in [aerialCell, mapnikCell] {
 			cell?.activityView.stopAnimating()
 		}
 	}
@@ -71,10 +71,10 @@ class OfflineViewController: UITableViewController {
 
 	@IBAction func toggleDownload(_ sender: UIButton) {
 		var cell = OfflineTableViewCell()
-		if sender == _aerialCell.button {
-			cell = _aerialCell
+		if sender == aerialCell.button {
+			cell = aerialCell
 		} else {
-			cell = _mapnikCell
+			cell = mapnikCell
 		}
 
 		if cell.activityView.isAnimating {

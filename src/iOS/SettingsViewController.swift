@@ -10,8 +10,8 @@ import MessageUI
 import UIKit
 
 class SettingsViewController: UITableViewController, MFMailComposeViewControllerDelegate {
-	@IBOutlet var _username: UILabel!
-	@IBOutlet var _language: UILabel!
+	@IBOutlet var username: UILabel!
+	@IBOutlet var language: UILabel!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -28,18 +28,18 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 		let presetLanguages = PresetLanguages()
 		let preferredLanguageCode = presetLanguages.preferredLanguageCode
 		let preferredLanguage = PresetLanguages.localLanguageNameForCode(preferredLanguageCode())
-		_language.text = preferredLanguage
+		language.text = preferredLanguage
 
 		// set username, but then validate it
 		let appDelegate = AppDelegate.shared
 
-		_username.text = ""
+		username.text = ""
 		if appDelegate.userName.count > 0 {
 			appDelegate.mapView.editorLayer.mapData.verifyUserCredentials(withCompletion: { [self] errorMessage in
 				if errorMessage != nil {
-					_username.text = NSLocalizedString("<unknown>", comment: "unknown user name")
+					username.text = NSLocalizedString("<unknown>", comment: "unknown user name")
 				} else {
-					_username.text = appDelegate.userName
+					username.text = appDelegate.userName
 				}
 
 				tableView.reloadData()

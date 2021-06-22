@@ -10,7 +10,7 @@ import SafariServices
 import UIKit
 
 class NearbyMappersViewController: UITableViewController {
-	var _mappers: [OsmUserStatistics] = []
+	private var mappers: [OsmUserStatistics] = []
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -21,13 +21,13 @@ class NearbyMappersViewController: UITableViewController {
 		let appDelegate = AppDelegate.shared
 
 		let rect = appDelegate.mapView.screenLatLonRect()
-		_mappers = appDelegate.mapView.editorLayer.mapData.userStatistics(forRegion: rect)
-		_mappers.sort(by: { s1, s2 in s1.lastEdit.compare(s2.lastEdit) != .orderedAscending })
+		mappers = appDelegate.mapView.editorLayer.mapData.userStatistics(forRegion: rect)
+		mappers.sort(by: { s1, s2 in s1.lastEdit.compare(s2.lastEdit) != .orderedAscending })
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		if _mappers.count == 0 {
+		if mappers.count == 0 {
 			let alert = UIAlertController(
 				title: NSLocalizedString("No Data", comment: "Alert title"),
 				message: NSLocalizedString(
@@ -50,7 +50,7 @@ class NearbyMappersViewController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return _mappers.count
+		return mappers.count
 	}
 
 	// MARK: - Table view delegate
@@ -62,7 +62,7 @@ class NearbyMappersViewController: UITableViewController {
 			withIdentifier: NearbyMappersViewController.tableViewCellIdentifier,
 			for: indexPath)
 
-		let stats = _mappers[indexPath.row]
+		let stats = mappers[indexPath.row]
 		cell.textLabel?.text = stats.user
 		let date = DateFormatter.localizedString(
 			from: stats.lastEdit,
@@ -78,7 +78,7 @@ class NearbyMappersViewController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let stats = _mappers[indexPath.row]
+		let stats = mappers[indexPath.row]
 		let urlString = "https://www.openstreetmap.org/user/\(stats.user)"
 		let encodedUrlString = urlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
 		let url = URL(string: encodedUrlString ?? "")

@@ -82,11 +82,11 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 			let cell = tableView.dequeueReusableCell(
 				withIdentifier: "noteResolveCell",
 				for: indexPath) as! NotesResolveCell
-			cell._text.layer.cornerRadius = 5.0
-			cell._text.layer.borderColor = UIColor.black.cgColor
-			cell._text.layer.borderWidth = 1.0
-			cell._text.delegate = self
-			cell._text.text = newComment
+			cell.textView.layer.cornerRadius = 5.0
+			cell.textView.layer.borderColor = UIColor.black.cgColor
+			cell.textView.layer.borderWidth = 1.0
+			cell.textView.delegate = self
+			cell.textView.text = newComment
 			cell.commentButton.isEnabled = false
 			cell.resolveButton.isEnabled = note?.comments != nil
 			return cell
@@ -122,7 +122,7 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 		guard let cell: NotesResolveCell = sender?.superviewOfType()
 		else { return }
 
-		let s = cell._text.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+		let s = cell.textView.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 		let alert = UIAlertController(
 			title: NSLocalizedString("Updating Note...", comment: "OSM Note"),
 			message: nil,
@@ -159,7 +159,7 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 
 	func textViewDidChange(_ textView: UITextView) {
 		if let cell: NotesResolveCell = textView.superviewOfType() {
-			newComment = cell._text.text
+			newComment = cell.textView.text
 			let s = newComment?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 			cell.commentButton.isEnabled = (s?.count ?? 0) > 0
 		}
@@ -178,7 +178,7 @@ class NotesCommentCell: UITableViewCell {
 }
 
 class NotesResolveCell: UITableViewCell {
-	@IBOutlet var _text: UITextView!
+	@IBOutlet var textView: UITextView!
 	@IBOutlet var commentButton: UIButton!
 	@IBOutlet var resolveButton: UIButton!
 }

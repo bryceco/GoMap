@@ -31,13 +31,13 @@ class TextPairTableCell: UITableViewCell {
 }
 
 class POIAllTagsViewController: UITableViewController {
-	var tags: [(k: String, v: String)] = []
-	var relations: [OsmRelation] = []
-	var members: [OsmMember] = []
-	@IBOutlet var _saveButton: UIBarButtonItem!
-	var childViewPresented = false
-	var featureID: String?
-	var currentTextField: UITextField?
+	private var tags: [(k: String, v: String)] = []
+	private var relations: [OsmRelation] = []
+	private var members: [OsmMember] = []
+	@IBOutlet var saveButton: UIBarButtonItem!
+	private var childViewPresented = false
+	private var featureID: String?
+	private var currentTextField: UITextField?
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -156,9 +156,9 @@ class POIAllTagsViewController: UITableViewController {
 
 		_ = updateWithRecomendations(forFeature: true)
 
-		_saveButton.isEnabled = tabController.isTagDictChanged()
+		saveButton.isEnabled = tabController.isTagDictChanged()
 		if #available(iOS 13.0, *) {
-			tabBarController?.isModalInPresentation = _saveButton.isEnabled
+			tabBarController?.isModalInPresentation = saveButton.isEnabled
 		}
 	}
 
@@ -250,7 +250,7 @@ class POIAllTagsViewController: UITableViewController {
 
 	// MARK: Accessory buttons
 
-	func getAssociatedColor(for cell: TextPairTableCell) -> UIView? {
+	private func getAssociatedColor(for cell: TextPairTableCell) -> UIView? {
 		if let key = cell.text1.text,
 		   let value = cell.text2.text,
 		   key == "colour" || key == "color" || key.hasSuffix(":colour") || key.hasSuffix(":color")
@@ -309,7 +309,7 @@ class POIAllTagsViewController: UITableViewController {
 		}
 	}
 
-	func getWebsiteButton(for cell: TextPairTableCell) -> UIView? {
+	private func getWebsiteButton(for cell: TextPairTableCell) -> UIView? {
 		if let key = cell.text1.text,
 		   let value = cell.text2.text,
 		   key == "wikipedia"
@@ -344,7 +344,7 @@ class POIAllTagsViewController: UITableViewController {
 		textFieldEditingDidEnd(pair.text2)
 	}
 
-	func getSurveyDateButton(for cell: TextPairTableCell) -> UIView? {
+	private func getSurveyDateButton(for cell: TextPairTableCell) -> UIView? {
 		let synonyms = [
 			"check_date",
 			"survey_date",
@@ -381,7 +381,7 @@ class POIAllTagsViewController: UITableViewController {
 		present(directionViewController, animated: true)
 	}
 
-	func getDirectionButton(for cell: TextPairTableCell) -> UIView? {
+	private func getDirectionButton(for cell: TextPairTableCell) -> UIView? {
 		let synonyms = [
 			"direction",
 			"camera:direction"
@@ -413,7 +413,7 @@ class POIAllTagsViewController: UITableViewController {
 		childViewPresented = true
 	}
 
-	func getHeightButton(for cell: TextPairTableCell) -> UIView? {
+	private func getHeightButton(for cell: TextPairTableCell) -> UIView? {
 		if cell.text1.text == "height" {
 			let button = UIButton(type: .contactAdd)
 			button.addTarget(self, action: #selector(setHeight(_:)), for: .touchUpInside)
@@ -422,7 +422,7 @@ class POIAllTagsViewController: UITableViewController {
 		return nil
 	}
 
-	func updateAssociatedContent(for cell: TextPairTableCell) {
+	private func updateAssociatedContent(for cell: TextPairTableCell) {
 		let associatedView = getAssociatedColor(for: cell)
 			?? getWebsiteButton(for: cell)
 			?? getSurveyDateButton(for: cell)
@@ -714,9 +714,9 @@ class POIAllTagsViewController: UITableViewController {
 			tags[indexPath.row] = kv
 
 			let dict = keyValueDictionary()
-			_saveButton.isEnabled = tabController.isTagDictChanged(dict)
+			saveButton.isEnabled = tabController.isTagDictChanged(dict)
 			if #available(iOS 13.0, *) {
-				tabBarController?.isModalInPresentation = _saveButton.isEnabled
+				tabBarController?.isModalInPresentation = saveButton.isEnabled
 			}
 		}
 	}
@@ -844,9 +844,9 @@ class POIAllTagsViewController: UITableViewController {
 			}
 			tableView.deleteRows(at: [indexPath], with: .fade)
 
-			_saveButton.isEnabled = tabController.isTagDictChanged()
+			saveButton.isEnabled = tabController.isTagDictChanged()
 			if #available(iOS 13.0, *) {
-				tabBarController?.isModalInPresentation = _saveButton.isEnabled
+				tabBarController?.isModalInPresentation = saveButton.isEnabled
 			}
 		} else if editingStyle == .insert {
 			// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view

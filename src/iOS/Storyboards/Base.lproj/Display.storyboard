@@ -1642,15 +1642,15 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="_addButtonPosition" destination="el8-h8-H1F" id="gtU-mk-rXW"/>
-                        <outlet property="_birdsEyeSwitch" destination="IuS-7H-TV3" id="qn2-l1-Fvx"/>
-                        <outlet property="_gpsTraceSwitch" destination="hvT-hi-s8k" id="aav-pU-882"/>
-                        <outlet property="_gpxLoggingSwitch" destination="1jq-Mx-hmn" id="Xjp-YQ-1CM"/>
-                        <outlet property="_notesSwitch" destination="fC8-R7-fUP" id="1ot-P9-Y8q"/>
-                        <outlet property="_objectFiltersSwitch" destination="sdA-WB-aRv" id="Gfo-Ch-zqZ"/>
-                        <outlet property="_rotationSwitch" destination="H71-wV-6i5" id="ayi-ju-aO9"/>
-                        <outlet property="_turnRestrictionSwitch" destination="CPE-7e-MTX" id="OYA-e4-dd9"/>
-                        <outlet property="_unnamedRoadSwitch" destination="CUT-E6-72l" id="BE3-wk-4oS"/>
+                        <outlet property="addButtonPosition" destination="el8-h8-H1F" id="gtU-mk-rXW"/>
+                        <outlet property="birdsEyeSwitch" destination="IuS-7H-TV3" id="qn2-l1-Fvx"/>
+                        <outlet property="gpsTraceSwitch" destination="hvT-hi-s8k" id="aav-pU-882"/>
+                        <outlet property="gpxLoggingSwitch" destination="1jq-Mx-hmn" id="Xjp-YQ-1CM"/>
+                        <outlet property="notesSwitch" destination="fC8-R7-fUP" id="1ot-P9-Y8q"/>
+                        <outlet property="objectFiltersSwitch" destination="sdA-WB-aRv" id="Gfo-Ch-zqZ"/>
+                        <outlet property="rotationSwitch" destination="H71-wV-6i5" id="ayi-ju-aO9"/>
+                        <outlet property="turnRestrictionSwitch" destination="CPE-7e-MTX" id="OYA-e4-dd9"/>
+                        <outlet property="unnamedRoadSwitch" destination="CUT-E6-72l" id="BE3-wk-4oS"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qfn-yi-XU8" userLabel="First Responder" sceneMemberID="firstResponder"/>

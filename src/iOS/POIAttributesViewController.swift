@@ -46,7 +46,7 @@ class AttributeCustomCell: UITableViewCell {
 }
 
 class POIAttributesViewController: UITableViewController {
-	@IBOutlet var _saveButton: UIBarButtonItem!
+	@IBOutlet var saveButton: UIBarButtonItem!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -65,7 +65,7 @@ class POIAttributesViewController: UITableViewController {
 		super.viewWillAppear(animated)
 
 		let tabController = tabBarController as? POITabBarController
-		_saveButton.isEnabled = tabController?.isTagDictChanged() ?? false
+		saveButton.isEnabled = tabController?.isTagDictChanged() ?? false
 	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {

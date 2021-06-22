@@ -26,9 +26,9 @@ func roundToEvenValue(_ value: Double) -> Double {
 }
 
 class RulerView: UIView {
-	var _shapeLayer: CAShapeLayer
-	var _metricTextLayer: CATextLayer
-	var _britishTextLayer: CATextLayer
+	private var shapeLayer: CAShapeLayer
+	private var metricTextLayer: CATextLayer
+	private var britishTextLayer: CATextLayer
 	var mapView: MapView? {
 		didSet {
 			mapView?.mapTransform.observe(by: self, callback: { self.setNeedsLayout() })
@@ -36,16 +36,16 @@ class RulerView: UIView {
 	}
 
 	required init?(coder: NSCoder) {
-		_shapeLayer = CAShapeLayer()
-		_metricTextLayer = CATextLayer()
-		_britishTextLayer = CATextLayer()
+		shapeLayer = CAShapeLayer()
+		metricTextLayer = CATextLayer()
+		britishTextLayer = CATextLayer()
 
 		super.init(coder: coder)
 		backgroundColor = nil
 
-		_shapeLayer.lineWidth = 2
-		_shapeLayer.strokeColor = UIColor.black.cgColor
-		_shapeLayer.fillColor = nil
+		shapeLayer.lineWidth = 2
+		shapeLayer.strokeColor = UIColor.black.cgColor
+		shapeLayer.fillColor = nil
 
 #if os(iOS)
 		let font = UIFont.preferredFont(forTextStyle: .caption2)
@@ -53,29 +53,29 @@ class RulerView: UIView {
 		let font = NSFont.labelFont(ofSize: 12)
 #endif
 
-		_metricTextLayer.font = font
-		_britishTextLayer.font = font
-		_metricTextLayer.fontSize = 12 // font.pointSize;
-		_britishTextLayer.fontSize = 12 // font.pointSize;
-		_metricTextLayer.foregroundColor = UIColor.black.cgColor
-		_britishTextLayer.foregroundColor = UIColor.black.cgColor
-		_metricTextLayer.alignmentMode = .center
-		_britishTextLayer.alignmentMode = .center
-		_metricTextLayer.contentsScale = UIScreen.main.scale
-		_britishTextLayer.contentsScale = UIScreen.main.scale
+		metricTextLayer.font = font
+		britishTextLayer.font = font
+		metricTextLayer.fontSize = 12 // font.pointSize;
+		britishTextLayer.fontSize = 12 // font.pointSize;
+		metricTextLayer.foregroundColor = UIColor.black.cgColor
+		britishTextLayer.foregroundColor = UIColor.black.cgColor
+		metricTextLayer.alignmentMode = .center
+		britishTextLayer.alignmentMode = .center
+		metricTextLayer.contentsScale = UIScreen.main.scale
+		britishTextLayer.contentsScale = UIScreen.main.scale
 
 		layer.shadowColor = UIColor.white.cgColor
 		layer.shadowRadius = 0.0
 		layer.shadowOpacity = 0.4
 		layer.shadowOffset = CGSize(width: 0, height: 0)
 
-		_shapeLayer.shadowOpacity = 0.0
-		_metricTextLayer.shadowOpacity = 0.0
-		_britishTextLayer.shadowOpacity = 0.0
+		shapeLayer.shadowOpacity = 0.0
+		metricTextLayer.shadowOpacity = 0.0
+		britishTextLayer.shadowOpacity = 0.0
 
-		layer.addSublayer(_shapeLayer)
-		layer.addSublayer(_metricTextLayer)
-		layer.addSublayer(_britishTextLayer)
+		layer.addSublayer(shapeLayer)
+		layer.addSublayer(metricTextLayer)
+		layer.addSublayer(britishTextLayer)
 	}
 
 	override var frame: CGRect {
@@ -85,7 +85,7 @@ class RulerView: UIView {
 		set(frame) {
 			super.frame = frame
 
-			_shapeLayer.frame = bounds
+			shapeLayer.frame = bounds
 
 			setNeedsLayout()
 		}
@@ -151,23 +151,23 @@ class RulerView: UIView {
 		path.addLine(to: CGPoint(x: CGFloat(Double(rc.origin.x) + britishPixels),
 		                         y: rc.origin.y))
 
-		_shapeLayer.path = path
+		shapeLayer.path = path
 
 		var rect = bounds
 		rect.size.width = CGFloat(metricPixels)
 		rect.origin.y = CGFloat(round(Double(rc.origin.y + rc.size.height / 2)))
-		_metricTextLayer.frame = rect
+		metricTextLayer.frame = rect
 
 		rect.size.width = CGFloat(britishPixels)
 		rect.origin.y = CGFloat(round(Double(rc.origin.y)))
-		_britishTextLayer.frame = rect
+		britishTextLayer.frame = rect
 
-		_metricTextLayer.string = String(
+		metricTextLayer.string = String(
 			format: "%ld %@%@",
 			Int(metricWide),
 			metricUnit,
 			metricWide > 1 ? metricSuffix : "")
-		_britishTextLayer.string = String(
+		britishTextLayer.string = String(
 			format: "%ld %@%@",
 			Int(britishWide),
 			britishUnit,

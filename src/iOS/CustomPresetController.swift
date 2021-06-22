@@ -9,29 +9,29 @@
 import UIKit
 
 class CustomPresetController: UITableViewController {
-	@IBOutlet var _nameField: UITextField!
-	@IBOutlet var _appliesToTagField: UITextField!
-	@IBOutlet var _appliesToValueField: UITextField!
-	@IBOutlet var _keyField: UITextField!
-	@IBOutlet var _value1Field: UITextField!
-	@IBOutlet var _value2Field: UITextField!
-	@IBOutlet var _value3Field: UITextField!
-	@IBOutlet var _value4Field: UITextField!
-	@IBOutlet var _value5Field: UITextField!
-	@IBOutlet var _value6Field: UITextField!
-	@IBOutlet var _value7Field: UITextField!
-	@IBOutlet var _value8Field: UITextField!
-	@IBOutlet var _value9Field: UITextField!
-	@IBOutlet var _value10Field: UITextField!
-	@IBOutlet var _value11Field: UITextField!
-	@IBOutlet var _value12Field: UITextField!
-	var _valueFieldList: [UITextField] = []
+	@IBOutlet var nameField: UITextField!
+	@IBOutlet var appliesToTagField: UITextField!
+	@IBOutlet var appliesToValueField: UITextField!
+	@IBOutlet var keyField: UITextField!
+	@IBOutlet var value1Field: UITextField!
+	@IBOutlet var value2Field: UITextField!
+	@IBOutlet var value3Field: UITextField!
+	@IBOutlet var value4Field: UITextField!
+	@IBOutlet var value5Field: UITextField!
+	@IBOutlet var value6Field: UITextField!
+	@IBOutlet var value7Field: UITextField!
+	@IBOutlet var value8Field: UITextField!
+	@IBOutlet var value9Field: UITextField!
+	@IBOutlet var value10Field: UITextField!
+	@IBOutlet var value11Field: UITextField!
+	@IBOutlet var value12Field: UITextField!
+	private var valueFieldList: [UITextField] = []
 
 	var customPreset: PresetKeyUserDefined?
 	var completion: ((_ customPreset: PresetKeyUserDefined?) -> Void)?
 
 	@IBAction func contentChanged(_ sender: Any) {
-		if (_nameField.text?.count ?? 0) > 0, (_keyField.text?.count ?? 0) > 0 {
+		if (nameField.text?.count ?? 0) > 0, (keyField.text?.count ?? 0) > 0 {
 			navigationItem.rightBarButtonItem?.isEnabled = true
 		} else {
 			navigationItem.rightBarButtonItem?.isEnabled = false
@@ -40,15 +40,15 @@ class CustomPresetController: UITableViewController {
 
 	@IBAction func done(_ sender: Any) {
 		// remove white space from subdomain list
-		let name = _nameField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
-		let key = _keyField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
+		let name = nameField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
+		let key = keyField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
 		if name.count == 0 || key.count == 0 {
 			return
 		}
-		let appliesToKey = _appliesToTagField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
-		let appliesToVal = _appliesToValueField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
+		let appliesToKey = appliesToTagField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
+		let appliesToVal = appliesToValueField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
 		var presets: [PresetValue] = []
-		for field in _valueFieldList {
+		for field in valueFieldList {
 			let value = field.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
 			if value.count != 0 {
 				let preset = PresetValue(name: nil, details: nil, tagValue: value)
@@ -78,28 +78,28 @@ class CustomPresetController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		_valueFieldList = [
-			_value1Field,
-			_value2Field,
-			_value3Field,
-			_value4Field,
-			_value5Field,
-			_value6Field,
-			_value7Field,
-			_value8Field,
-			_value9Field,
-			_value10Field,
-			_value11Field,
-			_value12Field
+		valueFieldList = [
+			value1Field,
+			value2Field,
+			value3Field,
+			value4Field,
+			value5Field,
+			value6Field,
+			value7Field,
+			value8Field,
+			value9Field,
+			value10Field,
+			value11Field,
+			value12Field
 		]
 
-		_nameField.text = customPreset?.name ?? ""
-		_appliesToTagField.text = customPreset?.appliesToKey ?? ""
-		_appliesToValueField.text = customPreset?.appliesToValue ?? ""
-		_keyField.text = customPreset?.tagKey ?? ""
+		nameField.text = customPreset?.name ?? ""
+		appliesToTagField.text = customPreset?.appliesToKey ?? ""
+		appliesToValueField.text = customPreset?.appliesToValue ?? ""
+		keyField.text = customPreset?.tagKey ?? ""
 
 		var idx = 0
-		for textField in _valueFieldList {
+		for textField in valueFieldList {
 			if idx >= (customPreset?.presetList?.count ?? 0) {
 				break
 			}

@@ -84,8 +84,8 @@ class GpxTrackExpirationCell: UITableViewCell {
 }
 
 class GpxViewController: UITableViewController {
-	var _timer: Timer?
-	@IBOutlet var _navigationBar: UINavigationBar!
+	private var timer: Timer?
+	@IBOutlet var navigationBar: UINavigationBar!
 
 	@IBAction func cancel(_ sender: Any) {
 		dismiss(animated: true)
@@ -220,8 +220,8 @@ class GpxViewController: UITableViewController {
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
-		_timer?.invalidate()
-		_timer = nil
+		timer?.invalidate()
+		timer = nil
 	}
 
 	func startTimer(forStart date: Date) {
@@ -229,16 +229,16 @@ class GpxViewController: UITableViewController {
 		var delta = now.timeIntervalSince(date)
 		delta = 1 - fmod(delta, 1.0)
 		let date = now.addingTimeInterval(delta)
-		_timer = Timer(fire: date, interval: 1.0, repeats: true, block: { timer in
+		timer = Timer(fire: date, interval: 1.0, repeats: true, block: { timer in
 			if AppDelegate.shared.mapView.gpxLayer.activeTrack != nil {
 				let index = IndexPath(row: 0, section: SECTION_ACTIVE_TRACK)
 				self.tableView?.reloadRows(at: [index], with: .none)
 			} else {
 				timer.invalidate()
-				self._timer = nil
+				self.timer = nil
 			}
 		})
-		RunLoop.current.add(_timer!, forMode: .default)
+		RunLoop.current.add(timer!, forMode: .default)
 	}
 
 	// MARK: - Table view data source
@@ -284,10 +284,10 @@ class GpxViewController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let mapView = AppDelegate.shared.mapView
-		let gpxLayer = mapView?.gpxLayer
+		let mapView = AppDelegate.shared.mapView!
+		let gpxLayer = mapView.gpxLayer
 
-		if indexPath.section == SECTION_ACTIVE_TRACK, gpxLayer?.activeTrack == nil {
+		if indexPath.section == SECTION_ACTIVE_TRACK, gpxLayer.activeTrack == nil {
 			// no active track
 			let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
 			cell.textLabel?.text = NSLocalizedString("No active track", comment: "GPX track")
@@ -314,47 +314,44 @@ class GpxViewController: UITableViewController {
 				let cell = tableView.dequeueReusableCell(
 					withIdentifier: "GpxTrackBackgroundCollection",
 					for: indexPath) as! GpxTrackBackgroundCollection
-				cell.enableBackground.isOn = mapView!.gpsInBackground
+				cell.enableBackground.isOn = mapView.gpsInBackground
 				return cell
 			}
 		}
 
 		// active track or previous tracks
-		let track = (indexPath.section == SECTION_ACTIVE_TRACK ? gpxLayer?.activeTrack : gpxLayer?
-			.previousTracks[indexPath.row])
-		let dur = Int(round(track?.duration() ?? 0.0))
+		let track = indexPath.section == SECTION_ACTIVE_TRACK ? gpxLayer.activeTrack!
+						: gpxLayer.previousTracks[indexPath.row]
+		let dur = Int(round(track.duration() ))
 		var startDate: String?
-		if let creationDate = track?.creationDate {
-			startDate = DateFormatter.localizedString(from: creationDate, dateStyle: .short, timeStyle: .short)
-		}
+		let creationDate = track.creationDate
+		startDate = DateFormatter.localizedString(from: creationDate, dateStyle: .short, timeStyle: .short)
+
 		let duration = String(format: "%d:%02d:%02d", dur / 3600, dur / 60 % 60, dur % 60)
-		let trackDistanceInt = Int(track?.distance() ?? 0.0)
-		let trackPointsInt = track?.points.count ?? 0
+		let trackDistanceInt = Int(track.lengthInMeters() )
+		let trackPointsInt = track.points.count
 		let meters = String.localizedStringWithFormat(
 			NSLocalizedString("%ld meters, %ld points", comment: "length of a gpx track"),
 			trackDistanceInt,
 			trackPointsInt)
 		let cell = tableView.dequeueReusableCell(
 			withIdentifier: "GpxTrackTableCell",
-			for: indexPath) as? GpxTrackTableCell
-		cell?.startDate.text = startDate
-		cell?.duration.text = duration
-		cell?.details.text = meters
-		if let track = track {
-			cell?.gpxTrack = track
+			for: indexPath) as! GpxTrackTableCell
+		cell.startDate.text = startDate
+		cell.duration.text = duration
+		cell.details.text = meters
+		cell.gpxTrack = track
+		cell.tableView = self
+		let name = track.name
+		if gpxLayer.uploadedTracks[name] != nil {
+			cell.uploadButton.setImage(nil, for: .normal)
+			cell.uploadButton.setTitle("\u{2714}", for: .normal)
+		} else {
+			let image = UIImage(named: "702-share")
+			cell.uploadButton.setImage(image, for: .normal)
+			cell.uploadButton.setTitle(nil, for: .normal)
 		}
-		cell?.tableView = self
-		if let name = track?.name {
-			if gpxLayer?.uploadedTracks[name] != nil {
-				cell?.uploadButton.setImage(nil, for: .normal)
-				cell?.uploadButton.setTitle("\u{2714}", for: .normal)
-			} else {
-				let image = UIImage(named: "702-share")
-				cell?.uploadButton.setImage(image, for: .normal)
-				cell?.uploadButton.setTitle(nil, for: .normal)
-			}
-		}
-		return cell!
+		return cell
 	}
 
 	// Override to support conditional editing of the table view.

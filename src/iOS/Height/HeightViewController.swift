@@ -13,22 +13,21 @@ import UIKit
 private let InsetPercent: CGFloat = 0.15
 
 class HeightViewController: UIViewController {
-	var _captureSession: AVCaptureSession?
-	var _previewLayer: AVCaptureVideoPreviewLayer?
-	var _coreMotion: CMMotionManager?
-	var _cameraFOV: Double = 0.0
-	var _canZoom = false
-	@IBOutlet var _distanceLabel: UIButton!
-	@IBOutlet var _heightLabel: UIButton!
-	@IBOutlet var _applyButton: UIButton!
-	@IBOutlet var _cancelButton: UIButton!
-	var _rulerViews: [Int: UILabel] = [:]
-	var _rulerLayers: [Int: CAShapeLayer] = [:]
-	var _isExiting = false
-	var _scrollPosition: CGFloat = 0.0
-	var _totalZoom: Double = 0.0
-	var _currentHeight: String = ""
-	var _alertHeight: String?
+	private var captureSession: AVCaptureSession?
+	private var previewLayer: AVCaptureVideoPreviewLayer?
+	private var coreMotion: CMMotionManager?
+	private var cameraFOV: Double = 0.0
+	private var canZoom = false
+	@IBOutlet var distanceLabel: UIButton!
+	@IBOutlet var heightLabel: UIButton!
+	@IBOutlet var applyButton: UIButton!
+	@IBOutlet var cancelButton: UIButton!
+	private var rulerViews: [Int: UILabel] = [:]
+	private var rulerLayers: [Int: CAShapeLayer] = [:]
+	private var isExiting = false
+	private var scrollPosition: CGFloat = 0.0
+	private var totalZoom: Double = 0.0
+	private var currentHeight: String = ""
 
 	var callback: ((_ newValue: String) -> Void)?
 
@@ -61,35 +60,35 @@ class HeightViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		_rulerViews = [:]
-		_rulerLayers = [:]
+		rulerViews = [:]
+		rulerLayers = [:]
 
 		view.backgroundColor = UIColor.black
 
-		_applyButton.layer.cornerRadius = 5
-		_applyButton.layer.backgroundColor = UIColor.black.cgColor
-		_applyButton.layer.borderColor = UIColor.white.cgColor
-		_applyButton.layer.borderWidth = 1.0
-		_applyButton.layer.zPosition = 1
+		applyButton.layer.cornerRadius = 5
+		applyButton.layer.backgroundColor = UIColor.black.cgColor
+		applyButton.layer.borderColor = UIColor.white.cgColor
+		applyButton.layer.borderWidth = 1.0
+		applyButton.layer.zPosition = 1
 
-		_cancelButton.layer.cornerRadius = 5
-		_cancelButton.layer.backgroundColor = UIColor.black.cgColor
-		_cancelButton.layer.borderColor = UIColor.white.cgColor
-		_cancelButton.layer.borderWidth = 1.0
-		_cancelButton.layer.zPosition = 1
+		cancelButton.layer.cornerRadius = 5
+		cancelButton.layer.backgroundColor = UIColor.black.cgColor
+		cancelButton.layer.borderColor = UIColor.white.cgColor
+		cancelButton.layer.borderWidth = 1.0
+		cancelButton.layer.zPosition = 1
 
-		_distanceLabel.backgroundColor = nil
-		_distanceLabel.layer.cornerRadius = 5
-		_distanceLabel.layer.backgroundColor = UIColor(red: 0.4, green: 0.4, blue: 1.0, alpha: 0.75).cgColor
-		_distanceLabel.layer.zPosition = 1
+		distanceLabel.backgroundColor = nil
+		distanceLabel.layer.cornerRadius = 5
+		distanceLabel.layer.backgroundColor = UIColor(red: 0.4, green: 0.4, blue: 1.0, alpha: 0.75).cgColor
+		distanceLabel.layer.zPosition = 1
 
-		_heightLabel.backgroundColor = nil
-		_heightLabel.layer.cornerRadius = 5
-		_heightLabel.layer.backgroundColor = UIColor(red: 0, green: 0, blue: 1.0, alpha: 0.75).cgColor
-		_heightLabel.layer.zPosition = 1
+		heightLabel.backgroundColor = nil
+		heightLabel.layer.cornerRadius = 5
+		heightLabel.layer.backgroundColor = UIColor(red: 0, green: 0, blue: 1.0, alpha: 0.75).cgColor
+		heightLabel.layer.zPosition = 1
 
-		_totalZoom = 1.0
-		_scrollPosition = 20
+		totalZoom = 1.0
+		scrollPosition = 20
 
 		let tap = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
 		view.addGestureRecognizer(tap)
@@ -104,12 +103,12 @@ class HeightViewController: UIViewController {
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 
-		_coreMotion = CMMotionManager()
-		_coreMotion?.deviceMotionUpdateInterval = 1.0 / 30
+		coreMotion = CMMotionManager()
+		coreMotion?.deviceMotionUpdateInterval = 1.0 / 30
 		let currentQueue = OperationQueue.current
 		weak var weakSelf = self
 		if let currentQueue = currentQueue {
-			_coreMotion?.startDeviceMotionUpdates(
+			coreMotion?.startDeviceMotionUpdates(
 				using: .xTrueNorthZVertical,
 				to: currentQueue,
 				withHandler: { motion, _ in
@@ -121,7 +120,7 @@ class HeightViewController: UIViewController {
 
 		_ = startCameraPreview()
 
-		if _canZoom {
+		if canZoom {
 			let rc = view.bounds
 			let lineMargin: CGFloat = 30
 			let arrowWidth: CGFloat = 10
@@ -157,9 +156,9 @@ class HeightViewController: UIViewController {
 	}
 
 	func startCameraPreview() -> Bool {
-		_captureSession = AVCaptureSession()
+		captureSession = AVCaptureSession()
 
-		guard let captureSession = _captureSession,
+		guard let captureSession = captureSession,
 		      let videoDevice = AVCaptureDevice.default(for: .video),
 		      let videoIn = try? AVCaptureDeviceInput(device: videoDevice),
 		      captureSession.canAddInput(videoIn)
@@ -177,17 +176,17 @@ class HeightViewController: UIViewController {
 		} catch {}
 
 		// can camera zoom?
-		_canZoom = videoDevice.activeFormat.videoMaxZoomFactor >= 10.0
+		canZoom = videoDevice.activeFormat.videoMaxZoomFactor >= 10.0
 
 		// get FOV
-		_cameraFOV = Double(videoDevice.activeFormat.videoFieldOfView)
-		if _cameraFOV == 0 {
-			_cameraFOV = cameraFOV()
+		cameraFOV = Double(videoDevice.activeFormat.videoFieldOfView)
+		if cameraFOV == 0 {
+			cameraFOV = calculateCameraFOV()
 		}
-		_cameraFOV *= .pi / 180
+		cameraFOV *= .pi / 180
 
-		_previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-		guard let previewLayer = _previewLayer else { return false }
+		previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+		guard let previewLayer = previewLayer else { return false }
 		previewLayer.videoGravity = .resizeAspectFill
 		previewLayer.bounds = view.layer.bounds
 		previewLayer.position = view.layer.bounds.center()
@@ -201,7 +200,7 @@ class HeightViewController: UIViewController {
 
 	@objc func didTap(_ tap: UITapGestureRecognizer) {
 		var pos = tap.location(in: view)
-		guard let input = _captureSession?.inputs.last as? AVCaptureDeviceInput else { return }
+		guard let input = captureSession?.inputs.last as? AVCaptureDeviceInput else { return }
 		do {
 			try input.device.lockForConfiguration()
 			let rc = view.bounds
@@ -214,26 +213,26 @@ class HeightViewController: UIViewController {
 
 	@objc func didPan(_ pan: UIPanGestureRecognizer) {
 		let delta = pan.translation(in: view)
-		_scrollPosition -= delta.y
+		scrollPosition -= delta.y
 		pan.setTranslation(CGPoint(x: 0, y: 0), in: view)
 	}
 
 	@objc func didPinch(_ pinch: UIPinchGestureRecognizer) {
-		if _canZoom {
-			guard let input = _captureSession?.inputs.last as? AVCaptureDeviceInput else { return }
+		if canZoom {
+			guard let input = captureSession?.inputs.last as? AVCaptureDeviceInput else { return }
 			let device = input.device
 
 			let maxZoom = device.activeFormat.videoMaxZoomFactor
-			_totalZoom *= Double(pinch.scale)
-			if _totalZoom < 1.0 {
-				_totalZoom = 1.0
-			} else if _totalZoom > Double(maxZoom) {
-				_totalZoom = Double(maxZoom)
+			totalZoom *= Double(pinch.scale)
+			if totalZoom < 1.0 {
+				totalZoom = 1.0
+			} else if totalZoom > Double(maxZoom) {
+				totalZoom = Double(maxZoom)
 			}
 
 			do {
 				try device.lockForConfiguration()
-				device.videoZoomFactor = CGFloat(_totalZoom)
+				device.videoZoomFactor = CGFloat(totalZoom)
 				device.unlockForConfiguration()
 			} catch {}
 			pinch.scale = 1.0
@@ -289,7 +288,7 @@ class HeightViewController: UIViewController {
 		("iPod4,1", 0.0, 0.0, 0.0) // iPod Touch (Fourth Generation)
 	)
 
-	func cameraFOV() -> Double {
+	func calculateCameraFOV() -> Double {
 		var systemInfo = utsname()
 		uname(&systemInfo)
 		for device in HeightViewController.ModelList {
@@ -366,7 +365,7 @@ class HeightViewController: UIViewController {
 	}
 
 	func refreshRulerLabels(_ motion: CMDeviceMotion) {
-		if _isExiting {
+		if isExiting {
 			return
 		}
 
@@ -391,31 +390,31 @@ class HeightViewController: UIViewController {
 		// update distance label
 		let distText = "Distance: \(distanceString(forFloat: dist)) ± \(distanceString(forFloat: distError)) meters"
 		UIView.performWithoutAnimation({ [self] in
-			_distanceLabel.setTitle(distText, for: .normal)
-			_distanceLabel.layoutIfNeeded()
+			distanceLabel.setTitle(distText, for: .normal)
+			distanceLabel.layoutIfNeeded()
 		})
 
 		let rc = view.bounds
-		let dist2 = Double((rc.size.height / 2) / tan(CGFloat(_cameraFOV) / 2))
+		let dist2 = Double((rc.size.height / 2) / tan(CGFloat(cameraFOV) / 2))
 
-		if _canZoom {
-			let height1 = dist * tan(pitch - atan2(Double(rc.size.height / 2 * (1 - InsetPercent)) / _totalZoom, dist2))
-			let height2 = dist * tan(pitch + atan2(Double(rc.size.height / 2 * (1 - InsetPercent)) / _totalZoom, dist2))
+		if canZoom {
+			let height1 = dist * tan(pitch - atan2(Double(rc.size.height / 2 * (1 - InsetPercent)) / totalZoom, dist2))
+			let height2 = dist * tan(pitch + atan2(Double(rc.size.height / 2 * (1 - InsetPercent)) / totalZoom, dist2))
 			let height = height2 - height1
 			let heightError = height * distError / dist
-			_currentHeight = distanceString(forFloat: height)
+			currentHeight = distanceString(forFloat: height)
 			let text = String.localizedStringWithFormat(NSLocalizedString("Height: %@ ± %@ meters", comment: ""),
-			                                            _currentHeight,
+			                                            currentHeight,
 			                                            distanceString(forFloat: heightError))
 			UIView.performWithoutAnimation({ [self] in
-				_heightLabel.setTitle(text, for: .normal)
-				_heightLabel.layoutIfNeeded()
+				heightLabel.setTitle(text, for: .normal)
+				heightLabel.layoutIfNeeded()
 			})
 		} else {
-			let userHeight = tan(_cameraFOV / 2 - pitch) * dist
+			let userHeight = tan(cameraFOV / 2 - pitch) * dist
 
 			// get number of labels to display
-			let maxHeight = dist * tan(_cameraFOV / 2 + pitch) + dist * tan(_cameraFOV / 2 - pitch)
+			let maxHeight = dist * tan(cameraFOV / 2 + pitch) + dist * tan(cameraFOV / 2 - pitch)
 			var increment = 0.1
 			var scale = 1
 			while maxHeight / increment > 10 {
@@ -431,7 +430,7 @@ class HeightViewController: UIViewController {
 				}
 			}
 
-			let scrollHeight = Double(_scrollPosition) * dist / dist2
+			let scrollHeight = Double(scrollPosition) * dist / dist2
 
 			for div in -20..<30 {
 				let labelBorderWidth: CGFloat = 5
@@ -447,11 +446,11 @@ class HeightViewController: UIViewController {
 				var labelWidth: CGFloat = 0
 				if div % 2 == 0 {
 					let label: UILabel
-					if let lab = _rulerViews[div] {
+					if let lab = rulerViews[div] {
 						label = lab
 					} else {
 						label = UILabel()
-						_rulerViews[div] = label
+						rulerViews[div] = label
 					}
 
 					if pixels > Double(rc.size.height) || pixels < 0 {
@@ -476,11 +475,11 @@ class HeightViewController: UIViewController {
 				}
 
 				let layer: CAShapeLayer
-				if let lay = _rulerLayers[div] {
+				if let lay = rulerLayers[div] {
 					layer = lay
 				} else {
 					layer = CAShapeLayer()
-					_rulerLayers[div] = layer
+					rulerLayers[div] = layer
 				}
 				if pixels > Double(rc.size.height) || pixels < 0 {
 					layer.removeFromSuperlayer()
@@ -505,9 +504,9 @@ class HeightViewController: UIViewController {
 	}
 
 	@IBAction func cancel(_ sender: Any?) {
-		_isExiting = true
-		_captureSession?.stopRunning()
-		_coreMotion?.stopDeviceMotionUpdates()
+		isExiting = true
+		captureSession?.stopRunning()
+		coreMotion?.stopDeviceMotionUpdates()
 
 		for v in view.subviews {
 			v.removeFromSuperview()
@@ -522,8 +521,8 @@ class HeightViewController: UIViewController {
 	}
 
 	@IBAction func apply(_ sender: Any) {
-		if _canZoom {
-			setHeight(_currentHeight)
+		if canZoom {
+			setHeight(currentHeight)
 		} else {
 			let alert = UIAlertController(
 				title: NSLocalizedString("Set Height Tag", comment: "The height=* tag"),

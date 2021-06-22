@@ -73,10 +73,8 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	final var _constructed = false
 
 	public final var renderPriorityCached = 0
-	private var _deleted = false
-	final var deleted: Bool {
-		return _deleted
-	}
+
+	final private(set) var deleted = false
 
 	final var renderInfo: RenderInfo?
 	private(set) final var modifyCount: Int32 = 0
@@ -90,7 +88,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		changeset = 0
 		uid = 0
 		visible = false
-		_deleted = false
+		deleted = false
 		modifyCount = 0
 	}
 
@@ -115,8 +113,8 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		changeset = OsmIdentifier(coder.decodeInteger(forKey: "changeset"))
 		uid = Int(coder.decodeInt32(forKey: "uid"))
 		visible = coder.decodeBool(forKey: "visible")
-		_tags = coder.decodeObject(forKey: "tags") as? [String: String] ?? [:]
-		_deleted = coder.decodeBool(forKey: "deleted")
+		tags = coder.decodeObject(forKey: "tags") as? [String: String] ?? [:]
+		deleted = coder.decodeBool(forKey: "deleted")
 		modifyCount = coder.decodeInt32(forKey: "modified")
 		super.init()
 		assert(ident != 0)
@@ -138,7 +136,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		visible = true
 		self.ident = ident
 		self.timestamp = timestamp
-		_tags = tags
+		self.tags = tags
 		super.init()
 	}
 
@@ -161,7 +159,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 			visible = true
 			self.ident = ident
 			self.timestamp = timestamp
-			_tags = [:]
+			tags = [:]
 			super.init()
 		} else {
 			return nil
@@ -186,10 +184,9 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 	// attributes
 
-	private var _tags: [String: String] = NSMutableDictionary() as! [String: String]
-	var tags: [String: String] {
-		return _tags
-	}
+	// FIXME: This needed to be an NSMutableDictionary because of how Database treated it,
+	// but I think we can remove that now that everything is swift
+	private(set) var tags: [String: String] = NSMutableDictionary() as! [String: String]
 
 	public var _boundingBox: OSMRect? // public only so subclasses can set it
 	var boundingBox: OSMRect {
@@ -360,7 +357,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		}
 
 		assert(!_constructed)
-		_tags[tag] = value
+		tags[tag] = value
 	}
 
 	func constructed() -> Bool {
@@ -457,7 +454,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	func serverUpdate(inPlace newerVersion: OsmBaseObject) {
 		assert(ident == newerVersion.ident)
 		assert(version < newerVersion.version)
-		_tags = newerVersion.tags
+		tags = newerVersion.tags
 		user = newerVersion.user
 		timestamp = newerVersion.timestamp
 		version = newerVersion.version
@@ -476,7 +473,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 				selector: #selector(setDeleted(_:undo:)),
 				objects: [NSNumber(value: self.deleted), undo!])
 		}
-		_deleted = deleted
+		self.deleted = deleted
 	}
 
 	func setTags(_ tags: [String: String], undo: MyUndoManager?) {
@@ -485,7 +482,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 			incrementModifyCount(undo!)
 			undo!.registerUndo(withTarget: self, selector: #selector(setTags(_:undo:)), objects: [self.tags, undo!])
 		}
-		_tags = tags
+		self.tags = tags
 		clearCachedProperties()
 	}
 

@@ -9,29 +9,29 @@
 import UIKit
 
 class NominatimViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
-	@IBOutlet var _searchBar: UISearchBar!
-	var _resultsArray: [[String: Any]] = []
-	@IBOutlet var _activityIndicator: UIActivityIndicatorView!
-	@IBOutlet var _tableView: UITableView!
-	var _historyArray: [String] = []
+	@IBOutlet var searchBar: UISearchBar!
+	private var resultsArray: [[String: Any]] = []
+	@IBOutlet var activityIndicator: UIActivityIndicatorView!
+	@IBOutlet var tableView: UITableView!
+	private var historyArray: [String] = []
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		_activityIndicator.color = UIColor.black
+		activityIndicator.color = UIColor.black
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		_searchBar.becomeFirstResponder()
+		searchBar.becomeFirstResponder()
 
-		_historyArray = UserDefaults.standard.object(forKey: "searchHistory") as? [String] ?? []
+		historyArray = UserDefaults.standard.object(forKey: "searchHistory") as? [String] ?? []
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
 		view.endEditing(true)
 
 		super.viewWillDisappear(animated)
-		UserDefaults.standard.set(_historyArray, forKey: "searchHistory")
+		UserDefaults.standard.set(historyArray, forKey: "searchHistory")
 	}
 
 	// MARK: - Table view data source
@@ -41,7 +41,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	}
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return (_searchBar.text?.count ?? 0) != 0 ? _resultsArray.count : _historyArray.count
+		return (searchBar.text?.count ?? 0) != 0 ? resultsArray.count : historyArray.count
 	}
 
 	func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -63,10 +63,10 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			withIdentifier: NominatimViewController.tableViewCellIdentifier,
 			for: indexPath)
 
-		if _searchBar.text?.isEmpty ?? true {
-			cell.textLabel?.text = _historyArray[indexPath.row]
+		if searchBar.text?.isEmpty ?? true {
+			cell.textLabel?.text = historyArray[indexPath.row]
 		} else {
-			let dict = _resultsArray[indexPath.row]
+			let dict = resultsArray[indexPath.row]
 			cell.textLabel?.text = dict["display_name"] as? String
 		}
 		return cell
@@ -96,14 +96,14 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	// MARK: - Table view delegate
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		if (_searchBar.text?.count ?? 0) == 0 {
+		if (searchBar.text?.count ?? 0) == 0 {
 			// history item
-			_searchBar.text = _historyArray[indexPath.row]
-			searchBarSearchButtonClicked(_searchBar)
+			searchBar.text = historyArray[indexPath.row]
+			searchBarSearchButtonClicked(searchBar)
 			return
 		}
 
-		let dict = _resultsArray[indexPath.row]
+		let dict = resultsArray[indexPath.row]
 		if let box = dict["boundingbox"] as? [String] {
 			let lat1 = Double(box[0]) ?? 0.0
 			let lat2 = Double(box[1]) ?? 0.0
@@ -160,10 +160,10 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	}
 
 	func updateHistory(with string: String) {
-		_historyArray.removeAll { $0 == string }
-		_historyArray.insert(string, at: 0)
-		while _historyArray.count > 20 {
-			_historyArray.removeLast()
+		historyArray.removeAll { $0 == string }
+		historyArray.insert(string, at: 0)
+		while historyArray.count > 20 {
+			historyArray.removeLast()
 		}
 	}
 
@@ -176,12 +176,12 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		searchBar.resignFirstResponder()
 
-		_resultsArray = []
+		resultsArray = []
 		guard let string = searchBar.text,
 		      !string.isEmpty
 		else {
 			// no search
-			_searchBar.perform(#selector(UIResponder.resignFirstResponder), with: nil, afterDelay: 0.1)
+			searchBar.perform(#selector(UIResponder.resignFirstResponder), with: nil, afterDelay: 0.1)
 			return
 		}
 		if containsLatLon(string) {
@@ -189,7 +189,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		}
 
 		// searching
-		_activityIndicator.startAnimating()
+		activityIndicator.startAnimating()
 
 		let text = string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
 		let url = "https://nominatim.openstreetmap.org/search?q=\(text ?? "")&format=json&limit=50"
@@ -197,7 +197,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			let task = URLSession.shared.dataTask(with: url1, completionHandler: { [self] data, _, error in
 				DispatchQueue.main.async(execute: { [self] in
 
-					_activityIndicator.stopAnimating()
+					activityIndicator.stopAnimating()
 
 					if let data = data,
 					   error == nil
@@ -218,23 +218,24 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 						 */
 
 						let json = try? JSONSerialization.jsonObject(with: data, options: [])
-						_resultsArray = json as? [[String: Any]] ?? []
-						_tableView.reloadData()
+						resultsArray = json as? [[String: Any]] ?? []
+						tableView.reloadData()
 
-						if _resultsArray.count > 0 {
+						if resultsArray.count > 0 {
 							updateHistory(with: string)
 						}
 					} else {
 						// error fetching results
 					}
 
-					if _resultsArray.count == 0 {
+					if resultsArray.count == 0 {
 						let alert = UIAlertController(
 							title: NSLocalizedString("No results found", comment: ""),
 							message: nil,
 							preferredStyle: .alert)
 						alert
-							.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel,
+							.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+													 style: .cancel,
 							                         handler: nil))
 						present(alert, animated: true)
 					}
@@ -242,6 +243,6 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			})
 			task.resume()
 		}
-		_tableView.reloadData()
+		tableView.reloadData()
 	}
 }

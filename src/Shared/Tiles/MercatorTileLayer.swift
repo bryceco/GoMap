@@ -21,8 +21,8 @@ import UIKit
 }
 
 final class MercatorTileLayer: CALayer, GetDiskCacheSize {
-	private var _webCache = PersistentWebCache<UIImage>(name: "", memorySize: 0)
-	private var _layerDict: [String: CALayer] = [:] // map of tiles currently displayed
+	private var webCache = PersistentWebCache<UIImage>(name: "", memorySize: 0)
+	private var layerDict: [String: CALayer] = [:] // map of tiles currently displayed
 
 	@objc let mapView: MapView // mark as objc for KVO
 	private var isPerformingLayout = AtomicInt(0)
@@ -77,10 +77,10 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 
 			// remove previous data
 			sublayers = nil
-			_layerDict.removeAll()
+			layerDict.removeAll()
 
 			// update service
-			_webCache = PersistentWebCache(name: service.identifier, memorySize: 20 * 1000 * 1000)
+			webCache = PersistentWebCache(name: service.identifier, memorySize: 20 * 1000 * 1000)
 
 			let expirationDate = Date(timeIntervalSinceNow: -7 * 24 * 60 * 60)
 			purgeOldCacheItemsAsync(expirationDate)
@@ -122,19 +122,19 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 	}
 
 	func purgeTileCache() {
-		_webCache.removeAllObjects()
-		_layerDict.removeAll()
+		webCache.removeAllObjects()
+		layerDict.removeAll()
 		sublayers = nil
 		URLCache.shared.removeAllCachedResponses()
 		setNeedsLayout()
 	}
 
 	func purgeOldCacheItemsAsync(_ expiration: Date) {
-		_webCache.removeObjectsAsyncOlderThan(expiration)
+		webCache.removeObjectsAsyncOlderThan(expiration)
 	}
 
 	func getDiskCacheSize(_ pSize: inout Int, count pCount: inout Int) {
-		_webCache.getDiskCacheSize(&pSize, count: &pCount)
+		webCache.getDiskCacheSize(&pSize, count: &pCount)
 	}
 
 	private func layerOverlapsScreen(_ layer: CALayer) -> Bool {
@@ -171,7 +171,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		for layer in removeList {
 			if let key = layer.value(forKey: "tileKey") as? String {
 				// DLog("prune \(key): \(layer)")
-				_layerDict.removeValue(forKey: key)
+				layerDict.removeValue(forKey: key)
 				layer.removeFromSuperlayer()
 				layer.contents = nil
 			}
@@ -219,7 +219,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 
 		for layer in removeList {
 			let key = layer.value(forKey: "tileKey") as! String
-			_layerDict.removeValue(forKey: key)
+			layerDict.removeValue(forKey: key)
 			layer.removeFromSuperlayer()
 			layer.contents = nil
 		}
@@ -240,7 +240,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		let tileModY = modulus(tileY, 1 << zoomLevel)
 		let tileKey = "\(zoomLevel),\(tileX),\(tileY)"
 
-		if _layerDict[tileKey] != nil {
+		if layerDict[tileKey] != nil {
 			// already have it
 			completion(nil)
 			return
@@ -260,7 +260,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 			//        let scale = 256.0 / Double((1 << zoomLevel))
 			//        layer?.frame = CGRect(x: CGFloat(Double(tileX) * scale), y: CGFloat(Double(tileY) * scale), width: CGFloat(scale), height: CGFloat(scale))
 			// #endif
-			_layerDict[tileKey] = layer
+			layerDict[tileKey] = layer
 
 			isPerformingLayout.increment()
 			addSublayer(layer)
@@ -268,7 +268,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 
 			// check memory cache
 			let cacheKey = String(quadKey(forZoom: zoomLevel, tileX: tileModX, tileY: tileModY))
-			let cachedImage: UIImage? = _webCache.object(
+			let cachedImage: UIImage? = webCache.object(
 				withKey: cacheKey,
 				fallbackURL: { [self] in
 					self.tileServer.url(forZoom: zoomLevel, tileX: tileModX, tileY: tileModY)
@@ -419,7 +419,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 
 		// #if CUSTOM_TRANSFORM
 		// update locations of tiles
-		setSublayerPositions(_layerDict)
+		setSublayerPositions(layerDict)
 		removeUnneededTiles(for: OSMRect(bounds), zoomLevel: zoomLevel)
 		// #else
 		//        let rc = mapView.boundingMapRectForScreen()
@@ -439,7 +439,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 	// this function is used for bulk downloading tiles
 	func downloadTile(forKey cacheKey: String, completion: @escaping () -> Void) {
 		let (tileX, tileY, zoomLevel) = QuadKeyToTileXY(cacheKey)
-		let data2 = _webCache.object(withKey: cacheKey,
+		let data2 = webCache.object(withKey: cacheKey,
 		                             fallbackURL: {
 		                             	self.tileServer.url(forZoom: zoomLevel, tileX: tileX, tileY: tileY)
 		                             },
@@ -458,7 +458,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 
 	// Used for bulk downloading tiles for offline use
 	func allTilesIntersectingVisibleRect() -> [String] {
-		let currentTiles = _webCache.allKeys()
+		let currentTiles = webCache.allKeys()
 		let currentSet = Set(currentTiles)
 
 		let rect = mapView.boundingMapRectForScreen()

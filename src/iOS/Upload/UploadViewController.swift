@@ -12,32 +12,32 @@ import UIKit
 
 class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeViewControllerDelegate {
 	var mapData: OsmMapData!
-	@IBOutlet var _commentContainerView: UIView!
-	@IBOutlet var _xmlTextView: UITextView!
-	@IBOutlet var _commentTextView: UITextView!
-	@IBOutlet var _sourceTextField: UITextField!
-	@IBOutlet var _commitButton: UIBarButtonItem!
-	@IBOutlet var _cancelButton: UIBarButtonItem!
-	@IBOutlet var _progressView: UIActivityIndicatorView!
-	@IBOutlet var _sendMailButton: UIButton!
-	@IBOutlet var _editXmlButton: UIButton!
-	@IBOutlet var _clearCommentButton: UIButton!
+	@IBOutlet var commentContainerView: UIView!
+	@IBOutlet var xmlTextView: UITextView!
+	@IBOutlet var commentTextView: UITextView!
+	@IBOutlet var sourceTextField: UITextField!
+	@IBOutlet var commitButton: UIBarButtonItem!
+	@IBOutlet var cancelButton: UIBarButtonItem!
+	@IBOutlet var progressView: UIActivityIndicatorView!
+	@IBOutlet var sendMailButton: UIButton!
+	@IBOutlet var editXmlButton: UIButton!
+	@IBOutlet var clearCommentButton: UIButton!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		let color = UIColor.gray.withAlphaComponent(0.5)
-		_commentContainerView.layer.borderColor = color.cgColor
-		_commentContainerView.layer.borderWidth = 2.0
-		_commentContainerView.layer.cornerRadius = 10.0
+		commentContainerView.layer.borderColor = color.cgColor
+		commentContainerView.layer.borderWidth = 2.0
+		commentContainerView.layer.cornerRadius = 10.0
 
-		_sourceTextField.layer.borderColor = color.cgColor
-		_sourceTextField.layer.borderWidth = 2.0
-		_sourceTextField.layer.cornerRadius = 10.0
+		sourceTextField.layer.borderColor = color.cgColor
+		sourceTextField.layer.borderWidth = 2.0
+		sourceTextField.layer.cornerRadius = 10.0
 
-		_xmlTextView.layer.borderColor = color.cgColor
-		_xmlTextView.layer.borderWidth = 2.0
-		_xmlTextView.layer.cornerRadius = 10.0
+		xmlTextView.layer.borderColor = color.cgColor
+		xmlTextView.layer.borderWidth = 2.0
+		xmlTextView.layer.cornerRadius = 10.0
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -47,35 +47,35 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 		mapData = mapView?.editorLayer.mapData
 
 		let comment = UserDefaults.standard.object(forKey: "uploadComment") as? String
-		_commentTextView.text = comment
+		commentTextView.text = comment
 
 		let source = UserDefaults.standard.object(forKey: "uploadSource") as? String
-		_sourceTextField.text = source
+		sourceTextField.text = source
 
 		let text = mapData?.changesetAsAttributedString()
 		if text == nil {
-			_commitButton.isEnabled = false
+			commitButton.isEnabled = false
 			let font = UIFont.preferredFont(forTextStyle: .body)
-			_xmlTextView.attributedText = NSAttributedString(
+			xmlTextView.attributedText = NSAttributedString(
 				string: NSLocalizedString("Nothing to upload, no changes have been made.", comment: ""),
 				attributes: [
 					NSAttributedString.Key.font: font
 				])
 		} else {
-			_commitButton.isEnabled = true
-			_xmlTextView.attributedText = text
+			commitButton.isEnabled = true
+			xmlTextView.attributedText = text
 		}
 
-		_sendMailButton.isEnabled = text != nil
-		_editXmlButton.isEnabled = text != nil
+		sendMailButton.isEnabled = text != nil
+		editXmlButton.isEnabled = text != nil
 
-		_clearCommentButton.isHidden = true
+		clearCommentButton.isHidden = true
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
-		UserDefaults.standard.set(_commentTextView.text, forKey: "uploadComment")
-		UserDefaults.standard.set(_sourceTextField.text, forKey: "uploadSource")
+		UserDefaults.standard.set(commentTextView.text, forKey: "uploadComment")
+		UserDefaults.standard.set(sourceTextField.text, forKey: "uploadSource")
 	}
 
 	func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -87,8 +87,8 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 	}
 
 	@IBAction func clearCommentText(_ sender: Any) {
-		_commentTextView.text = ""
-		_clearCommentButton.isHidden = true
+		commentTextView.text = ""
+		clearCommentButton.isHidden = true
 	}
 
 	@IBAction func commit(_ sender: Any?) {
@@ -117,25 +117,25 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 			return
 		}
 
-		_progressView.startAnimating()
-		_commitButton.isEnabled = false
-		_cancelButton.isEnabled = false
-		_sendMailButton.isEnabled = false
-		_editXmlButton.isEnabled = false
+		progressView.startAnimating()
+		commitButton.isEnabled = false
+		cancelButton.isEnabled = false
+		sendMailButton.isEnabled = false
+		editXmlButton.isEnabled = false
 
-		_commentTextView.resignFirstResponder()
-		_xmlTextView.resignFirstResponder()
+		commentTextView.resignFirstResponder()
+		xmlTextView.resignFirstResponder()
 
-		var comment = _commentTextView.text ?? ""
+		var comment = commentTextView.text ?? ""
 		comment = comment.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
-		var source = _sourceTextField.text ?? ""
+		var source = sourceTextField.text ?? ""
 		source = source.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
 		let completion: ((String?) -> Void) = { [self] error in
-			_progressView.stopAnimating()
-			_commitButton.isEnabled = true
-			_cancelButton.isEnabled = true
+			progressView.stopAnimating()
+			commitButton.isEnabled = true
+			cancelButton.isEnabled = true
 			if let error = error {
 				let alert = UIAlertController(
 					title: NSLocalizedString("Unable to upload changes", comment: ""),
@@ -145,9 +145,9 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 					.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
 				present(alert, animated: true)
 
-				if !_xmlTextView.isEditable {
-					_sendMailButton.isEnabled = true
-					_editXmlButton.isEnabled = true
+				if !xmlTextView.isEditable {
+					sendMailButton.isEnabled = true
+					editXmlButton.isEnabled = true
 				}
 			} else {
 				dismiss(animated: true)
@@ -176,9 +176,9 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 			imagery = appDelegate.mapView.aerialLayer.tileServer.name
 		}
 
-		if _xmlTextView.isEditable {
+		if xmlTextView.isEditable {
 			// upload user-edited text
-			let xmlText = _xmlTextView.text ?? ""
+			let xmlText = xmlTextView.text ?? ""
 			let xmlDoc: DDXMLDocument
 			do {
 				xmlDoc = try DDXMLDocument(xmlString: xmlText, options: 0)
@@ -201,11 +201,11 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 	@IBAction func editXml(_ sender: Any) {
 		var xml = mapData?.changesetAsXml() ?? ""
 		xml = xml + "\n\n\n\n\n\n\n\n\n\n\n\n"
-		_xmlTextView.attributedText = nil
-		_xmlTextView.text = xml
-		_xmlTextView.isEditable = true
-		_sendMailButton.isEnabled = false
-		_editXmlButton.isEnabled = false
+		xmlTextView.attributedText = nil
+		xmlTextView.text = xml
+		xmlTextView.isEditable = true
+		sendMailButton.isEnabled = false
+		editXmlButton.isEnabled = false
 
 		let alert = UIAlertController(
 			title: NSLocalizedString("Edit XML", comment: ""),
@@ -249,20 +249,20 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 	}
 
 	func textViewDidChange(_ textView: UITextView) {
-		if textView == _commentTextView {
-			_clearCommentButton.isHidden = _commentTextView.text.count == 0
+		if textView == commentTextView {
+			clearCommentButton.isHidden = commentTextView.text.count == 0
 		}
 	}
 
 	func textViewDidBeginEditing(_ textView: UITextView) {
-		if textView == _commentTextView {
-			_clearCommentButton.isHidden = _commentTextView.text.count == 0
+		if textView == commentTextView {
+			clearCommentButton.isHidden = commentTextView.text.count == 0
 		}
 	}
 
 	func textViewDidEndEditing(_ textView: UITextView) {
-		if textView == _commentTextView {
-			_clearCommentButton.isHidden = true
+		if textView == commentTextView {
+			clearCommentButton.isHidden = true
 		}
 	}
 

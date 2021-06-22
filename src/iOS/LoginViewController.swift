@@ -9,10 +9,10 @@
 import UIKit
 
 class LoginViewController: UITableViewController {
-	@IBOutlet var _saveButton: UIBarButtonItem!
-	@IBOutlet var _username: UITextField!
-	@IBOutlet var _password: UITextField!
-	@IBOutlet var _activityIndicator: UIActivityIndicatorView!
+	@IBOutlet var saveButton: UIBarButtonItem!
+	@IBOutlet var username: UITextField!
+	@IBOutlet var password: UITextField!
+	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -23,7 +23,7 @@ class LoginViewController: UITableViewController {
 	}
 
 	@IBAction func textFieldDidChange(_ sender: Any) {
-		_saveButton.isEnabled = (_username.text?.count ?? 0) != 0 && (_password.text?.count ?? 0) != 0
+		saveButton.isEnabled = (username.text?.count ?? 0) != 0 && (password.text?.count ?? 0) != 0
 	}
 
 	@IBAction func registerAccount(_ sender: Any) {
@@ -36,23 +36,23 @@ class LoginViewController: UITableViewController {
 	}
 
 	@IBAction func verifyAccount(_ sender: Any) {
-		if _activityIndicator.isAnimating {
+		if activityIndicator.isAnimating {
 			return
 		}
 
 		let appDelegate = AppDelegate.shared
 
-		let username = _username.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
-		let password = _password.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
+		let username = username.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
+		let password = password.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
 		appDelegate.userName = username
 		appDelegate.userPassword = password
 
-		_activityIndicator.color = UIColor.darkGray
-		_activityIndicator.startAnimating()
+		activityIndicator.color = UIColor.darkGray
+		activityIndicator.startAnimating()
 
 		appDelegate.mapView.editorLayer.mapData.verifyUserCredentials(withCompletion: { errorMessage in
 			var errorMessage = errorMessage
-			self._activityIndicator.stopAnimating()
+			self.activityIndicator.stopAnimating()
 			if errorMessage != nil {
 				// warn that email addresses don't work
 				if appDelegate.userName.contains("@") {
@@ -69,10 +69,10 @@ class LoginViewController: UITableViewController {
 				self.present(alert, animated: true)
 			} else {
 				// verifying credentials may update the appDelegate values when we subsitute name for correct case:
-				self._username.text = username
-				self._password.text = password
-				self._username.resignFirstResponder()
-				self._password.resignFirstResponder()
+				self.username.text = username
+				self.password.text = password
+				self.username.resignFirstResponder()
+				self.password.resignFirstResponder()
 
 				self.saveVerifiedCredentials(username: username, password: password)
 
@@ -104,9 +104,9 @@ class LoginViewController: UITableViewController {
 		super.viewWillAppear(animated)
 
 		let appDelegate = AppDelegate.shared
-		_username.text = appDelegate.userName
-		_password.text = appDelegate.userPassword
+		username.text = appDelegate.userName
+		password.text = appDelegate.userPassword
 
-		_saveButton.isEnabled = (_username.text?.count ?? 0) != 0 && (_password.text?.count ?? 0) != 0
+		saveButton.isEnabled = (username.text?.count ?? 0) != 0 && (password.text?.count ?? 0) != 0
 	}
 }

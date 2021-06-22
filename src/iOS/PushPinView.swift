@@ -12,26 +12,26 @@ import UIKit
 typealias PushPinViewDragCallback = (UIGestureRecognizer.State, CGFloat, CGFloat, UIGestureRecognizer) -> Void
 
 final class PushPinView: UIButton, CAAnimationDelegate {
-	private var _panCoord = CGPoint.zero
-	private let _shapeLayer: CAShapeLayer // shape for balloon
-	private let _textLayer: CATextLayer // text in balloon
-	private var _hittestRect = CGRect.zero
-	private let _moveButton: CALayer
+	private var panCoord = CGPoint.zero
+	private let shapeLayer: CAShapeLayer // shape for balloon
+	private let textLayer: CATextLayer // text in balloon
+	private var hittestRect = CGRect.zero
+	private let moveButton: CALayer
 	public let placeholderLayer: CALayer
 
-	private var _buttonList = [UIButton]()
-	private var _callbackList = [() -> Void]()
-	private var _lineLayers = [CAShapeLayer]()
+	private var buttonList = [UIButton]()
+	private var callbackList = [() -> Void]()
+	private var lineLayers = [CAShapeLayer]()
 
 	var text: String {
 		get {
-			return _textLayer.string as! String
+			return textLayer.string as! String
 		}
 		set(text) {
-			if text == (_textLayer.string as! String) {
+			if text == (textLayer.string as! String) {
 				return
 			}
-			_textLayer.string = text
+			textLayer.string = text
 			setNeedsLayout()
 		}
 	}
@@ -67,21 +67,21 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 	}
 
 	init() {
-		_shapeLayer = CAShapeLayer()
-		_shapeLayer.fillColor = UIColor.gray.cgColor
-		_shapeLayer.strokeColor = UIColor.white.cgColor
-		_shapeLayer.shadowColor = UIColor.black.cgColor
-		_shapeLayer.shadowOffset = CGSize(width: 3, height: 3)
-		_shapeLayer.shadowOpacity = 0.6
+		shapeLayer = CAShapeLayer()
+		shapeLayer.fillColor = UIColor.gray.cgColor
+		shapeLayer.strokeColor = UIColor.white.cgColor
+		shapeLayer.shadowColor = UIColor.black.cgColor
+		shapeLayer.shadowOffset = CGSize(width: 3, height: 3)
+		shapeLayer.shadowOpacity = 0.6
 
 		// text layer
-		_textLayer = CATextLayer()
-		_textLayer.contentsScale = UIScreen.main.scale
-		_textLayer.string = ""
+		textLayer = CATextLayer()
+		textLayer.contentsScale = UIScreen.main.scale
+		textLayer.string = ""
 
-		_moveButton = CALayer()
-		_moveButton.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
-		_moveButton.contents = UIImage(named: "move.png")!.cgImage
+		moveButton = CALayer()
+		moveButton.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+		moveButton.contents = UIImage(named: "move.png")!.cgImage
 
 		placeholderLayer = CALayer()
 
@@ -90,36 +90,36 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 		labelOnBottom = true
 
 		let font = UIFont.preferredFont(forTextStyle: .headline)
-		_textLayer.font = font
-		_textLayer.fontSize = font.pointSize
-		_textLayer.alignmentMode = .left
-		_textLayer.truncationMode = .end
-		_textLayer.foregroundColor = UIColor.white.cgColor
-		_shapeLayer.addSublayer(_textLayer)
+		textLayer.font = font
+		textLayer.fontSize = font.pointSize
+		textLayer.alignmentMode = .left
+		textLayer.truncationMode = .end
+		textLayer.foregroundColor = UIColor.white.cgColor
+		shapeLayer.addSublayer(textLayer)
 
-		_shapeLayer.addSublayer(_moveButton)
-		_shapeLayer.addSublayer(placeholderLayer)
+		shapeLayer.addSublayer(moveButton)
+		shapeLayer.addSublayer(placeholderLayer)
 
-		layer.addSublayer(_shapeLayer)
+		layer.addSublayer(shapeLayer)
 
 		addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(draggingGesture(_:))))
 	}
 
 	override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
 		// test the label box
-		if _hittestRect.contains(point) {
+		if hittestRect.contains(point) {
 			return self
 		}
 #if targetEnvironment(macCatalyst)
 		// also hit the arrow point
 		if abs(Float(screenPoint.y)) < 12,
-		   abs(Float(screenPoint.x - _hittestRect.origin.x - _hittestRect.size.width / 2)) < 12
+		   abs(Float(screenPoint.x - hittestRect.origin.x - hittestRect.size.width / 2)) < 12
 		{
 			return self
 		}
 #endif
 		// and any buttons connected to us
-		for button in _buttonList {
+		for button in buttonList {
 			let point2 = button.convert(point, from: self)
 			let hit = button.hitTest(point2, with: event)
 			if let hit = hit {
@@ -132,22 +132,22 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 	override func layoutSubviews() {
 		super.layoutSubviews()
 
-		var textSize = _textLayer.preferredFrameSize()
+		var textSize = textLayer.preferredFrameSize()
 		if textSize.width > 300 {
 			textSize.width = 300
 		}
 
-		let buttonCount = Int(max(_buttonList.count, 1))
+		let buttonCount = Int(max(buttonList.count, 1))
 		let moveButtonGap: CGFloat = 3.0
 		let buttonVerticalSpacing: CGFloat = 55
 		let textAlleyWidth: CGFloat = 5
-		let width = textSize.width + 2 * textAlleyWidth + moveButtonGap + _moveButton.frame.size.width
+		let width = textSize.width + 2 * textAlleyWidth + moveButtonGap + moveButton.frame.size.width
 		let height: CGFloat = textSize.height + 2 * textAlleyWidth
 		let boxSize = CGSize(width: width, height: height)
 		let arrowHeight = 20 + (CGFloat(buttonCount) * buttonVerticalSpacing) / 2
 		let arrowWidth: CGFloat = 20
 		let buttonHorzOffset: CGFloat = 44
-		let buttonHeight: CGFloat = (_buttonList.count != 0 ? _buttonList[0].frame.size.height : 0.0)
+		let buttonHeight: CGFloat = (buttonList.count != 0 ? buttonList[0].frame.size.height : 0.0)
 
 		let topGap = buttonHeight / 2 + CGFloat(buttonCount - 1) * buttonVerticalSpacing / 2
 
@@ -155,7 +155,7 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 		let cornerRadius: CGFloat = 4
 		let viewPath = CGMutablePath()
 		if labelOnBottom {
-			_hittestRect = CGRect(x: 0, y: arrowHeight, width: boxSize.width, height: boxSize.height)
+			hittestRect = CGRect(x: 0, y: arrowHeight, width: boxSize.width, height: boxSize.height)
 			viewPath.move(to: CGPoint(x: boxSize.width / 2, y: 0)) // arrow top
 			viewPath.addLine(to: CGPoint(x: boxSize.width / 2 - arrowWidth / 2, y: arrowHeight)) // arrow top-left
 			viewPath.addArc(
@@ -200,26 +200,26 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 		}
 
 		// make hit target a little larger
-		_hittestRect = _hittestRect.insetBy(dx: -7, dy: -7)
+		hittestRect = hittestRect.insetBy(dx: -7, dy: -7)
 
 		let viewRect = viewPath.boundingBoxOfPath
-		_shapeLayer.frame = CGRect(x: 0, y: 0, width: 20, height: 20) // arbitrary since it is a shape
-		_shapeLayer.path = viewPath
-		_shapeLayer.shadowPath = viewPath
+		shapeLayer.frame = CGRect(x: 0, y: 0, width: 20, height: 20) // arbitrary since it is a shape
+		shapeLayer.path = viewPath
+		shapeLayer.shadowPath = viewPath
 
 		if labelOnBottom {
-			_textLayer.frame = CGRect(
+			textLayer.frame = CGRect(
 				x: textAlleyWidth,
 				y: topGap + arrowHeight + textAlleyWidth,
 				width: boxSize.width - textAlleyWidth,
 				height: textSize.height)
-			_moveButton.frame = CGRect(
-				x: boxSize.width - _moveButton.frame.size.width - 3,
-				y: topGap + arrowHeight + (boxSize.height - _moveButton.frame.size.height) / 2,
-				width: _moveButton.frame.size.width,
-				height: _moveButton.frame.size.height)
+			moveButton.frame = CGRect(
+				x: boxSize.width - moveButton.frame.size.width - 3,
+				y: topGap + arrowHeight + (boxSize.height - moveButton.frame.size.height) / 2,
+				width: moveButton.frame.size.width,
+				height: moveButton.frame.size.height)
 		} else {
-			_textLayer.frame = CGRect(
+			textLayer.frame = CGRect(
 				x: textAlleyWidth,
 				y: textAlleyWidth,
 				width: boxSize.width - textAlleyWidth,
@@ -228,9 +228,9 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 
 		// place buttons
 		var rc = viewRect
-		for i in 0..<_buttonList.count {
+		for i in 0..<buttonList.count {
 			// place button
-			let button = _buttonList[i]
+			let button = buttonList[i]
 			var buttonRect: CGRect = .zero
 			buttonRect.size = button.frame.size
 			if labelOnBottom {
@@ -239,13 +239,13 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 					y: CGFloat(i) * buttonVerticalSpacing)
 			} else {
 				let x = viewRect.size.width / 2 + buttonHorzOffset
-				let y = viewRect.size.height + CGFloat(i - _buttonList.count / 2) * buttonVerticalSpacing + 5
+				let y = viewRect.size.height + CGFloat(i - buttonList.count / 2) * buttonVerticalSpacing + 5
 				buttonRect.origin = CGPoint(x: x, y: y)
 			}
 			button.frame = buttonRect
 
 			// place line to button
-			let line = _lineLayers[i]
+			let line = lineLayers[i]
 			let buttonPath = CGMutablePath()
 			var start = CGPoint(
 				x: Double(viewRect.size.width / 2),
@@ -281,8 +281,8 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 	}
 
 	@objc func buttonPress(_ sender: UIButton) {
-		let index = _buttonList.firstIndex(of: sender)!
-		let callback: (() -> Void) = _callbackList[index]
+		let index = buttonList.firstIndex(of: sender)!
+		let callback: (() -> Void) = callbackList[index]
 		callback()
 	}
 
@@ -292,11 +292,11 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 		line.strokeColor = UIColor.white.cgColor
 		line.shadowColor = UIColor.black.cgColor
 		line.shadowRadius = 5
-		_shapeLayer.addSublayer(line)
+		shapeLayer.addSublayer(line)
 
-		_buttonList.append(button)
-		_callbackList.append(callback)
-		_lineLayers.append(line)
+		buttonList.append(button)
+		callbackList.append(callback)
+		lineLayers.append(line)
 
 		addSubview(button)
 
@@ -339,10 +339,10 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 		var dY: CGFloat = 0
 
 		if gesture.state == .began {
-			_panCoord = newCoord
+			panCoord = newCoord
 		} else {
-			dX = newCoord.x - _panCoord.x
-			dY = newCoord.y - _panCoord.y
+			dX = newCoord.x - panCoord.x
+			dY = newCoord.y - panCoord.y
 			_arrowPoint = CGPoint(x: _arrowPoint.x + dX, y: _arrowPoint.y + dY)
 
 			let newCenter = CGPoint(x: Double(center.x + dX), y: Double(center.y + dY))
