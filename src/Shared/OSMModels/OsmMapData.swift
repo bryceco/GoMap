@@ -900,127 +900,132 @@ final class OsmMapData: NSObject, NSCoding {
 		completion: @escaping (_ errorMessage: String?) -> Void)
 	{
 		let url2 = OSM_API_URL + "api/0.6/changeset/\(changesetID)/upload"
-		putRequest(url: url2, method: "POST", xml: xmlChanges) { [self] postData, postErrorMessage in
-			guard let postData = postData else {
-				completion(postErrorMessage)
-				return
-			}
-			let response = String(decoding: postData, as: UTF8.self)
+		putRequest(url: url2, method: "POST", xml: xmlChanges) { [self] result in
 
-			if retries > 0 && response.hasPrefix("Version mismatch") {
-				// update the bad element and retry
-				DLog("Upload error: \(response)")
-				var localVersion = 0
-				var serverVersion = 0
-				var objType: NSString? = ""
-				var objId: OsmIdentifier = 0
-				// "Version mismatch: Provided %d, server had: %d of %[a-zA-Z] %lld"
-				let scanner = Scanner(string: response)
-				if scanner.scanString("Version mismatch: Provided", into: nil),
-				   scanner.scanInt(&localVersion),
-				   scanner.scanString(", server had:", into: nil),
-				   scanner.scanInt(&serverVersion),
-				   scanner.scanString("of", into: nil),
-				   scanner.scanCharacters(from: CharacterSet.alphanumerics, into: &objType),
-				   scanner.scanInt64(&objId),
-				   let objType = objType
-				{
-					let objType = (objType as String).lowercased()
-					var url3 = OSM_API_URL + "api/0.6/\(objType)/\(objId)"
-					if objType == "way" || objType == "relation" {
-						url3 = url3 + "/full"
-					}
-					OsmDownloader.osmData(forUrl: url3, completion: { result in
-						switch result {
-						case let .success(data):
-							// update the bad element
-							try? merge(data, savingToDatabase: true)
-							// try again:
-							uploadChangeset(changesetID, retries: retries - 1, completion: completion)
-						case let .failure(error):
-							completion("\(error)")
+			switch result {
+			case let .failure(error):
+				completion("\(error.localizedDescription)")
+				return
+			case let .success(postData):
+				let response = String(decoding: postData, as: UTF8.self)
+
+				if retries > 0 && response.hasPrefix("Version mismatch") {
+					// update the bad element and retry
+					DLog("Upload error: \(response)")
+					var localVersion = 0
+					var serverVersion = 0
+					var objType: NSString? = ""
+					var objId: OsmIdentifier = 0
+					// "Version mismatch: Provided %d, server had: %d of %[a-zA-Z] %lld"
+					let scanner = Scanner(string: response)
+					if scanner.scanString("Version mismatch: Provided", into: nil),
+					   scanner.scanInt(&localVersion),
+					   scanner.scanString(", server had:", into: nil),
+					   scanner.scanInt(&serverVersion),
+					   scanner.scanString("of", into: nil),
+					   scanner.scanCharacters(from: CharacterSet.alphanumerics, into: &objType),
+					   scanner.scanInt64(&objId),
+					   let objType = objType
+					{
+						let objType = (objType as String).lowercased()
+						var url3 = OSM_API_URL + "api/0.6/\(objType)/\(objId)"
+						if objType == "way" || objType == "relation" {
+							url3 = url3 + "/full"
 						}
-					})
+						OsmDownloader.osmData(forUrl: url3, completion: { result in
+							switch result {
+							case let .success(data):
+								// update the bad element
+								try? merge(data, savingToDatabase: true)
+								// try again:
+								uploadChangeset(changesetID, retries: retries - 1, completion: completion)
+							case let .failure(error):
+								completion("\(error.localizedDescription)")
+							}
+						})
+						return
+					}
+				}
+
+				// we expect to receive an XML document with server updates
+				if !response.hasPrefix("<?xml") {
+					completion(response)
 					return
 				}
-			}
 
-			if !response.hasPrefix("<?xml") {
-				completion(postErrorMessage ?? response)
-				return
-			}
-
-			let diffDoc: DDXMLDocument
-			do {
-				diffDoc = try DDXMLDocument(data: postData, options: 0)
-			} catch let error as NSError {
-				completion(error.localizedDescription)
-				return
-			} catch {
-				completion("XML conversion error")
-				return
-			}
-
-			guard let diffResult = diffDoc.rootElement(),
-			      diffResult.name == "diffResult"
-			else {
-				completion("Upload failed: invalid server respsonse")
-				return
-			}
-
-			var sqlUpdate: [OsmBaseObject: Bool] = [:]
-			for element in diffResult.children ?? [] {
-				guard let element = element as? DDXMLElement else {
-					continue
+				let diffDoc: DDXMLDocument
+				do {
+					diffDoc = try DDXMLDocument(data: postData, options: 0)
+				} catch let error as LocalizedError {
+					completion(error.localizedDescription)
+					return
+				} catch {
+					completion("XML conversion error")
+					return
 				}
-				let name = element.name
-				let oldId = Int64(element.attribute(forName: "old_id")?.stringValue ?? "0")!
-				let newId = Int64(element.attribute(forName: "new_id")?.stringValue ?? "0")!
-				let newVersion = Int(element.attribute(forName: "new_version")?.stringValue ?? "0")!
 
-				if name == "node" {
-					updateObjectDictionary(
-						&nodes,
-						oldId: oldId,
-						newId: newId,
-						version: newVersion,
-						changeset: changesetID,
-						sqlUpdate: &sqlUpdate)
-				} else if name == "way" {
-					updateObjectDictionary(
-						&ways,
-						oldId: oldId,
-						newId: newId,
-						version: newVersion,
-						changeset: changesetID,
-						sqlUpdate: &sqlUpdate)
-				} else if name == "relation" {
-					updateObjectDictionary(
-						&relations,
-						oldId: oldId,
-						newId: newId,
-						version: newVersion,
-						changeset: changesetID,
-						sqlUpdate: &sqlUpdate)
-				} else {
-					DLog("Bad upload diff document")
+				guard let diffResult = diffDoc.rootElement(),
+				      diffResult.name == "diffResult"
+				else {
+					completion("Upload failed: invalid server respsonse")
+					return
 				}
-			}
 
-			updateSql(sqlUpdate)
+				var sqlUpdate: [OsmBaseObject: Bool] = [:]
+				for element in diffResult.children ?? [] {
+					guard let element = element as? DDXMLElement else {
+						continue
+					}
+					let name = element.name
+					let oldId = Int64(element.attribute(forName: "old_id")?.stringValue ?? "0")!
+					let newId = Int64(element.attribute(forName: "new_id")?.stringValue ?? "0")!
+					let newVersion = Int(element.attribute(forName: "new_version")?.stringValue ?? "0")!
 
-			let url3 = OSM_API_URL + "api/0.6/changeset/\(changesetID)/close"
-			putRequest(url: url3, method: "PUT", xml: nil) { _, errorMessage in
-				var errorMsg = errorMessage
-				if errorMsg != nil {
-					errorMsg = (errorMsg!) + " (ignored, changes already committed)"
+					if name == "node" {
+						updateObjectDictionary(
+							&nodes,
+							oldId: oldId,
+							newId: newId,
+							version: newVersion,
+							changeset: changesetID,
+							sqlUpdate: &sqlUpdate)
+					} else if name == "way" {
+						updateObjectDictionary(
+							&ways,
+							oldId: oldId,
+							newId: newId,
+							version: newVersion,
+							changeset: changesetID,
+							sqlUpdate: &sqlUpdate)
+					} else if name == "relation" {
+						updateObjectDictionary(
+							&relations,
+							oldId: oldId,
+							newId: newId,
+							version: newVersion,
+							changeset: changesetID,
+							sqlUpdate: &sqlUpdate)
+					} else {
+						DLog("Bad upload diff document")
+					}
 				}
-				completion(errorMsg)
-				// DLog(@"changeset closed");
-			}
 
-			// reset undo stack after upload so user can't accidently undo a commit (wouldn't work anyhow because we don't undo version numbers on objects)
-			undoManager.removeAllActions()
+				updateSql(sqlUpdate)
+
+				let url3 = OSM_API_URL + "api/0.6/changeset/\(changesetID)/close"
+				putRequest(url: url3, method: "PUT", xml: nil) { result in
+					switch result {
+					case .success:
+						completion(nil)
+					case let .failure(error):
+						let errorMsg = "\(error.localizedDescription) (ignored, changes already committed)"
+						completion(errorMsg)
+					}
+				}
+
+				// reset undo stack after upload so user can't accidently undo a commit (wouldn't work anyhow because we don't undo version numbers on objects)
+				undoManager.removeAllActions()
+			}
 		}
 	}
 
@@ -1094,10 +1099,12 @@ final class OsmMapData: NSObject, NSCoding {
 		url: String,
 		method: String,
 		xml: DDXMLDocument?,
-		completion: @escaping (_ data: Data?, _ error: String?) -> Void)
+		completion: @escaping (Result<Data, Error>) -> Void)
 	{
 		guard let url1 = URL(string: url) else {
-			completion(nil, "Unable to build URL")
+			completion(.failure(NSError(domain: "OsmMapData", code: 102, userInfo: [
+				NSLocalizedDescriptionKey: "Unable to build URL"
+			])))
 			return
 		}
 		let request = NSMutableURLRequest(url: url1)
@@ -1118,15 +1125,13 @@ final class OsmMapData: NSObject, NSCoding {
 
 		URLSession.shared.data(with: request as URLRequest, completionHandler: { result in
 			DispatchQueue.main.async(execute: {
-				switch result {
-				case let .success(data):
-					completion(data, nil)
-				case let .failure(error):
-					let errorMessage = "\(error)\n\n\(method) \(url)"
-					completion(nil, errorMessage)
-				}
+				completion(result)
 			})
 		})
+	}
+
+	enum OsmServerError: Error {
+		case changesetIdNotDecimal(String)
 	}
 
 	// create a new changeset to upload to
@@ -1134,7 +1139,7 @@ final class OsmMapData: NSObject, NSCoding {
 		withComment comment: String,
 		source: String,
 		imagery: String,
-		completion: @escaping (_ changesetID: Int64?, _ errorMessage: String?) -> Void)
+		completion: @escaping (Result<Int64, Error>) -> Void)
 	{
 		let appDelegate = AppDelegate.shared
 		let creator = "\(appDelegate.appName()) \(appDelegate.appVersion())"
@@ -1152,22 +1157,21 @@ final class OsmMapData: NSObject, NSCoding {
 		}
 		if let xmlCreate = OsmXmlGenerator.createXml(withType: "changeset", tags: tags) {
 			let url = OSM_API_URL + "api/0.6/changeset/create"
-			putRequest(url: url, method: "PUT", xml: xmlCreate) { putData, putErrorMessage in
-				guard let putData = putData,
-				      putErrorMessage == nil
-				else {
-					completion(nil, putErrorMessage ?? "")
+			putRequest(url: url, method: "PUT", xml: xmlCreate) { result in
+				switch result {
+				case let .failure(error):
+					completion(.failure(error))
 					return
-				}
-
-				let responseString = String(decoding: putData, as: UTF8.self)
-				if let changeset = Int64(responseString) {
-					// The response string only contains of the digits 0 through 9.
-					// Assume that the request was successful and that the server responded with a changeset ID.
-					completion(changeset, nil)
-				} else {
-					// The response did not only contain digits; treat this as an error.
-					completion(nil, responseString)
+				case let .success(putData):
+					let responseString = String(decoding: putData, as: UTF8.self)
+					if let changeset = Int64(responseString) {
+						// The response string only contains of the digits 0 through 9.
+						// Assume that the request was successful and that the server responded with a changeset ID.
+						completion(.success(changeset))
+					} else {
+						// The response did not only contain digits; treat this as an error.
+						completion(.failure(OsmServerError.changesetIdNotDecimal(responseString)))
+					}
 				}
 			}
 		}
@@ -1180,11 +1184,12 @@ final class OsmMapData: NSObject, NSCoding {
 		imagery: String,
 		completion: @escaping (_ errorMessage: String?) -> Void)
 	{
-		createChangeset(withComment: comment, source: source, imagery: imagery) { [self] changesetID, errorMessage in
-			if let changesetID = changesetID {
+		createChangeset(withComment: comment, source: source, imagery: imagery) { [self] result in
+			switch result {
+			case let .success(changesetID):
 				uploadChangeset(changesetID, retries: 20, completion: completion)
-			} else {
-				completion(errorMessage)
+			case let .failure(error):
+				completion(error.localizedDescription)
 			}
 		}
 	}
@@ -1199,12 +1204,13 @@ final class OsmMapData: NSObject, NSCoding {
 	{
 		consistencyCheck()
 
-		createChangeset(withComment: comment, source: source, imagery: imagery) { [self] changesetID, errorMessage in
-			if let changesetID = changesetID {
+		createChangeset(withComment: comment, source: source, imagery: imagery) { [self] result in
+			switch result {
+			case let .success(changesetID):
 				OsmMapData.updateChangesetXml(xmlChanges, withChangesetID: changesetID)
 				uploadChangesetXML(xmlChanges, changesetID: changesetID, retries: 0, completion: completion)
-			} else {
-				completion(errorMessage)
+			case let .failure(error):
+				completion(error.localizedDescription)
 			}
 		}
 	}
@@ -1213,10 +1219,10 @@ final class OsmMapData: NSObject, NSCoding {
 		let appDelegate = AppDelegate.shared
 
 		let url = OSM_API_URL + "api/0.6/user/details"
-		putRequest(url: url, method: "GET", xml: nil) { data, errorMessage in
-			var ok = false
-			var errorMsg = errorMessage
-			if let data = data {
+		putRequest(url: url, method: "GET", xml: nil) { result in
+			switch result {
+			case let .success(data):
+				var ok = false
 				let text = String(data: data, encoding: .utf8)
 				if let doc = try? DDXMLDocument(xmlString: text ?? "", options: 0),
 				   let users = doc.rootElement()?.elements(forName: "user"),
@@ -1228,13 +1234,12 @@ final class OsmMapData: NSObject, NSCoding {
 					appDelegate.userName = displayName
 					ok = true
 				}
-			}
-			if ok {
-				completion(nil)
-			} else {
-				if errorMsg == nil {
-					errorMsg = NSLocalizedString("Not found", comment: "User credentials not found")
+				if ok {
+					completion(nil)
 				}
+				fallthrough
+			case .failure:
+				let errorMsg = NSLocalizedString("Not found", comment: "User credentials not found")
 				completion(errorMsg)
 			}
 		}
@@ -1779,7 +1784,7 @@ final class OsmMapData: NSObject, NSCoding {
 			try decode.merge(newData, savingToDatabase: false)
 		} catch {
 			// database couldn't be read
-			print("Error: \(error)")
+			print("Error: \(error.localizedDescription)")
 			print("Unable to read database: recreating from scratch\n")
 			try? Database.delete(withName: "")
 			// need to download all regions

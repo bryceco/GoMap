@@ -77,7 +77,7 @@ class PresetKeyUserDefinedList {
 				list = oldList as? [PresetKeyUserDefined] ?? []
 			}
 		} catch {
-			print("error loading custom presets: \(error)")
+			print("error loading custom presets: \(error.localizedDescription)")
 			list = []
 		}
 	}

@@ -145,7 +145,7 @@ final class EditorMapLayer: CALayer {
 			{
 				// a clean install
 			} else {
-				print("Database error: \(error)")
+				print("Database error: \(error.localizedDescription)")
 				alert = UIAlertController(title: NSLocalizedString("Database error", comment: ""),
 				                          message: NSLocalizedString(
 				                          	"Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.",

@@ -129,18 +129,19 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 			preferredStyle: .alert)
 		present(alert, animated: true)
 
-		mapView.notesDatabase.update(note, close: resolve, comment: s) { [self] newNote, errorMessage in
+		mapView.notesDatabase.update(note, close: resolve, comment: s) { [self] result in
 			alert.dismiss(animated: true)
-			if let newNote = newNote {
+			switch result {
+			case .success(let newNote):
 				note = newNote
 				DispatchQueue.main.async(execute: { [self] in
 					done(nil)
 					mapView.refreshNoteButtonsFromDatabase()
 				})
-			} else {
+			case .failure(let error):
 				let alert2 = UIAlertController(
 					title: NSLocalizedString("Error", comment: ""),
-					message: errorMessage,
+					message: error.localizedDescription,
 					preferredStyle: .alert)
 				alert2
 					.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))

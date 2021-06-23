@@ -431,7 +431,7 @@ final class OsmNotesDatabase: NSObject {
 		_ note: OsmNote,
 		close: Bool,
 		comment: String,
-		completion: @escaping (_ newNote: OsmNote?, _ errorMessage: String?) -> Void)
+		completion: @escaping ( Result<OsmNote,Error>) -> Void)
 	{
 		var allowedChars = CharacterSet.urlQueryAllowed
 		allowedChars.remove(charactersIn: "+;&")
@@ -451,9 +451,8 @@ final class OsmNotesDatabase: NSObject {
 			}
 		}
 
-		mapData.putRequest(url: url, method: "POST", xml: nil) { [self] postData, postErrorMessage in
-			if let postData = postData,
-			   postErrorMessage == nil,
+		mapData.putRequest(url: url, method: "POST", xml: nil, completion: { [self] result in
+			if case let .success(postData) = result,
 			   let xmlText = String(data: postData, encoding: .utf8),
 			   let xmlDoc = try? DDXMLDocument(xmlString: xmlText, options: 0),
 			   let list = try? xmlDoc.rootElement()?.nodes(forXPath: "./note") as? [DDXMLElement],
@@ -461,11 +460,15 @@ final class OsmNotesDatabase: NSObject {
 			   let newNote = OsmNote(noteXml: noteElement)
 			{
 				addOrUpdate(newNote)
-				completion(newNote, nil)
+				completion(.success(newNote))
 			} else {
-				completion(nil, postErrorMessage ?? "Update Error")
+				if case let .failure(error) = result {
+					completion(.failure(error))
+				} else {
+					completion(.failure(NSError(domain: "OsmNotesDatabase", code: 1, userInfo: [NSLocalizedDescriptionKey:"Update Error"])))
+				}
 			}
-		}
+		})
 	}
 
 	func note(forTag tag: Int) -> OsmNote? {

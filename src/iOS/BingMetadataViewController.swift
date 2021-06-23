@@ -94,7 +94,7 @@ class BingMetadataViewController: UIViewController {
 			case let .failure(error):
 				self.textView.text = String.localizedStringWithFormat(
 					NSLocalizedString("Error fetching metadata: %@", comment: ""),
-					"\(error)")
+					"\(error.localizedDescription)")
 			}
 		})
 	}

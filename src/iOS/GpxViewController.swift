@@ -170,7 +170,7 @@ class GpxViewController: UITableViewController {
 					case let .failure(error):
 						let failure = UIAlertController(
 							title: NSLocalizedString("GPX Upload Failed", comment: ""),
-							message: "\(error)",
+							message: "\(error.localizedDescription)",
 							preferredStyle: .alert)
 						failure
 							.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel,
