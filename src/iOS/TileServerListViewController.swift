@@ -225,7 +225,7 @@ class TileServerListViewController: UITableViewController {
 				editRow = indexPath
 			}
 			controller.name = service.name
-			controller.url = service.isMaxar() ? nil : service.url
+			controller.url = service.isMaxar() ? "" : service.url
 			if service.maxZoom > 0 {
 				controller.zoom = service.maxZoom
 			}
