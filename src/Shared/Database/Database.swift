@@ -445,8 +445,8 @@ final class Database {
 	// MARK: update
 
 	func save<NodeCollection1: Collection, NodeCollection2: Collection,
-			  WayCollection1: Collection, WayCollection2: Collection,
-			  RelationCollection1: Collection, RelationCollection2: Collection>
+		WayCollection1: Collection, WayCollection2: Collection,
+		RelationCollection1: Collection, RelationCollection2: Collection>
 	(
 		saveNodes: NodeCollection1,
 		saveWays: WayCollection1,
@@ -493,7 +493,7 @@ final class Database {
 		let query = "SELECT key,value,ident FROM \(tableName)"
 		let tagStatement = try db.prepare(query)
 
-		var dict:[OsmIdentifier: [String: String]] = [:]
+		var dict: [OsmIdentifier: [String: String]] = [:]
 		dict.reserveCapacity(sizeEstimate)
 
 		try db.reset(tagStatement)
@@ -504,7 +504,7 @@ final class Database {
 			let ident = db.columnInt64(tagStatement, 2)
 
 			if dict[ident] == nil {
-				dict[ident] = [key:value]
+				dict[ident] = [key: value]
 			} else {
 				dict[ident]![key] = value
 			}
@@ -517,10 +517,10 @@ final class Database {
 		let nodeStatement =
 			try db.prepare("SELECT ident,user,timestamp,version,changeset,uid,longitude,latitude FROM nodes;")
 
-		let tagsDict = try queryTagTable("node_tags", sizeEstimate: 5_000)
+		let tagsDict = try queryTagTable("node_tags", sizeEstimate: 5000)
 
 		var nodes: [OsmNode] = []
-		nodes.reserveCapacity(100_000)
+		nodes.reserveCapacity(100000)
 
 		while try db.step(nodeStatement, hasResult: Sqlite.ROW) {
 			let ident = db.columnInt64(nodeStatement, 0)
@@ -558,7 +558,7 @@ final class Database {
 		let wayStatement = try db.prepare("SELECT ident,user,timestamp,version,changeset,uid,nodecount FROM ways")
 
 		var ways: [OsmIdentifier: OsmWay] = [:]
-		let tagsDict = try queryTagTable("way_tags", sizeEstimate: 20_000)
+		let tagsDict = try queryTagTable("way_tags", sizeEstimate: 20000)
 
 		while try db.step(wayStatement, hasResult: Sqlite.ROW) {
 			let ident = db.columnInt64(wayStatement, 0)
