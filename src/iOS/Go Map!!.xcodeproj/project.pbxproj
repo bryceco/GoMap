@@ -667,7 +667,7 @@
 				C3004F4C263A6306006BF313 /* NominatimViewController.swift */,
 				C341E1592639DF210022E983 /* NotesTableViewController.swift */,
 				ED91352426020945006A637A /* OfflineViewController.swift */,
-				02CB2409265DB7D600835F32 /* Opening Hours */,
+				02CB2409265DB7D600835F32 /* OpeningHours */,
 				C3004F61263B2524006BF313 /* POIAllTagsViewController.swift */,
 				C3004F53263A99DC006BF313 /* POIAttributesViewController.swift */,
 				C3D0969B263CBC1100E3B129 /* POIFeaturePickerViewController.swift */,
@@ -749,7 +749,7 @@
 			path = Height;
 			sourceTree = "<group>";
 		};
-		02CB2409265DB7D600835F32 /* Opening Hours */ = {
+		02CB2409265DB7D600835F32 /* OpeningHours */ = {
 			isa = PBXGroup;
 			children = (
 				02CB2402265DB7CB00835F32 /* CameraView.swift */,
@@ -757,7 +757,7 @@
 				02CB2403265DB7CB00835F32 /* LevenshteinDistance.swift */,
 				02CB2401265DB7CB00835F32 /* OpeningHoursRecognizerView.swift */,
 			);
-			path = "Opening Hours";
+			path = OpeningHours;
 			sourceTree = "<group>";
 		};
 		02CC01CF2584190A004444EF /* PresetsDatabase */ = {
