@@ -170,7 +170,6 @@ class QuadMap: NSObject, NSCoding {
 		var wCount = 0
 		var rCount = 0
 		rootQuad.enumerate { obj, rect in
-			assert(!(rect == .zero))
 			let id = obj.extendedIdentifier
 			if let cnt = dict[id] {
 				dict[id] = cnt + 1

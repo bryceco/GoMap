@@ -10,7 +10,7 @@ import Foundation
 
 private let MinRectSize = 360.0 / Double(1 << 16)
 private let MAP_RECT = OSMRect(x: -180.0, y: -90.0, width: 360.0, height: 180.0)
-private let MAX_MEMBERS_PER_LEVEL = 16
+private let MAX_MEMBERS_PER_LEVEL = 40
 private let MAX_DEPTH = 26 // 2 feet wide
 
 private
@@ -428,7 +428,9 @@ final class QuadBox: NSObject, Codable, NSCoding {
 	// spatial specific
 
 	private func addMember(member: OsmBaseObject, bbox: OSMRect, depth: Int) {
-		if !isSplit, depth >= MAX_DEPTH || members.count < MAX_MEMBERS_PER_LEVEL {
+		if !isSplit,
+		   depth >= MAX_DEPTH || members.count < MAX_MEMBERS_PER_LEVEL
+		{
 			members.append(member)
 			return
 		}
