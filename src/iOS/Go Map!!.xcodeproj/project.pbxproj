@@ -27,6 +27,7 @@
 		021FADEF25884BB900F6E1C0 /* OsmTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADEE25884BB900F6E1C0 /* OsmTags.swift */; };
 		02263CDF2677F93A002BA72F /* QuadBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02263CDE2677F93A002BA72F /* QuadBox.swift */; };
 		0226B771268300C9005DB9E2 /* Data+Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B770268300C9005DB9E2 /* Data+Wrapper.swift */; };
+		0226B7732683BCB6005DB9E2 /* URLSession+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */; };
 		02354F7A246349E100878A04 /* CurvedGlyphLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02354F79246349E100878A04 /* CurvedGlyphLayer.swift */; };
 		023B892B19C148790060CDB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B892A19C148790060CDB5 /* Images.xcassets */; };
 		02401F361DE021EE00F32AF5 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */; };
@@ -211,6 +212,7 @@
 		02248A042568C3E2004272B2 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		02263CDE2677F93A002BA72F /* QuadBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadBox.swift; sourceTree = "<group>"; };
 		0226B770268300C9005DB9E2 /* Data+Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Wrapper.swift"; sourceTree = "<group>"; };
+		0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extension.swift"; sourceTree = "<group>"; };
 		02354F79246349E100878A04 /* CurvedGlyphLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurvedGlyphLayer.swift; sourceTree = "<group>"; };
 		023B892A19C148790060CDB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
 		02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
@@ -827,6 +829,7 @@
 				C3D096CE263EA0DB00E3B129 /* KeyChain.swift */,
 				C3FA924C263FFEF9000A2A99 /* PathUtil.swift */,
 				0226B770268300C9005DB9E2 /* Data+Wrapper.swift */,
+				0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */,
 			);
 			name = Utility;
 			path = ../Shared/Utility;
@@ -1252,6 +1255,7 @@
 				C3D096D0263EA76500E3B129 /* Geekbench.swift in Sources */,
 				024909CF267EADC70027E531 /* OsmXmlGenerator.swift in Sources */,
 				020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */,
+				0226B7732683BCB6005DB9E2 /* URLSession+Extension.swift in Sources */,
 				021FADC0258594EE00F6E1C0 /* PresetValue.swift in Sources */,
 				02E049BA2650B0E10028B57F /* TurnRestrictController.swift in Sources */,
 				ED9649F12601CEC800EC0A60 /* POITabBarController.swift in Sources */,

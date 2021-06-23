@@ -124,48 +124,37 @@ class WikiPage {
 
 #if false
 		// query wiki metadata for which pages match
-		let urlComponents =
+		if let urlComponents =
 			NSURLComponents(
 				string: "https://wiki.openstreetmap.org/w/api.php?action=wbgetentities&sites=wiki&languages=en&format=json")
-		let newItem = NSURLQueryItem(name: "titles", value: titles)
-		if let queryItems = urlComponents?.queryItems {
-			urlComponents?.queryItems = queryItems + [newItem]
-		}
-		var request: URLRequest?
-		if let URL = urlComponents?.url {
-			request = URLRequest(url: URL)
-		}
-		var task: URLSessionDataTask?
-		if let request = request {
-			task = URLSession.shared.dataTask(with: request, completionHandler: { data, _, error in
-
-				if error == nil && (data?.count ?? 0) != 0 {
-					SwiftTryCatch.try({
-						var json: Any?
-						do {
-							if let data = data {
-								json = try JSONSerialization.jsonObject(with: data, options: [])
-							}
-						} catch {}
-						let entitiesDict = json?["entities"] as? [String: Any]
-						(entitiesDict as NSDictionary?)?.enumerateKeysAndObjects({ _, entityDict, _ in
-							let claims = entityDict["claims"] as? [String: Any]
-							if let claim = claims?["P31"] {
+		{
+			let newItem = URLQueryItem(name: "titles", value: titles)
+			urlComponents.queryItems = (urlComponents.queryItems ?? []) + [newItem]
+			if let url = urlComponents.url {
+				URLSession.shared.data(with: url, completionHandler: { result in
+					if case let .success(data) = result,
+					   let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+					   let entitiesDict = json["entities"] as? [String: Any]
+					{
+						for (_, entityDict) in entitiesDict {
+							if let entityDict = entityDict as? [String: Any],
+							   let claims = entityDict["claims"] as? [String: Any],
+							   let claim = claims["P31"] as? [[String: Any]]
+							{
 								for lang in claim {
-									let value = lang["mainsnak"]["datavalue"]["value"] as? [String: Any]
-									let pageTitle = value?["text"] as? String
-									let pageLanguage = value?["language"] as? String
-									print("\(pageLanguage ?? "") = \(pageTitle ?? "")")
+									if let value = lang["mainsnak"]["datavalue"]["value"] as? [String: Any],
+									   let pageTitle = value?["text"] as? String,
+									   let pageLanguage = value?["language"] as? String
+									{
+										print("\(pageLanguage ?? "") = \(pageTitle ?? "")")
+									}
 								}
 							}
-						})
-					}, catch: { _ in
-					}, finallyBlock: {})
-				}
-				completion(error)
-			})
+						}
+					}
+				})
+			}
 		}
-		task?.resume()
 #endif
 	}
 }

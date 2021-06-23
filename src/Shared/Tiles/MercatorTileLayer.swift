@@ -92,9 +92,9 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		return tileServer.roundZoomUp ? Int(ceil(mapView.mapTransform.zoom())) : Int(floor(mapView.mapTransform.zoom()))
 	}
 
-	func metadata(_ callback: @escaping (Data?, Error?) -> Void) {
+	func metadata(_ callback: @escaping (Result<Data, Error>?) -> Void) {
 		guard let metadataUrl = tileServer.metadataUrl else {
-			callback(nil, nil)
+			callback(nil)
 			return
 		}
 
@@ -112,12 +112,11 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 			zoomLevel)
 
 		if let url = URL(string: url) {
-			let task = URLSession.shared.dataTask(with: url, completionHandler: { data, _, error in
+			URLSession.shared.data(with: url, completionHandler: { result in
 				DispatchQueue.main.async(execute: {
-					callback(data, error)
+					callback(result)
 				})
 			})
-			task.resume()
 		}
 	}
 

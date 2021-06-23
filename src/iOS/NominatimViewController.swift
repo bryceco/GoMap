@@ -191,16 +191,16 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		// searching
 		activityIndicator.startAnimating()
 
-		let text = string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-		let url = "https://nominatim.openstreetmap.org/search?q=\(text ?? "")&format=json&limit=50"
-		if let url1 = URL(string: url) {
-			let task = URLSession.shared.dataTask(with: url1, completionHandler: { [self] data, _, error in
+		if let text = string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed),
+		   let url = URL(string: "https://nominatim.openstreetmap.org/search?q=\(text)&format=json&limit=50")
+		{
+			URLSession.shared.data(with: url, completionHandler: { [self] result in
 				DispatchQueue.main.async(execute: { [self] in
 
 					activityIndicator.stopAnimating()
 
-					if let data = data,
-					   error == nil
+					if case let .success(data) = result,
+					   let json = try? JSONSerialization.jsonObject(with: data, options: [])
 					{
 						/*
 						 {
@@ -217,18 +217,13 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 						 },
 						 */
 
-						let json = try? JSONSerialization.jsonObject(with: data, options: [])
 						resultsArray = json as? [[String: Any]] ?? []
 						tableView.reloadData()
-
-						if resultsArray.count > 0 {
-							updateHistory(with: string)
-						}
-					} else {
-						// error fetching results
 					}
 
-					if resultsArray.count == 0 {
+					if resultsArray.count > 0 {
+						updateHistory(with: string)
+					} else {
 						let alert = UIAlertController(
 							title: NSLocalizedString("No results found", comment: ""),
 							message: nil,
@@ -241,7 +236,6 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 					}
 				})
 			})
-			task.resume()
 		}
 		tableView.reloadData()
 	}

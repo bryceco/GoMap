@@ -148,14 +148,12 @@ class GpxViewController: UITableViewController {
 			auth = "Basic \(auth)"
 			request.setValue(auth, forHTTPHeaderField: "Authorization")
 
-			var task: URLSessionDataTask?
-			task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
+			URLSession.shared.data(with: request as URLRequest, completionHandler: { result in
 				DispatchQueue.main.async(execute: {
 					progress.dismiss(animated: true)
 
-					let httpResponse = ((response is HTTPURLResponse) ? response : nil) as? HTTPURLResponse
-					if httpResponse?.statusCode == 200 {
-						// ok
+					switch result {
+					case .success:
 						let success = UIAlertController(
 							title: NSLocalizedString("GPX Upload Complete", comment: ""),
 							message: nil,
@@ -169,22 +167,10 @@ class GpxViewController: UITableViewController {
 						let gpxLayer = AppDelegate.shared.mapView.gpxLayer
 						gpxLayer.markTrackUploaded(track)
 						self.tableView?.reloadData()
-					} else {
-						if let response = response {
-							DLog("response =\(response)\n")
-						}
-						let dataStringRep = data?.map { String(format: "%02x", $0) }.joined() ?? ""
-						DLog("data = \(dataStringRep)")
-						var errorMessage: String?
-						if (data?.count ?? 0) > 0 {
-							errorMessage = String(data: data!, encoding: .utf8)
-						} else {
-							errorMessage = error?.localizedDescription ?? ""
-						}
-
+					case let .failure(error):
 						let failure = UIAlertController(
 							title: NSLocalizedString("GPX Upload Failed", comment: ""),
-							message: errorMessage,
+							message: "\(error)",
 							preferredStyle: .alert)
 						failure
 							.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel,
@@ -193,7 +179,6 @@ class GpxViewController: UITableViewController {
 					}
 				})
 			})
-			task?.resume()
 		})
 	}
 

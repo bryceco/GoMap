@@ -1130,32 +1130,21 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 		countryCodeLocation = loc
 
-		let url =
+		let urlString =
 			"https://nominatim.openstreetmap.org/reverse?zoom=13&addressdetails=1&format=json&lat=\(loc.lat)&lon=\(loc.lon)"
-		var task: URLSessionDataTask?
-		if let url1 = URL(string: url) {
-			task = URLSession.shared.dataTask(with: url1, completionHandler: { data, _, _ in
-				if (data?.count ?? 0) != 0 {
-					var json: Any?
-					do {
-						if let data = data {
-							json = try JSONSerialization.jsonObject(with: data, options: [])
-						}
-					} catch {}
-					if let json = json as? [String: Any] {
-						if let address = json["address"] as? [String: Any] {
-							let code = address["country_code"] as? String
-							if let code = code {
-								DispatchQueue.main.async(execute: {
-									self.countryCodeForLocation = code
-								})
-							}
-						}
-					}
+		if let url = URL(string: urlString) {
+			URLSession.shared.data(with: url, completionHandler: { result in
+				if case let .success(data) = result,
+				   let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+				   let address = json["address"] as? [String: Any],
+				   let code = address["country_code"] as? String
+				{
+					DispatchQueue.main.async(execute: {
+						self.countryCodeForLocation = code
+					})
 				}
 			})
 		}
-		task?.resume()
 	}
 
 	// MARK: Rotate object

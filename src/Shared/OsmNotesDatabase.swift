@@ -287,11 +287,9 @@ final class OsmNotesDatabase: NSObject {
 	func updateNotes(forRegion box: OSMRect, fixmeData mapData: OsmMapData, completion: @escaping () -> Void) {
 		let url = OSM_API_URL +
 			"api/0.6/notes?closed=0&bbox=\(box.origin.x),\(box.origin.y),\(box.origin.x + box.size.width),\(box.origin.y + box.size.height)"
-		var task: URLSessionDataTask?
 		if let url1 = URL(string: url) {
-			task = URLSession.shared.dataTask(with: url1, completionHandler: { [self] data, _, error in
-				guard let data = data,
-				      error == nil,
+			URLSession.shared.data(with: url1, completionHandler: { [self] result in
+				guard case let .success(data) = result,
 				      let xmlText = String(data: data, encoding: .utf8),
 				      let xmlDoc = try? DDXMLDocument(xmlString: xmlText, options: 0)
 				else { return }
@@ -312,7 +310,7 @@ final class OsmNotesDatabase: NSObject {
 						addOrUpdate(note)
 					}
 
-					// add FIXMEs
+					// add from FIXME=yes tags
 					mapData.enumerateObjects(inRegion: box, block: { [self] obj in
 						for key in FixMeList {
 							if let fixme = obj.tags[key],
@@ -329,7 +327,6 @@ final class OsmNotesDatabase: NSObject {
 				})
 			})
 		}
-		task?.resume()
 	}
 
 	func update(withGpxWaypoints xmlText: String, mapData: OsmMapData, completion: @escaping () -> Void) {
@@ -387,15 +384,13 @@ final class OsmNotesDatabase: NSObject {
 			box.origin.x + box.size.width,
 			box.origin.y + box.size.height)
 		guard let url1 = URL(string: url) else { return }
-		let task = URLSession.shared.dataTask(with: url1, completionHandler: { [self] data, _, error in
-			if let data = data,
-			   error == nil,
+		URLSession.shared.data(with: url1, completionHandler: { [self] result in
+			if case let .success(data) = result,
 			   let xmlText = String(data: data, encoding: .utf8)
 			{
 				update(withGpxWaypoints: xmlText, mapData: mapData, completion: completion)
 			}
 		})
-		task.resume()
 	}
 
 	func updateRegion(
@@ -456,7 +451,7 @@ final class OsmNotesDatabase: NSObject {
 			}
 		}
 
-		mapData.putRequest(url, method: "POST", xml: nil) { [self] postData, postErrorMessage in
+		mapData.putRequest(url: url, method: "POST", xml: nil) { [self] postData, postErrorMessage in
 			if let postData = postData,
 			   postErrorMessage == nil,
 			   let xmlText = String(data: postData, encoding: .utf8),

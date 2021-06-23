@@ -34,45 +34,16 @@ final class DownloadThreadPool: NSObject, URLSessionDataDelegate, URLSessionTask
 
 		inProgress.increment()
 
-		let task = urlSession.dataTask(with: request, completionHandler: { [self] data, response, error in
+		urlSession.data(with: request, completionHandler: { [self] result in
 			inProgress.decrement()
-			if let error = error {
-				DLog("Error: \(error.localizedDescription)")
+			switch result {
+			case let .success(data):
+				let inputStream = InputStream(data: data)
+				callback(.success(inputStream))
+			case let .failure(error):
 				callback(.failure(error))
-				return
 			}
-
-			if let httpResponse = response as? HTTPURLResponse,
-			   httpResponse.statusCode >= 400
-			{
-				DLog(
-					"HTTP error \(httpResponse.statusCode): \(HTTPURLResponse.localizedString(forStatusCode: httpResponse.statusCode))")
-				DLog("URL: \(url)")
-				var text: String = ""
-				if let data = data {
-					if let dataText = String(data: data, encoding: .utf8) {
-						text = dataText
-					}
-				}
-				if text.isEmpty {
-					text = HTTPURLResponse.localizedString(forStatusCode: httpResponse.statusCode)
-				}
-				let error = NSError(domain: "HTTP", code: httpResponse.statusCode, userInfo: [
-					NSLocalizedDescriptionKey: text
-				])
-				callback(.failure(error))
-				return
-			}
-
-			guard let data = data else {
-				callback(.failure(NSError()))
-				return
-			}
-
-			let inputStream = InputStream(data: data)
-			callback(.success(inputStream))
 		})
-		task.resume()
 	}
 
 	func cancelAllDownloads() {

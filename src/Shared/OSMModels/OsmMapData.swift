@@ -900,7 +900,7 @@ final class OsmMapData: NSObject, NSCoding {
 		completion: @escaping (_ errorMessage: String?) -> Void)
 	{
 		let url2 = OSM_API_URL + "api/0.6/changeset/\(changesetID)/upload"
-		putRequest(url2, method: "POST", xml: xmlChanges) { [self] postData, postErrorMessage in
+		putRequest(url: url2, method: "POST", xml: xmlChanges) { [self] postData, postErrorMessage in
 			guard let postData = postData else {
 				completion(postErrorMessage)
 				return
@@ -1010,7 +1010,7 @@ final class OsmMapData: NSObject, NSCoding {
 			updateSql(sqlUpdate)
 
 			let url3 = OSM_API_URL + "api/0.6/changeset/\(changesetID)/close"
-			putRequest(url3, method: "PUT", xml: nil) { _, errorMessage in
+			putRequest(url: url3, method: "PUT", xml: nil) { _, errorMessage in
 				var errorMsg = errorMessage
 				if errorMsg != nil {
 					errorMsg = (errorMsg!) + " (ignored, changes already committed)"
@@ -1091,7 +1091,7 @@ final class OsmMapData: NSObject, NSCoding {
 	}
 
 	func putRequest(
-		_ url: String,
+		url: String,
 		method: String,
 		xml: DDXMLDocument?,
 		completion: @escaping (_ data: Data?, _ error: String?) -> Void)
@@ -1116,30 +1116,17 @@ final class OsmMapData: NSObject, NSCoding {
 		auth = "Basic \(auth)"
 		request.setValue(auth, forHTTPHeaderField: "Authorization")
 
-		let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
+		URLSession.shared.data(with: request as URLRequest, completionHandler: { result in
 			DispatchQueue.main.async(execute: {
-				let httpResponse = ((response is HTTPURLResponse) ? response : nil) as? HTTPURLResponse
-				if data != nil, error == nil, httpResponse != nil, (httpResponse?.statusCode ?? 0) >= 200,
-				   (httpResponse?.statusCode ?? 0) <= 299
-				{
+				switch result {
+				case let .success(data):
 					completion(data, nil)
-				} else {
-					var errorMessage: String?
-					if (data?.count ?? 0) > 0 {
-						data?.withUnsafeBytes { bytes in
-							errorMessage = String(bytes: bytes, encoding: .utf8)
-						}
-					} else {
-						errorMessage = error != nil ? error?.localizedDescription : httpResponse != nil ? String(
-							format: "HTTP Error %ld",
-							Int(httpResponse?.statusCode ?? 0)) : "Unknown error"
-					}
-					errorMessage = (errorMessage ?? "") + "\n\n\(method) \(url)"
-					completion(nil, errorMessage ?? "")
+				case let .failure(error):
+					let errorMessage = "\(error)\n\n\(method) \(url)"
+					completion(nil, errorMessage)
 				}
 			})
 		})
-		task.resume()
 	}
 
 	// create a new changeset to upload to
@@ -1165,7 +1152,7 @@ final class OsmMapData: NSObject, NSCoding {
 		}
 		if let xmlCreate = OsmXmlGenerator.createXml(withType: "changeset", tags: tags) {
 			let url = OSM_API_URL + "api/0.6/changeset/create"
-			putRequest(url, method: "PUT", xml: xmlCreate) { putData, putErrorMessage in
+			putRequest(url: url, method: "PUT", xml: xmlCreate) { putData, putErrorMessage in
 				guard let putData = putData,
 				      putErrorMessage == nil
 				else {
@@ -1226,7 +1213,7 @@ final class OsmMapData: NSObject, NSCoding {
 		let appDelegate = AppDelegate.shared
 
 		let url = OSM_API_URL + "api/0.6/user/details"
-		putRequest(url, method: "GET", xml: nil) { data, errorMessage in
+		putRequest(url: url, method: "GET", xml: nil) { data, errorMessage in
 			var ok = false
 			var errorMsg = errorMessage
 			if let data = data {

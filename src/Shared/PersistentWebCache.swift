@@ -125,7 +125,9 @@ final class PersistentWebCache<T: AnyObject> {
 		}
 		pending[cacheKey] = [completion]
 
-		let processData: ((_ data: Data?) -> Bool) = { data in
+		// this function must be called along every path at some point, in order to call
+		// completions of our callee
+		func processData(_ data: Data?) -> Bool {
 			let obj = data != nil ? objectForData(data!) : nil
 			DispatchQueue.main.async(execute: {
 				if let obj = obj {
@@ -153,16 +155,18 @@ final class PersistentWebCache<T: AnyObject> {
 					_ = processData(nil)
 					return
 				}
-				let request = URLRequest(url: url)
-				let task = URLSession.shared.dataTask(with: request, completionHandler: { data, response, _ in
-					let data = ((response as? HTTPURLResponse)?.statusCode ?? 404) < 300 ? data : nil
-					if processData(data) {
-						DispatchQueue.global(qos: .default).async(execute: {
-							(data! as NSData).write(to: filePath, atomically: true)
-						})
+				URLSession.shared.data(with: url, completionHandler: { result in
+					switch result {
+					case let .success(data):
+						if processData(data) {
+							DispatchQueue.global(qos: .default).async(execute: {
+								(data as NSData).write(to: filePath, atomically: true)
+							})
+						}
+					case .failure:
+						_ = processData(nil)
 					}
 				})
-				task.resume()
 			}
 		})
 		return nil

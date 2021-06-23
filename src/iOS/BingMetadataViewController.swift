@@ -28,10 +28,15 @@ class BingMetadataViewController: UIViewController {
 			zoomLevel = aerialService.maxZoom
 		}
 
-		appDelegate.mapView.aerialLayer.metadata({ data, error in
+		appDelegate.mapView.aerialLayer.metadata({ result in
 			self.activityIndicator.stopAnimating()
 
-			if let data = data, error == nil {
+			guard let result = result else {
+				self.textView.text = NSLocalizedString("An unknown error occurred fetching metadata", comment: "")
+				return
+			}
+			switch result {
+			case let .success(data):
 				let json = try? JSONSerialization.jsonObject(with: data, options: [])
 
 				var attrList: [String] = []
@@ -86,12 +91,10 @@ class BingMetadataViewController: UIViewController {
 				self.textView.text = String.localizedStringWithFormat(
 					NSLocalizedString("Background imagery %@", comment: "identifies current aerial imagery"),
 					text)
-			} else if let error = error {
+			case let .failure(error):
 				self.textView.text = String.localizedStringWithFormat(
 					NSLocalizedString("Error fetching metadata: %@", comment: ""),
-					error.localizedDescription)
-			} else {
-				self.textView.text = NSLocalizedString("An unknown error occurred fetching metadata", comment: "")
+					"\(error)")
 			}
 		})
 	}
