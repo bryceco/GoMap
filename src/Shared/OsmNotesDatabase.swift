@@ -431,7 +431,7 @@ final class OsmNotesDatabase: NSObject {
 		_ note: OsmNote,
 		close: Bool,
 		comment: String,
-		completion: @escaping ( Result<OsmNote,Error>) -> Void)
+		completion: @escaping (Result<OsmNote, Error>) -> Void)
 	{
 		var allowedChars = CharacterSet.urlQueryAllowed
 		allowedChars.remove(charactersIn: "+;&")
@@ -465,7 +465,9 @@ final class OsmNotesDatabase: NSObject {
 				if case let .failure(error) = result {
 					completion(.failure(error))
 				} else {
-					completion(.failure(NSError(domain: "OsmNotesDatabase", code: 1, userInfo: [NSLocalizedDescriptionKey:"Update Error"])))
+					completion(.failure(NSError(domain: "OsmNotesDatabase",
+												code: 1,
+					                            userInfo: [NSLocalizedDescriptionKey: "Update Error"])))
 				}
 			}
 		})

@@ -9,7 +9,7 @@
 import Foundation
 import SQLite3
 
-enum SqliteError: Error {
+enum SqliteError: LocalizedError {
 	case open(Int32)
 	case close(Int32)
 	case exec(String, Int32)
@@ -17,6 +17,18 @@ enum SqliteError: Error {
 	case clearBindings(Int32)
 	case bind(Int32)
 	case step(Int32)
+
+	public var errorDescription: String? {
+		switch self {
+		case let .open(rc): return "SqliteError.open() -> \(rc)"
+		case let .close(rc): return "SqliteError.close() -> \(rc)"
+		case let .exec(stmt, rc): return "SqliteError.exec(\(stmt) -> \(rc)"
+		case let .prepare(stmt, rc): return "SqliteError.prepare(\(stmt) -> \(rc)"
+		case let .clearBindings(rc): return "SqliteError.clearBindings() -> \(rc)"
+		case let .bind(rc): return "SqliteError.bind() -> \(rc)"
+		case let .step(rc): return "SqliteError.step() -> \(rc)"
+		}
+	}
 }
 
 private typealias sqlite3_db = OpaquePointer
