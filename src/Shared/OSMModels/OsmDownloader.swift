@@ -159,6 +159,9 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 		}
 
 		reset()
+		result.nodes.reserveCapacity(5000)
+		result.ways.reserveCapacity(100)
+		result.relations.reserveCapacity(100)
 		let parser = XMLParser(stream: stream)
 		parser.delegate = self
 		parseError = nil
