@@ -17,7 +17,7 @@ let USE_RTREE = 0
 enum DatabaseError: Error {
 	case wayReferencedByNodeDoesNotExist
 	case relationReferencedByMemberDoesNotExist
-	case unlinkFailed
+	case unlinkFailed(Int32)
 }
 
 final class Database {
@@ -50,8 +50,9 @@ final class Database {
 
 	class func delete(withName name: String) throws {
 		let path = Database.databasePath(withName: name)
-		if unlink(path) != 0 {
-			throw DatabaseError.unlinkFailed
+		let rc = unlink(path)
+		if rc != 0 {
+			throw DatabaseError.unlinkFailed(rc)
 		}
 	}
 
@@ -443,8 +444,9 @@ final class Database {
 
 	// MARK: update
 
-	func save<NodeCollection1: Collection, WayCollection1: Collection, RelationCollection1: Collection,
-		NodeCollection2: Collection, WayCollection2: Collection, RelationCollection2: Collection>
+	func save<NodeCollection1: Collection, NodeCollection2: Collection,
+			  WayCollection1: Collection, WayCollection2: Collection,
+			  RelationCollection1: Collection, RelationCollection2: Collection>
 	(
 		saveNodes: NodeCollection1,
 		saveWays: WayCollection1,
@@ -487,11 +489,12 @@ final class Database {
 
 	// MARK: query
 
-	private func queryTagTable(_ tableName: String) throws -> [OsmIdentifier: [String: String]] {
+	private func queryTagTable(_ tableName: String, sizeEstimate: Int) throws -> [OsmIdentifier: [String: String]] {
 		let query = "SELECT key,value,ident FROM \(tableName)"
 		let tagStatement = try db.prepare(query)
 
-		var list = [OsmIdentifier: [String: String]]()
+		var dict:[OsmIdentifier: [String: String]] = [:]
+		dict.reserveCapacity(sizeEstimate)
 
 		try db.reset(tagStatement)
 		try db.clearBindings(tagStatement)
@@ -500,22 +503,24 @@ final class Database {
 			let value = db.columnText(tagStatement, 1)
 			let ident = db.columnInt64(tagStatement, 2)
 
-			if list[ident] == nil {
-				list[ident] = [:]
+			if dict[ident] == nil {
+				dict[ident] = [key:value]
+			} else {
+				dict[ident]![key] = value
 			}
-			list[ident]![key] = value
 		}
 
-		return list
+		return dict
 	}
 
-	func querySqliteNodes() throws -> [OsmNode] {
-		let nodeStatement = try db
-			.prepare("SELECT ident,user,timestamp,version,changeset,uid,longitude,latitude FROM nodes;")
+	func queryNodes() throws -> [OsmNode] {
+		let nodeStatement =
+			try db.prepare("SELECT ident,user,timestamp,version,changeset,uid,longitude,latitude FROM nodes;")
 
-		let tagDict = try queryTagTable("node_tags")
+		let tagsDict = try queryTagTable("node_tags", sizeEstimate: 5_000)
 
 		var nodes: [OsmNode] = []
+		nodes.reserveCapacity(100_000)
 
 		while try db.step(nodeStatement, hasResult: Sqlite.ROW) {
 			let ident = db.columnInt64(nodeStatement, 0)
@@ -527,7 +532,7 @@ final class Database {
 			let longitude = db.columnDouble(nodeStatement, 6)
 			let latitude = db.columnDouble(nodeStatement, 7)
 
-			let tags = tagDict[ident] ?? [:]
+			let tags = tagsDict[ident] ?? [:]
 
 			let node = OsmNode(
 				withVersion: Int(version),
@@ -549,11 +554,11 @@ final class Database {
 		return nodes
 	}
 
-	func querySqliteWays() throws -> [OsmWay] {
+	func queryWays() throws -> [OsmWay] {
 		let wayStatement = try db.prepare("SELECT ident,user,timestamp,version,changeset,uid,nodecount FROM ways")
 
 		var ways: [OsmIdentifier: OsmWay] = [:]
-		let tagDicts = try queryTagTable("way_tags")
+		let tagsDict = try queryTagTable("way_tags", sizeEstimate: 20_000)
 
 		while try db.step(wayStatement, hasResult: Sqlite.ROW) {
 			let ident = db.columnInt64(wayStatement, 0)
@@ -564,7 +569,7 @@ final class Database {
 			let uid = db.columnInt32(wayStatement, 5)
 			let nodecount = db.columnInt32(wayStatement, 6)
 
-			let tags = tagDicts[ident] ?? [:]
+			let tags = tagsDict[ident] ?? [:]
 
 			let way = OsmWay(
 				withVersion: Int(version),
@@ -602,13 +607,25 @@ final class Database {
 		}
 	}
 
-	func querySqliteRelations() throws -> [OsmRelation] {
+	// This class is used as a temporary object while reading relations from Sqlite3 and building member lists
+	private final class OsmRelationBuilder {
+		let relation: OsmRelation
+		var members: [OsmMember?]
+		init(with relation: OsmRelation, memberCount: Int) {
+			self.relation = relation
+			members = [OsmMember?](repeating: nil, count: memberCount)
+		}
+	}
+
+	func queryRelations() throws -> [OsmRelation] {
 		let relationStatement = try db
 			.prepare("SELECT ident,user,timestamp,version,changeset,uid,membercount FROM relations")
 
-		let tagsDict = try queryTagTable("relation_tags")
+		let tagsDict = try queryTagTable("relation_tags", sizeEstimate: 1000)
 
 		var relations: [OsmIdentifier: OsmRelationBuilder] = [:]
+		relations.reserveCapacity(1000)
+
 		while try db.step(relationStatement, hasResult: Sqlite.ROW) {
 			let ident = db.columnInt64(relationStatement, 0)
 			let user = db.columnText(relationStatement, 1)
@@ -634,16 +651,16 @@ final class Database {
 		}
 
 		// set the member objects for relations
-		try queryMembers(forRelations: relations)
+		try queryMembers(forRelationBuilders: relations)
 		for builder in relations.values {
 			builder.relation.constructMembers(builder.members.map({ $0! }))
 		}
 
-		// build the dictionary
+		// build the final list of relations
 		return relations.values.map({ $0.relation })
 	}
 
-	private func queryMembers(forRelations relations: [OsmIdentifier: OsmRelationBuilder]) throws {
+	private func queryMembers(forRelationBuilders relations: [OsmIdentifier: OsmRelationBuilder]) throws {
 		let memberStatement = try db.prepare("SELECT ident,type,ref,role,member_index FROM relation_members")
 
 		while try db.step(memberStatement, hasResult: Sqlite.ROW) {

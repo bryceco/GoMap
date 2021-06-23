@@ -8,16 +8,6 @@
 
 import UIKit
 
-// This class is used as a temporary object while reading relations from Sqlite3 and building member lists
-final class OsmRelationBuilder: NSObject {
-	var relation: OsmRelation
-	var members: [OsmMember?]
-	init(with relation: OsmRelation, memberCount: Int) {
-		self.relation = relation
-		members = [OsmMember?](repeating: nil, count: memberCount)
-	}
-}
-
 @objcMembers
 final class OsmRelation: OsmBaseObject {
 	private(set) var members: [OsmMember]

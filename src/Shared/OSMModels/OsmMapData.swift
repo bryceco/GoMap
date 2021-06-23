@@ -1785,13 +1785,14 @@ final class OsmMapData: NSObject, NSCoding {
 		do {
 			let db = try Database(name: "")
 			var newData = OsmDownloadData()
-			newData.nodes = try db.querySqliteNodes()
-			newData.ways = try db.querySqliteWays()
-			newData.relations = try db.querySqliteRelations()
+			newData.nodes = try db.queryNodes()
+			newData.ways = try db.queryWays()
+			newData.relations = try db.queryRelations()
 
 			try decode.merge(newData, savingToDatabase: false)
 		} catch {
 			// database couldn't be read
+			print("Error: \(error)")
 			print("Unable to read database: recreating from scratch\n")
 			try? Database.delete(withName: "")
 			// need to download all regions
