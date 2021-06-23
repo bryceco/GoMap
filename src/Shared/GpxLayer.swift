@@ -53,8 +53,11 @@ final class GpxTrack: NSObject, NSCoding {
 	private var recording = false
 	private var distance = 0.0
 
-	static let nullShapePaths = [CGPath?](repeating: nil, count: 32) // an array of paths, each simplified according to zoom level so we have good performance when zoomed out
-	public var shapePaths = GpxTrack.nullShapePaths // an array of paths, each simplified according to zoom level so we have good performance when zoomed out
+	static let nullShapePaths = [CGPath?](repeating: nil, count: 32)
+
+	// An array of paths, each simplified according to zoom level
+	// so we have good performance when zoomed out:
+	public var shapePaths = GpxTrack.nullShapePaths
 
 	private var _name: String?
 	var name: String {
