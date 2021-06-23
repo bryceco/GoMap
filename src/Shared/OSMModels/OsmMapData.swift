@@ -825,12 +825,15 @@ final class OsmMapData: NSObject, NSCoding {
 
 		consistencyCheck()
 
-		// all relations, including old ones, need to be resolved against new objects
+		// All relations, including old ones, need to be resolved against new objects
+		// In addition we need to recompute bounding boxes of relations every time
+		// in case a member is another relation that changed size.
 		var didChange: Bool = true
 		while didChange {
 			didChange = false
 			for (_, relation) in relations {
 				let bbox = relation.boundingBox
+				relation.clearCachedProperties()
 				didChange = relation.resolveToMapData(self) || didChange
 				spatial.updateMember(relation, fromBox: bbox, undo: nil)
 			}
@@ -1273,8 +1276,6 @@ final class OsmMapData: NSObject, NSCoding {
 	// MARK: Save/Restore
 
 	func encode(with coder: NSCoder) {
-		consistencyCheck()
-
 		coder.encode(nodes, forKey: "nodes")
 		coder.encode(ways, forKey: "ways")
 		coder.encode(relations, forKey: "relations")
