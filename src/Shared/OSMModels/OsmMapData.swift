@@ -962,7 +962,7 @@ final class OsmMapData: NSObject, NSCoding {
 			}
 
 			guard let diffResult = diffDoc.rootElement(),
-				  diffResult.name == "diffResult"
+			      diffResult.name == "diffResult"
 			else {
 				completion("Upload failed: invalid server respsonse")
 				return

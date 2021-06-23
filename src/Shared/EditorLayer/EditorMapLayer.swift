@@ -53,20 +53,22 @@ protocol EditorMapLayerOwner: UIView, MapViewProgress {
 	func screenLatLonRect() -> OSMRect
 	func metersPerPixel() -> Double
 
+	// boolean options chosen by owner
 	func useTurnRestrictions() -> Bool
 	func useAutomaticCacheManagement() -> Bool
 	func useUnnamedRoadHalo() -> Bool
 
+	// editing actions handled by owner
 	func presentTagEditor(_ sender: Any?)
 	func presentEditActionSheet(_ sender: Any?)
 	func presentTurnRestrictionEditor()
 
-	// FIXME: We should take over this functionality
+	// FIXME: We should move this functionality into EditorMapLayer
 	func blink(_ object: OsmBaseObject?, segment: Int)
 	func unblinkObject()
 	func startObjectRotation()
 
-	// FIXME: this shouldn't be in the editor layer
+	// FIXME: this shouldn't be in the editor layer. Move to MapView.
 	func addNote()
 
 	// notify owner that tags changed so it can refresh e.g. fixme= buttons
@@ -176,8 +178,7 @@ final class EditorMapLayer: CALayer {
 		OsmMapData.setEditorMapLayerForArchive(self)
 
 		mapData.undoContextForComment = { comment in
-			var trans = self.owner.mapTransform.transform
-			let location = Data(bytes: &trans, count: MemoryLayout.size(ofValue: trans))
+			let location = Data.fromVar(self.owner.mapTransform.transform)
 			var dict: [String: Any] = [:]
 			dict["comment"] = comment
 			dict["location"] = location
@@ -201,13 +202,11 @@ final class EditorMapLayer: CALayer {
 			}
 
 			guard let action = context["comment"] as? String,
-			      let location = context["location"] as? Data
+			      let location = context["location"] as? Data,
+			      let transform: OSMTransform = location.asVar()
 			else { return }
 			// FIXME: Use Coder for OSMTransform (warning: doing this will break backwards compatibility)
-			if location.count == MemoryLayout<OSMTransform>.size {
-				let transform: OSMTransform = location.withUnsafeBytes({ $0.load(as: OSMTransform.self) })
-				owner.setScreenFromMap(transform: transform)
-			}
+			owner.setScreenFromMap(transform: transform)
 			let title = undo ? NSLocalizedString("Undo", comment: "") : NSLocalizedString("Redo", comment: "")
 
 			self.selectedRelation = context["selectedRelation"] as? OsmRelation
