@@ -73,7 +73,7 @@ class TileServerListViewController: UITableViewController {
 			let dateFormatter = DateFormatter()
 			dateFormatter.dateStyle = .medium
 			dateFormatter.timeStyle = .none
-			if let lastDownloadDate = serverList?.lastDownloadDate {
+			if let lastDownloadDate = serverList.lastDownloadDate {
 				let date = dateFormatter.string(from: lastDownloadDate)
 				return String.localizedStringWithFormat(NSLocalizedString("Last updated %@", comment: ""), date)
 			}
@@ -92,7 +92,7 @@ class TileServerListViewController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if indexPath.section == SECTION_USER && indexPath.row == (serverList?.userDefinedServices().count ?? 0) {
+		if indexPath.section == SECTION_USER && indexPath.row == serverList.userDefinedServices().count {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "addNewCell", for: indexPath)
 			return cell
 		}
@@ -236,11 +236,11 @@ class TileServerListViewController: UITableViewController {
 			guard let editRow = editRow else {
 				return
 			}
-			if editRow.row == self.serverList?.userDefinedServices().count {
-				self.serverList?.addUserDefinedService(service, at: self.serverList?.userDefinedServices().count ?? 0)
+			if editRow.row == self.serverList.userDefinedServices().count {
+				self.serverList.addUserDefinedService(service, at: self.serverList.userDefinedServices().count)
 			} else {
-				self.serverList?.removeUserDefinedService(at: editRow.row)
-				self.serverList?.addUserDefinedService(service, at: editRow.row)
+				self.serverList.removeUserDefinedService(at: editRow.row)
+				self.serverList.addUserDefinedService(service, at: editRow.row)
 			}
 			self.tableView.reloadData()
 			self.tableView(self.tableView, didSelectRowAt: editRow)
