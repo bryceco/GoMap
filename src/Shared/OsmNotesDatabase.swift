@@ -466,7 +466,7 @@ final class OsmNotesDatabase: NSObject {
 					completion(.failure(error))
 				} else {
 					completion(.failure(NSError(domain: "OsmNotesDatabase",
-												code: 1,
+					                            code: 1,
 					                            userInfo: [NSLocalizedDescriptionKey: "Update Error"])))
 				}
 			}

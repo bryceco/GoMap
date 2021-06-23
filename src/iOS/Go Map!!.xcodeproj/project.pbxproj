@@ -642,8 +642,6 @@
 			isa = PBXGroup;
 			children = (
 				ED9649BF2601C33E00EC0A60 /* AdvancedSettingsViewController.swift */,
-				ED9649C02601C33E00EC0A60 /* TileServerEditViewController.swift */,
-				ED9649D22601C4CE00EC0A60 /* TileServerListViewController.swift */,
 				C3D096AB263D48F700E3B129 /* AppDelegate.swift */,
 				ED56E5AA26024DA5000B368C /* AutocompleteTextField.swift */,
 				ED56E5B226026541000B368C /* BingMetadataViewController.swift */,
@@ -681,6 +679,8 @@
 				0291D83A2442822300F793BE /* Storyboards */,
 				0266DE852655A21F007A502E /* Superview.swift */,
 				02ACBA3A16713CCB00BB4414 /* Supporting Files */,
+				ED9649C02601C33E00EC0A60 /* TileServerEditViewController.swift */,
+				ED9649D22601C4CE00EC0A60 /* TileServerListViewController.swift */,
 				028C51E525CB7A23004A88F7 /* TristateButton.swift */,
 				C3D096AF263D4FF500E3B129 /* TurnRestrictController.swift */,
 				647C150D24268DB7008A9366 /* Upload */,

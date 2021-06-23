@@ -146,7 +146,7 @@ final class TileServerList {
 
 			let propExtent = properties["extent"] as? [String: Any] ?? [:]
 
-			let maxZoom = ((isGeoJSON ? properties : propExtent)["max_zoom"] as? NSNumber)?.intValue ?? 0
+			let maxZoom = ((isGeoJSON ? properties : propExtent)["max_zoom"] as? NSNumber)?.intValue ?? 21
 			var attribIconString = properties["icon"] as? String ?? ""
 
 			let attribDict = properties["attribution"] as? [String: Any] ?? [:]
@@ -323,33 +323,26 @@ final class TileServerList {
 			let urlString = "https://josm.openstreetmap.de/maps?format=geojson"
 			// NSString * urlString = @"https://osmlab.github.io/editor-layer-index/imagery.geojson";
 			if let downloadUrl = URL(string: urlString) {
-				let downloadTask = URLSession.shared.dataTask(
-					with: downloadUrl,
-					completionHandler: { [self] data, response, error in
-						if let data = data,
-						   let httpResponse = response as? HTTPURLResponse,
-						   httpResponse.statusCode >= 200, httpResponse.statusCode < 300,
-						   error == nil
-						{
-							if data.count > 100000 {
-								// if the data is large then only download again periodically
-								self.lastDownloadDate = Date()
-							}
-							let externalAerials = processOsmLabAerialsData(data)
-							if externalAerials.count > 100 {
-								// cache download for next time
-								let fileUrl = URL(fileURLWithPath: pathToExternalAerialsCache())
-								try? data.write(to: fileUrl, options: .atomic)
-
-								// notify caller of update
-								DispatchQueue.main.async(execute: { [self] in
-									downloadedList = externalAerials
-									completion()
-								})
-							}
+				URLSession.shared.data(with: downloadUrl, completionHandler: { [self] result in
+					if case let .success(data) = result {
+						if data.count > 100000 {
+							// if the data is large then only download again periodically
+							self.lastDownloadDate = Date()
 						}
-					})
-				downloadTask.resume()
+						let externalAerials = processOsmLabAerialsData(data)
+						if externalAerials.count > 100 {
+							// cache download for next time
+							let fileUrl = URL(fileURLWithPath: pathToExternalAerialsCache())
+							try? data.write(to: fileUrl, options: .atomic)
+
+							// notify caller of update
+							DispatchQueue.main.async(execute: { [self] in
+								downloadedList = externalAerials
+								completion()
+							})
+						}
+					}
+				})
 			}
 		}
 	}

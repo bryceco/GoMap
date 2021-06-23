@@ -68,7 +68,7 @@ final class TileServer {
 		withName name: String,
 		identifier: String,
 		url: String,
-		maxZoom: Int?,
+		maxZoom: Int,
 		roundUp: Bool,
 		startDate: String?,
 		endDate: String?,
@@ -90,7 +90,7 @@ final class TileServer {
 		attributionString = attribString.count != 0 ? attribString : name
 		attributionUrl = attribUrl
 
-		self.maxZoom = maxZoom ?? 21
+		self.maxZoom = maxZoom
 		roundZoomUp = roundUp
 		self.startDate = startDate
 		self.endDate = endDate
@@ -307,7 +307,7 @@ final class TileServer {
 		self.init(withName: dict["name"] as! String,
 		          identifier: url,
 		          url: url,
-		          maxZoom: (dict["zoom"] as? NSNumber)?.intValue ?? 0,
+		          maxZoom: (dict["zoom"] as? NSNumber)?.intValue ?? 21,
 		          roundUp: (dict["roundUp"] as? NSNumber)?.boolValue ?? false,
 		          startDate: nil, endDate: nil,
 		          wmsProjection: projection,

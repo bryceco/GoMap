@@ -54,11 +54,20 @@ class TileServerEditViewController: UITableViewController {
 		return range != nil
 	}
 
+	func trimmedName() -> String {
+		return nameField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
+	}
+
 	@IBAction func done(_ sender: Any) {
 		// remove white space from subdomain list
 		var url = urlField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
 		url = url.replacingOccurrences(of: "%7B", with: "{")
 		url = url.replacingOccurrences(of: "%7D", with: "}")
+
+		let name = trimmedName()
+		if name.isEmpty {
+			return
+		}
 
 		if isBannedURL(url) {
 			return
@@ -70,10 +79,10 @@ class TileServerEditViewController: UITableViewController {
 		if projection == TMS_PROJECTION_NAME {
 			projection = ""
 		}
-		let maxZoom = Int(zoomField.text ?? "0") ?? 0
+		let maxZoom = Int(zoomField.text ?? "21") ?? 21
 
 		let service = TileServer(
-			withName: nameField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? "",
+			withName: name,
 			identifier: identifier,
 			url: url,
 			maxZoom: maxZoom,
@@ -96,10 +105,12 @@ class TileServerEditViewController: UITableViewController {
 
 	@IBAction func contentChanged(_ sender: Any) {
 		var allowed = false
-		if (nameField.text?.count ?? 0) > 0, (urlField.text?.count ?? 0) > 0 {
-			if !isBannedURL(urlField.text ?? "") {
-				allowed = true
-			}
+		if !trimmedName().isEmpty,
+		   let url = urlField.text,
+		   url.count > 0,
+		   !isBannedURL(url)
+		{
+			allowed = true
 		}
 		navigationItem.rightBarButtonItem?.isEnabled = allowed
 	}
