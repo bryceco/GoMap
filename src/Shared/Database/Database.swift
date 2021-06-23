@@ -234,7 +234,9 @@ final class Database {
 
 	// MARK: save
 
-	private func saveNodes(_ nodes: [OsmNode]) throws {
+	private func saveNodes<NodeCollection: Collection>(_ nodes: NodeCollection) throws
+		where NodeCollection.Element == OsmNode
+	{
 		if nodes.count == 0 {
 			return
 		}
@@ -276,7 +278,9 @@ final class Database {
 		}
 	}
 
-	private func saveWays(_ ways: [OsmWay]) throws {
+	private func saveWays<WayCollection: Collection>(_ ways: WayCollection) throws
+		where WayCollection.Element == OsmWay
+	{
 		if ways.count == 0 {
 			return
 		}
@@ -327,7 +331,9 @@ final class Database {
 		}
 	}
 
-	private func saveRelations(_ relations: [OsmRelation]) throws {
+	private func saveRelations<RelationCollection: Collection>(_ relations: RelationCollection) throws
+		where RelationCollection.Element == OsmRelation
+	{
 		if relations.count == 0 {
 			return
 		}
@@ -384,8 +390,10 @@ final class Database {
 
 	// MARK: delete
 
-	private func deleteNodes(_ nodes: [OsmNode]) throws {
-		if nodes.count == 0 {
+	private func deleteNodes<NodeSequence: Collection>(_ nodes: NodeSequence) throws
+		where NodeSequence.Element == OsmNode
+	{
+		if nodes.isEmpty {
 			return
 		}
 
@@ -399,7 +407,9 @@ final class Database {
 		}
 	}
 
-	private func deleteWays(_ ways: [OsmWay]) throws {
+	private func deleteWays<WayCollection: Collection>(_ ways: WayCollection) throws
+		where WayCollection.Element == OsmWay
+	{
 		if ways.count == 0 {
 			return
 		}
@@ -414,7 +424,9 @@ final class Database {
 		}
 	}
 
-	private func deleteRelations(_ relations: [OsmRelation]) throws {
+	private func deleteRelations<RelationCollection: Collection>(_ relations: RelationCollection) throws
+		where RelationCollection.Element == OsmRelation
+	{
 		if relations.count == 0 {
 			return
 		}
@@ -431,14 +443,20 @@ final class Database {
 
 	// MARK: update
 
-	func save(
-		saveNodes: [OsmNode],
-		saveWays: [OsmWay],
-		saveRelations: [OsmRelation],
-		deleteNodes: [OsmNode],
-		deleteWays: [OsmWay],
-		deleteRelations: [OsmRelation],
+	func save<NodeCollection1: Collection, WayCollection1: Collection, RelationCollection1: Collection,
+		NodeCollection2: Collection, WayCollection2: Collection, RelationCollection2: Collection>
+	(
+		saveNodes: NodeCollection1,
+		saveWays: WayCollection1,
+		saveRelations: RelationCollection1,
+		deleteNodes: NodeCollection2,
+		deleteWays: WayCollection2,
+		deleteRelations: RelationCollection2,
 		isUpdate: Bool) throws
+		where
+		NodeCollection1.Element == OsmNode, NodeCollection2.Element == OsmNode,
+		WayCollection1.Element == OsmWay, WayCollection2.Element == OsmWay,
+		RelationCollection1.Element == OsmRelation, RelationCollection2.Element == OsmRelation
 	{
 #if DEBUG
 #if !targetEnvironment(macCatalyst)

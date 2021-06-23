@@ -772,6 +772,11 @@ final class OsmMapData: NSObject, NSCoding {
 		var newNodes: [OsmNode] = []
 		var newWays: [OsmWay] = []
 		var newRelations: [OsmRelation] = []
+		newNodes.reserveCapacity(newData.nodes.count)
+		newWays.reserveCapacity(newData.ways.count)
+		newRelations.reserveCapacity(newData.relations.count)
+
+		consistencyCheck()
 
 		for node in newData.nodes {
 			let current = nodes[node.ident]
@@ -818,6 +823,8 @@ final class OsmMapData: NSObject, NSCoding {
 			}
 		}
 
+		consistencyCheck()
+
 		// all relations, including old ones, need to be resolved against new objects
 		var didChange: Bool = true
 		while didChange {
@@ -828,6 +835,8 @@ final class OsmMapData: NSObject, NSCoding {
 				spatial.updateMember(relation, fromBox: bbox, undo: nil)
 			}
 		}
+
+		consistencyCheck()
 
 		for node in newData.nodes {
 			node.setConstructed()
@@ -841,8 +850,8 @@ final class OsmMapData: NSObject, NSCoding {
 
 		// store new nodes in database
 		if save {
-			sqlSaveNodes(
-				newNodes,
+			sqlSave(
+				saveNodes: newNodes,
 				saveWays: newWays,
 				saveRelations: newRelations,
 				deleteNodes: [],
@@ -855,6 +864,8 @@ final class OsmMapData: NSObject, NSCoding {
 				AppDelegate.shared.mapView.discardStaleData()
 			})
 		}
+
+		consistencyCheck()
 	}
 
 	class func updateChangesetXml(_ xmlDoc: DDXMLDocument, withChangesetID changesetID: Int64) {
@@ -947,13 +958,15 @@ final class OsmMapData: NSObject, NSCoding {
 				return
 			}
 
-			if diffDoc.rootElement()?.name != "diffResult" {
+			guard let diffResult = diffDoc.rootElement(),
+				  diffResult.name == "diffResult"
+			else {
 				completion("Upload failed: invalid server respsonse")
 				return
 			}
 
 			var sqlUpdate: [OsmBaseObject: Bool] = [:]
-			for element in diffDoc.rootElement()?.children ?? [] {
+			for element in diffResult.children ?? [] {
 				guard let element = element as? DDXMLElement else {
 					continue
 				}
@@ -1429,8 +1442,8 @@ final class OsmMapData: NSObject, NSCoding {
 		return path
 	}
 
-	func sqlSaveNodes(
-		_ saveNodes: [OsmNode],
+	func sqlSave(
+		saveNodes: [OsmNode],
 		saveWays: [OsmWay],
 		saveRelations: [OsmRelation],
 		deleteNodes: [OsmNode],
@@ -1633,9 +1646,9 @@ final class OsmMapData: NSObject, NSCoding {
 		print("Discard sweep time = \(t)\n")
 
 		// make a copy of items to save because the dictionary might get updated by the time the Database block runs
-		let saveNodes = Array(nodes.values)
-		let saveWays = Array(ways.values)
-		let saveRelations = Array(relations.values)
+		let saveNodes = nodes.values
+		let saveWays = ways.values
+		let saveRelations = relations.values
 
 		Database.dispatchQueue.async(execute: { [self] in
 			var t2 = CACurrentMediaTime()
@@ -1708,8 +1721,8 @@ final class OsmMapData: NSObject, NSCoding {
 			}
 		}
 
-		sqlSaveNodes(
-			insertNode,
+		sqlSave(
+			saveNodes: insertNode,
 			saveWays: insertWay,
 			saveRelations: insertRelation,
 			deleteNodes: deleteNode,
