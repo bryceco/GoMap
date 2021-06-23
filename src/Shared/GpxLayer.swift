@@ -53,8 +53,8 @@ final class GpxTrack: NSObject, NSCoding {
 	private var recording = false
 	private var distance = 0.0
 
-	public var shapePaths = [CGPath?](repeating: nil,
-	                                  count: 20) // an array of paths, each simplified according to zoom level so we have good performance when zoomed out
+	static let nullShapePaths = [CGPath?](repeating: nil, count: 32) // an array of paths, each simplified according to zoom level so we have good performance when zoomed out
+	public var shapePaths = GpxTrack.nullShapePaths // an array of paths, each simplified according to zoom level so we have good performance when zoomed out
 
 	private var _name: String?
 	var name: String {
@@ -751,7 +751,7 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 
 		var refPoint = OSMPoint(x: 0, y: 0)
 		let path = self.path(for: track, refPoint: &refPoint)
-		memset(&track.shapePaths, 0, MemoryLayout.size(ofValue: track.shapePaths))
+		track.shapePaths = GpxTrack.nullShapePaths
 		track.shapePaths[0] = path
 
 		let color = track == selectedTrack ? UIColor.red : UIColor(

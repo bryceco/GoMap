@@ -178,7 +178,7 @@ final class EditorMapLayer: CALayer {
 		OsmMapData.setEditorMapLayerForArchive(self)
 
 		mapData.undoContextForComment = { comment in
-			let location = Data.fromVar(self.owner.mapTransform.transform)
+			let location = Data.fromStruct(self.owner.mapTransform.transform)
 			var dict: [String: Any] = [:]
 			dict["comment"] = comment
 			dict["location"] = location
@@ -203,7 +203,7 @@ final class EditorMapLayer: CALayer {
 
 			guard let action = context["comment"] as? String,
 			      let location = context["location"] as? Data,
-			      let transform: OSMTransform = location.asVar()
+			      let transform: OSMTransform = location.asStruct()
 			else { return }
 			// FIXME: Use Coder for OSMTransform (warning: doing this will break backwards compatibility)
 			owner.setScreenFromMap(transform: transform)
