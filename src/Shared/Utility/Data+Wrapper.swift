@@ -16,7 +16,7 @@ extension Data {
 		return nil
 	}
 
-	static func fromStruct(_ v: Any) -> Data {
+	static func fromStruct<Type>(_ v: Type) -> Data {
 		var v = v
 		return Data(bytes: &v, count: MemoryLayout.size(ofValue: v))
 	}
