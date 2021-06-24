@@ -1796,13 +1796,26 @@ final class OsmMapData: NSObject, NSCoding {
 	}
 
 	func consistencyCheckRelationMembers() {
+		// make sure that every relation member contains the relation in parentRelations
+		var allMembers = Set<OsmBaseObject>()
 		for (_, relation) in relations {
 			for member in relation.members {
 				if let object = member.obj {
 					assert(object.parentRelations.contains(relation))
+					allMembers.insert(object)
 				}
 			}
 		}
+		// ensure there is no object with parentRelations that isn't actually a member
+		nodes.values
+			.forEach({ obj in
+				obj.parentRelations.forEach({ assert($0.members.compactMap({ $0.obj }).contains(obj)) }) })
+		ways.values
+			.forEach({ obj in
+				obj.parentRelations.forEach({ assert($0.members.compactMap({ $0.obj }).contains(obj)) }) })
+		relations.values
+			.forEach({ obj in
+				obj.parentRelations.forEach({ assert($0.members.compactMap({ $0.obj }).contains(obj)) }) })
 	}
 
 	func consistencyCheck() {
@@ -1846,6 +1859,18 @@ final class OsmMapData: NSObject, NSCoding {
 			for index in nodes.indices.dropLast() {
 				assert(nodes[index].ident != nodes[index + 1].ident)
 			}
+		}
+
+		// check if node wayCount is accurate
+		var wayCountDict = Dictionary(uniqueKeysWithValues: nodes.values.map({ ($0.ident, $0.wayCount) }))
+		for way in ways.values {
+			for node in way.nodes {
+				wayCountDict[node.ident]! -= 1
+			}
+		}
+		if let index = wayCountDict.first(where: { $0.1 != 0 }) {
+			print("\(index) has bad wayCount")
+			assert(false)
 		}
 #endif
 	}
