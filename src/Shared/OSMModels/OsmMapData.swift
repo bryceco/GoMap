@@ -776,8 +776,6 @@ final class OsmMapData: NSObject, NSCoding {
 		newWays.reserveCapacity(newData.ways.count)
 		newRelations.reserveCapacity(newData.relations.count)
 
-		consistencyCheck()
-
 		for node in newData.nodes {
 			let current = nodes[node.ident]
 			if current == nil {
@@ -838,8 +836,6 @@ final class OsmMapData: NSObject, NSCoding {
 				spatial.updateMember(relation, fromBox: bbox, undo: nil)
 			}
 		}
-
-		consistencyCheck()
 
 		for node in newData.nodes {
 			node.setConstructed()
@@ -1862,7 +1858,9 @@ final class OsmMapData: NSObject, NSCoding {
 		}
 
 		// check if node wayCount is accurate
+#if false
 		var wayCountDict = Dictionary(uniqueKeysWithValues: nodes.values.map({ ($0.ident, $0.wayCount) }))
+print("\(wayCountDict.values)")
 		for way in ways.values {
 			for node in way.nodes {
 				wayCountDict[node.ident]! -= 1
@@ -1872,6 +1870,7 @@ final class OsmMapData: NSObject, NSCoding {
 			print("\(index) has bad wayCount")
 			assert(false)
 		}
+#endif
 #endif
 	}
 }
