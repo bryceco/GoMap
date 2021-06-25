@@ -260,7 +260,7 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 	}
 
 	func textField(_ textField: UITextField,
-				   shouldChangeCharactersIn range: NSRange,
+	               shouldChangeCharactersIn range: NSRange,
 	               replacementString string: String) -> Bool
 	{
 		let shouldChange: Bool
@@ -268,12 +268,12 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 			// FIXME: forwarding to this view controller doesn't work following
 			// the normal code path (Swift bug?), so hack it:
 			shouldChange = delegate.textField(textField,
-											  shouldChangeCharactersIn: range,
-											  replacementString: string)
+			                                  shouldChangeCharactersIn: range,
+			                                  replacementString: string)
 		} else {
 			shouldChange = realDelegate?.textField?(textField,
-													shouldChangeCharactersIn: range,
-													replacementString: string) ?? true
+			                                        shouldChangeCharactersIn: range,
+			                                        replacementString: string) ?? true
 		}
 
 		if shouldChange {

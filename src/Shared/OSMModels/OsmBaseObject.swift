@@ -55,7 +55,7 @@ struct OsmExtendedIdentifier: Equatable, Hashable {
 
 	var ident: OsmIdentifier {
 		let ident = OsmIdentifier(rawValue & OsmExtendedIdentifier.identMask)
-		return (ident << 2) >> 2	// sign-extend
+		return (ident << 2) >> 2 // sign-extend
 	}
 }
 

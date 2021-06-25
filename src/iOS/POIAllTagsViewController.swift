@@ -783,8 +783,8 @@ class POIAllTagsViewController: UITableViewController {
 	}
 
 	@objc func textField(_ textField: UITextField,
-						 shouldChangeCharactersIn range: NSRange,
-						 replacementString string: String) -> Bool
+	                     shouldChangeCharactersIn range: NSRange,
+	                     replacementString string: String) -> Bool
 	{
 		let MAX_LENGTH = 255
 		let oldLength = textField.text?.count ?? 0

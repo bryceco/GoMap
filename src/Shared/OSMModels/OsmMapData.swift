@@ -1234,13 +1234,13 @@ final class OsmMapData: NSObject, NSCoding {
 	}
 
 	override init() {
-		self.nodes = [:]
-		self.ways = [:]
-		self.relations = [:]
-		self.undoContextForComment = nil
-		self.region = QuadMap(encodingContentsOnSave: true)
-		self.spatial = QuadMap(encodingContentsOnSave: false)
-		self.undoManager = MyUndoManager()
+		nodes = [:]
+		ways = [:]
+		relations = [:]
+		undoContextForComment = nil
+		region = QuadMap(encodingContentsOnSave: true)
+		spatial = QuadMap(encodingContentsOnSave: false)
+		undoManager = MyUndoManager()
 
 		super.init()
 
@@ -1295,15 +1295,15 @@ final class OsmMapData: NSObject, NSCoding {
 		let modNodes = undoObjects.compactMap({ $0 as? OsmNode })
 		let modRelations = undoObjects.compactMap({ $0 as? OsmRelation })
 
-		#if DEBUG
+#if DEBUG
 		// verify that every modified object exists in the UndoManager
-		let n = Set<OsmNode>( self.nodes.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() }) )
-		let w = Set<OsmWay>( self.ways.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() }) )
-		let r = Set<OsmRelation>( self.relations.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() }) )
-		assert( n.isSubset(of: modNodes) )
-		assert( w.isSubset(of: modWays) )
-		assert( r.isSubset(of: modRelations) )
-		#endif
+		let n = Set<OsmNode>(nodes.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() }))
+		let w = Set<OsmWay>(ways.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() }))
+		let r = Set<OsmRelation>(relations.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() }))
+		assert(n.isSubset(of: modNodes))
+		assert(w.isSubset(of: modWays))
+		assert(r.isSubset(of: modRelations))
+#endif
 
 		var modified = OsmDownloadData()
 		modified.nodes = modNodes
@@ -1718,9 +1718,9 @@ final class OsmMapData: NSObject, NSCoding {
 
 		// update self with minimized versions appropriate for saving
 		let modified = modifiedObjects()
-		nodes = Dictionary(uniqueKeysWithValues: modified.nodes.map({($0.ident,$0)}))
-		ways =  Dictionary(uniqueKeysWithValues: modified.ways.map({($0.ident,$0)}))
-		relations = Dictionary(uniqueKeysWithValues: modified.relations.map({($0.ident,$0)}))
+		nodes = Dictionary(uniqueKeysWithValues: modified.nodes.map({ ($0.ident, $0) }))
+		ways = Dictionary(uniqueKeysWithValues: modified.ways.map({ ($0.ident, $0) }))
+		relations = Dictionary(uniqueKeysWithValues: modified.relations.map({ ($0.ident, $0) }))
 		// the spatial used to be handled here as well, but now it simply never saves it's contents
 
 		// Do the save.
@@ -1729,7 +1729,7 @@ final class OsmMapData: NSObject, NSCoding {
 
 		t = CACurrentMediaTime() - t
 		DLog(
-			"Archive save \(self.nodeCount()),\(self.wayCount()),\(self.relationCount()),\(undoManager.countUndoGroups),\(region.countOfObjects()) = \(t)")
+			"Archive save \(nodeCount()),\(wayCount()),\(relationCount()),\(undoManager.countUndoGroups),\(region.countOfObjects()) = \(t)")
 
 		// restore originals
 		nodes = origNodes
@@ -1845,10 +1845,10 @@ final class OsmMapData: NSObject, NSCoding {
 			}
 		}
 
-		// check if node wayCount is accurate
+// check if node wayCount is accurate
 #if false
 		var wayCountDict = Dictionary(uniqueKeysWithValues: nodes.values.map({ ($0.ident, $0.wayCount) }))
-print("\(wayCountDict.values)")
+		print("\(wayCountDict.values)")
 		for way in ways.values {
 			for node in way.nodes {
 				wayCountDict[node.ident]! -= 1
