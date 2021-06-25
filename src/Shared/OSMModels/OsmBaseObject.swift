@@ -32,9 +32,11 @@ let PATH_SCALING = (256 * 256.0)
 typealias OsmIdentifier = Int64
 
 struct OsmExtendedIdentifier: Equatable, Hashable {
+	static let identMask = (Int64(1) << 62) - 1
+
 	let rawValue: Int64
 	init(_ type: OSM_TYPE, _ ident: OsmIdentifier) {
-		rawValue = (Int64(type.rawValue) << 62) | ident
+		rawValue = (Int64(type.rawValue) << 62) | (ident & OsmExtendedIdentifier.identMask)
 	}
 
 	init(_ obj: OsmBaseObject) {
@@ -52,7 +54,8 @@ struct OsmExtendedIdentifier: Equatable, Hashable {
 	}
 
 	var ident: OsmIdentifier {
-		return OsmIdentifier(rawValue & ((Int64(1) << 62) - 1))
+		let ident = OsmIdentifier(rawValue & OsmExtendedIdentifier.identMask)
+		return (ident << 2) >> 2	// sign-extend
 	}
 }
 

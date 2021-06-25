@@ -155,7 +155,7 @@ final class OsmMapData: NSObject, NSCoding {
 		return relations.count
 	}
 
-	// FIXME: use OsmExtendedIdentifier
+	// FIXME: Use OsmExtendedIdentifier. This requires adding an enum in NotesDatabase.
 	func object(withExtendedIdentifier extendedIdentifier: Int64) -> OsmBaseObject? {
 		let ext = OsmExtendedIdentifier(extendedIdentifier)
 		let ident: OsmIdentifier = ext.ident
