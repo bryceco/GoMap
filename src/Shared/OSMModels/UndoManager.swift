@@ -44,9 +44,7 @@ class MyUndoManager: NSObject, NSCoding {
 
 	var runLoopCounter = 0
 
-	override init() {
-		super.init()
-
+	func initCommon() {
 		var context = CFRunLoopObserverContext()
 		context.info = UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque())
 		runLoopObserver = CFRunLoopObserverCreate(
@@ -58,6 +56,11 @@ class MyUndoManager: NSObject, NSCoding {
 			&context)
 		CFRunLoopAddObserver(CFRunLoopGetMain(), runLoopObserver, CFRunLoopMode.commonModes)
 		//		DLog(@"add observer %@",_runLoopObserver);
+	}
+
+	override init() {
+		super.init()
+		initCommon()
 	}
 
 	deinit {
@@ -245,8 +248,8 @@ class MyUndoManager: NSObject, NSCoding {
 		}
 	}
 
-	required convenience init?(coder: NSCoder) {
-		self.init()
+	required init?(coder: NSCoder) {
+		super.init()
 		if coder.allowsKeyedCoding {
 			undoStack = coder.decodeObject(forKey: "undoStack") as? [UndoAction] ?? []
 			redoStack = coder.decodeObject(forKey: "redoStack") as? [UndoAction] ?? []
@@ -263,6 +266,7 @@ class MyUndoManager: NSObject, NSCoding {
 				}
 			})
 		}
+		initCommon()
 	}
 }
 
