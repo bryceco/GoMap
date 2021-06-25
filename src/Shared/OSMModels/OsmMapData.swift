@@ -40,7 +40,8 @@ enum OsmMapDataError: Error {
 }
 
 final class OsmMapData: NSObject, NSCoding {
-	fileprivate static var g_EditorMapLayerForArchive: EditorMapLayer?
+	// only used when saving/restoring undo manager
+	public static var g_EditorMapLayerForArchive: EditorMapLayer?
 
 	private(set) var nodes: [OsmIdentifier: OsmNode] = [:]
 	private(set) var ways: [OsmIdentifier: OsmWay] = [:]
@@ -57,51 +58,7 @@ final class OsmMapData: NSObject, NSCoding {
 
 	private var previousDiscardDate = Date.distantPast
 
-	// only used when saving/restoring undo manager
-	class func setEditorMapLayerForArchive(_ editorLayer: EditorMapLayer) {
-		g_EditorMapLayerForArchive = editorLayer
-	}
-
-	// only used when saving/restoring undo manager
-	class func editorMapLayerForArchive() -> EditorMapLayer {
-		return g_EditorMapLayerForArchive!
-	}
-
-	func initCommon() {
-		UserDefaults.standard.register(defaults: [OSM_SERVER_KEY: "https://api.openstreetmap.org/"])
-		let server = UserDefaults.standard.object(forKey: OSM_SERVER_KEY) as! String
-		setServer(server)
-		setupPeriodicSaveTimer()
-	}
-
-	init(region: QuadMap, spatial: QuadMap, undoManager: MyUndoManager) {
-		nodes = [:]
-		ways = [:]
-		relations = [:]
-		undoContextForComment = nil
-
-		self.region = region
-		self.spatial = spatial
-		self.undoManager = undoManager
-
-		super.init()
-
-		initCommon()
-	}
-
-	override convenience init() {
-		self.init(region: QuadMap(encodingContentsOnSave: true),
-		          spatial: QuadMap(encodingContentsOnSave: false),
-		          undoManager: MyUndoManager())
-	}
-
-	deinit {
-		NotificationCenter.default.removeObserver(
-			self,
-			name: NSNotification.Name(MyUndoManager.UndoManagerDidChangeNotification),
-			object: undoManager)
-		periodicSaveTimer?.invalidate()
-	}
+	// MARK: Utility
 
 	func setServer(_ hostname: String) {
 		var hostname = hostname
@@ -560,7 +517,6 @@ final class OsmMapData: NSObject, NSCoding {
 
 	@discardableResult
 	func undo() -> [String: Any]? {
-		consistencyCheck()
 		let comment = undoManager.undo()
 		if let undoCommentCallback = undoCommentCallback {
 			undoCommentCallback(true, comment ?? [:])
@@ -571,7 +527,6 @@ final class OsmMapData: NSObject, NSCoding {
 
 	@discardableResult
 	func redo() -> [String: Any]? {
-		consistencyCheck()
 		let comment = undoManager.redo()
 		if let undoCommentCallback = undoCommentCallback {
 			undoCommentCallback(false, comment ?? [:])
@@ -1261,7 +1216,36 @@ final class OsmMapData: NSObject, NSCoding {
 		return xml!.xmlString(withOptions: UInt(DDXMLNodePrettyPrint))
 	}
 
-	// MARK: Save/Restore
+	// MARK: Init/Save/Restore
+
+	func initCommon() {
+		UserDefaults.standard.register(defaults: [OSM_SERVER_KEY: "https://api.openstreetmap.org/"])
+		let server = UserDefaults.standard.object(forKey: OSM_SERVER_KEY) as! String
+		setServer(server)
+		setupPeriodicSaveTimer()
+	}
+
+	deinit {
+		NotificationCenter.default.removeObserver(
+			self,
+			name: NSNotification.Name(MyUndoManager.UndoManagerDidChangeNotification),
+			object: undoManager)
+		periodicSaveTimer?.invalidate()
+	}
+
+	override init() {
+		self.nodes = [:]
+		self.ways = [:]
+		self.relations = [:]
+		self.undoContextForComment = nil
+		self.region = QuadMap(encodingContentsOnSave: true)
+		self.spatial = QuadMap(encodingContentsOnSave: false)
+		self.undoManager = MyUndoManager()
+
+		super.init()
+
+		initCommon()
+	}
 
 	func encode(with coder: NSCoder) {
 		coder.encode(nodes, forKey: "nodes")
@@ -1272,7 +1256,7 @@ final class OsmMapData: NSObject, NSCoding {
 		coder.encode(undoManager, forKey: "undoManager")
 	}
 
-	required convenience init?(coder: NSCoder) {
+	required init?(coder: NSCoder) {
 		guard
 			let nodes = coder.decodeObject(forKey: "nodes") as? [OsmIdentifier: OsmNode],
 			let ways = coder.decodeObject(forKey: "ways") as? [OsmIdentifier: OsmWay],
@@ -1282,13 +1266,14 @@ final class OsmMapData: NSObject, NSCoding {
 			let undoManager = coder.decodeObject(forKey: "undoManager") as? MyUndoManager
 		else { return nil }
 
-		self.init(region: region,
-		          spatial: spatial,
-		          undoManager: undoManager)
-
 		self.nodes = nodes
 		self.ways = ways
 		self.relations = relations
+		self.region = region
+		self.spatial = spatial
+		self.undoManager = undoManager
+
+		super.init()
 
 		initCommon()
 
@@ -1301,28 +1286,29 @@ final class OsmMapData: NSObject, NSCoding {
 		}
 	}
 
-	func modifiedObjects() -> OsmMapData {
-		// get modified nodes and ways
-		var objects = Array(undoManager.objectRefs())
-		objects += nodes.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() })
-		objects += ways.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() })
-		objects += relations.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() })
-
-		let modified = OsmMapData()
-		for obj in objects {
-			if let node = obj as? OsmNode {
-				modified.nodes[node.ident] = node
-			} else if let way = obj as? OsmWay {
-				modified.ways[way.ident] = way
-				for node in way.nodes {
-					modified.nodes[node.ident] = node
-				}
-			} else if let relation = obj as? OsmRelation {
-				modified.relations[relation.ident] = relation
-			} else {
-				// some other undo object
-			}
+	func modifiedObjects() -> OsmDownloadData {
+		var undoObjects = undoManager.objectRefs()
+		let modWays = undoObjects.compactMap({ $0 as? OsmWay })
+		for way in modWays {
+			undoObjects.formUnion(way.nodes)
 		}
+		let modNodes = undoObjects.compactMap({ $0 as? OsmNode })
+		let modRelations = undoObjects.compactMap({ $0 as? OsmRelation })
+
+		#if DEBUG
+		// verify that every modified object exists in the UndoManager
+		let n = Set<OsmNode>( self.nodes.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() }) )
+		let w = Set<OsmWay>( self.ways.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() }) )
+		let r = Set<OsmRelation>( self.relations.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() }) )
+		assert( n.isSubset(of: modNodes) )
+		assert( w.isSubset(of: modWays) )
+		assert( r.isSubset(of: modRelations) )
+		#endif
+
+		var modified = OsmDownloadData()
+		modified.nodes = modNodes
+		modified.ways = modWays
+		modified.relations = modRelations
 		return modified
 	}
 
@@ -1732,23 +1718,23 @@ final class OsmMapData: NSObject, NSCoding {
 
 		// update self with minimized versions appropriate for saving
 		let modified = modifiedObjects()
-		nodes = modified.nodes
-		ways = modified.ways
-		relations = modified.relations
+		nodes = Dictionary(uniqueKeysWithValues: modified.nodes.map({($0.ident,$0)}))
+		ways =  Dictionary(uniqueKeysWithValues: modified.ways.map({($0.ident,$0)}))
+		relations = Dictionary(uniqueKeysWithValues: modified.relations.map({($0.ident,$0)}))
 		// the spatial used to be handled here as well, but now it simply never saves it's contents
 
 		// Do the save.
 		let archiver = OsmMapDataArchiver()
 		_ = archiver.saveArchive(mapData: self)
 
+		t = CACurrentMediaTime() - t
+		DLog(
+			"Archive save \(self.nodeCount()),\(self.wayCount()),\(self.relationCount()),\(undoManager.countUndoGroups),\(region.countOfObjects()) = \(t)")
+
 		// restore originals
 		nodes = origNodes
 		ways = origWays
 		relations = origRelations
-
-		t = CACurrentMediaTime() - t
-		DLog(
-			"Archive save \(modified.nodeCount()),\(modified.wayCount()),\(modified.relationCount()),\(undoManager.countUndoGroups),\(region.countOfObjects()) = \(t)")
 
 		periodicSaveTimer?.invalidate()
 		periodicSaveTimer = nil
@@ -1790,6 +1776,8 @@ final class OsmMapData: NSObject, NSCoding {
 		decode.consistencyCheck()
 		return decode
 	}
+
+	// MARK: Consistency checking
 
 	func consistencyCheckRelationMembers() {
 		// make sure that every relation member contains the relation in parentRelations
@@ -1874,6 +1862,8 @@ print("\(wayCountDict.values)")
 #endif
 	}
 }
+
+// MARK: Archive helper
 
 enum MapDataError: Error {
 	case archiveDoesNotExist

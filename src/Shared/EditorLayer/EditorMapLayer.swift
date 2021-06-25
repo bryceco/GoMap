@@ -175,7 +175,7 @@ final class EditorMapLayer: CALayer {
 		// observe changes to screen
 		owner.mapTransform.observe(by: self, callback: { self.updateMapLocation() })
 
-		OsmMapData.setEditorMapLayerForArchive(self)
+		OsmMapData.g_EditorMapLayerForArchive = self
 
 		mapData.undoContextForComment = { comment in
 			let location = Data.fromStruct(self.owner.mapTransform.transform)
