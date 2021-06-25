@@ -185,7 +185,7 @@ final class RenderInfo {
 
 final class RenderInfoDatabase {
 	var allFeatures: [RenderInfo] = []
-	var keyDict: [String: [String?: RenderInfo?]] = [:]
+	var keyDict: [String: [String: RenderInfo]] = [:]
 
 	static let shared = RenderInfoDatabase()
 
@@ -221,12 +221,12 @@ final class RenderInfoDatabase {
 	required init() {
 		allFeatures = RenderInfoDatabase.readConfiguration()
 		keyDict = [:]
-		for tag in allFeatures {
+		for tag: RenderInfo in allFeatures {
 			var valDict = keyDict[tag.key]
 			if valDict == nil {
-				valDict = [tag.value: tag]
+				valDict = [tag.value ?? "": tag]
 			} else {
-				valDict![tag.value] = tag
+				valDict![tag.value ?? ""] = tag
 			}
 			keyDict[tag.key] = valDict
 		}
@@ -253,8 +253,8 @@ final class RenderInfoDatabase {
 		var bestCount = 0
 		for (key, value) in tags {
 			guard let valDict = keyDict[key] else { continue }
-			var render = valDict[value]
 			var isDefault = false
+			var render = valDict[value]
 			if render == nil {
 				render = valDict[""]
 				if render != nil {
@@ -263,7 +263,7 @@ final class RenderInfoDatabase {
 			}
 			guard let render = render else { continue }
 
-			let count: Int = ((render!.lineColor != nil) ? 1 : 0) + ((render!.areaColor != nil) ? 1 : 0)
+			let count: Int = ((render.lineColor != nil) ? 1 : 0) + ((render.areaColor != nil) ? 1 : 0)
 			if bestRender == nil || (bestIsDefault && !isDefault) || (count > bestCount) {
 				bestRender = render
 				bestCount = count
