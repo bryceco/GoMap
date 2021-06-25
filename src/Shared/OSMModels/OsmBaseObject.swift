@@ -597,17 +597,17 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		if let node = isNode() {
 			if node.wayCount > 0 {
 				return details
-					? String.localizedStringWithFormat(NSLocalizedString("node %@ (in way)", comment: ""), ident)
+					? String.localizedStringWithFormat(NSLocalizedString("node %@ (in way)", comment: ""), NSNumber(value: ident))
 					: NSLocalizedString("(node in way)", comment: "")
 			}
 			return details
-				? String.localizedStringWithFormat(NSLocalizedString("node %@", comment: ""), ident)
+				? String.localizedStringWithFormat(NSLocalizedString("node %@", comment: ""), NSNumber(value: ident))
 				: NSLocalizedString("(node)", comment: "")
 		}
 
 		if isWay() != nil {
 			return details
-				? String.localizedStringWithFormat(NSLocalizedString("way %@", comment: ""), ident)
+				? String.localizedStringWithFormat(NSLocalizedString("way %@", comment: ""), NSNumber(value: ident))
 				: NSLocalizedString("(way)", comment: "")
 		}
 
@@ -619,7 +619,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 					return String.localizedStringWithFormat(NSLocalizedString("%@ (relation)", comment: ""), type)
 				}
 			}
-			return String.localizedStringWithFormat(NSLocalizedString("(relation %@)", comment: ""), ident)
+			return String.localizedStringWithFormat(NSLocalizedString("(relation %@)", comment: ""), NSNumber(value: ident))
 		}
 		return NSLocalizedString("other object", comment: "")
 	}
