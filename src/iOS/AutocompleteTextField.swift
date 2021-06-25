@@ -259,13 +259,23 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 		}
 	}
 
-	func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
+	func textField(_ textField: UITextField,
+				   shouldChangeCharactersIn range: NSRange,
 	               replacementString string: String) -> Bool
 	{
-		let shouldChange = realDelegate?.textField?(
-			textField,
-			shouldChangeCharactersIn: range,
-			replacementString: string) ?? true
+		let shouldChange: Bool
+		if let delegate = realDelegate as? POIAllTagsViewController {
+			// FIXME: forwarding to this view controller doesn't work following
+			// the normal code path (Swift bug?), so hack it:
+			shouldChange = delegate.textField(textField,
+											  shouldChangeCharactersIn: range,
+											  replacementString: string)
+		} else {
+			shouldChange = realDelegate?.textField?(textField,
+													shouldChangeCharactersIn: range,
+													replacementString: string) ?? true
+		}
+
 		if shouldChange {
 			let newString = (text! as NSString).replacingCharacters(in: range, with: string) as String
 			updateAutocomplete(for: newString)

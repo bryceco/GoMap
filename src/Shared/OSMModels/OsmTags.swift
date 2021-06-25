@@ -81,10 +81,11 @@ final class OsmTags {
 	}
 
 	static func StringTruncatedTo255(_ s: String) -> String {
-		guard s.count < 256 else {
+		if s.count < 256 {
 			return s
+		} else {
+			return String(s.prefix(255))
 		}
-		return String(s.prefix(255))
 	}
 
 	static func DictWithTagsTruncatedTo255(_ tags: [String: String]) -> [String: String] {

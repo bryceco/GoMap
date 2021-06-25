@@ -764,7 +764,7 @@ class POIAllTagsViewController: UITableViewController {
 		tab(toNext: true)
 	}
 
-	func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+	@objc func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
 		let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 44))
 		toolbar.items = [
 			UIBarButtonItem(
@@ -782,8 +782,9 @@ class POIAllTagsViewController: UITableViewController {
 		return true
 	}
 
-	func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
-	               replacementString string: String) -> Bool
+	@objc func textField(_ textField: UITextField,
+						 shouldChangeCharactersIn range: NSRange,
+						 replacementString string: String) -> Bool
 	{
 		let MAX_LENGTH = 255
 		let oldLength = textField.text?.count ?? 0
