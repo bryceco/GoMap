@@ -12,7 +12,6 @@ import UIKit
 typealias PushPinViewDragCallback = (UIGestureRecognizer.State, CGFloat, CGFloat, UIGestureRecognizer) -> Void
 
 final class PushPinView: UIButton, CAAnimationDelegate {
-	private var panCoord = CGPoint.zero
 	private let shapeLayer: CAShapeLayer // shape for balloon
 	private let textLayer: CATextLayer // text in balloon
 	private var hittestRect = CGRect.zero
@@ -36,17 +35,12 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 		}
 	}
 
-	private var _arrowPoint = CGPoint.zero
-	var arrowPoint: CGPoint {
-		get {
-			return _arrowPoint
-		}
-		set(arrowPoint) {
+	var arrowPoint: CGPoint = .zero {
+		didSet {
 			if arrowPoint.x.isNaN || arrowPoint.y.isNaN {
 				DLog("bad arrow location")
 				return
 			}
-			_arrowPoint = arrowPoint
 			center = CGPoint(x: arrowPoint.x, y: arrowPoint.y + bounds.size.height / 2)
 		}
 	}
@@ -112,8 +106,8 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 		}
 #if targetEnvironment(macCatalyst)
 		// also hit the arrow point
-		if abs(Float(screenPoint.y)) < 12,
-		   abs(Float(screenPoint.x - hittestRect.origin.x - hittestRect.size.width / 2)) < 12
+		if abs(Float(point.y)) < 12,
+		   abs(Float(point.x - hittestRect.origin.x - hittestRect.size.width / 2)) < 12
 		{
 			return self
 		}
@@ -334,24 +328,20 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 	}
 
 	@objc func draggingGesture(_ gesture: UIPanGestureRecognizer) {
-		let newCoord = gesture.location(in: gesture.view)
-		var dX: CGFloat = 0
-		var dY: CGFloat = 0
+		let delta = gesture.translation(in: gesture.view)
 
 		if gesture.state == .began {
-			panCoord = newCoord
+			print("start drag \(delta)")
 		} else {
-			dX = newCoord.x - panCoord.x
-			dY = newCoord.y - panCoord.y
-			_arrowPoint = CGPoint(x: _arrowPoint.x + dX, y: _arrowPoint.y + dY)
-
-			let newCenter = CGPoint(x: Double(center.x + dX), y: Double(center.y + dY))
-			gesture.view?.center = newCenter
+			print("continue drag \(delta)")
 		}
+		arrowPoint = CGPoint(x: arrowPoint.x + delta.x, y: arrowPoint.y + delta.y)
 
 		if let dragCallback = dragCallback {
-			dragCallback(gesture.state, dX, dY, gesture)
+			dragCallback(gesture.state, delta.x, delta.y, gesture)
 		}
+
+		gesture.setTranslation(.zero, in: gesture.view)
 	}
 
 	@available(*, unavailable)

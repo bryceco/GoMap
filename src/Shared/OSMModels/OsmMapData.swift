@@ -1803,7 +1803,7 @@ final class OsmMapData: NSObject, NSCoding {
 	}
 
 	func consistencyCheck() {
-#if DEBUG
+#if DEBUG && false
 		// This is extremely expensive: DEBUG only!
 		print("Checking spatial database consistency")
 
