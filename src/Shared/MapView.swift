@@ -1887,7 +1887,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		// get the selected button: has to be done before modifying the node/way selection
 		guard let segmentedControl = sender as? UISegmentedControl else { return }
 		let segment = segmentedControl.selectedSegmentIndex
-		if segment < editControlActions.count {
+		if segment >= 0 && segment < editControlActions.count {
 			let action = editControlActions[segment]
 			editorLayer.performEdit(action)
 		}
