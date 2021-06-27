@@ -606,11 +606,12 @@ extension EditorMapLayer {
 		if let selectedWay = self.selectedWay {
 			if let selectedNode = self.selectedNode {
 				// node in way
-				let parentWays: [OsmWay] = [] // [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode];
-				let disconnect = parentWays.count > 1 || selectedNode.hasInterestingTags() || selectedWay
-					.isSelfIntersection(selectedNode)
-				let split = selectedWay
-					.isClosed() || (selectedNode != selectedWay.nodes[0] && selectedNode != selectedWay.nodes.last)
+				let parentWays: [OsmWay] = mapData.waysContaining(selectedNode)
+				let disconnect = parentWays.count > 1 ||
+					selectedNode.hasInterestingTags() ||
+					selectedWay.isSelfIntersection(selectedNode)
+				let split = selectedWay.isClosed() ||
+					(selectedNode != selectedWay.nodes[0] && selectedNode != selectedWay.nodes.last)
 				let join = parentWays.count > 1
 				let restriction = owner.useTurnRestrictions() && self.selectedWay?.tags["highway"] != nil && parentWays
 					.count > 1

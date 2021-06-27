@@ -758,18 +758,16 @@ extension OsmMapData {
 
 			if waysContaining(node).count > 1 {
 				// detach node from other ways containing it
-				var index: Int = NSNotFound
-				repeat {
+				while let index = way.nodes.firstIndex(of: node) {
 					addNodeUnsafe(newNode, to: way, at: index + 1)
 					deleteNodeUnsafe(inWay: way, index: index, preserveNode: false)
-					index = way.nodes.firstIndex(of: node) ?? NSNotFound
-				} while index != NSNotFound
+				}
 			} else {
 				// detach node from self-intersection
-				var index: Int?
-				index = way.nodes.firstIndex(of: node) ?? NSNotFound
-				addNodeUnsafe(newNode, to: way, at: (index ?? 0) + 1)
-				deleteNodeUnsafe(inWay: way, index: index ?? 0, preserveNode: false)
+				if let index = way.nodes.firstIndex(of: node) {
+					addNodeUnsafe(newNode, to: way, at: index + 1)
+					deleteNodeUnsafe(inWay: way, index: index, preserveNode: false)
+				}
 			}
 			return newNode
 		}

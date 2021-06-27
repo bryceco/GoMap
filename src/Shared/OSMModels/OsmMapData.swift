@@ -174,13 +174,7 @@ final class OsmMapData: NSObject, NSCoding {
 	}
 
 	func waysContaining(_ node: OsmNode) -> [OsmWay] {
-		var a: [OsmWay] = []
-		for (_, way) in ways {
-			if way.nodes.contains(node) {
-				a.append(way)
-			}
-		}
-		return a
+		return ways.values.filter({ $0.nodes.contains(node) })
 	}
 
 	func objectsContaining(_ object: OsmBaseObject) -> [OsmBaseObject] {
