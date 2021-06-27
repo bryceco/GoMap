@@ -282,6 +282,7 @@ final class EditorMapLayer: CALayer {
 	}
 
 	func purgeCachedDataHard(_ hard: Bool) {
+		owner.removePin()
 		selectedNode = nil
 		selectedWay = nil
 		selectedRelation = nil

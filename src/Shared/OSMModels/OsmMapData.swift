@@ -669,8 +669,8 @@ final class OsmMapData: NSObject, NSCoding {
 	/// - The user moves the screen, which creates a new viewable region
 	///	- We ask QuadMap for a set of QuadBoxes that tile the region, less any quads that we already downloaded (missingQuads)
 	///		- The returned quads are marked as "busy" by QuadMap, meaning it won't return them on a subsequent query
-	///			before the current query completes. The quads must be marked non-busy via a call to makeWhole()
-	///			once we're done with them. makeWhole() takes a success flag indicating that the quad now contains data.
+	///			before the current query completes. The quads must be marked non-busy via a call to updateDownloadStatus()
+	///			once we're done with them. updateDownloadStatus() takes a success flag indicating that the quad now contains data.
 	///	- We then combine (coalesceQuadQueries) adjacent quads into a single rectangle
 	///	- We submit the rect to the server
 	///	- Once we've successfully fetched the data for the rect we tell the QuadMap that it can mark the given QuadBoxes as downloaded
@@ -708,7 +708,7 @@ final class OsmMapData: NSObject, NSCoding {
 					didChange(error) // error fetching data
 				}
 				for quadBox in query.quadList {
-					self.region.makeWhole(quadBox, success: didGetData)
+					self.region.updateDownloadStatus(quadBox, success: didGetData)
 				}
 				progress.progressDecrement()
 			})
@@ -1459,6 +1459,11 @@ final class OsmMapData: NSObject, NSCoding {
 	}
 
 	func discardStaleData() -> Bool {
+		#if DEBUG
+		let minTimeBetweenDiscards = 5.0	// seconds
+		#else
+		let minTimeBetweenDiscards = 60.0	// seconds
+		#endif
 		if modificationCount() > 0 {
 			return false
 		}
@@ -1466,12 +1471,16 @@ final class OsmMapData: NSObject, NSCoding {
 
 		// don't discard too frequently
 		let now = Date()
-		if now.timeIntervalSince(previousDiscardDate) < 60 {
+		if now.timeIntervalSince(previousDiscardDate) < minTimeBetweenDiscards {
 			return false
 		}
 
 		// remove objects if they are too old, or we have too many:
-		let limit = 100000
+		#if DEBUG
+		let limit = 10_000
+		#else
+		let limit = 100_000
+		#endif
 		var oldest = Date(timeIntervalSinceNow: -24 * 60 * 60)
 
 		// get rid of old quads marked as downloaded
@@ -1527,17 +1536,16 @@ final class OsmMapData: NSObject, NSCoding {
 				let memberObjects = relation.allMemberObjects()
 				var covered = false
 				for obj in memberObjects {
-					if obj.isNode() != nil {
-						if region.pointIsCovered(obj.isNode()!.location()) {
+					if let node = obj as? OsmNode {
+						if region.pointIsCovered(node.location()) {
 							covered = true
+							break
 						}
-					} else if obj.isWay() != nil {
-						if region.anyNodeIsCovered(obj.isWay()!.nodes) {
+					} else if let way = obj as? OsmWay {
+						if region.anyNodeIsCovered(way.nodes) {
 							covered = true
+							break
 						}
-					}
-					if covered {
-						break
 					}
 				}
 				if !covered {

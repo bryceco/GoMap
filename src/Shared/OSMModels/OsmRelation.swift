@@ -32,35 +32,31 @@ final class OsmRelation: OsmBaseObject {
 		return self
 	}
 
-	private func forAllMemberObjectsRecurse(
-		_ callback: @escaping (OsmBaseObject) -> Void,
-		relations: inout Set<OsmRelation>)
+	static func forAllMemberObjects(inRelation relation: OsmRelation,
+									callback: (OsmBaseObject) -> Void)
 	{
-		for member in members {
-			if let obj = member.obj {
-				if let rel = obj.isRelation() {
-					if relations.contains(rel) {
-						// already processed
+		var alreadySeen = Set<OsmRelation>([relation])
+		var needToVisit = [relation]
+		while let relation = needToVisit.popLast() {
+			for member in relation.members {
+				if let obj = member.obj {
+					if let rel = obj as? OsmRelation {
+						if !alreadySeen.contains(rel) {
+							callback(obj)
+							alreadySeen.insert(rel)
+							needToVisit.append(rel)
+						}
 					} else {
 						callback(obj)
-						relations.insert(rel)
-						rel.forAllMemberObjectsRecurse(callback, relations: &relations)
 					}
-				} else {
-					callback(obj)
 				}
 			}
 		}
 	}
 
-	func forAllMemberObjects(_ callback: @escaping (OsmBaseObject) -> Void) {
-		var relations = Set<OsmRelation>([self])
-		forAllMemberObjectsRecurse(callback, relations: &relations)
-	}
-
 	func allMemberObjects() -> Set<OsmBaseObject> {
 		var objects: Set<OsmBaseObject> = []
-		forAllMemberObjects({ obj in
+		OsmRelation.forAllMemberObjects(inRelation: self, callback:{ obj in
 			objects.insert(obj)
 		})
 		return objects

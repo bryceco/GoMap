@@ -21,7 +21,7 @@ enum QUAD_ENUM: Int, CaseIterable {
 	case NW = 3
 }
 
-final class QuadBox: NSObject, Codable, NSCoding {
+final class QuadBox: NSObject, NSCoding {
 	static let emptyChildren: [QuadBox?] = [nil, nil, nil, nil]
 
 	let rect: OSMRect
@@ -29,7 +29,7 @@ final class QuadBox: NSObject, Codable, NSCoding {
 
 	var children: [QuadBox?] = QuadBox.emptyChildren
 	var downloadDate = 0.0
-	var whole = false // this quad successfully downloaded all of its data, so we don't need to track children anymore
+	var isDownloaded = false // this quad successfully downloaded all of its data, so we don't need to track children anymore
 	var busy = false // this quad is currently being downloaded
 	var isSplit = false
 	// member is used only for spatial
@@ -50,48 +50,11 @@ final class QuadBox: NSObject, Codable, NSCoding {
 
 	func reset() {
 		children = QuadBox.emptyChildren
-		whole = false
+		isDownloaded = false
 		busy = false
 		isSplit = false
 		downloadDate = 0.0
 		members = []
-	}
-
-	enum CodingKeys: String, CodingKey {
-		case whole
-		case rect
-		case isSplit = "split"
-		case downloadDate = "date"
-		case children
-	}
-
-	/*
-	 func encode(to encoder: Encoder) {
-	 	if let child0 = children[0] 	{ coder.encode( child0, forKey: "child0") }
-	 	if let child1 = children[1] 	{ coder.encode( child1, forKey: "child1") }
-	 	if let child2 = children[2] 	{ coder.encode( child2, forKey: "child2") }
-	 	if let child3 = children[3] 	{ coder.encode( child3, forKey: "child3") }
-
-	 	coder.encode(whole, forKey:@"whole")
-	 	coder encodeObject:[NSData dataWithBytes:&_rect length:sizeof _rect]	forKey:@"rect"];
-	 	[coder encodeBool:_isSplit												forKey:@"split"];
-	 	[coder encodeDouble:_downloadDate 										forKey:@"date"];
-	 }
-	 */
-	required init(from decoder: Decoder) throws {
-		let values = try decoder.container(keyedBy: CodingKeys.self)
-		children = try values.decode([QuadBox?].self, forKey: .children)
-		whole = try values.decode(Bool.self, forKey: .whole)
-		isSplit = try values.decode(Bool.self, forKey: .isSplit)
-		rect = try values.decode(OSMRect.self, forKey: .rect)
-		downloadDate = try values.decode(Double.self, forKey: .downloadDate)
-		busy = false
-		super.init()
-		for child in children {
-			if let child = child {
-				child.parent = self
-			}
-		}
 	}
 
 	func encode(with coder: NSCoder) {
@@ -99,7 +62,7 @@ final class QuadBox: NSObject, Codable, NSCoding {
 		if let child = children[1] { coder.encode(child, forKey: "child1") }
 		if let child = children[2] { coder.encode(child, forKey: "child2") }
 		if let child = children[3] { coder.encode(child, forKey: "child3") }
-		coder.encode(whole, forKey: "whole")
+		coder.encode(isDownloaded, forKey: "whole")
 		var rect = rect
 		coder.encode(Data(bytes: &rect, count: MemoryLayout.size(ofValue: rect)), forKey: "rect")
 		coder.encode(isSplit, forKey: "split")
@@ -111,7 +74,7 @@ final class QuadBox: NSObject, Codable, NSCoding {
 		children[1] = coder.decodeObject(forKey: "child1") as? QuadBox
 		children[2] = coder.decodeObject(forKey: "child2") as? QuadBox
 		children[3] = coder.decodeObject(forKey: "child3") as? QuadBox
-		whole = coder.decodeBool(forKey: "whole")
+		isDownloaded = coder.decodeBool(forKey: "whole")
 		isSplit = coder.decodeBool(forKey: "split")
 		guard let rectData = coder.decodeObject(forKey: "rect") as? Data else { return nil }
 		rect = rectData.withUnsafeBytes({ $0.load(as: OSMRect.self) })
@@ -128,7 +91,7 @@ final class QuadBox: NSObject, Codable, NSCoding {
 		}
 
 		// if we just upgraded from an older install then we may need to set a download date
-		if whole, downloadDate == 0.0 {
+		if isDownloaded, downloadDate == 0.0 {
 			downloadDate = NSDate.timeIntervalSinceReferenceDate
 		}
 	}
@@ -162,7 +125,7 @@ final class QuadBox: NSObject, Codable, NSCoding {
 	// MARK: Region
 
 	func missingPieces(_ missing: inout [QuadBox], intersecting needed: OSMRect) {
-		if whole || busy {
+		if isDownloaded || busy {
 			return
 		}
 		if !needed.intersectsRect(rect) {
@@ -218,13 +181,13 @@ final class QuadBox: NSObject, Codable, NSCoding {
 
 	// This runs after we attempted to download a quad.
 	// If the download succeeded we can mark this region and its children as whole.
-	func makeWhole(success: Bool) {
+	func updateDownloadStatus(success: Bool) {
 		if let parent = parent,
-		   parent.whole
+		   parent.isDownloaded
 		{
 			// parent was made whole (somehow) before we completed, so nothing to do
 			if countBusy() == 0 {
-				delete() // remove parent reference so we don't have a retain cycle
+				delete()
 			}
 			return
 		}
@@ -233,20 +196,20 @@ final class QuadBox: NSObject, Codable, NSCoding {
 
 		if success {
 			downloadDate = Date.timeIntervalSinceReferenceDate
-			whole = true
+			isDownloaded = true
 #if SHOW_DOWNLOAD_QUADS // Display query regions as GPX lines
 			gpxTrack = AppDelegate.getAppDelegate.mapView.gpxLayer.createGpxRect(CGRectFromOSMRect(rect))
 #endif
 			children = QuadBox.emptyChildren
 			if let parent = parent {
 				// if all children of parent exist and are whole then parent is whole as well
-				let childrenComplete = parent.children.allSatisfy({ $0?.whole ?? false })
+				let childrenComplete = parent.children.allSatisfy({ $0?.isDownloaded ?? false })
 				if childrenComplete {
 #if true
-					// we want to have fine granularity during discard phase, so don't delete children by taking the makeWhole() path
-					parent.whole = true
+					// we want to have fine granularity during discard phase, so don't delete children by taking the markDownloadStatus() path
+					parent.isDownloaded = true
 #else
-					parent.makeWhole(success)
+					parent.markDownloadStatus(success)
 #endif
 				}
 			}
@@ -271,29 +234,38 @@ final class QuadBox: NSObject, Codable, NSCoding {
 		return c
 	}
 
+	/// Discard any quads older than the given date (assuming they aren't busy).
+	/// Returns a bool whether anything was discarded.
 	func discardQuadsOlderThan(referenceDate date: Double) -> Bool {
 		if busy {
 			return false
 		}
 
-		if downloadDate != 0.0, downloadDate < date {
-			parent?.whole = false
+		if downloadDate != 0.0,
+		   downloadDate < date
+		{
+			parent?.isDownloaded = false
 			delete()
 			return true
 		} else {
-			var changed = false
-			for c in QUAD_ENUM.allCases {
-				if let child = children[c.rawValue] {
-					let del = child.discardQuadsOlderThan(referenceDate: date)
-					if del {
-						changed = true
+			var childRemoved = false
+			for child in children {
+				if let child = child {
+					if child.discardQuadsOlderThan(referenceDate: date) {
+						childRemoved = true
 					}
 				}
 			}
-			if changed, !whole, downloadDate == 0.0, !hasChildren(), parent != nil {
+			// Delete ourself if all our children are gone, and we haven't downloaded anything
+			if childRemoved,
+			   !isDownloaded,
+			   downloadDate == 0.0,
+			   !hasChildren(),
+			   parent != nil
+			{
 				delete()
 			}
-			return changed
+			return childRemoved
 		}
 	}
 
@@ -301,8 +273,8 @@ final class QuadBox: NSObject, Codable, NSCoding {
 		return discardQuadsOlderThan(referenceDate: date.timeIntervalSinceReferenceDate)
 	}
 
-	// discard the oldest "fraction" of quads, or oldestDate, whichever is more
-	// return the cutoff date selected
+	// Discard the oldest "fraction" of quads, or quads older than oldestDate, whichever is more
+	// Return the cutoff date selected, or nil if nothing to discard
 	func discardOldestQuads(fraction: Double, oldest: Date) -> Date? {
 		var oldest = oldest
 
@@ -317,13 +289,15 @@ final class QuadBox: NSObject, Codable, NSCoding {
 			if list.isEmpty {
 				return nil
 			}
-			// sort ascending by date
+			// sort ascending by date (oldest first)
 			list.sort(by: { $0.downloadDate < $1.downloadDate })
 
 			let index = Int(Double(list.count) * fraction)
-			let date2 = list[index].downloadDate
-			if date2 > oldest.timeIntervalSinceReferenceDate {
-				oldest = Date(timeIntervalSinceReferenceDate: date2) // be more aggressive and prune even more
+			let fractionDate = list[index].downloadDate
+			if fractionDate > oldest.timeIntervalSinceReferenceDate {
+				// Cutoff date based on fraction is higher (more recent)
+				// so prune based on the fraction instead
+				oldest = Date(timeIntervalSinceReferenceDate: fractionDate)
 			}
 		}
 		return discardQuadsOlderThan(referenceDate: oldest.timeIntervalSinceReferenceDate) ? oldest : nil
@@ -349,8 +323,7 @@ final class QuadBox: NSObject, Codable, NSCoding {
 		// rather than searching the entire tree for each node we start the search at the location of the previous node
 		var quad = self
 
-		node_loop:
-			for node in nodeList {
+		node_loop: for node in nodeList {
 			let point = node.location()
 			// move up until we find a quad containing the point
 			while !quad.rect.containsPoint(point), quad.parent != nil {

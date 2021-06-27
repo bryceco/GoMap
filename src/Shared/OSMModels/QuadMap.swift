@@ -65,8 +65,8 @@ class QuadMap: NSObject, NSCoding {
 		return quads
 	}
 
-	func makeWhole(_ quad: QuadBox, success: Bool) {
-		quad.makeWhole(success: success)
+	func updateDownloadStatus(_ quad: QuadBox, success: Bool) {
+		quad.updateDownloadStatus(success: success)
 	}
 
 	// MARK: Spatial
