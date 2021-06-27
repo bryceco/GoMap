@@ -406,7 +406,7 @@ final class OsmMapData: NSObject, NSCoding {
 
 		while way.nodes.count != 0 {
 			let node = way.nodes.last
-			deleteNode(inWayUnsafe: way, index: way.nodes.count - 1, preserveNode: node?.hasInterestingTags() ?? false)
+			deleteNodeUnsafe(inWay: way, index: way.nodes.count - 1, preserveNode: node?.hasInterestingTags() ?? false)
 		}
 		way.setDeleted(true, undo: undoManager)
 	}
@@ -438,7 +438,7 @@ final class OsmMapData: NSObject, NSCoding {
 		spatial.updateMember(way, fromBox: origBox, undo: undoManager)
 	}
 
-	func deleteNode(inWayUnsafe way: OsmWay, index: Int, preserveNode: Bool) {
+	func deleteNodeUnsafe(inWay way: OsmWay, index: Int, preserveNode: Bool) {
 		registerUndoCommentString(NSLocalizedString("delete node from way", comment: ""))
 		let node = way.nodes[index]
 		DbgAssert(node.wayCount > 0)

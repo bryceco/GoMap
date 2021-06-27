@@ -498,7 +498,7 @@ extension OsmMapData {
 					for index in 0..<way.nodes.count {
 						if way.nodes[index] == deadNode {
 							addNodeUnsafe(survivor, to: way, at: index)
-							deleteNode(inWayUnsafe: way, index: index + 1, preserveNode: false)
+							deleteNodeUnsafe(inWay: way, index: index + 1, preserveNode: false)
 						}
 					}
 				}
@@ -598,7 +598,7 @@ extension OsmMapData {
 			}
 
 			while way.nodes.count > newNodes.count {
-				deleteNode(inWayUnsafe: way, index: way.nodes.count - 1, preserveNode: false)
+				deleteNodeUnsafe(inWay: way, index: way.nodes.count - 1, preserveNode: false)
 			}
 
 			// reverse tags on way
@@ -714,7 +714,7 @@ extension OsmMapData {
 		return { [self] in
 			let needAreaFixup = way.nodes.last == node && way.nodes.first == node
 			while let index = way.nodes.firstIndex(of: node) {
-				deleteNode(inWayUnsafe: way, index: index, preserveNode: false)
+				deleteNodeUnsafe(inWay: way, index: index, preserveNode: false)
 			}
 			if way.nodes.count < 2 {
 				var dummy: String?
@@ -761,7 +761,7 @@ extension OsmMapData {
 				var index: Int = NSNotFound
 				repeat {
 					addNodeUnsafe(newNode, to: way, at: index + 1)
-					deleteNode(inWayUnsafe: way, index: index, preserveNode: false)
+					deleteNodeUnsafe(inWay: way, index: index, preserveNode: false)
 					index = way.nodes.firstIndex(of: node) ?? NSNotFound
 				} while index != NSNotFound
 			} else {
@@ -769,7 +769,7 @@ extension OsmMapData {
 				var index: Int?
 				index = way.nodes.firstIndex(of: node) ?? NSNotFound
 				addNodeUnsafe(newNode, to: way, at: (index ?? 0) + 1)
-				deleteNode(inWayUnsafe: way, index: index ?? 0, preserveNode: false)
+				deleteNodeUnsafe(inWay: way, index: index ?? 0, preserveNode: false)
 			}
 			return newNode
 		}
@@ -788,7 +788,7 @@ extension OsmMapData {
 
 			if wayA.isClosed() {
 				// remove duplicated node
-				deleteNode(inWayUnsafe: wayA, index: wayA.nodes.count - 1, preserveNode: false)
+				deleteNodeUnsafe(inWay: wayA, index: wayA.nodes.count - 1, preserveNode: false)
 
 				// get segment indices
 				var idxA: Int?
@@ -805,13 +805,13 @@ extension OsmMapData {
 				// delete moved nodes from original way
 				for n in wayB.nodes {
 					let i = wayA.nodes.firstIndex(of: n) ?? NSNotFound
-					deleteNode(inWayUnsafe: wayA, index: i, preserveNode: false)
+					deleteNodeUnsafe(inWay: wayA, index: i, preserveNode: false)
 				}
 
 				// rebase A so it starts with selected node
 				while wayA.nodes.first != node {
 					addNodeUnsafe(wayA.nodes.first!, to: wayA, at: wayA.nodes.count)
-					deleteNode(inWayUnsafe: wayA, index: 0, preserveNode: false)
+					deleteNodeUnsafe(inWay: wayA, index: 0, preserveNode: false)
 				}
 
 				// add shared endpoints
@@ -826,7 +826,7 @@ extension OsmMapData {
 				idx = (wayA.nodes.firstIndex(of: node) ?? NSNotFound) + 1
 				while idx < wayA.nodes.count {
 					addNodeUnsafe(wayA.nodes[idx], to: wayB, at: wayB.nodes.count)
-					deleteNode(inWayUnsafe: wayA, index: idx, preserveNode: false)
+					deleteNodeUnsafe(inWay: wayA, index: idx, preserveNode: false)
 				}
 			}
 
