@@ -11,13 +11,13 @@ import Foundation
 final class PersistentWebCache<T: AnyObject> {
 	private let cacheDirectory: URL
 	private let memoryCache: NSCache<NSString, T>
-	private var pending: [String: [(T?)
-			-> Void]] // track objects we're already downloading so we don't issue multiple requests
+	// track objects we're already downloading so we don't issue multiple requests
+	private var pending: [String: [(T?) -> Void]]
 
 	class func encodeKey(forFilesystem string: String) -> String {
 		var string = string
 		let allowed = CharacterSet(charactersIn: "/").inverted
-		string = string.addingPercentEncoding(withAllowedCharacters: allowed) ?? ""
+		string = string.addingPercentEncoding(withAllowedCharacters: allowed) ?? string
 		return string
 	}
 
@@ -43,21 +43,21 @@ final class PersistentWebCache<T: AnyObject> {
 
 	init(name: String, memorySize: Int) {
 		let name = PersistentWebCache.encodeKey(forFilesystem: name)
-		let bundleName = Bundle.main.infoDictionary?["CFBundleIdentifier"] as? String
+		let bundleName = Bundle.main.infoDictionary?["CFBundleIdentifier"] as! String
 		cacheDirectory = try! FileManager.default.url(
 			for: .cachesDirectory,
 			in: .userDomainMask,
 			appropriateFor: nil,
-			create: true).appendingPathComponent(bundleName ?? "", isDirectory: true)
+			create: true).appendingPathComponent(bundleName, isDirectory: true)
 			.appendingPathComponent(name, isDirectory: true)
 
 		memoryCache = NSCache<NSString, T>()
-		memoryCache.countLimit = 10000
+		memoryCache.countLimit = 1000
 		memoryCache.totalCostLimit = memorySize
 
 		pending = [:]
 
-		try! FileManager.default.createDirectory(
+		try? FileManager.default.createDirectory(
 			at: cacheDirectory,
 			withIntermediateDirectories: true,
 			attributes: nil)

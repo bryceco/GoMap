@@ -70,8 +70,8 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 	}
 
 	var tileServer: TileServer {
-		willSet(service) {
-			if service === tileServer {
+		didSet {
+			if oldValue === tileServer {
 				return
 			}
 
@@ -80,7 +80,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 			layerDict.removeAll()
 
 			// update service
-			webCache = PersistentWebCache(name: service.identifier, memorySize: 20 * 1000 * 1000)
+			webCache = PersistentWebCache(name: tileServer.identifier, memorySize: 20 * 1000 * 1000)
 
 			let expirationDate = Date(timeIntervalSinceNow: -7 * 24 * 60 * 60)
 			purgeOldCacheItemsAsync(expirationDate)

@@ -162,9 +162,9 @@ final class OsmMapData: NSObject, NSCoding {
 		let ident: OsmIdentifier = ext.ident
 		let type: OSM_TYPE = ext.type
 		switch type {
-		case .NODE:		return nodes[ident]
-		case .WAY:		return ways[ident]
-		case .RELATION:	return relations[ident]
+		case .NODE: return nodes[ident]
+		case .WAY: return ways[ident]
+		case .RELATION: return relations[ident]
 		}
 	}
 
