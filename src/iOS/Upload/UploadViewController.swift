@@ -153,7 +153,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 				dismiss(animated: true)
 
 				// flash success message
-				let popTime = DispatchTime.now() + Double(Int64(0.3 * Double(NSEC_PER_SEC)))
+				let popTime = DispatchTime.now() + 0.3 * Double(NSEC_PER_SEC)
 				DispatchQueue.main.asyncAfter(deadline: popTime, execute: {
 					appDelegate.mapView.editorLayer.setNeedsLayout()
 					appDelegate.mapView.flashMessage(NSLocalizedString("Upload complete!", comment: ""), duration: 1.5)
@@ -186,8 +186,8 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 				completion(NSLocalizedString("The XML is improperly formed", comment: ""))
 				return
 			}
-			mapData?.uploadChangesetXml(
-				xmlDoc,
+			mapData?.openChangesetAndUpload(
+				xml: xmlDoc,
 				comment: comment,
 				source: source,
 				imagery: imagery,

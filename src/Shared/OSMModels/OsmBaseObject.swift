@@ -147,6 +147,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		super.init()
 	}
 
+	/// Initialize with XML downloaded from OSM server
 	init?(fromXmlDict attributeDict: [String: Any]) {
 		if let version = attributeDict["version"] as? String,
 		   let version = Int(version),

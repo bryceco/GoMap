@@ -8,8 +8,7 @@
 
 final class OsmNode: OsmBaseObject {
 	private(set) var latLon: LatLon
-
-	var wayCount = 0
+	private(set) var wayCount: Int
 
 	var turnRestrictionParentWay: OsmWay! // temporarily used during turn restriction processing
 
@@ -94,6 +93,7 @@ final class OsmNode: OsmBaseObject {
 		tags: [String: String])
 	{
 		latLon = .zero
+		wayCount = 0
 		super.init(
 			withVersion: version,
 			changeset: changeset,
@@ -109,8 +109,10 @@ final class OsmNode: OsmBaseObject {
 		self.init(withVersion: 1, changeset: 0, user: userName, uid: 0, ident: ident, timestamp: "", tags: [:])
 	}
 
+	/// Initialize with XML downloaded from OSM server
 	override init?(fromXmlDict attributeDict: [String: Any]) {
 		latLon = .zero
+		wayCount = 0
 		super.init(fromXmlDict: attributeDict)
 	}
 
@@ -118,8 +120,8 @@ final class OsmNode: OsmBaseObject {
 		let lat = coder.decodeDouble(forKey: "lat")
 		let lon = coder.decodeDouble(forKey: "lon")
 		latLon = LatLon(latitude: lat, longitude: lon)
+		wayCount = 0
 		super.init(coder: coder)
-		wayCount = coder.decodeInteger(forKey: "wayCount")
 		_constructed = true
 	}
 
@@ -127,10 +129,9 @@ final class OsmNode: OsmBaseObject {
 		super.encode(with: coder)
 		coder.encode(latLon.lat, forKey: "lat")
 		coder.encode(latLon.lon, forKey: "lon")
-		coder.encode(wayCount, forKey: "wayCount")
 	}
 
-	@objc func setWayCount(_ wayCount: Int, undo: MyUndoManager?) {
+	func setWayCount(_ wayCount: Int, undo: MyUndoManager?) {
 		if _constructed, undo != nil {
 			undo!.registerUndo(
 				withTarget: self,

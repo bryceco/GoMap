@@ -507,20 +507,6 @@ final class OsmWay: OsmBaseObject {
 		return best
 	}
 
-	required init?(coder: NSCoder) {
-		nodes = coder.decodeObject(forKey: "nodes") as! [OsmNode]
-		super.init(coder: coder)
-		_constructed = true
-#if DEBUG
-		for node in nodes {
-			if node.wayCount == 0 {
-				print("node \(node.ident) @ \(Unmanaged.passUnretained(node).toOpaque()) waycount = \(node.wayCount)")
-				assert(node.wayCount > 0)
-			}
-		}
-#endif
-	}
-
 	override init(
 		withVersion version: Int,
 		changeset: Int64,
@@ -543,24 +529,31 @@ final class OsmWay: OsmBaseObject {
 
 	convenience init(asUserCreated userName: String) {
 		let ident = OsmBaseObject.nextUnusedIdentifier()
-		self.init(withVersion: 1, changeset: 0, user: userName, uid: 0, ident: ident, timestamp: "", tags: [:])
+		self.init(withVersion: 1,
+		          changeset: 0,
+		          user: userName,
+		          uid: 0,
+		          ident: ident,
+		          timestamp: "",
+		          tags: [:])
 	}
 
+	/// Initialize with XML downloaded from OSM server
 	override init?(fromXmlDict attributeDict: [String: Any]) {
 		nodes = []
 		super.init(fromXmlDict: attributeDict)
 	}
 
-	override func encode(with coder: NSCoder) {
-#if DEBUG
+	required init?(coder: NSCoder) {
+		nodes = coder.decodeObject(forKey: "nodes") as! [OsmNode]
+		super.init(coder: coder)
 		for node in nodes {
-			if node.wayCount == 0 {
-				print("way \(ident) @ \(address()) nodes = \(nodes.count)")
-				print("node \(node.ident) @ \(node.address()) waycount = \(node.wayCount)")
-				assert(node.wayCount > 0)
-			}
+			node.setWayCount(node.wayCount + 1, undo: nil)
 		}
-#endif
+		_constructed = true
+	}
+
+	override func encode(with coder: NSCoder) {
 		super.encode(with: coder)
 		coder.encode(nodes, forKey: "nodes")
 	}
