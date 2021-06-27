@@ -537,7 +537,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		if let feature = PresetsDatabase.shared.matchObjectTagsToFeature(tags,
 		                                                                 geometry: geometryName(),
 		                                                                 includeNSI: true),
-		   !feature.isGeneric()
+			!feature.isGeneric()
 		{
 			return feature.friendlyName()
 		}
@@ -597,7 +597,9 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		if let node = isNode() {
 			if node.wayCount > 0 {
 				return details
-					? String.localizedStringWithFormat(NSLocalizedString("node %@ (in way)", comment: ""), NSNumber(value: ident))
+					? String.localizedStringWithFormat(
+						NSLocalizedString("node %@ (in way)", comment: ""),
+						NSNumber(value: ident))
 					: NSLocalizedString("(node in way)", comment: "")
 			}
 			return details
@@ -619,7 +621,9 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 					return String.localizedStringWithFormat(NSLocalizedString("%@ (relation)", comment: ""), type)
 				}
 			}
-			return String.localizedStringWithFormat(NSLocalizedString("(relation %@)", comment: ""), NSNumber(value: ident))
+			return String.localizedStringWithFormat(
+				NSLocalizedString("(relation %@)", comment: ""),
+				NSNumber(value: ident))
 		}
 		return NSLocalizedString("other object", comment: "")
 	}

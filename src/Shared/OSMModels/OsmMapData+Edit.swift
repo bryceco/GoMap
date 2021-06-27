@@ -405,7 +405,7 @@ extension OsmMapData {
 					}
 				} else if member.isWay() {
 					guard let way = member.obj as? OsmWay,
-						  way.nodes.count > 0
+					      way.nodes.count > 0
 					else {
 						error = NSLocalizedString("A relation the node belongs to is not fully downloaded", comment: "")
 						return nil

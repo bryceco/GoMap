@@ -82,13 +82,12 @@ final class PresetFeature {
 		return featureID
 	}
 
-
 	func isGeneric() -> Bool {
 		return featureID == "point" ||
-				featureID == "line" ||
-				featureID == "area"
+			featureID == "line" ||
+			featureID == "area"
 	}
-	
+
 	func friendlyName() -> String {
 		return name ?? featureID
 	}

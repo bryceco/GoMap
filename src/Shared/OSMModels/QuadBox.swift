@@ -25,11 +25,12 @@ final class QuadBox: NSObject, NSCoding {
 	static let emptyChildren: [QuadBox?] = [nil, nil, nil, nil]
 
 	let rect: OSMRect
-	var parent: QuadBox? = nil
+	var parent: QuadBox?
 
 	var children: [QuadBox?] = QuadBox.emptyChildren
 	var downloadDate = 0.0
-	var isDownloaded = false // this quad successfully downloaded all of its data, so we don't need to track children anymore
+	var isDownloaded =
+		false // this quad successfully downloaded all of its data, so we don't need to track children anymore
 	var busy = false // this quad is currently being downloaded
 	var isSplit = false
 	// member is used only for spatial

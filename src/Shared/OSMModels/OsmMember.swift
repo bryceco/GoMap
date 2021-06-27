@@ -43,6 +43,7 @@ final class OsmMember: NSObject, NSCoding {
 	func deresolveRef() {
 		obj = nil
 	}
+
 	func resolveRef(to object: OsmBaseObject) {
 		assert(ref == object.ident)
 		obj = object

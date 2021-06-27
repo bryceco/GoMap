@@ -1448,11 +1448,11 @@ final class OsmMapData: NSObject, NSCoding {
 	}
 
 	func discardStaleData() -> Bool {
-		#if DEBUG
-		let minTimeBetweenDiscards = 5.0	// seconds
-		#else
-		let minTimeBetweenDiscards = 60.0	// seconds
-		#endif
+#if DEBUG
+		let minTimeBetweenDiscards = 5.0 // seconds
+#else
+		let minTimeBetweenDiscards = 60.0 // seconds
+#endif
 		if modificationCount() > 0 {
 			return false
 		}
@@ -1464,12 +1464,12 @@ final class OsmMapData: NSObject, NSCoding {
 			return false
 		}
 
-		// remove objects if they are too old, or we have too many:
-		#if DEBUG
-		let limit = 10_000
-		#else
-		let limit = 100_000
-		#endif
+// remove objects if they are too old, or we have too many:
+#if DEBUG
+		let limit = 10000
+#else
+		let limit = 100000
+#endif
 		var oldest = Date(timeIntervalSinceNow: -24 * 60 * 60)
 
 		// get rid of old quads marked as downloaded

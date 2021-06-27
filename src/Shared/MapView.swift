@@ -1348,11 +1348,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		if progressActive.value() == 0 {
 			progressIndicator.stopAnimating()
 		}
-		#if DEBUG
+#if DEBUG
 		if progressActive.value() < 0 {
 			print("progressDecrement = \(progressActive.value())")
 		}
-		#endif
+#endif
 	}
 
 	func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

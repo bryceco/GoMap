@@ -33,7 +33,7 @@ final class OsmRelation: OsmBaseObject {
 	}
 
 	static func forAllMemberObjects(inRelation relation: OsmRelation,
-									callback: (OsmBaseObject) -> Void)
+	                                callback: (OsmBaseObject) -> Void)
 	{
 		var alreadySeen = Set<OsmRelation>([relation])
 		var needToVisit = [relation]
@@ -56,7 +56,7 @@ final class OsmRelation: OsmBaseObject {
 
 	func allMemberObjects() -> Set<OsmBaseObject> {
 		var objects: Set<OsmBaseObject> = []
-		OsmRelation.forAllMemberObjects(inRelation: self, callback:{ obj in
+		OsmRelation.forAllMemberObjects(inRelation: self, callback: { obj in
 			objects.insert(obj)
 		})
 		return objects

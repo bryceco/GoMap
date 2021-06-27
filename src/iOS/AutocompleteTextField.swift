@@ -120,9 +120,9 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 		}
 	}
 
-    func frameForCompletionTableView() -> CGRect {
-		guard let cell: UITableViewCell = self.superviewOfType(),
-		   let tableView: UITableView = cell.superviewOfType()
+	func frameForCompletionTableView() -> CGRect {
+		guard let cell: UITableViewCell = superviewOfType(),
+		      let tableView: UITableView = cell.superviewOfType()
 		else {
 			return .zero
 		}
