@@ -536,13 +536,10 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 		if let feature = PresetsDatabase.shared.matchObjectTagsToFeature(tags,
 		                                                                 geometry: geometryName(),
-		                                                                 includeNSI: true)
+		                                                                 includeNSI: true),
+		   !feature.isGeneric()
 		{
-			let isGeneric = (feature.featureID == "point") || (feature.featureID == "line") ||
-				(feature.featureID == "area")
-			if !isGeneric {
-				return feature.friendlyName()
-			}
+			return feature.friendlyName()
 		}
 
 		if isRelation() != nil {
