@@ -330,11 +330,6 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 	@objc func draggingGesture(_ gesture: UIPanGestureRecognizer) {
 		let delta = gesture.translation(in: gesture.view)
 
-		if gesture.state == .began {
-			print("start drag \(delta)")
-		} else {
-			print("continue drag \(delta)")
-		}
 		arrowPoint = CGPoint(x: arrowPoint.x + delta.x, y: arrowPoint.y + delta.y)
 
 		if let dragCallback = dragCallback {
