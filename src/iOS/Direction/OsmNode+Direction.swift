@@ -32,8 +32,7 @@ extension OsmNode {
 	]
 
 	/// The direction in which the node is facing.
-	/// Since Objective-C is not able to work with optionals, the direction is `NSNotFound`
-	/// if the node does not have a direction value instead of being `nil`.
+	/// If the node does not have a direction value return `nil`.
 	var direction: NSRange? {
 		let keys = ["direction", "camera:direction"]
 		for directionKey in keys {
@@ -54,9 +53,8 @@ extension OsmNode {
 			if a.count == 2 {
 				let a0 = String(a[0])
 				let a1 = String(a[1])
-				if
-					let d1 = Float(a0) ?? cardinalDictionary[a0],
-					let d2 = Float(a1) ?? cardinalDictionary[a1]
+				if let d1 = Float(a0) ?? cardinalDictionary[a0],
+				   let d2 = Float(a1) ?? cardinalDictionary[a1]
 				{
 					var angle = Int(d2 - d1)
 					if angle < 0 {

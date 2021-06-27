@@ -281,11 +281,11 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 		var ident = Int64((name as NSString).substring(from: 1)) ?? 0
 		switch name[name.index(name.startIndex, offsetBy: 0)] {
 		case "n":
-			ident = OsmExtendedIdentifier(._NODE, ident).rawValue
+			ident = OsmExtendedIdentifier(.NODE, ident).rawValue
 		case "w":
-			ident = OsmExtendedIdentifier(._WAY, ident).rawValue
+			ident = OsmExtendedIdentifier(.WAY, ident).rawValue
 		case "r":
-			ident = OsmExtendedIdentifier(._RELATION, ident).rawValue
+			ident = OsmExtendedIdentifier(.RELATION, ident).rawValue
 		default:
 			return false
 		}

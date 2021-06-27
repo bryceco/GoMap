@@ -791,7 +791,7 @@ class POIAllTagsViewController: UITableViewController {
 		let replacementLength = string.count
 		let rangeLength = range.length
 		let newLength = oldLength - rangeLength + replacementLength
-		let returnKey = (string as NSString).range(of: "\n").location != NSNotFound
+		let returnKey = string.range(of: "\n") != nil
 		return newLength <= MAX_LENGTH || returnKey
 	}
 

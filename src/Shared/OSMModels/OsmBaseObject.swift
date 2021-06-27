@@ -9,22 +9,22 @@
 import Foundation
 import UIKit
 
-@objc enum OSM_TYPE: Int {
-	case _NODE = 1
-	case _WAY = 2
-	case _RELATION = 3
+enum OSM_TYPE: Int {
+	case NODE = 1
+	case WAY = 2
+	case RELATION = 3
 }
 
-@objc enum ONEWAY: Int {
-	case _BACKWARD = -1
-	case _NONE = 0
-	case _FORWARD = 1
+enum ONEWAY: Int {
+	case BACKWARD = -1
+	case NONE = 0
+	case FORWARD = 1
 }
 
-@objc enum TRISTATE: Int {
-	case _UNKNOWN
-	case _YES
-	case _NO
+enum TRISTATE: Int {
+	case UNKNOWN
+	case YES
+	case NO
 }
 
 let PATH_SCALING = (256 * 256.0)
@@ -40,7 +40,7 @@ struct OsmExtendedIdentifier: Equatable, Hashable {
 	}
 
 	init(_ obj: OsmBaseObject) {
-		let type: OSM_TYPE = obj is OsmNode ? ._NODE : obj is OsmWay ? ._WAY : ._RELATION
+		let type: OSM_TYPE = obj is OsmNode ? .NODE : obj is OsmWay ? .WAY : .RELATION
 		self.init(type, obj.ident)
 	}
 
@@ -69,7 +69,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	private(set) final var uid: Int
 	private(set) final var visible: Bool
 
-	final var isShown = TRISTATE._UNKNOWN
+	final var isShown = TRISTATE.UNKNOWN
 
 	// extra stuff
 
@@ -400,7 +400,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	func clearCachedProperties() {
 		renderInfo = nil
 		renderPriorityCached = 0
-		isShown = ._UNKNOWN
+		isShown = .UNKNOWN
 		_boundingBox = nil
 
 		for layer in shapeLayers ?? [] {

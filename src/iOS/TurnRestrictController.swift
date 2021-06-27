@@ -324,7 +324,7 @@ class TurnRestrictController: UIViewController {
 		editor.selectedWay = selectedHwy.wayObj
 
 		selectedHwy.wayObj = selectedHwy.connectedNode?.turnRestrictionParentWay
-		uTurnButton?.isHidden = selectedFromHwy?.wayObj?.isOneWay != ONEWAY._NONE
+		uTurnButton?.isHidden = selectedFromHwy?.wayObj?.isOneWay != ONEWAY.NONE
 
 		let angle = TurnRestrictHwyView.heading(from: selectedHwy.endPoint, to: selectedHwy.centerPoint)
 		uTurnButton?.transform = CGAffineTransform(rotationAngle: .pi + CGFloat(angle))
@@ -457,8 +457,8 @@ class TurnRestrictController: UIViewController {
 
 		if fabs(angle) < 23.0 {
 			return "straight_on"
-		} else if (toHwy.wayObj?.isOneWay ?? ONEWAY._NONE) != ONEWAY._NONE,
-		          (fromHwy.wayObj?.isOneWay ?? ONEWAY._NONE) != ONEWAY._NONE,
+		} else if (toHwy.wayObj?.isOneWay ?? ONEWAY.NONE) != ONEWAY.NONE,
+		          (fromHwy.wayObj?.isOneWay ?? ONEWAY.NONE) != ONEWAY.NONE,
 		          fabs(fabs(angle) - 180.0) < 40.0
 		{
 			// more likely a u-turn if both are one-way

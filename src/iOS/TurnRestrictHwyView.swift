@@ -75,19 +75,17 @@ class TurnRestrictHwyView: UIView {
 	}
 
 	func createOneWayArrowsForHighway() {
-		if wayObj?.isOneWay == ONEWAY._NONE {
+		guard let wayObj = wayObj else { return }
+		if wayObj.isOneWay == .NONE {
 			return
 		}
 
-		var centerIndex: Int?
-		if let centerNode = centerNode {
-			centerIndex = wayObj?.nodes.firstIndex(of: centerNode) ?? NSNotFound
-		}
-		var otherIndex: Int?
-		if let connectedNode = connectedNode {
-			otherIndex = wayObj?.nodes.firstIndex(of: connectedNode) ?? NSNotFound
-		}
-		let forwardOneWay = (wayObj?.isOneWay == ONEWAY._FORWARD) == ((otherIndex ?? 0) > (centerIndex ?? 0))
+		guard let centerNode = centerNode,
+		      let centerIndex = wayObj.nodes.firstIndex(of: centerNode),
+		      let connectedNode = connectedNode,
+		      let otherIndex = wayObj.nodes.firstIndex(of: connectedNode)
+		else { return }
+		let forwardOneWay = (wayObj.isOneWay == ONEWAY.FORWARD) == (otherIndex > centerIndex)
 
 		// create 3 arrows on highway
 		let location1 = MidPointOf(centerPoint, endPoint)
@@ -134,19 +132,15 @@ class TurnRestrictHwyView: UIView {
 	}
 
 	func isOneWayExitingCenter() -> Bool {
-		let way = wayObj
-		if way?.isOneWay != nil {
-			var centerIndex: Int?
-			if let centerNode = centerNode {
-				centerIndex = way?.nodes.firstIndex(of: centerNode) ?? NSNotFound
-			}
-			var otherIndex: Int?
-			if let connectedNode = connectedNode {
-				otherIndex = way?.nodes.firstIndex(of: connectedNode) ?? NSNotFound
-			}
-			if ((otherIndex ?? 0) > (centerIndex ?? 0)) == (way?.isOneWay == ONEWAY._FORWARD) {
-				return true
-			}
+		if let way = wayObj,
+		   way.isOneWay != ONEWAY.NONE,
+		   let centerNode = centerNode,
+		   let connectedNode = connectedNode,
+		   let centerIndex = way.nodes.firstIndex(of: centerNode),
+		   let otherIndex = way.nodes.firstIndex(of: connectedNode),
+		   (otherIndex > centerIndex) == (way.isOneWay == ONEWAY.FORWARD)
+		{
+			return true
 		}
 		return false
 	}
@@ -162,7 +156,7 @@ class TurnRestrictHwyView: UIView {
 			if let connectedNode = connectedNode {
 				otherIndex = way?.nodes.firstIndex(of: connectedNode) ?? NSNotFound
 			}
-			if ((otherIndex ?? 0) < (centerIndex ?? 0)) == (way?.isOneWay == ONEWAY._FORWARD) {
+			if ((otherIndex ?? 0) < (centerIndex ?? 0)) == (way?.isOneWay == ONEWAY.FORWARD) {
 				return true
 			}
 		}

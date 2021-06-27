@@ -139,23 +139,23 @@ final class OsmWay: OsmBaseObject {
 	func computeIsOneWay() -> ONEWAY {
 		if let oneWayVal = tags["oneway"] {
 			if (oneWayVal == "yes") || (oneWayVal == "1") {
-				return ._FORWARD
+				return .FORWARD
 			}
 			if (oneWayVal == "no") || (oneWayVal == "0") {
-				return ._NONE
+				return .NONE
 			}
 			if oneWayVal == "-1" {
-				return ._BACKWARD
+				return .BACKWARD
 			}
 		}
 		for (tag, value) in tags {
 			if let valueDict = OsmWay.computeIsOneWayOneWayTags[tag],
 			   valueDict[value] != nil
 			{
-				return ._FORWARD
+				return .FORWARD
 			}
 		}
-		return ._NONE
+		return .NONE
 	}
 
 	func sharesNodes(with way: OsmWay) -> Bool {

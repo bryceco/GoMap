@@ -626,14 +626,14 @@ extension OsmMapData {
 			// reverse roles in relations the way belongs to
 			for relation in way.parentRelations {
 				for member in relation.members {
-					if member.obj == way {
-						let newRole = roleReversals[member.role ?? ""]
-						if newRole != "" {
-							let index = relation.members.firstIndex(of: member) ?? NSNotFound
-							let newMember = OsmMember(obj: way, role: newRole)
-							deleteMember(inRelationUnsafe: relation, index: index)
-							addMemberUnsafe(newMember, to: relation, at: index)
-						}
+					if member.obj == way,
+					   let role = member.role,
+					   let newRole = roleReversals[role],
+					   let index = relation.members.firstIndex(of: member)
+					{
+						let newMember = OsmMember(obj: way, role: newRole)
+						deleteMember(inRelationUnsafe: relation, index: index)
+						addMemberUnsafe(newMember, to: relation, at: index)
 					}
 				}
 			}
@@ -789,9 +789,8 @@ extension OsmMapData {
 				deleteNodeUnsafe(inWay: wayA, index: wayA.nodes.count - 1, preserveNode: false)
 
 				// get segment indices
-				var idxA: Int?
-				idxA = wayA.nodes.firstIndex(of: node) ?? NSNotFound
-				let idxB = splitArea(wayA.nodes, idxA ?? 0)
+				let idxA = wayA.nodes.firstIndex(of: node)!
+				let idxB = splitArea(wayA.nodes, idxA)
 
 				// build new way
 				var i = idxB
@@ -802,7 +801,7 @@ extension OsmMapData {
 
 				// delete moved nodes from original way
 				for n in wayB.nodes {
-					let i = wayA.nodes.firstIndex(of: n) ?? NSNotFound
+					let i = wayA.nodes.firstIndex(of: n)!
 					deleteNodeUnsafe(inWay: wayA, index: i, preserveNode: false)
 				}
 
@@ -820,8 +819,7 @@ extension OsmMapData {
 				addNodeUnsafe(node, to: wayB, at: 0)
 
 				// move remaining nodes to 2nd way
-				var idx: Int = 0
-				idx = (wayA.nodes.firstIndex(of: node) ?? NSNotFound) + 1
+				let idx = wayA.nodes.firstIndex(of: node)! + 1
 				while idx < wayA.nodes.count {
 					addNodeUnsafe(wayA.nodes[idx], to: wayB, at: wayB.nodes.count)
 					deleteNodeUnsafe(inWay: wayA, index: idx, preserveNode: false)

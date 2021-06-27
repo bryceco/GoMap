@@ -188,13 +188,13 @@ final class OsmNote {
 
 		switch osmType {
 		case "node":
-			type = OSM_TYPE._NODE
+			type = OSM_TYPE.NODE
 			object = mapData.nodes[osmIdent]
 		case "way":
-			type = OSM_TYPE._WAY
+			type = OSM_TYPE.WAY
 			object = mapData.ways[osmIdent]
 		case "relation":
-			type = OSM_TYPE._RELATION
+			type = OSM_TYPE.RELATION
 			object = mapData.relations[osmIdent]
 		default:
 			return nil
