@@ -40,6 +40,9 @@ final class OsmMember: NSObject, NSCoding {
 		super.init()
 	}
 
+	func deresolveRef() {
+		obj = nil
+	}
 	func resolveRef(to object: OsmBaseObject) {
 		assert(ref == object.ident)
 		obj = object

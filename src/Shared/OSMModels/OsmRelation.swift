@@ -109,6 +109,7 @@ final class OsmRelation: OsmBaseObject {
 		for member in members {
 			if let obj = member.obj {
 				assert(member.ref == obj.ident)
+				member.deresolveRef()
 				obj.removeParentRelation(self, undo: nil)
 			}
 		}

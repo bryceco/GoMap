@@ -776,8 +776,6 @@ final class OsmMapData: NSObject, NSCoding {
 			}
 		}
 
-		consistencyCheck()
-
 		// All relations, including old ones, need to be resolved against new objects
 		// In addition we need to recompute bounding boxes of relations every time
 		// in case a member is another relation that changed size.
@@ -1495,6 +1493,8 @@ final class OsmMapData: NSObject, NSCoding {
 			}
 		}
 
+		consistencyCheck()
+
 		var t = CACurrentMediaTime()
 
 		var didExpand = false
@@ -1811,7 +1811,7 @@ final class OsmMapData: NSObject, NSCoding {
 	}
 
 	func consistencyCheck() {
-#if DEBUG && false
+#if DEBUG
 		// This is extremely expensive: DEBUG only!
 		print("Checking spatial database consistency")
 
@@ -1832,6 +1832,7 @@ final class OsmMapData: NSObject, NSCoding {
 			}
 		}
 
+#if false
 		// check for duplicated/overlappying nodes
 		var locSet = [OSMPoint: OsmNode]()
 		for (ident, node) in nodes {
@@ -1844,6 +1845,7 @@ final class OsmMapData: NSObject, NSCoding {
 				locSet[loc] = node
 			}
 		}
+#endif
 
 		// check for duplicate consecutive nodes in a way
 		for way in ways.values {
