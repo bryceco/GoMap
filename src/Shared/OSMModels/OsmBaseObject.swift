@@ -536,7 +536,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		}
 
 		if let feature = PresetsDatabase.shared.matchObjectTagsToFeature(tags,
-		                                                                 geometry: geometryName(),
+		                                                                 geometry: geometry(),
 		                                                                 includeNSI: true),
 			!feature.isGeneric()
 		{
@@ -668,26 +668,30 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		parentRelations.remove(at: index)
 	}
 
-	func geometryName() -> String {
+	func geometry() -> GEOMETRY {
 		if let way = isWay() {
 			if way.isArea() {
-				return GEOMETRY_AREA
+				return GEOMETRY.AREA
 			} else {
-				return GEOMETRY_WAY
+				return GEOMETRY.LINE
 			}
 		} else if let node = isNode() {
 			if node.wayCount > 0 {
-				return GEOMETRY_VERTEX
+				return GEOMETRY.VERTEX
 			} else {
-				return GEOMETRY_NODE
+				return GEOMETRY.NODE
 			}
 		} else if let relation = isRelation() {
 			if relation.isMultipolygon() {
-				return GEOMETRY_AREA
+				return GEOMETRY.AREA
 			} else {
-				return GEOMETRY_WAY
+				return GEOMETRY.LINE
 			}
 		}
-		return ""
+		fatalError()
+	}
+
+	func geometryName() -> String {
+		return geometry().rawValue
 	}
 }

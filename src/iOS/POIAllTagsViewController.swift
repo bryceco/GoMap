@@ -73,7 +73,7 @@ class POIAllTagsViewController: UITableViewController {
 	// return -1 if unchanged, else row to set focus
 	func updateWithRecomendations(forFeature forceReload: Bool) -> Int {
 		let tabController = tabBarController as? POITabBarController
-		let geometry = tabController?.selection?.geometryName() ?? GEOMETRY_NODE
+		let geometry = tabController?.selection?.geometry() ?? GEOMETRY.NODE
 		let dict = keyValueDictionary()
 		let newFeature = PresetsDatabase.shared.matchObjectTagsToFeature(
 			dict,

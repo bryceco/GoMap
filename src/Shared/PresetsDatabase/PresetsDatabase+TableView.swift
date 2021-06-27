@@ -16,14 +16,15 @@ enum PresetFeatureOrCategory {
 
 // The entire presets database from iD
 extension PresetsDatabase {
-	func featuresAndCategoriesForGeometry(_ geometry: String) -> [PresetFeatureOrCategory] {
-		let list = jsonDefaults[geometry] as! [String]
+	func featuresAndCategoriesForGeometry(_ geometry: GEOMETRY) -> [PresetFeatureOrCategory] {
+		let list = jsonDefaults[geometry.rawValue] as! [String]
 		let featureList = featuresAndCategoriesForMemberList(memberList: list)
 		return featureList
 	}
 
-	func featuresInCategory(_ category: PresetCategory?, matching searchText: String,
-	                        geometry: String) -> [PresetFeature]
+	func featuresInCategory(_ category: PresetCategory?,
+							matching searchText: String,
+	                        geometry: GEOMETRY) -> [PresetFeature]
 	{
 		var list = [PresetFeature]()
 		if let category = category {
@@ -400,14 +401,17 @@ extension PresetsDatabase {
 		return tag
 	}
 
-	func groupForField(fieldName: String, geometry: String, ignore: [String]?, update: (() -> Void)?) -> PresetGroup? {
+	func groupForField(fieldName: String,
+					   geometry: GEOMETRY,
+					   ignore: [String]?,
+					   update: (() -> Void)?) -> PresetGroup? {
 		guard let dict = jsonFields[fieldName] as? [String: Any] else { return nil }
 		if dict.count == 0 {
 			return nil
 		}
 
 		if let geoList = dict["geometry"] as? [String] {
-			if !geoList.contains(geometry) {
+			if !geoList.contains(geometry.rawValue) {
 				return nil
 			}
 		}

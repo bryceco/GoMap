@@ -25,10 +25,12 @@ let UITextAutocapitalizationTypeWords = 2
 
 #endif
 
-let GEOMETRY_AREA = "area"
-let GEOMETRY_WAY = "line"
-let GEOMETRY_NODE = "point"
-let GEOMETRY_VERTEX = "vertex"
+enum GEOMETRY: String {
+	case NODE = "point"
+	case LINE = "line"
+	case AREA = "area"
+	case VERTEX = "vertex"
+}
 
 // A key along with information about possible values
 class PresetKey: NSObject, NSSecureCoding {

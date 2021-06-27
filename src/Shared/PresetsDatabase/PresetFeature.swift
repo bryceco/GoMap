@@ -131,11 +131,11 @@ final class PresetFeature {
 		return nil
 	}
 
-	func matchesSearchText(_ searchText: String?, geometry: String) -> Bool {
+	func matchesSearchText(_ searchText: String?, geometry: GEOMETRY) -> Bool {
 		guard let searchText = searchText else {
 			return false
 		}
-		if !self.geometry.contains(geometry) {
+		if !self.geometry.contains(geometry.rawValue) {
 			return false
 		}
 		if featureID.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) != nil {
@@ -152,8 +152,8 @@ final class PresetFeature {
 		return false
 	}
 
-	func matchObjectTagsScore(_ objectTags: [String: String], geometry: String) -> Double {
-		guard self.geometry.contains(geometry) else { return 0.0 }
+	func matchObjectTagsScore(_ objectTags: [String: String], geometry: GEOMETRY) -> Double {
+		guard self.geometry.contains(geometry.rawValue) else { return 0.0 }
 
 		var totalScore = 1.0
 
@@ -179,7 +179,7 @@ final class PresetFeature {
 					totalScore += matchScore / 2
 					continue
 				}
-			} else if key == "area", value == "yes", geometry == "area" {
+			} else if key == "area", value == "yes", geometry == .AREA {
 				totalScore += 0.1
 				continue
 			}
@@ -197,7 +197,7 @@ final class PresetFeature {
 		return totalScore
 	}
 
-	func defaultValuesForGeometry(_ geometry: String) -> [String: String] {
+	func defaultValuesForGeometry(_ geometry: GEOMETRY) -> [String: String] {
 		var result: [String: String] = [:]
 		let fields = PresetsForFeature.fieldsFor(featureID: featureID, field: { f in f.fields })
 		for fieldName in fields {
@@ -205,7 +205,7 @@ final class PresetFeature {
 			   let key = field["key"] as? String,
 			   let def = field["default"] as? String,
 			   let geom = field["geometry"] as? [String],
-			   geom.contains(geometry)
+			   geom.contains(geometry.rawValue)
 			{
 				result[key] = def
 			}

@@ -67,7 +67,7 @@ final class PresetsForFeature {
 
 	func addPresetsForFields(
 		inFeatureID featureID: String,
-		geometry: String,
+		geometry: GEOMETRY,
 		field fieldGetter: @escaping (_ feature: PresetFeature) -> [String]?,
 		ignore: [String],
 		dupSet: inout Set<String>,
@@ -105,7 +105,7 @@ final class PresetsForFeature {
 
 	init(withFeature feature: PresetFeature?, // feature == nil if a new object
 	     objectTags: [String: String],
-	     geometry: String,
+	     geometry: GEOMETRY,
 	     update: (() -> Void)?)
 	{
 		_featureName = feature?.name ?? ""

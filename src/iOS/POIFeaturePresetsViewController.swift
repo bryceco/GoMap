@@ -49,7 +49,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		if drillDownGroup == nil {
 			let dict = tabController.keyValueDict
 			let object = tabController.selection
-			let geometry: String = object?.geometryName() ?? GEOMETRY_NODE
+			let geometry = object?.geometry() ?? GEOMETRY.NODE
 
 			// update most recent feature
 			let feature = selectedFeature ?? PresetsDatabase.shared.matchObjectTagsToFeature(
@@ -132,11 +132,11 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	{
 		selectedFeature = newFeature
 		let tabController = tabBarController as! POITabBarController
-		let geometry = tabController.selection != nil ? tabController.selection?.geometryName() : GEOMETRY_NODE
+		let geometry = tabController.selection?.geometry() ?? GEOMETRY.NODE
 
 		let oldFeature = PresetsDatabase.shared.matchObjectTagsToFeature(
 			tabController.keyValueDict,
-			geometry: geometry!,
+			geometry: geometry,
 			includeNSI: true)
 
 		// remove previous feature tags
@@ -163,7 +163,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		}
 
 		// add default values of new feature fields
-		let defaults = newFeature.defaultValuesForGeometry(geometry!)
+		let defaults = newFeature.defaultValuesForGeometry(geometry)
 		for (key, value) in defaults {
 			if !tabController.keyValueDict.keys.contains(key) {
 				tabController.setFeatureKey(key, value: value)

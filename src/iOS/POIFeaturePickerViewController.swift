@@ -38,7 +38,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	var parentCategory: PresetCategory?
 	weak var delegate: POITypeViewControllerDelegate?
 
-	class func loadMostRecent(forGeometry geometry: String) {
+	class func loadMostRecent(forGeometry geometry: GEOMETRY) {
 		if let max = UserDefaults.standard.object(forKey: "mostRecentTypesMaximum") as? NSNumber,
 		   max.intValue > 0
 		{
@@ -46,18 +46,14 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		} else {
 			mostRecentMaximum = MOST_RECENT_DEFAULT_COUNT
 		}
-		let defaults: String = "mostRecentTypes.\(geometry)"
+		let defaults: String = "mostRecentTypes.\(geometry.rawValue)"
 		let a = UserDefaults.standard.object(forKey: defaults) as? [String] ?? []
 		mostRecentArray = a.compactMap({ PresetsDatabase.shared.presetFeatureForFeatureID($0) })
 	}
 
-	func currentSelectionGeometry() -> String? {
+	func currentSelectionGeometry() -> GEOMETRY {
 		let tabController = tabBarController as? POITabBarController
-		let selection = tabController?.selection
-		var geometry = selection?.geometryName()
-		if geometry == nil {
-			geometry = GEOMETRY_NODE // a brand new node
-		}
+		let geometry = tabController?.selection?.geometry() ?? GEOMETRY.NODE // a brand new node
 		return geometry
 	}
 
@@ -71,7 +67,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		tableView.estimatedRowHeight = 44.0 // or could use UITableViewAutomaticDimension;
 		tableView.rowHeight = UITableView.automaticDimension
 
-		let geometry: String = currentSelectionGeometry() ?? GEOMETRY_NODE // a brand new node
+		let geometry = currentSelectionGeometry()
 		POIFeaturePickerViewController.loadMostRecent(forGeometry: geometry)
 
 		if let parentCategory = parentCategory {
@@ -223,7 +219,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		}
 		let brand: String = "☆ "
 		let tabController = tabBarController as? POITabBarController
-		let geometry: String = currentSelectionGeometry() ?? ""
+		let geometry = currentSelectionGeometry()
 		let currentFeature = PresetsDatabase.shared.matchObjectTagsToFeature(
 			tabController?.keyValueDict,
 			geometry: geometry,
@@ -246,7 +242,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		return cell
 	}
 
-	class func updateMostRecentArray(withSelection feature: PresetFeature, geometry: String) {
+	class func updateMostRecentArray(withSelection feature: PresetFeature, geometry: GEOMETRY) {
 		mostRecentArray.removeAll(where: { $0.featureID == feature.featureID })
 		mostRecentArray.insert(feature, at: 0)
 		if mostRecentArray.count > MOST_RECENT_SAVED_MAXIMUM {
@@ -254,12 +250,12 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		}
 
 		let a = mostRecentArray.map({ $0.featureID })
-		let defaults = "mostRecentTypes.\(geometry)"
+		let defaults = "mostRecentTypes.\(geometry.rawValue)"
 		UserDefaults.standard.set(a, forKey: defaults)
 	}
 
 	func updateTags(with feature: PresetFeature) {
-		let geometry = currentSelectionGeometry() ?? ""
+		let geometry = currentSelectionGeometry()
 		delegate?.typeViewController(self, didChangeFeatureTo: feature)
 		POIFeaturePickerViewController.updateMostRecentArray(withSelection: feature, geometry: geometry)
 	}
@@ -305,7 +301,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 			searchArrayRecent = []
 		} else {
 			// searching
-			let geometry = currentSelectionGeometry()!
+			let geometry = currentSelectionGeometry()
 			searchArrayAll = PresetsDatabase.shared.featuresInCategory(
 				parentCategory,
 				matching: searchText,

@@ -875,7 +875,7 @@ final class EditorMapLayer: CALayer {
 
 		// fetch icon
 		let feature = PresetsDatabase.shared.matchObjectTagsToFeature(node.tags,
-		                                                              geometry: node.geometryName(),
+		                                                              geometry: node.geometry(),
 		                                                              includeNSI: false)
 		var icon = feature?.iconScaled24()
 		if icon == nil {

@@ -246,9 +246,11 @@ final class EditorFilters {
 			return object.tags["waterway"] != nil
 		}
 		let predLanduse: ((OsmBaseObject) -> Bool) = { object in
-			((object.isWay()?.isArea() ?? false) ||
-				(object.isRelation()?.isMultipolygon() ?? false))
-				&& !predBuildings(object) && !predWater(object)
+//			return (object.isWay.isArea || object.isRelation.isMultipolygon) && !predBuildings(object) && !predWater(object);
+			if object.geometryName() == GEOMETRY.AREA.rawValue {
+				return !predBuildings(object) && !predWater(object)
+			}
+			return false
 		}
 		let predBoundaries: ((OsmBaseObject) -> Bool) = { object in
 			if object.tags["boundary"] != nil {

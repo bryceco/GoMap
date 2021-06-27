@@ -120,11 +120,11 @@ final class PresetsDatabase {
 #if DEBUG
 				// verify all fields can be read
 				for (field, info) in self.jsonFields {
-					var geometry = "way"
+					var geometry = GEOMETRY.LINE
 					if let info = info as? [String: Any],
 					   let geom = info["geometry"] as? [String]
 					{
-						geometry = geom[0]
+						geometry = GEOMETRY(rawValue: geom[0])!
 					}
 					_ = self.groupForField(fieldName: field, geometry: geometry, ignore: nil, update: nil)
 				}
@@ -226,7 +226,7 @@ final class PresetsDatabase {
 	}
 
 	func matchObjectTagsToFeature(_ objectTags: [String: String]?,
-	                              geometry: String,
+	                              geometry: GEOMETRY,
 	                              includeNSI: Bool) -> PresetFeature?
 	{
 		guard let objectTags = objectTags else { return nil }
@@ -250,7 +250,7 @@ final class PresetsDatabase {
 		return bestFeature
 	}
 
-	func featuresMatchingSearchText(_ searchText: String?, geometry: String, country: String?) -> [PresetFeature] {
+	func featuresMatchingSearchText(_ searchText: String?, geometry: GEOMETRY, country: String?) -> [PresetFeature] {
 		var list = [PresetFeature]()
 		enumeratePresetsAndNsiUsingBlock { feature in
 			if feature.searchable {
