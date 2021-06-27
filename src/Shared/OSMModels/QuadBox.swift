@@ -293,11 +293,13 @@ final class QuadBox: NSObject, NSCoding {
 			list.sort(by: { $0.downloadDate < $1.downloadDate })
 
 			let index = Int(Double(list.count) * fraction)
-			let fractionDate = list[index].downloadDate
-			if fractionDate > oldest.timeIntervalSinceReferenceDate {
-				// Cutoff date based on fraction is higher (more recent)
-				// so prune based on the fraction instead
-				oldest = Date(timeIntervalSinceReferenceDate: fractionDate)
+			if index < list.count {
+				let fractionDate = list[index].downloadDate
+				if fractionDate > oldest.timeIntervalSinceReferenceDate {
+					// Cutoff date based on fraction is higher (more recent)
+					// so prune based on the fraction instead
+					oldest = Date(timeIntervalSinceReferenceDate: fractionDate)
+				}
 			}
 		}
 		return discardQuadsOlderThan(referenceDate: oldest.timeIntervalSinceReferenceDate) ? oldest : nil
