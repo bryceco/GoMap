@@ -317,7 +317,7 @@ extension OsmMapData {
 			return nil
 		}
 
-		var survivor = OsmNode(asUserCreated: "")
+		let survivor: OsmNode
 		if node1.ident < 0 {
 			survivor = node2
 		} else if node2.ident < 0 {
@@ -404,12 +404,14 @@ extension OsmMapData {
 						keyto.append(node)
 					}
 				} else if member.isWay() {
-					guard let way = member.obj as? OsmWay else {
+					guard let way = member.obj as? OsmWay,
+						  way.nodes.count > 0
+					else {
 						error = NSLocalizedString("A relation the node belongs to is not fully downloaded", comment: "")
 						return nil
 					}
 					var c = collection[role] ?? Set<OsmNode>()
-					c.formUnion(Set(way.nodes))
+					c.formUnion(way.nodes)
 					collection[role] = c
 
 					if (member.role == "from") || (member.role == "via") {
