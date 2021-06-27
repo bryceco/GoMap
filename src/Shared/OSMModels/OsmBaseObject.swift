@@ -132,6 +132,10 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		timestamp: String,
 		tags: [String: String])
 	{
+		var timestamp = timestamp
+		if timestamp == "" {
+			timestamp = OsmBaseObject.rfc3339DateFormatter().string(from: Date())
+		}
 		self.version = version
 		self.changeset = changeset
 		self.user = user
@@ -380,7 +384,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		if let date = OsmBaseObject.rfc3339DateFormatter().date(from: timestamp) {
 			return date
 		}
-		fatalError()
+		return Date()
 	}
 
 	func setTimestamp(_ date: Date, undo: MyUndoManager?) {
@@ -426,9 +430,8 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		clearCachedProperties()
 	}
 
-	func resetModifyCount(_ undo: MyUndoManager) {
+	func resetModifyCount() {
 		modifyCount = 0
-
 		clearCachedProperties()
 	}
 
