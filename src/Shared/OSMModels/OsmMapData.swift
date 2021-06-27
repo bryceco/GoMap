@@ -931,7 +931,7 @@ final class OsmMapData: NSObject, NSCoding {
 					let newVersion = Int(element.attribute(forName: "new_version")?.stringValue ?? "0")!
 
 					if name == "node" {
-						updateObjectDictionary(
+						OsmMapData.updateObjectDictionary(
 							&nodes,
 							oldId: oldId,
 							newId: newId,
@@ -939,7 +939,7 @@ final class OsmMapData: NSObject, NSCoding {
 							changeset: changesetID,
 							sqlUpdate: &sqlUpdate)
 					} else if name == "way" {
-						updateObjectDictionary(
+						OsmMapData.updateObjectDictionary(
 							&ways,
 							oldId: oldId,
 							newId: newId,
@@ -947,7 +947,7 @@ final class OsmMapData: NSObject, NSCoding {
 							changeset: changesetID,
 							sqlUpdate: &sqlUpdate)
 					} else if name == "relation" {
-						updateObjectDictionary(
+						OsmMapData.updateObjectDictionary(
 							&relations,
 							oldId: oldId,
 							newId: newId,
@@ -993,7 +993,7 @@ final class OsmMapData: NSObject, NSCoding {
 
 	// MARK: Upload
 
-	func updateObjectDictionary<T: OsmBaseObject>(
+	static func updateObjectDictionary<T: OsmBaseObject>(
 		_ dictionary: inout [OsmIdentifier: T],
 		oldId: OsmIdentifier,
 		newId: OsmIdentifier,
@@ -1007,16 +1007,8 @@ final class OsmMapData: NSObject, NSCoding {
 			// Delete object for real
 			// When a way is deleted we delete the nodes also, but they aren't marked as deleted in the graph.
 			// If nodes are still in use by another way the newId and newVersion will be set and we won't take this path.
-			assert(Int(newId) == 0 && newVersion == 0)
-			if object.isNode() != nil {
-				nodes.removeValue(forKey: object.ident)
-			} else if object.isWay() != nil {
-				ways.removeValue(forKey: object.ident)
-			} else if object.isRelation() != nil {
-				relations.removeValue(forKey: object.ident)
-			} else {
-				assert(false)
-			}
+			assert(newId == 0 && newVersion == 0)
+			dictionary.removeValue(forKey: object.ident)
 			sqlUpdate[object] = false // mark for deletion
 			return
 		}
@@ -1028,19 +1020,19 @@ final class OsmMapData: NSObject, NSCoding {
 
 		if oldId != newId {
 			// replace placeholder object with new server provided identity
-			assert(Int(oldId) < 0 && Int(newId) > 0)
+			assert(oldId < 0 && newId > 0)
 			dictionary.removeValue(forKey: object.ident)
 			object.serverUpdateIdent(newId)
 			dictionary[object.ident] = object
 		} else {
-			assert(Int(oldId) > 0)
+			assert(oldId > 0)
 		}
-		object.resetModifyCount(undoManager)
+		object.resetModifyCount()
 	}
 
 	class func encodeBase64(_ plainText: String) -> String {
-		let data = plainText.data(using: .utf8)
-		let output = data!.base64EncodedString(options: [])
+		let data = plainText.data(using: .utf8)!
+		let output = data.base64EncodedString(options: [])
 		return output
 	}
 
