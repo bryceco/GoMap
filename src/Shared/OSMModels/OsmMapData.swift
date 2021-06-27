@@ -37,6 +37,7 @@ enum OsmMapDataError: Error {
 	case unableToOpenDatabase
 	case osmWayResolveToMapDataFoundNilNodeRefs
 	case osmWayResolveToMapDataCouldntFindNodeRef
+	case badURL(String)
 }
 
 final class OsmMapData: NSObject, NSCoding {
@@ -1043,9 +1044,7 @@ final class OsmMapData: NSObject, NSCoding {
 		completion: @escaping (Result<Data, Error>) -> Void)
 	{
 		guard let url1 = URL(string: url) else {
-			completion(.failure(NSError(domain: "OsmMapData", code: 102, userInfo: [
-				NSLocalizedDescriptionKey: "Unable to build URL"
-			])))
+			completion(.failure(OsmMapDataError.badURL(url)))
 			return
 		}
 		let request = NSMutableURLRequest(url: url1)
