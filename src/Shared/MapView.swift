@@ -192,7 +192,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	private(set) lazy var notesDatabase = OsmNotesDatabase()
-	private(set) var notesViewDict: [Int: UIButton] = [:] // convert a note ID to a button on the map
+	private(set) var buttonForButtonId: [Int: UIButton] = [:] // convert a note ID to a button on the map
 
 	private(set) lazy var aerialLayer: MercatorTileLayer = { MercatorTileLayer(mapView: self) }()
 	private(set) lazy var mapnikLayer: MercatorTileLayer = { MercatorTileLayer(mapView: self) }()
@@ -702,7 +702,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 #endif
 
 		notesDatabase.mapData = editorLayer.mapData
-		notesViewDict = [:]
+		buttonForButtonId = [:]
 
 		// center button
 		centerOnGPSButton.isHidden = true
@@ -2243,14 +2243,14 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			UIView.performWithoutAnimation({ [self] in
 				// if a button is no longer in the notes database then it got resolved and can go away
 				var remove: [Int] = []
-				for tag in notesViewDict.keys {
-					if notesDatabase.note(forTag: tag) == nil {
+				for tag in buttonForButtonId.keys {
+					if notesDatabase.mapMarker(forTag: tag) == nil {
 						remove.append(tag)
 					}
 				}
 				for tag in remove {
-					if let button = notesViewDict[tag] {
-						notesViewDict.removeValue(forKey: tag)
+					if let button = buttonForButtonId[tag] {
+						buttonForButtonId.removeValue(forKey: tag)
 						button.removeFromSuperview()
 					}
 				}
@@ -2262,13 +2262,13 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 						if note is KeepRight,
 						   notesDatabase.isIgnored(note)
 						{
-							if let button = notesViewDict[note.buttonId] {
+							if let button = buttonForButtonId[note.buttonId] {
 								button.removeFromSuperview()
 							}
 							return
 						}
 
-						if notesViewDict[note.buttonId] == nil {
+						if buttonForButtonId[note.buttonId] == nil {
 							let button = UIButton(type: .custom)
 							button.addTarget(self, action: #selector(noteButtonPress(_:)), for: .touchUpInside)
 							button.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
@@ -2278,21 +2278,14 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 							button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
 							button.titleLabel?.textColor = UIColor.white
 							button.titleLabel?.textAlignment = .center
-							let title = note is Fixme ? "F" : note is WayPoint ? "W" : note is KeepRight ? "R" : "N"
-							button.setTitle(title, for: .normal)
+							button.setTitle(note.buttonLabel, for: .normal)
 							button.tag = note.buttonId
 							addSubview(button)
-							notesViewDict[note.buttonId] = button
+							buttonForButtonId[note.buttonId] = button
 						}
-						let button = notesViewDict[note.buttonId]!
+						let button = buttonForButtonId[note.buttonId]!
 
-						if let note = note as? OsmNote,
-						   note.status == "closed"
-						{
-							button.removeFromSuperview()
-						} else if let note = note as? Fixme,
-						          editorLayer.mapData.object(withExtendedIdentifier: note.noteId)?.tags["fixme"] == nil
-						{
+						if note.shouldHide() {
 							button.removeFromSuperview()
 						} else {
 							let offsetX = (note is KeepRight) || (note is Fixme) ? 0.00001 : 0.0
@@ -2310,9 +2303,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 						}
 					} else {
 						// not displaying any notes at this time
-						if let button = notesViewDict[note.buttonId] {
+						if let button = buttonForButtonId[note.buttonId] {
 							button.removeFromSuperview()
-							notesViewDict.removeValue(forKey: note.buttonId)
+							buttonForButtonId.removeValue(forKey: note.buttonId)
 						}
 					}
 				})
@@ -2326,14 +2319,14 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	@objc func noteButtonPress(_ sender: Any?) {
 		guard let button = sender as? UIButton,
-		      let note = notesDatabase.note(forTag: button.tag)
+		      let note = notesDatabase.mapMarker(forTag: button.tag)
 		else { return }
 
 		var object: OsmBaseObject?
 		if let note = note as? KeepRight {
 			object = editorLayer.mapData.object(withExtendedIdentifier: note.objectId)
 		} else if let note = note as? Fixme {
-			object = editorLayer.mapData.object(withExtendedIdentifier: note.noteId)
+			object = note.object
 		}
 
 		if !editorLayer.isHidden,
@@ -2377,11 +2370,18 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				                         	removePin()
 				                         }))
 			mainViewController.present(alertKeepRight, animated: true)
-		} else if note is Fixme {
+		} else if let note = note as? Fixme {
 			if !editorLayer.isHidden {
 				presentTagEditor(nil)
+			} else {
+				guard let object = note.object else { return }
+				let alert = UIAlertController(title: "\(object.friendlyDescription())",
+											  message: note.comments.first?.text,
+											  preferredStyle: .alert)
+				alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+				mainViewController.present(alert, animated: true)
 			}
-		} else if note is OsmNote {
+		} else if let note = note as? OsmNote {
 			mainViewController.performSegue(withIdentifier: "NotesSegue", sender: note)
 		}
 	}

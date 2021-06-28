@@ -386,8 +386,8 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		* Orientation changes are not supported\n\n\
 		* Buttons won't move when they're disabled (undo/redo, upload)
 		"""
-		let alert = UIAlertController(title: "Attention Testers!", message: message, preferredStyle: .alert)
-		let ok = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: { _ in
+		let alert = UIAlertController(buttonLabel: "Attention Testers!", message: message, preferredStyle: .alert)
+		let ok = UIAlertAction(buttonLabel: NSLocalizedString("OK", comment: ""), style: .default, handler: { _ in
 			alert.dismiss(animated: true)
 		})
 		alert.addAction(ok)

@@ -9,44 +9,21 @@
 import CoreGraphics
 import Foundation
 
-private let FixMeList: [String] = ["fixme", "FIXME"] // there are many others but not frequently used
-
 let STATUS_FIXME = "fixme"
 let STATUS_KEEPRIGHT = "keepright"
 let STATUS_WAYPOINT = "waypoint"
 
 final class OsmNoteComment {
-	private(set) var date = ""
-	private(set) var action = ""
-	private(set) var text = ""
-	private(set) var user = ""
+	let date: String
+	let action: String
+	let text: String
+	let user: String
 
-	init(noteXml noteElement: DDXMLElement) {
-		for child in noteElement.children ?? [] {
-			guard let child = child as? DDXMLElement else {
-				continue
-			}
-			if child.name == "date" {
-				date = child.stringValue ?? ""
-			} else if child.name == "user" {
-				user = child.stringValue ?? ""
-			} else if child.name == "action" {
-				action = child.stringValue ?? ""
-			} else if child.name == "text" {
-				text = child.stringValue?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
-			}
-		}
-	}
-
-	init(fixmeObject object: OsmBaseObject, fixmeKey fixme: String) {
-		date = object.timestamp
-		user = object.user
-		action = "fixme"
-		let friendlyDescription = object.friendlyDescription()
-		if let tags = object.tags[fixme] {
-			text =
-				"\(friendlyDescription) (\((object.isNode() != nil) ? "node" : (object.isWay() != nil) ? "way" : (object.isRelation() != nil) ? "relation" : "") \(object.ident): \(tags)"
-		}
+	init(date: String, action: String, text: String, user: String) {
+		self.date = date
+		self.action = action
+		self.text = text
+		self.user = user
 	}
 
 	init(gpxWaypoint description: String) {
@@ -99,6 +76,15 @@ class MapMarker {
 		self.dateCreated = dateCreated
 		self.comments = comments
 	}
+
+	func shouldHide() -> Bool {
+		return false
+	}
+
+	var buttonLabel: String {
+		get { fatalError() }
+	}
+
 }
 
 // A regular OSM note
@@ -109,6 +95,12 @@ class OsmNote: MapMarker {
 	override var key: String {
 		return "note-\(noteId)"
 	}
+
+	override func shouldHide() -> Bool {
+		return status == "closed"
+	}
+
+	override var buttonLabel: String { get{ "N" } }
 
 	/// A note newly created by user
 	init(lat: Double, lon: Double) {
@@ -149,7 +141,25 @@ class OsmNote: MapMarker {
 			} else if child.name == "comments" {
 				guard let children = child.children as? [DDXMLElement] else { return nil }
 				for commentElement in children {
-					let comment = OsmNoteComment(noteXml: commentElement)
+					var date = ""
+						var user = ""
+					var action = ""
+					var text = ""
+					for child in commentElement.children ?? [] {
+						guard let child = child as? DDXMLElement else {
+							continue
+						}
+						if child.name == "date" {
+							date = child.stringValue ?? ""
+						} else if child.name == "user" {
+							user = child.stringValue ?? ""
+						} else if child.name == "action" {
+							action = child.stringValue ?? ""
+						} else if child.name == "text" {
+							text = child.stringValue?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
+						}
+					}
+					let comment = OsmNoteComment(date: date, action: action, text: text, user: user)
 					comments.append(comment)
 				}
 			}
@@ -171,16 +181,36 @@ class OsmNote: MapMarker {
 // An OSM object containing a fixme= tag
 class Fixme: MapMarker {
 	let noteId: OsmExtendedIdentifier
+	weak var object: OsmBaseObject?
 
 	override var key: String {
 		return "fixme-\(noteId)"
 	}
 
-	/// Initialize from FIXME data
-	init(fixmeObject object: OsmBaseObject, fixmeKey fixme: String) {
-		let center = object.selectionPoint()
-		let comment = OsmNoteComment(fixmeObject: object, fixmeKey: fixme)
+	/// If the object contains a fixme then returns the fixme value, else nil
+	static func fixmeTag(_ object: OsmBaseObject) -> String? {
+		if let tag = object.tags.first(where: { $0.key.caseInsensitiveCompare( "fixme" ) == .orderedSame }) {
+			return tag.value
+		}
+		return nil
+	}
 
+	override func shouldHide() -> Bool {
+		guard let object = object else { return true }
+		return Fixme.fixmeTag(object) == nil
+	}
+
+	override var buttonLabel: String {  "F" }
+
+	/// Initialize from FIXME data
+	init(object: OsmBaseObject, text: String) {
+		let center = object.selectionPoint()
+		let comment = OsmNoteComment(date: object.timestamp,
+									 action: "fixme",
+									 text: text,
+									 user: object.user)
+
+		self.object = object
 		noteId = object.extendedIdentifier
 		super.init(lat: center.lat,
 		           lon: center.lon,
@@ -247,6 +277,8 @@ class WayPoint: MapMarker {
 	override var key: String {
 		fatalError()	// return "waypoint-()"
 	}
+
+	override var buttonLabel: String { "W" }
 }
 
 // A keep-right entry. These use XML just like a GPS waypoint, but with an extension to define OSM data.
@@ -257,6 +289,8 @@ class KeepRight: MapMarker {
 	override var key: String {
 		return "keepright-\(noteId)"
 	}
+
+	override var buttonLabel: String { "R" }
 
 	/// Initialize based on KeepRight query
 	init?(gpxWaypointXml waypointElement: DDXMLElement, status: String, namespace ns: String, mapData: OsmMapData) {
@@ -297,13 +331,7 @@ class KeepRight: MapMarker {
 		      let noteId = noteId
 		else { return nil }
 
-		let type: OSM_TYPE
-		switch osmType {
-		case "node": type = .NODE
-		case "way": type = .WAY
-		case "relation": type = .RELATION
-		default: return nil
-		}
+		guard let type = OSM_TYPE(text: osmType) else { return nil }
 		let objectId = OsmExtendedIdentifier(type, osmIdent)
 
 		let objectName: String
@@ -325,7 +353,7 @@ class KeepRight: MapMarker {
 
 final class OsmNotesDatabase: NSObject {
 	private let workQueue = OperationQueue()
-	private var keepRightIgnoreList: [Int: Bool]?
+	private var _keepRightIgnoreList: [Int: Bool]?	// FIXME: Use UserDefaults for storage so this becomes non-optional
 	private var noteForTag: [Int: MapMarker] = [:] // return the note with the given button tag (tagId)
 	private var tagForKey: [String: Int] = [:]
 	weak var mapData: OsmMapData!
@@ -382,12 +410,9 @@ final class OsmNotesDatabase: NSObject {
 
 					// add from FIXME=yes tags
 					mapData.enumerateObjects(inRegion: box, block: { [self] obj in
-						for key in FixMeList {
-							if obj.tags[key] != nil {
-								let note = Fixme(fixmeObject: obj, fixmeKey: key)
-								addOrUpdate(note)
-								break
-							}
+						if let fixme = Fixme.fixmeTag(obj) {
+							let note = Fixme(object: obj, text: fixme)
+							addOrUpdate(note)
 						}
 					})
 
@@ -531,33 +556,34 @@ final class OsmNotesDatabase: NSObject {
 		})
 	}
 
-	func note(forTag tag: Int) -> MapMarker? {
+	func mapMarker(forTag tag: Int) -> MapMarker? {
 		return noteForTag[tag]
 	}
 
 	// MARK: Ignore list
 
+	// FIXME: change this to just use non-optional _keepRightIgnoreList
 	func ignoreList() -> [Int: Bool] {
-		if keepRightIgnoreList == nil {
+		if _keepRightIgnoreList == nil {
 			let path = URL(fileURLWithPath: FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)
 				.map(\.path).last ?? "").appendingPathComponent("keepRightIgnoreList").path
-			keepRightIgnoreList = NSKeyedUnarchiver.unarchiveObject(withFile: path) as? [Int: Bool]
-			if keepRightIgnoreList == nil {
-				keepRightIgnoreList = [:]
+			_keepRightIgnoreList = NSKeyedUnarchiver.unarchiveObject(withFile: path) as? [Int: Bool]
+			if _keepRightIgnoreList == nil {
+				_keepRightIgnoreList = [:]
 			}
 		}
-		return keepRightIgnoreList!
+		return _keepRightIgnoreList!
 	}
 
 	func ignore(_ note: MapMarker) {
-		var tempIgnoreList = ignoreList()
-		tempIgnoreList[note.buttonId] = true
+		if _keepRightIgnoreList == nil {
+			_keepRightIgnoreList = [:]
+		}
+		_keepRightIgnoreList![note.buttonId] = true
 
 		let path = URL(fileURLWithPath: FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)
 			.map(\.path).last ?? "").appendingPathComponent("keepRightIgnoreList").path
-		if let keepRightIgnoreList = keepRightIgnoreList {
-			NSKeyedArchiver.archiveRootObject(keepRightIgnoreList, toFile: path)
-		}
+		NSKeyedArchiver.archiveRootObject(_keepRightIgnoreList!, toFile: path)
 	}
 
 	func isIgnored(_ note: MapMarker) -> Bool {
