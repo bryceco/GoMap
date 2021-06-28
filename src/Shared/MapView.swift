@@ -919,40 +919,15 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		mainViewController.present(alertError, animated: true)
 	}
 
-	func html(asAttributedString html: String, textColor: UIColor,
-	          backgroundColor backColor: UIColor) -> NSAttributedString?
-	{
-		if html.hasPrefix("<") {
-			var attrText: NSAttributedString?
-			if let data = html.data(using: .utf8) {
-				attrText = try? NSAttributedString(
-					data: data,
-					options: [.documentType: NSAttributedString.DocumentType.html,
-					          .characterEncoding: NSNumber(value: String.Encoding.utf8.rawValue)],
-					documentAttributes: nil)
-			}
-			if let attrText = attrText {
-				let s = NSMutableAttributedString(attributedString: attrText)
-				// change text color
-				s.addAttribute(.foregroundColor, value: textColor, range: NSRange(location: 0, length: s.length))
-				s.addAttribute(.backgroundColor, value: backColor, range: NSRange(location: 0, length: s.length))
-				// center align
-				let paragraphStyle = NSMutableParagraphStyle()
-				paragraphStyle.alignment = .center
-				s.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: s.length))
-
-				return s
-			}
-		}
-		return nil
-	}
-
 	func flashMessage(_ message: String, duration: TimeInterval) {
 		//        #if os(iOS)
 		let MAX_ALPHA: CGFloat = 0.8
 
-		let attrText = html(asAttributedString: message, textColor: UIColor.white, backgroundColor: UIColor.black)
-		if (attrText?.length ?? 0) > 0 {
+		if let attrText = NSMutableAttributedString(withHtmlString: message,
+		                                            textColor: UIColor.white,
+		                                            backgroundColor: UIColor.black),
+			attrText.length > 0
+		{
 			flashLabel.attributedText = attrText
 		} else {
 			flashLabel.text = message
@@ -1020,9 +995,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			if flash {
 				flashMessage(text, duration: 0.9)
 			} else {
-				let attrText = html(asAttributedString: text, textColor: UIColor.black, backgroundColor: UIColor.white)
 				let alertError = UIAlertController(title: title, message: text, preferredStyle: .alert)
-				if let attrText = attrText {
+				if let attrText = NSMutableAttributedString(withHtmlString: text,
+				                                            textColor: UIColor.black,
+				                                            backgroundColor: UIColor.white)
+				{
 					alertError.setValue(attrText, forKey: "attributedMessage")
 				}
 				alertError
