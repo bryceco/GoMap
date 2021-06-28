@@ -1247,7 +1247,7 @@ extension OsmMapData {
 			registerUndoCommentString(comment)
 			return duplicateWay(way, withOffset: offset)
 		} else if let relation = object as? OsmRelation,
-				  relation.isMultipolygon()
+		          relation.isMultipolygon()
 		{
 			registerUndoCommentString(comment)
 			return duplicateRelationMultipolygon(relation, withOffset: offset)

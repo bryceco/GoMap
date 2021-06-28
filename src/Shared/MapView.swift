@@ -993,13 +993,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		if lastErrorDate == nil || Date().timeIntervalSince(lastErrorDate ?? Date()) > 3.0 {
 			let text = error.localizedDescription
 
-#if false
-			let ignorable = (error as NSError?)?.userInfo["Ignorable"]
-			if ignorable != nil {
-				return
-			}
-#endif
-
 			var isNetworkError = false
 			var title = NSLocalizedString("Error", comment: "")
 			var ignoreButton: String?
