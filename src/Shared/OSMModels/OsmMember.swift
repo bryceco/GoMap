@@ -69,7 +69,14 @@ final class OsmMember: NSObject, NSCoding {
 
 	required init?(coder: NSCoder) {
 		type = coder.decodeObject(forKey: "type") as? String
-		ref = (coder.decodeObject(forKey: "ref") as! NSNumber).int64Value
+		guard let ref2 = coder.decodeObject(forKey: "ref")
+		else { fatalError("OsmMember ref is nil")}
+		if let ref2 = ref2 as? NSNumber {
+			ref = ref2.int64Value
+		} else {
+			// shouldn't happen, but we see it occasionally in swift beta?
+			fatalError("OsmMember ref is not NSNumber: \(Swift.type(of: ref2))")
+		}
 		role = coder.decodeObject(forKey: "role") as? String
 		obj = nil
 		super.init()
