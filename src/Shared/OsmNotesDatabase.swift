@@ -79,10 +79,10 @@ class MapMarker {
 		fatalError()
 	}
 
-	private static var g_nextTagID = 1
-	static func nextTag() -> Int {
-		g_nextTagID += 1
-		return g_nextTagID
+	private static var g_nextButtonID = 1
+	static func NextButtonID() -> Int {
+		g_nextButtonID += 1
+		return g_nextButtonID
 	}
 
 	init(lat: Double,
@@ -92,7 +92,7 @@ class MapMarker {
 	     status: String,
 	     comments: [OsmNoteComment])
 	{
-		buttonId = MapMarker.nextTag()
+		buttonId = MapMarker.NextButtonID()
 		self.lat = lat
 		self.lon = lon
 		self.noteId = noteId
@@ -290,10 +290,10 @@ class WayPoint: MapMarker {
 }
 
 final class OsmNotesDatabase: NSObject {
-	let workQueue = OperationQueue()
-	var keepRightIgnoreList: [Int: Bool]?
-	var noteForTag: [Int: MapMarker] = [:]
-	var tagForKey: [String: Int] = [:]
+	private let workQueue = OperationQueue()
+	private var keepRightIgnoreList: [Int: Bool]?
+	private var noteForTag: [Int: MapMarker] = [:]	// return the note with the given button tag (tagId)
+	private var tagForKey: [String: Int] = [:]
 	weak var mapData: OsmMapData!
 
 	override init() {
@@ -307,6 +307,8 @@ final class OsmNotesDatabase: NSObject {
 		tagForKey.removeAll()
 	}
 
+	/// This is called when we download a new note. If it is an update to an existing note then
+	/// we need to delete the reference to the previous tag, so the button can be replaced.
 	func addOrUpdate(_ newNote: MapMarker) {
 		let key = newNote.key
 		let newTag = newNote.buttonId
