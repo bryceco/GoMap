@@ -13,6 +13,24 @@ enum OSM_TYPE: Int {
 	case NODE = 1
 	case WAY = 2
 	case RELATION = 3
+
+	func asText() -> String {
+		switch self {
+		case .NODE: return "node"
+		case .WAY: return "way"
+		case .RELATION: return "relation"
+		}
+	}
+
+	init?(text: String) {
+		switch text {
+		case "node": self = .NODE
+		case "way": self = .WAY
+		case "relation": self = .RELATION
+		default: return nil
+		}
+	}
+
 }
 
 enum ONEWAY: Int {
@@ -40,8 +58,7 @@ struct OsmExtendedIdentifier: Equatable, Hashable {
 	}
 
 	init(_ obj: OsmBaseObject) {
-		let type: OSM_TYPE = obj is OsmNode ? .NODE : obj is OsmWay ? .WAY : .RELATION
-		self.init(type, obj.ident)
+		self.init(obj.osmType, obj.ident)
 	}
 
 	var type: OSM_TYPE {
@@ -175,6 +192,8 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		return UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
 	}
 #endif
+
+	var osmType: OSM_TYPE { return self is OsmNode ? .NODE : self is OsmWay ? .WAY : .RELATION }
 
 	var extendedIdentifier: OsmExtendedIdentifier {
 		return OsmExtendedIdentifier(self)

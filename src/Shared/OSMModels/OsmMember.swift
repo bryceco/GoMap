@@ -45,7 +45,7 @@ final class OsmMember: NSObject, NSCoding {
 	}
 
 	func resolveRef(to object: OsmBaseObject) {
-		assert(ref == object.ident)
+		precondition(ref == object.ident)
 		obj = object
 	}
 
@@ -72,7 +72,7 @@ final class OsmMember: NSObject, NSCoding {
 		guard let ref2 = coder.decodeObject(forKey: "ref")
 		else { fatalError("OsmMember ref is nil")}
 		if let ref2 = ref2 as? NSNumber {
-			ref = ref2.int64Value
+			ref = ref2.int64Value	// normal path
 		} else {
 			// shouldn't happen, but we see it occasionally in swift beta?
 			fatalError("OsmMember ref is not NSNumber: \(Swift.type(of: ref2))")

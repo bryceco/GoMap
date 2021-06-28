@@ -40,11 +40,7 @@ final class OsmXmlGenerator {
 	// MARK: Changeset Payload XML
 
 	class func element(for object: OsmBaseObject) -> DDXMLElement {
-		guard let type = (object.isNode() != nil) ? "node" : (object.isWay() != nil) ? "way" :
-			(object.isRelation() != nil) ? "relation" : nil
-		else {
-			fatalError()
-		}
+		let type = object.osmType.asText()
 		let element = DDXMLNode.element(withName: type) as! DDXMLElement
 		element
 			.addAttribute(DDXMLNode

@@ -183,33 +183,28 @@ class POIAttributesViewController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let object = AppDelegate.shared.mapView.editorLayer.selectedPrimary
-		if object == nil {
+		guard let object = AppDelegate.shared.mapView.editorLayer.selectedPrimary
+		else {
 			return
 		}
 
 		var urlString: String?
 
 		if indexPath.row == ROW.identifier.rawValue {
-			let type = object?.isNode() != nil ? "node" : object?.isWay() != nil ? "way" : object?
-				.isRelation() != nil ? "relation" : "?"
-			if let ident = object?.ident {
-				urlString = "https://www.openstreetmap.org/browse/\(type)/\(ident)"
-			}
+			let type = object.osmType.asText()
+			let ident = object.ident
+			urlString = "https://www.openstreetmap.org/browse/\(type)/\(ident)"
 		} else if indexPath.row == ROW.user.rawValue {
-			if let user = object?.user {
-				urlString = "https://www.openstreetmap.org/user/\(user)"
-			}
+			let user = object.user
+			urlString = "https://www.openstreetmap.org/user/\(user)"
 		} else if indexPath.row == ROW.version.rawValue {
-			let type = object?.isNode() != nil ? "node" : object?.isWay() != nil ? "way" : object?
-				.isRelation() != nil ? "relation" : "?"
-			if let ident = object?.ident {
-				urlString = "https://www.openstreetmap.org/browse/\(type)/\(ident)/history"
-			}
+			let type = object.osmType.asText()
+			 let ident = object.ident
+			urlString = "https://www.openstreetmap.org/browse/\(type)/\(ident)/history"
 		} else if indexPath.row == ROW.changeset.rawValue {
 			urlString = String(
 				format: "https://www.openstreetmap.org/browse/changeset/%ld",
-				Int(object?.changeset ?? 0))
+				Int(object.changeset))
 		}
 
 		if let urlString = urlString {
