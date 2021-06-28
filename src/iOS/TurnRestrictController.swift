@@ -438,14 +438,13 @@ class TurnRestrictController: UIViewController {
 	}
 
 	func removeTurnRestriction(_ mapData: OsmMapData, relation: OsmRelation) {
-		var error: String?
-		let canDelete = mapData.canDelete(relation, error: &error)
-		if let canDelete = canDelete {
+		do {
+			let canDelete = try mapData.canDelete(relation)
 			canDelete()
-		} else {
+		} catch {
 			let alert = UIAlertController(
 				title: NSLocalizedString("The restriction cannot be deleted", comment: ""),
-				message: error as String?,
+				message: error.localizedDescription,
 				preferredStyle: .alert)
 			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
 			present(alert, animated: true)

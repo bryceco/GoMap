@@ -14,16 +14,25 @@ import UIKit
 private var rectoLowerThreshold = 0.0
 private var rectoUpperThreshold = 0.0
 
+enum EditError: Error, LocalizedError {
+	case text(String)
+
+	public var errorDescription: String? {
+		switch self {
+		case let .text(text): return text
+		}
+	}
+}
+
 extension OsmMapData {
 	// basic stuff:
 
 	// MARK: canDeleteNode
 
 	// Only for solitary nodes. Otherwise use delete node in way.
-	func canDelete(_ node: OsmNode, error: inout String?) -> EditAction? {
+	func canDelete(_ node: OsmNode) throws -> EditAction {
 		if node.wayCount > 0 || node.parentRelations.count > 0 {
-			error = NSLocalizedString("Can't delete node that is part of a relation", comment: "")
-			return nil
+			throw EditError.text(NSLocalizedString("Can't delete node that is part of a relation", comment: ""))
 		}
 		return {
 			self.deleteNodeUnsafe(node)
@@ -32,7 +41,7 @@ extension OsmMapData {
 
 	// MARK: canDeleteWay
 
-	func canDelete(_ way: OsmWay, error: inout String?) -> EditAction? {
+	func canDelete(_ way: OsmWay) throws -> EditAction {
 		if way.parentRelations.count > 0 {
 			var ok = false
 			if way.parentRelations.count == 1 {
@@ -53,8 +62,9 @@ extension OsmMapData {
 				}
 			}
 			if !ok {
-				error = NSLocalizedString("Can't delete way that is part of a Route or similar relation", comment: "")
-				return nil
+				throw EditError
+					.text(NSLocalizedString("Can't delete way that is part of a Route or similar relation",
+					                        comment: ""))
 			}
 		}
 
@@ -65,14 +75,13 @@ extension OsmMapData {
 
 	// MARK: canDeleteRelation
 
-	func canDelete(_ relation: OsmRelation, error: inout String?) -> EditAction? {
+	func canDelete(_ relation: OsmRelation) throws -> EditAction {
 		if relation.isMultipolygon() {
 			// okay
 		} else if relation.isRestriction() {
 			// okay
 		} else {
-			error = NSLocalizedString("Can't delete relation that is not a multipolygon", comment: "")
-			return nil
+			throw EditError.text(NSLocalizedString("Can't delete relation that is not a multipolygon", comment: ""))
 		}
 
 		return {
@@ -84,18 +93,14 @@ extension OsmMapData {
 
 	// MARK: canAddWayToRelation
 
-	func canAdd(_ obj: OsmBaseObject, to relation: OsmRelation, withRole role: String?,
-	            error: inout String?) -> EditAction?
-	{
+	func canAdd(_ obj: OsmBaseObject, to relation: OsmRelation, withRole role: String?) throws -> EditAction {
 		var role = role
 
 		if !relation.isMultipolygon() {
-			error = NSLocalizedString("Only multipolygon relations are supported", comment: "")
-			return nil
+			throw EditError.text(NSLocalizedString("Only multipolygon relations are supported", comment: ""))
 		}
 		guard let newWay = obj.isWay() else {
-			error = NSLocalizedString("Can only add ways to multipolygons", comment: "")
-			return nil
+			throw EditError.text(NSLocalizedString("Can only add ways to multipolygons", comment: ""))
 		}
 
 		// place the member adjacent to a way its connected to, if any
@@ -109,8 +114,7 @@ extension OsmMapData {
 			}
 			if newWay.connectsTo(way: w) != nil {
 				if role != nil, role! != m.role {
-					error = NSLocalizedString("Cannot connect an inner way to an outer way", comment: "")
-					return nil
+					throw EditError.text(NSLocalizedString("Cannot connect an inner way to an outer way", comment: ""))
 				}
 				role = m.role // copy the role of the way it's connected to
 				break
@@ -118,8 +122,7 @@ extension OsmMapData {
 		}
 
 		if role == nil {
-			error = NSLocalizedString("Unknown role", comment: "relation role=* tag")
-			return nil
+			throw EditError.text(NSLocalizedString("Unknown role", comment: "relation role=* tag"))
 		}
 
 		return { [self] in
@@ -132,7 +135,7 @@ extension OsmMapData {
 
 	// MARK: canAddNodeToWay
 
-	func canAddNode(to way: OsmWay, at index: Int, error: inout String?) -> EditActionWithNode? {
+	func canAddNode(to way: OsmWay, at index: Int) throws -> EditActionWithNode {
 		if way.nodes.count >= 2, index == 0 || index == way.nodes.count {
 			// we don't want to extend a way that is a portion of a route relation, polygon, etc.
 			for relation in way.parentRelations {
@@ -146,30 +149,26 @@ extension OsmMapData {
 						if let via = via {
 							if let prevNode = prevNode {
 								if via.isWay() != nil, via == way || (via.isWay()?.nodes.contains(prevNode) ?? false) {
-									error = NSLocalizedString(
+									throw EditError.text(NSLocalizedString(
 										"Extending a 'via' in a Turn Restriction will break the relation",
-										comment: "")
-									return nil
+										comment: ""))
 								}
 							}
 						} else {
-							error = NSLocalizedString(
+							throw EditError.text(NSLocalizedString(
 								"The way belongs to a relation that is not fully downloaded",
-								comment: "")
-							return nil
+								comment: ""))
 						}
 					}
 				} else {
-					error = NSLocalizedString(
+					throw EditError.text(NSLocalizedString(
 						"Extending a way which belongs to a Route or similar relation may damage the relation",
-						comment: "")
-					return nil
+						comment: ""))
 				}
 			}
 		}
 		if way.nodes.count == 2000 {
-			error = NSLocalizedString("Maximum way length is 2000 nodes", comment: "")
-			return nil
+			throw EditError.text(NSLocalizedString("Maximum way length is 2000 nodes", comment: ""))
 		}
 
 		return { [self] node in
@@ -179,10 +178,9 @@ extension OsmMapData {
 
 	// MARK: canRemoveObject:fromRelation
 
-	func canRemove(_ obj: OsmBaseObject, from relation: OsmRelation, error: inout String?) -> EditAction? {
+	func canRemove(_ obj: OsmBaseObject, from relation: OsmRelation) throws -> EditAction {
 		if !relation.isMultipolygon() {
-			error = NSLocalizedString("Only multipolygon relations are supported", comment: "")
-			return nil
+			throw EditError.text(NSLocalizedString("Only multipolygon relations are supported", comment: ""))
 		}
 		return { [self] in
 			for index in relation.members.count..<0 {
@@ -195,11 +193,10 @@ extension OsmMapData {
 	}
 
 	// more complicated stuff:
-	func canOrthogonalizeWay(_ way: OsmWay, error: inout String?) -> EditAction? {
+	func canOrthogonalizeWay(_ way: OsmWay) throws -> EditAction {
 		// needs a closed way to work properly.
 		if !(way.isWay() != nil) || !way.isClosed() || way.nodes.count < 5 {
-			error = NSLocalizedString("Requires a closed way with at least 4 nodes", comment: "")
-			return nil
+			throw EditError.text(NSLocalizedString("Requires a closed way with at least 4 nodes", comment: ""))
 		}
 
 #if false
@@ -291,8 +288,7 @@ extension OsmMapData {
 					} else {
 						let dotp = normalizedDotProduct(i, points)
 						if dotp < -1 + epsilon {
-							var dummy: String?
-							if let canDeleteNode = canDelete(node, from: way, error: &dummy) {
+							if let canDeleteNode = try? canDelete(node, from: way) {
 								canDeleteNode()
 							} else {
 								// oh well...
@@ -307,14 +303,13 @@ extension OsmMapData {
 	// MARK: canMergeNode:intoNode
 
 	// used when dragging a node into another node
-	func canMerge(_ node1: OsmNode, into node2: OsmNode, error: inout String?) -> EditActionReturnNode? {
+	func canMerge(_ node1: OsmNode, into node2: OsmNode) throws -> EditActionReturnNode {
 		guard let mergedTags = OsmTags.Merge(
 			ourTags: node1.tags,
 			otherTags: node2.tags,
 			allowConflicts: false)
 		else {
-			error = NSLocalizedString("The merged nodes contain conflicting tags", comment: "")
-			return nil
+			throw EditError.text(NSLocalizedString("The merged nodes contain conflicting tags", comment: ""))
 		}
 
 		let survivor: OsmNode
@@ -348,8 +343,8 @@ extension OsmMapData {
 				if let prevRole = seen[relation.ident],
 				   prevRole != role
 				{
-					error = NSLocalizedString("The nodes have conflicting roles in parent relations", comment: "")
-					return nil
+					throw EditError
+						.text(NSLocalizedString("The nodes have conflicting roles in parent relations", comment: ""))
 				} else {
 					seen[relation.ident] = role
 				}
@@ -374,8 +369,9 @@ extension OsmMapData {
 			for member in relation.members {
 				if member.isWay() {
 					guard let memberObj = member.obj as? OsmWay else {
-						error = NSLocalizedString("A relation the node belongs to is not fully downloaded", comment: "")
-						return nil
+						throw EditError
+							.text(NSLocalizedString("A relation the node belongs to is not fully downloaded",
+							                        comment: ""))
 					}
 					memberWays.append(memberObj)
 				}
@@ -393,8 +389,9 @@ extension OsmMapData {
 				let role = member.role ?? ""
 				if member.isNode() {
 					guard let node = member.obj as? OsmNode else {
-						error = NSLocalizedString("A relation the node belongs to is not fully downloaded", comment: "")
-						return nil
+						throw EditError
+							.text(NSLocalizedString("A relation the node belongs to is not fully downloaded",
+							                        comment: ""))
 					}
 					var c = collection[role] ?? Set<OsmNode>()
 					c.insert(node)
@@ -407,8 +404,9 @@ extension OsmMapData {
 					guard let way = member.obj as? OsmWay,
 					      way.nodes.count > 0
 					else {
-						error = NSLocalizedString("A relation the node belongs to is not fully downloaded", comment: "")
-						return nil
+						throw EditError
+							.text(NSLocalizedString("A relation the node belongs to is not fully downloaded",
+							                        comment: ""))
 					}
 					var c = collection[role] ?? Set<OsmNode>()
 					c.formUnion(way.nodes)
@@ -457,8 +455,7 @@ extension OsmMapData {
 				}
 			}
 			if (connectFrom && connectTo && !isUturn) || (connectFrom && connectVia) || (connectTo && connectVia) {
-				error = NSLocalizedString("Connecting the nodes would damage a relation", comment: "")
-				return nil
+				throw EditError.text(NSLocalizedString("Connecting the nodes would damage a relation", comment: ""))
 			}
 
 			// connecting to a key node -
@@ -478,8 +475,7 @@ extension OsmMapData {
 
 				if n0 != nil, n1 != nil {
 					// both nodes are part of the restriction
-					error = NSLocalizedString("Connecting the nodes would damage a relation", comment: "")
-					return nil
+					throw EditError.text(NSLocalizedString("Connecting the nodes would damage a relation", comment: ""))
 				}
 			}
 		}
@@ -513,7 +509,7 @@ extension OsmMapData {
 		}
 	}
 
-	func canStraightenWay(_ way: OsmWay, error: inout String?) -> EditAction? {
+	func canStraightenWay(_ way: OsmWay) throws -> EditAction {
 		let count = way.nodes.count
 		var points: [OSMPoint?] = way.nodes.map({ OSMPoint(x: $0.latLon.lon, y: lat2latp($0.latLon.lat)) })
 		if count > 2 {
@@ -528,8 +524,7 @@ extension OsmMapData {
 
 				let dist = newPoint.distanceToPoint(point)
 				if dist > threshold {
-					error = NSLocalizedString("The way is not sufficiently straight", comment: "")
-					return nil
+					throw EditError.text(NSLocalizedString("The way is not sufficiently straight", comment: ""))
 				}
 
 				// if node is interesting then move it, otherwise delete it.
@@ -556,8 +551,7 @@ extension OsmMapData {
 				} else {
 					// remove point
 					let node = way.nodes[i]
-					var dummy: String?
-					if let canDelete = self.canDelete(node, from: way, error: &dummy) {
+					if let canDelete = try? self.canDelete(node, from: way) {
 						canDelete()
 					} else {
 						// no big deal
@@ -568,7 +562,7 @@ extension OsmMapData {
 		}
 	}
 
-	func canReverse(_ way: OsmWay, error: inout String?) -> EditAction? {
+	func canReverse(_ way: OsmWay) throws -> EditAction {
 		let roleReversals = [
 			"forward": "backward",
 			"backward": "forward",
@@ -636,7 +630,7 @@ extension OsmMapData {
 
 	// MARK: deleteNodeFromWay
 
-	func canDisconnectOrDelete(_ node: OsmNode, in way: OsmWay, isDelete: Bool, error: inout String?) -> Bool {
+	func canDisconnectOrDelete(_ node: OsmNode, in way: OsmWay, isDelete: Bool) throws {
 		// only care if node is an endpoiont
 		if node == way.nodes.first || node == way.nodes.last {
 			// we don't want to truncate a way that is a portion of a route relation, polygon, etc.
@@ -644,10 +638,9 @@ extension OsmMapData {
 				if relation.isRestriction() {
 					for member in relation.members {
 						if member.obj == nil {
-							error = NSLocalizedString(
+							throw EditError.text(NSLocalizedString(
 								"The way belongs to a relation that is not fully downloaded",
-								comment: "")
-							return false
+								comment: ""))
 						}
 					}
 
@@ -657,23 +650,23 @@ extension OsmMapData {
 					let to = relation.member(byRole: "to")
 					if from?.obj == way || to?.obj == way {
 						if isDelete, way.nodes.count <= 2 {
-							error = NSLocalizedString("Can't remove Turn Restriction to/from way", comment: "")
-							return false // deleting node will cause degenerate way
+							// deleting node will cause degenerate way
+							throw EditError
+								.text(NSLocalizedString("Can't remove Turn Restriction to/from way", comment: ""))
 						}
 						for viaMember in viaList {
 							if viaMember.obj == node {
-								error = NSLocalizedString("Can't remove Turn Restriction 'via' node", comment: "")
-								return false
+								throw EditError
+									.text(NSLocalizedString("Can't remove Turn Restriction 'via' node", comment: ""))
 							} else {
 								if let viaObject = viaMember.obj,
 								   let common = viaObject.isWay()?.connectsTo(way: way)
 								{
 									if common.isNode() == node {
 										// deleting the node that connects from/to and via
-										error = NSLocalizedString(
+										throw EditError.text(NSLocalizedString(
 											"Can't remove Turn Restriction node connecting 'to'/'from' to 'via'",
-											comment: "")
-										return false
+											comment: ""))
 									}
 								}
 							}
@@ -684,35 +677,30 @@ extension OsmMapData {
 					for viaMember in viaList {
 						if viaMember.obj == way {
 							// can't delete an endpoint of a via way
-							error = NSLocalizedString("Can't remove node in Turn Restriction 'via' way", comment: "")
-							return false
+							throw EditError
+								.text(NSLocalizedString("Can't remove node in Turn Restriction 'via' way", comment: ""))
 						}
 					}
 				} else if relation.isMultipolygon() {
 					// okay
 				} else {
 					// don't allow deleting an endpoint node of routes, etc.
-					error = NSLocalizedString("Can't remove component of a Route or similar relation", comment: "")
-					return false
+					throw EditError
+						.text(NSLocalizedString("Can't remove component of a Route or similar relation", comment: ""))
 				}
 			}
 		}
-		return true
 	}
 
-	func canDelete(_ node: OsmNode, from way: OsmWay, error: inout String?) -> EditAction? {
-		if !canDisconnectOrDelete(node, in: way, isDelete: true, error: &error) {
-			return nil
-		}
-
+	func canDelete(_ node: OsmNode, from way: OsmWay) throws -> EditAction {
+		try canDisconnectOrDelete(node, in: way, isDelete: true)
 		return { [self] in
 			let needAreaFixup = way.nodes.last == node && way.nodes.first == node
 			while let index = way.nodes.firstIndex(of: node) {
 				deleteNodeUnsafe(inWay: way, index: index, preserveNode: false)
 			}
 			if way.nodes.count < 2 {
-				var dummy: String?
-				if let delete = canDelete(way, error: &dummy) {
+				if let delete = try? canDelete(way) {
 					delete() // this will also delete any relations the way belongs to
 				} else {
 					deleteWayUnsafe(way)
@@ -729,19 +717,15 @@ extension OsmMapData {
 
 	// disconnect all other ways from the selected way joined to it at node
 	// if the node doesn't belong to any other ways then it's a self-intersection
-	func canDisconnectWay(_ way: OsmWay, at node: OsmNode, error: inout String?) -> EditActionReturnNode? {
+	func canDisconnectWay(_ way: OsmWay, at node: OsmNode) throws -> EditActionReturnNode {
 		if !way.nodes.contains(node) {
-			error = NSLocalizedString("Node is not an element of way", comment: "")
-			return nil
+			throw EditError.text(NSLocalizedString("Node is not an element of way", comment: ""))
 		}
 		if node.wayCount < 2 {
-			error = NSLocalizedString("The way must have at least 2 nodes", comment: "")
-			return nil
+			throw EditError.text(NSLocalizedString("The way must have at least 2 nodes", comment: ""))
 		}
 
-		if !canDisconnectOrDelete(node, in: way, isDelete: false, error: &error) {
-			return nil
-		}
+		try canDisconnectOrDelete(node, in: way, isDelete: false)
 
 		return { [self] in
 			registerUndoCommentString(NSLocalizedString("Disconnect", comment: ""))
@@ -768,7 +752,7 @@ extension OsmMapData {
 	}
 
 	// returns the new other half
-	func canSplitWay(_ selectedWay: OsmWay, at node: OsmNode, error: inout String?) -> EditActionReturnWay? {
+	func canSplitWay(_ selectedWay: OsmWay, at node: OsmNode) throws -> EditActionReturnWay {
 		return { [self] in
 			registerUndoCommentString(NSLocalizedString("Split", comment: ""))
 			let wayA = selectedWay
@@ -958,8 +942,7 @@ extension OsmMapData {
 		// get all necessary splits
 		var splitFuncs: [EditActionReturnWay] = []
 		for way in splits {
-			var error: String?
-			guard let split = canSplitWay(way, at: viaNode, error: &error) else {
+			guard let split = try? canSplitWay(way, at: viaNode) else {
 				return nil
 			}
 			splitFuncs.append(split)
@@ -1012,10 +995,9 @@ extension OsmMapData {
 
 	// MARK: joinWay
 
-	func canJoin(_ selectedWay: OsmWay, at selectedNode: OsmNode, error: inout String?) -> EditAction? {
+	func canJoin(_ selectedWay: OsmWay, at selectedNode: OsmNode) throws -> EditAction {
 		if selectedWay.nodes.first != selectedNode, selectedWay.nodes.last != selectedNode {
-			error = NSLocalizedString("Node must be the first or last node of the way", comment: "")
-			return nil // must be endpoint node
+			throw EditError.text(NSLocalizedString("Node must be the first or last node of the way", comment: ""))
 		}
 
 		let ways = waysContaining(selectedNode)
@@ -1038,17 +1020,13 @@ extension OsmMapData {
 		}
 		if otherWays.count > 1 {
 			// ambigious connection
-			error = NSLocalizedString("The target way is ambiguous", comment: "")
-			return nil
+			throw EditError.text(NSLocalizedString("The target way is ambiguous", comment: ""))
 		} else if otherWays.count == 0 {
-			error = NSLocalizedString("Missing way to connect to", comment: "")
-			return nil
+			throw EditError.text(NSLocalizedString("Missing way to connect to", comment: ""))
 		}
-
-		guard let otherWay = otherWays.first else { return nil }
+		let otherWay = otherWays.first!
 		if (otherWay.nodes.count + selectedWay.nodes.count) > 2000 {
-			error = NSLocalizedString("Max nodes after joining is 2000", comment: "")
-			return nil
+			throw EditError.text(NSLocalizedString("Max nodes after joining is 2000", comment: ""))
 		}
 
 		var relations = Set<OsmRelation>(selectedWay.parentRelations)
@@ -1068,10 +1046,9 @@ extension OsmMapData {
 					}
 				}
 				if foundSet != 3 {
-					error = NSLocalizedString(
+					throw EditError.text(NSLocalizedString(
 						"Joining would invalidate a Turn Restriction the way belongs to",
-						comment: "")
-					return nil
+						comment: ""))
 				}
 			}
 			// route or polygon, so should be okay
@@ -1079,26 +1056,21 @@ extension OsmMapData {
 
 		// check if extending the way would break something
 		var loc = selectedWay.nodes.firstIndex(of: selectedNode) ?? 0
-		if canAddNode(to: selectedWay, at: loc > 0 ? loc : loc + 1, error: &error) == nil {
-			return nil
-		}
+		_ = try canAddNode(to: selectedWay, at: loc > 0 ? loc : loc + 1)
+
 		loc = otherWay.nodes.firstIndex(of: selectedNode) ?? 0
-		if canAddNode(to: otherWay, at: loc > 0 ? loc : loc + 1, error: &error) == nil {
-			return nil
-		}
+		_ = try canAddNode(to: otherWay, at: loc > 0 ? loc : loc + 1)
 
 		let newTags = OsmTags.Merge(ourTags: selectedWay.tags, otherTags: otherWay.tags, allowConflicts: false)
 		if newTags == nil {
 			// tag conflict
-			error = NSLocalizedString("The ways contain incompatible tags", comment: "")
-			return nil
+			throw EditError.text(NSLocalizedString("The ways contain incompatible tags", comment: ""))
 		}
 
 		return { [self] in
 
 			// join nodes, preserving selected way
 			var index = 0
-			var dummy: String?
 			if selectedWay.nodes.last == otherWay.nodes[0] {
 				registerUndoCommentString(NSLocalizedString("Join", comment: ""))
 				for n in otherWay.nodes {
@@ -1110,9 +1082,8 @@ extension OsmMapData {
 				}
 			} else if selectedWay.nodes.last == otherWay.nodes.last {
 				registerUndoCommentString(NSLocalizedString("Join", comment: ""))
-				if let reverse = canReverse(otherWay, error: &dummy) { // reverse the tags on other way
-					reverse()
-				}
+				let reverse = try! canReverse(otherWay) // reverse the tags on other way
+				reverse()
 				for n in otherWay.nodes {
 					if index == 0 {
 						continue
@@ -1122,9 +1093,8 @@ extension OsmMapData {
 				}
 			} else if selectedWay.nodes[0] == otherWay.nodes[0] {
 				registerUndoCommentString(NSLocalizedString("Join", comment: ""))
-				if let reverse = canReverse(otherWay, error: &dummy) { // reverse the tags on other way
-					reverse()
-				}
+				let reverse = try! canReverse(otherWay) // reverse the tags on other way
+				reverse()
 				for n in otherWay.nodes.reversed() {
 					if index == 0 {
 						continue
@@ -1154,10 +1124,9 @@ extension OsmMapData {
 		}
 	}
 
-	func canCircularizeWay(_ way: OsmWay, error: inout String?) -> EditAction? {
+	func canCircularizeWay(_ way: OsmWay) throws -> EditAction {
 		if !(way.isWay() != nil) || !way.isClosed() || way.nodes.count < 4 {
-			error = NSLocalizedString("Requires a closed way with at least 3 nodes", comment: "")
-			return nil
+			throw EditError.text(NSLocalizedString("Requires a closed way with at least 3 nodes", comment: ""))
 		}
 
 		func insertNode(in way: OsmWay, withCenter center: LatLon, angle: Double, radius: Double, atIndex index: Int) {
@@ -1229,7 +1198,7 @@ extension OsmMapData {
 
 	// MARK: Duplicate
 
-	func duplicateNode(_ node: OsmNode, withOffset offset: OSMPoint) -> OsmNode {
+	private func duplicateNode(_ node: OsmNode, withOffset offset: OSMPoint) -> OsmNode {
 		let loc = LatLon(latitude: node.latLon.lat + offset.y,
 		                 longitude: node.latLon.lon + offset.x)
 		let newNode = createNode(atLocation: loc)
@@ -1237,7 +1206,7 @@ extension OsmMapData {
 		return newNode
 	}
 
-	func duplicateWay(_ way: OsmWay, withOffset offset: OSMPoint) -> OsmWay {
+	private func duplicateWay(_ way: OsmWay, withOffset offset: OSMPoint) -> OsmWay {
 		let newWay = createWay()
 		for index in way.nodes.indices {
 			let node = way.nodes[index]
@@ -1250,40 +1219,40 @@ extension OsmMapData {
 		return newWay
 	}
 
+	private func duplicateRelationMultipolygon(_ relation: OsmRelation, withOffset offset: OSMPoint) -> OsmRelation {
+		let newRelation = createRelation()
+		for member in relation.members {
+			if let way = member.obj as? OsmWay {
+				let newWay: OsmWay
+				if let prev = newRelation.members.first(where: { $0.obj === way }) {
+					// way is duplicated and already exists
+					newWay = prev.obj as! OsmWay
+				} else {
+					newWay = duplicateWay(way, withOffset: offset)
+				}
+				let newMember = OsmMember(obj: newWay, role: member.role)
+				newRelation.addMember(newMember, atIndex: newRelation.members.count, undo: undoManager)
+			}
+		}
+		setTags(relation.tags, for: newRelation)
+		return newRelation
+	}
+
 	func duplicate(_ object: OsmBaseObject, withOffset offset: OSMPoint) -> OsmBaseObject? {
 		let comment = NSLocalizedString("duplicate", comment: "create a duplicate")
-		if object.isNode() != nil {
+		if let node = object as? OsmNode {
 			registerUndoCommentString(comment)
-			return duplicateNode(object.isNode()!, withOffset: offset)
-		} else if object.isWay() != nil {
+			return duplicateNode(node, withOffset: offset)
+		} else if let way = object as? OsmWay {
 			registerUndoCommentString(comment)
-			return duplicateWay(object.isWay()!, withOffset: offset)
-		} else if object.isRelation()?.isMultipolygon() ?? false {
+			return duplicateWay(way, withOffset: offset)
+		} else if let relation = object as? OsmRelation,
+				  relation.isMultipolygon()
+		{
 			registerUndoCommentString(comment)
-			let newRelation = createRelation()
-			if let members = object.isRelation()?.members {
-				for member in members {
-					if let way = member.obj as? OsmWay {
-						var newWay: OsmWay?
-						for prev in 0..<newRelation.members.count {
-							let m = object.isRelation()?.members[prev]
-							if m?.obj == way {
-								// way is duplicated
-								newWay = newRelation.members[prev].obj as? OsmWay
-								break
-							}
-						}
-						if newWay == nil {
-							newWay = duplicateWay(way, withOffset: offset)
-						}
-						let newMember = OsmMember(obj: newWay!, role: member.role)
-						newRelation.addMember(newMember, atIndex: newRelation.members.count, undo: undoManager)
-					}
-				}
-			}
-			setTags(object.tags, for: newRelation)
-			return newRelation
+			return duplicateRelationMultipolygon(relation, withOffset: offset)
 		}
+		// a non-multipolygon relation
 		return nil
 	}
 
@@ -1296,7 +1265,7 @@ extension OsmMapData {
 
 	// MARK: reverseWay
 
-	func reverseKey(_ key: String) -> String {
+	private func reverseKey(_ key: String) -> String {
 		let replacements = [
 			":right": ":left",
 			":left": ":right",
@@ -1312,23 +1281,11 @@ extension OsmMapData {
 		return newKey
 	}
 
-	static var isNumericRegex: NSRegularExpression?
-
 	private func isNumeric(_ s: String) -> Bool {
-		if OsmMapData.isNumericRegex == nil {
-			let numeric = "^[+\\-]?[\\d.]"
-			do {
-				OsmMapData.isNumericRegex = try NSRegularExpression(pattern: numeric, options: .caseInsensitive)
-			} catch {}
-		}
-		let r = OsmMapData.isNumericRegex?.rangeOfFirstMatch(
-			in: s,
-			options: [],
-			range: NSRange(location: 0, length: s.count))
-		return (r?.length ?? 0) > 0
+		return Double(s) != nil
 	}
 
-	func reverseValue(_ key: String, _ value: String) -> String {
+	private func reverseValue(_ key: String, _ value: String) -> String {
 		if (key == "incline") && isNumeric(value) {
 			let ch = value[value.startIndex]
 			if ch == "-" {
