@@ -282,41 +282,38 @@ extension EditorMapLayer {
 		}
 
 		if let selectedWay = self.selectedWay,
-		   let object = object.isNode()
+		   let dragNode = object.isNode()
 		{
 			// dragging a node that is part of a way
-			if let dragNode = object.isNode() {
-				let dragWay = selectedWay
-				var segment = -1
-				let hit = hitTestDragConnection(for: dragNode, segment: &segment)
-				if var hit = hit as? OsmNode {
-					// replace dragged node with hit node
-					var error: String?
-					let merge: EditActionReturnNode? = mapData.canMerge(dragNode, into: hit, error: &error)
-					if merge == nil {
-						owner.showAlert(error!, message: nil)
-						return
-					}
-					hit = merge!()
-					if dragWay.isArea() {
-						selectedNode = nil
-						let pt = owner.mapTransform.screenPoint(forLatLon: hit.latLon, birdsEye: true)
-						owner.placePushpin(at: pt, object: dragWay)
-					} else {
-						selectedNode = hit
-						owner.placePushpinForSelection(at: nil)
-					}
-				} else if let hit = hit as? OsmWay {
-					// add new node to hit way
-					let pt = hit.latLonOnObject(forLatLon: dragNode.latLon)
-					mapData.setLatLon(pt, forNode: dragNode)
-					var error: String?
-					let add: EditActionWithNode? = canAddNode(toWay: hit, atIndex: segment + 1, error: &error)
-					if let add = add {
-						add(dragNode)
-					} else {
-						owner.showAlert(NSLocalizedString("Error connecting to way", comment: ""), message: error)
-					}
+			let dragWay = selectedWay
+			var segment = -1
+			let hit = hitTestDragConnection(for: dragNode, segment: &segment)
+			if var hit = hit as? OsmNode {
+				// replace dragged node with hit node
+				var error: String?
+				guard let merge = mapData.canMerge(dragNode, into: hit, error: &error)
+				else {
+					owner.showAlert(error!, message: nil)
+					return
+				}
+				hit = merge()
+				if dragWay.isArea() {
+					selectedNode = nil
+					let pt = owner.mapTransform.screenPoint(forLatLon: hit.latLon, birdsEye: true)
+					owner.placePushpin(at: pt, object: dragWay)
+				} else {
+					selectedNode = hit
+					owner.placePushpinForSelection(at: nil)
+				}
+			} else if let hit = hit as? OsmWay {
+				// add new node to hit way
+				let pt = hit.latLonOnObject(forLatLon: dragNode.latLon)
+				mapData.setLatLon(pt, forNode: dragNode)
+				var error: String?
+				if let add = canAddNode(toWay: hit, atIndex: segment + 1, error: &error) {
+					add(dragNode)
+				} else {
+					owner.showAlert(NSLocalizedString("Error connecting to way", comment: ""), message: error)
 				}
 			}
 			return

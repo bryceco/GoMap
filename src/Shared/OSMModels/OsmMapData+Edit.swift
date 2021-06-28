@@ -494,24 +494,18 @@ extension OsmMapData {
 
 			// need to replace the node in all objects everywhere
 			for (_, way) in ways {
-				if way.nodes.contains(deadNode) {
-					for index in 0..<way.nodes.count {
-						if way.nodes[index] == deadNode {
-							addNodeUnsafe(survivor, to: way, at: index)
-							deleteNodeUnsafe(inWay: way, index: index + 1, preserveNode: false)
-						}
-					}
+				while let index = way.nodes.firstIndex(of: deadNode) {
+					addNodeUnsafe(survivor, to: way, at: index)
+					deleteNodeUnsafe(inWay: way, index: index + 1, preserveNode: false)
 				}
 			}
 
 			for (_, relation) in relations {
-				for index in 0..<relation.members.count {
+				while let index = relation.members.firstIndex(where: { $0.obj == deadNode }) {
 					let member = relation.members[index]
-					if member.obj == deadNode {
-						let newMember = OsmMember(obj: survivor, role: member.role)
-						addMemberUnsafe(newMember, to: relation, at: index + 1)
-						deleteMember(inRelationUnsafe: relation, index: index)
-					}
+					let newMember = OsmMember(obj: survivor, role: member.role)
+					addMemberUnsafe(newMember, to: relation, at: index + 1)
+					deleteMember(inRelationUnsafe: relation, index: index)
 				}
 			}
 			deleteNodeUnsafe(deadNode)
