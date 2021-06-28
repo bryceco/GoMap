@@ -185,8 +185,10 @@ class POIAllTagsViewController: UITableViewController {
 		super.viewDidAppear(animated)
 		let tabController = tabBarController as! POITabBarController
 		if tabController.selection == nil {
-			let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! TextPairTableCell
-			if cell.text1.text?.count == 0, cell.text2.text?.count == 0 {
+			if let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TextPairTableCell,
+			   cell.text1.text?.count == 0,
+			   cell.text2.text?.count == 0
+			{
 				cell.text1.becomeFirstResponder()
 			}
 		}
