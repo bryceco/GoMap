@@ -199,7 +199,6 @@ enum OsmDownloader {
 				DispatchQueue.main.async(execute: {
 					completion(.failure(error))
 				})
-				return
 			}
 		})
 	}

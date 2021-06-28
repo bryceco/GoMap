@@ -156,9 +156,7 @@ final class OsmMapData: NSObject, NSCoding {
 		return relations.count
 	}
 
-	// FIXME: Use OsmExtendedIdentifier. This requires adding an enum in NotesDatabase.
-	func object(withExtendedIdentifier extendedIdentifier: Int64) -> OsmBaseObject? {
-		let ext = OsmExtendedIdentifier(extendedIdentifier)
+	func object(withExtendedIdentifier ext: OsmExtendedIdentifier) -> OsmBaseObject? {
 		let ident: OsmIdentifier = ext.ident
 		let type: OSM_TYPE = ext.type
 		switch type {
@@ -1860,7 +1858,7 @@ final class OsmMapData: NSObject, NSCoding {
 			}
 		}
 		if let index = wayCountDict.first(where: { $0.1 != 0 }) {
-			print("node \(index) has bad wayCount")
+			print("node \(index.key) has bad wayCount: \(index.value)")
 			assert(false)
 		}
 	}

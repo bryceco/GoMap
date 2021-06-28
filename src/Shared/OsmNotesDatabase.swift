@@ -49,10 +49,17 @@ final class OsmNoteComment {
 		}
 	}
 
-	init(gpxWaypoint objectName: String, description: String) {
+	init(gpxWaypoint description: String) {
 		date = ""
 		user = ""
 		action = "waypoint"
+		text = "\(description)"
+	}
+
+	init(keepRight objectName: String, description: String) {
+		date = ""
+		user = ""
+		action = "keepright"
 		text = "\(objectName): \(description)"
 	}
 
@@ -67,11 +74,7 @@ class MapMarker {
 	let lat: Double
 	let lon: Double
 
-	// for Notes this is the note ID, for fixme or Keep Right it is the OSM object ID, for GPX it is the waypoint ID
-	let noteId: Int64
-
 	let dateCreated: String // date created
-	let status: String // open, closed, etc.
 	private(set) var comments: [OsmNoteComment] = []
 
 	// a unique identifier for a note across multiple downloads
@@ -87,42 +90,33 @@ class MapMarker {
 
 	init(lat: Double,
 	     lon: Double,
-	     noteId: Int64,
 	     dateCreated: String,
-	     status: String,
 	     comments: [OsmNoteComment])
 	{
 		buttonId = MapMarker.NextButtonID()
 		self.lat = lat
 		self.lon = lon
-		self.noteId = noteId
 		self.dateCreated = dateCreated
-		self.status = status
 		self.comments = comments
-	}
-
-	var description: String {
-		var text = "Note \(noteId) - \(status):\n"
-		for comment in comments {
-			text += "  \(comment.description)\n"
-		}
-		return text
 	}
 }
 
 // A regular OSM note
 class OsmNote: MapMarker {
+	let status: String // open, closed, etc.
+	let noteId: Int64
+
 	override var key: String {
 		return "note-\(noteId)"
 	}
 
 	/// A note newly created by user
 	init(lat: Double, lon: Double) {
+		noteId = 0
+		status = ""
 		super.init(lat: lat,
 		           lon: lon,
-		           noteId: 0,
 		           dateCreated: "",
-		           status: "",
 		           comments: [])
 	}
 
@@ -164,17 +158,20 @@ class OsmNote: MapMarker {
 		      let dateCreated = dateCreated,
 		      let status = status
 		else { return nil }
+
+		self.noteId = noteId
+		self.status = status
 		super.init(lat: lat,
 		           lon: lon,
-		           noteId: noteId,
 		           dateCreated: dateCreated,
-		           status: status,
 		           comments: comments)
 	}
 }
 
 // An OSM object containing a fixme= tag
 class Fixme: MapMarker {
+	let noteId: OsmExtendedIdentifier
+
 	override var key: String {
 		return "fixme-\(noteId)"
 	}
@@ -184,23 +181,20 @@ class Fixme: MapMarker {
 		let center = object.selectionPoint()
 		let comment = OsmNoteComment(fixmeObject: object, fixmeKey: fixme)
 
+		noteId = object.extendedIdentifier
 		super.init(lat: center.lat,
 		           lon: center.lon,
-		           noteId: object.extendedIdentifier.rawValue,
 		           dateCreated: object.timestamp,
-		           status: STATUS_FIXME,
 		           comments: [comment])
 	}
 }
 
-// A keep-right entry
-class KeepRight: MapMarker {
-	override var key: String {
-		return "keepright-\(noteId)"
-	}
-
+// A GPX waypoint
+class WayPoint: MapMarker {
 	/// Initialize based on KeepRight query
-	init?(gpxWaypointXml waypointElement: DDXMLElement, status: String, namespace ns: String, mapData: OsmMapData) {
+	static func parseXML(gpxWaypointXml waypointElement: DDXMLElement, namespace ns: String)
+		-> (lon: Double, lat: Double, desc: String, extensions: [DDXMLNode])?
+	{
 		//		<wpt lon="-122.2009985" lat="47.6753189">
 		//		<name><![CDATA[website, http error]]></name>
 		//		<desc><![CDATA[The URL (<a target="_blank" href="http://www.stjamesespresso.com/">http://www.stjamesespresso.com/</a>) cannot be opened (HTTP status code 301)]]></desc>
@@ -219,9 +213,7 @@ class KeepRight: MapMarker {
 		else { return nil }
 
 		var description: String = ""
-		var osmIdent: OsmIdentifier?
-		var osmType: String?
-		var noteId: Int64?
+		var extensions: [DDXMLNode] = []
 
 		for child in waypointElement.children ?? [] {
 			guard let child = child as? DDXMLElement else {
@@ -231,22 +223,73 @@ class KeepRight: MapMarker {
 				// ignore for now
 			} else if child.name == "desc" {
 				description = child.stringValue ?? ""
-			} else if child.name == "extensions" {
-				for child2 in child.children ?? [] {
-					guard let child2 = child2 as? DDXMLElement else {
-						continue
-					}
-					if child2.name == "id",
-					   let string = child2.stringValue,
-					   let id = Int64(string)
-					{
-						noteId = id
-					} else if child2.name == "object_id" {
-						osmIdent = Int64(child2.stringValue ?? "") ?? 0
-					} else if child2.name == "object_type" {
-						osmType = child2.stringValue
-					}
-				}
+			} else if child.name == "extensions",
+			          let children = child.children
+			{
+				extensions = children
+			}
+		}
+		return (lon, lat, description, extensions)
+	}
+
+	/// Initialize based on KeepRight query
+	init?(gpxWaypointXml waypointElement: DDXMLElement, status: String, namespace ns: String, mapData: OsmMapData) {
+		guard let (lon, lat, desc, _) = Self.parseXML(gpxWaypointXml: waypointElement, namespace: ns)
+		else { return nil }
+
+		let comment = OsmNoteComment(gpxWaypoint: desc)
+		super.init(lat: lat,
+		           lon: lon,
+		           dateCreated: "",
+		           comments: [comment])
+	}
+
+	override var key: String {
+		fatalError()	// return "waypoint-()"
+	}
+}
+
+// A keep-right entry. These use XML just like a GPS waypoint, but with an extension to define OSM data.
+class KeepRight: MapMarker {
+	let noteId: Int
+	let objectId: OsmExtendedIdentifier
+
+	override var key: String {
+		return "keepright-\(noteId)"
+	}
+
+	/// Initialize based on KeepRight query
+	init?(gpxWaypointXml waypointElement: DDXMLElement, status: String, namespace ns: String, mapData: OsmMapData) {
+		//		<wpt lon="-122.2009985" lat="47.6753189">
+		//		<name><![CDATA[website, http error]]></name>
+		//		<desc><![CDATA[The URL (<a target="_blank" href="http://www.stjamesespresso.com/">http://www.stjamesespresso.com/</a>) cannot be opened (HTTP status code 301)]]></desc>
+		//		<extensions>
+		//								<schema>21</schema>
+		//								<id>78427597</id>
+		//								<error_type>411</error_type>
+		//								<object_type>node</object_type>
+		//								<object_id>2627663149</object_id>
+		//		</extensions></wpt>
+
+		guard let (lon, lat, desc, extensions) = WayPoint.parseXML(gpxWaypointXml: waypointElement, namespace: ns)
+		else { return nil }
+
+		var osmIdent: OsmIdentifier?
+		var osmType: String?
+		var noteId: Int?
+		for child2 in extensions {
+			guard let child2 = child2 as? DDXMLElement else {
+				continue
+			}
+			if child2.name == "id",
+			   let string = child2.stringValue,
+			   let id = Int(string)
+			{
+				noteId = id
+			} else if child2.name == "object_id" {
+				osmIdent = Int64(child2.stringValue ?? "") ?? 0
+			} else if child2.name == "object_type" {
+				osmType = child2.stringValue
 			}
 		}
 		guard let osmIdent = osmIdent,
@@ -254,45 +297,36 @@ class KeepRight: MapMarker {
 		      let noteId = noteId
 		else { return nil }
 
-		let object: OsmBaseObject?
+		let type: OSM_TYPE
 		switch osmType {
-		case "node":
-			object = mapData.nodes[osmIdent]
-		case "way":
-			object = mapData.ways[osmIdent]
-		case "relation":
-			object = mapData.relations[osmIdent]
-		default:
-			object = nil
+		case "node": type = .NODE
+		case "way": type = .WAY
+		case "relation": type = .RELATION
+		default: return nil
 		}
+		let objectId = OsmExtendedIdentifier(type, osmIdent)
+
 		let objectName: String
-		if let object = object {
+		if let object = mapData.object(withExtendedIdentifier: objectId) {
 			let friendlyDescription = object.friendlyDescription()
 			objectName = "\(friendlyDescription) (\(osmType) \(osmIdent))"
 		} else {
 			objectName = "\(osmType) \(osmIdent)"
 		}
-		let comment = OsmNoteComment(gpxWaypoint: objectName, description: description)
+		let comment = OsmNoteComment(keepRight: objectName, description: desc)
+		self.noteId = noteId
+		self.objectId = objectId
 		super.init(lat: lat,
 		           lon: lon,
-		           noteId: noteId,
 		           dateCreated: "",
-		           status: status,
 		           comments: [comment])
-	}
-}
-
-// A GPX waypoint
-class WayPoint: MapMarker {
-	override var key: String {
-		return "waypoint-\(noteId)"
 	}
 }
 
 final class OsmNotesDatabase: NSObject {
 	private let workQueue = OperationQueue()
 	private var keepRightIgnoreList: [Int: Bool]?
-	private var noteForTag: [Int: MapMarker] = [:]	// return the note with the given button tag (tagId)
+	private var noteForTag: [Int: MapMarker] = [:] // return the note with the given button tag (tagId)
 	private var tagForKey: [String: Int] = [:]
 	weak var mapData: OsmMapData!
 
@@ -449,14 +483,6 @@ final class OsmNotesDatabase: NSObject {
 		for note in noteForTag.values {
 			callback(note)
 		}
-	}
-
-	override var description: String {
-		var text = ""
-		for (_, note) in noteForTag {
-			text = note.description
-		}
-		return text
 	}
 
 	func update(

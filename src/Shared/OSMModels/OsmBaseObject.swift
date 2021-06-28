@@ -33,8 +33,8 @@ typealias OsmIdentifier = Int64
 
 struct OsmExtendedIdentifier: Equatable, Hashable {
 	static let identMask = (Int64(1) << 62) - 1
-
-	let rawValue: Int64
+	private let rawValue: Int64
+	
 	init(_ type: OSM_TYPE, _ ident: OsmIdentifier) {
 		rawValue = (Int64(type.rawValue) << 62) | (ident & OsmExtendedIdentifier.identMask)
 	}
@@ -42,11 +42,6 @@ struct OsmExtendedIdentifier: Equatable, Hashable {
 	init(_ obj: OsmBaseObject) {
 		let type: OSM_TYPE = obj is OsmNode ? .NODE : obj is OsmWay ? .WAY : .RELATION
 		self.init(type, obj.ident)
-	}
-
-	// FIXME: backward compat
-	init(_ raw: Int64) {
-		rawValue = raw
 	}
 
 	var type: OSM_TYPE {

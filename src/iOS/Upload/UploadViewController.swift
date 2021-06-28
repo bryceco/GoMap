@@ -278,18 +278,19 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 		if name.count == 0 {
 			return false
 		}
-		var ident = Int64((name as NSString).substring(from: 1)) ?? 0
+		let ident = Int64((name as NSString).substring(from: 1)) ?? 0
+		let extendedId: OsmExtendedIdentifier
 		switch name[name.index(name.startIndex, offsetBy: 0)] {
 		case "n":
-			ident = OsmExtendedIdentifier(.NODE, ident).rawValue
+			extendedId = OsmExtendedIdentifier(.NODE, ident)
 		case "w":
-			ident = OsmExtendedIdentifier(.WAY, ident).rawValue
+			extendedId = OsmExtendedIdentifier(.WAY, ident)
 		case "r":
-			ident = OsmExtendedIdentifier(.RELATION, ident).rawValue
+			extendedId = OsmExtendedIdentifier(.RELATION, ident)
 		default:
 			return false
 		}
-		guard let object = appDelegate.mapView.editorLayer.mapData.object(withExtendedIdentifier: ident)
+		guard let object = appDelegate.mapView.editorLayer.mapData.object(withExtendedIdentifier: extendedId)
 		else { return false }
 		appDelegate.mapView.editorLayer.selectedRelation = object.isRelation()
 		appDelegate.mapView.editorLayer.selectedWay = object.isWay()

@@ -2286,9 +2286,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 						}
 						let button = notesViewDict[note.buttonId]!
 
-						if note.status == "closed" {
+						if let note = note as? OsmNote,
+						   note.status == "closed"
+						{
 							button.removeFromSuperview()
-						} else if note is Fixme,
+						} else if let note = note as? Fixme,
 						          editorLayer.mapData.object(withExtendedIdentifier: note.noteId)?.tags["fixme"] == nil
 						{
 							button.removeFromSuperview()
@@ -2327,18 +2329,23 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		      let note = notesDatabase.note(forTag: button.tag)
 		else { return }
 
-		if note is WayPoint || note is KeepRight || note is Fixme {
-			if !editorLayer.isHidden {
-				if let object = editorLayer.mapData.object(withExtendedIdentifier: note.noteId) {
-					editorLayer.selectedNode = object.isNode()
-					editorLayer.selectedWay = object.isWay()
-					editorLayer.selectedRelation = object.isRelation()
+		var object: OsmBaseObject?
+		if let note = note as? KeepRight {
+			object = editorLayer.mapData.object(withExtendedIdentifier: note.objectId)
+		} else if let note = note as? Fixme {
+			object = editorLayer.mapData.object(withExtendedIdentifier: note.noteId)
+		}
 
-					let pt = object.latLonOnObject(forLatLon: LatLon(x: note.lon, y: note.lat))
-					let point = mapTransform.screenPoint(forLatLon: pt, birdsEye: true)
-					placePushpin(at: point, object: object)
-				}
-			}
+		if !editorLayer.isHidden,
+		   let object = object
+		{
+			editorLayer.selectedNode = object.isNode()
+			editorLayer.selectedWay = object.isWay()
+			editorLayer.selectedRelation = object.isRelation()
+
+			let pt = object.latLonOnObject(forLatLon: LatLon(x: note.lon, y: note.lat))
+			let point = mapTransform.screenPoint(forLatLon: pt, birdsEye: true)
+			placePushpin(at: point, object: object)
 		}
 
 		if (note is WayPoint) || (note is KeepRight) {
