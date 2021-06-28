@@ -23,7 +23,7 @@ extension PresetsDatabase {
 	}
 
 	func featuresInCategory(_ category: PresetCategory?,
-							matching searchText: String,
+	                        matching searchText: String,
 	                        geometry: GEOMETRY) -> [PresetFeature]
 	{
 		var list = [PresetFeature]()
@@ -402,9 +402,10 @@ extension PresetsDatabase {
 	}
 
 	func groupForField(fieldName: String,
-					   geometry: GEOMETRY,
-					   ignore: [String]?,
-					   update: (() -> Void)?) -> PresetGroup? {
+	                   geometry: GEOMETRY,
+	                   ignore: [String]?,
+	                   update: (() -> Void)?) -> PresetGroup?
+	{
 		guard let dict = jsonFields[fieldName] as? [String: Any] else { return nil }
 		if dict.count == 0 {
 			return nil

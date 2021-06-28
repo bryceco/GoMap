@@ -15,8 +15,6 @@ let STATUS_FIXME = "fixme"
 let STATUS_KEEPRIGHT = "keepright"
 let STATUS_WAYPOINT = "waypoint"
 
-private var g_nextTagID = 1
-
 final class OsmNoteComment {
 	private(set) var date = ""
 	private(set) var action = ""
@@ -63,66 +61,97 @@ final class OsmNoteComment {
 	}
 }
 
-final class OsmNote {
+class MapMarker {
+	let buttonId: Int // a unique value we assign to track note buttons. If > 0 this is the noteID, otherwise it is assigned by us.
+
 	let lat: Double
 	let lon: Double
-	let tagId: Int // a unique value we assign to track note buttons. If > 0 this is the noteID, otherwise it is assigned by us.
 
-	private(set) var noteId: Int64 =
-		0 // for Notes this is the note ID, for fixme or Keep Right it is the OSM object ID, for GPX it is the waypoint ID
-	private(set) var created = ""
-	private(set) var status = ""
+	// for Notes this is the note ID, for fixme or Keep Right it is the OSM object ID, for GPX it is the waypoint ID
+	let noteId: Int64
+
+	let dateCreated: String // date created
+	let status: String // open, closed, etc.
 	private(set) var comments: [OsmNoteComment] = []
 
-	var isFixme: Bool {
-		return status == STATUS_FIXME
-	}
-
-	var isKeepRight: Bool {
-		return status == STATUS_KEEPRIGHT
-	}
-
-	var isWaypoint: Bool {
-		return status == STATUS_WAYPOINT
-	}
-
+	// a unique identifier for a note across multiple downloads
 	var key: String {
-		if isFixme {
-			return "fixme-\(noteId)"
-		}
-		if isWaypoint {
-			return "waypoint-\(noteId)"
-		}
-		if isKeepRight {
-			return "keepright-\(noteId)"
-		}
-		return "note-\(noteId)"
-	} // a unique identifier for a note across multiple downloads
+		fatalError()
+	}
 
-	init(lat: Double, lon: Double) {
-		tagId = g_nextTagID
+	private static var g_nextTagID = 1
+	static func nextTag() -> Int {
 		g_nextTagID += 1
+		return g_nextTagID
+	}
 
+	init(lat: Double,
+	     lon: Double,
+	     noteId: Int64,
+	     dateCreated: String,
+	     status: String,
+	     comments: [OsmNoteComment])
+	{
+		buttonId = MapMarker.nextTag()
 		self.lat = lat
 		self.lon = lon
+		self.noteId = noteId
+		self.dateCreated = dateCreated
+		self.status = status
+		self.comments = comments
 	}
 
-	init?(noteXml noteElement: DDXMLElement?) {
-		tagId = g_nextTagID
-		g_nextTagID += 1
+	var description: String {
+		var text = "Note \(noteId) - \(status):\n"
+		for comment in comments {
+			text += "  \(comment.description)\n"
+		}
+		return text
+	}
+}
 
-		lat = Double(noteElement?.attribute(forName: "lat")?.stringValue ?? "") ?? 0.0
-		lon = Double(noteElement?.attribute(forName: "lon")?.stringValue ?? "") ?? 0.0
-		for child in noteElement?.children ?? [] {
+// A regular OSM note
+class OsmNote: MapMarker {
+	override var key: String {
+		return "note-\(noteId)"
+	}
+
+	/// A note newly created by user
+	init(lat: Double, lon: Double) {
+		super.init(lat: lat,
+		           lon: lon,
+		           noteId: 0,
+		           dateCreated: "",
+		           status: "",
+		           comments: [])
+	}
+
+	/// Initialize based on OSM Notes query
+	init?(noteXml noteElement: DDXMLElement) {
+		guard let lat = noteElement.attribute(forName: "lat")?.stringValue,
+		      let lon = noteElement.attribute(forName: "lon")?.stringValue,
+		      let lat = Double(lat),
+		      let lon = Double(lon)
+		else { return nil }
+
+		var noteId: Int64?
+		var dateCreated: String?
+		var status: String?
+		var comments: [OsmNoteComment] = []
+		for child in noteElement.children ?? [] {
 			guard let child = child as? DDXMLElement else {
 				continue
 			}
 			if child.name == "id" {
-				noteId = Int64(child.stringValue ?? "0") ?? 0
+				if let string = child.stringValue,
+				   let id = Int64(string)
+				{
+					noteId = id
+				}
 			} else if child.name == "date_created" {
-				created = child.stringValue ?? ""
+				dateCreated = child.stringValue
 			} else if child.name == "status" {
-				status = child.stringValue ?? ""
+				status = child.stringValue
 			} else if child.name == "comments" {
 				guard let children = child.children as? [DDXMLElement] else { return nil }
 				for commentElement in children {
@@ -131,9 +160,46 @@ final class OsmNote {
 				}
 			}
 		}
-		if noteId == 0 { return nil }
+		guard let noteId = noteId,
+		      let dateCreated = dateCreated,
+		      let status = status
+		else { return nil }
+		super.init(lat: lat,
+		           lon: lon,
+		           noteId: noteId,
+		           dateCreated: dateCreated,
+		           status: status,
+		           comments: comments)
+	}
+}
+
+// An OSM object containing a fixme= tag
+class Fixme: MapMarker {
+	override var key: String {
+		return "fixme-\(noteId)"
 	}
 
+	/// Initialize from FIXME data
+	init(fixmeObject object: OsmBaseObject, fixmeKey fixme: String) {
+		let center = object.selectionPoint()
+		let comment = OsmNoteComment(fixmeObject: object, fixmeKey: fixme)
+
+		super.init(lat: center.lat,
+		           lon: center.lon,
+		           noteId: object.extendedIdentifier.rawValue,
+		           dateCreated: object.timestamp,
+		           status: STATUS_FIXME,
+		           comments: [comment])
+	}
+}
+
+// A keep-right entry
+class KeepRight: MapMarker {
+	override var key: String {
+		return "keepright-\(noteId)"
+	}
+
+	/// Initialize based on KeepRight query
 	init?(gpxWaypointXml waypointElement: DDXMLElement, status: String, namespace ns: String, mapData: OsmMapData) {
 		//		<wpt lon="-122.2009985" lat="47.6753189">
 		//		<name><![CDATA[website, http error]]></name>
@@ -146,15 +212,16 @@ final class OsmNote {
 		//								<object_id>2627663149</object_id>
 		//		</extensions></wpt>
 
-		tagId = g_nextTagID
-		g_nextTagID += 1
-		lon = Double(waypointElement.attribute(forName: "lon")?.stringValue ?? "") ?? 0.0
-		lat = Double(waypointElement.attribute(forName: "lat")?.stringValue ?? "") ?? 0.0
-		self.status = status
+		guard let lon = waypointElement.attribute(forName: "lon")?.stringValue,
+		      let lat = waypointElement.attribute(forName: "lat")?.stringValue,
+		      let lon = Double(lon),
+		      let lat = Double(lat)
+		else { return nil }
 
 		var description: String = ""
 		var osmIdent: OsmIdentifier?
 		var osmType: String?
+		var noteId: Int64?
 
 		for child in waypointElement.children ?? [] {
 			guard let child = child as? DDXMLElement else {
@@ -169,8 +236,11 @@ final class OsmNote {
 					guard let child2 = child2 as? DDXMLElement else {
 						continue
 					}
-					if child2.name == "id" {
-						noteId = Int64(child2.stringValue ?? "") ?? 0
+					if child2.name == "id",
+					   let string = child2.stringValue,
+					   let id = Int64(string)
+					{
+						noteId = id
 					} else if child2.name == "object_id" {
 						osmIdent = Int64(child2.stringValue ?? "") ?? 0
 					} else if child2.name == "object_type" {
@@ -180,24 +250,20 @@ final class OsmNote {
 			}
 		}
 		guard let osmIdent = osmIdent,
-		      let osmType = osmType
+		      let osmType = osmType,
+		      let noteId = noteId
 		else { return nil }
 
-		var object: OsmBaseObject?
-		let type: OSM_TYPE
-
+		let object: OsmBaseObject?
 		switch osmType {
 		case "node":
-			type = OSM_TYPE.NODE
 			object = mapData.nodes[osmIdent]
 		case "way":
-			type = OSM_TYPE.WAY
 			object = mapData.ways[osmIdent]
 		case "relation":
-			type = OSM_TYPE.RELATION
 			object = mapData.relations[osmIdent]
 		default:
-			return nil
+			object = nil
 		}
 		let objectName: String
 		if let object = object {
@@ -206,37 +272,27 @@ final class OsmNote {
 		} else {
 			objectName = "\(osmType) \(osmIdent)"
 		}
-		noteId = OsmBaseObject.extendedIdentifierForType(type, identifier: osmIdent)
 		let comment = OsmNoteComment(gpxWaypoint: objectName, description: description)
-		comments = [comment]
+		super.init(lat: lat,
+		           lon: lon,
+		           noteId: noteId,
+		           dateCreated: "",
+		           status: status,
+		           comments: [comment])
 	}
+}
 
-	init(fixmeObject object: OsmBaseObject, fixmeKey fixme: String) {
-		let center = object.selectionPoint()
-		tagId = g_nextTagID
-		g_nextTagID += 1
-		noteId = object.extendedIdentifier.rawValue
-		lon = center.lon
-		lat = center.lat
-		created = object.timestamp
-		status = STATUS_FIXME
-		let comment = OsmNoteComment(fixmeObject: object, fixmeKey: fixme)
-		comments = [comment]
-	}
-
-	var description: String {
-		var text = "Note \(noteId) - \(status):\n"
-		for comment in comments {
-			text += "  \(comment.description)\n"
-		}
-		return text
+// A GPX waypoint
+class WayPoint: MapMarker {
+	override var key: String {
+		return "waypoint-\(noteId)"
 	}
 }
 
 final class OsmNotesDatabase: NSObject {
 	let workQueue = OperationQueue()
 	var keepRightIgnoreList: [Int: Bool]?
-	var noteForTag: [Int: OsmNote] = [:]
+	var noteForTag: [Int: MapMarker] = [:]
 	var tagForKey: [String: Int] = [:]
 	weak var mapData: OsmMapData!
 
@@ -251,38 +307,16 @@ final class OsmNotesDatabase: NSObject {
 		tagForKey.removeAll()
 	}
 
-	func addOrUpdate(_ newNote: OsmNote) {
+	func addOrUpdate(_ newNote: MapMarker) {
 		let key = newNote.key
-		let oldTag = tagForKey[key]
-		let newTag = newNote.tagId
-		if let oldTag = oldTag {
+		let newTag = newNote.buttonId
+		if let oldTag = tagForKey[key] {
 			// remove any existing tag with the same key
 			noteForTag.removeValue(forKey: oldTag)
 		}
 		tagForKey[key] = newTag
 		noteForTag[newTag] = newNote
 	}
-
-#if false
-
-	func update(_ object: OsmBaseObject?) {
-		let ident = NSNumber(value: object?.extendedIdentifier)
-		dict.removeValue(forKey: ident)
-
-		for key in FixMeList ?? [] {
-			guard let key = key as? String else {
-				continue
-			}
-			let fixme = object?.tags[key] as? String
-			if (fixme?.count ?? 0) > 0 {
-				let note = OsmNote(fixmeObject: object, fixmeKey: key)
-				dict[note.ident] = note
-				break
-			}
-		}
-	}
-
-#endif
 
 	func updateNotes(forRegion box: OSMRect, fixmeData mapData: OsmMapData, completion: @escaping () -> Void) {
 		let url = OSM_API_URL +
@@ -313,10 +347,8 @@ final class OsmNotesDatabase: NSObject {
 					// add from FIXME=yes tags
 					mapData.enumerateObjects(inRegion: box, block: { [self] obj in
 						for key in FixMeList {
-							if let fixme = obj.tags[key],
-							   fixme.count > 0
-							{
-								let note = OsmNote(fixmeObject: obj, fixmeKey: key)
+							if obj.tags[key] != nil {
+								let note = Fixme(fixmeObject: obj, fixmeKey: key)
 								addOrUpdate(note)
 								break
 							}
@@ -361,10 +393,10 @@ final class OsmNotesDatabase: NSObject {
 					guard let waypointElement = waypointElement as? DDXMLElement else {
 						continue
 					}
-					if let note = OsmNote(gpxWaypointXml: waypointElement,
-					                      status: STATUS_KEEPRIGHT,
-					                      namespace: ns,
-					                      mapData: mapData)
+					if let note = KeepRight(gpxWaypointXml: waypointElement,
+					                        status: STATUS_KEEPRIGHT,
+					                        namespace: ns,
+					                        mapData: mapData)
 					{
 						addOrUpdate(note)
 					}
@@ -411,12 +443,10 @@ final class OsmNotesDatabase: NSObject {
 		})
 	}
 
-	func enumerateNotes(_ callback: @escaping (_ note: OsmNote) -> Void) {
-		(noteForTag as NSDictionary?)?.enumerateKeysAndObjects({ _, note, _ in
-			if let note = note as? OsmNote {
-				callback(note)
-			}
-		})
+	func enumerateNotes(_ callback: (_ note: MapMarker) -> Void) {
+		for note in noteForTag.values {
+			callback(note)
+		}
 	}
 
 	override var description: String {
@@ -473,7 +503,7 @@ final class OsmNotesDatabase: NSObject {
 		})
 	}
 
-	func note(forTag tag: Int) -> OsmNote? {
+	func note(forTag tag: Int) -> MapMarker? {
 		return noteForTag[tag]
 	}
 
@@ -491,9 +521,9 @@ final class OsmNotesDatabase: NSObject {
 		return keepRightIgnoreList!
 	}
 
-	func ignore(_ note: OsmNote) {
+	func ignore(_ note: MapMarker) {
 		var tempIgnoreList = ignoreList()
-		tempIgnoreList[note.tagId] = true
+		tempIgnoreList[note.buttonId] = true
 
 		let path = URL(fileURLWithPath: FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)
 			.map(\.path).last ?? "").appendingPathComponent("keepRightIgnoreList").path
@@ -502,8 +532,8 @@ final class OsmNotesDatabase: NSObject {
 		}
 	}
 
-	func isIgnored(_ note: OsmNote) -> Bool {
-		if ignoreList()[note.tagId] != nil {
+	func isIgnored(_ note: MapMarker) -> Bool {
+		if ignoreList()[note.buttonId] != nil {
 			return true
 		}
 		return false

@@ -155,7 +155,10 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		let loc = recognizer.location(in: mapView)
 		var segment = 0
 		var hit: OsmBaseObject?
-		if recognizer.state == .changed, !mapView.editorLayer.isHidden {
+		if recognizer.state == .changed,
+		   !mapView.editorLayer.isHidden,
+		   mapView.hitTest(loc, with: nil) == mapView
+		{
 			if mapView.editorLayer.selectedWay != nil {
 				hit = mapView.editorLayer.osmHitTestNode(inSelectedWay: loc, radius: DefaultHitTestRadius)
 			}

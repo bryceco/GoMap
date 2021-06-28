@@ -185,11 +185,6 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		return OsmExtendedIdentifier(self)
 	}
 
-	// FIXME: back compat, delete this function
-	static func extendedIdentifierForType(_ type: OSM_TYPE, identifier: Int64) -> Int64 {
-		return OsmExtendedIdentifier(type, identifier).rawValue
-	}
-
 	// attributes
 
 	// FIXME: This needed to be an NSMutableDictionary because of how Database treated it,

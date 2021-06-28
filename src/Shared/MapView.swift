@@ -1355,6 +1355,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 #endif
 	}
 
+	// MARK: GPS and Location Manager
+
 	func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 		if locationManagerExtraneousNotification {
 			// filter out extraneous notification we get when initializing CL
@@ -2257,14 +2259,16 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				notesDatabase.enumerateNotes({ [self] note in
 					if viewOverlayMask.contains(MapViewOverlays.NOTES) {
 						// hide unwanted keep right buttons
-						if note.isKeepRight, notesDatabase.isIgnored(note) {
-							if let button = notesViewDict[note.tagId] {
+						if note is KeepRight,
+						   notesDatabase.isIgnored(note)
+						{
+							if let button = notesViewDict[note.buttonId] {
 								button.removeFromSuperview()
 							}
 							return
 						}
 
-						if notesViewDict[note.tagId] == nil {
+						if notesViewDict[note.buttonId] == nil {
 							let button = UIButton(type: .custom)
 							button.addTarget(self, action: #selector(noteButtonPress(_:)), for: .touchUpInside)
 							button.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
@@ -2274,23 +2278,22 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 							button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
 							button.titleLabel?.textColor = UIColor.white
 							button.titleLabel?.textAlignment = .center
-							let title = note.isFixme ? "F" : note.isWaypoint ? "W" : note.isKeepRight ? "R" : "N"
+							let title = note is Fixme ? "F" : note is WayPoint ? "W" : note is KeepRight ? "R" : "N"
 							button.setTitle(title, for: .normal)
-							button.tag = note.tagId
+							button.tag = note.buttonId
 							addSubview(button)
-							notesViewDict[note.tagId] = button
+							notesViewDict[note.buttonId] = button
 						}
-						let button = notesViewDict[note.tagId]!
+						let button = notesViewDict[note.buttonId]!
 
 						if note.status == "closed" {
 							button.removeFromSuperview()
-						} else if note.isFixme,
-						          editorLayer.mapData.object(withExtendedIdentifier: note.noteId)?
-						          .tags["fixme"] == nil
+						} else if note is Fixme,
+						          editorLayer.mapData.object(withExtendedIdentifier: note.noteId)?.tags["fixme"] == nil
 						{
 							button.removeFromSuperview()
 						} else {
-							let offsetX = note.isKeepRight || note.isFixme ? 0.00001 : 0.0
+							let offsetX = (note is KeepRight) || (note is Fixme) ? 0.00001 : 0.0
 							let pos = mapTransform.screenPoint(
 								forLatLon: LatLon(latitude: note.lat, longitude: note.lon + offsetX),
 								birdsEye: true)
@@ -2305,9 +2308,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 						}
 					} else {
 						// not displaying any notes at this time
-						if let button = notesViewDict[note.tagId] {
+						if let button = notesViewDict[note.buttonId] {
 							button.removeFromSuperview()
-							notesViewDict.removeValue(forKey: note.tagId)
+							notesViewDict.removeValue(forKey: note.buttonId)
 						}
 					}
 				})
@@ -2324,10 +2327,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		      let note = notesDatabase.note(forTag: button.tag)
 		else { return }
 
-		if note.isWaypoint || note.isKeepRight {
+		if note is WayPoint || note is KeepRight || note is Fixme {
 			if !editorLayer.isHidden {
-				let object = editorLayer.mapData.object(withExtendedIdentifier: note.noteId)
-				if let object = object {
+				if let object = editorLayer.mapData.object(withExtendedIdentifier: note.noteId) {
 					editorLayer.selectedNode = object.isNode()
 					editorLayer.selectedWay = object.isWay()
 					editorLayer.selectedRelation = object.isRelation()
@@ -2337,8 +2339,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					placePushpin(at: point, object: object)
 				}
 			}
+		}
+
+		if (note is WayPoint) || (note is KeepRight) {
 			let comment = note.comments.last!
-			let title = note.isWaypoint ? "Waypoint" : "Keep Right"
+			let title = note is WayPoint ? "Waypoint" : "Keep Right"
 
 			// use regular alertview
 			var text = comment.text
@@ -2365,17 +2370,16 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				                         	removePin()
 				                         }))
 			mainViewController.present(alertKeepRight, animated: true)
-		} else if note.isFixme {
-			guard let object = editorLayer.mapData.object(withExtendedIdentifier: note.noteId)
-			else { return }
-			editorLayer.selectedNode = object.isNode()
-			editorLayer.selectedWay = object.isWay()
-			editorLayer.selectedRelation = object.isRelation()
-			presentTagEditor(nil)
-		} else {
+		} else if note is Fixme {
+			if !editorLayer.isHidden {
+				presentTagEditor(nil)
+			}
+		} else if note is OsmNote {
 			mainViewController.performSegue(withIdentifier: "NotesSegue", sender: note)
 		}
 	}
+
+	// MARK: Gesture Recognizers
 
 	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
 		// http://stackoverflow.com/questions/3344341/uibutton-inside-a-view-that-has-a-uitapgesturerecognizer
@@ -2599,6 +2603,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		editorLayer.addNode(at: location)
 	}
 }
+
+// MARK: EditorMapLayerOwner delegate methods
 
 // EditorMap extensions
 extension MapView: EditorMapLayerOwner {
