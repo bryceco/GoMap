@@ -81,10 +81,7 @@ class MapMarker {
 		return false
 	}
 
-	var buttonLabel: String {
-		get { fatalError() }
-	}
-
+	var buttonLabel: String { fatalError() }
 }
 
 // A regular OSM note
@@ -100,7 +97,7 @@ class OsmNote: MapMarker {
 		return status == "closed"
 	}
 
-	override var buttonLabel: String { get{ "N" } }
+	override var buttonLabel: String { "N" }
 
 	/// A note newly created by user
 	init(lat: Double, lon: Double) {
@@ -142,7 +139,7 @@ class OsmNote: MapMarker {
 				guard let children = child.children as? [DDXMLElement] else { return nil }
 				for commentElement in children {
 					var date = ""
-						var user = ""
+					var user = ""
 					var action = ""
 					var text = ""
 					for child in commentElement.children ?? [] {
@@ -189,7 +186,7 @@ class Fixme: MapMarker {
 
 	/// If the object contains a fixme then returns the fixme value, else nil
 	static func fixmeTag(_ object: OsmBaseObject) -> String? {
-		if let tag = object.tags.first(where: { $0.key.caseInsensitiveCompare( "fixme" ) == .orderedSame }) {
+		if let tag = object.tags.first(where: { $0.key.caseInsensitiveCompare("fixme") == .orderedSame }) {
 			return tag.value
 		}
 		return nil
@@ -200,15 +197,15 @@ class Fixme: MapMarker {
 		return Fixme.fixmeTag(object) == nil
 	}
 
-	override var buttonLabel: String {  "F" }
+	override var buttonLabel: String { "F" }
 
 	/// Initialize from FIXME data
 	init(object: OsmBaseObject, text: String) {
 		let center = object.selectionPoint()
 		let comment = OsmNoteComment(date: object.timestamp,
-									 action: "fixme",
-									 text: text,
-									 user: object.user)
+		                             action: "fixme",
+		                             text: text,
+		                             user: object.user)
 
 		self.object = object
 		noteId = object.extendedIdentifier
@@ -275,7 +272,7 @@ class WayPoint: MapMarker {
 	}
 
 	override var key: String {
-		fatalError()	// return "waypoint-()"
+		fatalError() // return "waypoint-()"
 	}
 
 	override var buttonLabel: String { "W" }
@@ -353,7 +350,7 @@ class KeepRight: MapMarker {
 
 final class OsmNotesDatabase: NSObject {
 	private let workQueue = OperationQueue()
-	private var _keepRightIgnoreList: [Int: Bool]?	// FIXME: Use UserDefaults for storage so this becomes non-optional
+	private var _keepRightIgnoreList: [Int: Bool]? // FIXME: Use UserDefaults for storage so this becomes non-optional
 	private var noteForTag: [Int: MapMarker] = [:] // return the note with the given button tag (tagId)
 	private var tagForKey: [String: Int] = [:]
 	weak var mapData: OsmMapData!

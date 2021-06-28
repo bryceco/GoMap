@@ -30,7 +30,6 @@ enum OSM_TYPE: Int {
 		default: return nil
 		}
 	}
-
 }
 
 enum ONEWAY: Int {
@@ -52,7 +51,7 @@ typealias OsmIdentifier = Int64
 struct OsmExtendedIdentifier: Equatable, Hashable {
 	static let identMask = (Int64(1) << 62) - 1
 	private let rawValue: Int64
-	
+
 	init(_ type: OSM_TYPE, _ ident: OsmIdentifier) {
 		rawValue = (Int64(type.rawValue) << 62) | (ident & OsmExtendedIdentifier.identMask)
 	}

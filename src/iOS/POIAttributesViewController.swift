@@ -199,7 +199,7 @@ class POIAttributesViewController: UITableViewController {
 			urlString = "https://www.openstreetmap.org/user/\(user)"
 		} else if indexPath.row == ROW.version.rawValue {
 			let type = object.osmType.asText()
-			 let ident = object.ident
+			let ident = object.ident
 			urlString = "https://www.openstreetmap.org/browse/\(type)/\(ident)/history"
 		} else if indexPath.row == ROW.changeset.rawValue {
 			urlString = String(

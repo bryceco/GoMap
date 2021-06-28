@@ -70,9 +70,9 @@ final class OsmMember: NSObject, NSCoding {
 	required init?(coder: NSCoder) {
 		type = coder.decodeObject(forKey: "type") as? String
 		guard let ref2 = coder.decodeObject(forKey: "ref")
-		else { fatalError("OsmMember ref is nil")}
+		else { fatalError("OsmMember ref is nil") }
 		if let ref2 = ref2 as? NSNumber {
-			ref = ref2.int64Value	// normal path
+			ref = ref2.int64Value // normal path
 		} else {
 			// shouldn't happen, but we see it occasionally in swift beta?
 			fatalError("OsmMember ref is not NSNumber: \(Swift.type(of: ref2))")

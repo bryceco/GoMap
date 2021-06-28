@@ -27,7 +27,7 @@ extension URLSession {
 				completionHandler(.failure(UrlSessionError.missingResponse))
 				return
 			}
-			guard httpResponse.statusCode >= 200 && httpResponse.statusCode < 300
+			guard httpResponse.statusCode >= 200, httpResponse.statusCode < 300
 			else {
 				// the server might provide additional information in the payload
 				var message: String?

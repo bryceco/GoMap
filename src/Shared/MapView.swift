@@ -2376,8 +2376,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			} else {
 				guard let object = note.object else { return }
 				let alert = UIAlertController(title: "\(object.friendlyDescription())",
-											  message: note.comments.first?.text,
-											  preferredStyle: .alert)
+				                              message: note.comments.first?.text,
+				                              preferredStyle: .alert)
 				alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
 				mainViewController.present(alert, animated: true)
 			}
