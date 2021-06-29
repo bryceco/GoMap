@@ -159,13 +159,14 @@ private final class StringGlyphs {
 final class CurvedGlyphLayer {
 	// static stuff
 	public static var foreColor = UIColor.white
-	public static var backColor = UIColor.black
+	public static var backColor = UIColor.black.withAlphaComponent(0.3)
+
 	static var whiteOnBlack: Bool = true {
-		willSet(newValue) {
-			if newValue != whiteOnBlack {
+		didSet {
+			if oldValue != whiteOnBlack {
 				GlyphLayer.clearCache()
-				CurvedGlyphLayer.foreColor = newValue ? UIColor.white : UIColor.black
-				CurvedGlyphLayer.backColor = (newValue ? UIColor.black : UIColor.white).withAlphaComponent(0.3)
+				CurvedGlyphLayer.foreColor = whiteOnBlack ? UIColor.white : UIColor.black
+				CurvedGlyphLayer.backColor = (whiteOnBlack ? UIColor.black : UIColor.white).withAlphaComponent(0.3)
 			}
 		}
 	}
