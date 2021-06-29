@@ -209,6 +209,11 @@ extension OSMPoint {
 		return Add(lineA, Mult(ab, t))
 	}
 }
+extension OSMPoint: CustomStringConvertible {
+	var description: String {
+		return "OSMPoint(x:\(x),y:\(y))"
+	}
+}
 
 // MARK: OSMSize
 
@@ -226,6 +231,11 @@ extension OSMSize {
 
 	@inline(__always) public static func ==(_ a: OSMSize, _ b: OSMSize) -> Bool {
 		return a.width == b.width && a.height == b.height
+	}
+}
+extension OSMSize: CustomStringConvertible {
+	var description: String {
+		return "OSMSize(w:\(width),h:\(height))"
 	}
 }
 
@@ -266,8 +276,8 @@ extension OSMRect {
 
 	@inline(__always) func intersectsRect(_ b: OSMRect) -> Bool {
 		if origin.x >= b.origin.x + b.size.width { return false }
-		if origin.x + size.width < b.origin.x { return false }
 		if origin.y >= b.origin.y + b.size.height { return false }
+		if origin.x + size.width < b.origin.x { return false }
 		if origin.y + size.height < b.origin.y { return false }
 		return true
 	}
@@ -386,6 +396,16 @@ extension OSMRect {
 		}
 
 		return true
+	}
+
+	var boundsString: String {
+		return "OSMRect(ul:(\(origin.x),\(origin.y)),lr:(\(origin.x+size.width),\(origin.y+size.height))"
+
+	}
+}
+extension OSMRect: CustomStringConvertible {
+	var description: String {
+		return "OSMRect(x:\(origin.x),y:\(origin.y),w:\(size.width),h:\(size.height)"
 	}
 }
 
@@ -608,6 +628,12 @@ struct LatLon {
 
 	init(_ pt: OSMPoint) {
 		self.init(lon: pt.x, lat: pt.y)
+	}
+
+	static func metersForLatLon(rect rc: OSMRect) -> OSMSize {
+		let w = GreatCircleDistance(LatLon(x:rc.origin.x,y:rc.origin.y), LatLon(x:rc.origin.x+rc.size.width,y:rc.origin.y))
+		let h = GreatCircleDistance(LatLon(x:rc.origin.x,y:rc.origin.y), LatLon(x:rc.origin.x,y:rc.origin.y+rc.size.height))
+		return OSMSize(width: w, height: h)
 	}
 }
 
