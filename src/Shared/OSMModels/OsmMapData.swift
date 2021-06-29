@@ -1880,7 +1880,9 @@ final class OsmMapData: NSObject, NSCoding {
 
 	func consistencyCheck() {
 #if DEBUG
-		consistencyCheckDebugOnly()
+		if isUnderDebugger() {
+			consistencyCheckDebugOnly()
+		}
 #endif
 	}
 }
