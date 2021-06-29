@@ -190,7 +190,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		do {
 			var string = string
 			if let hash = string.firstIndex(of: "#") {
-				string = String( string[..<hash] )
+				string = String(string[..<hash])
 			}
 			var objIdent: NSString?
 			var objType: NSString?

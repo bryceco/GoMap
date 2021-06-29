@@ -966,7 +966,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	func presentError(_ error: Error, flash: Bool) {
 		if lastErrorDate == nil || Date().timeIntervalSince(lastErrorDate ?? Date()) > 3.0 {
-			let text = error.localizedDescription
+			var text = error.localizedDescription
 
 			var isNetworkError = false
 			var title = NSLocalizedString("Error", comment: "")
@@ -978,6 +978,12 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				if (underError.domain as CFString) == kCFErrorDomainCFNetwork {
 					isNetworkError = true
 				}
+			}
+			if let error = error as? UrlSessionError,
+			   case let .badStatusCode(_, html) = error,
+			   html.count > 20
+			{
+				text = html
 			}
 			if isNetworkError {
 				if let ignoreNetworkErrorsUntilDate = ignoreNetworkErrorsUntilDate {

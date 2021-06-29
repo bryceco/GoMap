@@ -9,13 +9,13 @@
 import Foundation
 
 enum UrlSessionError: LocalizedError {
-	case badStatusCode(Int, String?)
+	case badStatusCode(Int, String)
 	case missingResponse
 	case noData
 
 	public var errorDescription: String? {
 		switch self {
-		case let .badStatusCode(rc, text): return "UrlSessionError.badStatusCode(\(rc),\(text ?? ""))"
+		case let .badStatusCode(rc, text): return "UrlSessionError.badStatusCode(\(rc),\(text))"
 		case .missingResponse: return "UrlSessionError.missingResponse"
 		case .noData: return "UrlSessionError.noData"
 		}
@@ -38,7 +38,7 @@ extension URLSession {
 			guard httpResponse.statusCode >= 200, httpResponse.statusCode < 300
 			else {
 				// the server might provide additional information in the payload
-				var message: String?
+				var message: String = ""
 				if let data = data, data.count > 0 {
 					message = String(decoding: data, as: UTF8.self)
 				}

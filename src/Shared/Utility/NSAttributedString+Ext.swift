@@ -26,8 +26,10 @@ extension NSMutableAttributedString {
 			                        .characterEncoding: encoding],
 			              documentAttributes: nil)
 
-			// change text color
+			// remove any hyperlinks, since they display in a different color
 			let range = NSRange(location: 0, length: length)
+			removeAttribute(.link, range: range)
+			// change text color
 			addAttribute(.foregroundColor, value: textColor, range: range)
 			addAttribute(.backgroundColor, value: backColor, range: range)
 			// center align
