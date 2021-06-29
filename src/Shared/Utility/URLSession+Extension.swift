@@ -8,10 +8,18 @@
 
 import Foundation
 
-enum UrlSessionError: Error {
+enum UrlSessionError: LocalizedError {
 	case badStatusCode(Int, String?)
 	case missingResponse
 	case noData
+
+	public var errorDescription: String? {
+		switch self {
+		case let .badStatusCode(rc,text): return "UrlSessionError.badStatusCode(\(rc),\(text ?? ""))"
+		case .missingResponse:return "UrlSessionError.missingResponse"
+		case .noData:return "UrlSessionError.noData"
+		}
+	}
 }
 
 extension URLSession {

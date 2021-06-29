@@ -33,11 +33,20 @@ private final class ServerQuery {
 	var rect = OSMRect.zero
 }
 
-enum OsmMapDataError: Error {
+enum OsmMapDataError: LocalizedError {
 	case unableToOpenDatabase
 	case osmWayResolveToMapDataFoundNilNodeRefs
 	case osmWayResolveToMapDataCouldntFindNodeRef
 	case badURL(String)
+
+	public var errorDescription: String? {
+		switch self {
+		case .unableToOpenDatabase: return "OsmMapDataError.unableToOpenDatabase"
+		case .osmWayResolveToMapDataFoundNilNodeRefs: return "OsmMapDataError.osmWayResolveToMapDataFoundNilNodeRefs"
+		case .osmWayResolveToMapDataCouldntFindNodeRef:return "OsmMapDataError.osmWayResolveToMapDataCouldntFindNodeRef"
+		case .badURL(let url):return "OsmMapDataError.badURL(\(url))"
+		}
+	}
 }
 
 final class OsmMapData: NSObject, NSCoding {
@@ -1063,8 +1072,14 @@ final class OsmMapData: NSObject, NSCoding {
 		})
 	}
 
-	enum OsmServerError: Error {
+	enum OsmServerError: LocalizedError {
 		case changesetIdNotDecimal(String)
+
+		public var errorDescription: String? {
+			switch self {
+			case .changesetIdNotDecimal(let text): return "OsmServerError.changesetIdNotDecimal(\(text)"
+			}
+		}
 	}
 
 	// create a new changeset to upload to
@@ -1872,10 +1887,18 @@ final class OsmMapData: NSObject, NSCoding {
 
 // MARK: Archive helper
 
-enum MapDataError: Error {
+enum MapDataError: LocalizedError {
 	case archiveDoesNotExist
 	case archiveCannotBeRead // I/O error
 	case archiveCannotBeDecoded // NSKeyedUnarchiver problem
+
+	public var errorDescription: String? {
+		switch self {
+		case .archiveDoesNotExist: return "MapDataError.archiveDoesNotExist"
+		case .archiveCannotBeRead: return "MapDataError.archiveCannotBeRead"
+		case .archiveCannotBeDecoded: return "MapDataError.archiveCannotBeDecoded"
+		}
+	}
 }
 
 class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {

@@ -14,10 +14,18 @@ let USE_RTREE = 1
 let USE_RTREE = 0
 #endif
 
-enum DatabaseError: Error {
+enum DatabaseError: LocalizedError {
 	case wayReferencedByNodeDoesNotExist
 	case relationReferencedByMemberDoesNotExist
 	case unlinkFailed(Int32)
+
+	public var errorDescription: String? {
+		switch self {
+		case .wayReferencedByNodeDoesNotExist: return "DatabaseError.wayReferencedByNodeDoesNotExist"
+		case .relationReferencedByMemberDoesNotExist: return "DatabaseError.relationReferencedByMemberDoesNotExist"
+		case .unlinkFailed(let rc): return "DatabaseError.unlinkFailed(\(rc)"
+		}
+	}
 }
 
 final class Database {

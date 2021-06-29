@@ -14,7 +14,7 @@ import UIKit
 private var rectoLowerThreshold = 0.0
 private var rectoUpperThreshold = 0.0
 
-enum EditError: Error, LocalizedError {
+enum EditError: LocalizedError {
 	case text(String)
 
 	public var errorDescription: String? {
