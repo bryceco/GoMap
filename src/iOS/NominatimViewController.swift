@@ -184,59 +184,93 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			searchBar.perform(#selector(UIResponder.resignFirstResponder), with: nil, afterDelay: 0.1)
 			return
 		}
+
+		// try parsing as an OSM URL
+		// https://www.openstreetmap.org/relation/12894314#map=
+		do {
+			var string = string
+			if let hash = string.firstIndex(of: "#") {
+				string = String( string[..<hash] )
+			}
+			var objIdent: NSString?
+			var objType: NSString?
+			let delim = CharacterSet(charactersIn: "/,. -")
+			let scanner = Scanner(string: String(string.reversed()))
+			if scanner.scanCharacters(from: CharacterSet.alphanumerics, into: &objIdent),
+			   let objIdent = objIdent,
+			   let objIdent2 = Int64(String((objIdent as String).reversed())),
+			   scanner.scanCharacters(from: delim, into: nil),
+			   scanner.scanCharacters(from: CharacterSet.alphanumerics, into: &objType),
+			   let objType = objType,
+			   let objType2 = OSM_TYPE(text: String((objType as String).reversed()))
+			{
+				activityIndicator.startAnimating()
+				var url = OSM_API_URL + "api/0.6/\(objType2.asText())/\(objIdent2)"
+				if objType2 != .NODE {
+					url += "/full"
+				}
+				OsmDownloader.osmData(forUrl: url, completion: { result in
+					DispatchQueue.main.async {
+						self.activityIndicator.stopAnimating()
+						switch result {
+						case let .success(data):
+							if let node = data.nodes.first {
+								self.updateHistory(with: "\(objType2.asText()) \(objIdent2)")
+								self.jump(toLat: node.latLon.lat, lon: node.latLon.lon)
+							}
+							self.presentErrorMessage()
+						case let .failure(error):
+							self.presentErrorMessage(error)
+						}
+					}
+				})
+				return
+			}
+		}
+
+		// Do this after checking for an OSM object URL since those can contain lat/lon as well
 		if containsLatLon(string) {
 			return
 		}
 
-		// searching
-		activityIndicator.startAnimating()
-
 		if let text = string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed),
 		   let url = URL(string: "https://nominatim.openstreetmap.org/search?q=\(text)&format=json&limit=50")
 		{
+			activityIndicator.startAnimating()
+
 			URLSession.shared.data(with: url, completionHandler: { [self] result in
 				DispatchQueue.main.async(execute: { [self] in
 
 					activityIndicator.stopAnimating()
 
-					if case let .success(data) = result,
-					   let json = try? JSONSerialization.jsonObject(with: data, options: [])
-					{
-						/*
-						 {
-						 "place_id":"5639098",
-						 "licence":"Data \u00a9 OpenStreetMap contributors, ODbL 1.0. https:\/\/www.openstreetmap.org\/copyright",
-						 "osm_type":"node",
-						 "osm_id":"585214834",
-						 "boundingbox":["55.9587516784668","55.9587554931641","-3.20986247062683","-3.20986223220825"],
-						 "lat":"55.9587537","lon":"-3.2098624",
-						 "display_name":"Hectors, Deanhaugh Street, Stockbridge, Dean, Edinburgh, City of Edinburgh, Scotland, EH4 1NE, United Kingdom",
-						 "class":"amenity",
-						 "type":"pub",
-						 "icon":"https:\/\/nominatim.openstreetmap.org\/images\/mapicons\/food_pub.p.20.png"
-						 },
-						 */
+					switch result {
+					case let .success(data):
+						if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
+							resultsArray = json as? [[String: Any]] ?? []
+							tableView.reloadData()
+						}
 
-						resultsArray = json as? [[String: Any]] ?? []
-						tableView.reloadData()
-					}
-
-					if resultsArray.count > 0 {
-						updateHistory(with: string)
-					} else {
-						let alert = UIAlertController(
-							title: NSLocalizedString("No results found", comment: ""),
-							message: nil,
-							preferredStyle: .alert)
-						alert
-							.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
-							                         style: .cancel,
-							                         handler: nil))
-						present(alert, animated: true)
+						if resultsArray.count > 0 {
+							updateHistory(with: string)
+						} else {
+							presentErrorMessage()
+						}
+					case let .failure(error):
+						presentErrorMessage(error)
 					}
 				})
 			})
 		}
 		tableView.reloadData()
+	}
+
+	func presentErrorMessage(_ error: Error? = nil) {
+		let alert = UIAlertController(title: NSLocalizedString("No results found", comment: ""),
+		                              message: error?.localizedDescription ?? "",
+		                              preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+		                              style: .cancel,
+		                              handler: nil))
+		present(alert, animated: true)
 	}
 }

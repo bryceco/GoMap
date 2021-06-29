@@ -788,14 +788,14 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" placeholder="Niagara Falls" translatesAutoresizingMaskIntoConstraints="NO" id="xw9-Ro-Fai">
-                                <rect key="frame" x="0.0" y="56" width="414" height="51"/>
+                                <rect key="frame" x="0.0" y="137" width="414" height="51"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                 <connections>
                                     <outlet property="delegate" destination="siu-I6-IEp" id="WHJ-zD-DWG"/>
                                 </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="abd-jd-9tI">
-                                <rect key="frame" x="0.0" y="107" width="414" height="755"/>
+                                <rect key="frame" x="0.0" y="188" width="414" height="674"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="vRO-Aj-Sdr" style="IBUITableViewCellStyleDefault" id="cM4-jn-BbC">
@@ -824,18 +824,40 @@
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="BJx-hX-58b">
                                 <rect key="frame" x="188.5" y="125" width="37" height="37"/>
                             </activityIndicatorView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kw9-Kv-I2B" userLabel="Description View">
+                                <rect key="frame" x="0.0" y="56" width="414" height="81"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TcP-6i-B8H">
+                                        <rect key="frame" x="20" y="10" width="374" height="61"/>
+                                        <string key="text">Specify a name ("New York"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object ("way 51014987"):</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="TcP-6i-B8H" firstAttribute="top" secondItem="Kw9-Kv-I2B" secondAttribute="top" constant="10" id="Byt-7M-BZk"/>
+                                    <constraint firstItem="TcP-6i-B8H" firstAttribute="leading" secondItem="Kw9-Kv-I2B" secondAttribute="leading" constant="20" symbolic="YES" id="JvR-eR-38Y"/>
+                                    <constraint firstAttribute="bottom" secondItem="TcP-6i-B8H" secondAttribute="bottom" constant="10" id="ddj-KF-GIA"/>
+                                    <constraint firstAttribute="trailing" secondItem="TcP-6i-B8H" secondAttribute="trailing" constant="20" symbolic="YES" id="obI-fb-fsu"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="JYP-Gu-HBL"/>
                         <constraints>
                             <constraint firstItem="abd-jd-9tI" firstAttribute="top" secondItem="xw9-Ro-Fai" secondAttribute="bottom" id="2UE-0c-j5w"/>
+                            <constraint firstItem="JYP-Gu-HBL" firstAttribute="trailing" secondItem="Kw9-Kv-I2B" secondAttribute="trailing" id="63I-uY-OYs"/>
+                            <constraint firstItem="Kw9-Kv-I2B" firstAttribute="leading" secondItem="JYP-Gu-HBL" secondAttribute="leading" id="6qk-WP-VUO"/>
                             <constraint firstItem="BJx-hX-58b" firstAttribute="top" secondItem="SQe-Tw-wQG" secondAttribute="top" constant="125" id="Ctw-fE-ucI"/>
+                            <constraint firstItem="Kw9-Kv-I2B" firstAttribute="top" secondItem="JYP-Gu-HBL" secondAttribute="top" id="D2J-dS-rZs"/>
                             <constraint firstItem="xw9-Ro-Fai" firstAttribute="leading" secondItem="JYP-Gu-HBL" secondAttribute="leading" id="L7s-F4-sIf"/>
                             <constraint firstItem="abd-jd-9tI" firstAttribute="leading" secondItem="JYP-Gu-HBL" secondAttribute="leading" id="SBf-Qz-WXs"/>
                             <constraint firstItem="abd-jd-9tI" firstAttribute="trailing" secondItem="JYP-Gu-HBL" secondAttribute="trailing" id="Z07-2o-YAz"/>
                             <constraint firstItem="xw9-Ro-Fai" firstAttribute="trailing" secondItem="JYP-Gu-HBL" secondAttribute="trailing" id="imf-Fu-CBo"/>
-                            <constraint firstItem="JYP-Gu-HBL" firstAttribute="top" secondItem="xw9-Ro-Fai" secondAttribute="top" id="sPq-5G-3wa"/>
+                            <constraint firstItem="Kw9-Kv-I2B" firstAttribute="bottom" secondItem="xw9-Ro-Fai" secondAttribute="top" id="sPq-5G-3wa"/>
                             <constraint firstItem="BJx-hX-58b" firstAttribute="centerX" secondItem="xw9-Ro-Fai" secondAttribute="centerX" id="sdn-2O-8GI"/>
-                            <constraint firstItem="abd-jd-9tI" firstAttribute="bottom" secondItem="SQe-Tw-wQG" secondAttribute="bottom" constant="20" id="zuH-3C-T3Q"/>
+                            <constraint firstItem="abd-jd-9tI" firstAttribute="bottom" secondItem="SQe-Tw-wQG" secondAttribute="bottom" constant="20" symbolic="YES" id="zuH-3C-T3Q"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Search for Location" id="FaM-WV-S6I">
@@ -853,7 +875,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xdo-ip-Va2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="152" y="186"/>
+            <point key="canvasLocation" x="150.72463768115944" y="185.49107142857142"/>
         </scene>
         <!--Rotating Navigation Controller-->
         <scene sceneID="zdf-8K-g4P">
