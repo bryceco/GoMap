@@ -13,7 +13,7 @@ final class DisplayLink {
 	static let shared = DisplayLink()
 
 	var displayLink: CADisplayLink!
-	var blockDict = [String: () -> Void]()
+	var blockDict: [String: ()->Void] = [:]
 
 	private static let g_shared = DisplayLink()
 

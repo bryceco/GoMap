@@ -1693,16 +1693,16 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				}
 				// Rotate using an ease-in/out curve. This ensures that small changes in direction don't cause jerkiness.
 				// result = interpolated value, t = current time, b = initial value, c = delta value, d = duration
-				let easeInOutQuad: ((_ t: inout Double, _ b: Double, _ c: Double, _ d: Double) -> Double) =
-					{ t, b, c, d in
-						t /= d / 2
-						if t < 1 {
-							return c / 2 * t * t + b
-						}
-						t -= 1
-						return -c / 2 * (t * (t - 2) - 1) + b
+				func easeInOutQuad(_ t: Double, _ b: Double, _ c: Double, _ d: Double) -> Double {
+					var t = t
+					t /= d / 2
+					if t < 1 {
+						return c / 2 * t * t + b
 					}
-				let miniHeading = easeInOutQuad(&elapsedTime, 0, deltaHeading, duration)
+					t -= 1
+					return -c / 2 * (t * (t - 2) - 1) + b
+				}
+				let miniHeading = easeInOutQuad(elapsedTime, 0, deltaHeading, duration)
 				myself.rotate(by: CGFloat(miniHeading - prevHeading), aroundScreenPoint: center)
 				prevHeading = miniHeading
 				if elapsedTime >= duration {
