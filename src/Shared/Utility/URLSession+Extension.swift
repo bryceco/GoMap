@@ -15,9 +15,9 @@ enum UrlSessionError: LocalizedError {
 
 	public var errorDescription: String? {
 		switch self {
-		case let .badStatusCode(rc,text): return "UrlSessionError.badStatusCode(\(rc),\(text ?? ""))"
-		case .missingResponse:return "UrlSessionError.missingResponse"
-		case .noData:return "UrlSessionError.noData"
+		case let .badStatusCode(rc, text): return "UrlSessionError.badStatusCode(\(rc),\(text ?? ""))"
+		case .missingResponse: return "UrlSessionError.missingResponse"
+		case .noData: return "UrlSessionError.noData"
 		}
 	}
 }

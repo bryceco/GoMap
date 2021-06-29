@@ -176,7 +176,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 	}
 }
 
-class OsmDownloader {
+enum OsmDownloader {
 	// http://wiki.openstreetmap.org/wiki/API_v0.6#Retrieving_map_data_by_bounding_box:_GET_.2Fapi.2F0.6.2Fmap
 	static func osmData(forUrl url: String,
 	                    completion: @escaping (_ r: Result<OsmDownloadData, Error>) -> Void)

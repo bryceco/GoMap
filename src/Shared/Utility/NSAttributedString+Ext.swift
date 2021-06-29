@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 extension NSMutableAttributedString {
-
 	/// Takes a string containing HTML code, such as an error message returned by a server, and
 	/// converts it to an NSAttributedString
 	convenience init?(withHtmlString html: String,
@@ -19,7 +18,7 @@ extension NSMutableAttributedString {
 	{
 		do {
 			guard html.hasPrefix("<"),
-				  let data = html.data(using: .utf8)
+			      let data = html.data(using: .utf8)
 			else { return nil }
 			let encoding = NSNumber(value: String.Encoding.utf8.rawValue)
 			try self.init(data: data,

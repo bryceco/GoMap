@@ -43,8 +43,8 @@ enum OsmMapDataError: LocalizedError {
 		switch self {
 		case .unableToOpenDatabase: return "OsmMapDataError.unableToOpenDatabase"
 		case .osmWayResolveToMapDataFoundNilNodeRefs: return "OsmMapDataError.osmWayResolveToMapDataFoundNilNodeRefs"
-		case .osmWayResolveToMapDataCouldntFindNodeRef:return "OsmMapDataError.osmWayResolveToMapDataCouldntFindNodeRef"
-		case .badURL(let url):return "OsmMapDataError.badURL(\(url))"
+		case .osmWayResolveToMapDataCouldntFindNodeRef: return "OsmMapDataError.osmWayResolveToMapDataCouldntFindNodeRef"
+		case let .badURL(url): return "OsmMapDataError.badURL(\(url))"
 		}
 	}
 }
@@ -1077,7 +1077,7 @@ final class OsmMapData: NSObject, NSCoding {
 
 		public var errorDescription: String? {
 			switch self {
-			case .changesetIdNotDecimal(let text): return "OsmServerError.changesetIdNotDecimal(\(text)"
+			case let .changesetIdNotDecimal(text): return "OsmServerError.changesetIdNotDecimal(\(text)"
 			}
 		}
 	}

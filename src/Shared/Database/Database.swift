@@ -23,7 +23,7 @@ enum DatabaseError: LocalizedError {
 		switch self {
 		case .wayReferencedByNodeDoesNotExist: return "DatabaseError.wayReferencedByNodeDoesNotExist"
 		case .relationReferencedByMemberDoesNotExist: return "DatabaseError.relationReferencedByMemberDoesNotExist"
-		case .unlinkFailed(let rc): return "DatabaseError.unlinkFailed(\(rc)"
+		case let .unlinkFailed(rc): return "DatabaseError.unlinkFailed(\(rc)"
 		}
 	}
 }
