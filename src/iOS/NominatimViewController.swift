@@ -136,25 +136,82 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 
 		let scanner = Scanner(string: text)
 		let digits = CharacterSet(charactersIn: "-0123456789")
+		let floats = CharacterSet(charactersIn: "-.0123456789")
 		let comma = CharacterSet(charactersIn: ",°/")
 		scanner.charactersToBeSkipped = CharacterSet.whitespaces
 
 		while !scanner.isAtEnd {
 			scanner.scanUpToCharacters(from: digits, into: nil)
 			let pos = scanner.scanLocation
-			var lat: Double = 0.0
-			var lon: Double = 0.0
-			if scanner.scanDouble(&lat), lat != Double(Int(lat)), lat > -90, lat < 90,
+			var sLat: NSString?
+			var sLon: NSString?
+			if scanner.scanCharacters(from: floats, into: &sLat),
+			   let sLat = sLat,
+			   sLat.contains("."),
+			   let lat = Double(sLat as String),
+			   lat > -90,
+			   lat < 90,
 			   scanner.scanCharacters(from: comma, into: nil),
-			   scanner.scanDouble(&lon), lon != Double(Int(lon)), lon >= -180, lon <= 180
+			   scanner.scanCharacters(from: floats, into: &sLon),
+			   let sLon = sLon,
+			   sLon.contains("."),
+			   let lon = Double(sLon as String),
+			   lon >= -180,
+			   lon <= 180
 			{
 				updateHistory(with: "\(lat),\(lon)")
 				jump(toLat: lat, lon: lon)
 				return true
 			}
-			if scanner.scanLocation == pos, !scanner.isAtEnd {
+			if scanner.scanLocation == pos,
+			   !scanner.isAtEnd
+			{
 				scanner.scanLocation = pos + 1
 			}
+		}
+		return false
+	}
+
+	/// try parsing as an OSM URL
+	/// https://www.openstreetmap.org/relation/12894314#map=
+	func containsOsmObjectID(string: String) -> Bool {
+		var string = string
+		if let hash = string.firstIndex(of: "#") {
+			string = String(string[..<hash])
+		}
+		var objIdent: NSString?
+		var objType: NSString?
+		let delim = CharacterSet(charactersIn: "/,. -")
+		let scanner = Scanner(string: String(string.reversed()))
+		if scanner.scanCharacters(from: CharacterSet.alphanumerics, into: &objIdent),
+		   let objIdent = objIdent,
+		   let objIdent2 = Int64(String((objIdent as String).reversed())),
+		   scanner.scanCharacters(from: delim, into: nil),
+		   scanner.scanCharacters(from: CharacterSet.alphanumerics, into: &objType),
+		   let objType = objType,
+		   let objType2 = OSM_TYPE(text: String((objType as String).reversed()))
+		{
+			activityIndicator.startAnimating()
+			var url = OSM_API_URL + "api/0.6/\(objType2.asText())/\(objIdent2)"
+			if objType2 != .NODE {
+				url += "/full"
+			}
+			OsmDownloader.osmData(forUrl: url, completion: { result in
+				DispatchQueue.main.async {
+					self.activityIndicator.stopAnimating()
+					switch result {
+					case let .success(data):
+						if let node = data.nodes.first {
+							self.updateHistory(with: "\(objType2.asText()) \(objIdent2)")
+							self.jump(toLat: node.latLon.lat, lon: node.latLon.lon)
+						}
+						self.presentErrorMessage()
+					case let .failure(error):
+						self.presentErrorMessage(error)
+					}
+				}
+			})
+			return true
 		}
 		return false
 	}
@@ -187,45 +244,8 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 
 		// try parsing as an OSM URL
 		// https://www.openstreetmap.org/relation/12894314#map=
-		do {
-			var string = string
-			if let hash = string.firstIndex(of: "#") {
-				string = String(string[..<hash])
-			}
-			var objIdent: NSString?
-			var objType: NSString?
-			let delim = CharacterSet(charactersIn: "/,. -")
-			let scanner = Scanner(string: String(string.reversed()))
-			if scanner.scanCharacters(from: CharacterSet.alphanumerics, into: &objIdent),
-			   let objIdent = objIdent,
-			   let objIdent2 = Int64(String((objIdent as String).reversed())),
-			   scanner.scanCharacters(from: delim, into: nil),
-			   scanner.scanCharacters(from: CharacterSet.alphanumerics, into: &objType),
-			   let objType = objType,
-			   let objType2 = OSM_TYPE(text: String((objType as String).reversed()))
-			{
-				activityIndicator.startAnimating()
-				var url = OSM_API_URL + "api/0.6/\(objType2.asText())/\(objIdent2)"
-				if objType2 != .NODE {
-					url += "/full"
-				}
-				OsmDownloader.osmData(forUrl: url, completion: { result in
-					DispatchQueue.main.async {
-						self.activityIndicator.stopAnimating()
-						switch result {
-						case let .success(data):
-							if let node = data.nodes.first {
-								self.updateHistory(with: "\(objType2.asText()) \(objIdent2)")
-								self.jump(toLat: node.latLon.lat, lon: node.latLon.lon)
-							}
-							self.presentErrorMessage()
-						case let .failure(error):
-							self.presentErrorMessage(error)
-						}
-					}
-				})
-				return
-			}
+		if containsOsmObjectID(string: string) {
+			return
 		}
 
 		// Do this after checking for an OSM object URL since those can contain lat/lon as well
