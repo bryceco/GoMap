@@ -588,73 +588,58 @@ final class OsmMapData: NSObject, NSCoding {
 
 	// returns a list of ServerQuery objects
 	private class func coalesceQuadQueries(_ quadList: [QuadBox]) -> [ServerQuery] {
-		// sort by row
-		var quadList = quadList
-		quadList.sort(by: { q1, q2 in
-			var diff = q1.rect.origin.y - q2.rect.origin.y
-			if diff == 0 {
-				diff = q1.rect.origin.x - q2.rect.origin.x
-			}
-			return diff < 0
-		})
-
-		var queries: [ServerQuery] = []
-		var prevQuery: ServerQuery?
-		for q in quadList {
-			if let prevQuery = prevQuery,
-			   q.rect.origin.y == prevQuery.rect.origin.y,
-			   q.rect.origin.x == prevQuery.rect.origin.x + prevQuery.rect.size.width,
-			   q.rect.size.height == prevQuery.rect.size.height
-			{
-				// combine with previous quad(s)
-				prevQuery.quadList.append(q)
-				prevQuery.rect.size.width += q.rect.size.width
-			} else {
-				// create new query for quad
-				prevQuery = ServerQuery()
-				prevQuery!.quadList = [q]
-				prevQuery!.rect = q.rect
-				queries.append(prevQuery!)
-			}
+		// make a query for every quad
+		var queries = quadList.map { quad->ServerQuery in
+			let query = ServerQuery()
+			query.quadList = [quad]
+			query.rect = quad.rect
+			return query
 		}
-
-		// any items that didn't get grouped get put back on the list
-		quadList = queries.compactMap({ query in
-			query.quadList.count == 1 ? query.quadList[0] : nil
-		})
-
-		// sort by column
-		quadList.sort(by: { q1, q2 in
-			var diff = q1.rect.origin.x - q2.rect.origin.x
-			if diff == 0 {
-				diff = q1.rect.origin.y - q2.rect.origin.y
+		loop: while true {
+			for q in queries {
+				if let index = queries.firstIndex(where: {
+					if q.rect.size.width == $0.rect.size.width {
+						// equal widths
+						if q.rect.origin.x == $0.rect.origin.x {
+							// matching left-right sides
+							if q.rect.origin.y == $0.rect.origin.y+$0.rect.size.height ||
+								q.rect.origin.y+q.rect.size.height == $0.rect.origin.y
+							{
+								// stacked vertically
+								return true
+							}
+						}
+					}
+					if q.rect.size.height == $0.rect.size.height {
+						// equal heights
+						if q.rect.origin.y == $0.rect.origin.y {
+							// matching top-bottom
+							if q.rect.origin.x == $0.rect.origin.x+$0.rect.size.width ||
+								q.rect.origin.x+q.rect.size.width == $0.rect.origin.x
+							{
+								// stacked horizontally
+								return true
+							}
+						}
+					}
+					return false
+				})
+				{
+					// combine them
+					let other = queries[index]
+					let newRect = q.rect.union(other.rect)
+					#if DEBUG
+					let areaDiff = newRect.size.width*newRect.size.height - (q.rect.size.width*q.rect.size.height + other.rect.size.width*other.rect.size.height)
+					assert(areaDiff == 0.0)
+					#endif
+					q.rect = newRect
+					q.quadList += other.quadList
+					queries.remove(at: index)
+					continue loop
+				}
 			}
-			return diff < 0
-		})
-		prevQuery = nil
-		for q in quadList {
-			if let prevQuery = prevQuery,
-			   q.rect.origin.x == prevQuery.rect.origin.x,
-			   q.rect.origin.y == prevQuery.rect.origin.y + prevQuery.rect.size.height,
-			   q.rect.size.width == prevQuery.rect.size.width
-			{
-				prevQuery.quadList.append(q)
-				prevQuery.rect.size.height += q.rect.size.height
-			} else {
-				prevQuery = ServerQuery()
-				prevQuery!.quadList = [q]
-				prevQuery!.rect = q.rect
-				queries.append(prevQuery!)
-			}
+			break
 		}
-
-#if false
-		DLog("\nquery list:")
-		for q in queries {
-			DLog("  %@", NSCoder.string(for: CGRectFromOSMRect(q.rect)))
-		}
-#endif
-
 		return queries
 	}
 
@@ -681,7 +666,13 @@ final class OsmMapData: NSObject, NSCoding {
 			return
 		}
 
-		// Convert the list of quads into server queries
+		#if DEBUG
+		AppDelegate.shared.mapView.quadDownloadLayer?.setNeedsLayout()
+		#endif
+
+		// Convert the list of quads into server queries. We look for quads that are adjacent
+		// and can be combined into larger rectangular queries. This usually results in
+		// 1-2 queries even though there are many quads.
 		let queryList = OsmMapData.coalesceQuadQueries(newQuads)
 
 		// submit each query to the server and process the results
@@ -697,6 +688,8 @@ final class OsmMapData: NSObject, NSCoding {
 				switch result {
 				case let .success(data):
 					// merge data
+					print("Downloaded \(data.nodes.count+data.ways.count+data.relations.count) objects")
+
 					try? self.merge(data, savingToDatabase: true)
 					didGetData = true
 					didChange(nil) // data was updated
@@ -708,6 +701,10 @@ final class OsmMapData: NSObject, NSCoding {
 					self.region.updateDownloadStatus(quadBox, success: didGetData)
 				}
 				progress.progressDecrement()
+				
+				#if DEBUG
+				AppDelegate.shared.mapView.quadDownloadLayer?.setNeedsLayout()
+				#endif
 			})
 		}
 	}
@@ -1442,13 +1439,14 @@ final class OsmMapData: NSObject, NSCoding {
 		}
 		Database.dispatchQueue.async(execute: { [self] in
 			var t = CACurrentMediaTime()
-			var ok: Bool = false
+			let ok: Bool
 			do {
 				let db = try Database(name: "")
 				try db.createTables()
 				try db.save(saveNodes: saveNodes, saveWays: saveWays, saveRelations: saveRelations,
 				            deleteNodes: deleteNodes, deleteWays: deleteWays, deleteRelations: deleteRelations,
 				            isUpdate: isUpdate)
+				ok = true
 			} catch {
 				try? Database.delete(withName: "")
 				ok = false
@@ -1486,7 +1484,7 @@ final class OsmMapData: NSObject, NSCoding {
 
 // remove objects if they are too old, or we have too many:
 #if DEBUG
-		let limit = 10000
+		let limit = 500000
 #else
 		let limit = 100000
 #endif
@@ -1823,7 +1821,6 @@ final class OsmMapData: NSObject, NSCoding {
 
 	func consistencyCheckDebugOnly() {
 		// This is extremely expensive: DEBUG only!
-		print("Checking database consistency")
 
 		consistencyCheckRelationMembers()
 		spatial.consistencyCheck(nodes: Array(nodes.values),
