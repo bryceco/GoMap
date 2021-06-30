@@ -183,6 +183,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		var objType: NSString?
 		let delim = CharacterSet(charactersIn: "/,. -")
 		let scanner = Scanner(string: String(string.reversed()))
+		scanner.charactersToBeSkipped = nil
 		if scanner.scanCharacters(from: CharacterSet.alphanumerics, into: &objIdent),
 		   let objIdent = objIdent,
 		   let objIdent2 = Int64(String((objIdent as String).reversed())),
