@@ -8,7 +8,7 @@
 
 import Foundation
 
-private let MinRectSize = 360.0 / Double(1 << 16)
+private let MinRectSize = 360.0 / Double(1 << 18)	// FIXME: This should vary between spatial and region
 private let MAP_RECT = OSMRect(x: -180.0, y: -90.0, width: 360.0, height: 180.0)
 private let MAX_MEMBERS_PER_LEVEL = 40
 private let MAX_DEPTH = 26 // 2 feet wide
@@ -28,11 +28,13 @@ final class QuadBox: NSObject, NSCoding {
 	var parent: QuadBox?
 
 	var children: [QuadBox?] = QuadBox.emptyChildren
+	// this quad successfully downloaded all of its data, so we don't need to track children anymore
+	var isDownloaded = false
 	var downloadDate = 0.0
-	var isDownloaded =
-		false // this quad successfully downloaded all of its data, so we don't need to track children anymore
 	var busy = false // this quad is currently being downloaded
+
 	var isSplit = false
+
 	// member is used only for spatial
 	var members: [OsmBaseObject] = []
 #if SHOW_DOWNLOAD_QUADS
@@ -126,28 +128,28 @@ final class QuadBox: NSObject, NSCoding {
 	// MARK: Region
 
 	func missingPieces(_ missing: inout [QuadBox], intersecting needed: OSMRect) {
+		assert( needed.intersectsRect(rect) )
+
 		if isDownloaded || busy {
+			// previously downloaded, or in the process of being downloaded
 			return
 		}
-		if !needed.intersectsRect(rect) {
-			return
-		}
-		if rect.size.width <= MinRectSize ||
-			rect.size.width <= needed.size.width / 2 ||
-			rect.size.height <= needed.size.height / 2
-		{
+		if rect.size.width <= MinRectSize {
+			// smallest allowed size
 			busy = true
 			missing.append(self)
+//			print("depth \(Int(round(log2(360.0/rect.size.width))))")
 			return
 		}
-		if needed.containsRect(rect) {
-			if !hasChildren() {
-				busy = true
-				missing.append(self)
-				return
-			}
+		if needed.containsRect(rect) && !hasChildren() {
+			// no part of us has been downloaded, and we're completely covered by the needed area
+			busy = true
+			missing.append(self)
+//			print("depth \(Int(round(log2(360.0/rect.size.width))))")
+			return
 		}
 
+		// find the child pieces that are partially covered and recurse
 		for child in QUAD_ENUM.allCases {
 			let rc = QuadBox.ChildRect(child, rect)
 			if needed.intersectsRect(rc) {
@@ -158,26 +160,6 @@ final class QuadBox: NSObject, NSCoding {
 				children[child.rawValue]!.missingPieces(&missing, intersecting: needed)
 			}
 		}
-	}
-
-	// Delete ourself from the quad tree
-	private func delete() {
-		if let parent = parent {
-			// remove parent's pointer to us
-			if let index = parent.children.firstIndex(where: { $0 === self }) {
-				parent.children[index] = nil
-			}
-			self.parent = nil
-		}
-
-		// delete any children
-		children = []
-
-#if SHOW_DOWNLOAD_QUADS
-		if let gpxTrack = gpxTrack {
-			AppDelegate.getAppDelegate.mapView.gpxLayer.deleteTrack(gpxTrack)
-		}
-#endif
 	}
 
 	// This runs after we attempted to download a quad.
@@ -207,15 +189,45 @@ final class QuadBox: NSObject, NSCoding {
 				let childrenComplete = parent.children.allSatisfy({ $0?.isDownloaded ?? false })
 				if childrenComplete {
 #if true
-					// we want to have fine granularity during discard phase, so don't delete children by taking the markDownloadStatus() path
+					// we want to have fine granularity during discard phase, so don't delete children by taking the updateDownloadStatus() path
 					parent.isDownloaded = true
 #else
-					parent.markDownloadStatus(success)
+					parent.updateDownloadStatus(success)
 #endif
 				}
 			}
 		}
 	}
+
+	// Delete ourself from the quad tree
+	private func delete() {
+		if let parent = parent {
+			// remove parent's pointer to us
+			if let index = parent.children.firstIndex(where: { $0 === self }) {
+				parent.children[index] = nil
+			}
+			self.parent = nil
+		}
+
+		// delete any children
+		children = []
+
+#if SHOW_DOWNLOAD_QUADS
+		if let gpxTrack = gpxTrack {
+			AppDelegate.getAppDelegate.mapView.gpxLayer.deleteTrack(gpxTrack)
+		}
+#endif
+	}
+
+	func enumerate(_ block: (QuadBox) -> Void) {
+		block(self)
+		for child in children {
+			if let child = child {
+				child.enumerate(block)
+			}
+		}
+	}
+
 
 	func countOfObjects() -> Int {
 		var count = 0
@@ -512,12 +524,12 @@ final class QuadBox: NSObject, NSCoding {
 		}
 	}
 
-	func enumerate(_ block: (_ obj: OsmBaseObject, _ rect: OSMRect) -> Void) {
+	func enumerateObjects(_ block: (_ obj: OsmBaseObject, _ rect: OSMRect) -> Void) {
 		for obj in members {
 			block(obj, rect)
 		}
 		for child in children where child != nil {
-			child!.enumerate(block)
+			child!.enumerateObjects(block)
 		}
 	}
 
