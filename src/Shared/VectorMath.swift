@@ -282,7 +282,7 @@ extension OSMRect {
 		return true
 	}
 
-	@inline(__always) func containsRect(b: OSMRect) -> Bool {
+	@inline(__always) func containsRect(_ b: OSMRect) -> Bool {
 		return origin.x <= b.origin.x &&
 			origin.y <= b.origin.y &&
 			origin.x + size.width >= b.origin.x + b.size.width &&
@@ -296,13 +296,6 @@ extension OSMRect {
 		let maxY = Double(max(origin.y + size.height, b.origin.y + b.size.height))
 		let r = OSMRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
 		return r
-	}
-
-	@inline(__always) func containsRect(_ b: OSMRect) -> Bool {
-		return origin.x <= b.origin.x &&
-			origin.y <= b.origin.y &&
-			origin.x + size.width >= b.origin.x + b.size.width &&
-			origin.y + size.height >= b.origin.y + b.size.height
 	}
 
 	@inline(__always) public static func ==(_ a: OSMRect, _ b: OSMRect) -> Bool {
@@ -398,9 +391,14 @@ extension OSMRect {
 		return true
 	}
 
+	func metersSizeForLatLon() -> OSMSize {
+		let w = GreatCircleDistance(LatLon(x:origin.x,y:origin.y), LatLon(x:origin.x+size.width,y:origin.y))
+		let h = GreatCircleDistance(LatLon(x:origin.x,y:origin.y), LatLon(x:origin.x,y:origin.y+size.height))
+		return OSMSize(width: w, height: h)
+	}
+
 	var boundsString: String {
 		return "OSMRect(ul:(\(origin.x),\(origin.y)),lr:(\(origin.x+size.width),\(origin.y+size.height))"
-
 	}
 }
 extension OSMRect: CustomStringConvertible {
@@ -628,12 +626,6 @@ struct LatLon {
 
 	init(_ pt: OSMPoint) {
 		self.init(lon: pt.x, lat: pt.y)
-	}
-
-	static func metersForLatLon(rect rc: OSMRect) -> OSMSize {
-		let w = GreatCircleDistance(LatLon(x:rc.origin.x,y:rc.origin.y), LatLon(x:rc.origin.x+rc.size.width,y:rc.origin.y))
-		let h = GreatCircleDistance(LatLon(x:rc.origin.x,y:rc.origin.y), LatLon(x:rc.origin.x,y:rc.origin.y+rc.size.height))
-		return OSMSize(width: w, height: h)
 	}
 }
 
