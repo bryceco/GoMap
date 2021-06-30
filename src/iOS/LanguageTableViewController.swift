@@ -9,11 +9,10 @@
 import UIKit
 
 class LanguageTableViewController: UITableViewController {
-	var languages: PresetLanguages?
+	let languages = PresetLanguages()
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		languages = PresetLanguages()
 
 		tableView.estimatedRowHeight = 44
 		tableView.rowHeight = UITableView.automaticDimension
@@ -22,7 +21,7 @@ class LanguageTableViewController: UITableViewController {
 	// MARK: - Table view data source
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		1
+		return 1
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -35,7 +34,7 @@ class LanguageTableViewController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return (languages?.languageCodes().count ?? 0) + 1
+		return languages.languageCodes().count + 1
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -51,7 +50,7 @@ class LanguageTableViewController: UITableViewController {
 			cell.textLabel?.text = NSLocalizedString("Automatic", comment: "Automatic selection of presets languages")
 			cell.detailTextLabel?.text = nil
 		} else {
-			code = languages?.languageCodes()[indexPath.row - 1]
+			code = languages.languageCodes()[indexPath.row - 1]
 
 			// name in native language
 			cell.textLabel?.text = PresetLanguages.languageNameForCode(code ?? "") ?? ""
@@ -61,26 +60,22 @@ class LanguageTableViewController: UITableViewController {
 		}
 
 		// accessory checkmark
-		if let isPreferredLanguageIsDefault = languages?.preferredLanguageIsDefault() {
-			if isPreferredLanguageIsDefault {
-				if !(indexPath.row == 0) {
-					if code == languages?.preferredLanguageCode() {
-						cell.accessoryType = .checkmark
-					} else {
-						cell.accessoryType = .none
-					}
-				}
-			}
+		if (languages.preferredLanguageIsDefault() && indexPath.row == 0)
+			|| code == languages.preferredLanguageCode()
+		{
+			cell.accessoryType = .checkmark
+		} else {
+			cell.accessoryType = .none
 		}
 		return cell
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		if indexPath.row == 0 {
-			languages?.setPreferredLanguageCode(nil)
+			languages.setPreferredLanguageCode(nil)
 		} else {
-			let code = languages?.languageCodes()[indexPath.row - 1]
-			languages?.setPreferredLanguageCode(code)
+			let code = languages.languageCodes()[indexPath.row - 1]
+			languages.setPreferredLanguageCode(code)
 		}
 
 		self.tableView.reloadData()
