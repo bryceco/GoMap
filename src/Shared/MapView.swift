@@ -918,9 +918,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			if !service.isBingAerial() {
 				service.scaleAttributionIcon(toHeight: aerialServiceLogo.frame.size.height)
 			}
-
+			let gap = service.attributionIcon != nil && service.attributionString.count > 0 ? " " : ""
 			aerialServiceLogo.setImage(service.attributionIcon, for: .normal)
-			aerialServiceLogo.setTitle(service.attributionString, for: .normal)
+			aerialServiceLogo.setTitle(gap+service.attributionString, for: .normal)
 		}
 	}
 
