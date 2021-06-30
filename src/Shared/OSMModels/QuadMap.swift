@@ -69,6 +69,16 @@ class QuadMap: NSObject, NSCoding {
 		quad.updateDownloadStatus(success: success)
 	}
 
+	func enumerate(_ block: (QuadBox) -> Void) {
+		rootQuad.enumerate(block)
+	}
+
+	func downloadCount() -> Int {
+		var c = 0
+		enumerate({ if $0.isDownloaded { c += 1 } })
+		return c
+	}
+
 	// MARK: Spatial
 
 	@objc func addMember(_ member: OsmBaseObject, undo: MyUndoManager?) {
@@ -135,8 +145,8 @@ class QuadMap: NSObject, NSCoding {
 		rootQuad.findObjects(inArea: bbox, block: block)
 	}
 
-	func enumerate(_ block: (OsmBaseObject, OSMRect) -> Void) {
-		rootQuad.enumerate(block)
+	func enumerateObjects(_ block: (OsmBaseObject, OSMRect) -> Void) {
+		rootQuad.enumerateObjects(block)
 	}
 
 	// these are for purging old data:
@@ -169,7 +179,7 @@ class QuadMap: NSObject, NSCoding {
 		var nCount = 0
 		var wCount = 0
 		var rCount = 0
-		rootQuad.enumerate { obj, rect in
+		rootQuad.enumerateObjects { obj, rect in
 			let id = obj.extendedIdentifier
 			if let cnt = dict[id] {
 				dict[id] = cnt + 1
