@@ -175,7 +175,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	/// try parsing as an OSM URL
 	/// https://www.openstreetmap.org/relation/12894314#map=
 	func containsOsmObjectID(string: String) -> Bool {
-		var string = string
+		var string = string.lowercased()
 		if let hash = string.firstIndex(of: "#") {
 			string = String(string[..<hash])
 		}
@@ -205,8 +205,9 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 						if let node = data.nodes.first {
 							self.updateHistory(with: "\(objType2.string) \(objIdent2)")
 							self.jump(toLat: node.latLon.lat, lon: node.latLon.lon)
+						} else {
+							self.presentErrorMessage()
 						}
-						self.presentErrorMessage()
 					case let .failure(error):
 						self.presentErrorMessage(error)
 					}
