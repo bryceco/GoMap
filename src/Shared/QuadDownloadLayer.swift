@@ -64,8 +64,12 @@ final class QuadDownloadLayer: CALayer {
 				return
 			}
 */
-			let color = (quad.busy ? UIColor.yellow : UIColor.green).withAlphaComponent(0.3).cgColor
-
+			let color: CGColor
+			if quad.busy {
+				color = UIColor.yellow.withAlphaComponent(0.3).cgColor
+			} else {
+				color = UIColor.green.withAlphaComponent(0.15).cgColor
+			}
 			let layer = CALayer()
 			layer.frame = screenRect
 			layer.backgroundColor = color
