@@ -963,7 +963,7 @@ extension OsmMapData {
 			if way == toWay, newWay.nodes.contains(toWayNode) {
 				toWay = newWay
 			}
-			newWays[i] = newWay
+			newWays.append( newWay )
 		}
 
 		var restriction = restriction
