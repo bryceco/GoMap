@@ -13,7 +13,6 @@ private let OVERLAY_SECTION = 2
 private let CACHE_SECTION = 3
 
 class DisplayViewController: UITableViewController {
-	@IBOutlet var birdsEyeSwitch: UISwitch!
 	@IBOutlet var rotationSwitch: UISwitch!
 	@IBOutlet var notesSwitch: UISwitch!
 	@IBOutlet var gpsTraceSwitch: UISwitch!
@@ -68,7 +67,6 @@ class DisplayViewController: UITableViewController {
 		mask |= unnamedRoadSwitch.isOn ? Int(MapViewOverlays.NONAME.rawValue) : 0
 		mapView.viewOverlayMask = MapViewOverlays(rawValue: MapViewOverlays.RawValue(mask))
 
-		mapView.enableBirdsEye = birdsEyeSwitch.isOn
 		mapView.enableRotation = rotationSwitch.isOn
 		mapView.enableUnnamedRoadHalo = unnamedRoadSwitch.isOn
 		mapView.enableGpxLogging = gpxLoggingSwitch.isOn
@@ -98,24 +96,19 @@ class DisplayViewController: UITableViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
-		let mapView = AppDelegate.shared.mapView
+		guard let mapView = AppDelegate.shared.mapView else { return }
 
 		// becoming visible the first time
 		navigationController?.isNavigationBarHidden = false
 
-		if let viewOverlayMask = mapView?.viewOverlayMask {
-			// Fix here
-			let bitwiseOperation = (viewOverlayMask.rawValue & MapViewOverlays.NOTES.rawValue)
-			notesSwitch.isOn = bitwiseOperation != 0
-		}
-		gpsTraceSwitch.isOn = !(mapView?.gpsTraceLayer.isHidden)!
+		notesSwitch.isOn = mapView.viewOverlayMask.contains(.NOTES)
+		gpsTraceSwitch.isOn = !mapView.gpsTraceLayer.isHidden
 
-		birdsEyeSwitch.isOn = mapView?.enableBirdsEye ?? false
-		rotationSwitch.isOn = mapView?.enableRotation ?? false
-		unnamedRoadSwitch.isOn = mapView?.enableUnnamedRoadHalo ?? false
-		gpxLoggingSwitch.isOn = mapView?.enableGpxLogging ?? false
-		turnRestrictionSwitch.isOn = mapView?.enableTurnRestriction ?? false
-		objectFiltersSwitch.isOn = mapView?.editorLayer.objectFilters.enableObjectFilters ?? false
+		rotationSwitch.isOn = mapView.enableRotation
+		unnamedRoadSwitch.isOn = mapView.enableUnnamedRoadHalo
+		gpxLoggingSwitch.isOn = mapView.enableGpxLogging
+		turnRestrictionSwitch.isOn = mapView.enableTurnRestriction
+		objectFiltersSwitch.isOn = mapView.editorLayer.objectFilters.enableObjectFilters
 
 		setButtonLayoutTitle()
 	}

@@ -2249,7 +2249,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 				// update new and existing buttons
 				notesDatabase.enumerateNotes({ [self] note in
-					if viewOverlayMask.contains(MapViewOverlays.NOTES) {
+					if viewOverlayMask.contains(.NOTES) {
 						// hide unwanted keep right buttons
 						if note is KeepRight,
 						   notesDatabase.isIgnored(note)

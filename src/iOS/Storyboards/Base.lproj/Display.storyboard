@@ -1599,32 +1599,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="gt5-e4-ICw">
-                                        <rect key="frame" x="0.0" y="789.5" width="414" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gt5-e4-ICw" id="sug-RD-ipO">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable 3-D Effects" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="luT-Tw-T3x">
-                                                    <rect key="frame" x="15" y="13.5" width="319" height="17"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IuS-7H-TV3">
-                                                    <rect key="frame" x="335" y="6.5" width="51" height="31"/>
-                                                </switch>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="luT-Tw-T3x" firstAttribute="leading" secondItem="sug-RD-ipO" secondAttribute="leading" constant="15" id="85K-7O-gKl"/>
-                                                <constraint firstItem="IuS-7H-TV3" firstAttribute="leading" secondItem="luT-Tw-T3x" secondAttribute="trailing" constant="1" id="D1J-HJ-Eve"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="IuS-7H-TV3" secondAttribute="trailing" constant="10" id="Dzl-eP-aZD"/>
-                                                <constraint firstItem="IuS-7H-TV3" firstAttribute="centerY" secondItem="sug-RD-ipO" secondAttribute="centerY" id="Z2v-Bk-58F"/>
-                                                <constraint firstItem="IuS-7H-TV3" firstAttribute="centerY" secondItem="luT-Tw-T3x" secondAttribute="centerY" id="hrj-pt-t3m"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>

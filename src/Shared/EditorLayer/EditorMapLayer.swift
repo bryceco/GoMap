@@ -11,7 +11,7 @@ import CoreLocation
 import UIKit
 
 // compile options:
-public let SHOW_3D = true
+public let SHOW_3D = false
 private let FADE_INOUT = false
 private let SINGLE_SIDED_WALLS = true
 
