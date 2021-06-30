@@ -64,6 +64,7 @@ private let Z_MAPNIK: CGFloat = -98
 private let Z_LOCATOR: CGFloat = -50
 private let Z_GPSTRACE: CGFloat = -40
 private let Z_EDITOR: CGFloat = -20
+private let Z_QUADDOWNLOAD: CGFloat = -18
 private let Z_GPX: CGFloat = -15
 private let Z_ROTATEGRAPHIC: CGFloat = -3
 private let Z_BLINK: CGFloat = 4
@@ -199,6 +200,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	private(set) lazy var noNameLayer: MercatorTileLayer = { MercatorTileLayer(mapView: self) }()
 	private(set) lazy var editorLayer: EditorMapLayer = { EditorMapLayer(owner: self) }()
 	private(set) lazy var gpxLayer: GpxLayer = { GpxLayer(mapView: self) }()
+	private(set) var quadDownloadLayer:QuadDownloadLayer?
 
 	// overlays
 	private(set) lazy var locatorLayer: MercatorTileLayer = { MercatorTileLayer(mapView: self) }()
@@ -571,6 +573,15 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		gpxLayer.isHidden = true
 		bg.append(gpxLayer)
 
+		#if DEBUG
+		quadDownloadLayer = QuadDownloadLayer(mapView: self)
+		if let quadDownloadLayer = quadDownloadLayer {
+			quadDownloadLayer.zPosition = Z_QUADDOWNLOAD
+			quadDownloadLayer.isHidden = false
+			bg.append(quadDownloadLayer)
+		}
+		#endif
+		
 		backgroundLayers = bg
 		for layer in backgroundLayers {
 			self.layer.addSublayer(layer)
@@ -1230,9 +1241,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				userInstructionLabel.text = NSLocalizedString("Zoom to Edit", comment: "")
 			}
 		}
-		updateNotesFromServer(withDelay: 0)
+		quadDownloadLayer?.isHidden = editorLayer.isHidden
 
 		CATransaction.commit()
+
+		updateNotesFromServer(withDelay: 0)
 
 		// enable/disable editing buttons based on visibility
 		mainViewController.updateUndoRedoButtonState()
