@@ -262,8 +262,7 @@ final class OsmRelation: OsmBaseObject {
 	}
 
 	static func buildMultipolygonFromMembers(_ memberList: [OsmMember],
-	                                         repairing: Bool,
-	                                         isComplete: UnsafeMutablePointer<ObjCBool>) -> [[OsmNode]]
+	                                         repairing: Bool) -> ([[OsmNode]],Bool)
 	{
 		var loopList: [[OsmNode]] = []
 		var loop: [OsmNode] = []
@@ -272,7 +271,7 @@ final class OsmRelation: OsmBaseObject {
 		var isInner = false
 		var foundAdjacent = false
 
-		isComplete.pointee = ObjCBool(members.count == memberList.count)
+		var isComplete = (members.count == memberList.count)
 
 		while !members.isEmpty {
 			if loop.isEmpty {
@@ -310,7 +309,7 @@ final class OsmRelation: OsmBaseObject {
 				}
 				if !foundAdjacent, repairing {
 					// invalid, but we'll try to continue
-					isComplete.pointee = false
+					isComplete = false
 					// force-close the loop
 					loop.append(loop[0])
 				}
@@ -326,17 +325,15 @@ final class OsmRelation: OsmBaseObject {
 				loop = []
 			}
 		}
-		return loopList
+		return (loopList,isComplete)
 	}
 
 	func buildMultipolygonRepairing(_ repairing: Bool) -> [[OsmNode]] {
 		if !isMultipolygon() {
 			return []
 		}
-		var isComplete: ObjCBool = true
-		let a = OsmRelation.buildMultipolygonFromMembers(members,
-		                                                 repairing: repairing,
-		                                                 isComplete: &isComplete)
+		let (a,_) = OsmRelation.buildMultipolygonFromMembers(members,
+															 repairing: repairing)
 		return a
 	}
 

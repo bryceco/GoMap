@@ -1316,17 +1316,17 @@ extension OsmMapData {
 
 	// MARK: updateMultipolygonRelationRoles
 
+	static let AUTOMATICALLY_ASSIGN_MEMBER_ROLES = false
 	func updateMultipolygonRelationRoles(_ relation: OsmRelation) {
-		if !relation.isMultipolygon() {
+		// This code can be called when moving arbitrary nodes, and the risk is too high:
+		if !OsmMapData.AUTOMATICALLY_ASSIGN_MEMBER_ROLES || !relation.isMultipolygon() {
 			return
 		}
 
-		var isComplete: ObjCBool = false
 		var members = relation.members
 
-		let loopList = OsmRelation.buildMultipolygonFromMembers(members, repairing: false, isComplete: &isComplete)
-
-		if !isComplete.boolValue {
+		let (loopList,isComplete) = OsmRelation.buildMultipolygonFromMembers(members, repairing: false)
+		if !isComplete {
 			return
 		}
 
