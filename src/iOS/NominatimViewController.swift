@@ -189,10 +189,10 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		   scanner.scanCharacters(from: delim, into: nil),
 		   scanner.scanCharacters(from: CharacterSet.alphanumerics, into: &objType),
 		   let objType = objType,
-		   let objType2 = OSM_TYPE(text: String((objType as String).reversed()))
+		   let objType2 = try? OSM_TYPE(string: String((objType as String).reversed()))
 		{
 			activityIndicator.startAnimating()
-			var url = OSM_API_URL + "api/0.6/\(objType2.asText())/\(objIdent2)"
+			var url = OSM_API_URL + "api/0.6/\(objType2.string)/\(objIdent2)"
 			if objType2 != .NODE {
 				url += "/full"
 			}
@@ -202,7 +202,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 					switch result {
 					case let .success(data):
 						if let node = data.nodes.first {
-							self.updateHistory(with: "\(objType2.asText()) \(objIdent2)")
+							self.updateHistory(with: "\(objType2.string) \(objIdent2)")
 							self.jump(toLat: node.latLon.lat, lon: node.latLon.lon)
 						}
 						self.presentErrorMessage()

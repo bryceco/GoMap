@@ -9,12 +9,23 @@
 import Foundation
 import UIKit
 
+enum OsmObject: LocalizedError {
+	case invalidRelationMemberType
+
+	public var errorDescription: String? {
+		switch self {
+		case .invalidRelationMemberType: return "invalidRelationMemberType"
+		}
+	}
+}
+
+
 enum OSM_TYPE: Int {
 	case NODE = 1
 	case WAY = 2
 	case RELATION = 3
 
-	func asText() -> String {
+	var string: String {
 		switch self {
 		case .NODE: return "node"
 		case .WAY: return "way"
@@ -22,12 +33,12 @@ enum OSM_TYPE: Int {
 		}
 	}
 
-	init?(text: String) {
-		switch text {
+	init(string: String) throws {
+		switch string {
 		case "node": self = .NODE
 		case "way": self = .WAY
 		case "relation": self = .RELATION
-		default: return nil
+		default: throw OsmObject.invalidRelationMemberType
 		}
 	}
 }

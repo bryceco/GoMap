@@ -525,7 +525,7 @@ class POIAllTagsViewController: UITableViewController {
 			if let obj = member.obj {
 				memberName = obj.friendlyDescriptionWithDetails()
 			} else {
-				let type = member.type ?? "(unknown)"
+				let type = member.type.string
 				memberName = "\(type) \(member.ref)"
 			}
 			cell.text1.text = member.role

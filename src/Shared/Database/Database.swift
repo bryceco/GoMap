@@ -384,7 +384,7 @@ final class Database {
 				try db.reset(memberStatement)
 				try db.clearBindings(memberStatement)
 				try db.bindInt64(memberStatement, 1, relation.ident)
-				try db.bindText(memberStatement, 2, member.type)
+				try db.bindText(memberStatement, 2, member.type.string)
 				try db.bindInt64(memberStatement, 3, member.ref)
 				try db.bindText(memberStatement, 4, member.role)
 				try db.bindInt32(memberStatement, 5, index)
@@ -682,7 +682,7 @@ final class Database {
 				throw DatabaseError.relationReferencedByMemberDoesNotExist
 			}
 			let member = OsmMember(
-				type: type,
+				type: try OSM_TYPE(string: type),
 				ref: ref,
 				role: role)
 

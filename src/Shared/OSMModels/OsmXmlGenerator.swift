@@ -40,7 +40,7 @@ final class OsmXmlGenerator {
 	// MARK: Changeset Payload XML
 
 	class func element(for object: OsmBaseObject) -> DDXMLElement {
-		let type = object.osmType.asText()
+		let type = object.osmType.string
 		let element = DDXMLNode.element(withName: type) as! DDXMLElement
 		element
 			.addAttribute(DDXMLNode
@@ -147,14 +147,16 @@ final class OsmXmlGenerator {
 			if relation.deleted, relation.ident > 0 {
 				let element = Self.element(for: relation)
 				deleteRelationElement.addChild(element)
-			} else if relation.isModified(), !relation.deleted {
+			} else if relation.isModified(),
+					  !relation.deleted
+			{
 				// added/modified
 				let element = Self.element(for: relation)
 				for member in relation.members {
 					let memberElement = DDXMLElement.element(withName: "member") as! DDXMLElement
 					memberElement
 						.addAttribute(DDXMLNode
-							.attribute(withName: "type", stringValue: member.type ?? "") as! DDXMLNode)
+										.attribute(withName: "type", stringValue: member.type.string) as! DDXMLNode)
 					memberElement
 						.addAttribute(DDXMLNode
 							.attribute(withName: "ref",

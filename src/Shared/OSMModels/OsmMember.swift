@@ -8,15 +8,15 @@
 
 final class OsmMember: NSObject, NSCoding {
 	let ref: OsmIdentifier
-	private(set) var type: String? // way, node, or relation: to help identify ref
+	private(set) var type: OSM_TYPE // way, node, or relation
 	private(set) var obj: OsmBaseObject?
 	private(set) var role: String?
 
 	override var description: String {
-		return "\(super.description) role=\(role ?? ""); type=\(type ?? ""); ref=\(ref);"
+		return "\(super.description) role=\(role ?? ""); type=\(type); ref=\(ref);"
 	}
 
-	init(type: String?, ref: OsmIdentifier, role: String?) {
+	init(type: OSM_TYPE, ref: OsmIdentifier, role: String?) {
 		self.type = type
 		self.ref = ref
 		obj = nil
@@ -29,13 +29,13 @@ final class OsmMember: NSObject, NSCoding {
 		ref = obj.ident
 		self.role = role
 		if obj.isNode() != nil {
-			type = "node"
+			type = .NODE
 		} else if obj.isWay() != nil {
-			type = "way"
+			type = .WAY
 		} else if obj.isRelation() != nil {
-			type = "relation"
+			type = .RELATION
 		} else {
-			type = nil
+			fatalError()
 		}
 		super.init()
 	}
@@ -50,25 +50,30 @@ final class OsmMember: NSObject, NSCoding {
 	}
 
 	func isNode() -> Bool {
-		return type == "node"
+		return type == .NODE
 	}
 
 	func isWay() -> Bool {
-		return type == "way"
+		return type == .WAY
 	}
 
 	func isRelation() -> Bool {
-		return type == "relation"
+		return type == .RELATION
 	}
 
 	func encode(with coder: NSCoder) {
-		coder.encode(type, forKey: "type")
+		coder.encode(type.string, forKey: "type")
 		coder.encode(NSNumber(value: ref), forKey: "ref")
 		coder.encode(role, forKey: "role")
 	}
 
 	required init?(coder: NSCoder) {
-		type = coder.decodeObject(forKey: "type") as? String
+		guard let type = coder.decodeObject(forKey: "type") as? String,
+			  let type = try? OSM_TYPE(string: type)
+		else {
+			return nil
+		}
+		self.type = type
 		guard let ref2 = coder.decodeObject(forKey: "ref")
 		else { fatalError("OsmMember ref is nil") }
 		if let ref2 = ref2 as? NSNumber {

@@ -14,6 +14,26 @@ struct OsmDownloadData {
 	var relations: [OsmRelation] = []
 }
 
+enum OsmParserError: LocalizedError {
+	case missingLatLon
+	case unexpectedStackElement
+	case badNodeRef
+	case badRelationRefID
+	case unknownRelationMemberType(String?)
+	case unsupportedOsmApiVersion(String?)
+
+	public var errorDescription: String? {
+		switch self {
+		case .missingLatLon: return "missing lat/lon"
+		case .unexpectedStackElement: return "unexpectedStackElement"
+		case .badNodeRef: return "bad node ref ID"
+		case .badRelationRefID: return "badRelationRefID"
+		case .unknownRelationMemberType(let str): return "unknownRelationMemberType(\(str ?? "nil")"
+		case .unsupportedOsmApiVersion(let str): return "unsupportedOsmApiVersion(\(str ?? "nil")"
+		}
+	}
+}
+
 class OsmDownloadParser: NSObject, XMLParserDelegate {
 	private var parserCurrentElementText: String = "" // not currently used, it's mostly whitespace
 	private var parserStack: [Any] = []
@@ -36,9 +56,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			      let lat = Double(latText),
 			      let lon = Double(lonText)
 			else {
-				parseError = NSError(domain: "Parser", code: 102, userInfo: [
-					NSLocalizedDescriptionKey: "OSM parser: missing lat/lon"
-				])
+				parseError = OsmParserError.missingLatLon
 				parser.abortParsing()
 				return
 			}
@@ -54,6 +72,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			let key = attributeDict["k"]!
 			let value = attributeDict["v"]!
 			guard let object = parserStack.last as? OsmBaseObject else {
+				parseError = OsmParserError.unexpectedStackElement
 				parser.abortParsing()
 				return
 			}
@@ -64,6 +83,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			      let ref = attributeDict["ref"],
 			      let ref = Int64(ref)
 			else {
+				parseError = OsmParserError.badNodeRef
 				parser.abortParsing()
 				return
 			}
@@ -78,10 +98,17 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			      let ref = attributeDict["ref"],
 			      let ref = Int64(ref)
 			else {
+				parseError = OsmParserError.badRelationRefID
 				parser.abortParsing()
 				return
 			}
-			let type = attributeDict["type"]
+			guard let type = attributeDict["type"],
+				  let type = try? OSM_TYPE(string: type)
+			else {
+				parseError = OsmParserError.unknownRelationMemberType(attributeDict["type"])
+				parser.abortParsing()
+				return
+			}
 			let role = attributeDict["role"]
 			let member = OsmMember(type: type, ref: ref, role: role)
 			relation.constructMember(member)
@@ -90,11 +117,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			// osm header
 			let version = attributeDict["version"]
 			if version != "0.6" {
-				parseError = NSError(domain: "Parser", code: 102, userInfo: [
-					NSLocalizedDescriptionKey: String.localizedStringWithFormat(
-						NSLocalizedString("OSM data must be version 0.6 (fetched '%@')", comment: ""),
-						version ?? "")
-				])
+				parseError = OsmParserError.unsupportedOsmApiVersion(version)
 				parser.abortParsing()
 			}
 			parserStack.append("osm")
@@ -119,6 +142,8 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			parseError = NSError(domain: "Parser", code: 102, userInfo: [
 				NSLocalizedDescriptionKey: "OSM parser: Unknown tag '\(elementName)'"
 			])
+parseError = OsmParserError.unknown
+
 			parser.abortParsing()
 #endif
 		}

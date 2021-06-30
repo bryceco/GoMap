@@ -328,7 +328,7 @@ class KeepRight: MapMarker {
 		      let noteId = noteId
 		else { return nil }
 
-		guard let type = OSM_TYPE(text: osmType) else { return nil }
+		guard let type = try? OSM_TYPE(string: osmType) else { return nil }
 		let objectId = OsmExtendedIdentifier(type, osmIdent)
 
 		let objectName: String

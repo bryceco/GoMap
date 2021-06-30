@@ -191,14 +191,14 @@ class POIAttributesViewController: UITableViewController {
 		var urlString: String?
 
 		if indexPath.row == ROW.identifier.rawValue {
-			let type = object.osmType.asText()
+			let type = object.osmType.string
 			let ident = object.ident
 			urlString = "https://www.openstreetmap.org/browse/\(type)/\(ident)"
 		} else if indexPath.row == ROW.user.rawValue {
 			let user = object.user
 			urlString = "https://www.openstreetmap.org/user/\(user)"
 		} else if indexPath.row == ROW.version.rawValue {
-			let type = object.osmType.asText()
+			let type = object.osmType.string
 			let ident = object.ident
 			urlString = "https://www.openstreetmap.org/browse/\(type)/\(ident)/history"
 		} else if indexPath.row == ROW.changeset.rawValue {
