@@ -1193,6 +1193,7 @@ final class OsmMapData: NSObject, NSCoding {
 				}
 				if ok {
 					completion(nil)
+					return
 				}
 				fallthrough
 			case .failure:

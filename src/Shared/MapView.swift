@@ -573,7 +573,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		gpxLayer.isHidden = true
 		bg.append(gpxLayer)
 
-#if DEBUG
+#if DEBUG && false
 		quadDownloadLayer = QuadDownloadLayer(mapView: self)
 		if let quadDownloadLayer = quadDownloadLayer {
 			quadDownloadLayer.zPosition = Z_QUADDOWNLOAD
