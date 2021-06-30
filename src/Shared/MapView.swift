@@ -979,16 +979,18 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		if lastErrorDate == nil || Date().timeIntervalSince(lastErrorDate ?? Date()) > 3.0 {
 			var text = error.localizedDescription
 
-			var isNetworkError = false
 			var title = NSLocalizedString("Error", comment: "")
+
+			var isNetworkError = false
 			var ignoreButton: String?
-			if (error as NSError?)?.userInfo["NSErrorFailingURLKey"] != nil {
+			let userInfo = (error as NSError).userInfo
+			if userInfo["NSErrorFailingURLKey"] != nil {
 				isNetworkError = true
 			}
-			if let underError = (error as NSError?)?.userInfo["NSUnderlyingError"] as? NSError {
-				if (underError.domain as CFString) == kCFErrorDomainCFNetwork {
-					isNetworkError = true
-				}
+			if let underError = userInfo["NSUnderlyingError"] as? NSError,
+				(underError.domain as CFString) == kCFErrorDomainCFNetwork
+			{
+				isNetworkError = true
 			}
 			if let error = error as? UrlSessionError,
 			   case let .badStatusCode(_, html) = error,
@@ -996,6 +998,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			{
 				text = html
 			}
+
 			if isNetworkError {
 				if let ignoreNetworkErrorsUntilDate = ignoreNetworkErrorsUntilDate {
 					if Date().timeIntervalSince(ignoreNetworkErrorsUntilDate) >= 0 {
@@ -1019,8 +1022,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				{
 					alertError.setValue(attrText, forKey: "attributedMessage")
 				}
-				alertError
-					.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+				alertError.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+										style: .cancel, handler: nil))
 				if let ignoreButton = ignoreButton {
 					alertError.addAction(UIAlertAction(title: ignoreButton, style: .default, handler: { [self] _ in
 						// ignore network errors for a while
