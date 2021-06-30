@@ -200,7 +200,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	private(set) lazy var noNameLayer: MercatorTileLayer = { MercatorTileLayer(mapView: self) }()
 	private(set) lazy var editorLayer: EditorMapLayer = { EditorMapLayer(owner: self) }()
 	private(set) lazy var gpxLayer: GpxLayer = { GpxLayer(mapView: self) }()
-	private(set) var quadDownloadLayer:QuadDownloadLayer?
+	private(set) var quadDownloadLayer: QuadDownloadLayer?
 
 	// overlays
 	private(set) lazy var locatorLayer: MercatorTileLayer = { MercatorTileLayer(mapView: self) }()
@@ -573,15 +573,15 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		gpxLayer.isHidden = true
 		bg.append(gpxLayer)
 
-		#if DEBUG
+#if DEBUG
 		quadDownloadLayer = QuadDownloadLayer(mapView: self)
 		if let quadDownloadLayer = quadDownloadLayer {
 			quadDownloadLayer.zPosition = Z_QUADDOWNLOAD
 			quadDownloadLayer.isHidden = false
 			bg.append(quadDownloadLayer)
 		}
-		#endif
-		
+#endif
+
 		backgroundLayers = bg
 		for layer in backgroundLayers {
 			self.layer.addSublayer(layer)
@@ -988,7 +988,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				isNetworkError = true
 			}
 			if let underError = userInfo["NSUnderlyingError"] as? NSError,
-				(underError.domain as CFString) == kCFErrorDomainCFNetwork
+			   (underError.domain as CFString) == kCFErrorDomainCFNetwork
 			{
 				isNetworkError = true
 			}
@@ -1023,7 +1023,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					alertError.setValue(attrText, forKey: "attributedMessage")
 				}
 				alertError.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
-										style: .cancel, handler: nil))
+				                                   style: .cancel, handler: nil))
 				if let ignoreButton = ignoreButton {
 					alertError.addAction(UIAlertAction(title: ignoreButton, style: .default, handler: { [self] _ in
 						// ignore network errors for a while

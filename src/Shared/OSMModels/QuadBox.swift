@@ -8,7 +8,7 @@
 
 import Foundation
 
-private let MinRectSize = 360.0 / Double(1 << 18)	// FIXME: This should vary between spatial and region
+private let MinRectSize = 360.0 / Double(1 << 18) // FIXME: This should vary between spatial and region
 private let MAP_RECT = OSMRect(x: -180.0, y: -90.0, width: 360.0, height: 180.0)
 private let MAX_MEMBERS_PER_LEVEL = 40
 private let MAX_DEPTH = 26 // 2 feet wide
@@ -124,7 +124,7 @@ final class QuadBox: NSObject, NSCoding {
 	// MARK: Region
 
 	func missingPieces(_ missing: inout [QuadBox], intersecting needed: OSMRect) {
-		assert( needed.intersectsRect(rect) )
+		assert(needed.intersectsRect(rect))
 
 		if isDownloaded || busy {
 			// previously downloaded, or in the process of being downloaded
@@ -137,7 +137,7 @@ final class QuadBox: NSObject, NSCoding {
 //			print("depth \(Int(round(log2(360.0/rect.size.width))))")
 			return
 		}
-		if needed.containsRect(rect) && !hasChildren() {
+		if needed.containsRect(rect), !hasChildren() {
 			// no part of us has been downloaded, and we're completely covered by the needed area
 			busy = true
 			missing.append(self)
@@ -214,7 +214,6 @@ final class QuadBox: NSObject, NSCoding {
 			}
 		}
 	}
-
 
 	func countOfObjects() -> Int {
 		var count = 0

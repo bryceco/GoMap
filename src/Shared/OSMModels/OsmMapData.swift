@@ -589,7 +589,7 @@ final class OsmMapData: NSObject, NSCoding {
 	// returns a list of ServerQuery objects
 	private class func coalesceQuadQueries(_ quadList: [QuadBox]) -> [ServerQuery] {
 		// make a query for every quad
-		var queries = quadList.map { quad->ServerQuery in
+		var queries = quadList.map { quad -> ServerQuery in
 			let query = ServerQuery()
 			query.quadList = [quad]
 			query.rect = quad.rect
@@ -602,8 +602,8 @@ final class OsmMapData: NSObject, NSCoding {
 						// equal widths
 						if q.rect.origin.x == $0.rect.origin.x {
 							// matching left-right sides
-							if q.rect.origin.y == $0.rect.origin.y+$0.rect.size.height ||
-								q.rect.origin.y+q.rect.size.height == $0.rect.origin.y
+							if q.rect.origin.y == $0.rect.origin.y + $0.rect.size.height ||
+								q.rect.origin.y + q.rect.size.height == $0.rect.origin.y
 							{
 								// stacked vertically
 								return true
@@ -614,8 +614,8 @@ final class OsmMapData: NSObject, NSCoding {
 						// equal heights
 						if q.rect.origin.y == $0.rect.origin.y {
 							// matching top-bottom
-							if q.rect.origin.x == $0.rect.origin.x+$0.rect.size.width ||
-								q.rect.origin.x+q.rect.size.width == $0.rect.origin.x
+							if q.rect.origin.x == $0.rect.origin.x + $0.rect.size.width ||
+								q.rect.origin.x + q.rect.size.width == $0.rect.origin.x
 							{
 								// stacked horizontally
 								return true
@@ -623,15 +623,15 @@ final class OsmMapData: NSObject, NSCoding {
 						}
 					}
 					return false
-				})
-				{
+				}) {
 					// combine them
 					let other = queries[index]
 					let newRect = q.rect.union(other.rect)
-					#if DEBUG
-					let areaDiff = newRect.size.width*newRect.size.height - (q.rect.size.width*q.rect.size.height + other.rect.size.width*other.rect.size.height)
+#if DEBUG
+					let areaDiff = newRect.size.width * newRect.size.height
+						- (q.rect.size.width * q.rect.size.height + other.rect.size.width * other.rect.size.height)
 					assert(areaDiff == 0.0)
-					#endif
+#endif
 					q.rect = newRect
 					q.quadList += other.quadList
 					queries.remove(at: index)
@@ -666,9 +666,9 @@ final class OsmMapData: NSObject, NSCoding {
 			return
 		}
 
-		#if DEBUG
+#if DEBUG
 		AppDelegate.shared.mapView.quadDownloadLayer?.setNeedsLayout()
-		#endif
+#endif
 
 		// Convert the list of quads into server queries. We look for quads that are adjacent
 		// and can be combined into larger rectangular queries. This usually results in
@@ -688,7 +688,7 @@ final class OsmMapData: NSObject, NSCoding {
 				switch result {
 				case let .success(data):
 					// merge data
-					print("Downloaded \(data.nodes.count+data.ways.count+data.relations.count) objects")
+					print("Downloaded \(data.nodes.count + data.ways.count + data.relations.count) objects")
 
 					try? self.merge(data, savingToDatabase: true)
 					didGetData = true
@@ -701,10 +701,10 @@ final class OsmMapData: NSObject, NSCoding {
 					self.region.updateDownloadStatus(quadBox, success: didGetData)
 				}
 				progress.progressDecrement()
-				
-				#if DEBUG
+
+#if DEBUG
 				AppDelegate.shared.mapView.quadDownloadLayer?.setNeedsLayout()
-				#endif
+#endif
 			})
 		}
 	}

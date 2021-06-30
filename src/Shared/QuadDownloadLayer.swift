@@ -10,7 +10,6 @@ import QuartzCore
 import UIKit
 
 final class QuadDownloadLayer: CALayer {
-
 	let mapView: MapView
 
 	// MARK: Implementation
@@ -51,19 +50,26 @@ final class QuadDownloadLayer: CALayer {
 		}
 		// update locations of tiles
 		let tRotation = mapView.screenFromMapTransform.rotation()
-		self.sublayers = []
+		sublayers = []
 		mapView.editorLayer.mapData.region.enumerate({ quad in
-			if !quad.isDownloaded && !quad.busy {
+			if !quad.isDownloaded, !quad.busy {
 				return
 			}
 			let upperLeft = mapView.mapTransform.screenPoint(forLatLon: LatLon(quad.rect.origin), birdsEye: true)
-			let bottomRight = mapView.mapTransform.screenPoint(forLatLon: LatLon(lon:quad.rect.origin.x+quad.rect.size.width,lat:quad.rect.origin.y+quad.rect.size.height), birdsEye: true)
-			let screenRect = CGRect(x: upperLeft.x, y: upperLeft.y, width: bottomRight.x-upperLeft.x, height: bottomRight.y-upperLeft.y)
-/*
-			if !screenRect.intersects(self.bounds) {
-				return
-			}
-*/
+			let bottomRight = mapView.mapTransform.screenPoint(
+				forLatLon: LatLon(lon: quad.rect.origin.x + quad.rect.size.width,
+				                  lat: quad.rect.origin.y + quad.rect.size.height),
+				birdsEye: true)
+			let screenRect = CGRect(
+				x: upperLeft.x,
+				y: upperLeft.y,
+				width: bottomRight.x - upperLeft.x,
+				height: bottomRight.y - upperLeft.y)
+			/*
+			 if !screenRect.intersects(self.bounds) {
+			 	return
+			 }
+			 */
 			let color: CGColor
 			if quad.busy {
 				color = UIColor.yellow.withAlphaComponent(0.3).cgColor

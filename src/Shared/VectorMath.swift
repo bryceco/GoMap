@@ -209,6 +209,7 @@ extension OSMPoint {
 		return Add(lineA, Mult(ab, t))
 	}
 }
+
 extension OSMPoint: CustomStringConvertible {
 	var description: String {
 		return "OSMPoint(x:\(x),y:\(y))"
@@ -233,6 +234,7 @@ extension OSMSize {
 		return a.width == b.width && a.height == b.height
 	}
 }
+
 extension OSMSize: CustomStringConvertible {
 	var description: String {
 		return "OSMSize(w:\(width),h:\(height))"
@@ -392,15 +394,16 @@ extension OSMRect {
 	}
 
 	func metersSizeForLatLon() -> OSMSize {
-		let w = GreatCircleDistance(LatLon(x:origin.x,y:origin.y), LatLon(x:origin.x+size.width,y:origin.y))
-		let h = GreatCircleDistance(LatLon(x:origin.x,y:origin.y), LatLon(x:origin.x,y:origin.y+size.height))
+		let w = GreatCircleDistance(LatLon(x: origin.x, y: origin.y), LatLon(x: origin.x + size.width, y: origin.y))
+		let h = GreatCircleDistance(LatLon(x: origin.x, y: origin.y), LatLon(x: origin.x, y: origin.y + size.height))
 		return OSMSize(width: w, height: h)
 	}
 
 	var boundsString: String {
-		return "OSMRect(ul:(\(origin.x),\(origin.y)),lr:(\(origin.x+size.width),\(origin.y+size.height))"
+		return "OSMRect(ul:(\(origin.x),\(origin.y)),lr:(\(origin.x + size.width),\(origin.y + size.height))"
 	}
 }
+
 extension OSMRect: CustomStringConvertible {
 	var description: String {
 		return "OSMRect(x:\(origin.x),y:\(origin.y),w:\(size.width),h:\(size.height)"

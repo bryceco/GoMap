@@ -513,9 +513,7 @@ class POIAllTagsViewController: UITableViewController {
 			let isResolved = member.obj != nil
 			let cell = (isResolved
 				? tableView.dequeueReusableCell(withIdentifier: "RelationCell", for: indexPath)
-				: tableView.dequeueReusableCell(
-					withIdentifier: "MemberCell",
-					for: indexPath)) as! TextPairTableCell
+				: tableView.dequeueReusableCell(withIdentifier: "MemberCell", for: indexPath)) as! TextPairTableCell
 			if EDIT_RELATIONS {
 				cell.text1.isEnabled = true
 				cell.text2.isEnabled = true
@@ -523,11 +521,11 @@ class POIAllTagsViewController: UITableViewController {
 				cell.text1.isEnabled = false
 				cell.text2.isEnabled = false
 			}
-			var memberName: String = ""
+			let memberName: String
 			if let obj = member.obj {
 				memberName = obj.friendlyDescriptionWithDetails()
 			} else {
-				let type = member.type ?? ""
+				let type = member.type ?? "(unknown)"
 				memberName = "\(type) \(member.ref)"
 			}
 			cell.text1.text = member.role

@@ -511,7 +511,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		case name = 1
 		case ref = 2
 	}
-	
+
 	private static let givenNameHighwayTypes: [String: Uses] = [
 		"motorway": .ref,
 		"trunk": .ref,
@@ -607,7 +607,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 			if node.wayCount > 0 {
 				return details
 					? String.localizedStringWithFormat(
-						NSLocalizedString("node %@ (in way)", comment: ""),	"\(ident)")
+						NSLocalizedString("node %@ (in way)", comment: ""), "\(ident)")
 					: NSLocalizedString("(node in way)", comment: "")
 			}
 			return details
