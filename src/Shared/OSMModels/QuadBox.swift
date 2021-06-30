@@ -37,10 +37,6 @@ final class QuadBox: NSObject, NSCoding {
 
 	// member is used only for spatial
 	var members: [OsmBaseObject] = []
-#if SHOW_DOWNLOAD_QUADS
-	// for debugging purposes we abuse the Gpx code to draw squares representing quads
-	var gpxTrack: GpxTrack?
-#endif
 
 	private init(rect: OSMRect, parent: QuadBox?) {
 		self.rect = rect
@@ -180,9 +176,6 @@ final class QuadBox: NSObject, NSCoding {
 		if success {
 			downloadDate = Date.timeIntervalSinceReferenceDate
 			isDownloaded = true
-#if SHOW_DOWNLOAD_QUADS // Display query regions as GPX lines
-			gpxTrack = AppDelegate.getAppDelegate.mapView.gpxLayer.createGpxRect(CGRectFromOSMRect(rect))
-#endif
 			children = QuadBox.emptyChildren
 			if let parent = parent {
 				// if all children of parent exist and are whole then parent is whole as well
@@ -211,12 +204,6 @@ final class QuadBox: NSObject, NSCoding {
 
 		// delete any children
 		children = []
-
-#if SHOW_DOWNLOAD_QUADS
-		if let gpxTrack = gpxTrack {
-			AppDelegate.getAppDelegate.mapView.gpxLayer.deleteTrack(gpxTrack)
-		}
-#endif
 	}
 
 	func enumerate(_ block: (QuadBox) -> Void) {

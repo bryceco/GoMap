@@ -518,13 +518,6 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 		}
 	}
 
-	func createGpxRect(_ rect: CGRect) -> GpxTrack {
-		let track = GpxTrack(rect: rect)
-		previousTracks.insert(track, at: 0)
-		setNeedsLayout()
-		return track
-	}
-
 	func saveDirectory() -> String {
 		let documentPaths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).map(\.path)
 		let docsDir = documentPaths[0]
