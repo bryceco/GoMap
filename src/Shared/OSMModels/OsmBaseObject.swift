@@ -19,7 +19,6 @@ enum OsmObject: LocalizedError {
 	}
 }
 
-
 enum OSM_TYPE: Int {
 	case NODE = 1
 	case WAY = 2

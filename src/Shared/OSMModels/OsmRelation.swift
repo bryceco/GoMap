@@ -262,7 +262,7 @@ final class OsmRelation: OsmBaseObject {
 	}
 
 	static func buildMultipolygonFromMembers(_ memberList: [OsmMember],
-	                                         repairing: Bool) -> ([[OsmNode]],Bool)
+	                                         repairing: Bool) -> ([[OsmNode]], Bool)
 	{
 		var loopList: [[OsmNode]] = []
 		var loop: [OsmNode] = []
@@ -325,15 +325,15 @@ final class OsmRelation: OsmBaseObject {
 				loop = []
 			}
 		}
-		return (loopList,isComplete)
+		return (loopList, isComplete)
 	}
 
 	func buildMultipolygonRepairing(_ repairing: Bool) -> [[OsmNode]] {
 		if !isMultipolygon() {
 			return []
 		}
-		let (a,_) = OsmRelation.buildMultipolygonFromMembers(members,
-															 repairing: repairing)
+		let (a, _) = OsmRelation.buildMultipolygonFromMembers(members,
+		                                                      repairing: repairing)
 		return a
 	}
 

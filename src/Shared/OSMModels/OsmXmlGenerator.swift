@@ -148,7 +148,7 @@ final class OsmXmlGenerator {
 				let element = Self.element(for: relation)
 				deleteRelationElement.addChild(element)
 			} else if relation.isModified(),
-					  !relation.deleted
+			          !relation.deleted
 			{
 				// added/modified
 				let element = Self.element(for: relation)
@@ -156,7 +156,7 @@ final class OsmXmlGenerator {
 					let memberElement = DDXMLElement.element(withName: "member") as! DDXMLElement
 					memberElement
 						.addAttribute(DDXMLNode
-										.attribute(withName: "type", stringValue: member.type.string) as! DDXMLNode)
+							.attribute(withName: "type", stringValue: member.type.string) as! DDXMLNode)
 					memberElement
 						.addAttribute(DDXMLNode
 							.attribute(withName: "ref",

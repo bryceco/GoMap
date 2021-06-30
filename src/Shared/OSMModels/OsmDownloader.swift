@@ -28,8 +28,8 @@ enum OsmParserError: LocalizedError {
 		case .unexpectedStackElement: return "unexpectedStackElement"
 		case .badNodeRef: return "bad node ref ID"
 		case .badRelationRefID: return "badRelationRefID"
-		case .unknownRelationMemberType(let str): return "unknownRelationMemberType(\(str ?? "nil")"
-		case .unsupportedOsmApiVersion(let str): return "unsupportedOsmApiVersion(\(str ?? "nil")"
+		case let .unknownRelationMemberType(str): return "unknownRelationMemberType(\(str ?? "nil")"
+		case let .unsupportedOsmApiVersion(str): return "unsupportedOsmApiVersion(\(str ?? "nil")"
 		}
 	}
 }
@@ -103,7 +103,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 				return
 			}
 			guard let type = attributeDict["type"],
-				  let type = try? OSM_TYPE(string: type)
+			      let type = try? OSM_TYPE(string: type)
 			else {
 				parseError = OsmParserError.unknownRelationMemberType(attributeDict["type"])
 				parser.abortParsing()
@@ -142,7 +142,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			parseError = NSError(domain: "Parser", code: 102, userInfo: [
 				NSLocalizedDescriptionKey: "OSM parser: Unknown tag '\(elementName)'"
 			])
-parseError = OsmParserError.unknown
+			parseError = OsmParserError.unknown
 
 			parser.abortParsing()
 #endif

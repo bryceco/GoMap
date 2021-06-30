@@ -442,7 +442,10 @@ final class OsmMapData: NSObject, NSCoding {
 		let bbox = way.boundingBox
 		way.removeNodeAtIndex(index, undo: undoManager)
 		// if removing the node leads to 2 identical nodes being consecutive delete one of them as well
-		while index > 0, index < way.nodes.count, way.nodes[index - 1] == way.nodes[index] {
+		while index > 0,
+		      index < way.nodes.count,
+		      way.nodes[index - 1] == way.nodes[index]
+		{
 			way.removeNodeAtIndex(index, undo: undoManager)
 		}
 		spatial.updateMember(way, fromBox: bbox, undo: undoManager)

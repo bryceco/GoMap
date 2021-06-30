@@ -963,7 +963,7 @@ extension OsmMapData {
 			if way == toWay, newWay.nodes.contains(toWayNode) {
 				toWay = newWay
 			}
-			newWays.append( newWay )
+			newWays.append(newWay)
 		}
 
 		var restriction = restriction
@@ -1325,7 +1325,7 @@ extension OsmMapData {
 
 		var members = relation.members
 
-		let (loopList,isComplete) = OsmRelation.buildMultipolygonFromMembers(members, repairing: false)
+		let (loopList, isComplete) = OsmRelation.buildMultipolygonFromMembers(members, repairing: false)
 		if !isComplete {
 			return
 		}
