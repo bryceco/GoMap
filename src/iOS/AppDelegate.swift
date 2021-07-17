@@ -98,12 +98,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		// self.externalGPS = [[ExternalGPS alloc] init];
 
-		let url = launchOptions?[.url] as? URL
-		if let url = url {
-			// somebody handed us a URL to open
-			return self.application(application, open: url, options: [:])
-		}
-
 		return true
 	}
 
@@ -133,40 +127,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		})
 	}
 
-	func application(_ application: UIApplication, open url: URL,
+	func application(_ application: UIApplication,
+					 open url: URL,
 	                 options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool
 	{
-		let error = {
-			let alertView = UIAlertController(
-				title: NSLocalizedString("Invalid URL", comment: ""),
-				message: url.absoluteString,
-				preferredStyle: .alert)
-			alertView
-				.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
-			self.mapView.mainViewController.present(alertView, animated: true)
-		}
-
 		if url.isFileURL && (url.pathExtension == "gpx") {
 			// Load GPX
-			_ = url.startAccessingSecurityScopedResource()
-			guard let data: Data = try? Data(contentsOf: url, options: []) else {
-				error()
+			guard url.startAccessingSecurityScopedResource() else {
+				DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [self] in
+					self.mapView.showAlert(	NSLocalizedString("Invalid URL", comment: ""),
+											message: "startAccessingSecurityScopedResource failed")
+				})
 				return false
 			}
-
+			var data: Data?
+			do {
+				data = try Data(contentsOf: url, options: [])
+			} catch {
+				DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [self] in
+					self.mapView.presentError(error, flash: false)
+				})
+				return false
+			}
 			url.stopAccessingSecurityScopedResource()
+
+			guard let data = data else {
+				DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [self] in
+					self.mapView.showAlert(	NSLocalizedString("Invalid URL", comment: ""),
+											message: "No data")
+				})
+				return false
+			}
 
 			DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: { [self] in
 				let ok = mapView.gpxLayer.loadGPXData(data, center: true)
 				if !ok {
-					let alert = UIAlertController(
-						title: NSLocalizedString("Open URL", comment: ""),
-						message: NSLocalizedString("Sorry, an error occurred while loading the GPX file", comment: ""),
-						preferredStyle: .alert)
-					alert
-						.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel,
-						                         handler: nil))
-					mapView.mainViewController.present(alert, animated: true)
+					mapView.showAlert(NSLocalizedString("Open URL", comment: ""),
+									  message: NSLocalizedString("Sorry, an error occurred while loading the GPX file", comment: ""))
 				}
 			})
 			return true
@@ -178,7 +175,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				})
 				return true
 			} else {
-				error()
+				DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [self] in
+					self.mapView.showAlert(	NSLocalizedString("Invalid URL", comment: ""),
+											message: url.absoluteString)
+				})
 				return false
 			}
 		}
@@ -274,5 +274,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 	}
 }
-
-// #import "MainViewController.h"
