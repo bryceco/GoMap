@@ -183,23 +183,22 @@ final class GpxTrack: NSObject, NSCoding {
 		return data
 	}
 
-	convenience init?(xmlData data: Data?) {
-		guard let data = data,
-		      data.count > 0,
+	convenience init?(xmlData data: Data) {
+		guard data.count > 0,
 		      let doc = try? DDXMLDocument(data: data, options: 0)
 		else {
 			return nil
 		}
 
 		guard let namespace1 = DDXMLElement.namespace(
-			withName: "ns1",
-			stringValue: "http://www.topografix.com/GPX/1/0") as? DDXMLElement,
+				withName: "ns1",
+				stringValue: "http://www.topografix.com/GPX/1/0") as? DDXMLNode,
 			let namespace2 = DDXMLElement.namespace(
 				withName: "ns2",
-				stringValue: "http://www.topografix.com/GPX/1/1") as? DDXMLElement,
+				stringValue: "http://www.topografix.com/GPX/1/1") as? DDXMLNode,
 			let namespace3 = DDXMLElement.namespace(
 				withName: "ns3",
-				stringValue: "http://topografix.com/GPX/1/1") as? DDXMLElement // HOT OSM uses this
+				stringValue: "http://topografix.com/GPX/1/1") as? DDXMLNode // HOT OSM uses this
 		else { return nil }
 
 		doc.rootElement()?.addNamespace(namespace1)
@@ -257,8 +256,8 @@ final class GpxTrack: NSObject, NSCoding {
 	}
 
 	convenience init?(xmlFile path: String) {
-		let data = NSData(contentsOfFile: path) as Data?
-		if data == nil {
+		guard let data = NSData(contentsOfFile: path) as Data?
+		else {
 			return nil
 		}
 		self.init(xmlData: data)
