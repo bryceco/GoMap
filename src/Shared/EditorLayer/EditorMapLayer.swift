@@ -1153,10 +1153,12 @@ final class EditorMapLayer: CALayer {
 				// Turn Restrictions
 				if owner.useTurnRestrictions() {
 					for relation in object.parentRelations {
-						if relation.isRestriction(), relation.member(byRole: "from")?.obj == object {
+						if relation.isRestriction(),
+						   relation.member(byRole: "from")?.obj == object
+						{
 							// the From member of the turn restriction is the selected way
 							if selectedNode == nil || relation.member(byRole: "via")?.obj == selectedNode {
-								// highlight if no node, is selected, or the selected node is the via node
+								// highlight if no node is selected, or the selected node is the via node
 								for member in relation.members {
 									if let way = member.obj as? OsmWay {
 										let turnPath = self.path(for: way)
@@ -1170,11 +1172,11 @@ final class EditorMapLayer: CALayer {
 										} else if relation.tags["restriction"]?.hasPrefix("no_") ?? false {
 											haloLayer.strokeColor = UIColor.red.withAlphaComponent(0.75).cgColor
 										} else {
-											haloLayer.strokeColor = UIColor.orange.withAlphaComponent(0.75)
-												.cgColor // some other kind of restriction
+											// some other kind of restriction
+											haloLayer.strokeColor = UIColor.orange.withAlphaComponent(0.75).cgColor
 										}
 										haloLayer.fillColor = nil
-										haloLayer.lineWidth = (way.renderInfo!.lineWidth + 6) * highwayScale
+										haloLayer.lineWidth = ((way.renderInfo?.lineWidth ?? 0) + 6) * highwayScale
 										haloLayer.lineCap = CAShapeLayerLineCap.round
 										haloLayer.lineJoin = CAShapeLayerLineJoin.round
 										haloLayer.zPosition = Z_HALO
