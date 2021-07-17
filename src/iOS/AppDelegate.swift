@@ -50,15 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		_ application: UIApplication,
 		willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool
 	{
-		let url = launchOptions?[.url] as? URL
-		if let url = url {
-			if !url.isFileURL {
-				return false
-			}
-			if url.pathExtension != "gpx" {
-				return false
-			}
-		}
+		// return true to ensure URL opening code will always be invoked
 		return true
 	}
 
