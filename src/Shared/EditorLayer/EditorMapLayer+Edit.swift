@@ -96,7 +96,11 @@ extension EditorMapLayer {
 			owner.didUpdateObject()
 		} else {
 			// create new object
-			let point = owner.pushpinView()!.arrowPoint
+			guard let pushpin = owner.pushpinView() else {
+				// shouldn't ever happen but there have been a few crashes so it does
+				return
+			}
+			let point = pushpin.arrowPoint
 			let node = createNode(atScreenPoint: point)
 			mapData.setTags(tags, for: node)
 			selectedNode = node
