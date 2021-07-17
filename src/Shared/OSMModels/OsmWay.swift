@@ -539,7 +539,7 @@ final class OsmWay: OsmBaseObject {
 	}
 
 	/// Initialize with XML downloaded from OSM server
-	override init?(fromXmlDict attributeDict: [String: Any]) {
+	override init?(fromXmlDict attributeDict: [String: String]) {
 		nodes = []
 		super.init(fromXmlDict: attributeDict)
 	}

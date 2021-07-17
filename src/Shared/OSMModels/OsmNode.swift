@@ -110,8 +110,15 @@ final class OsmNode: OsmBaseObject {
 	}
 
 	/// Initialize with XML downloaded from OSM server
-	override init?(fromXmlDict attributeDict: [String: Any]) {
-		latLon = .zero
+	override init?(fromXmlDict attributeDict: [String: String]) {
+		guard let latText = attributeDict["lat"],
+			  let lonText = attributeDict["lon"],
+			  let lat = Double(latText),
+			  let lon = Double(lonText)
+		else {
+			return nil
+		}
+		latLon = LatLon(lon: lon, lat: lat)
 		wayCount = 0
 		super.init(fromXmlDict: attributeDict)
 	}

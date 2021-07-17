@@ -19,7 +19,8 @@ enum OsmParserError: LocalizedError {
 	case unexpectedStackElement
 	case badNodeRef
 	case badRelationRefID
-	case unknownRelationMemberType(String?)
+	case missingKeyValInTag
+	case badXmlDict(String,[String:String])
 	case unsupportedOsmApiVersion(String?)
 
 	public var errorDescription: String? {
@@ -28,7 +29,8 @@ enum OsmParserError: LocalizedError {
 		case .unexpectedStackElement: return "unexpectedStackElement"
 		case .badNodeRef: return "bad node ref ID"
 		case .badRelationRefID: return "badRelationRefID"
-		case let .unknownRelationMemberType(str): return "unknownRelationMemberType(\(str ?? "nil")"
+		case .missingKeyValInTag: return ""
+		case let .badXmlDict(ele,dict): return "badXmlDict(\(ele)):\n \(dict.map({k,v in "\(k)=\(v)"}).joined(separator: ",\n"))"
 		case let .unsupportedOsmApiVersion(str): return "unsupportedOsmApiVersion(\(str ?? "nil")"
 		}
 	}
@@ -50,27 +52,31 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 	{
 		parserCurrentElementText = ""
 
-		if elementName == "node" {
-			guard let latText = attributeDict["lat"],
-			      let lonText = attributeDict["lon"],
-			      let lat = Double(latText),
-			      let lon = Double(lonText)
-			else {
-				parseError = OsmParserError.missingLatLon
+		switch elementName {
+		case "node":
+			guard let node = OsmNode(fromXmlDict: attributeDict) else {
+				parseError = OsmParserError.badXmlDict(elementName,attributeDict)
 				parser.abortParsing()
 				return
 			}
-			let node = OsmNode(fromXmlDict: attributeDict)!
-			node.setLongitude(lon, latitude: lat, undo: nil)
 			result.nodes.append(node)
 			parserStack.append(node)
-		} else if elementName == "way" {
-			let way = OsmWay(fromXmlDict: attributeDict)!
+		case "way":
+			guard let way = OsmWay(fromXmlDict: attributeDict) else {
+				parseError = OsmParserError.badXmlDict(elementName,attributeDict)
+				parser.abortParsing()
+				return
+			}
 			result.ways.append(way)
 			parserStack.append(way)
-		} else if elementName == "tag" {
-			let key = attributeDict["k"]!
-			let value = attributeDict["v"]!
+		case "tag":
+			guard let key = attributeDict["k"],
+				  let value = attributeDict["v"]
+			else {
+				parseError = OsmParserError.badXmlDict(elementName,attributeDict)
+				parser.abortParsing()
+				return
+			}
 			guard let object = parserStack.last as? OsmBaseObject else {
 				parseError = OsmParserError.unexpectedStackElement
 				parser.abortParsing()
@@ -78,7 +84,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			}
 			object.constructTag(key, value: value)
 			parserStack.append("tag")
-		} else if elementName == "nd" {
+		case "nd":
 			guard let way = parserStack.last as? OsmWay,
 			      let ref = attributeDict["ref"],
 			      let ref = Int64(ref)
@@ -89,11 +95,15 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			}
 			way.constructNode(ref)
 			parserStack.append("nd")
-		} else if elementName == "relation" {
-			let relation = OsmRelation(fromXmlDict: attributeDict)!
+		case "relation":
+			guard let relation = OsmRelation(fromXmlDict: attributeDict) else {
+				parseError = OsmParserError.badXmlDict(elementName,attributeDict)
+				parser.abortParsing()
+				return
+			}
 			result.relations.append(relation)
 			parserStack.append(relation)
-		} else if elementName == "member" {
+		case "member":
 			guard let relation = parserStack.last as? OsmRelation,
 			      let ref = attributeDict["ref"],
 			      let ref = Int64(ref)
@@ -105,7 +115,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			guard let type = attributeDict["type"],
 			      let type = try? OSM_TYPE(string: type)
 			else {
-				parseError = OsmParserError.unknownRelationMemberType(attributeDict["type"])
+				parseError = OsmParserError.badXmlDict(elementName,attributeDict)
 				parser.abortParsing()
 				return
 			}
@@ -113,7 +123,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			let member = OsmMember(type: type, ref: ref, role: role)
 			relation.constructMember(member)
 			parserStack.append(member)
-		} else if elementName == "osm" {
+		case "osm":
 			// osm header
 			let version = attributeDict["version"]
 			if version != "0.6" {
@@ -121,7 +131,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 				parser.abortParsing()
 			}
 			parserStack.append("osm")
-		} else if elementName == "bounds" {
+		case "bounds":
 #if false
 			let minLat = Double(attributeDict["minlat"] ?? "") ?? 0.0
 			let minLon = Double(attributeDict["minlon"] ?? "") ?? 0.0
@@ -129,13 +139,13 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			let maxLon = Double(attributeDict["maxlon"] ?? "") ?? 0.0
 #endif
 			parserStack.append("bounds")
-		} else if elementName == "note" {
+		case "note":
 			// issued by Overpass API server
 			parserStack.append(elementName)
-		} else if elementName == "meta" {
+		case "meta":
 			// issued by Overpass API server
 			parserStack.append(elementName)
-		} else {
+		default:
 			DLog("OSM parser: Unknown tag '%@'", elementName)
 			parserStack.append(elementName)
 #if false

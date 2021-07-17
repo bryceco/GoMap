@@ -169,17 +169,17 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	}
 
 	/// Initialize with XML downloaded from OSM server
-	init?(fromXmlDict attributeDict: [String: Any]) {
-		if let version = attributeDict["version"] as? String,
+	init?(fromXmlDict attributeDict: [String: String]) {
+		if let version = attributeDict["version"],
 		   let version = Int(version),
-		   let changeset = attributeDict["changeset"] as? String,
+		   let changeset = attributeDict["changeset"],
 		   let changeset = Int64(changeset),
-		   let user = attributeDict["user"] as? String,
-		   let uid = attributeDict["uid"] as? String,
+		   let user = attributeDict["user"],
+		   let uid = attributeDict["uid"],
 		   let uid = Int(uid),
-		   let ident = attributeDict["id"] as? String,
+		   let ident = attributeDict["id"],
 		   let ident = Int64(ident),
-		   let timestamp = attributeDict["timestamp"] as? String
+		   let timestamp = attributeDict["timestamp"]
 		{
 			self.version = version
 			self.changeset = changeset

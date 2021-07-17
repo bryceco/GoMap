@@ -494,7 +494,7 @@ final class OsmRelation: OsmBaseObject {
 	}
 
 	/// Initialize with XML downloaded from OSM server
-	override init?(fromXmlDict attributeDict: [String: Any]) {
+	override init?(fromXmlDict attributeDict: [String: String]) {
 		members = []
 		super.init(fromXmlDict: attributeDict)
 	}
