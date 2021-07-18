@@ -78,9 +78,17 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 		} else {
 			filteredCompletions = allStrings
 		}
-		// sort alphabetically
+		// sort by prefix, then alphabetically
 		filteredCompletions = filteredCompletions.sorted(by: { s1, s2 in
-			s1.caseInsensitiveCompare(s2) == .orderedAscending
+			let p1 = s1.hasPrefix(text)
+			let p2 = s2.hasPrefix(text)
+			if p1 == p2 {
+				// both have, or don't have, a matching prefix, so use alphabetical
+				return s1.caseInsensitiveCompare(s2) == .orderedAscending
+			} else {
+				// matching prefix first
+				return p1
+			}
 		})
 		updateCompletionTableView()
 	}
