@@ -41,7 +41,7 @@ class DirectionViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		title = "Measure Direction"
+		title = NSLocalizedString("Measure Direction", comment: "")
 
 		bindToViewModel()
 

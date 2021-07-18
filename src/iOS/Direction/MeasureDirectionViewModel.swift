@@ -21,7 +21,7 @@ class MeasureDirectionViewModel: HeadingProviderDelegate {
 	var oldValueLabelText = Observable<String?>(nil)
 	let primaryActionButtonTitle: String
 	var isPrimaryActionButtonHidden = Observable<Bool>(true)
-	var dismissButtonTitle = Observable<String>("Cancel")
+	var dismissButtonTitle = Observable<String>(NSLocalizedString("Cancel",comment: ""))
 
 	// MARK: Private properties
 
@@ -47,20 +47,23 @@ class MeasureDirectionViewModel: HeadingProviderDelegate {
 		self.key = key
 		oldValue = value
 
-		primaryActionButtonTitle = String(format: "Update '%@' tag", key)
+		primaryActionButtonTitle = String(format: NSLocalizedString("Update '%@' tag",
+																	comment: "Update the named tag value (e.g. foo=*)"),
+										  key)
 
 		headingProvider.delegate = self
 
 		guard headingProvider.isHeadingAvailable else {
 			valueLabelText.value = "🤷‍♂️"
-			oldValueLabelText.value = "This device is not able to provide heading data."
-			dismissButtonTitle.value = "Back"
-
+			oldValueLabelText.value = NSLocalizedString("This device is not able to provide heading data.",
+														comment: "")
+			dismissButtonTitle.value = NSLocalizedString("Back", comment: "back button")
 			return
 		}
 
 		if let oldValue = value, !oldValue.isEmpty {
-			oldValueLabelText.value = "Old value: \(oldValue)"
+			oldValueLabelText.value = NSLocalizedString("Old value: \(oldValue)",
+														comment: "previous tag value")
 		}
 	}
 

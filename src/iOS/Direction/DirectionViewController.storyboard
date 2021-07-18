@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Direction View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewController id="Y6W-OH-hqX" customClass="DirectionViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="nYR-hu-Zu2">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="320" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fTd-IM-NDF" userLabel="Value Label">
+                                <rect key="frame" x="184.5" y="433" width="45" height="30"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="60k-CD-AtO">
+                                <rect key="frame" x="12" y="746" width="390" height="104"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wq9-WK-Ccp">
+                                        <rect key="frame" x="0.0" y="0.0" width="390" height="48"/>
+                                        <color key="backgroundColor" red="0.270588249" green="0.78823530669999997" blue="0.3843137324" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="48" id="EXY-Qk-leF"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="Update &quot;direction&quot; tag">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="didTapPrimaryActionButton" destination="Y6W-OH-hqX" eventType="touchUpInside" id="cEg-WH-CSW"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jm4-tW-K3C">
+                                        <rect key="frame" x="0.0" y="56" width="390" height="48"/>
+                                        <color key="backgroundColor" systemColor="systemFillColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="48" id="EWf-4k-YTt"/>
+                                        </constraints>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" systemColor="labelColor"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Old value: 42" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hzv-CS-Vcl">
+                                <rect key="frame" x="162.5" y="463" width="89" height="17"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Position your device parallel to the direction of the object." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="unl-Sy-gov">
+                                <rect key="frame" x="20" y="56" width="374" height="359"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="G78-rD-qyw"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="fTd-IM-NDF" firstAttribute="top" secondItem="unl-Sy-gov" secondAttribute="bottom" constant="18" id="9d9-F9-HhG"/>
+                            <constraint firstItem="unl-Sy-gov" firstAttribute="centerX" secondItem="nYR-hu-Zu2" secondAttribute="centerX" id="BTe-v0-Wri"/>
+                            <constraint firstItem="hzv-CS-Vcl" firstAttribute="top" secondItem="fTd-IM-NDF" secondAttribute="bottom" id="Har-OY-GfN"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="unl-Sy-gov" secondAttribute="trailing" id="Imv-It-tVb"/>
+                            <constraint firstItem="fTd-IM-NDF" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="60k-CD-AtO" secondAttribute="top" constant="-48" id="KnC-0k-HbZ"/>
+                            <constraint firstItem="unl-Sy-gov" firstAttribute="top" secondItem="G78-rD-qyw" secondAttribute="top" constant="12" id="QQB-Rp-V5m"/>
+                            <constraint firstItem="fTd-IM-NDF" firstAttribute="centerX" secondItem="nYR-hu-Zu2" secondAttribute="centerX" id="RSt-9A-l2a"/>
+                            <constraint firstItem="60k-CD-AtO" firstAttribute="leading" secondItem="G78-rD-qyw" secondAttribute="leading" constant="12" id="TXk-iC-Ot5"/>
+                            <constraint firstItem="G78-rD-qyw" firstAttribute="bottom" secondItem="60k-CD-AtO" secondAttribute="bottom" constant="12" id="g1Z-79-S4o"/>
+                            <constraint firstItem="fTd-IM-NDF" firstAttribute="centerY" secondItem="nYR-hu-Zu2" secondAttribute="centerY" priority="750" id="izJ-35-Nzr"/>
+                            <constraint firstItem="unl-Sy-gov" firstAttribute="leading" secondItem="nYR-hu-Zu2" secondAttribute="leadingMargin" id="l1P-qv-653"/>
+                            <constraint firstItem="fTd-IM-NDF" firstAttribute="top" relation="greaterThanOrEqual" secondItem="G78-rD-qyw" secondAttribute="top" constant="48" id="ntP-HX-3ZR"/>
+                            <constraint firstItem="hzv-CS-Vcl" firstAttribute="centerX" secondItem="nYR-hu-Zu2" secondAttribute="centerX" id="oKW-Vz-mQS"/>
+                            <constraint firstItem="G78-rD-qyw" firstAttribute="trailing" secondItem="60k-CD-AtO" secondAttribute="trailing" constant="12" id="qcg-gs-Cel"/>
+                            <constraint firstItem="hzv-CS-Vcl" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="Wq9-WK-Ccp" secondAttribute="top" priority="750" constant="12" id="unu-CL-J1k"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="cancelButton" destination="jm4-tW-K3C" id="Pup-cM-SQn"/>
+                        <outlet property="oldValueLabel" destination="hzv-CS-Vcl" id="9Wp-wm-Mff"/>
+                        <outlet property="primaryActionButton" destination="Wq9-WK-Ccp" id="ooN-Ep-iWP"/>
+                        <outlet property="valueLabel" destination="fTd-IM-NDF" id="XFl-2n-2iT"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="90" y="73"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemFillColor">
+            <color red="0.47058823529411764" green="0.47058823529411764" blue="0.50196078431372548" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
