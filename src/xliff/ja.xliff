@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
-  <file original="Direction/Base.lproj/DirectionViewController.storyboard" datatype="plaintext" source-language="en" target-language="ja">
+  <file original="Direction/Base.lproj/DirectionViewController.xib" datatype="plaintext" source-language="en" target-language="ja">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
-      <trans-unit id="Wq9-WK-Ccp.normalTitle" xml:space="preserve">
-        <source>Update "direction" tag</source>
-        <note>Class = "UIButton"; normalTitle = "Update \"direction\" tag"; ObjectID = "Wq9-WK-Ccp";</note>
-      </trans-unit>
-      <trans-unit id="fTd-IM-NDF.text" xml:space="preserve">
-        <source>320</source>
-        <note>Class = "UILabel"; text = "320"; ObjectID = "fTd-IM-NDF";</note>
-      </trans-unit>
-      <trans-unit id="hzv-CS-Vcl.text" xml:space="preserve">
-        <source>Old value: 42</source>
-        <note>Class = "UILabel"; text = "Old value: 42"; ObjectID = "hzv-CS-Vcl";</note>
-      </trans-unit>
-      <trans-unit id="jm4-tW-K3C.normalTitle" xml:space="preserve">
-        <source>Cancel</source>
-        <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "jm4-tW-K3C";</note>
-      </trans-unit>
-      <trans-unit id="unl-Sy-gov.text" xml:space="preserve">
+      <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
         <source>Position your device parallel to the direction of the object.</source>
-        <note>Class = "UILabel"; text = "Position your device parallel to the direction of the object."; ObjectID = "unl-Sy-gov";</note>
+        <note>Class = "UILabel"; text = "Position your device parallel to the direction of the object."; ObjectID = "4vY-m2-xMW";</note>
+      </trans-unit>
+      <trans-unit id="Jc3-Um-Aiy.text" xml:space="preserve">
+        <source>320</source>
+        <note>Class = "UILabel"; text = "320"; ObjectID = "Jc3-Um-Aiy";</note>
+      </trans-unit>
+      <trans-unit id="Yt9-h6-KKC.normalTitle" xml:space="preserve">
+        <source>Update "direction" tag</source>
+        <note>Class = "UIButton"; normalTitle = "Update \"direction\" tag"; ObjectID = "Yt9-h6-KKC";</note>
+      </trans-unit>
+      <trans-unit id="exg-Jc-FOH.normalTitle" xml:space="preserve">
+        <source>Cancel</source>
+        <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "exg-Jc-FOH";</note>
+      </trans-unit>
+      <trans-unit id="vtk-nS-Ss4.text" xml:space="preserve">
+        <source>Old value: 42</source>
+        <note>Class = "UILabel"; text = "Old value: 42"; ObjectID = "vtk-nS-Ss4";</note>
       </trans-unit>
     </body>
   </file>
