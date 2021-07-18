@@ -67,10 +67,10 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 	func updateUndoRedoButtonState() {
 		guard undoButton != nil else { return } // during init it can be null
-		undoButton.isEnabled = mapView.editorLayer.mapData.canUndo() && !mapView.editorLayer.isHidden
-		redoButton.isEnabled = mapView.editorLayer.mapData.canRedo() && !mapView.editorLayer.isHidden
-		uploadButton.isHidden = !undoButton.isEnabled
-		undoRedoView.isHidden = !undoButton.isEnabled && !redoButton.isEnabled
+		undoButton.isEnabled = mapView.editorLayer.mapData.canUndo()
+		redoButton.isEnabled = mapView.editorLayer.mapData.canRedo()
+		undoRedoView.isHidden = mapView.editorLayer.isHidden || (!undoButton.isEnabled && !redoButton.isEnabled)
+		uploadButton.isHidden = !mapView.editorLayer.mapData.canUndo()
 	}
 
 	func updateUploadButtonState() {
