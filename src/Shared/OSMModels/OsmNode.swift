@@ -112,9 +112,9 @@ final class OsmNode: OsmBaseObject {
 	/// Initialize with XML downloaded from OSM server
 	override init?(fromXmlDict attributeDict: [String: String]) {
 		guard let latText = attributeDict["lat"],
-			  let lonText = attributeDict["lon"],
-			  let lat = Double(latText),
-			  let lon = Double(lonText)
+		      let lonText = attributeDict["lon"],
+		      let lat = Double(latText),
+		      let lon = Double(lonText)
 		else {
 			return nil
 		}

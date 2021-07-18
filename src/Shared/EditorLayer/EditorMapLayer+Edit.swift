@@ -801,13 +801,13 @@ extension EditorMapLayer {
 					message: nil,
 					preferredStyle: .actionSheet)
 				actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Multipolygon", comment: ""),
-													style: .default,
-													handler: { _ in
-														create("multipolygon")
-													}))
+				                                    style: .default,
+				                                    handler: { _ in
+				                                    	create("multipolygon")
+				                                    }))
 				actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
-													style: .cancel,
-													handler: nil))
+				                                    style: .cancel,
+				                                    handler: nil))
 				let rc = CGRect(origin: owner.pushpinView()?.arrowPoint ?? .zero, size: .zero)
 				owner.presentAlert(alert: actionSheet, location: .rect(rc))
 				return

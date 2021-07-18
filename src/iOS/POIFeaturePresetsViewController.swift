@@ -496,7 +496,6 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	}
 
 	func measureDirection(forKey key: String, value: String) {
-
 		let directionViewController = DirectionViewController(
 			key: key,
 			value: value,

@@ -926,8 +926,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	func showAlert(_ title: String, message: String?) {
 		let alertError = UIAlertController(title: title,
-										   message: message,
-										   preferredStyle: .alert)
+		                                   message: message,
+		                                   preferredStyle: .alert)
 		alertError.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
 		mainViewController.present(alertError, animated: true)
 	}

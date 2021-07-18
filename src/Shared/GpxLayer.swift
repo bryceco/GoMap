@@ -191,8 +191,8 @@ final class GpxTrack: NSObject, NSCoding {
 		}
 
 		guard let namespace1 = DDXMLElement.namespace(
-				withName: "ns1",
-				stringValue: "http://www.topografix.com/GPX/1/0") as? DDXMLNode,
+			withName: "ns1",
+			stringValue: "http://www.topografix.com/GPX/1/0") as? DDXMLNode,
 			let namespace2 = DDXMLElement.namespace(
 				withName: "ns2",
 				stringValue: "http://www.topografix.com/GPX/1/1") as? DDXMLNode,

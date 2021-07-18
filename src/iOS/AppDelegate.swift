@@ -120,15 +120,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	func application(_ application: UIApplication,
-					 open url: URL,
+	                 open url: URL,
 	                 options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool
 	{
-		if url.isFileURL && (url.pathExtension == "gpx") {
+		if url.isFileURL, url.pathExtension == "gpx" {
 			// Load GPX
 			guard url.startAccessingSecurityScopedResource() else {
 				DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [self] in
-					self.mapView.showAlert(	NSLocalizedString("Invalid URL", comment: ""),
-											message: "startAccessingSecurityScopedResource failed")
+					self.mapView.showAlert(NSLocalizedString("Invalid URL", comment: ""),
+					                       message: "startAccessingSecurityScopedResource failed")
 				})
 				return false
 			}
@@ -145,8 +145,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 			guard let data = data else {
 				DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [self] in
-					self.mapView.showAlert(	NSLocalizedString("Invalid URL", comment: ""),
-											message: "No data")
+					self.mapView.showAlert(NSLocalizedString("Invalid URL", comment: ""),
+					                       message: "No data")
 				})
 				return false
 			}
@@ -155,7 +155,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				let ok = mapView.gpxLayer.loadGPXData(data, center: true)
 				if !ok {
 					mapView.showAlert(NSLocalizedString("Open URL", comment: ""),
-									  message: NSLocalizedString("Sorry, an error occurred while loading the GPX file", comment: ""))
+					                  message: NSLocalizedString(
+					                  	"Sorry, an error occurred while loading the GPX file",
+					                  	comment: ""))
 				}
 			})
 			return true
@@ -168,8 +170,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				return true
 			} else {
 				DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [self] in
-					self.mapView.showAlert(	NSLocalizedString("Invalid URL", comment: ""),
-											message: url.absoluteString)
+					self.mapView.showAlert(NSLocalizedString("Invalid URL", comment: ""),
+					                       message: url.absoluteString)
 				})
 				return false
 			}

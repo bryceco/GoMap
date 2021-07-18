@@ -20,7 +20,7 @@ enum OsmParserError: LocalizedError {
 	case badNodeRef
 	case badRelationRefID
 	case missingKeyValInTag
-	case badXmlDict(String,[String:String])
+	case badXmlDict(String, [String: String])
 	case unsupportedOsmApiVersion(String?)
 
 	public var errorDescription: String? {
@@ -30,7 +30,8 @@ enum OsmParserError: LocalizedError {
 		case .badNodeRef: return "bad node ref ID"
 		case .badRelationRefID: return "badRelationRefID"
 		case .missingKeyValInTag: return ""
-		case let .badXmlDict(ele,dict): return "badXmlDict(\(ele)):\n \(dict.map({k,v in "\(k)=\(v)"}).joined(separator: ",\n"))"
+		case let .badXmlDict(ele, dict):
+			return "badXmlDict(\(ele)):\n \(dict.map({ k, v in "\(k)=\(v)" }).joined(separator: ",\n"))"
 		case let .unsupportedOsmApiVersion(str): return "unsupportedOsmApiVersion(\(str ?? "nil")"
 		}
 	}
@@ -55,7 +56,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 		switch elementName {
 		case "node":
 			guard let node = OsmNode(fromXmlDict: attributeDict) else {
-				parseError = OsmParserError.badXmlDict(elementName,attributeDict)
+				parseError = OsmParserError.badXmlDict(elementName, attributeDict)
 				parser.abortParsing()
 				return
 			}
@@ -63,7 +64,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			parserStack.append(node)
 		case "way":
 			guard let way = OsmWay(fromXmlDict: attributeDict) else {
-				parseError = OsmParserError.badXmlDict(elementName,attributeDict)
+				parseError = OsmParserError.badXmlDict(elementName, attributeDict)
 				parser.abortParsing()
 				return
 			}
@@ -71,9 +72,9 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			parserStack.append(way)
 		case "tag":
 			guard let key = attributeDict["k"],
-				  let value = attributeDict["v"]
+			      let value = attributeDict["v"]
 			else {
-				parseError = OsmParserError.badXmlDict(elementName,attributeDict)
+				parseError = OsmParserError.badXmlDict(elementName, attributeDict)
 				parser.abortParsing()
 				return
 			}
@@ -97,7 +98,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			parserStack.append("nd")
 		case "relation":
 			guard let relation = OsmRelation(fromXmlDict: attributeDict) else {
-				parseError = OsmParserError.badXmlDict(elementName,attributeDict)
+				parseError = OsmParserError.badXmlDict(elementName, attributeDict)
 				parser.abortParsing()
 				return
 			}
@@ -115,7 +116,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			guard let type = attributeDict["type"],
 			      let type = try? OSM_TYPE(string: type)
 			else {
-				parseError = OsmParserError.badXmlDict(elementName,attributeDict)
+				parseError = OsmParserError.badXmlDict(elementName, attributeDict)
 				parser.abortParsing()
 				return
 			}
