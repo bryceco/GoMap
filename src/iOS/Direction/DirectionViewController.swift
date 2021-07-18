@@ -11,9 +11,9 @@ import UIKit
 class DirectionViewController: UIViewController {
 	// MARK: Private properties
 
-	private var viewModel: MeasureDirectionViewModel! = nil
+	private let viewModel: MeasureDirectionViewModel
 	private var disposal = Disposal()
-	private var callback: ((String?) -> Void)! = nil
+	private let callback: (String?) -> Void
 
 	@IBOutlet var valueLabel: UILabel!
 	@IBOutlet var oldValueLabel: UILabel!
@@ -22,14 +22,18 @@ class DirectionViewController: UIViewController {
 
 	// MARK: Initializer
 
-	class func instantiate(key: String, value: String?, setValue: @escaping (String?) -> Void) -> DirectionViewController
-	{
-		let sb = UIStoryboard(name: "DirectionViewController", bundle: nil)
-		let vc = sb.instantiateViewController(withIdentifier: "DirectionViewController") as! DirectionViewController
-		vc.viewModel = MeasureDirectionViewModel(key: key, value: value)
-		vc.callback = setValue
-		vc.viewModel.delegate = vc
-		return vc
+	init(key: String, value: String?, setValue: @escaping (String?) -> Void) {
+		viewModel = MeasureDirectionViewModel(key: key, value: value)
+		callback = setValue
+
+		super.init(nibName: nil, bundle: nil)
+
+		viewModel.delegate = self
+	}
+
+	@available(*, unavailable)
+	required init?(coder _: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
 	}
 
 	// MARK: View Lifecycle

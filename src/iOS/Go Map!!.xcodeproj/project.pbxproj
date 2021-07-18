@@ -25,13 +25,13 @@
 		021FADD725873D0100F6E1C0 /* PresetsForFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADD625873D0100F6E1C0 /* PresetsForFeature.swift */; };
 		021FADE22588474300F6E1C0 /* PresetCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADE12588474300F6E1C0 /* PresetCategory.swift */; };
 		021FADEF25884BB900F6E1C0 /* OsmTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADEE25884BB900F6E1C0 /* OsmTags.swift */; };
-		02244DFC26A3DAEB00E97499 /* DirectionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02244DFE26A3DAEB00E97499 /* DirectionViewController.storyboard */; };
 		02263CDF2677F93A002BA72F /* QuadBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02263CDE2677F93A002BA72F /* QuadBox.swift */; };
 		0226B771268300C9005DB9E2 /* Data+Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B770268300C9005DB9E2 /* Data+Wrapper.swift */; };
 		0226B7732683BCB6005DB9E2 /* URLSession+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */; };
 		02354F7A246349E100878A04 /* CurvedGlyphLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02354F79246349E100878A04 /* CurvedGlyphLayer.swift */; };
 		023B892B19C148790060CDB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B892A19C148790060CDB5 /* Images.xcassets */; };
 		02401F361DE021EE00F32AF5 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */; };
+		0246A78126A4AA3A00941A44 /* DirectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0246A78326A4AA3A00941A44 /* DirectionViewController.xib */; };
 		024909C9267BF9F70027E531 /* MapTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024909C8267BF9F70027E531 /* MapTransform.swift */; };
 		024909CB267D99190027E531 /* OsmDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024909CA267D99190027E531 /* OsmDownloader.swift */; };
 		024909CF267EADC70027E531 /* OsmXmlGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024909CE267EADC70027E531 /* OsmXmlGenerator.swift */; };
@@ -211,7 +211,6 @@
 		021FADEE25884BB900F6E1C0 /* OsmTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmTags.swift; sourceTree = "<group>"; };
 		022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorMapLayer+Ocean.swift"; sourceTree = "<group>"; };
 		02231F8925C4CB38000E7C07 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Changeset.strings"; sourceTree = "<group>"; };
-		02244DFD26A3DAEB00E97499 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/DirectionViewController.storyboard; sourceTree = "<group>"; };
 		02248A032568C3E2004272B2 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		02248A042568C3E2004272B2 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		02263CDE2677F93A002BA72F /* QuadBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadBox.swift; sourceTree = "<group>"; };
@@ -221,6 +220,7 @@
 		023B892A19C148790060CDB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
 		02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		02401F3A1DE157B800F32AF5 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		0246A78226A4AA3A00941A44 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DirectionViewController.xib; sourceTree = "<group>"; };
 		024909C8267BF9F70027E531 /* MapTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapTransform.swift; path = ../Shared/MapTransform.swift; sourceTree = "<group>"; };
 		024909CA267D99190027E531 /* OsmDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmDownloader.swift; sourceTree = "<group>"; };
 		024909CE267EADC70027E531 /* OsmXmlGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmXmlGenerator.swift; sourceTree = "<group>"; };
@@ -950,7 +950,7 @@
 		64D74BF02253DF39004FFD20 /* Direction */ = {
 			isa = PBXGroup;
 			children = (
-				02244DFE26A3DAEB00E97499 /* DirectionViewController.storyboard */,
+				0246A78326A4AA3A00941A44 /* DirectionViewController.xib */,
 				64D74BF12253DF49004FFD20 /* DirectionViewController.swift */,
 				647F46D02253F08200CEC482 /* HeadingProvider.swift */,
 				647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */,
@@ -1107,7 +1107,7 @@
 				02ED19811BBF119C00A57CF4 /* Launch Screen.storyboard in Resources */,
 				027AB503250E9CA500C404CD /* Changeset.storyboard in Resources */,
 				027AB4FD250E9C8A00C404CD /* POI.storyboard in Resources */,
-				02244DFC26A3DAEB00E97499 /* DirectionViewController.storyboard in Resources */,
+				0246A78126A4AA3A00941A44 /* DirectionViewController.xib in Resources */,
 				02C3194E250EAED500C5D200 /* Localizable.strings in Resources */,
 				027AB500250E9C9B00C404CD /* Height.storyboard in Resources */,
 				023B892B19C148790060CDB5 /* Images.xcassets in Resources */,
@@ -1325,12 +1325,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		02244DFE26A3DAEB00E97499 /* DirectionViewController.storyboard */ = {
+		0246A78326A4AA3A00941A44 /* DirectionViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				02244DFD26A3DAEB00E97499 /* Base */,
+				0246A78226A4AA3A00941A44 /* Base */,
 			);
-			name = DirectionViewController.storyboard;
+			name = DirectionViewController.xib;
 			sourceTree = "<group>";
 		};
 		027AB4FC250E9C8000C404CD /* Settings.storyboard */ = {

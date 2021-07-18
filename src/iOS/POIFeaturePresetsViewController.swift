@@ -497,13 +497,13 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 
 	func measureDirection(forKey key: String, value: String) {
 
-		let directionViewController = DirectionViewController.instantiate(
+		let directionViewController = DirectionViewController(
 			key: key,
 			value: value,
 			setValue: { newValue in
 				self.updateTag(withValue: newValue ?? "", forKey: key)
 			})
-		present(directionViewController, animated: true)
+		navigationController?.pushViewController(directionViewController, animated: true)
 	}
 
 	func canMeasureHeight(for key: PresetKey) -> Bool {
