@@ -49,15 +49,15 @@ public struct OpeningHoursRecognizerView: View {
 					.frame(height: 100.0)
 				HStack {
 					Spacer()
-					Button("Cancel") {
+					Button(NSLocalizedString("Cancel",comment:"")) {
 						onCancel()
 					}.withMyButtonStyle(enabled: true)
 					Spacer()
-					Button("Retry") {
+					Button(NSLocalizedString("Retry",comment: "retry opening hours recognition")) {
 						restart = true
 					}.withMyButtonStyle(enabled: true)
 					Spacer()
-					Button("Accept") {
+					Button(NSLocalizedString("Accept", comment: "")) {
 						onAccept(recognizer.text)
 					}.withMyButtonStyle(enabled: recognizer.finished)
 						.disabled(!recognizer.finished)
