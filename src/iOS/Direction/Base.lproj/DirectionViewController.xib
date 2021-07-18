@@ -65,7 +65,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Position your device parallel to the direction of the object." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4vY-m2-xMW">
-                    <rect key="frame" x="16" y="56" width="343" height="317"/>
+                    <rect key="frame" x="29.666666666666657" y="56" width="316" height="317"/>
                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -83,9 +83,9 @@
                 <constraint firstItem="vtk-nS-Ss4" firstAttribute="top" secondItem="Jc3-Um-Aiy" secondAttribute="bottom" id="jHH-iN-oIm"/>
                 <constraint firstItem="Jc3-Um-Aiy" firstAttribute="top" relation="greaterThanOrEqual" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="48" id="kpR-mk-xAZ"/>
                 <constraint firstItem="BZS-tz-AfD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="12" id="lQ2-Ao-QCx"/>
-                <constraint firstItem="4vY-m2-xMW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="p0F-sn-R8n"/>
+                <constraint firstItem="4vY-m2-xMW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="p0F-sn-R8n"/>
                 <constraint firstItem="Jc3-Um-Aiy" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="pDn-LN-AYY"/>
-                <constraint firstAttribute="trailingMargin" secondItem="4vY-m2-xMW" secondAttribute="trailing" id="red-4Y-usc"/>
+                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="4vY-m2-xMW" secondAttribute="trailing" id="red-4Y-usc"/>
                 <constraint firstItem="Jc3-Um-Aiy" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="BZS-tz-AfD" secondAttribute="top" constant="-48" id="sIB-OX-Ui1"/>
                 <constraint firstItem="4vY-m2-xMW" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="12" id="uZn-Gc-PwT"/>
                 <constraint firstItem="Jc3-Um-Aiy" firstAttribute="top" secondItem="4vY-m2-xMW" secondAttribute="bottom" constant="18" id="yCf-3A-Su5"/>
