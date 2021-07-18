@@ -12,7 +12,6 @@
 		0203473F266C1EDD000A7C3D /* ExternalGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0203473E266C1EDD000A7C3D /* ExternalGPS.swift */; };
 		02034743266C2CB9000A7C3D /* OsmNotesDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02034742266C2CB9000A7C3D /* OsmNotesDatabase.swift */; };
 		02034744266D83DB000A7C3D /* DLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C381C308263FD294003142BA /* DLog.swift */; };
-		020B005326A3C3B300234250 /* DirectionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 020B005226A3C3B300234250 /* DirectionViewController.storyboard */; };
 		020E160B267A82050037DE49 /* TileServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020E160A267A82050037DE49 /* TileServer.swift */; };
 		020EBA7926506156001D56F4 /* MercatorTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925326411C2B000A2A99 /* MercatorTileLayer.swift */; };
 		020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */; };
@@ -26,6 +25,7 @@
 		021FADD725873D0100F6E1C0 /* PresetsForFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADD625873D0100F6E1C0 /* PresetsForFeature.swift */; };
 		021FADE22588474300F6E1C0 /* PresetCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADE12588474300F6E1C0 /* PresetCategory.swift */; };
 		021FADEF25884BB900F6E1C0 /* OsmTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADEE25884BB900F6E1C0 /* OsmTags.swift */; };
+		02244DFC26A3DAEB00E97499 /* DirectionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02244DFE26A3DAEB00E97499 /* DirectionViewController.storyboard */; };
 		02263CDF2677F93A002BA72F /* QuadBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02263CDE2677F93A002BA72F /* QuadBox.swift */; };
 		0226B771268300C9005DB9E2 /* Data+Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B770268300C9005DB9E2 /* Data+Wrapper.swift */; };
 		0226B7732683BCB6005DB9E2 /* URLSession+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */; };
@@ -196,7 +196,6 @@
 		0203473E266C1EDD000A7C3D /* ExternalGPS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExternalGPS.swift; path = ../Shared/ExternalGPS.swift; sourceTree = "<group>"; };
 		02034742266C2CB9000A7C3D /* OsmNotesDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OsmNotesDatabase.swift; path = ../Shared/OsmNotesDatabase.swift; sourceTree = "<group>"; };
 		02072AD51BD46B1700F1CAB4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		020B005226A3C3B300234250 /* DirectionViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DirectionViewController.storyboard; sourceTree = "<group>"; };
 		020E160A267A82050037DE49 /* TileServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileServer.swift; sourceTree = "<group>"; };
 		020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsDatabase.swift; sourceTree = "<group>"; };
 		02128F7B2575D925003D2551 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Height.strings"; sourceTree = "<group>"; };
@@ -212,6 +211,7 @@
 		021FADEE25884BB900F6E1C0 /* OsmTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmTags.swift; sourceTree = "<group>"; };
 		022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorMapLayer+Ocean.swift"; sourceTree = "<group>"; };
 		02231F8925C4CB38000E7C07 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Changeset.strings"; sourceTree = "<group>"; };
+		02244DFD26A3DAEB00E97499 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/DirectionViewController.storyboard; sourceTree = "<group>"; };
 		02248A032568C3E2004272B2 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		02248A042568C3E2004272B2 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		02263CDE2677F93A002BA72F /* QuadBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadBox.swift; sourceTree = "<group>"; };
@@ -950,7 +950,7 @@
 		64D74BF02253DF39004FFD20 /* Direction */ = {
 			isa = PBXGroup;
 			children = (
-				020B005226A3C3B300234250 /* DirectionViewController.storyboard */,
+				02244DFE26A3DAEB00E97499 /* DirectionViewController.storyboard */,
 				64D74BF12253DF49004FFD20 /* DirectionViewController.swift */,
 				647F46D02253F08200CEC482 /* HeadingProvider.swift */,
 				647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */,
@@ -1107,7 +1107,7 @@
 				02ED19811BBF119C00A57CF4 /* Launch Screen.storyboard in Resources */,
 				027AB503250E9CA500C404CD /* Changeset.storyboard in Resources */,
 				027AB4FD250E9C8A00C404CD /* POI.storyboard in Resources */,
-				020B005326A3C3B300234250 /* DirectionViewController.storyboard in Resources */,
+				02244DFC26A3DAEB00E97499 /* DirectionViewController.storyboard in Resources */,
 				02C3194E250EAED500C5D200 /* Localizable.strings in Resources */,
 				027AB500250E9C9B00C404CD /* Height.storyboard in Resources */,
 				023B892B19C148790060CDB5 /* Images.xcassets in Resources */,
@@ -1325,6 +1325,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		02244DFE26A3DAEB00E97499 /* DirectionViewController.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				02244DFD26A3DAEB00E97499 /* Base */,
+			);
+			name = DirectionViewController.storyboard;
+			sourceTree = "<group>";
+		};
 		027AB4FC250E9C8000C404CD /* Settings.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

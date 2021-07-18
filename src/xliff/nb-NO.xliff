@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="Direction/Base.lproj/DirectionViewController.storyboard" datatype="plaintext" source-language="en" target-language="nb-NO">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
+    </header>
+    <body>
+      <trans-unit id="Wq9-WK-Ccp.normalTitle" xml:space="preserve">
+        <source>Update "direction" tag</source>
+        <note>Class = "UIButton"; normalTitle = "Update \"direction\" tag"; ObjectID = "Wq9-WK-Ccp";</note>
+      </trans-unit>
+      <trans-unit id="fTd-IM-NDF.text" xml:space="preserve">
+        <source>320</source>
+        <note>Class = "UILabel"; text = "320"; ObjectID = "fTd-IM-NDF";</note>
+      </trans-unit>
+      <trans-unit id="hzv-CS-Vcl.text" xml:space="preserve">
+        <source>Old value: 42</source>
+        <note>Class = "UILabel"; text = "Old value: 42"; ObjectID = "hzv-CS-Vcl";</note>
+      </trans-unit>
+      <trans-unit id="jm4-tW-K3C.normalTitle" xml:space="preserve">
+        <source>Cancel</source>
+        <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "jm4-tW-K3C";</note>
+      </trans-unit>
+      <trans-unit id="unl-Sy-gov.text" xml:space="preserve">
+        <source>Position your device parallel to the direction of the object.</source>
+        <note>Class = "UILabel"; text = "Position your device parallel to the direction of the object."; ObjectID = "unl-Sy-gov";</note>
+      </trans-unit>
+    </body>
+  </file>
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="nb-NO" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
