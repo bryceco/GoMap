@@ -800,15 +800,14 @@ extension EditorMapLayer {
 					title: NSLocalizedString("Create Relation Type", comment: ""),
 					message: nil,
 					preferredStyle: .actionSheet)
-				actionSheet
-					.addAction(UIAlertAction(title: NSLocalizedString("Multipolygon", comment: ""), style: .default,
-					                         handler: { _ in
-					                         	create("multipolygon")
-					                         }))
-				actionSheet
-					.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel,
-					                         handler: nil))
-
+				actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Multipolygon", comment: ""),
+													style: .default,
+													handler: { _ in
+														create("multipolygon")
+													}))
+				actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+													style: .cancel,
+													handler: nil))
 				let rc = CGRect(origin: owner.pushpinView()?.arrowPoint ?? .zero, size: .zero)
 				owner.presentAlert(alert: actionSheet, location: .rect(rc))
 				return

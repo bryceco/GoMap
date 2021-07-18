@@ -1070,45 +1070,28 @@ extension OsmMapData {
 		return { [self] in
 
 			// join nodes, preserving selected way
-			var index = 0
 			if selectedWay.nodes.last == otherWay.nodes[0] {
 				registerUndoCommentString(NSLocalizedString("Join", comment: ""))
-				for n in otherWay.nodes {
-					if index == 0 {
-						continue
-					}
-					index += 1
+				for n in otherWay.nodes.dropFirst() {
 					addNodeUnsafe(n, to: selectedWay, at: selectedWay.nodes.count)
 				}
 			} else if selectedWay.nodes.last == otherWay.nodes.last {
 				registerUndoCommentString(NSLocalizedString("Join", comment: ""))
 				let reverse = try! canReverse(otherWay) // reverse the tags on other way
 				reverse()
-				for n in otherWay.nodes {
-					if index == 0 {
-						continue
-					}
-					index += 1
+				for n in otherWay.nodes.dropFirst() {
 					addNodeUnsafe(n, to: selectedWay, at: selectedWay.nodes.count)
 				}
 			} else if selectedWay.nodes[0] == otherWay.nodes[0] {
 				registerUndoCommentString(NSLocalizedString("Join", comment: ""))
 				let reverse = try! canReverse(otherWay) // reverse the tags on other way
 				reverse()
-				for n in otherWay.nodes.reversed() {
-					if index == 0 {
-						continue
-					}
-					index += 1
+				for n in otherWay.nodes.reversed().dropFirst() {
 					addNodeUnsafe(n, to: selectedWay, at: 0)
 				}
 			} else if selectedWay.nodes[0] == otherWay.nodes.last {
 				registerUndoCommentString(NSLocalizedString("Join", comment: ""))
-				for n in otherWay.nodes.reversed() {
-					if index == 0 {
-						continue
-					}
-					index += 1
+				for n in otherWay.nodes.reversed().dropFirst() {
 					addNodeUnsafe(n, to: selectedWay, at: 0)
 				}
 			} else {
