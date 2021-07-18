@@ -227,6 +227,10 @@
         <target>節點所屬的關係沒有全部下載完畢</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Accept" xml:space="preserve">
+        <source>Accept</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
         <source>Add Note</source>
         <target>新增節點</target>
@@ -1042,6 +1046,10 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <source>Results for %1$@ (%2$@)</source>
         <target>結果： %1$@ (%2$@)</target>
         <note>country name,2-character country code</note>
+      </trans-unit>
+      <trans-unit id="Retry" xml:space="preserve">
+        <source>Retry</source>
+        <note>retry opening hours recognition</note>
       </trans-unit>
       <trans-unit id="Reverse" xml:space="preserve">
         <source>Reverse</source>

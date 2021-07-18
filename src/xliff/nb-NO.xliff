@@ -226,6 +226,10 @@
         <target>En relasjon noden tilhører er ikke helt nedlastet enda</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Accept" xml:space="preserve">
+        <source>Accept</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
         <source>Add Note</source>
         <target>Legg til notat</target>
@@ -999,6 +1003,10 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
         <source>Results for %1$@ (%2$@)</source>
         <target>Resultater for %1$@ (%2$@)</target>
         <note>country name,2-character country code</note>
+      </trans-unit>
+      <trans-unit id="Retry" xml:space="preserve">
+        <source>Retry</source>
+        <note>retry opening hours recognition</note>
       </trans-unit>
       <trans-unit id="Reverse" xml:space="preserve">
         <source>Reverse</source>

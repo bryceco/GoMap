@@ -208,6 +208,10 @@
         <source>A relation the node belongs to is not fully downloaded</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Accept" xml:space="preserve">
+        <source>Accept</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
         <source>Add Note</source>
         <note>Edit action</note>
@@ -859,6 +863,10 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       <trans-unit id="Results for %@ (%@)" xml:space="preserve">
         <source>Results for %1$@ (%2$@)</source>
         <note>country name,2-character country code</note>
+      </trans-unit>
+      <trans-unit id="Retry" xml:space="preserve">
+        <source>Retry</source>
+        <note>retry opening hours recognition</note>
       </trans-unit>
       <trans-unit id="Reverse" xml:space="preserve">
         <source>Reverse</source>
