@@ -2,7 +2,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -12,6 +12,7 @@
       </trans-unit>
       <trans-unit id="CFBundleGetInfoString" xml:space="preserve">
         <source/>
+        <target/>
         <note>Get Info string</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
@@ -36,6 +37,7 @@
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
         <source/>
+        <target/>
         <note>Copyright (human-readable)</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
@@ -57,7 +59,7 @@
   </file>
   <file original="en.lproj/Localizable.strings" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="&#9;Relation " xml:space="preserve">
@@ -264,6 +266,11 @@
         <source>Automatic</source>
         <target>Automatic</target>
         <note>Automatic selection of presets languages</note>
+      </trans-unit>
+      <trans-unit id="Back" xml:space="preserve">
+        <source>Back</source>
+        <target>Back</target>
+        <note>back button</note>
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
         <source>Background imagery %@</source>
@@ -683,6 +690,11 @@ Error: %@</target>
         <target>Maybe later...</target>
         <note>rate the app later</note>
       </trans-unit>
+      <trans-unit id="Measure Direction" xml:space="preserve">
+        <source>Measure Direction</source>
+        <target>Measure Direction</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Member of multipolygon relation" xml:space="preserve">
         <source>Member of multipolygon relation</source>
         <target>Member of multipolygon relation</target>
@@ -865,15 +877,15 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>OK</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="OSM data must be version 0.6 (fetched '%@')" xml:space="preserve">
-        <source>OSM data must be version 0.6 (fetched '%@')</source>
-        <target>OSM data must be version 0.6 (fetched '%@')</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
       <trans-unit id="Object modified" xml:space="preserve">
         <source>Object modified</source>
         <target>Object modified</target>
         <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Old value: (oldValue)" xml:space="preserve">
+        <source>Old value: (oldValue)</source>
+        <target>Old value: (oldValue)</target>
+        <note>previous tag value</note>
       </trans-unit>
       <trans-unit id="Only Left Turn restriction" xml:space="preserve">
         <source>Only Left Turn restriction</source>
@@ -1191,6 +1203,11 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>This app does not yet support editing turn restrictions without a node as the 'via' member</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="This device is not able to provide heading data." xml:space="preserve">
+        <source>This device is not able to provide heading data.</source>
+        <target>This device is not able to provide heading data.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
         <source>To add another member to the relation 'long press' on the way to be added</source>
         <target>To add another member to the relation 'long press' on the way to be added</target>
@@ -1274,6 +1291,11 @@ Select the highway from which you are approaching the intersection, then tap an 
         <source>Update</source>
         <target>Update</target>
         <note>update an osm note</note>
+      </trans-unit>
+      <trans-unit id="Update '%@' tag" xml:space="preserve">
+        <source>Update '%@' tag</source>
+        <target>Update '%@' tag</target>
+        <note>Update the named tag value (e.g. foo=*)</note>
       </trans-unit>
       <trans-unit id="Updating Note..." xml:space="preserve">
         <source>Updating Note...</source>
@@ -1533,7 +1555,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
@@ -1560,7 +1582,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="Storyboards/Base.lproj/Display.storyboard" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
@@ -1905,11 +1927,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <target>Past/Future</target>
         <note>Class = "UILabel"; text = "Past/Future"; ObjectID = "lu0-kr-5Cc";</note>
       </trans-unit>
-      <trans-unit id="luT-Tw-T3x.text" xml:space="preserve">
-        <source>Enable 3-D Effects</source>
-        <target>Enable 3-D Effects</target>
-        <note>Class = "UILabel"; text = "Enable 3-D Effects"; ObjectID = "luT-Tw-T3x";</note>
-      </trans-unit>
       <trans-unit id="lwG-AE-nIZ.headerTitle" xml:space="preserve">
         <source>Background</source>
         <target>Background</target>
@@ -2029,7 +2046,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
@@ -2122,6 +2139,11 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <target>Bing Maps</target>
         <note>Class = "UINavigationItem"; title = "Bing Maps"; ObjectID = "Qz0-Ce-YCX";</note>
       </trans-unit>
+      <trans-unit id="TcP-6i-B8H.text" xml:space="preserve">
+        <source>Specify a name ("New York"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object ("way 51014987"):</source>
+        <target>Specify a name ("New York"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object ("way 51014987"):</target>
+        <note>Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H";</note>
+      </trans-unit>
       <trans-unit id="ach-1A-88x.text" xml:space="preserve">
         <source>Changeset comment goes here</source>
         <target>Changeset comment goes here</target>
@@ -2191,7 +2213,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/POI.storyboard" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
@@ -2563,7 +2585,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/Settings.storyboard" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
@@ -2908,7 +2930,7 @@ http://glyphish.com
   </file>
   <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">

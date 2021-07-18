@@ -1,0 +1,24 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Go Map!!";
+
+/* Bundle name */
+"CFBundleName" = "Go Map!!";
+
+/* (No Comment) */
+"GPS Exchange Format (GPX)" = "GPS Exchange Format (GPX)";
+
+/* Privacy - Bluetooth Peripheral Usage Description */
+"NSBluetoothPeripheralUsageDescription" = "Připojení k externím Bluetooth GPS zařízením";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "Kamera je použita k měření výšky budov a objektů";
+
+/* Privacy - Location Always and When In Use Usage Description */
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Vždy zapnuté sledování polohy umožňuje aktivní aplikaci zaznamenat GPX soubory.";
+
+/* Privacy - Location Always Usage Description */
+"NSLocationAlwaysUsageDescription" = "Vaše poloha bude sledována a zobrazena na mapě.";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "Vaše poloha bude sledována a zobrazena na mapě.";
+

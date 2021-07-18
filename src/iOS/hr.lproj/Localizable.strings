@@ -245,6 +245,9 @@
 /* current GPX track */
 "Current Track" = "Trenutačna staza";
 
+/* No comment provided by engineer. */
+"Database error" = "Greška baze podataka";
+
 /* Edit action */
 "Delete" = "Izbriši";
 
@@ -556,9 +559,6 @@
 "Open URL" = "Otvori URL";
 
 /* No comment provided by engineer. */
-"OSM data must be version 0.6 (fetched '%@')" = "OSM podaci moraju biti u verziji 0.6 (dohvaćeno „%@”)";
-
-/* No comment provided by engineer. */
 "other object" = "drugi objekt";
 
 /* Edit action */
@@ -663,6 +663,9 @@
 
 /* No comment provided by engineer. */
 "Show Recent Items" = "Prikaži nedavne stavke";
+
+/* No comment provided by engineer. */
+"Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." = "Došlo je do greške prilikom pokušaja obnavljanja podataka. Sve neobavljene promjene su izgubljene. Žao nam je.";
 
 /* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "Oprosti, došlo je do greške tijekom učitavanja GPX datoteke";

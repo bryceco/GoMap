@@ -61,9 +61,6 @@
 /* Class = "UILabel"; text = "OpenStreetMap GPS Traces"; ObjectID = "hMJ-yP-XJe"; */
 "hMJ-yP-XJe.text" = "OpenStreetMap GPS轨迹";
 
-/* Class = "UILabel"; text = "Enable 3-D Effects"; ObjectID = "luT-Tw-T3x"; */
-"luT-Tw-T3x.text" = "启用3D效果";
-
 /* Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ"; */
 "lwG-AE-nIZ.headerTitle" = "背景";
 

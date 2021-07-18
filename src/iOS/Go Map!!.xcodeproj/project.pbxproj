@@ -281,6 +281,14 @@
 		02ACBD2016717BC500BB4414 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		02AFBF1F245774DC00BE43F4 /* OSM-Logo256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "OSM-Logo256.png"; path = "../OSM-Logo256.png"; sourceTree = "<group>"; };
 		02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BingPlaceholderImage.png; path = ../Shared/BingPlaceholderImage.png; sourceTree = "<group>"; };
+		02AFD45B26A3D6D800EFAD48 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		02AFD45C26A3D6D800EFAD48 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
+		02AFD45D26A3D6D800EFAD48 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Height.strings; sourceTree = "<group>"; };
+		02AFD45E26A3D6D800EFAD48 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Display.strings; sourceTree = "<group>"; };
+		02AFD45F26A3D6D800EFAD48 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
+		02AFD46026A3D6D800EFAD48 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/POI.strings; sourceTree = "<group>"; };
+		02AFD46126A3D6D800EFAD48 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Settings.strings; sourceTree = "<group>"; };
+		02AFD46226A3D6D800EFAD48 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Changeset.strings; sourceTree = "<group>"; };
 		02B4BBEE26790A9400B7158D /* si */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = si; path = si.lproj/Localizable.strings; sourceTree = "<group>"; };
 		02B4BBEF26790A9400B7158D /* si */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = si; path = si.lproj/Changeset.strings; sourceTree = "<group>"; };
 		02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = EsriPlaceholderImage.jpg; path = ../Shared/EsriPlaceholderImage.jpg; sourceTree = "<group>"; };
@@ -1068,6 +1076,7 @@
 				nl,
 				si,
 				vi,
+				cs,
 			);
 			mainGroup = 02ACBA2416713CCB00BB4414;
 			productRefGroup = 02ACBA3016713CCB00BB4414 /* Products */;
@@ -1335,6 +1344,7 @@
 				02F8DE9326790A830022460C /* it */,
 				025D68A826790A8C007079B8 /* nl */,
 				02D75AD726790A97008DAA53 /* vi */,
+				02AFD46126A3D6D800EFAD48 /* cs */,
 			);
 			name = Settings.storyboard;
 			sourceTree = "<group>";
@@ -1357,6 +1367,7 @@
 				02D7DF8626790A80003EE233 /* id */,
 				02F8DE9226790A830022460C /* it */,
 				02D75AD626790A97008DAA53 /* vi */,
+				02AFD46026A3D6D800EFAD48 /* cs */,
 			);
 			name = POI.storyboard;
 			sourceTree = "<group>";
@@ -1379,6 +1390,7 @@
 				02D7DF8326790A80003EE233 /* id */,
 				02F8DE8F26790A830022460C /* it */,
 				02D75AD326790A97008DAA53 /* vi */,
+				02AFD45D26A3D6D800EFAD48 /* cs */,
 			);
 			name = Height.storyboard;
 			sourceTree = "<group>";
@@ -1403,6 +1415,7 @@
 				025D68A926790A8C007079B8 /* nl */,
 				02B4BBEF26790A9400B7158D /* si */,
 				02D75AD826790A97008DAA53 /* vi */,
+				02AFD46226A3D6D800EFAD48 /* cs */,
 			);
 			name = Changeset.storyboard;
 			sourceTree = "<group>";
@@ -1425,6 +1438,7 @@
 				02D7DF8426790A80003EE233 /* id */,
 				02F8DE9026790A830022460C /* it */,
 				02D75AD426790A97008DAA53 /* vi */,
+				02AFD45E26A3D6D800EFAD48 /* cs */,
 			);
 			name = Display.storyboard;
 			sourceTree = "<group>";
@@ -1447,6 +1461,7 @@
 				02F8DE8D26790A830022460C /* it */,
 				025D68A626790A8C007079B8 /* nl */,
 				02D75AD126790A97008DAA53 /* vi */,
+				02AFD45B26A3D6D800EFAD48 /* cs */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1469,6 +1484,7 @@
 				02D7DF8526790A80003EE233 /* id */,
 				02F8DE9126790A830022460C /* it */,
 				02D75AD526790A97008DAA53 /* vi */,
+				02AFD45F26A3D6D800EFAD48 /* cs */,
 			);
 			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
@@ -1492,6 +1508,7 @@
 				025D68A726790A8C007079B8 /* nl */,
 				02B4BBEE26790A9400B7158D /* si */,
 				02D75AD226790A97008DAA53 /* vi */,
+				02AFD45C26A3D6D800EFAD48 /* cs */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

@@ -432,9 +432,6 @@
 /* No comment provided by engineer. */
 "Open URL" = "打开URL";
 
-/* No comment provided by engineer. */
-"OSM data must be version 0.6 (fetched '%@')" = "OSM数据必须为0.6版(已提取'％@')";
-
 /* Edit action */
 "Paste" = "粘贴";
 

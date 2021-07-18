@@ -556,9 +556,6 @@
 "Open URL" = "打開連結";
 
 /* No comment provided by engineer. */
-"OSM data must be version 0.6 (fetched '%@')" = "OSM 資料必須是版本 0.6 (已更新 '%@')";
-
-/* No comment provided by engineer. */
 "other object" = "其他物件";
 
 /* Edit action */

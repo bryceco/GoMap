@@ -85,9 +85,6 @@
 /* Class = "UITextField"; placeholder = "(TMS)"; ObjectID = "iuk-Fk-3Fw"; */
 "iuk-Fk-3Fw.placeholder" = "(TMS)";
 
-/* Class = "UILabel"; text = "Enable 3-D Effects"; ObjectID = "luT-Tw-T3x"; */
-"luT-Tw-T3x.text" = "Ota 3D-tehosteet käyttöön";
-
 /* Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ"; */
 "lwG-AE-nIZ.headerTitle" = "Tausta";
 

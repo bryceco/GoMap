@@ -412,9 +412,6 @@
 "Open URL" = "Mở URL";
 
 /* No comment provided by engineer. */
-"OSM data must be version 0.6 (fetched '%@')" = "Dữ liệu OSM phải thuộc phiên bản 0.6 (đã lấy “%@”)";
-
-/* No comment provided by engineer. */
 "other object" = "đối tượng khác";
 
 /* Edit action */

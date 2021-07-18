@@ -556,9 +556,6 @@
 "Open URL" = "Ouvrir l'URL";
 
 /* No comment provided by engineer. */
-"OSM data must be version 0.6 (fetched '%@')" = "Les données d'OSM doivent être de version 0.6 (« %@ » récupéré)";
-
-/* No comment provided by engineer. */
 "other object" = "autre objet";
 
 /* Edit action */

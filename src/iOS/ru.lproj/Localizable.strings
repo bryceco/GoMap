@@ -245,6 +245,9 @@
 /* current GPX track */
 "Current Track" = "Текущий трек";
 
+/* No comment provided by engineer. */
+"Database error" = "Ошибка базы данных";
+
 /* Edit action */
 "Delete" = "Удалить";
 
@@ -554,9 +557,6 @@
 
 /* No comment provided by engineer. */
 "Open URL" = "Открыть URL";
-
-/* No comment provided by engineer. */
-"OSM data must be version 0.6 (fetched '%@')" = "Версия данных OSM должна быть 0.6 (загружена '%@')";
 
 /* No comment provided by engineer. */
 "other object" = "другой объект";

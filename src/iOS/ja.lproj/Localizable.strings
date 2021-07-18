@@ -556,9 +556,6 @@
 "Open URL" = "URLを開く";
 
 /* No comment provided by engineer. */
-"OSM data must be version 0.6 (fetched '%@')" = "OSMデータはバージョン0.6でなければなりません ('%@' をフェッチ)";
-
-/* No comment provided by engineer. */
 "other object" = "他のオブジェクト";
 
 /* Edit action */

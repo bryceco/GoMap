@@ -1,8 +1,8 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="ru" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -57,7 +57,7 @@
   </file>
   <file original="en.lproj/Localizable.strings" source-language="en" target-language="ru" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="&#9;Relation " xml:space="preserve">
@@ -264,6 +264,10 @@
         <source>Automatic</source>
         <target>Автоматически</target>
         <note>Automatic selection of presets languages</note>
+      </trans-unit>
+      <trans-unit id="Back" xml:space="preserve">
+        <source>Back</source>
+        <note>back button</note>
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
         <source>Background imagery %@</source>
@@ -683,6 +687,10 @@ Error: %@</source>
         <target>Может быть, позже...</target>
         <note>rate the app later</note>
       </trans-unit>
+      <trans-unit id="Measure Direction" xml:space="preserve">
+        <source>Measure Direction</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Member of multipolygon relation" xml:space="preserve">
         <source>Member of multipolygon relation</source>
         <target>Элемент мультиполигона</target>
@@ -865,15 +873,14 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>ОК</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="OSM data must be version 0.6 (fetched '%@')" xml:space="preserve">
-        <source>OSM data must be version 0.6 (fetched '%@')</source>
-        <target>Версия данных OSM должна быть 0.6 (загружена '%@')</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
       <trans-unit id="Object modified" xml:space="preserve">
         <source>Object modified</source>
         <target>Объект изменён</target>
         <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Old value: (oldValue)" xml:space="preserve">
+        <source>Old value: (oldValue)</source>
+        <note>previous tag value</note>
       </trans-unit>
       <trans-unit id="Only Left Turn restriction" xml:space="preserve">
         <source>Only Left Turn restriction</source>
@@ -1190,6 +1197,10 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>Это приложение пока не поддерживает ограничение манёвров без точки с ролью 'via'</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="This device is not able to provide heading data." xml:space="preserve">
+        <source>This device is not able to provide heading data.</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
         <source>To add another member to the relation 'long press' on the way to be added</source>
         <target>Чтобы добавить элемент в отношение, выберите и удерживайте линию, которую требуется добавить</target>
@@ -1273,6 +1284,10 @@ Select the highway from which you are approaching the intersection, then tap an 
         <source>Update</source>
         <target>Обновить</target>
         <note>update an osm note</note>
+      </trans-unit>
+      <trans-unit id="Update '%@' tag" xml:space="preserve">
+        <source>Update '%@' tag</source>
+        <note>Update the named tag value (e.g. foo=*)</note>
       </trans-unit>
       <trans-unit id="Updating Note..." xml:space="preserve">
         <source>Updating Note...</source>
@@ -1532,7 +1547,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="ru" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
@@ -1559,7 +1574,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="Storyboards/Base.lproj/Display.storyboard" source-language="en" target-language="ru" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
@@ -1904,11 +1919,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <target>Прошлое/Будущее</target>
         <note>Class = "UILabel"; text = "Past/Future"; ObjectID = "lu0-kr-5Cc";</note>
       </trans-unit>
-      <trans-unit id="luT-Tw-T3x.text" xml:space="preserve">
-        <source>Enable 3-D Effects</source>
-        <target>Включить 3D-эффекты</target>
-        <note>Class = "UILabel"; text = "Enable 3-D Effects"; ObjectID = "luT-Tw-T3x";</note>
-      </trans-unit>
       <trans-unit id="lwG-AE-nIZ.headerTitle" xml:space="preserve">
         <source>Background</source>
         <target>Подложка</target>
@@ -2028,7 +2038,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="ru" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
@@ -2121,6 +2131,10 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <target>Карты Bing</target>
         <note>Class = "UINavigationItem"; title = "Bing Maps"; ObjectID = "Qz0-Ce-YCX";</note>
       </trans-unit>
+      <trans-unit id="TcP-6i-B8H.text" xml:space="preserve">
+        <source>Specify a name ("New York"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object ("way 51014987"):</source>
+        <note>Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H";</note>
+      </trans-unit>
       <trans-unit id="ach-1A-88x.text" xml:space="preserve">
         <source>Changeset comment goes here</source>
         <target>Комментарий для пакета правок</target>
@@ -2190,7 +2204,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/POI.storyboard" source-language="en" target-language="ru" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
@@ -2562,7 +2576,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/Settings.storyboard" source-language="en" target-language="ru" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
@@ -2907,7 +2921,7 @@ http://glyphish.com
   </file>
   <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="ru" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">

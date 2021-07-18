@@ -486,9 +486,6 @@
 /* No comment provided by engineer. */
 "Open URL" = "URL öffnen";
 
-/* No comment provided by engineer. */
-"OSM data must be version 0.6 (fetched '%@')" = "OSM Daten müssen Version 0.6 (abgerufen '%@') sein";
-
 /* Edit action */
 "Paste" = "Einfügen";
 

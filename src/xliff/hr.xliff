@@ -1,8 +1,8 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="hr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -57,7 +57,7 @@
   </file>
   <file original="en.lproj/Localizable.strings" source-language="en" target-language="hr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="&#9;Relation " xml:space="preserve">
@@ -264,6 +264,10 @@
         <source>Automatic</source>
         <target>Automaski</target>
         <note>Automatic selection of presets languages</note>
+      </trans-unit>
+      <trans-unit id="Back" xml:space="preserve">
+        <source>Back</source>
+        <note>back button</note>
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
         <source>Background imagery %@</source>
@@ -683,6 +687,10 @@ Greška: %@</target>
         <target>Možda kasnije …</target>
         <note>rate the app later</note>
       </trans-unit>
+      <trans-unit id="Measure Direction" xml:space="preserve">
+        <source>Measure Direction</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Member of multipolygon relation" xml:space="preserve">
         <source>Member of multipolygon relation</source>
         <target>Član mnogokutne veze</target>
@@ -865,15 +873,14 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
         <target>U redu</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="OSM data must be version 0.6 (fetched '%@')" xml:space="preserve">
-        <source>OSM data must be version 0.6 (fetched '%@')</source>
-        <target>OSM podaci moraju biti u verziji 0.6 (dohvaćeno „%@”)</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
       <trans-unit id="Object modified" xml:space="preserve">
         <source>Object modified</source>
         <target>Objekt promijenjen</target>
         <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Old value: (oldValue)" xml:space="preserve">
+        <source>Old value: (oldValue)</source>
+        <note>previous tag value</note>
       </trans-unit>
       <trans-unit id="Only Left Turn restriction" xml:space="preserve">
         <source>Only Left Turn restriction</source>
@@ -1191,6 +1198,10 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
         <target>Ovaj program još ne podržava uređivanje zabrane skretanja bez čvora kao člana „preko”</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="This device is not able to provide heading data." xml:space="preserve">
+        <source>This device is not able to provide heading data.</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
         <source>To add another member to the relation 'long press' on the way to be added</source>
         <target>Za dodavanje daljnjeg člana vezi, „pritisni dugo” na put kojemu se dodaje</target>
@@ -1274,6 +1285,10 @@ Odaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu 
         <source>Update</source>
         <target>Aktualiziraj</target>
         <note>update an osm note</note>
+      </trans-unit>
+      <trans-unit id="Update '%@' tag" xml:space="preserve">
+        <source>Update '%@' tag</source>
+        <note>Update the named tag value (e.g. foo=*)</note>
       </trans-unit>
       <trans-unit id="Updating Note..." xml:space="preserve">
         <source>Updating Note...</source>
@@ -1533,7 +1548,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
   </file>
   <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="hr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
@@ -1560,7 +1575,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
   </file>
   <file original="Storyboards/Base.lproj/Display.storyboard" source-language="en" target-language="hr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
@@ -1905,11 +1920,6 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
         <target>Prošlo/Buduće</target>
         <note>Class = "UILabel"; text = "Past/Future"; ObjectID = "lu0-kr-5Cc";</note>
       </trans-unit>
-      <trans-unit id="luT-Tw-T3x.text" xml:space="preserve">
-        <source>Enable 3-D Effects</source>
-        <target>Aktiviraj 3-D efekte</target>
-        <note>Class = "UILabel"; text = "Enable 3-D Effects"; ObjectID = "luT-Tw-T3x";</note>
-      </trans-unit>
       <trans-unit id="lwG-AE-nIZ.headerTitle" xml:space="preserve">
         <source>Background</source>
         <target>Pozadina</target>
@@ -2029,7 +2039,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
   </file>
   <file original="Storyboards/Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="hr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
@@ -2122,6 +2132,10 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
         <target>Bing karte</target>
         <note>Class = "UINavigationItem"; title = "Bing Maps"; ObjectID = "Qz0-Ce-YCX";</note>
       </trans-unit>
+      <trans-unit id="TcP-6i-B8H.text" xml:space="preserve">
+        <source>Specify a name ("New York"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object ("way 51014987"):</source>
+        <note>Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H";</note>
+      </trans-unit>
       <trans-unit id="ach-1A-88x.text" xml:space="preserve">
         <source>Changeset comment goes here</source>
         <target>Ovdje upiši komentar za skup promjena</target>
@@ -2190,7 +2204,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
   </file>
   <file original="Storyboards/Base.lproj/POI.storyboard" source-language="en" target-language="hr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
@@ -2562,7 +2576,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
   </file>
   <file original="Storyboards/Base.lproj/Settings.storyboard" source-language="en" target-language="hr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
@@ -2907,7 +2921,7 @@ http://glyphish.com
   </file>
   <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="hr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">

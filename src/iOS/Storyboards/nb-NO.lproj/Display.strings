@@ -109,9 +109,6 @@
 /* Class = "UILabel"; text = "Past/Future"; ObjectID = "lu0-kr-5Cc"; */
 "lu0-kr-5Cc.text" = "Tidligere/fremtidig";
 
-/* Class = "UILabel"; text = "Enable 3-D Effects"; ObjectID = "luT-Tw-T3x"; */
-"luT-Tw-T3x.text" = "Skru på 3D-effekter";
-
 /* Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ"; */
 "lwG-AE-nIZ.headerTitle" = "Bakgrunn";
 
