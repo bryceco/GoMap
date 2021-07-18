@@ -370,7 +370,7 @@ class POIAllTagsViewController: UITableViewController {
 	@IBAction func setDirection(_ sender: Any) {
 		guard let pair: TextPairTableCell = (sender as? UIView)?.superviewOfType() else { return }
 
-		let directionViewController = DirectionViewController(
+		let directionViewController = DirectionViewController.instantiate(
 			key: pair.text1.text ?? "",
 			value: pair.text2.text,
 			setValue: { [self] newValue in

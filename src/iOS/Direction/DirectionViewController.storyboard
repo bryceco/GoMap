@@ -12,8 +12,7 @@
         <!--Direction View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <viewController id="Y6W-OH-hqX" customClass="DirectionViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DirectionViewController" id="Y6W-OH-hqX" customClass="DirectionViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="nYR-hu-Zu2">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -89,10 +88,11 @@
                     <connections>
                         <outlet property="cancelButton" destination="jm4-tW-K3C" id="Pup-cM-SQn"/>
                         <outlet property="oldValueLabel" destination="hzv-CS-Vcl" id="9Wp-wm-Mff"/>
-                        <outlet property="primaryActionButton" destination="Wq9-WK-Ccp" id="ooN-Ep-iWP"/>
+                        <outlet property="primaryActionButton" destination="Wq9-WK-Ccp" id="7qV-TT-5Vw"/>
                         <outlet property="valueLabel" destination="fTd-IM-NDF" id="XFl-2n-2iT"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="90" y="73"/>
         </scene>
