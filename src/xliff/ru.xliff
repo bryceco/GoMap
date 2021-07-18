@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="Direction/Base.lproj/DirectionViewController.xib" datatype="plaintext" source-language="en" target-language="ru">
     <header>
@@ -11,6 +11,7 @@
       </trans-unit>
       <trans-unit id="Jc3-Um-Aiy.text" xml:space="preserve">
         <source>320</source>
+        <target>320</target>
         <note>Class = "UILabel"; text = "320"; ObjectID = "Jc3-Um-Aiy";</note>
       </trans-unit>
       <trans-unit id="Yt9-h6-KKC.normalTitle" xml:space="preserve">
@@ -19,10 +20,12 @@
       </trans-unit>
       <trans-unit id="exg-Jc-FOH.normalTitle" xml:space="preserve">
         <source>Cancel</source>
+        <target>Отмена</target>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "exg-Jc-FOH";</note>
       </trans-unit>
       <trans-unit id="vtk-nS-Ss4.text" xml:space="preserve">
         <source>Old value: 42</source>
+        <target>Старое значение: 42</target>
         <note>Class = "UILabel"; text = "Old value: 42"; ObjectID = "vtk-nS-Ss4";</note>
       </trans-unit>
     </body>
@@ -229,6 +232,7 @@
       </trans-unit>
       <trans-unit id="Accept" xml:space="preserve">
         <source>Accept</source>
+        <target>Принять</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
@@ -298,6 +302,7 @@
       </trans-unit>
       <trans-unit id="Back" xml:space="preserve">
         <source>Back</source>
+        <target>Назад</target>
         <note>back button</note>
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
@@ -911,6 +916,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Old value: (oldValue)" xml:space="preserve">
         <source>Old value: (oldValue)</source>
+        <target>Старое значение: (oldValue)</target>
         <note>previous tag value</note>
       </trans-unit>
       <trans-unit id="Only Left Turn restriction" xml:space="preserve">
@@ -1050,6 +1056,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Retry" xml:space="preserve">
         <source>Retry</source>
+        <target>Повторить</target>
         <note>retry opening hours recognition</note>
       </trans-unit>
       <trans-unit id="Reverse" xml:space="preserve">
@@ -1322,6 +1329,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Update '%@' tag" xml:space="preserve">
         <source>Update '%@' tag</source>
+        <target>Обновить тег '%@'</target>
         <note>Update the named tag value (e.g. foo=*)</note>
       </trans-unit>
       <trans-unit id="Updating Note..." xml:space="preserve">
