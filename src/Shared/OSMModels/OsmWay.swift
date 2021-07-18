@@ -234,6 +234,11 @@ final class OsmWay: OsmBaseObject {
 		return true
 	}
 
+	override func clearCachedProperties() {
+		_isOneWay = nil
+		super.clearCachedProperties()
+	}
+
 	private var _isOneWay: ONEWAY?
 	var isOneWay: ONEWAY {
 		if _isOneWay == nil {
