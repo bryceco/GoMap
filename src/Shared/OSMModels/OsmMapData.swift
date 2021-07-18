@@ -396,15 +396,15 @@ final class OsmMapData: NSObject, NSCoding {
 
 	func deleteWayUnsafe(_ way: OsmWay) {
 		registerUndoCommentString(NSLocalizedString("delete way", comment: ""))
-		_ = spatial.removeMember(way, undo: undoManager)
 
 		remove(fromParentRelationsUnsafe: way)
 
 		while way.nodes.count != 0 {
-			let node = way.nodes.last
-			deleteNodeUnsafe(inWay: way, index: way.nodes.count - 1, preserveNode: node?.hasInterestingTags() ?? false)
+			let node = way.nodes.last!
+			deleteNodeUnsafe(inWay: way, index: way.nodes.count - 1, preserveNode: node.hasInterestingTags())
 		}
 		way.setDeleted(true, undo: undoManager)
+		_ = spatial.removeMember(way, undo: undoManager)
 	}
 
 	func deleteRelationUnsafe(_ relation: OsmRelation) {
