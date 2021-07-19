@@ -102,8 +102,6 @@ class QuadMap: NSObject, NSCoding {
 	}
 
 	func updateMember(_ member: OsmBaseObject, toBox: OSMRect, fromBox: OSMRect, undo: MyUndoManager?) {
-		var toBox = toBox
-		var fromBox = fromBox
 		if let fromQuad = rootQuad.getQuadBoxContaining(member, bbox: fromBox) {
 			if fromQuad.rect.containsRect(toBox) {
 				// It fits in its current box. It might fit into a child, but this path is rare and not worth optimizing.
@@ -112,6 +110,8 @@ class QuadMap: NSObject, NSCoding {
 			fromQuad.removeMember(member, bbox: fromBox)
 			rootQuad.addMember(member, bbox: toBox)
 			if let undo = undo {
+				var toBox = toBox
+				var fromBox = fromBox
 				let toData = Data(bytes: &toBox, count: MemoryLayout.size(ofValue: toBox))
 				let fromData = Data(bytes: &fromBox, count: MemoryLayout.size(ofValue: fromBox))
 				undo.registerUndo(

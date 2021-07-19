@@ -736,7 +736,7 @@ extension EditorMapLayer {
 				reverse()
 			case .JOIN:
 				let join = try mapData.canJoin(selectedWay!, at: selectedNode!)
-				join()
+				selectedWay = join()
 			case .DISCONNECT:
 				let disconnect = try mapData.canDisconnectWay(selectedWay!, at: selectedNode!)
 				selectedNode = disconnect()

@@ -995,7 +995,8 @@ extension OsmMapData {
 
 	// MARK: joinWay
 
-	func canJoin(_ selectedWay: OsmWay, at selectedNode: OsmNode) throws -> EditAction {
+	// Join two ways together, returning the new way (which is the older of the two)
+	func canJoin(_ selectedWay: OsmWay, at selectedNode: OsmNode) throws -> EditActionReturnWay {
 		if selectedWay.nodes.first != selectedNode, selectedWay.nodes.last != selectedNode {
 			throw EditError.text(NSLocalizedString("Node must be the first or last node of the way", comment: ""))
 		}
@@ -1024,7 +1025,7 @@ extension OsmMapData {
 		} else if otherWays.count == 0 {
 			throw EditError.text(NSLocalizedString("Missing way to connect to", comment: ""))
 		}
-		let otherWay = otherWays.first!
+		var otherWay = otherWays.first!
 		if (otherWay.nodes.count + selectedWay.nodes.count) > 2000 {
 			throw EditError.text(NSLocalizedString("Max nodes after joining is 2000", comment: ""))
 		}
@@ -1067,6 +1068,12 @@ extension OsmMapData {
 			throw EditError.text(NSLocalizedString("The ways contain incompatible tags", comment: ""))
 		}
 
+		// preserve the older of the two ways
+		var selectedWay = selectedWay
+		if selectedWay.version < otherWay.version || (selectedWay.ident < 0 && otherWay.ident > 0) {
+			swap(&selectedWay, &otherWay)
+		}
+
 		return { [self] in
 
 			// join nodes, preserving selected way
@@ -1095,8 +1102,7 @@ extension OsmMapData {
 					addNodeUnsafe(n, to: selectedWay, at: 0)
 				}
 			} else {
-				DbgAssert(false)
-				return // never happens
+				fatalError()
 			}
 
 			// join tags
@@ -1104,6 +1110,9 @@ extension OsmMapData {
 
 			deleteWayUnsafe(otherWay)
 			updateParentMultipolygonRelationRoles(for: selectedWay)
+
+			// return the new combined way
+			return selectedWay
 		}
 	}
 
