@@ -161,6 +161,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				}
 			})
 			return true
+		} else if url.isFileURL, url.pathExtension == "jpg" {
+			// FIXME: Not yet supported
+			return false
 		} else if url.absoluteString.count > 0 {
 			// geo: and gomaposm: support
 			if let parserResult = LocationURLParser.parseURL(url) {
