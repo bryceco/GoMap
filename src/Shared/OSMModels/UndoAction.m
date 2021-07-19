@@ -43,7 +43,10 @@
 
 -(NSString *)description
 {
-	return [NSString stringWithFormat:@"%@ %@ %@ (%@) %ld", [super description], _target, _selector, _objects, (long)_group];
+	return [NSString stringWithFormat:@"UndoAction %ld: %@ %@",
+			(long)_group,
+			NSStringFromClass([_target class]),
+			_selector];
 }
 
 -(void)performAction

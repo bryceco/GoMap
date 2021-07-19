@@ -102,11 +102,10 @@ class QuadMap: NSObject, NSCoding {
 	}
 
 	func updateMember(_ member: OsmBaseObject, toBox: OSMRect, fromBox: OSMRect, undo: MyUndoManager?) {
+		if fromBox == toBox {
+			return
+		}
 		if let fromQuad = rootQuad.getQuadBoxContaining(member, bbox: fromBox) {
-			if fromQuad.rect.containsRect(toBox) {
-				// It fits in its current box. It might fit into a child, but this path is rare and not worth optimizing.
-				return
-			}
 			fromQuad.removeMember(member, bbox: fromBox)
 			rootQuad.addMember(member, bbox: toBox)
 			if let undo = undo {
@@ -122,14 +121,15 @@ class QuadMap: NSObject, NSCoding {
 		} else {
 			rootQuad.addMember(member, bbox: toBox)
 			if let undo = undo {
-				undo.registerUndo(withTarget: self, selector: #selector(removeMember(_:undo:)), objects: [member, undo])
+				undo.registerUndo(withTarget: self,
+				                  selector: #selector(removeMember(_:undo:)),
+				                  objects: [member, undo])
 			}
 		}
 	}
 
 	// This is just like updateMember but allows boxed arguments so the undo manager can call it
 	@objc func updateMemberBoxed(_ member: OsmBaseObject, toBox: Data, fromBox: Data, undo: MyUndoManager?) {
-		// FIXME: convert OSMRect to use Coder once OSMRect is a swift type
 		let to: OSMRect = toBox.withUnsafeBytes({ $0.load(as: OSMRect.self) })
 		let from: OSMRect = fromBox.withUnsafeBytes({ $0.load(as: OSMRect.self) })
 		updateMember(member, toBox: to, fromBox: from, undo: undo)
