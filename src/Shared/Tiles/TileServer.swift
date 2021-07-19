@@ -164,20 +164,6 @@ final class TileServer {
 		attribIcon: nil,
 		attribUrl: "")
 
-	static let bingAerial = TileServer(
-		withName: "Bing Aerial",
-		identifier: BING_IDENTIFIER,
-		url: "https://ecn.{switch:t0,t1,t2,t3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=587&key=" + BING_MAPS_KEY,
-		maxZoom: 21,
-		roundUp: true,
-		startDate: nil,
-		endDate: nil,
-		wmsProjection: nil,
-		polygon: nil,
-		attribString: "",
-		attribIcon: UIImage(named: "bing-logo-white"),
-		attribUrl: "")
-
 	static let maxarPremiumAerial: TileServer = {
 		let url =
 			"eZ5AGZGcRQyKahl/+UTyIm+vENuJECB4Hvu4ytCzjBoCBDeRMbsOkaQ7zD5rUAYfRDaQwnQRiqE4lj0KYTenPe1d1spljlcYgvYRsqjEtYp6AhCoBPO4Rz6d0Z9enlPqPj7KCvxyOcB8A/+3HkYjpMGMEcvA6oeSX9I0RH/PS9lQzmJACnINv3lFIonIZ1gY/yFVqi2FWnWCbTyFdy2+FlyrWqTfyeG8tstR+5wQsC+xmsaCmW8e41jROh1O0z+U"
@@ -276,6 +262,80 @@ final class TileServer {
 		attribString: "",
 		attribIcon: nil,
 		attribUrl: "")
+
+	private static let builtinBingAerial = TileServer(
+		withName: "Bing Aerial",
+		identifier: BING_IDENTIFIER,
+		url: "https://ecn.{switch:t0,t1,t2,t3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=10618&key=" + BING_MAPS_KEY,
+		maxZoom: 21,
+		roundUp: true,
+		startDate: nil,
+		endDate: nil,
+		wmsProjection: nil,
+		polygon: nil,
+		attribString: "",
+		attribIcon: UIImage(named: "bing-logo-white"),
+		attribUrl: "")
+
+	private static var dynamicBingAerial: TileServer?
+
+	static var bingAerial: TileServer {
+		return Self.dynamicBingAerial ?? builtinBingAerial
+	}
+
+	static func fetchDynamicBingServer(_ callback: ((Result<TileServer, Error>) -> Void)?) {
+		let url = "https://dev.virtualearth.net/REST/v1/Imagery/Metadata/Aerial?include=ImageryProviders&key=" +
+			BING_MAPS_KEY
+		if let url = URL(string: url) {
+			URLSession.shared.data(with: url, completionHandler: { result in
+				DispatchQueue.main.async(execute: {
+					switch result {
+					case let .success(data):
+						if let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+						   let statusCode = json["statusCode"] as? Int,
+						   statusCode == 200,
+						   let brandLogoUri = json["brandLogoUri"] as? String,
+						   let resourceSets = json["resourceSets"] as? [Any],
+						   let resourceSet = resourceSets.first as? [String: Any],
+						   let resources = resourceSet["resources"] as? [Any],
+						   let res = resources.first as? [String: Any],
+						   var imageUrl = res["imageUrl"] as? String,
+						   let subdomains = res["imageUrlSubdomains"] as? [String],
+						   let zoomMax = res["zoomMax"] as? Int
+						{
+							let subdomains = subdomains.joined(separator: ",")
+							imageUrl = imageUrl.replacingOccurrences(of: "http://",
+							                                         with: "https://")
+							imageUrl = imageUrl.replacingOccurrences(of: "{subdomain}",
+							                                         with: "{switch:\(subdomains)}")
+							imageUrl = imageUrl.replacingOccurrences(of: "{quadkey}",
+							                                         with: "{u}")
+							imageUrl += "&key=" + BING_MAPS_KEY
+							let bing = TileServer(withName: Self.builtinBingAerial.name,
+							                      identifier: Self.builtinBingAerial.identifier,
+							                      url: imageUrl,
+							                      maxZoom: zoomMax,
+							                      roundUp: Self.builtinBingAerial.roundZoomUp,
+							                      startDate: Self.builtinBingAerial.startDate,
+							                      endDate: Self.builtinBingAerial.endDate,
+							                      wmsProjection: Self.builtinBingAerial.wmsProjection,
+							                      polygon: Self.builtinBingAerial.polygon,
+							                      attribString: Self.builtinBingAerial.attributionString,
+							                      attribIcon: Self.builtinBingAerial.attributionIcon,
+							                      attribUrl: Self.builtinBingAerial.attributionUrl)
+							bing.loadIcon(fromWeb: brandLogoUri)
+							Self.dynamicBingAerial = bing
+							callback?(.success(bing))
+						} else {
+							callback?(.failure(NSError()))
+						}
+					case let .failure(error):
+						callback?(.failure(error))
+					}
+				})
+			})
+		}
+	}
 
 	func dictionary() -> [String: Any] {
 		return [

@@ -22,6 +22,8 @@ final class TileServerList {
 	}
 
 	init() {
+		TileServer.fetchDynamicBingServer(nil)
+
 		fetchOsmLabAerials({ [self] in
 			// if a non-builtin aerial service is current then we need to select it once the list is loaded
 			load()
