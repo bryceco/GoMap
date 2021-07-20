@@ -36,8 +36,10 @@
 			<array>
 				<string>public.jpeg</string>
 				<string>public.png</string>
-			</array>		</dict>
-		<dict/>
+				<string>public.heic</string>
+				<string>public.image</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>

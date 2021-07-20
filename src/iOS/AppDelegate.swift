@@ -119,51 +119,67 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		})
 	}
 
+	func dataForScopedUrl(_ url: URL) throws -> Data {
+		guard url.isFileURL else {
+			throw NSError(domain: "dataForScopedUrl",
+			              code: 1,
+			              userInfo: [NSLocalizedDescriptionKey: "Not a file URL"])
+		}
+		guard url.startAccessingSecurityScopedResource() else {
+			throw NSError(domain: "dataForScopedUrl",
+			              code: 1,
+			              userInfo: [NSLocalizedDescriptionKey: "startAccessingSecurityScopedResource failed"])
+		}
+		defer {
+			url.stopAccessingSecurityScopedResource()
+		}
+		return try Data(contentsOf: url, options: [])
+	}
+
 	func application(_ application: UIApplication,
 	                 open url: URL,
 	                 options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool
 	{
-		if url.isFileURL, url.pathExtension == "gpx" {
-			// Load GPX
-			guard url.startAccessingSecurityScopedResource() else {
-				DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [self] in
-					self.mapView.showAlert(NSLocalizedString("Invalid URL", comment: ""),
-					                       message: "startAccessingSecurityScopedResource failed")
-				})
-				return false
-			}
-			var data: Data?
+		if url.isFileURL {
+			let data: Data
 			do {
-				data = try Data(contentsOf: url, options: [])
+				data = try dataForScopedUrl(url)
 			} catch {
 				DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [self] in
-					self.mapView.presentError(error, flash: false)
-				})
-				return false
-			}
-			url.stopAccessingSecurityScopedResource()
-
-			guard let data = data else {
-				DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [self] in
 					self.mapView.showAlert(NSLocalizedString("Invalid URL", comment: ""),
-					                       message: "No data")
+					                       message: error.localizedDescription)
 				})
 				return false
 			}
-
-			DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: { [self] in
-				let ok = mapView.gpxLayer.loadGPXData(data, center: true)
-				if !ok {
-					mapView.showAlert(NSLocalizedString("Open URL", comment: ""),
-					                  message: NSLocalizedString(
-					                  	"Sorry, an error occurred while loading the GPX file",
-					                  	comment: ""))
+			switch url.pathExtension.lowercased() {
+			case "gpx":
+				// Load GPX
+				DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: { [self] in
+					let ok = mapView.gpxLayer.loadGPXData(data, center: true)
+					if !ok {
+						mapView.showAlert(NSLocalizedString("Open URL", comment: ""),
+						                  message: NSLocalizedString(
+						                  	"Sorry, an error occurred while loading the GPX file",
+						                  	comment: ""))
+					}
+				})
+				return true
+			case "jpg", "jpeg", "png", "heic":
+				if let sourceRef: CGImageSource = CGImageSourceCreateWithData(data as CFData, nil),
+				   let properties = CGImageSourceCopyPropertiesAtIndex(sourceRef, 0, nil) as? [AnyHashable: Any],
+				   let exif = properties[kCGImagePropertyExifDictionary],
+				   let dict = exif as? [String: Any]
+				{
+					// Unfortunately this doesn't include the Lat/Lon.
+					// One option is to use a library like https://code.google.com/archive/p/iphone-exif/
+					print("\(dict)")
+					return false
 				}
-			})
-			return true
-		} else if url.isFileURL, url.pathExtension == "jpg" {
-			// FIXME: Not yet supported
-			return false
+				return false
+			default:
+				return false
+			}
+
 		} else if url.absoluteString.count > 0 {
 			// geo: and gomaposm: support
 			if let parserResult = LocationURLParser.parseURL(url) {
