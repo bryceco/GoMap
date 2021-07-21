@@ -120,6 +120,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	func dataForScopedUrl(_ url: URL) throws -> Data {
+		// sometimes we don't need to do scoping and the scoping calls will fail
+		if let data = try? Data(contentsOf: url, options: []) {
+			return data
+		}
+
 		guard url.isFileURL else {
 			throw NSError(domain: "dataForScopedUrl",
 			              code: 1,
