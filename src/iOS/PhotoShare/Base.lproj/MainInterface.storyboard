@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="j1y-V4-xli">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Share View Controller-->
+        <scene sceneID="ceB-am-kn3">
+            <objects>
+                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="overCurrentContext" id="j1y-V4-xli" customClass="ShareViewController" customModule="PhotoShare" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" opaque="NO" contentMode="center" id="wbc-yd-nQP">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JEt-At-qpg" userLabel="Popup View">
+                                <rect key="frame" x="20" y="390.5" width="374" height="125.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Go Map!! will open at the location the photo was taken." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cy3-gz-fvk">
+                                        <rect key="frame" x="20" y="20" width="334" height="42.5"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zxw-Em-faC">
+                                        <rect key="frame" x="225" y="70.5" width="59" height="35"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                        <state key="normal" title="Cancel"/>
+                                        <connections>
+                                            <action selector="buttonCancel" destination="j1y-V4-xli" eventType="touchUpInside" id="S0R-cO-f05"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="05z-LH-xEK">
+                                        <rect key="frame" x="324" y="70.5" width="30" height="35"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                        <state key="normal" title="OK"/>
+                                        <connections>
+                                            <action selector="buttonPressOK" destination="j1y-V4-xli" eventType="touchUpInside" id="VIp-8w-DZ8"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="cy3-gz-fvk" firstAttribute="top" secondItem="JEt-At-qpg" secondAttribute="top" constant="20" symbolic="YES" id="4mS-uq-RB6"/>
+                                    <constraint firstAttribute="trailing" secondItem="05z-LH-xEK" secondAttribute="trailing" constant="20" symbolic="YES" id="Do6-4Z-WLX"/>
+                                    <constraint firstAttribute="bottom" secondItem="05z-LH-xEK" secondAttribute="bottom" constant="20" symbolic="YES" id="G7U-dO-fgx"/>
+                                    <constraint firstItem="Zxw-Em-faC" firstAttribute="top" secondItem="cy3-gz-fvk" secondAttribute="bottom" constant="8" symbolic="YES" id="Ig7-hV-9xT"/>
+                                    <constraint firstItem="Zxw-Em-faC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JEt-At-qpg" secondAttribute="leading" constant="20" symbolic="YES" id="bgy-9v-1sk"/>
+                                    <constraint firstAttribute="trailing" secondItem="cy3-gz-fvk" secondAttribute="trailing" constant="20" symbolic="YES" id="g4s-de-LwH"/>
+                                    <constraint firstItem="05z-LH-xEK" firstAttribute="top" secondItem="cy3-gz-fvk" secondAttribute="bottom" constant="8" symbolic="YES" id="gCG-Sh-vSc"/>
+                                    <constraint firstAttribute="bottom" secondItem="Zxw-Em-faC" secondAttribute="bottom" constant="20" symbolic="YES" id="ncg-Pu-eau"/>
+                                    <constraint firstItem="05z-LH-xEK" firstAttribute="leading" secondItem="Zxw-Em-faC" secondAttribute="trailing" constant="40" id="ryw-ql-CsB"/>
+                                    <constraint firstItem="cy3-gz-fvk" firstAttribute="leading" secondItem="JEt-At-qpg" secondAttribute="leading" constant="20" symbolic="YES" id="u4x-1r-Dcm"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="1Xd-am-t49"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="JEt-At-qpg" firstAttribute="centerY" secondItem="1Xd-am-t49" secondAttribute="centerY" id="0Xy-np-8bJ"/>
+                            <constraint firstItem="JEt-At-qpg" firstAttribute="centerX" secondItem="1Xd-am-t49" secondAttribute="centerX" id="MUD-50-fs8"/>
+                            <constraint firstItem="1Xd-am-t49" firstAttribute="leading" secondItem="JEt-At-qpg" secondAttribute="leading" constant="-20" id="uVZ-37-3Mo"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="300" height="300"/>
+                    <connections>
+                        <outlet property="buttonOK" destination="05z-LH-xEK" id="125-ij-abu"/>
+                        <outlet property="popupText" destination="cy3-gz-fvk" id="TYe-ba-uRa"/>
+                        <outlet property="popupView" destination="JEt-At-qpg" id="TGC-ft-gee"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CEy-Cv-SGf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="89.855072463768124" y="71.651785714285708"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
