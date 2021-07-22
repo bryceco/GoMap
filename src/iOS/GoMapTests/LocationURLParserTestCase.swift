@@ -10,12 +10,12 @@
 import XCTest
 
 class LocationURLParserTestCase: XCTestCase {
-	var parser: LocationURLParser!
+	var parser: LocationParser!
 
 	override func setUp() {
 		super.setUp()
 
-		parser = LocationURLParser()
+		parser = LocationParser()
 	}
 
 	override func tearDown() {
@@ -29,7 +29,7 @@ class LocationURLParserTestCase: XCTestCase {
 		let url = URL(string: "https://openstreetmap.org/").require()
 
 		/// When
-		let result = parser.parseURL(url)
+		let result = LocationParser.mapLocationFrom(url: url)
 
 		/// Then
 		XCTAssertNil(result)
@@ -40,7 +40,7 @@ class LocationURLParserTestCase: XCTestCase {
 		let url = URL(string: "geo:foo,1?z=2").require()
 
 		/// When
-		let result = parser.parseURL(url)
+		let result = LocationParser.mapLocationFrom(url: url)
 
 		/// Then
 		XCTAssertNil(result)
@@ -51,7 +51,7 @@ class LocationURLParserTestCase: XCTestCase {
 		let url = URL(string: "geo:1,bar?z=2").require()
 
 		/// When
-		let result = parser.parseURL(url)
+		let result = LocationParser.mapLocationFrom(url: url)
 
 		/// Then
 		XCTAssertNil(result)
@@ -65,13 +65,13 @@ class LocationURLParserTestCase: XCTestCase {
 		let url = URL(string: "geo:\(latitude),\(longitude)?z=\(zoom)").require()
 
 		/// When
-		let result = parser.parseURL(url).require()
+		let result = LocationParser.mapLocationFrom(url: url).require()
 
 		/// Then
 		XCTAssertEqual(result.latitude, latitude)
 		XCTAssertEqual(result.longitude, longitude)
 		XCTAssertEqual(result.zoom, zoom)
-		XCTAssertEqual(result.viewState, MAPVIEW_NONE)
+		XCTAssertEqual(result.viewState, nil)
 	}
 
 	func testParseURL_withURLThatContainsSemicolonsBetweenCoordinatesAndZoom_shouldNotResultInNil() {
@@ -79,7 +79,7 @@ class LocationURLParserTestCase: XCTestCase {
 		let url = URL(string: "geo:1,2;;;;;;;;;;;;;;;;;;;;;?z=3").require()
 
 		/// When
-		let result = parser.parseURL(url)
+		let result = LocationParser.mapLocationFrom(url: url)
 
 		/// Then
 		XCTAssertNotNil(result)
@@ -90,18 +90,18 @@ class LocationURLParserTestCase: XCTestCase {
 		let url = URL(string: "geo:1,2?z=loremipsum").require()
 
 		/// When
-		let result = parser.parseURL(url).require()
+		let result = LocationParser.mapLocationFrom(url: url).require()
 
 		/// Then
 		XCTAssertEqual(result.zoom, 0)
 	}
-
+ 
 	func testParseURL_withURLThatDoesNotHaveTheZoomParameter_shouldDefaultToZoom0() {
 		/// Given
 		let url = URL(string: "geo:1,2").require()
 
 		/// When
-		let result = parser.parseURL(url).require()
+		let result = LocationParser.mapLocationFrom(url: url).require()
 
 		/// Then
 		XCTAssertEqual(result.zoom, 0)

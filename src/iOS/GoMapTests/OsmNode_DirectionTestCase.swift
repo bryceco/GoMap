@@ -11,29 +11,29 @@ import XCTest
 
 class OsmNode_DirectionTestCase: XCTestCase {
 	func testLowerBoundOfDirectionShouldBeNotFoundIfNoDirectionTagExists() {
-		let node = OsmNode()
+		let node = OsmNode(asUserCreated: "")
 
-		XCTAssertEqual(node.direction.lowerBound, NSNotFound)
+		XCTAssertEqual(node.direction, nil)
 	}
 
 	func testDirectionShouldUseTheDirectionTagForLowerBound() {
 		let key = "direction"
 		let direction = 42
 
-		let node = OsmNode()
+		let node = OsmNode(asUserCreated: "")
 		node.constructTag(key, value: "\(direction)")
 
-		XCTAssertEqual(node.direction.lowerBound, direction)
+		XCTAssertEqual(node.direction?.lowerBound, direction)
 	}
 
 	func testDirectionShouldUseTheCameraDirectionTagForLowerBound() {
 		let key = "camera:direction"
 		let direction = 42
 
-		let node = OsmNode()
+		let node = OsmNode(asUserCreated: "")
 		node.constructTag(key, value: "\(direction)")
 
-		XCTAssertEqual(node.direction.lowerBound, direction)
+		XCTAssertEqual(node.direction?.lowerBound, direction)
 	}
 
 	func testDirectionShouldParseCardinalDirectionToLowerBound() {
@@ -48,10 +48,10 @@ class OsmNode_DirectionTestCase: XCTestCase {
 		                                                "W": 270,
 		                                                "NW": 315]
 		for (cardinalDirection, expectedDirection) in cardinalDirectionToDegree {
-			let node = OsmNode()
+			let node = OsmNode(asUserCreated: "")
 			node.constructTag(key, value: cardinalDirection)
 
-			XCTAssertEqual(node.direction.lowerBound, expectedDirection)
+			XCTAssertEqual(node.direction?.lowerBound, expectedDirection)
 		}
 	}
 }

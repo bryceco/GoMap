@@ -119,55 +119,11 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 
 	/// Looks for a pair of non-integer numbers in the string, and jump to it if found
 	func containsLatLon(_ text: String) -> Bool {
-		let text = text.trimmingCharacters(in: .whitespacesAndNewlines)
 
-		// try parsing as a URL containing lat=,lon=
-		if let comps = URLComponents(string: text) {
-			if let lat = comps.queryItems?.first(where: { $0.name == "lat" })?.value,
-			   let lon = comps.queryItems?.first(where: { $0.name == "lon" })?.value,
-			   let lat = Double(lat),
-			   let lon = Double(lon)
-			{
-				updateHistory(with: "\(lat),\(lon)")
-				jump(toLat: lat, lon: lon)
-				return true
-			}
-		}
-
-		let scanner = Scanner(string: text)
-		let digits = CharacterSet(charactersIn: "-0123456789")
-		let floats = CharacterSet(charactersIn: "-.0123456789")
-		let comma = CharacterSet(charactersIn: ",°/")
-		scanner.charactersToBeSkipped = CharacterSet.whitespaces
-
-		while !scanner.isAtEnd {
-			scanner.scanUpToCharacters(from: digits, into: nil)
-			let pos = scanner.scanLocation
-			var sLat: NSString?
-			var sLon: NSString?
-			if scanner.scanCharacters(from: floats, into: &sLat),
-			   let sLat = sLat,
-			   sLat.contains("."),
-			   let lat = Double(sLat as String),
-			   lat > -90,
-			   lat < 90,
-			   scanner.scanCharacters(from: comma, into: nil),
-			   scanner.scanCharacters(from: floats, into: &sLon),
-			   let sLon = sLon,
-			   sLon.contains("."),
-			   let lon = Double(sLon as String),
-			   lon >= -180,
-			   lon <= 180
-			{
-				updateHistory(with: "\(lat),\(lon)")
-				jump(toLat: lat, lon: lon)
-				return true
-			}
-			if scanner.scanLocation == pos,
-			   !scanner.isAtEnd
-			{
-				scanner.scanLocation = pos + 1
-			}
+		if let loc = LocationParser.mapLocationFrom(text: text) {
+			updateHistory(with: "\(loc.latitude),\(loc.longitude)")
+			jump(toLat: loc.latitude, lon: loc.longitude)
+			return true
 		}
 		return false
 	}

@@ -15,7 +15,7 @@ class OSMMapDataTestCase: XCTestCase {
 
 	override func setUp() {
 		userDefaults = createDedicatedUserDefaults()
-		mapData = OsmMapData(userDefaults: userDefaults)
+		mapData = OsmMapData()
 	}
 
 	override func tearDown() {

@@ -186,8 +186,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			}
 
 		} else if url.absoluteString.count > 0 {
-			// geo: and gomaposm: support
-			if let parserResult = LocationURLParser.parseURL(url) {
+			// geo: gomaposm: and arbitrary URLs containing lat/lon coordinates
+			if let parserResult = LocationParser.mapLocationFrom(url: url) {
 				DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: { [self] in
 					setMapLocation(parserResult)
 				})

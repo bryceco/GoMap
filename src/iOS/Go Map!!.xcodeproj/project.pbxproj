@@ -154,7 +154,7 @@
 		C3D096DB263EB73E00E3B129 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096DA263EB73E00E3B129 /* main.swift */; };
 		C3D096DC263EB7DE00E3B129 /* MyApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096D7263EAE1E00E3B129 /* MyApplication.swift */; };
 		C3D096FC263F118500E3B129 /* FpsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341E1552639DEFC0022E983 /* FpsLabel.swift */; };
-		C3FA9249263FF95B000A2A99 /* LocationURLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA9248263FF95B000A2A99 /* LocationURLParser.swift */; };
+		C3FA9249263FF95B000A2A99 /* LocationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA9248263FF95B000A2A99 /* LocationParser.swift */; };
 		ED56E5AB26024DA5000B368C /* AutocompleteTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5AA26024DA5000B368C /* AutocompleteTextField.swift */; };
 		ED56E5B426026542000B368C /* BingMetadataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5B226026541000B368C /* BingMetadataViewController.swift */; };
 		ED56E5B526026542000B368C /* ClearCacheViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5B326026541000B368C /* ClearCacheViewController.swift */; };
@@ -514,7 +514,7 @@
 		C3D096F1263EBE5E00E3B129 /* OsmBaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OsmBaseObject.swift; sourceTree = "<group>"; };
 		C3D096F2263EBE5E00E3B129 /* OsmRelation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OsmRelation.swift; sourceTree = "<group>"; };
 		C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VoiceAnnouncement.swift; path = ../Shared/VoiceAnnouncement.swift; sourceTree = "<group>"; };
-		C3FA9248263FF95B000A2A99 /* LocationURLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationURLParser.swift; sourceTree = "<group>"; };
+		C3FA9248263FF95B000A2A99 /* LocationParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationParser.swift; sourceTree = "<group>"; };
 		C3FA924A263FFD7E000A2A99 /* QuadMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuadMap.swift; sourceTree = "<group>"; };
 		C3FA924C263FFEF9000A2A99 /* PathUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathUtil.swift; sourceTree = "<group>"; };
 		C3FA924F2640329B000A2A99 /* TileServerList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileServerList.swift; sourceTree = "<group>"; };
@@ -717,6 +717,7 @@
 				02BC04E924C6767100BFA5EF /* Height */,
 				027EDC5D206F3EED00D349D6 /* KissXML */,
 				EDB2C3A02609E29F00C08293 /* LanguageTableViewController.swift */,
+				C3FA9248263FF95B000A2A99 /* LocationParser.swift */,
 				EDB2C3A52609E6E100C08293 /* LoginViewController.swift */,
 				C3D096DA263EB73E00E3B129 /* main.swift */,
 				C3004F51263A6CA5006BF313 /* MainViewController.swift */,
@@ -743,7 +744,6 @@
 				028C51E525CB7A23004A88F7 /* TristateButton.swift */,
 				C3D096AF263D4FF500E3B129 /* TurnRestrictController.swift */,
 				647C150D24268DB7008A9366 /* Upload */,
-				64305F6C23E71F5700232BB9 /* URLParsing */,
 			);
 			name = "Go Map!";
 			sourceTree = "<group>";
@@ -919,14 +919,6 @@
 			);
 			name = Utility;
 			path = ../Shared/Utility;
-			sourceTree = "<group>";
-		};
-		64305F6C23E71F5700232BB9 /* URLParsing */ = {
-			isa = PBXGroup;
-			children = (
-				C3FA9248263FF95B000A2A99 /* LocationURLParser.swift */,
-			);
-			path = URLParsing;
 			sourceTree = "<group>";
 		};
 		64348CEB225E7CD900ADE7FB /* GoMapTests */ = {
@@ -1343,7 +1335,7 @@
 				02FEDAF42651DCC100DF15D7 /* POIAllTagsViewController.swift in Sources */,
 				C3D096DB263EB73E00E3B129 /* main.swift in Sources */,
 				02034743266C2CB9000A7C3D /* OsmNotesDatabase.swift in Sources */,
-				C3FA9249263FF95B000A2A99 /* LocationURLParser.swift in Sources */,
+				C3FA9249263FF95B000A2A99 /* LocationParser.swift in Sources */,
 				ED56E5EB26028B5F000B368C /* GpxConfigureViewController.swift in Sources */,
 				02EA1C6C2663398C00A0F827 /* TileQuadKey.swift in Sources */,
 				021FADD725873D0100F6E1C0 /* PresetsForFeature.swift in Sources */,
