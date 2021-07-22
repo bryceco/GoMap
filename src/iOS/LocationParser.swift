@@ -10,9 +10,7 @@ import Foundation
 
 /// An object that parses URLs and text for coordinates
 class LocationParser {
-
 	class func mapLocationFrom(text: String) -> MapLocation? {
-
 		// first try parsing as a URL
 		let text = text.trimmingCharacters(in: .whitespacesAndNewlines)
 		if let url = URL(string: text),
@@ -34,33 +32,32 @@ class LocationParser {
 			var sLat: NSString?
 			var sLon: NSString?
 			if scanner.scanCharacters(from: floats, into: &sLat),
-				let sLat = sLat,
-				sLat.contains("."),
-				let lat = Double(sLat as String),
-				lat > -90,
-				lat < 90,
-				scanner.scanCharacters(from: comma, into: nil),
-				scanner.scanCharacters(from: floats, into: &sLon),
-				let sLon = sLon,
-				sLon.contains("."),
-				let lon = Double(sLon as String),
-				lon >= -180,
-				lon <= 180
-			 {
+			   let sLat = sLat,
+			   sLat.contains("."),
+			   let lat = Double(sLat as String),
+			   lat > -90,
+			   lat < 90,
+			   scanner.scanCharacters(from: comma, into: nil),
+			   scanner.scanCharacters(from: floats, into: &sLon),
+			   let sLon = sLon,
+			   sLon.contains("."),
+			   let lon = Double(sLon as String),
+			   lon >= -180,
+			   lon <= 180
+			{
 				return MapLocation(longitude: lon,
-								   latitude: lat,
-								   zoom: 0.0,
-								   viewState: nil)
-			 }
-			 if scanner.scanLocation == pos,
-				!scanner.isAtEnd
-			 {
-				 scanner.scanLocation = pos + 1
-			 }
-		 }
-		 return nil
+				                   latitude: lat,
+				                   zoom: 0.0,
+				                   viewState: nil)
+			}
+			if scanner.scanLocation == pos,
+			   !scanner.isAtEnd
+			{
+				scanner.scanLocation = pos + 1
+			}
+		}
+		return nil
 	}
-
 
 	/// Attempts to parse the given URL.
 	/// @param url The URL to parse.
@@ -77,12 +74,12 @@ class LocationParser {
 			var zoom: Double = 0
 			let scanner = Scanner(string: components.path)
 			guard scanner.scanDouble(&lat),
-			   scanner.scanString(",", into: nil),
-			   scanner.scanDouble(&lon)
+			      scanner.scanString(",", into: nil),
+			      scanner.scanDouble(&lon)
 			else {
 				return nil
 			}
-			if let z = components.queryItems?.first(where: {$0.name == "z"})?.value,
+			if let z = components.queryItems?.first(where: { $0.name == "z" })?.value,
 			   let z = Double(z)
 			{
 				zoom = z
@@ -101,16 +98,17 @@ class LocationParser {
 			var view: MapViewState?
 
 			for queryItem in components.queryItems ?? [] {
-				if queryItem.name == "center" {
+				switch queryItem.name {
+				case "center":
 					// scan center
 					let scanner = Scanner(string: queryItem.value ?? "")
 					hasCenter = scanner.scanDouble(&lat) && scanner.scanString(",", into: nil) && scanner
 						.scanDouble(&lon) && scanner.isAtEnd
-				} else if queryItem.name == "zoom" {
+				case "zoom":
 					// scan zoom
 					let scanner = Scanner(string: queryItem.value ?? "")
 					hasZoom = scanner.scanDouble(&zoom) && scanner.isAtEnd
-				} else if queryItem.name == "view" {
+				case "view":
 					// scan view
 					if queryItem.value == "aerial+editor" {
 						view = MapViewState.EDITORAERIAL
@@ -121,8 +119,9 @@ class LocationParser {
 					} else if queryItem.value == "editor" {
 						view = MapViewState.EDITOR
 					}
-				} else {
+				default:
 					// unrecognized parameter
+					break
 				}
 			}
 			if hasCenter {
@@ -133,16 +132,33 @@ class LocationParser {
 			}
 		}
 
-		 // try parsing as any URL containing lat=,lon=
-		 if let lat = components.queryItems?.first(where: { $0.name == "lat" })?.value,
-			let lon = components.queryItems?.first(where: { $0.name == "lon" })?.value,
-			let lat = Double(lat),
-			let lon = Double(lon)
-		 {
+		// decode as apple maps link
+		if components.host == "maps.apple.com",
+		   let latLon = components.queryItems?.first(where: { $0.name == "ll" })?.value
+		{
+			var lat = 0.0, lon = 0.0
+			let scanner = Scanner(string: latLon)
+			if scanner.scanDouble(&lat),
+			   scanner.scanString(",", into: nil),
+			   scanner.scanDouble(&lon)
+			{
+				return MapLocation(longitude: lon,
+				                   latitude: lat,
+				                   zoom: 0.0,
+				                   viewState: nil)
+			}
+		}
+
+		// try parsing as any URL containing lat=,lon=
+		if let lat = components.queryItems?.first(where: { $0.name == "lat" })?.value,
+		   let lon = components.queryItems?.first(where: { $0.name == "lon" })?.value,
+		   let lat = Double(lat),
+		   let lon = Double(lon)
+		{
 			return MapLocation(longitude: lon,
-							   latitude: lat,
-							   zoom: 0.0,
-							   viewState: nil)
+			                   latitude: lat,
+			                   zoom: 0.0,
+			                   viewState: nil)
 		}
 
 		return nil

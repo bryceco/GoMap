@@ -80,6 +80,7 @@
 		02ACBD2116717BC500BB4414 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD2016717BC500BB4414 /* CoreLocation.framework */; };
 		02AFBF20245774DC00BE43F4 /* OSM-Logo256.png in Resources */ = {isa = PBXBuildFile; fileRef = 02AFBF1F245774DC00BE43F4 /* OSM-Logo256.png */; };
 		02AFBF242458C1E800BE43F4 /* BingPlaceholderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */; };
+		02B0B15D26AA052600111E7E /* LocationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA9248263FF95B000A2A99 /* LocationParser.swift */; };
 		02BE6190245D1F9D00E92662 /* EsriPlaceholderImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */; };
 		02C3194E250EAED500C5D200 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02C3194C250EAED500C5D200 /* Localizable.strings */; };
 		02CB2405265DB7CB00835F32 /* OpeningHoursRecognizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB2401265DB7CB00835F32 /* OpeningHoursRecognizerView.swift */; };
@@ -1382,6 +1383,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				02D6238226A6628300A4F147 /* ShareViewController.swift in Sources */,
+				02B0B15D26AA052600111E7E /* LocationParser.swift in Sources */,
 				02D623B626A8AFFC00A4F147 /* exif.cpp in Sources */,
 				02D623D626A8B16900A4F147 /* ExifGeolocation.mm in Sources */,
 			);

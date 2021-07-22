@@ -95,7 +95,7 @@ class LocationURLParserTestCase: XCTestCase {
 		/// Then
 		XCTAssertEqual(result.zoom, 0)
 	}
- 
+
 	func testParseURL_withURLThatDoesNotHaveTheZoomParameter_shouldDefaultToZoom0() {
 		/// Given
 		let url = URL(string: "geo:1,2").require()

@@ -119,7 +119,6 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 
 	/// Looks for a pair of non-integer numbers in the string, and jump to it if found
 	func containsLatLon(_ text: String) -> Bool {
-
 		if let loc = LocationParser.mapLocationFrom(text: text) {
 			updateHistory(with: "\(loc.latitude),\(loc.longitude)")
 			jump(toLat: loc.latitude, lon: loc.longitude)
