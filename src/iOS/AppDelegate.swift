@@ -141,6 +141,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		return try Data(contentsOf: url, options: [])
 	}
 
+	func displayGpxError() {
+		mapView.showAlert(NSLocalizedString("Open URL", comment: ""),
+		                  message: NSLocalizedString("Sorry, an error occurred while loading the GPX file",
+		                                             comment: ""))
+	}
+
 	func application(_ application: UIApplication,
 	                 open url: URL,
 	                 options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool
@@ -159,17 +165,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			switch url.pathExtension.lowercased() {
 			case "gpx":
 				// Load GPX
-				DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: { [self] in
+				DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [self] in
 					let ok = mapView.gpxLayer.loadGPXData(data, center: true)
 					if !ok {
-						mapView.showAlert(NSLocalizedString("Open URL", comment: ""),
-						                  message: NSLocalizedString(
-						                  	"Sorry, an error occurred while loading the GPX file",
-						                  	comment: ""))
+						displayGpxError()
 					}
 				})
 				return true
 			case "jpg", "jpeg", "png", "heic":
+				// image file: try to extract location of image from EXIF
 				if let sourceRef: CGImageSource = CGImageSourceCreateWithData(data as CFData, nil),
 				   let properties = CGImageSourceCopyPropertiesAtIndex(sourceRef, 0, nil) as? [AnyHashable: Any],
 				   let exif = properties[kCGImagePropertyExifDictionary],
@@ -185,7 +189,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				return false
 			}
 
-		} else if url.absoluteString.count > 0 {
+		} else {
+			guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else { return false }
+
+			if components.scheme == "gomaposm",
+			   let base64 = components.queryItems?.first(where: { $0.name == "gpxurl" })?.value,
+			   let gpxUrlData = Data(base64Encoded: base64, options: []),
+			   let gpxUrl = String(data: gpxUrlData, encoding: .utf8),
+			   let gpxUrl = URL(string: gpxUrl)
+			{
+				URLSession.shared.data(with: gpxUrl) { result in
+					DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [self] in
+						if case let .success(data) = result {
+							let ok = mapView.gpxLayer.loadGPXData(data, center: true)
+							if !ok {
+								displayGpxError()
+							}
+						} else {
+							displayGpxError()
+						}
+					})
+				}
+				return true
+			}
+
 			// geo: gomaposm: and arbitrary URLs containing lat/lon coordinates
 			if let parserResult = LocationParser.mapLocationFrom(url: url) {
 				DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: { [self] in

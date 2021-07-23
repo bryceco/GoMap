@@ -67,8 +67,8 @@ class LocationParser {
 			return nil
 		}
 
+		// geo:47.75538,-122.15979?z=18
 		if components.scheme == "geo" {
-			// geo:47.75538,-122.15979?z=18
 			var lat: Double = 0
 			var lon: Double = 0
 			var zoom: Double = 0
@@ -84,12 +84,13 @@ class LocationParser {
 			{
 				zoom = z
 			}
-
 			return MapLocation(longitude: lon, latitude: lat, zoom: zoom, viewState: nil)
 		}
 
 		// https://gomaposm.com/edit?center=47.679056,-122.212559&zoom=21&view=aerial%2Beditor
-		if components.scheme == "gomaposm" || components.host == "gomaposm.com" {
+		if components.scheme == "gomaposm" ||
+			components.host == "gomaposm.com"
+		{
 			var hasCenter = false
 			var hasZoom = false
 			var lat: Double = 0
@@ -102,22 +103,22 @@ class LocationParser {
 				case "center":
 					// scan center
 					let scanner = Scanner(string: queryItem.value ?? "")
-					hasCenter = scanner.scanDouble(&lat) && scanner.scanString(",", into: nil) && scanner
-						.scanDouble(&lon) && scanner.isAtEnd
+					hasCenter = scanner.scanDouble(&lat)
+						&& scanner.scanString(",", into: nil)
+						&& scanner.scanDouble(&lon)
+						&& scanner.isAtEnd
 				case "zoom":
 					// scan zoom
 					let scanner = Scanner(string: queryItem.value ?? "")
 					hasZoom = scanner.scanDouble(&zoom) && scanner.isAtEnd
 				case "view":
 					// scan view
-					if queryItem.value == "aerial+editor" {
-						view = MapViewState.EDITORAERIAL
-					} else if queryItem.value == "aerial" {
-						view = MapViewState.AERIAL
-					} else if queryItem.value == "mapnik" {
-						view = MapViewState.MAPNIK
-					} else if queryItem.value == "editor" {
-						view = MapViewState.EDITOR
+					switch queryItem.value {
+					case "aerial+editor": view = .EDITORAERIAL
+					case "aerial": view = .AERIAL
+					case "mapnik": view = .MAPNIK
+					case "editor": view = .EDITOR
+					default: break
 					}
 				default:
 					// unrecognized parameter

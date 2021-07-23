@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="j1y-V4-xli">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -17,25 +18,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JEt-At-qpg" userLabel="Popup View">
-                                <rect key="frame" x="20" y="390.5" width="374" height="125.5"/>
+                                <rect key="frame" x="40" y="396.5" width="334" height="113"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Go Map!! will open at the location the photo was taken." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cy3-gz-fvk">
-                                        <rect key="frame" x="20" y="20" width="334" height="42.5"/>
+                                        <rect key="frame" x="20" y="20" width="294" height="36"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zxw-Em-faC">
-                                        <rect key="frame" x="225" y="70.5" width="59" height="35"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                        <rect key="frame" x="199" y="64" width="45" height="29"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <state key="normal" title="Cancel"/>
                                         <connections>
                                             <action selector="buttonCancel" destination="j1y-V4-xli" eventType="touchUpInside" id="S0R-cO-f05"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="05z-LH-xEK">
-                                        <rect key="frame" x="324" y="70.5" width="30" height="35"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                        <rect key="frame" x="284" y="64" width="30" height="29"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <state key="normal" title="OK"/>
                                         <connections>
                                             <action selector="buttonPressOK" destination="j1y-V4-xli" eventType="touchUpInside" id="VIp-8w-DZ8"/>
@@ -62,7 +63,7 @@
                         <constraints>
                             <constraint firstItem="JEt-At-qpg" firstAttribute="centerY" secondItem="1Xd-am-t49" secondAttribute="centerY" id="0Xy-np-8bJ"/>
                             <constraint firstItem="JEt-At-qpg" firstAttribute="centerX" secondItem="1Xd-am-t49" secondAttribute="centerX" id="MUD-50-fs8"/>
-                            <constraint firstItem="1Xd-am-t49" firstAttribute="leading" secondItem="JEt-At-qpg" secondAttribute="leading" constant="-20" id="uVZ-37-3Mo"/>
+                            <constraint firstItem="1Xd-am-t49" firstAttribute="leading" secondItem="JEt-At-qpg" secondAttribute="leading" constant="-40" id="uVZ-37-3Mo"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>

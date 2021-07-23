@@ -9,41 +9,71 @@
 import Photos
 import UIKit
 
+/// Duplicated so we can re-use the URL parsing code in LocationParser
+enum MapViewState: Int {
+	case EDITOR
+	case EDITORAERIAL
+	case AERIAL
+	case MAPNIK
+}
+
+struct MapLocation {
+	var longitude = 0.0
+	var latitude = 0.0
+	var zoom = 0.0
+	var viewState: MapViewState? = nil
+}
+
 class ShareViewController: UIViewController, URLSessionTaskDelegate {
 	@IBOutlet var buttonOK: UIButton!
 	@IBOutlet var popupView: UIView!
 	@IBOutlet var popupText: UILabel!
 
 	var location: CLLocationCoordinate2D?
+	var photoText: String!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
 		popupView.layer.cornerRadius = 10.0
 		popupView.layer.masksToBounds = true
 		popupView.layer.isOpaque = false
 		buttonOK.isEnabled = false
-		getLocation()
+		photoText = popupText.text
+		popupText.text = NSLocalizedString("Processing data...",
+		                                   comment: "")
+	}
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		processShareItem()
 	}
 
 	@objc func openURL(_ url: URL) {}
 
 	// intercept redirect when dealing with google maps
 	func urlSession(_ session: URLSession,
-					task: URLSessionTask,
-					willPerformHTTPRedirection response: HTTPURLResponse,
-					newRequest request: URLRequest,
-					completionHandler: (URLRequest?) -> Void)
+	                task: URLSessionTask,
+	                willPerformHTTPRedirection response: HTTPURLResponse,
+	                newRequest request: URLRequest,
+	                completionHandler: (URLRequest?) -> Void)
 	{
 		completionHandler(nil)
 	}
 
-	func getLocation() {
-		if let item = extensionContext?.inputItems.first as? NSExtensionItem,
-		   let attachments = item.attachments
-		{
-			var found = false
-			for provider in attachments {
+	func setUnrecognizedText() {
+		DispatchQueue.main.async {
+			self.popupText.text = NSLocalizedString("The URL content isn't recognized.",
+			                                        comment: "Error message when sharing a URL to Go Map!!")
+		}
+	}
+
+	func processShareItem() {
+		var found = false
+		for item in extensionContext?.inputItems ?? [] {
+			for provider in (item as? NSExtensionItem)?.attachments ?? [] {
 				if provider.hasItemConformingToTypeIdentifier("public.image") {
+					// A photo
 					found = true
 					provider.loadItem(forTypeIdentifier: "public.image", options: nil) { url, _ in
 						if let url = url as? URL,
@@ -53,72 +83,86 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 							DispatchQueue.main.async {
 								self.location = location.coordinate
 								self.buttonOK.isEnabled = true
+								self.popupText.text = self.photoText
 							}
 						} else {
-							var text = self.popupText.text!
-							text += "\n\n"
-							text += NSLocalizedString(
-								"Unfortunately the selected image does not contain location information.",
-								comment: "")
 							DispatchQueue.main.async {
+								var text = self.photoText!
+								text += "\n\n"
+								text += NSLocalizedString(
+									"Unfortunately the selected image does not contain location information.",
+									comment: "")
 								self.popupText.text = text
 							}
 						}
 					}
 				} else if provider.hasItemConformingToTypeIdentifier("com.apple.mapkit.map-item") {
-					// an MKMapItem
+					// An MKMapItem. There should also be a URL we can use instead.
 				} else if provider.hasItemConformingToTypeIdentifier("public.url") {
 					found = true
-					provider.loadItem(forTypeIdentifier: "public.url", options: nil) { url, error in
-						// decode as apple maps
+					provider.loadItem(forTypeIdentifier: "public.url", options: nil) { url, _ in
+						// decode as a location URL
 						if let url = url as? URL,
-							let comps = URLComponents(url: url, resolvingAgainstBaseURL: true),
-							comps.host == "maps.apple.com",
-							let item = comps.queryItems?.first(where: { $0.name == "ll" }),
-							let latLon = item.value
+						   let loc = LocationParser.mapLocationFrom(url: url)
 						{
-							let scanner = Scanner(string: latLon)
-							var lat = 0.0, lon = 0.0
-							if scanner.scanDouble(&lat),
-							   scanner.scanString(",", into:nil),
-							   scanner.scanDouble(&lon)
-							{
-								DispatchQueue.main.async {
-									self.location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-									self.buttonOK.isEnabled = true
-									self.buttonPressOK()
-								}
-								return
+							DispatchQueue.main.async {
+								self.location = CLLocationCoordinate2D(latitude: loc.latitude,
+								                                       longitude: loc.longitude)
+								self.buttonOK.isEnabled = true
+								self.buttonPressOK()
 							}
+							return
 						}
 
-						#if false
+						// decode as a GPX file
+						if let url = url as? URL {
+							let request = NSMutableURLRequest(url: url)
+							request.httpMethod = "HEAD"
+							let task = URLSession.shared.dataTask(with: url) { _, response, _ in
+								if let httpResponse = response as? HTTPURLResponse,
+								   let contentType = httpResponse.allHeaderFields["Content-Type"] as? String,
+								   contentType == "application/gpx+xml"
+								{
+									DispatchQueue.main.async {
+										let url: String = url.absoluteString.data(using: .utf8)!.base64EncodedString()
+										let app = URL(string: "gomaposm://?gpxurl=\(url)")!
+										self.openApp(withUrl: app)
+										self.extensionContext!.completeRequest(
+											returningItems: [],
+											completionHandler: nil)
+									}
+									return
+								}
+								self.setUnrecognizedText()
+							}
+							task.resume()
+							return
+						}
+
+#if false
 						// decode as google maps
 						if let url = url as? URL,
-							let comps = URLComponents(url: url, resolvingAgainstBaseURL: true),
-							comps.host == "goo.gl"
+						   let comps = URLComponents(url: url, resolvingAgainstBaseURL: true),
+						   comps.host == "goo.gl"
 						{
 							// need to get the redirect to find the actual location
 							let configuration = URLSessionConfiguration.default
 							let session = URLSession(configuration: configuration,
-													 delegate: self,
-													 delegateQueue: nil)
+							                         delegate: self,
+							                         delegateQueue: nil)
 							let task = session.dataTask(with: url)
 							task.resume()
 						}
-						#endif
+#endif
 
 						// error
-						DispatchQueue.main.async {
-							self.popupText.text = NSLocalizedString("The shared content does not contain a location.",
-																	comment: "Error message when sharing a map location from Apple Maps to Go Map!!")
-						}
+						self.setUnrecognizedText()
 					}
 				}
 			}
-			if !found {
-				extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
-			}
+		}
+		if !found {
+			extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
 		}
 	}
 
@@ -144,7 +188,6 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 	}
 
 	@IBAction func buttonCancel() {
-		let error = NSError()
-		extensionContext!.cancelRequest(withError: error)
+		extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
 	}
 }
