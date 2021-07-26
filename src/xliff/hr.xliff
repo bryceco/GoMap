@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="Direction/Base.lproj/DirectionViewController.xib" datatype="plaintext" source-language="en" target-language="hr">
     <header>
@@ -7,6 +7,7 @@
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
         <source>Position your device parallel to the direction of the object.</source>
+        <target>Postavi uređaj paralelno sa smjerom objekta.</target>
         <note>Class = "UILabel"; text = "Position your device parallel to the direction of the object."; ObjectID = "4vY-m2-xMW";</note>
       </trans-unit>
       <trans-unit id="Jc3-Um-Aiy.text" xml:space="preserve">
@@ -19,6 +20,7 @@
       </trans-unit>
       <trans-unit id="exg-Jc-FOH.normalTitle" xml:space="preserve">
         <source>Cancel</source>
+        <target>Odustani</target>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "exg-Jc-FOH";</note>
       </trans-unit>
       <trans-unit id="vtk-nS-Ss4.text" xml:space="preserve">
@@ -229,6 +231,7 @@
       </trans-unit>
       <trans-unit id="Accept" xml:space="preserve">
         <source>Accept</source>
+        <target>Prihvati</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
@@ -298,6 +301,7 @@
       </trans-unit>
       <trans-unit id="Back" xml:space="preserve">
         <source>Back</source>
+        <target>Natrag</target>
         <note>back button</note>
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
@@ -720,6 +724,7 @@ Greška: %@</target>
       </trans-unit>
       <trans-unit id="Measure Direction" xml:space="preserve">
         <source>Measure Direction</source>
+        <target>Smjer mjerenja</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Member of multipolygon relation" xml:space="preserve">
@@ -1050,6 +1055,7 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       </trans-unit>
       <trans-unit id="Retry" xml:space="preserve">
         <source>Retry</source>
+        <target>Pokušaj ponovo</target>
         <note>retry opening hours recognition</note>
       </trans-unit>
       <trans-unit id="Reverse" xml:space="preserve">
@@ -1235,6 +1241,7 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       </trans-unit>
       <trans-unit id="This device is not able to provide heading data." xml:space="preserve">
         <source>This device is not able to provide heading data.</source>
+        <target>Ovaj uređaj nije u stanju pružiti podatke o smjeru.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
@@ -1323,6 +1330,7 @@ Odaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu 
       </trans-unit>
       <trans-unit id="Update '%@' tag" xml:space="preserve">
         <source>Update '%@' tag</source>
+        <target>Aktualiziraj „%@” oznaku</target>
         <note>Update the named tag value (e.g. foo=*)</note>
       </trans-unit>
       <trans-unit id="Updating Note..." xml:space="preserve">
@@ -2169,6 +2177,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="TcP-6i-B8H.text" xml:space="preserve">
         <source>Specify a name ("New York"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object ("way 51014987"):</source>
+        <target>Odredi ime („New York”), URL ili drugi tekst koji sadrži geografske koordinate ili referencu na OSM objekt („put 51014987”):</target>
         <note>Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H";</note>
       </trans-unit>
       <trans-unit id="ach-1A-88x.text" xml:space="preserve">
