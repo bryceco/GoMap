@@ -140,17 +140,36 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 		setButtonAppearances()
 
-		if #available(iOS 13.0, macCatalyst 13.0, *) {
+		if #available(iOS 13.4, macCatalyst 13.0, *) {
 			// mouseover support for Mac Catalyst and iPad:
 			let hover = UIHoverGestureRecognizer(target: self, action: #selector(hover(_:)))
 			mapView.addGestureRecognizer(hover)
 
 			#if targetEnvironment(macCatalyst)
-			// right-click support for Mac Catalyst and iPad:
+			// right-click support for Mac Catalyst
 			let rightClick = UIContextMenuInteraction(delegate: self)
 			mapView.addInteraction(rightClick)
+			#else
+			// right-click support for iPad:
+			let rightClick = UITapGestureRecognizer(target: self, action: #selector(rightClick(_:)))
+			rightClick.buttonMaskRequired = .secondary
+			mapView.addGestureRecognizer(rightClick)
 			#endif
 		}
+	}
+
+	@objc func rightClick(_ recognizer: UIGestureRecognizer) {
+		let location = recognizer.location(in: mapView)
+		mapView.rightClick(atLocation: location)
+	}
+
+	@available(iOS 13.0, *)
+	func contextMenuInteraction(
+		_ interaction: UIContextMenuInteraction,
+		configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration?
+	{
+		mapView.rightClick(atLocation: location)
+		return nil
 	}
 
 	@objc func hover(_ recognizer: UIGestureRecognizer) {
@@ -180,15 +199,6 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			}
 		}
 		mapView.blink(hit, segment: -1)
-	}
-
-	@available(iOS 13.0, *)
-	func contextMenuInteraction(
-		_ interaction: UIContextMenuInteraction,
-		configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration?
-	{
-		mapView.rightClick(atLocation: location)
-		return nil
 	}
 
 #if targetEnvironment(macCatalyst)
