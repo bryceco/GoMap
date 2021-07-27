@@ -16,7 +16,7 @@ enum BUTTON_LAYOUT: Int {
 }
 
 class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureRecognizerDelegate,
-	UIContextMenuInteractionDelegate
+	UIContextMenuInteractionDelegate, UIPointerInteractionDelegate
 {
 	@IBOutlet var uploadButton: UIButton!
 	@IBOutlet var undoButton: UIButton!
@@ -320,8 +320,24 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 				button.addTarget(self, action: #selector(makeButtonNormal(_:)), for: .touchCancel)
 
 				button.showsTouchWhenHighlighted = true
+
+				// pointer interaction when using a mouse
+				if #available(iOS 13.4, *) {
+					let interaction = UIPointerInteraction(delegate: self)
+					button.interactions.append(interaction)
+				}
 			}
 		}
+	}
+
+	@available(iOS 13.4, *)
+	func pointerInteraction(_ interaction: UIPointerInteraction, styleFor: UIPointerRegion) -> UIPointerStyle? {
+		var pointerStyle: UIPointerStyle? = nil
+		if let interactionView = interaction.view {
+			let targetedPreview = UITargetedPreview(view: interactionView)
+			pointerStyle = UIPointerStyle(effect: UIPointerEffect.lift(targetedPreview))
+		}
+		return pointerStyle
 	}
 
 	@objc func makeButtonHighlight(_ button: UIView?) {
