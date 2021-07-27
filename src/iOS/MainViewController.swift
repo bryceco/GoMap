@@ -273,8 +273,8 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 				// these buttons take care of themselves
 			} else if view == mapView.helpButton || view == mapView.addNodeButton {
 				// The button is a circle.
-				let bounds = view.bounds.size.width
-				view.layer.cornerRadius = bounds / 2
+				let width = view.bounds.size.width
+				view.layer.cornerRadius = width / 2
 			} else {
 				// rounded corners
 				view.layer.cornerRadius = 10.0
@@ -328,6 +328,12 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 				}
 			}
 		}
+
+		// special handling for aerial logo button
+		if #available(iOS 13.4, *) {
+			let interaction = UIPointerInteraction(delegate: self)
+			mapView.aerialServiceLogo.interactions.append(interaction)
+		}
 	}
 
 	@available(iOS 13.4, *)
@@ -335,7 +341,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		var pointerStyle: UIPointerStyle? = nil
 		if let interactionView = interaction.view {
 			let targetedPreview = UITargetedPreview(view: interactionView)
-			pointerStyle = UIPointerStyle(effect: UIPointerEffect.lift(targetedPreview))
+			pointerStyle = UIPointerStyle(effect: UIPointerEffect.automatic(targetedPreview))
 		}
 		return pointerStyle
 	}
