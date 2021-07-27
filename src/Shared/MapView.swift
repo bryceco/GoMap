@@ -2468,22 +2468,23 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 	}
 
+	var previousPinchZoom: CGFloat = 1.0
 	@objc func handlePinchGesture(_ pinch: UIPinchGestureRecognizer) {
-		if pinch.state == .changed {
-			if pinch.scale.isNaN {
-				return
-			}
-
+		switch pinch.state {
+		case .began:
+			previousPinchZoom = pinch.scale
+		case .changed:
 			userOverrodeLocationZoom = true
 
 			DisplayLink.shared.removeName(DisplayLinkPanning)
 
 			let zoomCenter = pinch.location(in: self)
-			adjustZoom(by: pinch.scale, aroundScreenPoint: zoomCenter)
-
-			pinch.scale = 1.0
-		} else if pinch.state == .ended {
+			adjustZoom(by: pinch.scale/previousPinchZoom, aroundScreenPoint: zoomCenter)
+			previousPinchZoom = pinch.scale
+		case .ended:
 			updateNotesFromServer(withDelay: 0)
+		default:
+			break
 		}
 	}
 
