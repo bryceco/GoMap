@@ -336,29 +336,29 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		}
 	}
 
+	/// Change the button/cursor shape when hovering over a button with a mouse on iPad
 	@available(iOS 13.4, *)
 	func pointerInteraction(_ interaction: UIPointerInteraction, styleFor: UIPointerRegion) -> UIPointerStyle? {
-		var pointerStyle: UIPointerStyle? = nil
 		if let interactionView = interaction.view {
 			let targetedPreview = UITargetedPreview(view: interactionView)
-			pointerStyle = UIPointerStyle(effect: UIPointerEffect.automatic(targetedPreview))
+			return UIPointerStyle(effect: UIPointerEffect.automatic(targetedPreview))
 		}
-		return pointerStyle
+		return nil
 	}
 
-	@objc func makeButtonHighlight(_ button: UIView?) {
+	@objc func makeButtonHighlight(_ button: UIView) {
 		if #available(iOS 13.0, *) {
-			button?.backgroundColor = UIColor.secondarySystemBackground
+			button.backgroundColor = UIColor.secondarySystemBackground
 		} else {
-			button?.backgroundColor = UIColor.lightGray
+			button.backgroundColor = UIColor.lightGray
 		}
 	}
 
-	@objc func makeButtonNormal(_ button: UIView?) {
+	@objc func makeButtonNormal(_ button: UIView) {
 		if #available(iOS 13.0, *) {
-			button?.backgroundColor = UIColor.systemBackground
+			button.backgroundColor = UIColor.systemBackground
 		} else {
-			button?.backgroundColor = UIColor.white
+			button.backgroundColor = UIColor.white
 		}
 	}
 
