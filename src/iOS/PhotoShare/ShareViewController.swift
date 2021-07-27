@@ -9,6 +9,14 @@
 import Photos
 import UIKit
 
+/// This extension allows different types of things to the app:
+///	* Sharing a photo jumps to the location defined in the EXIF
+///	* Sharing a URL to a GPX loads the GPX
+///	* Sharing a URL containing a lat/lon jumps to the location
+///	* Sharing an Apple Maps location is the same as a location URL
+///	* You cannot share a Google Maps location because it doesn't include lat/lon
+
+
 /// Duplicated so we can re-use the URL parsing code in LocationParser
 enum MapViewState: Int {
 	case EDITOR
@@ -17,6 +25,7 @@ enum MapViewState: Int {
 	case MAPNIK
 }
 
+/// Duplicated so we can re-use the URL parsing code in LocationParser
 struct MapLocation {
 	var longitude = 0.0
 	var latitude = 0.0
