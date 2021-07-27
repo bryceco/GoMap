@@ -104,14 +104,16 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 		if hittestRect.contains(point) {
 			return self
 		}
-#if targetEnvironment(macCatalyst)
-		// also hit the arrow point
-		if abs(Float(point.y)) < 12,
-		   abs(Float(point.x - hittestRect.origin.x - hittestRect.size.width / 2)) < 12
-		{
-			return self
+
+		if #available(iOS 13.0, macCatalyst 13.0, *) {
+			// also hit the arrow point if they're using a mouse
+			if abs(Float(point.y)) < 12,
+			   abs(Float(point.x - hittestRect.origin.x - hittestRect.size.width / 2)) < 12
+			{
+				return self
+			}
 		}
-#endif
+
 		// and any buttons connected to us
 		for button in buttonList {
 			let point2 = button.convert(point, from: self)

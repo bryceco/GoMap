@@ -140,15 +140,17 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 		setButtonAppearances()
 
-#if targetEnvironment(macCatalyst)
-		// mouseover support for Mac Catalyst:
-		let hover = UIHoverGestureRecognizer(target: self, action: #selector(hover(_:)))
-		mapView.addGestureRecognizer(hover)
+		if #available(iOS 13.0, macCatalyst 13.0, *) {
+			// mouseover support for Mac Catalyst and iPad:
+			let hover = UIHoverGestureRecognizer(target: self, action: #selector(hover(_:)))
+			mapView.addGestureRecognizer(hover)
 
-		// right-click support for Mac Catalyst:
-		let rightClick = UIContextMenuInteraction(delegate: self)
-		mapView.addInteraction(rightClick)
-#endif
+			#if targetEnvironment(macCatalyst)
+			// right-click support for Mac Catalyst and iPad:
+			let rightClick = UIContextMenuInteraction(delegate: self)
+			mapView.addInteraction(rightClick)
+			#endif
+		}
 	}
 
 	@objc func hover(_ recognizer: UIGestureRecognizer) {

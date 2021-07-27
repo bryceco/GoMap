@@ -700,9 +700,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			addNodeButton.addGestureRecognizer(addNodeButtonLongPressGestureRecognizer)
 		}
 
-#if targetEnvironment(macCatalyst)
-		do {
-			// pan gesture to recognize mouse-wheel scrolling (zoom) on Mac Catalyst
+		if #available(iOS 13.4, macCatalyst 13.4, *) {
+			// pan gesture to recognize mouse-wheel scrolling (zoom) on iPad and Mac Catalyst
 			let scrollWheelGesture = UIPanGestureRecognizer(
 				target: self,
 				action: #selector(handleScrollWheelGesture(_:)))
@@ -710,7 +709,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			scrollWheelGesture.maximumNumberOfTouches = 0
 			addGestureRecognizer(scrollWheelGesture)
 		}
-#endif
 
 		notesDatabase.mapData = editorLayer.mapData
 		buttonForButtonId = [:]
