@@ -22,18 +22,17 @@ class MyApplication: UIApplication {
 	}
 
 	func rect(forTouchPosition pos: CGPoint) -> CGRect {
-		if touchImage != nil {
-			var rc = CGRect(origin: pos, size: touchImage?.size ?? CGSize.zero)
-			rc = rc.offsetBy(dx: -(touchImage?.size.width ?? 0.0) / 2, dy: -TOUCH_RADIUS)
+		if let touchImage = touchImage {
+			var rc = CGRect(origin: pos, size: touchImage.size)
+			rc = rc.offsetBy(dx: -(touchImage.size.width) / 2, dy: -TOUCH_RADIUS)
 			rc.origin.x += 15 // extra so rotated finger is aligned
 			rc.origin.y -= 10 // extra so touches on toolbar or easier to see
 			return rc
 		} else {
-			return CGRect(
-				x: pos.x - TOUCH_RADIUS,
-				y: pos.y - TOUCH_RADIUS,
-				width: 2 * TOUCH_RADIUS,
-				height: 2 * TOUCH_RADIUS)
+			return CGRect( x: pos.x - TOUCH_RADIUS,
+						   y: pos.y - TOUCH_RADIUS,
+						   width: 2 * TOUCH_RADIUS,
+						   height: 2 * TOUCH_RADIUS)
 		}
 	}
 
@@ -54,7 +53,8 @@ class MyApplication: UIApplication {
 				pos = UIScreen.main.coordinateSpace.convert(pos, to: UIScreen.main.fixedCoordinateSpace)
 			}
 
-			if touch.phase == .began {
+			switch touch.phase {
+			case .began:
 				let win = UIWindow(frame: rect(forTouchPosition: pos))
 
 				touches[touch] = (win, touch.timestamp)
@@ -68,14 +68,15 @@ class MyApplication: UIApplication {
 					win.layer.cornerRadius = TOUCH_RADIUS
 					win.layer.opacity = 0.85
 				}
-			} else if touch.phase == .moved {
+			case .moved:
 				let (win, _) = touches[touch]!
 				win.layer.setAffineTransform(CGAffineTransform.identity)
 				win.frame = rect(forTouchPosition: pos)
 				win.layer.setAffineTransform(CGAffineTransform(rotationAngle: -.pi / 4))
-			} else if touch.phase == .stationary {
+			case .stationary:
 				// ignore
-			} else {
+				break
+			default:
 				// ended/cancelled
 				// remove window after a slight delay so quick taps are still visible
 				let MIN_DISPLAY_INTERVAL = 0.5
