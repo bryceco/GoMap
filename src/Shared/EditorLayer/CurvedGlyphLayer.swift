@@ -409,6 +409,14 @@ final class GlyphLayer: CALayerWithProperties {
 #endif
 	}
 
+	override init(layer: Any) {
+		let layer = layer as! GlyphLayer
+		glyphs = layer.glyphs
+		positions = layer.positions
+		font = layer.font
+		super.init(layer: layer)
+	}
+
 	public static func layer(withFont font: CTFont, glyphs: [CGGlyph], positions: [CGPoint]) -> GlyphLayer? {
 		let key = glyphs.withUnsafeBytes { a in
 			NSData(bytes: a.baseAddress, length: a.count)

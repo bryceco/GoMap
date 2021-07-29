@@ -370,7 +370,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	var enableUnnamedRoadHalo: Bool = false {
 		didSet {
-			editorLayer.clearCachedProperties()
+			if enableUnnamedRoadHalo != oldValue {
+				editorLayer.clearCachedProperties()
+			}
 		}
 	}
 
@@ -383,7 +385,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	var enableTurnRestriction: Bool = false {
 		didSet {
-			editorLayer.clearCachedProperties()
+			if oldValue != enableTurnRestriction {
+				editorLayer.clearCachedProperties()
+			}
 		}
 	}
 

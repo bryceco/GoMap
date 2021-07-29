@@ -41,6 +41,13 @@ final class LocationBallLayer: CALayer {
 		}
 	}
 
+	override init(layer: Any) {
+		let layer = layer as! Self
+		ringLayer = CAShapeLayer()
+		headingLayer = CAShapeLayer()
+		super.init(layer: layer)
+	}
+
 	override init() {
 		ringLayer = CAShapeLayer()
 		headingLayer = CAShapeLayer()

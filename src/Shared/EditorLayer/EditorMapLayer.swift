@@ -1626,7 +1626,7 @@ final class EditorMapLayer: CALayer {
 		if isHidden {
 			return
 		}
-
+		
 		isPerformingLayout = true
 		CATransaction.begin()
 		CATransaction.setDisableActions(true)
