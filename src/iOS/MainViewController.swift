@@ -286,6 +286,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 				view.layer.shadowOffset = CGSize(width: 0, height: 0)
 				view.layer.shadowRadius = 3
 				view.layer.shadowOpacity = 0.5
+				view.layer.shadowPath = UIBezierPath(roundedRect: view.bounds, cornerRadius: view.layer.cornerRadius).cgPath
 				view.layer.masksToBounds = false
 			}
 			// image blue tint
