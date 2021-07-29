@@ -152,6 +152,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			#else
 			// right-click support for iPad:
 			let rightClick = UITapGestureRecognizer(target: self, action: #selector(rightClick(_:)))
+			rightClick.allowedTouchTypes = [NSNumber(integerLiteral: UITouch.TouchType.indirect.rawValue)]
 			rightClick.buttonMaskRequired = .secondary
 			mapView.addGestureRecognizer(rightClick)
 			#endif
