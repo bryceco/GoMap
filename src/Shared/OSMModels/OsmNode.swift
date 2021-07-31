@@ -139,11 +139,13 @@ final class OsmNode: OsmBaseObject {
 	}
 
 	func setWayCount(_ wayCount: Int, undo: MyUndoManager?) {
-		if _constructed, undo != nil {
-			undo!.registerUndo(
+		if _constructed,
+		   let undo = undo
+		{
+			undo.registerUndo(
 				withTarget: self,
 				selector: #selector(setWayCount(_:undo:)),
-				objects: [NSNumber(value: self.wayCount), undo!])
+				objects: [NSNumber(value: self.wayCount), undo])
 		}
 		self.wayCount = wayCount
 	}

@@ -221,17 +221,23 @@ class MyUndoManager: NSObject, NSCoding {
 
 	func objectRefs() -> Set<OsmBaseObject> {
 		var refs: Set<OsmBaseObject> = []
-		for action in undoStack {
-			if let target = action.target as? OsmBaseObject {
-				refs.insert(target)
+
+		for stack in [undoStack, redoStack] {
+			for action in stack {
+				if let target = action.target as? OsmBaseObject {
+					refs.insert(target)
+				}
+				for obj in action.objects {
+					if let osm = obj as? OsmBaseObject {
+						// argmuments that are an object
+						refs.insert(osm)
+					} else if let dict = obj as? [String:Any] {
+						// also comments can point to objects for selectedNode, etc.
+						refs.formUnion(dict.values.compactMap({ $0 as? OsmBaseObject }))
+					}
+				}
+				refs.formUnion(action.objects.compactMap({ $0 as? OsmBaseObject }))
 			}
-			refs.formUnion(action.objects.compactMap({ $0 as? OsmBaseObject }))
-		}
-		for action in redoStack {
-			if let target = action.target as? OsmBaseObject {
-				refs.insert(target)
-			}
-			refs.formUnion(action.objects.compactMap({ $0 as? OsmBaseObject }))
 		}
 		return refs
 	}
