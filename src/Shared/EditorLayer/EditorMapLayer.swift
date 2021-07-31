@@ -1202,10 +1202,6 @@ final class EditorMapLayer: CALayer {
 				let nodes = object == selectedWay ? object.nodeSet() : []
 				for node in nodes {
 					let layer2 = CAShapeLayerWithProperties()
-					let rect = CGRect(x: -NodeHighlightRadius,
-					                  y: -NodeHighlightRadius,
-					                  width: 2 * NodeHighlightRadius,
-					                  height: 2 * NodeHighlightRadius)
 					layer2.position = owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false)
 					layer2.strokeColor = node == selectedNode ? UIColor.yellow.cgColor : UIColor.green.cgColor
 					layer2.fillColor = UIColor.clear.cgColor
@@ -1216,9 +1212,25 @@ final class EditorMapLayer: CALayer {
 					layer2.shadowOffset = CGSize(width: 0, height: 0)
 					layer2.masksToBounds = false
 
-					path = node.hasInterestingTags() ? CGPath(rect: rect, transform: nil)
-						: CGPath(ellipseIn: rect, transform: nil)
-					layer2.path = path
+					let rect = CGRect(x: -NodeHighlightRadius,
+									  y: -NodeHighlightRadius,
+									  width: 2 * NodeHighlightRadius,
+									  height: 2 * NodeHighlightRadius)
+
+					let rc1 = rect.insetBy(dx: layer2.lineWidth/2, dy: layer2.lineWidth/2)
+					let rc2 = rc1.insetBy(dx: -layer2.lineWidth, dy: -layer2.lineWidth)
+
+					if node.hasInterestingTags() {
+						layer2.path = CGPath(rect: rect, transform: nil)
+						let shadow = UIBezierPath(rect: rc1)
+						shadow.append(UIBezierPath(rect: rc2).reversing())
+						layer2.shadowPath = shadow.cgPath
+					} else {
+						layer2.path = CGPath(ellipseIn: rect, transform: nil)
+						let shadow = UIBezierPath(ovalIn: rc1)
+						shadow.append(UIBezierPath(ovalIn: rc2).reversing())
+						layer2.shadowPath = shadow.cgPath
+					}
 					layer2.zPosition = Z_HIGHLIGHT_NODE + (node == selectedNode ? 0.1 * EditorMapLayer.ZSCALE : 0)
 					layers.append(layer2)
 				}
