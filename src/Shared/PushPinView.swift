@@ -107,7 +107,9 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 
 		if #available(iOS 13.0, macCatalyst 13.0, *) {
 			// also hit the arrow point if they're using a mouse
-			if abs(Float(point.y)) < 12,
+			if let touch = event?.allTouches?.first,
+			   touch.type != .direct,
+			   abs(Float(point.y)) < 12,
 			   abs(Float(point.x - hittestRect.origin.x - hittestRect.size.width / 2)) < 12
 			{
 				return self
@@ -311,22 +313,19 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 		path.move(to: posA)
 		path.addQuadCurve(to: posC, control: posB)
 
-		var theAnimation: CAKeyframeAnimation?
-		theAnimation = CAKeyframeAnimation(keyPath: "position")
-		theAnimation?.path = path
-		theAnimation?.timingFunction = CAMediaTimingFunction(name: .easeOut)
-		theAnimation?.repeatCount = 0
-		theAnimation?.isRemovedOnCompletion = true
-		theAnimation?.fillMode = .both
-		theAnimation?.duration = 0.5
+		let theAnimation = CAKeyframeAnimation(keyPath: "position")
+		theAnimation.path = path
+		theAnimation.timingFunction = CAMediaTimingFunction(name: .easeOut)
+		theAnimation.repeatCount = 0
+		theAnimation.isRemovedOnCompletion = true
+		theAnimation.fillMode = .both
+		theAnimation.duration = 0.5
 
 		// let us get notified when animation completes
-		theAnimation?.delegate = self
+		theAnimation.delegate = self
 
 		layer.position = posC
-		if let theAnimation = theAnimation {
-			layer.add(theAnimation, forKey: "animatePosition")
-		}
+		layer.add(theAnimation, forKey: "animatePosition")
 	}
 
 	@objc func draggingGesture(_ gesture: UIPanGestureRecognizer) {
