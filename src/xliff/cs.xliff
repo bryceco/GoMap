@@ -768,7 +768,7 @@ Chyba: %@</target>
         <source>Modifying the raw XML data allows you to correct errors that prevent uploading.
 
 It is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format.</source>
-        <target>Úprava surových XML dát umožňuje opravit chyby bránící nahrání změn.
+        <target>Úprava surových XML dat umožňuje opravit chyby bránící nahrání změn.
 
 Jedná se o pokročilou funkci, kterou byste měli použít jen pokud skutečně dobře rozumíte formátu OSM sady změn.</target>
         <note>No comment provided by engineer.</note>
