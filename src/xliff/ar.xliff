@@ -22,7 +22,7 @@
       </trans-unit>
       <trans-unit id="exg-Jc-FOH.normalTitle" xml:space="preserve">
         <source>Cancel</source>
-        <target state="needs-translation">إلغاء</target>
+        <target state="translated">إلغاء</target>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "exg-Jc-FOH";</note>
       </trans-unit>
       <trans-unit id="vtk-nS-Ss4.text" xml:space="preserve">
@@ -39,7 +39,7 @@
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>Go Map!!</source>
-        <target state="needs-translation">Go Map!!</target>
+        <target state="translated">!!Go Map</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleGetInfoString" xml:space="preserve">
@@ -49,22 +49,22 @@
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>Go Map!!</source>
-        <target state="needs-translation">Go Map!!</target>
+        <target state="translated">!!Go Map</target>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="GPS Exchange Format (GPX)" xml:space="preserve">
         <source>GPS Exchange Format (GPX)</source>
-        <target/>
+        <target>تنسيق تبادل GPS (GPX)</target>
         <note/>
       </trans-unit>
       <trans-unit id="NSBluetoothPeripheralUsageDescription" xml:space="preserve">
         <source>Connect to external Bluetooth GPS devices</source>
-        <target state="needs-translation">الاتصال بأجهزة بلوتوث GPS الخارجية</target>
+        <target state="translated">الاتصال بأجهزة بلوتوث GPS الخارجية</target>
         <note>Privacy - Bluetooth Peripheral Usage Description</note>
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
         <source>The camera is used to measure heights of buildings or objects</source>
-        <target state="needs-translation">يتم استخدام الكاميرا لقياس ارتفاعات المباني أو الأشياء</target>
+        <target state="translated">يتم استخدام الكاميرا لقياس ارتفاعات المباني أو الأشياء</target>
         <note>Privacy - Camera Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
@@ -74,17 +74,17 @@
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
         <source>Always on location tracking allows the app to record GPX files when inactive.</source>
-        <target state="needs-translation">تشغيل تتبع الموقع بشكل دائم يسمح للتطبيق بتسجيل ملفات GPX عندما يكون التطبيق غير نشط.</target>
+        <target state="translated">تشغيل تتبع الموقع بشكل دائم يسمح للتطبيق بتسجيل ملفات GPX عندما يكون التطبيق غير نشط.</target>
         <note>Privacy - Location Always and When In Use Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysUsageDescription" xml:space="preserve">
         <source>Your location will be displayed and followed on the map.</source>
-        <target state="needs-translation">سيتم عرض موقعك ومتابعته على الخريطة.</target>
+        <target state="translated">سيتم عرض موقعك وتتبعه على الخريطة.</target>
         <note>Privacy - Location Always Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationWhenInUseUsageDescription" xml:space="preserve">
         <source>Your location will be displayed and followed on the map.</source>
-        <target state="needs-translation">سيتم عرض موقعك ومتابعته على الخريطة.</target>
+        <target state="translated">سيتم عرض موقعك وتتبعه على الخريطة.</target>
         <note>Privacy - Location When In Use Usage Description</note>
       </trans-unit>
     </body>
@@ -96,122 +96,122 @@
     <body>
       <trans-unit id="&#9;Relation " xml:space="preserve">
         <source>	Relation </source>
-        <target state="needs-translation">	علاقة </target>
+        <target state="translated">	علاقة </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="&#9;Way " xml:space="preserve">
         <source>	Way </source>
-        <target state="needs-translation">	طريق </target>
+        <target state="translated">	طريق </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;" xml:space="preserve">
         <source> (%d members)
 </source>
-        <target state="needs-translation"> (%d الأعضاء)
+        <target state="translated"> (%d الأعضاء)
 </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;" xml:space="preserve">
         <source> (%d nodes)
 </source>
-        <target state="needs-translation"> (العقد %d)
+        <target state="translated"> (%d عقدة/عقد)
 </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (node)" xml:space="preserve">
         <source> (node)</source>
-        <target state="needs-translation"> هذه العُقدة (النقطة)</target>
+        <target state="translated"> (عقدة)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (way)" xml:space="preserve">
         <source> (way)</source>
-        <target state="needs-translation"> إلى الطريق</target>
+        <target state="translated"> (طريق)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
         <source>%1$.0f meters, %2$ld nodes</source>
-        <target state="needs-translation">%1$.0f متر، عقد %2$ld</target>
+        <target state="translated">%1$.0f أمتار، %2$ld عقد</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
         <source>%1$.1f meters, %2$ld nodes</source>
-        <target state="needs-translation">%1$.1f متر، عقد %2$ld</target>
+        <target state="translated">%1$.1f أمتار، %2$ld عقد</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
         <source>%1$.2f MB, %2$ld files</source>
-        <target state="needs-translation">%1$.2f ميغابايت، ملفات %2$ld</target>
+        <target state="translated">%1$.2f ميقا بايت، %2$ld ملف/ات</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
         <source>%@ (relation)</source>
-        <target state="needs-translation">هذه العلاقة</target>
+        <target state="translated">%@ (علاقة)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ changeset" xml:space="preserve">
         <source>%@ changeset</source>
-        <target state="needs-translation">مجموعة التغييرات</target>
+        <target state="translated">%@ مجموعة التغيير</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ meters" xml:space="preserve">
         <source>%@ meters</source>
-        <target state="needs-translation">المدى (متر)</target>
+        <target state="translated">%@ متر/أمتار</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="%ld Days" xml:space="preserve">
         <source>%ld Days</source>
-        <target state="needs-translation">%ld أيام</target>
+        <target state="translated">%ld يوم/أيام</target>
         <note>One or more days
    Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@" xml:space="preserve">
         <source>%1$ld edits, last active %2$@</source>
-        <target state="needs-translation">%1$ld التحرير، آخر نشاط ٪2$. @</target>
+        <target state="translated">%1$ld تحرير، آخر نشاط %2$@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$ld meters, %2$ld points</source>
-        <target state="needs-translation">%1$ld متر، نقاط %2$ld</target>
+        <target state="translated">%1$ld متر/أمتار, %2$ld نقطة/نقاط</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld objects" xml:space="preserve">
         <source>%ld objects</source>
-        <target state="needs-translation">%ld الكائنات</target>
+        <target state="translated">%ld عنصر/عناصر</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%lu tiles needed" xml:space="preserve">
         <source>%lu tiles needed</source>
-        <target state="needs-translation">البلاط %lu اللازمة</target>
+        <target state="translated">عدد الصور المتجانبة المطلوبة %lu</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="(new object)" xml:space="preserve">
         <source>(new object)</source>
-        <target state="needs-translation">(كائن جديد)</target>
+        <target state="translated">(عنصر جديد)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
         <source>(node in way)</source>
-        <target state="needs-translation">(العقدة في الطريق)</target>
+        <target state="translated">(العقدة في الطريق)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(node)" xml:space="preserve">
         <source>(node)</source>
-        <target state="needs-translation">عقدة (نقطة)</target>
+        <target state="translated">(عقدة)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(relation %@)" xml:space="preserve">
         <source>(relation %@)</source>
-        <target state="needs-translation">هذه العلاقة</target>
+        <target state="translated">(%@ علاقة)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(way)" xml:space="preserve">
         <source>(way)</source>
-        <target state="needs-translation">إلى الطريق</target>
+        <target state="translated">(طريق)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="+ Button Position" xml:space="preserve">
         <source>+ Button Position</source>
-        <target state="needs-translation">+ زر الموقف</target>
+        <target state="translated">+ موضع الزر</target>
         <note>Location of Add Node button on the screen</note>
       </trans-unit>
       <trans-unit id="1 Day" xml:space="preserve">
@@ -221,57 +221,57 @@
       </trans-unit>
       <trans-unit id="&lt;unknown&gt;" xml:space="preserve">
         <source>&lt;unknown&gt;</source>
-        <target state="needs-translation">&lt;غير معروف&gt;</target>
+        <target state="translated">&lt;غير معروف&gt;</target>
         <note>unknown user name</note>
       </trans-unit>
       <trans-unit id="A GPX Track records your path as you travel along a road or trail" xml:space="preserve">
         <source>A GPX Track records your path as you travel along a road or trail</source>
-        <target state="needs-translation">يسجل مسار GPX مسارك أثناء السفر على طول الطريق أو المسار</target>
+        <target state="translated">يتم تسجيل ملف بيانات ملف GPX حسب مسارك أثناء التنقل على طول الطريق أو المسار</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="A relation the node belongs to is not fully downloaded" xml:space="preserve">
         <source>A relation the node belongs to is not fully downloaded</source>
-        <target state="needs-translation">لا يتم تحميل علاقة تنتمي العقدة إلى بالكامل</target>
+        <target state="translated">لم يتم تنزيل العلاقة التي تنتمي إليها العقدة بشكل كامل</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Accept" xml:space="preserve">
         <source>Accept</source>
-        <target state="needs-translation">قبول</target>
+        <target state="translated">قبول</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
         <source>Add Note</source>
-        <target state="needs-translation">إضافة ملاحظة</target>
+        <target state="translated">إضافة ملاحظة</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Add inner member" xml:space="preserve">
         <source>Add inner member</source>
-        <target state="needs-translation">إضافة عضو داخلي</target>
+        <target state="translated">إضافة عضو لطرف داخلي</target>
         <note>Add to relation</note>
       </trans-unit>
       <trans-unit id="Add outer member" xml:space="preserve">
         <source>Add outer member</source>
-        <target state="needs-translation">إضافة عضو خارجي</target>
+        <target state="translated">إضافة عضو لطرف خارجي</target>
         <note>Add to relation</note>
       </trans-unit>
       <trans-unit id="Add way to multipolygon?" xml:space="preserve">
         <source>Add way to multipolygon?</source>
-        <target state="needs-translation">إضافة طريقة إلى متعددةpolygon؟</target>
+        <target state="translated">إضافة طريق إلى علاقة مضلع متداخل؟</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Adding members:" xml:space="preserve">
         <source>Adding members:</source>
-        <target state="needs-translation">إضافة الأعضاء:</target>
+        <target state="translated">إضافة الأعضاء:</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Additional imagery" xml:space="preserve">
         <source>Additional imagery</source>
-        <target state="needs-translation">صور إضافية</target>
+        <target state="translated">صور إضافية</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
         <source>Aerial only</source>
-        <target state="needs-translation">جوي فقط</target>
+        <target state="translated">صور جوية فقط</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="All Tags" xml:space="preserve">
@@ -281,491 +281,491 @@
       </trans-unit>
       <trans-unit id="All choices" xml:space="preserve">
         <source>All choices</source>
-        <target state="needs-translation">جميع الخيارات</target>
+        <target state="translated">جميع الخيارات</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="An unknown error occurred fetching metadata" xml:space="preserve">
         <source>An unknown error occurred fetching metadata</source>
-        <target state="needs-translation">حدث خطأ غير معروف في إحضار بيانات التعريف</target>
+        <target state="translated">حدث خطأ غير معروف أثناء جلب البيانات الوصفية</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Attention" xml:space="preserve">
         <source>Attention</source>
-        <target state="needs-translation">انتباه</target>
+        <target state="translated">تحذير</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Attributes" xml:space="preserve">
         <source>Attributes</source>
-        <target state="needs-translation">السمات</target>
+        <target state="translated">السمات</target>
         <note>node/way/relation attributes</note>
       </trans-unit>
       <trans-unit id="Automatic" xml:space="preserve">
         <source>Automatic</source>
-        <target state="needs-translation">تلقائي</target>
+        <target state="translated">تلقائي</target>
         <note>Automatic selection of presets languages</note>
       </trans-unit>
       <trans-unit id="Back" xml:space="preserve">
         <source>Back</source>
-        <target state="needs-translation">رجوع</target>
+        <target state="translated">رجوع</target>
         <note>back button</note>
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
         <source>Background imagery %@</source>
-        <target state="needs-translation">صور الخلفية</target>
+        <target state="translated">الصور الخلفية %@</target>
         <note>identifies current aerial imagery</note>
       </trans-unit>
       <trans-unit id="Bad login" xml:space="preserve">
         <source>Bad login</source>
-        <target state="needs-translation">تسجيل دخول غير صالح</target>
+        <target state="translated">تسجيل دخول غير صحيح</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
         <source>Cache size warning</source>
-        <target state="needs-translation">تحذير بحجم ذاكرة التخزين المؤقت</target>
+        <target state="translated">تحذير عن حجم ذاكرة التخزين المؤقت</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache trimmed" xml:space="preserve">
         <source>Cache trimmed</source>
-        <target state="needs-translation">ذاكرة التخزين المؤقت مشذبة</target>
+        <target state="translated">تم مسح ذاكرة التخزين المؤقت</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can only add ways to multipolygons" xml:space="preserve">
         <source>Can only add ways to multipolygons</source>
-        <target state="needs-translation">يمكن فقط إضافة طرق إلى متعددةpolygons</target>
+        <target state="translated">تستطيع إضافة الطرق فقط إلى علاقة المضلعات المتداخلة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't delete node that is part of a relation" xml:space="preserve">
         <source>Can't delete node that is part of a relation</source>
-        <target state="needs-translation">لا يمكن حذف العقدة التي هي جزء من علاقة</target>
+        <target state="translated">لا يمكن حذف العقدة التي تكون جزء من علاقة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't delete relation that is not a multipolygon" xml:space="preserve">
         <source>Can't delete relation that is not a multipolygon</source>
-        <target state="needs-translation">لا يمكن حذف علاقة ليست متعددةpolygon</target>
+        <target state="translated">لا يمكن حذف علاقة ليست من نوع مضلعات متداخلة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't delete way that is part of a Route or similar relation" xml:space="preserve">
         <source>Can't delete way that is part of a Route or similar relation</source>
-        <target state="needs-translation">لا يمكن حذف الطريقة التي تشكل جزءا من مسار أو علاقة مشابهة</target>
+        <target state="translated">لا يمكن حذف الطريق الذي يكون جزءاً من مسار أو علاقة مشابهة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't extend way" xml:space="preserve">
         <source>Can't extend way</source>
-        <target state="needs-translation">لا يمكن تمديد الطريق</target>
+        <target state="translated">لا يمكن تمديد الطريق</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction 'via' node" xml:space="preserve">
         <source>Can't remove Turn Restriction 'via' node</source>
-        <target state="needs-translation">لا يمكن إزالة "قيد التشغيل" 'عبر' عقدة</target>
+        <target state="translated">لا يمكن إزالة تقييد الانعطاف "عبر" العقدة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" xml:space="preserve">
         <source>Can't remove Turn Restriction node connecting 'to'/'from' to 'via'</source>
-        <target state="needs-translation">لا يمكن إزالة عقدة تقييد التشغيل التي تربط 'إلى'/'من' إلى 'عبر'</target>
+        <target state="translated">لا يمكن إزالة عقدة تقييد الانعطاف التي تربط 'إلى'/'من' إلى'عبر'</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction to/from way" xml:space="preserve">
         <source>Can't remove Turn Restriction to/from way</source>
-        <target state="needs-translation">لا يمكن إزالة "تقييد تحويل" إلى/من الطريق</target>
+        <target state="translated">لا يمكن إزالة تقييد الانعطاف من / إلى الطريق</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove component of a Route or similar relation" xml:space="preserve">
         <source>Can't remove component of a Route or similar relation</source>
-        <target state="needs-translation">لا يمكن إزالة مكون مسار أو علاقة مشابهة</target>
+        <target state="translated">لا يمكن إزالة مكون مسار أو علاقة مشابهة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove node in Turn Restriction 'via' way" xml:space="preserve">
         <source>Can't remove node in Turn Restriction 'via' way</source>
-        <target state="needs-translation">لا يمكن إزالة العقدة في تحويل تقييد 'عبر' طريقة</target>
+        <target state="translated">لا يمكن إزالة عقدة تقييد الانعطاف "عبر" الطريق</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cancel" xml:space="preserve">
         <source>Cancel</source>
-        <target state="needs-translation">إلغاء</target>
+        <target state="translated">إلغاء</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cannot compose message" xml:space="preserve">
         <source>Cannot compose message</source>
-        <target state="needs-translation">لا يمكن إنشاء رسالة</target>
+        <target state="translated">لا يمكن إنشاء رسالة</target>
         <note>e-mail message</note>
       </trans-unit>
       <trans-unit id="Cannot connect an inner way to an outer way" xml:space="preserve">
         <source>Cannot connect an inner way to an outer way</source>
-        <target state="needs-translation">لا يمكن توصيل طريقة داخلية بطريقة خارجية</target>
+        <target state="translated">لا يمكن توصيل الخط الذي يمثل أطراف داخلية بخطوط الأطراف خارجية</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Changeset" xml:space="preserve">
         <source>Changeset</source>
-        <target state="needs-translation">مجموعة التغييرات</target>
+        <target state="translated">مجموعة التغييرات</target>
         <note>OSM changeset identifier</note>
       </trans-unit>
       <trans-unit id="Clear Aerial Tiles" xml:space="preserve">
         <source>Clear Aerial Tiles</source>
-        <target state="needs-translation">بلاط جوي واضح</target>
+        <target state="translated">خريطة صور متجانبة واضحة</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear GPS Overlay Tiles" xml:space="preserve">
         <source>Clear GPS Overlay Tiles</source>
-        <target state="needs-translation">مسح الإطارات المتجانبة لتراكب GPS</target>
+        <target state="translated">مسح الطبقة العلوية لصور ال GPS</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear GPX Tracks" xml:space="preserve">
         <source>Clear GPX Tracks</source>
-        <target state="needs-translation">مسح مسارات GPX</target>
+        <target state="translated">مسح مسارات GPX</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear Locator Overlay Tiles" xml:space="preserve">
         <source>Clear Locator Overlay Tiles</source>
-        <target state="needs-translation">مسح تجانبات تراكب محدد المواقع</target>
+        <target state="translated">مسح الصور المتجانبة لطبقة محدد المواقع</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear Mapnik Tiles" xml:space="preserve">
         <source>Clear Mapnik Tiles</source>
-        <target state="needs-translation">مسح بلاطات مابنيك</target>
+        <target state="translated">مسح الصور المتجانبة لطبقة مابنيك Mapnik</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear OSM Data" xml:space="preserve">
         <source>Clear OSM Data</source>
-        <target state="needs-translation">مسح بيانات OSM</target>
+        <target state="translated">مسح بيانات خريطة الشارع المفتوحة</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Commit" xml:space="preserve">
         <source>Commit</source>
-        <target state="needs-translation">ارتكب</target>
+        <target state="translated">إرسال</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Configure" xml:space="preserve">
         <source>Configure</source>
-        <target state="needs-translation">تهيئة</target>
+        <target state="translated">تهيئة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Confirm move" xml:space="preserve">
         <source>Confirm move</source>
-        <target state="needs-translation">تأكيد نقل</target>
+        <target state="translated">تأكيد النقل</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Connecting the nodes would damage a relation" xml:space="preserve">
         <source>Connecting the nodes would damage a relation</source>
-        <target state="needs-translation">ربط العقد من شأنه أن يضر علاقة</target>
+        <target state="translated">ربط العقد من شأنه أن يضر علاقة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Copy Tags" xml:space="preserve">
         <source>Copy Tags</source>
-        <target state="needs-translation">نسخ العلامات</target>
+        <target state="translated">نسخ الوسوم</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Could not duplicate object" xml:space="preserve">
         <source>Could not duplicate object</source>
-        <target state="needs-translation">تعذر تكرار الكائن</target>
+        <target state="translated">لا يمكن تكرار العنصر</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Create&#10;" xml:space="preserve">
         <source>Create
 </source>
-        <target state="needs-translation">خلق
+        <target state="translated">إنشاء
 </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Create Relation" xml:space="preserve">
         <source>Create Relation</source>
-        <target state="needs-translation">إنشاء علاقة</target>
+        <target state="translated">إنشاء علاقة</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Create Relation Type" xml:space="preserve">
         <source>Create Relation Type</source>
-        <target state="needs-translation">إنشاء نوع العلاقة</target>
+        <target state="translated">إنشاء نوع العلاقة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
         <source>Current Track</source>
-        <target state="needs-translation">المسار الحالي</target>
+        <target state="translated">المسار الحالي</target>
         <note>current GPX track</note>
       </trans-unit>
       <trans-unit id="Database error" xml:space="preserve">
         <source>Database error</source>
-        <target state="needs-translation">خطأ في قاعدة البيانات</target>
+        <target state="translated">خطأ في قاعدة البيانات</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Delete" xml:space="preserve">
         <source>Delete</source>
-        <target state="needs-translation">حذف</target>
+        <target state="translated">حذف</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Delete&#10;" xml:space="preserve">
         <source>Delete
 </source>
-        <target state="needs-translation">حذف
+        <target state="translated">حذف
 </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Delete completely" xml:space="preserve">
         <source>Delete completely</source>
-        <target state="needs-translation">حذف تماما</target>
+        <target state="translated">حذف بشكل كامل</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Delete failed" xml:space="preserve">
         <source>Delete failed</source>
-        <target state="needs-translation">فشل الحذف</target>
+        <target state="translated">فشل الحذف</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Detach from relation" xml:space="preserve">
         <source>Detach from relation</source>
-        <target state="needs-translation">الانفصال عن العلاقة</target>
+        <target state="translated">الانفصال عن العلاقة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Disconnect" xml:space="preserve">
         <source>Disconnect</source>
-        <target state="needs-translation">فصل</target>
+        <target state="translated">فصل</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Display options" xml:space="preserve">
         <source>Display options</source>
-        <target state="needs-translation">عرض الخيارات</target>
+        <target state="translated">عرض الخيارات</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Done" xml:space="preserve">
         <source>Done</source>
-        <target state="needs-translation">تم</target>
+        <target state="translated">تم</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Duplicate" xml:space="preserve">
         <source>Duplicate</source>
-        <target state="needs-translation">تكرار</target>
+        <target state="translated">تكرار</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Edit" xml:space="preserve">
         <source>Edit</source>
-        <target state="needs-translation">تعديل</target>
+        <target state="translated">تعديل</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Edit XML" xml:space="preserve">
         <source>Edit XML</source>
-        <target state="needs-translation">تحرير XML</target>
+        <target state="translated">تحرير XML</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Edit restrictions" xml:space="preserve">
         <source>Edit restrictions</source>
-        <target state="needs-translation">تحرير القيود</target>
+        <target state="translated">تحرير القيود</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Editing layer not visible" xml:space="preserve">
         <source>Editing layer not visible</source>
-        <target state="needs-translation">طبقة التحرير غير مرئية</target>
+        <target state="translated">طبقة التحرير غير مرئية</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Editor only" xml:space="preserve">
         <source>Editor only</source>
-        <target state="needs-translation">المحرر فقط</target>
+        <target state="translated">المحرر فقط</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Editor with Aerial" xml:space="preserve">
         <source>Editor with Aerial</source>
-        <target state="needs-translation">محرر مع الجوي</target>
+        <target state="translated">المحرر مع الصور الجوية</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Ensure Location Services is enabled and you have granted this application access.&#10;&#10;Error: %@" xml:space="preserve">
         <source>Ensure Location Services is enabled and you have granted this application access.
 
 Error: %@</source>
-        <target state="needs-translation">تأكد من تمكين خدمات الموقع وكنت قد منحت هذا التطبيق الوصول.
+        <target state="translated">تأكد من تمكين خدمات الموقع ومنح هذا التطبيق حق الوصول.
 
-خطأ: ٪ @</target>
+الخطأ: %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Ensure the editor view is visible and displays objects in the local area" xml:space="preserve">
         <source>Ensure the editor view is visible and displays objects in the local area</source>
-        <target state="needs-translation">تأكد من أن طريقة عرض المحرر مرئية وعرض الكائنات في المنطقة المحلية</target>
+        <target state="translated">تأكد من تفعيل وضع التحرير وجعلة مرئي ويعرض العناصر في المنطقة المحلية</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Error" xml:space="preserve">
         <source>Error</source>
-        <target state="needs-translation">خطأ</target>
+        <target state="translated">خطأ</target>
         <note>Error dialog title</note>
       </trans-unit>
       <trans-unit id="Error connecting to way" xml:space="preserve">
         <source>Error connecting to way</source>
-        <target state="needs-translation">خطأ في الاتصال بالطريق</target>
+        <target state="translated">خطأ في الاتصال بالطريق</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Error fetching metadata: %@" xml:space="preserve">
         <source>Error fetching metadata: %@</source>
-        <target state="needs-translation">خطأ في جلب بيانات التعريف: ٪ @</target>
+        <target state="translated">خطأ في جلب البيانات الوصفية: %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Extending a 'via' in a Turn Restriction will break the relation" xml:space="preserve">
         <source>Extending a 'via' in a Turn Restriction will break the relation</source>
-        <target state="needs-translation">توسيع 'عبر' في تقييد بدوره سوف كسر العلاقة</target>
+        <target state="translated">سيؤدي تمديد "عبر" في قيود الدور إلى تخريب العلاقة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Extending a way which belongs to a Route or similar relation may damage the relation" xml:space="preserve">
         <source>Extending a way which belongs to a Route or similar relation may damage the relation</source>
-        <target state="needs-translation">توسيع طريقة تنتمي إلى مسار أو علاقة مشابهة قد يضر بالعلاقة</target>
+        <target state="translated">قد يؤدي تمديد طريق ينتمي إلى مسار أو علاقة مشابهة إلى تخريب العلاقة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="GPX Upload Complete" xml:space="preserve">
         <source>GPX Upload Complete</source>
-        <target state="needs-translation">اكتمال تحميل GPX</target>
+        <target state="translated">اكتمال رفع ملف GPX</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="GPX Upload Failed" xml:space="preserve">
         <source>GPX Upload Failed</source>
-        <target state="needs-translation">فشل تحميل GPX</target>
+        <target state="translated">فشل رفع ملف GPX</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Height: %@ ± %@ meters" xml:space="preserve">
         <source>Height: %1$@ ± %2$@ meters</source>
-        <target state="needs-translation">الارتفاع: ٪1$@ ± ٪2$@ متر</target>
+        <target state="translated">الارتفاع: %1$@ ± %2$@ متر/أمتار</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="I'll do it!" xml:space="preserve">
         <source>I'll do it!</source>
-        <target state="needs-translation">أنا سأفعل ذلك!</target>
+        <target state="translated">أنا سأفعل ذلك!</target>
         <note>rate the app now</note>
       </trans-unit>
       <trans-unit id="Identifier" xml:space="preserve">
         <source>Identifier</source>
-        <target state="needs-translation">الهوية</target>
+        <target state="translated">المعرف</target>
         <note>OSM node/way/relation identifier</note>
       </trans-unit>
       <trans-unit id="Ignore" xml:space="preserve">
         <source>Ignore</source>
-        <target state="needs-translation">تجاهل</target>
+        <target state="translated">تجاهل</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="In order to measure height, please enable camera access in the app's settings." xml:space="preserve">
         <source>In order to measure height, please enable camera access in the app's settings.</source>
-        <target state="needs-translation">لقياس الارتفاع، يرجى تمكين الوصول إلى الكاميرا في إعدادات التطبيق.</target>
+        <target state="translated">لقياس الارتفاع، نرجوا منك تمكين الوصول إلى الكاميرا في إعدادات التطبيق.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Invalid URL" xml:space="preserve">
         <source>Invalid URL</source>
-        <target state="needs-translation">رابط غير صالح</target>
+        <target state="translated">رابط غير صالح</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Join" xml:space="preserve">
         <source>Join</source>
-        <target state="needs-translation">انضم</target>
+        <target state="translated">ضم</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Joining would invalidate a Turn Restriction the way belongs to" xml:space="preserve">
         <source>Joining would invalidate a Turn Restriction the way belongs to</source>
-        <target state="needs-translation">الانضمام إلى إبطال قيد تشغيل الطريقة التي ينتمي إليها</target>
+        <target state="translated">قد يؤدي الانضمام إلى إبطال قيد الانعطاف الذي ينتمي إليه الطريق</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." xml:space="preserve">
         <source>Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English.</source>
-        <target state="needs-translation">يؤثر تحديد اللغة على الإعدادات المسبقة فقط وفقط على الإعدادات المسبقة التي تتم ترجمتها للتحديد. الواجهة الرئيسية لا تزال الإنجليزية.</target>
+        <target state="translated">اختيارك للغة يؤثر على الإعدادات المسبقة للوسوم والتي تمت ترجمتها لمحرر iD، أما الواجهة الأساسية للتطبيق لا تزال بالإنجليزية.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Last updated %@" xml:space="preserve">
         <source>Last updated %@</source>
-        <target state="needs-translation">آخر تحديث ٪ @</target>
+        <target state="translated">آخر تحديث %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Lat/Lon" xml:space="preserve">
         <source>Lat/Lon</source>
-        <target state="needs-translation">لات/ لون</target>
+        <target state="translated">خط عرض/ خط طول</target>
         <note>coordinates</note>
       </trans-unit>
       <trans-unit id="Left" xml:space="preserve">
         <source>Left</source>
-        <target state="needs-translation">يسار</target>
+        <target state="translated">يسار</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Left side" xml:space="preserve">
         <source>Left side</source>
-        <target state="needs-translation">جانب أيسر</target>
+        <target state="translated">الجانب الأيسر</target>
         <note>Left-hand side of screen</note>
       </trans-unit>
       <trans-unit id="Length" xml:space="preserve">
         <source>Length</source>
-        <target state="needs-translation">الطول</target>
+        <target state="translated">الطول</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
         <source>Location unavailable</source>
-        <target state="needs-translation">الموقع غير متوفر</target>
+        <target state="translated">غير قادر على تحديد موقع</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Login successful" xml:space="preserve">
         <source>Login successful</source>
-        <target state="needs-translation">تمت عملية تسجيل الدخول بنجاح</target>
+        <target state="translated">تمت عملية تسجيل الدخول بنجاح</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Low memory: clearing cache" xml:space="preserve">
         <source>Low memory: clearing cache</source>
-        <target state="needs-translation">ذاكرة منخفضة: مسح ذاكرة التخزين المؤقت</target>
+        <target state="translated">ذاكرة منخفضة: مسح ذاكرة التخزين المؤقت</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Mail delivery is not available on this device" xml:space="preserve">
         <source>Mail delivery is not available on this device</source>
-        <target state="needs-translation">تسليم البريد غير متوفر على هذا الجهاز</target>
+        <target state="translated">لا يمكن إرسال البريد الإلكتروني على هذا الجهاز</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Make Circular" xml:space="preserve">
         <source>Make Circular</source>
-        <target state="needs-translation">جعل دائرية</target>
+        <target state="translated">جعله دائري</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Make Rectangular" xml:space="preserve">
         <source>Make Rectangular</source>
-        <target state="needs-translation">جعل مستطيلة</target>
+        <target state="translated">جعله مستطيلاً</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Max nodes after joining is 2000" xml:space="preserve">
         <source>Max nodes after joining is 2000</source>
-        <target state="needs-translation">الحد الأقصى للعقد بعد الانضمام هو 2000</target>
+        <target state="translated">الحد الأقصى للعقد بعد الضم هو 2000</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Maximum way length is 2000 nodes" xml:space="preserve">
         <source>Maximum way length is 2000 nodes</source>
-        <target state="needs-translation">أقصى طول للطريق هو 2000 عقدة</target>
+        <target state="translated">أقصى طول للطريق الواحد هو 2000 عقدة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Maybe later..." xml:space="preserve">
         <source>Maybe later...</source>
-        <target state="needs-translation">ربما في وقت لاحق...</target>
+        <target state="translated">ربما في وقت لاحق...</target>
         <note>rate the app later</note>
       </trans-unit>
       <trans-unit id="Measure Direction" xml:space="preserve">
         <source>Measure Direction</source>
-        <target state="needs-translation">قياس الاتجاه</target>
+        <target state="translated">قياس الاتجاه</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Member of multipolygon relation" xml:space="preserve">
         <source>Member of multipolygon relation</source>
-        <target state="needs-translation">عضو في علاقة متعددة الأضلاع</target>
+        <target state="translated">عضو في علاقة أضلاع متداخلة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Members" xml:space="preserve">
         <source>Members</source>
-        <target state="needs-translation">الأعضاء</target>
+        <target state="translated">الأعضاء</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Merge Tags" xml:space="preserve">
         <source>Merge Tags</source>
-        <target state="needs-translation">اجمع الوسوم</target>
+        <target state="translated">دمج الوسوم</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Missing way to connect to" xml:space="preserve">
         <source>Missing way to connect to</source>
-        <target state="needs-translation">طريقة مفقودة للاتصال</target>
+        <target state="translated">لا يوجد خط للاتصال به</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Modified" xml:space="preserve">
         <source>Modified</source>
-        <target state="needs-translation">تم تعديل</target>
+        <target state="translated">تم التعديل</target>
         <note>last modified date</note>
       </trans-unit>
       <trans-unit id="Modify" xml:space="preserve">
         <source>Modify</source>
-        <target state="needs-translation">تعديل</target>
+        <target state="translated">تعديل</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Modify&#10;" xml:space="preserve">
         <source>Modify
 </source>
-        <target state="needs-translation">لتعديل قيود الانعطاف، أولا انقر على أي جزء **من** لاختياره، وسيظهر حول الجزء المختار ظل يومض باستمرار، وسيظهر على جميع الوجهات الممكن الذهاب **إليها** رموز انعطاف.
+        <target state="translated">تعديل
 </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
@@ -773,9 +773,9 @@ Error: %@</source>
         <source>Modifying the raw XML data allows you to correct errors that prevent uploading.
 
 It is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format.</source>
-        <target state="needs-translation">تعديل بيانات XML الأولية يسمح لك لتصحيح الأخطاء التي تمنع التحميل.
+        <target state="translated">تعديل بيانات XML يتيح لك تصحيح الأخطاء التي تمنع الرفع.
 
-وهي عملية متقدمة يجب أن يتم تنفيذها فقط إذا كان لديك فهم شامل لتنسيق مجموعة التغييرات OSM.</target>
+وهي عملية متقدمة يجب إجراؤها فقط إذا كان لديك فهم شامل لتنسيق مجموعة تغييرات خريطة الشارع المفتوحة.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="More..." xml:space="preserve">
@@ -785,138 +785,138 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Most recent" xml:space="preserve">
         <source>Most recent</source>
-        <target state="needs-translation">الأحدث</target>
+        <target state="translated">المستخدم مؤخرًا</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Move" xml:space="preserve">
         <source>Move</source>
-        <target state="needs-translation">تحريك</target>
+        <target state="translated">تحريك</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Move selected object?" xml:space="preserve">
         <source>Move selected object?</source>
-        <target state="needs-translation">نقل كائن محدد؟</target>
+        <target state="translated">نقل عنصر محدد؟</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Multipolygon" xml:space="preserve">
         <source>Multipolygon</source>
-        <target state="needs-translation">المضلعات المتداخلة</target>
+        <target state="translated">المضلعات المتداخلة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Network error" xml:space="preserve">
         <source>Network error</source>
-        <target state="needs-translation">خطأ في الشبكة</target>
+        <target state="translated">خطأ في الشبكة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Never" xml:space="preserve">
         <source>Never</source>
-        <target state="needs-translation">أبدا</target>
+        <target state="translated">أبدا</target>
         <note>Never delete old GPX tracks
    Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Next" xml:space="preserve">
         <source>Next</source>
-        <target state="needs-translation">التالي &gt;</target>
+        <target state="translated">التالي</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No Data" xml:space="preserve">
         <source>No Data</source>
-        <target state="needs-translation">بيانات الخريطة</target>
+        <target state="translated">لايوجد بيانات</target>
         <note>Alert title</note>
       </trans-unit>
       <trans-unit id="No Left Turn restriction" xml:space="preserve">
         <source>No Left Turn restriction</source>
-        <target state="needs-translation">لا يوجد تقييد للانعطاف الأيسر</target>
+        <target state="translated">لا يوجد قيود على الانعطاف لليسار</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No Right Turn restriction" xml:space="preserve">
         <source>No Right Turn restriction</source>
-        <target state="needs-translation">لا يوجد تقييد للانعطاف الأيمن</target>
+        <target state="translated">لا يوجد قيود على الانعطاف لليمين</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No Straight On restriction" xml:space="preserve">
         <source>No Straight On restriction</source>
-        <target state="needs-translation">لا يوجد قيد مستقيم على</target>
+        <target state="translated">لا يوجد قيود على المشي بشكل مستقيم وللأمام</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No U-Turn restriction" xml:space="preserve">
         <source>No U-Turn restriction</source>
-        <target state="needs-translation">لا يوجد تقييد تشغيل U</target>
+        <target state="translated">لا يوجد تقييد انعطاف على الدواران (اليوتيرن)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No active track" xml:space="preserve">
         <source>No active track</source>
-        <target state="needs-translation">لا يوجد مسار نشط</target>
+        <target state="translated">لا يوجد مسار نشط</target>
         <note>GPX track</note>
       </trans-unit>
       <trans-unit id="No image data available" xml:space="preserve">
         <source>No image data available</source>
-        <target state="needs-translation">لا تتوفر بيانات الصور</target>
+        <target state="translated">لا تتوفر بيانات الصور</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No results found" xml:space="preserve">
         <source>No results found</source>
-        <target state="needs-translation">لم يُعثر على نتائج</target>
+        <target state="translated">لم يتم العثور على نتائج</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No tags to paste" xml:space="preserve">
         <source>No tags to paste</source>
-        <target state="needs-translation">لا توجد علامات للصقها</target>
+        <target state="translated">لا توجد وسوم للصقها</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node" xml:space="preserve">
         <source>Node</source>
-        <target state="needs-translation">عقدة (نقطة)</target>
+        <target state="translated">عقدة (نقطة)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node Attributes" xml:space="preserve">
         <source>Node Attributes</source>
-        <target state="needs-translation">سمات العقدة</target>
+        <target state="translated">خصائص العقدة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node Tags" xml:space="preserve">
         <source>Node Tags</source>
-        <target state="needs-translation">علامات العقدة</target>
+        <target state="translated">وسوم العقدة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node is not an element of way" xml:space="preserve">
         <source>Node is not an element of way</source>
-        <target state="needs-translation">العقدة ليست عنصرا من عناصر الطريق</target>
+        <target state="translated">العقدة ليست عنصرا من عناصر الطريق</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node must be the first or last node of the way" xml:space="preserve">
         <source>Node must be the first or last node of the way</source>
-        <target state="needs-translation">العقدة يجب أن تكون العقدة الأولى أو الأخيرة من الطريق</target>
+        <target state="translated">يجب أن تكون العقدة هي العقدة الأولى أو الأخيرة في الطريق</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Not found" xml:space="preserve">
         <source>Not found</source>
-        <target state="needs-translation">غير موجود</target>
+        <target state="translated">لم يتم العثور على شيء</target>
         <note>User credentials not found</note>
       </trans-unit>
       <trans-unit id="Note History" xml:space="preserve">
         <source>Note History</source>
-        <target state="needs-translation">ملاحظة محفوظات</target>
+        <target state="translated">السجل التاريخي للملاحظات</target>
         <note>OSM note</note>
       </trans-unit>
       <trans-unit id="Nothing to upload, no changes have been made." xml:space="preserve">
         <source>Nothing to upload, no changes have been made.</source>
-        <target state="needs-translation">لا شيء لتحميل، لم يتم إجراء أي تغييرات.</target>
+        <target state="translated">لا شيء للرفع، لم تقم بإجراء أي تغييرات.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Number of recent items to display" xml:space="preserve">
         <source>Number of recent items to display</source>
-        <target state="needs-translation">عدد العناصر الحديثة التي سيتم عرضها</target>
+        <target state="translated">عدد العناصر الحديثة التي سيتم عرضها</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="OK" xml:space="preserve">
         <source>OK</source>
-        <target state="needs-translation">موافق</target>
+        <target state="translated">موافق</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Object modified" xml:space="preserve">
         <source>Object modified</source>
-        <target state="needs-translation">كائن معدل</target>
+        <target state="translated">عنصر معدل</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Old value: (oldValue)" xml:space="preserve">
@@ -926,498 +926,498 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Only Left Turn restriction" xml:space="preserve">
         <source>Only Left Turn restriction</source>
-        <target state="needs-translation">تقييد المنعطف الأيسر فقط</target>
+        <target state="translated">فقط قيود الانعطاف لليسار</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only Right Turn restriction" xml:space="preserve">
         <source>Only Right Turn restriction</source>
-        <target state="needs-translation">تقييد المنعطف الأيمن فقط</target>
+        <target state="translated">فقط قيود الانعطاف لليمين</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only Straight On restriction" xml:space="preserve">
         <source>Only Straight On restriction</source>
-        <target state="needs-translation">فقط مباشرة على تقييد</target>
+        <target state="translated">فقط قيود المشي بشكل مستقيم (للأمام)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only multipolygon relations are supported" xml:space="preserve">
         <source>Only multipolygon relations are supported</source>
-        <target state="needs-translation">يتم دعم العلاقات متعددة الأضلاع فقط</target>
+        <target state="translated">يتم دعم علاقات المضلعات المتداخلة فقط</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only ways/multipolygons can be rotated" xml:space="preserve">
         <source>Only ways/multipolygons can be rotated</source>
-        <target state="needs-translation">يمكن تدوير الطرق/المضلعات المتعددة فقط</target>
+        <target state="translated">يمكن تدوير الطرق/المضلعات المتداخلة فقط</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Open Settings" xml:space="preserve">
         <source>Open Settings</source>
-        <target state="needs-translation">فتح الإعدادات</target>
+        <target state="translated">فتح الإعدادات</target>
         <note>Open the iOS Settings app</note>
       </trans-unit>
       <trans-unit id="Open URL" xml:space="preserve">
         <source>Open URL</source>
-        <target state="needs-translation">فتح الرابط</target>
+        <target state="translated">فتح رابط</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Paste" xml:space="preserve">
         <source>Paste</source>
-        <target state="needs-translation">لصق</target>
+        <target state="translated">لصق</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)" xml:space="preserve">
         <source>Pasting %ld tag(s)</source>
-        <target state="needs-translation">لصق %ld العلامة (العلامات)</target>
+        <target state="translated">تُعرض عند نسخ / لصق الوسوم من عنصر لآخر</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Perform Action" xml:space="preserve">
         <source>Perform Action</source>
-        <target state="needs-translation">تنفيذ الإجراء</target>
+        <target state="translated">تنفيذ الإجراء</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Please wait" xml:space="preserve">
         <source>Please wait</source>
-        <target state="needs-translation">يرجى الانتظار</target>
+        <target state="translated">يرجى الانتظار</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
         <source>Previous</source>
-        <target state="needs-translation">السابق</target>
+        <target state="translated">السابق</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Previous Tracks" xml:space="preserve">
         <source>Previous Tracks</source>
-        <target state="needs-translation">المسارات السابقة</target>
+        <target state="translated">المسارات السابقة</target>
         <note>previous GPX track</note>
       </trans-unit>
       <trans-unit id="Purge" xml:space="preserve">
         <source>Purge</source>
-        <target state="needs-translation">تطهير</target>
+        <target state="translated">تنظيف</target>
         <note>Discard editing changes when resetting OSM data cache</note>
       </trans-unit>
       <trans-unit id="Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." xml:space="preserve">
         <source>Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap.</source>
-        <target state="needs-translation">تصنيف هذا التطبيق يجعل من السهل على مخططي الخرائط الآخرين لاكتشاف ذلك ويزيد من رؤية خريطة الشارع المفتوح.</target>
+        <target state="translated">يسهّل تقييم هذا التطبيق على مصممي الخرائط الآخرين اكتشافه الأمر الذي يؤدي لمزيد من المحررين على خريطة الشارع المفتوحة.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Recent Aerial Imagery" xml:space="preserve">
         <source>Recent Aerial Imagery</source>
-        <target state="needs-translation">الصور الجوية الأخيرة</target>
+        <target state="translated">الصور الجوية الحديثة</target>
         <note>Alert title message</note>
       </trans-unit>
       <trans-unit id="Redo" xml:space="preserve">
         <source>Redo</source>
-        <target state="needs-translation">إعادة</target>
+        <target state="translated">إعادة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation Attributes" xml:space="preserve">
         <source>Relation Attributes</source>
-        <target state="needs-translation">سمات العلاقة</target>
+        <target state="translated">خصائص العلاقة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation Tags" xml:space="preserve">
         <source>Relation Tags</source>
-        <target state="needs-translation">علامات العلاقة</target>
+        <target state="translated">وسوم العلاقة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation: %@" xml:space="preserve">
         <source>Relation: %@</source>
-        <target state="needs-translation">هذه العلاقة</target>
+        <target state="translated">العلاقة: %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relations" xml:space="preserve">
         <source>Relations</source>
-        <target state="needs-translation">العلاقات</target>
+        <target state="translated">العلاقات</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Replace Tags" xml:space="preserve">
         <source>Replace Tags</source>
-        <target state="needs-translation">استبدال العلامات</target>
+        <target state="translated">استبدال الوسوم</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Requires a closed way with at least 3 nodes" xml:space="preserve">
         <source>Requires a closed way with at least 3 nodes</source>
-        <target state="needs-translation">يتطلب طريقة مغلقة مع ما لا يقل عن 3 عقد</target>
+        <target state="translated">لابد من وجود طريق مغلق (مساحة لشيء ما) ويحتوي على ثلاث عقد (نقاط) على الأقل</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Requires a closed way with at least 4 nodes" xml:space="preserve">
         <source>Requires a closed way with at least 4 nodes</source>
-        <target state="needs-translation">يتطلب طريقة مغلقة مع ما لا يقل عن 4 عقد</target>
+        <target state="translated">لابد من وجود طريق مغلق (مساحة لشيء ما) ويحتوي على أربع عقد (نقاط) على الأقل</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Restrict" xml:space="preserve">
         <source>Restrict</source>
-        <target state="needs-translation">تقيد</target>
+        <target state="translated">قيد</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Restriction: %@" xml:space="preserve">
         <source>Restriction: %@</source>
-        <target state="needs-translation">قيود الانعطاف</target>
+        <target state="translated">القيد: %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Results for %@ (%@)" xml:space="preserve">
         <source>Results for %1$@ (%2$@)</source>
-        <target state="needs-translation">نتائج ٪1$@ (٪2$@)</target>
+        <target state="translated">النتائج %1$@ (%2$@)</target>
         <note>country name,2-character country code</note>
       </trans-unit>
       <trans-unit id="Retry" xml:space="preserve">
         <source>Retry</source>
-        <target state="needs-translation">إعادة المحاولة</target>
+        <target state="translated">إعادة المحاولة</target>
         <note>retry opening hours recognition</note>
       </trans-unit>
       <trans-unit id="Reverse" xml:space="preserve">
         <source>Reverse</source>
-        <target state="needs-translation">عكس الاتجاه</target>
+        <target state="translated">عكس الاتجاه</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Right" xml:space="preserve">
         <source>Right</source>
-        <target state="needs-translation">يمين</target>
+        <target state="translated">يمين</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Right side" xml:space="preserve">
         <source>Right side</source>
-        <target state="needs-translation">جانب أيمن</target>
+        <target state="translated">الجانب الأيمن</target>
         <note>Right-hand side of screen</note>
       </trans-unit>
       <trans-unit id="Rotate" xml:space="preserve">
         <source>Rotate</source>
-        <target state="needs-translation">تدوير</target>
+        <target state="translated">تدوير</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Select Object" xml:space="preserve">
         <source>Select Object</source>
-        <target state="needs-translation">تحديد كائن</target>
+        <target state="translated">تحديد عنصر</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Select a highway approaching the intersection" xml:space="preserve">
         <source>Select a highway approaching the intersection</source>
-        <target state="needs-translation">حدد طريقا سريعا يقترب من التقاطع</target>
+        <target state="translated">حدد الطريق المؤدي إلى التقاطع</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Selected object is off screen" xml:space="preserve">
         <source>Selected object is off screen</source>
-        <target state="needs-translation">الكائن المحدد خارج الشاشة</target>
+        <target state="translated">العنصر المحدد خارج الشاشة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Set" xml:space="preserve">
         <source>Set</source>
-        <target state="needs-translation">تعيين</target>
+        <target state="translated">ضبط</target>
         <note>set tag value</note>
       </trans-unit>
       <trans-unit id="Set Height Tag" xml:space="preserve">
         <source>Set Height Tag</source>
-        <target state="needs-translation">تعيين علامة الارتفاع</target>
+        <target state="translated">ضبط وسم الارتفاع</target>
         <note>The height=* tag</note>
       </trans-unit>
       <trans-unit id="Settings" xml:space="preserve">
         <source>Settings</source>
-        <target state="needs-translation">الإعدادات</target>
+        <target state="translated">الإعدادات</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Share" xml:space="preserve">
         <source>Share</source>
-        <target state="needs-translation">شارك</target>
+        <target state="translated">مشاركة</target>
         <note>Open iOS sharing sheet
    Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Show Recent Items" xml:space="preserve">
         <source>Show Recent Items</source>
-        <target state="needs-translation">إظهار العناصر الحديثة</target>
+        <target state="translated">إظهار العناصر الحديثة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." xml:space="preserve">
         <source>Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.</source>
-        <target state="needs-translation">حدث خطأ ما أثناء محاولة استعادة بياناتك. تم فقدان أية تغييرات معلقة. معذرة.</target>
+        <target state="translated">حدث خطأ ما أثناء محاولة استعادة بياناتك. كما فقدت أي تغييرات كانت معلقة. نأسف لذلك.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Sorry, an error occurred while loading the GPX file" xml:space="preserve">
         <source>Sorry, an error occurred while loading the GPX file</source>
-        <target state="needs-translation">عذرا، حدث خطأ أثناء تحميل ملف GPX</target>
+        <target state="translated">عذرا، حدث خطأ أثناء تحميل ملف GPX</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Split" xml:space="preserve">
         <source>Split</source>
-        <target state="needs-translation">تقسيم</target>
+        <target state="translated">تقسيم</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Standard imagery" xml:space="preserve">
         <source>Standard imagery</source>
-        <target state="needs-translation">صور قياسية</target>
+        <target state="translated">صور قياسية</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Start" xml:space="preserve">
         <source>Start</source>
-        <target state="needs-translation">ابدأ</target>
+        <target state="translated">ابدأ</target>
         <note>Begin downloading tiles</note>
       </trans-unit>
       <trans-unit id="Stop" xml:space="preserve">
         <source>Stop</source>
-        <target state="needs-translation">إيقاف</target>
+        <target state="translated">توقف</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Straighten" xml:space="preserve">
         <source>Straighten</source>
-        <target state="needs-translation">استقامة</target>
+        <target state="translated">جعله مستقيماً</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Tags" xml:space="preserve">
         <source>Tags</source>
-        <target state="needs-translation">الوسوم</target>
+        <target state="translated">الوسوم</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
         <source>The + button can be positioned on either the left or right side of the screen</source>
-        <target state="needs-translation">يمكن وضع الزر + على الجانب الأيسر أو الأيمن من الشاشة</target>
+        <target state="translated">يمكن وضع الزر + على الجانب الأيسر أو الأيمن من الشاشة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The XML is improperly formed" xml:space="preserve">
         <source>The XML is improperly formed</source>
-        <target state="needs-translation">تم تشكيل XML بشكل غير صحيح</target>
+        <target state="translated">تم تشكيل XML بشكل غير صحيح</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The current location cannot be determined: " xml:space="preserve">
         <source>The current location cannot be determined: </source>
-        <target state="needs-translation">لا يمكن تحديد الموقع الحالي: </target>
+        <target state="translated">لا يمكن تحديد الموقع الحالي: </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The merged nodes contain conflicting tags" xml:space="preserve">
         <source>The merged nodes contain conflicting tags</source>
-        <target state="needs-translation">تحتوي العقد المدمجة على علامات متعارضة</target>
+        <target state="translated">تحتوي العقد المدموجة على وسوم متعارضة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The nodes have conflicting roles in parent relations" xml:space="preserve">
         <source>The nodes have conflicting roles in parent relations</source>
-        <target state="needs-translation">العقد لها أدوار متعارضة في العلاقات الأصل</target>
+        <target state="translated">العقد لها أدوار متعارضة في العلاقات التي تتبع لها</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The object does not contain any tags" xml:space="preserve">
         <source>The object does not contain any tags</source>
-        <target state="needs-translation">لا يحتوي الكائن على أي علامات</target>
+        <target state="translated">لا يحتوي العنصر على أي وسوم</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The restriction cannot be deleted" xml:space="preserve">
         <source>The restriction cannot be deleted</source>
-        <target state="needs-translation">لا يمكن حذف القيد</target>
+        <target state="translated">لا يمكن حذف القيد</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The selected way must be completely visible" xml:space="preserve">
         <source>The selected way must be completely visible</source>
-        <target state="needs-translation">يجب أن تكون الطريقة المحددة مرئية تماما</target>
+        <target state="translated">يجب أن يكون الطريق المحدد مرئياً بشكل كامل</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The target way is ambiguous" xml:space="preserve">
         <source>The target way is ambiguous</source>
-        <target state="needs-translation">الطريقة المستهدفة غامضة</target>
+        <target state="translated">الطريق المستهدف مبهم وغير واضح</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The turn contains an unrecognized turn restriction style. Proceeding will destroy it." xml:space="preserve">
         <source>The turn contains an unrecognized turn restriction style. Proceeding will destroy it.</source>
-        <target state="needs-translation">يحتوي بدوره على نمط تقييد تشغيل غير معروف. المتابعة ستدمره</target>
+        <target state="translated">يحتوي المنعطف على نمط تقييد دوران غير معروف. مواصلة الإجراء سوف يقوم بتخريبها.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way belongs to a relation that is not fully downloaded" xml:space="preserve">
         <source>The way belongs to a relation that is not fully downloaded</source>
-        <target state="needs-translation">الطريقة تنتمي إلى علاقة لم يتم تنزيلها بالكامل</target>
+        <target state="translated">الطريق ينتمي إلى علاقة لم يتم تنزيلها بالكامل</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way is not sufficiently straight" xml:space="preserve">
         <source>The way is not sufficiently straight</source>
-        <target state="needs-translation">الطريق ليس مستقيما بما فيه الكفاية</target>
+        <target state="translated">الطريق ليس مستقيما بما فيه الكفاية</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way must have at least 2 nodes" xml:space="preserve">
         <source>The way must have at least 2 nodes</source>
-        <target state="needs-translation">يجب أن تحتوي الطريقة على عقدتين على الأقل</target>
+        <target state="translated">يجب أن يحتوي الطريق على عقدتين على الأقل</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The ways contain incompatible tags" xml:space="preserve">
         <source>The ways contain incompatible tags</source>
-        <target state="needs-translation">تحتوي الطرق على علامات غير متوافقة</target>
+        <target state="translated">تحتوي الطرق على وسوم غير متوافقة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="This action requires GPS to be turned on" xml:space="preserve">
         <source>This action requires GPS to be turned on</source>
-        <target state="needs-translation">يتطلب هذا الإجراء تشغيل نظام تحديد المواقع العالمي (GPS)</target>
+        <target state="translated">يتطلب هذا الإجراء تشغيل نظام تحديد المواقع العالمي (GPS)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="This app does not yet support editing turn restrictions without a node as the 'via' member" xml:space="preserve">
         <source>This app does not yet support editing turn restrictions without a node as the 'via' member</source>
-        <target state="needs-translation">هذا التطبيق لا يدعم حتى الآن تحرير القيود بدوره دون عقدة كعضو "عبر"</target>
+        <target state="translated">لا يدعم هذا التطبيق حتى الآن قيود تعديل الانعطاف بدون عقدة كعضو "عبر"</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="This device is not able to provide heading data." xml:space="preserve">
         <source>This device is not able to provide heading data.</source>
-        <target state="needs-translation">هذا الجهاز غير قادر على توفير بيانات العنوان.</target>
+        <target state="translated">هذا الجهاز غير قادر على توفير بيانات العنوان.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
         <source>To add another member to the relation 'long press' on the way to be added</source>
-        <target state="needs-translation">لإضافة عضو آخر إلى العلاقة "اضغط طويلا" في الطريق إلى أن تضاف</target>
+        <target state="translated">لإضافة عضو آخر إلى العلاقة "اضغط طويلا" على الطريق إلى أن يضاف</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel ALLOWED from %@ to %@" xml:space="preserve">
         <source>Travel ALLOWED from %1$@ to %2$@</source>
-        <target state="needs-translation">السفر المسموح به من ٪1$@ إلى ٪2$$ @</target>
+        <target state="translated">التنقل مسموح به من %1$@ إلى %2$@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel ONLY from %@ to %@" xml:space="preserve">
         <source>Travel ONLY from %1$@ to %2$@</source>
-        <target state="needs-translation">السفر فقط من ٪1$@ إلى ٪2$$ @</target>
+        <target state="translated">التنقل محصور أن يكون من %1$@ إلى %2$@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel PROHIBITED from %@ to %@" xml:space="preserve">
         <source>Travel PROHIBITED from %1$@ to %2$@</source>
-        <target state="needs-translation">السفر المحظور من ٪1$@ إلى ٪2$$ @</target>
+        <target state="translated">التنقل ممنوع من %1$@ إلى %2$@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel from %@" xml:space="preserve">
         <source>Travel from %@</source>
-        <target state="needs-translation">السفر من ٪ @</target>
+        <target state="translated">التنقل من %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Turn On Location Services to Allow %@ to Determine Your Location" xml:space="preserve">
         <source>Turn On Location Services to Allow %@ to Determine Your Location</source>
-        <target state="needs-translation">تشغيل خدمات الموقع للسماح ٪@ بتحديد موقعك</target>
+        <target state="translated">تشغيل خدمات الموقع للسماح لـ %@ بتحديد موقعك</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Turn Restrictions" xml:space="preserve">
         <source>Turn Restrictions</source>
-        <target state="needs-translation">قيود المنعطفات</target>
+        <target state="translated">قيود الانعطافات المرورية</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.&#10;&#10;Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route." xml:space="preserve">
         <source>Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.
 
 Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route.</source>
-        <target state="needs-translation">حدد قيود التشغيل الطرق التي يمكنك الانتقال إليها عند إدخال تقاطع من اتجاه معين.
+        <target state="translated">تحدد قيود الانعطاف الطرق التي يمكنك الانعطاف إليها عند دخول تقاطع من اتجاه معين.
 
-حدد الطريق السريع الذي تقترب منه من التقاطع، ثم اضغط على سهم للتبديل بين ما إذا كان الطريق الوجهة هو طريق مسموح به.</target>
+حدد الطريق الذي يقترب لتقاطع أو مفترق طرق، ثم اضغط على السهم للتحديد ما إذا ما كانت طريق الوجهة طريقًا مسموحًا به.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="U-Turn from %@ allowed" xml:space="preserve">
         <source>U-Turn from %@ allowed</source>
-        <target state="needs-translation">U-Turn من ٪@ مسموح به</target>
+        <target state="translated">الدواران (الوتيرن) يسمح به من %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="U-Turn from %@ prohibited" xml:space="preserve">
         <source>U-Turn from %@ prohibited</source>
-        <target state="needs-translation">U-بدوره من ٪@ محظور</target>
+        <target state="translated">الدواران (الوتيرن) ممنوع من %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="UID" xml:space="preserve">
         <source>UID</source>
-        <target state="needs-translation">معرف معرف الاتحاد الأوروبي</target>
+        <target state="translated">معرف المستخدم</target>
         <note>OSM numeric user ID</note>
       </trans-unit>
       <trans-unit id="Unable to upload changes" xml:space="preserve">
         <source>Unable to upload changes</source>
-        <target state="needs-translation">غير قادر على تحميل التغييرات</target>
+        <target state="translated">لا يمكن رفع التغييرات</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Undo" xml:space="preserve">
         <source>Undo</source>
-        <target state="needs-translation">تراجع</target>
+        <target state="translated">تراجع</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Unknown role" xml:space="preserve">
         <source>Unknown role</source>
-        <target state="needs-translation">دور غير معروف</target>
+        <target state="translated">دور لعضو العلاقة غير معروف</target>
         <note>relation role=* tag</note>
       </trans-unit>
       <trans-unit id="Unsupported turn restriction type" xml:space="preserve">
         <source>Unsupported turn restriction type</source>
-        <target state="needs-translation">نوع تقييد التشغيل غير المدعوم</target>
+        <target state="translated">نوع قيود الانعطاف غير مدعوم</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Update" xml:space="preserve">
         <source>Update</source>
-        <target state="needs-translation">تحديث</target>
+        <target state="translated">تحديث</target>
         <note>update an osm note</note>
       </trans-unit>
       <trans-unit id="Update '%@' tag" xml:space="preserve">
         <source>Update '%@' tag</source>
-        <target state="needs-translation">تحديث علامة '٪@'</target>
+        <target state="translated">تحديث الوسم '%@'</target>
         <note>Update the named tag value (e.g. foo=*)</note>
       </trans-unit>
       <trans-unit id="Updating Note..." xml:space="preserve">
         <source>Updating Note...</source>
-        <target state="needs-translation">جاري تحديث الملاحظة...</target>
+        <target state="translated">جاري تحديث الملاحظة...</target>
         <note>OSM Note</note>
       </trans-unit>
       <trans-unit id="Upload complete!" xml:space="preserve">
         <source>Upload complete!</source>
-        <target state="needs-translation">تحميل كاملة!</target>
+        <target state="translated">اكتمل رفع البيانات!</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Upload to OSM" xml:space="preserve">
         <source>Upload to OSM</source>
-        <target state="needs-translation">تحميل إلى OSM</target>
+        <target state="translated">رفع إلى خريطة الشارع المفتوحة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Upload your changes" xml:space="preserve">
         <source>Upload your changes</source>
-        <target state="needs-translation">تحميل التغييرات</target>
+        <target state="translated">رفع التغييرات التي قمت بها</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Uploading GPX..." xml:space="preserve">
         <source>Uploading GPX...</source>
-        <target state="needs-translation">تحميل GPX...</target>
+        <target state="translated">يتم رفع GPX...</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="User" xml:space="preserve">
         <source>User</source>
-        <target state="needs-translation">المستخدم</target>
+        <target state="translated">اسم المستخدم</target>
         <note>OSM user name</note>
       </trans-unit>
       <trans-unit id="User-defined imagery" xml:space="preserve">
         <source>User-defined imagery</source>
-        <target state="needs-translation">صور معرفة من قبل المستخدم</target>
+        <target state="translated">صور من تحديد المستخدم</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Version" xml:space="preserve">
         <source>Version</source>
-        <target state="needs-translation">الإصدار</target>
+        <target state="translated">الإصدار</target>
         <note>OSM object versioh</note>
       </trans-unit>
       <trans-unit id="Warning" xml:space="preserve">
         <source>Warning</source>
-        <target state="needs-translation">تحذير</target>
+        <target state="translated">تحذير</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Way Attributes" xml:space="preserve">
         <source>Way Attributes</source>
-        <target state="needs-translation">سمات الطريق</target>
+        <target state="translated">خصائص الطريق</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Way Tags" xml:space="preserve">
         <source>Way Tags</source>
-        <target state="needs-translation">علامات الطريق</target>
+        <target state="translated">وسوم الطريق</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.&#10;&#10;To continue press Commit once again, otherwise press Cancel." xml:space="preserve">
         <source>You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.
 
 To continue press Commit once again, otherwise press Cancel.</source>
-        <target state="needs-translation">أنت على وشك إجراء تغييرات على قاعدة بيانات خريطة الشارع المفتوح المباشرة. ستكون تغييراتك مرئية للجميع في العالم.
+        <target state="translated">أنت على وشك إجراء تغييرات على قاعدة بيانات خريطة الشارع المفتوح المباشرة. ستكون تغييراتك مرئية للجميع في العالم.
 
-لمتابعة الضغط على الالتزام مرة أخرى، وإلا اضغط على إلغاء الأمر.</target>
+لمتابعة الضغط على إرسال مرة أخرى، وإلا اضغط على إلغاء.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You can define your own custom presets here" xml:space="preserve">
         <source>You can define your own custom presets here</source>
-        <target state="needs-translation">يمكنك تحديد إعداداتك المسبقة المخصصة هنا</target>
+        <target state="translated">من هنا يمكنك تحديد إعداداتك المسبقة المخصصة</target>
         <note>POI editor presets</note>
       </trans-unit>
       <trans-unit id="You can navigate to a relation member only if it is already downloaded.&#10;These members are marked with '&gt;'." xml:space="preserve">
         <source>You can navigate to a relation member only if it is already downloaded.
 These members are marked with '&gt;'.</source>
-        <target state="needs-translation">يمكنك الانتقال إلى عضو علاقة فقط إذا تم تنزيله بالفعل.
-تم وضع علامة "&gt;" على هؤلاء الأعضاء.</target>
+        <target state="translated">يمكنك الانتقال إلى عضو العلاقة فقط إذا تم تنزيله بالفعل.
+يتم تمييز هؤلاء الأعضاء بـ '&gt;'.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." xml:space="preserve">
         <source>You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost.</source>
-        <target state="needs-translation">لقد قمت بتغييرات لم يتم تحميلها بعد إلى الخادم. سيؤدي مسح ذاكرة التخزين المؤقت إلى فقدان هذه التغييرات.</target>
+        <target state="translated">لقد قمت بتغييرات لم يتم رفعها بعد إلى الخادم. سيؤدي مسح ذاكرة التخزين المؤقت إلى فقدان هذه التغييرات.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You must provide your OSM user name, not an email address." xml:space="preserve">
@@ -1427,30 +1427,30 @@ These members are marked with '&gt;'.</source>
       </trans-unit>
       <trans-unit id="You must save or discard changes to the current object before editing its associated relation" xml:space="preserve">
         <source>You must save or discard changes to the current object before editing its associated relation</source>
-        <target state="needs-translation">يجب حفظ التغييرات على الكائن الحالي أو تجاهلها قبل تحرير العلاقة المقترنة به</target>
+        <target state="translated">يجب حفظ التغييرات على العنصر الحالي أو تجاهلها قبل تحرير العلاقة المقترنة به</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You've uploaded %ld changesets with this version of Go Map!!&#10;&#10;Rate this app?" xml:space="preserve">
         <source>You've uploaded %ld changesets with this version of Go Map!!
 
 Rate this app?</source>
-        <target state="needs-translation">لقد قمت بتحميل %ld changesets مع هذا الإصدار من خريطة الذهاب!
+        <target state="translated">لقد قمت برفع %ld تغيير/تغييرات مع هذا الإصدار من Go Map!!
 
-تقييم هذا التطبيق؟</target>
+هل ترغب بتقييم هذا التطبيق؟</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Your OSM data cache is getting large, which may lead to slow startup and shutdown times.&#10;&#10;You may want to clear the cache (under Display settings) to improve performance." xml:space="preserve">
         <source>Your OSM data cache is getting large, which may lead to slow startup and shutdown times.
 
 You may want to clear the cache (under Display settings) to improve performance.</source>
-        <target state="needs-translation">ذاكرة التخزين المؤقت للبيانات OSM الخاص بك هو الحصول على كبيرة، والتي قد تؤدي إلى بدء التشغيل بطيئة وأوقات إيقاف التشغيل.
+        <target state="translated">ذاكرة التخزين المؤقت الخاص بك لبيانات خريطة الشارع المفتوحة أصبحت كبيرة جدا، وقد يؤدي ذلك إلى البطء في بدء وإيقاف تشغيل التطبيق.
 
 قد تحتاج إلى مسح ذاكرة التخزين المؤقت (ضمن إعدادات العرض) لتحسين الأداء.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Zoom to Edit" xml:space="preserve">
         <source>Zoom to Edit</source>
-        <target state="needs-translation">تكبير/تصغير إلى تحرير</target>
+        <target state="translated">تكبير للتحرير</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="add node to way" xml:space="preserve">
@@ -1460,57 +1460,57 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="add object to relation" xml:space="preserve">
         <source>add object to relation</source>
-        <target state="needs-translation">إضافة كائن إلى العلاقة</target>
+        <target state="translated">إضافة عنصر إلى العلاقة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="added to multipolygon relation" xml:space="preserve">
         <source>added to multipolygon relation</source>
-        <target state="needs-translation">تمت إضافته إلى علاقة متعددةpolygon</target>
+        <target state="translated">تمت إضافته إلى علاقة الأضلاع المتداخلة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="computing size..." xml:space="preserve">
         <source>computing size...</source>
-        <target state="needs-translation">حجم الحوسبة...</target>
+        <target state="translated">حساب الحجم ...</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="create node" xml:space="preserve">
         <source>create node</source>
-        <target state="needs-translation">إنشاء عقدة/طريق</target>
+        <target state="translated">إنشاء عقدة/نقطة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="create relation" xml:space="preserve">
         <source>create relation</source>
-        <target state="needs-translation">إنشاء علاقة</target>
+        <target state="translated">إنشاء علاقة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="create turn restriction" xml:space="preserve">
         <source>create turn restriction</source>
-        <target state="needs-translation">إنشاء تقييد تشغيل</target>
+        <target state="translated">إنشاء قيود انعطاف</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="create way" xml:space="preserve">
         <source>create way</source>
-        <target state="needs-translation">خلق طريقة</target>
+        <target state="translated">إنشاء طريق</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete multipolygon" xml:space="preserve">
         <source>delete multipolygon</source>
-        <target state="needs-translation">حذف متعددةpolygon</target>
+        <target state="translated">حذف مضلعات متعددة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete node" xml:space="preserve">
         <source>delete node</source>
-        <target state="needs-translation">حذف العقدة</target>
+        <target state="translated">حذف العقدة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete node from way" xml:space="preserve">
         <source>delete node from way</source>
-        <target state="needs-translation">حذف العقدة من الطريق</target>
+        <target state="translated">حذف العقدة من الطريق</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete object from relation" xml:space="preserve">
         <source>delete object from relation</source>
-        <target state="needs-translation">حذف كائن من العلاقة</target>
+        <target state="translated">حذف عنصر من العلاقة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete relation" xml:space="preserve">
@@ -1520,47 +1520,47 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="delete restriction" xml:space="preserve">
         <source>delete restriction</source>
-        <target state="needs-translation">حذف تقييد</target>
+        <target state="translated">حذف قيد</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete route" xml:space="preserve">
         <source>delete route</source>
-        <target state="needs-translation">حذف المسار</target>
+        <target state="translated">حذف المسار</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete way" xml:space="preserve">
         <source>delete way</source>
-        <target state="needs-translation">حذف طريقة</target>
+        <target state="translated">حذف الطريق</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="duplicate" xml:space="preserve">
         <source>duplicate</source>
-        <target state="needs-translation">تكرار</target>
+        <target state="translated">تكرار</target>
         <note>create a duplicate</note>
       </trans-unit>
       <trans-unit id="meters" xml:space="preserve">
         <source>meters</source>
-        <target state="needs-translation">متر</target>
+        <target state="translated">متر/أمتار</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="move" xml:space="preserve">
         <source>move</source>
-        <target state="needs-translation">نقل</target>
+        <target state="translated">نقل وتحريك</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">
         <source>node %@</source>
-        <target state="needs-translation">هذه العُقدة (النقطة)</target>
+        <target state="translated">العقدة %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="node %@ (in way)" xml:space="preserve">
         <source>node %@ (in way)</source>
-        <target state="needs-translation">العقدة ٪@ (في الطريق)</target>
+        <target state="translated">العقدة %@ (في الطريق)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="other object" xml:space="preserve">
         <source>other object</source>
-        <target state="needs-translation">كائن آخر</target>
+        <target state="translated">عنصر آخر</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="relation" xml:space="preserve">
@@ -1570,7 +1570,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="set tags" xml:space="preserve">
         <source>set tags</source>
-        <target state="needs-translation">تعيين علامات</target>
+        <target state="translated">ضبط الوسوم</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="update relation members" xml:space="preserve">
@@ -1580,17 +1580,17 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="vintage %@" xml:space="preserve">
         <source>vintage %@</source>
-        <target state="needs-translation">عتيق</target>
+        <target state="translated">سنة الالتقاط %@</target>
         <note>Year aerial imagery was created</note>
       </trans-unit>
       <trans-unit id="vintage %@ - %@" xml:space="preserve">
         <source>vintage %1$@ - %2$@</source>
-        <target state="needs-translation">خمر ٪1$@ - ٪2$$ @</target>
+        <target state="translated">سنة الالتقاط %1$@ - %2$@</target>
         <note>Years aerial imagery was created</note>
       </trans-unit>
       <trans-unit id="way %@" xml:space="preserve">
         <source>way %@</source>
-        <target state="needs-translation">إلى الطريق</target>
+        <target state="translated">الطريق %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>
@@ -1602,12 +1602,12 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
         <source>Set Height</source>
-        <target state="needs-translation">تعيين الارتفاع</target>
+        <target state="translated">تحديد الارتفاع</target>
         <note>Class = "UIButton"; normalTitle = "Set Height"; ObjectID = "QZK-2k-kEa";</note>
       </trans-unit>
       <trans-unit id="SdH-uy-BuK.normalTitle" xml:space="preserve">
         <source>Distance</source>
-        <target state="needs-translation">المسافة</target>
+        <target state="translated">المسافة</target>
         <note>Class = "UIButton"; normalTitle = "Distance"; ObjectID = "SdH-uy-BuK";</note>
       </trans-unit>
       <trans-unit id="juy-LX-vDs.normalTitle" xml:space="preserve">
@@ -1617,7 +1617,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="l5O-tO-QFr.normalTitle" xml:space="preserve">
         <source>Cancel</source>
-        <target state="needs-translation">إلغاء</target>
+        <target state="translated">إلغاء</target>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "l5O-tO-QFr";</note>
       </trans-unit>
     </body>
@@ -1629,72 +1629,72 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
         <source>Cancel</source>
-        <target state="needs-translation">إلغاء</target>
+        <target state="translated">إلغاء</target>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "1SY-O5-qJR";</note>
       </trans-unit>
       <trans-unit id="1f0-8q-yCi.text" xml:space="preserve">
         <source>GPX Tracks</source>
-        <target state="needs-translation">مسارات GPX</target>
+        <target state="translated">مسارات GPX</target>
         <note>Class = "UILabel"; text = "GPX Tracks"; ObjectID = "1f0-8q-yCi";</note>
       </trans-unit>
       <trans-unit id="2Ku-Lb-uCf.text" xml:space="preserve">
         <source>Details</source>
-        <target state="needs-translation">تفاصيل</target>
+        <target state="translated">التفاصيل</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "2Ku-Lb-uCf";</note>
       </trans-unit>
       <trans-unit id="2ZY-zi-luF.text" xml:space="preserve">
         <source>Clear Cache</source>
-        <target state="needs-translation">مسح ذاكرة التخزين المؤقت</target>
+        <target state="translated">مسح ذاكرة التخزين المؤقت</target>
         <note>Class = "UILabel"; text = "Clear Cache"; ObjectID = "2ZY-zi-luF";</note>
       </trans-unit>
       <trans-unit id="4s8-Bj-JOX.normalTitle" xml:space="preserve">
         <source>99 Days</source>
-        <target state="needs-translation">99 يوم</target>
+        <target state="translated">99 يوم</target>
         <note>Class = "UIButton"; normalTitle = "99 Days"; ObjectID = "4s8-Bj-JOX";</note>
       </trans-unit>
       <trans-unit id="5hB-2Y-Wgl.text" xml:space="preserve">
         <source>Projection</source>
-        <target state="needs-translation">إسقاط</target>
+        <target state="translated">الإسقاط</target>
         <note>Class = "UILabel"; text = "Projection"; ObjectID = "5hB-2Y-Wgl";</note>
       </trans-unit>
       <trans-unit id="7df-49-qTa.text" xml:space="preserve">
         <source>Rail Features</source>
-        <target state="needs-translation">عناصر السكك الحديدية</target>
+        <target state="translated">عناصر السكك الحديدية</target>
         <note>Class = "UILabel"; text = "Rail Features"; ObjectID = "7df-49-qTa";</note>
       </trans-unit>
       <trans-unit id="7ga-PZ-MfV.placeholder" xml:space="preserve">
         <source>-1..3,7</source>
-        <target state="needs-translation">-1..3,7</target>
+        <target state="translated">-1..3,7</target>
         <note>Class = "UITextField"; placeholder = "-1..3,7"; ObjectID = "7ga-PZ-MfV";</note>
       </trans-unit>
       <trans-unit id="8HT-Bc-Q2z.title" xml:space="preserve">
         <source>Aerial Imagery</source>
-        <target state="needs-translation">من الصور الجوية</target>
+        <target state="translated">الصور الجوية</target>
         <note>Class = "UINavigationItem"; title = "Aerial Imagery"; ObjectID = "8HT-Bc-Q2z";</note>
       </trans-unit>
       <trans-unit id="8S7-Kw-QHF.normalTitle" xml:space="preserve">
         <source>Details</source>
-        <target state="needs-translation">تفاصيل</target>
+        <target state="translated">التفاصيل</target>
         <note>Class = "UIButton"; normalTitle = "Details"; ObjectID = "8S7-Kw-QHF";</note>
       </trans-unit>
       <trans-unit id="8es-4f-sj3.headerTitle" xml:space="preserve">
         <source>Overlays</source>
-        <target state="needs-translation">طبقات إضافية علوية</target>
+        <target state="translated">طبقات إضافية علوية</target>
         <note>Class = "UITableViewSection"; headerTitle = "Overlays"; ObjectID = "8es-4f-sj3";</note>
       </trans-unit>
       <trans-unit id="9L3-JO-Whj.text" xml:space="preserve">
         <source>Mapnik only</source>
-        <target state="needs-translation">مابنيك فقط</target>
+        <target state="translated">مابنيك Mapnik فقط</target>
         <note>Class = "UILabel"; text = "Mapnik only"; ObjectID = "9L3-JO-Whj";</note>
       </trans-unit>
       <trans-unit id="186-0W-Nrr.title" xml:space="preserve">
         <source>Display</source>
-        <target state="needs-translation">عرض</target>
+        <target state="translated">العرض</target>
         <note>Class = "UINavigationItem"; title = "Display"; ObjectID = "186-0W-Nrr";</note>
       </trans-unit>
       <trans-unit id="DmO-dW-3Fh.text" xml:space="preserve">
         <source>Collect in background:</source>
-        <target state="needs-translation">جمع في الخلفية:</target>
+        <target state="translated">التجميع في الخلفية:</target>
         <note>Class = "UILabel"; text = "Collect in background:"; ObjectID = "DmO-dW-3Fh";</note>
       </trans-unit>
       <trans-unit id="EHa-L5-Hcz.text" xml:space="preserve">
@@ -1704,77 +1704,77 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="EmS-9F-1qc.text" xml:space="preserve">
         <source>Details</source>
-        <target state="needs-translation">تفاصيل</target>
+        <target state="translated">التفاصيل</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "EmS-9F-1qc";</note>
       </trans-unit>
       <trans-unit id="F9l-B0-puf.text" xml:space="preserve">
         <source>Details</source>
-        <target state="needs-translation">تفاصيل</target>
+        <target state="translated">التفاصيل</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "F9l-B0-puf";</note>
       </trans-unit>
       <trans-unit id="GNK-bZ-i9X.text" xml:space="preserve">
         <source>Details</source>
-        <target state="needs-translation">تفاصيل</target>
+        <target state="translated">التفاصيل</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "GNK-bZ-i9X";</note>
       </trans-unit>
       <trans-unit id="H3p-Ta-kIy.title" xml:space="preserve">
         <source>QA Poole No Name Tiles</source>
-        <target state="needs-translation">QA بول لا يوجد بلاط الاسم</target>
+        <target state="translated">الصور المتجانبة من Poole لطبقة ضمان الجودة للعناصر التي بدون اسم</target>
         <note>Class = "UINavigationItem"; title = "QA Poole No Name Tiles"; ObjectID = "H3p-Ta-kIy"; Note = "Title for Simon Poole's \"No name\" (missing name) tile overlay";</note>
       </trans-unit>
       <trans-unit id="Idx-2G-6F7.text" xml:space="preserve">
         <source>Power Features</source>
-        <target state="needs-translation">عناصر الطاقة</target>
+        <target state="translated">عناصر الطاقة</target>
         <note>Class = "UILabel"; text = "Power Features"; ObjectID = "Idx-2G-6F7";</note>
       </trans-unit>
       <trans-unit id="Jz1-GP-Wbe.text" xml:space="preserve">
         <source>Paths</source>
-        <target state="needs-translation">المسارات</target>
+        <target state="translated">المسارات</target>
         <note>Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe";</note>
       </trans-unit>
       <trans-unit id="LxX-tl-ZLH.text" xml:space="preserve">
         <source>Enable Filters</source>
-        <target state="needs-translation">تمكين عوامل التصفية</target>
+        <target state="translated">تمكين المصفيات</target>
         <note>Class = "UILabel"; text = "Enable Filters"; ObjectID = "LxX-tl-ZLH";</note>
       </trans-unit>
       <trans-unit id="MPq-PX-jf0.text" xml:space="preserve">
         <source>Editor with Aerial</source>
-        <target state="needs-translation">محرر مع الجوي</target>
+        <target state="translated">محرر مع الصور الجوية</target>
         <note>Class = "UILabel"; text = "Editor with Aerial"; ObjectID = "MPq-PX-jf0";</note>
       </trans-unit>
       <trans-unit id="MZF-am-tCM.title" xml:space="preserve">
         <source>Aerial Provider</source>
-        <target state="needs-translation">مزود جوي</target>
+        <target state="translated">مزود صور جوية</target>
         <note>Class = "UINavigationItem"; title = "Aerial Provider"; ObjectID = "MZF-am-tCM";</note>
       </trans-unit>
       <trans-unit id="MeQ-4N-FqC.text" xml:space="preserve">
         <source>GPX Tracks you record or download will be automatically deleted after:</source>
-        <target state="needs-translation">سيتم حذف مسارات GPX التي تسجلها أو تنزيلها تلقائيا بعد:</target>
+        <target state="translated">سيتم حذف مسارات GPX التي تسجلها أو تنزيلها تلقائيا بعد:</target>
         <note>Class = "UILabel"; text = "GPX Tracks you record or download will be automatically deleted after:"; ObjectID = "MeQ-4N-FqC";</note>
       </trans-unit>
       <trans-unit id="O0U-6M-7AT.text" xml:space="preserve">
         <source>Notes and Fixmes</source>
-        <target state="needs-translation">ملاحظات وإصلاحات</target>
+        <target state="translated">الملاحظات وطلبات الإصلاح</target>
         <note>Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "O0U-6M-7AT";</note>
       </trans-unit>
       <trans-unit id="OiJ-GU-gZ3.title" xml:space="preserve">
         <source>Cancel</source>
-        <target state="needs-translation">إلغاء</target>
+        <target state="translated">إلغاء</target>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "OiJ-GU-gZ3";</note>
       </trans-unit>
       <trans-unit id="Okg-2D-O6U.text" xml:space="preserve">
         <source>Landuse</source>
-        <target state="needs-translation">الأراضي المستخدمة</target>
+        <target state="translated">استخدامات الأراضي</target>
         <note>Class = "UILabel"; text = "Landuse"; ObjectID = "Okg-2D-O6U";</note>
       </trans-unit>
       <trans-unit id="RJU-Z2-QFh.headerTitle" xml:space="preserve">
         <source>Interactions</source>
-        <target state="needs-translation">تفاعلات</target>
+        <target state="translated">تأثيرات</target>
         <note>Class = "UITableViewSection"; headerTitle = "Interactions"; ObjectID = "RJU-Z2-QFh";</note>
       </trans-unit>
       <trans-unit id="RxO-IV-UE7.text" xml:space="preserve">
         <source>Service Roads</source>
-        <target state="needs-translation">طرق الخدمة (المؤدية لخدمات)</target>
+        <target state="translated">طرق الخدمات (المؤدية لخدمات)</target>
         <note>Class = "UILabel"; text = "Service Roads"; ObjectID = "RxO-IV-UE7";</note>
       </trans-unit>
       <trans-unit id="SNa-W1-wga.footerTitle" xml:space="preserve">
@@ -1783,91 +1783,91 @@ You may want to clear the cache (under Display settings) to improve performance.
 Warning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.
 
 Clear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed.</source>
-        <target state="needs-translation">مسح ذاكرة التخزين المؤقت للبيانات OSM إذا أصبحت حالة التطبيق متزامنة مع ملقم OSM. قد يحدث هذا إذا قام شخص آخر بتغيير البيانات التي تقوم بتحريرها، أو إذا فشل أحد التحميلات في منتصف الطريق من خلال منعك من تحميل بيانات إضافية. 
+        <target state="translated">امسح ذاكرة التخزين المؤقت لبيانات خريطة الشارع المفتوحة كل فترة خاصة إذا أصبحت حالة التطبيق غير متزامنة مع الخادم، وقد يحدث هذا إذا قام شخص آخر بتغيير البيانات التي تقوم بتحريرها، أو إذا فشلت عملية رفع البيانات في منتصف الإجراء الذي يمنعك من رفع بيانات إضافية. 
 
-تحذير: سيؤدي مسح ذاكرة التخزين المؤقت OSM إلى فقدان أية تغييرات لم يتم تحميلها بعد.
+تحذير: سيؤدي مسح ذاكرة التخزين المؤقت OSM إلى فقد أي تغييرات لم تقم برفعها. 
 
-قم بإلغاء تحديد ذاكرة التخزين المؤقت للتجانب Mapnik أو Overlay لتنزيل أحدث الإطارات المتجانبة التي تعكس التغييرات التي قمت بإرسالها مسبقا. قد تستغرق التغييرات التي أجريتها ما يصل إلى 24 ساعة حتى تتم معالجتها.</target>
+امسح ذاكرة التخزين المؤقت لطبقة Mapnik أو الطبقات الأخرى لتنزيل أحدث الصور المتجانبة التي تعكس التغييرات التي أرسلتها مسبقًا.  قد ستغرق تطبيق تغييراتك أحيانا ما يصل إلى 24 ساعة لتتم معالجتها.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. \n\nWarning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.\n\nClear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed."; ObjectID = "SNa-W1-wga";</note>
       </trans-unit>
       <trans-unit id="SNa-W1-wga.headerTitle" xml:space="preserve">
         <source>Discard &amp; Refresh</source>
-        <target state="needs-translation">تجاهل التحديث</target>
+        <target state="translated">تجاهل &amp; تحديث</target>
         <note>Class = "UITableViewSection"; headerTitle = "Discard &amp; Refresh"; ObjectID = "SNa-W1-wga";</note>
       </trans-unit>
       <trans-unit id="Uum-Wn-9CF.text" xml:space="preserve">
         <source>Others</source>
-        <target state="needs-translation">أخرى</target>
+        <target state="translated">الأخرى</target>
         <note>Class = "UILabel"; text = "Others"; ObjectID = "Uum-Wn-9CF";</note>
       </trans-unit>
       <trans-unit id="VUR-wT-knn.text" xml:space="preserve">
         <source>Enable Rotation</source>
-        <target state="needs-translation">تمكين التدوير</target>
+        <target state="translated">تمكين تدوير الشاشة</target>
         <note>Class = "UILabel"; text = "Enable Rotation"; ObjectID = "VUR-wT-knn";</note>
       </trans-unit>
       <trans-unit id="WnI-tY-WWa.text" xml:space="preserve">
         <source>Delete tracks after:</source>
-        <target state="needs-translation">حذف المسارات بعد:</target>
+        <target state="translated">حذف المسارات بعد:</target>
         <note>Class = "UILabel"; text = "Delete tracks after:"; ObjectID = "WnI-tY-WWa";</note>
       </trans-unit>
       <trans-unit id="Z8C-Ef-iJE.title" xml:space="preserve">
         <source>GPX Tracks</source>
-        <target state="needs-translation">مسارات GPX</target>
+        <target state="translated">مسارات GPX</target>
         <note>Class = "UINavigationItem"; title = "GPX Tracks"; ObjectID = "Z8C-Ef-iJE";</note>
       </trans-unit>
       <trans-unit id="ZP1-qY-kXe.text" xml:space="preserve">
         <source>Unnamed Roads</source>
-        <target state="needs-translation">طرق غير مسماة</target>
+        <target state="translated">طرق ليس لها اسم</target>
         <note>Class = "UILabel"; text = "Unnamed Roads"; ObjectID = "ZP1-qY-kXe";</note>
       </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.footerTitle" xml:space="preserve">
         <source>If specifying a WMS URL you must also provide the projection used</source>
-        <target state="needs-translation">إذا كان تحديد عنوان WMS يجب عليك أيضا توفير الإسقاط المستخدمة</target>
+        <target state="translated">إذا كان تحديد عنوان WMS يجب عليك أيضا توفير الإسقاط الخاص به</target>
         <note>Class = "UITableViewSection"; footerTitle = "If specifying a WMS URL you must also provide the projection used"; ObjectID = "Zn9-Sg-9fS";</note>
       </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.headerTitle" xml:space="preserve">
         <source>WMS Projection</source>
-        <target state="needs-translation">إسقاط WMS</target>
+        <target state="translated">إسقاط WMS</target>
         <note>Class = "UITableViewSection"; headerTitle = "WMS Projection"; ObjectID = "Zn9-Sg-9fS";</note>
       </trans-unit>
       <trans-unit id="Zzc-4t-QhT.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target state="needs-translation">البلاط الجوي</target>
+        <target state="translated">الصور المتجانبة الجوية</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.footerTitle" xml:space="preserve">
         <source>Go Map!! will automatically discard old data to optimize performance.</source>
-        <target state="needs-translation">الذهاب خريطة! سيتم تجاهل البيانات القديمة تلقائيا لتحسين الأداء.</target>
+        <target state="translated">تطبيق Go Map!! سوف يتجاهل البيانات القديمة تلقائيًا لتحسين الأداء.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Go Map!! will automatically discard old data to optimize performance."; ObjectID = "bmY-Hw-jv6";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.headerTitle" xml:space="preserve">
         <source>Cache Management</source>
-        <target state="needs-translation">إدارة ذاكرة التخزين المؤقت</target>
+        <target state="translated">إدارة ذاكرة التخزين المؤقت</target>
         <note>Class = "UITableViewSection"; headerTitle = "Cache Management"; ObjectID = "bmY-Hw-jv6";</note>
       </trans-unit>
       <trans-unit id="cXC-ij-AMQ.title" xml:space="preserve">
         <source>Show Objects</source>
-        <target state="needs-translation">إظهار الكائنات</target>
+        <target state="translated">إظهار العناصر</target>
         <note>Class = "UINavigationItem"; title = "Show Objects"; ObjectID = "cXC-ij-AMQ";</note>
       </trans-unit>
       <trans-unit id="cpC-iE-1Dm.text" xml:space="preserve">
         <source>Title</source>
-        <target state="needs-translation">العنوان</target>
+        <target state="translated">العنوان</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "cpC-iE-1Dm";</note>
       </trans-unit>
       <trans-unit id="cpv-m2-oDm.headerTitle" xml:space="preserve">
         <source>Friendly Name</source>
-        <target state="needs-translation">اسم مألوف</target>
+        <target state="translated">اسم مألوف</target>
         <note>Class = "UITableViewSection"; headerTitle = "Friendly Name"; ObjectID = "cpv-m2-oDm";</note>
       </trans-unit>
       <trans-unit id="dIe-MC-t44.text" xml:space="preserve">
         <source>Automatic</source>
-        <target state="needs-translation">تلقائي</target>
+        <target state="translated">تلقائي</target>
         <note>Class = "UILabel"; text = "Automatic"; ObjectID = "dIe-MC-t44";</note>
       </trans-unit>
       <trans-unit id="dci-gg-ddc.title" xml:space="preserve">
         <source>Cancel</source>
-        <target state="needs-translation">إلغاء</target>
+        <target state="translated">إلغاء</target>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "dci-gg-ddc";</note>
       </trans-unit>
       <trans-unit id="dzT-B4-za3.placeholder" xml:space="preserve">
@@ -1878,83 +1878,83 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="eFa-yZ-YZl.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target state="needs-translation">البلاط الجوي</target>
+        <target state="translated">الصور الجوية المتجانبة</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eFa-yZ-YZl";</note>
       </trans-unit>
       <trans-unit id="eLW-GB-ugG.text" xml:space="preserve">
         <source>Position + Button on </source>
-        <target state="needs-translation">موضع + زر على </target>
+        <target state="translated">موضع زر + على </target>
         <note>Class = "UILabel"; text = "Position + Button on "; ObjectID = "eLW-GB-ugG"; Note = "The location on the screen where the user prefers the + (add node) button to appear";</note>
       </trans-unit>
       <trans-unit id="eN6-SZ-99I.text" xml:space="preserve">
         <source>Editor only</source>
-        <target state="needs-translation">المحرر فقط</target>
+        <target state="translated">المحرر فقط</target>
         <note>Class = "UILabel"; text = "Editor only"; ObjectID = "eN6-SZ-99I";</note>
       </trans-unit>
       <trans-unit id="eTY-48-gab.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target state="needs-translation">البلاط الجوي</target>
+        <target state="translated">الصور الجوية المتجانبة</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eTY-48-gab";</note>
       </trans-unit>
       <trans-unit id="eac-Db-EaW.normalTitle" xml:space="preserve">
         <source>Bing</source>
-        <target state="needs-translation">بينج</target>
+        <target state="translated">بينج Bing</target>
         <note>Class = "UIButton"; normalTitle = "Bing"; ObjectID = "eac-Db-EaW";</note>
       </trans-unit>
       <trans-unit id="el8-h8-H1F.normalTitle" xml:space="preserve">
         <source>Button</source>
-        <target state="needs-translation">زر</target>
+        <target state="translated">زر</target>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F";</note>
       </trans-unit>
       <trans-unit id="fFT-hv-mKl.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target state="needs-translation">البلاط الجوي</target>
+        <target state="translated">الصور الجوية المتجانبة</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fFT-hv-mKl";</note>
       </trans-unit>
       <trans-unit id="fHH-rC-iGa.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target state="needs-translation">البلاط الجوي</target>
+        <target state="translated">الصور الجوية المتجانبة</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fHH-rC-iGa";</note>
       </trans-unit>
       <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve">
         <source>Details</source>
-        <target state="needs-translation">تفاصيل</target>
+        <target state="translated">التفاصيل</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "g2G-5j-Y4q";</note>
       </trans-unit>
       <trans-unit id="g46-cV-NBw.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target state="needs-translation">البلاط الجوي</target>
+        <target state="translated">الصور الجوية المتجانبة</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "g46-cV-NBw";</note>
       </trans-unit>
       <trans-unit id="gdL-Os-R6R.text" xml:space="preserve">
         <source>Points</source>
-        <target state="needs-translation">النقاط</target>
+        <target state="translated">النقاط</target>
         <note>Class = "UILabel"; text = "Points"; ObjectID = "gdL-Os-R6R";</note>
       </trans-unit>
       <trans-unit id="gre-3S-iPA.text" xml:space="preserve">
         <source>Detail</source>
-        <target state="needs-translation">التفاصيل</target>
+        <target state="translated">التفاصيل</target>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "gre-3S-iPA";</note>
       </trans-unit>
       <trans-unit id="h1O-06-ApF.text" xml:space="preserve">
         <source>Label</source>
-        <target state="needs-translation">العلامة</target>
+        <target state="translated">العلامة</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "h1O-06-ApF";</note>
       </trans-unit>
       <trans-unit id="hMJ-yP-XJe.text" xml:space="preserve">
         <source>OpenStreetMap GPS Traces</source>
-        <target state="needs-translation">آثار نظام تحديد المواقع المفتوحة خريطة الشارع</target>
+        <target state="translated">مسارات GPS الخاصة بخريطة الشارع المفتوحة</target>
         <note>Class = "UILabel"; text = "OpenStreetMap GPS Traces"; ObjectID = "hMJ-yP-XJe";</note>
       </trans-unit>
       <trans-unit id="hkr-kO-jbt.text" xml:space="preserve">
         <source>Traffic Roads</source>
-        <target state="needs-translation">الطرق المرورية</target>
+        <target state="translated">الطرق المرورية</target>
         <note>Class = "UILabel"; text = "Traffic Roads"; ObjectID = "hkr-kO-jbt";</note>
       </trans-unit>
       <trans-unit id="hsp-Xj-TU6.text" xml:space="preserve">
         <source>Simon Poole Map Data © OpenStreetMap contributors
 </source>
-        <target state="needs-translation">بيانات خريطة سيمون بول © المساهمين في OpenStreetMap
+        <target state="translated">بيانات خريطة سيمون بول © المساهمين في خريطة الشارع المفتوحة
 </target>
         <note>Class = "UITextView"; text = "Simon Poole Map Data © OpenStreetMap contributors\n"; ObjectID = "hsp-Xj-TU6";</note>
       </trans-unit>
@@ -1965,77 +1965,77 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="lu0-kr-5Cc.text" xml:space="preserve">
         <source>Past/Future</source>
-        <target state="needs-translation">الماضي / المستقبل</target>
+        <target state="translated">الماضي / المستقبل</target>
         <note>Class = "UILabel"; text = "Past/Future"; ObjectID = "lu0-kr-5Cc";</note>
       </trans-unit>
       <trans-unit id="lwG-AE-nIZ.headerTitle" xml:space="preserve">
         <source>Background</source>
-        <target state="needs-translation">الخلفية</target>
+        <target state="translated">الخلفية</target>
         <note>Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ";</note>
       </trans-unit>
       <trans-unit id="oSD-0y-Vt0.title" xml:space="preserve">
         <source>Configure GPX Tracks</source>
-        <target state="needs-translation">تكوين مسارات GPX</target>
+        <target state="translated">إعدادات مسارات GPX</target>
         <note>Class = "UINavigationItem"; title = "Configure GPX Tracks"; ObjectID = "oSD-0y-Vt0";</note>
       </trans-unit>
       <trans-unit id="pQK-9y-t4z.text" xml:space="preserve">
         <source>Buildings</source>
-        <target state="needs-translation">المباني</target>
+        <target state="translated">المباني</target>
         <note>Class = "UILabel"; text = "Buildings"; ObjectID = "pQK-9y-t4z";</note>
       </trans-unit>
       <trans-unit id="pR1-M8-pXH.title" xml:space="preserve">
         <source>Back</source>
-        <target state="needs-translation">رجوع</target>
+        <target state="translated">رجوع</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "pR1-M8-pXH";</note>
       </trans-unit>
       <trans-unit id="qdV-Je-jXT.text" xml:space="preserve">
         <source>Boundaries</source>
-        <target state="needs-translation">الحدود</target>
+        <target state="translated">الحدود</target>
         <note>Class = "UILabel"; text = "Boundaries"; ObjectID = "qdV-Je-jXT";</note>
       </trans-unit>
       <trans-unit id="r6a-cT-Ufa.text" xml:space="preserve">
         <source>Turn Restrictions</source>
-        <target state="needs-translation">قيود المنعطفات</target>
+        <target state="translated">قيود الانعطافات المرورية</target>
         <note>Class = "UILabel"; text = "Turn Restrictions"; ObjectID = "r6a-cT-Ufa";</note>
       </trans-unit>
       <trans-unit id="scg-Po-M3L.headerTitle" xml:space="preserve">
         <source>Filter Objects</source>
-        <target state="needs-translation">تصفية الكائنات</target>
+        <target state="translated">تصفية العناصر</target>
         <note>Class = "UITableViewSection"; headerTitle = "Filter Objects"; ObjectID = "scg-Po-M3L";</note>
       </trans-unit>
       <trans-unit id="swu-t3-p5w.text" xml:space="preserve">
         <source>URL</source>
-        <target state="needs-translation">الرابط</target>
+        <target state="translated">الرابط</target>
         <note>Class = "UILabel"; text = "URL"; ObjectID = "swu-t3-p5w";</note>
       </trans-unit>
       <trans-unit id="tS9-CP-pqu.title" xml:space="preserve">
         <source>Clear Cache</source>
-        <target state="needs-translation">مسح ذاكرة التخزين المؤقت</target>
+        <target state="translated">مسح ذاكرة التخزين المؤقت</target>
         <note>Class = "UINavigationItem"; title = "Clear Cache"; ObjectID = "tS9-CP-pqu";</note>
       </trans-unit>
       <trans-unit id="tU9-Ml-4ko.title" xml:space="preserve">
         <source>Back</source>
-        <target state="needs-translation">رجوع</target>
+        <target state="translated">رجوع</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "tU9-Ml-4ko";</note>
       </trans-unit>
       <trans-unit id="twn-Ve-8vl.text" xml:space="preserve">
         <source>Water Features</source>
-        <target state="needs-translation">عناصر مائية</target>
+        <target state="translated">عناصر تخص المياه</target>
         <note>Class = "UILabel"; text = "Water Features"; ObjectID = "twn-Ve-8vl";</note>
       </trans-unit>
       <trans-unit id="uOd-BB-zEq.text" xml:space="preserve">
         <source>Aerial only</source>
-        <target state="needs-translation">جوي فقط</target>
+        <target state="translated">التصوير الجوي فقط</target>
         <note>Class = "UILabel"; text = "Aerial only"; ObjectID = "uOd-BB-zEq";</note>
       </trans-unit>
       <trans-unit id="uQ3-vb-l3H.placeholder" xml:space="preserve">
         <source>21</source>
-        <target state="needs-translation">21</target>
+        <target state="translated">21</target>
         <note>Class = "UITextField"; placeholder = "21"; ObjectID = "uQ3-vb-l3H";</note>
       </trans-unit>
       <trans-unit id="uZo-P0-sR7.text" xml:space="preserve">
         <source>Building Level</source>
-        <target state="needs-translation">مستوى البناء</target>
+        <target state="translated">مستوى/أدوار المباني</target>
         <note>Class = "UILabel"; text = "Building Level"; ObjectID = "uZo-P0-sR7";</note>
       </trans-unit>
       <trans-unit id="v6h-g5-fka.text" xml:space="preserve">
@@ -2045,12 +2045,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="voF-Yf-33h.text" xml:space="preserve">
         <source>Max Zoom</source>
-        <target state="needs-translation">ماكس زووم</target>
+        <target state="translated">أقصى درجة للتكبير</target>
         <note>Class = "UILabel"; text = "Max Zoom"; ObjectID = "voF-Yf-33h";</note>
       </trans-unit>
       <trans-unit id="w75-Lj-3jF.placeholder" xml:space="preserve">
         <source>Portlandia GIS</source>
-        <target state="needs-translation">بورتلانديا جيس</target>
+        <target state="translated">بورتلاند GIS</target>
         <note>Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF"; Note = "A hypothetical aerial imagery provider";</note>
       </trans-unit>
       <trans-unit id="wev-ax-u4C.headerTitle" xml:space="preserve">
@@ -2060,27 +2060,27 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="xve-fW-qM7.text" xml:space="preserve">
         <source>Details</source>
-        <target state="needs-translation">تفاصيل</target>
+        <target state="translated">التفاصيل</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "xve-fW-qM7";</note>
       </trans-unit>
       <trans-unit id="yue-km-52a.text" xml:space="preserve">
         <source>Name</source>
-        <target state="needs-translation">الاسم</target>
+        <target state="translated">الاسم</target>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "yue-km-52a";</note>
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.footerTitle" xml:space="preserve">
         <source>A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL</source>
-        <target state="needs-translation">عنوان URL ل TMS مع عناصر نائبة {x} {y} {z} أو عنوان URL ل WMS</target>
+        <target state="translated">عنوان URL لطبقة من نوع TMS الذي يحتوي على عناصر تعويضية {x} و {y} و {z} أو عنوان URL لطبقة من نوع WMS</target>
         <note>Class = "UITableViewSection"; footerTitle = "A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL"; ObjectID = "zD6-m4-1PD";</note>
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.headerTitle" xml:space="preserve">
         <source>Template URL of the tile server</source>
-        <target state="needs-translation">عنوان URL للقالب لملقم التجانب</target>
+        <target state="translated">عنوان URL للقالب الخاص بخادم الصور المتجانبة</target>
         <note>Class = "UITableViewSection"; headerTitle = "Template URL of the tile server"; ObjectID = "zD6-m4-1PD";</note>
       </trans-unit>
       <trans-unit id="zI2-YM-qbl.normalTitle" xml:space="preserve">
         <source>Add New</source>
-        <target state="needs-translation">اضف جديد</target>
+        <target state="translated">إضافة جديدة</target>
         <note>Class = "UIButton"; normalTitle = "Add New"; ObjectID = "zI2-YM-qbl";</note>
       </trans-unit>
     </body>
@@ -2092,12 +2092,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
     <body>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
         <source>Get Directions</source>
-        <target state="needs-translation">احصل على الاتجاهات</target>
+        <target state="translated">احصل على الاتجاهات</target>
         <note>Class = "UILabel"; text = "Get Directions"; ObjectID = "1xx-L0-hKm";</note>
       </trans-unit>
       <trans-unit id="2.title" xml:space="preserve">
         <source>First</source>
-        <target state="needs-translation">الأول</target>
+        <target state="translated">الأول</target>
         <note>Class = "UIViewController"; title = "First"; ObjectID = "2";</note>
       </trans-unit>
       <trans-unit id="2Ka-IT-DQC.normalTitle" xml:space="preserve">
@@ -2107,12 +2107,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="2g1-vb-Cjc.normalTitle" xml:space="preserve">
         <source>Comment</source>
-        <target state="needs-translation">تعليق</target>
+        <target state="translated">تعليق</target>
         <note>Class = "UIButton"; normalTitle = "Comment"; ObjectID = "2g1-vb-Cjc";</note>
       </trans-unit>
       <trans-unit id="7Ua-cx-BHI.title" xml:space="preserve">
         <source>Upload</source>
-        <target state="needs-translation">رفع</target>
+        <target state="translated">رفع</target>
         <note>Class = "UINavigationItem"; title = "Upload"; ObjectID = "7Ua-cx-BHI";</note>
       </trans-unit>
       <trans-unit id="9G2-Gl-CeP.text" xml:space="preserve">
@@ -2122,7 +2122,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="9hH-Ja-fKn.text" xml:space="preserve">
         <source>New comment:</source>
-        <target state="needs-translation">تعليق جديد</target>
+        <target state="translated">تعليق جديد:</target>
         <note>Class = "UILabel"; text = "New comment:"; ObjectID = "9hH-Ja-fKn";</note>
       </trans-unit>
       <trans-unit id="9t5-wq-j1u.text" xml:space="preserve">
@@ -2132,22 +2132,22 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityHint" xml:space="preserve">
         <source>Reorient map north</source>
-        <target state="needs-translation">إعادة توجيه الخريطة شمالا</target>
+        <target state="translated">وجّه الخريطة إلى الشمال</target>
         <note>Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt";</note>
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityLabel" xml:space="preserve">
         <source>Compass</source>
-        <target state="needs-translation">البوصله</target>
+        <target state="translated">البوصلة</target>
         <note>Class = "UIButton"; accessibilityLabel = "Compass"; ObjectID = "E22-sL-sNt";</note>
       </trans-unit>
       <trans-unit id="FaM-WV-S6I.title" xml:space="preserve">
         <source>Search for Location</source>
-        <target state="needs-translation">البحث عن الموقع</target>
+        <target state="translated">ابحث عن موقع</target>
         <note>Class = "UINavigationItem"; title = "Search for Location"; ObjectID = "FaM-WV-S6I";</note>
       </trans-unit>
       <trans-unit id="Fo4-Nq-pAz.normalTitle" xml:space="preserve">
         <source>Center</source>
-        <target state="needs-translation">المركز</target>
+        <target state="translated">المركز</target>
         <note>Class = "UIButton"; normalTitle = "Center"; ObjectID = "Fo4-Nq-pAz";</note>
       </trans-unit>
       <trans-unit id="HeZ-95-3K1.text" xml:space="preserve">
@@ -2157,17 +2157,17 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="MBY-TK-Wuy.title" xml:space="preserve">
         <source>Note</source>
-        <target state="needs-translation">ملاحظة</target>
+        <target state="translated">ملاحظة</target>
         <note>Class = "UINavigationItem"; title = "Note"; ObjectID = "MBY-TK-Wuy";</note>
       </trans-unit>
       <trans-unit id="N5Q-nV-TPG.text" xml:space="preserve">
         <source>Zoom to Edit</source>
-        <target state="needs-translation">تكبير/تصغير إلى تحرير</target>
+        <target state="translated">تكبير للتحرير</target>
         <note>Class = "UILabel"; text = "Zoom to Edit"; ObjectID = "N5Q-nV-TPG";</note>
       </trans-unit>
       <trans-unit id="OJ0-aO-ri1.normalTitle" xml:space="preserve">
         <source>Resolve</source>
-        <target state="needs-translation">حسم</target>
+        <target state="translated">حل</target>
         <note>Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1";</note>
       </trans-unit>
       <trans-unit id="PHk-s9-onx.text" xml:space="preserve">
@@ -2177,12 +2177,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Qz0-Ce-YCX.title" xml:space="preserve">
         <source>Bing Maps</source>
-        <target state="needs-translation">خرائط بنج</target>
+        <target state="translated">خرائط بنج Bing</target>
         <note>Class = "UINavigationItem"; title = "Bing Maps"; ObjectID = "Qz0-Ce-YCX";</note>
       </trans-unit>
       <trans-unit id="TcP-6i-B8H.text" xml:space="preserve">
         <source>Specify a name ("New York"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object ("way 51014987"):</source>
-        <target state="needs-translation">تحديد اسم ("نيويورك")، أو عنوان URL أو نص آخر يحتوي على إحداثيات lat/lon، أو مرجع إلى كائن OSM ("طريقة 51014987"):</target>
+        <target state="translated">ضع اسمًا مثل ("نيويورك")، أو عنوان رابط URL أو نصًا آخر يحتوي على إحداثيات خطوط الطول / العرض ، أو رقم معرف العنصر على OSM مثل:("way 51014987"):</target>
         <note>Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H";</note>
       </trans-unit>
       <trans-unit id="ach-1A-88x.text" xml:space="preserve">
@@ -2192,12 +2192,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="gdu-Sf-XrE.title" xml:space="preserve">
         <source>Commit</source>
-        <target state="needs-translation">ارتكب</target>
+        <target state="translated">إرسال</target>
         <note>Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "gdu-Sf-XrE";</note>
       </trans-unit>
       <trans-unit id="l7S-YL-RKK.text" xml:space="preserve">
         <source>Subtitle</source>
-        <target state="needs-translation">عنوان فرعي</target>
+        <target state="translated">عنوان فرعي</target>
         <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "l7S-YL-RKK";</note>
       </trans-unit>
       <trans-unit id="nU5-T2-ADn.text" xml:space="preserve">
@@ -2212,12 +2212,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="siu-I6-IEp.title" xml:space="preserve">
         <source>Search for Location</source>
-        <target state="needs-translation">البحث عن الموقع</target>
+        <target state="translated">ابحث عن موقع</target>
         <note>Class = "UIViewController"; title = "Search for Location"; ObjectID = "siu-I6-IEp";</note>
       </trans-unit>
       <trans-unit id="stf-JU-iga.text" xml:space="preserve">
         <source>Title</source>
-        <target state="needs-translation">العنوان</target>
+        <target state="translated">العنوان</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "stf-JU-iga";</note>
       </trans-unit>
       <trans-unit id="tOO-VD-MeJ.text" xml:space="preserve">
@@ -2232,22 +2232,22 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="xw9-Ro-Fai.placeholder" xml:space="preserve">
         <source>Niagara Falls</source>
-        <target state="needs-translation">شلالات نياغارا</target>
+        <target state="translated">شلالات نياغارا</target>
         <note>Class = "UISearchBar"; placeholder = "Niagara Falls"; ObjectID = "xw9-Ro-Fai";</note>
       </trans-unit>
       <trans-unit id="zrW-uc-hfQ.segmentTitles[0]" xml:space="preserve">
         <source>Tags</source>
-        <target state="needs-translation">الوسوم</target>
+        <target state="translated">الوسوم</target>
         <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[0] = "Tags"; ObjectID = "zrW-uc-hfQ";</note>
       </trans-unit>
       <trans-unit id="zrW-uc-hfQ.segmentTitles[1]" xml:space="preserve">
         <source>Delete</source>
-        <target state="needs-translation">حذف</target>
+        <target state="translated">حذف</target>
         <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[1] = "Delete"; ObjectID = "zrW-uc-hfQ";</note>
       </trans-unit>
       <trans-unit id="zrW-uc-hfQ.segmentTitles[2]" xml:space="preserve">
         <source>More...</source>
-        <target state="needs-translation">المزيد...</target>
+        <target state="translated">المزيد...</target>
         <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[2] = "More..."; ObjectID = "zrW-uc-hfQ";</note>
       </trans-unit>
     </body>
@@ -2259,52 +2259,52 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
         <source>no</source>
-        <target state="needs-translation">لا</target>
+        <target state="translated">لا</target>
         <note>Class = "UITextField"; placeholder = "no"; ObjectID = "0mW-YK-ajm"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="0zS-QM-zwQ.placeholder" xml:space="preserve">
         <source>type</source>
-        <target state="needs-translation">نوع</target>
+        <target state="translated">النوع</target>
         <note>Class = "UITextField"; placeholder = "type"; ObjectID = "0zS-QM-zwQ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="1Yx-Ce-yfq.title" xml:space="preserve">
         <source>Back</source>
-        <target state="needs-translation">رجوع</target>
+        <target state="translated">رجوع</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "1Yx-Ce-yfq";</note>
       </trans-unit>
       <trans-unit id="2Q5-Vd-FED.text" xml:space="preserve">
         <source>Title</source>
-        <target state="needs-translation">العنوان</target>
+        <target state="translated">العنوان</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "2Q5-Vd-FED"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="2cB-FV-ozw.title" xml:space="preserve">
         <source>Attributes</source>
-        <target state="needs-translation">السمات</target>
+        <target state="translated">الخصائص</target>
         <note>Class = "UITabBarItem"; title = "Attributes"; ObjectID = "2cB-FV-ozw";</note>
       </trans-unit>
       <trans-unit id="6VA-gm-L0S.title" xml:space="preserve">
         <source>Point of Interest</source>
-        <target state="needs-translation">نقطة الاهتمام</target>
+        <target state="translated">نقطة اهتمام</target>
         <note>Class = "UITableViewController"; title = "Point of Interest"; ObjectID = "6VA-gm-L0S";</note>
       </trans-unit>
       <trans-unit id="8Nt-xf-x5Q.text" xml:space="preserve">
         <source>Title</source>
-        <target state="needs-translation">العنوان</target>
+        <target state="translated">العنوان</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "8Nt-xf-x5Q";</note>
       </trans-unit>
       <trans-unit id="9Nw-ha-JK5.placeholder" xml:space="preserve">
         <source>Yes</source>
-        <target state="needs-translation">نعم</target>
+        <target state="translated">نعم</target>
         <note>Class = "UITextField"; placeholder = "Yes"; ObjectID = "9Nw-ha-JK5";</note>
       </trans-unit>
       <trans-unit id="19J-sp-UTX.title" xml:space="preserve">
         <source>All Tags</source>
-        <target state="needs-translation">كل الوسوم</target>
+        <target state="translated">كل الوسوم</target>
         <note>Class = "UITabBarItem"; title = "All Tags"; ObjectID = "19J-sp-UTX";</note>
       </trans-unit>
       <trans-unit id="436-kv-L7j.placeholder" xml:space="preserve">
         <source>Restaurant</source>
-        <target state="needs-translation">مطعم</target>
+        <target state="translated">مطعم</target>
         <note>Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j";</note>
       </trans-unit>
       <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve">
@@ -2314,7 +2314,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Bnh-U0-D7i.text" xml:space="preserve">
         <source>Add New</source>
-        <target state="needs-translation">اضف جديد</target>
+        <target state="translated">إضافة جديد</target>
         <note>Class = "UILabel"; text = "Add New"; ObjectID = "Bnh-U0-D7i";</note>
       </trans-unit>
       <trans-unit id="CXe-gQ-Zda.text" xml:space="preserve">
@@ -2324,7 +2324,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Dfv-TT-J6i.footerTitle" xml:space="preserve">
         <source>The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard.</source>
-        <target state="needs-translation">سيكون الإعداد المسبق متاحا عند تحرير الكائنات المطابقة لمجموعة المفاتيح/القيمة هذه. اترك إما فارغا للبدل.</target>
+        <target state="translated">سيكون الإعداد المسبق متاحًا عند تحرير العناصر التي تطابق مدخلات المفتاح/القيمة هذه.  اتركها فارغة لتظهر لك إعدادات مسبقة بشكل أكثر.</target>
         <note>Class = "UITableViewSection"; footerTitle = "The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard."; ObjectID = "Dfv-TT-J6i";</note>
       </trans-unit>
       <trans-unit id="Dfv-TT-J6i.headerTitle" xml:space="preserve">
@@ -2349,7 +2349,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="G5R-oP-lp3.title" xml:space="preserve">
         <source>Custom Tags</source>
-        <target state="needs-translation">العلامات المخصصة</target>
+        <target state="translated">الوسوم المخصصة</target>
         <note>Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3";</note>
       </trans-unit>
       <trans-unit id="GIO-W7-q5U.title" xml:space="preserve">
@@ -2359,17 +2359,17 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Hgu-iP-FnG.title" xml:space="preserve">
         <source>Back</source>
-        <target state="needs-translation">رجوع</target>
+        <target state="translated">رجوع</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "Hgu-iP-FnG";</note>
       </trans-unit>
       <trans-unit id="JAT-qD-dTS.text" xml:space="preserve">
         <source>Value 1</source>
-        <target state="needs-translation">القيمة 1</target>
+        <target state="translated">القيمة 1</target>
         <note>Class = "UILabel"; text = "Value 1"; ObjectID = "JAT-qD-dTS";</note>
       </trans-unit>
       <trans-unit id="Jsm-mO-hgo.title" xml:space="preserve">
         <source>POI Type</source>
-        <target state="needs-translation">نوع POI</target>
+        <target state="translated">نوع نقطة الاهتمام</target>
         <note>Class = "UINavigationItem"; title = "POI Type"; ObjectID = "Jsm-mO-hgo";</note>
       </trans-unit>
       <trans-unit id="KX3-hG-OyE.title" xml:space="preserve">
@@ -2379,67 +2379,67 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="OND-s7-I6f.title" xml:space="preserve">
         <source>Custom Preset</source>
-        <target state="needs-translation">إعداد مسبق مخصص</target>
+        <target state="translated">إعداد مسبق مخصص</target>
         <note>Class = "UINavigationItem"; title = "Custom Preset"; ObjectID = "OND-s7-I6f";</note>
       </trans-unit>
       <trans-unit id="P3A-5n-1Iq.text" xml:space="preserve">
         <source>Type</source>
-        <target state="needs-translation">النوع</target>
+        <target state="translated">النوع</target>
         <note>Class = "UILabel"; text = "Type"; ObjectID = "P3A-5n-1Iq";</note>
       </trans-unit>
       <trans-unit id="QDv-7w-nbx.headerTitle" xml:space="preserve">
         <source>Preset Name</source>
-        <target state="needs-translation">اسم محدد مسبقا</target>
+        <target state="translated">اسم محدد مسبقا</target>
         <note>Class = "UITableViewSection"; headerTitle = "Preset Name"; ObjectID = "QDv-7w-nbx";</note>
       </trans-unit>
       <trans-unit id="R0q-aM-ULf.text" xml:space="preserve">
         <source>Value 6</source>
-        <target state="needs-translation">القيمة 6</target>
+        <target state="translated">القيمة 6</target>
         <note>Class = "UILabel"; text = "Value 6"; ObjectID = "R0q-aM-ULf";</note>
       </trans-unit>
       <trans-unit id="Rfe-SO-p0w.title" xml:space="preserve">
         <source>Cancel</source>
-        <target state="needs-translation">إلغاء</target>
+        <target state="translated">إلغاء</target>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "Rfe-SO-p0w";</note>
       </trans-unit>
       <trans-unit id="TK4-E8-1q7.text" xml:space="preserve">
         <source>Title</source>
-        <target state="needs-translation">العنوان</target>
+        <target state="translated">العنوان</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "TK4-E8-1q7"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="Urd-9O-Mte.placeholder" xml:space="preserve">
         <source>relation</source>
-        <target state="needs-translation">علاقة</target>
+        <target state="translated">علاقة</target>
         <note>Class = "UITextField"; placeholder = "relation"; ObjectID = "Urd-9O-Mte"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="Vli-Ct-Lpz.text" xml:space="preserve">
         <source>Wheelchair Access</source>
-        <target state="needs-translation">إمكانية دخول/وصول كراسي المعاقين</target>
+        <target state="translated">إمكانية دخول/وصول كراسي المعاقين</target>
         <note>Class = "UILabel"; text = "Wheelchair Access"; ObjectID = "Vli-Ct-Lpz";</note>
       </trans-unit>
       <trans-unit id="Wim-Qa-dYQ.text" xml:space="preserve">
         <source>Value 10</source>
-        <target state="needs-translation">القيمة 10</target>
+        <target state="translated">القيمة 10</target>
         <note>Class = "UILabel"; text = "Value 10"; ObjectID = "Wim-Qa-dYQ";</note>
       </trans-unit>
       <trans-unit id="WoH-od-iKL.text" xml:space="preserve">
         <source>Value 7</source>
-        <target state="needs-translation">القيمة 7</target>
+        <target state="translated">القيمة 7</target>
         <note>Class = "UILabel"; text = "Value 7"; ObjectID = "WoH-od-iKL";</note>
       </trans-unit>
       <trans-unit id="X1y-nK-nVJ.placeholder" xml:space="preserve">
         <source>key</source>
-        <target state="needs-translation">مفتاح</target>
+        <target state="translated">المفتاح</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "X1y-nK-nVJ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="XBV-Ie-LDT.text" xml:space="preserve">
         <source>Food &amp; Drink</source>
-        <target state="needs-translation">الطعام والشراب</target>
+        <target state="translated">الطعام &amp; الشراب</target>
         <note>Class = "UILabel"; text = "Food &amp; Drink"; ObjectID = "XBV-Ie-LDT"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
         <source>Subtitle</source>
-        <target state="needs-translation">عنوان فرعي</target>
+        <target state="translated">عنوان فرعي</target>
         <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "ZYn-TK-k7d"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="aCs-vS-YXj.placeholder" xml:space="preserve">
@@ -2449,12 +2449,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="aLi-Vs-z0k.title" xml:space="preserve">
         <source>Configure</source>
-        <target state="needs-translation">تهيئة</target>
+        <target state="translated">تهيئة وضبط</target>
         <note>Class = "UIBarButtonItem"; title = "Configure"; ObjectID = "aLi-Vs-z0k";</note>
       </trans-unit>
       <trans-unit id="cN9-3h-H3l.title" xml:space="preserve">
         <source>All Tags</source>
-        <target state="needs-translation">كل الوسوم</target>
+        <target state="translated">كل الوسوم</target>
         <note>Class = "UINavigationItem"; title = "All Tags"; ObjectID = "cN9-3h-H3l";</note>
       </trans-unit>
       <trans-unit id="cP3-lR-lzM.placeholder" xml:space="preserve">
@@ -3001,7 +3001,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="feW-AK-msn.title" xml:space="preserve">
         <source>Commit</source>
-        <target state="needs-translation">ارتكب</target>
+        <target state="translated">إرسال</target>
         <note>Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "feW-AK-msn";</note>
       </trans-unit>
       <trans-unit id="hcE-yO-3eH.normalTitle" xml:space="preserve">
