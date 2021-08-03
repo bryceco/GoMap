@@ -16,7 +16,6 @@ import UIKit
 ///	* Sharing an Apple Maps location is the same as a location URL
 ///	* You cannot share a Google Maps location because it doesn't include lat/lon
 
-
 /// Duplicated so we can re-use the URL parsing code in LocationParser
 enum MapViewState: Int {
 	case EDITOR

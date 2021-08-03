@@ -231,7 +231,7 @@ class MyUndoManager: NSObject, NSCoding {
 					if let osm = obj as? OsmBaseObject {
 						// argmuments that are an object
 						refs.insert(osm)
-					} else if let dict = obj as? [String:Any] {
+					} else if let dict = obj as? [String: Any] {
 						// also comments can point to objects for selectedNode, etc.
 						refs.formUnion(dict.values.compactMap({ $0 as? OsmBaseObject }))
 					}

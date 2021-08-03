@@ -2483,7 +2483,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			DisplayLink.shared.removeName(DisplayLinkPanning)
 
 			let zoomCenter = pinch.location(in: self)
-			adjustZoom(by: pinch.scale/previousPinchZoom, aroundScreenPoint: zoomCenter)
+			adjustZoom(by: pinch.scale / previousPinchZoom, aroundScreenPoint: zoomCenter)
 			previousPinchZoom = pinch.scale
 		case .ended:
 			updateNotesFromServer(withDelay: 0)

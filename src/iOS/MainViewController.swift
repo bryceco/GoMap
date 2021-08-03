@@ -145,17 +145,17 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			let hover = UIHoverGestureRecognizer(target: self, action: #selector(hover(_:)))
 			mapView.addGestureRecognizer(hover)
 
-			#if targetEnvironment(macCatalyst)
+#if targetEnvironment(macCatalyst)
 			// right-click support for Mac Catalyst
 			let rightClick = UIContextMenuInteraction(delegate: self)
 			mapView.addInteraction(rightClick)
-			#else
+#else
 			// right-click support for iPad:
 			let rightClick = UITapGestureRecognizer(target: self, action: #selector(rightClick(_:)))
 			rightClick.allowedTouchTypes = [NSNumber(integerLiteral: UITouch.TouchType.indirect.rawValue)]
 			rightClick.buttonMaskRequired = .secondary
 			mapView.addGestureRecognizer(rightClick)
-			#endif
+#endif
 		}
 	}
 
@@ -286,7 +286,8 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 				view.layer.shadowOffset = CGSize(width: 0, height: 0)
 				view.layer.shadowRadius = 3
 				view.layer.shadowOpacity = 0.5
-				view.layer.shadowPath = UIBezierPath(roundedRect: view.bounds, cornerRadius: view.layer.cornerRadius).cgPath
+				view.layer.shadowPath = UIBezierPath(roundedRect: view.bounds, cornerRadius: view.layer.cornerRadius)
+					.cgPath
 				view.layer.masksToBounds = false
 			}
 			// image blue tint

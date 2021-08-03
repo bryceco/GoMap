@@ -1129,7 +1129,7 @@ final class EditorMapLayer: CALayer {
 			let selected = object == selectedNode || object == selectedWay
 
 			if let way = object as? OsmWay {
-				var path = self.path(for: way)
+				let path = self.path(for: way)
 				var lineWidth: CGFloat = selected ? 1.0 : 2.0
 				let wayColor = selected ? regularColor : relationColor
 
@@ -1213,11 +1213,11 @@ final class EditorMapLayer: CALayer {
 					layer2.masksToBounds = false
 
 					let rect = CGRect(x: -NodeHighlightRadius,
-									  y: -NodeHighlightRadius,
-									  width: 2 * NodeHighlightRadius,
-									  height: 2 * NodeHighlightRadius)
+					                  y: -NodeHighlightRadius,
+					                  width: 2 * NodeHighlightRadius,
+					                  height: 2 * NodeHighlightRadius)
 
-					let rc1 = rect.insetBy(dx: layer2.lineWidth/2, dy: layer2.lineWidth/2)
+					let rc1 = rect.insetBy(dx: layer2.lineWidth / 2, dy: layer2.lineWidth / 2)
 					let rc2 = rc1.insetBy(dx: -layer2.lineWidth, dy: -layer2.lineWidth)
 
 					if node.hasInterestingTags() {
@@ -1638,7 +1638,7 @@ final class EditorMapLayer: CALayer {
 		if isHidden {
 			return
 		}
-		
+
 		isPerformingLayout = true
 		CATransaction.begin()
 		CATransaction.setDisableActions(true)

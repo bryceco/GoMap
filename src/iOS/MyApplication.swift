@@ -24,15 +24,15 @@ class MyApplication: UIApplication {
 	func rect(forTouchPosition pos: CGPoint) -> CGRect {
 		if let touchImage = touchImage {
 			var rc = CGRect(origin: pos, size: touchImage.size)
-			rc = rc.offsetBy(dx: -(touchImage.size.width) / 2, dy: -TOUCH_RADIUS)
+			rc = rc.offsetBy(dx: -touchImage.size.width / 2, dy: -TOUCH_RADIUS)
 			rc.origin.x += 15 // extra so rotated finger is aligned
 			rc.origin.y -= 10 // extra so touches on toolbar or easier to see
 			return rc
 		} else {
-			return CGRect( x: pos.x - TOUCH_RADIUS,
-						   y: pos.y - TOUCH_RADIUS,
-						   width: 2 * TOUCH_RADIUS,
-						   height: 2 * TOUCH_RADIUS)
+			return CGRect(x: pos.x - TOUCH_RADIUS,
+			              y: pos.y - TOUCH_RADIUS,
+			              width: 2 * TOUCH_RADIUS,
+			              height: 2 * TOUCH_RADIUS)
 		}
 	}
 
