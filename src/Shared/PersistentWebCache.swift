@@ -8,11 +8,23 @@
 
 import Foundation
 
+enum WebCacheError: LocalizedError {
+	case objectForDataFailure
+	case urlFunctionFailure
+
+	public var errorDescription: String? {
+		switch self {
+		case .objectForDataFailure: return "objectForData() failed"
+		case .urlFunctionFailure: return "urlFunction() failed"
+		}
+	}
+}
+
 final class PersistentWebCache<T: AnyObject> {
 	private let cacheDirectory: URL
 	private let memoryCache: NSCache<NSString, T>
 	// track objects we're already downloading so we don't issue multiple requests
-	private var pending: [String: [(T?) -> Void]]
+	private var pending: [String: [(Result<T, Error>) -> Void]]
 
 	class func encodeKey(forFilesystem string: String) -> String {
 		var string = string
@@ -110,7 +122,7 @@ final class PersistentWebCache<T: AnyObject> {
 		withKey cacheKey: String,
 		fallbackURL urlFunction: @escaping () -> URL?,
 		objectForData: @escaping (_ data: Data) -> T?,
-		completion: @escaping (_ object: T?) -> Void) -> T?
+		completion: @escaping (_ result: Result<T, Error>) -> Void) -> T?
 	{
 		DbgAssert(Thread.isMainThread) // since we update our data structures on the main thread we need this true
 		assert(memoryCache.totalCostLimit != 0)
@@ -127,20 +139,32 @@ final class PersistentWebCache<T: AnyObject> {
 
 		// this function must be called along every path at some point, in order to call
 		// completions of our callee
-		func processData(_ data: Data?) -> Bool {
-			let obj = data != nil ? objectForData(data!) : nil
+		func processData(_ result: Result<Data, Error>) -> Bool {
+			let r: Result<T, Error>
+			var size = -1
+			switch result {
+			case let .success(data):
+				if let obj = objectForData(data) {
+					size = data.count
+					r = .success(obj)
+				} else {
+					r = .failure(WebCacheError.objectForDataFailure)
+				}
+			case let .failure(error):
+				r = .failure(error)
+			}
 			DispatchQueue.main.async(execute: {
-				if let obj = obj {
+				if case let .success(obj) = r {
 					self.memoryCache.setObject(obj,
 					                           forKey: cacheKey as NSString,
-					                           cost: data!.count)
+					                           cost: size)
 				}
 				for completion in self.pending[cacheKey] ?? [] {
-					completion(obj)
+					completion(r)
 				}
 				self.pending.removeValue(forKey: cacheKey)
 			})
-			return obj != nil
+			return size >= 0
 		}
 
 		DispatchQueue.global(qos: .default).async(execute: { [self] in
@@ -148,23 +172,20 @@ final class PersistentWebCache<T: AnyObject> {
 			let fileName = PersistentWebCache.encodeKey(forFilesystem: cacheKey)
 			let filePath = cacheDirectory.appendingPathComponent(fileName)
 			if let data = try? Data(contentsOf: filePath) {
-				_ = processData(data)
+				_ = processData(.success(data))
 			} else {
 				// fetch from server
 				guard let url = urlFunction() else {
-					_ = processData(nil)
+					_ = processData(.failure(WebCacheError.urlFunctionFailure))
 					return
 				}
 				URLSession.shared.data(with: url, completionHandler: { result in
-					switch result {
-					case let .success(data):
-						if processData(data) {
-							DispatchQueue.global(qos: .default).async(execute: {
-								(data as NSData).write(to: filePath, atomically: true)
-							})
-						}
-					case .failure:
-						_ = processData(nil)
+					if processData(result),
+					   case let .success(data) = result
+					{
+						DispatchQueue.global(qos: .default).async(execute: {
+							(data as NSData).write(to: filePath, atomically: true)
+						})
 					}
 				})
 			}

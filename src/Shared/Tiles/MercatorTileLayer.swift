@@ -278,8 +278,9 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 					}
 					return UIImage(data: data)
 				},
-				completion: { [self] image in
-					if let image = image {
+				completion: { [self] result in
+					switch result {
+					case let .success(image):
 						if layer.superlayer != nil {
 #if os(iOS)
 							layer.contents = image.cgImage
@@ -299,35 +300,23 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 							// no longer needed
 						}
 						completion(nil)
-					} else if zoomLevel > minZoom {
-						// try to show tile at one zoom level higher
-						DispatchQueue.main.async(execute: { [self] in
-							fetchTile(
-								forTileX: tileX >> 1,
-								tileY: tileY >> 1,
-								minZoom: minZoom,
-								zoomLevel: zoomLevel - 1,
-								completion: completion)
-						})
-					} else {
-// report error
-#if false
-						if let data = data {
-							var json: JSONSerialization?
-							do {
-								json = try JSONSerialization.jsonObject(with: data, options: [])
-								text = json.description()
-							} catch error {
-								text = String(bytes: data.bytes, encoding: .utf8)
-							}
+					case let .failure(error):
+						if zoomLevel > minZoom {
+							// try to show tile at one zoom level higher
+							DispatchQueue.main.async(execute: { [self] in
+								fetchTile(
+									forTileX: tileX >> 1,
+									tileY: tileY >> 1,
+									minZoom: minZoom,
+									zoomLevel: zoomLevel - 1,
+									completion: completion)
+							})
+						} else {
+							// report error
+							DispatchQueue.main.async(execute: {
+								completion(error)
+							})
 						}
-#endif
-						let error = NSError(domain: "Image", code: 100, userInfo: [
-							NSLocalizedDescriptionKey: NSLocalizedString("No image data available", comment: "")
-						])
-						DispatchQueue.main.async(execute: {
-							completion(error)
-						})
 					}
 				})
 			if cachedImage != nil {

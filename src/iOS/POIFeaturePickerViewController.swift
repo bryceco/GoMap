@@ -199,14 +199,14 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 				} else {
 					return UIImage()
 				}
-			}, completion: { image in
+			}, completion: { result in
 				DispatchQueue.main.async(execute: {
+					let image = try? result.get()
 					feature.nsiLogo = image
 					for cell in tableView.visibleCells {
-						guard let cell = cell as? FeaturePickerCell else {
-							continue
-						}
-						if cell.featureID == feature.featureID {
+						if let cell = cell as? FeaturePickerCell,
+						   cell.featureID == feature.featureID
+						{
 							cell.pickerImage.image = image
 						}
 					}

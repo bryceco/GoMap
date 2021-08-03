@@ -428,7 +428,7 @@ final class TileServer {
 			self.attributionIcon = TileServer.iconCache.object(withKey: self.identifier,
 			                                                   fallbackURL: { URL(string: url) },
 			                                                   objectForData: { UIImage(data: $0) },
-			                                                   completion: { self.attributionIcon = $0 })
+			                                                   completion: { self.attributionIcon = try? $0.get() })
 		})
 	}
 
