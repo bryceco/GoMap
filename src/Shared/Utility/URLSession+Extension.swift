@@ -37,7 +37,10 @@ extension URLSession {
 			}
 			guard httpResponse.statusCode >= 200, httpResponse.statusCode < 300
 			else {
-				// the server might provide additional information in the payload
+				// The server might provide additional information in the payload.
+				// We could potentially look at httpResponse.allHeaderFields or
+				// httpResponse.value(forHTTPHeaderField: "Content-Type") to
+				// determine how to decode the payload.
 				var message: String = ""
 				if let data = data, data.count > 0 {
 					message = String(decoding: data, as: UTF8.self)

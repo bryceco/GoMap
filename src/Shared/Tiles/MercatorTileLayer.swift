@@ -319,12 +319,8 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 						}
 					}
 				})
-			if cachedImage != nil {
-#if os(iOS)
-				layer.contents = cachedImage!.cgImage
-#else
-				layer?.contents = cachedImage
-#endif
+			if let cachedImage = cachedImage {
+				layer.contents = cachedImage.cgImage
 				layer.isHidden = false
 				completion(nil)
 				return
@@ -394,7 +390,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 				fetchTile(
 					forTileX: tileX,
 					tileY: tileY,
-					minZoom: max(zoomLevel - 8, 1),
+					minZoom: max(zoomLevel - 2, 1),
 					zoomLevel: zoomLevel,
 					completion: { [self] error in
 						if let error = error {
