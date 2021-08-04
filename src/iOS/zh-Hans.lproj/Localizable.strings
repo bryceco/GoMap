@@ -302,7 +302,7 @@
 /* No comment provided by engineer. */
 "GPX Upload Failed" = "GPX上传失败";
 
-/* No comment provided by engineer. */
+/* Height of an object with an error value */
 "Height: %@ ± %@ meters" = "高度: %1$@ ± %2$@ 米";
 
 /* rate the app now */

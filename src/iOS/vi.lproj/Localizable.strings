@@ -248,7 +248,7 @@
 /* Error dialog title */
 "Error" = "Lỗi";
 
-/* No comment provided by engineer. */
+/* Height of an object with an error value */
 "Height: %@ ± %@ meters" = "Chiều cao: %1$@ ± %2$@ mét";
 
 /* OSM node/way/relation identifier */

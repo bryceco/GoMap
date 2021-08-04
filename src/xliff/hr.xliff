@@ -493,6 +493,10 @@
 </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Delete (name)?" xml:space="preserve">
+        <source>Delete (name)?</source>
+        <note>Confirm deleting a node/way</note>
+      </trans-unit>
       <trans-unit id="Delete completely" xml:space="preserve">
         <source>Delete completely</source>
         <target>Potpuno izbriši</target>
@@ -517,6 +521,10 @@
         <source>Display options</source>
         <target>Opcije prikaza</target>
         <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Distance: (distanceString(forFloat: dist)) ± (distanceString(forFloat: distError)) meters" xml:space="preserve">
+        <source>Distance: (distanceString(forFloat: dist)) ± (distanceString(forFloat: distError)) meters</source>
+        <note>Distance to an object with an error value</note>
       </trans-unit>
       <trans-unit id="Done" xml:space="preserve">
         <source>Done</source>
@@ -610,7 +618,7 @@ Greška: %@</target>
       <trans-unit id="Height: %@ ± %@ meters" xml:space="preserve">
         <source>Height: %1$@ ± %2$@ meters</source>
         <target>Visina: %1$@ ± %2$@ m</target>
-        <note>No comment provided by engineer.</note>
+        <note>Height of an object with an error value</note>
       </trans-unit>
       <trans-unit id="I'll do it!" xml:space="preserve">
         <source>I'll do it!</source>
@@ -1282,6 +1290,10 @@ Select the highway from which you are approaching the intersection, then tap an 
 
 Odaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu uključivanje/isključivanje ceste do odredišta kao dozvoljene rute.</target>
         <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Type" xml:space="preserve">
+        <source>Type</source>
+        <note>The 'Type' header in Common Tags</note>
       </trans-unit>
       <trans-unit id="U-Turn from %@ allowed" xml:space="preserve">
         <source>U-Turn from %@ allowed</source>
@@ -2159,9 +2171,8 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
         <note>Class = "UINavigationItem"; title = "Upload"; ObjectID = "7Ua-cx-BHI";</note>
       </trans-unit>
       <trans-unit id="9G2-Gl-CeP.text" xml:space="preserve">
-        <source>username - action</source>
-        <target>korisničko ime – radnja</target>
-        <note>Class = "UILabel"; text = "username - action"; ObjectID = "9G2-Gl-CeP"; Note = "Placeholder - ignore";</note>
+        <source>username</source>
+        <note>Class = "UILabel"; text = "username"; ObjectID = "9G2-Gl-CeP"; Note = "Placeholder - ignore";</note>
       </trans-unit>
       <trans-unit id="9hH-Ja-fKn.text" xml:space="preserve">
         <source>New comment:</source>
@@ -2198,6 +2209,10 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
         <target>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</target>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "HeZ-95-3K1";</note>
       </trans-unit>
+      <trans-unit id="LSJ-rB-J2c.text" xml:space="preserve">
+        <source>-</source>
+        <note>Class = "UILabel"; text = "-"; ObjectID = "LSJ-rB-J2c"; Note = "Placeholder - ignore";</note>
+      </trans-unit>
       <trans-unit id="MBY-TK-Wuy.title" xml:space="preserve">
         <source>Note</source>
         <target>Bilješka</target>
@@ -2227,6 +2242,10 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
         <source>Specify a name ("New York"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object ("way 51014987"):</source>
         <target>Odredi ime („New York”), URL ili drugi tekst koji sadrži geografske koordinate ili referencu na OSM objekt („put 51014987”):</target>
         <note>Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H";</note>
+      </trans-unit>
+      <trans-unit id="VNE-ee-a7u.text" xml:space="preserve">
+        <source>action</source>
+        <note>Class = "UILabel"; text = "action"; ObjectID = "VNE-ee-a7u"; Note = "Placeholder - ignore";</note>
       </trans-unit>
       <trans-unit id="ach-1A-88x.text" xml:space="preserve">
         <source>Changeset comment goes here</source>

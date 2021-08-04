@@ -13,9 +13,6 @@
 /* Class = "UINavigationItem"; title = "Upload"; ObjectID = "7Ua-cx-BHI"; */
 "7Ua-cx-BHI.title" = "Загрузить";
 
-/* Class = "UILabel"; text = "username - action"; ObjectID = "9G2-Gl-CeP"; Note = "Placeholder - ignore"; */
-"9G2-Gl-CeP.text" = "имя пользователя - действие";
-
 /* Class = "UILabel"; text = "New comment:"; ObjectID = "9hH-Ja-fKn"; */
 "9hH-Ja-fKn.text" = "Новый комментарий:";
 

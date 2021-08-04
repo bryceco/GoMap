@@ -353,7 +353,7 @@
 /* No comment provided by engineer. */
 "GPX Upload Failed" = "Nahrávání GPX se nezdařilo";
 
-/* No comment provided by engineer. */
+/* Height of an object with an error value */
 "Height: %@ ± %@ meters" = "Výška: %1$@ ± %2$@ metrů";
 
 /* rate the app now */

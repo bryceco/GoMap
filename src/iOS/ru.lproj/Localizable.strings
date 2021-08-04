@@ -353,7 +353,7 @@
 /* No comment provided by engineer. */
 "GPX Upload Failed" = "Загрузка GPX не удалась";
 
-/* No comment provided by engineer. */
+/* Height of an object with an error value */
 "Height: %@ ± %@ meters" = "Высота: %1$@ ± %2$@ метров";
 
 /* rate the app now */

@@ -10,9 +10,6 @@
 /* Class = "UINavigationItem"; title = "Upload"; ObjectID = "7Ua-cx-BHI"; */
 "7Ua-cx-BHI.title" = "Last opp";
 
-/* Class = "UILabel"; text = "username - action"; ObjectID = "9G2-Gl-CeP"; Note = "Placeholder - ignore"; */
-"9G2-Gl-CeP.text" = "brukernavn - handling";
-
 /* Class = "UILabel"; text = "New comment:"; ObjectID = "9hH-Ja-fKn"; */
 "9hH-Ja-fKn.text" = "Ny kommentar:";
 
