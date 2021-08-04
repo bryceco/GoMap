@@ -440,7 +440,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K4Z-5c-5ee" userLabel="Comment Background">
                                                     <rect key="frame" x="47" y="48" width="352" height="46"/>
                                                     <subviews>
-                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Various comments..." translatesAutoresizingMaskIntoConstraints="NO" id="PHk-s9-onx">
+                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Various comments..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="PHk-s9-onx">
                                                             <rect key="frame" x="5" y="0.0" width="342" height="46"/>
                                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <color key="textColor" systemColor="labelColor"/>
@@ -465,8 +465,26 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username - action" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9G2-Gl-CeP">
-                                                    <rect key="frame" x="12" y="27" width="390" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9G2-Gl-CeP">
+                                                    <rect key="frame" x="12" y="27" width="67" height="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Placeholder - ignore"/>
+                                                    </attributedString>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LSJ-rB-J2c">
+                                                    <rect key="frame" x="87" y="27" width="7" height="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Placeholder - ignore"/>
+                                                    </attributedString>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="action" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNE-ee-a7u">
+                                                    <rect key="frame" x="102" y="27" width="42" height="17"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -477,9 +495,13 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="tOO-VD-MeJ" secondAttribute="trailing" constant="12" id="34Q-Mn-rjb"/>
+                                                <constraint firstItem="VNE-ee-a7u" firstAttribute="leading" secondItem="LSJ-rB-J2c" secondAttribute="trailing" constant="8" symbolic="YES" id="4mI-N0-aEu"/>
                                                 <constraint firstItem="9G2-Gl-CeP" firstAttribute="leading" secondItem="c9J-93-JX7" secondAttribute="leading" constant="12" id="8gC-Id-7w5"/>
-                                                <constraint firstAttribute="trailing" secondItem="9G2-Gl-CeP" secondAttribute="trailing" constant="12" id="DbV-2Z-jQk"/>
+                                                <constraint firstItem="VNE-ee-a7u" firstAttribute="centerY" secondItem="9G2-Gl-CeP" secondAttribute="centerY" id="PkV-6a-dZR"/>
                                                 <constraint firstItem="K4Z-5c-5ee" firstAttribute="top" secondItem="9G2-Gl-CeP" secondAttribute="bottom" constant="4" id="arl-xi-cEH"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="VNE-ee-a7u" secondAttribute="trailing" constant="20" symbolic="YES" id="baJ-DY-bZx"/>
+                                                <constraint firstItem="LSJ-rB-J2c" firstAttribute="centerY" secondItem="9G2-Gl-CeP" secondAttribute="centerY" id="hQQ-Yw-A7L"/>
+                                                <constraint firstItem="LSJ-rB-J2c" firstAttribute="leading" secondItem="9G2-Gl-CeP" secondAttribute="trailing" constant="8" symbolic="YES" id="nZh-r0-W2j"/>
                                                 <constraint firstItem="9G2-Gl-CeP" firstAttribute="top" secondItem="tOO-VD-MeJ" secondAttribute="bottom" constant="1" id="pif-j0-8PG"/>
                                                 <constraint firstAttribute="bottom" secondItem="K4Z-5c-5ee" secondAttribute="bottom" constant="8" id="um6-3J-mXo"/>
                                                 <constraint firstItem="K4Z-5c-5ee" firstAttribute="leading" secondItem="c9J-93-JX7" secondAttribute="leadingMargin" constant="27" id="zH1-ER-8mG"/>
@@ -489,6 +511,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="action" destination="VNE-ee-a7u" id="IPA-Tf-5ut"/>
                                             <outlet property="comment" destination="PHk-s9-onx" id="bfH-uu-ww6"/>
                                             <outlet property="commentBackground" destination="K4Z-5c-5ee" id="b8z-vC-Dgd"/>
                                             <outlet property="date" destination="tOO-VD-MeJ" id="AmY-aH-Fos"/>
@@ -606,7 +629,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z95-O6-wvO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2160" y="1009"/>
+            <point key="canvasLocation" x="-2160.8695652173915" y="1008.4821428571428"/>
         </scene>
         <!--Upload Table View Controller-->
         <scene sceneID="oQU-hH-L4s">

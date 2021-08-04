@@ -65,7 +65,8 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 			let comment = note.comments[indexPath.row]
 			let user = comment.user.count > 0 ? comment.user : "anonymous"
 			cell.date.text = comment.date
-			cell.user.text = "\(user) - \(comment.action)"
+			cell.user.text = user
+			cell.action.text = comment.action
 			if comment.text.count == 0 {
 				cell.commentBackground.isHidden = true
 				cell.comment.text = nil
@@ -174,6 +175,7 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 class NotesCommentCell: UITableViewCell {
 	@IBOutlet var date: UILabel!
 	@IBOutlet var user: UILabel!
+	@IBOutlet var action: UILabel!
 	@IBOutlet var comment: UITextView!
 	@IBOutlet var commentBackground: UIView!
 }
