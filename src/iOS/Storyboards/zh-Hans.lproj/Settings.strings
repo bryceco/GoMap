@@ -10,6 +10,12 @@
 /* Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va"; Note = "Display the user's touches when they tap the screen"; */
 "2Zi-cz-7Va.text" = "显示触摸";
 
+/* Class = "UILabel"; text = "Details"; ObjectID = "3qk-15-BUc"; */
+"3qk-15-BUc.text" = "详情";
+
+/* Class = "UITableViewSection"; footerTitle = "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org."; ObjectID = "6GT-p2-rPO"; */
+"6GT-p2-rPO.footerTitle" = "如果你想编辑位于另一个OSM服务器上的数据，请指定一个主机。默认主机是api.openstreetmap.org。";
+
 /* Class = "UITableViewSection"; headerTitle = "OpenStreetMap Server"; ObjectID = "6GT-p2-rPO"; */
 "6GT-p2-rPO.headerTitle" = "OpenStreetMap服务器";
 

@@ -70,6 +70,9 @@
 /* Class = "UILabel"; text = "Title"; ObjectID = "stf-JU-iga"; */
 "stf-JU-iga.text" = "Naslov";
 
+/* Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H"; */
+"TcP-6i-B8H.text" = "Odredi ime („New York”), URL ili drugi tekst koji sadrži geografske koordinate ili referencu na OSM objekt („put 51014987”):";
+
 /* Class = "UILabel"; text = "2014-06-17 17:54 UTC"; ObjectID = "tOO-VD-MeJ"; */
 "tOO-VD-MeJ.text" = "2014-06-17 17:54 UTC";
 

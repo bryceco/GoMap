@@ -52,6 +52,9 @@
 /* Class = "UILabel"; text = "Collect in background:"; ObjectID = "DmO-dW-3Fh"; */
 "DmO-dW-3Fh.text" = "Samle inn i bakgrunnen";
 
+/* Class = "UIButton"; normalTitle = "Bing"; ObjectID = "eac-Db-EaW"; */
+"eac-Db-EaW.normalTitle" = "Bing";
+
 /* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eFa-yZ-YZl"; */
 "eFa-yZ-YZl.text" = "Flyfoto-flis";
 
@@ -102,6 +105,9 @@
 
 /* Class = "UILabel"; text = "Power Features"; ObjectID = "Idx-2G-6F7"; */
 "Idx-2G-6F7.text" = "Avanserte funksjoner";
+
+/* Class = "UITextField"; placeholder = "(TMS)"; ObjectID = "iuk-Fk-3Fw"; */
+"iuk-Fk-3Fw.placeholder" = "(TMS)";
 
 /* Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe"; */
 "Jz1-GP-Wbe.text" = "Stier";

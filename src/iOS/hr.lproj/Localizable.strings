@@ -80,6 +80,9 @@
 /* No comment provided by engineer. */
 "A relation the node belongs to is not fully downloaded" = "Vezu kojoj čvor pripada nije moguće potpuno preuzeti";
 
+/* No comment provided by engineer. */
+"Accept" = "Prihvati";
+
 /* Add to relation */
 "Add inner member" = "Dodaj unutarnji član";
 
@@ -127,6 +130,9 @@
 
 /* Automatic selection of presets languages */
 "Automatic" = "Automaski";
+
+/* back button */
+"Back" = "Natrag";
 
 /* identifies current aerial imagery */
 "Background imagery %@" = "Slike pozadine %@";
@@ -417,6 +423,9 @@
 "Maybe later..." = "Možda kasnije …";
 
 /* No comment provided by engineer. */
+"Measure Direction" = "Smjer mjerenja";
+
+/* No comment provided by engineer. */
 "Member of multipolygon relation" = "Član mnogokutne veze";
 
 /* No comment provided by engineer. */
@@ -476,9 +485,6 @@
 
 /* Alert title */
 "No Data" = "Nema podataka";
-
-/* No comment provided by engineer. */
-"No image data available" = "Nema slikovnih podataka";
 
 /* No comment provided by engineer. */
 "No Left Turn restriction" = "Nema zabrane skretanja nalijevo";
@@ -624,6 +630,9 @@
 /* country name,2-character country code */
 "Results for %@ (%@)" = "Rezultati za %1$@ (%2$@)";
 
+/* retry opening hours recognition */
+"Retry" = "Pokušaj ponovo";
+
 /* Edit action */
 "Reverse" = "Preokreni";
 
@@ -737,6 +746,9 @@
 "This app does not yet support editing turn restrictions without a node as the 'via' member" = "Ovaj program još ne podržava uređivanje zabrane skretanja bez čvora kao člana „preko”";
 
 /* No comment provided by engineer. */
+"This device is not able to provide heading data." = "Ovaj uređaj nije u stanju pružiti podatke o smjeru.";
+
+/* No comment provided by engineer. */
 "To add another member to the relation 'long press' on the way to be added" = "Za dodavanje daljnjeg člana vezi, „pritisni dugo” na put kojemu se dodaje";
 
 /* No comment provided by engineer. */
@@ -783,6 +795,9 @@
 
 /* update an osm note */
 "Update" = "Aktualiziraj";
+
+/* Update the named tag value (e.g. foo=*) */
+"Update '%@' tag" = "Aktualiziraj „%@” oznaku";
 
 /* No comment provided by engineer. */
 "update relation members" = "aktualiziraj vezu između članova";

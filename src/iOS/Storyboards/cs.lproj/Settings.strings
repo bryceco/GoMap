@@ -29,7 +29,7 @@
 "6Lj-wh-z9f.text" = "Podrobnosti";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "7cc-E7-pzw"; */
-"7cc-E7-pzw.text" = "Název";
+"7cc-E7-pzw.text" = "Jméno";
 
 /* Class = "UILabel"; text = "OpenStreetMap Login"; ObjectID = "34N-Ep-rpf"; */
 "34N-Ep-rpf.text" = "OpenStreetMap přihlášení";
@@ -56,7 +56,7 @@
 "bt0-CH-HbH.normalTitle" = "Spustit";
 
 /* Class = "UILabel"; text = "Weblate - Translations"; ObjectID = "CHj-a3-gC9"; */
-"CHj-a3-gC9.text" = "Weblate – překlady";
+"CHj-a3-gC9.text" = "Weblate – Překlady";
 
 /* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "ctb-pg-pM9"; */
 "ctb-pg-pM9.title" = "Uložit";

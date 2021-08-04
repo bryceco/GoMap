@@ -1,6 +1,6 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
-  <file original="Direction/Base.lproj/DirectionViewController.xib" datatype="plaintext" source-language="en" target-language="nb-NO">
+  <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="nb-NO" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
@@ -821,11 +821,6 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
         <source>No active track</source>
         <note>GPX track</note>
       </trans-unit>
-      <trans-unit id="No image data available" xml:space="preserve">
-        <source>No image data available</source>
-        <target>Bildedata ikke tilgjengelig</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
       <trans-unit id="No results found" xml:space="preserve">
         <source>No results found</source>
         <target>Resultatløst</target>
@@ -1555,6 +1550,59 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
       </trans-unit>
     </body>
   </file>
+  <file original="PhotoShare/Base.lproj/MainInterface.storyboard" datatype="plaintext" source-language="en" target-language="nb-NO">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
+    </header>
+    <body>
+      <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
+        <source>OK</source>
+        <note>Class = "UIButton"; normalTitle = "OK"; ObjectID = "05z-LH-xEK";</note>
+      </trans-unit>
+      <trans-unit id="Zxw-Em-faC.normalTitle" xml:space="preserve">
+        <source>Cancel</source>
+        <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "Zxw-Em-faC";</note>
+      </trans-unit>
+      <trans-unit id="cy3-gz-fvk.text" xml:space="preserve">
+        <source>Go Map!! will open at the location the photo was taken.</source>
+        <note>Class = "UILabel"; text = "Go Map!! will open at the location the photo was taken."; ObjectID = "cy3-gz-fvk";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="PhotoShare/en.lproj/InfoPlist.strings" datatype="plaintext" source-language="en" target-language="nb-NO">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleDisplayName" xml:space="preserve">
+        <source>PhotoShare</source>
+        <note>Bundle display name</note>
+      </trans-unit>
+      <trans-unit id="CFBundleName" xml:space="preserve">
+        <source>PhotoShare</source>
+        <note>Bundle name</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="PhotoShare/en.lproj/Localizable.strings" datatype="plaintext" source-language="en" target-language="nb-NO">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
+    </header>
+    <body>
+      <trans-unit id="Processing data..." xml:space="preserve">
+        <source>Processing data...</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="The URL content isn't recognized." xml:space="preserve">
+        <source>The URL content isn't recognized.</source>
+        <note>Error message when sharing a URL to Go Map!!</note>
+      </trans-unit>
+      <trans-unit id="Unfortunately the selected image does not contain location information." xml:space="preserve">
+        <source>Unfortunately the selected image does not contain location information.</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+    </body>
+  </file>
   <file original="Storyboards/Base.lproj/Display.storyboard" source-language="en" target-language="nb-NO" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
@@ -2040,7 +2088,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityHint" xml:space="preserve">
         <source>Reorient map north</source>
-        <target state="needs-translation">Reorienter kartet mot nord</target>
+        <target>Reorienter kartet mot nord</target>
         <note>Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt";</note>
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityLabel" xml:space="preserve">
@@ -2780,7 +2828,7 @@ https://glyphish.com
       </trans-unit>
       <trans-unit id="iR4-av-Q7M.text" xml:space="preserve">
         <source>Email Feedback</source>
-        <target state="needs-translation">E-posttilbakemelding</target>
+        <target>E-posttilbakemelding</target>
         <note>Class = "UILabel"; text = "Email Feedback"; ObjectID = "iR4-av-Q7M";</note>
       </trans-unit>
       <trans-unit id="ib9-wt-IzD.title" xml:space="preserve">
@@ -2845,7 +2893,7 @@ https://glyphish.com
       </trans-unit>
       <trans-unit id="whL-SZ-HD5.text" xml:space="preserve">
         <source>Email Feedback</source>
-        <target state="needs-translation">E-posttilbakemelding</target>
+        <target>E-posttilbakemelding</target>
         <note>Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5";</note>
       </trans-unit>
       <trans-unit id="x4m-oT-EG8.text" xml:space="preserve">

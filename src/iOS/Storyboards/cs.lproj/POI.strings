@@ -23,7 +23,7 @@
 "9Nw-ha-JK5.placeholder" = "Ano";
 
 /* Class = "UITabBarItem"; title = "All Tags"; ObjectID = "19J-sp-UTX"; */
-"19J-sp-UTX.title" = "Všechny tagy";
+"19J-sp-UTX.title" = "Všechny značky";
 
 /* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j"; */
 "436-kv-L7j.placeholder" = "Restaurace";
@@ -38,7 +38,7 @@
 "Bnh-U0-D7i.text" = "Přidat nový";
 
 /* Class = "UINavigationItem"; title = "All Tags"; ObjectID = "cN9-3h-H3l"; */
-"cN9-3h-H3l.title" = "Všechny tagy";
+"cN9-3h-H3l.title" = "Všechny značky";
 
 /* Class = "UITextField"; placeholder = "value"; ObjectID = "cP3-lR-lzM"; Note = "Do not translate"; */
 "cP3-lR-lzM.placeholder" = "value";
@@ -74,7 +74,7 @@
 "Fcv-4Q-gpE.text" = "Hodnota 3";
 
 /* Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3"; */
-"G5R-oP-lp3.title" = "Vlastní tagy";
+"G5R-oP-lp3.title" = "Vlastní značky";
 
 /* Class = "UINavigationItem"; title = "Custom Presets"; ObjectID = "GIO-W7-q5U"; */
 "GIO-W7-q5U.title" = "Vlastní předvolby";
@@ -116,10 +116,10 @@
 "li7-oV-pgT.text" = "Hodnota 5";
 
 /* Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz"; */
-"lPv-s6-uEz.title" = "Běžné tagy";
+"lPv-s6-uEz.title" = "Běžné značky";
 
 /* Class = "UINavigationItem"; title = "Common tags"; ObjectID = "mAb-DX-pqb"; */
-"mAb-DX-pqb.title" = "Běžné tagy";
+"mAb-DX-pqb.title" = "Běžné značky";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "mcN-gM-s7u"; */
 "mcN-gM-s7u.text" = "Název";

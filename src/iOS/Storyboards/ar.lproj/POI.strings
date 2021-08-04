@@ -1,0 +1,195 @@
+/* Class = "UITextField"; placeholder = "no"; ObjectID = "0mW-YK-ajm"; Note = "Do not translate"; */
+"0mW-YK-ajm.placeholder" = "لا";
+
+/* Class = "UITextField"; placeholder = "type"; ObjectID = "0zS-QM-zwQ"; Note = "Do not translate"; */
+"0zS-QM-zwQ.placeholder" = "النوع";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "1Yx-Ce-yfq"; */
+"1Yx-Ce-yfq.title" = "رجوع";
+
+/* Class = "UITabBarItem"; title = "Attributes"; ObjectID = "2cB-FV-ozw"; */
+"2cB-FV-ozw.title" = "الخصائص";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "2Q5-Vd-FED"; Note = "Do not translate"; */
+"2Q5-Vd-FED.text" = "العنوان";
+
+/* Class = "UITableViewController"; title = "Point of Interest"; ObjectID = "6VA-gm-L0S"; */
+"6VA-gm-L0S.title" = "نقطة اهتمام";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "8Nt-xf-x5Q"; */
+"8Nt-xf-x5Q.text" = "العنوان";
+
+/* Class = "UITextField"; placeholder = "Yes"; ObjectID = "9Nw-ha-JK5"; */
+"9Nw-ha-JK5.placeholder" = "نعم";
+
+/* Class = "UITabBarItem"; title = "All Tags"; ObjectID = "19J-sp-UTX"; */
+"19J-sp-UTX.title" = "كل الوسوم";
+
+/* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j"; */
+"436-kv-L7j.placeholder" = "مطعم";
+
+/* Class = "UIBarButtonItem"; title = "Configure"; ObjectID = "aLi-Vs-z0k"; */
+"aLi-Vs-z0k.title" = "تهيئة وضبط";
+
+/* Class = "UILabel"; text = "Add New"; ObjectID = "Bnh-U0-D7i"; */
+"Bnh-U0-D7i.text" = "إضافة جديد";
+
+/* Class = "UINavigationItem"; title = "All Tags"; ObjectID = "cN9-3h-H3l"; */
+"cN9-3h-H3l.title" = "كل الوسوم";
+
+/* Class = "UITextField"; placeholder = "value"; ObjectID = "cP3-lR-lzM"; Note = "Do not translate"; */
+"cP3-lR-lzM.placeholder" = "القيمة";
+
+/* Class = "UITableViewSection"; headerTitle = "Preset Key"; ObjectID = "cTf-Rc-vqr"; */
+"cTf-Rc-vqr.headerTitle" = "مفتاح مسبق الإعداد";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh"; Note = "Do not translate"; */
+"daQ-tl-pKh.text" = "العلامة/العنوان";
+
+/* Class = "UITableViewSection"; footerTitle = "The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard."; ObjectID = "Dfv-TT-J6i"; */
+"Dfv-TT-J6i.footerTitle" = "سيكون الإعداد المسبق متاحًا عند تحرير العناصر التي تطابق مدخلات المفتاح/القيمة هذه، وكلما تركتها فارغة ستتظهر لك إعدادات مسبقة أكثر.";
+
+/* Class = "UITableViewSection"; headerTitle = "Applies To"; ObjectID = "Dfv-TT-J6i"; */
+"Dfv-TT-J6i.headerTitle" = "ينطبق على";
+
+/* Class = "UILabel"; text = "Value 9"; ObjectID = "dsA-B6-s7R"; */
+"dsA-B6-s7R.text" = "القيمة 9";
+
+/* Class = "UITextField"; placeholder = "Dogs Allowed"; ObjectID = "eG3-Xz-Nnp"; */
+"eG3-Xz-Nnp.placeholder" = "يسمح بدخول الكلاب";
+
+/* Class = "UILabel"; text = "Key"; ObjectID = "Eou-a6-V4g"; */
+"Eou-a6-V4g.text" = "مفتاح";
+
+/* Class = "UITabBarController"; title = "Attributes"; ObjectID = "f5t-25-IXF"; */
+"f5t-25-IXF.title" = "الخصائص";
+
+/* Class = "UILabel"; text = "Value 3"; ObjectID = "Fcv-4Q-gpE"; */
+"Fcv-4Q-gpE.text" = "القيمة 3";
+
+/* Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3"; */
+"G5R-oP-lp3.title" = "الوسوم المخصصة";
+
+/* Class = "UINavigationItem"; title = "Custom Presets"; ObjectID = "GIO-W7-q5U"; */
+"GIO-W7-q5U.title" = "إعدادات مسبقة مخصصة";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw"; Note = "Do not translate"; */
+"gv7-b8-wUw.text" = "العلامة/المسمى";
+
+/* Class = "UITextField"; text = "value"; ObjectID = "hfr-Mf-ZHv"; */
+"hfr-Mf-ZHv.text" = "القيمة";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "Hgu-iP-FnG"; */
+"Hgu-iP-FnG.title" = "رجوع";
+
+/* Class = "UINavigationItem"; title = "Attributes"; ObjectID = "hKU-EH-qxp"; */
+"hKU-EH-qxp.title" = "الخصائص";
+
+/* Class = "UILabel"; text = "Changeset"; ObjectID = "ijx-N9-1eO"; */
+"ijx-N9-1eO.text" = "مجموعة التغييرات";
+
+/* Class = "UILabel"; text = "Value 1"; ObjectID = "JAT-qD-dTS"; */
+"JAT-qD-dTS.text" = "القيمة 1";
+
+/* Class = "UINavigationItem"; title = "POI Type"; ObjectID = "Jsm-mO-hgo"; */
+"Jsm-mO-hgo.title" = "نوع نقطة الاهتمام";
+
+/* Class = "UITableViewSection"; footerTitle = "The possible values for the preset"; ObjectID = "jv1-BF-p2a"; */
+"jv1-BF-p2a.footerTitle" = "القيم المحتملة للإعداد المسبق";
+
+/* Class = "UITableViewSection"; headerTitle = "Preset values"; ObjectID = "jv1-BF-p2a"; */
+"jv1-BF-p2a.headerTitle" = "قيم محددة مسبقًا";
+
+/* Class = "UITextField"; placeholder = "leisure "; ObjectID = "kPA-ky-U48"; Note = "Do not translate"; */
+"kPA-ky-U48.placeholder" = "ترفيه ";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "KX3-hG-OyE"; */
+"KX3-hG-OyE.title" = "رجوع";
+
+/* Class = "UILabel"; text = "Value 5"; ObjectID = "li7-oV-pgT"; */
+"li7-oV-pgT.text" = "القيمة 5";
+
+/* Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz"; */
+"lPv-s6-uEz.title" = "الوسوم الشائعة";
+
+/* Class = "UINavigationItem"; title = "Common tags"; ObjectID = "mAb-DX-pqb"; */
+"mAb-DX-pqb.title" = "الوسوم الشائعة";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "mcN-gM-s7u"; */
+"mcN-gM-s7u.text" = "الاسم";
+
+/* Class = "UILabel"; text = "Value 4"; ObjectID = "ng7-T9-SJ6"; */
+"ng7-T9-SJ6.text" = "القيمة 4";
+
+/* Class = "UILabel"; text = "Value 2"; ObjectID = "nKt-LG-cSw"; */
+"nKt-LG-cSw.text" = "القيمة 2";
+
+/* Class = "UILabel"; text = "Value 11"; ObjectID = "o63-qY-4vl"; */
+"o63-qY-4vl.text" = "القيمة 11";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "omf-S9-Yjq"; */
+"omf-S9-Yjq.text" = "الاسم";
+
+/* Class = "UINavigationItem"; title = "Custom Preset"; ObjectID = "OND-s7-I6f"; */
+"OND-s7-I6f.title" = "إعداد مسبق مخصص";
+
+/* Class = "UILabel"; text = "Type"; ObjectID = "P3A-5n-1Iq"; */
+"P3A-5n-1Iq.text" = "النوع";
+
+/* Class = "UIButton"; normalTitle = "Customize Presets"; ObjectID = "pHA-2B-6DC"; */
+"pHA-2B-6DC.normalTitle" = "تخصيص الإعدادات المسبقة";
+
+/* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "pxY-di-zg7"; */
+"pxY-di-zg7.placeholder" = "مطعم";
+
+/* Class = "UITableViewSection"; headerTitle = "Preset Name"; ObjectID = "QDv-7w-nbx"; */
+"QDv-7w-nbx.headerTitle" = "اسم محدد مسبقا";
+
+/* Class = "UILabel"; text = "Value 6"; ObjectID = "R0q-aM-ULf"; */
+"R0q-aM-ULf.text" = "القيمة 6";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "Rfe-SO-p0w"; */
+"Rfe-SO-p0w.title" = "إلغاء";
+
+/* Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ"; Note = "Do not translate"; */
+"sVp-1S-TjJ.placeholder" = "دور";
+
+/* Class = "UILabel"; text = "Key"; ObjectID = "teB-9L-Nrf"; */
+"teB-9L-Nrf.text" = "المفتاح";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "TK4-E8-1q7"; Note = "Do not translate"; */
+"TK4-E8-1q7.text" = "العنوان";
+
+/* Class = "UITextField"; placeholder = "relation"; ObjectID = "Urd-9O-Mte"; Note = "Do not translate"; */
+"Urd-9O-Mte.placeholder" = "علاقة";
+
+/* Class = "UINavigationItem"; title = "Presets"; ObjectID = "v1b-PG-XxE"; */
+"v1b-PG-XxE.title" = "إعدادات مسبقة";
+
+/* Class = "UILabel"; text = "Wheelchair Access"; ObjectID = "Vli-Ct-Lpz"; */
+"Vli-Ct-Lpz.text" = "إمكانية دخول/وصول كراسي المعاقين";
+
+/* Class = "UITextField"; placeholder = "yes"; ObjectID = "vpk-jC-yxl"; Note = "Do not translate"; */
+"vpk-jC-yxl.placeholder" = "نعم";
+
+/* Class = "UILabel"; text = "Value 12"; ObjectID = "wFE-f1-sQa"; */
+"wFE-f1-sQa.text" = "القيمة 12";
+
+/* Class = "UILabel"; text = "Value 10"; ObjectID = "Wim-Qa-dYQ"; */
+"Wim-Qa-dYQ.text" = "القيمة 10";
+
+/* Class = "UILabel"; text = "Value 7"; ObjectID = "WoH-od-iKL"; */
+"WoH-od-iKL.text" = "القيمة 7";
+
+/* Class = "UITextField"; placeholder = "key"; ObjectID = "X1y-nK-nVJ"; Note = "Do not translate"; */
+"X1y-nK-nVJ.placeholder" = "المفتاح";
+
+/* Class = "UILabel"; text = "Food & Drink"; ObjectID = "XBV-Ie-LDT"; Note = "Do not translate"; */
+"XBV-Ie-LDT.text" = "الطعام & الشراب";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ"; */
+"z19-cc-gHZ.text" = "القيمة";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "ZYn-TK-k7d"; Note = "Do not translate"; */
+"ZYn-TK-k7d.text" = "عنوان فرعي";
+

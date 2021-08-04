@@ -746,10 +746,6 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <source>No active track</source>
         <note>GPX track</note>
       </trans-unit>
-      <trans-unit id="No image data available" xml:space="preserve">
-        <source>No image data available</source>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
       <trans-unit id="No results found" xml:space="preserve">
         <source>No results found</source>
         <note>No comment provided by engineer.</note>
@@ -1374,6 +1370,59 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>Cancel</source>
         <target>Cancella</target>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "l5O-tO-QFr";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="PhotoShare/Base.lproj/MainInterface.storyboard" datatype="plaintext" source-language="en" target-language="it">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
+    </header>
+    <body>
+      <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
+        <source>OK</source>
+        <note>Class = "UIButton"; normalTitle = "OK"; ObjectID = "05z-LH-xEK";</note>
+      </trans-unit>
+      <trans-unit id="Zxw-Em-faC.normalTitle" xml:space="preserve">
+        <source>Cancel</source>
+        <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "Zxw-Em-faC";</note>
+      </trans-unit>
+      <trans-unit id="cy3-gz-fvk.text" xml:space="preserve">
+        <source>Go Map!! will open at the location the photo was taken.</source>
+        <note>Class = "UILabel"; text = "Go Map!! will open at the location the photo was taken."; ObjectID = "cy3-gz-fvk";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="PhotoShare/en.lproj/InfoPlist.strings" datatype="plaintext" source-language="en" target-language="it">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleDisplayName" xml:space="preserve">
+        <source>PhotoShare</source>
+        <note>Bundle display name</note>
+      </trans-unit>
+      <trans-unit id="CFBundleName" xml:space="preserve">
+        <source>PhotoShare</source>
+        <note>Bundle name</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="PhotoShare/en.lproj/Localizable.strings" datatype="plaintext" source-language="en" target-language="it">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
+    </header>
+    <body>
+      <trans-unit id="Processing data..." xml:space="preserve">
+        <source>Processing data...</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="The URL content isn't recognized." xml:space="preserve">
+        <source>The URL content isn't recognized.</source>
+        <note>Error message when sharing a URL to Go Map!!</note>
+      </trans-unit>
+      <trans-unit id="Unfortunately the selected image does not contain location information." xml:space="preserve">
+        <source>Unfortunately the selected image does not contain location information.</source>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>
   </file>

@@ -1,3 +1,6 @@
+/* Class = "UITextField"; placeholder = "type"; ObjectID = "0zS-QM-zwQ"; Note = "Do not translate"; */
+"0zS-QM-zwQ.placeholder" = "类型";
+
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "1Yx-Ce-yfq"; */
 "1Yx-Ce-yfq.title" = "返回";
 
@@ -96,6 +99,9 @@
 
 /* Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz"; */
 "lPv-s6-uEz.title" = "常用标签";
+
+/* Class = "UINavigationItem"; title = "Common tags"; ObjectID = "mAb-DX-pqb"; */
+"mAb-DX-pqb.title" = "常用标签";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "mcN-gM-s7u"; */
 "mcN-gM-s7u.text" = "名字";

@@ -85,6 +85,9 @@
 /* Class = "UINavigationItem"; title = "Language"; ObjectID = "ib9-wt-IzD"; */
 "ib9-wt-IzD.title" = "Språk";
 
+/* Class = "UILabel"; text = "Email Feedback"; ObjectID = "iR4-av-Q7M"; */
+"iR4-av-Q7M.text" = "E-posttilbakemelding";
+
 /* Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; Note = "Do not translate"; */
 "JbA-pC-plJ.text" = "Tittel tittel tittel tittel";
 
@@ -153,6 +156,9 @@
 
 /* Class = "UINavigationItem"; title = "Nearby Mappers"; ObjectID = "VDO-HW-SLB"; */
 "VDO-HW-SLB.title" = "Kartografer i nærheten";
+
+/* Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5"; */
+"whL-SZ-HD5.text" = "E-posttilbakemelding";
 
 /* Class = "UILabel"; text = "GitHub - Issues & Source Code"; ObjectID = "x4m-oT-EG8"; */
 "x4m-oT-EG8.text" = "GitHub - Feilsporer og kildekode";

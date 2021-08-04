@@ -1,3 +1,6 @@
+/* Class = "UILabel"; text = "Get Directions"; ObjectID = "1xx-L0-hKm"; */
+"1xx-L0-hKm.text" = "Získat směr";
+
 /* Class = "UIViewController"; title = "First"; ObjectID = "2"; */
 "2.title" = "První";
 
@@ -55,6 +58,9 @@
 /* Class = "UILabel"; text = "Title"; ObjectID = "stf-JU-iga"; */
 "stf-JU-iga.text" = "Název";
 
+/* Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H"; */
+"TcP-6i-B8H.text" = "Zadejte název („New York“), URL adresu nebo jiný text obsahující zeměpisné souřadnice, nebo referenci OSM objektu („way 51014987“):";
+
 /* Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr"; */
 "vRO-Aj-Sdr.text" = "Název";
 
@@ -62,7 +68,7 @@
 "xw9-Ro-Fai.placeholder" = "Niagarské vodopády";
 
 /* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[0] = "Tags"; ObjectID = "zrW-uc-hfQ"; */
-"zrW-uc-hfQ.segmentTitles[0]" = "Tagy";
+"zrW-uc-hfQ.segmentTitles[0]" = "Značky";
 
 /* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[1] = "Delete"; ObjectID = "zrW-uc-hfQ"; */
 "zrW-uc-hfQ.segmentTitles[1]" = "Smazat";

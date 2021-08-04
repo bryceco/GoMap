@@ -22,6 +22,9 @@
 /* Class = "UITextView"; text = "Changeset comment goes here"; ObjectID = "ach-1A-88x"; */
 "ach-1A-88x.text" = "Endringssettkommentar skrives her";
 
+/* Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt"; */
+"E22-sL-sNt.accessibilityHint" = "Reorienter kartet mot nord";
+
 /* Class = "UIButton"; accessibilityLabel = "Compass"; ObjectID = "E22-sL-sNt"; */
 "E22-sL-sNt.accessibilityLabel" = "Kompass";
 

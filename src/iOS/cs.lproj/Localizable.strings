@@ -2,7 +2,7 @@
 "\tRelation " = "\tRelace ";
 
 /* No comment provided by engineer. */
-"\tWay " = "\tCesta ";
+"\tWay " = "\tLinie ";
 
 /* No comment provided by engineer. */
 " (%d members)\n" = " (%d členů)\n";
@@ -14,13 +14,13 @@
 " (node)" = " (bod)";
 
 /* No comment provided by engineer. */
-" (way)" = " (cesta)";
+" (way)" = " (linie)";
 
 /* No comment provided by engineer. */
 "(new object)" = "(nový objekt)";
 
 /* No comment provided by engineer. */
-"(node in way)" = "(bod cesty)";
+"(node in way)" = "(bod linie)";
 
 /* No comment provided by engineer. */
 "(node)" = "(bod)";
@@ -29,7 +29,7 @@
 "(relation %@)" = "(relace %@)";
 
 /* No comment provided by engineer. */
-"(way)" = "(cesta)";
+"(way)" = "(linie)";
 
 /* way length if > 10m */
 "%.0f meters, %ld nodes" = "%1$.0f metrů, %2$ld bodů";
@@ -51,7 +51,7 @@
 
 /* One or more days
    Plural number of days */
-"%ld Days" = "%ld dní";
+"%ld Days" = "%ld dnech";
 
 /* Brief synopsis of a mapper's activity (count,last active date) */
 "%ld edits, last active %@" = "%1$ld úprav, naposledy aktivní %2$@";
@@ -80,11 +80,14 @@
 /* No comment provided by engineer. */
 "A relation the node belongs to is not fully downloaded" = "Relace, do které bod patří, není zcela stažena";
 
+/* No comment provided by engineer. */
+"Accept" = "Přijmout";
+
 /* Add to relation */
 "Add inner member" = "Přidat vnitřního člena";
 
 /* No comment provided by engineer. */
-"add node to way" = "přidat bod do cesty";
+"add node to way" = "přidat bod do linie";
 
 /* Edit action */
 "Add Note" = "Přidat poznámku";
@@ -96,7 +99,7 @@
 "Add outer member" = "Přidat vnějšího člena";
 
 /* No comment provided by engineer. */
-"Add way to multipolygon?" = "Přidat cestu do multipolygonu?";
+"Add way to multipolygon?" = "Přidat linii do multipolygonu?";
 
 /* No comment provided by engineer. */
 "added to multipolygon relation" = "přidáno do multipolygonové relace";
@@ -114,7 +117,7 @@
 "All choices" = "Všechny možnosti";
 
 /* No comment provided by engineer. */
-"All Tags" = "Všechny tagy";
+"All Tags" = "Všechny značky";
 
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "Při stahování metadat došlo k neznámé chybě";
@@ -127,6 +130,9 @@
 
 /* Automatic selection of presets languages */
 "Automatic" = "Automaticky";
+
+/* back button */
+"Back" = "Zpět";
 
 /* identifies current aerial imagery */
 "Background imagery %@" = "Snímky pozadí %@";
@@ -141,7 +147,7 @@
 "Cache trimmed" = "Mezipaměť pročištěna";
 
 /* No comment provided by engineer. */
-"Can only add ways to multipolygons" = "Do multipolygonu lze přidat jen cesty";
+"Can only add ways to multipolygons" = "Do multipolygonu lze přidat jen linie";
 
 /* No comment provided by engineer. */
 "Can't delete node that is part of a relation" = "Nelze odstranit bod, který je součástí relace";
@@ -150,10 +156,10 @@
 "Can't delete relation that is not a multipolygon" = "Nelze odstranit relaci, která není multipolygon";
 
 /* No comment provided by engineer. */
-"Can't delete way that is part of a Route or similar relation" = "Nelze odstranit cestu, která je součástí trasy nebo obdobné relace";
+"Can't delete way that is part of a Route or similar relation" = "Nelze odstranit linii, která je součástí trasy nebo obdobné relace";
 
 /* No comment provided by engineer. */
-"Can't extend way" = "Cestu nelze prodloužit";
+"Can't extend way" = "Linii nelze prodloužit";
 
 /* No comment provided by engineer. */
 "Can't remove component of a Route or similar relation" = "Nelze odstranit součást trasy nebo obdobné relace";
@@ -177,7 +183,7 @@
 "Cannot compose message" = "Zprávu nelze vytvořit";
 
 /* No comment provided by engineer. */
-"Cannot connect an inner way to an outer way" = "Vnitřní a vnější cestu nelze spojit";
+"Cannot connect an inner way to an outer way" = "Vnitřní a vnější linie nelze spojit";
 
 /* OSM changeset identifier */
 "Changeset" = "Sada změn";
@@ -216,7 +222,7 @@
 "Connecting the nodes would damage a relation" = "Spojením bodů dojde k poškození relace";
 
 /* Edit action */
-"Copy Tags" = "Kopírovat tagy";
+"Copy Tags" = "Kopírovat značky";
 
 /* No comment provided by engineer. */
 "Could not duplicate object" = "Objekt nelze duplikovat";
@@ -240,7 +246,7 @@
 "create turn restriction" = "vytvořit omezení odbočení";
 
 /* No comment provided by engineer. */
-"create way" = "vytvořit cestu";
+"create way" = "vytvořit linii";
 
 /* current GPX track */
 "Current Track" = "Aktuální trasa";
@@ -267,7 +273,7 @@
 "delete node" = "smazat bod";
 
 /* No comment provided by engineer. */
-"delete node from way" = "smazat bod z cesty";
+"delete node from way" = "smazat bod z linie";
 
 /* No comment provided by engineer. */
 "delete object from relation" = "smazat objekt z relace";
@@ -282,7 +288,7 @@
 "delete route" = "smazat trasu";
 
 /* No comment provided by engineer. */
-"delete way" = "smazat cestu";
+"delete way" = "smazat linii";
 
 /* No comment provided by engineer. */
 "Detach from relation" = "Odpojit od relace";
@@ -330,7 +336,7 @@
 "Error" = "Chyba";
 
 /* No comment provided by engineer. */
-"Error connecting to way" = "Chyba připojení k cestě";
+"Error connecting to way" = "Chyba připojení k linii";
 
 /* No comment provided by engineer. */
 "Error fetching metadata: %@" = "Chyba při stahování metadat: %@";
@@ -372,7 +378,7 @@
 "Joining would invalidate a Turn Restriction the way belongs to" = "Spojením dojde k zneplatnění omezení odbočení do kterého cesta patří";
 
 /* No comment provided by engineer. */
-"Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "Výběr jazyka ovlivňuje pouze předvolby a to jen ty, které jsou lokalizované pro editor iD. Rozhraní bude stále v angličtině.";
+"Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "Výběr jazyka ovlivňuje rozhraní aplikace a předvolby, které jsou lokalizované pro editor iD.";
 
 /* No comment provided by engineer. */
 "Last updated %@" = "Poslední nahrání %@";
@@ -411,10 +417,13 @@
 "Max nodes after joining is 2000" = "Max. počet bodů po spojení je 2 000";
 
 /* No comment provided by engineer. */
-"Maximum way length is 2000 nodes" = "Maximální délka cesty je 2 000 bodů";
+"Maximum way length is 2000 nodes" = "Maximální délka linie je 2 000 bodů";
 
 /* rate the app later */
 "Maybe later..." = "Možná později…";
+
+/* No comment provided by engineer. */
+"Measure Direction" = "Změřit vzdálenost";
 
 /* No comment provided by engineer. */
 "Member of multipolygon relation" = "Člen multipolygonové relace";
@@ -423,13 +432,13 @@
 "Members" = "Členové";
 
 /* No comment provided by engineer. */
-"Merge Tags" = "Sloučit tagy";
+"Merge Tags" = "Sloučit značky";
 
 /* No comment provided by engineer. */
 "meters" = "metry";
 
 /* No comment provided by engineer. */
-"Missing way to connect to" = "Chybí cesta pro spojení";
+"Missing way to connect to" = "Chybí linie pro spojení";
 
 /* last modified date */
 "Modified" = "Změněno";
@@ -441,7 +450,7 @@
 "Modify\n" = "Změnit\n";
 
 /* No comment provided by engineer. */
-"Modifying the raw XML data allows you to correct errors that prevent uploading.\n\nIt is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format." = "Úprava surových XML dát umožňuje opravit chyby bránící nahrání změn.\n\nJedná se o pokročilou funkci, kterou byste měli použít jen pokud skutečně dobře rozumíte formátu OSM sady změn.";
+"Modifying the raw XML data allows you to correct errors that prevent uploading.\n\nIt is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format." = "Úprava surových XML dat umožňuje opravit chyby bránící nahrání změn.\n\nJedná se o pokročilou funkci, kterou byste měli použít jen pokud skutečně dobře rozumíte formátu OSM sady změn.";
 
 /* Edit action */
 "More..." = "Další…";
@@ -478,9 +487,6 @@
 "No Data" = "Žádná data";
 
 /* No comment provided by engineer. */
-"No image data available" = "Žádné dostupné snímky";
-
-/* No comment provided by engineer. */
 "No Left Turn restriction" = "Žádné omezení odbočení vlevo";
 
 /* No comment provided by engineer. */
@@ -493,7 +499,7 @@
 "No Straight On restriction" = "Žádné omezení jízdy rovně";
 
 /* No comment provided by engineer. */
-"No tags to paste" = "Žádné tagy pro vložení";
+"No tags to paste" = "Žádné značky pro vložení";
 
 /* No comment provided by engineer. */
 "No U-Turn restriction" = "Žádné omezení otáčení";
@@ -505,19 +511,19 @@
 "node %@" = "bod %@";
 
 /* No comment provided by engineer. */
-"node %@ (in way)" = "bod %@ (v cestě)";
+"node %@ (in way)" = "bod %@ (v linii)";
 
 /* No comment provided by engineer. */
 "Node Attributes" = "Atributy bodu";
 
 /* No comment provided by engineer. */
-"Node is not an element of way" = "Bod není součástí cesty";
+"Node is not an element of way" = "Bod není součástí linie";
 
 /* No comment provided by engineer. */
-"Node must be the first or last node of the way" = "Bod musí být prvním, či posledním bodem cesty";
+"Node must be the first or last node of the way" = "Bod musí být prvním, či posledním bodem linie";
 
 /* No comment provided by engineer. */
-"Node Tags" = "Tagy bodu";
+"Node Tags" = "Značky bodu";
 
 /* User credentials not found */
 "Not found" = "Nenalezeno";
@@ -550,7 +556,7 @@
 "Only Straight On restriction" = "Pouze omezení jízdy rovně";
 
 /* No comment provided by engineer. */
-"Only ways/multipolygons can be rotated" = "Otáčeny mohou být pouze cesty a multipolygony";
+"Only ways/multipolygons can be rotated" = "Otáčeny mohou být pouze linie a multipolygony";
 
 /* Open the iOS Settings app */
 "Open Settings" = "Otevřít nastavení";
@@ -598,7 +604,7 @@
 "Relation Attributes" = "Atributy relace";
 
 /* No comment provided by engineer. */
-"Relation Tags" = "Tagy relace";
+"Relation Tags" = "Značky relace";
 
 /* No comment provided by engineer. */
 "Relation: %@" = "Relace: %@";
@@ -607,13 +613,13 @@
 "Relations" = "Relace";
 
 /* No comment provided by engineer. */
-"Replace Tags" = "Nahradit tagy";
+"Replace Tags" = "Nahradit značky";
 
 /* No comment provided by engineer. */
-"Requires a closed way with at least 3 nodes" = "Vyžaduje uzavřenou cestu s alespoň 3 body";
+"Requires a closed way with at least 3 nodes" = "Vyžaduje uzavřenou linii s alespoň 3 body";
 
 /* No comment provided by engineer. */
-"Requires a closed way with at least 4 nodes" = "Vyžaduje uzavřenou cestu s alespoň 4 body";
+"Requires a closed way with at least 4 nodes" = "Vyžaduje uzavřenou linii s alespoň 4 body";
 
 /* Edit action */
 "Restrict" = "Omezit";
@@ -623,6 +629,9 @@
 
 /* country name,2-character country code */
 "Results for %@ (%@)" = "Výsledky pro %1$@ (%2$@)";
+
+/* retry opening hours recognition */
+"Retry" = "Opakovat";
 
 /* Edit action */
 "Reverse" = "Obrátit směr";
@@ -649,10 +658,10 @@
 "Set" = "Nastavit";
 
 /* The height=* tag */
-"Set Height Tag" = "Nastavit tag výšky";
+"Set Height Tag" = "Nastavit značku výšky";
 
 /* No comment provided by engineer. */
-"set tags" = "nastavit tagy";
+"set tags" = "nastavit značky";
 
 /* No comment provided by engineer. */
 "Settings" = "Nastavení";
@@ -686,7 +695,7 @@
 "Straighten" = "Narovnat";
 
 /* Edit action */
-"Tags" = "Tagy";
+"Tags" = "Značky";
 
 /* No comment provided by engineer. */
 "The + button can be positioned on either the left or right side of the screen" = "Tlačítko „+“ může být umístěno na levé či pravé straně obrazovky";
@@ -695,37 +704,37 @@
 "The current location cannot be determined: " = "Aktuální polohu nelze určit: ";
 
 /* No comment provided by engineer. */
-"The merged nodes contain conflicting tags" = "Sloučené body obsahují konfliktní tagy";
+"The merged nodes contain conflicting tags" = "Sloučené body obsahují konfliktní značky";
 
 /* No comment provided by engineer. */
 "The nodes have conflicting roles in parent relations" = "Body mají konfliktní role v rodičovských relacích";
 
 /* No comment provided by engineer. */
-"The object does not contain any tags" = "Objekt neobsahuje žádné tagy";
+"The object does not contain any tags" = "Objekt neobsahuje žádné značky";
 
 /* No comment provided by engineer. */
 "The restriction cannot be deleted" = "Omezení nelze odstranit";
 
 /* No comment provided by engineer. */
-"The selected way must be completely visible" = "Vybraná cesta musí být zcela viditelná";
+"The selected way must be completely visible" = "Vybraná linie musí být zcela viditelná";
 
 /* No comment provided by engineer. */
-"The target way is ambiguous" = "Cílová cesta je nejednoznačná";
+"The target way is ambiguous" = "Cílová linie je nejednoznačná";
 
 /* No comment provided by engineer. */
 "The turn contains an unrecognized turn restriction style. Proceeding will destroy it." = "Odbočení obsahuje nerozpoznaný styl omezení odbočení. Pokračováním dojde k jeho zničení.";
 
 /* No comment provided by engineer. */
-"The way belongs to a relation that is not fully downloaded" = "Cesta patří do relace, která není zcela stažena";
+"The way belongs to a relation that is not fully downloaded" = "Linie patří do relace, která není zcela stažena";
 
 /* No comment provided by engineer. */
-"The way is not sufficiently straight" = "Cesta není dostatečně rovná";
+"The way is not sufficiently straight" = "Linie není dostatečně rovná";
 
 /* No comment provided by engineer. */
-"The way must have at least 2 nodes" = "Cesta musí mít alespoň 2 body";
+"The way must have at least 2 nodes" = "Linie musí mít alespoň 2 body";
 
 /* No comment provided by engineer. */
-"The ways contain incompatible tags" = "Cesta obsahuje nekompatibilní tagy";
+"The ways contain incompatible tags" = "Linie obsahují nekompatibilní značky";
 
 /* No comment provided by engineer. */
 "The XML is improperly formed" = "XML soubor je nesprávně naformatován";
@@ -737,7 +746,10 @@
 "This app does not yet support editing turn restrictions without a node as the 'via' member" = "Tato aplikace zatím nepodporuje úpravy odbočení bez bodu „přes“ jako člena";
 
 /* No comment provided by engineer. */
-"To add another member to the relation 'long press' on the way to be added" = "Pro přidání dalšího člena do relace dlouze přidržte cestu, kterou chcete přidat";
+"This device is not able to provide heading data." = "Toto zařízení neumožňuje určovat směr.";
+
+/* No comment provided by engineer. */
+"To add another member to the relation 'long press' on the way to be added" = "Pro přidání dalšího člena do relace dlouze přidržte linii, kterou chcete přidat";
 
 /* No comment provided by engineer. */
 "Travel ALLOWED from %@ to %@" = "Cesta POVOLENA z %1$@ do %2$@";
@@ -784,6 +796,9 @@
 /* update an osm note */
 "Update" = "Aktualizovat";
 
+/* Update the named tag value (e.g. foo=*) */
+"Update '%@' tag" = "Aktualizovat značku „%@“";
+
 /* No comment provided by engineer. */
 "update relation members" = "aktualizovat členy relace";
 
@@ -821,13 +836,13 @@
 "Warning" = "Upozornění";
 
 /* No comment provided by engineer. */
-"way %@" = "cesta %@";
+"way %@" = "linie %@";
 
 /* No comment provided by engineer. */
-"Way Attributes" = "Atributy cesty";
+"Way Attributes" = "Atributy linie";
 
 /* No comment provided by engineer. */
-"Way Tags" = "Tagy cesty";
+"Way Tags" = "Značky linie";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Chystáte se provést změny v živé OpenStreetMap databázi. Vaše změny budou viditelné pro všechny na světě.\n\nChcete-li změny skutečně odeslat, znovu klepněte na Odeslat. Jinak klepněte na Zrušit.";

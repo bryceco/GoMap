@@ -80,6 +80,9 @@
 /* No comment provided by engineer. */
 "A relation the node belongs to is not fully downloaded" = "节点所属的关系没有完全下载";
 
+/* No comment provided by engineer. */
+"Accept" = "接受";
+
 /* Add to relation */
 "Add inner member" = "添加内部成员";
 
@@ -118,6 +121,9 @@
 
 /* Automatic selection of presets languages */
 "Automatic" = "自动";
+
+/* back button */
+"Back" = "返回";
 
 /* identifies current aerial imagery */
 "Background imagery %@" = "背景图像 %@";
@@ -174,6 +180,9 @@
 "Commit" = "提交";
 
 /* No comment provided by engineer. */
+"computing size..." = "计算大小...";
+
+/* No comment provided by engineer. */
 "Configure" = "配置";
 
 /* No comment provided by engineer. */
@@ -212,6 +221,9 @@
 /* current GPX track */
 "Current Track" = "当前轨迹";
 
+/* No comment provided by engineer. */
+"Database error" = "数据库错误";
+
 /* Edit action */
 "Delete" = "删除";
 
@@ -228,6 +240,18 @@
 "delete node" = "删除节点";
 
 /* No comment provided by engineer. */
+"delete relation" = "删除关系";
+
+/* No comment provided by engineer. */
+"delete restriction" = "删除限制";
+
+/* No comment provided by engineer. */
+"delete route" = "删除路线";
+
+/* No comment provided by engineer. */
+"delete way" = "删除路径";
+
+/* No comment provided by engineer. */
 "Detach from relation" = "从关系中分离";
 
 /* Edit action */
@@ -238,6 +262,9 @@
 
 /* No comment provided by engineer. */
 "Done" = "完成";
+
+/* create a duplicate */
+"duplicate" = "复制";
 
 /* Edit action */
 "Duplicate" = "复制";
@@ -302,6 +329,9 @@
 /* coordinates */
 "Lat/Lon" = "纬度/经度";
 
+/* No comment provided by engineer. */
+"Left" = "左边";
+
 /* Left-hand side of screen */
 "Left side" = "左侧";
 
@@ -330,6 +360,9 @@
 "Maybe later..." = "以后再说...";
 
 /* No comment provided by engineer. */
+"Measure Direction" = "测量方向";
+
+/* No comment provided by engineer. */
 "Member of multipolygon relation" = "复杂多边关系成员";
 
 /* No comment provided by engineer. */
@@ -337,6 +370,9 @@
 
 /* No comment provided by engineer. */
 "Merge Tags" = "合并标签";
+
+/* No comment provided by engineer. */
+"meters" = "米";
 
 /* last modified date */
 "Modified" = "修改的";
@@ -352,6 +388,9 @@
 
 /* No comment provided by engineer. */
 "Most recent" = "最近的";
+
+/* No comment provided by engineer. */
+"move" = "移动";
 
 /* No comment provided by engineer. */
 "Move" = "移动";
@@ -376,9 +415,6 @@
 "No Data" = "无数据";
 
 /* No comment provided by engineer. */
-"No image data available" = "没有可用的图像数据";
-
-/* No comment provided by engineer. */
 "No Left Turn restriction" = "无左转限制";
 
 /* No comment provided by engineer. */
@@ -399,6 +435,15 @@
 /* No comment provided by engineer. */
 "Node" = "节点";
 
+/* No comment provided by engineer. */
+"node %@" = "节点%@";
+
+/* No comment provided by engineer. */
+"Node Attributes" = "节点属性";
+
+/* No comment provided by engineer. */
+"Node Tags" = "节点标签";
+
 /* User credentials not found */
 "Not found" = "未找到";
 
@@ -410,6 +455,9 @@
 
 /* No comment provided by engineer. */
 "Number of recent items to display" = "最近显示的项目数";
+
+/* No comment provided by engineer. */
+"Object modified" = "修改的对象";
 
 /* No comment provided by engineer. */
 "OK" = "确定";
@@ -432,8 +480,14 @@
 /* No comment provided by engineer. */
 "Open URL" = "打开URL";
 
+/* No comment provided by engineer. */
+"other object" = "其他对象";
+
 /* Edit action */
 "Paste" = "粘贴";
+
+/* No comment provided by engineer. */
+"Pasting %ld tag(s)" = "粘贴 %ld 个标签";
 
 /* No comment provided by engineer. */
 "Perform Action" = "执行操作";
@@ -457,6 +511,15 @@
 "Redo" = "重做";
 
 /* No comment provided by engineer. */
+"relation" = "关系";
+
+/* No comment provided by engineer. */
+"Relation Attributes" = "关系属性";
+
+/* No comment provided by engineer. */
+"Relation Tags" = "关系标签";
+
+/* No comment provided by engineer. */
 "Relation: %@" = "关系: %@";
 
 /* No comment provided by engineer. */
@@ -466,7 +529,16 @@
 "Replace Tags" = "替换标签";
 
 /* Edit action */
+"Restrict" = "限制";
+
+/* retry opening hours recognition */
+"Retry" = "重试";
+
+/* Edit action */
 "Reverse" = "逆转";
+
+/* No comment provided by engineer. */
+"Right" = "右";
 
 /* Right-hand side of screen */
 "Right side" = "右侧";
@@ -485,6 +557,9 @@
 
 /* The height=* tag */
 "Set Height Tag" = "设置高度标签";
+
+/* No comment provided by engineer. */
+"set tags" = "设置标签";
 
 /* No comment provided by engineer. */
 "Settings" = "设置";
@@ -526,6 +601,9 @@
 /* No comment provided by engineer. */
 "The XML is improperly formed" = "XML格式不正确";
 
+/* Edit action */
+"Turn Restrictions" = "转向限制";
+
 /* OSM numeric user ID */
 "UID" = "用户ID";
 
@@ -540,6 +618,12 @@
 
 /* update an osm note */
 "Update" = "更新";
+
+/* Update the named tag value (e.g. foo=*) */
+"Update '%@' tag" = "更新'%@'标签";
+
+/* No comment provided by engineer. */
+"update relation members" = "更新关系成员";
 
 /* OSM Note */
 "Updating Note..." = "更新说明...";
@@ -568,6 +652,18 @@
 /* No comment provided by engineer. */
 "Warning" = "警告";
 
+/* No comment provided by engineer. */
+"Way Attributes" = "路径属性";
+
+/* No comment provided by engineer. */
+"Way Tags" = "路径标签";
+
 /* POI editor presets */
 "You can define your own custom presets here" = "您可以在这里定义自己的自定义预设";
+
+/* No comment provided by engineer. */
+"You must provide your OSM user name, not an email address." = "你必须提供你的OSM用户名，而不是电子邮件地址。";
+
+/* No comment provided by engineer. */
+"You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?" = "您已使用此版本的 Go Map 上传了 %ld 个变更集！！\n\n为这个应用软件评分？";
 

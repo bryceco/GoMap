@@ -11,6 +11,9 @@
 " (%d nodes)\n" = " (%d noder)\n";
 
 /* No comment provided by engineer. */
+" (node)" = " (node)";
+
+/* No comment provided by engineer. */
 " (way)" = " (vei)";
 
 /* No comment provided by engineer. */
@@ -77,6 +80,9 @@
 /* No comment provided by engineer. */
 "A relation the node belongs to is not fully downloaded" = "En relasjon noden tilhører er ikke helt nedlastet enda";
 
+/* No comment provided by engineer. */
+"Accept" = "Godta";
+
 /* Add to relation */
 "Add inner member" = "Leg til indre medlem";
 
@@ -122,6 +128,9 @@
 /* Automatic selection of presets languages */
 "Automatic" = "Automatisk";
 
+/* back button */
+"Back" = "Tilbake";
+
 /* identifies current aerial imagery */
 "Background imagery %@" = "Bakgrunnsbildemateriale %@";
 
@@ -145,6 +154,9 @@
 
 /* No comment provided by engineer. */
 "Can't delete way that is part of a Route or similar relation" = "Kan ikke slette vei som er en del av en rute eller lignende relasjon";
+
+/* No comment provided by engineer. */
+"Can't extend way" = "Kan ikke forlenge vei";
 
 /* No comment provided by engineer. */
 "Cancel" = "Avbryt";
@@ -214,6 +226,9 @@
 
 /* current GPX track */
 "Current Track" = "Nåværende spor";
+
+/* No comment provided by engineer. */
+"Database error" = "Databasefeil";
 
 /* Edit action */
 "Delete" = "Slett";
@@ -345,6 +360,9 @@
 "Maybe later..." = "Kanskje senere …";
 
 /* No comment provided by engineer. */
+"Measure Direction" = "Mål retning";
+
+/* No comment provided by engineer. */
 "Member of multipolygon relation" = "Medlem av multipolygon-relasjon";
 
 /* No comment provided by engineer. */
@@ -387,6 +405,9 @@
 "Move selected object?" = "Flytt valgt object?";
 
 /* No comment provided by engineer. */
+"Multipolygon" = "Multipolygon";
+
+/* No comment provided by engineer. */
 "Network error" = "Nettverksfeil";
 
 /* Never delete old GPX tracks
@@ -398,9 +419,6 @@
 
 /* Alert title */
 "No Data" = "Ingen data";
-
-/* No comment provided by engineer. */
-"No image data available" = "Bildedata ikke tilgjengelig";
 
 /* No comment provided by engineer. */
 "No results found" = "Resultatløst";
@@ -416,6 +434,9 @@
 
 /* No comment provided by engineer. */
 "node %@ (in way)" = "node %@ (i vei)";
+
+/* No comment provided by engineer. */
+"Node Tags" = "Nodeetiketter";
 
 /* User credentials not found */
 "Not found" = "Ikke funnet";
@@ -434,6 +455,9 @@
 
 /* No comment provided by engineer. */
 "OK" = "OK";
+
+/* previous tag value */
+"Old value: (oldValue)" = "Gammel verdi: (gammelVerdi)";
 
 /* Open the iOS Settings app */
 "Open Settings" = "Åpne innstillingene";
@@ -551,6 +575,9 @@
 "The nodes have conflicting roles in parent relations" = "Nodene har uoverensstemmende roller i deres ovennevnte relasjoner";
 
 /* No comment provided by engineer. */
+"The object does not contain any tags" = "Objektet inneholder ingen etiketter";
+
+/* No comment provided by engineer. */
 "The selected way must be completely visible" = "Valgt vei må være synlig i sin helhet";
 
 /* No comment provided by engineer. */
@@ -585,6 +612,9 @@
 
 /* No comment provided by engineer. */
 "Turn On Location Services to Allow %@ to Determine Your Location" = "Skru på posisjonstjenester for å tillate %@ å fastsette din posisjon";
+
+/* OSM numeric user ID */
+"UID" = "UID";
 
 /* No comment provided by engineer. */
 "Unable to upload changes" = "Kunne ikke laste opp endringer";

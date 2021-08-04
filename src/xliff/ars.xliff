@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="ars" datatype="plaintext">
     <header>
@@ -12,12 +12,10 @@
       </trans-unit>
       <trans-unit id="Jc3-Um-Aiy.text" xml:space="preserve">
         <source>320</source>
-        <target/>
         <note>Class = "UILabel"; text = "320"; ObjectID = "Jc3-Um-Aiy";</note>
       </trans-unit>
       <trans-unit id="Yt9-h6-KKC.normalTitle" xml:space="preserve">
         <source>Update "direction" tag</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Update \"direction\" tag"; ObjectID = "Yt9-h6-KKC";</note>
       </trans-unit>
       <trans-unit id="exg-Jc-FOH.normalTitle" xml:space="preserve">
@@ -27,7 +25,6 @@
       </trans-unit>
       <trans-unit id="vtk-nS-Ss4.text" xml:space="preserve">
         <source>Old value: 42</source>
-        <target/>
         <note>Class = "UILabel"; text = "Old value: 42"; ObjectID = "vtk-nS-Ss4";</note>
       </trans-unit>
     </body>
@@ -44,7 +41,6 @@
       </trans-unit>
       <trans-unit id="CFBundleGetInfoString" xml:space="preserve">
         <source/>
-        <target/>
         <note>Get Info string</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
@@ -69,7 +65,6 @@
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
         <source/>
-        <target/>
         <note>Copyright (human-readable)</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
@@ -216,7 +211,6 @@
       </trans-unit>
       <trans-unit id="1 Day" xml:space="preserve">
         <source>1 Day</source>
-        <target/>
         <note>1 day singular</note>
       </trans-unit>
       <trans-unit id="&lt;unknown&gt;" xml:space="preserve">
@@ -849,11 +843,6 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>لا يوجد مسار نشط</target>
         <note>GPX track</note>
       </trans-unit>
-      <trans-unit id="No image data available" xml:space="preserve">
-        <source>No image data available</source>
-        <target>لا تتوفر بيانات الصور</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
       <trans-unit id="No results found" xml:space="preserve">
         <source>No results found</source>
         <target>لم يتم العثور على نتائج</target>
@@ -921,7 +910,6 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Old value: (oldValue)" xml:space="preserve">
         <source>Old value: (oldValue)</source>
-        <target/>
         <note>previous tag value</note>
       </trans-unit>
       <trans-unit id="Only Left Turn restriction" xml:space="preserve">
@@ -1622,6 +1610,59 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
     </body>
   </file>
+  <file original="PhotoShare/Base.lproj/MainInterface.storyboard" datatype="plaintext" source-language="en" target-language="ars">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
+    </header>
+    <body>
+      <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
+        <source>OK</source>
+        <note>Class = "UIButton"; normalTitle = "OK"; ObjectID = "05z-LH-xEK";</note>
+      </trans-unit>
+      <trans-unit id="Zxw-Em-faC.normalTitle" xml:space="preserve">
+        <source>Cancel</source>
+        <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "Zxw-Em-faC";</note>
+      </trans-unit>
+      <trans-unit id="cy3-gz-fvk.text" xml:space="preserve">
+        <source>Go Map!! will open at the location the photo was taken.</source>
+        <note>Class = "UILabel"; text = "Go Map!! will open at the location the photo was taken."; ObjectID = "cy3-gz-fvk";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="PhotoShare/en.lproj/InfoPlist.strings" datatype="plaintext" source-language="en" target-language="ars">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleDisplayName" xml:space="preserve">
+        <source>PhotoShare</source>
+        <note>Bundle display name</note>
+      </trans-unit>
+      <trans-unit id="CFBundleName" xml:space="preserve">
+        <source>PhotoShare</source>
+        <note>Bundle name</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="PhotoShare/en.lproj/Localizable.strings" datatype="plaintext" source-language="en" target-language="ars">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
+    </header>
+    <body>
+      <trans-unit id="Processing data..." xml:space="preserve">
+        <source>Processing data...</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="The URL content isn't recognized." xml:space="preserve">
+        <source>The URL content isn't recognized.</source>
+        <note>Error message when sharing a URL to Go Map!!</note>
+      </trans-unit>
+      <trans-unit id="Unfortunately the selected image does not contain location information." xml:space="preserve">
+        <source>Unfortunately the selected image does not contain location information.</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+    </body>
+  </file>
   <file original="Storyboards/Base.lproj/Display.storyboard" source-language="en" target-language="ars" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
@@ -1699,7 +1740,6 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="EHa-L5-Hcz.text" xml:space="preserve">
         <source>12:00:00</source>
-        <target/>
         <note>Class = "UILabel"; text = "12:00:00"; ObjectID = "EHa-L5-Hcz";</note>
       </trans-unit>
       <trans-unit id="EmS-9F-1qc.text" xml:space="preserve">
@@ -1873,7 +1913,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       <trans-unit id="dzT-B4-za3.placeholder" xml:space="preserve">
         <source>http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
  </source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "; ObjectID = "dzT-B4-za3";</note>
       </trans-unit>
       <trans-unit id="eFa-yZ-YZl.text" xml:space="preserve">
@@ -1960,7 +1999,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="iuk-Fk-3Fw.placeholder" xml:space="preserve">
         <source>(TMS)</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "(TMS)"; ObjectID = "iuk-Fk-3Fw";</note>
       </trans-unit>
       <trans-unit id="lu0-kr-5Cc.text" xml:space="preserve">
@@ -2040,7 +2078,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="v6h-g5-fka.text" xml:space="preserve">
         <source>12/22/20, 7:55 PM</source>
-        <target/>
         <note>Class = "UILabel"; text = "12/22/20, 7:55 PM"; ObjectID = "v6h-g5-fka";</note>
       </trans-unit>
       <trans-unit id="voF-Yf-33h.text" xml:space="preserve">
@@ -2102,7 +2139,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="2Ka-IT-DQC.normalTitle" xml:space="preserve">
         <source>Bing attribution</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Bing attribution"; ObjectID = "2Ka-IT-DQC";</note>
       </trans-unit>
       <trans-unit id="2g1-vb-Cjc.normalTitle" xml:space="preserve">
@@ -2117,7 +2153,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="9G2-Gl-CeP.text" xml:space="preserve">
         <source>username - action</source>
-        <target/>
         <note>Class = "UILabel"; text = "username - action"; ObjectID = "9G2-Gl-CeP"; Note = "Placeholder - ignore";</note>
       </trans-unit>
       <trans-unit id="9hH-Ja-fKn.text" xml:space="preserve">
@@ -2127,7 +2162,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="9t5-wq-j1u.text" xml:space="preserve">
         <source>66.6 FPS</source>
-        <target/>
         <note>Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u";</note>
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityHint" xml:space="preserve">
@@ -2152,7 +2186,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="HeZ-95-3K1.text" xml:space="preserve">
         <source>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</source>
-        <target/>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "HeZ-95-3K1";</note>
       </trans-unit>
       <trans-unit id="MBY-TK-Wuy.title" xml:space="preserve">
@@ -2172,7 +2205,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="PHk-s9-onx.text" xml:space="preserve">
         <source>Various comments...</source>
-        <target/>
         <note>Class = "UITextView"; text = "Various comments..."; ObjectID = "PHk-s9-onx"; Note = "Placeholder - ignore";</note>
       </trans-unit>
       <trans-unit id="Qz0-Ce-YCX.title" xml:space="preserve">
@@ -2187,7 +2219,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="ach-1A-88x.text" xml:space="preserve">
         <source>Changeset comment goes here</source>
-        <target/>
         <note>Class = "UITextView"; text = "Changeset comment goes here"; ObjectID = "ach-1A-88x";</note>
       </trans-unit>
       <trans-unit id="gdu-Sf-XrE.title" xml:space="preserve">
@@ -2202,12 +2233,10 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="nU5-T2-ADn.text" xml:space="preserve">
         <source>A Error Message Flashing Z</source>
-        <target/>
         <note>Class = "UILabel"; text = "A Error Message Flashing Z"; ObjectID = "nU5-T2-ADn"; Note = "Placeholder - Don't translate";</note>
       </trans-unit>
       <trans-unit id="qP9-Sc-sc4.text" xml:space="preserve">
         <source>Label</source>
-        <target/>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "qP9-Sc-sc4";</note>
       </trans-unit>
       <trans-unit id="siu-I6-IEp.title" xml:space="preserve">
@@ -2222,12 +2251,10 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="tOO-VD-MeJ.text" xml:space="preserve">
         <source>2014-06-17 17:54 UTC</source>
-        <target/>
         <note>Class = "UILabel"; text = "2014-06-17 17:54 UTC"; ObjectID = "tOO-VD-MeJ";</note>
       </trans-unit>
       <trans-unit id="vRO-Aj-Sdr.text" xml:space="preserve">
         <source>Title</source>
-        <target/>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr";</note>
       </trans-unit>
       <trans-unit id="xw9-Ro-Fai.placeholder" xml:space="preserve">
@@ -2309,7 +2336,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve">
         <source>dog</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="Bnh-U0-D7i.text" xml:space="preserve">
@@ -2319,7 +2345,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="CXe-gQ-Zda.text" xml:space="preserve">
         <source>Value 8</source>
-        <target/>
         <note>Class = "UILabel"; text = "Value 8"; ObjectID = "CXe-gQ-Zda";</note>
       </trans-unit>
       <trans-unit id="Dfv-TT-J6i.footerTitle" xml:space="preserve">
@@ -2344,7 +2369,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Fe2-dc-zgA.placeholder" xml:space="preserve">
         <source>designated</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="G5R-oP-lp3.title" xml:space="preserve">
@@ -2444,7 +2468,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="aCs-vS-YXj.placeholder" xml:space="preserve">
         <source>ref</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "ref"; ObjectID = "aCs-vS-YXj"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="aLi-Vs-z0k.title" xml:space="preserve">
@@ -2489,7 +2512,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
         <source>clean</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
@@ -2564,12 +2586,10 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="oC6-w7-cwN.placeholder" xml:space="preserve">
         <source>leashed</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="okh-JP-aKZ.placeholder" xml:space="preserve">
         <source>park</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="omf-S9-Yjq.text" xml:space="preserve">
@@ -2619,7 +2639,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="zpj-gL-2Nt.normalTitle" xml:space="preserve">
         <source>ⓘ</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "zpj-gL-2Nt";</note>
       </trans-unit>
     </body>
@@ -2691,7 +2710,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="66J-ih-Lfh.placeholder" xml:space="preserve">
         <source>api.openstreetmap.org</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "api.openstreetmap.org"; ObjectID = "66J-ih-Lfh";</note>
       </trans-unit>
       <trans-unit id="355-dx-Oi8.headerTitle" xml:space="preserve">
@@ -2764,7 +2782,6 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="DiU-tt-U7H.text" xml:space="preserve">
         <source>Detail detail detail detail detail</source>
-        <target/>
         <note>Class = "UILabel"; text = "Detail detail detail detail detail"; ObjectID = "DiU-tt-U7H"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="Gcr-zK-nDq.text" xml:space="preserve">
@@ -2784,7 +2801,6 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="JbA-pC-plJ.text" xml:space="preserve">
         <source>Title title title title</source>
-        <target/>
         <note>Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="KIO-8j-QsO.text" xml:space="preserve">

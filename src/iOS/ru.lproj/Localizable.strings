@@ -80,6 +80,9 @@
 /* No comment provided by engineer. */
 "A relation the node belongs to is not fully downloaded" = "Отношение, к которому принадлежит точка, не загружено полностью";
 
+/* No comment provided by engineer. */
+"Accept" = "Принять";
+
 /* Add to relation */
 "Add inner member" = "Добавить элемент с ролью inner";
 
@@ -127,6 +130,9 @@
 
 /* Automatic selection of presets languages */
 "Automatic" = "Автоматически";
+
+/* back button */
+"Back" = "Назад";
 
 /* identifies current aerial imagery */
 "Background imagery %@" = "Подложка %@";
@@ -478,9 +484,6 @@
 "No Data" = "Нет данных";
 
 /* No comment provided by engineer. */
-"No image data available" = "Изображения недоступны";
-
-/* No comment provided by engineer. */
 "No Left Turn restriction" = "Запрет левого поворота";
 
 /* No comment provided by engineer. */
@@ -536,6 +539,9 @@
 
 /* No comment provided by engineer. */
 "OK" = "ОК";
+
+/* previous tag value */
+"Old value: (oldValue)" = "Старое значение: (oldValue)";
 
 /* No comment provided by engineer. */
 "Only Left Turn restriction" = "Только левый поворот";
@@ -623,6 +629,9 @@
 
 /* country name,2-character country code */
 "Results for %@ (%@)" = "Результаты для %1$@ (%2$@)";
+
+/* retry opening hours recognition */
+"Retry" = "Повторить";
 
 /* Edit action */
 "Reverse" = "Изменить направление";
@@ -780,6 +789,9 @@
 
 /* update an osm note */
 "Update" = "Обновить";
+
+/* Update the named tag value (e.g. foo=*) */
+"Update '%@' tag" = "Обновить тег '%@'";
 
 /* No comment provided by engineer. */
 "update relation members" = "обновить участников отношения";
