@@ -112,7 +112,7 @@ final class PresetsForFeature {
 
 		// Always start with Type and Name
 		let typeTag = PresetKey(
-			name: "Type",
+			name: NSLocalizedString("Type", comment: "The 'Type' header in Common Tags"),
 			tagKey: "",
 			defaultValue: nil,
 			placeholder: "",

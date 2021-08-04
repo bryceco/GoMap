@@ -578,8 +578,8 @@ extension EditorMapLayer {
 
 		} else {
 			// regular delete
-			let name = self.selectedPrimary?.friendlyDescription()
-			let question = "Delete \(name ?? "")?"
+			let name = selectedPrimary.friendlyDescription()
+			let question = NSLocalizedString("Delete \(name)?", comment: "Confirm deleting a node/way")
 			let alertDelete = UIAlertController(
 				title: NSLocalizedString("Delete", comment: ""),
 				message: question,
