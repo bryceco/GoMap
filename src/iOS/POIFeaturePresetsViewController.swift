@@ -227,8 +227,10 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 				: "CommonTagSingle"
 
 			let cell = tableView.dequeueReusableCell(withIdentifier: cellName, for: indexPath) as! FeaturePresetCell
-			cell.nameLabel.text = presetKey.name
-			cell.valueField.placeholder = presetKey.placeholder
+			if key != "" {
+				cell.nameLabel.text = presetKey.name
+				cell.valueField.placeholder = presetKey.placeholder
+			}
 			cell.valueField.delegate = self
 			cell.presetKey = .key(presetKey)
 
