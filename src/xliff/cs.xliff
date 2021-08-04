@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="Direction/Base.lproj/DirectionViewController.xib" datatype="plaintext" source-language="en" target-language="cs">
     <header>
@@ -7,6 +7,7 @@
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
         <source>Position your device parallel to the direction of the object.</source>
+        <target>Nasměrujte své zařízení paralelně se směrem objektu.</target>
         <note>Class = "UILabel"; text = "Position your device parallel to the direction of the object."; ObjectID = "4vY-m2-xMW";</note>
       </trans-unit>
       <trans-unit id="Jc3-Um-Aiy.text" xml:space="preserve">
@@ -19,6 +20,7 @@
       </trans-unit>
       <trans-unit id="exg-Jc-FOH.normalTitle" xml:space="preserve">
         <source>Cancel</source>
+        <target>Zrušit</target>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "exg-Jc-FOH";</note>
       </trans-unit>
       <trans-unit id="vtk-nS-Ss4.text" xml:space="preserve">
@@ -94,7 +96,7 @@
       </trans-unit>
       <trans-unit id="&#9;Way " xml:space="preserve">
         <source>	Way </source>
-        <target>	Cesta </target>
+        <target>	Linie </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;" xml:space="preserve">
@@ -118,7 +120,7 @@
       </trans-unit>
       <trans-unit id=" (way)" xml:space="preserve">
         <source> (way)</source>
-        <target> (cesta)</target>
+        <target> (linie)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
@@ -153,7 +155,7 @@
       </trans-unit>
       <trans-unit id="%ld Days" xml:space="preserve">
         <source>%ld Days</source>
-        <target>%ld dní</target>
+        <target>%ld dnech</target>
         <note>One or more days
    Plural number of days</note>
       </trans-unit>
@@ -184,7 +186,7 @@
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
         <source>(node in way)</source>
-        <target>(bod cesty)</target>
+        <target>(bod linie)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(node)" xml:space="preserve">
@@ -199,7 +201,7 @@
       </trans-unit>
       <trans-unit id="(way)" xml:space="preserve">
         <source>(way)</source>
-        <target>(cesta)</target>
+        <target>(linie)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="+ Button Position" xml:space="preserve">
@@ -229,6 +231,7 @@
       </trans-unit>
       <trans-unit id="Accept" xml:space="preserve">
         <source>Accept</source>
+        <target>Přijmout</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
@@ -248,7 +251,7 @@
       </trans-unit>
       <trans-unit id="Add way to multipolygon?" xml:space="preserve">
         <source>Add way to multipolygon?</source>
-        <target>Přidat cestu do multipolygonu?</target>
+        <target>Přidat linii do multipolygonu?</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Adding members:" xml:space="preserve">
@@ -268,7 +271,7 @@
       </trans-unit>
       <trans-unit id="All Tags" xml:space="preserve">
         <source>All Tags</source>
-        <target>Všechny tagy</target>
+        <target>Všechny značky</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="All choices" xml:space="preserve">
@@ -298,6 +301,7 @@
       </trans-unit>
       <trans-unit id="Back" xml:space="preserve">
         <source>Back</source>
+        <target>Zpět</target>
         <note>back button</note>
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
@@ -322,7 +326,7 @@
       </trans-unit>
       <trans-unit id="Can only add ways to multipolygons" xml:space="preserve">
         <source>Can only add ways to multipolygons</source>
-        <target>Do multipolygonu lze přidat jen cesty</target>
+        <target>Do multipolygonu lze přidat jen linie</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't delete node that is part of a relation" xml:space="preserve">
@@ -337,12 +341,12 @@
       </trans-unit>
       <trans-unit id="Can't delete way that is part of a Route or similar relation" xml:space="preserve">
         <source>Can't delete way that is part of a Route or similar relation</source>
-        <target>Nelze odstranit cestu, která je součástí trasy nebo obdobné relace</target>
+        <target>Nelze odstranit linii, která je součástí trasy nebo obdobné relace</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't extend way" xml:space="preserve">
         <source>Can't extend way</source>
-        <target>Cestu nelze prodloužit</target>
+        <target>Linii nelze prodloužit</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction 'via' node" xml:space="preserve">
@@ -382,7 +386,7 @@
       </trans-unit>
       <trans-unit id="Cannot connect an inner way to an outer way" xml:space="preserve">
         <source>Cannot connect an inner way to an outer way</source>
-        <target>Vnitřní a vnější cestu nelze spojit</target>
+        <target>Vnitřní a vnější linie nelze spojit</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Changeset" xml:space="preserve">
@@ -442,7 +446,7 @@
       </trans-unit>
       <trans-unit id="Copy Tags" xml:space="preserve">
         <source>Copy Tags</source>
-        <target>Kopírovat tagy</target>
+        <target>Kopírovat značky</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Could not duplicate object" xml:space="preserve">
@@ -575,7 +579,7 @@ Chyba: %@</target>
       </trans-unit>
       <trans-unit id="Error connecting to way" xml:space="preserve">
         <source>Error connecting to way</source>
-        <target>Chyba připojení k cestě</target>
+        <target>Chyba připojení k linii</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Error fetching metadata: %@" xml:space="preserve">
@@ -645,7 +649,7 @@ Chyba: %@</target>
       </trans-unit>
       <trans-unit id="Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." xml:space="preserve">
         <source>Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English.</source>
-        <target>Výběr jazyka ovlivňuje pouze předvolby a to jen ty, které jsou lokalizované pro editor iD. Rozhraní bude stále v angličtině.</target>
+        <target>Výběr jazyka ovlivňuje rozhraní aplikace a předvolby, které jsou lokalizované pro editor iD.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Last updated %@" xml:space="preserve">
@@ -710,7 +714,7 @@ Chyba: %@</target>
       </trans-unit>
       <trans-unit id="Maximum way length is 2000 nodes" xml:space="preserve">
         <source>Maximum way length is 2000 nodes</source>
-        <target>Maximální délka cesty je 2 000 bodů</target>
+        <target>Maximální délka linie je 2 000 bodů</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Maybe later..." xml:space="preserve">
@@ -720,6 +724,7 @@ Chyba: %@</target>
       </trans-unit>
       <trans-unit id="Measure Direction" xml:space="preserve">
         <source>Measure Direction</source>
+        <target>Změřit vzdálenost</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Member of multipolygon relation" xml:space="preserve">
@@ -734,12 +739,12 @@ Chyba: %@</target>
       </trans-unit>
       <trans-unit id="Merge Tags" xml:space="preserve">
         <source>Merge Tags</source>
-        <target>Sloučit tagy</target>
+        <target>Sloučit značky</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Missing way to connect to" xml:space="preserve">
         <source>Missing way to connect to</source>
-        <target>Chybí cesta pro spojení</target>
+        <target>Chybí linie pro spojení</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Modified" xml:space="preserve">
@@ -763,7 +768,7 @@ Chyba: %@</target>
         <source>Modifying the raw XML data allows you to correct errors that prevent uploading.
 
 It is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format.</source>
-        <target>Úprava surových XML dát umožňuje opravit chyby bránící nahrání změn.
+        <target>Úprava surových XML dat umožňuje opravit chyby bránící nahrání změn.
 
 Jedná se o pokročilou funkci, kterou byste měli použít jen pokud skutečně dobře rozumíte formátu OSM sady změn.</target>
         <note>No comment provided by engineer.</note>
@@ -851,7 +856,7 @@ Jedná se o pokročilou funkci, kterou byste měli použít jen pokud skutečně
       </trans-unit>
       <trans-unit id="No tags to paste" xml:space="preserve">
         <source>No tags to paste</source>
-        <target>Žádné tagy pro vložení</target>
+        <target>Žádné značky pro vložení</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node" xml:space="preserve">
@@ -866,17 +871,17 @@ Jedná se o pokročilou funkci, kterou byste měli použít jen pokud skutečně
       </trans-unit>
       <trans-unit id="Node Tags" xml:space="preserve">
         <source>Node Tags</source>
-        <target>Tagy bodu</target>
+        <target>Značky bodu</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node is not an element of way" xml:space="preserve">
         <source>Node is not an element of way</source>
-        <target>Bod není součástí cesty</target>
+        <target>Bod není součástí linie</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node must be the first or last node of the way" xml:space="preserve">
         <source>Node must be the first or last node of the way</source>
-        <target>Bod musí být prvním, či posledním bodem cesty</target>
+        <target>Bod musí být prvním, či posledním bodem linie</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Not found" xml:space="preserve">
@@ -935,7 +940,7 @@ Jedná se o pokročilou funkci, kterou byste měli použít jen pokud skutečně
       </trans-unit>
       <trans-unit id="Only ways/multipolygons can be rotated" xml:space="preserve">
         <source>Only ways/multipolygons can be rotated</source>
-        <target>Otáčeny mohou být pouze cesty a multipolygony</target>
+        <target>Otáčeny mohou být pouze linie a multipolygony</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Open Settings" xml:space="preserve">
@@ -1005,7 +1010,7 @@ Jedná se o pokročilou funkci, kterou byste měli použít jen pokud skutečně
       </trans-unit>
       <trans-unit id="Relation Tags" xml:space="preserve">
         <source>Relation Tags</source>
-        <target>Tagy relace</target>
+        <target>Značky relace</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation: %@" xml:space="preserve">
@@ -1020,17 +1025,17 @@ Jedná se o pokročilou funkci, kterou byste měli použít jen pokud skutečně
       </trans-unit>
       <trans-unit id="Replace Tags" xml:space="preserve">
         <source>Replace Tags</source>
-        <target>Nahradit tagy</target>
+        <target>Nahradit značky</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Requires a closed way with at least 3 nodes" xml:space="preserve">
         <source>Requires a closed way with at least 3 nodes</source>
-        <target>Vyžaduje uzavřenou cestu s alespoň 3 body</target>
+        <target>Vyžaduje uzavřenou linii s alespoň 3 body</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Requires a closed way with at least 4 nodes" xml:space="preserve">
         <source>Requires a closed way with at least 4 nodes</source>
-        <target>Vyžaduje uzavřenou cestu s alespoň 4 body</target>
+        <target>Vyžaduje uzavřenou linii s alespoň 4 body</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Restrict" xml:space="preserve">
@@ -1050,6 +1055,7 @@ Jedná se o pokročilou funkci, kterou byste měli použít jen pokud skutečně
       </trans-unit>
       <trans-unit id="Retry" xml:space="preserve">
         <source>Retry</source>
+        <target>Opakovat</target>
         <note>retry opening hours recognition</note>
       </trans-unit>
       <trans-unit id="Reverse" xml:space="preserve">
@@ -1094,7 +1100,7 @@ Jedná se o pokročilou funkci, kterou byste měli použít jen pokud skutečně
       </trans-unit>
       <trans-unit id="Set Height Tag" xml:space="preserve">
         <source>Set Height Tag</source>
-        <target>Nastavit tag výšky</target>
+        <target>Nastavit značku výšky</target>
         <note>The height=* tag</note>
       </trans-unit>
       <trans-unit id="Settings" xml:space="preserve">
@@ -1150,7 +1156,7 @@ Jedná se o pokročilou funkci, kterou byste měli použít jen pokud skutečně
       </trans-unit>
       <trans-unit id="Tags" xml:space="preserve">
         <source>Tags</source>
-        <target>Tagy</target>
+        <target>Značky</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
@@ -1170,7 +1176,7 @@ Jedná se o pokročilou funkci, kterou byste měli použít jen pokud skutečně
       </trans-unit>
       <trans-unit id="The merged nodes contain conflicting tags" xml:space="preserve">
         <source>The merged nodes contain conflicting tags</source>
-        <target>Sloučené body obsahují konfliktní tagy</target>
+        <target>Sloučené body obsahují konfliktní značky</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The nodes have conflicting roles in parent relations" xml:space="preserve">
@@ -1180,7 +1186,7 @@ Jedná se o pokročilou funkci, kterou byste měli použít jen pokud skutečně
       </trans-unit>
       <trans-unit id="The object does not contain any tags" xml:space="preserve">
         <source>The object does not contain any tags</source>
-        <target>Objekt neobsahuje žádné tagy</target>
+        <target>Objekt neobsahuje žádné značky</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The restriction cannot be deleted" xml:space="preserve">
@@ -1190,12 +1196,12 @@ Jedná se o pokročilou funkci, kterou byste měli použít jen pokud skutečně
       </trans-unit>
       <trans-unit id="The selected way must be completely visible" xml:space="preserve">
         <source>The selected way must be completely visible</source>
-        <target>Vybraná cesta musí být zcela viditelná</target>
+        <target>Vybraná linie musí být zcela viditelná</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The target way is ambiguous" xml:space="preserve">
         <source>The target way is ambiguous</source>
-        <target>Cílová cesta je nejednoznačná</target>
+        <target>Cílová linie je nejednoznačná</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The turn contains an unrecognized turn restriction style. Proceeding will destroy it." xml:space="preserve">
@@ -1205,22 +1211,22 @@ Jedná se o pokročilou funkci, kterou byste měli použít jen pokud skutečně
       </trans-unit>
       <trans-unit id="The way belongs to a relation that is not fully downloaded" xml:space="preserve">
         <source>The way belongs to a relation that is not fully downloaded</source>
-        <target>Cesta patří do relace, která není zcela stažena</target>
+        <target>Linie patří do relace, která není zcela stažena</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way is not sufficiently straight" xml:space="preserve">
         <source>The way is not sufficiently straight</source>
-        <target>Cesta není dostatečně rovná</target>
+        <target>Linie není dostatečně rovná</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way must have at least 2 nodes" xml:space="preserve">
         <source>The way must have at least 2 nodes</source>
-        <target>Cesta musí mít alespoň 2 body</target>
+        <target>Linie musí mít alespoň 2 body</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The ways contain incompatible tags" xml:space="preserve">
         <source>The ways contain incompatible tags</source>
-        <target>Cesta obsahuje nekompatibilní tagy</target>
+        <target>Linie obsahují nekompatibilní značky</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="This action requires GPS to be turned on" xml:space="preserve">
@@ -1235,11 +1241,12 @@ Jedná se o pokročilou funkci, kterou byste měli použít jen pokud skutečně
       </trans-unit>
       <trans-unit id="This device is not able to provide heading data." xml:space="preserve">
         <source>This device is not able to provide heading data.</source>
+        <target>Toto zařízení neumožňuje určovat směr.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
         <source>To add another member to the relation 'long press' on the way to be added</source>
-        <target>Pro přidání dalšího člena do relace dlouze přidržte cestu, kterou chcete přidat</target>
+        <target>Pro přidání dalšího člena do relace dlouze přidržte linii, kterou chcete přidat</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel ALLOWED from %@ to %@" xml:space="preserve">
@@ -1323,6 +1330,7 @@ Vyberte cestu, kterou přijíždíte do křížení a poté klepněte na šipku 
       </trans-unit>
       <trans-unit id="Update '%@' tag" xml:space="preserve">
         <source>Update '%@' tag</source>
+        <target>Aktualizovat značku „%@“</target>
         <note>Update the named tag value (e.g. foo=*)</note>
       </trans-unit>
       <trans-unit id="Updating Note..." xml:space="preserve">
@@ -1372,12 +1380,12 @@ Vyberte cestu, kterou přijíždíte do křížení a poté klepněte na šipku 
       </trans-unit>
       <trans-unit id="Way Attributes" xml:space="preserve">
         <source>Way Attributes</source>
-        <target>Atributy cesty</target>
+        <target>Atributy linie</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Way Tags" xml:space="preserve">
         <source>Way Tags</source>
-        <target>Tagy cesty</target>
+        <target>Značky linie</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.&#10;&#10;To continue press Commit once again, otherwise press Cancel." xml:space="preserve">
@@ -1441,7 +1449,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="add node to way" xml:space="preserve">
         <source>add node to way</source>
-        <target>přidat bod do cesty</target>
+        <target>přidat bod do linie</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="add object to relation" xml:space="preserve">
@@ -1476,7 +1484,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="create way" xml:space="preserve">
         <source>create way</source>
-        <target>vytvořit cestu</target>
+        <target>vytvořit linii</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete multipolygon" xml:space="preserve">
@@ -1491,7 +1499,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="delete node from way" xml:space="preserve">
         <source>delete node from way</source>
-        <target>smazat bod z cesty</target>
+        <target>smazat bod z linie</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete object from relation" xml:space="preserve">
@@ -1516,7 +1524,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="delete way" xml:space="preserve">
         <source>delete way</source>
-        <target>smazat cestu</target>
+        <target>smazat linii</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="duplicate" xml:space="preserve">
@@ -1541,7 +1549,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="node %@ (in way)" xml:space="preserve">
         <source>node %@ (in way)</source>
-        <target>bod %@ (v cestě)</target>
+        <target>bod %@ (v linii)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="other object" xml:space="preserve">
@@ -1556,7 +1564,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="set tags" xml:space="preserve">
         <source>set tags</source>
-        <target>nastavit tagy</target>
+        <target>nastavit značky</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="update relation members" xml:space="preserve">
@@ -1576,7 +1584,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="way %@" xml:space="preserve">
         <source>way %@</source>
-        <target>cesta %@</target>
+        <target>linie %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>
@@ -2075,6 +2083,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
     <body>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
         <source>Get Directions</source>
+        <target>Získat směr</target>
         <note>Class = "UILabel"; text = "Get Directions"; ObjectID = "1xx-L0-hKm";</note>
       </trans-unit>
       <trans-unit id="2.title" xml:space="preserve">
@@ -2161,6 +2170,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="TcP-6i-B8H.text" xml:space="preserve">
         <source>Specify a name ("New York"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object ("way 51014987"):</source>
+        <target>Zadejte název („New York“), URL adresu nebo jiný text obsahující zeměpisné souřadnice, nebo referenci OSM objektu („way 51014987“):</target>
         <note>Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H";</note>
       </trans-unit>
       <trans-unit id="ach-1A-88x.text" xml:space="preserve">
@@ -2212,7 +2222,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="zrW-uc-hfQ.segmentTitles[0]" xml:space="preserve">
         <source>Tags</source>
-        <target>Tagy</target>
+        <target>Značky</target>
         <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[0] = "Tags"; ObjectID = "zrW-uc-hfQ";</note>
       </trans-unit>
       <trans-unit id="zrW-uc-hfQ.segmentTitles[1]" xml:space="preserve">
@@ -2274,7 +2284,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="19J-sp-UTX.title" xml:space="preserve">
         <source>All Tags</source>
-        <target>Všechny tagy</target>
+        <target>Všechny značky</target>
         <note>Class = "UITabBarItem"; title = "All Tags"; ObjectID = "19J-sp-UTX";</note>
       </trans-unit>
       <trans-unit id="436-kv-L7j.placeholder" xml:space="preserve">
@@ -2323,7 +2333,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="G5R-oP-lp3.title" xml:space="preserve">
         <source>Custom Tags</source>
-        <target>Vlastní tagy</target>
+        <target>Vlastní značky</target>
         <note>Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3";</note>
       </trans-unit>
       <trans-unit id="GIO-W7-q5U.title" xml:space="preserve">
@@ -2427,7 +2437,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="cN9-3h-H3l.title" xml:space="preserve">
         <source>All Tags</source>
-        <target>Všechny tagy</target>
+        <target>Všechny značky</target>
         <note>Class = "UINavigationItem"; title = "All Tags"; ObjectID = "cN9-3h-H3l";</note>
       </trans-unit>
       <trans-unit id="cP3-lR-lzM.placeholder" xml:space="preserve">
@@ -2501,7 +2511,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="lPv-s6-uEz.title" xml:space="preserve">
         <source>Common Tags</source>
-        <target>Běžné tagy</target>
+        <target>Běžné značky</target>
         <note>Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz";</note>
       </trans-unit>
       <trans-unit id="li7-oV-pgT.text" xml:space="preserve">
@@ -2511,7 +2521,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="mAb-DX-pqb.title" xml:space="preserve">
         <source>Common tags</source>
-        <target>Běžné tagy</target>
+        <target>Běžné značky</target>
         <note>Class = "UINavigationItem"; title = "Common tags"; ObjectID = "mAb-DX-pqb";</note>
       </trans-unit>
       <trans-unit id="mcN-gM-s7u.text" xml:space="preserve">
@@ -2651,7 +2661,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="7cc-E7-pzw.text" xml:space="preserve">
         <source>Name</source>
-        <target>Název</target>
+        <target>Jméno</target>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "7cc-E7-pzw";</note>
       </trans-unit>
       <trans-unit id="34N-Ep-rpf.text" xml:space="preserve">
@@ -2724,7 +2734,7 @@ https://glyphish.com
       </trans-unit>
       <trans-unit id="CHj-a3-gC9.text" xml:space="preserve">
         <source>Weblate - Translations</source>
-        <target>Weblate – překlady</target>
+        <target>Weblate – Překlady</target>
         <note>Class = "UILabel"; text = "Weblate - Translations"; ObjectID = "CHj-a3-gC9";</note>
       </trans-unit>
       <trans-unit id="DY5-Ls-XZ1.normalTitle" xml:space="preserve">
