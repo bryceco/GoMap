@@ -390,7 +390,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 				fetchTile(
 					forTileX: tileX,
 					tileY: tileY,
-					minZoom: max(zoomLevel - 2, 1),
+					minZoom: max(zoomLevel - 6, 1),
 					zoomLevel: zoomLevel,
 					completion: { [self] error in
 						if let error = error {
