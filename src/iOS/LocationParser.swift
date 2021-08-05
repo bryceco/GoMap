@@ -26,37 +26,52 @@ class LocationParser {
 		let comma = CharacterSet(charactersIn: ",°/")
 		scanner.charactersToBeSkipped = CharacterSet.whitespaces
 
-		while !scanner.isAtEnd {
+		var candidates = [(sLon:String, lon:Double,
+						   sLat:String, lat:Double)]()
+
+		while true {
 			scanner.scanUpToCharacters(from: digits, into: nil)
+			if scanner.isAtEnd {
+				break
+			}
 			let pos = scanner.scanLocation
 			var sLat: NSString?
 			var sLon: NSString?
 			if scanner.scanCharacters(from: floats, into: &sLat),
 			   let sLat = sLat,
-			   sLat.contains("."),
 			   let lat = Double(sLat as String),
 			   lat > -90,
 			   lat < 90,
 			   scanner.scanCharacters(from: comma, into: nil),
 			   scanner.scanCharacters(from: floats, into: &sLon),
 			   let sLon = sLon,
-			   sLon.contains("."),
 			   let lon = Double(sLon as String),
 			   lon >= -180,
 			   lon <= 180
 			{
-				return MapLocation(longitude: lon,
-				                   latitude: lat,
-				                   zoom: 0.0,
-				                   viewState: nil)
+				candidates.append((sLon as String, lon, sLat as String, lat))
 			}
-			if scanner.scanLocation == pos,
-			   !scanner.isAtEnd
-			{
+			if scanner.scanLocation == pos {
 				scanner.scanLocation = pos + 1
+			} else {
+				scanner.scanLocation = pos
+				scanner.scanCharacters(from: floats, into: nil)
 			}
 		}
-		return nil
+		if candidates.isEmpty {
+			return nil
+		}
+		if candidates.count > 1 {
+			// remove any that lack decimal points
+			let best = candidates.filter({ $0.sLon.contains(".") && $0.sLat.contains(".") })
+			if !best.isEmpty {
+				candidates = best
+			}
+		}
+		return MapLocation(longitude: candidates.first!.lon,
+						   latitude: candidates.first!.lat,
+						   zoom: 0.0,
+						   viewState: nil)
 	}
 
 	/// Attempts to parse the given URL.
