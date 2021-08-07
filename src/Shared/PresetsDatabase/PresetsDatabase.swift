@@ -126,7 +126,11 @@ final class PresetsDatabase {
 					{
 						geometry = GEOMETRY(rawValue: geom[0])!
 					}
-					_ = self.groupForField(fieldName: field, geometry: geometry, ignore: nil, update: nil)
+					_ = self.groupForField(fieldName: field,
+										   objectTags: [:],
+										   geometry: geometry,
+										   ignore: [],
+										   update: nil)
 				}
 #endif
 			}

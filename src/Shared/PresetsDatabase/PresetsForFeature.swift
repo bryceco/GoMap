@@ -67,6 +67,7 @@ final class PresetsForFeature {
 
 	func addPresetsForFields(
 		inFeatureID featureID: String,
+		objectTags: [String: String],
 		geometry: GEOMETRY,
 		field fieldGetter: @escaping (_ feature: PresetFeature) -> [String]?,
 		ignore: [String],
@@ -83,6 +84,7 @@ final class PresetsForFeature {
 
 			guard let group = PresetsDatabase.shared.groupForField(
 				fieldName: field,
+				objectTags: objectTags,
 				geometry: geometry,
 				ignore: ignore,
 				update: update)
@@ -161,6 +163,7 @@ final class PresetsForFeature {
 		let ignoreTags = Array(feature.tags.keys)
 		addPresetsForFields(
 			inFeatureID: feature.featureID,
+			objectTags: objectTags,
 			geometry: geometry,
 			field: { f in f.fields },
 			ignore: ignoreTags,
@@ -171,6 +174,7 @@ final class PresetsForFeature {
 			                    tags: [PresetKeyOrGroup]())) // Create a break between the common items and the rare items
 		addPresetsForFields(
 			inFeatureID: feature.featureID,
+			objectTags: objectTags,
 			geometry: geometry,
 			field: { f in f.moreFields },
 			ignore: ignoreTags,

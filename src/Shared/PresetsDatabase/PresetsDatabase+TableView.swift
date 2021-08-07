@@ -402,8 +402,9 @@ extension PresetsDatabase {
 	}
 
 	func groupForField(fieldName: String,
+					   objectTags: [String: String],
 	                   geometry: GEOMETRY,
-	                   ignore: [String]?,
+	                   ignore: [String],
 	                   update: (() -> Void)?) -> PresetGroup?
 	{
 		guard let dict = jsonFields[fieldName] as? [String: Any] else { return nil }
@@ -417,9 +418,25 @@ extension PresetsDatabase {
 			}
 		}
 
-		if let _ = dict["prerequisiteTag"] as? [String: String] {
-			// supporting this would require us to dynamically add/remove fields as tags are set
-			// print("preset \(fieldName) doesn't honor prerequisiteTag")
+		if let prerequisiteTag = dict["prerequisiteTag"] as? [String: String] {
+			if let key = prerequisiteTag["key"] {
+				guard let v = objectTags[key] else { return nil }
+				if let value = prerequisiteTag["value"] {
+					if v != value {
+						return nil
+					}
+				} else if let valueNot = prerequisiteTag["valueNot"] {
+					if v == valueNot {
+						return nil
+					}
+				}
+			} else if let keyNot = prerequisiteTag["keyNot"] {
+				if objectTags[keyNot] != nil {
+					return nil
+				}
+			} else {
+				print("bad")
+			}
 		}
 
 		let type = dict["type"] as! String
@@ -499,7 +516,7 @@ extension PresetsDatabase {
 		case "combo", "semiCombo", "networkCombo", "typeCombo":
 
 			let key = dict["key"] as! String
-			if type == "typeCombo", ignore?.contains(key) ?? false {
+			if type == "typeCombo", ignore.contains(key) {
 				return nil
 			}
 			let options = dict["options"] as? [String] ?? taginfoFor(key: key, searchKeys: false, update: update)
