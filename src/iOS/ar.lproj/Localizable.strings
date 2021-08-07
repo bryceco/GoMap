@@ -8,7 +8,7 @@
 " (%d members)\n" = " (%d الأعضاء)\n";
 
 /* No comment provided by engineer. */
-" (%d nodes)\n" = " (%d عقدة/عقد)\n";
+" (%d nodes)\n" = " (%d عقدة)\n";
 
 /* No comment provided by engineer. */
 " (node)" = " (عقدة)";
@@ -195,10 +195,10 @@
 "Clear GPX Tracks" = "مسح مسارات GPX";
 
 /* Delete cached data */
-"Clear Locator Overlay Tiles" = "مسح الصور المتجانبة لطبقة محدد المواقع";
+"Clear Locator Overlay Tiles" = "مسح صور طبقة محدد المواقع";
 
 /* Delete cached data */
-"Clear Mapnik Tiles" = "مسح الصور المتجانبة لطبقة مابنيك Mapnik";
+"Clear Mapnik Tiles" = "مسح ذاكرة طبقة Mapnik";
 
 /* Delete cached data */
 "Clear OSM Data" = "مسح بيانات خريطة الشارع المفتوحة";
@@ -228,7 +228,7 @@
 "Create\n" = "إنشاء\n";
 
 /* No comment provided by engineer. */
-"create node" = "إنشاء عقدة/نقطة";
+"create node" = "إنشاء عقدة";
 
 /* No comment provided by engineer. */
 "create relation" = "إنشاء علاقة";
@@ -349,9 +349,6 @@
 
 /* No comment provided by engineer. */
 "GPX Upload Failed" = "فشل رفع ملف GPX";
-
-/* Height of an object with an error value */
-"Height: %@ ± %@ meters" = "الارتفاع: %1$@ ± %2$@ متر/أمتار";
 
 /* rate the app now */
 "I'll do it!" = "أنا سأفعل ذلك!";
@@ -502,7 +499,7 @@
 "No U-Turn restriction" = "لا يوجد تقييد انعطاف على الدواران (اليوتيرن)";
 
 /* No comment provided by engineer. */
-"Node" = "عقدة (نقطة)";
+"Node" = "عقدة";
 
 /* No comment provided by engineer. */
 "node %@" = "العقدة %@";
@@ -768,6 +765,9 @@
 
 /* No comment provided by engineer. */
 "Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.\n\nSelect the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route." = "تحدد قيود الانعطاف الطرق التي يمكنك الانعطاف إليها عند دخول تقاطع من اتجاه معين.\n\nحدد الطريق الذي يقترب لتقاطع أو مفترق طرق، ثم اضغط على السهم للتحديد ما إذا ما كانت طريق الوجهة طريقًا مسموحًا به.";
+
+/* The 'Type' header in Common Tags */
+"Type" = "النوع";
 
 /* No comment provided by engineer. */
 "U-Turn from %@ allowed" = "الدواران (الوتيرن) يسمح به من %@";

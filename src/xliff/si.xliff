@@ -401,8 +401,8 @@
 </source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Delete (name)?" xml:space="preserve">
-        <source>Delete (name)?</source>
+      <trans-unit id="Delete %@?" xml:space="preserve">
+        <source>Delete %@?</source>
         <note>Confirm deleting a node/way</note>
       </trans-unit>
       <trans-unit id="Delete completely" xml:space="preserve">
@@ -425,8 +425,8 @@
         <source>Display options</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Distance: (distanceString(forFloat: dist)) ± (distanceString(forFloat: distError)) meters" xml:space="preserve">
-        <source>Distance: (distanceString(forFloat: dist)) ± (distanceString(forFloat: distError)) meters</source>
+      <trans-unit id="Distance: %1$@ ± %2$@ meters" xml:space="preserve">
+        <source>Distance: %1$@ ± %2$@ meters</source>
         <note>Distance to an object with an error value</note>
       </trans-unit>
       <trans-unit id="Done" xml:space="preserve">
@@ -499,7 +499,7 @@ Error: %@</source>
         <source>GPX Upload Failed</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Height: %@ ± %@ meters" xml:space="preserve">
+      <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Height: %1$@ ± %2$@ meters</source>
         <note>Height of an object with an error value</note>
       </trans-unit>

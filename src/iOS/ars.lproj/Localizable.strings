@@ -350,9 +350,6 @@
 /* No comment provided by engineer. */
 "GPX Upload Failed" = "فشل رفع ملف GPX";
 
-/* Height of an object with an error value */
-"Height: %@ ± %@ meters" = "الارتفاع: %1$@ ± %2$@ متر/أمتار";
-
 /* rate the app now */
 "I'll do it!" = "أنا سأفعل ذلك!";
 

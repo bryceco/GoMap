@@ -311,9 +311,6 @@
 /* No comment provided by engineer. */
 "GPX Upload Failed" = "Klarte ikke å laste opp GPX-fil";
 
-/* Height of an object with an error value */
-"Height: %@ ± %@ meters" = "Høyde: %1$@ ± %2$@ meter";
-
 /* rate the app now */
 "I'll do it!" = "På saken!";
 

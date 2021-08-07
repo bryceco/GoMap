@@ -1,6 +1,6 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
-  <file original="Direction/Base.lproj/DirectionViewController.xib" datatype="plaintext" source-language="en" target-language="ja">
+  <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="ja" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
@@ -493,9 +493,8 @@
 </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Delete (name)?" xml:space="preserve">
-        <source>Delete (name)?</source>
-        <target>削除しますか (name)?</target>
+      <trans-unit id="Delete %@?" xml:space="preserve">
+        <source>Delete %@?</source>
         <note>Confirm deleting a node/way</note>
       </trans-unit>
       <trans-unit id="Delete completely" xml:space="preserve">
@@ -523,9 +522,8 @@
         <target>オプションを表示</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Distance: (distanceString(forFloat: dist)) ± (distanceString(forFloat: distError)) meters" xml:space="preserve">
-        <source>Distance: (distanceString(forFloat: dist)) ± (distanceString(forFloat: distError)) meters</source>
-        <target>距離: (distanceString(forFloat: dist)) ± (distanceString(forFloat: distError)) メートル</target>
+      <trans-unit id="Distance: %1$@ ± %2$@ meters" xml:space="preserve">
+        <source>Distance: %1$@ ± %2$@ meters</source>
         <note>Distance to an object with an error value</note>
       </trans-unit>
       <trans-unit id="Done" xml:space="preserve">
@@ -617,9 +615,8 @@ Error: %@</source>
         <target>GPXアップロード失敗</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Height: %@ ± %@ meters" xml:space="preserve">
+      <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Height: %1$@ ± %2$@ meters</source>
-        <target>高さ: %1$@ ± %2$@ メートル</target>
         <note>Height of an object with an error value</note>
       </trans-unit>
       <trans-unit id="I'll do it!" xml:space="preserve">
@@ -1626,7 +1623,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
     </body>
   </file>
-  <file original="PhotoShare/Base.lproj/MainInterface.storyboard" datatype="plaintext" source-language="en" target-language="ja">
+  <file original="PhotoShare/Base.lproj/MainInterface.storyboard" source-language="en" target-language="ja" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
@@ -1663,7 +1660,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
     </body>
   </file>
-  <file original="PhotoShare/en.lproj/Localizable.strings" datatype="plaintext" source-language="en" target-language="ja">
+  <file original="PhotoShare/en.lproj/Localizable.strings" source-language="en" target-language="ja" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>

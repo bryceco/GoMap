@@ -353,9 +353,6 @@
 /* No comment provided by engineer. */
 "GPX Upload Failed" = "Prijenos na GPX neuspio";
 
-/* Height of an object with an error value */
-"Height: %@ ± %@ meters" = "Visina: %1$@ ± %2$@ m";
-
 /* rate the app now */
 "I'll do it!" = "Ja ću to obaviti!";
 

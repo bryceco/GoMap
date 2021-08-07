@@ -113,7 +113,7 @@
 "LaB-Et-hHT.text" = "Podrobnosti";
 
 /* Class = "UINavigationItem"; title = "Prepare for Offline"; ObjectID = "m7D-wn-3MP"; */
-"m7D-wn-3MP.title" = "Příprava pro offline práci";
+"m7D-wn-3MP.title" = "Příprava na offline práci";
 
 /* Class = "UITableViewSection"; headerTitle = "Become a Tester"; ObjectID = "m7u-CH-jgg"; */
 "m7u-CH-jgg.headerTitle" = "Staňte se testerem";

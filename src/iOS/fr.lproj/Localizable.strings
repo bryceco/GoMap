@@ -344,9 +344,6 @@
 /* No comment provided by engineer. */
 "GPX Upload Failed" = "Échec de l'envoi du fichier GPX";
 
-/* Height of an object with an error value */
-"Height: %@ ± %@ meters" = "Hauteur : %1$@ ± %2$@ mètres";
-
 /* rate the app now */
 "I'll do it!" = "Je le ferai !";
 

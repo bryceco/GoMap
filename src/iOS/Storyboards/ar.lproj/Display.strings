@@ -32,7 +32,7 @@
 "8S7-Kw-QHF.normalTitle" = "التفاصيل";
 
 /* Class = "UILabel"; text = "Mapnik only"; ObjectID = "9L3-JO-Whj"; */
-"9L3-JO-Whj.text" = "مابنيك Mapnik فقط";
+"9L3-JO-Whj.text" = "Mapnik فقط";
 
 /* Class = "UINavigationItem"; title = "Display"; ObjectID = "186-0W-Nrr"; */
 "186-0W-Nrr.title" = "العرض";
@@ -59,13 +59,13 @@
 "dIe-MC-t44.text" = "تلقائي";
 
 /* Class = "UILabel"; text = "Collect in background:"; ObjectID = "DmO-dW-3Fh"; */
-"DmO-dW-3Fh.text" = "التجميع في الخلفية:";
+"DmO-dW-3Fh.text" = "سجل في الخلفية:";
 
 /* Class = "UIButton"; normalTitle = "Bing"; ObjectID = "eac-Db-EaW"; */
 "eac-Db-EaW.normalTitle" = "بينج Bing";
 
 /* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eFa-yZ-YZl"; */
-"eFa-yZ-YZl.text" = "الصور الجوية المتجانبة";
+"eFa-yZ-YZl.text" = "الصور الجوية";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F"; */
 "el8-h8-H1F.normalTitle" = "زر";
@@ -80,22 +80,22 @@
 "eN6-SZ-99I.text" = "المحرر فقط";
 
 /* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eTY-48-gab"; */
-"eTY-48-gab.text" = "الصور الجوية المتجانبة";
+"eTY-48-gab.text" = "الصور الجوية";
 
 /* Class = "UILabel"; text = "Details"; ObjectID = "F9l-B0-puf"; */
 "F9l-B0-puf.text" = "التفاصيل";
 
 /* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fFT-hv-mKl"; */
-"fFT-hv-mKl.text" = "الصور الجوية المتجانبة";
+"fFT-hv-mKl.text" = "الصور الجوية";
 
 /* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fHH-rC-iGa"; */
-"fHH-rC-iGa.text" = "الصور الجوية المتجانبة";
+"fHH-rC-iGa.text" = "الصور الجوية";
 
 /* Class = "UILabel"; text = "Details"; ObjectID = "g2G-5j-Y4q"; */
 "g2G-5j-Y4q.text" = "التفاصيل";
 
 /* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "g46-cV-NBw"; */
-"g46-cV-NBw.text" = "الصور الجوية المتجانبة";
+"g46-cV-NBw.text" = "الصور الجوية";
 
 /* Class = "UILabel"; text = "Points"; ObjectID = "gdL-Os-R6R"; */
 "gdL-Os-R6R.text" = "النقاط";
@@ -116,7 +116,7 @@
 "hkr-kO-jbt.text" = "الطرق المرورية";
 
 /* Class = "UILabel"; text = "OpenStreetMap GPS Traces"; ObjectID = "hMJ-yP-XJe"; */
-"hMJ-yP-XJe.text" = "مسارات GPS الخاصة بخريطة الشارع المفتوحة";
+"hMJ-yP-XJe.text" = "مسارات GPS من OSM";
 
 /* Class = "UITextView"; text = "Simon Poole Map Data © OpenStreetMap contributors\n"; ObjectID = "hsp-Xj-TU6"; */
 "hsp-Xj-TU6.text" = "بيانات خريطة سيمون بول © المساهمين في خريطة الشارع المفتوحة\n";
@@ -251,5 +251,5 @@
 "ZP1-qY-kXe.text" = "طرق ليس لها اسم";
 
 /* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT"; */
-"Zzc-4t-QhT.text" = "الصور المتجانبة الجوية";
+"Zzc-4t-QhT.text" = "الصور الجوية";
 

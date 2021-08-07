@@ -197,9 +197,6 @@
 /* Error dialog title */
 "Error" = "Virhe";
 
-/* Height of an object with an error value */
-"Height: %@ ± %@ meters" = "Korkeus: %1$@ ± %2$@ metriä";
-
 /* rate the app now */
 "I'll do it!" = "Teen sen!";
 

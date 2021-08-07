@@ -164,9 +164,6 @@
 /* No comment provided by engineer. */
 "Error fetching metadata: %@" = "Gagal mengambil metadata: %@";
 
-/* Height of an object with an error value */
-"Height: %@ ± %@ meters" = "Tinggi: %1$@ ± %2$@ meter";
-
 /* rate the app now */
 "I'll do it!" = "Akan saya lakukan!";
 
