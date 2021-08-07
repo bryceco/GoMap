@@ -358,9 +358,9 @@ class HeightViewController: UIViewController {
 
 	func distanceString(forFloat num: Double) -> String {
 		if abs(Float(num)) < 10 {
-			return String(format: "%.1f", num)
+			return String.localizedStringWithFormat("%.1f", num)
 		} else {
-			return String(format: "%.0f", num)
+			return String.localizedStringWithFormat("%.0f", num)
 		}
 	}
 
@@ -388,8 +388,10 @@ class HeightViewController: UIViewController {
 		}
 
 		// update distance label
-		let distText = NSLocalizedString("Distance: \(distanceString(forFloat: dist)) ± \(distanceString(forFloat: distError)) meters",
-										 comment: "Distance to an object with an error value")
+		let distText = String.localizedStringWithFormat(NSLocalizedString("Distance: %1$@ ± %2$@ meters",
+		                                                                  comment: "Distance to an object with an error value"),
+		                                                distanceString(forFloat: dist),
+		                                                distanceString(forFloat: distError))
 		UIView.performWithoutAnimation({ [self] in
 			distanceLabel.setTitle(distText, for: .normal)
 			distanceLabel.layoutIfNeeded()
@@ -404,8 +406,8 @@ class HeightViewController: UIViewController {
 			let height = height2 - height1
 			let heightError = height * distError / dist
 			currentHeight = distanceString(forFloat: height)
-			let text = String.localizedStringWithFormat(NSLocalizedString("Height: %@ ± %@ meters",
-																		  comment: "Height of an object with an error value"),
+			let text = String.localizedStringWithFormat(NSLocalizedString("Height: %1$@ ± %2$@ meters",
+			                                                              comment: "Height of an object with an error value"),
 			                                            currentHeight,
 			                                            distanceString(forFloat: heightError))
 			UIView.performWithoutAnimation({ [self] in

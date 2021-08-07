@@ -26,8 +26,8 @@ class LocationParser {
 		let comma = CharacterSet(charactersIn: ",°/")
 		scanner.charactersToBeSkipped = CharacterSet.whitespaces
 
-		var candidates = [(sLon:String, lon:Double,
-						   sLat:String, lat:Double)]()
+		var candidates = [(sLon: String, lon: Double,
+		                   sLat: String, lat: Double)]()
 
 		while true {
 			scanner.scanUpToCharacters(from: digits, into: nil)
@@ -69,9 +69,9 @@ class LocationParser {
 			}
 		}
 		return MapLocation(longitude: candidates.first!.lon,
-						   latitude: candidates.first!.lat,
-						   zoom: 0.0,
-						   viewState: nil)
+		                   latitude: candidates.first!.lat,
+		                   zoom: 0.0,
+		                   viewState: nil)
 	}
 
 	/// Attempts to parse the given URL.
