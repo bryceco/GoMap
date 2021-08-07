@@ -26,7 +26,9 @@ class FeaturePickerCell: UITableViewCell {
 
 private var mostRecentArray: [PresetFeature] = []
 private var mostRecentMaximum: Int = 0
-private var logoCache: PersistentWebCache<UIImage>? // static so memory cache persists each time we appear
+
+// static so memory cache persists each time we appear
+private var logoCache = PersistentWebCache<UIImage>(name: "presetLogoCache", memorySize: 5 * 1000000)
 
 class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate {
 	private var featureList: [PresetFeatureOrCategory] = []
@@ -59,10 +61,6 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		if logoCache == nil {
-			logoCache = PersistentWebCache<UIImage>(name: "presetLogoCache", memorySize: 5 * 1000000)
-		}
 
 		tableView.estimatedRowHeight = 44.0 // or could use UITableViewAutomaticDimension;
 		tableView.rowHeight = UITableView.automaticDimension
@@ -179,20 +177,18 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 			}
 #else
 			feature.nsiLogo = feature.iconUnscaled()
-			let logo = logoCache?.object(withKey: feature.featureID, fallbackURL: {
-				var returnUrl = NSURL()
+			let logo = logoCache.object(withKey: feature.featureID, fallbackURL: {
 #if true
+				// fetch icons from our private server
 				let name: String = feature.featureID.replacingOccurrences(of: "/", with: "_")
 				let url: String = "http://gomaposm.com/brandIcons/" + name
-				if let retURL = URL(string: url) {
-					returnUrl = retURL as NSURL
-				}
+				return URL(string: url)
 #else
-				if let retURL = URL(string: feature?.logoURL) {
-					returnUrl = retURL as NSURL
-				}
+				// Fetch icons from a named public server. There are several downsides:
+				// * some image files are very large (megabytes)
+				// * many images are SVG which we don't support
+				return URL(string: feature.logoURL)
 #endif
-				return returnUrl as URL
 			}, objectForData: { data in
 				if let image = UIImage(data: data) {
 					return EditorMapLayer.ImageScaledToSize(image, 60.0)

@@ -37,6 +37,8 @@ os.system("rm -rf ./brandIcons")
 os.mkdir("./brandIcons")
 os.chdir("./brandIcons")
 
+headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
+
 cnt=0
 for ident,fields in dict.items():
 	if 'imageURL' in fields:
@@ -49,7 +51,7 @@ for ident,fields in dict.items():
 		ident=ident.replace("/","_")
 
 		try:
-			response = requests.get(url, stream=True)
+			response = requests.get(url, headers=headers, stream=True)
 		except:
 			print(cnt,url,"--> *** Error ***")
 			continue
