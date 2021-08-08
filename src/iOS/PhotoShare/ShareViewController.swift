@@ -109,8 +109,20 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 				} else if provider.hasItemConformingToTypeIdentifier("public.url") {
 					found = true
 					provider.loadItem(forTypeIdentifier: "public.url", options: nil) { url, _ in
+
+						// sometimes its a url, other times data containing a url
+						var urlValue: URL? = nil
+						if let url = url as? URL {
+							urlValue = url
+						} else if let data = url as? Data,
+								  let string = String(data: data, encoding: .utf8),
+								  let url = URL(string: string)
+						{
+							urlValue = url
+						}
+
 						// decode as a location URL
-						if let url = url as? URL,
+						if let url = urlValue,
 						   let loc = LocationParser.mapLocationFrom(url: url)
 						{
 							DispatchQueue.main.async {
@@ -123,7 +135,8 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 						}
 
 						// decode as a GPX file
-						if let url = url as? URL {
+						if let url = urlValue {
+							// try downloading the headers for the URL to see if it's "application/gpx+xml"
 							let request = NSMutableURLRequest(url: url)
 							request.httpMethod = "HEAD"
 							let task = URLSession.shared.dataTask(with: url) { _, response, _ in
@@ -132,6 +145,7 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 								   contentType == "application/gpx+xml"
 								{
 									DispatchQueue.main.async {
+										// pass the original url to the app which will download it
 										let url: String = url.absoluteString.data(using: .utf8)!.base64EncodedString()
 										let app = URL(string: "gomaposm://?gpxurl=\(url)")!
 										self.openApp(withUrl: app)
