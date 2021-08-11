@@ -150,7 +150,7 @@
       </trans-unit>
       <trans-unit id="%@ meters" xml:space="preserve">
         <source>%@ meters</source>
-        <target>%@ متر/أمتار</target>
+        <target>%@ متر</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="%ld Days" xml:space="preserve">
@@ -166,7 +166,7 @@
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$ld meters, %2$ld points</source>
-        <target>%1$ld متر/أمتار, %2$ld نقطة/نقاط</target>
+        <target>%1$ld متر, %2$ld نقطة</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld objects" xml:space="preserve">
@@ -494,6 +494,7 @@
       </trans-unit>
       <trans-unit id="Delete %@?" xml:space="preserve">
         <source>Delete %@?</source>
+        <target>حذف %@؟</target>
         <note>Confirm deleting a node/way</note>
       </trans-unit>
       <trans-unit id="Delete completely" xml:space="preserve">
@@ -523,6 +524,7 @@
       </trans-unit>
       <trans-unit id="Distance: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Distance: %1$@ ± %2$@ meters</source>
+        <target>المسافة: %1$@ ± %2$@ متر</target>
         <note>Distance to an object with an error value</note>
       </trans-unit>
       <trans-unit id="Done" xml:space="preserve">
@@ -616,6 +618,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Height: %1$@ ± %2$@ meters</source>
+        <target>الارتفاع: %1$@ ± %2$@ متر</target>
         <note>Height of an object with an error value</note>
       </trans-unit>
       <trans-unit id="I'll do it!" xml:space="preserve">
@@ -1540,7 +1543,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="meters" xml:space="preserve">
         <source>meters</source>
-        <target>متر/أمتار</target>
+        <target>متر</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="move" xml:space="preserve">
