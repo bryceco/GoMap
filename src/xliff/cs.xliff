@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="cs" datatype="plaintext">
     <header>
@@ -495,6 +495,7 @@
       </trans-unit>
       <trans-unit id="Delete %@?" xml:space="preserve">
         <source>Delete %@?</source>
+        <target>Smazat %@?</target>
         <note>Confirm deleting a node/way</note>
       </trans-unit>
       <trans-unit id="Delete completely" xml:space="preserve">
@@ -524,6 +525,7 @@
       </trans-unit>
       <trans-unit id="Distance: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Distance: %1$@ ± %2$@ meters</source>
+        <target>Vzdálenost: %1$@ ± %2$@ metrů</target>
         <note>Distance to an object with an error value</note>
       </trans-unit>
       <trans-unit id="Done" xml:space="preserve">
@@ -617,6 +619,7 @@ Chyba: %@</target>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Height: %1$@ ± %2$@ meters</source>
+        <target>Výška: %1$@ ± %2$@ metrů</target>
         <note>Height of an object with an error value</note>
       </trans-unit>
       <trans-unit id="I'll do it!" xml:space="preserve">
@@ -2487,17 +2490,17 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="X1y-nK-nVJ.placeholder" xml:space="preserve">
         <source>key</source>
-        <target>key</target>
+        <target>klíč</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "X1y-nK-nVJ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="XBV-Ie-LDT.text" xml:space="preserve">
         <source>Food &amp; Drink</source>
-        <target>Food &amp; Drink</target>
+        <target>Jídlo a pití</target>
         <note>Class = "UILabel"; text = "Food &amp; Drink"; ObjectID = "XBV-Ie-LDT"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
         <source>Subtitle</source>
-        <target>Subtitle</target>
+        <target>Podnadpis</target>
         <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "ZYn-TK-k7d"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="aCs-vS-YXj.placeholder" xml:space="preserve">
@@ -2516,7 +2519,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="cP3-lR-lzM.placeholder" xml:space="preserve">
         <source>value</source>
-        <target>value</target>
+        <target>hodnota</target>
         <note>Class = "UITextField"; placeholder = "value"; ObjectID = "cP3-lR-lzM"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="cTf-Rc-vqr.headerTitle" xml:space="preserve">
@@ -2526,7 +2529,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="daQ-tl-pKh.text" xml:space="preserve">
         <source>Label</source>
-        <target>Label</target>
+        <target>Štítek</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="dsA-B6-s7R.text" xml:space="preserve">
@@ -2550,7 +2553,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
         <source>Label</source>
-        <target>Label</target>
+        <target>Štítek</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="hKU-EH-qxp.title" xml:space="preserve">
