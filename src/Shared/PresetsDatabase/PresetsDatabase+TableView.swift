@@ -26,11 +26,11 @@ extension PresetsDatabase {
 	                        matching searchText: String,
 	                        geometry: GEOMETRY) -> [PresetFeature]
 	{
-		var list = [PresetFeature]()
+		var list = [(feature: PresetFeature, score: Int)]()
 		if let category = category {
 			for feature in category.members {
-				if feature.matchesSearchText(searchText, geometry: geometry) {
-					list.append(feature)
+				if let score = feature.matchesSearchText(searchText, geometry: geometry) {
+					list.append((feature, score))
 				}
 			}
 		} else {
@@ -40,24 +40,25 @@ extension PresetsDatabase {
 				geometry: geometry,
 				country: countryCode)
 		}
-		let searchText = searchText.lowercased()
 		list.sort(by: { obj1, obj2 -> Bool in
-			// prefer exact matches of primary name over alternate terms
-			let name1 = obj1.friendlyName()
-			let name2 = obj2.friendlyName()
-			let p1 = name1.lowercased().hasPrefix(searchText)
-			let p2 = name2.lowercased().hasPrefix(searchText)
-			if p1 != p2 {
-				return (p1 ? 1 : 0) > (p2 ? 1 : 0)
+			if obj1.score != obj2.score {
+				// higher score comes first
+				return obj1.score > obj2.score
 			}
-			// sort so that regular items come before suggestions
-			let diff = (obj1.nsiSuggestion ? 1 : 0) - (obj2.nsiSuggestion ? 1 : 0)
+
+			// prefer exact matches of primary name over alternate terms
+			let feature1 = obj1.feature
+			let feature2 = obj2.feature
+			let diff = (feature1.nsiSuggestion ? 1 : 0) - (feature2.nsiSuggestion ? 1 : 0)
 			if diff != 0 {
 				return diff < 0
 			}
+
+			let name1 = feature1.friendlyName()
+			let name2 = feature2.friendlyName()
 			return name1.caseInsensitiveCompare(name2) == .orderedAscending
 		})
-		return list
+		return list.map({ $0.feature })
 	}
 
 	func allTagKeys() -> Set<String> {

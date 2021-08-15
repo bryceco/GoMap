@@ -30,7 +30,7 @@ final class PresetFeature {
 	let searchable: Bool
 	let tags: [String: String]
 	let terms: [String]
-	let aliases: [String]	// an alias is a localizable alternative to 'name'
+	let aliases: [String] // an alias is a localizable alternative to 'name'
 
 	init(withID featureID: String, jsonDict: [String: Any], isNSI: Bool) {
 		self.featureID = featureID
@@ -53,7 +53,7 @@ final class PresetFeature {
 		} else {
 			terms = jsonDict["terms"] as? [String] ?? jsonDict["matchNames"] as? [String] ?? []
 		}
-		aliases = (jsonDict["aliases"] as? String)?.split(separator: "\n").map({ String($0)}) ?? []
+		aliases = (jsonDict["aliases"] as? String)?.split(separator: "\n").map({ String($0) }) ?? []
 
 		nsiSuggestion = isNSI
 	}
@@ -133,30 +133,46 @@ final class PresetFeature {
 		return nil
 	}
 
-	func matchesSearchText(_ searchText: String?, geometry: GEOMETRY) -> Bool {
+	private enum PresetMatchScore: Int {
+		case namePrefix = 10
+		case aliasPrefix = 9
+		case termPrefix = 8
+		case featureIdPrefix = 7
+
+		case nameInternal = 6
+		case aliasInternal = 5
+		case termInternal = 4
+		case featureIdInternal = 3
+	}
+
+	func matchesSearchText(_ searchText: String?, geometry: GEOMETRY) -> Int? {
 		guard let searchText = searchText else {
-			return false
+			return nil
 		}
 		if !self.geometry.contains(geometry.rawValue) {
-			return false
+			return nil
 		}
-		if featureID.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) != nil {
-			return true
-		}
-		if name.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) != nil {
-			return true
+		if let range = name.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) {
+			return (range.lowerBound == name.startIndex
+				? PresetMatchScore.namePrefix : PresetMatchScore.nameInternal).rawValue
 		}
 		for alias in aliases {
-			if alias.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) != nil {
-				return true
+			if let range = alias.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) {
+				return (range.lowerBound == alias.startIndex
+					? PresetMatchScore.aliasPrefix : PresetMatchScore.aliasInternal).rawValue
 			}
 		}
 		for term in terms {
-			if term.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) != nil {
-				return true
+			if let range = term.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) {
+				return (range.lowerBound == term.startIndex
+					? PresetMatchScore.termPrefix : PresetMatchScore.termInternal).rawValue
 			}
 		}
-		return false
+		if let range = featureID.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) {
+			return (range.lowerBound == featureID.startIndex
+				? PresetMatchScore.featureIdPrefix : PresetMatchScore.featureIdInternal).rawValue
+		}
+		return nil
 	}
 
 	func matchObjectTagsScore(_ objectTags: [String: String], geometry: GEOMETRY) -> Double {

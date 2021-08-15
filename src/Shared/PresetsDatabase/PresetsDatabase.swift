@@ -254,8 +254,10 @@ final class PresetsDatabase {
 		return bestFeature
 	}
 
-	func featuresMatchingSearchText(_ searchText: String?, geometry: GEOMETRY, country: String?) -> [PresetFeature] {
-		var list = [PresetFeature]()
+	func featuresMatchingSearchText(_ searchText: String?, geometry: GEOMETRY,
+	                                country: String?) -> [(PresetFeature, Int)]
+	{
+		var list = [(PresetFeature, Int)]()
 		enumeratePresetsAndNsiUsingBlock { feature in
 			if feature.searchable {
 				if let country = country,
@@ -266,8 +268,8 @@ final class PresetsDatabase {
 						return
 					}
 				}
-				if feature.matchesSearchText(searchText, geometry: geometry) {
-					list.append(feature)
+				if let score = feature.matchesSearchText(searchText, geometry: geometry) {
+					list.append((feature, score))
 				}
 			}
 		}

@@ -302,7 +302,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 				parentCategory,
 				matching: searchText,
 				geometry: geometry)
-			searchArrayRecent = mostRecentArray.filter { $0.matchesSearchText(searchText, geometry: geometry) }
+			searchArrayRecent = mostRecentArray.filter { $0.matchesSearchText(searchText, geometry: geometry) != nil }
 		}
 		tableView.reloadData()
 	}
