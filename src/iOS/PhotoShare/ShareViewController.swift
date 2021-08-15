@@ -111,12 +111,12 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 					provider.loadItem(forTypeIdentifier: "public.url", options: nil) { url, _ in
 
 						// sometimes its a url, other times data containing a url
-						var urlValue: URL? = nil
+						var urlValue: URL?
 						if let url = url as? URL {
 							urlValue = url
 						} else if let data = url as? Data,
-								  let string = String(data: data, encoding: .utf8),
-								  let url = URL(string: string)
+						          let string = String(data: data, encoding: .utf8),
+						          let url = URL(string: string)
 						{
 							urlValue = url
 						}
@@ -139,7 +139,7 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 							// try downloading the headers for the URL to see if it's "application/gpx+xml"
 							let request = NSMutableURLRequest(url: url)
 							request.httpMethod = "HEAD"
-							let task = URLSession.shared.dataTask(with: url) { _, response, _ in
+							let task = URLSession.shared.dataTask(with: request as URLRequest) { _, response, _ in
 								if let httpResponse = response as? HTTPURLResponse,
 								   let contentType = httpResponse.allHeaderFields["Content-Type"] as? String,
 								   contentType == "application/gpx+xml"

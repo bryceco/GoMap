@@ -49,6 +49,20 @@ final class GpxPoint: NSObject, NSCoding {
 
 // MARK: Track
 
+enum GpxError: LocalizedError {
+	case noData
+	case fewerThanTwoPoints
+	case badGpxFormat
+
+	public var errorDescription: String? {
+		switch self {
+		case .noData: return "The file is not accessible"
+		case .fewerThanTwoPoints: return "The GPX track must contain at least 2 points"
+		case .badGpxFormat: return "Invalid GPX file format"
+		}
+	}
+}
+
 final class GpxTrack: NSObject, NSCoding {
 	private var recording = false
 	private var distance = 0.0
@@ -183,11 +197,11 @@ final class GpxTrack: NSObject, NSCoding {
 		return data
 	}
 
-	convenience init?(xmlData data: Data) {
+	convenience init(xmlData data: Data) throws {
 		guard data.count > 0,
 		      let doc = try? DDXMLDocument(data: data, options: 0)
 		else {
-			return nil
+			throw GpxError.noData
 		}
 
 		guard let namespace1 = DDXMLElement.namespace(
@@ -199,7 +213,9 @@ final class GpxTrack: NSObject, NSCoding {
 			let namespace3 = DDXMLElement.namespace(
 				withName: "ns3",
 				stringValue: "http://topografix.com/GPX/1/1") as? DDXMLNode // HOT OSM uses this
-		else { return nil }
+		else {
+			throw GpxError.badGpxFormat
+		}
 
 		doc.rootElement()?.addNamespace(namespace1)
 		doc.rootElement()?.addNamespace(namespace2)
@@ -219,8 +235,8 @@ final class GpxTrack: NSObject, NSCoding {
 				break
 			}
 		}
-		if a.count == 0 {
-			return nil
+		if a.count < 2 {
+			throw GpxError.fewerThanTwoPoints
 		}
 
 		var points: [GpxPoint] = []
@@ -231,7 +247,9 @@ final class GpxTrack: NSObject, NSCoding {
 			      let lon = pt.attribute(forName: "lon")?.stringValue,
 			      let lat = Double(lat),
 			      let lon = Double(lon)
-			else { return nil }
+			else {
+				throw GpxError.badGpxFormat
+			}
 
 			let point = GpxPoint()
 			point.latLon = LatLon(latitude: lat, longitude: lon)
@@ -247,7 +265,7 @@ final class GpxTrack: NSObject, NSCoding {
 			points.append(point)
 		}
 		if points.count < 2 {
-			return nil
+			throw GpxError.fewerThanTwoPoints
 		}
 
 		self.init()
@@ -255,12 +273,12 @@ final class GpxTrack: NSObject, NSCoding {
 		creationDate = Date()
 	}
 
-	convenience init?(xmlFile path: String) {
+	convenience init(xmlFile path: String) throws {
 		guard let data = NSData(contentsOfFile: path) as Data?
 		else {
-			return nil
+			throw GpxError.noData
 		}
-		self.init(xmlData: data)
+		try self.init(xmlData: data)
 	}
 
 	func lengthInMeters() -> Double {
@@ -667,10 +685,8 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 	}
 
 	// Load a GPX trace from an external source
-	func loadGPXData(_ data: Data, center: Bool) -> Bool {
-		guard let newTrack = GpxTrack(xmlData: data) else {
-			return false
-		}
+	func loadGPXData(_ data: Data, center: Bool) throws {
+		let newTrack = try GpxTrack(xmlData: data)
 		previousTracks.insert(newTrack, at: 0)
 		if center {
 			self.center(on: newTrack)
@@ -678,7 +694,6 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 			mapView.enableGpxLogging = true // ensure GPX tracks are visible
 		}
 		save(toDisk: newTrack)
-		return true
 	}
 
 	// MARK: Drawing

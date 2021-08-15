@@ -141,10 +141,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		return try Data(contentsOf: url, options: [])
 	}
 
-	func displayGpxError() {
+	func displayGpxError(_ error: Error) {
+		var message = NSLocalizedString("Sorry, an error occurred while loading the GPX file",
+		                                comment: "")
+		message += "\n\n"
+		message += error.localizedDescription
 		mapView.showAlert(NSLocalizedString("Open URL", comment: ""),
-		                  message: NSLocalizedString("Sorry, an error occurred while loading the GPX file",
-		                                             comment: ""))
+		                  message: message)
 	}
 
 	func application(_ application: UIApplication,
@@ -166,9 +169,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			case "gpx":
 				// Load GPX
 				DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [self] in
-					let ok = mapView.gpxLayer.loadGPXData(data, center: true)
-					if !ok {
-						displayGpxError()
+					do {
+						try mapView.gpxLayer.loadGPXData(data, center: true)
+					} catch {
+						displayGpxError(error)
 					}
 				})
 				return true
@@ -200,13 +204,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			{
 				URLSession.shared.data(with: gpxUrl) { result in
 					DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [self] in
-						if case let .success(data) = result {
-							let ok = mapView.gpxLayer.loadGPXData(data, center: true)
-							if !ok {
-								displayGpxError()
+						switch result {
+						case let .success(data):
+							do {
+								try mapView.gpxLayer.loadGPXData(data, center: true)
+							} catch {
+								displayGpxError(error)
 							}
-						} else {
-							displayGpxError()
+						case let .failure(error):
+							displayGpxError(error)
 						}
 					})
 				}
