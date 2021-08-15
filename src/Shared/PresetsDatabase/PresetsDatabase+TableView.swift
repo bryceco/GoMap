@@ -402,7 +402,7 @@ extension PresetsDatabase {
 	}
 
 	func groupForField(fieldName: String,
-					   objectTags: [String: String],
+	                   objectTags: [String: String],
 	                   geometry: GEOMETRY,
 	                   ignore: [String],
 	                   update: (() -> Void)?) -> PresetGroup?
