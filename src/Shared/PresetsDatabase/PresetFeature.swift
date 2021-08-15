@@ -22,14 +22,15 @@ final class PresetFeature {
 	let icon: String? // icon on the map
 	let logoURL: String? // NSI brand image
 	let locationSet: [String: [String]]?
-	let matchScore: Double
+	let matchScore: Float
 	let moreFields: [String]?
-	let name: String?
+	let name: String
 	let reference: [String: String]?
 	let _removeTags: [String: String]?
 	let searchable: Bool
 	let tags: [String: String]
 	let terms: [String]
+	let aliases: [String]	// an alias is a localizable alternative to 'name'
 
 	init(withID featureID: String, jsonDict: [String: Any], isNSI: Bool) {
 		self.featureID = featureID
@@ -40,9 +41,9 @@ final class PresetFeature {
 		icon = jsonDict["icon"] as? String
 		logoURL = jsonDict["imageURL"] as? String
 		locationSet = PresetFeature.convertLocationSet(jsonDict["locationSet"] as? [String: [String]])
-		matchScore = jsonDict["matchScore"] as? Double ?? 1.0
+		matchScore = jsonDict["matchScore"] as? Float ?? 1.0
 		moreFields = jsonDict["moreFields"] as? [String]
-		name = jsonDict["name"] as? String
+		name = jsonDict["name"] as! String
 		reference = jsonDict["reference"] as? [String: String]
 		_removeTags = jsonDict["removeTags"] as? [String: String]
 		searchable = jsonDict["searchable"] as? Bool ?? true
@@ -52,6 +53,7 @@ final class PresetFeature {
 		} else {
 			terms = jsonDict["terms"] as? [String] ?? jsonDict["matchNames"] as? [String] ?? []
 		}
+		aliases = (jsonDict["aliases"] as? String)?.split(separator: "\n").map({ String($0)}) ?? []
 
 		nsiSuggestion = isNSI
 	}
@@ -89,7 +91,7 @@ final class PresetFeature {
 	}
 
 	func friendlyName() -> String {
-		return name ?? featureID
+		return name
 	}
 
 	func summary() -> String? {
@@ -141,8 +143,13 @@ final class PresetFeature {
 		if featureID.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) != nil {
 			return true
 		}
-		if name?.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) != nil {
+		if name.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) != nil {
 			return true
+		}
+		for alias in aliases {
+			if alias.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) != nil {
+				return true
+			}
 		}
 		for term in terms {
 			if term.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) != nil {
@@ -155,7 +162,7 @@ final class PresetFeature {
 	func matchObjectTagsScore(_ objectTags: [String: String], geometry: GEOMETRY) -> Double {
 		guard self.geometry.contains(geometry.rawValue) else { return 0.0 }
 
-		var totalScore = 1.0
+		var totalScore: Float = 1.0
 
 		var seen = Set<String>()
 		for (key, value) in tags {
@@ -194,7 +201,7 @@ final class PresetFeature {
 				}
 			}
 		}
-		return totalScore
+		return Double(totalScore)
 	}
 
 	func defaultValuesForGeometry(_ geometry: GEOMETRY) -> [String: String] {
