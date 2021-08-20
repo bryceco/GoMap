@@ -39,7 +39,7 @@ final class PresetsDatabase {
 			return orig
 		}
 		let orig = orig as! [String: Any]
-		let translation2: [String: Any] = translation as! [String: Any]
+		let translation2 = translation as! [String: Any]
 
 		// both are dictionaries, so recurse on each key/value pair
 		var newDict = [String: Any]()

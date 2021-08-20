@@ -24,7 +24,7 @@ final class PresetFeature {
 	let locationSet: [String: [String]]?
 	let matchScore: Float
 	let moreFields: [String]?
-	let name: String
+	let name: String?
 	let reference: [String: String]?
 	let _removeTags: [String: String]?
 	let searchable: Bool
@@ -43,7 +43,7 @@ final class PresetFeature {
 		locationSet = PresetFeature.convertLocationSet(jsonDict["locationSet"] as? [String: [String]])
 		matchScore = jsonDict["matchScore"] as? Float ?? 1.0
 		moreFields = jsonDict["moreFields"] as? [String]
-		name = jsonDict["name"] as! String
+		name = jsonDict["name"] as? String
 		reference = jsonDict["reference"] as? [String: String]
 		_removeTags = jsonDict["removeTags"] as? [String: String]
 		searchable = jsonDict["searchable"] as? Bool ?? true
@@ -91,7 +91,7 @@ final class PresetFeature {
 	}
 
 	func friendlyName() -> String {
-		return name
+		return name ?? featureID
 	}
 
 	func summary() -> String? {
@@ -152,7 +152,9 @@ final class PresetFeature {
 		if !self.geometry.contains(geometry.rawValue) {
 			return nil
 		}
-		if let range = name.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) {
+		if let name = name,
+		   let range = name.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive])
+		{
 			return (range.lowerBound == name.startIndex
 				? PresetMatchScore.namePrefix : PresetMatchScore.nameInternal).rawValue
 		}
