@@ -39,9 +39,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		NSKeyedUnarchiver.setClass(OsmMapData.classForKeyedArchiver(), forClassName: "OsmMapData")
 
-		NSKeyedUnarchiver
-			.setClass(PresetKeyUserDefined.classForKeyedArchiver(), forClassName: "CustomPreset") // was renamed
+		NSKeyedUnarchiver.setClass(PresetKeyUserDefined.classForKeyedArchiver(), forClassName: "CustomPreset")
 		NSKeyedUnarchiver.setClass(PresetValue.classForKeyedArchiver(), forClassName: "PresetValue")
+		NSKeyedUnarchiver.setClass(PresetKey.classForKeyedArchiver(), forClassName: "CommonTagKey")
+		NSKeyedUnarchiver.setClass(PresetValue.classForKeyedArchiver(), forClassName: "CommonTagValue")
 
 		NSKeyedUnarchiver.setClass(GpxTrack.classForKeyedArchiver(), forClassName: "GpxTrack")
 		NSKeyedUnarchiver.setClass(GpxPoint.classForKeyedArchiver(), forClassName: "GpxPoint")

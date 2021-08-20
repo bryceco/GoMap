@@ -68,8 +68,10 @@ class PresetKeyUserDefinedList {
 			if #available(iOS 11.0, *) {
 				let data = try Data(contentsOf: URL(fileURLWithPath: path))
 				let classList = [NSArray.self,
+								 NSMutableString.self,
 				                 PresetKeyUserDefined.self,
 				                 PresetValue.self]
+
 				list = try NSKeyedUnarchiver
 					.unarchivedObject(ofClasses: classList, from: data) as? [PresetKeyUserDefined] ?? []
 			} else {
@@ -77,7 +79,7 @@ class PresetKeyUserDefinedList {
 				list = oldList as? [PresetKeyUserDefined] ?? []
 			}
 		} catch {
-			print("error loading custom presets: \(error.localizedDescription)")
+			print("error loading custom presets: \(error)")
 			list = []
 		}
 	}
