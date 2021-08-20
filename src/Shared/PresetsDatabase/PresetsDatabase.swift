@@ -144,6 +144,7 @@ final class PresetsDatabase {
 	private class func featureDictForJsonDict(_ dict: [String: [String: Any]], isNSI: Bool) -> [String: PresetFeature] {
 		let presetDict = isNSI ? dict["presets"] as! [String: [String: Any]] : dict
 		var presets = [String: PresetFeature]()
+		presets.reserveCapacity(presetDict.count)
 		for (name, values) in presetDict {
 			presets[name] = PresetFeature(withID: name, jsonDict: values, isNSI: isNSI)
 		}
