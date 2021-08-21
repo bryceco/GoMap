@@ -77,9 +77,13 @@ final class OsmMember: NSObject, NSCoding {
 		guard let ref2 = coder.decodeObject(forKey: "ref")
 		else { fatalError("OsmMember ref is nil") }
 		if let ref2 = ref2 as? NSNumber {
-			ref = ref2.int64Value // normal path
+			// normal path
+			ref = ref2.int64Value
+		} else if let ref2 = ref2 as? OsmBaseObject {
+			// shouldn't happen but seems to when upgrading from old obj-c versions
+			ref = ref2.ident
 		} else {
-			// shouldn't happen, but we see it occasionally in swift beta?
+			// shouldn't happen
 			fatalError("OsmMember ref is not NSNumber: \(Swift.type(of: ref2))")
 		}
 		role = coder.decodeObject(forKey: "role") as? String

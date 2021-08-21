@@ -1930,6 +1930,10 @@ class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 		unarchiver.delegate = self
 		guard let decode = unarchiver.decodeObject(forKey: "OsmMapData") as? OsmMapData else {
 			print("Couldn't decode archive file")
+			if let error = unarchiver.error {
+				print("\(error)")
+				throw error
+			}
 			throw MapDataError.archiveCannotBeDecoded
 		}
 		return decode
