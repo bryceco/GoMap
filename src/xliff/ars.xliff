@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="ars" datatype="plaintext">
     <header>
@@ -109,7 +109,7 @@
       <trans-unit id=" (%d nodes)&#10;" xml:space="preserve">
         <source> (%d nodes)
 </source>
-        <target> (%d عقدة/عقد)
+        <target> (%d عقدة)
 </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
@@ -150,7 +150,7 @@
       </trans-unit>
       <trans-unit id="%@ meters" xml:space="preserve">
         <source>%@ meters</source>
-        <target>%@ متر/أمتار</target>
+        <target>%@ متر</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="%ld Days" xml:space="preserve">
@@ -166,7 +166,7 @@
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$ld meters, %2$ld points</source>
-        <target>%1$ld متر/أمتار, %2$ld نقطة/نقاط</target>
+        <target>%1$ld متر, %2$ld نقطة</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld objects" xml:space="preserve">
@@ -410,12 +410,12 @@
       </trans-unit>
       <trans-unit id="Clear Locator Overlay Tiles" xml:space="preserve">
         <source>Clear Locator Overlay Tiles</source>
-        <target>مسح الصور المتجانبة لطبقة محدد المواقع</target>
+        <target>مسح صور طبقة محدد المواقع</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear Mapnik Tiles" xml:space="preserve">
         <source>Clear Mapnik Tiles</source>
-        <target>مسح الصور المتجانبة لطبقة مابنيك Mapnik</target>
+        <target>مسح ذاكرة طبقة Mapnik</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear OSM Data" xml:space="preserve">
@@ -494,6 +494,7 @@
       </trans-unit>
       <trans-unit id="Delete %@?" xml:space="preserve">
         <source>Delete %@?</source>
+        <target>حذف %@؟</target>
         <note>Confirm deleting a node/way</note>
       </trans-unit>
       <trans-unit id="Delete completely" xml:space="preserve">
@@ -523,6 +524,7 @@
       </trans-unit>
       <trans-unit id="Distance: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Distance: %1$@ ± %2$@ meters</source>
+        <target>المسافة: %1$@ ± %2$@ متر</target>
         <note>Distance to an object with an error value</note>
       </trans-unit>
       <trans-unit id="Done" xml:space="preserve">
@@ -616,6 +618,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Height: %1$@ ± %2$@ meters</source>
+        <target>الارتفاع: %1$@ ± %2$@ متر</target>
         <note>Height of an object with an error value</note>
       </trans-unit>
       <trans-unit id="I'll do it!" xml:space="preserve">
@@ -862,7 +865,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Node" xml:space="preserve">
         <source>Node</source>
-        <target>عقدة (نقطة)</target>
+        <target>عقدة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node Attributes" xml:space="preserve">
@@ -1291,6 +1294,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Type" xml:space="preserve">
         <source>Type</source>
+        <target>النوع</target>
         <note>The 'Type' header in Common Tags</note>
       </trans-unit>
       <trans-unit id="U-Turn from %@ allowed" xml:space="preserve">
@@ -1474,7 +1478,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="create node" xml:space="preserve">
         <source>create node</source>
-        <target>إنشاء عقدة/نقطة</target>
+        <target>إنشاء عقدة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="create relation" xml:space="preserve">
@@ -1539,7 +1543,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="meters" xml:space="preserve">
         <source>meters</source>
-        <target>متر/أمتار</target>
+        <target>متر</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="move" xml:space="preserve">
@@ -1628,14 +1632,17 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
         <source>OK</source>
+        <target>موافق</target>
         <note>Class = "UIButton"; normalTitle = "OK"; ObjectID = "05z-LH-xEK";</note>
       </trans-unit>
       <trans-unit id="Zxw-Em-faC.normalTitle" xml:space="preserve">
         <source>Cancel</source>
+        <target>إلغاء</target>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "Zxw-Em-faC";</note>
       </trans-unit>
       <trans-unit id="cy3-gz-fvk.text" xml:space="preserve">
         <source>Go Map!! will open at the location the photo was taken.</source>
+        <target>سيقوم تطبيق Go Map بفتح الموقع الذي التقطت فيه الصورة.</target>
         <note>Class = "UILabel"; text = "Go Map!! will open at the location the photo was taken."; ObjectID = "cy3-gz-fvk";</note>
       </trans-unit>
     </body>
@@ -1662,14 +1669,17 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="Processing data..." xml:space="preserve">
         <source>Processing data...</source>
+        <target>معالجة البيانات...</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The URL content isn't recognized." xml:space="preserve">
         <source>The URL content isn't recognized.</source>
+        <target>لم يتم التعرف على محتوى رابط URL.</target>
         <note>Error message when sharing a URL to Go Map!!</note>
       </trans-unit>
       <trans-unit id="Unfortunately the selected image does not contain location information." xml:space="preserve">
         <source>Unfortunately the selected image does not contain location information.</source>
+        <target>للأسف الصورة المحددة لا يوجد فيها ما معلومات عن مكان إلتقاطها.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>
@@ -1736,7 +1746,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="9L3-JO-Whj.text" xml:space="preserve">
         <source>Mapnik only</source>
-        <target>مابنيك Mapnik فقط</target>
+        <target>Mapnik فقط</target>
         <note>Class = "UILabel"; text = "Mapnik only"; ObjectID = "9L3-JO-Whj";</note>
       </trans-unit>
       <trans-unit id="186-0W-Nrr.title" xml:space="preserve">
@@ -1746,7 +1756,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="DmO-dW-3Fh.text" xml:space="preserve">
         <source>Collect in background:</source>
-        <target>التجميع في الخلفية:</target>
+        <target>سجل في الخلفية:</target>
         <note>Class = "UILabel"; text = "Collect in background:"; ObjectID = "DmO-dW-3Fh";</note>
       </trans-unit>
       <trans-unit id="EHa-L5-Hcz.text" xml:space="preserve">
@@ -1883,7 +1893,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Zzc-4t-QhT.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target>الصور المتجانبة الجوية</target>
+        <target>الصور الجوية</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.footerTitle" xml:space="preserve">
@@ -1928,12 +1938,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="eFa-yZ-YZl.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target>الصور الجوية المتجانبة</target>
+        <target>الصور الجوية</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eFa-yZ-YZl";</note>
       </trans-unit>
       <trans-unit id="eLW-GB-ugG.text" xml:space="preserve">
         <source>Position + Button on </source>
-        <target>موضع زر + على </target>
+        <target>مكان زر الإضافة + </target>
         <note>Class = "UILabel"; text = "Position + Button on "; ObjectID = "eLW-GB-ugG"; Note = "The location on the screen where the user prefers the + (add node) button to appear";</note>
       </trans-unit>
       <trans-unit id="eN6-SZ-99I.text" xml:space="preserve">
@@ -1943,7 +1953,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="eTY-48-gab.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target>الصور الجوية المتجانبة</target>
+        <target>الصور الجوية</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eTY-48-gab";</note>
       </trans-unit>
       <trans-unit id="eac-Db-EaW.normalTitle" xml:space="preserve">
@@ -1958,12 +1968,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="fFT-hv-mKl.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target>الصور الجوية المتجانبة</target>
+        <target>الصور الجوية</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fFT-hv-mKl";</note>
       </trans-unit>
       <trans-unit id="fHH-rC-iGa.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target>الصور الجوية المتجانبة</target>
+        <target>الصور الجوية</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fHH-rC-iGa";</note>
       </trans-unit>
       <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve">
@@ -1973,7 +1983,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="g46-cV-NBw.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target>الصور الجوية المتجانبة</target>
+        <target>الصور الجوية</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "g46-cV-NBw";</note>
       </trans-unit>
       <trans-unit id="gdL-Os-R6R.text" xml:space="preserve">
@@ -1993,7 +2003,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="hMJ-yP-XJe.text" xml:space="preserve">
         <source>OpenStreetMap GPS Traces</source>
-        <target>مسارات GPS الخاصة بخريطة الشارع المفتوحة</target>
+        <target>مسارات GPS من OSM</target>
         <note>Class = "UILabel"; text = "OpenStreetMap GPS Traces"; ObjectID = "hMJ-yP-XJe";</note>
       </trans-unit>
       <trans-unit id="hkr-kO-jbt.text" xml:space="preserve">
@@ -2669,7 +2679,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
         <source>Mapnik Tiles</source>
-        <target>الصور المتجانبة لمابنيك Mapnik</target>
+        <target>الصور المتجانبة من Mapnik</target>
         <note>Class = "UILabel"; text = "Mapnik Tiles"; ObjectID = "0Hk-5U-2Kg";</note>
       </trans-unit>
       <trans-unit id="1Mo-xe-IbY.headerTitle" xml:space="preserve">

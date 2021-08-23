@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="Direction/Base.lproj/DirectionViewController.xib" datatype="plaintext" source-language="en" target-language="pl">
     <header>
@@ -7,6 +7,7 @@
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
         <source>Position your device parallel to the direction of the object.</source>
+        <target>Ustaw urządzenie równolegle do orientacji obiektu.</target>
         <note>Class = "UILabel"; text = "Position your device parallel to the direction of the object."; ObjectID = "4vY-m2-xMW";</note>
       </trans-unit>
       <trans-unit id="Jc3-Um-Aiy.text" xml:space="preserve">
@@ -19,6 +20,7 @@
       </trans-unit>
       <trans-unit id="exg-Jc-FOH.normalTitle" xml:space="preserve">
         <source>Cancel</source>
+        <target>Anuluj</target>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "exg-Jc-FOH";</note>
       </trans-unit>
       <trans-unit id="vtk-nS-Ss4.text" xml:space="preserve">
@@ -34,6 +36,7 @@
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>Go Map!!</source>
+        <target>Go Map!!</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleGetInfoString" xml:space="preserve">
@@ -42,6 +45,7 @@
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>Go Map!!</source>
+        <target>Go Map!!</target>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="GPS Exchange Format (GPX)" xml:space="preserve">
@@ -74,6 +78,7 @@
       </trans-unit>
       <trans-unit id="NSLocationWhenInUseUsageDescription" xml:space="preserve">
         <source>Your location will be displayed and followed on the map.</source>
+        <target state="needs-translation">Twoja lokalizacja będzie wyświetlana i śledzona na mapie.</target>
         <note>Privacy - Location When In Use Usage Description</note>
       </trans-unit>
     </body>
@@ -162,6 +167,7 @@
       </trans-unit>
       <trans-unit id="%ld objects" xml:space="preserve">
         <source>%ld objects</source>
+        <target state="needs-translation">%ld obiektów</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%lu tiles needed" xml:space="preserve">
@@ -170,6 +176,7 @@
       </trans-unit>
       <trans-unit id="(new object)" xml:space="preserve">
         <source>(new object)</source>
+        <target>(nowy obiekt)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
@@ -178,18 +185,22 @@
       </trans-unit>
       <trans-unit id="(node)" xml:space="preserve">
         <source>(node)</source>
+        <target>(węzeł [punkt])</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(relation %@)" xml:space="preserve">
         <source>(relation %@)</source>
+        <target>(relacja %@)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(way)" xml:space="preserve">
         <source>(way)</source>
+        <target>(linia)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="+ Button Position" xml:space="preserve">
         <source>+ Button Position</source>
+        <target state="needs-translation">+ Pozycja przycisku</target>
         <note>Location of Add Node button on the screen</note>
       </trans-unit>
       <trans-unit id="1 Day" xml:space="preserve">
@@ -202,6 +213,7 @@
       </trans-unit>
       <trans-unit id="A GPX Track records your path as you travel along a road or trail" xml:space="preserve">
         <source>A GPX Track records your path as you travel along a road or trail</source>
+        <target>Ślad GPX rejestruje trasę przebytą przez użytkownika wzdłuż drogi lub szlaku</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="A relation the node belongs to is not fully downloaded" xml:space="preserve">
@@ -214,6 +226,7 @@
       </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
         <source>Add Note</source>
+        <target>Dodaj notatkę</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Add inner member" xml:space="preserve">
@@ -242,6 +255,7 @@
       </trans-unit>
       <trans-unit id="All Tags" xml:space="preserve">
         <source>All Tags</source>
+        <target>Wszystkie tagi</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="All choices" xml:space="preserve">
@@ -250,6 +264,7 @@
       </trans-unit>
       <trans-unit id="An unknown error occurred fetching metadata" xml:space="preserve">
         <source>An unknown error occurred fetching metadata</source>
+        <target>Wystąpił nieznany błąd podczas pobierania metadanych</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Attention" xml:space="preserve">
@@ -258,6 +273,7 @@
       </trans-unit>
       <trans-unit id="Attributes" xml:space="preserve">
         <source>Attributes</source>
+        <target>Atrybuty</target>
         <note>node/way/relation attributes</note>
       </trans-unit>
       <trans-unit id="Automatic" xml:space="preserve">
@@ -266,6 +282,7 @@
       </trans-unit>
       <trans-unit id="Back" xml:space="preserve">
         <source>Back</source>
+        <target>Cofnij</target>
         <note>back button</note>
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
@@ -274,10 +291,12 @@
       </trans-unit>
       <trans-unit id="Bad login" xml:space="preserve">
         <source>Bad login</source>
+        <target state="needs-translation">Zły login</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
         <source>Cache size warning</source>
+        <target state="needs-translation">Ostrzeżenie o rozmiarze pamięci podręcznej</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache trimmed" xml:space="preserve">
