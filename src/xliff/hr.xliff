@@ -1647,7 +1647,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
-        <source>PhotoShare</source>
+        <source>Go Map!!</source>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">

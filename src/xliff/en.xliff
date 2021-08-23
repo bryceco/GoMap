@@ -1660,8 +1660,8 @@ You may want to clear the cache (under Display settings) to improve performance.
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
-        <source>PhotoShare</source>
-        <target>PhotoShare</target>
+        <source>Go Map!!</source>
+        <target>Go Map!!</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">

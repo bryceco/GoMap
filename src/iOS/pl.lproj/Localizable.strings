@@ -16,6 +16,18 @@
 /* No comment provided by engineer. */
 " (way)" = " (linia)";
 
+/* No comment provided by engineer. */
+"(new object)" = "(nowy obiekt)";
+
+/* No comment provided by engineer. */
+"(node)" = "(węzeł [punkt])";
+
+/* No comment provided by engineer. */
+"(relation %@)" = "(relacja %@)";
+
+/* No comment provided by engineer. */
+"(way)" = "(linia)";
+
 /* These values will always be large (plural) */
 "%.2f MB, %ld files" = "%1$.2f MB, %2$ld plików";
 
@@ -35,14 +47,44 @@
 /* Brief synopsis of a mapper's activity (count,last active date) */
 "%ld edits, last active %@" = "%1$ld zmian, ostatnio aktywny %2$@";
 
+/* Number of tiles/objects in cache */
+"%ld objects" = "%ld obiektów";
+
+/* Location of Add Node button on the screen */
+"+ Button Position" = "+ Pozycja przycisku";
+
+/* No comment provided by engineer. */
+"A GPX Track records your path as you travel along a road or trail" = "Ślad GPX rejestruje trasę przebytą przez użytkownika wzdłuż drogi lub szlaku";
+
 /* No comment provided by engineer. */
 "add node to way" = "dodaj węzeł (punkt) do linii";
+
+/* Edit action */
+"Add Note" = "Dodaj notatkę";
 
 /* No comment provided by engineer. */
 "add object to relation" = "dodaj obiekt do relacji";
 
 /* No comment provided by engineer. */
 "added to multipolygon relation" = "dodano do relacji multipolygon";
+
+/* No comment provided by engineer. */
+"All Tags" = "Wszystkie tagi";
+
+/* No comment provided by engineer. */
+"An unknown error occurred fetching metadata" = "Wystąpił nieznany błąd podczas pobierania metadanych";
+
+/* node/way/relation attributes */
+"Attributes" = "Atrybuty";
+
+/* back button */
+"Back" = "Cofnij";
+
+/* No comment provided by engineer. */
+"Bad login" = "Zły login";
+
+/* No comment provided by engineer. */
+"Cache size warning" = "Ostrzeżenie o rozmiarze pamięci podręcznej";
 
 /* No comment provided by engineer. */
 "computing size..." = "obliczanie rozmiaru...";

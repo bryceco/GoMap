@@ -1,3 +1,9 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Go Map!!";
+
+/* Bundle name */
+"CFBundleName" = "Go Map!!";
+
 /* Privacy - Bluetooth Peripheral Usage Description */
 "NSBluetoothPeripheralUsageDescription" = "Połącz się z zewnętrznymi urządzeniami GPS poprzez Bluetooth";
 
@@ -9,4 +15,7 @@
 
 /* Privacy - Location Always Usage Description */
 "NSLocationAlwaysUsageDescription" = "Twoja lokalizacja zostanie wyświetlona i obserwowana na mapie.";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "Twoja lokalizacja będzie wyświetlana i śledzona na mapie.";
 

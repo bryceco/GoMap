@@ -1637,7 +1637,7 @@ Vous pouvez vider le cache (dans Paramètres d'affichage) pour améliorer les pe
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
-        <source>PhotoShare</source>
+        <source>Go Map!!</source>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">

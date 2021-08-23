@@ -47,7 +47,7 @@
 "%@ changeset" = "%@ مجموعة التغيير";
 
 /* Always plural */
-"%@ meters" = "%@ متر/أمتار";
+"%@ meters" = "%@ متر";
 
 /* One or more days
    Plural number of days */
@@ -57,7 +57,7 @@
 "%ld edits, last active %@" = "%1$ld تحرير، آخر نشاط %2$@";
 
 /* length of a gpx track */
-"%ld meters, %ld points" = "%1$ld متر/أمتار, %2$ld نقطة/نقاط";
+"%ld meters, %ld points" = "%1$ld متر, %2$ld نقطة";
 
 /* Number of tiles/objects in cache */
 "%ld objects" = "%ld عنصر/عناصر";
@@ -257,6 +257,9 @@
 /* No comment provided by engineer. */
 "Delete\n" = "حذف\n";
 
+/* Confirm deleting a node/way */
+"Delete %@?" = "حذف %@؟";
+
 /* No comment provided by engineer. */
 "Delete completely" = "حذف بشكل كامل";
 
@@ -295,6 +298,9 @@
 
 /* No comment provided by engineer. */
 "Display options" = "عرض الخيارات";
+
+/* Distance to an object with an error value */
+"Distance: %1$@ ± %2$@ meters" = "المسافة: %1$@ ± %2$@ متر";
 
 /* No comment provided by engineer. */
 "Done" = "تم";
@@ -349,6 +355,9 @@
 
 /* No comment provided by engineer. */
 "GPX Upload Failed" = "فشل رفع ملف GPX";
+
+/* Height of an object with an error value */
+"Height: %1$@ ± %2$@ meters" = "الارتفاع: %1$@ ± %2$@ متر";
 
 /* rate the app now */
 "I'll do it!" = "أنا سأفعل ذلك!";
@@ -429,7 +438,7 @@
 "Merge Tags" = "دمج الوسوم";
 
 /* No comment provided by engineer. */
-"meters" = "متر/أمتار";
+"meters" = "متر";
 
 /* No comment provided by engineer. */
 "Missing way to connect to" = "لا يوجد خط للاتصال به";

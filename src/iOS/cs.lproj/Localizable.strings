@@ -260,6 +260,9 @@
 /* No comment provided by engineer. */
 "Delete\n" = "Smazat\n";
 
+/* Confirm deleting a node/way */
+"Delete %@?" = "Smazat %@?";
+
 /* No comment provided by engineer. */
 "Delete completely" = "Zcela smazat";
 
@@ -298,6 +301,9 @@
 
 /* No comment provided by engineer. */
 "Display options" = "Možnosti zobrazení";
+
+/* Distance to an object with an error value */
+"Distance: %1$@ ± %2$@ meters" = "Vzdálenost: %1$@ ± %2$@ metrů";
 
 /* No comment provided by engineer. */
 "Done" = "Hotovo";
@@ -352,6 +358,9 @@
 
 /* No comment provided by engineer. */
 "GPX Upload Failed" = "Nahrávání GPX se nezdařilo";
+
+/* Height of an object with an error value */
+"Height: %1$@ ± %2$@ meters" = "Výška: %1$@ ± %2$@ metrů";
 
 /* rate the app now */
 "I'll do it!" = "Udělám to!";

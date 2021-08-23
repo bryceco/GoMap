@@ -1,204 +1,219 @@
 /* Class = "UITextField"; placeholder = "no"; ObjectID = "0mW-YK-ajm"; Note = "Do not translate"; */
-"0mW-YK-ajm.placeholder" = "no";
+"0mW-YK-ajm.placeholder" = "";
 
 /* Class = "UITextField"; placeholder = "type"; ObjectID = "0zS-QM-zwQ"; Note = "Do not translate"; */
-"0zS-QM-zwQ.placeholder" = "type";
+"0zS-QM-zwQ.placeholder" = "";
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "1Yx-Ce-yfq"; */
-"1Yx-Ce-yfq.title" = "Zpět";
+"1Yx-Ce-yfq.title" = "";
 
 /* Class = "UITabBarItem"; title = "Attributes"; ObjectID = "2cB-FV-ozw"; */
-"2cB-FV-ozw.title" = "Atributy";
+"2cB-FV-ozw.title" = "";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "2Q5-Vd-FED"; Note = "Do not translate"; */
-"2Q5-Vd-FED.text" = "Title";
+"2Q5-Vd-FED.text" = "";
 
 /* Class = "UITableViewController"; title = "Point of Interest"; ObjectID = "6VA-gm-L0S"; */
-"6VA-gm-L0S.title" = "Bod zájmu";
+"6VA-gm-L0S.title" = "";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "8Nt-xf-x5Q"; */
-"8Nt-xf-x5Q.text" = "Název";
+"8Nt-xf-x5Q.text" = "";
 
 /* Class = "UITextField"; placeholder = "Yes"; ObjectID = "9Nw-ha-JK5"; */
-"9Nw-ha-JK5.placeholder" = "Ano";
+"9Nw-ha-JK5.placeholder" = "";
 
 /* Class = "UITabBarItem"; title = "All Tags"; ObjectID = "19J-sp-UTX"; */
-"19J-sp-UTX.title" = "Všechny značky";
+"19J-sp-UTX.title" = "";
 
 /* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j"; */
-"436-kv-L7j.placeholder" = "Restaurace";
+"436-kv-L7j.placeholder" = "";
+
+/* Class = "UITextField"; placeholder = "ref"; ObjectID = "aCs-vS-YXj"; Note = "Do not translate"; */
+"aCs-vS-YXj.placeholder" = "";
 
 /* Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V"; Note = "Do not translate"; */
-"Ak4-ru-E4V.placeholder" = "dog";
+"Ak4-ru-E4V.placeholder" = "";
 
 /* Class = "UIBarButtonItem"; title = "Configure"; ObjectID = "aLi-Vs-z0k"; */
-"aLi-Vs-z0k.title" = "Konfigurovat";
+"aLi-Vs-z0k.title" = "";
 
 /* Class = "UILabel"; text = "Add New"; ObjectID = "Bnh-U0-D7i"; */
-"Bnh-U0-D7i.text" = "Přidat nový";
+"Bnh-U0-D7i.text" = "";
 
 /* Class = "UINavigationItem"; title = "All Tags"; ObjectID = "cN9-3h-H3l"; */
-"cN9-3h-H3l.title" = "Všechny značky";
+"cN9-3h-H3l.title" = "";
 
 /* Class = "UITextField"; placeholder = "value"; ObjectID = "cP3-lR-lzM"; Note = "Do not translate"; */
-"cP3-lR-lzM.placeholder" = "hodnota";
+"cP3-lR-lzM.placeholder" = "";
 
 /* Class = "UITableViewSection"; headerTitle = "Preset Key"; ObjectID = "cTf-Rc-vqr"; */
-"cTf-Rc-vqr.headerTitle" = "Klíč předvolby";
+"cTf-Rc-vqr.headerTitle" = "";
 
 /* Class = "UILabel"; text = "Value 8"; ObjectID = "CXe-gQ-Zda"; */
-"CXe-gQ-Zda.text" = "Hodnota 8";
+"CXe-gQ-Zda.text" = "";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh"; Note = "Do not translate"; */
-"daQ-tl-pKh.text" = "Štítek";
+"daQ-tl-pKh.text" = "";
 
 /* Class = "UITableViewSection"; footerTitle = "The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard."; ObjectID = "Dfv-TT-J6i"; */
-"Dfv-TT-J6i.footerTitle" = "Předvolba bude dostupná při úpravách objektů shodujících se s touto kombinací klíče a hodnoty. Ponechte prázdné, nebo použijte hvězdičku.";
+"Dfv-TT-J6i.footerTitle" = "";
 
 /* Class = "UITableViewSection"; headerTitle = "Applies To"; ObjectID = "Dfv-TT-J6i"; */
-"Dfv-TT-J6i.headerTitle" = "Uplatní se na";
+"Dfv-TT-J6i.headerTitle" = "";
 
 /* Class = "UILabel"; text = "Value 9"; ObjectID = "dsA-B6-s7R"; */
-"dsA-B6-s7R.text" = "Hodnota 9";
+"dsA-B6-s7R.text" = "";
 
 /* Class = "UITextField"; placeholder = "Dogs Allowed"; ObjectID = "eG3-Xz-Nnp"; */
-"eG3-Xz-Nnp.placeholder" = "Psi povoleni";
+"eG3-Xz-Nnp.placeholder" = "";
 
 /* Class = "UILabel"; text = "Key"; ObjectID = "Eou-a6-V4g"; */
-"Eou-a6-V4g.text" = "Klíč";
+"Eou-a6-V4g.text" = "";
 
 /* Class = "UITabBarController"; title = "Attributes"; ObjectID = "f5t-25-IXF"; */
-"f5t-25-IXF.title" = "Atributy";
+"f5t-25-IXF.title" = "";
 
 /* Class = "UILabel"; text = "Value 3"; ObjectID = "Fcv-4Q-gpE"; */
-"Fcv-4Q-gpE.text" = "Hodnota 3";
+"Fcv-4Q-gpE.text" = "";
+
+/* Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; Note = "Do not translate"; */
+"Fe2-dc-zgA.placeholder" = "";
+
+/* Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Do not translate"; */
+"foC-aN-GtH.placeholder" = "";
 
 /* Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3"; */
-"G5R-oP-lp3.title" = "Vlastní značky";
+"G5R-oP-lp3.title" = "";
 
 /* Class = "UINavigationItem"; title = "Custom Presets"; ObjectID = "GIO-W7-q5U"; */
-"GIO-W7-q5U.title" = "Vlastní předvolby";
+"GIO-W7-q5U.title" = "";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw"; Note = "Do not translate"; */
-"gv7-b8-wUw.text" = "Štítek";
+"gv7-b8-wUw.text" = "";
 
 /* Class = "UITextField"; text = "value"; ObjectID = "hfr-Mf-ZHv"; */
-"hfr-Mf-ZHv.text" = "hodnota";
+"hfr-Mf-ZHv.text" = "";
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "Hgu-iP-FnG"; */
-"Hgu-iP-FnG.title" = "Zpět";
+"Hgu-iP-FnG.title" = "";
 
 /* Class = "UINavigationItem"; title = "Attributes"; ObjectID = "hKU-EH-qxp"; */
-"hKU-EH-qxp.title" = "Atributy";
+"hKU-EH-qxp.title" = "";
 
 /* Class = "UILabel"; text = "Changeset"; ObjectID = "ijx-N9-1eO"; */
-"ijx-N9-1eO.text" = "Sada změn";
+"ijx-N9-1eO.text" = "";
 
 /* Class = "UILabel"; text = "Value 1"; ObjectID = "JAT-qD-dTS"; */
-"JAT-qD-dTS.text" = "Hodnota 1";
+"JAT-qD-dTS.text" = "";
 
 /* Class = "UINavigationItem"; title = "POI Type"; ObjectID = "Jsm-mO-hgo"; */
-"Jsm-mO-hgo.title" = "Typ POI";
+"Jsm-mO-hgo.title" = "";
 
 /* Class = "UITableViewSection"; footerTitle = "The possible values for the preset"; ObjectID = "jv1-BF-p2a"; */
-"jv1-BF-p2a.footerTitle" = "Možné hodnoty předvolby";
+"jv1-BF-p2a.footerTitle" = "";
 
 /* Class = "UITableViewSection"; headerTitle = "Preset values"; ObjectID = "jv1-BF-p2a"; */
-"jv1-BF-p2a.headerTitle" = "Hodnoty předvolby";
+"jv1-BF-p2a.headerTitle" = "";
 
 /* Class = "UITextField"; placeholder = "leisure "; ObjectID = "kPA-ky-U48"; Note = "Do not translate"; */
-"kPA-ky-U48.placeholder" = "leisure ";
+"kPA-ky-U48.placeholder" = "";
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "KX3-hG-OyE"; */
-"KX3-hG-OyE.title" = "Zpět";
+"KX3-hG-OyE.title" = "";
 
 /* Class = "UILabel"; text = "Value 5"; ObjectID = "li7-oV-pgT"; */
-"li7-oV-pgT.text" = "Hodnota 5";
+"li7-oV-pgT.text" = "";
 
 /* Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz"; */
-"lPv-s6-uEz.title" = "Běžné značky";
+"lPv-s6-uEz.title" = "";
 
 /* Class = "UINavigationItem"; title = "Common tags"; ObjectID = "mAb-DX-pqb"; */
-"mAb-DX-pqb.title" = "Běžné značky";
+"mAb-DX-pqb.title" = "";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "mcN-gM-s7u"; */
-"mcN-gM-s7u.text" = "Název";
+"mcN-gM-s7u.text" = "";
 
 /* Class = "UILabel"; text = "Value 4"; ObjectID = "ng7-T9-SJ6"; */
-"ng7-T9-SJ6.text" = "Hodnota 4";
+"ng7-T9-SJ6.text" = "";
 
 /* Class = "UILabel"; text = "Value 2"; ObjectID = "nKt-LG-cSw"; */
-"nKt-LG-cSw.text" = "Hodnota 2";
+"nKt-LG-cSw.text" = "";
 
 /* Class = "UILabel"; text = "Value 11"; ObjectID = "o63-qY-4vl"; */
-"o63-qY-4vl.text" = "Hodnota 11";
+"o63-qY-4vl.text" = "";
+
+/* Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; Note = "Do not translate"; */
+"oC6-w7-cwN.placeholder" = "";
+
+/* Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; Note = "Do not translate"; */
+"okh-JP-aKZ.placeholder" = "";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "omf-S9-Yjq"; */
-"omf-S9-Yjq.text" = "Název";
+"omf-S9-Yjq.text" = "";
 
 /* Class = "UINavigationItem"; title = "Custom Preset"; ObjectID = "OND-s7-I6f"; */
-"OND-s7-I6f.title" = "Vlastní předvolba";
+"OND-s7-I6f.title" = "";
 
 /* Class = "UILabel"; text = "Type"; ObjectID = "P3A-5n-1Iq"; */
-"P3A-5n-1Iq.text" = "Typ";
+"P3A-5n-1Iq.text" = "";
 
 /* Class = "UIButton"; normalTitle = "Customize Presets"; ObjectID = "pHA-2B-6DC"; */
-"pHA-2B-6DC.normalTitle" = "Přizpůsobit předvolby";
+"pHA-2B-6DC.normalTitle" = "";
 
 /* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "pxY-di-zg7"; */
-"pxY-di-zg7.placeholder" = "Restaurace";
+"pxY-di-zg7.placeholder" = "";
 
 /* Class = "UITableViewSection"; headerTitle = "Preset Name"; ObjectID = "QDv-7w-nbx"; */
-"QDv-7w-nbx.headerTitle" = "Název předvolby";
+"QDv-7w-nbx.headerTitle" = "";
 
 /* Class = "UILabel"; text = "Value 6"; ObjectID = "R0q-aM-ULf"; */
-"R0q-aM-ULf.text" = "Hodnota 6";
+"R0q-aM-ULf.text" = "";
 
 /* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "Rfe-SO-p0w"; */
-"Rfe-SO-p0w.title" = "Zrušit";
+"Rfe-SO-p0w.title" = "";
 
 /* Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ"; Note = "Do not translate"; */
-"sVp-1S-TjJ.placeholder" = "role";
+"sVp-1S-TjJ.placeholder" = "";
 
 /* Class = "UILabel"; text = "Key"; ObjectID = "teB-9L-Nrf"; */
-"teB-9L-Nrf.text" = "Klíč";
+"teB-9L-Nrf.text" = "";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "TK4-E8-1q7"; Note = "Do not translate"; */
-"TK4-E8-1q7.text" = "Title";
+"TK4-E8-1q7.text" = "";
 
 /* Class = "UITextField"; placeholder = "relation"; ObjectID = "Urd-9O-Mte"; Note = "Do not translate"; */
-"Urd-9O-Mte.placeholder" = "relation";
+"Urd-9O-Mte.placeholder" = "";
 
 /* Class = "UINavigationItem"; title = "Presets"; ObjectID = "v1b-PG-XxE"; */
-"v1b-PG-XxE.title" = "Předvolby";
+"v1b-PG-XxE.title" = "";
 
 /* Class = "UILabel"; text = "Wheelchair Access"; ObjectID = "Vli-Ct-Lpz"; */
-"Vli-Ct-Lpz.text" = "Přístup na vozíčku";
+"Vli-Ct-Lpz.text" = "";
 
 /* Class = "UITextField"; placeholder = "yes"; ObjectID = "vpk-jC-yxl"; Note = "Do not translate"; */
-"vpk-jC-yxl.placeholder" = "yes";
+"vpk-jC-yxl.placeholder" = "";
 
 /* Class = "UILabel"; text = "Value 12"; ObjectID = "wFE-f1-sQa"; */
-"wFE-f1-sQa.text" = "Hodnota 12";
+"wFE-f1-sQa.text" = "";
 
 /* Class = "UILabel"; text = "Value 10"; ObjectID = "Wim-Qa-dYQ"; */
-"Wim-Qa-dYQ.text" = "Hodnota 10";
+"Wim-Qa-dYQ.text" = "";
 
 /* Class = "UILabel"; text = "Value 7"; ObjectID = "WoH-od-iKL"; */
-"WoH-od-iKL.text" = "Hodnota 7";
+"WoH-od-iKL.text" = "";
 
 /* Class = "UITextField"; placeholder = "key"; ObjectID = "X1y-nK-nVJ"; Note = "Do not translate"; */
-"X1y-nK-nVJ.placeholder" = "klíč";
+"X1y-nK-nVJ.placeholder" = "";
 
 /* Class = "UILabel"; text = "Food & Drink"; ObjectID = "XBV-Ie-LDT"; Note = "Do not translate"; */
-"XBV-Ie-LDT.text" = "Jídlo a pití";
+"XBV-Ie-LDT.text" = "";
 
 /* Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ"; */
-"z19-cc-gHZ.text" = "Hodnota";
+"z19-cc-gHZ.text" = "";
 
 /* Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "zpj-gL-2Nt"; */
-"zpj-gL-2Nt.normalTitle" = "ⓘ";
+"zpj-gL-2Nt.normalTitle" = "";
 
 /* Class = "UILabel"; text = "Subtitle"; ObjectID = "ZYn-TK-k7d"; Note = "Do not translate"; */
-"ZYn-TK-k7d.text" = "Podnadpis";
+"ZYn-TK-k7d.text" = "";
 
