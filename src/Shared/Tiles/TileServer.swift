@@ -116,8 +116,7 @@ final class TileServer {
 		return (identifier == MAXAR_PREMIUM_IDENTIFIER) || (identifier == MAXAR_STANDARD_IDENTIFIER)
 	}
 
-	static var dateFormatterList: [DateFormatter]?
-	class func date(from string: String?) -> Date? {
+	static var dateFormatterList: [DateFormatter] = {
 		let formatterYYYYMMDD = DateFormatter()
 		formatterYYYYMMDD.dateFormat = "yyyy-MM-dd"
 		formatterYYYYMMDD.timeZone = NSTimeZone(forSecondsFromGMT: 0) as TimeZone
@@ -130,23 +129,23 @@ final class TileServer {
 		formatterYYYY.dateFormat = "yyyy"
 		formatterYYYY.timeZone = NSTimeZone(forSecondsFromGMT: 0) as TimeZone
 
-		dateFormatterList = [
+		return [
 			formatterYYYYMMDD,
 			formatterYYYYMM,
 			formatterYYYY
 		]
+	}()
 
-		if string == nil {
+	class func date(from string: String?) -> Date? {
+		guard let string = string else {
 			return nil
 		}
-
-		for formatter in dateFormatterList ?? [] {
-			let date = formatter.date(from: string ?? "")
+		for formatter in dateFormatterList {
+			let date = formatter.date(from: string)
 			if let date = date {
 				return date
 			}
 		}
-
 		return nil
 	}
 
