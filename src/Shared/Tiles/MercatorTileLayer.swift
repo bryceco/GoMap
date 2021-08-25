@@ -446,8 +446,8 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		let currentSet = Set(currentTiles)
 
 		let rect = mapView.boundingMapRectForScreen()
-		let minZoomLevel = max(1,min(zoomLevel(),tileServer.maxZoom))
-		let maxZoomLevel = min(minZoomLevel+2,tileServer.maxZoom)
+		let minZoomLevel = max(1, min(zoomLevel(), tileServer.maxZoom))
+		let maxZoomLevel = min(minZoomLevel + 2, tileServer.maxZoom)
 
 		var neededTiles: [String] = []
 		for zoomLevel in minZoomLevel...maxZoomLevel {

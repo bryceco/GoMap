@@ -185,18 +185,18 @@ class LocationParser {
 			let pattern = "(\(integer))/(\(float))/(\(float))"
 			let regex = try! NSRegularExpression(pattern: pattern, options: [])
 			let nsrange = NSRange(fragment.startIndex..<fragment.endIndex,
-								  in: fragment)
+			                      in: fragment)
 			let matches = regex.matches(in: fragment,
-										options: [],
-										range: nsrange)
+			                            options: [],
+			                            range: nsrange)
 			for match in matches {
 				if let zoomRange = Range(match.range(at: 1), in: fragment),
 				   let latRange = Range(match.range(at: 2), in: fragment),
 				   let lonRange = Range(match.range(at: 5), in: fragment)
 				{
-					let zoom = fragment[ zoomRange ]
-					let lat = fragment[ latRange ]
-					let lon = fragment[ lonRange ]
+					let zoom = fragment[zoomRange]
+					let lat = fragment[latRange]
+					let lon = fragment[lonRange]
 					if let zoom = Int(zoom),
 					   let lat = Double(lat),
 					   let lon = Double(lon),
@@ -205,9 +205,9 @@ class LocationParser {
 					   (-180.0...180.0).contains(lon)
 					{
 						return MapLocation(longitude: lon,
-										   latitude: lat,
-										   zoom: Double(zoom),
-										   viewState: nil)
+						                   latitude: lat,
+						                   zoom: Double(zoom),
+						                   viewState: nil)
 					}
 				}
 			}

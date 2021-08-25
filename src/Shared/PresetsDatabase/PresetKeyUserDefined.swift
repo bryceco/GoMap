@@ -68,7 +68,7 @@ class PresetKeyUserDefinedList {
 			if #available(iOS 11.0, *) {
 				let data = try Data(contentsOf: URL(fileURLWithPath: path))
 				let classList = [NSArray.self,
-								 NSMutableString.self,
+				                 NSMutableString.self,
 				                 PresetKeyUserDefined.self,
 				                 PresetValue.self]
 
