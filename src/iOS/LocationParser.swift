@@ -177,6 +177,42 @@ class LocationParser {
 			                   viewState: nil)
 		}
 
+		// try parsing as a link containing zoom/lat/lon triple
+		let fragments = (components.queryItems?.map({ $0.value }) ?? []) + [components.fragment]
+		for fragment in fragments.compactMap({ $0 }) {
+			let integer = #"[0-9]+"#
+			let float = #"-?(0|[1-9]\d*)(\.\d+)?"#
+			let pattern = "(\(integer))/(\(float))/(\(float))"
+			let regex = try! NSRegularExpression(pattern: pattern, options: [])
+			let nsrange = NSRange(fragment.startIndex..<fragment.endIndex,
+								  in: fragment)
+			let matches = regex.matches(in: fragment,
+										options: [],
+										range: nsrange)
+			for match in matches {
+				if let zoomRange = Range(match.range(at: 1), in: fragment),
+				   let latRange = Range(match.range(at: 2), in: fragment),
+				   let lonRange = Range(match.range(at: 5), in: fragment)
+				{
+					let zoom = fragment[ zoomRange ]
+					let lat = fragment[ latRange ]
+					let lon = fragment[ lonRange ]
+					if let zoom = Int(zoom),
+					   let lat = Double(lat),
+					   let lon = Double(lon),
+					   (1...21).contains(zoom),
+					   (-90.0...90.0).contains(lat),
+					   (-180.0...180.0).contains(lon)
+					{
+						return MapLocation(longitude: lon,
+										   latitude: lat,
+										   zoom: Double(zoom),
+										   viewState: nil)
+					}
+				}
+			}
+		}
+
 		return nil
 	}
 }
