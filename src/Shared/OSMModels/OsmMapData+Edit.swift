@@ -183,7 +183,7 @@ extension OsmMapData {
 			throw EditError.text(NSLocalizedString("Only multipolygon relations are supported", comment: ""))
 		}
 		return { [self] in
-			for index in relation.members.count..<0 {
+			for index in relation.members.indices.reversed() {
 				let member = relation.members[index]
 				if member.obj == obj {
 					deleteMember(inRelationUnsafe: relation, index: index)
