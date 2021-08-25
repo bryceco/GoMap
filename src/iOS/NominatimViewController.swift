@@ -14,6 +14,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 	@IBOutlet var tableView: UITableView!
 	private var historyArray: [String] = []
+	private var showingHistory = true
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -63,7 +64,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			withIdentifier: NominatimViewController.tableViewCellIdentifier,
 			for: indexPath)
 
-		if searchBar.text?.isEmpty ?? true {
+		if showingHistory {
 			cell.textLabel?.text = historyArray[indexPath.row]
 		} else {
 			let dict = resultsArray[indexPath.row]
@@ -96,7 +97,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	// MARK: - Table view delegate
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		if (searchBar.text?.count ?? 0) == 0 {
+		if showingHistory {
 			// history item
 			searchBar.text = historyArray[indexPath.row]
 			searchBarSearchButtonClicked(searchBar)
@@ -238,6 +239,8 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 				})
 			})
 		}
+		// flag that we're no longer showing history and remove all items
+		showingHistory = false
 		tableView.reloadData()
 	}
 
