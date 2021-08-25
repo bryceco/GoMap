@@ -339,11 +339,15 @@ extension EditorMapLayer {
 				continue // lakes are not a concern of this function
 			}
 			if object.isCoastline() {
-				if let way = object.isWay() {
+				if let way = object.isWay(),
+				   way.nodes.count >= 2
+				{
 					outerWays.append(way)
 				} else if let relation = object.isRelation() {
 					for member in relation.members {
-						if let way = member.obj as? OsmWay {
+						if let way = member.obj as? OsmWay,
+						   way.nodes.count >= 2
+						{
 							if member.role == "outer" {
 								outerWays.append(way)
 							} else if member.role == "inner" {
