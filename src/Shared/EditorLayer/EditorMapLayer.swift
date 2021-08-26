@@ -1593,6 +1593,7 @@ final class EditorMapLayer: CALayer {
 					let scale = Double(UIScreen.main.scale)
 					pt2.x = round(pt2.x * scale) / scale
 					pt2.y = round(pt2.y * scale) / scale
+					DbgAssert(pt2.y.isFinite)
 					layer.position = CGPoint(x: CGFloat(pt2.x) + props.offset.x,
 					                         y: CGFloat(pt2.y) + props.offset.y)
 				}

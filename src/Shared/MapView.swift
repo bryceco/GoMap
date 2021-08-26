@@ -1278,11 +1278,17 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	func screenLatLonRect() -> OSMRect {
 		let rc = boundingMapRectForScreen()
-		return MapTransform.latLon(forMapRect: rc)
+		// this might be wrong near the edge of Mercator
+		let rect = MapTransform.latLon(forMapRect: rc)
+		return rect
 	}
 
 	func setTransformFor(latLon: LatLon) {
-		let point = mapTransform.screenPoint(forLatLon: latLon, birdsEye: false)
+		var lat = latLon.lat
+		lat = min( lat, 85.051129 )
+		lat = max( lat, -85.051129 )
+		let latLon2 = LatLon(latitude: lat, longitude: latLon.lon)
+		let point = mapTransform.screenPoint(forLatLon: latLon2, birdsEye: false)
 		let center = crossHairs.position
 		let delta = CGPoint(x: center.x - point.x, y: center.y - point.y)
 		adjustOrigin(by: delta)
