@@ -235,8 +235,13 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		zoomLevel: Int,
 		completion: @escaping (_ error: Error?) -> Void)
 	{
-		let tileModX = modulus(tileX, 1 << zoomLevel)
-		let tileModY = modulus(tileY, 1 << zoomLevel)
+		if tileY < 0 || tileY >= (1<<zoomLevel) {
+			// past north/south mercator limit
+			completion(nil)
+			return
+		}
+		let tileModY = tileY // modulus(tileY, 1 << zoomLevel)
+		let tileModX = modulus(tileX, 1<<zoomLevel)
 		let tileKey = "\(zoomLevel),\(tileX),\(tileY)"
 
 		if layerDict[tileKey] != nil {
@@ -248,9 +253,8 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 			let layer = CALayer()
 			layer.actions = actions
 			layer.zPosition = CGFloat(zoomLevel) * 0.01 - 0.25
-			layer
-				.edgeAntialiasingMask =
-				CAEdgeAntialiasingMask(rawValue: 0) // don't AA edges of tiles or there will be a seam visible
+			// don't AA edges of tiles or there will be a seam visible
+			layer.edgeAntialiasingMask = CAEdgeAntialiasingMask(rawValue: 0)
 			layer.isOpaque = true
 			layer.isHidden = true
 			layer.setValue(tileKey, forKey: "tileKey")

@@ -225,7 +225,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				pp = mapTransform.latLon(forScreenPoint: pushpinView.arrowPoint)
 			}
 
-			// Wrap around if we translate too far
+			// Wrap around if we translate too far longitudinally
 			let unitX = t.unitX()
 			let unitY = OSMPoint(x: -unitX.y, y: unitX.x)
 			let tran = t.translation()
@@ -240,12 +240,12 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				let mul = floor(-dx / mapSize)
 				t = t.translatedBy(dx: mul * mapSize / scale, dy: 0.0)
 			}
-			if dy > 0 {
-				let mul = ceil(dy / mapSize)
-				t = t.translatedBy(dx: 0.0, dy: -mul * mapSize / scale)
-			} else if dy < -mapSize {
-				let mul = floor(-dy / mapSize)
-				t = t.translatedBy(dx: 0.0, dy: mul * mapSize / scale)
+
+			// limit scrolling latitudinally
+			if dy > mapSize {
+				t = t.translatedBy(dx: 0.0, dy: mapSize-dy)
+			} else if dy < -2*mapSize {
+				t = t.translatedBy(dx: 0.0, dy: -2*mapSize-dy)
 			}
 
 			// update transform
@@ -1278,15 +1278,14 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	func screenLatLonRect() -> OSMRect {
 		let rc = boundingMapRectForScreen()
-		// this might be wrong near the edge of Mercator
 		let rect = MapTransform.latLon(forMapRect: rc)
 		return rect
 	}
 
 	func setTransformFor(latLon: LatLon) {
 		var lat = latLon.lat
-		lat = min( lat, 85.051129 )
-		lat = max( lat, -85.051129 )
+		lat = min(lat, MapTransform.latitudeLimit)
+		lat = max(lat, -MapTransform.latitudeLimit)
 		let latLon2 = LatLon(latitude: lat, longitude: latLon.lon)
 		let point = mapTransform.screenPoint(forLatLon: latLon2, birdsEye: false)
 		let center = crossHairs.position
