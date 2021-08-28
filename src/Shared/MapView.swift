@@ -243,9 +243,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 			// limit scrolling latitudinally
 			if dy > mapSize {
-				t = t.translatedBy(dx: 0.0, dy: mapSize-dy)
-			} else if dy < -2*mapSize {
-				t = t.translatedBy(dx: 0.0, dy: -2*mapSize-dy)
+				t = t.translatedBy(dx: 0.0, dy: mapSize - dy)
+			} else if dy < -2 * mapSize {
+				t = t.translatedBy(dx: 0.0, dy: -2 * mapSize - dy)
 			}
 
 			// update transform
