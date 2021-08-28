@@ -53,15 +53,15 @@ final class TileServer {
 	private(set) var attributionIcon: UIImage?
 
 	static let supportedProjections = [
-		"EPSG:3857",
-		"EPSG:4326",
-		"EPSG:900913",
-		"EPSG:3587",
+		"EPSG:3857", // Google Maps and OpenStreetMap
+		"EPSG:4326", // like 3857 but lat/lon in reverse order (sometimes)
+		"EPSG:900913", // alias for 3857
+		"EPSG:3587", // added as typo of 3785
 		"EPSG:54004",
 		"EPSG:41001",
-		"EPSG:102113",
-		"EPSG:102100",
-		"EPSG:3785"
+		"EPSG:102113", // alias for 3857
+		"EPSG:102100", // alias for 3857
+		"EPSG:3785" // alias for 3857
 	]
 
 	init(
@@ -468,7 +468,7 @@ final class TileServer {
 			// WMS
 			let minXmaxY = Self.TileToWMSCoords(tileX, tileY, zoom, wmsProjection)
 			let maxXminY = Self.TileToWMSCoords(tileX + 1, tileY + 1, zoom, wmsProjection)
-			var bbox: String = ""
+			let bbox: String
 			if wmsProjection == "EPSG:4326", url.lowercased().contains("crs={proj}") {
 				// reverse lat/lon for EPSG:4326 when WMS version is 1.3 (WMS 1.1 uses srs=epsg:4326 instead
 				bbox = "\(maxXminY.y),\(minXmaxY.x),\(minXmaxY.y),\(maxXminY.x)" // lat,lon
@@ -480,9 +480,8 @@ final class TileServer {
 			url = url.replacingOccurrences(of: "{height}", with: "256")
 			url = url.replacingOccurrences(of: "{proj}", with: wmsProjection)
 			url = url.replacingOccurrences(of: "{bbox}", with: bbox)
-			url = url.replacingOccurrences(
-				of: "{wkid}",
-				with: wmsProjection.replacingOccurrences(of: "EPSG:", with: ""))
+			url = url.replacingOccurrences(of: "{wkid}",
+			                               with: wmsProjection.replacingOccurrences(of: "EPSG:", with: ""))
 			url = url.replacingOccurrences(of: "{w}", with: "\(minXmaxY.x)")
 			url = url.replacingOccurrences(of: "{s}", with: "\(maxXminY.y)")
 			url = url.replacingOccurrences(of: "{n}", with: "\(maxXminY.x)")
