@@ -2381,7 +2381,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Tkc-bW-kNS.headerTitle" xml:space="preserve">
         <source>OpenStreetMap account</source>
-        <target>OpenStreetMap account</target>
+        <target>OpenStreetMap-account</target>
         <note>Class = "UITableViewSection"; headerTitle = "OpenStreetMap account"; ObjectID = "Tkc-bW-kNS";</note>
       </trans-unit>
       <trans-unit id="TrT-Nn-WKe.text" xml:space="preserve">
