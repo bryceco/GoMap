@@ -24,6 +24,13 @@ import Foundation
 final class MapTransform {
 	var center: CGPoint = .zero // screen center, needed for bird's eye calculations
 
+	enum Projection {
+		case mercator // EPSG:3857 or equivalent
+		case polarSouth // EPSG:3031
+	}
+
+	static var projection = Projection.mercator
+
 	static let latitudeLimit: Double = 85.051128
 
 	// This matrix translates between a "mapPoint" (a 256x256 mercator map of the world) and the screen
@@ -145,23 +152,37 @@ final class MapTransform {
 
 	/// Convert Web-Mercator projection of 0..256 x 0..256 to longitude/latitude
 	static func latLon(forMapPoint point: OSMPoint) -> LatLon {
-		var x: Double = point.x / 256
-		var y: Double = point.y / 256
-		x = x - floor(x) // modulus
-		x = x - 0.5
-		y = y - 0.5
-
-		return LatLon(x: 360 * x,
-		              y: 90 - 360 * atan(exp(y * 2 * .pi)) / .pi)
+		switch Self.projection {
+		case .mercator:
+			var x: Double = point.x / 256
+			var y: Double = point.y / 256
+			x = x - floor(x) // modulus
+			x = x - 0.5
+			y = y - 0.5
+			return LatLon(x: 360 * x,
+			              y: 90 - 360 * atan(exp(y * 2 * .pi)) / .pi)
+		case .polarSouth:
+			let scale = 25600.0 // don't know what this should be until we have imagery
+			let pt = OSMPoint(x: point.x * scale, y: point.y * scale)
+			let ll = latLonFromPolar(point: pt)
+			return ll
+		}
 	}
 
 	/// Convert longitude/latitude to a Web-Mercator projection of 0..256 x 0..256
 	static func mapPoint(forLatLon pt: LatLon) -> OSMPoint {
-		let x = (pt.lon + 180) / 360
-		let sinLatitude = sin(pt.lat * .pi / 180)
-		let y = 0.5 - log((1 + sinLatitude) / (1 - sinLatitude)) / (4 * .pi)
-		let point = OSMPoint(x: x * 256, y: y * 256)
-		return point
+		switch Self.projection {
+		case .mercator:
+			let x = (pt.lon + 180) / 360
+			let sinLatitude = sin(pt.lat * .pi / 180)
+			let y = 0.5 - log((1 + sinLatitude) / (1 - sinLatitude)) / (4 * .pi)
+			let point = OSMPoint(x: x * 256, y: y * 256)
+			return point
+		case .polarSouth:
+			let scale = 1.0 / 25600.0
+			let mp = pointFromPolar(latLon: pt)
+			return OSMPoint(x: mp.x * scale, y: mp.y * scale)
+		}
 	}
 
 	// MARK: Transform screenPoint <--> latLon
@@ -300,5 +321,24 @@ final class MapTransform {
 		let latLon2 = object.latLonOnObject(forLatLon: latLon)
 		let pos = screenPoint(forLatLon: latLon2, birdsEye: true)
 		return pos
+	}
+
+	// returns the xy offset from the pole in meters
+	// https://en.wikipedia.org/wiki/Stereographic_map_projection
+	// https://github.com/proj4js/proj4js/blob/master/lib/projections/stere.js
+	static func pointFromPolar(latLon: LatLon) -> OSMPoint {
+		let r = 2 * EarthRadius * tan(.pi / 4 - fabs(latLon.lat) * .pi / 180 / 2)
+		let a = latLon.lon * .pi / 180
+		let x = r * cos(a)
+		let y = r * sin(a)
+		return OSMPoint(x: x, y: y)
+	}
+
+	static func latLonFromPolar(point: OSMPoint) -> LatLon {
+		let a = atan2(point.y, point.x)
+		let r = hypot(point.x, point.y)
+		let lon = a * 180 / .pi
+		let lat = (.pi / 4 - atan(r / 2 / EarthRadius)) * 2 * (180 / Double.pi)
+		return LatLon(latitude: -lat, longitude: lon)
 	}
 }

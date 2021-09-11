@@ -648,15 +648,48 @@ func MetersPerDegreeAt(latitude: Double) -> OSMPoint {
 	return OSMPoint(x: lon, y: lat)
 }
 
+// compute area inside a triangle using Heron's formula
+// input is the length of the 3 sides
+func AreaOfTriangleWithSides(_ s1: Double, _ s2: Double, _ s3: Double) -> Double {
+	let s = (s1 + s2 + s3)/2
+	let a = sqrt( s*(s-s1)*(s-s2)*(s-s3) )
+	return a
+}
+
 // area in square meters
 func SurfaceAreaOfRect(_ latLon: OSMRect) -> Double {
-	// http://mathforum.org/library/drmath/view/63767.html
+	// Get lengths of sides of rect in meters, plus diagonal
+	let minX = latLon.origin.x
+	let maxX = latLon.origin.x + latLon.size.width
+	let minY = latLon.origin.y
+	let maxY = latLon.origin.y + latLon.size.height
+	let top = GreatCircleDistance( LatLon(lon: minX, lat: minY), LatLon(lon: maxX, lat: minY))
+	let bot = GreatCircleDistance( LatLon(lon: minX, lat: maxY), LatLon(lon: maxX, lat: maxY))
+	let lft = GreatCircleDistance( LatLon(lon: minX, lat: minY), LatLon(lon: minX, lat: maxY))
+	let rgt = GreatCircleDistance( LatLon(lon: maxX, lat: minY), LatLon(lon: maxX, lat: maxY))
+	let dia = GreatCircleDistance( LatLon(lon: minX, lat: minY), LatLon(lon: maxX, lat: maxY))
+
+	// Total area is the area of the two triangles formed by the diagonal
+	// This is approximate because we ignore curvature inside the triangles
+	let a1 = AreaOfTriangleWithSides( top, lft, dia)
+	let a2 = AreaOfTriangleWithSides( bot, rgt, dia)
+	return a1+a2
+
+	#if false
+	// This is a naive approach that ignores curvature:
 	let lon1 = latLon.origin.x * .pi / 180.0
 	let lat1 = latLon.origin.y * .pi / 180.0
 	let lon2: Double = (latLon.origin.x + latLon.size.width) * .pi / 180.0
 	let lat2: Double = (latLon.origin.y + latLon.size.height) * .pi / 180.0
+	if latLon.origin.y == -90.0 {
+		// use area of circle
+		let r = EarthRadius * abs(cos(lat2))
+		return .pi * r * r
+	}
+	// use area of rectangle
 	let A = EarthRadius * EarthRadius * abs(sin(lat1) - sin(lat2)) * abs(lon1 - lon2)
 	return A
+	#endif
 }
 
 // http://www.movable-type.co.uk/scripts/latlong.html

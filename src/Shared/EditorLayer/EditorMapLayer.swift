@@ -50,7 +50,7 @@ protocol EditorMapLayerOwner: UIView, MapViewProgress {
 	func presentError(_ error: Error, flash: Bool)
 
 	func setScreenFromMap(transform: OSMTransform) // used when undo/redo change the location
-	func screenLatLonRect() -> OSMRect
+	func boundingLatLonRectForScreen() -> OSMRect
 	func metersPerPixel() -> Double
 
 	// boolean options chosen by owner
@@ -306,12 +306,31 @@ final class EditorMapLayer: CALayer {
 			return // identity, we haven't been initialized yet
 		}
 
-		let box = owner.screenLatLonRect()
+		let box = owner.boundingLatLonRectForScreen()
 		if box.size.height <= 0 || box.size.width <= 0 {
 			return
 		}
 
-		mapData.downloadMissingData(inRect: box, withProgress: owner, didChange: { [self] error in
+		let view: ViewRegion
+		if MapTransform.projection == .mercator {
+			view = ViewRegion(encloses: { return box.containsRect($0)},
+							  intersects: { return box.intersectsRect($0)})
+		} else {
+			let mapTransform = owner.mapTransform
+			let sc = self.bounds
+			view = ViewRegion(encloses: {
+				let corners = $0.corners().map { mapTransform.screenPoint(forLatLon: LatLon($0), birdsEye: true) }
+				return corners.first(where: { !sc.contains($0) }) == nil
+			}, intersects: {
+				let corners = $0.corners().map { mapTransform.screenPoint(forLatLon: LatLon($0), birdsEye: true) }
+				return corners.first(where: { sc.contains($0) }) != nil
+			})
+		}
+
+		let center = owner.mapTransform.latLon(forScreenPoint: owner.crosshairs())
+		print("box contains center = \(box.containsPoint(OSMPoint(center)))")
+
+		mapData.downloadMissingData(inRect: view, withProgress: owner, didChange: { [self] error in
 			if let error = error {
 				// present error asynchrounously so we don't interrupt the current UI action
 				DispatchQueue.main.async(execute: { [self] in
@@ -1351,7 +1370,7 @@ final class EditorMapLayer: CALayer {
 	// MARK: Select objects and draw
 
 	func getVisibleObjects() -> ContiguousArray<OsmBaseObject> {
-		let box = owner.screenLatLonRect()
+		let box = owner.boundingLatLonRectForScreen()
 		var a: ContiguousArray<OsmBaseObject> = []
 		a.reserveCapacity(4000)
 		mapData.enumerateObjects(inRegion: box, block: { obj in
@@ -1426,6 +1445,9 @@ final class EditorMapLayer: CALayer {
 
 		// get objects in visible rect
 		var objects = getVisibleObjects()
+
+		let a = mapData.nodes.values.map({ owner.mapTransform.screenPoint(forLatLon: $0.latLon, birdsEye: true) })
+		print("getObjectsToDisplay = \(a)")
 
 		atVisibleObjectLimit = objects.count >= objectLimit // we want this to reflect the unfiltered count
 

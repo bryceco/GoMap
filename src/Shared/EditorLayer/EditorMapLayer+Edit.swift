@@ -727,7 +727,7 @@ extension EditorMapLayer {
 				}
 			case .RECTANGULARIZE:
 				guard let selectedWay = self.selectedWay else { return }
-				if selectedWay.ident >= 0, !owner.screenLatLonRect().containsRect(selectedWay.boundingBox) {
+				if selectedWay.ident >= 0, !owner.boundingLatLonRectForScreen().containsRect(selectedWay.boundingBox) {
 					throw EditError.text(NSLocalizedString("The selected way must be completely visible",
 					                                       comment: "")) // avoid bugs where nodes are deleted from other objects
 				}
@@ -749,7 +749,7 @@ extension EditorMapLayer {
 			case .STRAIGHTEN:
 				if let selectedWay = self.selectedWay {
 					let boundingBox = selectedWay.boundingBox
-					if selectedWay.ident >= 0, !owner.screenLatLonRect().containsRect(boundingBox) {
+					if selectedWay.ident >= 0, !owner.boundingLatLonRectForScreen().containsRect(boundingBox) {
 						throw EditError.text(NSLocalizedString("The selected way must be completely visible",
 						                                       comment: "")) // avoid bugs where nodes are deleted from other objects
 					} else {

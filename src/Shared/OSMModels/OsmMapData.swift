@@ -591,12 +591,41 @@ final class OsmMapData: NSObject, NSCoding {
 
 	// returns a list of ServerQuery objects
 	private class func coalesceQuadQueries(_ quadList: [QuadBox]) -> [ServerQuery] {
-		// make a query for every quad
-		var queries = quadList.map { quad -> ServerQuery in
-			let query = ServerQuery()
-			query.quadList = [quad]
-			query.rect = quad.rect
-			return query
+		var queries: [ServerQuery] = []
+		if quadList.count > 100 {
+			// Special handling for polar projection where the number of boxes is often huge
+			// We place all items of equal latitude in buckets, then for each latitude
+			// we sort east-west, and then accumulate runs of equal-sized quads
+			var latBuckets = [Double: [QuadBox]]()
+			for q in quadList {
+				latBuckets[q.rect.origin.y, default: []].append(q)
+			}
+			for list in latBuckets.values {
+				var list = list.sorted { $0.rect.origin.x < $1.rect.origin.x }
+				while let first = list.first {
+					var rightEdge = first.rect.origin.x + first.rect.size.width
+					var right = 1
+					while right < list.count && list[right].rect.origin.x == rightEdge && list[right].rect.size.height == first.rect.size.height {
+						right += 1
+						rightEdge += first.rect.size.width
+					}
+					let query = ServerQuery()
+					query.rect = OSMRect(origin: first.rect.origin,
+										 size: OSMSize(width: rightEdge-first.rect.origin.x, height: first.rect.size.height))
+					print("\(query.rect) -> \(query.rect.size.height*query.rect.size.width)")
+					query.quadList = Array(list[0..<right])
+					list.removeSubrange(0..<right)
+					queries.append( query )
+				}
+			}
+		} else {
+			// make a query for every quad
+			queries = quadList.map { quad -> ServerQuery in
+				let query = ServerQuery()
+				query.quadList = [quad]
+				query.rect = quad.rect
+				return query
+			}
 		}
 		loop: while true {
 			for q in queries {
@@ -635,6 +664,10 @@ final class OsmMapData: NSObject, NSCoding {
 						- (q.rect.size.width * q.rect.size.height + other.rect.size.width * other.rect.size.height)
 					assert(areaDiff == 0.0)
 #endif
+					if newRect.size.width * newRect.size.height >= 0.25 {
+						// combining will cause problems with the server so skip
+						continue
+					}
 					q.rect = newRect
 					q.quadList += other.quadList
 					queries.remove(at: index)
@@ -659,7 +692,7 @@ final class OsmMapData: NSObject, NSCoding {
 	///	- We then combine (coalesceQuadQueries) adjacent quads into a single rectangle
 	///	- We submit the rect to the server
 	///	- Once we've successfully fetched the data for the rect we tell the QuadMap that it can mark the given QuadBoxes as downloaded
-	func downloadMissingData(inRect rect: OSMRect,
+	func downloadMissingData(inRect rect: ViewRegion,
 	                         withProgress progress: NSObjectProtocol & MapViewProgress,
 	                         didChange: @escaping (_ error: Error?) -> Void)
 	{

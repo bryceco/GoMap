@@ -21,6 +21,11 @@ enum QUAD_ENUM: Int, CaseIterable {
 	case NW = 3
 }
 
+struct ViewRegion {
+	let encloses: (OSMRect) -> Bool
+	let intersects: (OSMRect) -> Bool
+}
+
 final class QuadBox: NSObject, NSCoding {
 	static let emptyChildren: [QuadBox?] = [nil, nil, nil, nil]
 
@@ -123,8 +128,8 @@ final class QuadBox: NSObject, NSCoding {
 
 	// MARK: Region
 
-	func missingPieces(_ missing: inout [QuadBox], intersecting needed: OSMRect) {
-		assert(needed.intersectsRect(rect))
+	func missingPieces(_ missing: inout [QuadBox], intersecting needed: ViewRegion) {
+		assert(needed.intersects(rect))
 
 		if isDownloaded || busy {
 			// previously downloaded, or in the process of being downloaded
@@ -137,7 +142,7 @@ final class QuadBox: NSObject, NSCoding {
 //			print("depth \(Int(round(log2(360.0/rect.size.width))))")
 			return
 		}
-		if needed.containsRect(rect), !hasChildren() {
+		if needed.encloses(rect), !hasChildren() {
 			// no part of us has been downloaded, and we're completely covered by the needed area
 			busy = true
 			missing.append(self)
@@ -148,7 +153,7 @@ final class QuadBox: NSObject, NSCoding {
 		// find the child pieces that are partially covered and recurse
 		for child in QUAD_ENUM.allCases {
 			let rc = QuadBox.ChildRect(child, rect)
-			if needed.intersectsRect(rc) {
+			if needed.intersects(rc) {
 				if children[child.rawValue] == nil {
 					children[child.rawValue] = QuadBox(rect: rc, parent: self)
 				}

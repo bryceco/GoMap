@@ -175,6 +175,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 	@objc func hover(_ recognizer: UIGestureRecognizer) {
 		let loc = recognizer.location(in: mapView)
+		print("hover = \(mapView.mapTransform.latLon(forScreenPoint: loc))")
 		var segment = 0
 		var hit: OsmBaseObject?
 		if recognizer.state == .changed,

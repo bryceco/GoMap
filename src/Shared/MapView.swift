@@ -225,27 +225,29 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				pp = mapTransform.latLon(forScreenPoint: pushpinView.arrowPoint)
 			}
 
-			// Wrap around if we translate too far longitudinally
-			let unitX = t.unitX()
-			let unitY = OSMPoint(x: -unitX.y, y: unitX.x)
-			let tran = t.translation()
-			let dx = Dot(tran, unitX) // translation distance in x direction
-			let dy = Dot(tran, unitY)
-			let scale = t.scale()
-			let mapSize = 256 * scale
-			if dx > 0 {
-				let mul = ceil(dx / mapSize)
-				t = t.translatedBy(dx: -mul * mapSize / scale, dy: 0.0)
-			} else if dx < -mapSize {
-				let mul = floor(-dx / mapSize)
-				t = t.translatedBy(dx: mul * mapSize / scale, dy: 0.0)
-			}
+			if MapTransform.projection == .mercator {
+				// Wrap around if we translate too far longitudinally
+				let unitX = t.unitX()
+				let unitY = OSMPoint(x: -unitX.y, y: unitX.x)
+				let tran = t.translation()
+				let dx = Dot(tran, unitX) // translation distance in x direction
+				let dy = Dot(tran, unitY)
+				let scale = t.scale()
+				let mapSize = 256 * scale
+				if dx > 0 {
+					let mul = ceil(dx / mapSize)
+					t = t.translatedBy(dx: -mul * mapSize / scale, dy: 0.0)
+				} else if dx < -mapSize {
+					let mul = floor(-dx / mapSize)
+					t = t.translatedBy(dx: mul * mapSize / scale, dy: 0.0)
+				}
 
-			// limit scrolling latitudinally
-			if dy > mapSize {
-				t = t.translatedBy(dx: 0.0, dy: mapSize - dy)
-			} else if dy < -2 * mapSize {
-				t = t.translatedBy(dx: 0.0, dy: -2 * mapSize - dy)
+				// limit scrolling latitudinally
+				if dy > mapSize {
+					t = t.translatedBy(dx: 0.0, dy: mapSize - dy)
+				} else if dy < -2 * mapSize {
+					t = t.translatedBy(dx: 0.0, dy: -2 * mapSize - dy)
+				}
 			}
 
 			// update transform
@@ -254,7 +256,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			// Determine if we've zoomed out enough to disable editing
 			// We can only compute a precise surface area size at high zoom since it's possible
 			// for the earth to be larger than the screen
-			let area = mapTransform.zoom() > 12 ? SurfaceAreaOfRect(screenLatLonRect()) : Double.greatestFiniteMagnitude
+			let area = mapTransform.zoom() > 12 ? SurfaceAreaOfRect(boundingLatLonRectForScreen()) : Double.greatestFiniteMagnitude
 			var isZoomedOut = area > 2.0 * 1000 * 1000
 			if !editorLayer.isHidden, !editorLayer.atVisibleObjectLimit, area < 200.0 * 1000 * 1000 {
 				isZoomedOut = false
@@ -834,10 +836,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	func save() {
-		// save defaults firs
-		var center = OSMPoint(crossHairs.position)
-		center = mapTransform.mapPoint(forScreenPoint: center, birdsEye: false)
-		let latLon = MapTransform.latLon(forMapPoint: center)
+		// save defaults first
+		let latLon = mapTransform.latLon(forScreenPoint: crossHairs.position)
 		let scale = screenFromMapTransform.scale()
 #if false && DEBUG
 		assert(scale > 1.0)
@@ -1276,7 +1276,15 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		return mapTransform.boundingMapRect(forScreenRect: rc)
 	}
 
-	func screenLatLonRect() -> OSMRect {
+	func boundingLatLonRectForScreen() -> OSMRect {
+		if MapTransform.projection == .polarSouth {
+			let ptPole = mapTransform.screenPoint(forLatLon: LatLon(lon: 0.0, lat: -90.0), birdsEye: true)
+			let rc = OSMRect(layer.bounds)
+			if rc.containsPoint(OSMPoint(ptPole)) {
+				// if the screen covers the south pole we use a default
+				return OSMRect(x: -180.0, y: -90.0, width: 360.0, height: 0.2 / 360.0)
+			}
+		}
 		let rc = boundingMapRectForScreen()
 		let rect = MapTransform.latLon(forMapRect: rc)
 		return rect
@@ -1284,6 +1292,20 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	func setTransformFor(latLon: LatLon) {
 		var lat = latLon.lat
+		if lat < -88.0 {
+			// South pole
+			MapTransform.projection = .polarSouth
+			screenFromMapTransform = .identity
+			let point = mapTransform.screenPoint(forLatLon: latLon, birdsEye: false)
+			let center = crossHairs.position
+			let delta = CGPoint(x: center.x - point.x, y: center.y - point.y)
+			adjustOrigin(by: delta)
+			return
+		}
+		if MapTransform.projection != .mercator {
+			MapTransform.projection = .mercator
+			screenFromMapTransform = .identity
+		}
 		lat = min(lat, MapTransform.latitudeLimit)
 		lat = max(lat, -MapTransform.latitudeLimit)
 		let latLon2 = LatLon(latitude: lat, longitude: latLon.lon)
@@ -1636,6 +1658,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		let o = OSMTransform.translation(Double(delta.x), Double(delta.y))
 		let t = screenFromMapTransform.concat(o)
 		screenFromMapTransform = t
+
+		let ll = mapTransform.latLon(forScreenPoint: crossHairs.position)
+		print("center = \(ll), zoom = \(mapTransform.zoom())")
 	}
 
 	func adjustZoom(by ratio: CGFloat, aroundScreenPoint zoomCenter: CGPoint) {
@@ -2228,7 +2253,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	func updateNotesFromServer(withDelay delay: CGFloat) {
 		if viewOverlayMask.contains(.NOTES) {
-			let rc = screenLatLonRect()
+			let rc = boundingLatLonRectForScreen()
 			notesDatabase.updateRegion(rc, withDelay: delay, fixmeData: editorLayer.mapData) { [self] in
 				refreshNoteButtonsFromDatabase()
 			}

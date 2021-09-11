@@ -97,8 +97,7 @@ class RulerView: UIView {
 			return
 		}
 
-		let metersPerPixel = mapView?.metersPerPixel() ?? 0.0
-		if metersPerPixel == 0 {
+		guard let metersPerPixel = mapView?.metersPerPixel() else {
 			return
 		}
 

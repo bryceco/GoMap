@@ -98,17 +98,16 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 			return
 		}
 
-		let rc = mapView.screenLatLonRect()
-
 		var zoomLevel = self.zoomLevel()
 		if zoomLevel > 21 {
 			zoomLevel = 21
 		}
 
+		let latLon = mapView.mapTransform.latLon(forScreenPoint: mapView.crosshairs())
 		let url = String(
 			format: metadataUrl,
-			rc.origin.y + rc.size.height / 2,
-			rc.origin.x + rc.size.width / 2,
+			latLon.lat,
+			latLon.lon,
 			zoomLevel)
 
 		if let url = URL(string: url) {

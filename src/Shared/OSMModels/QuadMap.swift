@@ -48,19 +48,8 @@ class QuadMap: NSObject, NSCoding {
 
 	// MARK: Regions
 
-	func missingQuads(forRect newRect: OSMRect) -> [QuadBox] {
-		var newRect = newRect
+	func missingQuads(forRect newRect: ViewRegion) -> [QuadBox] {
 		var quads: [QuadBox] = []
-
-		assert(newRect.origin.x >= -180.0 && newRect.origin.x <= 180.0)
-		if newRect.origin.x + newRect.size.width > 180 {
-			let half = OSMRect(origin: OSMPoint(x: -180.0,
-			                                    y: newRect.origin.y),
-			                   size: OSMSize(width: newRect.origin.x + newRect.size.width - 180.0,
-			                                 height: newRect.size.height))
-			rootQuad.missingPieces(&quads, intersecting: half)
-			newRect.size.width = 180 - newRect.origin.x
-		}
 		rootQuad.missingPieces(&quads, intersecting: newRect)
 		return quads
 	}
