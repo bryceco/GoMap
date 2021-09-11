@@ -174,17 +174,14 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		   let version = Int(version),
 		   let changeset = attributeDict["changeset"],
 		   let changeset = Int64(changeset),
-		   let user = attributeDict["user"],
-		   let uid = attributeDict["uid"],
-		   let uid = Int(uid),
 		   let ident = attributeDict["id"],
 		   let ident = Int64(ident),
 		   let timestamp = attributeDict["timestamp"]
 		{
 			self.version = version
 			self.changeset = changeset
-			self.user = user
-			self.uid = uid
+			self.user = attributeDict["user"] ?? ""		// can be missing on old objects
+			self.uid = Int(attributeDict["uid"] ?? "") ?? 0	// can be missing on old objects
 			visible = true
 			self.ident = ident
 			self.timestamp = timestamp
