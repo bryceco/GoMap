@@ -623,7 +623,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 	@objc func applicationDidEnterBackground(_ sender: Any?) {
 		let appDelegate = AppDelegate.shared
-		if appDelegate.mapView!.gpsInBackground, appDelegate.mapView!.enableGpxLogging {
+		if appDelegate.mapView!.gpsInBackground, appDelegate.mapView!.displayGpxLogs {
 			// allow GPS collection in background
 		} else {
 			// turn off GPS tracking

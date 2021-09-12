@@ -391,6 +391,7 @@ class GpxViewController: UITableViewController {
 			let track = gpxLayer.previousTracks[indexPath.row]
 			gpxLayer.selectedTrack = track
 			gpxLayer.center(on: track)
+			AppDelegate.shared.mapView.displayGpxLogs = true
 			navigationController?.dismiss(animated: true)
 		}
 	}

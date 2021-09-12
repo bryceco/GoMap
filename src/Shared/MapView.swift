@@ -333,7 +333,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		set(gpsInBackground) {
 			GpxLayer.backgroundTracking = gpsInBackground
 
-			locationManager.allowsBackgroundLocationUpdates = gpsInBackground && enableGpxLogging
+			locationManager.allowsBackgroundLocationUpdates = gpsInBackground && displayGpxLogs
 
 			if gpsInBackground {
 				// ios 8 and later:
@@ -376,10 +376,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 	}
 
-	var enableGpxLogging: Bool = false {
+	var displayGpxLogs: Bool = false {
 		didSet {
-			gpxLayer.isHidden = !enableGpxLogging
-			locationManager.allowsBackgroundLocationUpdates = gpsInBackground && enableGpxLogging
+			gpxLayer.isHidden = !displayGpxLogs
+			locationManager.allowsBackgroundLocationUpdates = gpsInBackground && displayGpxLogs
 		}
 	}
 
@@ -663,7 +663,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		locationManagerExtraneousNotification = true // flag that we're going to receive a bogus notification from CL
 		locationManager.delegate = self
 		locationManager.pausesLocationUpdatesAutomatically = false
-		locationManager.allowsBackgroundLocationUpdates = gpsInBackground && enableGpxLogging
+		locationManager.allowsBackgroundLocationUpdates = gpsInBackground && displayGpxLogs
 		if #available(iOS 11.0, *) {
 			locationManager.showsBackgroundLocationIndicator = true
 		}
@@ -750,7 +750,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		enableRotation = UserDefaults.standard.bool(forKey: "mapViewEnableRotation")
 		enableBirdsEye = UserDefaults.standard.bool(forKey: "mapViewEnableBirdsEye")
 		enableUnnamedRoadHalo = UserDefaults.standard.bool(forKey: "mapViewEnableUnnamedRoadHalo")
-		enableGpxLogging = UserDefaults.standard.bool(forKey: "mapViewEnableBreadCrumb")
+		displayGpxLogs = UserDefaults.standard.bool(forKey: "mapViewEnableBreadCrumb")
 		enableTurnRestriction = UserDefaults.standard.bool(forKey: "mapViewEnableTurnRestriction")
 
 		countryCodeForLocation = UserDefaults.standard.object(forKey: "countryCodeForLocation") as? String
@@ -852,7 +852,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		UserDefaults.standard.set(enableRotation, forKey: "mapViewEnableRotation")
 		UserDefaults.standard.set(enableBirdsEye, forKey: "mapViewEnableBirdsEye")
 		UserDefaults.standard.set(enableUnnamedRoadHalo, forKey: "mapViewEnableUnnamedRoadHalo")
-		UserDefaults.standard.set(enableGpxLogging, forKey: "mapViewEnableBreadCrumb")
+		UserDefaults.standard.set(displayGpxLogs, forKey: "mapViewEnableBreadCrumb")
 		UserDefaults.standard.set(enableTurnRestriction, forKey: "mapViewEnableTurnRestriction")
 		UserDefaults.standard.set(enableAutomaticCacheManagement, forKey: "automaticCacheManagement")
 

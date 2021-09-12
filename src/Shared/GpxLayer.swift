@@ -20,21 +20,26 @@ final class GpxTrackLayerWithProperties: CAShapeLayer {
 }
 
 final class GpxPoint: NSObject, NSCoding {
-	var latLon = LatLon.zero
-	var accuracy = 0.0
-	var elevation = 0.0
-	var timestamp: Date?
+	let latLon: LatLon
+	let accuracy: Double
+	let elevation: Double
+	let timestamp: Date? // imported GPX files may not contain a date
+
+	init(latLon: LatLon, accuracy: Double, elevation: Double, timestamp: Date?) {
+		self.latLon = latLon
+		self.accuracy = accuracy
+		self.elevation = elevation
+		self.timestamp = timestamp
+		super.init()
+	}
 
 	required init(coder aDecoder: NSCoder) {
-		super.init()
-		latLon.lat = aDecoder.decodeDouble(forKey: "lat")
-		latLon.lon = aDecoder.decodeDouble(forKey: "lon")
+		let lat = aDecoder.decodeDouble(forKey: "lat")
+		let lon = aDecoder.decodeDouble(forKey: "lon")
+		latLon = LatLon(latitude: lat, longitude: lon)
 		accuracy = aDecoder.decodeDouble(forKey: "acc")
 		elevation = aDecoder.decodeDouble(forKey: "ele")
 		timestamp = aDecoder.decodeObject(forKey: "time") as? Date
-	}
-
-	override init() {
 		super.init()
 	}
 
@@ -105,15 +110,12 @@ final class GpxTrack: NSObject, NSCoding {
 			distance += d
 		}
 
-		let pt = GpxPoint()
-		pt.latLon = coordinate
-		pt.timestamp = location.timestamp
-		pt.elevation = location.altitude
-		pt.accuracy = location.horizontalAccuracy
+		let pt = GpxPoint(latLon: coordinate,
+		                  accuracy: location.horizontalAccuracy,
+		                  elevation: location.altitude,
+		                  timestamp: location.timestamp)
 
 		points.append(pt)
-
-		//	DLog( @"%f,%f (%f): %lu gpx points", coordinate.longitude, coordinate.latitude, location.horizontalAccuracy, (unsigned long)_points.count );
 	}
 
 	func finish() {
@@ -251,17 +253,23 @@ final class GpxTrack: NSObject, NSCoding {
 				throw GpxError.badGpxFormat
 			}
 
-			let point = GpxPoint()
-			point.latLon = LatLon(latitude: lat, longitude: lon)
-
+			let latLon = LatLon(latitude: lat, longitude: lon)
+			var timestamp: Date?
+			var elevation = 0.0
 			if let time = pt.elements(forName: "time").last?.stringValue {
-				point.timestamp = dateFormatter.date(from: time)
+				timestamp = dateFormatter.date(from: time)
 			}
 			if let ele = pt.elements(forName: "ele").last?.stringValue,
 			   let ele = Double(ele)
 			{
-				point.elevation = ele
+				elevation = ele
 			}
+
+			let point = GpxPoint(latLon: latLon,
+			                     accuracy: 0.0,
+			                     elevation: elevation,
+			                     timestamp: timestamp)
+
 			points.append(point)
 		}
 		if points.count < 2 {
@@ -304,12 +312,10 @@ final class GpxTrack: NSObject, NSCoding {
 			return 0.0
 		}
 
-		let start = points.first
-		let finish = points.last
-		if let timestamp1 = start?.timestamp {
-			return finish?.timestamp?.timeIntervalSince(timestamp1) ?? 0.0
-		}
-		return 0.0
+		guard let start = points.first?.timestamp,
+		      let finish = points.last?.timestamp
+		else { return 0.0 }
+		return finish.timeIntervalSince(start)
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -678,7 +684,7 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 		if center {
 			self.center(on: newTrack)
 			selectedTrack = newTrack
-			mapView.enableGpxLogging = true // ensure GPX tracks are visible
+			mapView.displayGpxLogs = true // ensure GPX tracks are visible
 		}
 		save(toDisk: newTrack)
 	}
