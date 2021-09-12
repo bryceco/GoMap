@@ -446,25 +446,20 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 
 	func delete(_ track: GpxTrack) {
 		let path = URL(fileURLWithPath: saveDirectory()).appendingPathComponent(track.fileName()).path
-		do {
-			try FileManager.default.removeItem(atPath: path)
-		} catch {}
+		try? FileManager.default.removeItem(atPath: path)
 		previousTracks.removeAll { $0 === track }
 		track.shapeLayer?.removeFromSuperlayer()
+		uploadedTracks.removeValue(forKey: track.name)
 		setNeedsLayout()
-
-		if uploadedTracks[track.name] != nil {
-			uploadedTracks.removeValue(forKey: track.name)
-		}
 	}
 
 	func markTrackUploaded(_ track: GpxTrack) {
 		uploadedTracks[track.name] = true
 	}
 
+	// Removes GPX tracks older than date.
+	// This is called when the user selects a new age limit for tracks.
 	func trimTracksOlderThan(_ date: Date) {
-		// trim off old tracks
-
 		while let track = previousTracks.last {
 			let point = track.points[0]
 			if let timestamp1 = point.timestamp {
@@ -585,15 +580,12 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 		didLoadSavedTracks = true
 
 		let expiration = GpxLayer.expirationDays
-		let deleteIfCreatedBefore = expiration == 0 ? Date
-			.distantPast : Date(timeIntervalSinceNow: TimeInterval(-expiration * 24 * 60 * 60))
+		let deleteIfCreatedBefore = expiration == 0 ? Date.distantPast
+			: Date(timeIntervalSinceNow: TimeInterval(-expiration * 24 * 60 * 60))
 
 		DispatchQueue.global(qos: .default).async(execute: { [self] in
 			let dir = saveDirectory()
-			var files: [String] = []
-			do {
-				files = try FileManager.default.contentsOfDirectory(atPath: dir)
-			} catch {}
+			var files = (try? FileManager.default.contentsOfDirectory(atPath: dir)) ?? []
 
 			files = files.sorted { $0.compare($1, options: .caseInsensitive) == .orderedAscending }
 				.reversed() // file names are timestamps, so sort increasing
@@ -614,8 +606,6 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 						continue
 					}
 					DispatchQueue.main.async(execute: { [self] in
-						// DLog(@"track %@: %@, %ld points\n",file,track.creationDate, (long)track.points.count);
-
 						previousTracks.append(track)
 						setNeedsLayout()
 						if let progressCallback = progressCallback {
