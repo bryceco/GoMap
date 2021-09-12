@@ -293,23 +293,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					gpxLayer.endActiveTrack()
 				}
 
-				if gpsState == .HEADING {
-					// rotate to heading
-					if let heading = locationManager.heading {
-						let center = bounds.center()
-						let screenAngle = screenFromMapTransform.rotation()
-						let heading = self.heading(for: heading)
-						animateRotation(by: -(screenAngle + heading), aroundPoint: center)
-					}
-				} else if gpsState == .LOCATION {
-					// orient toward north
-					let center = bounds.center()
-					let rotation = screenFromMapTransform.rotation()
-					animateRotation(by: -rotation, aroundPoint: center)
-				} else {
-					// keep whatever rotation we had
-				}
-
 				if gpsState == .NONE {
 					centerOnGPSButton.isHidden = true
 					voiceAnnouncement?.enabled = false
@@ -1393,8 +1376,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		switch gpsState {
 		case .HEADING:
 			gpsState = .LOCATION
+			rotateToNorth()
 		case .LOCATION:
 			gpsState = .HEADING
+			rotateToHeading()
 		case .NONE:
 			rotateToNorth()
 		}
@@ -1776,6 +1761,16 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		let center = bounds.center()
 		let rotation = screenFromMapTransform.rotation()
 		animateRotation(by: -rotation, aroundPoint: center)
+	}
+
+	func rotateToHeading() {
+		// Rotate to face current compass heading
+		if let heading = locationManager.heading {
+			let center = bounds.center()
+			let screenAngle = screenFromMapTransform.rotation()
+			let heading = self.heading(for: heading)
+			animateRotation(by: -(screenAngle + heading), aroundPoint: center)
+		}
 	}
 
 	// MARK: Key presses
@@ -2576,9 +2571,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		// Rotate screen
 		if enableRotation {
-			if rotationGesture.state == .began {
-				// ignore
-			} else if rotationGesture.state == .changed {
+			switch rotationGesture.state {
+			case .began:
+				break // ignore
+			case .changed:
 				let centerPoint = rotationGesture.location(in: self)
 				let angle = rotationGesture.rotation
 				rotate(by: angle, aroundScreenPoint: centerPoint)
@@ -2587,8 +2583,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				if gpsState == .HEADING {
 					gpsState = .LOCATION
 				}
-			} else if rotationGesture.state == .ended {
+			case .ended:
 				updateNotesFromServer(withDelay: 0)
+			default:
+				break // ignore
 			}
 		}
 	}
@@ -2656,9 +2654,8 @@ extension MapView: EditorMapLayerOwner {
 			break
 		case .editBar:
 			var button = editControl.bounds
-			let segmentWidth = button.size
-				.width /
-				CGFloat(editControl.numberOfSegments) // hack because we can't get the frame for an individual segment
+			let segmentWidth = button.size.width
+				/ CGFloat(editControl.numberOfSegments) // hack because we can't get the frame for an individual segment
 			button.origin.x += button.size.width - 2 * segmentWidth
 			button.size.width = segmentWidth
 			alert.popoverPresentationController?.sourceView = editControl
