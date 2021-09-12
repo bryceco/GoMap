@@ -128,6 +128,12 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		displayButton.accessibilityLabel = NSLocalizedString("Display options", comment: "")
 	}
 
+	override func viewDidLayoutSubviews() {
+		// Set button shadows, colors, etc.
+		// Need to do this after layout to propery support dynamic text
+		setButtonAppearances()
+	}
+
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		navigationController?.isNavigationBarHidden = true
@@ -137,8 +143,6 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			"buttonLayout": NSNumber(value: BUTTON_LAYOUT._ADD_ON_RIGHT.rawValue)
 		])
 		buttonLayout = BUTTON_LAYOUT(rawValue: UserDefaults.standard.integer(forKey: "buttonLayout"))
-
-		setButtonAppearances()
 
 		if #available(iOS 13.4, macCatalyst 13.0, *) {
 			// mouseover support for Mac Catalyst and iPad:
@@ -250,7 +254,9 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 #endif
 
 	func setButtonAppearances() {
-		// update button styling
+		// Update button styling
+		// This is called every time fonts change, screen rotates, etc so
+		// it needs to be idempotent.
 		let buttons: [UIView] = [
 			// these aren't actually buttons, but they get similar tinting and shadows
 			mapView.editControl,
@@ -326,16 +332,20 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 				// pointer interaction when using a mouse
 				if #available(iOS 13.4, *) {
-					let interaction = UIPointerInteraction(delegate: self)
-					button.interactions.append(interaction)
+					if !button.interactions.contains(where: { $0.isKind(of: UIPointerInteraction.self) }) {
+						let interaction = UIPointerInteraction(delegate: self)
+						button.interactions.append(interaction)
+					}
 				}
 			}
 		}
 
 		// special handling for aerial logo button
 		if #available(iOS 13.4, *) {
-			let interaction = UIPointerInteraction(delegate: self)
-			mapView.aerialServiceLogo.interactions.append(interaction)
+			if !mapView.aerialServiceLogo.interactions.contains(where: {$0.isKind(of: UIPointerInteraction.self)}) {
+				let interaction = UIPointerInteraction(delegate: self)
+				mapView.aerialServiceLogo.interactions.append(interaction)
+			}
 		}
 	}
 
