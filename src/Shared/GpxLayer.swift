@@ -543,17 +543,14 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 	}
 
 	override func action(forKey key: String) -> CAAction? {
-		if key == "transform" {
+		switch key {
+		case "transform",
+		     "bounds",
+		     "position":
 			return nil
+		default:
+			return super.action(forKey: key)
 		}
-		if key == "bounds" {
-			return nil
-		}
-		if key == "position" {
-			return nil
-		}
-		//	DLog(@"actionForKey: %@",key);
-		return super.action(forKey: key)
 	}
 
 	// MARK: Caching
