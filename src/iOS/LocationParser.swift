@@ -106,11 +106,10 @@ class LocationParser {
 		if components.scheme == "gomaposm" ||
 			components.host == "gomaposm.com"
 		{
-			var hasCenter = false
-			var hasZoom = false
-			var lat: Double = 0
-			var lon: Double = 0
-			var zoom: Double = 0
+			var lat: Double?
+			var lon: Double?
+			var zoom: Double?
+			var direction: Double?
 			var view: MapViewState?
 
 			for queryItem in components.queryItems ?? [] {
@@ -118,14 +117,21 @@ class LocationParser {
 				case "center":
 					// scan center
 					let scanner = Scanner(string: queryItem.value ?? "")
-					hasCenter = scanner.scanDouble(&lat)
-						&& scanner.scanString(",", into: nil)
-						&& scanner.scanDouble(&lon)
-						&& scanner.isAtEnd
+					var pLat: Double = 0.0
+					var pLon: Double = 0.0
+					if scanner.scanDouble(&pLat),
+					   scanner.scanString(",", into: nil),
+					   scanner.scanDouble(&pLon),
+					   scanner.isAtEnd
+					{
+						lat = pLat
+						lon = pLon
+					}
 				case "zoom":
 					// scan zoom
-					let scanner = Scanner(string: queryItem.value ?? "")
-					hasZoom = scanner.scanDouble(&zoom) && scanner.isAtEnd
+					if let val = queryItem.value {
+						zoom = Double(val)
+					}
 				case "view":
 					// scan view
 					switch queryItem.value {
@@ -135,15 +141,23 @@ class LocationParser {
 					case "editor": view = .EDITOR
 					default: break
 					}
+				case "direction":
+					// direction facing
+					if let val = queryItem.value {
+						direction = Double(val)
+					}
 				default:
 					// unrecognized parameter
 					break
 				}
 			}
-			if hasCenter {
+			if let lat = lat,
+			   let lon = lon
+			{
 				return MapLocation(longitude: lon,
 				                   latitude: lat,
-				                   zoom: hasZoom ? zoom : 0.0,
+				                   zoom: zoom ?? 0.0,
+				                   direction: direction ?? 0.0,
 				                   viewState: view)
 			}
 		}

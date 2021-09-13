@@ -29,6 +29,7 @@ struct MapLocation {
 	var longitude = 0.0
 	var latitude = 0.0
 	var zoom = 0.0
+	var direction = 0.0
 	var viewState: MapViewState? = nil
 }
 
@@ -38,6 +39,7 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 	@IBOutlet var popupText: UILabel!
 
 	var location: CLLocationCoordinate2D?
+	var direction: Double = 0.0
 	var photoText: String!
 
 	override func viewDidLoad() {
@@ -90,6 +92,7 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 						{
 							DispatchQueue.main.async {
 								self.location = location.coordinate
+								self.direction = location.course
 								self.buttonOK.isEnabled = true
 								self.popupText.text = self.photoText
 							}
@@ -204,7 +207,7 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 
 	@IBAction func buttonPressOK() {
 		guard let coord = location else { return }
-		let app = URL(string: "gomaposm://?center=\(coord.latitude),\(coord.longitude)")!
+		let app = URL(string: "gomaposm://?center=\(coord.latitude),\(coord.longitude)&direction=\(direction)")!
 		openApp(withUrl: app)
 		extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
 	}

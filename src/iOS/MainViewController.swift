@@ -342,7 +342,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 		// special handling for aerial logo button
 		if #available(iOS 13.4, *) {
-			if !mapView.aerialServiceLogo.interactions.contains(where: {$0.isKind(of: UIPointerInteraction.self)}) {
+			if !mapView.aerialServiceLogo.interactions.contains(where: { $0.isKind(of: UIPointerInteraction.self) }) {
 				let interaction = UIPointerInteraction(delegate: self)
 				mapView.aerialServiceLogo.interactions.append(interaction)
 			}

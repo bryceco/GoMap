@@ -82,6 +82,7 @@ struct MapLocation {
 	var longitude = 0.0
 	var latitude = 0.0
 	var zoom = 0.0
+	var direction = 0.0 // degrees clockwise from north
 	var viewState: MapViewState? = nil
 }
 
@@ -1295,6 +1296,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		let scale = pow(2, zoom)
 		setTransformFor(latLon: LatLon(latitude: location.latitude, longitude: location.longitude),
 		                scale: scale)
+		let rotation = location.direction * .pi / 180.0 + screenFromMapTransform.rotation()
+		rotate(by: CGFloat(-rotation), aroundScreenPoint: crossHairs.position)
 		if let state = location.viewState {
 			viewState = state
 		}
