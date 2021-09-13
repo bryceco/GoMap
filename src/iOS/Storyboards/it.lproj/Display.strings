@@ -149,7 +149,7 @@
 "w75-Lj-3jF.placeholder" = "Portlandia GIS";
 
 /* Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C"; */
-"wev-ax-u4C.headerTitle" = "Reset";
+"wev-ax-u4C.headerTitle" = "Ripristina";
 
 /* Class = "UILabel"; text = "Delete tracks after:"; ObjectID = "WnI-tY-WWa"; */
 "WnI-tY-WWa.text" = "Elimina tracce dopo:";

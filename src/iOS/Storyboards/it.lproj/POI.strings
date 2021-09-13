@@ -23,7 +23,7 @@
 "9Nw-ha-JK5.placeholder" = "Sì";
 
 /* Class = "UITabBarItem"; title = "All Tags"; ObjectID = "19J-sp-UTX"; */
-"19J-sp-UTX.title" = "Tutti i tag";
+"19J-sp-UTX.title" = "Tutte le etichette";
 
 /* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j"; */
 "436-kv-L7j.placeholder" = "Ristorante";
@@ -38,7 +38,7 @@
 "Bnh-U0-D7i.text" = "Aggiungi Nuovo";
 
 /* Class = "UINavigationItem"; title = "All Tags"; ObjectID = "cN9-3h-H3l"; */
-"cN9-3h-H3l.title" = "Tutti i Tag";
+"cN9-3h-H3l.title" = "Tutte le etichette";
 
 /* Class = "UITextField"; placeholder = "value"; ObjectID = "cP3-lR-lzM"; Note = "Do not translate"; */
 "cP3-lR-lzM.placeholder" = "valore";
@@ -68,7 +68,7 @@
 "Fcv-4Q-gpE.text" = "Valore 3";
 
 /* Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3"; */
-"G5R-oP-lp3.title" = "Tag Personalizzati";
+"G5R-oP-lp3.title" = "Etichette personalizzate";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw"; Note = "Do not translate"; */
 "gv7-b8-wUw.text" = "Etichetta";
@@ -101,7 +101,7 @@
 "li7-oV-pgT.text" = "Valore 5";
 
 /* Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz"; */
-"lPv-s6-uEz.title" = "Tag comuni";
+"lPv-s6-uEz.title" = "Etichette comuni";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "mcN-gM-s7u"; */
 "mcN-gM-s7u.text" = "Nome";

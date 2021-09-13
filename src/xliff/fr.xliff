@@ -1,6 +1,6 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
-  <file original="Direction/Base.lproj/DirectionViewController.xib" datatype="plaintext" source-language="en" target-language="fr">
+  <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="fr" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
@@ -1626,7 +1626,7 @@ Vous pouvez vider le cache (dans Paramètres d'affichage) pour améliorer les pe
       </trans-unit>
     </body>
   </file>
-  <file original="PhotoShare/Base.lproj/MainInterface.storyboard" datatype="plaintext" source-language="en" target-language="fr">
+  <file original="PhotoShare/Base.lproj/MainInterface.storyboard" source-language="en" target-language="fr" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
@@ -1663,7 +1663,7 @@ Vous pouvez vider le cache (dans Paramètres d'affichage) pour améliorer les pe
       </trans-unit>
     </body>
   </file>
-  <file original="PhotoShare/en.lproj/Localizable.strings" datatype="plaintext" source-language="en" target-language="fr">
+  <file original="PhotoShare/en.lproj/Localizable.strings" source-language="en" target-language="fr" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
     </header>
@@ -2781,33 +2781,16 @@ Mapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com
 XML parsing courtesy of Robbie Hanson's KissXML:
 https://github.com/robbiehanson/KissXML
 
+EXIF parsing code Copyright (c) 2010-2015 Mayank Lahiri
+https://github.com/mayanklahiri/easyexif
+
 Map icons by SJJB:
 http://www.sjjb.co.uk/mapicons
 
 Other icons by Glyphish:
 http://glyphish.com
 </source>
-        <target>Copyright © 2012-2020 Bryce Cogswell. 
-Tous droits réservés.
-
-Les données OpenStreetMap sont soumise à la licence Open Data Commons Open Database License (ODbL) :
-https://www.openstreetmap.com/copyright
-
-Imagerie aérienne Bing copyright Microsoft et ses fournisseurs :
-https://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx
-
-Imagerie aérienne Mapbox copyright Mapbox et ses fournisseurs : https://www.mapbox.com/tos
-
-Analyse XML gracieusement fournie par KissXML de Robbie Hanson :
-https://github.com/robbiehanson/KissXML
-
-Icônes de la carte par SJJB :
-http://www.sjjb.co.uk/mapicons
-
-Autres icônes par Glyphish :
-http://glyphish.com
-</target>
-        <note>Class = "UITextView"; text = "Copyright © 2012-2020 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F";</note>
+        <note>Class = "UITextView"; text = "Copyright © 2012-2020 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nEXIF parsing code Copyright (c) 2010-2015 Mayank Lahiri\nhttps://github.com/mayanklahiri/easyexif\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F";</note>
       </trans-unit>
       <trans-unit id="CHj-a3-gC9.text" xml:space="preserve">
         <source>Weblate - Translations</source>

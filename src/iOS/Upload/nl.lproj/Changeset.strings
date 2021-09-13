@@ -10,11 +10,17 @@
 /* Class = "UIButton"; normalTitle = "Edit"; ObjectID = "hcE-yO-3eH"; */
 "hcE-yO-3eH.normalTitle" = "Bewerken";
 
+/* Class = "UILabel"; text = "Changeset comment:"; ObjectID = "ikj-u9-9Bn"; */
+"ikj-u9-9Bn.text" = "Wijzigingenset-commentaar:";
+
 /* Class = "UINavigationItem"; title = "Upload"; ObjectID = "Mdj-M0-0mZ"; */
 "Mdj-M0-0mZ.title" = "Uploaden";
 
 /* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "Plh-7W-ceY"; */
 "Plh-7W-ceY.text" = "Lorem ipsum dolor sit er elit lamet,";
+
+/* Class = "UITextField"; placeholder = "survey, Bing, etc."; ObjectID = "ps9-Hb-Vow"; */
+"ps9-Hb-Vow.placeholder" = "survey, Bing, etc.";
 
 /* Class = "UIButton"; normalTitle = "Mail"; ObjectID = "Rqu-ny-n3F"; */
 "Rqu-ny-n3F.normalTitle" = "Mail";

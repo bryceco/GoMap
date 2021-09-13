@@ -23,7 +23,7 @@
 "9Nw-ha-JK5.placeholder" = "Oui";
 
 /* Class = "UITabBarItem"; title = "All Tags"; ObjectID = "19J-sp-UTX"; */
-"19J-sp-UTX.title" = "Tous les tags";
+"19J-sp-UTX.title" = "Toutes les étiquettes";
 
 /* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j"; */
 "436-kv-L7j.placeholder" = "Restaurant";
@@ -38,7 +38,7 @@
 "Bnh-U0-D7i.text" = "Ajouter";
 
 /* Class = "UINavigationItem"; title = "All Tags"; ObjectID = "cN9-3h-H3l"; */
-"cN9-3h-H3l.title" = "Tous les tags";
+"cN9-3h-H3l.title" = "Toutes les étiquettes";
 
 /* Class = "UITextField"; placeholder = "value"; ObjectID = "cP3-lR-lzM"; Note = "Do not translate"; */
 "cP3-lR-lzM.placeholder" = "valeur";
@@ -74,7 +74,7 @@
 "Fcv-4Q-gpE.text" = "Valeur 3";
 
 /* Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3"; */
-"G5R-oP-lp3.title" = "Tags personnalisés";
+"G5R-oP-lp3.title" = "Étiquettes personnalisées";
 
 /* Class = "UINavigationItem"; title = "Custom Presets"; ObjectID = "GIO-W7-q5U"; */
 "GIO-W7-q5U.title" = "Préréglages personnalisés";
@@ -116,10 +116,10 @@
 "li7-oV-pgT.text" = "Valeur 5";
 
 /* Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz"; */
-"lPv-s6-uEz.title" = "Tags courants";
+"lPv-s6-uEz.title" = "Étiquettes courants";
 
 /* Class = "UINavigationItem"; title = "Common tags"; ObjectID = "mAb-DX-pqb"; */
-"mAb-DX-pqb.title" = "Balises communes";
+"mAb-DX-pqb.title" = "Étiquettes communes";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "mcN-gM-s7u"; */
 "mcN-gM-s7u.text" = "Nom";

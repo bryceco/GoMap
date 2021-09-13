@@ -1,24 +1,24 @@
 /* Bundle display name */
-"CFBundleDisplayName" = "";
+"CFBundleDisplayName" = "Go Map!!";
 
 /* Bundle name */
-"CFBundleName" = "";
+"CFBundleName" = "Go Map!!";
 
 /* (No Comment) */
-"GPS Exchange Format (GPX)" = "";
+"GPS Exchange Format (GPX)" = "GPS-vahetusformaat (GPX)";
 
 /* Privacy - Bluetooth Peripheral Usage Description */
-"NSBluetoothPeripheralUsageDescription" = "";
+"NSBluetoothPeripheralUsageDescription" = "Loo ühendus väliste Bluetooth GPS seadmetega";
 
 /* Privacy - Camera Usage Description */
-"NSCameraUsageDescription" = "";
+"NSCameraUsageDescription" = "Kaamerat kasutatakse hoonete või objektide kõrguse mõõtmiseks";
 
 /* Privacy - Location Always and When In Use Usage Description */
-"NSLocationAlwaysAndWhenInUseUsageDescription" = "";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Alati sisselülitatud asukoha jälgimine võimaldab rakendusel salvestada GPX-faile, kui see ei ole aktiivne.";
 
 /* Privacy - Location Always Usage Description */
-"NSLocationAlwaysUsageDescription" = "";
+"NSLocationAlwaysUsageDescription" = "Sinu asukoht kuvatakse ja jälgitakse kaardil.";
 
 /* Privacy - Location When In Use Usage Description */
-"NSLocationWhenInUseUsageDescription" = "";
+"NSLocationWhenInUseUsageDescription" = "Teie asukoht kuvatakse ja seda jälgitakse kaardil.";
 

@@ -49,9 +49,6 @@
 /* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "AVI-04-hFN"; */
 "AVI-04-hFN.text" = "Тайлы аэрофотосъемки";
 
-/* Class = "UITextView"; text = "Copyright © 2012-2020 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F"; */
-"BHr-ta-k6F.text" = "Авторские права © 2012-2020 Брайс Когсвелл (Bryce Cogswell). \nВсе права защищены.\n\nДанные OpenStreetMap распространяются по лицензии Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nВсе права на аэрофотоснимки Bing принадлежат компании Microsoft и ее поставщикам:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nВсе права на аэрофотоснимки Mapbox принадлежат компании Mapbox и ее поставщикам: https://www.mapbox.com/tos\n\nПарсинг XML любезно предоставлен KissXML Робби Хэнсона:\nhttps://github.com/robbiehanson/KissXML\n\nИконки на карте предоставлены SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nДругие иконки предоставлены Glyphish:\nhttp://glyphish.com\n";
-
 /* Class = "UIButton"; normalTitle = "Start"; ObjectID = "bt0-CH-HbH"; */
 "bt0-CH-HbH.normalTitle" = "Начать";
 

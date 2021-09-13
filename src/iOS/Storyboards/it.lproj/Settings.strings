@@ -37,6 +37,9 @@
 /* Class = "UILabel"; text = "Weblate - Translations"; ObjectID = "CHj-a3-gC9"; */
 "CHj-a3-gC9.text" = "Traduzioni Weblate";
 
+/* Class = "UITableViewSection"; headerTitle = "Bug Reports & Suggestions"; ObjectID = "dbi-X6-Day"; */
+"dbi-X6-Day.headerTitle" = "Segnalazioni di errore e suggerimenti";
+
 /* Class = "UIButton"; normalTitle = "Register new account"; ObjectID = "DY5-Ls-XZ1"; */
 "DY5-Ls-XZ1.normalTitle" = "Registra un nuovo account";
 
@@ -47,7 +50,10 @@
 "fbD-Hr-HNI.headerTitle" = "Credenziali";
 
 /* Class = "UILabel"; text = "Advanced Settings"; ObjectID = "gec-8l-k4H"; */
-"gec-8l-k4H.text" = "Impostazioni Avanzate";
+"gec-8l-k4H.text" = "Impostazioni avanzate";
+
+/* Class = "UITableViewSection"; headerTitle = "Advanced"; ObjectID = "gh3-sb-yuZ"; */
+"gh3-sb-yuZ.headerTitle" = "Avanzato";
 
 /* Class = "UINavigationItem"; title = "Advanced Settings"; ObjectID = "Gxc-44-SzR"; */
 "Gxc-44-SzR.title" = "Impostazioni avanzate";
@@ -56,10 +62,10 @@
 "HNj-kK-OCP.text" = "Titolo";
 
 /* Class = "UINavigationItem"; title = "Language"; ObjectID = "ib9-wt-IzD"; */
-"ib9-wt-IzD.title" = "Linguaggio";
+"ib9-wt-IzD.title" = "Lingua";
 
 /* Class = "UILabel"; text = "Email Feedback"; ObjectID = "iR4-av-Q7M"; */
-"iR4-av-Q7M.text" = "Feedback via e-mail";
+"iR4-av-Q7M.text" = "Commenti via e-mail";
 
 /* Class = "UILabel"; text = "Nearby Mappers"; ObjectID = "jcn-Lx-tj3"; */
 "jcn-Lx-tj3.text" = "Mappatori nelle vicinanze";
@@ -88,11 +94,14 @@
 /* Class = "UILabel"; text = "Detail"; ObjectID = "Mus-SG-1Sz"; */
 "Mus-SG-1Sz.text" = "Dettaglio";
 
+/* Class = "UITableViewSection"; headerTitle = "Miscellaneous"; ObjectID = "nIn-2k-PYG"; */
+"nIn-2k-PYG.headerTitle" = "Varie";
+
 /* Class = "UINavigationItem"; title = "Login"; ObjectID = "O6E-f1-A1k"; */
 "O6E-f1-A1k.title" = "Login";
 
 /* Class = "UITableViewSection"; headerTitle = "About Us"; ObjectID = "oIj-UV-kLH"; */
-"oIj-UV-kLH.headerTitle" = "Chi Siamo";
+"oIj-UV-kLH.headerTitle" = "Chi siamo";
 
 /* Class = "UILabel"; text = "Language"; ObjectID = "osk-Kq-gDX"; */
 "osk-Kq-gDX.text" = "Lingua";
@@ -122,10 +131,10 @@
 "VDO-HW-SLB.title" = "Mappatori nelle vicinanze";
 
 /* Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5"; */
-"whL-SZ-HD5.text" = "Feedback via e-mail";
+"whL-SZ-HD5.text" = "Commenti via e-mail";
 
 /* Class = "UILabel"; text = "GitHub - Issues & Source Code"; ObjectID = "x4m-oT-EG8"; */
-"x4m-oT-EG8.text" = "GitHub - Problemi & Codice Sorgente";
+"x4m-oT-EG8.text" = "GitHub - Problemi e codice sorgente";
 
 /* Class = "UITableViewSection"; headerTitle = "Developer settings"; ObjectID = "yAO-9B-CTd"; */
 "yAO-9B-CTd.headerTitle" = "Opzioni sviluppatore";

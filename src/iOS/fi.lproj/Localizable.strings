@@ -242,6 +242,9 @@
 /* No comment provided by engineer. */
 "meters" = "metriä";
 
+/* last modified date */
+"Modified" = "Muutettu";
+
 /* No comment provided by engineer. */
 "Modify" = "Muuta";
 
@@ -317,6 +320,9 @@
 
 /* No comment provided by engineer. */
 "Relations" = "Relaatiot";
+
+/* Edit action */
+"Restrict" = "Rajoita";
 
 /* No comment provided by engineer. */
 "Restriction: %@" = "Rajoitus: %@";

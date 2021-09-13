@@ -2760,33 +2760,16 @@ Mapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com
 XML parsing courtesy of Robbie Hanson's KissXML:
 https://github.com/robbiehanson/KissXML
 
+EXIF parsing code Copyright (c) 2010-2015 Mayank Lahiri
+https://github.com/mayanklahiri/easyexif
+
 Map icons by SJJB:
 http://www.sjjb.co.uk/mapicons
 
 Other icons by Glyphish:
 http://glyphish.com
 </source>
-        <target>版權聲明 © 2012-2020 Bryce Cogswell
-保留所有權利
-
-OpenStreetMap 資料的使用授權遵循 Open Data Commons Open Database License (ODbL)：
-https://www.openstreetmap.com/copyright
-
-Bing 空照影像的版權聲明 (Microsoft) 與圖資來源：
-https://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx
-
-Mapbox 空照影像的版權聲明 (Mapbox)與其圖資來源： https://www.mapbox.com/tos
-
-XML 的頗析要感謝 Robbie Hanson 的 KissXML：
-https://github.com/robbiehanson/KissXML
-
-圖徵的 icon 來源於 SJJB：
-http://www.sjjb.co.uk/mapicons
-
-其他 icon 來源於 Glyphish：
-http://glyphish.com
-</target>
-        <note>Class = "UITextView"; text = "Copyright © 2012-2020 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F";</note>
+        <note>Class = "UITextView"; text = "Copyright © 2012-2020 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nEXIF parsing code Copyright (c) 2010-2015 Mayank Lahiri\nhttps://github.com/mayanklahiri/easyexif\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F";</note>
       </trans-unit>
       <trans-unit id="CHj-a3-gC9.text" xml:space="preserve">
         <source>Weblate - Translations</source>

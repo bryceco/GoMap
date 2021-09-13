@@ -2625,33 +2625,16 @@ Mapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com
 XML parsing courtesy of Robbie Hanson's KissXML:
 https://github.com/robbiehanson/KissXML
 
+EXIF parsing code Copyright (c) 2010-2015 Mayank Lahiri
+https://github.com/mayanklahiri/easyexif
+
 Map icons by SJJB:
 http://www.sjjb.co.uk/mapicons
 
 Other icons by Glyphish:
 http://glyphish.com
 </source>
-        <target>Bản quyền © 2012–2020 Bryce Cogswell. 
-Mọi quyền được bảo lưu.
-
-Dữ liệu OpenStreetMap được phát hành theo Giấy phép Cơ sở dữ liệu Mở (ODbL) của Open Data Commons:
-https://www.openstreetmap.com/copyright
-
-Không ảnh Bing do Microsoft và các nhà cung cấp giữ bản quyền:
-https://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx
-
-Không ảnh Mapbox do Mapbox và các nhà cung cấp giữ bản quyền: https://www.mapbox.com/tos
-
-Bộ phận phân tích XML KissXML do Robbie Hanson cung cấp:
-https://github.com/robbiehanson/KissXML
-
-Các hình tượng bản đồ do SJJB cung cấp:
-http://www.sjjb.co.uk/mapicons
-
-Các hình tượng khác do Glyphish cung cấp:
-http://glyphish.com
-</target>
-        <note>Class = "UITextView"; text = "Copyright © 2012-2020 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F";</note>
+        <note>Class = "UITextView"; text = "Copyright © 2012-2020 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nEXIF parsing code Copyright (c) 2010-2015 Mayank Lahiri\nhttps://github.com/mayanklahiri/easyexif\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F";</note>
       </trans-unit>
       <trans-unit id="CHj-a3-gC9.text" xml:space="preserve">
         <source>Weblate - Translations</source>

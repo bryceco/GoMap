@@ -80,6 +80,9 @@
 /* No comment provided by engineer. */
 "A relation the node belongs to is not fully downloaded" = "Une relation à laquelle le noeud appartient n'est pas entièrement téléchargée";
 
+/* No comment provided by engineer. */
+"Accept" = "Accepter";
+
 /* Add to relation */
 "Add inner member" = "Ajouter un membre interne";
 
@@ -127,6 +130,9 @@
 
 /* Automatic selection of presets languages */
 "Automatic" = "Automatique";
+
+/* back button */
+"Back" = "Retour";
 
 /* identifies current aerial imagery */
 "Background imagery %@" = "Imagerie de fond %@";
@@ -245,11 +251,17 @@
 /* current GPX track */
 "Current Track" = "Suivi actuel";
 
+/* No comment provided by engineer. */
+"Database error" = "Erreur de base de données";
+
 /* Edit action */
 "Delete" = "Supprimer";
 
 /* No comment provided by engineer. */
 "Delete\n" = "Supprimer\n";
+
+/* Confirm deleting a node/way */
+"Delete %@?" = "Supprimer %@ ?";
 
 /* No comment provided by engineer. */
 "Delete completely" = "Supprimer définitivement";
@@ -289,6 +301,9 @@
 
 /* No comment provided by engineer. */
 "Display options" = "Options d'affichage";
+
+/* Distance to an object with an error value */
+"Distance: %1$@ ± %2$@ meters" = "Distance : %1$@ ± %2$@ mètres";
 
 /* No comment provided by engineer. */
 "Done" = "Terminé";
@@ -343,6 +358,9 @@
 
 /* No comment provided by engineer. */
 "GPX Upload Failed" = "Échec de l'envoi du fichier GPX";
+
+/* Height of an object with an error value */
+"Height: %1$@ ± %2$@ meters" = "Hauteur : %1$@ ± %2$@ mètres";
 
 /* rate the app now */
 "I'll do it!" = "Je le ferai !";
@@ -409,6 +427,9 @@
 
 /* rate the app later */
 "Maybe later..." = "Peut-être plus tard…";
+
+/* No comment provided by engineer. */
+"Measure Direction" = "Mesure de la direction";
 
 /* No comment provided by engineer. */
 "Member of multipolygon relation" = "Membre d'une relation d'un polygone multiple";
@@ -508,7 +529,7 @@
 "Node must be the first or last node of the way" = "Le nœud doit être le premier ou le dernier du chemin";
 
 /* No comment provided by engineer. */
-"Node Tags" = "Balises du nœud";
+"Node Tags" = "Étiquettes du nœud";
 
 /* User credentials not found */
 "Not found" = "Introuvable";
@@ -589,7 +610,7 @@
 "Relation Attributes" = "Attributs de la relation";
 
 /* No comment provided by engineer. */
-"Relation Tags" = "Balises de la relation";
+"Relation Tags" = "Étiquettes de la relation";
 
 /* No comment provided by engineer. */
 "Relation: %@" = "Relation : %@";
@@ -614,6 +635,9 @@
 
 /* country name,2-character country code */
 "Results for %@ (%@)" = "Résultats pour %1$@ (%2$@)";
+
+/* retry opening hours recognition */
+"Retry" = "Réessayer";
 
 /* Edit action */
 "Reverse" = "Inverser";
@@ -654,6 +678,9 @@
 
 /* No comment provided by engineer. */
 "Show Recent Items" = "Afficher les éléments récents";
+
+/* No comment provided by engineer. */
+"Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." = "Un problème est survenu lors de la tentative de restauration de vos données. Toutes les modifications en cours ont été perdues. Désolé.";
 
 /* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "Désolé, une erreur s'est produite lors du chargement du fichier GPX";
@@ -725,6 +752,9 @@
 "This app does not yet support editing turn restrictions without a node as the 'via' member" = "Cette application ne supporte pas encore l'édition d'interdictions de tourner sans nœud avec le rôle 'via'";
 
 /* No comment provided by engineer. */
+"This device is not able to provide heading data." = "Cet appareil n'est pas en mesure de fournir des données de cap.";
+
+/* No comment provided by engineer. */
 "To add another member to the relation 'long press' on the way to be added" = "Pour ajouter un autre membre à la relation effectuez un appui long sur le chemin auquel l'ajoutet";
 
 /* No comment provided by engineer. */
@@ -747,6 +777,9 @@
 
 /* No comment provided by engineer. */
 "Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.\n\nSelect the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route." = "Les interdictions de tourner spécifient sur quelles voies il est possible de tourner à une intersection en provenance d'une direction donnée.\n\nSélectionner la voie de provenance, puis taper sur une flèche pour basculer entre les différentes possibilités.";
+
+/* The 'Type' header in Common Tags */
+"Type" = "Type";
 
 /* No comment provided by engineer. */
 "U-Turn from %@ allowed" = "Demi-tour depuis %@ permis";
@@ -771,6 +804,9 @@
 
 /* update an osm note */
 "Update" = "Mettre à jour";
+
+/* Update the named tag value (e.g. foo=*) */
+"Update '%@' tag" = "Mettre à jour l'étiquette « %@ »";
 
 /* No comment provided by engineer. */
 "update relation members" = "mettre à jour les membres de la relation";
@@ -815,7 +851,7 @@
 "Way Attributes" = "Attributs du chemin";
 
 /* No comment provided by engineer. */
-"Way Tags" = "Balises du chemin";
+"Way Tags" = "Étiquettes du chemin";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Vous vous apprêtez à faire des changements à la base de données OpenStreetMap. Vos changements seront visibles de quiconque dans le monde.\n\nPour continuer, appuyer de nouveau sur Valider, sinon, appuyez sur Annuler.";

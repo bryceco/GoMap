@@ -302,6 +302,9 @@
 /* No comment provided by engineer. */
 "Display options" = "Настройки отображения";
 
+/* Distance to an object with an error value */
+"Distance: %1$@ ± %2$@ meters" = "Расстояние: %1$@ ± %2$@ метров";
+
 /* No comment provided by engineer. */
 "Done" = "Готово";
 
@@ -355,6 +358,9 @@
 
 /* No comment provided by engineer. */
 "GPX Upload Failed" = "Загрузка GPX не удалась";
+
+/* Height of an object with an error value */
+"Height: %1$@ ± %2$@ meters" = "Высота: %1$@ ± %2$@ метров";
 
 /* rate the app now */
 "I'll do it!" = "Будет сделано!";
