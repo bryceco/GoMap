@@ -201,13 +201,14 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 			gradientLayer?.removeFromSuperlayer()
 			gradientLayer = nil
 
-			let cell: UITableViewCell = superviewOfType()!
-			let tableView: UITableView = cell.superviewOfType()!
-
-			if let cellIndexPath = tableView.indexPath(for: cell) {
-				tableView.scrollToRow(at: cellIndexPath, at: .middle, animated: true)
+			if let cell: UITableViewCell = superviewOfType(),
+			   let tableView: UITableView = cell.superviewOfType()
+			{
+				if let cellIndexPath = tableView.indexPath(for: cell) {
+					tableView.scrollToRow(at: cellIndexPath, at: .middle, animated: true)
+				}
+				tableView.isScrollEnabled = true
 			}
-			tableView.isScrollEnabled = true
 		}
 	}
 
