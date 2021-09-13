@@ -1292,7 +1292,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	func setMapLocation(_ location: MapLocation) {
-		let zoom = location.zoom > 0 ? location.zoom : 18.0
+		let zoom = location.zoom > 0 ? location.zoom : 21.0
 		let scale = pow(2, zoom)
 		setTransformFor(latLon: LatLon(latitude: location.latitude, longitude: location.longitude),
 		                scale: scale)
