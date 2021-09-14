@@ -155,7 +155,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 				dismiss(animated: true)
 
 				// flash success message
-				let popTime = DispatchTime.now() + 0.3 * Double(NSEC_PER_SEC)
+				let popTime = DispatchTime.now() + 0.3
 				DispatchQueue.main.asyncAfter(deadline: popTime, execute: {
 					appDelegate.mapView.editorLayer.setNeedsLayout()
 					appDelegate.mapView.flashMessage(NSLocalizedString("Upload complete!", comment: ""), duration: 1.5)
