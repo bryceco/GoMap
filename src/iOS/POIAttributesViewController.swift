@@ -87,7 +87,7 @@ class POIAttributesViewController: UITableViewController {
 			if section == SectionType.wayExtra.getRawValue() {
 				return 1
 			} else if section == SectionType.wayNodes.getRawValue() {
-				return way.nodes.count // all nodes
+				return way.nodes.count // all nodes				
 			}
 		}
 		return 0

@@ -132,6 +132,8 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 		var source = sourceTextField.text ?? ""
 		source = source.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
+		let locale = PresetLanguages().preferredLanguageCode()
+
 		let completion: ((String?) -> Void) = { [self] error in
 			progressView.stopAnimating()
 			commitButton.isEnabled = true
@@ -191,10 +193,15 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 				comment: comment,
 				source: source,
 				imagery: imagery,
+				locale: locale,
 				completion: completion)
 		} else {
 			// normal upload
-			mapData?.uploadChangeset(withComment: comment, source: source, imagery: imagery, completion: completion)
+			mapData?.uploadChangeset(withComment: comment,
+									 source: source,
+									 imagery: imagery,
+									 locale: locale,
+									 completion: completion)
 		}
 	}
 

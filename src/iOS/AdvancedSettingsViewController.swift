@@ -22,6 +22,9 @@ class AdvancedSettingsViewController: UITableViewController {
 	}
 
 	@IBAction func textFieldReturn(_ sender: UITextField) {
+		let mapData = AppDelegate.shared.mapView.editorLayer.mapData
+		hostname.text = mapData.serverNameCanonicalized( hostname.text ?? "" )
+
 		sender.resignFirstResponder()
 	}
 
@@ -44,11 +47,12 @@ class AdvancedSettingsViewController: UITableViewController {
 		let mapData = appDelegate.mapView.editorLayer.mapData
 		if hostname.text != originalHostname {
 			// FIXME: need to make this sequence an API
-			AppDelegate.shared.mapView.removePin()
-			AppDelegate.shared.mapView.editorLayer.selectedNode = nil
-			AppDelegate.shared.mapView.editorLayer.selectedWay = nil
-			AppDelegate.shared.mapView.editorLayer.selectedRelation = nil
+			appDelegate.mapView.removePin()
+			appDelegate.mapView.editorLayer.selectedNode = nil
+			appDelegate.mapView.editorLayer.selectedWay = nil
+			appDelegate.mapView.editorLayer.selectedRelation = nil
 			mapData.setServer(hostname.text!)
+			appDelegate.mapView.editorLayer.setNeedsLayout()
 		}
 	}
 
