@@ -94,11 +94,16 @@ class POIAttributesViewController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let appDelegate = AppDelegate.shared
-		let object = appDelegate.mapView!.editorLayer.selectedPrimary!
 
 		let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AttributeCustomCell
 		cell.accessoryType = .none
+
+		guard let object = AppDelegate.shared.mapView.editorLayer.selectedPrimary else {
+			// should never happen (but it has)
+			cell.title.text = nil
+			cell.value.text = nil
+			return cell
+		}
 
 		if indexPath.section == SectionType.metadata.getRawValue() {
 			switch indexPath.row {
