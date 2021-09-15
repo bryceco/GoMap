@@ -9,7 +9,6 @@
 import Foundation
 
 final class PresetLanguages {
-
 	static let codeList: [String] = {
 		let path = Bundle.main.resourcePath! + "/presets/translations"
 		var list = (try? FileManager.default.contentsOfDirectory(atPath: path)) ?? []
@@ -22,8 +21,7 @@ final class PresetLanguages {
 		return list
 	}()
 
-	init() {
-	}
+	init() {}
 
 	func preferredLanguageIsDefault() -> Bool {
 		let code = UserDefaults.standard.object(forKey: "preferredLanguage") as? String

@@ -155,8 +155,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 				dismiss(animated: true)
 
 				// flash success message
-				let popTime = DispatchTime.now() + 0.3
-				DispatchQueue.main.asyncAfter(deadline: popTime, execute: {
+				DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
 					appDelegate.mapView.editorLayer.setNeedsLayout()
 					appDelegate.mapView.flashMessage(NSLocalizedString("Upload complete!", comment: ""), duration: 1.5)
 
@@ -198,10 +197,10 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 		} else {
 			// normal upload
 			mapData?.uploadChangeset(withComment: comment,
-									 source: source,
-									 imagery: imagery,
-									 locale: locale,
-									 completion: completion)
+			                         source: source,
+			                         imagery: imagery,
+			                         locale: locale,
+			                         completion: completion)
 		}
 	}
 

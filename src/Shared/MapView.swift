@@ -919,7 +919,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	func flashMessage(_ message: String, duration: TimeInterval) {
-		//        #if os(iOS)
 		let MAX_ALPHA: CGFloat = 0.8
 
 		if let attrText = NSMutableAttributedString(withHtmlString: message,
@@ -945,9 +944,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			flashLabel.alpha = MAX_ALPHA
 		}
 
-		let popTime = DispatchTime.now() + Double(duration)
-
-		DispatchQueue.main.asyncAfter(deadline: popTime, execute: {
+		DispatchQueue.main.asyncAfter(deadline: .now() + duration, execute: {
 			UIView.animate(withDuration: 0.35, animations: {
 				self.flashLabel.alpha = 0.0
 			}) { finished in
@@ -956,7 +953,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				}
 			}
 		})
-		//        #endif
 	}
 
 	func flashMessage(_ message: String) {

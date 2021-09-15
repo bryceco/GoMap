@@ -23,7 +23,7 @@ class AdvancedSettingsViewController: UITableViewController {
 
 	@IBAction func textFieldReturn(_ sender: UITextField) {
 		let mapData = AppDelegate.shared.mapView.editorLayer.mapData
-		hostname.text = mapData.serverNameCanonicalized( hostname.text ?? "" )
+		hostname.text = mapData.serverNameCanonicalized(hostname.text ?? "")
 
 		sender.resignFirstResponder()
 	}

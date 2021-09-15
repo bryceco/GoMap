@@ -87,14 +87,13 @@ class POIAttributesViewController: UITableViewController {
 			if section == SectionType.wayExtra.getRawValue() {
 				return 1
 			} else if section == SectionType.wayNodes.getRawValue() {
-				return way.nodes.count // all nodes				
+				return way.nodes.count // all nodes
 			}
 		}
 		return 0
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
 		let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AttributeCustomCell
 		cell.accessoryType = .none
 

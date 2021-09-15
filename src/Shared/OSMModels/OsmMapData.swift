@@ -103,7 +103,7 @@ final class OsmMapData: NSObject, NSCoding {
 	}
 
 	func setServer(_ hostname: String) {
-		let hostname = serverNameCanonicalized( hostname )
+		let hostname = serverNameCanonicalized(hostname)
 
 		if OSM_API_URL == hostname {
 			// no change
@@ -118,6 +118,7 @@ final class OsmMapData: NSObject, NSCoding {
 		UserDefaults.standard.set(hostname, forKey: OSM_SERVER_KEY)
 		OSM_API_URL = hostname
 	}
+
 	func getServer() -> String {
 		return OSM_API_URL
 	}
@@ -822,7 +823,7 @@ final class OsmMapData: NSObject, NSCoding {
 				isUpdate: false)
 
 			// purge old data
-			DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0, execute: {
+			DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
 				AppDelegate.shared.mapView.discardStaleData()
 			})
 		}
