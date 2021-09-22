@@ -1,0 +1,50 @@
+//
+//  Fixme.swift
+//  Go Map!!
+//
+//  Created by Bryce Cogswell on 9/16/21.
+//  Copyright © 2021 Bryce. All rights reserved.
+//
+
+import Foundation
+
+// An OSM object containing a fixme= tag
+class Fixme: MapMarker {
+	let noteId: OsmExtendedIdentifier
+	weak var object: OsmBaseObject?
+
+	override var key: String {
+		return "fixme-\(noteId)"
+	}
+
+	/// If the object contains a fixme then returns the fixme value, else nil
+	static func fixmeTag(_ object: OsmBaseObject) -> String? {
+		if let tag = object.tags.first(where: { $0.key.caseInsensitiveCompare("fixme") == .orderedSame }) {
+			return tag.value
+		}
+		return nil
+	}
+
+	override func shouldHide() -> Bool {
+		guard let object = object else { return true }
+		return Fixme.fixmeTag(object) == nil
+	}
+
+	override var buttonLabel: String { "F" }
+
+	/// Initialize from FIXME data
+	init(object: OsmBaseObject, text: String) {
+		let center = object.selectionPoint()
+		let comment = OsmNoteComment(date: object.timestamp,
+		                             action: "fixme",
+		                             text: text,
+		                             user: object.user)
+
+		self.object = object
+		noteId = object.extendedIdentifier
+		super.init(lat: center.lat,
+		           lon: center.lon,
+		           dateCreated: object.timestamp,
+		           comments: [comment])
+	}
+}

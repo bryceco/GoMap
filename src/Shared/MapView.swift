@@ -2322,6 +2322,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			object = editorLayer.mapData.object(withExtendedIdentifier: note.objectId)
 		} else if let note = note as? Fixme {
 			object = note.object
+		} else if let note = note as? QuestMarker {
+			object = note.object
 		}
 
 		if !editorLayer.isHidden,
@@ -2365,11 +2367,17 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				                         	removePin()
 				                         }))
 			mainViewController.present(alertKeepRight, animated: true)
-		} else if let note = note as? Fixme {
+		} else if let object = object {
+			// Fixme marker or Quest marker
 			if !editorLayer.isHidden {
-				presentTagEditor(nil)
+				if let marker = note as? QuestMarker {
+					let vc = QuestEditorController.instantiate(quest: marker.quest, object: object)
+					vc.modalPresentationStyle = .automatic
+					mainViewController.present(vc, animated: true)
+				} else {
+					presentTagEditor(nil)
+				}
 			} else {
-				guard let object = note.object else { return }
 				let alert = UIAlertController(title: "\(object.friendlyDescription())",
 				                              message: note.comments.first?.text,
 				                              preferredStyle: .alert)
