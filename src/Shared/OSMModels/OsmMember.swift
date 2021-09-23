@@ -68,8 +68,8 @@ final class OsmMember: NSObject, NSCoding {
 	}
 
 	required init?(coder: NSCoder) {
-		guard let type = coder.decodeObject(forKey: "type") as? String,
-		      let type = try? OSM_TYPE(string: type)
+		guard let type2 = coder.decodeObject(forKey: "type") as? String,
+		      let type = try? OSM_TYPE(string: type2)
 		else {
 			return nil
 		}

@@ -83,8 +83,7 @@ class CameraView: UIView, AVCapturePhotoCaptureDelegate, AVCaptureVideoDataOutpu
 	                          didFinishProcessingPhoto photo: AVCapturePhoto,
 	                          error: Error?)
 	{
-		let cgImage = photo.cgImageRepresentation()
-		if let cgImage = cgImage?.takeUnretainedValue() {
+		if let cgImage = photo.cgImageRepresentation() {
 #if true
 			photoCallback?(cgImage)
 #else

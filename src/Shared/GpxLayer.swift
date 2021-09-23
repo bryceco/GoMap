@@ -245,10 +245,10 @@ final class GpxTrack: NSObject, NSCoding {
 		let dateFormatter = OsmBaseObject.rfc3339DateFormatter()
 		for pt in a {
 			guard let pt = pt as? DDXMLElement,
-			      let lat = pt.attribute(forName: "lat")?.stringValue,
-			      let lon = pt.attribute(forName: "lon")?.stringValue,
-			      let lat = Double(lat),
-			      let lon = Double(lon)
+			      let lat2 = pt.attribute(forName: "lat")?.stringValue,
+			      let lon2 = pt.attribute(forName: "lon")?.stringValue,
+			      let lat = Double(lat2),
+			      let lon = Double(lon2)
 			else {
 				throw GpxError.badGpxFormat
 			}
@@ -259,8 +259,8 @@ final class GpxTrack: NSObject, NSCoding {
 			if let time = pt.elements(forName: "time").last?.stringValue {
 				timestamp = dateFormatter.date(from: time)
 			}
-			if let ele = pt.elements(forName: "ele").last?.stringValue,
-			   let ele = Double(ele)
+			if let ele2 = pt.elements(forName: "ele").last?.stringValue,
+			   let ele = Double(ele2)
 			{
 				elevation = ele
 			}

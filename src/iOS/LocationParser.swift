@@ -11,6 +11,7 @@ import Foundation
 /// An object that parses URLs and text for coordinates
 class LocationParser {
 	class func mapLocationFrom(text: String) -> MapLocation? {
+#if false
 		// first try parsing as a URL
 		let text = text.trimmingCharacters(in: .whitespacesAndNewlines)
 		if let url = URL(string: text),
@@ -72,6 +73,9 @@ class LocationParser {
 		                   latitude: candidates.first!.lat,
 		                   zoom: 0.0,
 		                   viewState: nil)
+		#else
+		return nil
+		#endif
 	}
 
 	/// Attempts to parse the given URL.
@@ -94,10 +98,11 @@ class LocationParser {
 			else {
 				return nil
 			}
-			if let z = components.queryItems?.first(where: { $0.name == "z" })?.value,
-			   let z = Double(z)
+			if let items = components.queryItems,
+			   let z = items.first(where: { $0.name == "z" })?.value,
+			   let z2 = Double(z)
 			{
-				zoom = z
+				zoom = z2
 			}
 			return MapLocation(longitude: lon, latitude: lat, zoom: zoom, viewState: nil)
 		}
@@ -180,10 +185,10 @@ class LocationParser {
 		}
 
 		// try parsing as any URL containing lat=,lon=
-		if let lat = components.queryItems?.first(where: { $0.name == "lat" })?.value,
-		   let lon = components.queryItems?.first(where: { $0.name == "lon" })?.value,
-		   let lat = Double(lat),
-		   let lon = Double(lon)
+		if let lat2 = components.queryItems?.first(where: { $0.name == "lat" })?.value,
+		   let lon2 = components.queryItems?.first(where: { $0.name == "lon" })?.value,
+		   let lat = Double(lat2),
+		   let lon = Double(lon2)
 		{
 			return MapLocation(longitude: lon,
 			                   latitude: lat,

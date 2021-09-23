@@ -87,8 +87,8 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			parserStack.append("tag")
 		case "nd":
 			guard let way = parserStack.last as? OsmWay,
-			      let ref = attributeDict["ref"],
-			      let ref = Int64(ref)
+			      let ref2 = attributeDict["ref"],
+			      let ref = Int64(ref2)
 			else {
 				parseError = OsmParserError.badNodeRef
 				parser.abortParsing()
@@ -106,15 +106,15 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			parserStack.append(relation)
 		case "member":
 			guard let relation = parserStack.last as? OsmRelation,
-			      let ref = attributeDict["ref"],
-			      let ref = Int64(ref)
+			      let ref2 = attributeDict["ref"],
+			      let ref = Int64(ref2)
 			else {
 				parseError = OsmParserError.badRelationRefID
 				parser.abortParsing()
 				return
 			}
-			guard let type = attributeDict["type"],
-			      let type = try? OSM_TYPE(string: type)
+			guard let type2 = attributeDict["type"],
+			      let type = try? OSM_TYPE(string: type2)
 			else {
 				parseError = OsmParserError.badXmlDict(elementName, attributeDict)
 				parser.abortParsing()

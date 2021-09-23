@@ -35,10 +35,10 @@ class OsmNote: MapMarker {
 
 	/// Initialize based on OSM Notes query
 	init?(noteXml noteElement: DDXMLElement) {
-		guard let lat = noteElement.attribute(forName: "lat")?.stringValue,
-		      let lon = noteElement.attribute(forName: "lon")?.stringValue,
-		      let lat = Double(lat),
-		      let lon = Double(lon)
+		guard let lat2 = noteElement.attribute(forName: "lat")?.stringValue,
+		      let lon2 = noteElement.attribute(forName: "lon")?.stringValue,
+		      let lat = Double(lat2),
+		      let lon = Double(lon2)
 		else { return nil }
 
 		var noteId: Int64?

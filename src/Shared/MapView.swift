@@ -2372,7 +2372,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			if !editorLayer.isHidden {
 				if let marker = note as? QuestMarker {
 					let vc = QuestEditorController.instantiate(quest: marker.quest, object: object)
-					vc.modalPresentationStyle = .automatic
 					mainViewController.present(vc, animated: true)
 				} else {
 					presentTagEditor(nil)

@@ -25,10 +25,10 @@ class WayPoint: MapMarker {
 		//								<object_id>2627663149</object_id>
 		//		</extensions></wpt>
 
-		guard let lon = waypointElement.attribute(forName: "lon")?.stringValue,
-		      let lat = waypointElement.attribute(forName: "lat")?.stringValue,
-		      let lon = Double(lon),
-		      let lat = Double(lat)
+		guard let lon2 = waypointElement.attribute(forName: "lon")?.stringValue,
+		      let lat2 = waypointElement.attribute(forName: "lat")?.stringValue,
+		      let lon = Double(lon2),
+		      let lat = Double(lat2)
 		else { return nil }
 
 		var description: String = ""
