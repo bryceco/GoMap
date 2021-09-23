@@ -2054,7 +2054,8 @@
 				0256631D26FCF8220009D950 /* QuestList.swift */,
 				0256631F26FCF9730009D950 /* Quests.json */,
 			);
-			path = Quests;
+			name = Quests;
+			path = ../Shared/Quests;
 			sourceTree = "<group>";
 		};
 		02CB2409265DB7D600835F32 /* OpeningHours */ = {
