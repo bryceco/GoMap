@@ -6,7 +6,7 @@
 //  Copyright © 2021 Bryce. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class MapMarker {
 	let buttonId: Int // a unique value we assign to track note buttons. If > 0 this is the noteID, otherwise it is assigned by us.
@@ -45,4 +45,5 @@ class MapMarker {
 	}
 
 	var buttonLabel: String { fatalError() }
+	var buttonIcon: UIImage? { nil }
 }

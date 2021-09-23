@@ -73,9 +73,9 @@ class LocationParser {
 		                   latitude: candidates.first!.lat,
 		                   zoom: 0.0,
 		                   viewState: nil)
-		#else
+#else
 		return nil
-		#endif
+#endif
 	}
 
 	/// Attempts to parse the given URL.

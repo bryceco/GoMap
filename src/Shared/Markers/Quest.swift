@@ -6,36 +6,7 @@
 //  Copyright © 2021 Bryce. All rights reserved.
 //
 
-import Foundation
-
-protocol QuestProtocol {
-	var title: String { get }
-	var tagKey: String { get }
-	func appliesTo(_ object: OsmBaseObject) -> Bool
-}
-
-class QuestHighwaySurface: QuestProtocol {
-	var title: String { "Highway surface" }
-	var tagKey: String { "surface" }
-	func appliesTo(_ object: OsmBaseObject) -> Bool {
-		if let way = object as? OsmWay,
-		   way.tags["highway"] != nil,
-		   way.tags["surface"] == nil
-		{
-			return true
-		}
-		return false
-	}
-}
-
-enum QuestList {
-	static let list: [QuestProtocol] = [
-		QuestHighwaySurface()
-	]
-	static func QuestsForObject(_ object: OsmBaseObject) -> [QuestProtocol] {
-		return list.compactMap({ $0.appliesTo(object) ? $0 : nil })
-	}
-}
+import UIKit
 
 // An OSM object for a quest
 class QuestMarker: MapMarker {
@@ -53,6 +24,7 @@ class QuestMarker: MapMarker {
 	}
 
 	override var buttonLabel: String { "Q" }
+	override var buttonIcon: UIImage? { quest.icon }
 
 	init(object: OsmBaseObject, quest: QuestProtocol) {
 		let center = object.selectionPoint()

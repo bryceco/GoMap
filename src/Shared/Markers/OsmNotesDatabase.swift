@@ -108,7 +108,7 @@ final class OsmNotesDatabase: NSObject {
 							let marker = Fixme(object: obj, text: fixme)
 							addOrUpdate(marker)
 						}
-						for quest in QuestList.QuestsForObject(obj) {
+						for quest in QuestList.shared.questsForObject(obj) {
 							let marker = QuestMarker(object: obj, quest: quest)
 							addOrUpdate(marker)
 						}

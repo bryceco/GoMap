@@ -37,6 +37,381 @@
 		024909C9267BF9F70027E531 /* MapTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024909C8267BF9F70027E531 /* MapTransform.swift */; };
 		024909CB267D99190027E531 /* OsmDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024909CA267D99190027E531 /* OsmDownloader.swift */; };
 		024909CF267EADC70027E531 /* OsmXmlGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024909CE267EADC70027E531 /* OsmXmlGenerator.swift */; };
+		0256631E26FCF8220009D950 /* QuestList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0256631D26FCF8220009D950 /* QuestList.swift */; };
+		0256632026FCF9730009D950 /* Quests.json in Resources */ = {isa = PBXBuildFile; fileRef = 0256631F26FCF9730009D950 /* Quests.json */; };
+		0256649626FCF9E00009D950 /* ic_quest_pitch_surface@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256632226FCF9DF0009D950 /* ic_quest_pitch_surface@2x.png */; };
+		0256649726FCF9E00009D950 /* ic_quest_pedestrian@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256632326FCF9DF0009D950 /* ic_quest_pedestrian@3x.png */; };
+		0256649826FCF9E00009D950 /* ic_quest_car_wash@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256632426FCF9DF0009D950 /* ic_quest_car_wash@3x.png */; };
+		0256649926FCF9E00009D950 /* ic_quest_wheelchair_shop@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256632526FCF9DF0009D950 /* ic_quest_wheelchair_shop@3x.png */; };
+		0256649A26FCF9E00009D950 /* ic_quest_steps.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256632626FCF9DF0009D950 /* ic_quest_steps.png */; };
+		0256649B26FCF9E00009D950 /* ic_quest_mail@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256632726FCF9DF0009D950 /* ic_quest_mail@3x.png */; };
+		0256649C26FCF9E00009D950 /* ic_quest_sport@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256632826FCF9DF0009D950 /* ic_quest_sport@3x.png */; };
+		0256649D26FCF9E00009D950 /* ic_quest_housenumber@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256632926FCF9DF0009D950 /* ic_quest_housenumber@2x.png */; };
+		0256649E26FCF9E00009D950 /* ic_quest_steps_count@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256632A26FCF9DF0009D950 /* ic_quest_steps_count@3x.png */; };
+		0256649F26FCF9E00009D950 /* ic_quest_laundry@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256632B26FCF9DF0009D950 /* ic_quest_laundry@3x.png */; };
+		025664A026FCF9E00009D950 /* ic_quest_toilet_fee@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256632C26FCF9DF0009D950 /* ic_quest_toilet_fee@3x.png */; };
+		025664A126FCF9E00009D950 /* ic_quest_parking_maxstay.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256632D26FCF9DF0009D950 /* ic_quest_parking_maxstay.png */; };
+		025664A226FCF9E00009D950 /* ic_quest_bicycleway_surface.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256632E26FCF9DF0009D950 /* ic_quest_bicycleway_surface.png */; };
+		025664A326FCF9E00009D950 /* ic_quest_parking_lane@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256632F26FCF9DF0009D950 /* ic_quest_parking_lane@2x.png */; };
+		025664A426FCF9E00009D950 /* ic_quest_kosher.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256633026FCF9DF0009D950 /* ic_quest_kosher.png */; };
+		025664A526FCF9E00009D950 /* ic_quest_check_shop@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256633126FCF9DF0009D950 /* ic_quest_check_shop@3x.png */; };
+		025664A626FCF9E00009D950 /* ic_quest_bus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256633226FCF9DF0009D950 /* ic_quest_bus@2x.png */; };
+		025664A726FCF9E00009D950 /* ic_quest_steps_ramp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256633326FCF9DF0009D950 /* ic_quest_steps_ramp@2x.png */; };
+		025664A826FCF9E00009D950 /* ic_quest_apple@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256633426FCF9DF0009D950 /* ic_quest_apple@3x.png */; };
+		025664A926FCF9E00009D950 /* ic_quest_bicycleway_surface@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256633526FCF9DF0009D950 /* ic_quest_bicycleway_surface@3x.png */; };
+		025664AA26FCF9E00009D950 /* ic_quest_lantern@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256633626FCF9DF0009D950 /* ic_quest_lantern@3x.png */; };
+		025664AB26FCF9E00009D950 /* ic_quest_cash@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256633726FCF9DF0009D950 /* ic_quest_cash@3x.png */; };
+		025664AC26FCF9E00009D950 /* ic_quest_pitch_lantern@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256633826FCF9DF0009D950 /* ic_quest_pitch_lantern@3x.png */; };
+		025664AD26FCF9E00009D950 /* ic_quest_kerb_type@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256633926FCF9DF0009D950 /* ic_quest_kerb_type@3x.png */; };
+		025664AE26FCF9E00009D950 /* ic_quest_recycling@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256633A26FCF9DF0009D950 /* ic_quest_recycling@3x.png */; };
+		025664AF26FCF9E00009D950 /* ic_quest_bus_stop_lit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256633B26FCF9DF0009D950 /* ic_quest_bus_stop_lit@2x.png */; };
+		025664B026FCF9E00009D950 /* ic_quest_railway@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256633C26FCF9DF0009D950 /* ic_quest_railway@3x.png */; };
+		025664B126FCF9E00009D950 /* ic_quest_roof_shape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256633D26FCF9DF0009D950 /* ic_quest_roof_shape@2x.png */; };
+		025664B226FCF9E00009D950 /* ic_quest_traffic_lights@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256633E26FCF9DF0009D950 /* ic_quest_traffic_lights@3x.png */; };
+		025664B326FCF9E00009D950 /* ic_quest_pitch_lantern.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256633F26FCF9DF0009D950 /* ic_quest_pitch_lantern.png */; };
+		025664B426FCF9E00009D950 /* ic_quest_steps@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256634026FCF9DF0009D950 /* ic_quest_steps@3x.png */; };
+		025664B526FCF9E00009D950 /* ic_quest_pedestrian_crossing_island@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256634126FCF9DF0009D950 /* ic_quest_pedestrian_crossing_island@2x.png */; };
+		025664B626FCF9E00009D950 /* ic_quest_information.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256634226FCF9DF0009D950 /* ic_quest_information.png */; };
+		025664B726FCF9E00009D950 /* ic_quest_motorcycle_parking.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256634326FCF9DF0009D950 /* ic_quest_motorcycle_parking.png */; };
+		025664B826FCF9E00009D950 /* ic_quest_ferry.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256634426FCF9DF0009D950 /* ic_quest_ferry.png */; };
+		025664B926FCF9E00009D950 /* ic_quest_create_note@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256634526FCF9DF0009D950 /* ic_quest_create_note@3x.png */; };
+		025664BA26FCF9E00009D950 /* ic_quest_bicycleway@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256634626FCF9DF0009D950 /* ic_quest_bicycleway@3x.png */; };
+		025664BB26FCF9E00009D950 /* ic_quest_blind_bus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256634726FCF9DF0009D950 /* ic_quest_blind_bus@2x.png */; };
+		025664BC26FCF9E00009D950 /* ic_quest_fee@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256634826FCF9DF0009D950 /* ic_quest_fee@2x.png */; };
+		025664BD26FCF9E00009D950 /* ic_quest_bus_stop_name.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256634926FCF9DF0009D950 /* ic_quest_bus_stop_name.png */; };
+		025664BE26FCF9E00009D950 /* ic_quest_label@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256634A26FCF9DF0009D950 /* ic_quest_label@3x.png */; };
+		025664BF26FCF9E00009D950 /* ic_quest_opening_hours@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256634B26FCF9DF0009D950 /* ic_quest_opening_hours@2x.png */; };
+		025664C026FCF9E00009D950 /* ic_quest_religion@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256634C26FCF9DF0009D950 /* ic_quest_religion@3x.png */; };
+		025664C126FCF9E00009D950 /* ic_quest_ferry_pedestrian@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256634D26FCF9DF0009D950 /* ic_quest_ferry_pedestrian@3x.png */; };
+		025664C226FCF9E00009D950 /* ic_quest_phone@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256634E26FCF9DF0009D950 /* ic_quest_phone@3x.png */; };
+		025664C326FCF9E00009D950 /* ic_quest_bus_stop_shelter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256634F26FCF9DF0009D950 /* ic_quest_bus_stop_shelter@2x.png */; };
+		025664C426FCF9E00009D950 /* ic_quest_create_note.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256635026FCF9DF0009D950 /* ic_quest_create_note.png */; };
+		025664C526FCF9E00009D950 /* ic_quest_ferry_pedestrian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256635126FCF9DF0009D950 /* ic_quest_ferry_pedestrian@2x.png */; };
+		025664C626FCF9E00009D950 /* ic_quest_phone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256635226FCF9DF0009D950 /* ic_quest_phone@2x.png */; };
+		025664C726FCF9E00009D950 /* ic_quest_bus_stop_shelter@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256635326FCF9E00009D950 /* ic_quest_bus_stop_shelter@3x.png */; };
+		025664C826FCF9E00009D950 /* ic_quest_check.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256635426FCF9E00009D950 /* ic_quest_check.png */; };
+		025664C926FCF9E00009D950 /* ic_quest_bench_poi.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256635526FCF9E00009D950 /* ic_quest_bench_poi.png */; };
+		025664CA26FCF9E00009D950 /* ic_quest_religion@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256635626FCF9E00009D950 /* ic_quest_religion@2x.png */; };
+		025664CB26FCF9E00009D950 /* ic_quest_opening_hours@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256635726FCF9E00009D950 /* ic_quest_opening_hours@3x.png */; };
+		025664CC26FCF9E10009D950 /* ic_quest_bench_public_transport.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256635826FCF9E00009D950 /* ic_quest_bench_public_transport.png */; };
+		025664CD26FCF9E10009D950 /* ic_quest_label@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256635926FCF9E00009D950 /* ic_quest_label@2x.png */; };
+		025664CE26FCF9E10009D950 /* ic_quest_fee@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256635A26FCF9E00009D950 /* ic_quest_fee@3x.png */; };
+		025664CF26FCF9E10009D950 /* ic_quest_bicycleway@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256635B26FCF9E00009D950 /* ic_quest_bicycleway@2x.png */; };
+		025664D026FCF9E10009D950 /* ic_quest_blind_bus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256635C26FCF9E00009D950 /* ic_quest_blind_bus@3x.png */; };
+		025664D126FCF9E10009D950 /* ic_quest_create_note@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256635D26FCF9E00009D950 /* ic_quest_create_note@2x.png */; };
+		025664D226FCF9E10009D950 /* ic_quest_road_construction.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256635E26FCF9E00009D950 /* ic_quest_road_construction.png */; };
+		025664D326FCF9E10009D950 /* ic_quest_recycling_clothes.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256635F26FCF9E00009D950 /* ic_quest_recycling_clothes.png */; };
+		025664D426FCF9E10009D950 /* ic_quest_pedestrian_crossing_island@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256636026FCF9E00009D950 /* ic_quest_pedestrian_crossing_island@3x.png */; };
+		025664D526FCF9E10009D950 /* ic_quest_railway.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256636126FCF9E00009D950 /* ic_quest_railway.png */; };
+		025664D626FCF9E10009D950 /* ic_quest_police.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256636226FCF9E00009D950 /* ic_quest_police.png */; };
+		025664D726FCF9E10009D950 /* ic_quest_parking_fee.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256636326FCF9E00009D950 /* ic_quest_parking_fee.png */; };
+		025664D826FCF9E10009D950 /* ic_quest_steps@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256636426FCF9E00009D950 /* ic_quest_steps@2x.png */; };
+		025664D926FCF9E10009D950 /* ic_quest_traffic_lights@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256636526FCF9E00009D950 /* ic_quest_traffic_lights@2x.png */; };
+		025664DA26FCF9E10009D950 /* ic_quest_fuel.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256636626FCF9E00009D950 /* ic_quest_fuel.png */; };
+		025664DB26FCF9E10009D950 /* ic_quest_roof_shape@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256636726FCF9E00009D950 /* ic_quest_roof_shape@3x.png */; };
+		025664DC26FCF9E10009D950 /* ic_quest_bus_stop_lit@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256636826FCF9E00009D950 /* ic_quest_bus_stop_lit@3x.png */; };
+		025664DD26FCF9E10009D950 /* ic_quest_railway@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256636926FCF9E00009D950 /* ic_quest_railway@2x.png */; };
+		025664DE26FCF9E10009D950 /* ic_quest_peak.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256636A26FCF9E00009D950 /* ic_quest_peak.png */; };
+		025664DF26FCF9E10009D950 /* ic_quest_pitch_lantern@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256636B26FCF9E00009D950 /* ic_quest_pitch_lantern@2x.png */; };
+		025664E026FCF9E10009D950 /* ic_quest_kerb_type@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256636C26FCF9E00009D950 /* ic_quest_kerb_type@2x.png */; };
+		025664E126FCF9E10009D950 /* ic_quest_barrier.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256636D26FCF9E00009D950 /* ic_quest_barrier.png */; };
+		025664E226FCF9E10009D950 /* ic_quest_recycling@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256636E26FCF9E00009D950 /* ic_quest_recycling@2x.png */; };
+		025664E326FCF9E10009D950 /* ic_quest_cash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256636F26FCF9E00009D950 /* ic_quest_cash@2x.png */; };
+		025664E426FCF9E10009D950 /* ic_quest_wheelchair.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256637026FCF9E00009D950 /* ic_quest_wheelchair.png */; };
+		025664E526FCF9E10009D950 /* ic_quest_apple@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256637126FCF9E00009D950 /* ic_quest_apple@2x.png */; };
+		025664E626FCF9E10009D950 /* ic_quest_bicycleway_surface@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256637226FCF9E00009D950 /* ic_quest_bicycleway_surface@2x.png */; };
+		025664E726FCF9E10009D950 /* ic_quest_lantern@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256637326FCF9E00009D950 /* ic_quest_lantern@2x.png */; };
+		025664E826FCF9E10009D950 /* ic_quest_steps_ramp@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256637426FCF9E00009D950 /* ic_quest_steps_ramp@3x.png */; };
+		025664E926FCF9E10009D950 /* ic_quest_bus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256637526FCF9E00009D950 /* ic_quest_bus@3x.png */; };
+		025664EA26FCF9E10009D950 /* ic_quest_check_shop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256637626FCF9E00009D950 /* ic_quest_check_shop@2x.png */; };
+		025664EB26FCF9E10009D950 /* ic_quest_toilet_fee@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256637726FCF9E00009D950 /* ic_quest_toilet_fee@2x.png */; };
+		025664EC26FCF9E10009D950 /* ic_quest_parking_lane@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256637826FCF9E00009D950 /* ic_quest_parking_lane@3x.png */; };
+		025664ED26FCF9E10009D950 /* ic_quest_housenumber@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256637926FCF9E00009D950 /* ic_quest_housenumber@3x.png */; };
+		025664EE26FCF9E10009D950 /* ic_quest_steps_count@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256637A26FCF9E00009D950 /* ic_quest_steps_count@2x.png */; };
+		025664EF26FCF9E10009D950 /* ic_quest_laundry@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256637B26FCF9E00009D950 /* ic_quest_laundry@2x.png */; };
+		025664F026FCF9E10009D950 /* ic_quest_path_segregation.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256637C26FCF9E00009D950 /* ic_quest_path_segregation.png */; };
+		025664F126FCF9E10009D950 /* ic_quest_parking_access.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256637D26FCF9E00009D950 /* ic_quest_parking_access.png */; };
+		025664F226FCF9E10009D950 /* ic_quest_sport@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256637E26FCF9E00009D950 /* ic_quest_sport@2x.png */; };
+		025664F326FCF9E10009D950 /* ic_quest_housenumber.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256637F26FCF9E00009D950 /* ic_quest_housenumber.png */; };
+		025664F426FCF9E10009D950 /* ic_quest_mail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256638026FCF9E00009D950 /* ic_quest_mail@2x.png */; };
+		025664F526FCF9E10009D950 /* ic_quest_car_wash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256638126FCF9E00009D950 /* ic_quest_car_wash@2x.png */; };
+		025664F626FCF9E10009D950 /* ic_quest_wheelchair_shop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256638226FCF9E00009D950 /* ic_quest_wheelchair_shop@2x.png */; };
+		025664F726FCF9E10009D950 /* ic_quest_bicycle_parking_fee.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256638326FCF9E00009D950 /* ic_quest_bicycle_parking_fee.png */; };
+		025664F826FCF9E10009D950 /* ic_quest_pitch_surface@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256638426FCF9E00009D950 /* ic_quest_pitch_surface@3x.png */; };
+		025664F926FCF9E10009D950 /* ic_quest_pedestrian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256638526FCF9E00009D950 /* ic_quest_pedestrian@2x.png */; };
+		025664FA26FCF9E10009D950 /* ic_quest_motorcycle_parking_cover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256638626FCF9E00009D950 /* ic_quest_motorcycle_parking_cover@2x.png */; };
+		025664FB26FCF9E10009D950 /* ic_quest_car_charger_capacity.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256638726FCF9E00009D950 /* ic_quest_car_charger_capacity.png */; };
+		025664FC26FCF9E10009D950 /* ic_quest_bicycle_parking_cover@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256638826FCF9E00009D950 /* ic_quest_bicycle_parking_cover@3x.png */; };
+		025664FD26FCF9E10009D950 /* ic_quest_surveillance_camera@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256638926FCF9E00009D950 /* ic_quest_surveillance_camera@3x.png */; };
+		025664FE26FCF9E10009D950 /* ic_quest_wifi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256638A26FCF9E00009D950 /* ic_quest_wifi@2x.png */; };
+		025664FF26FCF9E10009D950 /* ic_quest_baby@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256638B26FCF9E00009D950 /* ic_quest_baby@2x.png */; };
+		0256650026FCF9E10009D950 /* ic_quest_surveillance_camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256638C26FCF9E00009D950 /* ic_quest_surveillance_camera.png */; };
+		0256650126FCF9E10009D950 /* ic_quest_lantern.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256638D26FCF9E00009D950 /* ic_quest_lantern.png */; };
+		0256650226FCF9E10009D950 /* ic_quest_building_underground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256638E26FCF9E00009D950 /* ic_quest_building_underground@2x.png */; };
+		0256650326FCF9E10009D950 /* ic_quest_wheelchair@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256638F26FCF9E00009D950 /* ic_quest_wheelchair@3x.png */; };
+		0256650426FCF9E10009D950 /* ic_quest_way_surface.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256639026FCF9E00009D950 /* ic_quest_way_surface.png */; };
+		0256650526FCF9E10009D950 /* ic_quest_parking@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256639126FCF9E00009D950 /* ic_quest_parking@2x.png */; };
+		0256650626FCF9E10009D950 /* ic_quest_building_construction.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256639226FCF9E00009D950 /* ic_quest_building_construction.png */; };
+		0256650726FCF9E10009D950 /* ic_quest_blind.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256639326FCF9E00009D950 /* ic_quest_blind.png */; };
+		0256650826FCF9E10009D950 /* ic_quest_mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256639426FCF9E00009D950 /* ic_quest_mail.png */; };
+		0256650926FCF9E10009D950 /* ic_quest_wheelchair_shop.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256639526FCF9E00009D950 /* ic_quest_wheelchair_shop.png */; };
+		0256650A26FCF9E10009D950 /* ic_quest_housenumber_street@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256639626FCF9E00009D950 /* ic_quest_housenumber_street@2x.png */; };
+		0256650B26FCF9E10009D950 /* ic_quest_motorcycle_parking@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256639726FCF9E00009D950 /* ic_quest_motorcycle_parking@2x.png */; };
+		0256650C26FCF9E10009D950 /* ic_quest_sidewalk@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256639826FCF9E00009D950 /* ic_quest_sidewalk@3x.png */; };
+		0256650D26FCF9E10009D950 /* ic_quest_tractor@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256639926FCF9E00009D950 /* ic_quest_tractor@3x.png */; };
+		0256650E26FCF9E10009D950 /* ic_quest_blind_traffic_lights@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256639A26FCF9E00009D950 /* ic_quest_blind_traffic_lights@3x.png */; };
+		0256650F26FCF9E10009D950 /* ic_quest_kosher@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256639B26FCF9E00009D950 /* ic_quest_kosher@3x.png */; };
+		0256651026FCF9E10009D950 /* ic_quest_drinking_water@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256639C26FCF9E00009D950 /* ic_quest_drinking_water@3x.png */; };
+		0256651126FCF9E10009D950 /* ic_quest_motorcycle_parking_cover.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256639D26FCF9E00009D950 /* ic_quest_motorcycle_parking_cover.png */; };
+		0256651226FCF9E10009D950 /* ic_quest_no_pedestrians@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256639E26FCF9E00009D950 /* ic_quest_no_pedestrians@3x.png */; };
+		0256651326FCF9E10009D950 /* ic_quest_blind_traffic_lights_sound.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256639F26FCF9E00009D950 /* ic_quest_blind_traffic_lights_sound.png */; };
+		0256651426FCF9E10009D950 /* ic_quest_sport.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663A026FCF9E00009D950 /* ic_quest_sport.png */; };
+		0256651526FCF9E10009D950 /* ic_quest_bicycle_parking_fee@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663A126FCF9E00009D950 /* ic_quest_bicycle_parking_fee@3x.png */; };
+		0256651626FCF9E10009D950 /* ic_quest_notes.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663A226FCF9E00009D950 /* ic_quest_notes.png */; };
+		0256651726FCF9E10009D950 /* ic_quest_playground.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663A326FCF9E00009D950 /* ic_quest_playground.png */; };
+		0256651826FCF9E10009D950 /* ic_quest_blind_traffic_lights_sound@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663A426FCF9E00009D950 /* ic_quest_blind_traffic_lights_sound@2x.png */; };
+		0256651926FCF9E10009D950 /* ic_quest_parking_lane.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663A526FCF9E00009D950 /* ic_quest_parking_lane.png */; };
+		0256651A26FCF9E10009D950 /* ic_quest_parking_access@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663A626FCF9E00009D950 /* ic_quest_parking_access@3x.png */; };
+		0256651B26FCF9E10009D950 /* ic_quest_street_width@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663A726FCF9E00009D950 /* ic_quest_street_width@3x.png */; };
+		0256651C26FCF9E10009D950 /* ic_quest_building@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663A826FCF9E00009D950 /* ic_quest_building@2x.png */; };
+		0256651D26FCF9E10009D950 /* ic_quest_information@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663A926FCF9E00009D950 /* ic_quest_information@3x.png */; };
+		0256651E26FCF9E10009D950 /* ic_quest_max_width@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663AA26FCF9E00009D950 /* ic_quest_max_width@2x.png */; };
+		0256651F26FCF9E10009D950 /* ic_quest_ferry_pedestrian.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663AB26FCF9E00009D950 /* ic_quest_ferry_pedestrian.png */; };
+		0256652026FCF9E10009D950 /* ic_quest_bus_stop_shelter.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663AC26FCF9E00009D950 /* ic_quest_bus_stop_shelter.png */; };
+		0256652126FCF9E10009D950 /* ic_quest_max_speed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663AD26FCF9E00009D950 /* ic_quest_max_speed@2x.png */; };
+		0256652226FCF9E10009D950 /* ic_quest_car_charger_capacity@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663AE26FCF9E00009D950 /* ic_quest_car_charger_capacity@3x.png */; };
+		0256652326FCF9E10009D950 /* ic_quest_bicycle_parking_access@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663AF26FCF9E00009D950 /* ic_quest_bicycle_parking_access@2x.png */; };
+		0256652426FCF9E10009D950 /* ic_quest_bicycle_parking_access@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663B026FCF9E00009D950 /* ic_quest_bicycle_parking_access@3x.png */; };
+		0256652526FCF9E10009D950 /* ic_quest_max_speed@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663B126FCF9E00009D950 /* ic_quest_max_speed@3x.png */; };
+		0256652626FCF9E10009D950 /* ic_quest_car_charger_capacity@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663B226FCF9E00009D950 /* ic_quest_car_charger_capacity@2x.png */; };
+		0256652726FCF9E10009D950 /* ic_quest_wifi.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663B326FCF9E00009D950 /* ic_quest_wifi.png */; };
+		0256652826FCF9E10009D950 /* ic_quest_building@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663B426FCF9E00009D950 /* ic_quest_building@3x.png */; };
+		0256652926FCF9E10009D950 /* ic_quest_information@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663B526FCF9E00009D950 /* ic_quest_information@2x.png */; };
+		0256652A26FCF9E10009D950 /* ic_quest_max_width@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663B626FCF9E00009D950 /* ic_quest_max_width@3x.png */; };
+		0256652B26FCF9E10009D950 /* ic_quest_label.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663B726FCF9E00009D950 /* ic_quest_label.png */; };
+		0256652C26FCF9E10009D950 /* ic_quest_parking_access@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663B826FCF9E00009D950 /* ic_quest_parking_access@2x.png */; };
+		0256652D26FCF9E10009D950 /* ic_quest_street_width@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663B926FCF9E00009D950 /* ic_quest_street_width@2x.png */; };
+		0256652E26FCF9E10009D950 /* ic_quest_roof_shape.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663BA26FCF9E00009D950 /* ic_quest_roof_shape.png */; };
+		0256652F26FCF9E10009D950 /* ic_quest_blind_traffic_lights_sound@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663BB26FCF9E00009D950 /* ic_quest_blind_traffic_lights_sound@3x.png */; };
+		0256653026FCF9E10009D950 /* ic_quest_power.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663BC26FCF9E00009D950 /* ic_quest_power.png */; };
+		0256653126FCF9E10009D950 /* ic_quest_sidewalk.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663BD26FCF9E00009D950 /* ic_quest_sidewalk.png */; };
+		0256653226FCF9E10009D950 /* ic_quest_bicycle_parking_fee@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663BE26FCF9E00009D950 /* ic_quest_bicycle_parking_fee@2x.png */; };
+		0256653326FCF9E10009D950 /* ic_quest_drinking_water.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663BF26FCF9E00009D950 /* ic_quest_drinking_water.png */; };
+		0256653426FCF9E10009D950 /* ic_quest_building_levels.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663C026FCF9E00009D950 /* ic_quest_building_levels.png */; };
+		0256653526FCF9E10009D950 /* ic_quest_no_pedestrians@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663C126FCF9E00009D950 /* ic_quest_no_pedestrians@2x.png */; };
+		0256653626FCF9E10009D950 /* ic_quest_cow.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663C226FCF9E00009D950 /* ic_quest_cow.png */; };
+		0256653726FCF9E10009D950 /* ic_quest_drinking_water@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663C326FCF9E00009D950 /* ic_quest_drinking_water@2x.png */; };
+		0256653826FCF9E10009D950 /* ic_quest_street_name.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663C426FCF9E00009D950 /* ic_quest_street_name.png */; };
+		0256653926FCF9E10009D950 /* ic_quest_kosher@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663C526FCF9E00009D950 /* ic_quest_kosher@2x.png */; };
+		0256653A26FCF9E10009D950 /* ic_quest_blind_traffic_lights@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663C626FCF9E00009D950 /* ic_quest_blind_traffic_lights@2x.png */; };
+		0256653B26FCF9E10009D950 /* ic_quest_sidewalk@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663C726FCF9E00009D950 /* ic_quest_sidewalk@2x.png */; };
+		0256653C26FCF9E10009D950 /* ic_quest_tractor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663C826FCF9E00009D950 /* ic_quest_tractor@2x.png */; };
+		0256653D26FCF9E10009D950 /* ic_quest_housenumber_street@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663C926FCF9E00009D950 /* ic_quest_housenumber_street@3x.png */; };
+		0256653E26FCF9E10009D950 /* ic_quest_motorcycle_parking@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663CA26FCF9E00009D950 /* ic_quest_motorcycle_parking@3x.png */; };
+		0256653F26FCF9E10009D950 /* ic_quest_mail_ref.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663CB26FCF9E00009D950 /* ic_quest_mail_ref.png */; };
+		0256654026FCF9E10009D950 /* ic_quest_no_cars.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663CC26FCF9E00009D950 /* ic_quest_no_cars.png */; };
+		0256654126FCF9E10009D950 /* ic_quest_street_surface.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663CD26FCF9E00009D950 /* ic_quest_street_surface.png */; };
+		0256654226FCF9E10009D950 /* ic_quest_toilet_fee.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663CE26FCF9E00009D950 /* ic_quest_toilet_fee.png */; };
+		0256654326FCF9E10009D950 /* ic_quest_parking@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663CF26FCF9E00009D950 /* ic_quest_parking@3x.png */; };
+		0256654426FCF9E10009D950 /* ic_quest_wheelchair@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663D026FCF9E00009D950 /* ic_quest_wheelchair@2x.png */; };
+		0256654526FCF9E10009D950 /* ic_quest_building_underground@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663D126FCF9E00009D950 /* ic_quest_building_underground@3x.png */; };
+		0256654626FCF9E10009D950 /* ic_quest_fee.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663D226FCF9E00009D950 /* ic_quest_fee.png */; };
+		0256654726FCF9E10009D950 /* ic_quest_pitch_surface.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663D326FCF9E00009D950 /* ic_quest_pitch_surface.png */; };
+		0256654826FCF9E10009D950 /* ic_quest_baby@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663D426FCF9E00009D950 /* ic_quest_baby@3x.png */; };
+		0256654926FCF9E10009D950 /* ic_quest_bicycle_parking_cover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663D526FCF9E00009D950 /* ic_quest_bicycle_parking_cover@2x.png */; };
+		0256654A26FCF9E10009D950 /* ic_quest_surveillance_camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663D626FCF9E00009D950 /* ic_quest_surveillance_camera@2x.png */; };
+		0256654B26FCF9E10009D950 /* ic_quest_wifi@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663D726FCF9E00009D950 /* ic_quest_wifi@3x.png */; };
+		0256654C26FCF9E10009D950 /* ic_quest_pedestrian_crossing_island.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663D826FCF9E00009D950 /* ic_quest_pedestrian_crossing_island.png */; };
+		0256654D26FCF9E10009D950 /* ic_quest_motorcycle_parking_cover@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663D926FCF9E00009D950 /* ic_quest_motorcycle_parking_cover@3x.png */; };
+		0256654E26FCF9E10009D950 /* ic_quest_steps_handrail.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663DA26FCF9E00009D950 /* ic_quest_steps_handrail.png */; };
+		0256654F26FCF9E10009D950 /* ic_quest_bicycle_parking_cover.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663DB26FCF9E00009D950 /* ic_quest_bicycle_parking_cover.png */; };
+		0256655026FCF9E10009D950 /* ic_quest_money@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663DC26FCF9E00009D950 /* ic_quest_money@3x.png */; };
+		0256655126FCF9E10009D950 /* ic_quest_building_underground.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663DD26FCF9E00009D950 /* ic_quest_building_underground.png */; };
+		0256655226FCF9E10009D950 /* ic_quest_building_construction@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663DE26FCF9E00009D950 /* ic_quest_building_construction@2x.png */; };
+		0256655326FCF9E10009D950 /* ic_quest_restaurant_vegan@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663DF26FCF9E00009D950 /* ic_quest_restaurant_vegan@3x.png */; };
+		0256655426FCF9E10009D950 /* ic_quest_steps_count.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663E026FCF9E00009D950 /* ic_quest_steps_count.png */; };
+		0256655526FCF9E10009D950 /* ic_quest_max_width.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663E126FCF9E00009D950 /* ic_quest_max_width.png */; };
+		0256655626FCF9E10009D950 /* ic_quest_bicycle_parking.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663E226FCF9E00009D950 /* ic_quest_bicycle_parking.png */; };
+		0256655726FCF9E10009D950 /* ic_quest_recycling.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663E326FCF9E00009D950 /* ic_quest_recycling.png */; };
+		0256655826FCF9E10009D950 /* ic_quest_bridge@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663E426FCF9E00009D950 /* ic_quest_bridge@3x.png */; };
+		0256655926FCF9E10009D950 /* ic_quest_restaurant@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663E526FCF9E00009D950 /* ic_quest_restaurant@2x.png */; };
+		0256655A26FCF9E10009D950 /* ic_quest_bus_stop_name@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663E626FCF9E00009D950 /* ic_quest_bus_stop_name@3x.png */; };
+		0256655B26FCF9E10009D950 /* ic_quest_baby.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663E726FCF9E00009D950 /* ic_quest_baby.png */; };
+		0256655C26FCF9E10009D950 /* ic_quest_kerb_type.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663E826FCF9E00009D950 /* ic_quest_kerb_type.png */; };
+		0256655D26FCF9E10009D950 /* ic_quest_car.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663E926FCF9E00009D950 /* ic_quest_car.png */; };
+		0256655E26FCF9E10009D950 /* ic_quest_bridge.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663EA26FCF9E00009D950 /* ic_quest_bridge.png */; };
+		0256655F26FCF9E10009D950 /* ic_quest_money.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663EB26FCF9E00009D950 /* ic_quest_money.png */; };
+		0256656026FCF9E10009D950 /* ic_quest_road_construction@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663EC26FCF9E00009D950 /* ic_quest_road_construction@3x.png */; };
+		0256656126FCF9E10009D950 /* ic_quest_crown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663ED26FCF9E00009D950 /* ic_quest_crown@2x.png */; };
+		0256656226FCF9E10009D950 /* ic_quest_street_surface@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663EE26FCF9E00009D950 /* ic_quest_street_surface@2x.png */; };
+		0256656326FCF9E10009D950 /* ic_quest_tractor.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663EF26FCF9E00009D950 /* ic_quest_tractor.png */; };
+		0256656426FCF9E10009D950 /* ic_quest_street_turn_lanes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663F026FCF9E00009D950 /* ic_quest_street_turn_lanes@2x.png */; };
+		0256656526FCF9E10009D950 /* ic_quest_oneway@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663F126FCF9E00009D950 /* ic_quest_oneway@3x.png */; };
+		0256656626FCF9E10009D950 /* ic_quest_bicycle_parking@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663F226FCF9E00009D950 /* ic_quest_bicycle_parking@2x.png */; };
+		0256656726FCF9E10009D950 /* ic_quest_way_surface@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663F326FCF9E00009D950 /* ic_quest_way_surface@3x.png */; };
+		0256656826FCF9E10009D950 /* ic_quest_street_width.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663F426FCF9E00009D950 /* ic_quest_street_width.png */; };
+		0256656926FCF9E10009D950 /* ic_quest_car_charger@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663F526FCF9E00009D950 /* ic_quest_car_charger@2x.png */; };
+		0256656A26FCF9E10009D950 /* ic_quest_toilets.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663F626FCF9E00009D950 /* ic_quest_toilets.png */; };
+		0256656B26FCF9E10009D950 /* ic_quest_bench_poi@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663F726FCF9E00009D950 /* ic_quest_bench_poi@3x.png */; };
+		0256656C26FCF9E10009D950 /* ic_quest_recycling_glass@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663F826FCF9E00009D950 /* ic_quest_recycling_glass@2x.png */; };
+		0256656D26FCF9E10009D950 /* ic_quest_steps_handrail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663F926FCF9E00009D950 /* ic_quest_steps_handrail@2x.png */; };
+		0256656E26FCF9E10009D950 /* ic_quest_mail_ref@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663FA26FCF9E00009D950 /* ic_quest_mail_ref@2x.png */; };
+		0256656F26FCF9E10009D950 /* ic_quest_restaurant_vegetarian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663FB26FCF9E00009D950 /* ic_quest_restaurant_vegetarian@2x.png */; };
+		0256657026FCF9E10009D950 /* ic_quest_toilets_wheelchair.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663FC26FCF9E00009D950 /* ic_quest_toilets_wheelchair.png */; };
+		0256657126FCF9E10009D950 /* ic_quest_smoke.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663FD26FCF9E00009D950 /* ic_quest_smoke.png */; };
+		0256657226FCF9E10009D950 /* ic_quest_building_height@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663FE26FCF9E00009D950 /* ic_quest_building_height@3x.png */; };
+		0256657326FCF9E10009D950 /* ic_quest_street_name@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 025663FF26FCF9E00009D950 /* ic_quest_street_name@2x.png */; };
+		0256657426FCF9E10009D950 /* ic_quest_phone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256640026FCF9E00009D950 /* ic_quest_phone.png */; };
+		0256657526FCF9E10009D950 /* ic_quest_police@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256640126FCF9E00009D950 /* ic_quest_police@2x.png */; };
+		0256657626FCF9E10009D950 /* ic_quest_no_cars@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256640226FCF9E00009D950 /* ic_quest_no_cars@2x.png */; };
+		0256657726FCF9E10009D950 /* ic_quest_max_weight@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256640326FCF9E00009D950 /* ic_quest_max_weight@3x.png */; };
+		0256657826FCF9E10009D950 /* ic_quest_blind_pedestrian_crossing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256640426FCF9E00009D950 /* ic_quest_blind_pedestrian_crossing@2x.png */; };
+		0256657926FCF9E10009D950 /* ic_quest_traffic_lights.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256640526FCF9E00009D950 /* ic_quest_traffic_lights.png */; };
+		0256657A26FCF9E10009D950 /* ic_quest_toilets_wheelchair@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256640626FCF9E00009D950 /* ic_quest_toilets_wheelchair@3x.png */; };
+		0256657B26FCF9E10009D950 /* ic_quest_parking_maxstay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256640726FCF9E00009D950 /* ic_quest_parking_maxstay@2x.png */; };
+		0256657C26FCF9E10009D950 /* ic_quest_bus_stop_lit.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256640826FCF9E00009D950 /* ic_quest_bus_stop_lit.png */; };
+		0256657D26FCF9E10009D950 /* ic_quest_car@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256640926FCF9E00009D950 /* ic_quest_car@3x.png */; };
+		0256657E26FCF9E10009D950 /* ic_quest_barrier@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256640A26FCF9E00009D950 /* ic_quest_barrier@2x.png */; };
+		0256657F26FCF9E10009D950 /* ic_quest_footway_surface@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256640B26FCF9E00009D950 /* ic_quest_footway_surface@3x.png */; };
+		0256658026FCF9E10009D950 /* ic_quest_max_height@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256640C26FCF9E00009D950 /* ic_quest_max_height@3x.png */; };
+		0256658126FCF9E10009D950 /* ic_quest_restaurant.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256640D26FCF9E00009D950 /* ic_quest_restaurant.png */; };
+		0256658226FCF9E10009D950 /* ic_quest_playground@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256640E26FCF9E00009D950 /* ic_quest_playground@3x.png */; };
+		0256658326FCF9E10009D950 /* ic_quest_max_weight.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256640F26FCF9E00009D950 /* ic_quest_max_weight.png */; };
+		0256658426FCF9E10009D950 /* ic_quest_bicycleway.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256641026FCF9E00009D950 /* ic_quest_bicycleway.png */; };
+		0256658526FCF9E10009D950 /* ic_quest_recycling_glass.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256641126FCF9E00009D950 /* ic_quest_recycling_glass.png */; };
+		0256658626FCF9E10009D950 /* ic_quest_parking.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256641226FCF9E00009D950 /* ic_quest_parking.png */; };
+		0256658726FCF9E10009D950 /* ic_quest_playground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256641326FCF9E00009D950 /* ic_quest_playground@2x.png */; };
+		0256658826FCF9E10009D950 /* ic_quest_max_height@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256641426FCF9E00009D950 /* ic_quest_max_height@2x.png */; };
+		0256658926FCF9E10009D950 /* ic_quest_max_height.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256641526FCF9E00009D950 /* ic_quest_max_height.png */; };
+		0256658A26FCF9E10009D950 /* ic_quest_footway_surface@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256641626FCF9E00009D950 /* ic_quest_footway_surface@2x.png */; };
+		0256658B26FCF9E10009D950 /* ic_quest_apple.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256641726FCF9E00009D950 /* ic_quest_apple.png */; };
+		0256658C26FCF9E10009D950 /* ic_quest_car@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256641826FCF9E00009D950 /* ic_quest_car@2x.png */; };
+		0256658D26FCF9E10009D950 /* ic_quest_barrier@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256641926FCF9E00009D950 /* ic_quest_barrier@3x.png */; };
+		0256658E26FCF9E10009D950 /* ic_quest_laundry.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256641A26FCF9E00009D950 /* ic_quest_laundry.png */; };
+		0256658F26FCF9E10009D950 /* ic_quest_toilets_wheelchair@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256641B26FCF9E00009D950 /* ic_quest_toilets_wheelchair@2x.png */; };
+		0256659026FCF9E10009D950 /* ic_quest_parking_maxstay@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256641C26FCF9E00009D950 /* ic_quest_parking_maxstay@3x.png */; };
+		0256659126FCF9E10009D950 /* ic_quest_max_weight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256641D26FCF9E00009D950 /* ic_quest_max_weight@2x.png */; };
+		0256659226FCF9E10009D950 /* ic_quest_blind_pedestrian_crossing@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256641E26FCF9E00009D950 /* ic_quest_blind_pedestrian_crossing@3x.png */; };
+		0256659326FCF9E10009D950 /* ic_quest_check_shop.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256641F26FCF9E00009D950 /* ic_quest_check_shop.png */; };
+		0256659426FCF9E10009D950 /* ic_quest_police@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256642026FCF9E00009D950 /* ic_quest_police@3x.png */; };
+		0256659526FCF9E10009D950 /* ic_quest_no_cars@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256642126FCF9E00009D950 /* ic_quest_no_cars@3x.png */; };
+		0256659626FCF9E10009D950 /* ic_quest_opening_hours.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256642226FCF9E00009D950 /* ic_quest_opening_hours.png */; };
+		0256659726FCF9E10009D950 /* ic_quest_oneway.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256642326FCF9E00009D950 /* ic_quest_oneway.png */; };
+		0256659826FCF9E10009D950 /* ic_quest_cash.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256642426FCF9E00009D950 /* ic_quest_cash.png */; };
+		0256659926FCF9E10009D950 /* ic_quest_building_height@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256642526FCF9E00009D950 /* ic_quest_building_height@2x.png */; };
+		0256659A26FCF9E10009D950 /* ic_quest_street_name@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256642626FCF9E00009D950 /* ic_quest_street_name@3x.png */; };
+		0256659B26FCF9E10009D950 /* ic_quest_restaurant_vegetarian@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256642726FCF9E00009D950 /* ic_quest_restaurant_vegetarian@3x.png */; };
+		0256659C26FCF9E10009D950 /* ic_quest_leaf.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256642826FCF9E00009D950 /* ic_quest_leaf.png */; };
+		0256659D26FCF9E10009D950 /* ic_quest_mail_ref@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256642926FCF9E00009D950 /* ic_quest_mail_ref@3x.png */; };
+		0256659E26FCF9E10009D950 /* ic_quest_steps_handrail@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256642A26FCF9E00009D950 /* ic_quest_steps_handrail@3x.png */; };
+		0256659F26FCF9E10009D950 /* ic_quest_religion.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256642B26FCF9E00009D950 /* ic_quest_religion.png */; };
+		025665A026FCF9E10009D950 /* ic_quest_defibrillator.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256642C26FCF9E00009D950 /* ic_quest_defibrillator.png */; };
+		025665A126FCF9E10009D950 /* ic_quest_recycling_glass@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256642D26FCF9E00009D950 /* ic_quest_recycling_glass@3x.png */; };
+		025665A226FCF9E10009D950 /* ic_quest_bench_poi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256642E26FCF9E00009D950 /* ic_quest_bench_poi@2x.png */; };
+		025665A326FCF9E10009D950 /* ic_quest_recycling_container.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256642F26FCF9E00009D950 /* ic_quest_recycling_container.png */; };
+		025665A426FCF9E10009D950 /* ic_quest_way_surface@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256643026FCF9E00009D950 /* ic_quest_way_surface@2x.png */; };
+		025665A526FCF9E10009D950 /* ic_quest_car_charger@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256643126FCF9E00009D950 /* ic_quest_car_charger@3x.png */; };
+		025665A626FCF9E10009D950 /* ic_quest_street_turn_lanes@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256643226FCF9E00009D950 /* ic_quest_street_turn_lanes@3x.png */; };
+		025665A726FCF9E10009D950 /* ic_quest_oneway@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256643326FCF9E00009D950 /* ic_quest_oneway@2x.png */; };
+		025665A826FCF9E10009D950 /* ic_quest_bicycle_parking@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256643426FCF9E00009D950 /* ic_quest_bicycle_parking@3x.png */; };
+		025665A926FCF9E10009D950 /* ic_quest_crown@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256643526FCF9E00009D950 /* ic_quest_crown@3x.png */; };
+		025665AA26FCF9E10009D950 /* ic_quest_no_pedestrians.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256643626FCF9E00009D950 /* ic_quest_no_pedestrians.png */; };
+		025665AB26FCF9E10009D950 /* ic_quest_street_surface@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256643726FCF9E00009D950 /* ic_quest_street_surface@3x.png */; };
+		025665AC26FCF9E10009D950 /* ic_quest_footway_surface.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256643826FCF9E00009D950 /* ic_quest_footway_surface.png */; };
+		025665AD26FCF9E10009D950 /* ic_quest_road_construction@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256643926FCF9E00009D950 /* ic_quest_road_construction@2x.png */; };
+		025665AE26FCF9E10009D950 /* ic_quest_bridge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256643A26FCF9E00009D950 /* ic_quest_bridge@2x.png */; };
+		025665AF26FCF9E10009D950 /* ic_quest_restaurant@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256643B26FCF9E00009D950 /* ic_quest_restaurant@3x.png */; };
+		025665B026FCF9E10009D950 /* ic_quest_bus_stop_name@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256643C26FCF9E00009D950 /* ic_quest_bus_stop_name@2x.png */; };
+		025665B126FCF9E10009D950 /* ic_quest_restaurant_vegetarian.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256643D26FCF9E00009D950 /* ic_quest_restaurant_vegetarian.png */; };
+		025665B226FCF9E10009D950 /* ic_quest_money@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256643E26FCF9E00009D950 /* ic_quest_money@2x.png */; };
+		025665B326FCF9E10009D950 /* ic_quest_building_construction@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256643F26FCF9E00009D950 /* ic_quest_building_construction@3x.png */; };
+		025665B426FCF9E10009D950 /* ic_quest_restaurant_vegan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256644026FCF9E00009D950 /* ic_quest_restaurant_vegan@2x.png */; };
+		025665B526FCF9E10009D950 /* ic_quest_pedestrian_crossing.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256644126FCF9E00009D950 /* ic_quest_pedestrian_crossing.png */; };
+		025665B626FCF9E10009D950 /* ic_quest_bicycle_parking_access.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256644226FCF9E00009D950 /* ic_quest_bicycle_parking_access.png */; };
+		025665B726FCF9E10009D950 /* ic_quest_pedestrian_crossing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256644326FCF9E00009D950 /* ic_quest_pedestrian_crossing@2x.png */; };
+		025665B826FCF9E10009D950 /* ic_quest_bicycle@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256644426FCF9E00009D950 /* ic_quest_bicycle@3x.png */; };
+		025665B926FCF9E10009D950 /* ic_quest_kerb_tactile_paving@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256644526FCF9E00009D950 /* ic_quest_kerb_tactile_paving@3x.png */; };
+		025665BA26FCF9E10009D950 /* ic_quest_recycling_container@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256644626FCF9E00009D950 /* ic_quest_recycling_container@2x.png */; };
+		025665BB26FCF9E10009D950 /* ic_quest_power@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256644726FCF9E00009D950 /* ic_quest_power@2x.png */; };
+		025665BC26FCF9E10009D950 /* ic_quest_crown.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256644826FCF9E00009D950 /* ic_quest_crown.png */; };
+		025665BD26FCF9E10009D950 /* ic_quest_check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256644926FCF9E00009D950 /* ic_quest_check@2x.png */; };
+		025665BE26FCF9E10009D950 /* ic_quest_fuel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256644A26FCF9E00009D950 /* ic_quest_fuel@2x.png */; };
+		025665BF26FCF9E10009D950 /* ic_quest_motorcycle_parking_capacity@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256644B26FCF9E00009D950 /* ic_quest_motorcycle_parking_capacity@3x.png */; };
+		025665C026FCF9E10009D950 /* ic_quest_blind@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256644C26FCF9E00009D950 /* ic_quest_blind@2x.png */; };
+		025665C126FCF9E10009D950 /* ic_quest_bench_public_transport@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256644D26FCF9E00009D950 /* ic_quest_bench_public_transport@2x.png */; };
+		025665C226FCF9E10009D950 /* ic_quest_street@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256644E26FCF9E00009D950 /* ic_quest_street@2x.png */; };
+		025665C326FCF9E10009D950 /* ic_quest_board_type.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256644F26FCF9E00009D950 /* ic_quest_board_type.png */; };
+		025665C426FCF9E10009D950 /* ic_quest_bin_public_transport.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256645026FCF9E00009D950 /* ic_quest_bin_public_transport.png */; };
+		025665C526FCF9E10009D950 /* ic_quest_peak@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256645126FCF9E00009D950 /* ic_quest_peak@3x.png */; };
+		025665C626FCF9E10009D950 /* ic_quest_motorcycle_parking_capacity.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256645226FCF9E00009D950 /* ic_quest_motorcycle_parking_capacity.png */; };
+		025665C726FCF9E10009D950 /* ic_quest_board_type@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256645326FCF9E00009D950 /* ic_quest_board_type@3x.png */; };
+		025665C826FCF9E10009D950 /* ic_quest_recycling_clothes@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256645426FCF9E00009D950 /* ic_quest_recycling_clothes@3x.png */; };
+		025665C926FCF9E10009D950 /* ic_quest_toilets@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256645526FCF9E00009D950 /* ic_quest_toilets@3x.png */; };
+		025665CA26FCF9E10009D950 /* ic_quest_street.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256645626FCF9E00009D950 /* ic_quest_street.png */; };
+		025665CB26FCF9E10009D950 /* ic_quest_blind_bus.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256645726FCF9E00009D950 /* ic_quest_blind_bus.png */; };
+		025665CC26FCF9E10009D950 /* ic_quest_building.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256645826FCF9E00009D950 /* ic_quest_building.png */; };
+		025665CD26FCF9E10009D950 /* ic_quest_parking_fee@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256645926FCF9E00009D950 /* ic_quest_parking_fee@3x.png */; };
+		025665CE26FCF9E10009D950 /* ic_quest_leaf@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256645A26FCF9E00009D950 /* ic_quest_leaf@2x.png */; };
+		025665CF26FCF9E10009D950 /* ic_quest_bicycle_parking_capacity@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256645B26FCF9E00009D950 /* ic_quest_bicycle_parking_capacity@2x.png */; };
+		025665D026FCF9E10009D950 /* ic_quest_building_levels@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256645C26FCF9E00009D950 /* ic_quest_building_levels@3x.png */; };
+		025665D126FCF9E10009D950 /* ic_quest_street_lanes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256645D26FCF9E00009D950 /* ic_quest_street_lanes@2x.png */; };
+		025665D226FCF9E10009D950 /* ic_quest_path_segregation@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256645E26FCF9E00009D950 /* ic_quest_path_segregation@3x.png */; };
+		025665D326FCF9E10009D950 /* ic_quest_smoke@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256645F26FCF9E00009D950 /* ic_quest_smoke@2x.png */; };
+		025665D426FCF9E10009D950 /* ic_quest_kerb_tactile_paving.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256646026FCF9E00009D950 /* ic_quest_kerb_tactile_paving.png */; };
+		025665D526FCF9E10009D950 /* ic_quest_street_lanes.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256646126FCF9E00009D950 /* ic_quest_street_lanes.png */; };
+		025665D626FCF9E10009D950 /* ic_quest_ferry@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256646226FCF9E00009D950 /* ic_quest_ferry@3x.png */; };
+		025665D726FCF9E10009D950 /* ic_quest_bin_public_transport@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256646326FCF9E00009D950 /* ic_quest_bin_public_transport@3x.png */; };
+		025665D826FCF9E10009D950 /* ic_quest_notes@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256646426FCF9E00009D950 /* ic_quest_notes@3x.png */; };
+		025665D926FCF9E10009D950 /* ic_quest_building_height.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256646526FCF9E00009D950 /* ic_quest_building_height.png */; };
+		025665DA26FCF9E10009D950 /* ic_quest_street_surface_detail@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256646626FCF9E00009D950 /* ic_quest_street_surface_detail@3x.png */; };
+		025665DB26FCF9E10009D950 /* ic_quest_cow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256646726FCF9E00009D950 /* ic_quest_cow@2x.png */; };
+		025665DC26FCF9E10009D950 /* ic_quest_car_charger.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256646826FCF9E00009D950 /* ic_quest_car_charger.png */; };
+		025665DD26FCF9E10009D950 /* ic_quest_defibrillator@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256646926FCF9E00009D950 /* ic_quest_defibrillator@3x.png */; };
+		025665DE26FCF9E10009D950 /* ic_quest_fire_hydrant@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256646A26FCF9E00009D950 /* ic_quest_fire_hydrant@2x.png */; };
+		025665DF26FCF9E10009D950 /* ic_quest_defibrillator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256646B26FCF9E00009D950 /* ic_quest_defibrillator@2x.png */; };
+		025665E026FCF9E10009D950 /* ic_quest_fire_hydrant@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256646C26FCF9E00009D950 /* ic_quest_fire_hydrant@3x.png */; };
+		025665E126FCF9E10009D950 /* ic_quest_restaurant_vegan.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256646D26FCF9E00009D950 /* ic_quest_restaurant_vegan.png */; };
+		025665E226FCF9E10009D950 /* ic_quest_cow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256646E26FCF9E00009D950 /* ic_quest_cow@3x.png */; };
+		025665E326FCF9E10009D950 /* ic_quest_bin_public_transport@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256646F26FCF9E00009D950 /* ic_quest_bin_public_transport@2x.png */; };
+		025665E426FCF9E10009D950 /* ic_quest_notes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256647026FCF9E00009D950 /* ic_quest_notes@2x.png */; };
+		025665E526FCF9E10009D950 /* ic_quest_street_surface_detail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256647126FCF9E00009D950 /* ic_quest_street_surface_detail@2x.png */; };
+		025665E626FCF9E10009D950 /* ic_quest_ferry@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256647226FCF9E00009D950 /* ic_quest_ferry@2x.png */; };
+		025665E726FCF9E10009D950 /* ic_quest_housenumber_street.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256647326FCF9E00009D950 /* ic_quest_housenumber_street.png */; };
+		025665E826FCF9E10009D950 /* ic_quest_street_turn_lanes.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256647426FCF9E00009D950 /* ic_quest_street_turn_lanes.png */; };
+		025665E926FCF9E10009D950 /* ic_quest_steps_ramp.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256647526FCF9E00009D950 /* ic_quest_steps_ramp.png */; };
+		025665EA26FCF9E10009D950 /* ic_quest_max_speed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256647626FCF9E00009D950 /* ic_quest_max_speed.png */; };
+		025665EB26FCF9E10009D950 /* ic_quest_street_lanes@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256647726FCF9E00009D950 /* ic_quest_street_lanes@3x.png */; };
+		025665EC26FCF9E10009D950 /* ic_quest_path_segregation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256647826FCF9E00009D950 /* ic_quest_path_segregation@2x.png */; };
+		025665ED26FCF9E10009D950 /* ic_quest_blind_traffic_lights.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256647926FCF9E00009D950 /* ic_quest_blind_traffic_lights.png */; };
+		025665EE26FCF9E10009D950 /* ic_quest_smoke@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256647A26FCF9E00009D950 /* ic_quest_smoke@3x.png */; };
+		025665EF26FCF9E10009D950 /* ic_quest_car_wash.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256647B26FCF9E00009D950 /* ic_quest_car_wash.png */; };
+		025665F026FCF9E10009D950 /* ic_quest_blind_pedestrian_crossing.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256647C26FCF9E00009D950 /* ic_quest_blind_pedestrian_crossing.png */; };
+		025665F126FCF9E10009D950 /* ic_quest_building_levels@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256647D26FCF9E00009D950 /* ic_quest_building_levels@2x.png */; };
+		025665F226FCF9E10009D950 /* ic_quest_bus.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256647E26FCF9E00009D950 /* ic_quest_bus.png */; };
+		025665F326FCF9E10009D950 /* ic_quest_parking_fee@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256647F26FCF9E00009D950 /* ic_quest_parking_fee@2x.png */; };
+		025665F426FCF9E10009D950 /* ic_quest_leaf@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256648026FCF9E00009D950 /* ic_quest_leaf@3x.png */; };
+		025665F526FCF9E10009D950 /* ic_quest_bicycle_parking_capacity@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256648126FCF9E00009D950 /* ic_quest_bicycle_parking_capacity@3x.png */; };
+		025665F626FCF9E10009D950 /* ic_quest_bicycle_parking_capacity.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256648226FCF9E00009D950 /* ic_quest_bicycle_parking_capacity.png */; };
+		025665F726FCF9E10009D950 /* ic_quest_toilets@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256648326FCF9E00009D950 /* ic_quest_toilets@2x.png */; };
+		025665F826FCF9E10009D950 /* ic_quest_recycling_clothes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256648426FCF9E00009D950 /* ic_quest_recycling_clothes@2x.png */; };
+		025665F926FCF9E10009D950 /* ic_quest_bicycle.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256648526FCF9E00009D950 /* ic_quest_bicycle.png */; };
+		025665FA26FCF9E10009D950 /* ic_quest_board_type@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256648626FCF9E00009D950 /* ic_quest_board_type@2x.png */; };
+		025665FB26FCF9E10009D950 /* ic_quest_peak@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256648726FCF9E00009D950 /* ic_quest_peak@2x.png */; };
+		025665FC26FCF9E10009D950 /* ic_quest_fire_hydrant.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256648826FCF9E00009D950 /* ic_quest_fire_hydrant.png */; };
+		025665FD26FCF9E10009D950 /* ic_quest_street@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256648926FCF9E00009D950 /* ic_quest_street@3x.png */; };
+		025665FE26FCF9E10009D950 /* ic_quest_bench_public_transport@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256648A26FCF9E00009D950 /* ic_quest_bench_public_transport@3x.png */; };
+		025665FF26FCF9E10009D950 /* ic_quest_motorcycle_parking_capacity@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256648B26FCF9E00009D950 /* ic_quest_motorcycle_parking_capacity@2x.png */; };
+		0256660026FCF9E10009D950 /* ic_quest_blind@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256648C26FCF9E00009D950 /* ic_quest_blind@3x.png */; };
+		0256660126FCF9E10009D950 /* ic_quest_fuel@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256648D26FCF9E00009D950 /* ic_quest_fuel@3x.png */; };
+		0256660226FCF9E10009D950 /* ic_quest_recycling_container@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256648E26FCF9E00009D950 /* ic_quest_recycling_container@3x.png */; };
+		0256660326FCF9E10009D950 /* ic_quest_power@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256648F26FCF9E00009D950 /* ic_quest_power@3x.png */; };
+		0256660426FCF9E10009D950 /* ic_quest_check@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256649026FCF9E00009D950 /* ic_quest_check@3x.png */; };
+		0256660526FCF9E10009D950 /* ic_quest_street_surface_detail.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256649126FCF9E00009D950 /* ic_quest_street_surface_detail.png */; };
+		0256660626FCF9E10009D950 /* ic_quest_kerb_tactile_paving@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256649226FCF9E00009D950 /* ic_quest_kerb_tactile_paving@2x.png */; };
+		0256660726FCF9E10009D950 /* ic_quest_bicycle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256649326FCF9E00009D950 /* ic_quest_bicycle@2x.png */; };
+		0256660826FCF9E10009D950 /* ic_quest_pedestrian.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256649426FCF9E00009D950 /* ic_quest_pedestrian.png */; };
+		0256660926FCF9E10009D950 /* ic_quest_pedestrian_crossing@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0256649526FCF9E00009D950 /* ic_quest_pedestrian_crossing@3x.png */; };
+		0256660B26FD1C9B0009D950 /* QuestEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0256660A26FD1C9B0009D950 /* QuestEditor.storyboard */; };
 		0266DE862655A21F007A502E /* Superview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0266DE852655A21F007A502E /* Superview.swift */; };
 		026FC76726509D6E005DDAFF /* SpeechBalloonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */; };
 		026FC7682650A17B005DDAFF /* VoiceAnnouncement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */; };
@@ -91,7 +466,6 @@
 		02C8C56B26F44776003B0122 /* Quest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56A26F44776003B0122 /* Quest.swift */; };
 		02C8C56D26F4479A003B0122 /* WayPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56C26F4479A003B0122 /* WayPoint.swift */; };
 		02C8C56F26F447C3003B0122 /* KeepRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56E26F447C3003B0122 /* KeepRight.swift */; };
-		02C8C57226FAAFDC003B0122 /* QuestEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02C8C57126FAAFDC003B0122 /* QuestEditor.storyboard */; };
 		02C8C57426FAAFF0003B0122 /* QuestEditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C57326FAAFF0003B0122 /* QuestEditorController.swift */; };
 		02C8C57626FBCBF4003B0122 /* QuestFilterParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C57526FBCBF4003B0122 /* QuestFilterParser.swift */; };
 		02CB2405265DB7CB00835F32 /* OpeningHoursRecognizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB2401265DB7CB00835F32 /* OpeningHoursRecognizerView.swift */; };
@@ -303,6 +677,381 @@
 		024909CE267EADC70027E531 /* OsmXmlGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmXmlGenerator.swift; sourceTree = "<group>"; };
 		024E6D2E24CBBCE500E1E2A3 /* apple-app-site-association */ = {isa = PBXFileReference; lastKnownFileType = text; name = "apple-app-site-association"; path = "../apple-app-site-association"; sourceTree = "<group>"; };
 		0254C6CD2579CD88000705B4 /* POI-Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "POI-Icons"; path = "../POI-Icons"; sourceTree = "<group>"; };
+		0256631D26FCF8220009D950 /* QuestList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestList.swift; sourceTree = "<group>"; };
+		0256631F26FCF9730009D950 /* Quests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Quests.json; sourceTree = "<group>"; };
+		0256632226FCF9DF0009D950 /* ic_quest_pitch_surface@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_pitch_surface@2x.png"; sourceTree = "<group>"; };
+		0256632326FCF9DF0009D950 /* ic_quest_pedestrian@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_pedestrian@3x.png"; sourceTree = "<group>"; };
+		0256632426FCF9DF0009D950 /* ic_quest_car_wash@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_car_wash@3x.png"; sourceTree = "<group>"; };
+		0256632526FCF9DF0009D950 /* ic_quest_wheelchair_shop@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_wheelchair_shop@3x.png"; sourceTree = "<group>"; };
+		0256632626FCF9DF0009D950 /* ic_quest_steps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_steps.png; sourceTree = "<group>"; };
+		0256632726FCF9DF0009D950 /* ic_quest_mail@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_mail@3x.png"; sourceTree = "<group>"; };
+		0256632826FCF9DF0009D950 /* ic_quest_sport@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_sport@3x.png"; sourceTree = "<group>"; };
+		0256632926FCF9DF0009D950 /* ic_quest_housenumber@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_housenumber@2x.png"; sourceTree = "<group>"; };
+		0256632A26FCF9DF0009D950 /* ic_quest_steps_count@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_steps_count@3x.png"; sourceTree = "<group>"; };
+		0256632B26FCF9DF0009D950 /* ic_quest_laundry@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_laundry@3x.png"; sourceTree = "<group>"; };
+		0256632C26FCF9DF0009D950 /* ic_quest_toilet_fee@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_toilet_fee@3x.png"; sourceTree = "<group>"; };
+		0256632D26FCF9DF0009D950 /* ic_quest_parking_maxstay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_parking_maxstay.png; sourceTree = "<group>"; };
+		0256632E26FCF9DF0009D950 /* ic_quest_bicycleway_surface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_bicycleway_surface.png; sourceTree = "<group>"; };
+		0256632F26FCF9DF0009D950 /* ic_quest_parking_lane@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_parking_lane@2x.png"; sourceTree = "<group>"; };
+		0256633026FCF9DF0009D950 /* ic_quest_kosher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_kosher.png; sourceTree = "<group>"; };
+		0256633126FCF9DF0009D950 /* ic_quest_check_shop@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_check_shop@3x.png"; sourceTree = "<group>"; };
+		0256633226FCF9DF0009D950 /* ic_quest_bus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bus@2x.png"; sourceTree = "<group>"; };
+		0256633326FCF9DF0009D950 /* ic_quest_steps_ramp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_steps_ramp@2x.png"; sourceTree = "<group>"; };
+		0256633426FCF9DF0009D950 /* ic_quest_apple@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_apple@3x.png"; sourceTree = "<group>"; };
+		0256633526FCF9DF0009D950 /* ic_quest_bicycleway_surface@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bicycleway_surface@3x.png"; sourceTree = "<group>"; };
+		0256633626FCF9DF0009D950 /* ic_quest_lantern@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_lantern@3x.png"; sourceTree = "<group>"; };
+		0256633726FCF9DF0009D950 /* ic_quest_cash@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_cash@3x.png"; sourceTree = "<group>"; };
+		0256633826FCF9DF0009D950 /* ic_quest_pitch_lantern@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_pitch_lantern@3x.png"; sourceTree = "<group>"; };
+		0256633926FCF9DF0009D950 /* ic_quest_kerb_type@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_kerb_type@3x.png"; sourceTree = "<group>"; };
+		0256633A26FCF9DF0009D950 /* ic_quest_recycling@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_recycling@3x.png"; sourceTree = "<group>"; };
+		0256633B26FCF9DF0009D950 /* ic_quest_bus_stop_lit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bus_stop_lit@2x.png"; sourceTree = "<group>"; };
+		0256633C26FCF9DF0009D950 /* ic_quest_railway@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_railway@3x.png"; sourceTree = "<group>"; };
+		0256633D26FCF9DF0009D950 /* ic_quest_roof_shape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_roof_shape@2x.png"; sourceTree = "<group>"; };
+		0256633E26FCF9DF0009D950 /* ic_quest_traffic_lights@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_traffic_lights@3x.png"; sourceTree = "<group>"; };
+		0256633F26FCF9DF0009D950 /* ic_quest_pitch_lantern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_pitch_lantern.png; sourceTree = "<group>"; };
+		0256634026FCF9DF0009D950 /* ic_quest_steps@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_steps@3x.png"; sourceTree = "<group>"; };
+		0256634126FCF9DF0009D950 /* ic_quest_pedestrian_crossing_island@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_pedestrian_crossing_island@2x.png"; sourceTree = "<group>"; };
+		0256634226FCF9DF0009D950 /* ic_quest_information.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_information.png; sourceTree = "<group>"; };
+		0256634326FCF9DF0009D950 /* ic_quest_motorcycle_parking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_motorcycle_parking.png; sourceTree = "<group>"; };
+		0256634426FCF9DF0009D950 /* ic_quest_ferry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_ferry.png; sourceTree = "<group>"; };
+		0256634526FCF9DF0009D950 /* ic_quest_create_note@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_create_note@3x.png"; sourceTree = "<group>"; };
+		0256634626FCF9DF0009D950 /* ic_quest_bicycleway@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bicycleway@3x.png"; sourceTree = "<group>"; };
+		0256634726FCF9DF0009D950 /* ic_quest_blind_bus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_blind_bus@2x.png"; sourceTree = "<group>"; };
+		0256634826FCF9DF0009D950 /* ic_quest_fee@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_fee@2x.png"; sourceTree = "<group>"; };
+		0256634926FCF9DF0009D950 /* ic_quest_bus_stop_name.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_bus_stop_name.png; sourceTree = "<group>"; };
+		0256634A26FCF9DF0009D950 /* ic_quest_label@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_label@3x.png"; sourceTree = "<group>"; };
+		0256634B26FCF9DF0009D950 /* ic_quest_opening_hours@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_opening_hours@2x.png"; sourceTree = "<group>"; };
+		0256634C26FCF9DF0009D950 /* ic_quest_religion@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_religion@3x.png"; sourceTree = "<group>"; };
+		0256634D26FCF9DF0009D950 /* ic_quest_ferry_pedestrian@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_ferry_pedestrian@3x.png"; sourceTree = "<group>"; };
+		0256634E26FCF9DF0009D950 /* ic_quest_phone@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_phone@3x.png"; sourceTree = "<group>"; };
+		0256634F26FCF9DF0009D950 /* ic_quest_bus_stop_shelter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bus_stop_shelter@2x.png"; sourceTree = "<group>"; };
+		0256635026FCF9DF0009D950 /* ic_quest_create_note.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_create_note.png; sourceTree = "<group>"; };
+		0256635126FCF9DF0009D950 /* ic_quest_ferry_pedestrian@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_ferry_pedestrian@2x.png"; sourceTree = "<group>"; };
+		0256635226FCF9DF0009D950 /* ic_quest_phone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_phone@2x.png"; sourceTree = "<group>"; };
+		0256635326FCF9E00009D950 /* ic_quest_bus_stop_shelter@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bus_stop_shelter@3x.png"; sourceTree = "<group>"; };
+		0256635426FCF9E00009D950 /* ic_quest_check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_check.png; sourceTree = "<group>"; };
+		0256635526FCF9E00009D950 /* ic_quest_bench_poi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_bench_poi.png; sourceTree = "<group>"; };
+		0256635626FCF9E00009D950 /* ic_quest_religion@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_religion@2x.png"; sourceTree = "<group>"; };
+		0256635726FCF9E00009D950 /* ic_quest_opening_hours@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_opening_hours@3x.png"; sourceTree = "<group>"; };
+		0256635826FCF9E00009D950 /* ic_quest_bench_public_transport.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_bench_public_transport.png; sourceTree = "<group>"; };
+		0256635926FCF9E00009D950 /* ic_quest_label@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_label@2x.png"; sourceTree = "<group>"; };
+		0256635A26FCF9E00009D950 /* ic_quest_fee@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_fee@3x.png"; sourceTree = "<group>"; };
+		0256635B26FCF9E00009D950 /* ic_quest_bicycleway@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bicycleway@2x.png"; sourceTree = "<group>"; };
+		0256635C26FCF9E00009D950 /* ic_quest_blind_bus@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_blind_bus@3x.png"; sourceTree = "<group>"; };
+		0256635D26FCF9E00009D950 /* ic_quest_create_note@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_create_note@2x.png"; sourceTree = "<group>"; };
+		0256635E26FCF9E00009D950 /* ic_quest_road_construction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_road_construction.png; sourceTree = "<group>"; };
+		0256635F26FCF9E00009D950 /* ic_quest_recycling_clothes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_recycling_clothes.png; sourceTree = "<group>"; };
+		0256636026FCF9E00009D950 /* ic_quest_pedestrian_crossing_island@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_pedestrian_crossing_island@3x.png"; sourceTree = "<group>"; };
+		0256636126FCF9E00009D950 /* ic_quest_railway.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_railway.png; sourceTree = "<group>"; };
+		0256636226FCF9E00009D950 /* ic_quest_police.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_police.png; sourceTree = "<group>"; };
+		0256636326FCF9E00009D950 /* ic_quest_parking_fee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_parking_fee.png; sourceTree = "<group>"; };
+		0256636426FCF9E00009D950 /* ic_quest_steps@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_steps@2x.png"; sourceTree = "<group>"; };
+		0256636526FCF9E00009D950 /* ic_quest_traffic_lights@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_traffic_lights@2x.png"; sourceTree = "<group>"; };
+		0256636626FCF9E00009D950 /* ic_quest_fuel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_fuel.png; sourceTree = "<group>"; };
+		0256636726FCF9E00009D950 /* ic_quest_roof_shape@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_roof_shape@3x.png"; sourceTree = "<group>"; };
+		0256636826FCF9E00009D950 /* ic_quest_bus_stop_lit@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bus_stop_lit@3x.png"; sourceTree = "<group>"; };
+		0256636926FCF9E00009D950 /* ic_quest_railway@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_railway@2x.png"; sourceTree = "<group>"; };
+		0256636A26FCF9E00009D950 /* ic_quest_peak.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_peak.png; sourceTree = "<group>"; };
+		0256636B26FCF9E00009D950 /* ic_quest_pitch_lantern@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_pitch_lantern@2x.png"; sourceTree = "<group>"; };
+		0256636C26FCF9E00009D950 /* ic_quest_kerb_type@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_kerb_type@2x.png"; sourceTree = "<group>"; };
+		0256636D26FCF9E00009D950 /* ic_quest_barrier.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_barrier.png; sourceTree = "<group>"; };
+		0256636E26FCF9E00009D950 /* ic_quest_recycling@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_recycling@2x.png"; sourceTree = "<group>"; };
+		0256636F26FCF9E00009D950 /* ic_quest_cash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_cash@2x.png"; sourceTree = "<group>"; };
+		0256637026FCF9E00009D950 /* ic_quest_wheelchair.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_wheelchair.png; sourceTree = "<group>"; };
+		0256637126FCF9E00009D950 /* ic_quest_apple@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_apple@2x.png"; sourceTree = "<group>"; };
+		0256637226FCF9E00009D950 /* ic_quest_bicycleway_surface@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bicycleway_surface@2x.png"; sourceTree = "<group>"; };
+		0256637326FCF9E00009D950 /* ic_quest_lantern@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_lantern@2x.png"; sourceTree = "<group>"; };
+		0256637426FCF9E00009D950 /* ic_quest_steps_ramp@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_steps_ramp@3x.png"; sourceTree = "<group>"; };
+		0256637526FCF9E00009D950 /* ic_quest_bus@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bus@3x.png"; sourceTree = "<group>"; };
+		0256637626FCF9E00009D950 /* ic_quest_check_shop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_check_shop@2x.png"; sourceTree = "<group>"; };
+		0256637726FCF9E00009D950 /* ic_quest_toilet_fee@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_toilet_fee@2x.png"; sourceTree = "<group>"; };
+		0256637826FCF9E00009D950 /* ic_quest_parking_lane@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_parking_lane@3x.png"; sourceTree = "<group>"; };
+		0256637926FCF9E00009D950 /* ic_quest_housenumber@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_housenumber@3x.png"; sourceTree = "<group>"; };
+		0256637A26FCF9E00009D950 /* ic_quest_steps_count@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_steps_count@2x.png"; sourceTree = "<group>"; };
+		0256637B26FCF9E00009D950 /* ic_quest_laundry@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_laundry@2x.png"; sourceTree = "<group>"; };
+		0256637C26FCF9E00009D950 /* ic_quest_path_segregation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_path_segregation.png; sourceTree = "<group>"; };
+		0256637D26FCF9E00009D950 /* ic_quest_parking_access.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_parking_access.png; sourceTree = "<group>"; };
+		0256637E26FCF9E00009D950 /* ic_quest_sport@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_sport@2x.png"; sourceTree = "<group>"; };
+		0256637F26FCF9E00009D950 /* ic_quest_housenumber.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_housenumber.png; sourceTree = "<group>"; };
+		0256638026FCF9E00009D950 /* ic_quest_mail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_mail@2x.png"; sourceTree = "<group>"; };
+		0256638126FCF9E00009D950 /* ic_quest_car_wash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_car_wash@2x.png"; sourceTree = "<group>"; };
+		0256638226FCF9E00009D950 /* ic_quest_wheelchair_shop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_wheelchair_shop@2x.png"; sourceTree = "<group>"; };
+		0256638326FCF9E00009D950 /* ic_quest_bicycle_parking_fee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_bicycle_parking_fee.png; sourceTree = "<group>"; };
+		0256638426FCF9E00009D950 /* ic_quest_pitch_surface@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_pitch_surface@3x.png"; sourceTree = "<group>"; };
+		0256638526FCF9E00009D950 /* ic_quest_pedestrian@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_pedestrian@2x.png"; sourceTree = "<group>"; };
+		0256638626FCF9E00009D950 /* ic_quest_motorcycle_parking_cover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_motorcycle_parking_cover@2x.png"; sourceTree = "<group>"; };
+		0256638726FCF9E00009D950 /* ic_quest_car_charger_capacity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_car_charger_capacity.png; sourceTree = "<group>"; };
+		0256638826FCF9E00009D950 /* ic_quest_bicycle_parking_cover@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bicycle_parking_cover@3x.png"; sourceTree = "<group>"; };
+		0256638926FCF9E00009D950 /* ic_quest_surveillance_camera@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_surveillance_camera@3x.png"; sourceTree = "<group>"; };
+		0256638A26FCF9E00009D950 /* ic_quest_wifi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_wifi@2x.png"; sourceTree = "<group>"; };
+		0256638B26FCF9E00009D950 /* ic_quest_baby@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_baby@2x.png"; sourceTree = "<group>"; };
+		0256638C26FCF9E00009D950 /* ic_quest_surveillance_camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_surveillance_camera.png; sourceTree = "<group>"; };
+		0256638D26FCF9E00009D950 /* ic_quest_lantern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_lantern.png; sourceTree = "<group>"; };
+		0256638E26FCF9E00009D950 /* ic_quest_building_underground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_building_underground@2x.png"; sourceTree = "<group>"; };
+		0256638F26FCF9E00009D950 /* ic_quest_wheelchair@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_wheelchair@3x.png"; sourceTree = "<group>"; };
+		0256639026FCF9E00009D950 /* ic_quest_way_surface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_way_surface.png; sourceTree = "<group>"; };
+		0256639126FCF9E00009D950 /* ic_quest_parking@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_parking@2x.png"; sourceTree = "<group>"; };
+		0256639226FCF9E00009D950 /* ic_quest_building_construction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_building_construction.png; sourceTree = "<group>"; };
+		0256639326FCF9E00009D950 /* ic_quest_blind.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_blind.png; sourceTree = "<group>"; };
+		0256639426FCF9E00009D950 /* ic_quest_mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_mail.png; sourceTree = "<group>"; };
+		0256639526FCF9E00009D950 /* ic_quest_wheelchair_shop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_wheelchair_shop.png; sourceTree = "<group>"; };
+		0256639626FCF9E00009D950 /* ic_quest_housenumber_street@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_housenumber_street@2x.png"; sourceTree = "<group>"; };
+		0256639726FCF9E00009D950 /* ic_quest_motorcycle_parking@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_motorcycle_parking@2x.png"; sourceTree = "<group>"; };
+		0256639826FCF9E00009D950 /* ic_quest_sidewalk@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_sidewalk@3x.png"; sourceTree = "<group>"; };
+		0256639926FCF9E00009D950 /* ic_quest_tractor@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_tractor@3x.png"; sourceTree = "<group>"; };
+		0256639A26FCF9E00009D950 /* ic_quest_blind_traffic_lights@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_blind_traffic_lights@3x.png"; sourceTree = "<group>"; };
+		0256639B26FCF9E00009D950 /* ic_quest_kosher@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_kosher@3x.png"; sourceTree = "<group>"; };
+		0256639C26FCF9E00009D950 /* ic_quest_drinking_water@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_drinking_water@3x.png"; sourceTree = "<group>"; };
+		0256639D26FCF9E00009D950 /* ic_quest_motorcycle_parking_cover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_motorcycle_parking_cover.png; sourceTree = "<group>"; };
+		0256639E26FCF9E00009D950 /* ic_quest_no_pedestrians@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_no_pedestrians@3x.png"; sourceTree = "<group>"; };
+		0256639F26FCF9E00009D950 /* ic_quest_blind_traffic_lights_sound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_blind_traffic_lights_sound.png; sourceTree = "<group>"; };
+		025663A026FCF9E00009D950 /* ic_quest_sport.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_sport.png; sourceTree = "<group>"; };
+		025663A126FCF9E00009D950 /* ic_quest_bicycle_parking_fee@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bicycle_parking_fee@3x.png"; sourceTree = "<group>"; };
+		025663A226FCF9E00009D950 /* ic_quest_notes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_notes.png; sourceTree = "<group>"; };
+		025663A326FCF9E00009D950 /* ic_quest_playground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_playground.png; sourceTree = "<group>"; };
+		025663A426FCF9E00009D950 /* ic_quest_blind_traffic_lights_sound@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_blind_traffic_lights_sound@2x.png"; sourceTree = "<group>"; };
+		025663A526FCF9E00009D950 /* ic_quest_parking_lane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_parking_lane.png; sourceTree = "<group>"; };
+		025663A626FCF9E00009D950 /* ic_quest_parking_access@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_parking_access@3x.png"; sourceTree = "<group>"; };
+		025663A726FCF9E00009D950 /* ic_quest_street_width@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_street_width@3x.png"; sourceTree = "<group>"; };
+		025663A826FCF9E00009D950 /* ic_quest_building@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_building@2x.png"; sourceTree = "<group>"; };
+		025663A926FCF9E00009D950 /* ic_quest_information@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_information@3x.png"; sourceTree = "<group>"; };
+		025663AA26FCF9E00009D950 /* ic_quest_max_width@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_max_width@2x.png"; sourceTree = "<group>"; };
+		025663AB26FCF9E00009D950 /* ic_quest_ferry_pedestrian.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_ferry_pedestrian.png; sourceTree = "<group>"; };
+		025663AC26FCF9E00009D950 /* ic_quest_bus_stop_shelter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_bus_stop_shelter.png; sourceTree = "<group>"; };
+		025663AD26FCF9E00009D950 /* ic_quest_max_speed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_max_speed@2x.png"; sourceTree = "<group>"; };
+		025663AE26FCF9E00009D950 /* ic_quest_car_charger_capacity@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_car_charger_capacity@3x.png"; sourceTree = "<group>"; };
+		025663AF26FCF9E00009D950 /* ic_quest_bicycle_parking_access@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bicycle_parking_access@2x.png"; sourceTree = "<group>"; };
+		025663B026FCF9E00009D950 /* ic_quest_bicycle_parking_access@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bicycle_parking_access@3x.png"; sourceTree = "<group>"; };
+		025663B126FCF9E00009D950 /* ic_quest_max_speed@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_max_speed@3x.png"; sourceTree = "<group>"; };
+		025663B226FCF9E00009D950 /* ic_quest_car_charger_capacity@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_car_charger_capacity@2x.png"; sourceTree = "<group>"; };
+		025663B326FCF9E00009D950 /* ic_quest_wifi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_wifi.png; sourceTree = "<group>"; };
+		025663B426FCF9E00009D950 /* ic_quest_building@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_building@3x.png"; sourceTree = "<group>"; };
+		025663B526FCF9E00009D950 /* ic_quest_information@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_information@2x.png"; sourceTree = "<group>"; };
+		025663B626FCF9E00009D950 /* ic_quest_max_width@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_max_width@3x.png"; sourceTree = "<group>"; };
+		025663B726FCF9E00009D950 /* ic_quest_label.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_label.png; sourceTree = "<group>"; };
+		025663B826FCF9E00009D950 /* ic_quest_parking_access@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_parking_access@2x.png"; sourceTree = "<group>"; };
+		025663B926FCF9E00009D950 /* ic_quest_street_width@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_street_width@2x.png"; sourceTree = "<group>"; };
+		025663BA26FCF9E00009D950 /* ic_quest_roof_shape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_roof_shape.png; sourceTree = "<group>"; };
+		025663BB26FCF9E00009D950 /* ic_quest_blind_traffic_lights_sound@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_blind_traffic_lights_sound@3x.png"; sourceTree = "<group>"; };
+		025663BC26FCF9E00009D950 /* ic_quest_power.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_power.png; sourceTree = "<group>"; };
+		025663BD26FCF9E00009D950 /* ic_quest_sidewalk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_sidewalk.png; sourceTree = "<group>"; };
+		025663BE26FCF9E00009D950 /* ic_quest_bicycle_parking_fee@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bicycle_parking_fee@2x.png"; sourceTree = "<group>"; };
+		025663BF26FCF9E00009D950 /* ic_quest_drinking_water.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_drinking_water.png; sourceTree = "<group>"; };
+		025663C026FCF9E00009D950 /* ic_quest_building_levels.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_building_levels.png; sourceTree = "<group>"; };
+		025663C126FCF9E00009D950 /* ic_quest_no_pedestrians@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_no_pedestrians@2x.png"; sourceTree = "<group>"; };
+		025663C226FCF9E00009D950 /* ic_quest_cow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_cow.png; sourceTree = "<group>"; };
+		025663C326FCF9E00009D950 /* ic_quest_drinking_water@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_drinking_water@2x.png"; sourceTree = "<group>"; };
+		025663C426FCF9E00009D950 /* ic_quest_street_name.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_street_name.png; sourceTree = "<group>"; };
+		025663C526FCF9E00009D950 /* ic_quest_kosher@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_kosher@2x.png"; sourceTree = "<group>"; };
+		025663C626FCF9E00009D950 /* ic_quest_blind_traffic_lights@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_blind_traffic_lights@2x.png"; sourceTree = "<group>"; };
+		025663C726FCF9E00009D950 /* ic_quest_sidewalk@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_sidewalk@2x.png"; sourceTree = "<group>"; };
+		025663C826FCF9E00009D950 /* ic_quest_tractor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_tractor@2x.png"; sourceTree = "<group>"; };
+		025663C926FCF9E00009D950 /* ic_quest_housenumber_street@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_housenumber_street@3x.png"; sourceTree = "<group>"; };
+		025663CA26FCF9E00009D950 /* ic_quest_motorcycle_parking@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_motorcycle_parking@3x.png"; sourceTree = "<group>"; };
+		025663CB26FCF9E00009D950 /* ic_quest_mail_ref.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_mail_ref.png; sourceTree = "<group>"; };
+		025663CC26FCF9E00009D950 /* ic_quest_no_cars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_no_cars.png; sourceTree = "<group>"; };
+		025663CD26FCF9E00009D950 /* ic_quest_street_surface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_street_surface.png; sourceTree = "<group>"; };
+		025663CE26FCF9E00009D950 /* ic_quest_toilet_fee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_toilet_fee.png; sourceTree = "<group>"; };
+		025663CF26FCF9E00009D950 /* ic_quest_parking@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_parking@3x.png"; sourceTree = "<group>"; };
+		025663D026FCF9E00009D950 /* ic_quest_wheelchair@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_wheelchair@2x.png"; sourceTree = "<group>"; };
+		025663D126FCF9E00009D950 /* ic_quest_building_underground@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_building_underground@3x.png"; sourceTree = "<group>"; };
+		025663D226FCF9E00009D950 /* ic_quest_fee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_fee.png; sourceTree = "<group>"; };
+		025663D326FCF9E00009D950 /* ic_quest_pitch_surface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_pitch_surface.png; sourceTree = "<group>"; };
+		025663D426FCF9E00009D950 /* ic_quest_baby@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_baby@3x.png"; sourceTree = "<group>"; };
+		025663D526FCF9E00009D950 /* ic_quest_bicycle_parking_cover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bicycle_parking_cover@2x.png"; sourceTree = "<group>"; };
+		025663D626FCF9E00009D950 /* ic_quest_surveillance_camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_surveillance_camera@2x.png"; sourceTree = "<group>"; };
+		025663D726FCF9E00009D950 /* ic_quest_wifi@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_wifi@3x.png"; sourceTree = "<group>"; };
+		025663D826FCF9E00009D950 /* ic_quest_pedestrian_crossing_island.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_pedestrian_crossing_island.png; sourceTree = "<group>"; };
+		025663D926FCF9E00009D950 /* ic_quest_motorcycle_parking_cover@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_motorcycle_parking_cover@3x.png"; sourceTree = "<group>"; };
+		025663DA26FCF9E00009D950 /* ic_quest_steps_handrail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_steps_handrail.png; sourceTree = "<group>"; };
+		025663DB26FCF9E00009D950 /* ic_quest_bicycle_parking_cover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_bicycle_parking_cover.png; sourceTree = "<group>"; };
+		025663DC26FCF9E00009D950 /* ic_quest_money@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_money@3x.png"; sourceTree = "<group>"; };
+		025663DD26FCF9E00009D950 /* ic_quest_building_underground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_building_underground.png; sourceTree = "<group>"; };
+		025663DE26FCF9E00009D950 /* ic_quest_building_construction@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_building_construction@2x.png"; sourceTree = "<group>"; };
+		025663DF26FCF9E00009D950 /* ic_quest_restaurant_vegan@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_restaurant_vegan@3x.png"; sourceTree = "<group>"; };
+		025663E026FCF9E00009D950 /* ic_quest_steps_count.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_steps_count.png; sourceTree = "<group>"; };
+		025663E126FCF9E00009D950 /* ic_quest_max_width.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_max_width.png; sourceTree = "<group>"; };
+		025663E226FCF9E00009D950 /* ic_quest_bicycle_parking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_bicycle_parking.png; sourceTree = "<group>"; };
+		025663E326FCF9E00009D950 /* ic_quest_recycling.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_recycling.png; sourceTree = "<group>"; };
+		025663E426FCF9E00009D950 /* ic_quest_bridge@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bridge@3x.png"; sourceTree = "<group>"; };
+		025663E526FCF9E00009D950 /* ic_quest_restaurant@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_restaurant@2x.png"; sourceTree = "<group>"; };
+		025663E626FCF9E00009D950 /* ic_quest_bus_stop_name@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bus_stop_name@3x.png"; sourceTree = "<group>"; };
+		025663E726FCF9E00009D950 /* ic_quest_baby.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_baby.png; sourceTree = "<group>"; };
+		025663E826FCF9E00009D950 /* ic_quest_kerb_type.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_kerb_type.png; sourceTree = "<group>"; };
+		025663E926FCF9E00009D950 /* ic_quest_car.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_car.png; sourceTree = "<group>"; };
+		025663EA26FCF9E00009D950 /* ic_quest_bridge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_bridge.png; sourceTree = "<group>"; };
+		025663EB26FCF9E00009D950 /* ic_quest_money.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_money.png; sourceTree = "<group>"; };
+		025663EC26FCF9E00009D950 /* ic_quest_road_construction@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_road_construction@3x.png"; sourceTree = "<group>"; };
+		025663ED26FCF9E00009D950 /* ic_quest_crown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_crown@2x.png"; sourceTree = "<group>"; };
+		025663EE26FCF9E00009D950 /* ic_quest_street_surface@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_street_surface@2x.png"; sourceTree = "<group>"; };
+		025663EF26FCF9E00009D950 /* ic_quest_tractor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_tractor.png; sourceTree = "<group>"; };
+		025663F026FCF9E00009D950 /* ic_quest_street_turn_lanes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_street_turn_lanes@2x.png"; sourceTree = "<group>"; };
+		025663F126FCF9E00009D950 /* ic_quest_oneway@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_oneway@3x.png"; sourceTree = "<group>"; };
+		025663F226FCF9E00009D950 /* ic_quest_bicycle_parking@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bicycle_parking@2x.png"; sourceTree = "<group>"; };
+		025663F326FCF9E00009D950 /* ic_quest_way_surface@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_way_surface@3x.png"; sourceTree = "<group>"; };
+		025663F426FCF9E00009D950 /* ic_quest_street_width.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_street_width.png; sourceTree = "<group>"; };
+		025663F526FCF9E00009D950 /* ic_quest_car_charger@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_car_charger@2x.png"; sourceTree = "<group>"; };
+		025663F626FCF9E00009D950 /* ic_quest_toilets.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_toilets.png; sourceTree = "<group>"; };
+		025663F726FCF9E00009D950 /* ic_quest_bench_poi@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bench_poi@3x.png"; sourceTree = "<group>"; };
+		025663F826FCF9E00009D950 /* ic_quest_recycling_glass@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_recycling_glass@2x.png"; sourceTree = "<group>"; };
+		025663F926FCF9E00009D950 /* ic_quest_steps_handrail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_steps_handrail@2x.png"; sourceTree = "<group>"; };
+		025663FA26FCF9E00009D950 /* ic_quest_mail_ref@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_mail_ref@2x.png"; sourceTree = "<group>"; };
+		025663FB26FCF9E00009D950 /* ic_quest_restaurant_vegetarian@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_restaurant_vegetarian@2x.png"; sourceTree = "<group>"; };
+		025663FC26FCF9E00009D950 /* ic_quest_toilets_wheelchair.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_toilets_wheelchair.png; sourceTree = "<group>"; };
+		025663FD26FCF9E00009D950 /* ic_quest_smoke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_smoke.png; sourceTree = "<group>"; };
+		025663FE26FCF9E00009D950 /* ic_quest_building_height@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_building_height@3x.png"; sourceTree = "<group>"; };
+		025663FF26FCF9E00009D950 /* ic_quest_street_name@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_street_name@2x.png"; sourceTree = "<group>"; };
+		0256640026FCF9E00009D950 /* ic_quest_phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_phone.png; sourceTree = "<group>"; };
+		0256640126FCF9E00009D950 /* ic_quest_police@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_police@2x.png"; sourceTree = "<group>"; };
+		0256640226FCF9E00009D950 /* ic_quest_no_cars@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_no_cars@2x.png"; sourceTree = "<group>"; };
+		0256640326FCF9E00009D950 /* ic_quest_max_weight@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_max_weight@3x.png"; sourceTree = "<group>"; };
+		0256640426FCF9E00009D950 /* ic_quest_blind_pedestrian_crossing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_blind_pedestrian_crossing@2x.png"; sourceTree = "<group>"; };
+		0256640526FCF9E00009D950 /* ic_quest_traffic_lights.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_traffic_lights.png; sourceTree = "<group>"; };
+		0256640626FCF9E00009D950 /* ic_quest_toilets_wheelchair@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_toilets_wheelchair@3x.png"; sourceTree = "<group>"; };
+		0256640726FCF9E00009D950 /* ic_quest_parking_maxstay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_parking_maxstay@2x.png"; sourceTree = "<group>"; };
+		0256640826FCF9E00009D950 /* ic_quest_bus_stop_lit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_bus_stop_lit.png; sourceTree = "<group>"; };
+		0256640926FCF9E00009D950 /* ic_quest_car@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_car@3x.png"; sourceTree = "<group>"; };
+		0256640A26FCF9E00009D950 /* ic_quest_barrier@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_barrier@2x.png"; sourceTree = "<group>"; };
+		0256640B26FCF9E00009D950 /* ic_quest_footway_surface@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_footway_surface@3x.png"; sourceTree = "<group>"; };
+		0256640C26FCF9E00009D950 /* ic_quest_max_height@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_max_height@3x.png"; sourceTree = "<group>"; };
+		0256640D26FCF9E00009D950 /* ic_quest_restaurant.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_restaurant.png; sourceTree = "<group>"; };
+		0256640E26FCF9E00009D950 /* ic_quest_playground@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_playground@3x.png"; sourceTree = "<group>"; };
+		0256640F26FCF9E00009D950 /* ic_quest_max_weight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_max_weight.png; sourceTree = "<group>"; };
+		0256641026FCF9E00009D950 /* ic_quest_bicycleway.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_bicycleway.png; sourceTree = "<group>"; };
+		0256641126FCF9E00009D950 /* ic_quest_recycling_glass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_recycling_glass.png; sourceTree = "<group>"; };
+		0256641226FCF9E00009D950 /* ic_quest_parking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_parking.png; sourceTree = "<group>"; };
+		0256641326FCF9E00009D950 /* ic_quest_playground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_playground@2x.png"; sourceTree = "<group>"; };
+		0256641426FCF9E00009D950 /* ic_quest_max_height@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_max_height@2x.png"; sourceTree = "<group>"; };
+		0256641526FCF9E00009D950 /* ic_quest_max_height.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_max_height.png; sourceTree = "<group>"; };
+		0256641626FCF9E00009D950 /* ic_quest_footway_surface@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_footway_surface@2x.png"; sourceTree = "<group>"; };
+		0256641726FCF9E00009D950 /* ic_quest_apple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_apple.png; sourceTree = "<group>"; };
+		0256641826FCF9E00009D950 /* ic_quest_car@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_car@2x.png"; sourceTree = "<group>"; };
+		0256641926FCF9E00009D950 /* ic_quest_barrier@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_barrier@3x.png"; sourceTree = "<group>"; };
+		0256641A26FCF9E00009D950 /* ic_quest_laundry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_laundry.png; sourceTree = "<group>"; };
+		0256641B26FCF9E00009D950 /* ic_quest_toilets_wheelchair@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_toilets_wheelchair@2x.png"; sourceTree = "<group>"; };
+		0256641C26FCF9E00009D950 /* ic_quest_parking_maxstay@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_parking_maxstay@3x.png"; sourceTree = "<group>"; };
+		0256641D26FCF9E00009D950 /* ic_quest_max_weight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_max_weight@2x.png"; sourceTree = "<group>"; };
+		0256641E26FCF9E00009D950 /* ic_quest_blind_pedestrian_crossing@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_blind_pedestrian_crossing@3x.png"; sourceTree = "<group>"; };
+		0256641F26FCF9E00009D950 /* ic_quest_check_shop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_check_shop.png; sourceTree = "<group>"; };
+		0256642026FCF9E00009D950 /* ic_quest_police@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_police@3x.png"; sourceTree = "<group>"; };
+		0256642126FCF9E00009D950 /* ic_quest_no_cars@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_no_cars@3x.png"; sourceTree = "<group>"; };
+		0256642226FCF9E00009D950 /* ic_quest_opening_hours.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_opening_hours.png; sourceTree = "<group>"; };
+		0256642326FCF9E00009D950 /* ic_quest_oneway.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_oneway.png; sourceTree = "<group>"; };
+		0256642426FCF9E00009D950 /* ic_quest_cash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_cash.png; sourceTree = "<group>"; };
+		0256642526FCF9E00009D950 /* ic_quest_building_height@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_building_height@2x.png"; sourceTree = "<group>"; };
+		0256642626FCF9E00009D950 /* ic_quest_street_name@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_street_name@3x.png"; sourceTree = "<group>"; };
+		0256642726FCF9E00009D950 /* ic_quest_restaurant_vegetarian@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_restaurant_vegetarian@3x.png"; sourceTree = "<group>"; };
+		0256642826FCF9E00009D950 /* ic_quest_leaf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_leaf.png; sourceTree = "<group>"; };
+		0256642926FCF9E00009D950 /* ic_quest_mail_ref@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_mail_ref@3x.png"; sourceTree = "<group>"; };
+		0256642A26FCF9E00009D950 /* ic_quest_steps_handrail@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_steps_handrail@3x.png"; sourceTree = "<group>"; };
+		0256642B26FCF9E00009D950 /* ic_quest_religion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_religion.png; sourceTree = "<group>"; };
+		0256642C26FCF9E00009D950 /* ic_quest_defibrillator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_defibrillator.png; sourceTree = "<group>"; };
+		0256642D26FCF9E00009D950 /* ic_quest_recycling_glass@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_recycling_glass@3x.png"; sourceTree = "<group>"; };
+		0256642E26FCF9E00009D950 /* ic_quest_bench_poi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bench_poi@2x.png"; sourceTree = "<group>"; };
+		0256642F26FCF9E00009D950 /* ic_quest_recycling_container.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_recycling_container.png; sourceTree = "<group>"; };
+		0256643026FCF9E00009D950 /* ic_quest_way_surface@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_way_surface@2x.png"; sourceTree = "<group>"; };
+		0256643126FCF9E00009D950 /* ic_quest_car_charger@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_car_charger@3x.png"; sourceTree = "<group>"; };
+		0256643226FCF9E00009D950 /* ic_quest_street_turn_lanes@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_street_turn_lanes@3x.png"; sourceTree = "<group>"; };
+		0256643326FCF9E00009D950 /* ic_quest_oneway@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_oneway@2x.png"; sourceTree = "<group>"; };
+		0256643426FCF9E00009D950 /* ic_quest_bicycle_parking@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bicycle_parking@3x.png"; sourceTree = "<group>"; };
+		0256643526FCF9E00009D950 /* ic_quest_crown@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_crown@3x.png"; sourceTree = "<group>"; };
+		0256643626FCF9E00009D950 /* ic_quest_no_pedestrians.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_no_pedestrians.png; sourceTree = "<group>"; };
+		0256643726FCF9E00009D950 /* ic_quest_street_surface@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_street_surface@3x.png"; sourceTree = "<group>"; };
+		0256643826FCF9E00009D950 /* ic_quest_footway_surface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_footway_surface.png; sourceTree = "<group>"; };
+		0256643926FCF9E00009D950 /* ic_quest_road_construction@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_road_construction@2x.png"; sourceTree = "<group>"; };
+		0256643A26FCF9E00009D950 /* ic_quest_bridge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bridge@2x.png"; sourceTree = "<group>"; };
+		0256643B26FCF9E00009D950 /* ic_quest_restaurant@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_restaurant@3x.png"; sourceTree = "<group>"; };
+		0256643C26FCF9E00009D950 /* ic_quest_bus_stop_name@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bus_stop_name@2x.png"; sourceTree = "<group>"; };
+		0256643D26FCF9E00009D950 /* ic_quest_restaurant_vegetarian.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_restaurant_vegetarian.png; sourceTree = "<group>"; };
+		0256643E26FCF9E00009D950 /* ic_quest_money@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_money@2x.png"; sourceTree = "<group>"; };
+		0256643F26FCF9E00009D950 /* ic_quest_building_construction@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_building_construction@3x.png"; sourceTree = "<group>"; };
+		0256644026FCF9E00009D950 /* ic_quest_restaurant_vegan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_restaurant_vegan@2x.png"; sourceTree = "<group>"; };
+		0256644126FCF9E00009D950 /* ic_quest_pedestrian_crossing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_pedestrian_crossing.png; sourceTree = "<group>"; };
+		0256644226FCF9E00009D950 /* ic_quest_bicycle_parking_access.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_bicycle_parking_access.png; sourceTree = "<group>"; };
+		0256644326FCF9E00009D950 /* ic_quest_pedestrian_crossing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_pedestrian_crossing@2x.png"; sourceTree = "<group>"; };
+		0256644426FCF9E00009D950 /* ic_quest_bicycle@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bicycle@3x.png"; sourceTree = "<group>"; };
+		0256644526FCF9E00009D950 /* ic_quest_kerb_tactile_paving@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_kerb_tactile_paving@3x.png"; sourceTree = "<group>"; };
+		0256644626FCF9E00009D950 /* ic_quest_recycling_container@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_recycling_container@2x.png"; sourceTree = "<group>"; };
+		0256644726FCF9E00009D950 /* ic_quest_power@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_power@2x.png"; sourceTree = "<group>"; };
+		0256644826FCF9E00009D950 /* ic_quest_crown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_crown.png; sourceTree = "<group>"; };
+		0256644926FCF9E00009D950 /* ic_quest_check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_check@2x.png"; sourceTree = "<group>"; };
+		0256644A26FCF9E00009D950 /* ic_quest_fuel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_fuel@2x.png"; sourceTree = "<group>"; };
+		0256644B26FCF9E00009D950 /* ic_quest_motorcycle_parking_capacity@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_motorcycle_parking_capacity@3x.png"; sourceTree = "<group>"; };
+		0256644C26FCF9E00009D950 /* ic_quest_blind@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_blind@2x.png"; sourceTree = "<group>"; };
+		0256644D26FCF9E00009D950 /* ic_quest_bench_public_transport@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bench_public_transport@2x.png"; sourceTree = "<group>"; };
+		0256644E26FCF9E00009D950 /* ic_quest_street@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_street@2x.png"; sourceTree = "<group>"; };
+		0256644F26FCF9E00009D950 /* ic_quest_board_type.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_board_type.png; sourceTree = "<group>"; };
+		0256645026FCF9E00009D950 /* ic_quest_bin_public_transport.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_bin_public_transport.png; sourceTree = "<group>"; };
+		0256645126FCF9E00009D950 /* ic_quest_peak@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_peak@3x.png"; sourceTree = "<group>"; };
+		0256645226FCF9E00009D950 /* ic_quest_motorcycle_parking_capacity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_motorcycle_parking_capacity.png; sourceTree = "<group>"; };
+		0256645326FCF9E00009D950 /* ic_quest_board_type@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_board_type@3x.png"; sourceTree = "<group>"; };
+		0256645426FCF9E00009D950 /* ic_quest_recycling_clothes@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_recycling_clothes@3x.png"; sourceTree = "<group>"; };
+		0256645526FCF9E00009D950 /* ic_quest_toilets@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_toilets@3x.png"; sourceTree = "<group>"; };
+		0256645626FCF9E00009D950 /* ic_quest_street.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_street.png; sourceTree = "<group>"; };
+		0256645726FCF9E00009D950 /* ic_quest_blind_bus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_blind_bus.png; sourceTree = "<group>"; };
+		0256645826FCF9E00009D950 /* ic_quest_building.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_building.png; sourceTree = "<group>"; };
+		0256645926FCF9E00009D950 /* ic_quest_parking_fee@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_parking_fee@3x.png"; sourceTree = "<group>"; };
+		0256645A26FCF9E00009D950 /* ic_quest_leaf@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_leaf@2x.png"; sourceTree = "<group>"; };
+		0256645B26FCF9E00009D950 /* ic_quest_bicycle_parking_capacity@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bicycle_parking_capacity@2x.png"; sourceTree = "<group>"; };
+		0256645C26FCF9E00009D950 /* ic_quest_building_levels@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_building_levels@3x.png"; sourceTree = "<group>"; };
+		0256645D26FCF9E00009D950 /* ic_quest_street_lanes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_street_lanes@2x.png"; sourceTree = "<group>"; };
+		0256645E26FCF9E00009D950 /* ic_quest_path_segregation@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_path_segregation@3x.png"; sourceTree = "<group>"; };
+		0256645F26FCF9E00009D950 /* ic_quest_smoke@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_smoke@2x.png"; sourceTree = "<group>"; };
+		0256646026FCF9E00009D950 /* ic_quest_kerb_tactile_paving.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_kerb_tactile_paving.png; sourceTree = "<group>"; };
+		0256646126FCF9E00009D950 /* ic_quest_street_lanes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_street_lanes.png; sourceTree = "<group>"; };
+		0256646226FCF9E00009D950 /* ic_quest_ferry@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_ferry@3x.png"; sourceTree = "<group>"; };
+		0256646326FCF9E00009D950 /* ic_quest_bin_public_transport@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bin_public_transport@3x.png"; sourceTree = "<group>"; };
+		0256646426FCF9E00009D950 /* ic_quest_notes@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_notes@3x.png"; sourceTree = "<group>"; };
+		0256646526FCF9E00009D950 /* ic_quest_building_height.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_building_height.png; sourceTree = "<group>"; };
+		0256646626FCF9E00009D950 /* ic_quest_street_surface_detail@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_street_surface_detail@3x.png"; sourceTree = "<group>"; };
+		0256646726FCF9E00009D950 /* ic_quest_cow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_cow@2x.png"; sourceTree = "<group>"; };
+		0256646826FCF9E00009D950 /* ic_quest_car_charger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_car_charger.png; sourceTree = "<group>"; };
+		0256646926FCF9E00009D950 /* ic_quest_defibrillator@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_defibrillator@3x.png"; sourceTree = "<group>"; };
+		0256646A26FCF9E00009D950 /* ic_quest_fire_hydrant@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_fire_hydrant@2x.png"; sourceTree = "<group>"; };
+		0256646B26FCF9E00009D950 /* ic_quest_defibrillator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_defibrillator@2x.png"; sourceTree = "<group>"; };
+		0256646C26FCF9E00009D950 /* ic_quest_fire_hydrant@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_fire_hydrant@3x.png"; sourceTree = "<group>"; };
+		0256646D26FCF9E00009D950 /* ic_quest_restaurant_vegan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_restaurant_vegan.png; sourceTree = "<group>"; };
+		0256646E26FCF9E00009D950 /* ic_quest_cow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_cow@3x.png"; sourceTree = "<group>"; };
+		0256646F26FCF9E00009D950 /* ic_quest_bin_public_transport@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bin_public_transport@2x.png"; sourceTree = "<group>"; };
+		0256647026FCF9E00009D950 /* ic_quest_notes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_notes@2x.png"; sourceTree = "<group>"; };
+		0256647126FCF9E00009D950 /* ic_quest_street_surface_detail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_street_surface_detail@2x.png"; sourceTree = "<group>"; };
+		0256647226FCF9E00009D950 /* ic_quest_ferry@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_ferry@2x.png"; sourceTree = "<group>"; };
+		0256647326FCF9E00009D950 /* ic_quest_housenumber_street.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_housenumber_street.png; sourceTree = "<group>"; };
+		0256647426FCF9E00009D950 /* ic_quest_street_turn_lanes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_street_turn_lanes.png; sourceTree = "<group>"; };
+		0256647526FCF9E00009D950 /* ic_quest_steps_ramp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_steps_ramp.png; sourceTree = "<group>"; };
+		0256647626FCF9E00009D950 /* ic_quest_max_speed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_max_speed.png; sourceTree = "<group>"; };
+		0256647726FCF9E00009D950 /* ic_quest_street_lanes@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_street_lanes@3x.png"; sourceTree = "<group>"; };
+		0256647826FCF9E00009D950 /* ic_quest_path_segregation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_path_segregation@2x.png"; sourceTree = "<group>"; };
+		0256647926FCF9E00009D950 /* ic_quest_blind_traffic_lights.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_blind_traffic_lights.png; sourceTree = "<group>"; };
+		0256647A26FCF9E00009D950 /* ic_quest_smoke@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_smoke@3x.png"; sourceTree = "<group>"; };
+		0256647B26FCF9E00009D950 /* ic_quest_car_wash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_car_wash.png; sourceTree = "<group>"; };
+		0256647C26FCF9E00009D950 /* ic_quest_blind_pedestrian_crossing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_blind_pedestrian_crossing.png; sourceTree = "<group>"; };
+		0256647D26FCF9E00009D950 /* ic_quest_building_levels@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_building_levels@2x.png"; sourceTree = "<group>"; };
+		0256647E26FCF9E00009D950 /* ic_quest_bus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_bus.png; sourceTree = "<group>"; };
+		0256647F26FCF9E00009D950 /* ic_quest_parking_fee@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_parking_fee@2x.png"; sourceTree = "<group>"; };
+		0256648026FCF9E00009D950 /* ic_quest_leaf@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_leaf@3x.png"; sourceTree = "<group>"; };
+		0256648126FCF9E00009D950 /* ic_quest_bicycle_parking_capacity@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bicycle_parking_capacity@3x.png"; sourceTree = "<group>"; };
+		0256648226FCF9E00009D950 /* ic_quest_bicycle_parking_capacity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_bicycle_parking_capacity.png; sourceTree = "<group>"; };
+		0256648326FCF9E00009D950 /* ic_quest_toilets@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_toilets@2x.png"; sourceTree = "<group>"; };
+		0256648426FCF9E00009D950 /* ic_quest_recycling_clothes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_recycling_clothes@2x.png"; sourceTree = "<group>"; };
+		0256648526FCF9E00009D950 /* ic_quest_bicycle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_bicycle.png; sourceTree = "<group>"; };
+		0256648626FCF9E00009D950 /* ic_quest_board_type@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_board_type@2x.png"; sourceTree = "<group>"; };
+		0256648726FCF9E00009D950 /* ic_quest_peak@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_peak@2x.png"; sourceTree = "<group>"; };
+		0256648826FCF9E00009D950 /* ic_quest_fire_hydrant.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_fire_hydrant.png; sourceTree = "<group>"; };
+		0256648926FCF9E00009D950 /* ic_quest_street@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_street@3x.png"; sourceTree = "<group>"; };
+		0256648A26FCF9E00009D950 /* ic_quest_bench_public_transport@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bench_public_transport@3x.png"; sourceTree = "<group>"; };
+		0256648B26FCF9E00009D950 /* ic_quest_motorcycle_parking_capacity@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_motorcycle_parking_capacity@2x.png"; sourceTree = "<group>"; };
+		0256648C26FCF9E00009D950 /* ic_quest_blind@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_blind@3x.png"; sourceTree = "<group>"; };
+		0256648D26FCF9E00009D950 /* ic_quest_fuel@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_fuel@3x.png"; sourceTree = "<group>"; };
+		0256648E26FCF9E00009D950 /* ic_quest_recycling_container@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_recycling_container@3x.png"; sourceTree = "<group>"; };
+		0256648F26FCF9E00009D950 /* ic_quest_power@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_power@3x.png"; sourceTree = "<group>"; };
+		0256649026FCF9E00009D950 /* ic_quest_check@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_check@3x.png"; sourceTree = "<group>"; };
+		0256649126FCF9E00009D950 /* ic_quest_street_surface_detail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_street_surface_detail.png; sourceTree = "<group>"; };
+		0256649226FCF9E00009D950 /* ic_quest_kerb_tactile_paving@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_kerb_tactile_paving@2x.png"; sourceTree = "<group>"; };
+		0256649326FCF9E00009D950 /* ic_quest_bicycle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_bicycle@2x.png"; sourceTree = "<group>"; };
+		0256649426FCF9E00009D950 /* ic_quest_pedestrian.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_quest_pedestrian.png; sourceTree = "<group>"; };
+		0256649526FCF9E00009D950 /* ic_quest_pedestrian_crossing@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_quest_pedestrian_crossing@3x.png"; sourceTree = "<group>"; };
+		0256660A26FD1C9B0009D950 /* QuestEditor.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = QuestEditor.storyboard; sourceTree = "<group>"; };
 		025AC50A2598002F00F924DC /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Settings.strings"; sourceTree = "<group>"; };
 		025B841619DCF55C0053C637 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
 		025D68A626790A8C007079B8 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -435,7 +1184,6 @@
 		02C8C56A26F44776003B0122 /* Quest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quest.swift; sourceTree = "<group>"; };
 		02C8C56C26F4479A003B0122 /* WayPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WayPoint.swift; sourceTree = "<group>"; };
 		02C8C56E26F447C3003B0122 /* KeepRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeepRight.swift; sourceTree = "<group>"; };
-		02C8C57126FAAFDC003B0122 /* QuestEditor.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QuestEditor.storyboard; sourceTree = "<group>"; };
 		02C8C57326FAAFF0003B0122 /* QuestEditorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestEditorController.swift; sourceTree = "<group>"; };
 		02C8C57526FBCBF4003B0122 /* QuestFilterParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestFilterParser.swift; sourceTree = "<group>"; };
 		02C91CFB26BF1D4C00C92555 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
@@ -682,6 +1430,385 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0256632126FCF9DF0009D950 /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				0256632226FCF9DF0009D950 /* ic_quest_pitch_surface@2x.png */,
+				0256632326FCF9DF0009D950 /* ic_quest_pedestrian@3x.png */,
+				0256632426FCF9DF0009D950 /* ic_quest_car_wash@3x.png */,
+				0256632526FCF9DF0009D950 /* ic_quest_wheelchair_shop@3x.png */,
+				0256632626FCF9DF0009D950 /* ic_quest_steps.png */,
+				0256632726FCF9DF0009D950 /* ic_quest_mail@3x.png */,
+				0256632826FCF9DF0009D950 /* ic_quest_sport@3x.png */,
+				0256632926FCF9DF0009D950 /* ic_quest_housenumber@2x.png */,
+				0256632A26FCF9DF0009D950 /* ic_quest_steps_count@3x.png */,
+				0256632B26FCF9DF0009D950 /* ic_quest_laundry@3x.png */,
+				0256632C26FCF9DF0009D950 /* ic_quest_toilet_fee@3x.png */,
+				0256632D26FCF9DF0009D950 /* ic_quest_parking_maxstay.png */,
+				0256632E26FCF9DF0009D950 /* ic_quest_bicycleway_surface.png */,
+				0256632F26FCF9DF0009D950 /* ic_quest_parking_lane@2x.png */,
+				0256633026FCF9DF0009D950 /* ic_quest_kosher.png */,
+				0256633126FCF9DF0009D950 /* ic_quest_check_shop@3x.png */,
+				0256633226FCF9DF0009D950 /* ic_quest_bus@2x.png */,
+				0256633326FCF9DF0009D950 /* ic_quest_steps_ramp@2x.png */,
+				0256633426FCF9DF0009D950 /* ic_quest_apple@3x.png */,
+				0256633526FCF9DF0009D950 /* ic_quest_bicycleway_surface@3x.png */,
+				0256633626FCF9DF0009D950 /* ic_quest_lantern@3x.png */,
+				0256633726FCF9DF0009D950 /* ic_quest_cash@3x.png */,
+				0256633826FCF9DF0009D950 /* ic_quest_pitch_lantern@3x.png */,
+				0256633926FCF9DF0009D950 /* ic_quest_kerb_type@3x.png */,
+				0256633A26FCF9DF0009D950 /* ic_quest_recycling@3x.png */,
+				0256633B26FCF9DF0009D950 /* ic_quest_bus_stop_lit@2x.png */,
+				0256633C26FCF9DF0009D950 /* ic_quest_railway@3x.png */,
+				0256633D26FCF9DF0009D950 /* ic_quest_roof_shape@2x.png */,
+				0256633E26FCF9DF0009D950 /* ic_quest_traffic_lights@3x.png */,
+				0256633F26FCF9DF0009D950 /* ic_quest_pitch_lantern.png */,
+				0256634026FCF9DF0009D950 /* ic_quest_steps@3x.png */,
+				0256634126FCF9DF0009D950 /* ic_quest_pedestrian_crossing_island@2x.png */,
+				0256634226FCF9DF0009D950 /* ic_quest_information.png */,
+				0256634326FCF9DF0009D950 /* ic_quest_motorcycle_parking.png */,
+				0256634426FCF9DF0009D950 /* ic_quest_ferry.png */,
+				0256634526FCF9DF0009D950 /* ic_quest_create_note@3x.png */,
+				0256634626FCF9DF0009D950 /* ic_quest_bicycleway@3x.png */,
+				0256634726FCF9DF0009D950 /* ic_quest_blind_bus@2x.png */,
+				0256634826FCF9DF0009D950 /* ic_quest_fee@2x.png */,
+				0256634926FCF9DF0009D950 /* ic_quest_bus_stop_name.png */,
+				0256634A26FCF9DF0009D950 /* ic_quest_label@3x.png */,
+				0256634B26FCF9DF0009D950 /* ic_quest_opening_hours@2x.png */,
+				0256634C26FCF9DF0009D950 /* ic_quest_religion@3x.png */,
+				0256634D26FCF9DF0009D950 /* ic_quest_ferry_pedestrian@3x.png */,
+				0256634E26FCF9DF0009D950 /* ic_quest_phone@3x.png */,
+				0256634F26FCF9DF0009D950 /* ic_quest_bus_stop_shelter@2x.png */,
+				0256635026FCF9DF0009D950 /* ic_quest_create_note.png */,
+				0256635126FCF9DF0009D950 /* ic_quest_ferry_pedestrian@2x.png */,
+				0256635226FCF9DF0009D950 /* ic_quest_phone@2x.png */,
+				0256635326FCF9E00009D950 /* ic_quest_bus_stop_shelter@3x.png */,
+				0256635426FCF9E00009D950 /* ic_quest_check.png */,
+				0256635526FCF9E00009D950 /* ic_quest_bench_poi.png */,
+				0256635626FCF9E00009D950 /* ic_quest_religion@2x.png */,
+				0256635726FCF9E00009D950 /* ic_quest_opening_hours@3x.png */,
+				0256635826FCF9E00009D950 /* ic_quest_bench_public_transport.png */,
+				0256635926FCF9E00009D950 /* ic_quest_label@2x.png */,
+				0256635A26FCF9E00009D950 /* ic_quest_fee@3x.png */,
+				0256635B26FCF9E00009D950 /* ic_quest_bicycleway@2x.png */,
+				0256635C26FCF9E00009D950 /* ic_quest_blind_bus@3x.png */,
+				0256635D26FCF9E00009D950 /* ic_quest_create_note@2x.png */,
+				0256635E26FCF9E00009D950 /* ic_quest_road_construction.png */,
+				0256635F26FCF9E00009D950 /* ic_quest_recycling_clothes.png */,
+				0256636026FCF9E00009D950 /* ic_quest_pedestrian_crossing_island@3x.png */,
+				0256636126FCF9E00009D950 /* ic_quest_railway.png */,
+				0256636226FCF9E00009D950 /* ic_quest_police.png */,
+				0256636326FCF9E00009D950 /* ic_quest_parking_fee.png */,
+				0256636426FCF9E00009D950 /* ic_quest_steps@2x.png */,
+				0256636526FCF9E00009D950 /* ic_quest_traffic_lights@2x.png */,
+				0256636626FCF9E00009D950 /* ic_quest_fuel.png */,
+				0256636726FCF9E00009D950 /* ic_quest_roof_shape@3x.png */,
+				0256636826FCF9E00009D950 /* ic_quest_bus_stop_lit@3x.png */,
+				0256636926FCF9E00009D950 /* ic_quest_railway@2x.png */,
+				0256636A26FCF9E00009D950 /* ic_quest_peak.png */,
+				0256636B26FCF9E00009D950 /* ic_quest_pitch_lantern@2x.png */,
+				0256636C26FCF9E00009D950 /* ic_quest_kerb_type@2x.png */,
+				0256636D26FCF9E00009D950 /* ic_quest_barrier.png */,
+				0256636E26FCF9E00009D950 /* ic_quest_recycling@2x.png */,
+				0256636F26FCF9E00009D950 /* ic_quest_cash@2x.png */,
+				0256637026FCF9E00009D950 /* ic_quest_wheelchair.png */,
+				0256637126FCF9E00009D950 /* ic_quest_apple@2x.png */,
+				0256637226FCF9E00009D950 /* ic_quest_bicycleway_surface@2x.png */,
+				0256637326FCF9E00009D950 /* ic_quest_lantern@2x.png */,
+				0256637426FCF9E00009D950 /* ic_quest_steps_ramp@3x.png */,
+				0256637526FCF9E00009D950 /* ic_quest_bus@3x.png */,
+				0256637626FCF9E00009D950 /* ic_quest_check_shop@2x.png */,
+				0256637726FCF9E00009D950 /* ic_quest_toilet_fee@2x.png */,
+				0256637826FCF9E00009D950 /* ic_quest_parking_lane@3x.png */,
+				0256637926FCF9E00009D950 /* ic_quest_housenumber@3x.png */,
+				0256637A26FCF9E00009D950 /* ic_quest_steps_count@2x.png */,
+				0256637B26FCF9E00009D950 /* ic_quest_laundry@2x.png */,
+				0256637C26FCF9E00009D950 /* ic_quest_path_segregation.png */,
+				0256637D26FCF9E00009D950 /* ic_quest_parking_access.png */,
+				0256637E26FCF9E00009D950 /* ic_quest_sport@2x.png */,
+				0256637F26FCF9E00009D950 /* ic_quest_housenumber.png */,
+				0256638026FCF9E00009D950 /* ic_quest_mail@2x.png */,
+				0256638126FCF9E00009D950 /* ic_quest_car_wash@2x.png */,
+				0256638226FCF9E00009D950 /* ic_quest_wheelchair_shop@2x.png */,
+				0256638326FCF9E00009D950 /* ic_quest_bicycle_parking_fee.png */,
+				0256638426FCF9E00009D950 /* ic_quest_pitch_surface@3x.png */,
+				0256638526FCF9E00009D950 /* ic_quest_pedestrian@2x.png */,
+				0256638626FCF9E00009D950 /* ic_quest_motorcycle_parking_cover@2x.png */,
+				0256638726FCF9E00009D950 /* ic_quest_car_charger_capacity.png */,
+				0256638826FCF9E00009D950 /* ic_quest_bicycle_parking_cover@3x.png */,
+				0256638926FCF9E00009D950 /* ic_quest_surveillance_camera@3x.png */,
+				0256638A26FCF9E00009D950 /* ic_quest_wifi@2x.png */,
+				0256638B26FCF9E00009D950 /* ic_quest_baby@2x.png */,
+				0256638C26FCF9E00009D950 /* ic_quest_surveillance_camera.png */,
+				0256638D26FCF9E00009D950 /* ic_quest_lantern.png */,
+				0256638E26FCF9E00009D950 /* ic_quest_building_underground@2x.png */,
+				0256638F26FCF9E00009D950 /* ic_quest_wheelchair@3x.png */,
+				0256639026FCF9E00009D950 /* ic_quest_way_surface.png */,
+				0256639126FCF9E00009D950 /* ic_quest_parking@2x.png */,
+				0256639226FCF9E00009D950 /* ic_quest_building_construction.png */,
+				0256639326FCF9E00009D950 /* ic_quest_blind.png */,
+				0256639426FCF9E00009D950 /* ic_quest_mail.png */,
+				0256639526FCF9E00009D950 /* ic_quest_wheelchair_shop.png */,
+				0256639626FCF9E00009D950 /* ic_quest_housenumber_street@2x.png */,
+				0256639726FCF9E00009D950 /* ic_quest_motorcycle_parking@2x.png */,
+				0256639826FCF9E00009D950 /* ic_quest_sidewalk@3x.png */,
+				0256639926FCF9E00009D950 /* ic_quest_tractor@3x.png */,
+				0256639A26FCF9E00009D950 /* ic_quest_blind_traffic_lights@3x.png */,
+				0256639B26FCF9E00009D950 /* ic_quest_kosher@3x.png */,
+				0256639C26FCF9E00009D950 /* ic_quest_drinking_water@3x.png */,
+				0256639D26FCF9E00009D950 /* ic_quest_motorcycle_parking_cover.png */,
+				0256639E26FCF9E00009D950 /* ic_quest_no_pedestrians@3x.png */,
+				0256639F26FCF9E00009D950 /* ic_quest_blind_traffic_lights_sound.png */,
+				025663A026FCF9E00009D950 /* ic_quest_sport.png */,
+				025663A126FCF9E00009D950 /* ic_quest_bicycle_parking_fee@3x.png */,
+				025663A226FCF9E00009D950 /* ic_quest_notes.png */,
+				025663A326FCF9E00009D950 /* ic_quest_playground.png */,
+				025663A426FCF9E00009D950 /* ic_quest_blind_traffic_lights_sound@2x.png */,
+				025663A526FCF9E00009D950 /* ic_quest_parking_lane.png */,
+				025663A626FCF9E00009D950 /* ic_quest_parking_access@3x.png */,
+				025663A726FCF9E00009D950 /* ic_quest_street_width@3x.png */,
+				025663A826FCF9E00009D950 /* ic_quest_building@2x.png */,
+				025663A926FCF9E00009D950 /* ic_quest_information@3x.png */,
+				025663AA26FCF9E00009D950 /* ic_quest_max_width@2x.png */,
+				025663AB26FCF9E00009D950 /* ic_quest_ferry_pedestrian.png */,
+				025663AC26FCF9E00009D950 /* ic_quest_bus_stop_shelter.png */,
+				025663AD26FCF9E00009D950 /* ic_quest_max_speed@2x.png */,
+				025663AE26FCF9E00009D950 /* ic_quest_car_charger_capacity@3x.png */,
+				025663AF26FCF9E00009D950 /* ic_quest_bicycle_parking_access@2x.png */,
+				025663B026FCF9E00009D950 /* ic_quest_bicycle_parking_access@3x.png */,
+				025663B126FCF9E00009D950 /* ic_quest_max_speed@3x.png */,
+				025663B226FCF9E00009D950 /* ic_quest_car_charger_capacity@2x.png */,
+				025663B326FCF9E00009D950 /* ic_quest_wifi.png */,
+				025663B426FCF9E00009D950 /* ic_quest_building@3x.png */,
+				025663B526FCF9E00009D950 /* ic_quest_information@2x.png */,
+				025663B626FCF9E00009D950 /* ic_quest_max_width@3x.png */,
+				025663B726FCF9E00009D950 /* ic_quest_label.png */,
+				025663B826FCF9E00009D950 /* ic_quest_parking_access@2x.png */,
+				025663B926FCF9E00009D950 /* ic_quest_street_width@2x.png */,
+				025663BA26FCF9E00009D950 /* ic_quest_roof_shape.png */,
+				025663BB26FCF9E00009D950 /* ic_quest_blind_traffic_lights_sound@3x.png */,
+				025663BC26FCF9E00009D950 /* ic_quest_power.png */,
+				025663BD26FCF9E00009D950 /* ic_quest_sidewalk.png */,
+				025663BE26FCF9E00009D950 /* ic_quest_bicycle_parking_fee@2x.png */,
+				025663BF26FCF9E00009D950 /* ic_quest_drinking_water.png */,
+				025663C026FCF9E00009D950 /* ic_quest_building_levels.png */,
+				025663C126FCF9E00009D950 /* ic_quest_no_pedestrians@2x.png */,
+				025663C226FCF9E00009D950 /* ic_quest_cow.png */,
+				025663C326FCF9E00009D950 /* ic_quest_drinking_water@2x.png */,
+				025663C426FCF9E00009D950 /* ic_quest_street_name.png */,
+				025663C526FCF9E00009D950 /* ic_quest_kosher@2x.png */,
+				025663C626FCF9E00009D950 /* ic_quest_blind_traffic_lights@2x.png */,
+				025663C726FCF9E00009D950 /* ic_quest_sidewalk@2x.png */,
+				025663C826FCF9E00009D950 /* ic_quest_tractor@2x.png */,
+				025663C926FCF9E00009D950 /* ic_quest_housenumber_street@3x.png */,
+				025663CA26FCF9E00009D950 /* ic_quest_motorcycle_parking@3x.png */,
+				025663CB26FCF9E00009D950 /* ic_quest_mail_ref.png */,
+				025663CC26FCF9E00009D950 /* ic_quest_no_cars.png */,
+				025663CD26FCF9E00009D950 /* ic_quest_street_surface.png */,
+				025663CE26FCF9E00009D950 /* ic_quest_toilet_fee.png */,
+				025663CF26FCF9E00009D950 /* ic_quest_parking@3x.png */,
+				025663D026FCF9E00009D950 /* ic_quest_wheelchair@2x.png */,
+				025663D126FCF9E00009D950 /* ic_quest_building_underground@3x.png */,
+				025663D226FCF9E00009D950 /* ic_quest_fee.png */,
+				025663D326FCF9E00009D950 /* ic_quest_pitch_surface.png */,
+				025663D426FCF9E00009D950 /* ic_quest_baby@3x.png */,
+				025663D526FCF9E00009D950 /* ic_quest_bicycle_parking_cover@2x.png */,
+				025663D626FCF9E00009D950 /* ic_quest_surveillance_camera@2x.png */,
+				025663D726FCF9E00009D950 /* ic_quest_wifi@3x.png */,
+				025663D826FCF9E00009D950 /* ic_quest_pedestrian_crossing_island.png */,
+				025663D926FCF9E00009D950 /* ic_quest_motorcycle_parking_cover@3x.png */,
+				025663DA26FCF9E00009D950 /* ic_quest_steps_handrail.png */,
+				025663DB26FCF9E00009D950 /* ic_quest_bicycle_parking_cover.png */,
+				025663DC26FCF9E00009D950 /* ic_quest_money@3x.png */,
+				025663DD26FCF9E00009D950 /* ic_quest_building_underground.png */,
+				025663DE26FCF9E00009D950 /* ic_quest_building_construction@2x.png */,
+				025663DF26FCF9E00009D950 /* ic_quest_restaurant_vegan@3x.png */,
+				025663E026FCF9E00009D950 /* ic_quest_steps_count.png */,
+				025663E126FCF9E00009D950 /* ic_quest_max_width.png */,
+				025663E226FCF9E00009D950 /* ic_quest_bicycle_parking.png */,
+				025663E326FCF9E00009D950 /* ic_quest_recycling.png */,
+				025663E426FCF9E00009D950 /* ic_quest_bridge@3x.png */,
+				025663E526FCF9E00009D950 /* ic_quest_restaurant@2x.png */,
+				025663E626FCF9E00009D950 /* ic_quest_bus_stop_name@3x.png */,
+				025663E726FCF9E00009D950 /* ic_quest_baby.png */,
+				025663E826FCF9E00009D950 /* ic_quest_kerb_type.png */,
+				025663E926FCF9E00009D950 /* ic_quest_car.png */,
+				025663EA26FCF9E00009D950 /* ic_quest_bridge.png */,
+				025663EB26FCF9E00009D950 /* ic_quest_money.png */,
+				025663EC26FCF9E00009D950 /* ic_quest_road_construction@3x.png */,
+				025663ED26FCF9E00009D950 /* ic_quest_crown@2x.png */,
+				025663EE26FCF9E00009D950 /* ic_quest_street_surface@2x.png */,
+				025663EF26FCF9E00009D950 /* ic_quest_tractor.png */,
+				025663F026FCF9E00009D950 /* ic_quest_street_turn_lanes@2x.png */,
+				025663F126FCF9E00009D950 /* ic_quest_oneway@3x.png */,
+				025663F226FCF9E00009D950 /* ic_quest_bicycle_parking@2x.png */,
+				025663F326FCF9E00009D950 /* ic_quest_way_surface@3x.png */,
+				025663F426FCF9E00009D950 /* ic_quest_street_width.png */,
+				025663F526FCF9E00009D950 /* ic_quest_car_charger@2x.png */,
+				025663F626FCF9E00009D950 /* ic_quest_toilets.png */,
+				025663F726FCF9E00009D950 /* ic_quest_bench_poi@3x.png */,
+				025663F826FCF9E00009D950 /* ic_quest_recycling_glass@2x.png */,
+				025663F926FCF9E00009D950 /* ic_quest_steps_handrail@2x.png */,
+				025663FA26FCF9E00009D950 /* ic_quest_mail_ref@2x.png */,
+				025663FB26FCF9E00009D950 /* ic_quest_restaurant_vegetarian@2x.png */,
+				025663FC26FCF9E00009D950 /* ic_quest_toilets_wheelchair.png */,
+				025663FD26FCF9E00009D950 /* ic_quest_smoke.png */,
+				025663FE26FCF9E00009D950 /* ic_quest_building_height@3x.png */,
+				025663FF26FCF9E00009D950 /* ic_quest_street_name@2x.png */,
+				0256640026FCF9E00009D950 /* ic_quest_phone.png */,
+				0256640126FCF9E00009D950 /* ic_quest_police@2x.png */,
+				0256640226FCF9E00009D950 /* ic_quest_no_cars@2x.png */,
+				0256640326FCF9E00009D950 /* ic_quest_max_weight@3x.png */,
+				0256640426FCF9E00009D950 /* ic_quest_blind_pedestrian_crossing@2x.png */,
+				0256640526FCF9E00009D950 /* ic_quest_traffic_lights.png */,
+				0256640626FCF9E00009D950 /* ic_quest_toilets_wheelchair@3x.png */,
+				0256640726FCF9E00009D950 /* ic_quest_parking_maxstay@2x.png */,
+				0256640826FCF9E00009D950 /* ic_quest_bus_stop_lit.png */,
+				0256640926FCF9E00009D950 /* ic_quest_car@3x.png */,
+				0256640A26FCF9E00009D950 /* ic_quest_barrier@2x.png */,
+				0256640B26FCF9E00009D950 /* ic_quest_footway_surface@3x.png */,
+				0256640C26FCF9E00009D950 /* ic_quest_max_height@3x.png */,
+				0256640D26FCF9E00009D950 /* ic_quest_restaurant.png */,
+				0256640E26FCF9E00009D950 /* ic_quest_playground@3x.png */,
+				0256640F26FCF9E00009D950 /* ic_quest_max_weight.png */,
+				0256641026FCF9E00009D950 /* ic_quest_bicycleway.png */,
+				0256641126FCF9E00009D950 /* ic_quest_recycling_glass.png */,
+				0256641226FCF9E00009D950 /* ic_quest_parking.png */,
+				0256641326FCF9E00009D950 /* ic_quest_playground@2x.png */,
+				0256641426FCF9E00009D950 /* ic_quest_max_height@2x.png */,
+				0256641526FCF9E00009D950 /* ic_quest_max_height.png */,
+				0256641626FCF9E00009D950 /* ic_quest_footway_surface@2x.png */,
+				0256641726FCF9E00009D950 /* ic_quest_apple.png */,
+				0256641826FCF9E00009D950 /* ic_quest_car@2x.png */,
+				0256641926FCF9E00009D950 /* ic_quest_barrier@3x.png */,
+				0256641A26FCF9E00009D950 /* ic_quest_laundry.png */,
+				0256641B26FCF9E00009D950 /* ic_quest_toilets_wheelchair@2x.png */,
+				0256641C26FCF9E00009D950 /* ic_quest_parking_maxstay@3x.png */,
+				0256641D26FCF9E00009D950 /* ic_quest_max_weight@2x.png */,
+				0256641E26FCF9E00009D950 /* ic_quest_blind_pedestrian_crossing@3x.png */,
+				0256641F26FCF9E00009D950 /* ic_quest_check_shop.png */,
+				0256642026FCF9E00009D950 /* ic_quest_police@3x.png */,
+				0256642126FCF9E00009D950 /* ic_quest_no_cars@3x.png */,
+				0256642226FCF9E00009D950 /* ic_quest_opening_hours.png */,
+				0256642326FCF9E00009D950 /* ic_quest_oneway.png */,
+				0256642426FCF9E00009D950 /* ic_quest_cash.png */,
+				0256642526FCF9E00009D950 /* ic_quest_building_height@2x.png */,
+				0256642626FCF9E00009D950 /* ic_quest_street_name@3x.png */,
+				0256642726FCF9E00009D950 /* ic_quest_restaurant_vegetarian@3x.png */,
+				0256642826FCF9E00009D950 /* ic_quest_leaf.png */,
+				0256642926FCF9E00009D950 /* ic_quest_mail_ref@3x.png */,
+				0256642A26FCF9E00009D950 /* ic_quest_steps_handrail@3x.png */,
+				0256642B26FCF9E00009D950 /* ic_quest_religion.png */,
+				0256642C26FCF9E00009D950 /* ic_quest_defibrillator.png */,
+				0256642D26FCF9E00009D950 /* ic_quest_recycling_glass@3x.png */,
+				0256642E26FCF9E00009D950 /* ic_quest_bench_poi@2x.png */,
+				0256642F26FCF9E00009D950 /* ic_quest_recycling_container.png */,
+				0256643026FCF9E00009D950 /* ic_quest_way_surface@2x.png */,
+				0256643126FCF9E00009D950 /* ic_quest_car_charger@3x.png */,
+				0256643226FCF9E00009D950 /* ic_quest_street_turn_lanes@3x.png */,
+				0256643326FCF9E00009D950 /* ic_quest_oneway@2x.png */,
+				0256643426FCF9E00009D950 /* ic_quest_bicycle_parking@3x.png */,
+				0256643526FCF9E00009D950 /* ic_quest_crown@3x.png */,
+				0256643626FCF9E00009D950 /* ic_quest_no_pedestrians.png */,
+				0256643726FCF9E00009D950 /* ic_quest_street_surface@3x.png */,
+				0256643826FCF9E00009D950 /* ic_quest_footway_surface.png */,
+				0256643926FCF9E00009D950 /* ic_quest_road_construction@2x.png */,
+				0256643A26FCF9E00009D950 /* ic_quest_bridge@2x.png */,
+				0256643B26FCF9E00009D950 /* ic_quest_restaurant@3x.png */,
+				0256643C26FCF9E00009D950 /* ic_quest_bus_stop_name@2x.png */,
+				0256643D26FCF9E00009D950 /* ic_quest_restaurant_vegetarian.png */,
+				0256643E26FCF9E00009D950 /* ic_quest_money@2x.png */,
+				0256643F26FCF9E00009D950 /* ic_quest_building_construction@3x.png */,
+				0256644026FCF9E00009D950 /* ic_quest_restaurant_vegan@2x.png */,
+				0256644126FCF9E00009D950 /* ic_quest_pedestrian_crossing.png */,
+				0256644226FCF9E00009D950 /* ic_quest_bicycle_parking_access.png */,
+				0256644326FCF9E00009D950 /* ic_quest_pedestrian_crossing@2x.png */,
+				0256644426FCF9E00009D950 /* ic_quest_bicycle@3x.png */,
+				0256644526FCF9E00009D950 /* ic_quest_kerb_tactile_paving@3x.png */,
+				0256644626FCF9E00009D950 /* ic_quest_recycling_container@2x.png */,
+				0256644726FCF9E00009D950 /* ic_quest_power@2x.png */,
+				0256644826FCF9E00009D950 /* ic_quest_crown.png */,
+				0256644926FCF9E00009D950 /* ic_quest_check@2x.png */,
+				0256644A26FCF9E00009D950 /* ic_quest_fuel@2x.png */,
+				0256644B26FCF9E00009D950 /* ic_quest_motorcycle_parking_capacity@3x.png */,
+				0256644C26FCF9E00009D950 /* ic_quest_blind@2x.png */,
+				0256644D26FCF9E00009D950 /* ic_quest_bench_public_transport@2x.png */,
+				0256644E26FCF9E00009D950 /* ic_quest_street@2x.png */,
+				0256644F26FCF9E00009D950 /* ic_quest_board_type.png */,
+				0256645026FCF9E00009D950 /* ic_quest_bin_public_transport.png */,
+				0256645126FCF9E00009D950 /* ic_quest_peak@3x.png */,
+				0256645226FCF9E00009D950 /* ic_quest_motorcycle_parking_capacity.png */,
+				0256645326FCF9E00009D950 /* ic_quest_board_type@3x.png */,
+				0256645426FCF9E00009D950 /* ic_quest_recycling_clothes@3x.png */,
+				0256645526FCF9E00009D950 /* ic_quest_toilets@3x.png */,
+				0256645626FCF9E00009D950 /* ic_quest_street.png */,
+				0256645726FCF9E00009D950 /* ic_quest_blind_bus.png */,
+				0256645826FCF9E00009D950 /* ic_quest_building.png */,
+				0256645926FCF9E00009D950 /* ic_quest_parking_fee@3x.png */,
+				0256645A26FCF9E00009D950 /* ic_quest_leaf@2x.png */,
+				0256645B26FCF9E00009D950 /* ic_quest_bicycle_parking_capacity@2x.png */,
+				0256645C26FCF9E00009D950 /* ic_quest_building_levels@3x.png */,
+				0256645D26FCF9E00009D950 /* ic_quest_street_lanes@2x.png */,
+				0256645E26FCF9E00009D950 /* ic_quest_path_segregation@3x.png */,
+				0256645F26FCF9E00009D950 /* ic_quest_smoke@2x.png */,
+				0256646026FCF9E00009D950 /* ic_quest_kerb_tactile_paving.png */,
+				0256646126FCF9E00009D950 /* ic_quest_street_lanes.png */,
+				0256646226FCF9E00009D950 /* ic_quest_ferry@3x.png */,
+				0256646326FCF9E00009D950 /* ic_quest_bin_public_transport@3x.png */,
+				0256646426FCF9E00009D950 /* ic_quest_notes@3x.png */,
+				0256646526FCF9E00009D950 /* ic_quest_building_height.png */,
+				0256646626FCF9E00009D950 /* ic_quest_street_surface_detail@3x.png */,
+				0256646726FCF9E00009D950 /* ic_quest_cow@2x.png */,
+				0256646826FCF9E00009D950 /* ic_quest_car_charger.png */,
+				0256646926FCF9E00009D950 /* ic_quest_defibrillator@3x.png */,
+				0256646A26FCF9E00009D950 /* ic_quest_fire_hydrant@2x.png */,
+				0256646B26FCF9E00009D950 /* ic_quest_defibrillator@2x.png */,
+				0256646C26FCF9E00009D950 /* ic_quest_fire_hydrant@3x.png */,
+				0256646D26FCF9E00009D950 /* ic_quest_restaurant_vegan.png */,
+				0256646E26FCF9E00009D950 /* ic_quest_cow@3x.png */,
+				0256646F26FCF9E00009D950 /* ic_quest_bin_public_transport@2x.png */,
+				0256647026FCF9E00009D950 /* ic_quest_notes@2x.png */,
+				0256647126FCF9E00009D950 /* ic_quest_street_surface_detail@2x.png */,
+				0256647226FCF9E00009D950 /* ic_quest_ferry@2x.png */,
+				0256647326FCF9E00009D950 /* ic_quest_housenumber_street.png */,
+				0256647426FCF9E00009D950 /* ic_quest_street_turn_lanes.png */,
+				0256647526FCF9E00009D950 /* ic_quest_steps_ramp.png */,
+				0256647626FCF9E00009D950 /* ic_quest_max_speed.png */,
+				0256647726FCF9E00009D950 /* ic_quest_street_lanes@3x.png */,
+				0256647826FCF9E00009D950 /* ic_quest_path_segregation@2x.png */,
+				0256647926FCF9E00009D950 /* ic_quest_blind_traffic_lights.png */,
+				0256647A26FCF9E00009D950 /* ic_quest_smoke@3x.png */,
+				0256647B26FCF9E00009D950 /* ic_quest_car_wash.png */,
+				0256647C26FCF9E00009D950 /* ic_quest_blind_pedestrian_crossing.png */,
+				0256647D26FCF9E00009D950 /* ic_quest_building_levels@2x.png */,
+				0256647E26FCF9E00009D950 /* ic_quest_bus.png */,
+				0256647F26FCF9E00009D950 /* ic_quest_parking_fee@2x.png */,
+				0256648026FCF9E00009D950 /* ic_quest_leaf@3x.png */,
+				0256648126FCF9E00009D950 /* ic_quest_bicycle_parking_capacity@3x.png */,
+				0256648226FCF9E00009D950 /* ic_quest_bicycle_parking_capacity.png */,
+				0256648326FCF9E00009D950 /* ic_quest_toilets@2x.png */,
+				0256648426FCF9E00009D950 /* ic_quest_recycling_clothes@2x.png */,
+				0256648526FCF9E00009D950 /* ic_quest_bicycle.png */,
+				0256648626FCF9E00009D950 /* ic_quest_board_type@2x.png */,
+				0256648726FCF9E00009D950 /* ic_quest_peak@2x.png */,
+				0256648826FCF9E00009D950 /* ic_quest_fire_hydrant.png */,
+				0256648926FCF9E00009D950 /* ic_quest_street@3x.png */,
+				0256648A26FCF9E00009D950 /* ic_quest_bench_public_transport@3x.png */,
+				0256648B26FCF9E00009D950 /* ic_quest_motorcycle_parking_capacity@2x.png */,
+				0256648C26FCF9E00009D950 /* ic_quest_blind@3x.png */,
+				0256648D26FCF9E00009D950 /* ic_quest_fuel@3x.png */,
+				0256648E26FCF9E00009D950 /* ic_quest_recycling_container@3x.png */,
+				0256648F26FCF9E00009D950 /* ic_quest_power@3x.png */,
+				0256649026FCF9E00009D950 /* ic_quest_check@3x.png */,
+				0256649126FCF9E00009D950 /* ic_quest_street_surface_detail.png */,
+				0256649226FCF9E00009D950 /* ic_quest_kerb_tactile_paving@2x.png */,
+				0256649326FCF9E00009D950 /* ic_quest_bicycle@2x.png */,
+				0256649426FCF9E00009D950 /* ic_quest_pedestrian.png */,
+				0256649526FCF9E00009D950 /* ic_quest_pedestrian_crossing@3x.png */,
+			);
+			path = icons;
+			sourceTree = "<group>";
+		};
 		027EDC5D206F3EED00D349D6 /* KissXML */ = {
 			isa = PBXGroup;
 			children = (
@@ -825,7 +1952,8 @@
 				ED9649F82601D58900EC0A60 /* POIPresetValuePickerController.swift */,
 				ED9649F02601CEC800EC0A60 /* POITabBarController.swift */,
 				028F504619BA2F460093C423 /* presets */,
-				02C8C57026FAAFB9003B0122 /* Quests */,
+				0256660A26FD1C9B0009D950 /* QuestEditor.storyboard */,
+				02C8C57326FAAFF0003B0122 /* QuestEditorController.swift */,
 				ED9649E52601CE3100EC0A60 /* RotatingNavigationController.swift */,
 				ED9649DA2601CB7A00EC0A60 /* SettingsViewController.swift */,
 				02ACBCFF16713F7F00BB4414 /* Shared */,
@@ -866,6 +1994,7 @@
 				C3D096CA263E9A1100E3B129 /* DownloadThreadPool.swift */,
 				02F53299267ACFBB0088DF41 /* EditorLayer */,
 				0203473E266C1EDD000A7C3D /* ExternalGPS.swift */,
+				02C8C57026FAAFB9003B0122 /* Quests */,
 				C341E1552639DEFC0022E983 /* FpsLabel.swift */,
 				02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */,
 				C3FA925626416BF5000A2A99 /* GpxLayer.swift */,
@@ -920,9 +2049,10 @@
 		02C8C57026FAAFB9003B0122 /* Quests */ = {
 			isa = PBXGroup;
 			children = (
-				02C8C57126FAAFDC003B0122 /* QuestEditor.storyboard */,
-				02C8C57326FAAFF0003B0122 /* QuestEditorController.swift */,
+				0256632126FCF9DF0009D950 /* icons */,
 				02C8C57526FBCBF4003B0122 /* QuestFilterParser.swift */,
+				0256631D26FCF8220009D950 /* QuestList.swift */,
+				0256631F26FCF9730009D950 /* Quests.json */,
 			);
 			path = Quests;
 			sourceTree = "<group>";
@@ -1305,23 +2435,396 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				025665F326FCF9E10009D950 /* ic_quest_parking_fee@2x.png in Resources */,
+				025665C626FCF9E10009D950 /* ic_quest_motorcycle_parking_capacity.png in Resources */,
+				025665BF26FCF9E10009D950 /* ic_quest_motorcycle_parking_capacity@3x.png in Resources */,
+				0256650326FCF9E10009D950 /* ic_quest_wheelchair@3x.png in Resources */,
+				025664C626FCF9E00009D950 /* ic_quest_phone@2x.png in Resources */,
+				025664FD26FCF9E10009D950 /* ic_quest_surveillance_camera@3x.png in Resources */,
+				0256649A26FCF9E00009D950 /* ic_quest_steps.png in Resources */,
+				025665A926FCF9E10009D950 /* ic_quest_crown@3x.png in Resources */,
+				025665C226FCF9E10009D950 /* ic_quest_street@2x.png in Resources */,
+				025664FF26FCF9E10009D950 /* ic_quest_baby@2x.png in Resources */,
+				0256650926FCF9E10009D950 /* ic_quest_wheelchair_shop.png in Resources */,
+				025664BD26FCF9E00009D950 /* ic_quest_bus_stop_name.png in Resources */,
+				025665EB26FCF9E10009D950 /* ic_quest_street_lanes@3x.png in Resources */,
+				025664FA26FCF9E10009D950 /* ic_quest_motorcycle_parking_cover@2x.png in Resources */,
+				0256660326FCF9E10009D950 /* ic_quest_power@3x.png in Resources */,
+				0256654726FCF9E10009D950 /* ic_quest_pitch_surface.png in Resources */,
+				025664EE26FCF9E10009D950 /* ic_quest_steps_count@2x.png in Resources */,
+				0256650226FCF9E10009D950 /* ic_quest_building_underground@2x.png in Resources */,
+				0256652926FCF9E10009D950 /* ic_quest_information@2x.png in Resources */,
+				0256656826FCF9E10009D950 /* ic_quest_street_width.png in Resources */,
+				0256655426FCF9E10009D950 /* ic_quest_steps_count.png in Resources */,
+				025664B826FCF9E00009D950 /* ic_quest_ferry.png in Resources */,
+				0256651E26FCF9E10009D950 /* ic_quest_max_width@2x.png in Resources */,
+				0256660026FCF9E10009D950 /* ic_quest_blind@3x.png in Resources */,
+				025664B226FCF9E00009D950 /* ic_quest_traffic_lights@3x.png in Resources */,
+				0256659026FCF9E10009D950 /* ic_quest_parking_maxstay@3x.png in Resources */,
+				0256653A26FCF9E10009D950 /* ic_quest_blind_traffic_lights@2x.png in Resources */,
 				029A17C8257AB8A70035C6ED /* POI-Icons.xcassets in Resources */,
+				025665B626FCF9E10009D950 /* ic_quest_bicycle_parking_access.png in Resources */,
+				025665F926FCF9E10009D950 /* ic_quest_bicycle.png in Resources */,
+				0256660926FCF9E10009D950 /* ic_quest_pedestrian_crossing@3x.png in Resources */,
+				0256650426FCF9E10009D950 /* ic_quest_way_surface.png in Resources */,
+				0256659826FCF9E10009D950 /* ic_quest_cash.png in Resources */,
+				025665B326FCF9E10009D950 /* ic_quest_building_construction@3x.png in Resources */,
+				0256656726FCF9E10009D950 /* ic_quest_way_surface@3x.png in Resources */,
+				025665BD26FCF9E10009D950 /* ic_quest_check@2x.png in Resources */,
+				0256651026FCF9E10009D950 /* ic_quest_drinking_water@3x.png in Resources */,
+				0256650A26FCF9E10009D950 /* ic_quest_housenumber_street@2x.png in Resources */,
+				0256659F26FCF9E10009D950 /* ic_quest_religion.png in Resources */,
+				0256650B26FCF9E10009D950 /* ic_quest_motorcycle_parking@2x.png in Resources */,
+				025665BA26FCF9E10009D950 /* ic_quest_recycling_container@2x.png in Resources */,
+				0256651C26FCF9E10009D950 /* ic_quest_building@2x.png in Resources */,
+				025664B326FCF9E00009D950 /* ic_quest_pitch_lantern.png in Resources */,
+				025664D026FCF9E10009D950 /* ic_quest_blind_bus@3x.png in Resources */,
+				025664A726FCF9E00009D950 /* ic_quest_steps_ramp@2x.png in Resources */,
+				0256658D26FCF9E10009D950 /* ic_quest_barrier@3x.png in Resources */,
+				025664C126FCF9E00009D950 /* ic_quest_ferry_pedestrian@3x.png in Resources */,
+				0256651A26FCF9E10009D950 /* ic_quest_parking_access@3x.png in Resources */,
+				025664C026FCF9E00009D950 /* ic_quest_religion@3x.png in Resources */,
+				025665F826FCF9E10009D950 /* ic_quest_recycling_clothes@2x.png in Resources */,
+				0256657226FCF9E10009D950 /* ic_quest_building_height@3x.png in Resources */,
+				025665D226FCF9E10009D950 /* ic_quest_path_segregation@3x.png in Resources */,
+				025664F026FCF9E10009D950 /* ic_quest_path_segregation.png in Resources */,
+				0256656E26FCF9E10009D950 /* ic_quest_mail_ref@2x.png in Resources */,
+				025665B526FCF9E10009D950 /* ic_quest_pedestrian_crossing.png in Resources */,
+				025665E926FCF9E10009D950 /* ic_quest_steps_ramp.png in Resources */,
+				0256657126FCF9E10009D950 /* ic_quest_smoke.png in Resources */,
+				0256654326FCF9E10009D950 /* ic_quest_parking@3x.png in Resources */,
+				025665A726FCF9E10009D950 /* ic_quest_oneway@2x.png in Resources */,
+				025664C226FCF9E00009D950 /* ic_quest_phone@3x.png in Resources */,
+				025664DA26FCF9E10009D950 /* ic_quest_fuel.png in Resources */,
+				025664F826FCF9E10009D950 /* ic_quest_pitch_surface@3x.png in Resources */,
+				025664B926FCF9E00009D950 /* ic_quest_create_note@3x.png in Resources */,
+				0256658926FCF9E10009D950 /* ic_quest_max_height.png in Resources */,
+				0256658E26FCF9E10009D950 /* ic_quest_laundry.png in Resources */,
+				025665BC26FCF9E10009D950 /* ic_quest_crown.png in Resources */,
+				025664A226FCF9E00009D950 /* ic_quest_bicycleway_surface.png in Resources */,
+				025665D926FCF9E10009D950 /* ic_quest_building_height.png in Resources */,
 				02ACBA3E16713CCB00BB4414 /* InfoPlist.strings in Resources */,
+				025665CB26FCF9E10009D950 /* ic_quest_blind_bus.png in Resources */,
+				025665D126FCF9E10009D950 /* ic_quest_street_lanes@2x.png in Resources */,
 				028F504719BA2F460093C423 /* presets in Resources */,
+				025664C826FCF9E00009D950 /* ic_quest_check.png in Resources */,
+				0256659526FCF9E10009D950 /* ic_quest_no_cars@3x.png in Resources */,
+				025665C126FCF9E10009D950 /* ic_quest_bench_public_transport@2x.png in Resources */,
+				0256652826FCF9E10009D950 /* ic_quest_building@3x.png in Resources */,
+				025665D726FCF9E10009D950 /* ic_quest_bin_public_transport@3x.png in Resources */,
+				025664D526FCF9E10009D950 /* ic_quest_railway.png in Resources */,
+				025665ED26FCF9E10009D950 /* ic_quest_blind_traffic_lights.png in Resources */,
 				02AFBF20245774DC00BE43F4 /* OSM-Logo256.png in Resources */,
+				0256660826FCF9E10009D950 /* ic_quest_pedestrian.png in Resources */,
+				0256658526FCF9E10009D950 /* ic_quest_recycling_glass.png in Resources */,
+				025665AB26FCF9E10009D950 /* ic_quest_street_surface@3x.png in Resources */,
+				025664DB26FCF9E10009D950 /* ic_quest_roof_shape@3x.png in Resources */,
+				0256658726FCF9E10009D950 /* ic_quest_playground@2x.png in Resources */,
+				0256651626FCF9E10009D950 /* ic_quest_notes.png in Resources */,
+				025664D126FCF9E10009D950 /* ic_quest_create_note@2x.png in Resources */,
+				0256651B26FCF9E10009D950 /* ic_quest_street_width@3x.png in Resources */,
+				025665B726FCF9E10009D950 /* ic_quest_pedestrian_crossing@2x.png in Resources */,
+				0256656F26FCF9E10009D950 /* ic_quest_restaurant_vegetarian@2x.png in Resources */,
+				025665A326FCF9E10009D950 /* ic_quest_recycling_container.png in Resources */,
+				025664A826FCF9E00009D950 /* ic_quest_apple@3x.png in Resources */,
+				0256654F26FCF9E10009D950 /* ic_quest_bicycle_parking_cover.png in Resources */,
+				025664A626FCF9E00009D950 /* ic_quest_bus@2x.png in Resources */,
+				0256653326FCF9E10009D950 /* ic_quest_drinking_water.png in Resources */,
+				0256655926FCF9E10009D950 /* ic_quest_restaurant@2x.png in Resources */,
+				025665B226FCF9E10009D950 /* ic_quest_money@2x.png in Resources */,
+				0256653426FCF9E10009D950 /* ic_quest_building_levels.png in Resources */,
+				025665EF26FCF9E10009D950 /* ic_quest_car_wash.png in Resources */,
+				025664A326FCF9E00009D950 /* ic_quest_parking_lane@2x.png in Resources */,
+				025665FB26FCF9E10009D950 /* ic_quest_peak@2x.png in Resources */,
+				0256659226FCF9E10009D950 /* ic_quest_blind_pedestrian_crossing@3x.png in Resources */,
+				0256653F26FCF9E10009D950 /* ic_quest_mail_ref.png in Resources */,
+				0256653526FCF9E10009D950 /* ic_quest_no_pedestrians@2x.png in Resources */,
+				025665C926FCF9E10009D950 /* ic_quest_toilets@3x.png in Resources */,
+				0256653626FCF9E10009D950 /* ic_quest_cow.png in Resources */,
+				0256659726FCF9E10009D950 /* ic_quest_oneway.png in Resources */,
+				025664EC26FCF9E10009D950 /* ic_quest_parking_lane@3x.png in Resources */,
+				0256654426FCF9E10009D950 /* ic_quest_wheelchair@2x.png in Resources */,
+				0256652D26FCF9E10009D950 /* ic_quest_street_width@2x.png in Resources */,
+				0256654626FCF9E10009D950 /* ic_quest_fee.png in Resources */,
+				025665B126FCF9E10009D950 /* ic_quest_restaurant_vegetarian.png in Resources */,
+				025664E126FCF9E10009D950 /* ic_quest_barrier.png in Resources */,
+				025664DE26FCF9E10009D950 /* ic_quest_peak.png in Resources */,
+				025664EF26FCF9E10009D950 /* ic_quest_laundry@2x.png in Resources */,
+				0256650126FCF9E10009D950 /* ic_quest_lantern.png in Resources */,
+				025665E126FCF9E10009D950 /* ic_quest_restaurant_vegan.png in Resources */,
+				0256651126FCF9E10009D950 /* ic_quest_motorcycle_parking_cover.png in Resources */,
+				0256656326FCF9E10009D950 /* ic_quest_tractor.png in Resources */,
+				025665C426FCF9E10009D950 /* ic_quest_bin_public_transport.png in Resources */,
+				0256658426FCF9E10009D950 /* ic_quest_bicycleway.png in Resources */,
+				0256659D26FCF9E10009D950 /* ic_quest_mail_ref@3x.png in Resources */,
+				0256652426FCF9E10009D950 /* ic_quest_bicycle_parking_access@3x.png in Resources */,
+				0256659C26FCF9E10009D950 /* ic_quest_leaf.png in Resources */,
+				0256655B26FCF9E10009D950 /* ic_quest_baby.png in Resources */,
+				025664C326FCF9E00009D950 /* ic_quest_bus_stop_shelter@2x.png in Resources */,
+				025664A526FCF9E00009D950 /* ic_quest_check_shop@3x.png in Resources */,
+				025664D826FCF9E10009D950 /* ic_quest_steps@2x.png in Resources */,
+				025664E726FCF9E10009D950 /* ic_quest_lantern@2x.png in Resources */,
+				0256653926FCF9E10009D950 /* ic_quest_kosher@2x.png in Resources */,
+				0256657E26FCF9E10009D950 /* ic_quest_barrier@2x.png in Resources */,
+				025665C726FCF9E10009D950 /* ic_quest_board_type@3x.png in Resources */,
 				02AFBF242458C1E800BE43F4 /* BingPlaceholderImage.png in Resources */,
+				0256653E26FCF9E10009D950 /* ic_quest_motorcycle_parking@3x.png in Resources */,
+				025664CD26FCF9E10009D950 /* ic_quest_label@2x.png in Resources */,
+				025664C726FCF9E00009D950 /* ic_quest_bus_stop_shelter@3x.png in Resources */,
+				025664AF26FCF9E00009D950 /* ic_quest_bus_stop_lit@2x.png in Resources */,
+				0256658626FCF9E10009D950 /* ic_quest_parking.png in Resources */,
+				0256655726FCF9E10009D950 /* ic_quest_recycling.png in Resources */,
+				0256649B26FCF9E00009D950 /* ic_quest_mail@3x.png in Resources */,
+				025665D526FCF9E10009D950 /* ic_quest_street_lanes.png in Resources */,
+				0256650E26FCF9E10009D950 /* ic_quest_blind_traffic_lights@3x.png in Resources */,
+				025665CC26FCF9E10009D950 /* ic_quest_building.png in Resources */,
+				0256652C26FCF9E10009D950 /* ic_quest_parking_access@2x.png in Resources */,
+				0256632026FCF9730009D950 /* Quests.json in Resources */,
+				0256649D26FCF9E00009D950 /* ic_quest_housenumber@2x.png in Resources */,
+				025664F126FCF9E10009D950 /* ic_quest_parking_access.png in Resources */,
+				025665FC26FCF9E10009D950 /* ic_quest_fire_hydrant.png in Resources */,
+				025665CE26FCF9E10009D950 /* ic_quest_leaf@2x.png in Resources */,
+				0256655C26FCF9E10009D950 /* ic_quest_kerb_type.png in Resources */,
+				025664E526FCF9E10009D950 /* ic_quest_apple@2x.png in Resources */,
+				0256658B26FCF9E10009D950 /* ic_quest_apple.png in Resources */,
+				0256658026FCF9E10009D950 /* ic_quest_max_height@3x.png in Resources */,
+				0256649626FCF9E00009D950 /* ic_quest_pitch_surface@2x.png in Resources */,
+				025664A126FCF9E00009D950 /* ic_quest_parking_maxstay.png in Resources */,
+				025665AD26FCF9E10009D950 /* ic_quest_road_construction@2x.png in Resources */,
+				025664BE26FCF9E00009D950 /* ic_quest_label@3x.png in Resources */,
+				025664A026FCF9E00009D950 /* ic_quest_toilet_fee@3x.png in Resources */,
+				0256657626FCF9E10009D950 /* ic_quest_no_cars@2x.png in Resources */,
+				0256650726FCF9E10009D950 /* ic_quest_blind.png in Resources */,
+				0256655226FCF9E10009D950 /* ic_quest_building_construction@2x.png in Resources */,
+				0256658C26FCF9E10009D950 /* ic_quest_car@2x.png in Resources */,
+				0256660126FCF9E10009D950 /* ic_quest_fuel@3x.png in Resources */,
+				0256658326FCF9E10009D950 /* ic_quest_max_weight.png in Resources */,
+				025665E226FCF9E10009D950 /* ic_quest_cow@3x.png in Resources */,
+				0256656A26FCF9E10009D950 /* ic_quest_toilets.png in Resources */,
+				025665A826FCF9E10009D950 /* ic_quest_bicycle_parking@3x.png in Resources */,
+				025665F026FCF9E10009D950 /* ic_quest_blind_pedestrian_crossing.png in Resources */,
+				025665C026FCF9E10009D950 /* ic_quest_blind@2x.png in Resources */,
+				025665DB26FCF9E10009D950 /* ic_quest_cow@2x.png in Resources */,
+				025665B026FCF9E10009D950 /* ic_quest_bus_stop_name@2x.png in Resources */,
+				0256655526FCF9E10009D950 /* ic_quest_max_width.png in Resources */,
+				025664F926FCF9E10009D950 /* ic_quest_pedestrian@2x.png in Resources */,
+				0256654B26FCF9E10009D950 /* ic_quest_wifi@3x.png in Resources */,
+				025664A426FCF9E00009D950 /* ic_quest_kosher.png in Resources */,
+				025664ED26FCF9E10009D950 /* ic_quest_housenumber@3x.png in Resources */,
+				025665AE26FCF9E10009D950 /* ic_quest_bridge@2x.png in Resources */,
+				0256654026FCF9E10009D950 /* ic_quest_no_cars.png in Resources */,
+				025665DA26FCF9E10009D950 /* ic_quest_street_surface_detail@3x.png in Resources */,
 				02BE6190245D1F9D00E92662 /* EsriPlaceholderImage.jpg in Resources */,
+				025665D326FCF9E10009D950 /* ic_quest_smoke@2x.png in Resources */,
 				02ACBA4D16713CCB00BB4414 /* MainStoryboard.storyboard in Resources */,
+				025665DF26FCF9E10009D950 /* ic_quest_defibrillator@2x.png in Resources */,
+				025665B926FCF9E10009D950 /* ic_quest_kerb_tactile_paving@3x.png in Resources */,
+				0256652126FCF9E10009D950 /* ic_quest_max_speed@2x.png in Resources */,
+				025665D826FCF9E10009D950 /* ic_quest_notes@3x.png in Resources */,
+				0256659626FCF9E10009D950 /* ic_quest_opening_hours.png in Resources */,
 				0291D83724427AFA00F793BE /* Display.storyboard in Resources */,
+				0256649826FCF9E00009D950 /* ic_quest_car_wash@3x.png in Resources */,
+				025664F426FCF9E10009D950 /* ic_quest_mail@2x.png in Resources */,
+				0256655A26FCF9E10009D950 /* ic_quest_bus_stop_name@3x.png in Resources */,
+				0256653026FCF9E10009D950 /* ic_quest_power.png in Resources */,
+				025665A526FCF9E10009D950 /* ic_quest_car_charger@3x.png in Resources */,
+				025664CB26FCF9E00009D950 /* ic_quest_opening_hours@3x.png in Resources */,
+				025664B526FCF9E00009D950 /* ic_quest_pedestrian_crossing_island@2x.png in Resources */,
+				025665A026FCF9E10009D950 /* ic_quest_defibrillator.png in Resources */,
+				025665E026FCF9E10009D950 /* ic_quest_fire_hydrant@3x.png in Resources */,
+				025664B426FCF9E00009D950 /* ic_quest_steps@3x.png in Resources */,
+				0256653826FCF9E10009D950 /* ic_quest_street_name.png in Resources */,
+				0256658226FCF9E10009D950 /* ic_quest_playground@3x.png in Resources */,
+				0256649F26FCF9E00009D950 /* ic_quest_laundry@3x.png in Resources */,
+				0256649C26FCF9E00009D950 /* ic_quest_sport@3x.png in Resources */,
+				0256654826FCF9E10009D950 /* ic_quest_baby@3x.png in Resources */,
+				025664B126FCF9E00009D950 /* ic_quest_roof_shape@2x.png in Resources */,
+				0256653226FCF9E10009D950 /* ic_quest_bicycle_parking_fee@2x.png in Resources */,
+				025664E926FCF9E10009D950 /* ic_quest_bus@3x.png in Resources */,
 				027AB4FA250E9C8000C404CD /* Settings.storyboard in Resources */,
+				0256653C26FCF9E10009D950 /* ic_quest_tractor@2x.png in Resources */,
+				025665F126FCF9E10009D950 /* ic_quest_building_levels@2x.png in Resources */,
+				0256657A26FCF9E10009D950 /* ic_quest_toilets_wheelchair@3x.png in Resources */,
+				025664AB26FCF9E00009D950 /* ic_quest_cash@3x.png in Resources */,
+				025665F526FCF9E10009D950 /* ic_quest_bicycle_parking_capacity@3x.png in Resources */,
+				025665B426FCF9E10009D950 /* ic_quest_restaurant_vegan@2x.png in Resources */,
+				025664E626FCF9E10009D950 /* ic_quest_bicycleway_surface@2x.png in Resources */,
+				0256652526FCF9E10009D950 /* ic_quest_max_speed@3x.png in Resources */,
+				025665FE26FCF9E10009D950 /* ic_quest_bench_public_transport@3x.png in Resources */,
+				0256651826FCF9E10009D950 /* ic_quest_blind_traffic_lights_sound@2x.png in Resources */,
+				025664B626FCF9E00009D950 /* ic_quest_information.png in Resources */,
+				025665A426FCF9E10009D950 /* ic_quest_way_surface@2x.png in Resources */,
+				0256652326FCF9E10009D950 /* ic_quest_bicycle_parking_access@2x.png in Resources */,
+				0256653D26FCF9E10009D950 /* ic_quest_housenumber_street@3x.png in Resources */,
+				0256650D26FCF9E10009D950 /* ic_quest_tractor@3x.png in Resources */,
+				025665D626FCF9E10009D950 /* ic_quest_ferry@3x.png in Resources */,
+				0256649E26FCF9E00009D950 /* ic_quest_steps_count@3x.png in Resources */,
+				0256659926FCF9E10009D950 /* ic_quest_building_height@2x.png in Resources */,
+				0256654926FCF9E10009D950 /* ic_quest_bicycle_parking_cover@2x.png in Resources */,
+				0256649926FCF9E00009D950 /* ic_quest_wheelchair_shop@3x.png in Resources */,
 				02ED19811BBF119C00A57CF4 /* Launch Screen.storyboard in Resources */,
+				0256651226FCF9E10009D950 /* ic_quest_no_pedestrians@3x.png in Resources */,
+				0256654A26FCF9E10009D950 /* ic_quest_surveillance_camera@2x.png in Resources */,
 				027AB503250E9CA500C404CD /* Changeset.storyboard in Resources */,
+				0256652F26FCF9E10009D950 /* ic_quest_blind_traffic_lights_sound@3x.png in Resources */,
+				0256655126FCF9E10009D950 /* ic_quest_building_underground.png in Resources */,
+				025664DC26FCF9E10009D950 /* ic_quest_bus_stop_lit@3x.png in Resources */,
+				0256654526FCF9E10009D950 /* ic_quest_building_underground@3x.png in Resources */,
+				0256660626FCF9E10009D950 /* ic_quest_kerb_tactile_paving@2x.png in Resources */,
+				025665D026FCF9E10009D950 /* ic_quest_building_levels@3x.png in Resources */,
+				0256657426FCF9E10009D950 /* ic_quest_phone.png in Resources */,
+				025665CA26FCF9E10009D950 /* ic_quest_street.png in Resources */,
+				0256656C26FCF9E10009D950 /* ic_quest_recycling_glass@2x.png in Resources */,
+				0256653126FCF9E10009D950 /* ic_quest_sidewalk.png in Resources */,
+				0256650F26FCF9E10009D950 /* ic_quest_kosher@3x.png in Resources */,
+				0256657F26FCF9E10009D950 /* ic_quest_footway_surface@3x.png in Resources */,
+				0256658A26FCF9E10009D950 /* ic_quest_footway_surface@2x.png in Resources */,
+				025664EB26FCF9E10009D950 /* ic_quest_toilet_fee@2x.png in Resources */,
+				025664BA26FCF9E00009D950 /* ic_quest_bicycleway@3x.png in Resources */,
+				0256652726FCF9E10009D950 /* ic_quest_wifi.png in Resources */,
+				025664CA26FCF9E00009D950 /* ic_quest_religion@2x.png in Resources */,
+				0256659B26FCF9E10009D950 /* ic_quest_restaurant_vegetarian@3x.png in Resources */,
+				025665FF26FCF9E10009D950 /* ic_quest_motorcycle_parking_capacity@2x.png in Resources */,
+				0256651426FCF9E10009D950 /* ic_quest_sport.png in Resources */,
+				025664EA26FCF9E10009D950 /* ic_quest_check_shop@2x.png in Resources */,
+				025665FD26FCF9E10009D950 /* ic_quest_street@3x.png in Resources */,
+				0256660526FCF9E10009D950 /* ic_quest_street_surface_detail.png in Resources */,
+				025665E826FCF9E10009D950 /* ic_quest_street_turn_lanes.png in Resources */,
+				0256657526FCF9E10009D950 /* ic_quest_police@2x.png in Resources */,
+				025664CE26FCF9E10009D950 /* ic_quest_fee@3x.png in Resources */,
+				025664CC26FCF9E10009D950 /* ic_quest_bench_public_transport.png in Resources */,
+				0256659E26FCF9E10009D950 /* ic_quest_steps_handrail@3x.png in Resources */,
+				0256651526FCF9E10009D950 /* ic_quest_bicycle_parking_fee@3x.png in Resources */,
+				0256659426FCF9E10009D950 /* ic_quest_police@3x.png in Resources */,
+				025665EE26FCF9E10009D950 /* ic_quest_smoke@3x.png in Resources */,
+				0256655326FCF9E10009D950 /* ic_quest_restaurant_vegan@3x.png in Resources */,
+				0256660B26FD1C9B0009D950 /* QuestEditor.storyboard in Resources */,
+				025665B826FCF9E10009D950 /* ic_quest_bicycle@3x.png in Resources */,
+				025664C526FCF9E00009D950 /* ic_quest_ferry_pedestrian@2x.png in Resources */,
+				025665F226FCF9E10009D950 /* ic_quest_bus.png in Resources */,
+				0256656B26FCF9E10009D950 /* ic_quest_bench_poi@3x.png in Resources */,
+				025664DF26FCF9E10009D950 /* ic_quest_pitch_lantern@2x.png in Resources */,
+				0256655826FCF9E10009D950 /* ic_quest_bridge@3x.png in Resources */,
+				025665DE26FCF9E10009D950 /* ic_quest_fire_hydrant@2x.png in Resources */,
 				027AB4FD250E9C8A00C404CD /* POI.storyboard in Resources */,
+				0256656526FCF9E10009D950 /* ic_quest_oneway@3x.png in Resources */,
+				025665FA26FCF9E10009D950 /* ic_quest_board_type@2x.png in Resources */,
+				025664E826FCF9E10009D950 /* ic_quest_steps_ramp@3x.png in Resources */,
+				0256649726FCF9E00009D950 /* ic_quest_pedestrian@3x.png in Resources */,
+				025664BF26FCF9E00009D950 /* ic_quest_opening_hours@2x.png in Resources */,
+				0256656926FCF9E10009D950 /* ic_quest_car_charger@2x.png in Resources */,
+				0256651926FCF9E10009D950 /* ic_quest_parking_lane.png in Resources */,
+				0256652E26FCF9E10009D950 /* ic_quest_roof_shape.png in Resources */,
+				025664B026FCF9E00009D950 /* ic_quest_railway@3x.png in Resources */,
+				0256657D26FCF9E10009D950 /* ic_quest_car@3x.png in Resources */,
+				025664E026FCF9E10009D950 /* ic_quest_kerb_type@2x.png in Resources */,
+				025664BC26FCF9E00009D950 /* ic_quest_fee@2x.png in Resources */,
+				025665F726FCF9E10009D950 /* ic_quest_toilets@2x.png in Resources */,
+				0256660226FCF9E10009D950 /* ic_quest_recycling_container@3x.png in Resources */,
+				0256658F26FCF9E10009D950 /* ic_quest_toilets_wheelchair@2x.png in Resources */,
+				0256651D26FCF9E10009D950 /* ic_quest_information@3x.png in Resources */,
+				0256655D26FCF9E10009D950 /* ic_quest_car.png in Resources */,
+				0256657826FCF9E10009D950 /* ic_quest_blind_pedestrian_crossing@2x.png in Resources */,
+				0256652626FCF9E10009D950 /* ic_quest_car_charger_capacity@2x.png in Resources */,
+				025664CF26FCF9E10009D950 /* ic_quest_bicycleway@2x.png in Resources */,
+				025665E426FCF9E10009D950 /* ic_quest_notes@2x.png in Resources */,
+				0256655F26FCF9E10009D950 /* ic_quest_money.png in Resources */,
+				025664FB26FCF9E10009D950 /* ic_quest_car_charger_capacity.png in Resources */,
+				025665E326FCF9E10009D950 /* ic_quest_bin_public_transport@2x.png in Resources */,
 				0246A78126A4AA3A00941A44 /* DirectionViewController.xib in Resources */,
+				0256657C26FCF9E10009D950 /* ic_quest_bus_stop_lit.png in Resources */,
 				02C3194E250EAED500C5D200 /* Localizable.strings in Resources */,
-				02C8C57226FAAFDC003B0122 /* QuestEditor.storyboard in Resources */,
+				025664DD26FCF9E10009D950 /* ic_quest_railway@2x.png in Resources */,
+				0256654C26FCF9E10009D950 /* ic_quest_pedestrian_crossing_island.png in Resources */,
+				025665F626FCF9E10009D950 /* ic_quest_bicycle_parking_capacity.png in Resources */,
+				0256658826FCF9E10009D950 /* ic_quest_max_height@2x.png in Resources */,
+				0256658126FCF9E10009D950 /* ic_quest_restaurant.png in Resources */,
+				0256652A26FCF9E10009D950 /* ic_quest_max_width@3x.png in Resources */,
+				0256656426FCF9E10009D950 /* ic_quest_street_turn_lanes@2x.png in Resources */,
+				0256650026FCF9E10009D950 /* ic_quest_surveillance_camera.png in Resources */,
+				025664E326FCF9E10009D950 /* ic_quest_cash@2x.png in Resources */,
+				0256659A26FCF9E10009D950 /* ic_quest_street_name@3x.png in Resources */,
+				025664AE26FCF9E00009D950 /* ic_quest_recycling@3x.png in Resources */,
+				025664E426FCF9E10009D950 /* ic_quest_wheelchair.png in Resources */,
+				025665C826FCF9E10009D950 /* ic_quest_recycling_clothes@3x.png in Resources */,
+				025664F526FCF9E10009D950 /* ic_quest_car_wash@2x.png in Resources */,
+				0256650826FCF9E10009D950 /* ic_quest_mail.png in Resources */,
+				025664F326FCF9E10009D950 /* ic_quest_housenumber.png in Resources */,
+				0256657326FCF9E10009D950 /* ic_quest_street_name@2x.png in Resources */,
+				025664D426FCF9E10009D950 /* ic_quest_pedestrian_crossing_island@3x.png in Resources */,
+				0256654126FCF9E10009D950 /* ic_quest_street_surface.png in Resources */,
+				025665EA26FCF9E10009D950 /* ic_quest_max_speed.png in Resources */,
+				025665DC26FCF9E10009D950 /* ic_quest_car_charger.png in Resources */,
+				0256652026FCF9E10009D950 /* ic_quest_bus_stop_shelter.png in Resources */,
+				025664D926FCF9E10009D950 /* ic_quest_traffic_lights@2x.png in Resources */,
+				0256657926FCF9E10009D950 /* ic_quest_traffic_lights.png in Resources */,
+				0256651326FCF9E10009D950 /* ic_quest_blind_traffic_lights_sound.png in Resources */,
+				025665E626FCF9E10009D950 /* ic_quest_ferry@2x.png in Resources */,
+				0256656026FCF9E10009D950 /* ic_quest_road_construction@3x.png in Resources */,
+				025665BB26FCF9E10009D950 /* ic_quest_power@2x.png in Resources */,
+				025664D626FCF9E10009D950 /* ic_quest_police.png in Resources */,
+				025665AA26FCF9E10009D950 /* ic_quest_no_pedestrians.png in Resources */,
+				0256656626FCF9E10009D950 /* ic_quest_bicycle_parking@2x.png in Resources */,
+				0256657B26FCF9E10009D950 /* ic_quest_parking_maxstay@2x.png in Resources */,
+				025665F426FCF9E10009D950 /* ic_quest_leaf@3x.png in Resources */,
 				027AB500250E9C9B00C404CD /* Height.storyboard in Resources */,
+				025665D426FCF9E10009D950 /* ic_quest_kerb_tactile_paving.png in Resources */,
+				0256659326FCF9E10009D950 /* ic_quest_check_shop.png in Resources */,
+				025664E226FCF9E10009D950 /* ic_quest_recycling@2x.png in Resources */,
+				0256655E26FCF9E10009D950 /* ic_quest_bridge.png in Resources */,
+				0256660426FCF9E10009D950 /* ic_quest_check@3x.png in Resources */,
+				025665DD26FCF9E10009D950 /* ic_quest_defibrillator@3x.png in Resources */,
+				0256656126FCF9E10009D950 /* ic_quest_crown@2x.png in Resources */,
+				025664FC26FCF9E10009D950 /* ic_quest_bicycle_parking_cover@3x.png in Resources */,
+				025665C526FCF9E10009D950 /* ic_quest_peak@3x.png in Resources */,
+				025665E726FCF9E10009D950 /* ic_quest_housenumber_street.png in Resources */,
+				025665CD26FCF9E10009D950 /* ic_quest_parking_fee@3x.png in Resources */,
+				0256655626FCF9E10009D950 /* ic_quest_bicycle_parking.png in Resources */,
+				025665AF26FCF9E10009D950 /* ic_quest_restaurant@3x.png in Resources */,
+				0256654E26FCF9E10009D950 /* ic_quest_steps_handrail.png in Resources */,
+				0256655026FCF9E10009D950 /* ic_quest_money@3x.png in Resources */,
+				025664F626FCF9E10009D950 /* ic_quest_wheelchair_shop@2x.png in Resources */,
+				0256654226FCF9E10009D950 /* ic_quest_toilet_fee.png in Resources */,
+				025664BB26FCF9E00009D950 /* ic_quest_blind_bus@2x.png in Resources */,
+				025665BE26FCF9E10009D950 /* ic_quest_fuel@2x.png in Resources */,
+				025664F726FCF9E10009D950 /* ic_quest_bicycle_parking_fee.png in Resources */,
+				025664D726FCF9E10009D950 /* ic_quest_parking_fee.png in Resources */,
+				0256650C26FCF9E10009D950 /* ic_quest_sidewalk@3x.png in Resources */,
+				025664C426FCF9E00009D950 /* ic_quest_create_note.png in Resources */,
+				025664AD26FCF9E00009D950 /* ic_quest_kerb_type@3x.png in Resources */,
+				0256654D26FCF9E10009D950 /* ic_quest_motorcycle_parking_cover@3x.png in Resources */,
+				0256651726FCF9E10009D950 /* ic_quest_playground.png in Resources */,
+				0256653B26FCF9E10009D950 /* ic_quest_sidewalk@2x.png in Resources */,
+				025664F226FCF9E10009D950 /* ic_quest_sport@2x.png in Resources */,
+				025664C926FCF9E00009D950 /* ic_quest_bench_poi.png in Resources */,
+				025664A926FCF9E00009D950 /* ic_quest_bicycleway_surface@3x.png in Resources */,
+				025665A126FCF9E10009D950 /* ic_quest_recycling_glass@3x.png in Resources */,
+				0256650526FCF9E10009D950 /* ic_quest_parking@2x.png in Resources */,
+				025664FE26FCF9E10009D950 /* ic_quest_wifi@2x.png in Resources */,
+				0256657726FCF9E10009D950 /* ic_quest_max_weight@3x.png in Resources */,
+				025664AA26FCF9E00009D950 /* ic_quest_lantern@3x.png in Resources */,
+				025664B726FCF9E00009D950 /* ic_quest_motorcycle_parking.png in Resources */,
+				0256657026FCF9E10009D950 /* ic_quest_toilets_wheelchair.png in Resources */,
+				025665AC26FCF9E10009D950 /* ic_quest_footway_surface.png in Resources */,
+				0256652B26FCF9E10009D950 /* ic_quest_label.png in Resources */,
+				0256656226FCF9E10009D950 /* ic_quest_street_surface@2x.png in Resources */,
+				0256651F26FCF9E10009D950 /* ic_quest_ferry_pedestrian.png in Resources */,
+				025665EC26FCF9E10009D950 /* ic_quest_path_segregation@2x.png in Resources */,
+				025665A626FCF9E10009D950 /* ic_quest_street_turn_lanes@3x.png in Resources */,
+				0256660726FCF9E10009D950 /* ic_quest_bicycle@2x.png in Resources */,
+				025665CF26FCF9E10009D950 /* ic_quest_bicycle_parking_capacity@2x.png in Resources */,
 				023B892B19C148790060CDB5 /* Images.xcassets in Resources */,
+				025664D226FCF9E10009D950 /* ic_quest_road_construction.png in Resources */,
+				0256653726FCF9E10009D950 /* ic_quest_drinking_water@2x.png in Resources */,
+				0256659126FCF9E10009D950 /* ic_quest_max_weight@2x.png in Resources */,
+				025665A226FCF9E10009D950 /* ic_quest_bench_poi@2x.png in Resources */,
+				025664D326FCF9E10009D950 /* ic_quest_recycling_clothes.png in Resources */,
+				025665E526FCF9E10009D950 /* ic_quest_street_surface_detail@2x.png in Resources */,
+				025665C326FCF9E10009D950 /* ic_quest_board_type.png in Resources */,
+				0256656D26FCF9E10009D950 /* ic_quest_steps_handrail@2x.png in Resources */,
+				0256652226FCF9E10009D950 /* ic_quest_car_charger_capacity@3x.png in Resources */,
+				0256650626FCF9E10009D950 /* ic_quest_building_construction.png in Resources */,
+				025664AC26FCF9E00009D950 /* ic_quest_pitch_lantern@3x.png in Resources */,
 				02ACBCFD16713F2B00BB4414 /* RenderInfo.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1430,6 +2933,7 @@
 				024909C9267BF9F70027E531 /* MapTransform.swift in Sources */,
 				0282C4C7265F32E800F2D282 /* Sqlite3.swift in Sources */,
 				02F6A459268AE42800F2ACE7 /* Debugger.swift in Sources */,
+				0256631E26FCF8220009D950 /* QuestList.swift in Sources */,
 				6442666922540EDF00C0D545 /* Observable.swift in Sources */,
 				02C8C56F26F447C3003B0122 /* KeepRight.swift in Sources */,
 				0203473D26695B2A000A7C3D /* EditorMapLayer+Edit.swift in Sources */,
