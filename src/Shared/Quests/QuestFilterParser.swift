@@ -173,8 +173,9 @@ class QuestFilterParser {
 			}
 
 			if nextIsAndAdvance(OR) {
-				let expr = try parseTag()
-				result = { result($0) || expr($0) }
+				let e1 = result
+				let e2 = try parseTag()
+				result = { e1($0) || e2($0) }
 			} else if nextIsAndAdvance(AND) {
 				let e1 = result
 				let e2 = try parseTag()
