@@ -2210,7 +2210,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Fo4-Nq-pAz.normalTitle" xml:space="preserve">
         <source>Center</source>
-        <target>中心</target>
+        <target>中央</target>
         <note>Class = "UIButton"; normalTitle = "Center"; ObjectID = "Fo4-Nq-pAz";</note>
       </trans-unit>
       <trans-unit id="HeZ-95-3K1.text" xml:space="preserve">
