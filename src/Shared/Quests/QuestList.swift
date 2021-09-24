@@ -36,7 +36,6 @@ class QuestDefinition: QuestProtocol {
 	let tagKey: String
 	let icon: UIImage?
 	func appliesTo(_ object: OsmBaseObject) -> Bool {
-		print("filter \(title)")
 		return filter(object)
 	}
 
@@ -55,18 +54,22 @@ class QuestList {
 	let list: [QuestProtocol]
 
 	init() {
-		let path = Bundle.main.path(forResource: "Quests", ofType: "json")!
-		let data = try! NSData(contentsOfFile: path) as Data
-		let json = try! JSONSerialization.jsonObject(with: data, options: [])
+		let jsonPath = Bundle.main.path(forResource: "Quests", ofType: "json")!
+		let jsonData = try! NSData(contentsOfFile: jsonPath) as Data
+		let json = try! JSONSerialization.jsonObject(with: jsonData, options: [])
 		let topDict = json as! [String: [String: Any]]
 		var list: [QuestProtocol] = []
+
+		let iconPath = "quest_icons/"
 		for (name, dict) in topDict {
-			if let desc = dict["description"] as? String,
+			if let titleKey = dict["title"] as? String,
 			   let icon = dict["icon"] as? String,
 			   let filter = dict["filter"] as? String,
 			   let wiki = dict["wiki"] as? String,
-			   let icon2 = UIImage(named: icon + ".png")
+			   let iconPath = Bundle.main.path(forResource: iconPath+icon, ofType: "png"),
+			   let icon2 = UIImage(contentsOfFile: iconPath)
 			{
+				// deduce the tag key
 				var tagKey = dict["key"] as? String
 				if tagKey == nil {
 					// try wiki
@@ -86,10 +89,13 @@ class QuestList {
 					}
 				}
 
+				// convert title key to localized string
+				let title = Bundle.main.localizedString(forKey: titleKey, value: nil, table: "quest")
+
 				let filterParser = QuestFilterParser(filter)
 				do {
 					let filter2 = try filterParser.parseFilter()
-					let quest = QuestDefinition(title: desc,
+					let quest = QuestDefinition(title: title,
 					                            tagKey: tagKey!,
 					                            icon: icon2,
 					                            filter: filter2)
