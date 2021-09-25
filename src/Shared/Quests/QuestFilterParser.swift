@@ -58,10 +58,10 @@ private var OPERATORS = [
 	NEWER
 ]
 
-private var NUMBER_WORD_REGEX = try! NSRegularExpression(pattern: "(?:([0-9]+(?:\\.[0-9]*)?)|(\\.[0-9]+))(?:$| |\\))")
+private var NUMBER_WORD_REGEX = try! NSRegularExpression(pattern: "(?:([0-9]+(?:\\.[0-9]*)?)|(\\.[0-9]+))(?:$|\\s|\\))")
 
 enum Exception: LocalizedError {
-	case ParseException(String, String.Index)
+	case ParseException(String, String)
 	case IllegalStateException
 }
 
@@ -112,7 +112,8 @@ class QuestFilterParser {
 	}
 
 	private func ParseException(_ msg: String, _ loc: String.Index) -> Error {
-		return Exception.ParseException(msg, loc)
+		let text = string[loc...]
+		return Exception.ParseException(msg, "-->" + String(text))
 	}
 
 	func parseFilter() throws -> QuestElementFilter {
@@ -168,7 +169,7 @@ class QuestFilterParser {
 		var result = try parseTag()
 		while true {
 			expectAnyNumberOfSpaces()
-			if isAtEnd() {
+			if nextIs(")") || isAtEnd() {
 				return result
 			}
 
@@ -497,12 +498,10 @@ class QuestFilterParser {
 
 	private func nextMatches(_ regex: NSRegularExpression) -> NSTextCheckingResult? {
 		let offset = string.distance(from: string.startIndex, to: cursorPos)
-		let matches = regex.matches(in: string, options: [], range: NSMakeRange(offset, string.count - offset))
-		guard let match = matches.first
-		else {
-			return nil
-		}
-		if string.index(string.startIndex, offsetBy: match.range.lowerBound) != cursorPos {
+		guard let match = regex.firstMatch(in: string, options: [], range: NSMakeRange(offset, string.count - offset)),
+		      let range = Range(match.range, in: string)
+		else { return nil }
+		if range.lowerBound != cursorPos {
 			return nil
 		}
 		return match
@@ -524,7 +523,7 @@ class QuestFilterParser {
 	}
 
 	private func findWordLength() throws -> Int {
-		return min(findNext(" "), findNext(")"))
+		return min(findNext(" "), findNext("\t"), findNext("\n"), findNext(")"))
 	}
 
 	private func findQuotableWordLength() throws -> Int {

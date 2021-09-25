@@ -8,9 +8,8 @@
 
 import UIKit
 
-private enum Sections: Int, CaseIterable {
-	case ValuePicker = 0
-	case OpenEditor = 1
+class QuestTextEntryCell: UITableViewCell {
+	@IBOutlet var textField: UITextField?
 }
 
 class QuestEditorController: UITableViewController {
@@ -37,6 +36,40 @@ class QuestEditorController: UITableViewController {
 		navigationItem.rightBarButtonItem?.isEnabled = false
 	}
 
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		if presetKey?.presetList?.count == nil {
+			// set text cell to first responder
+			if let cell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)),
+			   let cell2 = cell as? QuestTextEntryCell
+			{
+				cell2.textField?.becomeFirstResponder()
+			}
+		}
+	}
+
+	func refreshPresetKey() {
+		let presets = PresetsForFeature(
+			withFeature: presetFeature,
+			objectTags: object.tags,
+			geometry: object.geometry(),
+			update: {
+				self.refreshPresetKey()
+				self.tableView.reloadData()
+			})
+		top_loop: for section in presets.sectionList() {
+			for g in section.presetKeys {
+				let list = Self.presetsForGroup(g)
+				for preset in list {
+					if preset.tagKey == quest.tagKey {
+						presetKey = preset
+						break top_loop
+					}
+				}
+			}
+		}
+	}
+
 	class func instantiate(quest: QuestProtocol, object: OsmBaseObject) -> UINavigationController {
 		let sb = UIStoryboard(name: "QuestEditor", bundle: nil)
 		guard let vc2 = sb.instantiateViewController(withIdentifier: "QuestEditor") as? UINavigationController,
@@ -46,26 +79,11 @@ class QuestEditorController: UITableViewController {
 		}
 		vc.object = object
 		vc.quest = quest
-		vc.title = quest.title
+		vc.title = quest.name
 		vc.presetFeature = PresetsDatabase.shared.matchObjectTagsToFeature(object.tags,
 		                                                                   geometry: object.geometry(),
 		                                                                   includeNSI: false)
-		let presets = PresetsForFeature(
-			withFeature: vc.presetFeature,
-			objectTags: object.tags,
-			geometry: object.geometry(),
-			update: nil)
-		top_loop: for section in presets.sectionList() {
-			for g in section.presetKeys {
-				let list = Self.presetsForGroup(g)
-				for preset in list {
-					if preset.tagKey == quest.tagKey {
-						vc.presetKey = preset
-						break top_loop
-					}
-				}
-			}
-		}
+		vc.refreshPresetKey()
 		return vc2
 	}
 
@@ -92,7 +110,7 @@ class QuestEditorController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		if indexPath.section == 1 {
+		if indexPath.row == self.tableView(tableView, numberOfRowsInSection: 0) - 1 {
 			dismiss(animated: false, completion: nil)
 			AppDelegate.shared.mapView?.presentTagEditor(nil)
 		}
@@ -100,31 +118,37 @@ class QuestEditorController: UITableViewController {
 	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return Sections.allCases.count
+		return 1
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		switch Sections(rawValue: section)! {
-		case .ValuePicker: return nil
-		case .OpenEditor: return " "
-		}
+		return nil
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		switch Sections(rawValue: section)! {
-		case .ValuePicker: return presetKey?.presetList?.count ?? 0
-		case .OpenEditor: return 1
+		if let answerCount = presetKey?.presetList?.count {
+			// title + open editor + answer list
+			return 2 + answerCount
+		} else {
+			// title + open editor + text field
+			return 3
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		switch Sections(rawValue: indexPath.section)! {
-		case .ValuePicker:
-			let cell = tableView.dequeueReusableCell(withIdentifier: "TagValue", for: indexPath)
-			cell.textLabel?.text = presetKey?.presetList?[indexPath.row].name ?? ""
+		if indexPath.row == 0 {
+			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestTitle", for: indexPath)
+			cell.textLabel?.text = quest.title
 			return cell
-		case .OpenEditor:
-			let cell = tableView.dequeueReusableCell(withIdentifier: "OpenEditor", for: indexPath)
+		} else if indexPath.row == self.tableView(tableView, numberOfRowsInSection: 0) - 1 {
+			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestOpenEditor", for: indexPath)
+			return cell
+		} else if let _ = presetKey?.presetList?.count {
+			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestTagValue", for: indexPath)
+			cell.textLabel?.text = presetKey?.presetList?[indexPath.row - 1].name ?? ""
+			return cell
+		} else {
+			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestTextEntry", for: indexPath)
 			return cell
 		}
 	}

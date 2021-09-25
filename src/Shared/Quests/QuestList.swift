@@ -9,6 +9,7 @@
 import UIKit
 
 protocol QuestProtocol {
+	var name: String { get }
 	var title: String { get }
 	var tagKey: String { get }
 	var icon: UIImage? { get }
@@ -16,6 +17,7 @@ protocol QuestProtocol {
 }
 
 class QuestHighwaySurface: QuestProtocol {
+	var name: String { "QuestHighwaySurface" }
 	var title: String { "Highway surface" }
 	var tagKey: String { "surface" }
 	var icon: UIImage? { nil }
@@ -32,6 +34,7 @@ class QuestHighwaySurface: QuestProtocol {
 }
 
 class QuestDefinition: QuestProtocol {
+	let name: String
 	let title: String
 	let tagKey: String
 	let icon: UIImage?
@@ -40,7 +43,8 @@ class QuestDefinition: QuestProtocol {
 	}
 
 	private let filter: QuestElementFilter
-	init(title: String, tagKey: String, icon: UIImage?, filter: @escaping QuestElementFilter) {
+	init(name: String, title: String, tagKey: String, icon: UIImage?, filter: @escaping QuestElementFilter) {
+		self.name = name
 		self.title = title
 		self.tagKey = tagKey
 		self.icon = icon
@@ -66,7 +70,7 @@ class QuestList {
 			   let icon = dict["icon"] as? String,
 			   let filter = dict["filter"] as? String,
 			   let wiki = dict["wiki"] as? String,
-			   let iconPath = Bundle.main.path(forResource: iconPath+icon, ofType: "png"),
+			   let iconPath = Bundle.main.path(forResource: iconPath + icon, ofType: "png"),
 			   let icon2 = UIImage(contentsOfFile: iconPath)
 			{
 				// deduce the tag key
@@ -95,13 +99,16 @@ class QuestList {
 				let filterParser = QuestFilterParser(filter)
 				do {
 					let filter2 = try filterParser.parseFilter()
-					let quest = QuestDefinition(title: title,
+					let quest = QuestDefinition(name: name,
+					                            title: title,
 					                            tagKey: tagKey!,
 					                            icon: icon2,
 					                            filter: filter2)
 					list.append(quest)
 				} catch {
-					print("Filter parse error: \(error)")
+					print("Filter parse error in \(name):")
+					print("Filter = \"\(filter)\"")
+					print("Error = \(error)")
 				}
 			} else {
 				print("Bad quest entry: \(name)")

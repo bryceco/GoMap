@@ -23,6 +23,15 @@ dict = {}
 icons = []
 titles = []
 
+blacklist = [
+	"AddBollardType",	# unsupported filter
+	"AddCrossing"		# too complicated
+]
+keyList = {
+	"AddParkingAccess": "access",
+	"AddTrafficSignalsButton": "button_operated",
+}
+
 # locate all quests definitions
 for file in files:
 	f = open(file, "r")
@@ -32,24 +41,44 @@ for file in files:
 	# get class name
 	match = re.search(r"^class\s+(\w+)\s*:\s*(\w+)<(\w+)>",data,re.MULTILINE)
 	if match:
-
 		name = match.groups()[0]
+		if name in blacklist:
+			print(name+": Blacklisted")
+			continue
+
 		filter = None
 		description = None
 		wiki = None
 		icon = None
 		title = None
+		key = None
+
+		if name in keyList:
+			key = keyList[name]
+
+		# get lists that might be joined together and embedded in filters
+		origData = data
+		for match in re.finditer('\s([a-zA-Z0-9_]+)\s*=\s*listOf\(\s*("([^"]+)"(,\s*("([^"]+)"))*\s*)',origData,re.MULTILINE):
+			ident = match.groups()[0]
+			list = match.groups()[1]
+			# join the list into "a|b|c" string
+			list = re.sub('\s*",\s*"',"|",list)
+			list = re.sub('\s*"\s*',"",list)
+			# replace joinToString instances
+			data = re.sub('\$\{'+ident+'\s*\.\s*joinToString\(\s*"|"\s*\)\}',list,data)
 
 		# get filter string
 		filterCore = '(nodes|ways|relations)(,\s*(nodes|ways|relations))*\s+with\s+'
 		filter1 = '"""\s*(' + filterCore + '[^"]+' + ')"""'
 		filter2 = '"\s*(' + filterCore + '[^"]+' + ')"'
-		match1 = re.search(filter1,data,re.MULTILINE)
-		match2 = re.search(filter2,data,re.MULTILINE)
-		if match1:
-			filter = match1.groups()[0]
-		elif match2:
-			filter = match2.groups()[0]
+		filter = ""
+		for match in re.finditer(filter1,data,re.MULTILINE):
+			if len(match.groups()[0]) > len(filter):
+				filter = match.groups()[0]
+		for match in re.finditer(filter2,data,re.MULTILINE):
+			if len(match.groups()[0]) > len(filter):
+				filter = match.groups()[0]
+		#print("Filter =",filter)
 
 		# get description
 		match = re.search('\scommitMessage\s+=\s+"([^"]+)"',data,re.MULTILINE)
@@ -71,7 +100,7 @@ for file in files:
 		if match:
 			title = match.groups()[0]
 
-		if not filter:
+		if len(filter) == 0:
 			print(name+": missing filter")
 			continue
 		elif not description:
@@ -94,10 +123,13 @@ for file in files:
 			entry["icon"] = icon
 			entry["filter"] = filter
 			entry["title"] = title
+			if key:
+				entry["key"] = key
 			dict[name] = entry
 
 			icons.append(icon)
 			titles.append(title)
+
 # write Quests.json
 s = json.dumps(dict, indent=4)
 f = open("./Quests.json", "w")
@@ -123,7 +155,7 @@ for (dirpath, dirnames, filenames) in os.walk(dir):
 		name = element.getAttribute('name')
 		if name in titles:
 			s = element.firstChild.nodeValue
-			s = s.strip('"').rstrip('"')
+			s = s.strip('"').rstrip('"').rstrip('\\')
 			text = text + '"' + name + '" = "' + s + '";\n'
 	# write strings file
 	dir = "strings/"+lang+".lproj"
@@ -132,8 +164,11 @@ for (dirpath, dirnames, filenames) in os.walk(dir):
 	f = open(dir+"/quest.strings", "w")
 	f.write(text)
 	f.close()
-os.mkdir("strings/Base.lproj")
-os.touch("strings/Base.lproj/quest.strings")
+try:
+	os.mkdir("strings/Base.lproj")
+	os.touch("strings/Base.lproj/quest.strings")
+except:
+	pass
 #os.system("git add ./*.strings")
 
 # Get icons

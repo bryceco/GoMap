@@ -1386,11 +1386,11 @@
 		02C8C57026FAAFB9003B0122 /* Quests */ = {
 			isa = PBXGroup;
 			children = (
-				027A111526FE8288009A95CE /* strings */,
 				0256660C26FD802C0009D950 /* quest_icons */,
 				02C8C57526FBCBF4003B0122 /* QuestFilterParser.swift */,
 				0256631D26FCF8220009D950 /* QuestList.swift */,
 				0256631F26FCF9730009D950 /* Quests.json */,
+				027A111526FE8288009A95CE /* strings */,
 			);
 			name = Quests;
 			path = ../Shared/Quests;

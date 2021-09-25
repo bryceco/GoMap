@@ -20,13 +20,6 @@
         "filter": "nodes, ways, relations with amenity = recycling and !recycling_type",
         "title": "quest_recycling_type_title"
     },
-    "AddBollardType": {
-        "description": "Add bollard type",
-        "wiki": "Key:bollard",
-        "icon": "ic_quest_no_cars",
-        "filter": "nodes with\n          barrier = bollard\n          and !bollard\n    ",
-        "title": "quest_bollard_type_title"
-    },
     "AddPowerPolesMaterial": {
         "description": "Add power poles material type",
         "wiki": "Tag:power=pole",
@@ -38,7 +31,7 @@
         "description": "Add whether there are sidewalks",
         "wiki": "Key:sidewalk",
         "icon": "ic_quest_sidewalk",
-        "filter": "ways with highway ~ path|footway|cycleway\n    ",
+        "filter": "ways with\n          highway ~ trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential\n          and area != yes\n          and motorroad != yes\n          and !sidewalk and !sidewalk:left and !sidewalk:right and !sidewalk:both\n          and (\n            !maxspeed\n            or maxspeed > 8\n            or (maxspeed ~ ",
         "title": "quest_sidewalk_title"
     },
     "AddSummitRegister": {
@@ -220,7 +213,7 @@
         "description": "Add road lanes",
         "wiki": "Key:lanes",
         "icon": "ic_quest_street_lanes",
-        "filter": "ways with\n          (\n            highway ~ ${ROADS_WITH_LANES.joinToString(",
+        "filter": "ways with\n          (\n            highway ~ motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified\n            or highway = residential and (\n              maxspeed > 30\n              or (maxspeed ~ ",
         "title": "quest_lanes_title"
     },
     "AddKerbHeight": {
@@ -332,7 +325,7 @@
         "description": "Add housenumbers",
         "wiki": "Key:addr",
         "icon": "ic_quest_housenumber",
-        "filter": "ways, relations with !building",
+        "filter": "ways, relations with\n      building ~ house|residential|apartments|detached|terrace|dormitory|semi|semidetached_house|farm|school|civic|college|university|public|hospital|kindergarten|train_station|hotel|retail|shop|commercial|office|house|residential|apartments|detached|terrace|dormitory|semi|semidetached_house|farm|school|civic|college|university|public|hospital|kindergarten|train_station|hotel|retail|shop|commercial|office\n      and location != underground\n      and ruins != yes\n      and abandoned != yes\n      and !addr:housenumber\n      and !addr:housename\n      and !addr:conscriptionnumber\n      and !addr:streetnumber\n      and !noaddress\n      and !nohousenumber\n    ",
         "title": "quest_address_title"
     },
     "AddStepsRamp": {
@@ -423,14 +416,14 @@
         "description": "Check if vacant shop is still vacant",
         "wiki": "Key:disused:",
         "icon": "ic_quest_check_shop",
-        "filter": "nodes, ways, relations with ${isKindOfShopExpression()}\n    ",
+        "filter": "nodes, ways, relations with (\n          shop = vacant\n          or ${isKindOfShopExpression(",
         "title": "quest_shop_vacant_type_title"
     },
     "AddStileType": {
         "description": "Add specific stile type",
         "wiki": "Key:stile",
         "icon": "ic_quest_cow",
-        "filter": "nodes with barrier = stile and !stile\n    ",
+        "filter": "ways with\n          access ~ private|no\n          and foot !~ permissive|yes|designated\n    ",
         "title": "quest_stile_type_title"
     },
     "AddBarrierType": {
@@ -452,7 +445,8 @@
         "wiki": "Tag:amenity=parking",
         "icon": "ic_quest_parking_access",
         "filter": "nodes, ways, relations with amenity = parking\n        and (\n            access = unknown\n            or (!access and parking !~ street_side|lane)\n        )\n    ",
-        "title": "quest_parking_access_title"
+        "title": "quest_parking_access_title",
+        "key": "access"
     },
     "AddCyclewaySegregation": {
         "description": "Add segregated status for combined footway with cycleway",
