@@ -98,7 +98,7 @@ class LocationParser {
 			   let z2 = Double(z)
 			{
 				zoom = z2
-			if let z = components.queryItems?.first(where: { $0.name == "z" })?.value,
+			}
 			return MapLocation(longitude: lon, latitude: lat, zoom: zoom, viewState: nil)
 		}
 
