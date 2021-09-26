@@ -269,7 +269,8 @@ extension PresetsDatabase {
 			var resultList: [String] = []
 			if searchKeys {
 				for v in results {
-					if (v["count_all"] as? NSNumber)?.intValue ?? 0 < 1000 {
+					let inWiki = ((v["in_wiki"] as? NSNumber) ?? 0) == 1
+					if !inWiki, (v["count_all"] as? NSNumber)?.intValue ?? 0 < 1000 {
 						continue // it's a very uncommon value, so ignore it
 					}
 					if let k = v["key"] as? String {
@@ -278,7 +279,8 @@ extension PresetsDatabase {
 				}
 			} else {
 				for v in results {
-					if ((v["fraction"] as? NSNumber)?.doubleValue ?? 0.0) < 0.01 {
+					let inWiki = ((v["in_wiki"] as? NSNumber) ?? 0) == 1
+					if !inWiki, ((v["fraction"] as? NSNumber)?.doubleValue ?? 0.0) < 0.01 {
 						continue // it's a very uncommon value, so ignore it
 					}
 					if let val = v["value"] as? String {
