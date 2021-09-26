@@ -2254,7 +2254,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				notesDatabase.enumerateNotes({ [self] note in
 					if viewOverlayMask.contains(.NOTES) {
 						// hide unwanted keep right buttons
-						if note is KeepRight,
+						if note is KeepRightMarker,
 						   notesDatabase.isIgnored(note)
 						{
 							if let button = buttonForButtonId[note.buttonId] {
@@ -2293,7 +2293,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 						if note.shouldHide() {
 							button.removeFromSuperview()
 						} else {
-							let offsetX = (note is KeepRight) || (note is Fixme) ? 0.00001 : 0.0
+							let offsetX = (note is KeepRightMarker) || (note is FixmeMarker) ? 0.00001 : 0.0
 							let pos = mapTransform.screenPoint(
 								forLatLon: LatLon(latitude: note.lat, longitude: note.lon + offsetX),
 								birdsEye: true)
@@ -2324,15 +2324,15 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	@objc func noteButtonPress(_ sender: Any?) {
 		guard let button = sender as? UIButton,
-		      let note = notesDatabase.mapMarker(forTag: button.tag)
+		      let marker = notesDatabase.mapMarker(forTag: button.tag)
 		else { return }
 
 		var object: OsmBaseObject?
-		if let note = note as? KeepRight {
+		if let note = marker as? KeepRightMarker {
 			object = editorLayer.mapData.object(withExtendedIdentifier: note.objectId)
-		} else if let note = note as? Fixme {
+		} else if let note = marker as? FixmeMarker {
 			object = note.object
-		} else if let note = note as? QuestMarker {
+		} else if let note = marker as? QuestMarker {
 			object = note.object
 		}
 
@@ -2343,17 +2343,17 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			editorLayer.selectedWay = object.isWay()
 			editorLayer.selectedRelation = object.isRelation()
 
-			let pt = object.latLonOnObject(forLatLon: LatLon(x: note.lon, y: note.lat))
+			let pt = object.latLonOnObject(forLatLon: LatLon(x: marker.lon, y: marker.lat))
 			let point = mapTransform.screenPoint(forLatLon: pt, birdsEye: true)
 			placePushpin(at: point, object: object)
 		}
 
-		if (note is WayPoint) || (note is KeepRight) {
-			let comment = note.comments.last!
-			let title = note is WayPoint ? "Waypoint" : "Keep Right"
+		if (marker is WayPointMarker) || (marker is KeepRightMarker) {
+			let comment = (marker as? WayPointMarker)?.description ?? (marker as? KeepRightMarker)?.description ?? ""
+			let title = marker is WayPointMarker ? "Waypoint" : "Keep Right"
 
 			// use regular alertview
-			var text = comment.text
+			var text = comment
 			if let r1 = text.range(of: "<a "),
 			   let r2 = text.range(of: "\">")
 			{
@@ -2369,7 +2369,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				.addAction(UIAlertAction(title: NSLocalizedString("Ignore", comment: ""), style: .default,
 				                         handler: { [self] _ in
 				                         	// they want to hide this button from now on
-				                         	notesDatabase.ignore(note)
+				                         	notesDatabase.ignore(marker)
 				                         	refreshNoteButtonsFromDatabase()
 				                         	editorLayer.selectedNode = nil
 				                         	editorLayer.selectedWay = nil
@@ -2380,20 +2380,30 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		} else if let object = object {
 			// Fixme marker or Quest marker
 			if !editorLayer.isHidden {
-				if let marker = note as? QuestMarker {
+				if let marker = marker as? QuestMarker {
 					let vc = QuestEditorController.instantiate(quest: marker.quest, object: object)
 					mainViewController.present(vc, animated: true)
 				} else {
 					presentTagEditor(nil)
 				}
 			} else {
+				let text: String
+				if let fixme = marker as? FixmeMarker,
+				   let object = fixme.object
+				{
+					text = FixmeMarker.fixmeTag(object) ?? ""
+				} else if let quest = marker as? QuestMarker {
+					text = quest.quest.title
+				} else {
+					text = ""
+				}
 				let alert = UIAlertController(title: "\(object.friendlyDescription())",
-				                              message: note.comments.first?.text,
+				                              message: text,
 				                              preferredStyle: .alert)
 				alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
 				mainViewController.present(alert, animated: true)
 			}
-		} else if let note = note as? OsmNote {
+		} else if let note = marker as? OsmNoteMarker {
 			mainViewController.performSegue(withIdentifier: "NotesSegue", sender: note)
 		}
 	}
@@ -2686,7 +2696,7 @@ extension MapView: EditorMapLayerOwner {
 	func addNote() {
 		if let pushpinView = pushPin {
 			let pos = mapTransform.latLon(forScreenPoint: pushpinView.arrowPoint)
-			let note = OsmNote(lat: pos.lat, lon: pos.lon)
+			let note = OsmNoteMarker(lat: pos.lat, lon: pos.lon)
 			mainViewController.performSegue(withIdentifier: "NotesSegue", sender: note)
 			removePin()
 		}

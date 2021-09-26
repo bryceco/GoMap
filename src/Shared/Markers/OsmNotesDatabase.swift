@@ -9,10 +9,6 @@
 import CoreGraphics
 import Foundation
 
-let STATUS_FIXME = "fixme"
-let STATUS_KEEPRIGHT = "keepright"
-let STATUS_WAYPOINT = "waypoint"
-
 final class OsmNoteComment {
 	let date: String
 	let action: String
@@ -86,12 +82,12 @@ final class OsmNotesDatabase: NSObject {
 				      let xmlDoc = try? DDXMLDocument(xmlString: xmlText, options: 0)
 				else { return }
 
-				var newNotes: [OsmNote] = []
+				var newNotes: [OsmNoteMarker] = []
 				for noteElement in (try? xmlDoc.rootElement()?.nodes(forXPath: "./note")) ?? [] {
 					guard let noteElement = noteElement as? DDXMLElement else {
 						continue
 					}
-					if let note = OsmNote(noteXml: noteElement) {
+					if let note = OsmNoteMarker(noteXml: noteElement) {
 						newNotes.append(note)
 					}
 				}
@@ -104,8 +100,8 @@ final class OsmNotesDatabase: NSObject {
 
 					// add from FIXME=yes tags
 					mapData.enumerateObjects(inRegion: box, block: { [self] obj in
-						if let fixme = Fixme.fixmeTag(obj) {
-							let marker = Fixme(object: obj, text: fixme)
+						if let fixme = FixmeMarker.fixmeTag(obj) {
+							let marker = FixmeMarker(object: obj, text: fixme)
 							addOrUpdate(marker)
 						}
 						for quest in QuestList.shared.questsForObject(obj) {
@@ -152,7 +148,7 @@ final class OsmNotesDatabase: NSObject {
 					guard let waypointElement = waypointElement as? DDXMLElement else {
 						continue
 					}
-					if let note = KeepRight(gpxWaypointXml: waypointElement,
+					if let note = KeepRightMarker(gpxWaypointXml: waypointElement,
 					                        namespace: ns,
 					                        mapData: mapData)
 					{
@@ -208,10 +204,10 @@ final class OsmNotesDatabase: NSObject {
 	}
 
 	func update(
-		_ note: OsmNote,
+		_ note: OsmNoteMarker,
 		close: Bool,
 		comment: String,
-		completion: @escaping (Result<OsmNote, Error>) -> Void)
+		completion: @escaping (Result<OsmNoteMarker, Error>) -> Void)
 	{
 		var allowedChars = CharacterSet.urlQueryAllowed
 		allowedChars.remove(charactersIn: "+;&")
@@ -237,7 +233,7 @@ final class OsmNotesDatabase: NSObject {
 			   let xmlDoc = try? DDXMLDocument(xmlString: xmlText, options: 0),
 			   let list = try? xmlDoc.rootElement()?.nodes(forXPath: "./note") as? [DDXMLElement],
 			   let noteElement = list.first,
-			   let newNote = OsmNote(noteXml: noteElement)
+			   let newNote = OsmNoteMarker(noteXml: noteElement)
 			{
 				addOrUpdate(newNote)
 				completion(.success(newNote))

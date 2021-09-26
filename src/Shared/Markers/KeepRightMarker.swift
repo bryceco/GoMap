@@ -9,12 +9,13 @@
 import Foundation
 
 // A keep-right entry. These use XML just like a GPS waypoint, but with an extension to define OSM data.
-class KeepRight: MapMarker {
-	let noteId: Int
+class KeepRightMarker: MapMarker {
+	let description: String
+	let keepRightID: Int
 	let objectId: OsmExtendedIdentifier
 
 	override var key: String {
-		return "keepright-\(noteId)"
+		return "keepright-\(keepRightID)"
 	}
 
 	override var buttonLabel: String { "R" }
@@ -32,12 +33,12 @@ class KeepRight: MapMarker {
 		//								<object_id>2627663149</object_id>
 		//		</extensions></wpt>
 
-		guard let (lon, lat, desc, extensions) = WayPoint.parseXML(gpxWaypointXml: waypointElement, namespace: ns)
+		guard let (lon, lat, desc, extensions) = WayPointMarker.parseXML(gpxWaypointXml: waypointElement, namespace: ns)
 		else { return nil }
 
 		var osmIdent: OsmIdentifier?
 		var osmType: String?
-		var noteId: Int?
+		var keepRightID: Int?
 		for child2 in extensions {
 			guard let child2 = child2 as? DDXMLElement else {
 				continue
@@ -46,7 +47,7 @@ class KeepRight: MapMarker {
 			   let string = child2.stringValue,
 			   let id = Int(string)
 			{
-				noteId = id
+				keepRightID = id
 			} else if child2.name == "object_id" {
 				osmIdent = Int64(child2.stringValue ?? "") ?? 0
 			} else if child2.name == "object_type" {
@@ -55,7 +56,7 @@ class KeepRight: MapMarker {
 		}
 		guard let osmIdent = osmIdent,
 		      let osmType = osmType,
-		      let noteId = noteId
+		      let keepRightID = keepRightID
 		else { return nil }
 
 		guard let type = try? OSM_TYPE(string: osmType) else { return nil }
@@ -68,12 +69,11 @@ class KeepRight: MapMarker {
 		} else {
 			objectName = "\(osmType) \(osmIdent)"
 		}
-		let comment = OsmNoteComment(keepRight: objectName, description: desc)
-		self.noteId = noteId
+
+		self.description = "\(objectName): \(desc)"
+		self.keepRightID = keepRightID
 		self.objectId = objectId
 		super.init(lat: lat,
-		           lon: lon,
-		           dateCreated: "",
-		           comments: [comment])
+		           lon: lon)
 	}
 }

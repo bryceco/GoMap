@@ -13,7 +13,7 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 	var newComment: String?
 
 	@IBOutlet var tableView: UITableView!
-	var note: OsmNote!
+	var note: OsmNoteMarker!
 	var mapView: MapView!
 
 	override func viewDidLoad() {

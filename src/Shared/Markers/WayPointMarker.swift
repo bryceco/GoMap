@@ -9,7 +9,9 @@
 import Foundation
 
 // A GPX waypoint
-class WayPoint: MapMarker {
+class WayPointMarker: MapMarker {
+	let description: String
+
 	/// Initialize based on KeepRight query
 	static func parseXML(gpxWaypointXml waypointElement: DDXMLElement, namespace ns: String)
 		-> (lon: Double, lat: Double, desc: String, extensions: [DDXMLNode])?
@@ -56,11 +58,8 @@ class WayPoint: MapMarker {
 		guard let (lon, lat, desc, _) = Self.parseXML(gpxWaypointXml: waypointElement, namespace: ns)
 		else { return nil }
 
-		let comment = OsmNoteComment(gpxWaypoint: desc)
-		super.init(lat: lat,
-		           lon: lon,
-		           dateCreated: "",
-		           comments: [comment])
+		self.description = desc
+		super.init(lat: lat, lon: lon)
 	}
 
 	override var key: String {

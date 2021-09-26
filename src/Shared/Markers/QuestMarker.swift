@@ -28,16 +28,9 @@ class QuestMarker: MapMarker {
 
 	init(object: OsmBaseObject, quest: QuestProtocol) {
 		let center = object.selectionPoint()
-		let comment = OsmNoteComment(date: object.timestamp,
-		                             action: "quest",
-		                             text: quest.title,
-		                             user: object.user)
 		self.object = object
 		self.quest = quest
 		noteId = object.extendedIdentifier
-		super.init(lat: center.lat,
-		           lon: center.lon,
-		           dateCreated: object.timestamp,
-		           comments: [comment])
+		super.init(lat: center.lat, lon: center.lon)
 	}
 }

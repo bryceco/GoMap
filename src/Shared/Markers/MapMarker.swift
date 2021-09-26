@@ -10,12 +10,8 @@ import UIKit
 
 class MapMarker {
 	let buttonId: Int // a unique value we assign to track note buttons. If > 0 this is the noteID, otherwise it is assigned by us.
-
 	let lat: Double
 	let lon: Double
-
-	let dateCreated: String // date created
-	private(set) var comments: [OsmNoteComment] = []
 
 	// a unique identifier for a note across multiple downloads
 	var key: String {
@@ -29,15 +25,11 @@ class MapMarker {
 	}
 
 	init(lat: Double,
-	     lon: Double,
-	     dateCreated: String,
-	     comments: [OsmNoteComment])
+	     lon: Double)
 	{
 		buttonId = MapMarker.NextButtonID()
 		self.lat = lat
 		self.lon = lon
-		self.dateCreated = dateCreated
-		self.comments = comments
 	}
 
 	func shouldHide() -> Bool {

@@ -131,11 +131,11 @@
 		02BE6190245D1F9D00E92662 /* EsriPlaceholderImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */; };
 		02C3194E250EAED500C5D200 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02C3194C250EAED500C5D200 /* Localizable.strings */; };
 		02C8C56526F446FD003B0122 /* MapMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56426F446FD003B0122 /* MapMarker.swift */; };
-		02C8C56726F44728003B0122 /* OsmNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56626F44728003B0122 /* OsmNote.swift */; };
-		02C8C56926F44759003B0122 /* Fixme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56826F44759003B0122 /* Fixme.swift */; };
-		02C8C56B26F44776003B0122 /* Quest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56A26F44776003B0122 /* Quest.swift */; };
-		02C8C56D26F4479A003B0122 /* WayPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56C26F4479A003B0122 /* WayPoint.swift */; };
-		02C8C56F26F447C3003B0122 /* KeepRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56E26F447C3003B0122 /* KeepRight.swift */; };
+		02C8C56726F44728003B0122 /* OsmNoteMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56626F44728003B0122 /* OsmNoteMarker.swift */; };
+		02C8C56926F44759003B0122 /* FixmeMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56826F44759003B0122 /* FixmeMarker.swift */; };
+		02C8C56B26F44776003B0122 /* QuestMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56A26F44776003B0122 /* QuestMarker.swift */; };
+		02C8C56D26F4479A003B0122 /* WayPointMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56C26F4479A003B0122 /* WayPointMarker.swift */; };
+		02C8C56F26F447C3003B0122 /* KeepRightMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56E26F447C3003B0122 /* KeepRightMarker.swift */; };
 		02C8C57426FAAFF0003B0122 /* QuestEditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C57326FAAFF0003B0122 /* QuestEditorController.swift */; };
 		02C8C57626FBCBF4003B0122 /* QuestFilterParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C57526FBCBF4003B0122 /* QuestFilterParser.swift */; };
 		02CB2405265DB7CB00835F32 /* OpeningHoursRecognizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB2401265DB7CB00835F32 /* OpeningHoursRecognizerView.swift */; };
@@ -519,11 +519,11 @@
 		02C3199C250EBCAC00C5D200 /* nb-NO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-NO"; path = "nb-NO.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		02C3199D250EBCAC00C5D200 /* nb-NO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-NO"; path = "nb-NO.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		02C8C56426F446FD003B0122 /* MapMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarker.swift; sourceTree = "<group>"; };
-		02C8C56626F44728003B0122 /* OsmNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmNote.swift; sourceTree = "<group>"; };
-		02C8C56826F44759003B0122 /* Fixme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fixme.swift; sourceTree = "<group>"; };
-		02C8C56A26F44776003B0122 /* Quest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quest.swift; sourceTree = "<group>"; };
-		02C8C56C26F4479A003B0122 /* WayPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WayPoint.swift; sourceTree = "<group>"; };
-		02C8C56E26F447C3003B0122 /* KeepRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeepRight.swift; sourceTree = "<group>"; };
+		02C8C56626F44728003B0122 /* OsmNoteMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmNoteMarker.swift; sourceTree = "<group>"; };
+		02C8C56826F44759003B0122 /* FixmeMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixmeMarker.swift; sourceTree = "<group>"; };
+		02C8C56A26F44776003B0122 /* QuestMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestMarker.swift; sourceTree = "<group>"; };
+		02C8C56C26F4479A003B0122 /* WayPointMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WayPointMarker.swift; sourceTree = "<group>"; };
+		02C8C56E26F447C3003B0122 /* KeepRightMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeepRightMarker.swift; sourceTree = "<group>"; };
 		02C8C57326FAAFF0003B0122 /* QuestEditorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestEditorController.swift; sourceTree = "<group>"; };
 		02C8C57526FBCBF4003B0122 /* QuestFilterParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestFilterParser.swift; sourceTree = "<group>"; };
 		02C91CFB26BF1D4C00C92555 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
@@ -1371,13 +1371,13 @@
 		02C8C56326F446A3003B0122 /* Markers */ = {
 			isa = PBXGroup;
 			children = (
-				02C8C56826F44759003B0122 /* Fixme.swift */,
-				02C8C56E26F447C3003B0122 /* KeepRight.swift */,
+				02C8C56826F44759003B0122 /* FixmeMarker.swift */,
+				02C8C56E26F447C3003B0122 /* KeepRightMarker.swift */,
 				02C8C56426F446FD003B0122 /* MapMarker.swift */,
-				02C8C56626F44728003B0122 /* OsmNote.swift */,
+				02C8C56626F44728003B0122 /* OsmNoteMarker.swift */,
 				02034742266C2CB9000A7C3D /* OsmNotesDatabase.swift */,
-				02C8C56A26F44776003B0122 /* Quest.swift */,
-				02C8C56C26F4479A003B0122 /* WayPoint.swift */,
+				02C8C56A26F44776003B0122 /* QuestMarker.swift */,
+				02C8C56C26F4479A003B0122 /* WayPointMarker.swift */,
 			);
 			name = Markers;
 			path = ../Shared/Markers;
@@ -1946,14 +1946,14 @@
 				02E049BB2651BAB90028B57F /* UndoManager.swift in Sources */,
 				028C51E625CB7A23004A88F7 /* TristateButton.swift in Sources */,
 				C3D096DC263EB7DE00E3B129 /* MyApplication.swift in Sources */,
-				02C8C56926F44759003B0122 /* Fixme.swift in Sources */,
+				02C8C56926F44759003B0122 /* FixmeMarker.swift in Sources */,
 				021FADEF25884BB900F6E1C0 /* OsmTags.swift in Sources */,
 				02EDBF672653306400B7072E /* OsmBaseObject.swift in Sources */,
 				0288169F265895FA00C30EA2 /* OsmMapData.swift in Sources */,
 				02263CDF2677F93A002BA72F /* QuadBox.swift in Sources */,
 				027EDC72206F3EED00D349D6 /* DDXMLNode.m in Sources */,
 				02EDBF6B26535BEB00B7072E /* OsmMember.swift in Sources */,
-				02C8C56D26F4479A003B0122 /* WayPoint.swift in Sources */,
+				02C8C56D26F4479A003B0122 /* WayPointMarker.swift in Sources */,
 				0286EAA726570382007CFEE9 /* LayerProperties.swift in Sources */,
 				EDB2C3A12609E2A000C08293 /* LanguageTableViewController.swift in Sources */,
 				02EDBF6926535BB700B7072E /* OsmWay.swift in Sources */,
@@ -1971,7 +1971,7 @@
 				02F6A459268AE42800F2ACE7 /* Debugger.swift in Sources */,
 				0256631E26FCF8220009D950 /* QuestList.swift in Sources */,
 				6442666922540EDF00C0D545 /* Observable.swift in Sources */,
-				02C8C56F26F447C3003B0122 /* KeepRight.swift in Sources */,
+				02C8C56F26F447C3003B0122 /* KeepRightMarker.swift in Sources */,
 				0203473D26695B2A000A7C3D /* EditorMapLayer+Edit.swift in Sources */,
 				02C8C57426FAAFF0003B0122 /* QuestEditorController.swift in Sources */,
 				024909CB267D99190027E531 /* OsmDownloader.swift in Sources */,
@@ -2001,7 +2001,7 @@
 				6442666822540EDF00C0D545 /* Disposable.swift in Sources */,
 				ED56E5C726027A50000B368C /* CreditsViewController.swift in Sources */,
 				ED9649F92601D58900EC0A60 /* POIPresetValuePickerController.swift in Sources */,
-				02C8C56B26F44776003B0122 /* Quest.swift in Sources */,
+				02C8C56B26F44776003B0122 /* QuestMarker.swift in Sources */,
 				64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */,
 				027EDC74206F3EED00D349D6 /* NSString+DDXML.m in Sources */,
 				02FEDAF42651DCC100DF15D7 /* POIAllTagsViewController.swift in Sources */,
@@ -2040,7 +2040,7 @@
 				02CB2406265DB7CB00835F32 /* CameraView.swift in Sources */,
 				02A123EF264EE7BC005638C1 /* aes.swift in Sources */,
 				6442666722540EDF00C0D545 /* Lock.swift in Sources */,
-				02C8C56726F44728003B0122 /* OsmNote.swift in Sources */,
+				02C8C56726F44728003B0122 /* OsmNoteMarker.swift in Sources */,
 				028816A12659B4A600C30EA2 /* GZip.swift in Sources */,
 				C3D096D0263EA76500E3B129 /* Geekbench.swift in Sources */,
 				024909CF267EADC70027E531 /* OsmXmlGenerator.swift in Sources */,

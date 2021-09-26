@@ -664,7 +664,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 #endif
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if sender is OsmNote {
+		if sender is OsmNoteMarker {
 			let vc: NotesTableViewController
 			if let dest = segue.destination as? NotesTableViewController {
 				/// The `NotesTableViewController` is presented directly.
@@ -680,7 +680,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 				return
 			}
 
-			vc.note = sender as? OsmNote
+			vc.note = sender as? OsmNoteMarker
 			vc.mapView = mapView
 		}
 	}

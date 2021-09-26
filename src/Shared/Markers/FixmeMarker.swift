@@ -9,12 +9,12 @@
 import Foundation
 
 // An OSM object containing a fixme= tag
-class Fixme: MapMarker {
-	let noteId: OsmExtendedIdentifier
+class FixmeMarker: MapMarker {
+	let fixmeID: OsmExtendedIdentifier
 	weak var object: OsmBaseObject?
 
 	override var key: String {
-		return "fixme-\(noteId)"
+		return "fixme-\(fixmeID)"
 	}
 
 	/// If the object contains a fixme then returns the fixme value, else nil
@@ -27,7 +27,7 @@ class Fixme: MapMarker {
 
 	override func shouldHide() -> Bool {
 		guard let object = object else { return true }
-		return Fixme.fixmeTag(object) == nil
+		return FixmeMarker.fixmeTag(object) == nil
 	}
 
 	override var buttonLabel: String { "F" }
@@ -35,16 +35,9 @@ class Fixme: MapMarker {
 	/// Initialize from FIXME data
 	init(object: OsmBaseObject, text: String) {
 		let center = object.selectionPoint()
-		let comment = OsmNoteComment(date: object.timestamp,
-		                             action: "fixme",
-		                             text: text,
-		                             user: object.user)
-
 		self.object = object
-		noteId = object.extendedIdentifier
+		fixmeID = object.extendedIdentifier
 		super.init(lat: center.lat,
-		           lon: center.lon,
-		           dateCreated: object.timestamp,
-		           comments: [comment])
+		           lon: center.lon)
 	}
 }

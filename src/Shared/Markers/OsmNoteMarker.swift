@@ -9,9 +9,11 @@
 import Foundation
 
 // A regular OSM note
-class OsmNote: MapMarker {
+class OsmNoteMarker: MapMarker {
 	let status: String // open, closed, etc.
 	let noteId: Int64
+	let dateCreated: String
+	private(set) var comments: [OsmNoteComment]
 
 	override var key: String {
 		return "note-\(noteId)"
@@ -24,13 +26,14 @@ class OsmNote: MapMarker {
 	override var buttonLabel: String { "N" }
 
 	/// A note newly created by user
-	init(lat: Double, lon: Double) {
+	override init(lat: Double, lon: Double) {
 		noteId = 0
 		status = ""
+		dateCreated = ""
+		comments = []
+
 		super.init(lat: lat,
-		           lon: lon,
-		           dateCreated: "",
-		           comments: [])
+		           lon: lon)
 	}
 
 	/// Initialize based on OSM Notes query
@@ -92,9 +95,9 @@ class OsmNote: MapMarker {
 
 		self.noteId = noteId
 		self.status = status
+		self.dateCreated = dateCreated
+		self.comments = comments
 		super.init(lat: lat,
-		           lon: lon,
-		           dateCreated: dateCreated,
-		           comments: comments)
+		           lon: lon)
 	}
 }
