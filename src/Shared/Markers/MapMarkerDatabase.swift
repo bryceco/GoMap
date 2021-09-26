@@ -1,5 +1,5 @@
 //
-//  Notes.swift
+//  MapMarkerDatabase.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 8/31/14.
@@ -9,39 +9,7 @@
 import CoreGraphics
 import Foundation
 
-final class OsmNoteComment {
-	let date: String
-	let action: String
-	let text: String
-	let user: String
-
-	init(date: String, action: String, text: String, user: String) {
-		self.date = date
-		self.action = action
-		self.text = text
-		self.user = user
-	}
-
-	init(gpxWaypoint description: String) {
-		date = ""
-		user = ""
-		action = "waypoint"
-		text = "\(description)"
-	}
-
-	init(keepRight objectName: String, description: String) {
-		date = ""
-		user = ""
-		action = "keepright"
-		text = "\(objectName): \(description)"
-	}
-
-	var description: String {
-		return "\(action): \(text)"
-	}
-}
-
-final class OsmNotesDatabase: NSObject {
+final class MapMarkerDatabase: NSObject {
 	private let workQueue = OperationQueue()
 	private var _keepRightIgnoreList: [Int: Bool]? // FIXME: Use UserDefaults for storage so this becomes non-optional
 	private var noteForTag: [Int: MapMarker] = [:] // return the note with the given button tag (tagId)
@@ -72,7 +40,7 @@ final class OsmNotesDatabase: NSObject {
 		noteForTag[newTag] = newNote
 	}
 
-	func updateNotes(forRegion box: OSMRect, fixmeData mapData: OsmMapData, completion: @escaping () -> Void) {
+	func updateMarkers(forRegion box: OSMRect, fixmeData mapData: OsmMapData, completion: @escaping () -> Void) {
 		let url = OSM_API_URL +
 			"api/0.6/notes?closed=0&bbox=\(box.origin.x),\(box.origin.y),\(box.origin.x + box.size.width),\(box.origin.y + box.size.height)"
 		if let url1 = URL(string: url) {
@@ -104,10 +72,12 @@ final class OsmNotesDatabase: NSObject {
 							let marker = FixmeMarker(object: obj, text: fixme)
 							addOrUpdate(marker)
 						}
+						#if DEBUG
 						for quest in QuestList.shared.questsForObject(obj) {
 							let marker = QuestMarker(object: obj, quest: quest)
 							addOrUpdate(marker)
 						}
+						#endif
 					})
 
 					completion()
@@ -190,7 +160,7 @@ final class OsmNotesDatabase: NSObject {
 			usleep(UInt32(1000 * (delay + 0.25)))
 		})
 		workQueue.addOperation({ [self] in
-			updateNotes(forRegion: bbox, fixmeData: mapData, completion: completion)
+			updateMarkers(forRegion: bbox, fixmeData: mapData, completion: completion)
 #if false
 			updateKeepRight(forRegion: bbox, mapData: mapData, completion: completion)
 #endif
@@ -204,7 +174,7 @@ final class OsmNotesDatabase: NSObject {
 	}
 
 	func update(
-		_ note: OsmNoteMarker,
+		note: OsmNoteMarker,
 		close: Bool,
 		comment: String,
 		completion: @escaping (Result<OsmNoteMarker, Error>) -> Void)

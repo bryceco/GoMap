@@ -8,6 +8,26 @@
 
 import Foundation
 
+
+final class OsmNoteComment {
+	let date: String
+	let action: String
+	let text: String
+	let user: String
+
+	init(date: String, action: String, text: String, user: String) {
+		self.date = date
+		self.action = action
+		self.text = text
+		self.user = user
+	}
+
+	var description: String {
+		return "\(action): \(text)"
+	}
+}
+
+
 // A regular OSM note
 class OsmNoteMarker: MapMarker {
 	let status: String // open, closed, etc.

@@ -193,7 +193,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 	}
 
-	private(set) lazy var notesDatabase = OsmNotesDatabase()
+	private(set) lazy var notesDatabase = MapMarkerDatabase()
 	private(set) var buttonForButtonId: [Int: UIButton] = [:] // convert a note ID to a button on the map
 
 	private(set) lazy var aerialLayer: MercatorTileLayer = { MercatorTileLayer(mapView: self) }()
