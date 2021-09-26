@@ -2266,14 +2266,24 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 						if buttonForButtonId[note.buttonId] == nil {
 							let button = UIButton(type: .custom)
 							button.addTarget(self, action: #selector(noteButtonPress(_:)), for: .touchUpInside)
-							button.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
-							button.layer.cornerRadius = 5
 							button.layer.backgroundColor = UIColor.blue.cgColor
 							button.layer.borderColor = UIColor.white.cgColor
-							button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
-							button.titleLabel?.textColor = UIColor.white
-							button.titleLabel?.textAlignment = .center
-							button.setTitle(note.buttonLabel, for: .normal)
+							if let icon = note.buttonIcon {
+								// icon button
+								button.bounds = CGRect(x: 0, y: 0, width: 34, height: 34)
+								button.layer.cornerRadius = button.bounds.width / 2
+								button.setImage(icon, for: .normal)
+								button.layer.borderColor = UIColor.white.cgColor
+								button.layer.borderWidth = 2.0
+							} else {
+								// text button
+								button.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
+								button.layer.cornerRadius = 5
+								button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+								button.titleLabel?.textColor = UIColor.white
+								button.titleLabel?.textAlignment = .center
+								button.setTitle(note.buttonLabel, for: .normal)
+							}
 							button.tag = note.buttonId
 							addSubview(button)
 							buttonForButtonId[note.buttonId] = button
@@ -2322,6 +2332,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			object = editorLayer.mapData.object(withExtendedIdentifier: note.objectId)
 		} else if let note = note as? Fixme {
 			object = note.object
+		} else if let note = note as? QuestMarker {
+			object = note.object
 		}
 
 		if !editorLayer.isHidden,
@@ -2365,11 +2377,16 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				                         	removePin()
 				                         }))
 			mainViewController.present(alertKeepRight, animated: true)
-		} else if let note = note as? Fixme {
+		} else if let object = object {
+			// Fixme marker or Quest marker
 			if !editorLayer.isHidden {
-				presentTagEditor(nil)
+				if let marker = note as? QuestMarker {
+					let vc = QuestEditorController.instantiate(quest: marker.quest, object: object)
+					mainViewController.present(vc, animated: true)
+				} else {
+					presentTagEditor(nil)
+				}
 			} else {
-				guard let object = note.object else { return }
 				let alert = UIAlertController(title: "\(object.friendlyDescription())",
 				                              message: note.comments.first?.text,
 				                              preferredStyle: .alert)
