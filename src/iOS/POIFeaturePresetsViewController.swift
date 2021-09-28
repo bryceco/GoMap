@@ -447,6 +447,14 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		textFieldIsEditing = false
 		updateTag(withValue: tagValue, forKey: presetKey.tagKey)
 
+		// do automatic value updates for special keys
+		if tagValue.count > 0,
+		   let newValue = OsmTags.convertWikiUrlToReference(withKey: presetKey.tagKey, value: tagValue)
+		   ?? OsmTags.convertWebsiteValueToHttps(withKey: presetKey.tagKey, value: tagValue)
+		{
+			textField.text = newValue
+		}
+
 		if presetKey.isYesNo() {
 			let tri = cell.valueField.rightView as! TristateButton
 			tri.setSelection(forString: textField.text ?? "")

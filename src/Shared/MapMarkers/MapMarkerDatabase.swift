@@ -72,13 +72,13 @@ final class MapMarkerDatabase: NSObject {
 							let marker = FixmeMarker(object: obj, text: fixme)
 							addOrUpdate(marker)
 						}
-						
-						#if DEBUG
+
+#if DEBUG
 						for quest in QuestList.shared.questsForObject(obj) {
 							let marker = QuestMarker(object: obj, quest: quest)
 							addOrUpdate(marker)
 						}
-						#endif
+#endif
 					})
 
 					completion()
@@ -120,8 +120,8 @@ final class MapMarkerDatabase: NSObject {
 						continue
 					}
 					if let note = KeepRightMarker(gpxWaypointXml: waypointElement,
-					                        namespace: ns,
-					                        mapData: mapData)
+					                              namespace: ns,
+					                              mapData: mapData)
 					{
 						addOrUpdate(note)
 					}

@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 final class OsmNoteComment {
 	let date: String
 	let action: String
@@ -26,7 +25,6 @@ final class OsmNoteComment {
 		return "\(action): \(text)"
 	}
 }
-
 
 // A regular OSM note
 class OsmNoteMarker: MapMarker {

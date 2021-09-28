@@ -624,7 +624,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		switch mapView.gpsState {
 		case GPS_STATE.NONE:
 			// if the user hasn't rotated the screen then start facing north, otherwise follow heading
-			if fabs( mapView.screenFromMapTransform.rotation() ) < 0.0001 {
+			if fabs(mapView.screenFromMapTransform.rotation()) < 0.0001 {
 				setGpsState(GPS_STATE.LOCATION)
 			} else {
 				setGpsState(GPS_STATE.HEADING)

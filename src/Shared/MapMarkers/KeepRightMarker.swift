@@ -70,7 +70,7 @@ class KeepRightMarker: MapMarker {
 			objectName = "\(osmType) \(osmIdent)"
 		}
 
-		self.description = "\(objectName): \(desc)"
+		description = "\(objectName): \(desc)"
 		self.keepRightID = keepRightID
 		self.objectId = objectId
 		super.init(lat: lat,

@@ -594,43 +594,6 @@ class POIAllTagsViewController: UITableViewController {
 		}
 	}
 
-	func convertWikiUrlToReference(withKey key: String, value url: String) -> String? {
-		if key.hasPrefix("wikipedia") || key.hasSuffix(":wikipedia") {
-			// if the value is for wikipedia then convert the URL to the correct format
-			// format is https://en.wikipedia.org/wiki/Nova_Scotia
-			let scanner = Scanner(string: url)
-			var languageCode: NSString?
-			var pageName: NSString?
-			if scanner.scanString("https://", into: nil) || scanner.scanString("http://", into: nil),
-			   scanner.scanUpTo(".", into: &languageCode),
-			   scanner.scanString(".m", into: nil) || true,
-			   scanner.scanString(".wikipedia.org/wiki/", into: nil),
-			   scanner.scanUpTo("/", into: &pageName),
-			   scanner.isAtEnd,
-			   let languageCode = languageCode as String?,
-			   let pageName = pageName as String?,
-			   languageCode.count == 2, pageName.count > 0
-			{
-				return "\(languageCode):\(pageName)"
-			}
-		} else if key.hasPrefix("wikidata") || key.hasSuffix(":wikidata") {
-			// https://www.wikidata.org/wiki/Q90000000
-			let scanner = Scanner(string: url)
-			var pageName: NSString?
-			if scanner.scanString("https://", into: nil) || scanner.scanString("http://", into: nil),
-			   scanner.scanString("www.wikidata.org/wiki/", into: nil) || scanner
-			   .scanString("m.wikidata.org/wiki/", into: nil),
-			   scanner.scanUpTo("/", into: &pageName),
-			   scanner.isAtEnd,
-			   let pageName = pageName as String?,
-			   pageName.count > 0
-			{
-				return pageName
-			}
-		}
-		return nil
-	}
-
 	@objc func textFieldEditingDidEnd(_ textField: UITextField) {
 		guard let pair: TextPairTableCell = textField.superviewOfType(),
 		      let indexPath = tableView.indexPath(for: pair)
@@ -642,8 +605,10 @@ class POIAllTagsViewController: UITableViewController {
 			updateAssociatedContent(for: pair)
 
 			if kv.k.count != 0 && kv.v.count != 0 {
-				// do wikipedia conversion
-				if let newValue = convertWikiUrlToReference(withKey: kv.k, value: kv.v) {
+				// do automatic value updates for special keys
+				if let newValue = OsmTags.convertWikiUrlToReference(withKey: kv.k, value: kv.v)
+					?? OsmTags.convertWebsiteValueToHttps(withKey: kv.k, value: kv.v)
+				{
 					kv.v = newValue
 					pair.text2.text = newValue
 					tags[indexPath.row] = kv

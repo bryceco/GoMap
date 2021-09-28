@@ -58,7 +58,7 @@ class WayPointMarker: MapMarker {
 		guard let (lon, lat, desc, _) = Self.parseXML(gpxWaypointXml: waypointElement, namespace: ns)
 		else { return nil }
 
-		self.description = desc
+		description = desc
 		super.init(lat: lat, lon: lon)
 	}
 
