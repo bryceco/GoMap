@@ -127,7 +127,6 @@
 		02ACBD2116717BC500BB4414 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD2016717BC500BB4414 /* CoreLocation.framework */; };
 		02AFBF20245774DC00BE43F4 /* OSM-Logo256.png in Resources */ = {isa = PBXBuildFile; fileRef = 02AFBF1F245774DC00BE43F4 /* OSM-Logo256.png */; };
 		02AFBF242458C1E800BE43F4 /* BingPlaceholderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */; };
-		02B0B15D26AA052600111E7E /* LocationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA9248263FF95B000A2A99 /* LocationParser.swift */; };
 		02BE6190245D1F9D00E92662 /* EsriPlaceholderImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */; };
 		02C3194E250EAED500C5D200 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02C3194C250EAED500C5D200 /* Localizable.strings */; };
 		02C8C56526F446FD003B0122 /* MapMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56426F446FD003B0122 /* MapMarker.swift */; };
@@ -694,7 +693,7 @@
 		C3D096F1263EBE5E00E3B129 /* OsmBaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OsmBaseObject.swift; sourceTree = "<group>"; };
 		C3D096F2263EBE5E00E3B129 /* OsmRelation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OsmRelation.swift; sourceTree = "<group>"; };
 		C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VoiceAnnouncement.swift; path = ../Shared/VoiceAnnouncement.swift; sourceTree = "<group>"; };
-		C3FA9248263FF95B000A2A99 /* LocationParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationParser.swift; sourceTree = "<group>"; };
+		C3FA9248263FF95B000A2A99 /* LocationParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationParser.swift; path = ../Shared/LocationParser.swift; sourceTree = "<group>"; };
 		C3FA924A263FFD7E000A2A99 /* QuadMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuadMap.swift; sourceTree = "<group>"; };
 		C3FA924C263FFEF9000A2A99 /* PathUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathUtil.swift; sourceTree = "<group>"; };
 		C3FA924F2640329B000A2A99 /* TileServerList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileServerList.swift; sourceTree = "<group>"; };
@@ -1273,7 +1272,6 @@
 				02BC04E924C6767100BFA5EF /* Height */,
 				027EDC5D206F3EED00D349D6 /* KissXML */,
 				EDB2C3A02609E29F00C08293 /* LanguageTableViewController.swift */,
-				C3FA9248263FF95B000A2A99 /* LocationParser.swift */,
 				EDB2C3A52609E6E100C08293 /* LoginViewController.swift */,
 				C3D096DA263EB73E00E3B129 /* main.swift */,
 				C3004F51263A6CA5006BF313 /* MainViewController.swift */,
@@ -1331,11 +1329,11 @@
 				C3D096CA263E9A1100E3B129 /* DownloadThreadPool.swift */,
 				02F53299267ACFBB0088DF41 /* EditorLayer */,
 				0203473E266C1EDD000A7C3D /* ExternalGPS.swift */,
-				02C8C57026FAAFB9003B0122 /* Quests */,
 				C341E1552639DEFC0022E983 /* FpsLabel.swift */,
 				02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */,
 				C3FA925626416BF5000A2A99 /* GpxLayer.swift */,
 				C3D096D4263EACFF00E3B129 /* LocationBallLayer.swift */,
+				C3FA9248263FF95B000A2A99 /* LocationParser.swift */,
 				02C8C56326F446A3003B0122 /* MapMarkers */,
 				024909C8267BF9F70027E531 /* MapTransform.swift */,
 				0282C4C826617E7400F2D282 /* MapView.swift */,
@@ -1346,6 +1344,7 @@
 				02CC01CF2584190A004444EF /* PresetsDatabase */,
 				C381C30A263FE518003142BA /* PushPinView.swift */,
 				0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */,
+				02C8C57026FAAFB9003B0122 /* Quests */,
 				C3D096B5263DF82F00E3B129 /* RulerView.swift */,
 				C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */,
 				C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */,
@@ -2057,7 +2056,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				02D6238226A6628300A4F147 /* ShareViewController.swift in Sources */,
-				02B0B15D26AA052600111E7E /* LocationParser.swift in Sources */,
 				02D623B626A8AFFC00A4F147 /* exif.cpp in Sources */,
 				02D623D626A8B16900A4F147 /* ExifGeolocation.mm in Sources */,
 			);
