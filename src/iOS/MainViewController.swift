@@ -620,11 +620,15 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		}
 	}
 
-	@IBAction func toggleLocation(_ sender: Any) {
+	@IBAction func toggleLocationButton(_ sender: Any) {
 		switch mapView.gpsState {
 		case GPS_STATE.NONE:
-			setGpsState(GPS_STATE.LOCATION)
-			mapView.rotateToNorth()
+			// if the user hasn't rotated the screen then start facing north, otherwise follow heading
+			if fabs( mapView.screenFromMapTransform.rotation() ) < 0.0001 {
+				setGpsState(GPS_STATE.LOCATION)
+			} else {
+				setGpsState(GPS_STATE.HEADING)
+			}
 		case GPS_STATE.LOCATION,
 		     GPS_STATE.HEADING:
 			setGpsState(GPS_STATE.NONE)

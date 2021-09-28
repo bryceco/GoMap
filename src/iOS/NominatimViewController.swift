@@ -85,7 +85,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 
 		// disable GPS
 		while appDelegate.mapView.gpsState != GPS_STATE.NONE {
-			appDelegate.mapView.mainViewController.toggleLocation(self)
+			appDelegate.mapView.mainViewController.toggleLocationButton(self)
 		}
 
 		appDelegate.mapView.setTransformFor(latLon: LatLon(latitude: lat, longitude: lon),

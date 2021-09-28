@@ -1336,7 +1336,7 @@
 				02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */,
 				C3FA925626416BF5000A2A99 /* GpxLayer.swift */,
 				C3D096D4263EACFF00E3B129 /* LocationBallLayer.swift */,
-				02C8C56326F446A3003B0122 /* Markers */,
+				02C8C56326F446A3003B0122 /* MapMarkers */,
 				024909C8267BF9F70027E531 /* MapTransform.swift */,
 				0282C4C826617E7400F2D282 /* MapView.swift */,
 				C3D096D7263EAE1E00E3B129 /* MyApplication.swift */,
@@ -1368,7 +1368,7 @@
 			path = Height;
 			sourceTree = "<group>";
 		};
-		02C8C56326F446A3003B0122 /* Markers */ = {
+		02C8C56326F446A3003B0122 /* MapMarkers */ = {
 			isa = PBXGroup;
 			children = (
 				02C8C56826F44759003B0122 /* FixmeMarker.swift */,
@@ -1379,8 +1379,8 @@
 				02C8C56A26F44776003B0122 /* QuestMarker.swift */,
 				02C8C56C26F4479A003B0122 /* WayPointMarker.swift */,
 			);
-			name = Markers;
-			path = ../Shared/Markers;
+			name = MapMarkers;
+			path = ../Shared/MapMarkers;
 			sourceTree = "<group>";
 		};
 		02C8C57026FAAFB9003B0122 /* Quests */ = {
