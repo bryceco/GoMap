@@ -2800,6 +2800,29 @@ http://www.sjjb.co.uk/mapicons
 Other icons by Glyphish:
 http://glyphish.com
 </source>
+        <target>Авторские права © 2012-2020 Брайс Когсвелл. 
+Все права защищены.
+
+Данные OpenStreetMap распространяются по лицензии с Open Data Commons Open Database License (ODbL):
+https://www.openstreetmap.com/copyright
+
+Bing aerial imagery copyright Microsoft and its suppliers:
+https://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx
+
+Mapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos
+
+XML parsing courtesy of Robbie Hanson's KissXML:
+https://github.com/robbiehanson/KissXML
+
+EXIF parsing code Copyright (c) 2010-2015 Mayank Lahiri
+https://github.com/mayanklahiri/easyexif
+
+Map icons by SJJB:
+http://www.sjjb.co.uk/mapicons
+
+Другие значки от Glyphish:
+http://glyphish.com
+</target>
         <note>Class = "UITextView"; text = "Copyright © 2012-2020 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nEXIF parsing code Copyright (c) 2010-2015 Mayank Lahiri\nhttps://github.com/mayanklahiri/easyexif\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F";</note>
       </trans-unit>
       <trans-unit id="CHj-a3-gC9.text" xml:space="preserve">
