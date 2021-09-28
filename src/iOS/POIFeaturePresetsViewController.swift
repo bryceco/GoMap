@@ -107,18 +107,22 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			let tabController = tabBarController as! POITabBarController
 			if tabController.isTagDictChanged() {
 				let dict = tabController.keyValueDict
-				if dict.count == 1 && (dict["shop"] != nil || dict["amenity"] != nil) && dict["name"] == nil {
+				if dict.count == 1,
+				   dict["shop"] != nil || dict["amenity"] != nil,
+				   dict["name"] == nil
+				{
 					// find name field and make it first responder
 					DispatchQueue.main.async(execute: {
 						let index = IndexPath(row: 1, section: 0)
-						let cell = self.tableView.cellForRow(at: index) as? FeaturePresetCell
-						if case let .key(presetKey) = cell?.presetKey,
+						if let cell = self.tableView.cellForRow(at: index) as? FeaturePresetCell,
+						   case let .key(presetKey) = cell.presetKey,
 						   presetKey.tagKey == "name"
 						{
-							cell?.valueField.becomeFirstResponder()
+							cell.valueField.becomeFirstResponder()
 						}
 					})
 				}
+
 			} else if !childPushed, (tabController.selection?.ident ?? 0) <= 0, tabController.keyValueDict.count == 0 {
 				// if we're being displayed for a newly created node then go straight to the Type picker
 				performSegue(withIdentifier: "POITypeSegue", sender: nil)
