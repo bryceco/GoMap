@@ -480,16 +480,15 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		}
 	}
 
-	func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
-	               replacementString string: String) -> Bool
+	@objc func textField(_ textField: UITextField,
+						 shouldChangeCharactersIn remove: NSRange,
+						 replacementString insert: String) -> Bool
 	{
-		let MAX_LENGTH = 255
-		let oldLength = textField.text?.count ?? 0
-		let replacementLength = string.count
-		let rangeLength = range.length
-		let newLength = oldLength - rangeLength + replacementLength
-		let returnKey = string.range(of: "\n") != nil
-		return newLength <= MAX_LENGTH || returnKey
+		guard let origText = textField.text else { return false }
+		return POIAllTagsViewController.shouldChangeTag(origText: origText,
+														charactersIn: remove,
+														replacementString: insert,
+														warningVC: self)
 	}
 
 	/**

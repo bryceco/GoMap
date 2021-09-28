@@ -747,17 +747,40 @@ class POIAllTagsViewController: UITableViewController {
 		return true
 	}
 
-	@objc func textField(_ textField: UITextField,
-	                     shouldChangeCharactersIn range: NSRange,
-	                     replacementString string: String) -> Bool
+	static func shouldChangeTag(origText: String,
+								charactersIn remove: NSRange,
+								replacementString insert: String,
+								warningVC: UIViewController?) -> Bool
 	{
 		let MAX_LENGTH = 255
-		let oldLength = textField.text?.count ?? 0
-		let replacementLength = string.count
-		let rangeLength = range.length
-		let newLength = oldLength - rangeLength + replacementLength
-		let returnKey = string.range(of: "\n") != nil
-		return newLength <= MAX_LENGTH || returnKey
+		let newLength = origText.count - remove.length + insert.count
+		let allowed = newLength <= MAX_LENGTH || insert == "\n"
+		if !allowed,
+		   insert.count > 1,
+		   let vc = warningVC
+		{
+			let format = NSLocalizedString("Pasting %@ characters, maximum tag length is 255", comment: "")
+			let message = String(format: format, NSNumber(value: insert.count))
+			let alert = UIAlertController(title: NSLocalizedString("Error", comment: ""),
+				message: message,
+				preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+										  style: .default,
+										 handler: nil))
+			vc.present(alert, animated: true)
+		}
+		return allowed
+	}
+
+	@objc func textField(_ textField: UITextField,
+	                     shouldChangeCharactersIn remove: NSRange,
+	                     replacementString insert: String) -> Bool
+	{
+		guard let origText = textField.text else { return false }
+		return Self.shouldChangeTag(origText: origText,
+									charactersIn: remove,
+									replacementString: insert,
+									warningVC: self)
 	}
 
 	// MARK: - Table view delegate

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		02008650265B25DC008F37DD /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028816A2265AD9D100C30EA2 /* Database.swift */; };
+		0200C1C22703B42600A79804 /* LocationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0200C1C12703B42600A79804 /* LocationParser.swift */; };
 		0203473D26695B2A000A7C3D /* EditorMapLayer+Edit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0203473C26695B2A000A7C3D /* EditorMapLayer+Edit.swift */; };
 		0203473F266C1EDD000A7C3D /* ExternalGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0203473E266C1EDD000A7C3D /* ExternalGPS.swift */; };
 		02034743266C2CB9000A7C3D /* MapMarkerDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02034742266C2CB9000A7C3D /* MapMarkerDatabase.swift */; };
@@ -282,6 +283,7 @@
 		020066AA26BB15360069FE29 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/POI.strings; sourceTree = "<group>"; };
 		020066AB26BB15360069FE29 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Settings.strings; sourceTree = "<group>"; };
 		020066AC26BB15360069FE29 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Changeset.strings; sourceTree = "<group>"; };
+		0200C1C12703B42600A79804 /* LocationParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationParser.swift; path = ../../Shared/LocationParser.swift; sourceTree = "<group>"; };
 		0203473C26695B2A000A7C3D /* EditorMapLayer+Edit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorMapLayer+Edit.swift"; sourceTree = "<group>"; };
 		0203473E266C1EDD000A7C3D /* ExternalGPS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExternalGPS.swift; path = ../Shared/ExternalGPS.swift; sourceTree = "<group>"; };
 		02034742266C2CB9000A7C3D /* MapMarkerDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapMarkerDatabase.swift; sourceTree = "<group>"; };
@@ -1433,6 +1435,7 @@
 				02D6238626A6628300A4F147 /* Info.plist */,
 				020685D626D3253F00A447F9 /* InfoPlist.strings */,
 				021F9D1E26BF1D3100331027 /* Localizable.strings */,
+				0200C1C12703B42600A79804 /* LocationParser.swift */,
 				02D6238326A6628300A4F147 /* MainInterface.storyboard */,
 				02D623D726A8B8DD00A4F147 /* PhotoShare-Bridging-Header.h */,
 				02D6238A26A6628300A4F147 /* PhotoShare.entitlements */,
@@ -2056,6 +2059,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				02D6238226A6628300A4F147 /* ShareViewController.swift in Sources */,
+				0200C1C22703B42600A79804 /* LocationParser.swift in Sources */,
 				02D623B626A8AFFC00A4F147 /* exif.cpp in Sources */,
 				02D623D626A8B16900A4F147 /* ExifGeolocation.mm in Sources */,
 			);
