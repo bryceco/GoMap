@@ -748,9 +748,9 @@ class POIAllTagsViewController: UITableViewController {
 	}
 
 	static func shouldChangeTag(origText: String,
-								charactersIn remove: NSRange,
-								replacementString insert: String,
-								warningVC: UIViewController?) -> Bool
+	                            charactersIn remove: NSRange,
+	                            replacementString insert: String,
+	                            warningVC: UIViewController?) -> Bool
 	{
 		let MAX_LENGTH = 255
 		let newLength = origText.count - remove.length + insert.count
@@ -762,11 +762,11 @@ class POIAllTagsViewController: UITableViewController {
 			let format = NSLocalizedString("Pasting %@ characters, maximum tag length is 255", comment: "")
 			let message = String(format: format, NSNumber(value: insert.count))
 			let alert = UIAlertController(title: NSLocalizedString("Error", comment: ""),
-				message: message,
-				preferredStyle: .alert)
+			                              message: message,
+			                              preferredStyle: .alert)
 			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
-										  style: .default,
-										 handler: nil))
+			                              style: .default,
+			                              handler: nil))
 			vc.present(alert, animated: true)
 		}
 		return allowed
@@ -778,9 +778,9 @@ class POIAllTagsViewController: UITableViewController {
 	{
 		guard let origText = textField.text else { return false }
 		return Self.shouldChangeTag(origText: origText,
-									charactersIn: remove,
-									replacementString: insert,
-									warningVC: self)
+		                            charactersIn: remove,
+		                            replacementString: insert,
+		                            warningVC: self)
 	}
 
 	// MARK: - Table view delegate

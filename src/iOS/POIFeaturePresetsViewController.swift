@@ -481,14 +481,14 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	}
 
 	@objc func textField(_ textField: UITextField,
-						 shouldChangeCharactersIn remove: NSRange,
-						 replacementString insert: String) -> Bool
+	                     shouldChangeCharactersIn remove: NSRange,
+	                     replacementString insert: String) -> Bool
 	{
 		guard let origText = textField.text else { return false }
 		return POIAllTagsViewController.shouldChangeTag(origText: origText,
-														charactersIn: remove,
-														replacementString: insert,
-														warningVC: self)
+		                                                charactersIn: remove,
+		                                                replacementString: insert,
+		                                                warningVC: self)
 	}
 
 	/**

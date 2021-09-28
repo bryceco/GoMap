@@ -57,6 +57,7 @@ class CustomPresetController: UITableViewController {
 		}
 		let keyboard: UIKeyboardType = .default
 		let capitalize: UITextAutocapitalizationType = .none
+		let autocorrect: UITextAutocorrectionType = .no
 
 		customPreset = PresetKeyUserDefined(
 			appliesToKey: appliesToKey,
@@ -66,6 +67,7 @@ class CustomPresetController: UITableViewController {
 			placeholder: nil,
 			keyboard: keyboard,
 			capitalize: capitalize,
+			autocorrect: autocorrect,
 			presets: presets)
 		completion?(customPreset)
 		navigationController?.popViewController(animated: true)

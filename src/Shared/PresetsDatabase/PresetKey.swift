@@ -43,6 +43,7 @@ class PresetKey: NSObject, NSSecureCoding {
 	let presetList: [PresetValue]? // array of potential values, or nil if it's free-form text
 	let keyboardType: UIKeyboardType
 	let autocapitalizationType: UITextAutocapitalizationType
+	let autocorrectType: UITextAutocorrectionType
 
 	init(
 		name: String,
@@ -51,6 +52,7 @@ class PresetKey: NSObject, NSSecureCoding {
 		placeholder: String?,
 		keyboard: UIKeyboardType,
 		capitalize: UITextAutocapitalizationType,
+		autocorrect: UITextAutocorrectionType,
 		presets: [PresetValue]?)
 	{
 		self.name = name
@@ -59,10 +61,13 @@ class PresetKey: NSObject, NSSecureCoding {
 			.unknownForLocale
 		keyboardType = keyboard
 		autocapitalizationType = capitalize
+		autocorrectType = autocorrect
 		presetList = presets
 		self.defaultValue = defaultValue
 	}
 
+	// This is used only for user-defined keys, call from
+	// PresetKeyUserDefined() super.init()
 	required init?(coder: NSCoder) {
 		if let name = coder.decodeObject(forKey: "name") as? String,
 		   let tagKey = coder.decodeObject(forKey: "tagKey") as? String,
@@ -78,6 +83,7 @@ class PresetKey: NSObject, NSSecureCoding {
 			self.presetList = presetList
 			self.keyboardType = keyboardType
 			self.autocapitalizationType = autocapitalizationType
+			autocorrectType = UITextAutocorrectionType.no // user can't set this
 			defaultValue = nil
 		} else {
 			return nil
@@ -91,6 +97,7 @@ class PresetKey: NSObject, NSSecureCoding {
 		coder.encode(presetList, forKey: "presetList")
 		coder.encode(keyboardType.rawValue, forKey: "keyboardType")
 		coder.encode(autocapitalizationType.rawValue, forKey: "capitalize")
+		// coder.encode(autocorrectType.rawValue, forKey: "autocorrect")
 	}
 
 	func prettyNameForTagValue(_ value: String) -> String {

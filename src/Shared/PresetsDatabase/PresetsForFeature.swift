@@ -120,6 +120,7 @@ final class PresetsForFeature {
 			placeholder: "",
 			keyboard: UIKeyboardType.default,
 			capitalize: UITextAutocapitalizationType.none,
+			autocorrect: UITextAutocorrectionType.no,
 			presets: nil)
 		let name = PresetsDatabase.shared.jsonFields["name"] as? [String: Any]
 		let nameTag = PresetKey(
@@ -129,6 +130,7 @@ final class PresetsForFeature {
 			placeholder: name?["placeholder"] as? String,
 			keyboard: UIKeyboardType.default,
 			capitalize: UITextAutocapitalizationType.words,
+			autocorrect: UITextAutocorrectionType.no,
 			presets: nil)
 		let typeGroup = PresetGroup(name: "Type", tags: [.key(typeTag), .key(nameTag)])
 		_sectionList = [typeGroup]

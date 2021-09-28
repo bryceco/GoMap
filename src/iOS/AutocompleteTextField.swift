@@ -164,7 +164,7 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 				if #available(iOS 15.0, *) {
 					// iOS handles scrolling differently and disabling it causes visual glitches
 				} else {
-				   tableView.isScrollEnabled = false
+					tableView.isScrollEnabled = false
 				}
 
 				// cell doesn't always scroll to the same place, so give it a moment before we add the completion table
