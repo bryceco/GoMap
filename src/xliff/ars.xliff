@@ -1,8 +1,271 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="../Shared/Quests/strings/Base.lproj/quest.strings" datatype="plaintext" source-language="en" target-language="ars">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.0" build-num="13A233"/>
+    </header>
+    <body>
+      <trans-unit id="quest_address_street_title" xml:space="preserve">
+        <source>What street does the (house) number %s belong to?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_address_title" xml:space="preserve">
+        <source>What is the house number of this building?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_atm_operator_title" xml:space="preserve">
+        <source>What's the name of the bank for this ATM?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_barrier_type_title" xml:space="preserve">
+        <source>What type of barrier is this?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_bench_backrest_title" xml:space="preserve">
+        <source>Does this bench have a backrest?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_bicycleParkingCoveredStatus_title" xml:space="preserve">
+        <source>Is this bicycle parking covered (protected from rain)?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_bicycle_parking_access_title" xml:space="preserve">
+        <source>Is it restricted who may park a bike here?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_bicycle_parking_fee_title" xml:space="preserve">
+        <source>Do you have to pay to park a bike here?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_bicycle_parking_type_title" xml:space="preserve">
+        <source>What type of bicycle parking is this?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_bikeParkingCapacity_title" xml:space="preserve">
+        <source>How many bikes can be parked here?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_board_type_title" xml:space="preserve">
+        <source>What is the topic of this information board?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_bridge_structure_title" xml:space="preserve">
+        <source>What is the structure of this bridge?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_buildingType_title" xml:space="preserve">
+        <source>What kind of building is this?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_camera_type_title" xml:space="preserve">
+        <source>What type of surveillance camera is this?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_charging_station_operator_title" xml:space="preserve">
+        <source>Who is the operator of this charging station?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_clothes_container_operator_title" xml:space="preserve">
+        <source>Who accepts donations for this clothing bin?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_construction_building_title" xml:space="preserve">
+        <source>Is this building completed?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_crossing_title" xml:space="preserve">
+        <source>Are there curbs where this way meets this road here? What kind?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_crossing_type_title" xml:space="preserve">
+        <source>What kind of crossing is this?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_cyclewayPartSurface_title" xml:space="preserve">
+        <source>What's the surface of the cycleway here?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_dietType_kosher_name_title" xml:space="preserve">
+        <source>Does %s offer kosher products?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_dietType_vegan_name_title" xml:space="preserve">
+        <source>Does %s have vegan meals on the menu?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_dietType_vegetarian_name_title" xml:space="preserve">
+        <source>Does %s have vegetarian meals on the menu?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_drinking_water_title" xml:space="preserve">
+        <source>Is the water potable here? (%s)</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_fireHydrant_type_title" xml:space="preserve">
+        <source>What kind of fire hydrant is this?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_footwayPartSurface_title" xml:space="preserve">
+        <source>What's the surface of the footway here?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_generalFee_title" xml:space="preserve">
+        <source>Do you need to pay to enter %s?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_handrail_title" xml:space="preserve">
+        <source>Do these steps have a handrail?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_internet_access_name_title" xml:space="preserve">
+        <source>What kind of Internet connection does %s offer?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_is_defibrillator_inside_title" xml:space="preserve">
+        <source>Is this defibrillator (AED) inside a building?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_kerb_height_title" xml:space="preserve">
+        <source>What is the height of this curb?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_lanes_title" xml:space="preserve">
+        <source>How many lanes for cars does this road have?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_laundrySelfService_title" xml:space="preserve">
+        <source>Is this laundry a self service laundry?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_leafType_title" xml:space="preserve">
+        <source>Do the trees here have needles or leaves?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_maxweight_title" xml:space="preserve">
+        <source>What is the weight limit here?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_motorcycleParkingCapacity_title" xml:space="preserve">
+        <source>How many motorcycles can be parked here?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_motorcycleParkingCoveredStatus_title" xml:space="preserve">
+        <source>Is this motorcycle parking covered (protected from rain)?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_parkingType_title" xml:space="preserve">
+        <source>What kind of parking is this?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_parking_access_title" xml:space="preserve">
+        <source>Is it restricted who may park here?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_parking_fee_title" xml:space="preserve">
+        <source>Do you have to pay to park here?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_playground_access_title" xml:space="preserve">
+        <source>Is this playground publicly accessible?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_policeType_title" xml:space="preserve">
+        <source>Which type of police station is this?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_postboxRoyalCypher_title" xml:space="preserve">
+        <source>What is the royal cypher on this postbox?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_powerPolesMaterial_title" xml:space="preserve">
+        <source>What is the material of this power or utility pole?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_recycling_glass_title" xml:space="preserve">
+        <source>Can only glass bottles and jars be recycled here, or any type of glass?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_recycling_materials_title" xml:space="preserve">
+        <source>What can be left here for recycling?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_recycling_type_title" xml:space="preserve">
+        <source>What type of recycling facility is this?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_religion_for_wayside_shrine_title" xml:space="preserve">
+        <source>What religion is represented at this shrine?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_segregated_title" xml:space="preserve">
+        <source>How are the footway and cycleway laid out here?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_shop_vacant_type_title" xml:space="preserve">
+        <source>This shop has been vacant. What's here now?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_sidewalk_title" xml:space="preserve">
+        <source>Does this street have a sidewalk?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_step_count_title" xml:space="preserve">
+        <source>How many steps are here?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_steps_incline_title" xml:space="preserve">
+        <source>Which direction leads upwards for these steps?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_steps_ramp_title" xml:space="preserve">
+        <source>Do these steps have a ramp? What kind?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_stile_type_title" xml:space="preserve">
+        <source>What type of stile is this?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_summit_register_title" xml:space="preserve">
+        <source>Is there a summit register at %s?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_tactile_paving_kerb_title" xml:space="preserve">
+        <source>Is there tactile paving on this curb here?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_toiletsFee_title" xml:space="preserve">
+        <source>Do you have to pay to use this restroom?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_tracktype_title" xml:space="preserve">
+        <source>What is the surface firmness of this track?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_traffic_signals_button_title" xml:space="preserve">
+        <source>Do these traffic lights have a button to request a walk signal?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_traffic_signals_sound_title" xml:space="preserve">
+        <source>Are there sound signals for the blind here?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_traffic_signals_vibrate_title" xml:space="preserve">
+        <source>Do these traffic lights have a tactile indication for blind people for when it's safe to cross?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_wheelchairAccess_outside_title" xml:space="preserve">
+        <source>Is this place wheelchair accessible?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_wheelchairAccess_toiletsPart_title" xml:space="preserve">
+        <source>Is the restroom at %s wheelchair accessible?</source>
+        <note/>
+      </trans-unit>
+    </body>
+  </file>
   <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="ars" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.0" build-num="13A233"/>
     </header>
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
@@ -31,7 +294,7 @@
   </file>
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="ars" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.0" build-num="13A233"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -86,7 +349,7 @@
   </file>
   <file original="en.lproj/Localizable.strings" source-language="en" target-language="ars" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.0" build-num="13A233"/>
     </header>
     <body>
       <trans-unit id="&#9;Relation " xml:space="preserve">
@@ -962,6 +1225,10 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>لصق</target>
         <note>Edit action</note>
       </trans-unit>
+      <trans-unit id="Pasting %@ characters, maximum tag length is 255" xml:space="preserve">
+        <source>Pasting %@ characters, maximum tag length is 255</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Pasting %ld tag(s)" xml:space="preserve">
         <source>Pasting %ld tag(s)</source>
         <target>تُعرض عند نسخ / لصق الوسوم من عنصر لآخر</target>
@@ -1600,7 +1867,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="ars" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.0" build-num="13A233"/>
     </header>
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
@@ -1627,7 +1894,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="PhotoShare/Base.lproj/MainInterface.storyboard" source-language="en" target-language="ars" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.0" build-num="13A233"/>
     </header>
     <body>
       <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
@@ -1649,7 +1916,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="PhotoShare/en.lproj/InfoPlist.strings" datatype="plaintext" source-language="en" target-language="ars">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.0" build-num="13A233"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -1664,7 +1931,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="PhotoShare/en.lproj/Localizable.strings" source-language="en" target-language="ars" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.0" build-num="13A233"/>
     </header>
     <body>
       <trans-unit id="Processing data..." xml:space="preserve">
@@ -1684,9 +1951,373 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
     </body>
   </file>
+  <file original="POI/Base.lproj/POI.storyboard" source-language="en" target-language="ars" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.0" build-num="13A233"/>
+    </header>
+    <body>
+      <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
+        <source>no</source>
+        <target>لا</target>
+        <note>Class = "UITextField"; placeholder = "no"; ObjectID = "0mW-YK-ajm"; Note = "Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="0zS-QM-zwQ.placeholder" xml:space="preserve">
+        <source>type</source>
+        <target>النوع</target>
+        <note>Class = "UITextField"; placeholder = "type"; ObjectID = "0zS-QM-zwQ"; Note = "Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="1Yx-Ce-yfq.title" xml:space="preserve">
+        <source>Back</source>
+        <target>رجوع</target>
+        <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "1Yx-Ce-yfq";</note>
+      </trans-unit>
+      <trans-unit id="2Q5-Vd-FED.text" xml:space="preserve">
+        <source>Title</source>
+        <target>العنوان</target>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "2Q5-Vd-FED"; Note = "Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="2cB-FV-ozw.title" xml:space="preserve">
+        <source>Attributes</source>
+        <target>الخصائص</target>
+        <note>Class = "UITabBarItem"; title = "Attributes"; ObjectID = "2cB-FV-ozw";</note>
+      </trans-unit>
+      <trans-unit id="6VA-gm-L0S.title" xml:space="preserve">
+        <source>Point of Interest</source>
+        <target>نقطة اهتمام</target>
+        <note>Class = "UITableViewController"; title = "Point of Interest"; ObjectID = "6VA-gm-L0S";</note>
+      </trans-unit>
+      <trans-unit id="8Nt-xf-x5Q.text" xml:space="preserve">
+        <source>Title</source>
+        <target>العنوان</target>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "8Nt-xf-x5Q";</note>
+      </trans-unit>
+      <trans-unit id="9Nw-ha-JK5.placeholder" xml:space="preserve">
+        <source>Yes</source>
+        <target>نعم</target>
+        <note>Class = "UITextField"; placeholder = "Yes"; ObjectID = "9Nw-ha-JK5";</note>
+      </trans-unit>
+      <trans-unit id="19J-sp-UTX.title" xml:space="preserve">
+        <source>All Tags</source>
+        <target>كل الوسوم</target>
+        <note>Class = "UITabBarItem"; title = "All Tags"; ObjectID = "19J-sp-UTX";</note>
+      </trans-unit>
+      <trans-unit id="436-kv-L7j.placeholder" xml:space="preserve">
+        <source>Restaurant</source>
+        <target>مطعم</target>
+        <note>Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j";</note>
+      </trans-unit>
+      <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve">
+        <source>dog</source>
+        <note>Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V"; Note = "Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="Bnh-U0-D7i.text" xml:space="preserve">
+        <source>Add New</source>
+        <target>إضافة جديد</target>
+        <note>Class = "UILabel"; text = "Add New"; ObjectID = "Bnh-U0-D7i";</note>
+      </trans-unit>
+      <trans-unit id="CXe-gQ-Zda.text" xml:space="preserve">
+        <source>Value 8</source>
+        <note>Class = "UILabel"; text = "Value 8"; ObjectID = "CXe-gQ-Zda";</note>
+      </trans-unit>
+      <trans-unit id="Dfv-TT-J6i.footerTitle" xml:space="preserve">
+        <source>The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard.</source>
+        <target>سيكون الإعداد المسبق متاحًا عند تحرير العناصر التي تطابق مدخلات المفتاح/القيمة هذه، وكلما تركتها فارغة ستتظهر لك إعدادات مسبقة أكثر.</target>
+        <note>Class = "UITableViewSection"; footerTitle = "The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard."; ObjectID = "Dfv-TT-J6i";</note>
+      </trans-unit>
+      <trans-unit id="Dfv-TT-J6i.headerTitle" xml:space="preserve">
+        <source>Applies To</source>
+        <target>ينطبق على</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Applies To"; ObjectID = "Dfv-TT-J6i";</note>
+      </trans-unit>
+      <trans-unit id="Eou-a6-V4g.text" xml:space="preserve">
+        <source>Key</source>
+        <target>مفتاح</target>
+        <note>Class = "UILabel"; text = "Key"; ObjectID = "Eou-a6-V4g";</note>
+      </trans-unit>
+      <trans-unit id="Fcv-4Q-gpE.text" xml:space="preserve">
+        <source>Value 3</source>
+        <target>القيمة 3</target>
+        <note>Class = "UILabel"; text = "Value 3"; ObjectID = "Fcv-4Q-gpE";</note>
+      </trans-unit>
+      <trans-unit id="Fe2-dc-zgA.placeholder" xml:space="preserve">
+        <source>designated</source>
+        <note>Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; Note = "Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="G5R-oP-lp3.title" xml:space="preserve">
+        <source>Custom Tags</source>
+        <target>الوسوم المخصصة</target>
+        <note>Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3";</note>
+      </trans-unit>
+      <trans-unit id="GIO-W7-q5U.title" xml:space="preserve">
+        <source>Custom Presets</source>
+        <target>إعدادات مسبقة مخصصة</target>
+        <note>Class = "UINavigationItem"; title = "Custom Presets"; ObjectID = "GIO-W7-q5U";</note>
+      </trans-unit>
+      <trans-unit id="Hgu-iP-FnG.title" xml:space="preserve">
+        <source>Back</source>
+        <target>رجوع</target>
+        <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "Hgu-iP-FnG";</note>
+      </trans-unit>
+      <trans-unit id="JAT-qD-dTS.text" xml:space="preserve">
+        <source>Value 1</source>
+        <target>القيمة 1</target>
+        <note>Class = "UILabel"; text = "Value 1"; ObjectID = "JAT-qD-dTS";</note>
+      </trans-unit>
+      <trans-unit id="Jsm-mO-hgo.title" xml:space="preserve">
+        <source>POI Type</source>
+        <target>نوع نقطة الاهتمام</target>
+        <note>Class = "UINavigationItem"; title = "POI Type"; ObjectID = "Jsm-mO-hgo";</note>
+      </trans-unit>
+      <trans-unit id="KX3-hG-OyE.title" xml:space="preserve">
+        <source>Back</source>
+        <target>رجوع</target>
+        <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "KX3-hG-OyE";</note>
+      </trans-unit>
+      <trans-unit id="OND-s7-I6f.title" xml:space="preserve">
+        <source>Custom Preset</source>
+        <target>إعداد مسبق مخصص</target>
+        <note>Class = "UINavigationItem"; title = "Custom Preset"; ObjectID = "OND-s7-I6f";</note>
+      </trans-unit>
+      <trans-unit id="P3A-5n-1Iq.text" xml:space="preserve">
+        <source>Type</source>
+        <target>النوع</target>
+        <note>Class = "UILabel"; text = "Type"; ObjectID = "P3A-5n-1Iq";</note>
+      </trans-unit>
+      <trans-unit id="QDv-7w-nbx.headerTitle" xml:space="preserve">
+        <source>Preset Name</source>
+        <target>اسم محدد مسبقا</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Preset Name"; ObjectID = "QDv-7w-nbx";</note>
+      </trans-unit>
+      <trans-unit id="R0q-aM-ULf.text" xml:space="preserve">
+        <source>Value 6</source>
+        <target>القيمة 6</target>
+        <note>Class = "UILabel"; text = "Value 6"; ObjectID = "R0q-aM-ULf";</note>
+      </trans-unit>
+      <trans-unit id="Rfe-SO-p0w.title" xml:space="preserve">
+        <source>Cancel</source>
+        <target>إلغاء</target>
+        <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "Rfe-SO-p0w";</note>
+      </trans-unit>
+      <trans-unit id="TK4-E8-1q7.text" xml:space="preserve">
+        <source>Title</source>
+        <target>العنوان</target>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "TK4-E8-1q7"; Note = "Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="Urd-9O-Mte.placeholder" xml:space="preserve">
+        <source>relation</source>
+        <target>علاقة</target>
+        <note>Class = "UITextField"; placeholder = "relation"; ObjectID = "Urd-9O-Mte"; Note = "Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="Vli-Ct-Lpz.text" xml:space="preserve">
+        <source>Wheelchair Access</source>
+        <target>إمكانية دخول/وصول كراسي المعاقين</target>
+        <note>Class = "UILabel"; text = "Wheelchair Access"; ObjectID = "Vli-Ct-Lpz";</note>
+      </trans-unit>
+      <trans-unit id="Wim-Qa-dYQ.text" xml:space="preserve">
+        <source>Value 10</source>
+        <target>القيمة 10</target>
+        <note>Class = "UILabel"; text = "Value 10"; ObjectID = "Wim-Qa-dYQ";</note>
+      </trans-unit>
+      <trans-unit id="WoH-od-iKL.text" xml:space="preserve">
+        <source>Value 7</source>
+        <target>القيمة 7</target>
+        <note>Class = "UILabel"; text = "Value 7"; ObjectID = "WoH-od-iKL";</note>
+      </trans-unit>
+      <trans-unit id="X1y-nK-nVJ.placeholder" xml:space="preserve">
+        <source>key</source>
+        <target>المفتاح</target>
+        <note>Class = "UITextField"; placeholder = "key"; ObjectID = "X1y-nK-nVJ"; Note = "Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="XBV-Ie-LDT.text" xml:space="preserve">
+        <source>Food &amp; Drink</source>
+        <target>الطعام &amp; الشراب</target>
+        <note>Class = "UILabel"; text = "Food &amp; Drink"; ObjectID = "XBV-Ie-LDT"; Note = "Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
+        <source>Subtitle</source>
+        <target>عنوان فرعي</target>
+        <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "ZYn-TK-k7d"; Note = "Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="aCs-vS-YXj.placeholder" xml:space="preserve">
+        <source>ref</source>
+        <note>Class = "UITextField"; placeholder = "ref"; ObjectID = "aCs-vS-YXj"; Note = "Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="aLi-Vs-z0k.title" xml:space="preserve">
+        <source>Configure</source>
+        <target>تهيئة وضبط</target>
+        <note>Class = "UIBarButtonItem"; title = "Configure"; ObjectID = "aLi-Vs-z0k";</note>
+      </trans-unit>
+      <trans-unit id="cN9-3h-H3l.title" xml:space="preserve">
+        <source>All Tags</source>
+        <target>كل الوسوم</target>
+        <note>Class = "UINavigationItem"; title = "All Tags"; ObjectID = "cN9-3h-H3l";</note>
+      </trans-unit>
+      <trans-unit id="cP3-lR-lzM.placeholder" xml:space="preserve">
+        <source>value</source>
+        <target>القيمة</target>
+        <note>Class = "UITextField"; placeholder = "value"; ObjectID = "cP3-lR-lzM"; Note = "Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="cTf-Rc-vqr.headerTitle" xml:space="preserve">
+        <source>Preset Key</source>
+        <target>مفتاح مسبق الإعداد</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Preset Key"; ObjectID = "cTf-Rc-vqr";</note>
+      </trans-unit>
+      <trans-unit id="daQ-tl-pKh.text" xml:space="preserve">
+        <source>Label</source>
+        <target>العلامة/العنوان</target>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh"; Note = "Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="dsA-B6-s7R.text" xml:space="preserve">
+        <source>Value 9</source>
+        <target>القيمة 9</target>
+        <note>Class = "UILabel"; text = "Value 9"; ObjectID = "dsA-B6-s7R";</note>
+      </trans-unit>
+      <trans-unit id="eG3-Xz-Nnp.placeholder" xml:space="preserve">
+        <source>Dogs Allowed</source>
+        <target>يسمح بدخول الكلاب</target>
+        <note>Class = "UITextField"; placeholder = "Dogs Allowed"; ObjectID = "eG3-Xz-Nnp";</note>
+      </trans-unit>
+      <trans-unit id="f5t-25-IXF.title" xml:space="preserve">
+        <source>Attributes</source>
+        <target>الخصائص</target>
+        <note>Class = "UITabBarController"; title = "Attributes"; ObjectID = "f5t-25-IXF";</note>
+      </trans-unit>
+      <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
+        <source>clean</source>
+        <note>Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
+        <source>Label</source>
+        <target>العلامة/المسمى</target>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw"; Note = "Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="hKU-EH-qxp.title" xml:space="preserve">
+        <source>Attributes</source>
+        <target>الخصائص</target>
+        <note>Class = "UINavigationItem"; title = "Attributes"; ObjectID = "hKU-EH-qxp";</note>
+      </trans-unit>
+      <trans-unit id="hfr-Mf-ZHv.text" xml:space="preserve">
+        <source>value</source>
+        <target>القيمة</target>
+        <note>Class = "UITextField"; text = "value"; ObjectID = "hfr-Mf-ZHv";</note>
+      </trans-unit>
+      <trans-unit id="ijx-N9-1eO.text" xml:space="preserve">
+        <source>Changeset</source>
+        <target>مجموعة التغييرات</target>
+        <note>Class = "UILabel"; text = "Changeset"; ObjectID = "ijx-N9-1eO";</note>
+      </trans-unit>
+      <trans-unit id="jv1-BF-p2a.footerTitle" xml:space="preserve">
+        <source>The possible values for the preset</source>
+        <target>القيم المحتملة للإعداد المسبق</target>
+        <note>Class = "UITableViewSection"; footerTitle = "The possible values for the preset"; ObjectID = "jv1-BF-p2a";</note>
+      </trans-unit>
+      <trans-unit id="jv1-BF-p2a.headerTitle" xml:space="preserve">
+        <source>Preset values</source>
+        <target>قيم محددة مسبقًا</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Preset values"; ObjectID = "jv1-BF-p2a";</note>
+      </trans-unit>
+      <trans-unit id="kPA-ky-U48.placeholder" xml:space="preserve">
+        <source>leisure </source>
+        <target>ترفيه </target>
+        <note>Class = "UITextField"; placeholder = "leisure "; ObjectID = "kPA-ky-U48"; Note = "Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="lPv-s6-uEz.title" xml:space="preserve">
+        <source>Common Tags</source>
+        <target>الوسوم الشائعة</target>
+        <note>Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz";</note>
+      </trans-unit>
+      <trans-unit id="li7-oV-pgT.text" xml:space="preserve">
+        <source>Value 5</source>
+        <target>القيمة 5</target>
+        <note>Class = "UILabel"; text = "Value 5"; ObjectID = "li7-oV-pgT";</note>
+      </trans-unit>
+      <trans-unit id="mAb-DX-pqb.title" xml:space="preserve">
+        <source>Common tags</source>
+        <target>الوسوم الشائعة</target>
+        <note>Class = "UINavigationItem"; title = "Common tags"; ObjectID = "mAb-DX-pqb";</note>
+      </trans-unit>
+      <trans-unit id="mcN-gM-s7u.text" xml:space="preserve">
+        <source>Name</source>
+        <target>الاسم</target>
+        <note>Class = "UILabel"; text = "Name"; ObjectID = "mcN-gM-s7u";</note>
+      </trans-unit>
+      <trans-unit id="nKt-LG-cSw.text" xml:space="preserve">
+        <source>Value 2</source>
+        <target>القيمة 2</target>
+        <note>Class = "UILabel"; text = "Value 2"; ObjectID = "nKt-LG-cSw";</note>
+      </trans-unit>
+      <trans-unit id="ng7-T9-SJ6.text" xml:space="preserve">
+        <source>Value 4</source>
+        <target>القيمة 4</target>
+        <note>Class = "UILabel"; text = "Value 4"; ObjectID = "ng7-T9-SJ6";</note>
+      </trans-unit>
+      <trans-unit id="o63-qY-4vl.text" xml:space="preserve">
+        <source>Value 11</source>
+        <target>القيمة 11</target>
+        <note>Class = "UILabel"; text = "Value 11"; ObjectID = "o63-qY-4vl";</note>
+      </trans-unit>
+      <trans-unit id="oC6-w7-cwN.placeholder" xml:space="preserve">
+        <source>leashed</source>
+        <note>Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; Note = "Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="okh-JP-aKZ.placeholder" xml:space="preserve">
+        <source>park</source>
+        <note>Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; Note = "Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="omf-S9-Yjq.text" xml:space="preserve">
+        <source>Name</source>
+        <target>الاسم</target>
+        <note>Class = "UILabel"; text = "Name"; ObjectID = "omf-S9-Yjq";</note>
+      </trans-unit>
+      <trans-unit id="pHA-2B-6DC.normalTitle" xml:space="preserve">
+        <source>Customize Presets</source>
+        <target>تخصيص الإعدادات المسبقة</target>
+        <note>Class = "UIButton"; normalTitle = "Customize Presets"; ObjectID = "pHA-2B-6DC";</note>
+      </trans-unit>
+      <trans-unit id="pxY-di-zg7.placeholder" xml:space="preserve">
+        <source>Restaurant</source>
+        <target>مطعم</target>
+        <note>Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "pxY-di-zg7";</note>
+      </trans-unit>
+      <trans-unit id="sVp-1S-TjJ.placeholder" xml:space="preserve">
+        <source>role</source>
+        <target>دور</target>
+        <note>Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ"; Note = "Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="teB-9L-Nrf.text" xml:space="preserve">
+        <source>Key</source>
+        <target>المفتاح</target>
+        <note>Class = "UILabel"; text = "Key"; ObjectID = "teB-9L-Nrf";</note>
+      </trans-unit>
+      <trans-unit id="v1b-PG-XxE.title" xml:space="preserve">
+        <source>Presets</source>
+        <target>إعدادات مسبقة</target>
+        <note>Class = "UINavigationItem"; title = "Presets"; ObjectID = "v1b-PG-XxE";</note>
+      </trans-unit>
+      <trans-unit id="vpk-jC-yxl.placeholder" xml:space="preserve">
+        <source>yes</source>
+        <target>نعم</target>
+        <note>Class = "UITextField"; placeholder = "yes"; ObjectID = "vpk-jC-yxl"; Note = "Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="wFE-f1-sQa.text" xml:space="preserve">
+        <source>Value 12</source>
+        <target>القيمة 12</target>
+        <note>Class = "UILabel"; text = "Value 12"; ObjectID = "wFE-f1-sQa";</note>
+      </trans-unit>
+      <trans-unit id="z19-cc-gHZ.text" xml:space="preserve">
+        <source>Value</source>
+        <target>القيمة</target>
+        <note>Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ";</note>
+      </trans-unit>
+      <trans-unit id="zpj-gL-2Nt.normalTitle" xml:space="preserve">
+        <source>ⓘ</source>
+        <note>Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "zpj-gL-2Nt";</note>
+      </trans-unit>
+    </body>
+  </file>
   <file original="Storyboards/Base.lproj/Display.storyboard" source-language="en" target-language="ars" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.0" build-num="13A233"/>
     </header>
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
@@ -2145,7 +2776,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="ars" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.0" build-num="13A233"/>
     </header>
     <body>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
@@ -2308,373 +2939,9 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
     </body>
   </file>
-  <file original="Storyboards/Base.lproj/POI.storyboard" source-language="en" target-language="ars" datatype="plaintext">
-    <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
-    </header>
-    <body>
-      <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
-        <source>no</source>
-        <target>لا</target>
-        <note>Class = "UITextField"; placeholder = "no"; ObjectID = "0mW-YK-ajm"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="0zS-QM-zwQ.placeholder" xml:space="preserve">
-        <source>type</source>
-        <target>النوع</target>
-        <note>Class = "UITextField"; placeholder = "type"; ObjectID = "0zS-QM-zwQ"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="1Yx-Ce-yfq.title" xml:space="preserve">
-        <source>Back</source>
-        <target>رجوع</target>
-        <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "1Yx-Ce-yfq";</note>
-      </trans-unit>
-      <trans-unit id="2Q5-Vd-FED.text" xml:space="preserve">
-        <source>Title</source>
-        <target>العنوان</target>
-        <note>Class = "UILabel"; text = "Title"; ObjectID = "2Q5-Vd-FED"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="2cB-FV-ozw.title" xml:space="preserve">
-        <source>Attributes</source>
-        <target>الخصائص</target>
-        <note>Class = "UITabBarItem"; title = "Attributes"; ObjectID = "2cB-FV-ozw";</note>
-      </trans-unit>
-      <trans-unit id="6VA-gm-L0S.title" xml:space="preserve">
-        <source>Point of Interest</source>
-        <target>نقطة اهتمام</target>
-        <note>Class = "UITableViewController"; title = "Point of Interest"; ObjectID = "6VA-gm-L0S";</note>
-      </trans-unit>
-      <trans-unit id="8Nt-xf-x5Q.text" xml:space="preserve">
-        <source>Title</source>
-        <target>العنوان</target>
-        <note>Class = "UILabel"; text = "Title"; ObjectID = "8Nt-xf-x5Q";</note>
-      </trans-unit>
-      <trans-unit id="9Nw-ha-JK5.placeholder" xml:space="preserve">
-        <source>Yes</source>
-        <target>نعم</target>
-        <note>Class = "UITextField"; placeholder = "Yes"; ObjectID = "9Nw-ha-JK5";</note>
-      </trans-unit>
-      <trans-unit id="19J-sp-UTX.title" xml:space="preserve">
-        <source>All Tags</source>
-        <target>كل الوسوم</target>
-        <note>Class = "UITabBarItem"; title = "All Tags"; ObjectID = "19J-sp-UTX";</note>
-      </trans-unit>
-      <trans-unit id="436-kv-L7j.placeholder" xml:space="preserve">
-        <source>Restaurant</source>
-        <target>مطعم</target>
-        <note>Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j";</note>
-      </trans-unit>
-      <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve">
-        <source>dog</source>
-        <note>Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="Bnh-U0-D7i.text" xml:space="preserve">
-        <source>Add New</source>
-        <target>إضافة جديد</target>
-        <note>Class = "UILabel"; text = "Add New"; ObjectID = "Bnh-U0-D7i";</note>
-      </trans-unit>
-      <trans-unit id="CXe-gQ-Zda.text" xml:space="preserve">
-        <source>Value 8</source>
-        <note>Class = "UILabel"; text = "Value 8"; ObjectID = "CXe-gQ-Zda";</note>
-      </trans-unit>
-      <trans-unit id="Dfv-TT-J6i.footerTitle" xml:space="preserve">
-        <source>The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard.</source>
-        <target>سيكون الإعداد المسبق متاحًا عند تحرير العناصر التي تطابق مدخلات المفتاح/القيمة هذه، وكلما تركتها فارغة ستتظهر لك إعدادات مسبقة أكثر.</target>
-        <note>Class = "UITableViewSection"; footerTitle = "The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard."; ObjectID = "Dfv-TT-J6i";</note>
-      </trans-unit>
-      <trans-unit id="Dfv-TT-J6i.headerTitle" xml:space="preserve">
-        <source>Applies To</source>
-        <target>ينطبق على</target>
-        <note>Class = "UITableViewSection"; headerTitle = "Applies To"; ObjectID = "Dfv-TT-J6i";</note>
-      </trans-unit>
-      <trans-unit id="Eou-a6-V4g.text" xml:space="preserve">
-        <source>Key</source>
-        <target>مفتاح</target>
-        <note>Class = "UILabel"; text = "Key"; ObjectID = "Eou-a6-V4g";</note>
-      </trans-unit>
-      <trans-unit id="Fcv-4Q-gpE.text" xml:space="preserve">
-        <source>Value 3</source>
-        <target>القيمة 3</target>
-        <note>Class = "UILabel"; text = "Value 3"; ObjectID = "Fcv-4Q-gpE";</note>
-      </trans-unit>
-      <trans-unit id="Fe2-dc-zgA.placeholder" xml:space="preserve">
-        <source>designated</source>
-        <note>Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="G5R-oP-lp3.title" xml:space="preserve">
-        <source>Custom Tags</source>
-        <target>الوسوم المخصصة</target>
-        <note>Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3";</note>
-      </trans-unit>
-      <trans-unit id="GIO-W7-q5U.title" xml:space="preserve">
-        <source>Custom Presets</source>
-        <target>إعدادات مسبقة مخصصة</target>
-        <note>Class = "UINavigationItem"; title = "Custom Presets"; ObjectID = "GIO-W7-q5U";</note>
-      </trans-unit>
-      <trans-unit id="Hgu-iP-FnG.title" xml:space="preserve">
-        <source>Back</source>
-        <target>رجوع</target>
-        <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "Hgu-iP-FnG";</note>
-      </trans-unit>
-      <trans-unit id="JAT-qD-dTS.text" xml:space="preserve">
-        <source>Value 1</source>
-        <target>القيمة 1</target>
-        <note>Class = "UILabel"; text = "Value 1"; ObjectID = "JAT-qD-dTS";</note>
-      </trans-unit>
-      <trans-unit id="Jsm-mO-hgo.title" xml:space="preserve">
-        <source>POI Type</source>
-        <target>نوع نقطة الاهتمام</target>
-        <note>Class = "UINavigationItem"; title = "POI Type"; ObjectID = "Jsm-mO-hgo";</note>
-      </trans-unit>
-      <trans-unit id="KX3-hG-OyE.title" xml:space="preserve">
-        <source>Back</source>
-        <target>رجوع</target>
-        <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "KX3-hG-OyE";</note>
-      </trans-unit>
-      <trans-unit id="OND-s7-I6f.title" xml:space="preserve">
-        <source>Custom Preset</source>
-        <target>إعداد مسبق مخصص</target>
-        <note>Class = "UINavigationItem"; title = "Custom Preset"; ObjectID = "OND-s7-I6f";</note>
-      </trans-unit>
-      <trans-unit id="P3A-5n-1Iq.text" xml:space="preserve">
-        <source>Type</source>
-        <target>النوع</target>
-        <note>Class = "UILabel"; text = "Type"; ObjectID = "P3A-5n-1Iq";</note>
-      </trans-unit>
-      <trans-unit id="QDv-7w-nbx.headerTitle" xml:space="preserve">
-        <source>Preset Name</source>
-        <target>اسم محدد مسبقا</target>
-        <note>Class = "UITableViewSection"; headerTitle = "Preset Name"; ObjectID = "QDv-7w-nbx";</note>
-      </trans-unit>
-      <trans-unit id="R0q-aM-ULf.text" xml:space="preserve">
-        <source>Value 6</source>
-        <target>القيمة 6</target>
-        <note>Class = "UILabel"; text = "Value 6"; ObjectID = "R0q-aM-ULf";</note>
-      </trans-unit>
-      <trans-unit id="Rfe-SO-p0w.title" xml:space="preserve">
-        <source>Cancel</source>
-        <target>إلغاء</target>
-        <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "Rfe-SO-p0w";</note>
-      </trans-unit>
-      <trans-unit id="TK4-E8-1q7.text" xml:space="preserve">
-        <source>Title</source>
-        <target>العنوان</target>
-        <note>Class = "UILabel"; text = "Title"; ObjectID = "TK4-E8-1q7"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="Urd-9O-Mte.placeholder" xml:space="preserve">
-        <source>relation</source>
-        <target>علاقة</target>
-        <note>Class = "UITextField"; placeholder = "relation"; ObjectID = "Urd-9O-Mte"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="Vli-Ct-Lpz.text" xml:space="preserve">
-        <source>Wheelchair Access</source>
-        <target>إمكانية دخول/وصول كراسي المعاقين</target>
-        <note>Class = "UILabel"; text = "Wheelchair Access"; ObjectID = "Vli-Ct-Lpz";</note>
-      </trans-unit>
-      <trans-unit id="Wim-Qa-dYQ.text" xml:space="preserve">
-        <source>Value 10</source>
-        <target>القيمة 10</target>
-        <note>Class = "UILabel"; text = "Value 10"; ObjectID = "Wim-Qa-dYQ";</note>
-      </trans-unit>
-      <trans-unit id="WoH-od-iKL.text" xml:space="preserve">
-        <source>Value 7</source>
-        <target>القيمة 7</target>
-        <note>Class = "UILabel"; text = "Value 7"; ObjectID = "WoH-od-iKL";</note>
-      </trans-unit>
-      <trans-unit id="X1y-nK-nVJ.placeholder" xml:space="preserve">
-        <source>key</source>
-        <target>المفتاح</target>
-        <note>Class = "UITextField"; placeholder = "key"; ObjectID = "X1y-nK-nVJ"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="XBV-Ie-LDT.text" xml:space="preserve">
-        <source>Food &amp; Drink</source>
-        <target>الطعام &amp; الشراب</target>
-        <note>Class = "UILabel"; text = "Food &amp; Drink"; ObjectID = "XBV-Ie-LDT"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
-        <source>Subtitle</source>
-        <target>عنوان فرعي</target>
-        <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "ZYn-TK-k7d"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="aCs-vS-YXj.placeholder" xml:space="preserve">
-        <source>ref</source>
-        <note>Class = "UITextField"; placeholder = "ref"; ObjectID = "aCs-vS-YXj"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="aLi-Vs-z0k.title" xml:space="preserve">
-        <source>Configure</source>
-        <target>تهيئة وضبط</target>
-        <note>Class = "UIBarButtonItem"; title = "Configure"; ObjectID = "aLi-Vs-z0k";</note>
-      </trans-unit>
-      <trans-unit id="cN9-3h-H3l.title" xml:space="preserve">
-        <source>All Tags</source>
-        <target>كل الوسوم</target>
-        <note>Class = "UINavigationItem"; title = "All Tags"; ObjectID = "cN9-3h-H3l";</note>
-      </trans-unit>
-      <trans-unit id="cP3-lR-lzM.placeholder" xml:space="preserve">
-        <source>value</source>
-        <target>القيمة</target>
-        <note>Class = "UITextField"; placeholder = "value"; ObjectID = "cP3-lR-lzM"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="cTf-Rc-vqr.headerTitle" xml:space="preserve">
-        <source>Preset Key</source>
-        <target>مفتاح مسبق الإعداد</target>
-        <note>Class = "UITableViewSection"; headerTitle = "Preset Key"; ObjectID = "cTf-Rc-vqr";</note>
-      </trans-unit>
-      <trans-unit id="daQ-tl-pKh.text" xml:space="preserve">
-        <source>Label</source>
-        <target>العلامة/العنوان</target>
-        <note>Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="dsA-B6-s7R.text" xml:space="preserve">
-        <source>Value 9</source>
-        <target>القيمة 9</target>
-        <note>Class = "UILabel"; text = "Value 9"; ObjectID = "dsA-B6-s7R";</note>
-      </trans-unit>
-      <trans-unit id="eG3-Xz-Nnp.placeholder" xml:space="preserve">
-        <source>Dogs Allowed</source>
-        <target>يسمح بدخول الكلاب</target>
-        <note>Class = "UITextField"; placeholder = "Dogs Allowed"; ObjectID = "eG3-Xz-Nnp";</note>
-      </trans-unit>
-      <trans-unit id="f5t-25-IXF.title" xml:space="preserve">
-        <source>Attributes</source>
-        <target>الخصائص</target>
-        <note>Class = "UITabBarController"; title = "Attributes"; ObjectID = "f5t-25-IXF";</note>
-      </trans-unit>
-      <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
-        <source>clean</source>
-        <note>Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
-        <source>Label</source>
-        <target>العلامة/المسمى</target>
-        <note>Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="hKU-EH-qxp.title" xml:space="preserve">
-        <source>Attributes</source>
-        <target>الخصائص</target>
-        <note>Class = "UINavigationItem"; title = "Attributes"; ObjectID = "hKU-EH-qxp";</note>
-      </trans-unit>
-      <trans-unit id="hfr-Mf-ZHv.text" xml:space="preserve">
-        <source>value</source>
-        <target>القيمة</target>
-        <note>Class = "UITextField"; text = "value"; ObjectID = "hfr-Mf-ZHv";</note>
-      </trans-unit>
-      <trans-unit id="ijx-N9-1eO.text" xml:space="preserve">
-        <source>Changeset</source>
-        <target>مجموعة التغييرات</target>
-        <note>Class = "UILabel"; text = "Changeset"; ObjectID = "ijx-N9-1eO";</note>
-      </trans-unit>
-      <trans-unit id="jv1-BF-p2a.footerTitle" xml:space="preserve">
-        <source>The possible values for the preset</source>
-        <target>القيم المحتملة للإعداد المسبق</target>
-        <note>Class = "UITableViewSection"; footerTitle = "The possible values for the preset"; ObjectID = "jv1-BF-p2a";</note>
-      </trans-unit>
-      <trans-unit id="jv1-BF-p2a.headerTitle" xml:space="preserve">
-        <source>Preset values</source>
-        <target>قيم محددة مسبقًا</target>
-        <note>Class = "UITableViewSection"; headerTitle = "Preset values"; ObjectID = "jv1-BF-p2a";</note>
-      </trans-unit>
-      <trans-unit id="kPA-ky-U48.placeholder" xml:space="preserve">
-        <source>leisure </source>
-        <target>ترفيه </target>
-        <note>Class = "UITextField"; placeholder = "leisure "; ObjectID = "kPA-ky-U48"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="lPv-s6-uEz.title" xml:space="preserve">
-        <source>Common Tags</source>
-        <target>الوسوم الشائعة</target>
-        <note>Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz";</note>
-      </trans-unit>
-      <trans-unit id="li7-oV-pgT.text" xml:space="preserve">
-        <source>Value 5</source>
-        <target>القيمة 5</target>
-        <note>Class = "UILabel"; text = "Value 5"; ObjectID = "li7-oV-pgT";</note>
-      </trans-unit>
-      <trans-unit id="mAb-DX-pqb.title" xml:space="preserve">
-        <source>Common tags</source>
-        <target>الوسوم الشائعة</target>
-        <note>Class = "UINavigationItem"; title = "Common tags"; ObjectID = "mAb-DX-pqb";</note>
-      </trans-unit>
-      <trans-unit id="mcN-gM-s7u.text" xml:space="preserve">
-        <source>Name</source>
-        <target>الاسم</target>
-        <note>Class = "UILabel"; text = "Name"; ObjectID = "mcN-gM-s7u";</note>
-      </trans-unit>
-      <trans-unit id="nKt-LG-cSw.text" xml:space="preserve">
-        <source>Value 2</source>
-        <target>القيمة 2</target>
-        <note>Class = "UILabel"; text = "Value 2"; ObjectID = "nKt-LG-cSw";</note>
-      </trans-unit>
-      <trans-unit id="ng7-T9-SJ6.text" xml:space="preserve">
-        <source>Value 4</source>
-        <target>القيمة 4</target>
-        <note>Class = "UILabel"; text = "Value 4"; ObjectID = "ng7-T9-SJ6";</note>
-      </trans-unit>
-      <trans-unit id="o63-qY-4vl.text" xml:space="preserve">
-        <source>Value 11</source>
-        <target>القيمة 11</target>
-        <note>Class = "UILabel"; text = "Value 11"; ObjectID = "o63-qY-4vl";</note>
-      </trans-unit>
-      <trans-unit id="oC6-w7-cwN.placeholder" xml:space="preserve">
-        <source>leashed</source>
-        <note>Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="okh-JP-aKZ.placeholder" xml:space="preserve">
-        <source>park</source>
-        <note>Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="omf-S9-Yjq.text" xml:space="preserve">
-        <source>Name</source>
-        <target>الاسم</target>
-        <note>Class = "UILabel"; text = "Name"; ObjectID = "omf-S9-Yjq";</note>
-      </trans-unit>
-      <trans-unit id="pHA-2B-6DC.normalTitle" xml:space="preserve">
-        <source>Customize Presets</source>
-        <target>تخصيص الإعدادات المسبقة</target>
-        <note>Class = "UIButton"; normalTitle = "Customize Presets"; ObjectID = "pHA-2B-6DC";</note>
-      </trans-unit>
-      <trans-unit id="pxY-di-zg7.placeholder" xml:space="preserve">
-        <source>Restaurant</source>
-        <target>مطعم</target>
-        <note>Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "pxY-di-zg7";</note>
-      </trans-unit>
-      <trans-unit id="sVp-1S-TjJ.placeholder" xml:space="preserve">
-        <source>role</source>
-        <target>دور</target>
-        <note>Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="teB-9L-Nrf.text" xml:space="preserve">
-        <source>Key</source>
-        <target>المفتاح</target>
-        <note>Class = "UILabel"; text = "Key"; ObjectID = "teB-9L-Nrf";</note>
-      </trans-unit>
-      <trans-unit id="v1b-PG-XxE.title" xml:space="preserve">
-        <source>Presets</source>
-        <target>إعدادات مسبقة</target>
-        <note>Class = "UINavigationItem"; title = "Presets"; ObjectID = "v1b-PG-XxE";</note>
-      </trans-unit>
-      <trans-unit id="vpk-jC-yxl.placeholder" xml:space="preserve">
-        <source>yes</source>
-        <target>نعم</target>
-        <note>Class = "UITextField"; placeholder = "yes"; ObjectID = "vpk-jC-yxl"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="wFE-f1-sQa.text" xml:space="preserve">
-        <source>Value 12</source>
-        <target>القيمة 12</target>
-        <note>Class = "UILabel"; text = "Value 12"; ObjectID = "wFE-f1-sQa";</note>
-      </trans-unit>
-      <trans-unit id="z19-cc-gHZ.text" xml:space="preserve">
-        <source>Value</source>
-        <target>القيمة</target>
-        <note>Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ";</note>
-      </trans-unit>
-      <trans-unit id="zpj-gL-2Nt.normalTitle" xml:space="preserve">
-        <source>ⓘ</source>
-        <note>Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "zpj-gL-2Nt";</note>
-      </trans-unit>
-    </body>
-  </file>
   <file original="Storyboards/Base.lproj/Settings.storyboard" source-language="en" target-language="ars" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.0" build-num="13A233"/>
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
@@ -2999,7 +3266,7 @@ http://glyphish.com
   </file>
   <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="ars" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5.1" build-num="12E507"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.0" build-num="13A233"/>
     </header>
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">

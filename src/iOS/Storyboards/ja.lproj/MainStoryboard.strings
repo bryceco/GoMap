@@ -32,7 +32,7 @@
 "FaM-WV-S6I.title" = "場所を探す";
 
 /* Class = "UIButton"; normalTitle = "Center"; ObjectID = "Fo4-Nq-pAz"; */
-"Fo4-Nq-pAz.normalTitle" = "中心";
+"Fo4-Nq-pAz.normalTitle" = "中央";
 
 /* Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "gdu-Sf-XrE"; */
 "gdu-Sf-XrE.title" = "コミット";
