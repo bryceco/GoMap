@@ -158,17 +158,14 @@ for (dirpath, dirnames, filenames) in os.walk(dir):
 			s = s.strip('"').rstrip('"').rstrip('\\')
 			text = text + '"' + name + '" = "' + s + '";\n'
 	# write strings file
+	if lang == "en":
+		lang = "Base"
 	dir = "strings/"+lang+".lproj"
 	if not os.path.exists(dir):
 		os.mkdir(dir)
 	f = open(dir+"/quest.strings", "w")
 	f.write(text)
 	f.close()
-try:
-	os.mkdir("strings/Base.lproj")
-	os.touch("strings/Base.lproj/quest.strings")
-except:
-	pass
 #os.system("git add ./*.strings")
 
 # Get icons
