@@ -7,27 +7,22 @@
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
         <source>Position your device parallel to the direction of the object.</source>
-        <target/>
         <note>Class = "UILabel"; text = "Position your device parallel to the direction of the object."; ObjectID = "4vY-m2-xMW";</note>
       </trans-unit>
       <trans-unit id="Jc3-Um-Aiy.text" xml:space="preserve">
         <source>320</source>
-        <target/>
         <note>Class = "UILabel"; text = "320"; ObjectID = "Jc3-Um-Aiy";</note>
       </trans-unit>
       <trans-unit id="Yt9-h6-KKC.normalTitle" xml:space="preserve">
         <source>Update "direction" tag</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Update \"direction\" tag"; ObjectID = "Yt9-h6-KKC";</note>
       </trans-unit>
       <trans-unit id="exg-Jc-FOH.normalTitle" xml:space="preserve">
         <source>Cancel</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "exg-Jc-FOH";</note>
       </trans-unit>
       <trans-unit id="vtk-nS-Ss4.text" xml:space="preserve">
         <source>Old value: 42</source>
-        <target/>
         <note>Class = "UILabel"; text = "Old value: 42"; ObjectID = "vtk-nS-Ss4";</note>
       </trans-unit>
     </body>
@@ -39,7 +34,6 @@
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>Go Map!!</source>
-        <target/>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleGetInfoString" xml:space="preserve">
@@ -48,22 +42,18 @@
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>Go Map!!</source>
-        <target/>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="GPS Exchange Format (GPX)" xml:space="preserve">
         <source>GPS Exchange Format (GPX)</source>
-        <target/>
         <note/>
       </trans-unit>
       <trans-unit id="NSBluetoothPeripheralUsageDescription" xml:space="preserve">
         <source>Connect to external Bluetooth GPS devices</source>
-        <target/>
         <note>Privacy - Bluetooth Peripheral Usage Description</note>
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
         <source>The camera is used to measure heights of buildings or objects</source>
-        <target/>
         <note>Privacy - Camera Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
@@ -72,17 +62,14 @@
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
         <source>Always on location tracking allows the app to record GPX files when inactive.</source>
-        <target/>
         <note>Privacy - Location Always and When In Use Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysUsageDescription" xml:space="preserve">
         <source>Your location will be displayed and followed on the map.</source>
-        <target/>
         <note>Privacy - Location Always Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationWhenInUseUsageDescription" xml:space="preserve">
         <source>Your location will be displayed and followed on the map.</source>
-        <target/>
         <note>Privacy - Location When In Use Usage Description</note>
       </trans-unit>
     </body>
@@ -94,1493 +81,1199 @@
     <body>
       <trans-unit id="&#9;Relation " xml:space="preserve">
         <source>	Relation </source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="&#9;Way " xml:space="preserve">
         <source>	Way </source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;" xml:space="preserve">
         <source> (%d members)
 </source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;" xml:space="preserve">
         <source> (%d nodes)
 </source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (node)" xml:space="preserve">
         <source> (node)</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (way)" xml:space="preserve">
         <source> (way)</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
         <source>%1$.0f meters, %2$ld nodes</source>
-        <target/>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
         <source>%1$.1f meters, %2$ld nodes</source>
-        <target/>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
         <source>%1$.2f MB, %2$ld files</source>
-        <target/>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
         <source>%@ (relation)</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ changeset" xml:space="preserve">
         <source>%@ changeset</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ meters" xml:space="preserve">
         <source>%@ meters</source>
-        <target/>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="%ld Days" xml:space="preserve">
         <source>%ld Days</source>
-        <target/>
         <note>One or more days
    Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@" xml:space="preserve">
         <source>%1$ld edits, last active %2$@</source>
-        <target/>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$ld meters, %2$ld points</source>
-        <target/>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld objects" xml:space="preserve">
         <source>%ld objects</source>
-        <target/>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%lu tiles needed" xml:space="preserve">
         <source>%lu tiles needed</source>
-        <target/>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="(new object)" xml:space="preserve">
         <source>(new object)</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
         <source>(node in way)</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(node)" xml:space="preserve">
         <source>(node)</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(relation %@)" xml:space="preserve">
         <source>(relation %@)</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(way)" xml:space="preserve">
         <source>(way)</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="+ Button Position" xml:space="preserve">
         <source>+ Button Position</source>
-        <target/>
         <note>Location of Add Node button on the screen</note>
       </trans-unit>
       <trans-unit id="1 Day" xml:space="preserve">
         <source>1 Day</source>
-        <target/>
         <note>1 day singular</note>
       </trans-unit>
       <trans-unit id="&lt;unknown&gt;" xml:space="preserve">
         <source>&lt;unknown&gt;</source>
-        <target/>
         <note>unknown user name</note>
       </trans-unit>
       <trans-unit id="A GPX Track records your path as you travel along a road or trail" xml:space="preserve">
         <source>A GPX Track records your path as you travel along a road or trail</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="A relation the node belongs to is not fully downloaded" xml:space="preserve">
         <source>A relation the node belongs to is not fully downloaded</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Accept" xml:space="preserve">
         <source>Accept</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
         <source>Add Note</source>
-        <target/>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Add inner member" xml:space="preserve">
         <source>Add inner member</source>
-        <target/>
         <note>Add to relation</note>
       </trans-unit>
       <trans-unit id="Add outer member" xml:space="preserve">
         <source>Add outer member</source>
-        <target/>
         <note>Add to relation</note>
       </trans-unit>
       <trans-unit id="Add way to multipolygon?" xml:space="preserve">
         <source>Add way to multipolygon?</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Adding members:" xml:space="preserve">
         <source>Adding members:</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Additional imagery" xml:space="preserve">
         <source>Additional imagery</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
         <source>Aerial only</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="All Tags" xml:space="preserve">
         <source>All Tags</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="All choices" xml:space="preserve">
         <source>All choices</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="An unknown error occurred fetching metadata" xml:space="preserve">
         <source>An unknown error occurred fetching metadata</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Attention" xml:space="preserve">
         <source>Attention</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Attributes" xml:space="preserve">
         <source>Attributes</source>
-        <target/>
         <note>node/way/relation attributes</note>
       </trans-unit>
       <trans-unit id="Automatic" xml:space="preserve">
         <source>Automatic</source>
-        <target/>
         <note>Automatic selection of presets languages</note>
       </trans-unit>
       <trans-unit id="Back" xml:space="preserve">
         <source>Back</source>
-        <target/>
         <note>back button</note>
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
         <source>Background imagery %@</source>
-        <target/>
         <note>identifies current aerial imagery</note>
       </trans-unit>
       <trans-unit id="Bad login" xml:space="preserve">
         <source>Bad login</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
         <source>Cache size warning</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache trimmed" xml:space="preserve">
         <source>Cache trimmed</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can only add ways to multipolygons" xml:space="preserve">
         <source>Can only add ways to multipolygons</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't delete node that is part of a relation" xml:space="preserve">
         <source>Can't delete node that is part of a relation</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't delete relation that is not a multipolygon" xml:space="preserve">
         <source>Can't delete relation that is not a multipolygon</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't delete way that is part of a Route or similar relation" xml:space="preserve">
         <source>Can't delete way that is part of a Route or similar relation</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't extend way" xml:space="preserve">
         <source>Can't extend way</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction 'via' node" xml:space="preserve">
         <source>Can't remove Turn Restriction 'via' node</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" xml:space="preserve">
         <source>Can't remove Turn Restriction node connecting 'to'/'from' to 'via'</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction to/from way" xml:space="preserve">
         <source>Can't remove Turn Restriction to/from way</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove component of a Route or similar relation" xml:space="preserve">
         <source>Can't remove component of a Route or similar relation</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove node in Turn Restriction 'via' way" xml:space="preserve">
         <source>Can't remove node in Turn Restriction 'via' way</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cancel" xml:space="preserve">
         <source>Cancel</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cannot compose message" xml:space="preserve">
         <source>Cannot compose message</source>
-        <target/>
         <note>e-mail message</note>
       </trans-unit>
       <trans-unit id="Cannot connect an inner way to an outer way" xml:space="preserve">
         <source>Cannot connect an inner way to an outer way</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Changeset" xml:space="preserve">
         <source>Changeset</source>
-        <target/>
         <note>OSM changeset identifier</note>
       </trans-unit>
       <trans-unit id="Clear Aerial Tiles" xml:space="preserve">
         <source>Clear Aerial Tiles</source>
-        <target/>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear GPS Overlay Tiles" xml:space="preserve">
         <source>Clear GPS Overlay Tiles</source>
-        <target/>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear GPX Tracks" xml:space="preserve">
         <source>Clear GPX Tracks</source>
-        <target/>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear Locator Overlay Tiles" xml:space="preserve">
         <source>Clear Locator Overlay Tiles</source>
-        <target/>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear Mapnik Tiles" xml:space="preserve">
         <source>Clear Mapnik Tiles</source>
-        <target/>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear OSM Data" xml:space="preserve">
         <source>Clear OSM Data</source>
-        <target/>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Commit" xml:space="preserve">
         <source>Commit</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Configure" xml:space="preserve">
         <source>Configure</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Confirm move" xml:space="preserve">
         <source>Confirm move</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Connecting the nodes would damage a relation" xml:space="preserve">
         <source>Connecting the nodes would damage a relation</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Copy Tags" xml:space="preserve">
         <source>Copy Tags</source>
-        <target/>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Could not duplicate object" xml:space="preserve">
         <source>Could not duplicate object</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Create&#10;" xml:space="preserve">
         <source>Create
 </source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Create Relation" xml:space="preserve">
         <source>Create Relation</source>
-        <target/>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Create Relation Type" xml:space="preserve">
         <source>Create Relation Type</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
         <source>Current Track</source>
-        <target/>
         <note>current GPX track</note>
       </trans-unit>
       <trans-unit id="Database error" xml:space="preserve">
         <source>Database error</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Delete" xml:space="preserve">
         <source>Delete</source>
-        <target/>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Delete&#10;" xml:space="preserve">
         <source>Delete
 </source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Delete %@?" xml:space="preserve">
         <source>Delete %@?</source>
-        <target/>
         <note>Confirm deleting a node/way</note>
       </trans-unit>
       <trans-unit id="Delete completely" xml:space="preserve">
         <source>Delete completely</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Delete failed" xml:space="preserve">
         <source>Delete failed</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Detach from relation" xml:space="preserve">
         <source>Detach from relation</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Disconnect" xml:space="preserve">
         <source>Disconnect</source>
-        <target/>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Display options" xml:space="preserve">
         <source>Display options</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Distance: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Distance: %1$@ ± %2$@ meters</source>
-        <target/>
         <note>Distance to an object with an error value</note>
       </trans-unit>
       <trans-unit id="Done" xml:space="preserve">
         <source>Done</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Duplicate" xml:space="preserve">
         <source>Duplicate</source>
-        <target/>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Edit" xml:space="preserve">
         <source>Edit</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Edit XML" xml:space="preserve">
         <source>Edit XML</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Edit restrictions" xml:space="preserve">
         <source>Edit restrictions</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Editing layer not visible" xml:space="preserve">
         <source>Editing layer not visible</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Editor only" xml:space="preserve">
         <source>Editor only</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Editor with Aerial" xml:space="preserve">
         <source>Editor with Aerial</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Ensure Location Services is enabled and you have granted this application access.&#10;&#10;Error: %@" xml:space="preserve">
         <source>Ensure Location Services is enabled and you have granted this application access.
 
 Error: %@</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Ensure the editor view is visible and displays objects in the local area" xml:space="preserve">
         <source>Ensure the editor view is visible and displays objects in the local area</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Error" xml:space="preserve">
         <source>Error</source>
-        <target/>
         <note>Error dialog title</note>
       </trans-unit>
       <trans-unit id="Error connecting to way" xml:space="preserve">
         <source>Error connecting to way</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Error fetching metadata: %@" xml:space="preserve">
         <source>Error fetching metadata: %@</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Extending a 'via' in a Turn Restriction will break the relation" xml:space="preserve">
         <source>Extending a 'via' in a Turn Restriction will break the relation</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Extending a way which belongs to a Route or similar relation may damage the relation" xml:space="preserve">
         <source>Extending a way which belongs to a Route or similar relation may damage the relation</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="GPX Upload Complete" xml:space="preserve">
         <source>GPX Upload Complete</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="GPX Upload Failed" xml:space="preserve">
         <source>GPX Upload Failed</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Height: %1$@ ± %2$@ meters</source>
-        <target/>
         <note>Height of an object with an error value</note>
       </trans-unit>
       <trans-unit id="I'll do it!" xml:space="preserve">
         <source>I'll do it!</source>
-        <target/>
         <note>rate the app now</note>
       </trans-unit>
       <trans-unit id="Identifier" xml:space="preserve">
         <source>Identifier</source>
-        <target/>
         <note>OSM node/way/relation identifier</note>
       </trans-unit>
       <trans-unit id="Ignore" xml:space="preserve">
         <source>Ignore</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="In order to measure height, please enable camera access in the app's settings." xml:space="preserve">
         <source>In order to measure height, please enable camera access in the app's settings.</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Invalid URL" xml:space="preserve">
         <source>Invalid URL</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Join" xml:space="preserve">
         <source>Join</source>
-        <target/>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Joining would invalidate a Turn Restriction the way belongs to" xml:space="preserve">
         <source>Joining would invalidate a Turn Restriction the way belongs to</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." xml:space="preserve">
         <source>Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English.</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Last updated %@" xml:space="preserve">
         <source>Last updated %@</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Lat/Lon" xml:space="preserve">
         <source>Lat/Lon</source>
-        <target/>
         <note>coordinates</note>
       </trans-unit>
       <trans-unit id="Left" xml:space="preserve">
         <source>Left</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Left side" xml:space="preserve">
         <source>Left side</source>
-        <target/>
         <note>Left-hand side of screen</note>
       </trans-unit>
       <trans-unit id="Length" xml:space="preserve">
         <source>Length</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
         <source>Location unavailable</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Login successful" xml:space="preserve">
         <source>Login successful</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Low memory: clearing cache" xml:space="preserve">
         <source>Low memory: clearing cache</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Mail delivery is not available on this device" xml:space="preserve">
         <source>Mail delivery is not available on this device</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Make Circular" xml:space="preserve">
         <source>Make Circular</source>
-        <target/>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Make Rectangular" xml:space="preserve">
         <source>Make Rectangular</source>
-        <target/>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Max nodes after joining is 2000" xml:space="preserve">
         <source>Max nodes after joining is 2000</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Maximum way length is 2000 nodes" xml:space="preserve">
         <source>Maximum way length is 2000 nodes</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Maybe later..." xml:space="preserve">
         <source>Maybe later...</source>
-        <target/>
         <note>rate the app later</note>
       </trans-unit>
       <trans-unit id="Measure Direction" xml:space="preserve">
         <source>Measure Direction</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Member of multipolygon relation" xml:space="preserve">
         <source>Member of multipolygon relation</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Members" xml:space="preserve">
         <source>Members</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Merge Tags" xml:space="preserve">
         <source>Merge Tags</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Missing way to connect to" xml:space="preserve">
         <source>Missing way to connect to</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Modified" xml:space="preserve">
         <source>Modified</source>
-        <target/>
         <note>last modified date</note>
       </trans-unit>
       <trans-unit id="Modify" xml:space="preserve">
         <source>Modify</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Modify&#10;" xml:space="preserve">
         <source>Modify
 </source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Modifying the raw XML data allows you to correct errors that prevent uploading.&#10;&#10;It is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format." xml:space="preserve">
         <source>Modifying the raw XML data allows you to correct errors that prevent uploading.
 
 It is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format.</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="More..." xml:space="preserve">
         <source>More...</source>
-        <target/>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Most recent" xml:space="preserve">
         <source>Most recent</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Move" xml:space="preserve">
         <source>Move</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Move selected object?" xml:space="preserve">
         <source>Move selected object?</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Multipolygon" xml:space="preserve">
         <source>Multipolygon</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Network error" xml:space="preserve">
         <source>Network error</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Never" xml:space="preserve">
         <source>Never</source>
-        <target/>
         <note>Never delete old GPX tracks
    Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Next" xml:space="preserve">
         <source>Next</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No Data" xml:space="preserve">
         <source>No Data</source>
-        <target/>
         <note>Alert title</note>
       </trans-unit>
       <trans-unit id="No Left Turn restriction" xml:space="preserve">
         <source>No Left Turn restriction</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No Right Turn restriction" xml:space="preserve">
         <source>No Right Turn restriction</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No Straight On restriction" xml:space="preserve">
         <source>No Straight On restriction</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No U-Turn restriction" xml:space="preserve">
         <source>No U-Turn restriction</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No active track" xml:space="preserve">
         <source>No active track</source>
-        <target/>
         <note>GPX track</note>
       </trans-unit>
       <trans-unit id="No results found" xml:space="preserve">
         <source>No results found</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No tags to paste" xml:space="preserve">
         <source>No tags to paste</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node" xml:space="preserve">
         <source>Node</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node Attributes" xml:space="preserve">
         <source>Node Attributes</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node Tags" xml:space="preserve">
         <source>Node Tags</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node is not an element of way" xml:space="preserve">
         <source>Node is not an element of way</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node must be the first or last node of the way" xml:space="preserve">
         <source>Node must be the first or last node of the way</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Not found" xml:space="preserve">
         <source>Not found</source>
-        <target/>
         <note>User credentials not found</note>
       </trans-unit>
       <trans-unit id="Note History" xml:space="preserve">
         <source>Note History</source>
-        <target/>
         <note>OSM note</note>
       </trans-unit>
       <trans-unit id="Nothing to upload, no changes have been made." xml:space="preserve">
         <source>Nothing to upload, no changes have been made.</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Number of recent items to display" xml:space="preserve">
         <source>Number of recent items to display</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="OK" xml:space="preserve">
         <source>OK</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Object modified" xml:space="preserve">
         <source>Object modified</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Old value: (oldValue)" xml:space="preserve">
         <source>Old value: (oldValue)</source>
-        <target/>
         <note>previous tag value</note>
       </trans-unit>
       <trans-unit id="Only Left Turn restriction" xml:space="preserve">
         <source>Only Left Turn restriction</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only Right Turn restriction" xml:space="preserve">
         <source>Only Right Turn restriction</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only Straight On restriction" xml:space="preserve">
         <source>Only Straight On restriction</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only multipolygon relations are supported" xml:space="preserve">
         <source>Only multipolygon relations are supported</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only ways/multipolygons can be rotated" xml:space="preserve">
         <source>Only ways/multipolygons can be rotated</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Open Settings" xml:space="preserve">
         <source>Open Settings</source>
-        <target/>
         <note>Open the iOS Settings app</note>
       </trans-unit>
       <trans-unit id="Open URL" xml:space="preserve">
         <source>Open URL</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Paste" xml:space="preserve">
         <source>Paste</source>
-        <target/>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)" xml:space="preserve">
         <source>Pasting %ld tag(s)</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Perform Action" xml:space="preserve">
         <source>Perform Action</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Please wait" xml:space="preserve">
         <source>Please wait</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
         <source>Previous</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Previous Tracks" xml:space="preserve">
         <source>Previous Tracks</source>
-        <target/>
         <note>previous GPX track</note>
       </trans-unit>
       <trans-unit id="Purge" xml:space="preserve">
         <source>Purge</source>
-        <target/>
         <note>Discard editing changes when resetting OSM data cache</note>
       </trans-unit>
       <trans-unit id="Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." xml:space="preserve">
         <source>Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap.</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Recent Aerial Imagery" xml:space="preserve">
         <source>Recent Aerial Imagery</source>
-        <target/>
         <note>Alert title message</note>
       </trans-unit>
       <trans-unit id="Redo" xml:space="preserve">
         <source>Redo</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation Attributes" xml:space="preserve">
         <source>Relation Attributes</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation Tags" xml:space="preserve">
         <source>Relation Tags</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation: %@" xml:space="preserve">
         <source>Relation: %@</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relations" xml:space="preserve">
         <source>Relations</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Replace Tags" xml:space="preserve">
         <source>Replace Tags</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Requires a closed way with at least 3 nodes" xml:space="preserve">
         <source>Requires a closed way with at least 3 nodes</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Requires a closed way with at least 4 nodes" xml:space="preserve">
         <source>Requires a closed way with at least 4 nodes</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Restrict" xml:space="preserve">
         <source>Restrict</source>
-        <target/>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Restriction: %@" xml:space="preserve">
         <source>Restriction: %@</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Results for %@ (%@)" xml:space="preserve">
         <source>Results for %1$@ (%2$@)</source>
-        <target/>
         <note>country name,2-character country code</note>
       </trans-unit>
       <trans-unit id="Retry" xml:space="preserve">
         <source>Retry</source>
-        <target/>
         <note>retry opening hours recognition</note>
       </trans-unit>
       <trans-unit id="Reverse" xml:space="preserve">
         <source>Reverse</source>
-        <target/>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Right" xml:space="preserve">
         <source>Right</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Right side" xml:space="preserve">
         <source>Right side</source>
-        <target/>
         <note>Right-hand side of screen</note>
       </trans-unit>
       <trans-unit id="Rotate" xml:space="preserve">
         <source>Rotate</source>
-        <target/>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Select Object" xml:space="preserve">
         <source>Select Object</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Select a highway approaching the intersection" xml:space="preserve">
         <source>Select a highway approaching the intersection</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Selected object is off screen" xml:space="preserve">
         <source>Selected object is off screen</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Set" xml:space="preserve">
         <source>Set</source>
-        <target/>
         <note>set tag value</note>
       </trans-unit>
       <trans-unit id="Set Height Tag" xml:space="preserve">
         <source>Set Height Tag</source>
-        <target/>
         <note>The height=* tag</note>
       </trans-unit>
       <trans-unit id="Settings" xml:space="preserve">
         <source>Settings</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Share" xml:space="preserve">
         <source>Share</source>
-        <target/>
         <note>Open iOS sharing sheet
    Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Show Recent Items" xml:space="preserve">
         <source>Show Recent Items</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." xml:space="preserve">
         <source>Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Sorry, an error occurred while loading the GPX file" xml:space="preserve">
         <source>Sorry, an error occurred while loading the GPX file</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Split" xml:space="preserve">
         <source>Split</source>
-        <target/>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Standard imagery" xml:space="preserve">
         <source>Standard imagery</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Start" xml:space="preserve">
         <source>Start</source>
-        <target/>
         <note>Begin downloading tiles</note>
       </trans-unit>
       <trans-unit id="Stop" xml:space="preserve">
         <source>Stop</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Straighten" xml:space="preserve">
         <source>Straighten</source>
-        <target/>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Tags" xml:space="preserve">
         <source>Tags</source>
-        <target/>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
         <source>The + button can be positioned on either the left or right side of the screen</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The XML is improperly formed" xml:space="preserve">
         <source>The XML is improperly formed</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The current location cannot be determined: " xml:space="preserve">
         <source>The current location cannot be determined: </source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The merged nodes contain conflicting tags" xml:space="preserve">
         <source>The merged nodes contain conflicting tags</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The nodes have conflicting roles in parent relations" xml:space="preserve">
         <source>The nodes have conflicting roles in parent relations</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The object does not contain any tags" xml:space="preserve">
         <source>The object does not contain any tags</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The restriction cannot be deleted" xml:space="preserve">
         <source>The restriction cannot be deleted</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The selected way must be completely visible" xml:space="preserve">
         <source>The selected way must be completely visible</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The target way is ambiguous" xml:space="preserve">
         <source>The target way is ambiguous</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The turn contains an unrecognized turn restriction style. Proceeding will destroy it." xml:space="preserve">
         <source>The turn contains an unrecognized turn restriction style. Proceeding will destroy it.</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way belongs to a relation that is not fully downloaded" xml:space="preserve">
         <source>The way belongs to a relation that is not fully downloaded</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way is not sufficiently straight" xml:space="preserve">
         <source>The way is not sufficiently straight</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way must have at least 2 nodes" xml:space="preserve">
         <source>The way must have at least 2 nodes</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The ways contain incompatible tags" xml:space="preserve">
         <source>The ways contain incompatible tags</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="This action requires GPS to be turned on" xml:space="preserve">
         <source>This action requires GPS to be turned on</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="This app does not yet support editing turn restrictions without a node as the 'via' member" xml:space="preserve">
         <source>This app does not yet support editing turn restrictions without a node as the 'via' member</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="This device is not able to provide heading data." xml:space="preserve">
         <source>This device is not able to provide heading data.</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
         <source>To add another member to the relation 'long press' on the way to be added</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel ALLOWED from %@ to %@" xml:space="preserve">
         <source>Travel ALLOWED from %1$@ to %2$@</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel ONLY from %@ to %@" xml:space="preserve">
         <source>Travel ONLY from %1$@ to %2$@</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel PROHIBITED from %@ to %@" xml:space="preserve">
         <source>Travel PROHIBITED from %1$@ to %2$@</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel from %@" xml:space="preserve">
         <source>Travel from %@</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Turn On Location Services to Allow %@ to Determine Your Location" xml:space="preserve">
         <source>Turn On Location Services to Allow %@ to Determine Your Location</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Turn Restrictions" xml:space="preserve">
         <source>Turn Restrictions</source>
-        <target/>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.&#10;&#10;Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route." xml:space="preserve">
         <source>Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.
 
 Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route.</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Type" xml:space="preserve">
         <source>Type</source>
-        <target/>
         <note>The 'Type' header in Common Tags</note>
       </trans-unit>
       <trans-unit id="U-Turn from %@ allowed" xml:space="preserve">
         <source>U-Turn from %@ allowed</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="U-Turn from %@ prohibited" xml:space="preserve">
         <source>U-Turn from %@ prohibited</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="UID" xml:space="preserve">
         <source>UID</source>
-        <target/>
         <note>OSM numeric user ID</note>
       </trans-unit>
       <trans-unit id="Unable to upload changes" xml:space="preserve">
         <source>Unable to upload changes</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Undo" xml:space="preserve">
         <source>Undo</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Unknown role" xml:space="preserve">
         <source>Unknown role</source>
-        <target/>
         <note>relation role=* tag</note>
       </trans-unit>
       <trans-unit id="Unsupported turn restriction type" xml:space="preserve">
         <source>Unsupported turn restriction type</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Update" xml:space="preserve">
         <source>Update</source>
-        <target/>
         <note>update an osm note</note>
       </trans-unit>
       <trans-unit id="Update '%@' tag" xml:space="preserve">
         <source>Update '%@' tag</source>
-        <target/>
         <note>Update the named tag value (e.g. foo=*)</note>
       </trans-unit>
       <trans-unit id="Updating Note..." xml:space="preserve">
         <source>Updating Note...</source>
-        <target/>
         <note>OSM Note</note>
       </trans-unit>
       <trans-unit id="Upload complete!" xml:space="preserve">
         <source>Upload complete!</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Upload to OSM" xml:space="preserve">
         <source>Upload to OSM</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Upload your changes" xml:space="preserve">
         <source>Upload your changes</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Uploading GPX..." xml:space="preserve">
         <source>Uploading GPX...</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="User" xml:space="preserve">
         <source>User</source>
-        <target/>
         <note>OSM user name</note>
       </trans-unit>
       <trans-unit id="User-defined imagery" xml:space="preserve">
         <source>User-defined imagery</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Version" xml:space="preserve">
         <source>Version</source>
-        <target/>
         <note>OSM object versioh</note>
       </trans-unit>
       <trans-unit id="Warning" xml:space="preserve">
         <source>Warning</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Way Attributes" xml:space="preserve">
         <source>Way Attributes</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Way Tags" xml:space="preserve">
         <source>Way Tags</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.&#10;&#10;To continue press Commit once again, otherwise press Cancel." xml:space="preserve">
         <source>You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.
 
 To continue press Commit once again, otherwise press Cancel.</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You can define your own custom presets here" xml:space="preserve">
         <source>You can define your own custom presets here</source>
-        <target/>
         <note>POI editor presets</note>
       </trans-unit>
       <trans-unit id="You can navigate to a relation member only if it is already downloaded.&#10;These members are marked with '&gt;'." xml:space="preserve">
         <source>You can navigate to a relation member only if it is already downloaded.
 These members are marked with '&gt;'.</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." xml:space="preserve">
         <source>You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost.</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You must provide your OSM user name, not an email address." xml:space="preserve">
         <source>You must provide your OSM user name, not an email address.</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You must save or discard changes to the current object before editing its associated relation" xml:space="preserve">
         <source>You must save or discard changes to the current object before editing its associated relation</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You've uploaded %ld changesets with this version of Go Map!!&#10;&#10;Rate this app?" xml:space="preserve">
         <source>You've uploaded %ld changesets with this version of Go Map!!
 
 Rate this app?</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Your OSM data cache is getting large, which may lead to slow startup and shutdown times.&#10;&#10;You may want to clear the cache (under Display settings) to improve performance." xml:space="preserve">
         <source>Your OSM data cache is getting large, which may lead to slow startup and shutdown times.
 
 You may want to clear the cache (under Display settings) to improve performance.</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Zoom to Edit" xml:space="preserve">
         <source>Zoom to Edit</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="add node to way" xml:space="preserve">
         <source>add node to way</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="add object to relation" xml:space="preserve">
         <source>add object to relation</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="added to multipolygon relation" xml:space="preserve">
         <source>added to multipolygon relation</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="computing size..." xml:space="preserve">
         <source>computing size...</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="create node" xml:space="preserve">
         <source>create node</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="create relation" xml:space="preserve">
         <source>create relation</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="create turn restriction" xml:space="preserve">
         <source>create turn restriction</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="create way" xml:space="preserve">
         <source>create way</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete multipolygon" xml:space="preserve">
         <source>delete multipolygon</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete node" xml:space="preserve">
         <source>delete node</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete node from way" xml:space="preserve">
         <source>delete node from way</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete object from relation" xml:space="preserve">
         <source>delete object from relation</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete relation" xml:space="preserve">
         <source>delete relation</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete restriction" xml:space="preserve">
         <source>delete restriction</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete route" xml:space="preserve">
         <source>delete route</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete way" xml:space="preserve">
         <source>delete way</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="duplicate" xml:space="preserve">
         <source>duplicate</source>
-        <target/>
         <note>create a duplicate</note>
       </trans-unit>
       <trans-unit id="meters" xml:space="preserve">
         <source>meters</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="move" xml:space="preserve">
         <source>move</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">
         <source>node %@</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="node %@ (in way)" xml:space="preserve">
         <source>node %@ (in way)</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="other object" xml:space="preserve">
         <source>other object</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="relation" xml:space="preserve">
         <source>relation</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="set tags" xml:space="preserve">
         <source>set tags</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="update relation members" xml:space="preserve">
         <source>update relation members</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="vintage %@" xml:space="preserve">
         <source>vintage %@</source>
-        <target/>
         <note>Year aerial imagery was created</note>
       </trans-unit>
       <trans-unit id="vintage %@ - %@" xml:space="preserve">
         <source>vintage %1$@ - %2$@</source>
-        <target/>
         <note>Years aerial imagery was created</note>
       </trans-unit>
       <trans-unit id="way %@" xml:space="preserve">
         <source>way %@</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>
@@ -1592,22 +1285,18 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
         <source>Set Height</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Set Height"; ObjectID = "QZK-2k-kEa";</note>
       </trans-unit>
       <trans-unit id="SdH-uy-BuK.normalTitle" xml:space="preserve">
         <source>Distance</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Distance"; ObjectID = "SdH-uy-BuK";</note>
       </trans-unit>
       <trans-unit id="juy-LX-vDs.normalTitle" xml:space="preserve">
         <source>Height</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Height"; ObjectID = "juy-LX-vDs";</note>
       </trans-unit>
       <trans-unit id="l5O-tO-QFr.normalTitle" xml:space="preserve">
         <source>Cancel</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "l5O-tO-QFr";</note>
       </trans-unit>
     </body>
@@ -1619,17 +1308,14 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
         <source>OK</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "OK"; ObjectID = "05z-LH-xEK";</note>
       </trans-unit>
       <trans-unit id="Zxw-Em-faC.normalTitle" xml:space="preserve">
         <source>Cancel</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "Zxw-Em-faC";</note>
       </trans-unit>
       <trans-unit id="cy3-gz-fvk.text" xml:space="preserve">
         <source>Go Map!! will open at the location the photo was taken.</source>
-        <target/>
         <note>Class = "UILabel"; text = "Go Map!! will open at the location the photo was taken."; ObjectID = "cy3-gz-fvk";</note>
       </trans-unit>
     </body>
@@ -1645,7 +1331,6 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>PhotoShare</source>
-        <target/>
         <note>Bundle name</note>
       </trans-unit>
     </body>
@@ -1657,17 +1342,14 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="Processing data..." xml:space="preserve">
         <source>Processing data...</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The URL content isn't recognized." xml:space="preserve">
         <source>The URL content isn't recognized.</source>
-        <target/>
         <note>Error message when sharing a URL to Go Map!!</note>
       </trans-unit>
       <trans-unit id="Unfortunately the selected image does not contain location information." xml:space="preserve">
         <source>Unfortunately the selected image does not contain location information.</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>
@@ -1679,152 +1361,122 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
         <source>Cancel</source>
-        <target/>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "1SY-O5-qJR";</note>
       </trans-unit>
       <trans-unit id="1f0-8q-yCi.text" xml:space="preserve">
         <source>GPX Tracks</source>
-        <target/>
         <note>Class = "UILabel"; text = "GPX Tracks"; ObjectID = "1f0-8q-yCi";</note>
       </trans-unit>
       <trans-unit id="2Ku-Lb-uCf.text" xml:space="preserve">
         <source>Details</source>
-        <target/>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "2Ku-Lb-uCf";</note>
       </trans-unit>
       <trans-unit id="2ZY-zi-luF.text" xml:space="preserve">
         <source>Clear Cache</source>
-        <target/>
         <note>Class = "UILabel"; text = "Clear Cache"; ObjectID = "2ZY-zi-luF";</note>
       </trans-unit>
       <trans-unit id="4s8-Bj-JOX.normalTitle" xml:space="preserve">
         <source>99 Days</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "99 Days"; ObjectID = "4s8-Bj-JOX";</note>
       </trans-unit>
       <trans-unit id="5hB-2Y-Wgl.text" xml:space="preserve">
         <source>Projection</source>
-        <target/>
         <note>Class = "UILabel"; text = "Projection"; ObjectID = "5hB-2Y-Wgl";</note>
       </trans-unit>
       <trans-unit id="7df-49-qTa.text" xml:space="preserve">
         <source>Rail Features</source>
-        <target/>
         <note>Class = "UILabel"; text = "Rail Features"; ObjectID = "7df-49-qTa";</note>
       </trans-unit>
       <trans-unit id="7ga-PZ-MfV.placeholder" xml:space="preserve">
         <source>-1..3,7</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "-1..3,7"; ObjectID = "7ga-PZ-MfV";</note>
       </trans-unit>
       <trans-unit id="8HT-Bc-Q2z.title" xml:space="preserve">
         <source>Aerial Imagery</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Aerial Imagery"; ObjectID = "8HT-Bc-Q2z";</note>
       </trans-unit>
       <trans-unit id="8S7-Kw-QHF.normalTitle" xml:space="preserve">
         <source>Details</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Details"; ObjectID = "8S7-Kw-QHF";</note>
       </trans-unit>
       <trans-unit id="8es-4f-sj3.headerTitle" xml:space="preserve">
         <source>Overlays</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "Overlays"; ObjectID = "8es-4f-sj3";</note>
       </trans-unit>
       <trans-unit id="9L3-JO-Whj.text" xml:space="preserve">
         <source>Mapnik only</source>
-        <target/>
         <note>Class = "UILabel"; text = "Mapnik only"; ObjectID = "9L3-JO-Whj";</note>
       </trans-unit>
       <trans-unit id="186-0W-Nrr.title" xml:space="preserve">
         <source>Display</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Display"; ObjectID = "186-0W-Nrr";</note>
       </trans-unit>
       <trans-unit id="DmO-dW-3Fh.text" xml:space="preserve">
         <source>Collect in background:</source>
-        <target/>
         <note>Class = "UILabel"; text = "Collect in background:"; ObjectID = "DmO-dW-3Fh";</note>
       </trans-unit>
       <trans-unit id="EHa-L5-Hcz.text" xml:space="preserve">
         <source>12:00:00</source>
-        <target/>
         <note>Class = "UILabel"; text = "12:00:00"; ObjectID = "EHa-L5-Hcz";</note>
       </trans-unit>
       <trans-unit id="EmS-9F-1qc.text" xml:space="preserve">
         <source>Details</source>
-        <target/>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "EmS-9F-1qc";</note>
       </trans-unit>
       <trans-unit id="F9l-B0-puf.text" xml:space="preserve">
         <source>Details</source>
-        <target/>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "F9l-B0-puf";</note>
       </trans-unit>
       <trans-unit id="GNK-bZ-i9X.text" xml:space="preserve">
         <source>Details</source>
-        <target/>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "GNK-bZ-i9X";</note>
       </trans-unit>
       <trans-unit id="H3p-Ta-kIy.title" xml:space="preserve">
         <source>QA Poole No Name Tiles</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "QA Poole No Name Tiles"; ObjectID = "H3p-Ta-kIy"; Note = "Title for Simon Poole's \"No name\" (missing name) tile overlay";</note>
       </trans-unit>
       <trans-unit id="Idx-2G-6F7.text" xml:space="preserve">
         <source>Power Features</source>
-        <target/>
         <note>Class = "UILabel"; text = "Power Features"; ObjectID = "Idx-2G-6F7";</note>
       </trans-unit>
       <trans-unit id="Jz1-GP-Wbe.text" xml:space="preserve">
         <source>Paths</source>
-        <target/>
         <note>Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe";</note>
       </trans-unit>
       <trans-unit id="LxX-tl-ZLH.text" xml:space="preserve">
         <source>Enable Filters</source>
-        <target/>
         <note>Class = "UILabel"; text = "Enable Filters"; ObjectID = "LxX-tl-ZLH";</note>
       </trans-unit>
       <trans-unit id="MPq-PX-jf0.text" xml:space="preserve">
         <source>Editor with Aerial</source>
-        <target/>
         <note>Class = "UILabel"; text = "Editor with Aerial"; ObjectID = "MPq-PX-jf0";</note>
       </trans-unit>
       <trans-unit id="MZF-am-tCM.title" xml:space="preserve">
         <source>Aerial Provider</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Aerial Provider"; ObjectID = "MZF-am-tCM";</note>
       </trans-unit>
       <trans-unit id="MeQ-4N-FqC.text" xml:space="preserve">
         <source>GPX Tracks you record or download will be automatically deleted after:</source>
-        <target/>
         <note>Class = "UILabel"; text = "GPX Tracks you record or download will be automatically deleted after:"; ObjectID = "MeQ-4N-FqC";</note>
       </trans-unit>
       <trans-unit id="O0U-6M-7AT.text" xml:space="preserve">
         <source>Notes and Fixmes</source>
-        <target/>
         <note>Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "O0U-6M-7AT";</note>
       </trans-unit>
       <trans-unit id="OiJ-GU-gZ3.title" xml:space="preserve">
         <source>Cancel</source>
-        <target/>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "OiJ-GU-gZ3";</note>
       </trans-unit>
       <trans-unit id="Okg-2D-O6U.text" xml:space="preserve">
         <source>Landuse</source>
-        <target/>
         <note>Class = "UILabel"; text = "Landuse"; ObjectID = "Okg-2D-O6U";</note>
       </trans-unit>
       <trans-unit id="RJU-Z2-QFh.headerTitle" xml:space="preserve">
         <source>Interactions</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "Interactions"; ObjectID = "RJU-Z2-QFh";</note>
       </trans-unit>
       <trans-unit id="RxO-IV-UE7.text" xml:space="preserve">
         <source>Service Roads</source>
-        <target/>
         <note>Class = "UILabel"; text = "Service Roads"; ObjectID = "RxO-IV-UE7";</note>
       </trans-unit>
       <trans-unit id="SNa-W1-wga.footerTitle" xml:space="preserve">
@@ -1833,299 +1485,240 @@ You may want to clear the cache (under Display settings) to improve performance.
 Warning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.
 
 Clear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed.</source>
-        <target/>
         <note>Class = "UITableViewSection"; footerTitle = "Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. \n\nWarning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.\n\nClear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed."; ObjectID = "SNa-W1-wga";</note>
       </trans-unit>
       <trans-unit id="SNa-W1-wga.headerTitle" xml:space="preserve">
         <source>Discard &amp; Refresh</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "Discard &amp; Refresh"; ObjectID = "SNa-W1-wga";</note>
       </trans-unit>
       <trans-unit id="Uum-Wn-9CF.text" xml:space="preserve">
         <source>Others</source>
-        <target/>
         <note>Class = "UILabel"; text = "Others"; ObjectID = "Uum-Wn-9CF";</note>
       </trans-unit>
       <trans-unit id="VUR-wT-knn.text" xml:space="preserve">
         <source>Enable Rotation</source>
-        <target/>
         <note>Class = "UILabel"; text = "Enable Rotation"; ObjectID = "VUR-wT-knn";</note>
       </trans-unit>
       <trans-unit id="WnI-tY-WWa.text" xml:space="preserve">
         <source>Delete tracks after:</source>
-        <target/>
         <note>Class = "UILabel"; text = "Delete tracks after:"; ObjectID = "WnI-tY-WWa";</note>
       </trans-unit>
       <trans-unit id="Z8C-Ef-iJE.title" xml:space="preserve">
         <source>GPX Tracks</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "GPX Tracks"; ObjectID = "Z8C-Ef-iJE";</note>
       </trans-unit>
       <trans-unit id="ZP1-qY-kXe.text" xml:space="preserve">
         <source>Unnamed Roads</source>
-        <target/>
         <note>Class = "UILabel"; text = "Unnamed Roads"; ObjectID = "ZP1-qY-kXe";</note>
       </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.footerTitle" xml:space="preserve">
         <source>If specifying a WMS URL you must also provide the projection used</source>
-        <target/>
         <note>Class = "UITableViewSection"; footerTitle = "If specifying a WMS URL you must also provide the projection used"; ObjectID = "Zn9-Sg-9fS";</note>
       </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.headerTitle" xml:space="preserve">
         <source>WMS Projection</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "WMS Projection"; ObjectID = "Zn9-Sg-9fS";</note>
       </trans-unit>
       <trans-unit id="Zzc-4t-QhT.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target/>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.footerTitle" xml:space="preserve">
         <source>Go Map!! will automatically discard old data to optimize performance.</source>
-        <target/>
         <note>Class = "UITableViewSection"; footerTitle = "Go Map!! will automatically discard old data to optimize performance."; ObjectID = "bmY-Hw-jv6";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.headerTitle" xml:space="preserve">
         <source>Cache Management</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "Cache Management"; ObjectID = "bmY-Hw-jv6";</note>
       </trans-unit>
       <trans-unit id="cXC-ij-AMQ.title" xml:space="preserve">
         <source>Show Objects</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Show Objects"; ObjectID = "cXC-ij-AMQ";</note>
       </trans-unit>
       <trans-unit id="cpC-iE-1Dm.text" xml:space="preserve">
         <source>Title</source>
-        <target/>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "cpC-iE-1Dm";</note>
       </trans-unit>
       <trans-unit id="cpv-m2-oDm.headerTitle" xml:space="preserve">
         <source>Friendly Name</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "Friendly Name"; ObjectID = "cpv-m2-oDm";</note>
       </trans-unit>
       <trans-unit id="dIe-MC-t44.text" xml:space="preserve">
         <source>Automatic</source>
-        <target/>
         <note>Class = "UILabel"; text = "Automatic"; ObjectID = "dIe-MC-t44";</note>
       </trans-unit>
       <trans-unit id="dci-gg-ddc.title" xml:space="preserve">
         <source>Cancel</source>
-        <target/>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "dci-gg-ddc";</note>
       </trans-unit>
       <trans-unit id="dzT-B4-za3.placeholder" xml:space="preserve">
         <source>http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
  </source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "; ObjectID = "dzT-B4-za3";</note>
       </trans-unit>
       <trans-unit id="eFa-yZ-YZl.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target/>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eFa-yZ-YZl";</note>
       </trans-unit>
       <trans-unit id="eLW-GB-ugG.text" xml:space="preserve">
         <source>Position + Button on </source>
-        <target/>
         <note>Class = "UILabel"; text = "Position + Button on "; ObjectID = "eLW-GB-ugG"; Note = "The location on the screen where the user prefers the + (add node) button to appear";</note>
       </trans-unit>
       <trans-unit id="eN6-SZ-99I.text" xml:space="preserve">
         <source>Editor only</source>
-        <target/>
         <note>Class = "UILabel"; text = "Editor only"; ObjectID = "eN6-SZ-99I";</note>
       </trans-unit>
       <trans-unit id="eTY-48-gab.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target/>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eTY-48-gab";</note>
       </trans-unit>
       <trans-unit id="eac-Db-EaW.normalTitle" xml:space="preserve">
         <source>Bing</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Bing"; ObjectID = "eac-Db-EaW";</note>
       </trans-unit>
       <trans-unit id="el8-h8-H1F.normalTitle" xml:space="preserve">
         <source>Button</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F";</note>
       </trans-unit>
       <trans-unit id="fFT-hv-mKl.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target/>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fFT-hv-mKl";</note>
       </trans-unit>
       <trans-unit id="fHH-rC-iGa.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target/>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fHH-rC-iGa";</note>
       </trans-unit>
       <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve">
         <source>Details</source>
-        <target/>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "g2G-5j-Y4q";</note>
       </trans-unit>
       <trans-unit id="g46-cV-NBw.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target/>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "g46-cV-NBw";</note>
       </trans-unit>
       <trans-unit id="gdL-Os-R6R.text" xml:space="preserve">
         <source>Points</source>
-        <target/>
         <note>Class = "UILabel"; text = "Points"; ObjectID = "gdL-Os-R6R";</note>
       </trans-unit>
       <trans-unit id="gre-3S-iPA.text" xml:space="preserve">
         <source>Detail</source>
-        <target/>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "gre-3S-iPA";</note>
       </trans-unit>
       <trans-unit id="h1O-06-ApF.text" xml:space="preserve">
         <source>Label</source>
-        <target/>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "h1O-06-ApF";</note>
       </trans-unit>
       <trans-unit id="hMJ-yP-XJe.text" xml:space="preserve">
         <source>OpenStreetMap GPS Traces</source>
-        <target/>
         <note>Class = "UILabel"; text = "OpenStreetMap GPS Traces"; ObjectID = "hMJ-yP-XJe";</note>
       </trans-unit>
       <trans-unit id="hkr-kO-jbt.text" xml:space="preserve">
         <source>Traffic Roads</source>
-        <target/>
         <note>Class = "UILabel"; text = "Traffic Roads"; ObjectID = "hkr-kO-jbt";</note>
       </trans-unit>
       <trans-unit id="hsp-Xj-TU6.text" xml:space="preserve">
         <source>Simon Poole Map Data © OpenStreetMap contributors
 </source>
-        <target/>
         <note>Class = "UITextView"; text = "Simon Poole Map Data © OpenStreetMap contributors\n"; ObjectID = "hsp-Xj-TU6";</note>
       </trans-unit>
       <trans-unit id="iuk-Fk-3Fw.placeholder" xml:space="preserve">
         <source>(TMS)</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "(TMS)"; ObjectID = "iuk-Fk-3Fw";</note>
       </trans-unit>
       <trans-unit id="lu0-kr-5Cc.text" xml:space="preserve">
         <source>Past/Future</source>
-        <target/>
         <note>Class = "UILabel"; text = "Past/Future"; ObjectID = "lu0-kr-5Cc";</note>
       </trans-unit>
       <trans-unit id="lwG-AE-nIZ.headerTitle" xml:space="preserve">
         <source>Background</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ";</note>
       </trans-unit>
       <trans-unit id="oSD-0y-Vt0.title" xml:space="preserve">
         <source>Configure GPX Tracks</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Configure GPX Tracks"; ObjectID = "oSD-0y-Vt0";</note>
       </trans-unit>
       <trans-unit id="pQK-9y-t4z.text" xml:space="preserve">
         <source>Buildings</source>
-        <target/>
         <note>Class = "UILabel"; text = "Buildings"; ObjectID = "pQK-9y-t4z";</note>
       </trans-unit>
       <trans-unit id="pR1-M8-pXH.title" xml:space="preserve">
         <source>Back</source>
-        <target/>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "pR1-M8-pXH";</note>
       </trans-unit>
       <trans-unit id="qdV-Je-jXT.text" xml:space="preserve">
         <source>Boundaries</source>
-        <target/>
         <note>Class = "UILabel"; text = "Boundaries"; ObjectID = "qdV-Je-jXT";</note>
       </trans-unit>
       <trans-unit id="r6a-cT-Ufa.text" xml:space="preserve">
         <source>Turn Restrictions</source>
-        <target/>
         <note>Class = "UILabel"; text = "Turn Restrictions"; ObjectID = "r6a-cT-Ufa";</note>
       </trans-unit>
       <trans-unit id="scg-Po-M3L.headerTitle" xml:space="preserve">
         <source>Filter Objects</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "Filter Objects"; ObjectID = "scg-Po-M3L";</note>
       </trans-unit>
       <trans-unit id="swu-t3-p5w.text" xml:space="preserve">
         <source>URL</source>
-        <target/>
         <note>Class = "UILabel"; text = "URL"; ObjectID = "swu-t3-p5w";</note>
       </trans-unit>
       <trans-unit id="tS9-CP-pqu.title" xml:space="preserve">
         <source>Clear Cache</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Clear Cache"; ObjectID = "tS9-CP-pqu";</note>
       </trans-unit>
       <trans-unit id="tU9-Ml-4ko.title" xml:space="preserve">
         <source>Back</source>
-        <target/>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "tU9-Ml-4ko";</note>
       </trans-unit>
       <trans-unit id="twn-Ve-8vl.text" xml:space="preserve">
         <source>Water Features</source>
-        <target/>
         <note>Class = "UILabel"; text = "Water Features"; ObjectID = "twn-Ve-8vl";</note>
       </trans-unit>
       <trans-unit id="uOd-BB-zEq.text" xml:space="preserve">
         <source>Aerial only</source>
-        <target/>
         <note>Class = "UILabel"; text = "Aerial only"; ObjectID = "uOd-BB-zEq";</note>
       </trans-unit>
       <trans-unit id="uQ3-vb-l3H.placeholder" xml:space="preserve">
         <source>21</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "21"; ObjectID = "uQ3-vb-l3H";</note>
       </trans-unit>
       <trans-unit id="uZo-P0-sR7.text" xml:space="preserve">
         <source>Building Level</source>
-        <target/>
         <note>Class = "UILabel"; text = "Building Level"; ObjectID = "uZo-P0-sR7";</note>
       </trans-unit>
       <trans-unit id="v6h-g5-fka.text" xml:space="preserve">
         <source>12/22/20, 7:55 PM</source>
-        <target/>
         <note>Class = "UILabel"; text = "12/22/20, 7:55 PM"; ObjectID = "v6h-g5-fka";</note>
       </trans-unit>
       <trans-unit id="voF-Yf-33h.text" xml:space="preserve">
         <source>Max Zoom</source>
-        <target/>
         <note>Class = "UILabel"; text = "Max Zoom"; ObjectID = "voF-Yf-33h";</note>
       </trans-unit>
       <trans-unit id="w75-Lj-3jF.placeholder" xml:space="preserve">
         <source>Portlandia GIS</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF"; Note = "A hypothetical aerial imagery provider";</note>
       </trans-unit>
       <trans-unit id="wev-ax-u4C.headerTitle" xml:space="preserve">
         <source>Reset</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C";</note>
       </trans-unit>
       <trans-unit id="xve-fW-qM7.text" xml:space="preserve">
         <source>Details</source>
-        <target/>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "xve-fW-qM7";</note>
       </trans-unit>
       <trans-unit id="yue-km-52a.text" xml:space="preserve">
         <source>Name</source>
-        <target/>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "yue-km-52a";</note>
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.footerTitle" xml:space="preserve">
         <source>A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL</source>
-        <target/>
         <note>Class = "UITableViewSection"; footerTitle = "A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL"; ObjectID = "zD6-m4-1PD";</note>
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.headerTitle" xml:space="preserve">
         <source>Template URL of the tile server</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "Template URL of the tile server"; ObjectID = "zD6-m4-1PD";</note>
       </trans-unit>
       <trans-unit id="zI2-YM-qbl.normalTitle" xml:space="preserve">
         <source>Add New</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Add New"; ObjectID = "zI2-YM-qbl";</note>
       </trans-unit>
     </body>
@@ -2137,172 +1730,138 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
     <body>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
         <source>Get Directions</source>
-        <target/>
         <note>Class = "UILabel"; text = "Get Directions"; ObjectID = "1xx-L0-hKm";</note>
       </trans-unit>
       <trans-unit id="2.title" xml:space="preserve">
         <source>First</source>
-        <target/>
         <note>Class = "UIViewController"; title = "First"; ObjectID = "2";</note>
       </trans-unit>
       <trans-unit id="2Ka-IT-DQC.normalTitle" xml:space="preserve">
         <source>Bing attribution</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Bing attribution"; ObjectID = "2Ka-IT-DQC";</note>
       </trans-unit>
       <trans-unit id="2g1-vb-Cjc.normalTitle" xml:space="preserve">
         <source>Comment</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Comment"; ObjectID = "2g1-vb-Cjc";</note>
       </trans-unit>
       <trans-unit id="7Ua-cx-BHI.title" xml:space="preserve">
         <source>Upload</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Upload"; ObjectID = "7Ua-cx-BHI";</note>
       </trans-unit>
       <trans-unit id="9G2-Gl-CeP.text" xml:space="preserve">
         <source>username</source>
-        <target/>
         <note>Class = "UILabel"; text = "username"; ObjectID = "9G2-Gl-CeP"; Note = "Placeholder - ignore";</note>
       </trans-unit>
       <trans-unit id="9hH-Ja-fKn.text" xml:space="preserve">
         <source>New comment:</source>
-        <target/>
         <note>Class = "UILabel"; text = "New comment:"; ObjectID = "9hH-Ja-fKn";</note>
       </trans-unit>
       <trans-unit id="9t5-wq-j1u.text" xml:space="preserve">
         <source>66.6 FPS</source>
-        <target/>
         <note>Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u";</note>
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityHint" xml:space="preserve">
         <source>Reorient map north</source>
-        <target/>
         <note>Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt";</note>
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityLabel" xml:space="preserve">
         <source>Compass</source>
-        <target/>
         <note>Class = "UIButton"; accessibilityLabel = "Compass"; ObjectID = "E22-sL-sNt";</note>
       </trans-unit>
       <trans-unit id="FaM-WV-S6I.title" xml:space="preserve">
         <source>Search for Location</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Search for Location"; ObjectID = "FaM-WV-S6I";</note>
       </trans-unit>
       <trans-unit id="Fo4-Nq-pAz.normalTitle" xml:space="preserve">
         <source>Center</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Center"; ObjectID = "Fo4-Nq-pAz";</note>
       </trans-unit>
       <trans-unit id="HeZ-95-3K1.text" xml:space="preserve">
         <source>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</source>
-        <target/>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "HeZ-95-3K1";</note>
       </trans-unit>
       <trans-unit id="LSJ-rB-J2c.text" xml:space="preserve">
         <source>-</source>
-        <target/>
         <note>Class = "UILabel"; text = "-"; ObjectID = "LSJ-rB-J2c"; Note = "Placeholder - ignore";</note>
       </trans-unit>
       <trans-unit id="MBY-TK-Wuy.title" xml:space="preserve">
         <source>Note</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Note"; ObjectID = "MBY-TK-Wuy";</note>
       </trans-unit>
       <trans-unit id="N5Q-nV-TPG.text" xml:space="preserve">
         <source>Zoom to Edit</source>
-        <target/>
         <note>Class = "UILabel"; text = "Zoom to Edit"; ObjectID = "N5Q-nV-TPG";</note>
       </trans-unit>
       <trans-unit id="OJ0-aO-ri1.normalTitle" xml:space="preserve">
         <source>Resolve</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1";</note>
       </trans-unit>
       <trans-unit id="PHk-s9-onx.text" xml:space="preserve">
         <source>Various comments...</source>
-        <target/>
         <note>Class = "UITextView"; text = "Various comments..."; ObjectID = "PHk-s9-onx"; Note = "Placeholder - ignore";</note>
       </trans-unit>
       <trans-unit id="Qz0-Ce-YCX.title" xml:space="preserve">
         <source>Bing Maps</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Bing Maps"; ObjectID = "Qz0-Ce-YCX";</note>
       </trans-unit>
       <trans-unit id="TcP-6i-B8H.text" xml:space="preserve">
         <source>Specify a name ("New York"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object ("way 51014987"):</source>
-        <target/>
         <note>Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H";</note>
       </trans-unit>
       <trans-unit id="VNE-ee-a7u.text" xml:space="preserve">
         <source>action</source>
-        <target/>
         <note>Class = "UILabel"; text = "action"; ObjectID = "VNE-ee-a7u"; Note = "Placeholder - ignore";</note>
       </trans-unit>
       <trans-unit id="ach-1A-88x.text" xml:space="preserve">
         <source>Changeset comment goes here</source>
-        <target/>
         <note>Class = "UITextView"; text = "Changeset comment goes here"; ObjectID = "ach-1A-88x";</note>
       </trans-unit>
       <trans-unit id="gdu-Sf-XrE.title" xml:space="preserve">
         <source>Commit</source>
-        <target/>
         <note>Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "gdu-Sf-XrE";</note>
       </trans-unit>
       <trans-unit id="l7S-YL-RKK.text" xml:space="preserve">
         <source>Subtitle</source>
-        <target/>
         <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "l7S-YL-RKK";</note>
       </trans-unit>
       <trans-unit id="nU5-T2-ADn.text" xml:space="preserve">
         <source>A Error Message Flashing Z</source>
-        <target/>
         <note>Class = "UILabel"; text = "A Error Message Flashing Z"; ObjectID = "nU5-T2-ADn"; Note = "Placeholder - Don't translate";</note>
       </trans-unit>
       <trans-unit id="qP9-Sc-sc4.text" xml:space="preserve">
         <source>Label</source>
-        <target/>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "qP9-Sc-sc4";</note>
       </trans-unit>
       <trans-unit id="siu-I6-IEp.title" xml:space="preserve">
         <source>Search for Location</source>
-        <target/>
         <note>Class = "UIViewController"; title = "Search for Location"; ObjectID = "siu-I6-IEp";</note>
       </trans-unit>
       <trans-unit id="stf-JU-iga.text" xml:space="preserve">
         <source>Title</source>
-        <target/>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "stf-JU-iga";</note>
       </trans-unit>
       <trans-unit id="tOO-VD-MeJ.text" xml:space="preserve">
         <source>2014-06-17 17:54 UTC</source>
-        <target/>
         <note>Class = "UILabel"; text = "2014-06-17 17:54 UTC"; ObjectID = "tOO-VD-MeJ";</note>
       </trans-unit>
       <trans-unit id="vRO-Aj-Sdr.text" xml:space="preserve">
         <source>Title</source>
-        <target/>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr";</note>
       </trans-unit>
       <trans-unit id="xw9-Ro-Fai.placeholder" xml:space="preserve">
         <source>Niagara Falls</source>
-        <target/>
         <note>Class = "UISearchBar"; placeholder = "Niagara Falls"; ObjectID = "xw9-Ro-Fai";</note>
       </trans-unit>
       <trans-unit id="zrW-uc-hfQ.segmentTitles[0]" xml:space="preserve">
         <source>Tags</source>
-        <target/>
         <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[0] = "Tags"; ObjectID = "zrW-uc-hfQ";</note>
       </trans-unit>
       <trans-unit id="zrW-uc-hfQ.segmentTitles[1]" xml:space="preserve">
         <source>Delete</source>
-        <target/>
         <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[1] = "Delete"; ObjectID = "zrW-uc-hfQ";</note>
       </trans-unit>
       <trans-unit id="zrW-uc-hfQ.segmentTitles[2]" xml:space="preserve">
         <source>More...</source>
-        <target/>
         <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[2] = "More..."; ObjectID = "zrW-uc-hfQ";</note>
       </trans-unit>
     </body>
@@ -2314,367 +1873,294 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
         <source>no</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "no"; ObjectID = "0mW-YK-ajm"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="0zS-QM-zwQ.placeholder" xml:space="preserve">
         <source>type</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "type"; ObjectID = "0zS-QM-zwQ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="1Yx-Ce-yfq.title" xml:space="preserve">
         <source>Back</source>
-        <target/>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "1Yx-Ce-yfq";</note>
       </trans-unit>
       <trans-unit id="2Q5-Vd-FED.text" xml:space="preserve">
         <source>Title</source>
-        <target/>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "2Q5-Vd-FED"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="2cB-FV-ozw.title" xml:space="preserve">
         <source>Attributes</source>
-        <target/>
         <note>Class = "UITabBarItem"; title = "Attributes"; ObjectID = "2cB-FV-ozw";</note>
       </trans-unit>
       <trans-unit id="6VA-gm-L0S.title" xml:space="preserve">
         <source>Point of Interest</source>
-        <target/>
         <note>Class = "UITableViewController"; title = "Point of Interest"; ObjectID = "6VA-gm-L0S";</note>
       </trans-unit>
       <trans-unit id="8Nt-xf-x5Q.text" xml:space="preserve">
         <source>Title</source>
-        <target/>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "8Nt-xf-x5Q";</note>
       </trans-unit>
       <trans-unit id="9Nw-ha-JK5.placeholder" xml:space="preserve">
         <source>Yes</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "Yes"; ObjectID = "9Nw-ha-JK5";</note>
       </trans-unit>
       <trans-unit id="19J-sp-UTX.title" xml:space="preserve">
         <source>All Tags</source>
-        <target/>
         <note>Class = "UITabBarItem"; title = "All Tags"; ObjectID = "19J-sp-UTX";</note>
       </trans-unit>
       <trans-unit id="436-kv-L7j.placeholder" xml:space="preserve">
         <source>Restaurant</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j";</note>
       </trans-unit>
       <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve">
         <source>dog</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="Bnh-U0-D7i.text" xml:space="preserve">
         <source>Add New</source>
-        <target/>
         <note>Class = "UILabel"; text = "Add New"; ObjectID = "Bnh-U0-D7i";</note>
       </trans-unit>
       <trans-unit id="CXe-gQ-Zda.text" xml:space="preserve">
         <source>Value 8</source>
-        <target/>
         <note>Class = "UILabel"; text = "Value 8"; ObjectID = "CXe-gQ-Zda";</note>
       </trans-unit>
       <trans-unit id="Dfv-TT-J6i.footerTitle" xml:space="preserve">
         <source>The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard.</source>
-        <target/>
         <note>Class = "UITableViewSection"; footerTitle = "The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard."; ObjectID = "Dfv-TT-J6i";</note>
       </trans-unit>
       <trans-unit id="Dfv-TT-J6i.headerTitle" xml:space="preserve">
         <source>Applies To</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "Applies To"; ObjectID = "Dfv-TT-J6i";</note>
       </trans-unit>
       <trans-unit id="Eou-a6-V4g.text" xml:space="preserve">
         <source>Key</source>
-        <target/>
         <note>Class = "UILabel"; text = "Key"; ObjectID = "Eou-a6-V4g";</note>
       </trans-unit>
       <trans-unit id="Fcv-4Q-gpE.text" xml:space="preserve">
         <source>Value 3</source>
-        <target/>
         <note>Class = "UILabel"; text = "Value 3"; ObjectID = "Fcv-4Q-gpE";</note>
       </trans-unit>
       <trans-unit id="Fe2-dc-zgA.placeholder" xml:space="preserve">
         <source>designated</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="G5R-oP-lp3.title" xml:space="preserve">
         <source>Custom Tags</source>
-        <target/>
         <note>Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3";</note>
       </trans-unit>
       <trans-unit id="GIO-W7-q5U.title" xml:space="preserve">
         <source>Custom Presets</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Custom Presets"; ObjectID = "GIO-W7-q5U";</note>
       </trans-unit>
       <trans-unit id="Hgu-iP-FnG.title" xml:space="preserve">
         <source>Back</source>
-        <target/>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "Hgu-iP-FnG";</note>
       </trans-unit>
       <trans-unit id="JAT-qD-dTS.text" xml:space="preserve">
         <source>Value 1</source>
-        <target/>
         <note>Class = "UILabel"; text = "Value 1"; ObjectID = "JAT-qD-dTS";</note>
       </trans-unit>
       <trans-unit id="Jsm-mO-hgo.title" xml:space="preserve">
         <source>POI Type</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "POI Type"; ObjectID = "Jsm-mO-hgo";</note>
       </trans-unit>
       <trans-unit id="KX3-hG-OyE.title" xml:space="preserve">
         <source>Back</source>
-        <target/>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "KX3-hG-OyE";</note>
       </trans-unit>
       <trans-unit id="OND-s7-I6f.title" xml:space="preserve">
         <source>Custom Preset</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Custom Preset"; ObjectID = "OND-s7-I6f";</note>
       </trans-unit>
       <trans-unit id="P3A-5n-1Iq.text" xml:space="preserve">
         <source>Type</source>
-        <target/>
         <note>Class = "UILabel"; text = "Type"; ObjectID = "P3A-5n-1Iq";</note>
       </trans-unit>
       <trans-unit id="QDv-7w-nbx.headerTitle" xml:space="preserve">
         <source>Preset Name</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "Preset Name"; ObjectID = "QDv-7w-nbx";</note>
       </trans-unit>
       <trans-unit id="R0q-aM-ULf.text" xml:space="preserve">
         <source>Value 6</source>
-        <target/>
         <note>Class = "UILabel"; text = "Value 6"; ObjectID = "R0q-aM-ULf";</note>
       </trans-unit>
       <trans-unit id="Rfe-SO-p0w.title" xml:space="preserve">
         <source>Cancel</source>
-        <target/>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "Rfe-SO-p0w";</note>
       </trans-unit>
       <trans-unit id="TK4-E8-1q7.text" xml:space="preserve">
         <source>Title</source>
-        <target/>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "TK4-E8-1q7"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="Urd-9O-Mte.placeholder" xml:space="preserve">
         <source>relation</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "relation"; ObjectID = "Urd-9O-Mte"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="Vli-Ct-Lpz.text" xml:space="preserve">
         <source>Wheelchair Access</source>
-        <target/>
         <note>Class = "UILabel"; text = "Wheelchair Access"; ObjectID = "Vli-Ct-Lpz";</note>
       </trans-unit>
       <trans-unit id="Wim-Qa-dYQ.text" xml:space="preserve">
         <source>Value 10</source>
-        <target/>
         <note>Class = "UILabel"; text = "Value 10"; ObjectID = "Wim-Qa-dYQ";</note>
       </trans-unit>
       <trans-unit id="WoH-od-iKL.text" xml:space="preserve">
         <source>Value 7</source>
-        <target/>
         <note>Class = "UILabel"; text = "Value 7"; ObjectID = "WoH-od-iKL";</note>
       </trans-unit>
       <trans-unit id="X1y-nK-nVJ.placeholder" xml:space="preserve">
         <source>key</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "X1y-nK-nVJ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="XBV-Ie-LDT.text" xml:space="preserve">
         <source>Food &amp; Drink</source>
-        <target/>
         <note>Class = "UILabel"; text = "Food &amp; Drink"; ObjectID = "XBV-Ie-LDT"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
         <source>Subtitle</source>
-        <target/>
         <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "ZYn-TK-k7d"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="aCs-vS-YXj.placeholder" xml:space="preserve">
         <source>ref</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "ref"; ObjectID = "aCs-vS-YXj"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="aLi-Vs-z0k.title" xml:space="preserve">
         <source>Configure</source>
-        <target/>
         <note>Class = "UIBarButtonItem"; title = "Configure"; ObjectID = "aLi-Vs-z0k";</note>
       </trans-unit>
       <trans-unit id="cN9-3h-H3l.title" xml:space="preserve">
         <source>All Tags</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "All Tags"; ObjectID = "cN9-3h-H3l";</note>
       </trans-unit>
       <trans-unit id="cP3-lR-lzM.placeholder" xml:space="preserve">
         <source>value</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "value"; ObjectID = "cP3-lR-lzM"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="cTf-Rc-vqr.headerTitle" xml:space="preserve">
         <source>Preset Key</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "Preset Key"; ObjectID = "cTf-Rc-vqr";</note>
       </trans-unit>
       <trans-unit id="daQ-tl-pKh.text" xml:space="preserve">
         <source>Label</source>
-        <target/>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="dsA-B6-s7R.text" xml:space="preserve">
         <source>Value 9</source>
-        <target/>
         <note>Class = "UILabel"; text = "Value 9"; ObjectID = "dsA-B6-s7R";</note>
       </trans-unit>
       <trans-unit id="eG3-Xz-Nnp.placeholder" xml:space="preserve">
         <source>Dogs Allowed</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "Dogs Allowed"; ObjectID = "eG3-Xz-Nnp";</note>
       </trans-unit>
       <trans-unit id="f5t-25-IXF.title" xml:space="preserve">
         <source>Attributes</source>
-        <target/>
         <note>Class = "UITabBarController"; title = "Attributes"; ObjectID = "f5t-25-IXF";</note>
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
         <source>clean</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
         <source>Label</source>
-        <target/>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="hKU-EH-qxp.title" xml:space="preserve">
         <source>Attributes</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Attributes"; ObjectID = "hKU-EH-qxp";</note>
       </trans-unit>
       <trans-unit id="hfr-Mf-ZHv.text" xml:space="preserve">
         <source>value</source>
-        <target/>
         <note>Class = "UITextField"; text = "value"; ObjectID = "hfr-Mf-ZHv";</note>
       </trans-unit>
       <trans-unit id="ijx-N9-1eO.text" xml:space="preserve">
         <source>Changeset</source>
-        <target/>
         <note>Class = "UILabel"; text = "Changeset"; ObjectID = "ijx-N9-1eO";</note>
       </trans-unit>
       <trans-unit id="jv1-BF-p2a.footerTitle" xml:space="preserve">
         <source>The possible values for the preset</source>
-        <target/>
         <note>Class = "UITableViewSection"; footerTitle = "The possible values for the preset"; ObjectID = "jv1-BF-p2a";</note>
       </trans-unit>
       <trans-unit id="jv1-BF-p2a.headerTitle" xml:space="preserve">
         <source>Preset values</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "Preset values"; ObjectID = "jv1-BF-p2a";</note>
       </trans-unit>
       <trans-unit id="kPA-ky-U48.placeholder" xml:space="preserve">
         <source>leisure </source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "leisure "; ObjectID = "kPA-ky-U48"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="lPv-s6-uEz.title" xml:space="preserve">
         <source>Common Tags</source>
-        <target/>
         <note>Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz";</note>
       </trans-unit>
       <trans-unit id="li7-oV-pgT.text" xml:space="preserve">
         <source>Value 5</source>
-        <target/>
         <note>Class = "UILabel"; text = "Value 5"; ObjectID = "li7-oV-pgT";</note>
       </trans-unit>
       <trans-unit id="mAb-DX-pqb.title" xml:space="preserve">
         <source>Common tags</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Common tags"; ObjectID = "mAb-DX-pqb";</note>
       </trans-unit>
       <trans-unit id="mcN-gM-s7u.text" xml:space="preserve">
         <source>Name</source>
-        <target/>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "mcN-gM-s7u";</note>
       </trans-unit>
       <trans-unit id="nKt-LG-cSw.text" xml:space="preserve">
         <source>Value 2</source>
-        <target/>
         <note>Class = "UILabel"; text = "Value 2"; ObjectID = "nKt-LG-cSw";</note>
       </trans-unit>
       <trans-unit id="ng7-T9-SJ6.text" xml:space="preserve">
         <source>Value 4</source>
-        <target/>
         <note>Class = "UILabel"; text = "Value 4"; ObjectID = "ng7-T9-SJ6";</note>
       </trans-unit>
       <trans-unit id="o63-qY-4vl.text" xml:space="preserve">
         <source>Value 11</source>
-        <target/>
         <note>Class = "UILabel"; text = "Value 11"; ObjectID = "o63-qY-4vl";</note>
       </trans-unit>
       <trans-unit id="oC6-w7-cwN.placeholder" xml:space="preserve">
         <source>leashed</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="okh-JP-aKZ.placeholder" xml:space="preserve">
         <source>park</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="omf-S9-Yjq.text" xml:space="preserve">
         <source>Name</source>
-        <target/>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "omf-S9-Yjq";</note>
       </trans-unit>
       <trans-unit id="pHA-2B-6DC.normalTitle" xml:space="preserve">
         <source>Customize Presets</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Customize Presets"; ObjectID = "pHA-2B-6DC";</note>
       </trans-unit>
       <trans-unit id="pxY-di-zg7.placeholder" xml:space="preserve">
         <source>Restaurant</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "pxY-di-zg7";</note>
       </trans-unit>
       <trans-unit id="sVp-1S-TjJ.placeholder" xml:space="preserve">
         <source>role</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="teB-9L-Nrf.text" xml:space="preserve">
         <source>Key</source>
-        <target/>
         <note>Class = "UILabel"; text = "Key"; ObjectID = "teB-9L-Nrf";</note>
       </trans-unit>
       <trans-unit id="v1b-PG-XxE.title" xml:space="preserve">
         <source>Presets</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Presets"; ObjectID = "v1b-PG-XxE";</note>
       </trans-unit>
       <trans-unit id="vpk-jC-yxl.placeholder" xml:space="preserve">
         <source>yes</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "yes"; ObjectID = "vpk-jC-yxl"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="wFE-f1-sQa.text" xml:space="preserve">
         <source>Value 12</source>
-        <target/>
         <note>Class = "UILabel"; text = "Value 12"; ObjectID = "wFE-f1-sQa";</note>
       </trans-unit>
       <trans-unit id="z19-cc-gHZ.text" xml:space="preserve">
         <source>Value</source>
-        <target/>
         <note>Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ";</note>
       </trans-unit>
       <trans-unit id="zpj-gL-2Nt.normalTitle" xml:space="preserve">
         <source>ⓘ</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "zpj-gL-2Nt";</note>
       </trans-unit>
     </body>
@@ -2686,82 +2172,66 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
         <source>Mapnik Tiles</source>
-        <target/>
         <note>Class = "UILabel"; text = "Mapnik Tiles"; ObjectID = "0Hk-5U-2Kg";</note>
       </trans-unit>
       <trans-unit id="1Mo-xe-IbY.headerTitle" xml:space="preserve">
         <source>I don't have an account</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "I don't have an account"; ObjectID = "1Mo-xe-IbY";</note>
       </trans-unit>
       <trans-unit id="1SU-BF-K3n.title" xml:space="preserve">
         <source>Credits</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Credits"; ObjectID = "1SU-BF-K3n";</note>
       </trans-unit>
       <trans-unit id="2TW-mO-uX2.footerTitle" xml:space="preserve">
         <source>If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area.</source>
-        <target/>
         <note>Class = "UITableViewSection"; footerTitle = "If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area."; ObjectID = "2TW-mO-uX2";</note>
       </trans-unit>
       <trans-unit id="2TW-mO-uX2.headerTitle" xml:space="preserve">
         <source>Download zoomed tiles</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "Download zoomed tiles"; ObjectID = "2TW-mO-uX2";</note>
       </trans-unit>
       <trans-unit id="2Zi-cz-7Va.text" xml:space="preserve">
         <source>Show Touches</source>
-        <target/>
         <note>Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va"; Note = "Display the user's touches when they tap the screen";</note>
       </trans-unit>
       <trans-unit id="3qk-15-BUc.text" xml:space="preserve">
         <source>Details</source>
-        <target/>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "3qk-15-BUc";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.footerTitle" xml:space="preserve">
         <source>Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.</source>
-        <target/>
         <note>Class = "UITableViewSection"; footerTitle = "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org."; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.headerTitle" xml:space="preserve">
         <source>OpenStreetMap Server</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "OpenStreetMap Server"; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6Lj-wh-z9f.text" xml:space="preserve">
         <source>Detail</source>
-        <target/>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "6Lj-wh-z9f";</note>
       </trans-unit>
       <trans-unit id="7cc-E7-pzw.text" xml:space="preserve">
         <source>Name</source>
-        <target/>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "7cc-E7-pzw";</note>
       </trans-unit>
       <trans-unit id="34N-Ep-rpf.text" xml:space="preserve">
         <source>OpenStreetMap Login</source>
-        <target/>
         <note>Class = "UILabel"; text = "OpenStreetMap Login"; ObjectID = "34N-Ep-rpf";</note>
       </trans-unit>
       <trans-unit id="66J-ih-Lfh.placeholder" xml:space="preserve">
         <source>api.openstreetmap.org</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "api.openstreetmap.org"; ObjectID = "66J-ih-Lfh";</note>
       </trans-unit>
       <trans-unit id="355-dx-Oi8.headerTitle" xml:space="preserve">
         <source>Language</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "Language"; ObjectID = "355-dx-Oi8";</note>
       </trans-unit>
       <trans-unit id="AHZ-L8-yUA.title" xml:space="preserve">
         <source>Settings</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Settings"; ObjectID = "AHZ-L8-yUA";</note>
       </trans-unit>
       <trans-unit id="AVI-04-hFN.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target/>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "AVI-04-hFN";</note>
       </trans-unit>
       <trans-unit id="BHr-ta-k6F.text" xml:space="preserve">
@@ -2788,222 +2258,178 @@ http://www.sjjb.co.uk/mapicons
 Other icons by Glyphish:
 http://glyphish.com
 </source>
-        <target/>
         <note>Class = "UITextView"; text = "Copyright © 2012-2020 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nEXIF parsing code Copyright (c) 2010-2015 Mayank Lahiri\nhttps://github.com/mayanklahiri/easyexif\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F";</note>
       </trans-unit>
       <trans-unit id="CHj-a3-gC9.text" xml:space="preserve">
         <source>Weblate - Translations</source>
-        <target/>
         <note>Class = "UILabel"; text = "Weblate - Translations"; ObjectID = "CHj-a3-gC9";</note>
       </trans-unit>
       <trans-unit id="DY5-Ls-XZ1.normalTitle" xml:space="preserve">
         <source>Register new account</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Register new account"; ObjectID = "DY5-Ls-XZ1";</note>
       </trans-unit>
       <trans-unit id="DiU-tt-U7H.text" xml:space="preserve">
         <source>Detail detail detail detail detail</source>
-        <target/>
         <note>Class = "UILabel"; text = "Detail detail detail detail detail"; ObjectID = "DiU-tt-U7H"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="Gcr-zK-nDq.text" xml:space="preserve">
         <source>Touches for screen recording</source>
-        <target/>
         <note>Class = "UILabel"; text = "Touches for screen recording"; ObjectID = "Gcr-zK-nDq"; Note = "Display the user's touches when they tap the screen";</note>
       </trans-unit>
       <trans-unit id="Gxc-44-SzR.title" xml:space="preserve">
         <source>Advanced Settings</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Advanced Settings"; ObjectID = "Gxc-44-SzR";</note>
       </trans-unit>
       <trans-unit id="HNj-kK-OCP.text" xml:space="preserve">
         <source>Title</source>
-        <target/>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "HNj-kK-OCP";</note>
       </trans-unit>
       <trans-unit id="JbA-pC-plJ.text" xml:space="preserve">
         <source>Title title title title</source>
-        <target/>
         <note>Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="KIO-8j-QsO.text" xml:space="preserve">
         <source>Subtitle</source>
-        <target/>
         <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "KIO-8j-QsO";</note>
       </trans-unit>
       <trans-unit id="LaB-Et-hHT.text" xml:space="preserve">
         <source>Details</source>
-        <target/>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "LaB-Et-hHT";</note>
       </trans-unit>
       <trans-unit id="Mus-SG-1Sz.text" xml:space="preserve">
         <source>Detail</source>
-        <target/>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "Mus-SG-1Sz";</note>
       </trans-unit>
       <trans-unit id="O6E-f1-A1k.title" xml:space="preserve">
         <source>Login</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Login"; ObjectID = "O6E-f1-A1k";</note>
       </trans-unit>
       <trans-unit id="TGa-tJ-nrC.text" xml:space="preserve">
         <source>Credits</source>
-        <target/>
         <note>Class = "UILabel"; text = "Credits"; ObjectID = "TGa-tJ-nrC";</note>
       </trans-unit>
       <trans-unit id="Tkc-bW-kNS.footerTitle" xml:space="preserve">
         <source>In order to upload changes to the map you need a user name and password registered at openstreetmap.org. </source>
-        <target/>
         <note>Class = "UITableViewSection"; footerTitle = "In order to upload changes to the map you need a user name and password registered at openstreetmap.org. "; ObjectID = "Tkc-bW-kNS";</note>
       </trans-unit>
       <trans-unit id="Tkc-bW-kNS.headerTitle" xml:space="preserve">
         <source>OpenStreetMap account</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "OpenStreetMap account"; ObjectID = "Tkc-bW-kNS";</note>
       </trans-unit>
       <trans-unit id="TrT-Nn-WKe.text" xml:space="preserve">
         <source>Join the TestFlight Beta</source>
-        <target/>
         <note>Class = "UILabel"; text = "Join the TestFlight Beta"; ObjectID = "TrT-Nn-WKe";</note>
       </trans-unit>
       <trans-unit id="UeH-ME-EV8.text" xml:space="preserve">
         <source>Show FPS</source>
-        <target/>
         <note>Class = "UILabel"; text = "Show FPS"; ObjectID = "UeH-ME-EV8"; Note = "Display the app's frames/second while running";</note>
       </trans-unit>
       <trans-unit id="UvN-Qa-roL.text" xml:space="preserve">
         <source>Frames/Second</source>
-        <target/>
         <note>Class = "UILabel"; text = "Frames/Second"; ObjectID = "UvN-Qa-roL";</note>
       </trans-unit>
       <trans-unit id="VDO-HW-SLB.title" xml:space="preserve">
         <source>Nearby Mappers</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Nearby Mappers"; ObjectID = "VDO-HW-SLB";</note>
       </trans-unit>
       <trans-unit id="YQ4-05-lQz.placeholder" xml:space="preserve">
         <source>username</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "username"; ObjectID = "YQ4-05-lQz";</note>
       </trans-unit>
       <trans-unit id="ags-Mx-c1q.text" xml:space="preserve">
         <source>Contact Us</source>
-        <target/>
         <note>Class = "UILabel"; text = "Contact Us"; ObjectID = "ags-Mx-c1q";</note>
       </trans-unit>
       <trans-unit id="bt0-CH-HbH.normalTitle" xml:space="preserve">
         <source>Start</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Start"; ObjectID = "bt0-CH-HbH";</note>
       </trans-unit>
       <trans-unit id="ctb-pg-pM9.title" xml:space="preserve">
         <source>Save</source>
-        <target/>
         <note>Class = "UIBarButtonItem"; title = "Save"; ObjectID = "ctb-pg-pM9";</note>
       </trans-unit>
       <trans-unit id="dbi-X6-Day.headerTitle" xml:space="preserve">
         <source>Bug Reports &amp; Suggestions</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "Bug Reports &amp; Suggestions"; ObjectID = "dbi-X6-Day";</note>
       </trans-unit>
       <trans-unit id="e7I-rE-dAW.placeholder" xml:space="preserve">
         <source>password</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "password"; ObjectID = "e7I-rE-dAW";</note>
       </trans-unit>
       <trans-unit id="fbD-Hr-HNI.headerTitle" xml:space="preserve">
         <source>Credentials</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "Credentials"; ObjectID = "fbD-Hr-HNI";</note>
       </trans-unit>
       <trans-unit id="gec-8l-k4H.text" xml:space="preserve">
         <source>Advanced Settings</source>
-        <target/>
         <note>Class = "UILabel"; text = "Advanced Settings"; ObjectID = "gec-8l-k4H";</note>
       </trans-unit>
       <trans-unit id="gh3-sb-yuZ.headerTitle" xml:space="preserve">
         <source>Advanced</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "Advanced"; ObjectID = "gh3-sb-yuZ";</note>
       </trans-unit>
       <trans-unit id="iR4-av-Q7M.text" xml:space="preserve">
         <source>Email Feedback</source>
-        <target/>
         <note>Class = "UILabel"; text = "Email Feedback"; ObjectID = "iR4-av-Q7M";</note>
       </trans-unit>
       <trans-unit id="ib9-wt-IzD.title" xml:space="preserve">
         <source>Language</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Language"; ObjectID = "ib9-wt-IzD";</note>
       </trans-unit>
       <trans-unit id="jcn-Lx-tj3.text" xml:space="preserve">
         <source>Nearby Mappers</source>
-        <target/>
         <note>Class = "UILabel"; text = "Nearby Mappers"; ObjectID = "jcn-Lx-tj3";</note>
       </trans-unit>
       <trans-unit id="k0y-gf-6DY.text" xml:space="preserve">
         <source>Password</source>
-        <target/>
         <note>Class = "UILabel"; text = "Password"; ObjectID = "k0y-gf-6DY";</note>
       </trans-unit>
       <trans-unit id="kt1-K7-kcu.title" xml:space="preserve">
         <source>Back</source>
-        <target/>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "kt1-K7-kcu";</note>
       </trans-unit>
       <trans-unit id="ktz-ef-tti.title" xml:space="preserve">
         <source>Contact Us</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Contact Us"; ObjectID = "ktz-ef-tti";</note>
       </trans-unit>
       <trans-unit id="m7D-wn-3MP.title" xml:space="preserve">
         <source>Prepare for Offline</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Prepare for Offline"; ObjectID = "m7D-wn-3MP";</note>
       </trans-unit>
       <trans-unit id="m7u-CH-jgg.headerTitle" xml:space="preserve">
         <source>Become a Tester</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "Become a Tester"; ObjectID = "m7u-CH-jgg";</note>
       </trans-unit>
       <trans-unit id="nIn-2k-PYG.headerTitle" xml:space="preserve">
         <source>Miscellaneous</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "Miscellaneous"; ObjectID = "nIn-2k-PYG";</note>
       </trans-unit>
       <trans-unit id="oIj-UV-kLH.headerTitle" xml:space="preserve">
         <source>About Us</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "About Us"; ObjectID = "oIj-UV-kLH";</note>
       </trans-unit>
       <trans-unit id="osk-Kq-gDX.text" xml:space="preserve">
         <source>Language</source>
-        <target/>
         <note>Class = "UILabel"; text = "Language"; ObjectID = "osk-Kq-gDX";</note>
       </trans-unit>
       <trans-unit id="rfX-TP-V0l.text" xml:space="preserve">
         <source>Prepare for Offline</source>
-        <target/>
         <note>Class = "UILabel"; text = "Prepare for Offline"; ObjectID = "rfX-TP-V0l";</note>
       </trans-unit>
       <trans-unit id="snH-kp-6ib.normalTitle" xml:space="preserve">
         <source>Start</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Start"; ObjectID = "snH-kp-6ib";</note>
       </trans-unit>
       <trans-unit id="whL-SZ-HD5.text" xml:space="preserve">
         <source>Email Feedback</source>
-        <target/>
         <note>Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5";</note>
       </trans-unit>
       <trans-unit id="x4m-oT-EG8.text" xml:space="preserve">
         <source>GitHub - Issues &amp; Source Code</source>
-        <target/>
         <note>Class = "UILabel"; text = "GitHub - Issues &amp; Source Code"; ObjectID = "x4m-oT-EG8";</note>
       </trans-unit>
       <trans-unit id="yAO-9B-CTd.headerTitle" xml:space="preserve">
         <source>Developer settings</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "Developer settings"; ObjectID = "yAO-9B-CTd";</note>
       </trans-unit>
     </body>
@@ -3015,52 +2441,42 @@ http://glyphish.com
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">
         <source>Changes:</source>
-        <target/>
         <note>Class = "UILabel"; text = "Changes:"; ObjectID = "ArV-4u-j7D";</note>
       </trans-unit>
       <trans-unit id="BAY-7z-hwv.text" xml:space="preserve">
         <source>Lorem ipsum dolor sit er elit lamet,</source>
-        <target/>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "BAY-7z-hwv";</note>
       </trans-unit>
       <trans-unit id="Mdj-M0-0mZ.title" xml:space="preserve">
         <source>Upload</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Upload"; ObjectID = "Mdj-M0-0mZ";</note>
       </trans-unit>
       <trans-unit id="Plh-7W-ceY.text" xml:space="preserve">
         <source>Lorem ipsum dolor sit er elit lamet,</source>
-        <target/>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "Plh-7W-ceY";</note>
       </trans-unit>
       <trans-unit id="Rqu-ny-n3F.normalTitle" xml:space="preserve">
         <source>Mail</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Mail"; ObjectID = "Rqu-ny-n3F";</note>
       </trans-unit>
       <trans-unit id="feW-AK-msn.title" xml:space="preserve">
         <source>Commit</source>
-        <target/>
         <note>Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "feW-AK-msn";</note>
       </trans-unit>
       <trans-unit id="hcE-yO-3eH.normalTitle" xml:space="preserve">
         <source>Edit</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Edit"; ObjectID = "hcE-yO-3eH";</note>
       </trans-unit>
       <trans-unit id="ikj-u9-9Bn.text" xml:space="preserve">
         <source>Changeset comment:</source>
-        <target/>
         <note>Class = "UILabel"; text = "Changeset comment:"; ObjectID = "ikj-u9-9Bn";</note>
       </trans-unit>
       <trans-unit id="ps9-Hb-Vow.placeholder" xml:space="preserve">
         <source>survey, Bing, etc.</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "survey, Bing, etc."; ObjectID = "ps9-Hb-Vow";</note>
       </trans-unit>
       <trans-unit id="yZR-tZ-66S.text" xml:space="preserve">
         <source>Source:</source>
-        <target/>
         <note>Class = "UILabel"; text = "Source:"; ObjectID = "yZR-tZ-66S";</note>
       </trans-unit>
     </body>
