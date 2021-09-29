@@ -1,47 +1,141 @@
-"quest_sidewalk_title" = "この通りに歩道がありますか?";
+/* (No Comment) */
 "quest_address_title" = "この建物の住居表示は何ですか?";
-"quest_bikeParkingCapacity_title" = "ここに何台の自転車を駐車できますか?";
-"quest_toiletsFee_title" = "これらのトイレは有料ですか?";
-"quest_bicycleParkingCoveredStatus_title" = "この駐輪場は屋根がありますか (雨から守られていますか)?";
-"quest_recycling_type_title" = "これはどのようなリサイクル施設ですか?";
-"quest_fireHydrant_type_title" = "これはどのような消火栓ですか?";
-"quest_crossing_type_title" = "この交差点はどのような種類ですか?";
-"quest_parkingType_title" = "ここはどのような種類の駐車場ですか?";
-"quest_powerPolesMaterial_title" = "この電柱の材質は何ですか?";
-"quest_dietType_vegetarian_name_title" = "%s は菜食（ベジタリアン）のメニューがありますか?";
-"quest_dietType_vegan_name_title" = "%s は完全菜食（ビーガン）のメニューがありますか?";
-"quest_bridge_structure_title" = "この橋の構造は何ですか?";
-"quest_internet_access_name_title" = "%s はどのような種類のインターネット接続を提供していますか?";
-"quest_bench_backrest_title" = "このベンチは背もたれがありますか?";
-"quest_religion_for_wayside_shrine_title" = "この神社にはどのような宗教がありますか?";
-"quest_parking_fee_title" = "ここに駐車するのに料金がかかりますか?";
-"quest_parking_access_title" = "ここに駐車する人は制限されていますか?";
-"quest_bicycle_parking_type_title" = "この駐輪場の種類は何ですか?";
-"quest_construction_building_title" = "この建物は完成していますか?";
-"quest_playground_access_title" = "この遊び場は誰でも利用できますか?";
-"quest_segregated_title" = "歩道と自転車道はどのように割り当てられていますか?";
-"quest_tracktype_title" = "この農道の路面の硬さは?";
-"quest_wheelchairAccess_outside_title" = "この場所は車椅子でアクセスできますか?";
-"quest_traffic_signals_button_title" = "この信号には歩行者用の押ボタンがありますか?";
-"quest_motorcycleParkingCapacity_title" = "ここに何台のオートバイを駐車できますか?";
-"quest_motorcycleParkingCoveredStatus_title" = "このオートバイの駐車場に屋根はありますか? (雨から守られていますか)";
-"quest_buildingType_title" = "これはどんな建物ですか?";
-"quest_leafType_title" = "ここの樹木の葉の種類は何ですか?";
-"quest_cyclewayPartSurface_title" = "この自転車道の路面は何ですか?";
-"quest_footwayPartSurface_title" = "この歩道の路面は何ですか?";
-"quest_handrail_title" = "この階段に手すりはありますか?";
-"quest_recycling_glass_title" = "リサイクルできるのはガラス瓶だけですか、それともあらゆるガラス製品を含みますか?";
-"quest_is_defibrillator_inside_title" = "この除細動器 (AED) は建物内にありますか?";
-"quest_steps_incline_title" = "階段はどの方向に上っていますか?";
-"quest_step_count_title" = "階段の何段ですか?";
-"quest_traffic_signals_sound_title" = "この信号に視覚障害者のための音響装置はありますか?";
-"quest_traffic_signals_vibrate_title" = "この信号機は視覚障害者のために、振動で安全に横断できることを知らせますか?";
-"quest_steps_ramp_title" = "階段にはスロープがありますか? どんな種類ですか?";
+
+/* (No Comment) */
 "quest_atm_operator_title" = "このATMを管理する銀行の名前は何ですか?";
-"quest_clothes_container_operator_title" = "この衣類収集箱への寄付は誰が受け取りますか?";
-"quest_charging_station_operator_title" = "この充電ステーションはどこが運営していますか?";
-"quest_tactile_paving_kerb_title" = "この縁石に点字ブロックはありますか?";
-"quest_shop_vacant_type_title" = "以前は空き店舗でしたが、現在は何がありますか?";
+
+/* (No Comment) */
+"quest_bench_backrest_title" = "このベンチは背もたれがありますか?";
+
+/* (No Comment) */
 "quest_bicycle_parking_access_title" = "ここに自転車を止められる人は制限されていますか?";
+
+/* (No Comment) */
 "quest_bicycle_parking_fee_title" = "有料の駐輪場ですか?";
+
+/* (No Comment) */
+"quest_bicycle_parking_type_title" = "この駐輪場の種類は何ですか?";
+
+/* (No Comment) */
+"quest_bicycleParkingCoveredStatus_title" = "この駐輪場は屋根がありますか (雨から守られていますか)?";
+
+/* (No Comment) */
+"quest_bikeParkingCapacity_title" = "ここに何台の自転車を駐車できますか?";
+
+/* (No Comment) */
+"quest_bridge_structure_title" = "この橋の構造は何ですか?";
+
+/* (No Comment) */
+"quest_buildingType_title" = "これはどんな建物ですか?";
+
+/* (No Comment) */
+"quest_charging_station_operator_title" = "この充電ステーションはどこが運営していますか?";
+
+/* (No Comment) */
+"quest_clothes_container_operator_title" = "この衣類収集箱への寄付は誰が受け取りますか?";
+
+/* (No Comment) */
+"quest_construction_building_title" = "この建物は完成していますか?";
+
+/* (No Comment) */
+"quest_crossing_type_title" = "この交差点はどのような種類ですか?";
+
+/* (No Comment) */
+"quest_cyclewayPartSurface_title" = "この自転車道の路面は何ですか?";
+
+/* (No Comment) */
+"quest_dietType_vegan_name_title" = "%s は完全菜食（ビーガン）のメニューがありますか?";
+
+/* (No Comment) */
+"quest_dietType_vegetarian_name_title" = "%s は菜食（ベジタリアン）のメニューがありますか?";
+
+/* (No Comment) */
 "quest_drinking_water_title" = "ここの水は飲用ですか? (%s)";
+
+/* (No Comment) */
+"quest_fireHydrant_type_title" = "これはどのような消火栓ですか?";
+
+/* (No Comment) */
+"quest_footwayPartSurface_title" = "この歩道の路面は何ですか?";
+
+/* (No Comment) */
+"quest_handrail_title" = "この階段に手すりはありますか?";
+
+/* (No Comment) */
+"quest_internet_access_name_title" = "%s はどのような種類のインターネット接続を提供していますか?";
+
+/* (No Comment) */
+"quest_is_defibrillator_inside_title" = "この除細動器 (AED) は建物内にありますか?";
+
+/* (No Comment) */
+"quest_leafType_title" = "ここの樹木の葉の種類は何ですか?";
+
+/* (No Comment) */
+"quest_motorcycleParkingCapacity_title" = "ここに何台のオートバイを駐車できますか?";
+
+/* (No Comment) */
+"quest_motorcycleParkingCoveredStatus_title" = "このオートバイの駐車場に屋根はありますか? (雨から守られていますか)";
+
+/* (No Comment) */
+"quest_parking_access_title" = "ここに駐車する人は制限されていますか?";
+
+/* (No Comment) */
+"quest_parking_fee_title" = "ここに駐車するのに料金がかかりますか?";
+
+/* (No Comment) */
+"quest_parkingType_title" = "ここはどのような種類の駐車場ですか?";
+
+/* (No Comment) */
+"quest_playground_access_title" = "この遊び場は誰でも利用できますか?";
+
+/* (No Comment) */
+"quest_powerPolesMaterial_title" = "この電柱の材質は何ですか?";
+
+/* (No Comment) */
+"quest_recycling_glass_title" = "リサイクルできるのはガラス瓶だけですか、それともあらゆるガラス製品を含みますか?";
+
+/* (No Comment) */
+"quest_recycling_type_title" = "これはどのようなリサイクル施設ですか?";
+
+/* (No Comment) */
+"quest_religion_for_wayside_shrine_title" = "この神社にはどのような宗教がありますか?";
+
+/* (No Comment) */
+"quest_segregated_title" = "歩道と自転車道はどのように割り当てられていますか?";
+
+/* (No Comment) */
+"quest_shop_vacant_type_title" = "以前は空き店舗でしたが、現在は何がありますか?";
+
+/* (No Comment) */
+"quest_sidewalk_title" = "この通りに歩道がありますか?";
+
+/* (No Comment) */
+"quest_step_count_title" = "階段の何段ですか?";
+
+/* (No Comment) */
+"quest_steps_incline_title" = "階段はどの方向に上っていますか?";
+
+/* (No Comment) */
+"quest_steps_ramp_title" = "階段にはスロープがありますか? どんな種類ですか?";
+
+/* (No Comment) */
+"quest_tactile_paving_kerb_title" = "この縁石に点字ブロックはありますか?";
+
+/* (No Comment) */
+"quest_toiletsFee_title" = "これらのトイレは有料ですか?";
+
+/* (No Comment) */
+"quest_tracktype_title" = "この農道の路面の硬さは?";
+
+/* (No Comment) */
+"quest_traffic_signals_button_title" = "この信号には歩行者用の押ボタンがありますか?";
+
+/* (No Comment) */
+"quest_traffic_signals_sound_title" = "この信号に視覚障害者のための音響装置はありますか?";
+
+/* (No Comment) */
+"quest_traffic_signals_vibrate_title" = "この信号機は視覚障害者のために、振動で安全に横断できることを知らせますか?";
+
+/* (No Comment) */
+"quest_wheelchairAccess_outside_title" = "この場所は車椅子でアクセスできますか?";
+

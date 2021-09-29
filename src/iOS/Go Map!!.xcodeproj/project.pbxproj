@@ -45,7 +45,6 @@
 		0266DE862655A21F007A502E /* Superview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0266DE852655A21F007A502E /* Superview.swift */; };
 		026FC76726509D6E005DDAFF /* SpeechBalloonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */; };
 		026FC7682650A17B005DDAFF /* VoiceAnnouncement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */; };
-		0278AFEF26FE7F55004A8253 /* quest.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0278AFD526FE7D40004A8253 /* quest.strings */; };
 		0278AFF026FE7F5B004A8253 /* quest.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0278AFC626FE7D40004A8253 /* quest.strings */; };
 		027A10EE26FE80AF009A95CE /* quest.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0278AFB726FE7D3F004A8253 /* quest.strings */; };
 		027A10EF26FE80B5009A95CE /* quest.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0278AFCF26FE7D40004A8253 /* quest.strings */; };
@@ -402,7 +401,6 @@
 		0278AFCD26FE7D40004A8253 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = quest.strings; sourceTree = "<group>"; };
 		0278AFD026FE7D40004A8253 /* am */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = am; path = quest.strings; sourceTree = "<group>"; };
 		0278AFD326FE7D40004A8253 /* lt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lt; path = quest.strings; sourceTree = "<group>"; };
-		0278AFD626FE7D40004A8253 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = quest.strings; sourceTree = "<group>"; };
 		0278AFD926FE7D40004A8253 /* gl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = gl; path = quest.strings; sourceTree = "<group>"; };
 		0278AFDC26FE7D40004A8253 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = quest.strings; sourceTree = "<group>"; };
 		0278AFDF26FE7D40004A8253 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = quest.strings; sourceTree = "<group>"; };
@@ -1027,14 +1025,6 @@
 			path = lt.lproj;
 			sourceTree = "<group>";
 		};
-		0278AFD426FE7D40004A8253 /* en.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				0278AFD526FE7D40004A8253 /* quest.strings */,
-			);
-			path = en.lproj;
-			sourceTree = "<group>";
-		};
 		0278AFD726FE7D40004A8253 /* gl.lproj */ = {
 			isa = PBXGroup;
 			children = (
@@ -1113,7 +1103,6 @@
 				0278AF7A26FE7D3D004A8253 /* da.lproj */,
 				0278AFB626FE7D3F004A8253 /* de.lproj */,
 				0278AF8326FE7D3D004A8253 /* el.lproj */,
-				0278AFD426FE7D40004A8253 /* en.lproj */,
 				0278AFC826FE7D40004A8253 /* es.lproj */,
 				0278AF9826FE7D3E004A8253 /* eu.lproj */,
 				0278AFA726FE7D3F004A8253 /* fa.lproj */,
@@ -1865,7 +1854,6 @@
 				027A111326FE8257009A95CE /* quest.strings in Resources */,
 				027A10F826FE81A7009A95CE /* quest.strings in Resources */,
 				027AB500250E9C9B00C404CD /* Height.storyboard in Resources */,
-				0278AFEF26FE7F55004A8253 /* quest.strings in Resources */,
 				023B892B19C148790060CDB5 /* Images.xcassets in Resources */,
 				027A10F326FE80D6009A95CE /* quest.strings in Resources */,
 				027A10F126FE80BF009A95CE /* quest.strings in Resources */,
@@ -2419,14 +2407,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				0278AFD326FE7D40004A8253 /* lt */,
-			);
-			name = quest.strings;
-			sourceTree = "<group>";
-		};
-		0278AFD526FE7D40004A8253 /* quest.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0278AFD626FE7D40004A8253 /* en */,
 			);
 			name = quest.strings;
 			sourceTree = "<group>";

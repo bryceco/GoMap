@@ -1,65 +1,192 @@
-"quest_sidewalk_title" = "Чи є тротуар на цій вулиці?";
-"quest_address_title" = "Який номер дому в цієї будівлі?";
-"quest_bikeParkingCapacity_title" = "Скільки велосипедів тут можна припаркувати?";
-"quest_toiletsFee_title" = "Цей туалет платний?";
-"quest_bicycleParkingCoveredStatus_title" = "Чи має ця велопарковка накриття (захищена від дощу)?";
-"quest_recycling_type_title" = "Якого типу цей об'єкт переробки?";
-"quest_fireHydrant_type_title" = "Якого типу цей пожежний гідрант?";
-"quest_crossing_type_title" = "Якого типу цей перехід?";
-"quest_parkingType_title" = "Якого типу ця парковка?";
-"quest_powerPolesMaterial_title" = "З якого матеріалу зроблений цей стовп ЛЕП?";
-"quest_dietType_vegetarian_name_title" = "Чи має «%s» вегетаріанські страви в меню?";
-"quest_dietType_vegan_name_title" = "Чи має «%s» веганські страви в меню?";
-"quest_bridge_structure_title" = "Яка структура цього моста?";
-"quest_internet_access_name_title" = "Який тип інтернет-зв'язку пропонує %s?";
-"quest_bench_backrest_title" = "Чи мая ця лавка спинку?";
-"quest_religion_for_wayside_shrine_title" = "Яку релігію представляє ця святиня?";
-"quest_parking_fee_title" = "Чи треба тут платити за паркування?";
-"quest_parking_access_title" = "Чи є обмеження, хто може тут паркуватися?";
-"quest_bicycle_parking_type_title" = "Якого типу ця велопарковка?";
-"quest_construction_building_title" = "Цей дім добудований?";
-"quest_playground_access_title" = "Чи є цей майданчик загальнодоступним?";
-"quest_segregated_title" = "Як тут розміщені пішохідна та вело- доріжки?";
-"quest_tracktype_title" = "Наскільки тверде покриття цього шляху?";
-"quest_wheelchairAccess_outside_title" = "Чи є доступ для людей у візках?";
-"quest_traffic_signals_button_title" = "Чи вмикається пішохідний світлофор кнопкою?";
-"quest_motorcycleParkingCapacity_title" = "Скільки мотоциклів ту може розташовуватись?";
-"quest_motorcycleParkingCoveredStatus_title" = "Ця парковка для мотоциклів крита (захищена від дощу)?";
-"quest_buildingType_title" = "Якого типу ця будівля?";
-"quest_leafType_title" = "Тут листяні чи хвойні дерева?";
-"quest_cyclewayPartSurface_title" = "Яке покриття велодоріжки?";
-"quest_footwayPartSurface_title" = "Яке тут покриття пішохідної доріжки?";
-"quest_wheelchairAccess_toiletsPart_title" = "Цей туалет %s доступний для людей на інвалідних візках?";
-"quest_maxweight_title" = "Яке тут обмеження ваги?";
-"quest_generalFee_title" = "Чи потрібно заплатити за вхід до %s?";
-"quest_laundrySelfService_title" = "Це пральня - пральня самообслуговування?";
-"quest_handrail_title" = "Чи мають ці сходи поручні?";
-"quest_recycling_materials_title" = "Що тут можна залишити для переробки?";
-"quest_recycling_glass_title" = "Тільки пляшки та банки здаються тут на переробку, чи любий тип скла?";
+/* (No Comment) */
 "quest_address_street_title" = "До якої вулиці належить (будинок) номер %s?";
-"quest_board_type_title" = "Яка тема цієї інформаційної дошки?";
-"quest_summit_register_title" = "
-Чи є книга реєстрації відвідувачів у %s?";
-"quest_is_defibrillator_inside_title" = "Чи є дефібрилятор (АЗД) всередині будівлі?";
-"quest_steps_incline_title" = "Який напрямок веде вгору для цих сходинок?";
-"quest_step_count_title" = "Скільки тут сходинок?";
-"quest_traffic_signals_sound_title" = "Чи є тут звукові сигнали для сліпих?";
-"quest_traffic_signals_vibrate_title" = "Чи мають ці світлофори тактильні вказівники для незрячих людей, коли безпечно переходити?";
-"quest_steps_ramp_title" = "Чи мають ці сходи пандус? Який?";
+
+/* (No Comment) */
+"quest_address_title" = "Який номер дому в цієї будівлі?";
+
+/* (No Comment) */
 "quest_atm_operator_title" = "Як називається банк цього банкомата?";
-"quest_clothes_container_operator_title" = "Хто збирає пожертви у цей контейнер для одягу?";
-"quest_charging_station_operator_title" = "Хто є оператором цієї зарядної станції?";
-"quest_lanes_title" = "Скильки на цій дорозі смуг для авто?";
-"quest_tactile_paving_kerb_title" = "На цьому бордюрі є тактильна бруківка?";
-"quest_kerb_height_title" = "Яка висота цього бордюра";
-"quest_shop_vacant_type_title" = "Цей магазин незайнятий. Що тут тепер?";
-"quest_dietType_kosher_name_title" = "Чи продаються у %s кошерні товари?";
-"quest_bicycle_parking_access_title" = "Є обмеження, хто може паркувати велосипед?";
-"quest_bicycle_parking_fee_title" = "Тут потрібно платити за паркування велосипеда?";
-"quest_drinking_water_title" = "Вода тут є питною? (%s)";
-"quest_postboxRoyalCypher_title" = "Який королівський шифр на цій поштовій скрині? ";
+
+/* (No Comment) */
 "quest_barrier_type_title" = "Який це тип перешкоди?";
-"quest_policeType_title" = "Який це тип відділку поліції?";
-"quest_stile_type_title" = "Який це тип перелазу?";
+
+/* (No Comment) */
+"quest_bench_backrest_title" = "Чи мая ця лавка спинку?";
+
+/* (No Comment) */
+"quest_bicycle_parking_access_title" = "Є обмеження, хто може паркувати велосипед?";
+
+/* (No Comment) */
+"quest_bicycle_parking_fee_title" = "Тут потрібно платити за паркування велосипеда?";
+
+/* (No Comment) */
+"quest_bicycle_parking_type_title" = "Якого типу ця велопарковка?";
+
+/* (No Comment) */
+"quest_bicycleParkingCoveredStatus_title" = "Чи має ця велопарковка накриття (захищена від дощу)?";
+
+/* (No Comment) */
+"quest_bikeParkingCapacity_title" = "Скільки велосипедів тут можна припаркувати?";
+
+/* (No Comment) */
+"quest_board_type_title" = "Яка тема цієї інформаційної дошки?";
+
+/* (No Comment) */
+"quest_bridge_structure_title" = "Яка структура цього моста?";
+
+/* (No Comment) */
+"quest_buildingType_title" = "Якого типу ця будівля?";
+
+/* (No Comment) */
 "quest_camera_type_title" = "Який це тип камери спостереження?";
+
+/* (No Comment) */
+"quest_charging_station_operator_title" = "Хто є оператором цієї зарядної станції?";
+
+/* (No Comment) */
+"quest_clothes_container_operator_title" = "Хто збирає пожертви у цей контейнер для одягу?";
+
+/* (No Comment) */
+"quest_construction_building_title" = "Цей дім добудований?";
+
+/* (No Comment) */
 "quest_crossing_title" = "Чи є бордюри, де цей шлях перетинається з дорогою? Якого типу?";
+
+/* (No Comment) */
+"quest_crossing_type_title" = "Якого типу цей перехід?";
+
+/* (No Comment) */
+"quest_cyclewayPartSurface_title" = "Яке покриття велодоріжки?";
+
+/* (No Comment) */
+"quest_dietType_kosher_name_title" = "Чи продаються у %s кошерні товари?";
+
+/* (No Comment) */
+"quest_dietType_vegan_name_title" = "Чи має «%s» веганські страви в меню?";
+
+/* (No Comment) */
+"quest_dietType_vegetarian_name_title" = "Чи має «%s» вегетаріанські страви в меню?";
+
+/* (No Comment) */
+"quest_drinking_water_title" = "Вода тут є питною? (%s)";
+
+/* (No Comment) */
+"quest_fireHydrant_type_title" = "Якого типу цей пожежний гідрант?";
+
+/* (No Comment) */
+"quest_footwayPartSurface_title" = "Яке тут покриття пішохідної доріжки?";
+
+/* (No Comment) */
+"quest_generalFee_title" = "Чи потрібно заплатити за вхід до %s?";
+
+/* (No Comment) */
+"quest_handrail_title" = "Чи мають ці сходи поручні?";
+
+/* (No Comment) */
+"quest_internet_access_name_title" = "Який тип інтернет-зв'язку пропонує %s?";
+
+/* (No Comment) */
+"quest_is_defibrillator_inside_title" = "Чи є дефібрилятор (АЗД) всередині будівлі?";
+
+/* (No Comment) */
+"quest_kerb_height_title" = "Яка висота цього бордюра";
+
+/* (No Comment) */
+"quest_lanes_title" = "Скильки на цій дорозі смуг для авто?";
+
+/* (No Comment) */
+"quest_laundrySelfService_title" = "Це пральня - пральня самообслуговування?";
+
+/* (No Comment) */
+"quest_leafType_title" = "Тут листяні чи хвойні дерева?";
+
+/* (No Comment) */
+"quest_maxweight_title" = "Яке тут обмеження ваги?";
+
+/* (No Comment) */
+"quest_motorcycleParkingCapacity_title" = "Скільки мотоциклів ту може розташовуватись?";
+
+/* (No Comment) */
+"quest_motorcycleParkingCoveredStatus_title" = "Ця парковка для мотоциклів крита (захищена від дощу)?";
+
+/* (No Comment) */
+"quest_parking_access_title" = "Чи є обмеження, хто може тут паркуватися?";
+
+/* (No Comment) */
+"quest_parking_fee_title" = "Чи треба тут платити за паркування?";
+
+/* (No Comment) */
+"quest_parkingType_title" = "Якого типу ця парковка?";
+
+/* (No Comment) */
+"quest_playground_access_title" = "Чи є цей майданчик загальнодоступним?";
+
+/* (No Comment) */
+"quest_policeType_title" = "Який це тип відділку поліції?";
+
+/* (No Comment) */
+"quest_postboxRoyalCypher_title" = "Який королівський шифр на цій поштовій скрині? ";
+
+/* (No Comment) */
+"quest_powerPolesMaterial_title" = "З якого матеріалу зроблений цей стовп ЛЕП?";
+
+/* (No Comment) */
+"quest_recycling_glass_title" = "Тільки пляшки та банки здаються тут на переробку, чи любий тип скла?";
+
+/* (No Comment) */
+"quest_recycling_materials_title" = "Що тут можна залишити для переробки?";
+
+/* (No Comment) */
+"quest_recycling_type_title" = "Якого типу цей об'єкт переробки?";
+
+/* (No Comment) */
+"quest_religion_for_wayside_shrine_title" = "Яку релігію представляє ця святиня?";
+
+/* (No Comment) */
+"quest_segregated_title" = "Як тут розміщені пішохідна та вело- доріжки?";
+
+/* (No Comment) */
+"quest_shop_vacant_type_title" = "Цей магазин незайнятий. Що тут тепер?";
+
+/* (No Comment) */
+"quest_sidewalk_title" = "Чи є тротуар на цій вулиці?";
+
+/* (No Comment) */
+"quest_step_count_title" = "Скільки тут сходинок?";
+
+/* (No Comment) */
+"quest_steps_incline_title" = "Який напрямок веде вгору для цих сходинок?";
+
+/* (No Comment) */
+"quest_steps_ramp_title" = "Чи мають ці сходи пандус? Який?";
+
+/* (No Comment) */
+"quest_stile_type_title" = "Який це тип перелазу?";
+
+/* (No Comment) */
+"quest_summit_register_title" = "\nЧи є книга реєстрації відвідувачів у %s?";
+
+/* (No Comment) */
+"quest_tactile_paving_kerb_title" = "На цьому бордюрі є тактильна бруківка?";
+
+/* (No Comment) */
+"quest_toiletsFee_title" = "Цей туалет платний?";
+
+/* (No Comment) */
+"quest_tracktype_title" = "Наскільки тверде покриття цього шляху?";
+
+/* (No Comment) */
+"quest_traffic_signals_button_title" = "Чи вмикається пішохідний світлофор кнопкою?";
+
+/* (No Comment) */
+"quest_traffic_signals_sound_title" = "Чи є тут звукові сигнали для сліпих?";
+
+/* (No Comment) */
+"quest_traffic_signals_vibrate_title" = "Чи мають ці світлофори тактильні вказівники для незрячих людей, коли безпечно переходити?";
+
+/* (No Comment) */
+"quest_wheelchairAccess_outside_title" = "Чи є доступ для людей у візках?";
+
+/* (No Comment) */
+"quest_wheelchairAccess_toiletsPart_title" = "Цей туалет %s доступний для людей на інвалідних візках?";
+
