@@ -1198,9 +1198,22 @@
 				02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */,
 				02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */,
 				027AB4FC250E9C8000C404CD /* Settings.storyboard */,
-				027AB4FF250E9C8A00C404CD /* POI.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		02A3598F2704E51700101369 /* POI */ = {
+			isa = PBXGroup;
+			children = (
+				027AB4FF250E9C8A00C404CD /* POI.storyboard */,
+				C3004F61263B2524006BF313 /* POIAllTagsViewController.swift */,
+				C3004F53263A99DC006BF313 /* POIAttributesViewController.swift */,
+				C3D0969B263CBC1100E3B129 /* POIFeaturePickerViewController.swift */,
+				ED964A002601D6A900EC0A60 /* POIFeaturePresetsViewController.swift */,
+				ED9649F82601D58900EC0A60 /* POIPresetValuePickerController.swift */,
+				ED9649F02601CEC800EC0A60 /* POITabBarController.swift */,
+			);
+			path = POI;
 			sourceTree = "<group>";
 		};
 		02ACBA2416713CCB00BB4414 = {
@@ -1282,12 +1295,7 @@
 				C341E1592639DF210022E983 /* NotesTableViewController.swift */,
 				ED91352426020945006A637A /* OfflineViewController.swift */,
 				02CB2409265DB7D600835F32 /* OpeningHours */,
-				C3004F61263B2524006BF313 /* POIAllTagsViewController.swift */,
-				C3004F53263A99DC006BF313 /* POIAttributesViewController.swift */,
-				C3D0969B263CBC1100E3B129 /* POIFeaturePickerViewController.swift */,
-				ED964A002601D6A900EC0A60 /* POIFeaturePresetsViewController.swift */,
-				ED9649F82601D58900EC0A60 /* POIPresetValuePickerController.swift */,
-				ED9649F02601CEC800EC0A60 /* POITabBarController.swift */,
+				02A3598F2704E51700101369 /* POI */,
 				028F504619BA2F460093C423 /* presets */,
 				0256660A26FD1C9B0009D950 /* QuestEditor.storyboard */,
 				02C8C57326FAAFF0003B0122 /* QuestEditorController.swift */,
