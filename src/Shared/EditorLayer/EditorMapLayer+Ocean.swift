@@ -168,8 +168,9 @@ extension EditorMapLayer {
 	// input is an array of OsmWay
 	// output is an array of arrays of OsmNode
 	// take a list of ways and return a new list of ways with contiguous ways joined together.
-	private static func joinConnectedWays(_ origList: inout [OsmWay]) -> [[OsmNode]] {
+	private static func joinConnectedWays(_ origList: [OsmWay]) -> [[OsmNode]] {
 		// connect ways together forming congiguous runs
+		var origList = origList.filter({ $0.nodes.count > 1 })
 		var newList = [[OsmNode]]()
 		while origList.count > 0 {
 			// find all connected segments
@@ -365,8 +366,8 @@ extension EditorMapLayer {
 		}
 
 		// connect ways together forming contiguous runs
-		let outerNodes = EditorMapLayer.joinConnectedWays(&outerWays)
-		let innerNodes = EditorMapLayer.joinConnectedWays(&innerWays)
+		let outerNodes = EditorMapLayer.joinConnectedWays(outerWays)
+		let innerNodes = EditorMapLayer.joinConnectedWays(innerWays)
 
 		// convert lists of nodes to screen points
 		var outerSegments = outerNodes.map { self.convertNodesToScreenPoints($0) }
