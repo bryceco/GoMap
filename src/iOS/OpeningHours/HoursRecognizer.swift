@@ -880,7 +880,7 @@ public class HoursRecognizer: ObservableObject {
 			}
 
 			// get times
-			let timeRange = times.count >= 2 ? stride(from: 0, to: times.count, by: 2)
+			let timeRange = times.count >= 2 ? stride(from: 0, to: times.count-1, by: 2)
 				.map({ TimeRange(start: times[$0], end: times[$0 + 1]) }) : []
 
 			// update result if interesting
