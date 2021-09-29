@@ -192,7 +192,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			return nil
 		}
 
-		let group = allPresets?.groupAtIndex(section)
+		let group = allPresets?.sectionAtIndex(section)
 		return group?.name
 	}
 
@@ -220,8 +220,8 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		let tabController = tabBarController as! POITabBarController
 		let keyValueDict = tabController.keyValueDict
 
-		let rowObject = (drillDownGroup != nil) ? drillDownGroup!.presetKeys[indexPath.row] : allPresets!
-			.presetAtIndexPath(indexPath)
+		let rowObject = (drillDownGroup != nil) ? drillDownGroup!.presetKeys[indexPath.row]
+			: allPresets!.presetAtIndexPath(indexPath)
 
 		switch rowObject {
 		case let PresetKeyOrGroup.key(presetKey):

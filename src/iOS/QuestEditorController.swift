@@ -18,19 +18,6 @@ class QuestEditorController: UITableViewController {
 	var presetFeature: PresetFeature?
 	var presetKey: PresetKey?
 
-	class func presetsForGroup(_ group: PresetKeyOrGroup) -> [PresetKey] {
-		var list: [PresetKey] = []
-		switch group {
-		case let .group(subgroup):
-			for g in subgroup.presetKeys {
-				list += Self.presetsForGroup(g)
-			}
-		case let .key(key):
-			list.append(key)
-		}
-		return list
-	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		navigationItem.rightBarButtonItem?.isEnabled = false
@@ -57,17 +44,7 @@ class QuestEditorController: UITableViewController {
 				self.refreshPresetKey()
 				self.tableView.reloadData()
 			})
-		top_loop: for section in presets.sectionList() {
-			for g in section.presetKeys {
-				let list = Self.presetsForGroup(g)
-				for preset in list {
-					if preset.tagKey == quest.tagKey {
-						presetKey = preset
-						break top_loop
-					}
-				}
-			}
-		}
+		presetKey = presets.allPresetKeys().first(where: { $0.tagKey == quest.tagKey })
 	}
 
 	class func instantiate(quest: QuestProtocol, object: OsmBaseObject) -> UINavigationController {

@@ -38,6 +38,7 @@ class POIAllTagsViewController: UITableViewController {
 	private var childViewPresented = false
 	private var featureID: String?
 	private var currentTextField: UITextField?
+	private var allPresetKeys: [PresetKey] = [] // updated whenever a value changes
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -94,28 +95,11 @@ class POIAllTagsViewController: UITableViewController {
 		tags.append(("", ""))
 
 		// add placeholder keys
+		allPresetKeys = []
 		if let newFeature = newFeature {
 			let presets = PresetsForFeature(withFeature: newFeature, objectTags: dict, geometry: geometry, update: nil)
-			var newKeys: [String] = []
-			for section in 0..<presets.sectionCount() {
-				for row in 0..<presets.tagsInSection(section) {
-					let preset = presets.presetAtSection(section, row: row)
-					switch preset {
-					case let .group(group):
-						for case let .key(presetKey) in group.presetKeys {
-							if presetKey.tagKey == "" {
-								continue
-							}
-							newKeys.append(presetKey.tagKey)
-						}
-					case let .key(presetKey):
-						if presetKey.tagKey.count == 0 {
-							continue
-						}
-						newKeys.append(presetKey.tagKey)
-					}
-				}
-			}
+			allPresetKeys = presets.allPresetKeys()
+			var newKeys: [String] = allPresetKeys.map({ $0.tagKey }).filter({ $0 != "" })
 			newKeys = newKeys.filter { key in
 				tags.first(where: { $0.k == key }) == nil
 			}
@@ -563,6 +547,22 @@ class POIAllTagsViewController: UITableViewController {
 		_ = updateWithRecomendations(forFeature: true)
 	}
 
+	func setTextAttributesForKey(key: String, textField: UITextField) {
+		// set text formatting options for text field
+		switch key {
+		case "note", "comment", "description", "fixme":
+			textField.autocapitalizationType = .sentences
+			textField.autocorrectionType = .yes
+		default:
+			textField.autocapitalizationType = .none
+			textField.autocorrectionType = .no
+		}
+		if let preset = allPresetKeys.first(where: { key == $0.tagKey }) {
+			textField.autocapitalizationType = preset.autocapitalizationType
+			textField.autocorrectionType = preset.autocorrectType
+		}
+	}
+
 	@IBAction func textFieldEditingDidBegin(_ textField: AutocompleteTextField) {
 		currentTextField = textField
 
@@ -574,6 +574,9 @@ class POIAllTagsViewController: UITableViewController {
 			let isValue = textField == pair.text2
 
 			if isValue {
+				// set up capitalization and autocorrect
+				setTextAttributesForKey(key: pair.text1?.text ?? "", textField: pair.text2)
+
 				// get list of values for current key
 				let kv = tags[indexPath.row]
 				let key = kv.k
@@ -606,6 +609,7 @@ class POIAllTagsViewController: UITableViewController {
 
 			if kv.k.count != 0 && kv.v.count != 0 {
 				// do automatic value updates for special keys
+				// for example add https:// prefix to website=
 				if let newValue = OsmTags.convertWikiUrlToReference(withKey: kv.k, value: kv.v)
 					?? OsmTags.convertWebsiteValueToHttps(withKey: kv.k, value: kv.v)
 				{

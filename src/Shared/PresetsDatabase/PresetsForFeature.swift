@@ -18,8 +18,29 @@ final class PresetsForFeature {
 		return _featureName
 	}
 
-	func sectionList() -> [PresetGroup] {
-		return _sectionList
+	private class func forEachPresetKeyInGroup(_ group: PresetKeyOrGroup, closure: (PresetKey) -> Void) {
+		switch group {
+		case let .group(subgroup):
+			for g in subgroup.presetKeys {
+				forEachPresetKeyInGroup(g, closure: closure)
+			}
+		case let .key(preset):
+			closure(preset)
+		}
+	}
+
+	func forEachPresetKey(_ closure: (PresetKey) -> Void) {
+		for section in _sectionList {
+			for g in section.presetKeys {
+				Self.forEachPresetKeyInGroup(g, closure: closure)
+			}
+		}
+	}
+
+	func allPresetKeys() -> [PresetKey] {
+		var list: [PresetKey] = []
+		forEachPresetKey({ list.append($0) })
+		return list
 	}
 
 	func sectionCount() -> Int {
@@ -31,7 +52,7 @@ final class PresetsForFeature {
 		return group.presetKeys.count
 	}
 
-	func groupAtIndex(_ index: Int) -> PresetGroup {
+	func sectionAtIndex(_ index: Int) -> PresetGroup {
 		return _sectionList[index]
 	}
 
