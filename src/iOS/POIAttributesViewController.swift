@@ -187,41 +187,39 @@ class POIAttributesViewController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		guard let object = AppDelegate.shared.mapView.editorLayer.selectedPrimary
+		guard let object = AppDelegate.shared.mapView.editorLayer.selectedPrimary,
+		      let row = ROW(rawValue: indexPath.row)
 		else {
 			return
 		}
 
-		var urlString: String?
+		let urlString: String
 
-		if indexPath.row == ROW.identifier.rawValue {
+		switch row {
+		case .identifier:
 			let type = object.osmType.string
 			let ident = object.ident
 			urlString = "https://www.openstreetmap.org/browse/\(type)/\(ident)"
-		} else if indexPath.row == ROW.user.rawValue {
+		case .user:
 			let user = object.user
 			urlString = "https://www.openstreetmap.org/user/\(user)"
-		} else if indexPath.row == ROW.version.rawValue {
+		case .version:
 			let type = object.osmType.string
 			let ident = object.ident
 			urlString = "https://www.openstreetmap.org/browse/\(type)/\(ident)/history"
-		} else if indexPath.row == ROW.changeset.rawValue {
+		case .changeset:
 			urlString = String(
 				format: "https://www.openstreetmap.org/browse/changeset/%ld",
 				Int(object.changeset))
+		case .uid, .modified:
+			return
 		}
 
-		if let urlString = urlString {
-			let encodedUrlString = urlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-			let url = URL(string: encodedUrlString ?? "")
-
-			var safariViewController: SFSafariViewController?
-			if let url = url {
-				safariViewController = SFSafariViewController(url: url)
-			}
-			if let safariViewController = safariViewController {
-				present(safariViewController, animated: true)
-			}
+		if let encodedUrlString = urlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed),
+		   let url = URL(string: encodedUrlString)
+		{
+			let safariViewController = SFSafariViewController(url: url)
+			present(safariViewController, animated: true)
 		}
 	}
 
@@ -236,11 +234,12 @@ class POIAttributesViewController: UITableViewController {
 		forRowAt indexPath: IndexPath,
 		withSender sender: Any?) -> Bool
 	{
-		if indexPath.section != SectionType.metadata.getRawValue(), action == #selector(copy(_:)) {
+		if indexPath.section != SectionType.metadata.getRawValue(),
+		   action == #selector(copy(_:))
+		{
 			// Allow users to copy latitude/longitude.
 			return true
 		}
-
 		return false
 	}
 
@@ -250,16 +249,17 @@ class POIAttributesViewController: UITableViewController {
 		forRowAt indexPath: IndexPath,
 		withSender sender: Any?)
 	{
-		let cell = tableView.cellForRow(at: indexPath)
-		if !(cell is AttributeCustomCell) {
+		guard let cell = tableView.cellForRow(at: indexPath),
+		      let customCell = cell as? AttributeCustomCell
+		else {
 			// For cells other than `AttributeCustomCell`, we don't know how to get the value.
 			return
 		}
 
-		let customCell = cell as? AttributeCustomCell
-
-		if indexPath.section != SectionType.metadata.getRawValue() && action == #selector(copy(_:)) {
-			UIPasteboard.general.string = customCell?.value.text
+		if indexPath.section != SectionType.metadata.getRawValue(),
+		   action == #selector(copy(_:))
+		{
+			UIPasteboard.general.string = customCell.value.text
 		}
 	}
 
