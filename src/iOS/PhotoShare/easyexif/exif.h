@@ -128,6 +128,8 @@ class EXIFInfo {
       double seconds;
       char direction;
     } LatComponents, LonComponents;   // Latitude, Longitude expressed in deg/min/sec
+	char imgDirectionRef;
+	double imgDirection;
   } GeoLocation;
   struct LensInfo_t {               // Lens information
     double FStopMin;                // Min aperture (f-stop)

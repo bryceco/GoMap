@@ -260,6 +260,9 @@
 /* No comment provided by engineer. */
 "Delete\n" = "削除\n";
 
+/* Confirm deleting a node/way */
+"Delete %@?" = "%@ を削除しますか?";
+
 /* No comment provided by engineer. */
 "Delete completely" = "完全に削除";
 
@@ -298,6 +301,9 @@
 
 /* No comment provided by engineer. */
 "Display options" = "オプションを表示";
+
+/* Distance to an object with an error value */
+"Distance: %1$@ ± %2$@ meters" = "距離: %1$@ ± %2$@ メートル";
 
 /* No comment provided by engineer. */
 "Done" = "完了";
@@ -352,6 +358,9 @@
 
 /* No comment provided by engineer. */
 "GPX Upload Failed" = "GPXアップロード失敗";
+
+/* Height of an object with an error value */
+"Height: %1$@ ± %2$@ meters" = "高さ: %1$@ ± %2$@ メートル";
 
 /* rate the app now */
 "I'll do it!" = "実行します！";

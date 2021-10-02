@@ -32,6 +32,11 @@ extension CGPoint {
 		               y: y - b.y)
 	}
 
+	@inline(__always) func plus(_ b: CGPoint) -> CGPoint {
+		return CGPoint(x: x + b.x,
+		               y: y + b.y)
+	}
+
 	@inline(__always) init(_ pt: OSMPoint) {
 		self.init(x: pt.x,
 		          y: pt.y)

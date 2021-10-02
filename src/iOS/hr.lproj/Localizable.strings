@@ -260,6 +260,9 @@
 /* No comment provided by engineer. */
 "Delete\n" = "Izbriši\n";
 
+/* Confirm deleting a node/way */
+"Delete %@?" = "Izbrisati %@?";
+
 /* No comment provided by engineer. */
 "Delete completely" = "Potpuno izbriši";
 
@@ -298,6 +301,9 @@
 
 /* No comment provided by engineer. */
 "Display options" = "Opcije prikaza";
+
+/* Distance to an object with an error value */
+"Distance: %1$@ ± %2$@ meters" = "Udaljenost: %1$@ ± %2$@ m";
 
 /* No comment provided by engineer. */
 "Done" = "Gotovo";
@@ -352,6 +358,9 @@
 
 /* No comment provided by engineer. */
 "GPX Upload Failed" = "Prijenos na GPX neuspio";
+
+/* Height of an object with an error value */
+"Height: %1$@ ± %2$@ meters" = "Visina: %1$@ ± %2$@ m";
 
 /* rate the app now */
 "I'll do it!" = "Ja ću to obaviti!";
@@ -768,6 +777,9 @@
 
 /* No comment provided by engineer. */
 "Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.\n\nSelect the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route." = "Zabrane skretanja navode ceste, na koje možeš skrenuti prilikom ulaska u raskrižje iz zadanog smjera.\n\nOdaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu uključivanje/isključivanje ceste do odredišta kao dozvoljene rute.";
+
+/* The 'Type' header in Common Tags */
+"Type" = "Vrsta";
 
 /* No comment provided by engineer. */
 "U-Turn from %@ allowed" = "Polukružno okretanje iz smjera %@ dozvoljeno";

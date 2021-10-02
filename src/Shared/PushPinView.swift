@@ -9,7 +9,7 @@
 import QuartzCore
 import UIKit
 
-typealias PushPinViewDragCallback = (UIGestureRecognizer.State, CGFloat, CGFloat, UIGestureRecognizer) -> Void
+typealias PushPinViewDragCallback = (UIGestureRecognizer.State, CGFloat, CGFloat) -> Void
 
 final class PushPinView: UIButton, CAAnimationDelegate {
 	private let shapeLayer: CAShapeLayer // shape for balloon
@@ -45,7 +45,7 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 		}
 	}
 
-	var dragCallback: PushPinViewDragCallback?
+	var dragCallback: PushPinViewDragCallback = { _, _, _ in }
 
 	private var _labelOnBottom = false
 	var labelOnBottom: Bool {
@@ -328,14 +328,18 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 		layer.add(theAnimation, forKey: "animatePosition")
 	}
 
+	private(set) var isDragging: Bool = false
 	@objc func draggingGesture(_ gesture: UIPanGestureRecognizer) {
-		let delta = gesture.translation(in: gesture.view)
-
-		arrowPoint = CGPoint(x: arrowPoint.x + delta.x, y: arrowPoint.y + delta.y)
-
-		if let dragCallback = dragCallback {
-			dragCallback(gesture.state, delta.x, delta.y, gesture)
+		switch gesture.state {
+		case .began, .changed:
+			isDragging = true
+		default:
+			isDragging = false
 		}
+
+		let delta = gesture.translation(in: gesture.view)
+		arrowPoint = arrowPoint.plus(delta)
+		dragCallback(gesture.state, delta.x, delta.y)
 
 		gesture.setTranslation(.zero, in: gesture.view)
 	}

@@ -13,7 +13,7 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 	var newComment: String?
 
 	@IBOutlet var tableView: UITableView!
-	var note: OsmNote!
+	var note: OsmNoteMarker!
 	var mapView: MapView!
 
 	override func viewDidLoad() {
@@ -130,7 +130,7 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 			preferredStyle: .alert)
 		present(alert, animated: true)
 
-		mapView.notesDatabase.update(note, close: resolve, comment: s) { [self] result in
+		mapView.notesDatabase.update(note: note, close: resolve, comment: s) { [self] result in
 			alert.dismiss(animated: true)
 			switch result {
 			case let .success(newNote):

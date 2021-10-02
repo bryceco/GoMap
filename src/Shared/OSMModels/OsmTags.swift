@@ -121,4 +121,57 @@ final class OsmTags {
 		}
 		return merged
 	}
+
+	static func convertWikiUrlToReference(withKey key: String, value url: String) -> String? {
+		if key.hasPrefix("wikipedia") || key.hasSuffix(":wikipedia") {
+			// if the value is for wikipedia then convert the URL to the correct format
+			// format is https://en.wikipedia.org/wiki/Nova_Scotia
+			let scanner = Scanner(string: url)
+			var languageCode: NSString?
+			var pageName: NSString?
+			if scanner.scanString("https://", into: nil) || scanner.scanString("http://", into: nil),
+			   scanner.scanUpTo(".", into: &languageCode),
+			   scanner.scanString(".m", into: nil) || true,
+			   scanner.scanString(".wikipedia.org/wiki/", into: nil),
+			   scanner.scanUpTo("/", into: &pageName),
+			   scanner.isAtEnd,
+			   let languageCode = languageCode as String?,
+			   let pageName = pageName as String?,
+			   languageCode.count == 2, pageName.count > 0
+			{
+				return "\(languageCode):\(pageName)"
+			}
+		} else if key.hasPrefix("wikidata") || key.hasSuffix(":wikidata") {
+			// https://www.wikidata.org/wiki/Q90000000
+			let scanner = Scanner(string: url)
+			var pageName: NSString?
+			if scanner.scanString("https://", into: nil) || scanner.scanString("http://", into: nil),
+			   scanner.scanString("www.wikidata.org/wiki/", into: nil) || scanner
+			   .scanString("m.wikidata.org/wiki/", into: nil),
+			   scanner.scanUpTo("/", into: &pageName),
+			   scanner.isAtEnd,
+			   let pageName = pageName as String?,
+			   pageName.count > 0
+			{
+				return pageName
+			}
+		}
+		return nil
+	}
+
+	static func convertWebsiteValueToHttps(withKey key: String, value url: String) -> String? {
+		guard key == "website" else {
+			// not a website value
+			return nil
+		}
+		if url.hasPrefix("http://") || url.hasPrefix("https://") {
+			// great
+			return nil
+		}
+		if url.contains("://") {
+			// weird, so we'll ignore it
+			return nil
+		}
+		return "https://" + url
+	}
 }

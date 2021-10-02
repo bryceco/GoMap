@@ -96,10 +96,10 @@
 "Add outer member" = "إضافة عضو لطرف خارجي";
 
 /* No comment provided by engineer. */
-"Add way to multipolygon?" = "إضافة طريق إلى علاقة مضلع متداخل؟";
+"Add way to multipolygon?" = "إضافة طريق إلى علاقة مضلع متعدد؟";
 
 /* No comment provided by engineer. */
-"added to multipolygon relation" = "تمت إضافته إلى علاقة الأضلاع المتداخلة";
+"added to multipolygon relation" = "تمت إضافته إلى علاقة المضلعات المتعددة";
 
 /* No comment provided by engineer. */
 "Adding members:" = "إضافة الأعضاء:";
@@ -144,13 +144,13 @@
 "Cache trimmed" = "تم مسح ذاكرة التخزين المؤقت";
 
 /* No comment provided by engineer. */
-"Can only add ways to multipolygons" = "تستطيع إضافة الطرق فقط إلى علاقة المضلعات المتداخلة";
+"Can only add ways to multipolygons" = "تستطيع إضافة الطرق فقط إلى علاقة المضلعات المتعددة";
 
 /* No comment provided by engineer. */
 "Can't delete node that is part of a relation" = "لا يمكن حذف العقدة التي تكون جزء من علاقة";
 
 /* No comment provided by engineer. */
-"Can't delete relation that is not a multipolygon" = "لا يمكن حذف علاقة ليست من نوع مضلعات متداخلة";
+"Can't delete relation that is not a multipolygon" = "لا يمكن حذف علاقة ليست من نوع مضلعات متعددة";
 
 /* No comment provided by engineer. */
 "Can't delete way that is part of a Route or similar relation" = "لا يمكن حذف الطريق الذي يكون جزءاً من مسار أو علاقة مشابهة";
@@ -324,10 +324,10 @@
 "Editing layer not visible" = "طبقة التحرير غير مرئية";
 
 /* No comment provided by engineer. */
-"Editor only" = "المحرر فقط";
+"Editor only" = "التحرير فقط";
 
 /* No comment provided by engineer. */
-"Editor with Aerial" = "المحرر مع الصور الجوية";
+"Editor with Aerial" = "التحرير مع الصور الجوية";
 
 /* No comment provided by engineer. */
 "Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "تأكد من تمكين خدمات الموقع ومنح هذا التطبيق حق الوصول.\n\nالخطأ: %@";
@@ -429,7 +429,7 @@
 "Measure Direction" = "قياس الاتجاه";
 
 /* No comment provided by engineer. */
-"Member of multipolygon relation" = "عضو في علاقة أضلاع متداخلة";
+"Member of multipolygon relation" = "عضو في علاقة مضلعات متعددة";
 
 /* No comment provided by engineer. */
 "Members" = "الأعضاء";
@@ -471,7 +471,7 @@
 "Move selected object?" = "نقل عنصر محدد؟";
 
 /* No comment provided by engineer. */
-"Multipolygon" = "المضلعات المتداخلة";
+"Multipolygon" = "المضلعات المتعددة";
 
 /* No comment provided by engineer. */
 "Network error" = "خطأ في الشبكة";
@@ -550,7 +550,7 @@
 "Only Left Turn restriction" = "فقط قيود الانعطاف لليسار";
 
 /* No comment provided by engineer. */
-"Only multipolygon relations are supported" = "يتم دعم علاقات المضلعات المتداخلة فقط";
+"Only multipolygon relations are supported" = "يتم دعم علاقات المضلعات المتعددة فقط";
 
 /* No comment provided by engineer. */
 "Only Right Turn restriction" = "فقط قيود الانعطاف لليمين";
@@ -559,7 +559,7 @@
 "Only Straight On restriction" = "فقط قيود المشي بشكل مستقيم (للأمام)";
 
 /* No comment provided by engineer. */
-"Only ways/multipolygons can be rotated" = "يمكن تدوير الطرق/المضلعات المتداخلة فقط";
+"Only ways/multipolygons can be rotated" = "يمكن تدوير الطرق/المضلعات المتعددة فقط";
 
 /* Open the iOS Settings app */
 "Open Settings" = "فتح الإعدادات";

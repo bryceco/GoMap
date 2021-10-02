@@ -269,7 +269,8 @@ extension PresetsDatabase {
 			var resultList: [String] = []
 			if searchKeys {
 				for v in results {
-					if (v["count_all"] as? NSNumber)?.intValue ?? 0 < 1000 {
+					let inWiki = ((v["in_wiki"] as? NSNumber) ?? 0) == 1
+					if !inWiki, (v["count_all"] as? NSNumber)?.intValue ?? 0 < 1000 {
 						continue // it's a very uncommon value, so ignore it
 					}
 					if let k = v["key"] as? String {
@@ -278,7 +279,8 @@ extension PresetsDatabase {
 				}
 			} else {
 				for v in results {
-					if ((v["fraction"] as? NSNumber)?.doubleValue ?? 0.0) < 0.01 {
+					let inWiki = ((v["in_wiki"] as? NSNumber) ?? 0) == 1
+					if !inWiki, ((v["fraction"] as? NSNumber)?.doubleValue ?? 0.0) < 0.01 {
 						continue // it's a very uncommon value, so ignore it
 					}
 					if let val = v["value"] as? String {
@@ -320,7 +322,8 @@ extension PresetsDatabase {
 		defaultValue: String?,
 		placeholder: String?,
 		keyboard: UIKeyboardType,
-		capitalize: UITextAutocapitalizationType) -> PresetGroup
+		capitalize: UITextAutocapitalizationType,
+		autocorrect: UITextAutocorrectionType) -> PresetGroup
 	{
 		let prefix = commonPrefixOfMultiKeys(options)
 		var tags: [PresetKeyOrGroup] = []
@@ -332,7 +335,8 @@ extension PresetsDatabase {
 				defaultValue: defaultValue,
 				placeholder: nil,
 				keyboard: keyboard,
-				capitalize: capitalize)
+				capitalize: capitalize,
+				autocorrect: autocorrect)
 			tags.append(.key(tag))
 		}
 		let group = PresetGroup(name: label, tags: tags, isDrillDown: true)
@@ -349,7 +353,8 @@ extension PresetsDatabase {
 		defaultValue: String?,
 		placeholder: String?,
 		keyboard: UIKeyboardType,
-		capitalize: UITextAutocapitalizationType) -> PresetKey
+		capitalize: UITextAutocapitalizationType,
+		autocorrect: UITextAutocorrectionType) -> PresetKey
 	{
 		var presets: [PresetValue] = []
 		for value in options {
@@ -374,6 +379,7 @@ extension PresetsDatabase {
 			placeholder: placeholder,
 			keyboard: keyboard,
 			capitalize: capitalize,
+			autocorrect: autocorrect,
 			presets: presets)
 		return tag
 	}
@@ -385,7 +391,8 @@ extension PresetsDatabase {
 		defaultValue: String?,
 		placeholder: String?,
 		keyboard: UIKeyboardType,
-		capitalize: UITextAutocapitalizationType) -> PresetKey
+		capitalize: UITextAutocapitalizationType,
+		autocorrect: UITextAutocorrectionType) -> PresetKey
 	{
 		let presets = [
 			PresetValue(name: PresetsDatabase.shared.yesForLocale, details: nil, tagValue: "yes"),
@@ -398,6 +405,7 @@ extension PresetsDatabase {
 			placeholder: placeholder,
 			keyboard: keyboard,
 			capitalize: capitalize,
+			autocorrect: autocorrect,
 			presets: presets)
 		return tag
 	}
@@ -446,8 +454,9 @@ extension PresetsDatabase {
 		let placeholder = dict["placeholder"] as? String
 		let defaultValue = dict["default"] as? String
 		var keyboard = UIKeyboardType.default
-		var capitalize = keyType.hasPrefix("name:") || (keyType == "operator") ? UITextAutocapitalizationType
-			.words : UITextAutocapitalizationType.none
+		var capitalize = keyType.hasPrefix("name:") || keyType == "operator"
+			? UITextAutocapitalizationType.words : UITextAutocapitalizationType.none
+		var autocorrect = UITextAutocorrectionType.no
 
 		switch type {
 		case "defaultcheck", "check", "onewayCheck":
@@ -458,7 +467,8 @@ extension PresetsDatabase {
 				defaultValue: defaultValue,
 				placeholder: placeholder,
 				keyboard: keyboard,
-				capitalize: capitalize)
+				capitalize: capitalize,
+				autocorrect: autocorrect)
 			let group = PresetGroup(name: nil, tags: [.key(tag)])
 			return group
 
@@ -490,13 +500,14 @@ extension PresetsDatabase {
 						defaultValue: defaultValue,
 						placeholder: placeholder,
 						keyboard: keyboard,
-						capitalize: capitalize)
+						capitalize: capitalize,
+						autocorrect: autocorrect)
 					let group = PresetGroup(name: nil, tags: [.key(tag)])
 					return group
 				}
 				let group = multiComboWith(label: label, keys: keys, options: options!, strings: strings,
 				                           defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard,
-				                           capitalize: capitalize)
+				                           capitalize: capitalize, autocorrect: autocorrect)
 				return group
 			} else {
 				// a multiple selection
@@ -509,7 +520,8 @@ extension PresetsDatabase {
 					defaultValue: defaultValue,
 					placeholder: placeholder,
 					keyboard: keyboard,
-					capitalize: capitalize)
+					capitalize: capitalize,
+					autocorrect: autocorrect)
 				let group = PresetGroup(name: nil, tags: [.key(tag)])
 				return group
 			}
@@ -530,7 +542,8 @@ extension PresetsDatabase {
 				defaultValue: defaultValue,
 				placeholder: placeholder,
 				keyboard: keyboard,
-				capitalize: capitalize)
+				capitalize: capitalize,
+				autocorrect: autocorrect)
 			let group = PresetGroup(name: nil, tags: [.key(tag)])
 			return group
 
@@ -552,7 +565,8 @@ extension PresetsDatabase {
 					defaultValue: defaultValue,
 					placeholder: placeholder,
 					keyboard: keyboard,
-					capitalize: capitalize)
+					capitalize: capitalize,
+					autocorrect: autocorrect)
 				tagList.append(.key(tag))
 			}
 			let group = PresetGroup(name: label, tags: tagList)
@@ -606,6 +620,7 @@ extension PresetsDatabase {
 						placeholder: placeholder,
 						keyboard: keyboard,
 						capitalize: UITextAutocapitalizationType.words,
+						autocorrect: UITextAutocorrectionType.no,
 						presets: nil)
 					addrs.append(.key(tag))
 				}
@@ -628,6 +643,7 @@ extension PresetsDatabase {
 				keyboard = .emailAddress
 			case "textarea":
 				capitalize = .sentences
+				autocorrect = .yes
 			default:
 				break
 			}
@@ -639,6 +655,7 @@ extension PresetsDatabase {
 				placeholder: placeholder,
 				keyboard: keyboard,
 				capitalize: capitalize,
+				autocorrect: autocorrect,
 				presets: nil)
 			let group = PresetGroup(name: nil, tags: [.key(tag)])
 			return group

@@ -87,12 +87,12 @@ final class EditorMapLayer: CALayer {
 	var baseLayer: CATransformLayer
 
 	struct DragState {
-		var totalMovement: CGPoint // to update note positions
+		var startPoint: LatLon // to track total movement
 		var didMove: Bool // to maintain undo stack
 		var confirmDrag: Bool // should we confirm that the user wanted to drag the selected object? Only if they haven't modified it since selecting it
 	}
 
-	var dragState = DragState(totalMovement: .zero, didMove: false, confirmDrag: false)
+	var dragState = DragState(startPoint: .zero, didMove: false, confirmDrag: false)
 
 	let objectFilters = EditorFilters()
 
@@ -162,11 +162,9 @@ final class EditorMapLayer: CALayer {
 
 		if let alert = alert {
 			// this has to occur after super.init()
-			DispatchQueue.main.asyncAfter(
-				deadline: DispatchTime.now() + DispatchTimeInterval.milliseconds(500),
-				execute: {
-					self.owner.presentAlert(alert: alert, location: .none)
-				})
+			DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+				self.owner.presentAlert(alert: alert, location: .none)
+			})
 		}
 
 		objectFilters.onChange = { self.mapData.clearCachedProperties() }

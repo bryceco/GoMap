@@ -132,6 +132,8 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 		var source = sourceTextField.text ?? ""
 		source = source.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
+		let locale = PresetLanguages().preferredLanguageCode()
+
 		let completion: ((String?) -> Void) = { [self] error in
 			progressView.stopAnimating()
 			commitButton.isEnabled = true
@@ -153,8 +155,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 				dismiss(animated: true)
 
 				// flash success message
-				let popTime = DispatchTime.now() + 0.3 * Double(NSEC_PER_SEC)
-				DispatchQueue.main.asyncAfter(deadline: popTime, execute: {
+				DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
 					appDelegate.mapView.editorLayer.setNeedsLayout()
 					appDelegate.mapView.flashMessage(NSLocalizedString("Upload complete!", comment: ""), duration: 1.5)
 
@@ -191,10 +192,15 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 				comment: comment,
 				source: source,
 				imagery: imagery,
+				locale: locale,
 				completion: completion)
 		} else {
 			// normal upload
-			mapData?.uploadChangeset(withComment: comment, source: source, imagery: imagery, completion: completion)
+			mapData?.uploadChangeset(withComment: comment,
+			                         source: source,
+			                         imagery: imagery,
+			                         locale: locale,
+			                         completion: completion)
 		}
 	}
 

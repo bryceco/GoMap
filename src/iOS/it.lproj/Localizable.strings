@@ -81,7 +81,7 @@
 "All choices" = "Tutte le scelte";
 
 /* No comment provided by engineer. */
-"All Tags" = "Tutti i tag";
+"All Tags" = "Tutte le etichette";
 
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "Si è verificato un errore sconosciuto nel recupero dei metadati";
@@ -192,16 +192,22 @@
 "move" = "sposta";
 
 /* No comment provided by engineer. */
+"No tags to paste" = "Nessuna etichetta da incollare";
+
+/* No comment provided by engineer. */
 "node %@" = "nodo %@";
 
 /* No comment provided by engineer. */
 "other object" = "altro oggetto";
 
+/* Edit action */
+"Paste" = "Incolla";
+
 /* No comment provided by engineer. */
 "relation" = "relazione";
 
 /* No comment provided by engineer. */
-"set tags" = "imposta i tag";
+"set tags" = "imposta le etichette";
 
 /* Year aerial imagery was created */
 "vintage %@" = "vintage %@";

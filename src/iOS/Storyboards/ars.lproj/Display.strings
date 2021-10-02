@@ -32,7 +32,7 @@
 "8S7-Kw-QHF.normalTitle" = "التفاصيل";
 
 /* Class = "UILabel"; text = "Mapnik only"; ObjectID = "9L3-JO-Whj"; */
-"9L3-JO-Whj.text" = "Mapnik فقط";
+"9L3-JO-Whj.text" = "فقط خريطة Mapnik (الرسمية)";
 
 /* Class = "UINavigationItem"; title = "Display"; ObjectID = "186-0W-Nrr"; */
 "186-0W-Nrr.title" = "العرض";
@@ -77,7 +77,7 @@
 "EmS-9F-1qc.text" = "التفاصيل";
 
 /* Class = "UILabel"; text = "Editor only"; ObjectID = "eN6-SZ-99I"; */
-"eN6-SZ-99I.text" = "المحرر فقط";
+"eN6-SZ-99I.text" = "التحرير فقط";
 
 /* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eTY-48-gab"; */
 "eTY-48-gab.text" = "الصور الجوية";
@@ -140,7 +140,7 @@
 "MeQ-4N-FqC.text" = "سيتم حذف مسارات GPX التي تسجلها أو تنزيلها تلقائيا بعد:";
 
 /* Class = "UILabel"; text = "Editor with Aerial"; ObjectID = "MPq-PX-jf0"; */
-"MPq-PX-jf0.text" = "محرر مع الصور الجوية";
+"MPq-PX-jf0.text" = "التحرير مع الصور الجوية";
 
 /* Class = "UINavigationItem"; title = "Aerial Provider"; ObjectID = "MZF-am-tCM"; */
 "MZF-am-tCM.title" = "مزود صور جوية";

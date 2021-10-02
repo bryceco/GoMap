@@ -166,7 +166,7 @@ class MyUndoManager: NSObject, NSCoding {
 		while stack.last?.group == currentGroup,
 		      let action = stack.popLast()
 		{
-			//		DLog(@"-- Undo action: '%@' %@", action.selector, [action.target description] );
+			// print("-- Undo action: '\(action.selector)' \(type(of: action.target))")
 			action.perform()
 		}
 	}
@@ -180,7 +180,7 @@ class MyUndoManager: NSObject, NSCoding {
 
 		assert(!isUndoing && !isRedoing)
 		isUndoing = true
-		MyUndoManager.doActionGroup(fromStack: &undoStack)
+		Self.doActionGroup(fromStack: &undoStack)
 		isUndoing = false
 
 		didChangeValue(forKey: "canUndo")
@@ -199,7 +199,7 @@ class MyUndoManager: NSObject, NSCoding {
 
 		assert(!isUndoing && !isRedoing)
 		isRedoing = true
-		MyUndoManager.doActionGroup(fromStack: &redoStack)
+		Self.doActionGroup(fromStack: &redoStack)
 		isRedoing = false
 
 		didChangeValue(forKey: "canUndo")

@@ -80,6 +80,9 @@
 /* No comment provided by engineer. */
 "A relation the node belongs to is not fully downloaded" = "Eine Relation, zu der dieser Knoten gehört, ist nicht vollständig heruntergeladen";
 
+/* No comment provided by engineer. */
+"Accept" = "Akzeptieren";
+
 /* Add to relation */
 "Add inner member" = "Inneres Mitglied hinzufügen";
 
@@ -121,6 +124,9 @@
 
 /* Automatic selection of presets languages */
 "Automatic" = "Automatisch";
+
+/* back button */
+"Back" = "Zurück";
 
 /* identifies current aerial imagery */
 "Background imagery %@" = "Hintergrundbilder %@";
@@ -166,6 +172,9 @@
 
 /* No comment provided by engineer. */
 "Cancel" = "Abbrechen";
+
+/* e-mail message */
+"Cannot compose message" = "Nachricht kann nicht erstellt werden";
 
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "Kann inneren Weg nicht mit äußerem Weg verbinden";
@@ -230,11 +239,17 @@
 /* current GPX track */
 "Current Track" = "Aktueller Track";
 
+/* No comment provided by engineer. */
+"Database error" = "Datenbankfehler";
+
 /* Edit action */
 "Delete" = "Löschen";
 
 /* No comment provided by engineer. */
 "Delete\n" = "Löschen\n";
+
+/* Confirm deleting a node/way */
+"Delete %@?" = "%@ löschen?";
 
 /* No comment provided by engineer. */
 "Delete completely" = "Vollständig löschen";
@@ -265,6 +280,9 @@
 
 /* No comment provided by engineer. */
 "Display options" = "Optionen anzeigen";
+
+/* Distance to an object with an error value */
+"Distance: %1$@ ± %2$@ meters" = "Entfernung : %1$@ ± %2$@ Meter";
 
 /* No comment provided by engineer. */
 "Done" = "Fertig";
@@ -320,6 +338,9 @@
 /* No comment provided by engineer. */
 "GPX Upload Failed" = "GPX Hochladen fehlgeschlagen";
 
+/* Height of an object with an error value */
+"Height: %1$@ ± %2$@ meters" = "Höhe: %1$@ ± %2$@ Meter";
+
 /* rate the app now */
 "I'll do it!" = "Ich erledige das!";
 
@@ -347,6 +368,9 @@
 /* coordinates */
 "Lat/Lon" = "Breitengrad/Längengrad";
 
+/* No comment provided by engineer. */
+"Left" = "Links";
+
 /* Left-hand side of screen */
 "Left side" = "Linke Seite";
 
@@ -362,6 +386,9 @@
 /* No comment provided by engineer. */
 "Low memory: clearing cache" = "Geringer Speicherplatz: leere Cache";
 
+/* No comment provided by engineer. */
+"Mail delivery is not available on this device" = "Nachrichtenversand ist auf diesem Gerät nicht verfügbar";
+
 /* Edit action */
 "Make Circular" = "Kreisförmig machen";
 
@@ -369,10 +396,16 @@
 "Make Rectangular" = "Rechteckig machen";
 
 /* No comment provided by engineer. */
+"Max nodes after joining is 2000" = "Maximale Anzahl an Nodes nach dem Verbinden ist 2000";
+
+/* No comment provided by engineer. */
 "Maximum way length is 2000 nodes" = "Maximale Weglänge sind 2000 Knoten";
 
 /* rate the app later */
 "Maybe later..." = "Vielleicht später...";
+
+/* No comment provided by engineer. */
+"Measure Direction" = "Richtungsmaßnahme";
 
 /* No comment provided by engineer. */
 "Member of multipolygon relation" = "Mitglied von Multipolygon-Relation";
@@ -403,6 +436,9 @@
 
 /* Edit action */
 "More..." = "Mehr...";
+
+/* No comment provided by engineer. */
+"Most recent" = "Am Neuesten";
 
 /* No comment provided by engineer. */
 "move" = "bewegen";
@@ -647,7 +683,7 @@
 "You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "Es wurden Änderungen gemacht, welche noch nicht zum Server hochgeladen wurden. Den Cache zu leeren, würde den Verlust dieser Veränderungen bedeuten.";
 
 /* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "Der OSM-Nutzername muss eingetragen sein, keine E-Mail Addresse.";
+"You must provide your OSM user name, not an email address." = "Der OSM-Nutzername muss eingetragen sein, keine E-Mail-Addresse.";
 
 /* No comment provided by engineer. */
 "You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?" = "Du hast %ld Änderungssätze mit dieser Version von GoMap!! hochgeladen.\n\nDiese App bewerten?";

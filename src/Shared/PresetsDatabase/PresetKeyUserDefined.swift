@@ -35,6 +35,7 @@ final class PresetKeyUserDefined: PresetKey {
 	     placeholder: String?,
 	     keyboard: UIKeyboardType,
 	     capitalize: UITextAutocapitalizationType,
+	     autocorrect: UITextAutocorrectionType,
 	     presets: [PresetValue])
 	{
 		self.appliesToKey = appliesToKey
@@ -45,6 +46,7 @@ final class PresetKeyUserDefined: PresetKey {
 		           placeholder: placeholder,
 		           keyboard: keyboard,
 		           capitalize: capitalize,
+		           autocorrect: autocorrect,
 		           presets: presets)
 	}
 

@@ -1,96 +1,66 @@
 /* Class = "UILabel"; text = "Get Directions"; ObjectID = "1xx-L0-hKm"; */
-"1xx-L0-hKm.text" = "";
+"1xx-L0-hKm.text" = "Hangi juhised";
 
 /* Class = "UIViewController"; title = "First"; ObjectID = "2"; */
-"2.title" = "";
+"2.title" = "Esimene";
 
 /* Class = "UIButton"; normalTitle = "Comment"; ObjectID = "2g1-vb-Cjc"; */
-"2g1-vb-Cjc.normalTitle" = "";
-
-/* Class = "UIButton"; normalTitle = "Bing attribution"; ObjectID = "2Ka-IT-DQC"; */
-"2Ka-IT-DQC.normalTitle" = "";
+"2g1-vb-Cjc.normalTitle" = "Kommentaar";
 
 /* Class = "UINavigationItem"; title = "Upload"; ObjectID = "7Ua-cx-BHI"; */
-"7Ua-cx-BHI.title" = "";
-
-/* Class = "UILabel"; text = "username - action"; ObjectID = "9G2-Gl-CeP"; Note = "Placeholder - ignore"; */
-"9G2-Gl-CeP.text" = "";
+"7Ua-cx-BHI.title" = "Saada";
 
 /* Class = "UILabel"; text = "New comment:"; ObjectID = "9hH-Ja-fKn"; */
-"9hH-Ja-fKn.text" = "";
-
-/* Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u"; */
-"9t5-wq-j1u.text" = "";
-
-/* Class = "UITextView"; text = "Changeset comment goes here"; ObjectID = "ach-1A-88x"; */
-"ach-1A-88x.text" = "";
+"9hH-Ja-fKn.text" = "Uus kommentaar:";
 
 /* Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt"; */
-"E22-sL-sNt.accessibilityHint" = "";
+"E22-sL-sNt.accessibilityHint" = "Suuna kaart põhja";
 
 /* Class = "UIButton"; accessibilityLabel = "Compass"; ObjectID = "E22-sL-sNt"; */
-"E22-sL-sNt.accessibilityLabel" = "";
+"E22-sL-sNt.accessibilityLabel" = "Kompass";
 
 /* Class = "UINavigationItem"; title = "Search for Location"; ObjectID = "FaM-WV-S6I"; */
-"FaM-WV-S6I.title" = "";
+"FaM-WV-S6I.title" = "Leia asukoht";
 
 /* Class = "UIButton"; normalTitle = "Center"; ObjectID = "Fo4-Nq-pAz"; */
-"Fo4-Nq-pAz.normalTitle" = "";
+"Fo4-Nq-pAz.normalTitle" = "Keskkoht";
 
 /* Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "gdu-Sf-XrE"; */
-"gdu-Sf-XrE.title" = "";
-
-/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "HeZ-95-3K1"; */
-"HeZ-95-3K1.text" = "";
+"gdu-Sf-XrE.title" = "Rakenda";
 
 /* Class = "UILabel"; text = "Subtitle"; ObjectID = "l7S-YL-RKK"; */
-"l7S-YL-RKK.text" = "";
+"l7S-YL-RKK.text" = "Alapealkiri";
 
 /* Class = "UINavigationItem"; title = "Note"; ObjectID = "MBY-TK-Wuy"; */
-"MBY-TK-Wuy.title" = "";
+"MBY-TK-Wuy.title" = "Märge";
 
 /* Class = "UILabel"; text = "Zoom to Edit"; ObjectID = "N5Q-nV-TPG"; */
-"N5Q-nV-TPG.text" = "";
-
-/* Class = "UILabel"; text = "A Error Message Flashing Z"; ObjectID = "nU5-T2-ADn"; Note = "Placeholder - Don't translate"; */
-"nU5-T2-ADn.text" = "";
+"N5Q-nV-TPG.text" = "Suurenda muutmiseks";
 
 /* Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1"; */
-"OJ0-aO-ri1.normalTitle" = "";
-
-/* Class = "UITextView"; text = "Various comments..."; ObjectID = "PHk-s9-onx"; Note = "Placeholder - ignore"; */
-"PHk-s9-onx.text" = "";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "qP9-Sc-sc4"; */
-"qP9-Sc-sc4.text" = "";
+"OJ0-aO-ri1.normalTitle" = "Lahenda";
 
 /* Class = "UINavigationItem"; title = "Bing Maps"; ObjectID = "Qz0-Ce-YCX"; */
-"Qz0-Ce-YCX.title" = "";
+"Qz0-Ce-YCX.title" = "Bing kaardid";
 
 /* Class = "UIViewController"; title = "Search for Location"; ObjectID = "siu-I6-IEp"; */
-"siu-I6-IEp.title" = "";
+"siu-I6-IEp.title" = "Leia asukoht";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "stf-JU-iga"; */
-"stf-JU-iga.text" = "";
+"stf-JU-iga.text" = "Pealkiri";
 
 /* Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H"; */
-"TcP-6i-B8H.text" = "";
-
-/* Class = "UILabel"; text = "2014-06-17 17:54 UTC"; ObjectID = "tOO-VD-MeJ"; */
-"tOO-VD-MeJ.text" = "";
-
-/* Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr"; */
-"vRO-Aj-Sdr.text" = "";
+"TcP-6i-B8H.text" = "Määra nimi (\"New York\"), URL või muu tekst, mis sisaldab koordinaate laius-/pikkuskoordinaate või viidet OSM objektile (\"way 51014987\"):";
 
 /* Class = "UISearchBar"; placeholder = "Niagara Falls"; ObjectID = "xw9-Ro-Fai"; */
-"xw9-Ro-Fai.placeholder" = "";
+"xw9-Ro-Fai.placeholder" = "Niagara juga";
 
 /* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[0] = "Tags"; ObjectID = "zrW-uc-hfQ"; */
-"zrW-uc-hfQ.segmentTitles[0]" = "";
+"zrW-uc-hfQ.segmentTitles[0]" = "Sildid";
 
 /* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[1] = "Delete"; ObjectID = "zrW-uc-hfQ"; */
-"zrW-uc-hfQ.segmentTitles[1]" = "";
+"zrW-uc-hfQ.segmentTitles[1]" = "Kustuta";
 
 /* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[2] = "More..."; ObjectID = "zrW-uc-hfQ"; */
-"zrW-uc-hfQ.segmentTitles[2]" = "";
+"zrW-uc-hfQ.segmentTitles[2]" = "Veel…";
 

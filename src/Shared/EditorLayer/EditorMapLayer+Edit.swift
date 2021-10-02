@@ -198,21 +198,19 @@ extension EditorMapLayer {
 		}
 	}
 
-	// MARK: Dragging
+	// MARK: Dragging pushPin
 
-	func dragBegin() {
+	func dragBegin(from: CGPoint) {
 		mapData.beginUndoGrouping()
-		dragState.totalMovement = .zero
+		dragState.startPoint = owner.mapTransform.latLon(forScreenPoint: from)
 		dragState.didMove = false
 	}
 
 	func dragContinue(object: OsmBaseObject,
-	                  dragx: CGFloat, dragy: CGFloat,
+	                  toPoint: CGPoint,
 	                  isRotateObjectMode: (rotateObjectOverlay: CAShapeLayer, rotateObjectCenter: LatLon)?)
 	{
 		// don't accumulate undo moves
-		dragState.totalMovement.x += dragx
-		dragState.totalMovement.y += dragy
 		if dragState.didMove {
 			mapData.endUndoGrouping()
 			silentUndo = true
@@ -226,10 +224,13 @@ extension EditorMapLayer {
 		}
 		dragState.didMove = true
 
+		let p1 = owner.mapTransform.screenPoint(forLatLon: dragState.startPoint, birdsEye: true)
+		let totalMovement = toPoint.minus(p1)
+
 		// move all dragged nodes
 		if let rotate = isRotateObjectMode {
 			// rotate object
-			let delta = Double(-(dragState.totalMovement.x + dragState.totalMovement.y) / 100)
+			let delta = Double(-(totalMovement.x + totalMovement.y) / 100)
 			let axis = owner.mapTransform.screenPoint(forLatLon: rotate.rotateObjectCenter,
 			                                          birdsEye: true)
 			let nodeSet = (object.isNode() != nil) ? selectedWay?.nodeSet() : object.nodeSet()
@@ -247,9 +248,8 @@ extension EditorMapLayer {
 			}
 		} else {
 			// drag object
-			let delta = CGPoint(x: dragState.totalMovement.x,
-			                    y: -dragState.totalMovement.y)
-
+			let delta = CGPoint(x: totalMovement.x,
+			                    y: -totalMovement.y)
 			for node in object.nodeSet() {
 				adjust(node, byScreenDistance: delta)
 			}

@@ -70,12 +70,17 @@ final class OsmMapData: NSObject, NSCoding {
 
 	// MARK: Utility
 
-	func setServer(_ hostname: String) {
+	func serverNameCanonicalized(_ hostname: String) -> String {
 		var hostname = hostname
 		hostname = hostname.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
-		if hostname.count == 0 {
+		switch hostname {
+		case "":
 			hostname = "api.openstreetmap.org"
+		case "dev":
+			hostname = "api06.dev.openstreetmap.org"
+		default:
+			break
 		}
 
 		if hostname.hasPrefix("http://") || hostname.hasPrefix("https://") {
@@ -93,6 +98,12 @@ final class OsmMapData: NSObject, NSCoding {
 		} else {
 			hostname = hostname + "/"
 		}
+
+		return hostname
+	}
+
+	func setServer(_ hostname: String) {
+		let hostname = serverNameCanonicalized(hostname)
 
 		if OSM_API_URL == hostname {
 			// no change
@@ -845,7 +856,7 @@ final class OsmMapData: NSObject, NSCoding {
 				isUpdate: false)
 
 			// purge old data
-			DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0, execute: {
+			DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
 				AppDelegate.shared.mapView.discardStaleData()
 			})
 		}
@@ -1120,6 +1131,7 @@ final class OsmMapData: NSObject, NSCoding {
 		withComment comment: String,
 		source: String,
 		imagery: String,
+		locale: String,
 		completion: @escaping (Result<Int64, Error>) -> Void)
 	{
 		let appDelegate = AppDelegate.shared
@@ -1135,6 +1147,9 @@ final class OsmMapData: NSObject, NSCoding {
 		}
 		if source.count != 0 {
 			tags["source"] = source
+		}
+		if locale.count != 0 {
+			tags["locale"] = locale
 		}
 		if let xmlCreate = OsmXmlGenerator.createXml(withType: "changeset", tags: tags) {
 			let url = OSM_API_URL + "api/0.6/changeset/create"
@@ -1175,9 +1190,10 @@ final class OsmMapData: NSObject, NSCoding {
 		withComment comment: String,
 		source: String,
 		imagery: String,
+		locale: String,
 		completion: @escaping (_ errorMessage: String?) -> Void)
 	{
-		openNewChangeset(withComment: comment, source: source, imagery: imagery) { [self] result in
+		openNewChangeset(withComment: comment, source: source, imagery: imagery, locale: locale) { [self] result in
 			switch result {
 			case let .success(changesetID):
 				generateXMLandUploadChangeset(changesetID, retries: 20, completion: completion)
@@ -1193,11 +1209,12 @@ final class OsmMapData: NSObject, NSCoding {
 		comment: String,
 		source: String,
 		imagery: String,
+		locale: String,
 		completion: @escaping (_ error: String?) -> Void)
 	{
 		consistencyCheck()
 
-		openNewChangeset(withComment: comment, source: source, imagery: imagery) { [self] result in
+		openNewChangeset(withComment: comment, source: source, imagery: imagery, locale: locale) { [self] result in
 			switch result {
 			case let .success(changesetID):
 				OsmMapData.addChangesetId(changesetID, toXML: xmlChanges)

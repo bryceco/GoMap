@@ -1,24 +1,16 @@
 /* Bundle display name */
-"CFBundleDisplayName" = "";
 
 /* Bundle name */
-"CFBundleName" = "";
 
 /* (No Comment) */
-"GPS Exchange Format (GPX)" = "";
 
 /* Privacy - Bluetooth Peripheral Usage Description */
-"NSBluetoothPeripheralUsageDescription" = "";
 
 /* Privacy - Camera Usage Description */
-"NSCameraUsageDescription" = "";
 
 /* Privacy - Location Always and When In Use Usage Description */
-"NSLocationAlwaysAndWhenInUseUsageDescription" = "";
 
 /* Privacy - Location Always Usage Description */
-"NSLocationAlwaysUsageDescription" = "";
 
 /* Privacy - Location When In Use Usage Description */
-"NSLocationWhenInUseUsageDescription" = "";
 

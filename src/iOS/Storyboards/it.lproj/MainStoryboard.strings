@@ -26,7 +26,7 @@
 "l7S-YL-RKK.text" = "Sottotitolo";
 
 /* Class = "UINavigationItem"; title = "Note"; ObjectID = "MBY-TK-Wuy"; */
-"MBY-TK-Wuy.title" = "Note";
+"MBY-TK-Wuy.title" = "Nota";
 
 /* Class = "UILabel"; text = "Zoom to Edit"; ObjectID = "N5Q-nV-TPG"; */
 "N5Q-nV-TPG.text" = "Ingrandisci per modificare";
@@ -44,7 +44,7 @@
 "xw9-Ro-Fai.placeholder" = "Cascate del Niagara";
 
 /* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[0] = "Tags"; ObjectID = "zrW-uc-hfQ"; */
-"zrW-uc-hfQ.segmentTitles[0]" = "Tags";
+"zrW-uc-hfQ.segmentTitles[0]" = "Etichette";
 
 /* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[1] = "Delete"; ObjectID = "zrW-uc-hfQ"; */
 "zrW-uc-hfQ.segmentTitles[1]" = "Elimina";

@@ -849,6 +849,26 @@ int easyexif::EXIFInfo::parseFromEXIFSegment(const unsigned char *buf,
                 buf + data + tiff_header_start, alignIntel);
           }
           break;
+
+		case 16:
+		  // GPX direction
+		  // T=true,M=magnetic
+		  this->GeoLocation.imgDirectionRef = *(buf + offs + 8);
+		  if (this->GeoLocation.imgDirectionRef == 0) {
+			this->GeoLocation.imgDirectionRef = '?';
+		  }
+		  break;
+
+		case 17:
+		  // GPX direction
+		  if ((format == 5 || format == 10)) {
+			this->GeoLocation.imgDirection = parse_value<Rational>(
+					buf + data + tiff_header_start, alignIntel);
+			if ('M' == this->GeoLocation.imgDirectionRef) {
+				// convert magnetic north to true north
+			}
+		  }
+		  break;
       }
       offs += 12;
     }
@@ -904,6 +924,8 @@ void easyexif::EXIFInfo::clear() {
   GeoLocation.LonComponents.minutes = 0;
   GeoLocation.LonComponents.seconds = 0;
   GeoLocation.LonComponents.direction = '?';
+  GeoLocation.imgDirectionRef = '?';
+  GeoLocation.imgDirection = 0;
 
   // LensInfo
   LensInfo.FocalLengthMax = 0;

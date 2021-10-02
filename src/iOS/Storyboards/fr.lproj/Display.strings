@@ -109,6 +109,9 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "h1O-06-ApF"; */
 "h1O-06-ApF.text" = "Étiquette";
 
+/* Class = "UINavigationItem"; title = "QA Poole No Name Tiles"; ObjectID = "H3p-Ta-kIy"; Note = "Title for Simon Poole's \"No name\" (missing name) tile overlay"; */
+"H3p-Ta-kIy.title" = "Tuiles sans nom QA Poole";
+
 /* Class = "UILabel"; text = "Traffic Roads"; ObjectID = "hkr-kO-jbt"; */
 "hkr-kO-jbt.text" = "Voies de circulation";
 
@@ -213,6 +216,9 @@
 
 /* Class = "UILabel"; text = "Enable Rotation"; ObjectID = "VUR-wT-knn"; */
 "VUR-wT-knn.text" = "Permettre la rotation";
+
+/* Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF"; Note = "A hypothetical aerial imagery provider"; */
+"w75-Lj-3jF.placeholder" = "Portlandia GIS";
 
 /* Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C"; */
 "wev-ax-u4C.headerTitle" = "Réinitialiser";

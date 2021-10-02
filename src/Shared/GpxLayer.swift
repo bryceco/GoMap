@@ -20,21 +20,26 @@ final class GpxTrackLayerWithProperties: CAShapeLayer {
 }
 
 final class GpxPoint: NSObject, NSCoding {
-	var latLon = LatLon.zero
-	var accuracy = 0.0
-	var elevation = 0.0
-	var timestamp: Date?
+	let latLon: LatLon
+	let accuracy: Double
+	let elevation: Double
+	let timestamp: Date? // imported GPX files may not contain a date
+
+	init(latLon: LatLon, accuracy: Double, elevation: Double, timestamp: Date?) {
+		self.latLon = latLon
+		self.accuracy = accuracy
+		self.elevation = elevation
+		self.timestamp = timestamp
+		super.init()
+	}
 
 	required init(coder aDecoder: NSCoder) {
-		super.init()
-		latLon.lat = aDecoder.decodeDouble(forKey: "lat")
-		latLon.lon = aDecoder.decodeDouble(forKey: "lon")
+		let lat = aDecoder.decodeDouble(forKey: "lat")
+		let lon = aDecoder.decodeDouble(forKey: "lon")
+		latLon = LatLon(latitude: lat, longitude: lon)
 		accuracy = aDecoder.decodeDouble(forKey: "acc")
 		elevation = aDecoder.decodeDouble(forKey: "ele")
 		timestamp = aDecoder.decodeObject(forKey: "time") as? Date
-	}
-
-	override init() {
 		super.init()
 	}
 
@@ -105,15 +110,12 @@ final class GpxTrack: NSObject, NSCoding {
 			distance += d
 		}
 
-		let pt = GpxPoint()
-		pt.latLon = coordinate
-		pt.timestamp = location.timestamp
-		pt.elevation = location.altitude
-		pt.accuracy = location.horizontalAccuracy
+		let pt = GpxPoint(latLon: coordinate,
+		                  accuracy: location.horizontalAccuracy,
+		                  elevation: location.altitude,
+		                  timestamp: location.timestamp)
 
 		points.append(pt)
-
-		//	DLog( @"%f,%f (%f): %lu gpx points", coordinate.longitude, coordinate.latitude, location.horizontalAccuracy, (unsigned long)_points.count );
 	}
 
 	func finish() {
@@ -243,25 +245,31 @@ final class GpxTrack: NSObject, NSCoding {
 		let dateFormatter = OsmBaseObject.rfc3339DateFormatter()
 		for pt in a {
 			guard let pt = pt as? DDXMLElement,
-			      let lat = pt.attribute(forName: "lat")?.stringValue,
-			      let lon = pt.attribute(forName: "lon")?.stringValue,
-			      let lat = Double(lat),
-			      let lon = Double(lon)
+			      let lat2 = pt.attribute(forName: "lat")?.stringValue,
+			      let lon2 = pt.attribute(forName: "lon")?.stringValue,
+			      let lat = Double(lat2),
+			      let lon = Double(lon2)
 			else {
 				throw GpxError.badGpxFormat
 			}
 
-			let point = GpxPoint()
-			point.latLon = LatLon(latitude: lat, longitude: lon)
-
+			let latLon = LatLon(latitude: lat, longitude: lon)
+			var timestamp: Date?
+			var elevation = 0.0
 			if let time = pt.elements(forName: "time").last?.stringValue {
-				point.timestamp = dateFormatter.date(from: time)
+				timestamp = dateFormatter.date(from: time)
 			}
-			if let ele = pt.elements(forName: "ele").last?.stringValue,
-			   let ele = Double(ele)
+			if let ele2 = pt.elements(forName: "ele").last?.stringValue,
+			   let ele = Double(ele2)
 			{
-				point.elevation = ele
+				elevation = ele
 			}
+
+			let point = GpxPoint(latLon: latLon,
+			                     accuracy: 0.0,
+			                     elevation: elevation,
+			                     timestamp: timestamp)
+
 			points.append(point)
 		}
 		if points.count < 2 {
@@ -304,12 +312,10 @@ final class GpxTrack: NSObject, NSCoding {
 			return 0.0
 		}
 
-		let start = points.first
-		let finish = points.last
-		if let timestamp1 = start?.timestamp {
-			return finish?.timestamp?.timeIntervalSince(timestamp1) ?? 0.0
-		}
-		return 0.0
+		guard let start = points.first?.timestamp,
+		      let finish = points.last?.timestamp
+		else { return 0.0 }
+		return finish.timeIntervalSince(start)
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -446,25 +452,20 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 
 	func delete(_ track: GpxTrack) {
 		let path = URL(fileURLWithPath: saveDirectory()).appendingPathComponent(track.fileName()).path
-		do {
-			try FileManager.default.removeItem(atPath: path)
-		} catch {}
+		try? FileManager.default.removeItem(atPath: path)
 		previousTracks.removeAll { $0 === track }
 		track.shapeLayer?.removeFromSuperlayer()
+		uploadedTracks.removeValue(forKey: track.name)
 		setNeedsLayout()
-
-		if uploadedTracks[track.name] != nil {
-			uploadedTracks.removeValue(forKey: track.name)
-		}
 	}
 
 	func markTrackUploaded(_ track: GpxTrack) {
 		uploadedTracks[track.name] = true
 	}
 
+	// Removes GPX tracks older than date.
+	// This is called when the user selects a new age limit for tracks.
 	func trimTracksOlderThan(_ date: Date) {
-		// trim off old tracks
-
 		while let track = previousTracks.last {
 			let point = track.points[0]
 			if let timestamp1 = point.timestamp {
@@ -543,17 +544,14 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 	}
 
 	override func action(forKey key: String) -> CAAction? {
-		if key == "transform" {
+		switch key {
+		case "transform",
+		     "bounds",
+		     "position":
 			return nil
+		default:
+			return super.action(forKey: key)
 		}
-		if key == "bounds" {
-			return nil
-		}
-		if key == "position" {
-			return nil
-		}
-		//	DLog(@"actionForKey: %@",key);
-		return super.action(forKey: key)
 	}
 
 	// MARK: Caching
@@ -588,15 +586,12 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 		didLoadSavedTracks = true
 
 		let expiration = GpxLayer.expirationDays
-		let deleteIfCreatedBefore = expiration == 0 ? Date
-			.distantPast : Date(timeIntervalSinceNow: TimeInterval(-expiration * 24 * 60 * 60))
+		let deleteIfCreatedBefore = expiration == 0 ? Date.distantPast
+			: Date(timeIntervalSinceNow: TimeInterval(-expiration * 24 * 60 * 60))
 
 		DispatchQueue.global(qos: .default).async(execute: { [self] in
 			let dir = saveDirectory()
-			var files: [String] = []
-			do {
-				files = try FileManager.default.contentsOfDirectory(atPath: dir)
-			} catch {}
+			var files = (try? FileManager.default.contentsOfDirectory(atPath: dir)) ?? []
 
 			files = files.sorted { $0.compare($1, options: .caseInsensitive) == .orderedAscending }
 				.reversed() // file names are timestamps, so sort increasing
@@ -617,8 +612,6 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 						continue
 					}
 					DispatchQueue.main.async(execute: { [self] in
-						// DLog(@"track %@: %@, %ld points\n",file,track.creationDate, (long)track.points.count);
-
 						previousTracks.append(track)
 						setNeedsLayout()
 						if let progressCallback = progressCallback {
@@ -691,7 +684,7 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 		if center {
 			self.center(on: newTrack)
 			selectedTrack = newTrack
-			mapView.enableGpxLogging = true // ensure GPX tracks are visible
+			mapView.displayGpxLogs = true // ensure GPX tracks are visible
 		}
 		save(toDisk: newTrack)
 	}

@@ -1,0 +1,192 @@
+/* (No Comment) */
+"quest_address_street_title" = "A quelle rue appartient le bâtiment portant le numéro %s ?";
+
+/* (No Comment) */
+"quest_address_title" = "Quel est le numéro de maison de ce bâtiment ?";
+
+/* (No Comment) */
+"quest_atm_operator_title" = "Quel est nom de la banque associée à ce distributeur ?";
+
+/* (No Comment) */
+"quest_barrier_type_title" = "Quel type de barrière est-ce ?";
+
+/* (No Comment) */
+"quest_bench_backrest_title" = "Ce banc a-t-il un dossier ?";
+
+/* (No Comment) */
+"quest_bicycle_parking_access_title" = "Qui peut garer un vélo ici ?";
+
+/* (No Comment) */
+"quest_bicycle_parking_fee_title" = "Doit-on payer pour garer son vélo ici ?";
+
+/* (No Comment) */
+"quest_bicycle_parking_type_title" = "De quel type de stationnement vélo s'agit-il ?";
+
+/* (No Comment) */
+"quest_bicycleParkingCoveredStatus_title" = "Ce parking à vélos est-il couvert (protégé de la pluie) ?";
+
+/* (No Comment) */
+"quest_bikeParkingCapacity_title" = "Combien de vélos peuvent être garés ici ?";
+
+/* (No Comment) */
+"quest_board_type_title" = "Quel est l'objet de ce panneau d'information ?";
+
+/* (No Comment) */
+"quest_bridge_structure_title" = "Quelle est la structure de ce pont ?";
+
+/* (No Comment) */
+"quest_buildingType_title" = "Quel est le type de ce bâtiment ?";
+
+/* (No Comment) */
+"quest_camera_type_title" = "Quel type de caméra de surveillance est-ce ?";
+
+/* (No Comment) */
+"quest_charging_station_operator_title" = "Qui est l'exploitant de cette station de recharge ?";
+
+/* (No Comment) */
+"quest_clothes_container_operator_title" = "Qui perçoit les dons de ce conteneur à vêtements ?";
+
+/* (No Comment) */
+"quest_construction_building_title" = "Ce bâtiment est-il achevé ?";
+
+/* (No Comment) */
+"quest_crossing_title" = "Y a-t-il des trottoirs à l'endroit où ce chemin rencontre cette route ? De quel type ?";
+
+/* (No Comment) */
+"quest_crossing_type_title" = "De quel type de passage piéton s'agit-il ?";
+
+/* (No Comment) */
+"quest_cyclewayPartSurface_title" = "Quel est le revêtement de la piste cyclable ici ?";
+
+/* (No Comment) */
+"quest_dietType_kosher_name_title" = "%s propose-t-il des produits casher ?";
+
+/* (No Comment) */
+"quest_dietType_vegan_name_title" = "Le menu de %s comporte-t-il des plats végétaliens ?";
+
+/* (No Comment) */
+"quest_dietType_vegetarian_name_title" = "Le menu de %s comporte-t-il des plats végétariens ?";
+
+/* (No Comment) */
+"quest_drinking_water_title" = "L'eau est-elle potable ici ? (%s)";
+
+/* (No Comment) */
+"quest_fireHydrant_type_title" = "De quel type de bouche d'incendie s'agit-il ?";
+
+/* (No Comment) */
+"quest_footwayPartSurface_title" = "Quel est le revêtement du chemin piéton ici ?";
+
+/* (No Comment) */
+"quest_generalFee_title" = "Faut-il payer pour entrer dans %s ?";
+
+/* (No Comment) */
+"quest_handrail_title" = "Ces marches ont-elles une main courante ?";
+
+/* (No Comment) */
+"quest_internet_access_name_title" = "Quel type de connexion internet %s offre-t-il ?";
+
+/* (No Comment) */
+"quest_is_defibrillator_inside_title" = "Ce défibrillateur (DAE) se trouve-t-il à l'intérieur d'un bâtiment ?";
+
+/* (No Comment) */
+"quest_kerb_height_title" = "Quelle est la hauteur de cette bordure ?";
+
+/* (No Comment) */
+"quest_lanes_title" = "Combien y a t-il de voies pour voitures sur cette route ?";
+
+/* (No Comment) */
+"quest_laundrySelfService_title" = "Cette laverie est-elle en libre-service ?";
+
+/* (No Comment) */
+"quest_leafType_title" = "Les arbres d'ici ont-ils des aiguilles ou des feuilles ?";
+
+/* (No Comment) */
+"quest_maxweight_title" = "Quelle est la limite de poids ici ?";
+
+/* (No Comment) */
+"quest_motorcycleParkingCapacity_title" = "Combien de motos peuvent être garées ici ?";
+
+/* (No Comment) */
+"quest_motorcycleParkingCoveredStatus_title" = "Ce parking moto est-il couvert (protégé de la pluie) ?";
+
+/* (No Comment) */
+"quest_parking_access_title" = "L'accès à ce parking est-il restreint ?";
+
+/* (No Comment) */
+"quest_parking_fee_title" = "Le stationnement est-il payant ici ?";
+
+/* (No Comment) */
+"quest_parkingType_title" = "De quel type de parking s'agit-il ?";
+
+/* (No Comment) */
+"quest_playground_access_title" = "Cette aire de jeu est-elle accessible au public ?";
+
+/* (No Comment) */
+"quest_policeType_title" = "Quel type de poste de police est-ce ?";
+
+/* (No Comment) */
+"quest_postboxRoyalCypher_title" = "Quel est le monogramme royal apposé sur cette boîte aux lettres ?";
+
+/* (No Comment) */
+"quest_powerPolesMaterial_title" = "De quel matériau est fait ce poteau électrique ?";
+
+/* (No Comment) */
+"quest_recycling_glass_title" = "Seuls les bouteilles en verre et pots en verre peuvent-ils être recyclés ici, ou tout type de verre ?";
+
+/* (No Comment) */
+"quest_recycling_materials_title" = "Qu'est-ce qui peut être déposé ici pour le recyclage ?";
+
+/* (No Comment) */
+"quest_recycling_type_title" = "De quel type d'installation de recyclage s'agit-il ?";
+
+/* (No Comment) */
+"quest_religion_for_wayside_shrine_title" = "Quelle religion est représentée dans ce sanctuaire ?";
+
+/* (No Comment) */
+"quest_segregated_title" = "Comment sont aménagées les voies piétonnes et cyclables ici ?";
+
+/* (No Comment) */
+"quest_shop_vacant_type_title" = "Cet emplacement de magasin a été vacant. Qu'y a-t'il ici maintenant ?";
+
+/* (No Comment) */
+"quest_sidewalk_title" = "Cette rue a-t-elle un trottoir ?";
+
+/* (No Comment) */
+"quest_step_count_title" = "Combien de marches y a-t-il ici ?";
+
+/* (No Comment) */
+"quest_steps_incline_title" = "Dans quel sens cet escalier monte-t-il ?";
+
+/* (No Comment) */
+"quest_steps_ramp_title" = "Ces marches ont-elles une rampe ? De quel type ?";
+
+/* (No Comment) */
+"quest_stile_type_title" = "Quel type d'échalier est-ce ?";
+
+/* (No Comment) */
+"quest_summit_register_title" = "Y a-t-il un registre des sommets à %s ?";
+
+/* (No Comment) */
+"quest_tactile_paving_kerb_title" = "Y a t-il un revêtement podotactile à cet endroit ?";
+
+/* (No Comment) */
+"quest_toiletsFee_title" = "Ces toilettes sont-elles payantes ?";
+
+/* (No Comment) */
+"quest_tracktype_title" = "Quelle est la fermeté du revêtement de cette piste ?";
+
+/* (No Comment) */
+"quest_traffic_signals_button_title" = "Ces feux tricolores ont-ils un bouton pour demander le feu vert pour les piétons ?";
+
+/* (No Comment) */
+"quest_traffic_signals_sound_title" = "Y a-t-il des signaux sonores pour les déficients visuels ici ?";
+
+/* (No Comment) */
+"quest_traffic_signals_vibrate_title" = "Est-ce que ces feux piétons ont un indicateur de traversée en sécurité, pour personnes malvoyantes ?";
+
+/* (No Comment) */
+"quest_wheelchairAccess_outside_title" = "Cet endroit est-il accessible en fauteuil roulant ?";
+
+/* (No Comment) */
+"quest_wheelchairAccess_toiletsPart_title" = "Les toilettes de %s sont-elles accessibles en fauteuil roulant ?";
+

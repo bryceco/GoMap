@@ -69,7 +69,7 @@ class DisplayViewController: UITableViewController {
 
 		mapView.enableRotation = rotationSwitch.isOn
 		mapView.enableUnnamedRoadHalo = unnamedRoadSwitch.isOn
-		mapView.enableGpxLogging = gpxLoggingSwitch.isOn
+		mapView.displayGpxLogs = gpxLoggingSwitch.isOn
 		mapView.enableTurnRestriction = turnRestrictionSwitch.isOn
 
 		mapView.editorLayer.setNeedsLayout()
@@ -78,7 +78,7 @@ class DisplayViewController: UITableViewController {
 	@IBAction func gpsSwitchChanged(_ sender: Any) {
 		// need this to take effect immediately in case they exit the app without dismissing this controller, and they want GPS enabled in background
 		let mapView = AppDelegate.shared.mapView
-		mapView?.enableGpxLogging = gpxLoggingSwitch.isOn
+		mapView?.displayGpxLogs = gpxLoggingSwitch.isOn
 	}
 
 	@IBAction func toggleObjectFilters(_ sender: UISwitch) {
@@ -106,7 +106,7 @@ class DisplayViewController: UITableViewController {
 
 		rotationSwitch.isOn = mapView.enableRotation
 		unnamedRoadSwitch.isOn = mapView.enableUnnamedRoadHalo
-		gpxLoggingSwitch.isOn = mapView.enableGpxLogging
+		gpxLoggingSwitch.isOn = mapView.displayGpxLogs
 		turnRestrictionSwitch.isOn = mapView.enableTurnRestriction
 		objectFiltersSwitch.isOn = mapView.editorLayer.objectFilters.enableObjectFilters
 

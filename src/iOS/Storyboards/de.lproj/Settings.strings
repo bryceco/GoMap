@@ -44,7 +44,7 @@
 "ctb-pg-pM9.title" = "Speichern";
 
 /* Class = "UITableViewSection"; headerTitle = "Bug Reports & Suggestions"; ObjectID = "dbi-X6-Day"; */
-"dbi-X6-Day.headerTitle" = "Fehlermeldungen & Vorschläge";
+"dbi-X6-Day.headerTitle" = "Fehlermeldungen und Vorschläge";
 
 /* Class = "UIButton"; normalTitle = "Register new account"; ObjectID = "DY5-Ls-XZ1"; */
 "DY5-Ls-XZ1.normalTitle" = "Neuen Account registrieren";
@@ -74,7 +74,7 @@
 "ib9-wt-IzD.title" = "Sprache";
 
 /* Class = "UILabel"; text = "Email Feedback"; ObjectID = "iR4-av-Q7M"; */
-"iR4-av-Q7M.text" = "E-Mail Feedback";
+"iR4-av-Q7M.text" = "Kommentare per E-Mail";
 
 /* Class = "UILabel"; text = "Password"; ObjectID = "k0y-gf-6DY"; */
 "k0y-gf-6DY.text" = "Passwort";
@@ -101,7 +101,7 @@
 "nIn-2k-PYG.headerTitle" = "Gemischt";
 
 /* Class = "UINavigationItem"; title = "Login"; ObjectID = "O6E-f1-A1k"; */
-"O6E-f1-A1k.title" = "Login";
+"O6E-f1-A1k.title" = "Identifikationsdaten";
 
 /* Class = "UITableViewSection"; headerTitle = "About Us"; ObjectID = "oIj-UV-kLH"; */
 "oIj-UV-kLH.headerTitle" = "Über uns";
@@ -116,7 +116,7 @@
 "Tkc-bW-kNS.footerTitle" = "Um Veränderungen hochzuladen wird ein Benutzername und Passwort, registriert bei openstreetmap.org, benötigt ";
 
 /* Class = "UITableViewSection"; headerTitle = "OpenStreetMap account"; ObjectID = "Tkc-bW-kNS"; */
-"Tkc-bW-kNS.headerTitle" = "OpenStreetMap Account";
+"Tkc-bW-kNS.headerTitle" = "OpenStreetMap-Konto";
 
 /* Class = "UILabel"; text = "Join the TestFlight Beta"; ObjectID = "TrT-Nn-WKe"; */
 "TrT-Nn-WKe.text" = "Tritt der TestFlight-Beta bei";
@@ -127,14 +127,17 @@
 /* Class = "UILabel"; text = "Frames/Second"; ObjectID = "UvN-Qa-roL"; */
 "UvN-Qa-roL.text" = "Bilder/Sekunde";
 
+/* Class = "UINavigationItem"; title = "Nearby Mappers"; ObjectID = "VDO-HW-SLB"; */
+"VDO-HW-SLB.title" = "Kartographen in der Nähe";
+
 /* Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5"; */
-"whL-SZ-HD5.text" = "E-Mail Feedback";
+"whL-SZ-HD5.text" = "Kommentare per E-Mail";
 
 /* Class = "UILabel"; text = "GitHub - Issues & Source Code"; ObjectID = "x4m-oT-EG8"; */
-"x4m-oT-EG8.text" = "GitHub - Fehler & Quellcode";
+"x4m-oT-EG8.text" = "GitHub – Fehler und Quellcode";
 
 /* Class = "UITableViewSection"; headerTitle = "Developer settings"; ObjectID = "yAO-9B-CTd"; */
-"yAO-9B-CTd.headerTitle" = "Entwickler Einstellungen";
+"yAO-9B-CTd.headerTitle" = "Entwickler-Einstellungen";
 
 /* Class = "UITextField"; placeholder = "username"; ObjectID = "YQ4-05-lQz"; */
 "YQ4-05-lQz.placeholder" = "Benutzername";

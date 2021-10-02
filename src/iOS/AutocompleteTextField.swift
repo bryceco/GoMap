@@ -158,9 +158,14 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 				let tableView: UITableView = cell.superviewOfType()!
 
 				// scroll cell to top
-				let p = tableView.indexPath(for: cell)!
-				tableView.scrollToRow(at: p, at: .top, animated: false)
-				tableView.isScrollEnabled = false
+				let indexPath = tableView.indexPath(for: cell)!
+				tableView.scrollToRow(at: indexPath, at: .top, animated: false)
+
+				if #available(iOS 15.0, *) {
+					// iOS handles scrolling differently and disabling it causes visual glitches
+				} else {
+					tableView.isScrollEnabled = false
+				}
 
 				// cell doesn't always scroll to the same place, so give it a moment before we add the completion table
 				DispatchQueue.main.async(execute: {
@@ -201,13 +206,14 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 			gradientLayer?.removeFromSuperlayer()
 			gradientLayer = nil
 
-			let cell: UITableViewCell = superviewOfType()!
-			let tableView: UITableView = cell.superviewOfType()!
-
-			if let cellIndexPath = tableView.indexPath(for: cell) {
-				tableView.scrollToRow(at: cellIndexPath, at: .middle, animated: true)
+			if let cell: UITableViewCell = superviewOfType(),
+			   let tableView: UITableView = cell.superviewOfType()
+			{
+				if let cellIndexPath = tableView.indexPath(for: cell) {
+					tableView.scrollToRow(at: cellIndexPath, at: .middle, animated: true)
+				}
+				tableView.isScrollEnabled = true
 			}
-			tableView.isScrollEnabled = true
 		}
 	}
 

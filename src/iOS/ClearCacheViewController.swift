@@ -108,12 +108,14 @@ class ClearCacheViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let appDelegate = AppDelegate.shared
 
-		if indexPath.section == 0 {
+		guard indexPath.section == 1,
+		      let row = Row(rawValue: indexPath.row)
+		else {
 			return
 		}
 
-		switch indexPath.row {
-		case Row.osmData.rawValue /* OSM */:
+		switch row {
+		case .osmData /* OSM */:
 			if appDelegate.mapView.editorLayer.mapData.changesetAsXml() != nil {
 				let alert = UIAlertController(
 					title: NSLocalizedString("Warning", comment: ""),
@@ -139,18 +141,16 @@ class ClearCacheViewController: UITableViewController {
 			}
 			appDelegate.mapView.editorLayer.purgeCachedDataHard(true)
 			appDelegate.mapView.removePin()
-		case Row.mapnik.rawValue /* Mapnik */:
+		case .mapnik /* Mapnik */:
 			appDelegate.mapView.mapnikLayer.purgeTileCache()
-		case Row.userGPX.rawValue /* Breadcrumb */:
+		case .userGPX /* Breadcrumb */:
 			appDelegate.mapView.gpxLayer.purgeTileCache()
-		case Row.aerial.rawValue /* Bing */:
+		case .aerial /* Bing */:
 			appDelegate.mapView.aerialLayer.purgeTileCache()
-		case Row.mapboxLocator.rawValue /* Locator Overlay */:
+		case .mapboxLocator /* Locator Overlay */:
 			appDelegate.mapView.locatorLayer.purgeTileCache()
-		case Row.osmGPS.rawValue /* GPS Overlay */:
+		case .osmGPS /* GPS Overlay */:
 			appDelegate.mapView.gpsTraceLayer.purgeTileCache()
-		default:
-			break
 		}
 		dismiss(animated: true)
 	}
