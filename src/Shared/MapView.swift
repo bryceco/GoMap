@@ -271,8 +271,16 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			if let pushpinView = pushPin,
 			   let pp = pp
 			{
-				pushpinView.arrowPoint = mapTransform.screenPoint(forLatLon: pp,
-				                                                  birdsEye: true)
+				if pushpinView.isDragging {
+					// moving the screen while dragging the pin moves the pin/object
+					let pt = mapTransform.screenPoint(forLatLon: pp, birdsEye: true)
+					let drag = pushpinView.arrowPoint.minus(pt)
+					pushpinView.dragCallback(.changed, drag.x, drag.y)
+				} else {
+					// if not dragging then make sure pin placement is updated
+					pushpinView.arrowPoint = mapTransform.screenPoint(forLatLon: pp,
+					                                                  birdsEye: true)
+				}
 			}
 
 			refreshNoteButtonsFromDatabase()
@@ -1990,10 +1998,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	private func pushpinDragCallbackFor(object: OsmBaseObject) -> PushPinViewDragCallback {
-		return { [self] state, dx, dy, _ in
+		return { [self] state, dx, dy in
 			switch state {
-			case .began:
-				editorLayer.dragBegin()
 			case .ended, .cancelled, .failed:
 				DisplayLink.shared.removeName("dragScroll")
 				let isRotate = self.isRotateObjectMode != nil
@@ -2003,14 +2009,19 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				self.unblinkObject()
 				editorLayer.dragFinish(object: object, isRotate: isRotate)
 
+			case .began:
+				if let pos = self.pushPin?.arrowPoint {
+					editorLayer.dragBegin(from: pos.minus(CGPoint(x: dx, y: dy)))
+				}
+				fallthrough // begin state can have movement
 			case .changed:
 				// define the drag function
-				let dragObject: ((_ dragx: CGFloat, _ dragy: CGFloat) -> Void) = { dragx, dragy in
-					// don't accumulate undo moves
-					editorLayer.dragContinue(object: object,
-					                         dragx: dragx,
-					                         dragy: dragy,
-					                         isRotateObjectMode: isRotateObjectMode)
+				let dragObjectToPushpin: (() -> Void) = {
+					if let pos = self.pushPin?.arrowPoint {
+						editorLayer.dragContinue(object: object,
+						                         toPoint: pos,
+						                         isRotateObjectMode: isRotateObjectMode)
+					}
 				}
 
 				// scroll screen if too close to edge
@@ -2051,22 +2062,18 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 							60.0 // scale to 60 FPS assumption, need to move farther if framerate is slow
 						let sy = scrolly * CGFloat(duration) * 60.0
 						self.adjustOrigin(by: CGPoint(x: -sx, y: -sy))
-						dragObject(sx, sy)
-						// update position of pushpin
-						if let pt = self.pushPin?.arrowPoint.withOffset(sx, sy) {
-							self.pushPin?.arrowPoint = pt
-						}
 						// update position of blink layer
 						if let pt = blinkLayer?.position.withOffset(-sx, -sy) {
 							self.blinkLayer?.position = pt
 						}
+						dragObjectToPushpin()
 					})
 				} else {
 					DisplayLink.shared.removeName("dragScroll")
 				}
 
 				// move the object
-				dragObject(dx, dy)
+				dragObjectToPushpin()
 			default:
 				break
 			}
@@ -2498,19 +2505,18 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 	}
 
-	var previousPinchZoom: CGFloat = 1.0
 	@objc func handlePinchGesture(_ pinch: UIPinchGestureRecognizer) {
 		switch pinch.state {
 		case .began:
-			previousPinchZoom = pinch.scale
+			fallthrough
 		case .changed:
 			userOverrodeLocationZoom = true
 
 			DisplayLink.shared.removeName(DisplayLinkPanning)
 
 			let zoomCenter = pinch.location(in: self)
-			adjustZoom(by: pinch.scale / previousPinchZoom, aroundScreenPoint: zoomCenter)
-			previousPinchZoom = pinch.scale
+			adjustZoom(by: pinch.scale, aroundScreenPoint: zoomCenter)
+			pinch.scale = 1.0
 		case .ended:
 			updateNotesFromServer(withDelay: 0)
 		default:
