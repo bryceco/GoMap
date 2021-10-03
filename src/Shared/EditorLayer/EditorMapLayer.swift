@@ -310,10 +310,11 @@ final class EditorMapLayer: CALayer {
 		}
 
 		let view: ViewRegion
-		if MapTransform.projection == .mercator {
+		switch MapTransform.projection {
+		case .mercator:
 			view = ViewRegion(encloses: { return box.containsRect($0)},
 							  intersects: { return box.intersectsRect($0)})
-		} else {
+		case .polarSouth:
 			let mapTransform = owner.mapTransform
 			let sc = self.bounds
 			view = ViewRegion(encloses: {
