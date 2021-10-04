@@ -14,14 +14,6 @@ class POITabBarController: UITabBarController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-	}
-
-	func removeValueFromKeyValueDict(key: String) {
-		keyValueDict.removeValue(forKey: key)
-	}
-
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
 
 		let appDelegate = AppDelegate.shared
 		let selection = appDelegate.mapView.editorLayer.selectedPrimary
@@ -34,6 +26,10 @@ class POITabBarController: UITabBarController {
 
 		// hide attributes tab on new objects
 		updatePOIAttributesTabBarItemVisibility(withSelectedObject: selection)
+	}
+
+	func removeValueFromKeyValueDict(key: String) {
+		keyValueDict.removeValue(forKey: key)
 	}
 
 	override var keyCommands: [UIKeyCommand]? {

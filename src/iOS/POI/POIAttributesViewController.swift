@@ -270,7 +270,8 @@ class POIAttributesViewController: UITableViewController {
 	@IBAction func done(_ sender: Any) {
 		dismiss(animated: true)
 
-		let tabController = tabBarController as? POITabBarController
-		tabController?.commitChanges()
+		if let tabController = tabBarController as? POITabBarController {
+			tabController.commitChanges()
+		}
 	}
 }
