@@ -84,10 +84,21 @@ class CameraView: UIView, AVCapturePhotoCaptureDelegate, AVCaptureVideoDataOutpu
 	                          error: Error?)
 	{
 		let cgImage: CGImage?
+
+#if targetEnvironment(macCatalyst)
+		// FIXME:
+		// As of iOS 15 cgImageRepresentation doesn't compile on MacCatalyst.
+		// Since few people are going to use the camera on Mac anyhow we can
+		// simply have it fail until Apple fixes the SDK.
+		cgImage = nil
+#else
 #if compiler(>=5.5)
+		// On newer Xcode cgImageRepresentation is a normal managed object
 		cgImage = photo.cgImageRepresentation()
 #else
+		// On older Xcode cgImageRepresentation is unmanaged
 		cgImage = photo.cgImageRepresentation()?.takeUnretainedValue()
+#endif
 #endif
 
 		if let cgImage = cgImage {
