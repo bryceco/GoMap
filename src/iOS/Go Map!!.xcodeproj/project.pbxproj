@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -31,6 +31,7 @@
 		02263CDF2677F93A002BA72F /* QuadBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02263CDE2677F93A002BA72F /* QuadBox.swift */; };
 		0226B771268300C9005DB9E2 /* Data+Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B770268300C9005DB9E2 /* Data+Wrapper.swift */; };
 		0226B7732683BCB6005DB9E2 /* URLSession+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */; };
+		022C6FB9270D757E002BB23F /* KissXML in Frameworks */ = {isa = PBXBuildFile; productRef = 022C6FB8270D757E002BB23F /* KissXML */; };
 		02354F7A246349E100878A04 /* CurvedGlyphLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02354F79246349E100878A04 /* CurvedGlyphLayer.swift */; };
 		023B892B19C148790060CDB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B892A19C148790060CDB5 /* Images.xcassets */; };
 		02401F361DE021EE00F32AF5 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */; };
@@ -90,11 +91,6 @@
 		027AB500250E9C9B00C404CD /* Height.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB502250E9C9B00C404CD /* Height.storyboard */; };
 		027AB503250E9CA500C404CD /* Changeset.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB505250E9CA500C404CD /* Changeset.storyboard */; };
 		027AD5D219F5A18700120654 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027AD5D119F5A18700120654 /* CoreFoundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		027EDC70206F3EED00D349D6 /* DDXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC60206F3EED00D349D6 /* DDXMLElement.m */; };
-		027EDC71206F3EED00D349D6 /* DDXMLElementAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC64206F3EED00D349D6 /* DDXMLElementAdditions.m */; };
-		027EDC72206F3EED00D349D6 /* DDXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC65206F3EED00D349D6 /* DDXMLNode.m */; };
-		027EDC73206F3EED00D349D6 /* DDXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC66206F3EED00D349D6 /* DDXMLDocument.m */; };
-		027EDC74206F3EED00D349D6 /* NSString+DDXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC6C206F3EED00D349D6 /* NSString+DDXML.m */; };
 		0282C4C7265F32E800F2D282 /* Sqlite3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282C4C6265F32E800F2D282 /* Sqlite3.swift */; };
 		0282C4C926617E7400F2D282 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282C4C826617E7400F2D282 /* MapView.swift */; };
 		0286EAA52656F15A007CFEE9 /* EditorMapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */; };
@@ -417,19 +413,6 @@
 		027AB50B250E9D0700C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Changeset.storyboard; sourceTree = "<group>"; };
 		027AD5D119F5A18700120654 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		027AD5D319F5EA7D00120654 /* libobjc.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libobjc.A.dylib; path = usr/lib/libobjc.A.dylib; sourceTree = SDKROOT; };
-		027EDC5E206F3EED00D349D6 /* DDXMLDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLDocument.h; sourceTree = "<group>"; };
-		027EDC5F206F3EED00D349D6 /* DDXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXML.h; sourceTree = "<group>"; };
-		027EDC60206F3EED00D349D6 /* DDXMLElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDXMLElement.m; sourceTree = "<group>"; };
-		027EDC61206F3EED00D349D6 /* KissXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KissXML.h; sourceTree = "<group>"; };
-		027EDC63206F3EED00D349D6 /* DDXMLElementAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLElementAdditions.h; sourceTree = "<group>"; };
-		027EDC64206F3EED00D349D6 /* DDXMLElementAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDXMLElementAdditions.m; sourceTree = "<group>"; };
-		027EDC65206F3EED00D349D6 /* DDXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDXMLNode.m; sourceTree = "<group>"; };
-		027EDC66206F3EED00D349D6 /* DDXMLDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDXMLDocument.m; sourceTree = "<group>"; };
-		027EDC68206F3EED00D349D6 /* DDXMLPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLPrivate.h; sourceTree = "<group>"; };
-		027EDC69206F3EED00D349D6 /* DDXMLElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLElement.h; sourceTree = "<group>"; };
-		027EDC6B206F3EED00D349D6 /* NSString+DDXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DDXML.h"; sourceTree = "<group>"; };
-		027EDC6C206F3EED00D349D6 /* NSString+DDXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DDXML.m"; sourceTree = "<group>"; };
-		027EDC6F206F3EED00D349D6 /* DDXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLNode.h; sourceTree = "<group>"; };
 		0282C4C6265F32E800F2D282 /* Sqlite3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sqlite3.swift; sourceTree = "<group>"; };
 		0282C4C826617E7400F2D282 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = ../Shared/MapView.swift; sourceTree = "<group>"; };
 		028556A926F004FB009986E9 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = et.lproj/MainInterface.strings; sourceTree = "<group>"; };
@@ -735,6 +718,7 @@
 				02ACBA3816713CCB00BB4414 /* CoreGraphics.framework in Frameworks */,
 				02ACBD2116717BC500BB4414 /* CoreLocation.framework in Frameworks */,
 				02DC59811671B79100213558 /* CoreText.framework in Frameworks */,
+				022C6FB9270D757E002BB23F /* KissXML in Frameworks */,
 				02ACBA3616713CCB00BB4414 /* Foundation.framework in Frameworks */,
 				021C6AB3168768C800FB17B0 /* MessageUI.framework in Frameworks */,
 				02ACBD1F16717BBB00BB4414 /* QuartzCore.framework in Frameworks */,
@@ -1136,50 +1120,6 @@
 			path = strings;
 			sourceTree = "<group>";
 		};
-		027EDC5D206F3EED00D349D6 /* KissXML */ = {
-			isa = PBXGroup;
-			children = (
-				027EDC62206F3EED00D349D6 /* Additions */,
-				027EDC6A206F3EED00D349D6 /* Categories */,
-				027EDC5F206F3EED00D349D6 /* DDXML.h */,
-				027EDC5E206F3EED00D349D6 /* DDXMLDocument.h */,
-				027EDC66206F3EED00D349D6 /* DDXMLDocument.m */,
-				027EDC69206F3EED00D349D6 /* DDXMLElement.h */,
-				027EDC60206F3EED00D349D6 /* DDXMLElement.m */,
-				027EDC6F206F3EED00D349D6 /* DDXMLNode.h */,
-				027EDC65206F3EED00D349D6 /* DDXMLNode.m */,
-				027EDC61206F3EED00D349D6 /* KissXML.h */,
-				027EDC67206F3EED00D349D6 /* Private */,
-			);
-			path = KissXML;
-			sourceTree = "<group>";
-		};
-		027EDC62206F3EED00D349D6 /* Additions */ = {
-			isa = PBXGroup;
-			children = (
-				027EDC63206F3EED00D349D6 /* DDXMLElementAdditions.h */,
-				027EDC64206F3EED00D349D6 /* DDXMLElementAdditions.m */,
-			);
-			path = Additions;
-			sourceTree = "<group>";
-		};
-		027EDC67206F3EED00D349D6 /* Private */ = {
-			isa = PBXGroup;
-			children = (
-				027EDC68206F3EED00D349D6 /* DDXMLPrivate.h */,
-			);
-			path = Private;
-			sourceTree = "<group>";
-		};
-		027EDC6A206F3EED00D349D6 /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				027EDC6B206F3EED00D349D6 /* NSString+DDXML.h */,
-				027EDC6C206F3EED00D349D6 /* NSString+DDXML.m */,
-			);
-			path = Categories;
-			sourceTree = "<group>";
-		};
 		0291D83A2442822300F793BE /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -1274,7 +1214,6 @@
 				ED56E5E826028B5F000B368C /* GpxConfigureViewController.swift */,
 				ED56E5EA26028B5F000B368C /* GpxViewController.swift */,
 				02BC04E924C6767100BFA5EF /* Height */,
-				027EDC5D206F3EED00D349D6 /* KissXML */,
 				EDB2C3A02609E29F00C08293 /* LanguageTableViewController.swift */,
 				EDB2C3A52609E6E100C08293 /* LoginViewController.swift */,
 				C3D096DA263EB73E00E3B129 /* main.swift */,
@@ -1635,6 +1574,9 @@
 				02D6238826A6628300A4F147 /* PBXTargetDependency */,
 			);
 			name = "Go Map!!";
+			packageProductDependencies = (
+				022C6FB8270D757E002BB23F /* KissXML */,
+			);
 			productName = OSMiOS;
 			productReference = 02ACBA2F16713CCB00BB4414 /* Go Map!!.app */;
 			productType = "com.apple.product-type.application";
@@ -1783,6 +1725,9 @@
 				pt,
 			);
 			mainGroup = 02ACBA2416713CCB00BB4414;
+			packageReferences = (
+				022C6FB7270D757E002BB23F /* XCRemoteSwiftPackageReference "KissXML" */,
+			);
 			productRefGroup = 02ACBA3016713CCB00BB4414 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1931,7 +1876,6 @@
 				02CB2405265DB7CB00835F32 /* OpeningHoursRecognizerView.swift in Sources */,
 				C3D096B6263DF82F00E3B129 /* RulerView.swift in Sources */,
 				C341E15A2639DF210022E983 /* NotesTableViewController.swift in Sources */,
-				027EDC71206F3EED00D349D6 /* DDXMLElementAdditions.m in Sources */,
 				C3D096AE263D4BFB00E3B129 /* UploadViewController.swift in Sources */,
 				0288169E265895FA00C30EA2 /* OsmMapData+Edit.swift in Sources */,
 				C365A569263FCC9C007DEC94 /* TapAndDragGesture.swift in Sources */,
@@ -1949,7 +1893,6 @@
 				02EDBF672653306400B7072E /* OsmBaseObject.swift in Sources */,
 				0288169F265895FA00C30EA2 /* OsmMapData.swift in Sources */,
 				02263CDF2677F93A002BA72F /* QuadBox.swift in Sources */,
-				027EDC72206F3EED00D349D6 /* DDXMLNode.m in Sources */,
 				02EDBF6B26535BEB00B7072E /* OsmMember.swift in Sources */,
 				02C8C56D26F4479A003B0122 /* WayPointMarker.swift in Sources */,
 				0286EAA726570382007CFEE9 /* LayerProperties.swift in Sources */,
@@ -2001,7 +1944,6 @@
 				ED9649F92601D58900EC0A60 /* POIPresetValuePickerController.swift in Sources */,
 				02C8C56B26F44776003B0122 /* QuestMarker.swift in Sources */,
 				64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */,
-				027EDC74206F3EED00D349D6 /* NSString+DDXML.m in Sources */,
 				02FEDAF42651DCC100DF15D7 /* POIAllTagsViewController.swift in Sources */,
 				C3D096DB263EB73E00E3B129 /* main.swift in Sources */,
 				02034743266C2CB9000A7C3D /* MapMarkerDatabase.swift in Sources */,
@@ -2027,14 +1969,12 @@
 				ED56E5C626027A50000B368C /* ContactUsViewController.swift in Sources */,
 				02A123E9264C8B60005638C1 /* GpxLayer.swift in Sources */,
 				ED56E5AB26024DA5000B368C /* AutocompleteTextField.swift in Sources */,
-				027EDC73206F3EED00D349D6 /* DDXMLDocument.m in Sources */,
 				0266DE862655A21F007A502E /* Superview.swift in Sources */,
 				02F53298267AB41C0088DF41 /* EditorMapLayer+HitTest.swift in Sources */,
 				02CB2408265DB7CB00835F32 /* HoursRecognizer.swift in Sources */,
 				02D5B5F3248F154D00FEE448 /* Colors.swift in Sources */,
 				021FADCD25873C8200F6E1C0 /* PresetsDatabase+TableView.swift in Sources */,
 				02F6A457268A934900F2ACE7 /* NSAttributedString+Ext.swift in Sources */,
-				027EDC70206F3EED00D349D6 /* DDXMLElement.m in Sources */,
 				02CB2406265DB7CB00835F32 /* CameraView.swift in Sources */,
 				02A123EF264EE7BC005638C1 /* aes.swift in Sources */,
 				6442666722540EDF00C0D545 /* Lock.swift in Sources */,
@@ -2860,7 +2800,10 @@
 				INFOPLIST_FILE = "Go Map!!-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.5;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 3.0.0;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-DDEBUG ";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap;
@@ -2899,7 +2842,10 @@
 				INFOPLIST_FILE = "Go Map!!-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.5;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap;
 				PRODUCT_NAME = "Go Map!!";
@@ -2942,7 +2888,11 @@
 				INFOPLIST_FILE = PhotoShare/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.5;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 3.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -2987,7 +2937,11 @@
 				INFOPLIST_FILE = PhotoShare/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.5;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 3.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -3025,7 +2979,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = GoMapTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.9.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -3064,13 +3022,18 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = GoMapTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.9.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMapTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,6";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Go Map!!.app/Go Map!!";
@@ -3098,7 +3061,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = GoMapUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.9.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -3135,13 +3102,18 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = GoMapUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.9.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMapUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = "Go Map!!";
@@ -3197,6 +3169,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		022C6FB7270D757E002BB23F /* XCRemoteSwiftPackageReference "KissXML" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/robbiehanson/KissXML";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		022C6FB8270D757E002BB23F /* KissXML */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 022C6FB7270D757E002BB23F /* XCRemoteSwiftPackageReference "KissXML" */;
+			productName = KissXML;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 02ACBA2616713CCB00BB4414 /* Project object */;
 }

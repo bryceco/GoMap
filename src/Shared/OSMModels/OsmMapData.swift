@@ -1240,7 +1240,7 @@ final class OsmMapData: NSObject, NSCoding {
 		if xml == nil {
 			return nil
 		}
-		return xml!.xmlString(withOptions: UInt(DDXMLNodePrettyPrint))
+		return xml!.xmlString(withOptions: UInt(XMLNodePrettyPrint))
 	}
 
 	// MARK: Init/Save/Restore
