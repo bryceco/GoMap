@@ -121,7 +121,6 @@
 		02ACBD191671737300BB4414 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD181671737300BB4414 /* libxml2.dylib */; };
 		02ACBD1F16717BBB00BB4414 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */; };
 		02ACBD2116717BC500BB4414 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD2016717BC500BB4414 /* CoreLocation.framework */; };
-		02AFBF20245774DC00BE43F4 /* OSM-Logo256.png in Resources */ = {isa = PBXBuildFile; fileRef = 02AFBF1F245774DC00BE43F4 /* OSM-Logo256.png */; };
 		02AFBF242458C1E800BE43F4 /* BingPlaceholderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */; };
 		02BE6190245D1F9D00E92662 /* EsriPlaceholderImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */; };
 		02C3194E250EAED500C5D200 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02C3194C250EAED500C5D200 /* Localizable.strings */; };
@@ -1750,7 +1749,6 @@
 				02ACBA3E16713CCB00BB4414 /* InfoPlist.strings in Resources */,
 				027A10F226FE80C8009A95CE /* quest.strings in Resources */,
 				028F504719BA2F460093C423 /* presets in Resources */,
-				02AFBF20245774DC00BE43F4 /* OSM-Logo256.png in Resources */,
 				027A10F026FE80BA009A95CE /* quest.strings in Resources */,
 				027A110F26FE8247009A95CE /* quest.strings in Resources */,
 				027A110626FE8223009A95CE /* quest.strings in Resources */,
