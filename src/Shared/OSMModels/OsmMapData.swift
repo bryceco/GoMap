@@ -1234,13 +1234,13 @@ final class OsmMapData: NSObject, NSCoding {
 	}
 
 	func changesetAsXml() -> String? {
-		let xml = OsmXmlGenerator.createXmlFor(nodes: nodes.values,
+		guard let xml = OsmXmlGenerator.createXmlFor(nodes: nodes.values,
 		                                       ways: ways.values,
 		                                       relations: relations.values)
-		if xml == nil {
+		else {
 			return nil
 		}
-		return xml!.xmlString(withOptions: UInt(XMLNodePrettyPrint))
+		return xml.xmlString(withOptions: UInt(XMLNodePrettyPrint))
 	}
 
 	// MARK: Init/Save/Restore
