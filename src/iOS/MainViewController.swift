@@ -331,8 +331,6 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 				button.addTarget(self, action: #selector(makeButtonNormal(_:)), for: .touchUpOutside)
 				button.addTarget(self, action: #selector(makeButtonNormal(_:)), for: .touchCancel)
 
-				button.showsTouchWhenHighlighted = true
-
 				// pointer interaction when using a mouse
 				if #available(iOS 13.4, *) {
 					if !button.interactions.contains(where: { $0.isKind(of: UIPointerInteraction.self) }) {
