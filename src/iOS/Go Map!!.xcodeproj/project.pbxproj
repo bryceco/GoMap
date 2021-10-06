@@ -220,7 +220,6 @@
 		ED9649C22601C33E00EC0A60 /* TileServerEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649C02601C33E00EC0A60 /* TileServerEditViewController.swift */; };
 		ED9649D32601C4CE00EC0A60 /* TileServerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649D22601C4CE00EC0A60 /* TileServerListViewController.swift */; };
 		ED9649DB2601CB7A00EC0A60 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649DA2601CB7A00EC0A60 /* SettingsViewController.swift */; };
-		ED9649E62601CE3100EC0A60 /* RotatingNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649E52601CE3100EC0A60 /* RotatingNavigationController.swift */; };
 		ED9649F12601CEC800EC0A60 /* POITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649F02601CEC800EC0A60 /* POITabBarController.swift */; };
 		ED9649F92601D58900EC0A60 /* POIPresetValuePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649F82601D58900EC0A60 /* POIPresetValuePickerController.swift */; };
 		ED964A012601D6A900EC0A60 /* POIFeaturePresetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED964A002601D6A900EC0A60 /* POIFeaturePresetsViewController.swift */; };
@@ -698,7 +697,6 @@
 		ED9649C02601C33E00EC0A60 /* TileServerEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileServerEditViewController.swift; sourceTree = "<group>"; };
 		ED9649D22601C4CE00EC0A60 /* TileServerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileServerListViewController.swift; sourceTree = "<group>"; };
 		ED9649DA2601CB7A00EC0A60 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		ED9649E52601CE3100EC0A60 /* RotatingNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotatingNavigationController.swift; sourceTree = "<group>"; };
 		ED9649F02601CEC800EC0A60 /* POITabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POITabBarController.swift; sourceTree = "<group>"; };
 		ED9649F82601D58900EC0A60 /* POIPresetValuePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIPresetValuePickerController.swift; sourceTree = "<group>"; };
 		ED964A002601D6A900EC0A60 /* POIFeaturePresetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIFeaturePresetsViewController.swift; sourceTree = "<group>"; };
@@ -1226,7 +1224,6 @@
 				028F504619BA2F460093C423 /* presets */,
 				0256660A26FD1C9B0009D950 /* QuestEditor.storyboard */,
 				02C8C57326FAAFF0003B0122 /* QuestEditorController.swift */,
-				ED9649E52601CE3100EC0A60 /* RotatingNavigationController.swift */,
 				ED9649DA2601CB7A00EC0A60 /* SettingsViewController.swift */,
 				02ACBCFF16713F7F00BB4414 /* Shared */,
 				0291D83A2442822300F793BE /* Storyboards */,
@@ -1881,7 +1878,6 @@
 				ED9649DB2601CB7A00EC0A60 /* SettingsViewController.swift in Sources */,
 				0203473F266C1EDD000A7C3D /* ExternalGPS.swift in Sources */,
 				C365A563263FC53F007DEC94 /* TurnRestrictHwyView.swift in Sources */,
-				ED9649E62601CE3100EC0A60 /* RotatingNavigationController.swift in Sources */,
 				C3D096B3263D618E00E3B129 /* HeightViewController.swift in Sources */,
 				02E049BB2651BAB90028B57F /* UndoManager.swift in Sources */,
 				028C51E625CB7A23004A88F7 /* TristateButton.swift in Sources */,

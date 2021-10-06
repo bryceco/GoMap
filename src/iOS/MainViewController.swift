@@ -27,6 +27,9 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 	@IBOutlet var mapView: MapView!
 	@IBOutlet var locationButton: UIButton!
 
+	override var shouldAutorotate: Bool { true }
+	override var supportedInterfaceOrientations: UIInterfaceOrientationMask { .all }
+
 	var buttonLayout: BUTTON_LAYOUT! {
 		didSet {
 			UserDefaults.standard.set(buttonLayout.rawValue, forKey: "buttonLayout")
