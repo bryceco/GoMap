@@ -238,8 +238,8 @@ final class TileServerList {
 			if url.contains("{apikey}") {
 				var apikey: String = ""
 				if url.contains(".thunderforest.com/") {
-					apikey =
-						"be3dc024e3924c22beb5f841d098a8a3" // Please don't use in other apps. Sign up for a free account at Thunderforest.com insead.
+					// Please don't use in other apps. Sign up for a free account at Thunderforest.com insead.
+					apikey = "be3dc024e3924c22beb5f841d098a8a3"
 				} else {
 					continue
 				}
