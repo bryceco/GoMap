@@ -675,6 +675,16 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			for: .normal)
 		editControl.layer.zPosition = Z_TOOLBAR
 		editControl.layer.cornerRadius = 4.0
+#if targetEnvironment(macCatalyst)
+		// We add a constraint in the storyboard to make the edit control buttons taller
+		// so they're easier to push, but on Mac the constraints doesn't work correctly
+		// and the buttons look ugly, so remove it.
+		if let height = editControl.constraints.first(where: {
+			$0.firstAttribute == .height && $0.constant == 43.0
+		}) {
+			editControl.removeConstraint(height)
+		}
+#endif
 
 		// long press for selecting from multiple objects (for multipolygon members)
 		let longPress = UILongPressGestureRecognizer(target: self, action: #selector(screenLongPressGesture(_:)))
