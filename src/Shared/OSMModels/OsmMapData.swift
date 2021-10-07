@@ -1235,8 +1235,8 @@ final class OsmMapData: NSObject, NSCoding {
 
 	func changesetAsXml() -> String? {
 		guard let xml = OsmXmlGenerator.createXmlFor(nodes: nodes.values,
-		                                       ways: ways.values,
-		                                       relations: relations.values)
+		                                             ways: ways.values,
+		                                             relations: relations.values)
 		else {
 			return nil
 		}
