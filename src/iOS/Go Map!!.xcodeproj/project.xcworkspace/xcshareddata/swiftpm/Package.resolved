@@ -5,9 +5,9 @@
         "package": "KissXML",
         "repositoryURL": "https://github.com/robbiehanson/KissXML",
         "state": {
-          "branch": null,
+          "branch": "master",
           "revision": "990cdef080213b5a3f0d9709b845d553bd3ddb97",
-          "version": "5.3.3"
+          "version": null
         }
       }
     ]

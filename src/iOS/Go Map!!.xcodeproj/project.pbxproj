@@ -31,7 +31,6 @@
 		02263CDF2677F93A002BA72F /* QuadBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02263CDE2677F93A002BA72F /* QuadBox.swift */; };
 		0226B771268300C9005DB9E2 /* Data+Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B770268300C9005DB9E2 /* Data+Wrapper.swift */; };
 		0226B7732683BCB6005DB9E2 /* URLSession+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */; };
-		022C6FB9270D757E002BB23F /* KissXML in Frameworks */ = {isa = PBXBuildFile; productRef = 022C6FB8270D757E002BB23F /* KissXML */; };
 		02354F7A246349E100878A04 /* CurvedGlyphLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02354F79246349E100878A04 /* CurvedGlyphLayer.swift */; };
 		023B892B19C148790060CDB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B892A19C148790060CDB5 /* Images.xcassets */; };
 		02401F361DE021EE00F32AF5 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */; };
@@ -43,6 +42,7 @@
 		0256632026FCF9730009D950 /* Quests.json in Resources */ = {isa = PBXBuildFile; fileRef = 0256631F26FCF9730009D950 /* Quests.json */; };
 		0256660B26FD1C9B0009D950 /* QuestEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0256660A26FD1C9B0009D950 /* QuestEditor.storyboard */; };
 		0256660D26FD802C0009D950 /* quest_icons in Resources */ = {isa = PBXBuildFile; fileRef = 0256660C26FD802C0009D950 /* quest_icons */; };
+		025CCA12271244B800074726 /* KissXML in Frameworks */ = {isa = PBXBuildFile; productRef = 025CCA11271244B800074726 /* KissXML */; };
 		0266DE862655A21F007A502E /* Superview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0266DE852655A21F007A502E /* Superview.swift */; };
 		026FC76726509D6E005DDAFF /* SpeechBalloonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */; };
 		026FC7682650A17B005DDAFF /* VoiceAnnouncement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */; };
@@ -715,7 +715,7 @@
 				02ACBA3816713CCB00BB4414 /* CoreGraphics.framework in Frameworks */,
 				02ACBD2116717BC500BB4414 /* CoreLocation.framework in Frameworks */,
 				02DC59811671B79100213558 /* CoreText.framework in Frameworks */,
-				022C6FB9270D757E002BB23F /* KissXML in Frameworks */,
+				025CCA12271244B800074726 /* KissXML in Frameworks */,
 				02ACBA3616713CCB00BB4414 /* Foundation.framework in Frameworks */,
 				021C6AB3168768C800FB17B0 /* MessageUI.framework in Frameworks */,
 				02ACBD1F16717BBB00BB4414 /* QuartzCore.framework in Frameworks */,
@@ -1571,7 +1571,7 @@
 			);
 			name = "Go Map!!";
 			packageProductDependencies = (
-				022C6FB8270D757E002BB23F /* KissXML */,
+				025CCA11271244B800074726 /* KissXML */,
 			);
 			productName = OSMiOS;
 			productReference = 02ACBA2F16713CCB00BB4414 /* Go Map!!.app */;
@@ -1722,7 +1722,7 @@
 			);
 			mainGroup = 02ACBA2416713CCB00BB4414;
 			packageReferences = (
-				022C6FB7270D757E002BB23F /* XCRemoteSwiftPackageReference "KissXML" */,
+				025CCA10271244B800074726 /* XCRemoteSwiftPackageReference "KissXML" */,
 			);
 			productRefGroup = 02ACBA3016713CCB00BB4414 /* Products */;
 			projectDirPath = "";
@@ -3166,20 +3166,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		022C6FB7270D757E002BB23F /* XCRemoteSwiftPackageReference "KissXML" */ = {
+		025CCA10271244B800074726 /* XCRemoteSwiftPackageReference "KissXML" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/robbiehanson/KissXML";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
+				branch = master;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		022C6FB8270D757E002BB23F /* KissXML */ = {
+		025CCA11271244B800074726 /* KissXML */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 022C6FB7270D757E002BB23F /* XCRemoteSwiftPackageReference "KissXML" */;
+			package = 025CCA10271244B800074726 /* XCRemoteSwiftPackageReference "KissXML" */;
 			productName = KissXML;
 		};
 /* End XCSwiftPackageProductDependency section */
