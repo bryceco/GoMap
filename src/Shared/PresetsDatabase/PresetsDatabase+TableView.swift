@@ -98,10 +98,9 @@ extension PresetsDatabase {
 			guard let dict = dict as? [String: Any] else { continue }
 			if let k = dict["key"] as? String,
 			   k == key,
-			   let dict2 = dict["strings"] as? [String: Any],
-			   let dict3 = dict2["options"] as? [String: Any]
+			   let list = dict["options"] as? [String]
 			{
-				set.formUnion(Set(dict3.keys))
+				set.formUnion(list)
 			}
 		}
 		PresetsDatabase.shared.enumeratePresetsUsingBlock({ feature in
