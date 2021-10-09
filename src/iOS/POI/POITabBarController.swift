@@ -21,7 +21,12 @@ class POITabBarController: UITabBarController {
 		keyValueDict = selection?.tags ?? [:]
 		relationList = selection?.parentRelations ?? []
 
-		let tabIndex = UserDefaults.standard.integer(forKey: "POITabIndex")
+		var tabIndex = UserDefaults.standard.integer(forKey: "POITabIndex")
+		if tabIndex == 2,
+		   selection == nil
+		{
+			tabIndex = 0
+		}
 		selectedIndex = tabIndex
 
 		// hide attributes tab on new objects
