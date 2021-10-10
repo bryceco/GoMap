@@ -137,7 +137,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	var lastErrorDate: Date? // to prevent spamming of error dialogs
 	var ignoreNetworkErrorsUntilDate: Date?
 	var voiceAnnouncement: VoiceAnnouncement?
-	var tapAndDragGesture: TapAndDragGesture?
+	var tapAndDragGesture: TapAndDragGesture!
 
 	var addNodeButtonLongPressGestureRecognizer: UILongPressGestureRecognizer?
 	var plusButtonTimestamp: TimeInterval = 0.0
@@ -735,14 +735,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		flashLabel.layer.zPosition = Z_FLASH
 		flashLabel.isHidden = true
 
-#if false
 		// Support zoom via tap and drag
-		handleTapAndDragGesture = TapAndDragGesture(target: self, action: #selector(handleTapAndDragGesture(_:)))
-		handleTapAndDragGesture?.delegate = self
-		if let handleTapAndDragGesture = handleTapAndDragGesture {
-			addGestureRecognizer(handleTapAndDragGesture)
-		}
-#endif
+		tapAndDragGesture = TapAndDragGesture(target: self, action: #selector(handleTapAndDragGesture(_:)))
+		tapAndDragGesture.delegate = self
+		addGestureRecognizer(tapAndDragGesture)
 
 		// these need to be loaded late because assigning to them changes the view
 		viewState = MapViewState(rawValue: UserDefaults.standard.integer(forKey: "mapViewState")) ?? MapViewState
@@ -2452,12 +2448,21 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		{
 			return true // if holding down the + button then always allow other gestures to proceeed
 		}
-		if (gestureRecognizer is UILongPressGestureRecognizer) ||
-			(otherGestureRecognizer is UILongPressGestureRecognizer)
+		if gestureRecognizer is UILongPressGestureRecognizer ||
+			otherGestureRecognizer is UILongPressGestureRecognizer
 		{
 			return false // don't register long-press when other gestures are occuring
 		}
-		if (gestureRecognizer is UITapGestureRecognizer) || (otherGestureRecognizer is UITapGestureRecognizer) {
+
+		if (gestureRecognizer is UIPanGestureRecognizer && otherGestureRecognizer is TapAndDragGesture) ||
+			(gestureRecognizer is TapAndDragGesture && otherGestureRecognizer is UIPanGestureRecognizer)
+		{
+			return false
+		} else if gestureRecognizer is TapAndDragGesture {
+			return true
+		}
+
+		if gestureRecognizer is UITapGestureRecognizer || otherGestureRecognizer is UITapGestureRecognizer {
 			return false // don't register taps during panning/zooming/rotating
 		}
 		return true // allow other things so we can pan/zoom/rotate simultaneously
@@ -2542,7 +2547,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			DisplayLink.shared.removeName(DisplayLinkPanning)
 
 			let delta = tapAndDrag.translation(in: self)
-			let scale = 1.0 + delta.y * 0.01
+			let scale = 1.0 - delta.y * 0.01
 			let zoomCenter = bounds.center()
 			adjustZoom(by: scale, aroundScreenPoint: zoomCenter)
 		} else if tapAndDrag.state == .ended {

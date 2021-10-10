@@ -143,7 +143,7 @@ final class TileServerList {
 				continue
 			}
 			let projections = properties["available_projections"] as? [String]
-			guard var url = properties["url"] as? String,
+			guard let url = properties["url"] as? String,
 			      url.hasPrefix("http:") || url.hasPrefix("https:")
 			else {
 				// invalid url
@@ -249,7 +249,7 @@ final class TileServerList {
 			}
 
 			if url.contains("{apikey}"),
-				apikey == ""
+			   apikey == ""
 			{
 				continue
 			}
@@ -257,8 +257,8 @@ final class TileServerList {
 			let service = TileServer(withName: name,
 			                         identifier: identifier,
 			                         url: url,
-									 best: best,
-									 apiKey: apikey,
+			                         best: best,
+			                         apiKey: apikey,
 			                         maxZoom: maxZoom,
 			                         roundUp: true,
 			                         startDate: startDateString,
@@ -415,10 +415,10 @@ final class TileServerList {
 		result.append(TileServer.maxarStandardAerial)
 
 		result = result.sorted(by: {
-			if $0.best && !$1.best {
+			if $0.best, !$1.best {
 				return true
 			}
-			if $1.best && !$0.best {
+			if $1.best, !$0.best {
 				return false
 			}
 			return $0.name.caseInsensitiveCompare($1.name) == .orderedAscending

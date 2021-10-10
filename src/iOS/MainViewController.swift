@@ -527,9 +527,8 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 	// MARK: Gesture recognizers
 
 	func installGestureRecognizer(_ gesture: UIGestureRecognizer, on button: UIButton) {
-		let view = button
-		if (view.gestureRecognizers?.count ?? 0) == 0 {
-			view.addGestureRecognizer(gesture)
+		if (button.gestureRecognizers?.count ?? 0) == 0 {
+			button.addGestureRecognizer(gesture)
 		}
 	}
 
@@ -655,7 +654,6 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		}
 	}
 
-#if true
 	// disable gestures inside toolbar buttons
 	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
 		// http://stackoverflow.com/questions/3344341/uibutton-inside-a-view-that-has-a-uitapgesturerecognizer
@@ -666,7 +664,6 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		}
 		return true // handle the touch
 	}
-#endif
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if sender is OsmNoteMarker {

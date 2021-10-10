@@ -15,8 +15,6 @@ private enum TapDragGestureState {
 	case isDragging
 }
 
-// #undef DEBUG
-
 private let DoubleTapTime: TimeInterval = 0.5
 
 private func TouchTranslation(_ touch: UITouch, _ view: UIView) -> CGPoint {
@@ -35,8 +33,8 @@ class TapAndDragGesture: UIGestureRecognizer {
 	private var lastTouchTimestamp: TimeInterval = 0.0
 
 #if DEBUG
-
 	private func showState() {
+#if false
 		let state: String
 		switch tapState {
 		case .needFirstTap: state = "need first"
@@ -44,16 +42,14 @@ class TapAndDragGesture: UIGestureRecognizer {
 		case .needDrag: state = "need drag"
 		case .isDragging: state = "dragging"
 		}
-		print("state = \(state)\n")
+		print("state = \(state)")
+#endif
 	}
-
 #endif
 
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
 		super.touchesBegan(touches, with: event)
-#if DEBUG
-		print("began\n")
-#endif
+
 		if touches.count != 1 {
 			state = tapState == .needDrag ? .cancelled : .failed
 			return
@@ -70,10 +66,7 @@ class TapAndDragGesture: UIGestureRecognizer {
 			{
 				tapState = .needDrag
 			} else {
-#if DEBUG
-				print("2nd tap too slow or too far away\n")
-				print("\(lastTouchLocation.x),\(lastTouchLocation.y) vs \(loc.x),\(loc.y)\n")
-#endif
+				// 2nd tap too slow or too far away
 				tapState = .needFirstTap
 				lastTouchLocation = touch.location(in: view)
 			}
@@ -85,9 +78,7 @@ class TapAndDragGesture: UIGestureRecognizer {
 
 	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
 		super.touchesEnded(touches, with: event)
-#if DEBUG
-		print("ended\n")
-#endif
+
 		if state != .possible,
 		   state != .changed
 		{
@@ -124,9 +115,6 @@ class TapAndDragGesture: UIGestureRecognizer {
 			return
 		}
 
-#if DEBUG
-		print("moved\n")
-#endif
 		switch tapState {
 		case .needDrag:
 			tapState = .isDragging
@@ -153,9 +141,6 @@ class TapAndDragGesture: UIGestureRecognizer {
 	}
 
 	override func reset() {
-#if DEBUG
-		print("reset\n")
-#endif
 		super.reset()
 		tapState = .needFirstTap
 #if DEBUG
