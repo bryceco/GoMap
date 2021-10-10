@@ -103,6 +103,9 @@ class TileServerListViewController: UITableViewController {
 
 		// set selection
 		var title = tileServer.name
+		if tileServer.best {
+			title = "☆" + title // star best imagery
+		}
 		if tileServer === serverList.currentServer {
 			title = "\u{2714} " + title // add checkmark
 		}

@@ -414,7 +414,15 @@ final class TileServerList {
 		result.append(TileServer.maxarPremiumAerial)
 		result.append(TileServer.maxarStandardAerial)
 
-		result = result.sorted(by: { $0.name.caseInsensitiveCompare($1.name) == .orderedAscending })
+		result = result.sorted(by: {
+			if $0.best && !$1.best {
+				return true
+			}
+			if $1.best && !$0.best {
+				return false
+			}
+			return $0.name.caseInsensitiveCompare($1.name) == .orderedAscending
+		})
 		return result
 	}
 
