@@ -80,6 +80,7 @@ final class TileServerList {
 	private func processOsmLabAerialsList(_ featureArray: [Any]?, isGeoJSON: Bool) -> [TileServer] {
 		let categories = [
 			"photo": true,
+			"historicphoto": true,
 			"elevation": true
 		]
 
@@ -115,7 +116,9 @@ final class TileServerList {
 				// we special case their imagery because they require a special key
 				continue
 			}
+
 			guard let identifier = properties["id"] as? String else { continue }
+
 			if let category = properties["category"] as? String,
 			   let supported = categories[category],
 			   supported
@@ -236,21 +239,26 @@ final class TileServerList {
 				}
 			}
 
+			let best = properties["best"] != nil
+
 			// support for {apikey}
-			if url.contains("{apikey}") {
-				var apikey: String = ""
-				if url.contains(".thunderforest.com/") {
-					// Please don't use in other apps. Sign up for a free account at Thunderforest.com insead.
-					apikey = "be3dc024e3924c22beb5f841d098a8a3"
-				} else {
-					continue
-				}
-				url = url.replacingOccurrences(of: "{apikey}", with: apikey)
+			var apikey = ""
+			if url.contains(".thunderforest.com/") {
+				// Please don't use in other apps. Sign up for a free account at Thunderforest.com insead.
+				apikey = "be3dc024e3924c22beb5f841d098a8a3"
+			}
+
+			if url.contains("{apikey}"),
+				apikey == ""
+			{
+				continue
 			}
 
 			let service = TileServer(withName: name,
 			                         identifier: identifier,
 			                         url: url,
+									 best: best,
+									 apiKey: apikey,
 			                         maxZoom: maxZoom,
 			                         roundUp: true,
 			                         startDate: startDateString,

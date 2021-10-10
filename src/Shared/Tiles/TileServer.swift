@@ -39,6 +39,8 @@ final class TileServer {
 	let name: String
 	let identifier: String
 	let url: String
+	let best: Bool
+	let apiKey: String
 	let maxZoom: Int
 
 	let polygon: CGPath?
@@ -68,6 +70,8 @@ final class TileServer {
 		withName name: String,
 		identifier: String,
 		url: String,
+		best: Bool,
+		apiKey: String,
 		maxZoom: Int,
 		roundUp: Bool,
 		startDate: String?,
@@ -86,6 +90,8 @@ final class TileServer {
 		self.name = name
 		self.identifier = identifier
 		self.url = url
+		self.best = best
+		self.apiKey = apiKey
 		wmsProjection = projection ?? ""
 		attributionString = attribString.count != 0 ? attribString : name
 		attributionUrl = attribUrl
@@ -153,6 +159,8 @@ final class TileServer {
 		withName: "<none>",
 		identifier: "",
 		url: "",
+		best: false,
+		apiKey: "",
 		maxZoom: 0,
 		roundUp: false,
 		startDate: nil,
@@ -170,6 +178,8 @@ final class TileServer {
 			withName: "Maxar Premium Aerial",
 			identifier: MAXAR_PREMIUM_IDENTIFIER,
 			url: aes.decryptString(url),
+			best: false,
+			apiKey: "",
 			maxZoom: 21,
 			roundUp: true,
 			startDate: nil,
@@ -190,6 +200,8 @@ final class TileServer {
 			withName: "Maxar Standard Aerial",
 			identifier: MAXAR_STANDARD_IDENTIFIER,
 			url: aes.decryptString(url),
+			best: false,
+			apiKey: "",
 			maxZoom: 21,
 			roundUp: true,
 			startDate: nil,
@@ -207,6 +219,8 @@ final class TileServer {
 		withName: "MapnikTiles",
 		identifier: MAPNIK_IDENTIFIER,
 		url: "https://{switch:a,b,c}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+		best: false,
+		apiKey: "",
 		maxZoom: 19,
 		roundUp: false,
 		startDate: nil,
@@ -221,6 +235,8 @@ final class TileServer {
 		withName: "OSM GPS Traces",
 		identifier: OSM_GPS_TRACE_IDENTIFIER,
 		url: "https://gps-{switch:a,b,c}.tile.openstreetmap.org/lines/{z}/{x}/{y}.png",
+		best: false,
+		apiKey: "",
 		maxZoom: 20,
 		roundUp: false,
 		startDate: nil,
@@ -236,8 +252,9 @@ final class TileServer {
 	static let mapboxLocator = TileServer(
 		withName: "Mapbox Locator",
 		identifier: MAPBOX_LOCATOR_IDENTIFIER,
-		url: "https://api.mapbox.com/styles/v1/openstreetmap/ckasmteyi1tda1ipfis6wqhuq/tiles/256/{zoom}/{x}/{y}{@2x}?access_token=" +
-			mapboxToken,
+		url: "https://api.mapbox.com/styles/v1/openstreetmap/ckasmteyi1tda1ipfis6wqhuq/tiles/256/{zoom}/{x}/{y}{@2x}?access_token={apikey}",
+		best: false,
+		apiKey: mapboxToken,
 		maxZoom: 20,
 		roundUp: false,
 		startDate: nil,
@@ -252,6 +269,8 @@ final class TileServer {
 		withName: "QA Poole No Name",
 		identifier: NO_NAME_IDENTIFIER,
 		url: "https://tile{switch:2,3}.poole.ch/noname/{zoom}/{x}/{y}.png",
+		best: false,
+		apiKey: "",
 		maxZoom: 25,
 		roundUp: false,
 		startDate: nil,
@@ -265,7 +284,9 @@ final class TileServer {
 	private static let builtinBingAerial = TileServer(
 		withName: "Bing Aerial",
 		identifier: BING_IDENTIFIER,
-		url: "https://ecn.{switch:t0,t1,t2,t3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=10618&key=" + BING_MAPS_KEY,
+		url: "https://ecn.{switch:t0,t1,t2,t3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=10618&key={apikey}",
+		best: false,
+		apiKey: BING_MAPS_KEY,
 		maxZoom: 21,
 		roundUp: true,
 		startDate: nil,
@@ -309,10 +330,12 @@ final class TileServer {
 							                                         with: "{switch:\(subdomains)}")
 							imageUrl = imageUrl.replacingOccurrences(of: "{quadkey}",
 							                                         with: "{u}")
-							imageUrl += "&key=" + BING_MAPS_KEY
+							imageUrl += "&key={apikey}"
 							let bing = TileServer(withName: Self.builtinBingAerial.name,
 							                      identifier: Self.builtinBingAerial.identifier,
 							                      url: imageUrl,
+												  best: false,
+												  apiKey: BING_MAPS_KEY,
 							                      maxZoom: zoomMax,
 							                      roundUp: Self.builtinBingAerial.roundZoomUp,
 							                      startDate: Self.builtinBingAerial.startDate,
@@ -366,6 +389,8 @@ final class TileServer {
 		self.init(withName: dict["name"] as! String,
 		          identifier: url,
 		          url: url,
+				  best: false,
+				  apiKey: "",
 		          maxZoom: (dict["zoom"] as? NSNumber)?.intValue ?? 21,
 		          roundUp: (dict["roundUp"] as? NSNumber)?.boolValue ?? false,
 		          startDate: nil, endDate: nil,
@@ -503,6 +528,9 @@ final class TileServer {
 		// retina screen
 		let retina = UIScreen.main.scale > 1 ? "@2x" : ""
 		url = url.replacingOccurrences(of: "{@2x}", with: retina)
+
+		// apikey
+		url = url.replacingOccurrences(of: "{apikey}", with: apiKey)
 
 		let urlString = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? url
 		// https://ecn.t1.tiles.virtualearth.net/tiles/a12313302102001233031.jpeg?g=587&key=ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk
