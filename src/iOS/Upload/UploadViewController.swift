@@ -51,6 +51,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 
 		let source = UserDefaults.standard.object(forKey: "uploadSource") as? String
 		sourceTextField.text = source
+		sourceTextField.placeholder = "survey, Bing, knowledge"	// overrules translations: see #557
 
 		let text = mapData?.changesetAsAttributedString()
 		if text == nil {
