@@ -116,14 +116,16 @@ final class TileServerList {
 				continue
 			}
 			guard let identifier = properties["id"] as? String else { continue }
-			let category = properties["category"] as? String
-			if categories[category ?? ""] == nil {
-				if identifier == "OpenTopoMap" {
-					// okay
-				} else {
-					// NSLog(@"category %@ - %@",category,identifier);
-					continue
-				}
+			if let category = properties["category"] as? String,
+			   let supported = categories[category],
+			   supported
+			{
+				// good
+			} else if identifier == "OpenTopoMap" {
+				// special exception for this one
+			} else {
+				// NSLog(@"category %@ - %@",category,identifier);
+				continue
 			}
 			let startDateString = properties["start_date"] as? String
 			let endDateString = properties["end_date"] as? String
@@ -264,7 +266,6 @@ final class TileServerList {
 				service.loadIcon(fromWeb: attribIconString)
 			}
 		}
-		externalAerials = externalAerials.sorted(by: { $0.name.caseInsensitiveCompare($1.name) == .orderedAscending })
 		return externalAerials
 	}
 
@@ -322,8 +323,8 @@ final class TileServerList {
 
 		if cachedData == nil {
 			// download newer version periodically
-			let urlString = "https://josm.openstreetmap.de/maps?format=geojson"
-			// NSString * urlString = @"https://osmlab.github.io/editor-layer-index/imagery.geojson";
+			// let urlString = "https://josm.openstreetmap.de/maps?format=geojson"
+			let urlString = "https://osmlab.github.io/editor-layer-index/imagery.geojson"
 			if let downloadUrl = URL(string: urlString) {
 				URLSession.shared.data(with: downloadUrl, completionHandler: { [self] result in
 					if case let .success(data) = result {
@@ -405,7 +406,7 @@ final class TileServerList {
 		result.append(TileServer.maxarPremiumAerial)
 		result.append(TileServer.maxarStandardAerial)
 
-		result = result.sorted(by: { $0.name < $1.name })
+		result = result.sorted(by: { $0.name.caseInsensitiveCompare($1.name) == .orderedAscending })
 		return result
 	}
 
