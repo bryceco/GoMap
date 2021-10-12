@@ -46,7 +46,10 @@ class MyApplication: UIApplication {
 		for touch in event.allTouches ?? [] {
 			var pos: CGPoint = touch.location(in: nil)
 			// if we double-tap then the second tap will be captured by our own window
-			pos = touch.window!.convert(pos, to: nil)
+			guard let window = touch.window else {
+				continue
+			}
+			pos = window.convert(pos, to: nil)
 
 			if UIDevice.current.userInterfaceIdiom == .phone {
 				// Translate coordinates in case screen is rotated. On iPad the tranform is done for us.
@@ -69,10 +72,11 @@ class MyApplication: UIApplication {
 					win.layer.opacity = 0.85
 				}
 			case .moved:
-				let (win, _) = touches[touch]!
-				win.layer.setAffineTransform(CGAffineTransform.identity)
-				win.frame = rect(forTouchPosition: pos)
-				win.layer.setAffineTransform(CGAffineTransform(rotationAngle: -.pi / 4))
+				if let (win, _) = touches[touch] {
+					win.layer.setAffineTransform(CGAffineTransform.identity)
+					win.frame = rect(forTouchPosition: pos)
+					win.layer.setAffineTransform(CGAffineTransform(rotationAngle: -.pi / 4))
+				}
 			case .stationary:
 				// ignore
 				break
@@ -80,16 +84,17 @@ class MyApplication: UIApplication {
 				// ended/cancelled
 				// remove window after a slight delay so quick taps are still visible
 				let MIN_DISPLAY_INTERVAL = 0.5
-				let (win, start) = touches[touch]!
-				var delta = TimeInterval(touch.timestamp - start)
-				if delta < MIN_DISPLAY_INTERVAL {
-					delta = TimeInterval(MIN_DISPLAY_INTERVAL - delta)
-					DispatchQueue.main.asyncAfter(deadline: .now() + delta, execute: {
-						// force window to be retained until now
-						withExtendedLifetime(win) {}
-					})
+				if let (win, start) = touches[touch] {
+					var delta = TimeInterval(touch.timestamp - start)
+					if delta < MIN_DISPLAY_INTERVAL {
+						delta = TimeInterval(MIN_DISPLAY_INTERVAL - delta)
+						DispatchQueue.main.asyncAfter(deadline: .now() + delta, execute: {
+							// force window to be retained until now
+							withExtendedLifetime(win) {}
+						})
+					}
+					touches.removeValue(forKey: touch)
 				}
-				touches.removeValue(forKey: touch)
 			}
 		}
 	}
