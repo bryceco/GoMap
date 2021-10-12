@@ -50,8 +50,15 @@ class TapAndDragGesture: UIGestureRecognizer {
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
 		super.touchesBegan(touches, with: event)
 
-		if touches.count != 1 {
+		var isIndirect = touches.first?.type == .indirect
+		if #available(iOS 13.4, *),
+		   touches.first?.type == .indirectPointer
+		{
+			isIndirect = true
+		}
+		if touches.count != 1 || isIndirect	{
 			state = tapState == .needDrag ? .cancelled : .failed
+			tapState = .needFirstTap
 			return
 		}
 
