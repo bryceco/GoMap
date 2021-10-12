@@ -151,10 +151,13 @@ final class PresetsDatabase {
 		return presets
 	}
 
+	/// basePresets is always the regular presets
+	/// inputList is either regular presets, or both presets and NSI
 	private class func buildTagIndex(_ inputList: [[String: PresetFeature]],
 	                                 basePresets: [String: PresetFeature]) -> [String: [PresetFeature]]
 	{
-		var keys = [String: Int]()
+		// keys contains all tag keys that have an associated preset
+		var keys: [String: Int] = [:]
 		for (featureID, _) in basePresets {
 			var key = featureID
 			if let range = key.range(of: "/") {
@@ -162,7 +165,7 @@ final class PresetsDatabase {
 			}
 			keys[key] = (keys[key] ?? 0) + 1
 		}
-		var tagIndex = [String: [PresetFeature]]()
+		var tagIndex: [String: [PresetFeature]] = [:]
 		for list in inputList {
 			for (_, feature) in list {
 				var added = false

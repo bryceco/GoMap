@@ -41,7 +41,7 @@ final class PresetFeature {
 		icon = jsonDict["icon"] as? String
 		logoURL = jsonDict["imageURL"] as? String
 		locationSet = PresetFeature.convertLocationSet(jsonDict["locationSet"] as? [String: [String]])
-		matchScore = jsonDict["matchScore"] as? Float ?? 1.0
+		matchScore = Float(jsonDict["matchScore"] as? Double ?? 1.0)
 		moreFields = jsonDict["moreFields"] as? [String]
 		name = jsonDict["name"] as? String
 		reference = jsonDict["reference"] as? [String: String]
@@ -186,29 +186,14 @@ final class PresetFeature {
 		for (key, value) in tags {
 			seen.insert(key)
 
-			var v: String?
-			if key.hasSuffix("*") {
-				let c = String(key.dropLast())
-				v = objectTags.first(where: { (key: String, _: String) -> Bool in
-					key.hasPrefix(c)
-				})?.value
+			guard let v = objectTags[key] else { return 0.0 }
+			if value == v {
+				totalScore += matchScore
+			} else if value == "*" {
+				totalScore += matchScore / 2
 			} else {
-				v = objectTags[key]
+				return 0.0 // invalid match
 			}
-			if let v = v {
-				if value == v {
-					totalScore += matchScore
-					continue
-				}
-				if value == "*" {
-					totalScore += matchScore / 2
-					continue
-				}
-			} else if key == "area", value == "yes", geometry == .AREA {
-				totalScore += 0.1
-				continue
-			}
-			return 0.0 // invalid match
 		}
 
 		// boost score for additional matches in addTags
