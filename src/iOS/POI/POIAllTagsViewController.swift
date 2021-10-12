@@ -30,13 +30,18 @@ class TextPairTableCell: UITableViewCell {
 	}
 }
 
-class POIAllTagsViewController: UITableViewController {
+class SectionHeaderCell: UITableViewCell {
+	@IBOutlet var label: UILabel!
+}
+
+class POIAllTagsViewController: UITableViewController, POITypeViewControllerDelegate {
+
 	private var tags: [(k: String, v: String)] = []
 	private var relations: [OsmRelation] = []
 	private var members: [OsmMember] = []
 	@IBOutlet var saveButton: UIBarButtonItem!
 	private var childViewPresented = false
-	private var featureID: String?
+	private var currentFeature: PresetFeature?
 	private var currentTextField: UITextField?
 	private var allPresetKeys: [PresetKey] = [] // updated whenever a value changes
 
@@ -81,10 +86,10 @@ class POIAllTagsViewController: UITableViewController {
 			geometry: geometry,
 			includeNSI: true)
 
-		if !forceReload, newFeature?.featureID == featureID {
+		if !forceReload, newFeature?.featureID == currentFeature?.featureID {
 			return -1
 		}
-		featureID = newFeature?.featureID
+		currentFeature = newFeature
 
 		// remove all entries without key & value
 		tags = tags.filter { $0.k != "" && $0.v != "" }
@@ -96,7 +101,7 @@ class POIAllTagsViewController: UITableViewController {
 
 		// add placeholder keys
 		allPresetKeys = []
-		if let newFeature = newFeature {
+		if let newFeature = currentFeature {
 			let presets = PresetsForFeature(withFeature: newFeature, objectTags: dict, geometry: geometry, update: nil)
 			allPresetKeys = presets.allPresetKeys()
 			var newKeys: [String] = allPresetKeys.map({ $0.tagKey }).filter({ $0 != "" })
@@ -184,6 +189,32 @@ class POIAllTagsViewController: UITableViewController {
 			// The Cancel button would be ideal but it isn't clear how to implement that, so select the Add button instead
 		}
 		return []
+	}
+
+	// MARK: - Feature picker
+
+	@IBAction func didRequestFeature() {
+		performSegue(withIdentifier: "POITypeSegue", sender: nil)
+	}
+
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if let dest = segue.destination as? POIFeaturePickerViewController {
+			dest.delegate = self
+		}
+	}
+
+	func typeViewController(_ typeViewController: POIFeaturePickerViewController,
+							didChangeFeatureTo newFeature: PresetFeature)
+	{
+		let tabController = tabBarController as! POITabBarController
+		let geometry = tabController.selection?.geometry() ?? GEOMETRY.NODE
+		tabController.keyValueDict = newFeature.objectTagsUpdatedForFeature(tabController.keyValueDict,
+																			geometry: geometry)
+		_ = updateWithRecomendations(forFeature: true)
+		saveButton.isEnabled = tabController.isTagDictChanged()
+		if #available(iOS 13.0, *) {
+			tabBarController?.isModalInPresentation = saveButton.isEnabled
+		}
 	}
 
 	// MARK: - Table view data source
@@ -788,6 +819,22 @@ class POIAllTagsViewController: UITableViewController {
 	}
 
 	// MARK: - Table view delegate
+
+
+	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		if section == 0 {
+			let ident = "SectionHeaderCell"
+			let cell: SectionHeaderCell = tableView.dequeueReusableCell(withIdentifier: ident) as! SectionHeaderCell
+			cell.label.text = currentFeature?.name ?? "TAGS"
+			return cell
+		} else {
+			return nil
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return 50.0
+	}
 
 	@IBAction func toggleTableRowEditing(_ sender: Any) {
 		let tabController = tabBarController as! POITabBarController

@@ -130,49 +130,14 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		}
 	}
 
-	func typeViewController(
-		_ typeViewController: POIFeaturePickerViewController,
-		didChangeFeatureTo newFeature: PresetFeature)
+	func typeViewController(_ typeViewController: POIFeaturePickerViewController,
+							didChangeFeatureTo newFeature: PresetFeature)
 	{
 		selectedFeature = newFeature
 		let tabController = tabBarController as! POITabBarController
 		let geometry = tabController.selection?.geometry() ?? GEOMETRY.NODE
-
-		let oldFeature = PresetsDatabase.shared.matchObjectTagsToFeature(
-			tabController.keyValueDict,
-			geometry: geometry,
-			includeNSI: true)
-
-		// remove previous feature tags
-		var removeTags = oldFeature?.removeTags() ?? [:]
-		let addTags = newFeature.addTags()
-		for key in addTags.keys {
-			removeTags.removeValue(forKey: key)
-		}
-		for key in removeTags.keys {
-			tabController.setFeatureKey(key, value: nil)
-		}
-
-		// add new feature tags
-		for (key, value) in newFeature.addTags() {
-			if value == "*" {
-				if !tabController.keyValueDict.keys.contains(key) {
-					tabController.setFeatureKey(key, value: "yes")
-				} else {
-					// already has a value
-				}
-			} else {
-				tabController.setFeatureKey(key, value: value)
-			}
-		}
-
-		// add default values of new feature fields
-		let defaults = newFeature.defaultValuesForGeometry(geometry)
-		for (key, value) in defaults {
-			if !tabController.keyValueDict.keys.contains(key) {
-				tabController.setFeatureKey(key, value: value)
-			}
-		}
+		tabController.keyValueDict = newFeature.objectTagsUpdatedForFeature(tabController.keyValueDict,
+																			geometry: geometry)
 	}
 
 	// MARK: - Table view data source
@@ -336,10 +301,6 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		      cell.accessoryType != .none
 		else { return }
 
-		// This workaround is necessary because `tableView:cellForRowAtIndexPath:`
-		// currently sets `cell.commonPreset` to an instance of `CommonPresetGroup` by casting it to `id`.
-//		var presetKey: PresetKey? = cell.presetKey as? PresetKey
-
 		if drillDownGroup == nil, indexPath.section == 0, indexPath.row == 0 {
 			performSegue(withIdentifier: "POITypeSegue", sender: cell)
 		} else if case let .group(group) = cell.presetKey {
@@ -369,17 +330,14 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		let cell = sender as? FeaturePresetCell
-		if segue.destination is POIPresetValuePickerController {
-			if let preset = segue.destination as? POIPresetValuePickerController,
-			   case let .key(presetKey) = cell?.presetKey
-			{
-				preset.tag = presetKey.tagKey
-				preset.valueDefinitions = presetKey.presetList
-				preset.navigationItem.title = presetKey.name
+		if let dest = segue.destination as? POIPresetValuePickerController {
+			if case let .key(presetKey) = cell?.presetKey {
+				dest.tag = presetKey.tagKey
+				dest.valueDefinitions = presetKey.presetList
+				dest.navigationItem.title = presetKey.name
 			}
-		} else if segue.destination is POIFeaturePickerViewController {
-			let dest = segue.destination as? POIFeaturePickerViewController
-			dest?.delegate = self
+		} else if let dest = segue.destination as? POIFeaturePickerViewController {
+			dest.delegate = self
 		}
 	}
 

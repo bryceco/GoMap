@@ -126,6 +126,52 @@ final class PresetFeature {
 		return _removeTags ?? addTags()
 	}
 
+	func objectTagsUpdatedForFeature(_ tags: [String:String], geometry: GEOMETRY) -> [String: String]
+	{
+		var tags = tags
+
+		let oldFeature = PresetsDatabase.shared.matchObjectTagsToFeature(
+			tags,
+			geometry: geometry,
+			includeNSI: true)
+
+		// remove previous feature tags
+		var removeTags = oldFeature?.removeTags() ?? [:]
+		for key in addTags().keys {
+			removeTags.removeValue(forKey: key)
+		}
+		for key in removeTags.keys {
+			tags.removeValue(forKey: key)
+		}
+
+		// add new feature tags
+		for (key, value) in addTags() {
+			if value == "*" {
+				if tags[key] == nil {
+					tags[key] = "yes"
+				} else {
+					// already has a value
+				}
+			} else {
+				tags[key] = value
+			}
+		}
+
+		// add default values of new feature fields
+		let defaults = self.defaultValuesForGeometry(geometry)
+		for (key, value) in defaults {
+			if tags[key] == nil {
+				tags[key] = value
+			}
+		}
+
+		// remove any empty values
+		tags = tags.compactMapValues({ $0 == "" ? nil : $0 })
+
+		return tags
+	}
+
+
 	class func parentIDofID(_ featureID: String) -> String? {
 		if let range = featureID.range(of: "/", options: .backwards, range: nil, locale: nil) {
 			return String(featureID.prefix(upTo: range.lowerBound))
