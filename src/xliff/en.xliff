@@ -371,6 +371,7 @@
       </trans-unit>
       <trans-unit id="CFBundleGetInfoString" xml:space="preserve">
         <source/>
+        <target/>
         <note>Get Info string</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
@@ -395,6 +396,7 @@
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
         <source/>
+        <target/>
         <note>Copyright (human-readable)</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
@@ -2133,6 +2135,11 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target>Back</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "Hgu-iP-FnG";</note>
       </trans-unit>
+      <trans-unit id="IcU-k2-G0m.normalTitle" xml:space="preserve">
+        <source>&gt;</source>
+        <target>&gt;</target>
+        <note>Class = "UIButton"; normalTitle = "&gt;"; ObjectID = "IcU-k2-G0m";</note>
+      </trans-unit>
       <trans-unit id="JAT-qD-dTS.text" xml:space="preserve">
         <source>Value 1</source>
         <target>Value 1</target>
@@ -2207,6 +2214,11 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>Food &amp; Drink</source>
         <target>Food &amp; Drink</target>
         <note>Class = "UILabel"; text = "Food &amp; Drink"; ObjectID = "XBV-Ie-LDT"; Note = "Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="XJZ-vI-jat.text" xml:space="preserve">
+        <source>PROTOTYPE CELLS</source>
+        <target>PROTOTYPE CELLS</target>
+        <note>Class = "UILabel"; text = "PROTOTYPE CELLS"; ObjectID = "XJZ-vI-jat";</note>
       </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
         <source>Subtitle</source>

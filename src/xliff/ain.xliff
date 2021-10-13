@@ -1710,6 +1710,10 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>Back</source>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "Hgu-iP-FnG";</note>
       </trans-unit>
+      <trans-unit id="IcU-k2-G0m.normalTitle" xml:space="preserve">
+        <source>&gt;</source>
+        <note>Class = "UIButton"; normalTitle = "&gt;"; ObjectID = "IcU-k2-G0m";</note>
+      </trans-unit>
       <trans-unit id="JAT-qD-dTS.text" xml:space="preserve">
         <source>Value 1</source>
         <note>Class = "UILabel"; text = "Value 1"; ObjectID = "JAT-qD-dTS";</note>
@@ -1769,6 +1773,10 @@ You may want to clear the cache (under Display settings) to improve performance.
       <trans-unit id="XBV-Ie-LDT.text" xml:space="preserve">
         <source>Food &amp; Drink</source>
         <note>Class = "UILabel"; text = "Food &amp; Drink"; ObjectID = "XBV-Ie-LDT"; Note = "Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="XJZ-vI-jat.text" xml:space="preserve">
+        <source>PROTOTYPE CELLS</source>
+        <note>Class = "UILabel"; text = "PROTOTYPE CELLS"; ObjectID = "XJZ-vI-jat";</note>
       </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
         <source>Subtitle</source>
