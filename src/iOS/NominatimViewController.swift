@@ -42,7 +42,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	}
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return (searchBar.text?.count ?? 0) != 0 ? resultsArray.count : historyArray.count
+		return showingHistory ? historyArray.count : resultsArray.count
 	}
 
 	func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
