@@ -29,6 +29,7 @@ done
 
 # Import translators' XLIFFs to update .strings files
 for f in *.xliff; do
+	echo xcodebuild -importLocalizations -localizationPath $f -project "$PROJECT"
 	xcodebuild -importLocalizations -localizationPath $f -project "$PROJECT"
 done
 
