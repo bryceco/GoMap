@@ -96,7 +96,7 @@ final class TileServer {
 		attributionString = attribString.count != 0 ? attribString : name
 		attributionUrl = attribUrl
 
-		self.maxZoom = maxZoom
+		self.maxZoom = maxZoom > 0 ? maxZoom : 21
 		roundZoomUp = roundUp
 		self.startDate = startDate
 		self.endDate = endDate

@@ -450,8 +450,8 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		let currentSet = Set(currentTiles)
 
 		let rect = mapView.boundingMapRectForScreen()
-		let minZoomLevel = max(1, min(zoomLevel(), tileServer.maxZoom))
-		let maxZoomLevel = min(minZoomLevel + 2, tileServer.maxZoom)
+		let minZoomLevel = min(zoomLevel(), tileServer.maxZoom)
+		let maxZoomLevel = min(zoomLevel() + 2, tileServer.maxZoom)
 
 		var neededTiles: [String] = []
 		for zoomLevel in minZoomLevel...maxZoomLevel {
@@ -460,6 +460,11 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 			let tileWest = Int(floor(rect.origin.x * zoom))
 			let tileSouth = Int(ceil((rect.origin.y + rect.size.height) * zoom))
 			let tileEast = Int(ceil((rect.origin.x + rect.size.width) * zoom))
+
+			if tileWest < 0 || tileWest >= tileEast || tileNorth < 0 || tileNorth >= tileSouth {
+				// stuff breaks if they zoom all the way out
+				continue
+			}
 
 			for tileX in tileWest..<tileEast {
 				for tileY in tileNorth..<tileSouth {
