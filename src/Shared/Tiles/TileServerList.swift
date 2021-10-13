@@ -155,7 +155,7 @@ final class TileServerList {
 
 			let propExtent = properties["extent"] as? [String: Any] ?? [:]
 
-			let maxZoom = ((isGeoJSON ? properties : propExtent)["max_zoom"] as? NSNumber)?.intValue ?? 21
+			let maxZoom = ((isGeoJSON ? properties : propExtent)["max_zoom"] as? NSNumber)?.intValue ?? 0
 			var attribIconString = properties["icon"] as? String ?? ""
 
 			let attribDict = properties["attribution"] as? [String: Any] ?? [:]

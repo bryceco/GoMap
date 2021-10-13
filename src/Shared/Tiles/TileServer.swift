@@ -390,7 +390,7 @@ final class TileServer {
 		          url: url,
 		          best: false,
 		          apiKey: "",
-		          maxZoom: (dict["zoom"] as? NSNumber)?.intValue ?? 21,
+		          maxZoom: (dict["zoom"] as? NSNumber)?.intValue ?? 0,
 		          roundUp: (dict["roundUp"] as? NSNumber)?.boolValue ?? false,
 		          startDate: nil, endDate: nil,
 		          wmsProjection: projection,

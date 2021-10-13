@@ -79,7 +79,7 @@ class TileServerEditViewController: UITableViewController {
 		if projection == TMS_PROJECTION_NAME {
 			projection = ""
 		}
-		let maxZoom = Int(zoomField.text ?? "21") ?? 21
+		let maxZoom = Int(zoomField.text ?? "0") ?? 0
 
 		let service = TileServer(
 			withName: name,
