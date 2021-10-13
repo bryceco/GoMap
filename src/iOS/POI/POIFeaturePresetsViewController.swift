@@ -466,7 +466,12 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	}
 
 	func updateTag(withValue value: String, forKey key: String) {
-		let tabController = tabBarController as! POITabBarController
+		guard let tabController = tabBarController as? POITabBarController else {
+			// This shouldn't happen, but there are crashes here
+			// originating from textFieldDidEndEditing(). Maybe
+			// when closing the modal somehow?
+			return
+		}
 
 		if value.count != 0 {
 			tabController.keyValueDict[key] = value
