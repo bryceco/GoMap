@@ -11,7 +11,7 @@ import UIKit
 
 typealias PushPinViewDragCallback = (UIGestureRecognizer.State, CGFloat, CGFloat) -> Void
 
-final class PushPinView: UIButton, CAAnimationDelegate {
+final class PushPinView: UIButton, CAAnimationDelegate, UIGestureRecognizerDelegate {
 	private let shapeLayer: CAShapeLayer // shape for balloon
 	private let textLayer: CATextLayer // text in balloon
 	private var hittestRect = CGRect.zero
@@ -96,35 +96,9 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 
 		layer.addSublayer(shapeLayer)
 
-		addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(draggingGesture(_:))))
-	}
-
-	override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-		// test the label box
-		if hittestRect.contains(point) {
-			return self
-		}
-
-		if #available(iOS 13.0, macCatalyst 13.0, *) {
-			// also hit the arrow point if they're using a mouse
-			if let touch = event?.allTouches?.first,
-			   touch.type != .direct,
-			   abs(Float(point.y)) < 12,
-			   abs(Float(point.x - hittestRect.origin.x - hittestRect.size.width / 2)) < 12
-			{
-				return self
-			}
-		}
-
-		// and any buttons connected to us
-		for button in buttonList {
-			let point2 = button.convert(point, from: self)
-			let hit = button.hitTest(point2, with: event)
-			if let hit = hit {
-				return hit
-			}
-		}
-		return nil
+		let pan = UIPanGestureRecognizer(target: self, action: #selector(draggingGesture(_:)))
+		pan.delegate = self
+		addGestureRecognizer(pan)
 	}
 
 	override func layoutSubviews() {
@@ -246,18 +220,18 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 			let line = lineLayers[i]
 			let buttonPath = CGMutablePath()
 			var start = CGPoint(
-				x: Double(viewRect.size.width / 2),
-				y: Double(labelOnBottom ? topGap : viewRect.size.height))
+				x: viewRect.size.width / 2,
+				y: labelOnBottom ? topGap : viewRect.size.height)
 			var end = CGPoint(
-				x: Double(buttonRect.origin.x + buttonRect.size.width / 2),
-				y: Double(buttonRect.origin.y + buttonRect.size.height / 2))
-			let dx = Double(end.x - start.x)
-			let dy = Double(end.y - start.y)
+				x: buttonRect.origin.x + buttonRect.size.width / 2,
+				y: buttonRect.origin.y + buttonRect.size.height / 2)
+			let dx = end.x - start.x
+			let dy = end.y - start.y
 			let dist = hypot(dx, dy)
-			start.x += CGFloat(15 * dx / dist)
-			start.y += CGFloat(15 * dy / dist)
-			end.x -= CGFloat(15 * dx / dist)
-			end.y -= CGFloat(15 * dy / dist)
+			start.x += 15 * dx / dist
+			start.y += 15 * dy / dist
+			end.x -= 15 * dx / dist
+			end.y -= 15 * dy / dist
 			buttonPath.move(to: CGPoint(x: start.x, y: start.y))
 			buttonPath.addLine(to: CGPoint(x: end.x, y: end.y))
 			line.path = buttonPath
@@ -307,7 +281,7 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 
 		let posA = startPos
 		let posC = layer.position
-		let posB = CGPoint(x: Double(posC.x), y: Double(posA.y))
+		let posB = CGPoint(x: posC.x, y: posA.y)
 
 		let path = CGMutablePath()
 		path.move(to: posA)
@@ -328,20 +302,70 @@ final class PushPinView: UIButton, CAAnimationDelegate {
 		layer.add(theAnimation, forKey: "animatePosition")
 	}
 
+	// MARK: - Dragging
+
+	override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+		// test the label box
+		if hittestRect.contains(point) {
+			return self
+		}
+
+		if #available(iOS 13.0, macCatalyst 13.0, *) {
+			// also hit the arrow point if they're using a mouse
+			let touch = event?.allTouches?.first	// sometime allTouchess is empty, so assume it's a mouse
+			var isMouse = touch == nil || touch?.type == .indirect
+			if #available(iOS 13.4, macCatalyst 13.0, *),
+			   touch?.type == .indirectPointer
+			{
+				isMouse = true
+			}
+			if isMouse,
+			   abs(point.y) < 12,
+			   abs(point.x - hittestRect.origin.x - hittestRect.size.width / 2) < 12
+			{
+				return self
+			}
+		}
+
+		// and any buttons connected to us
+		for button in buttonList {
+			let point2 = button.convert(point, from: self)
+			let hit = button.hitTest(point2, with: event)
+			if let hit = hit {
+				return hit
+			}
+		}
+		return nil
+	}
+
+	var initialPosition: CGPoint? = nil
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+		if !isDragging {
+			initialPosition = touches.first?.location(in: self)
+		}
+	}
+
 	private(set) var isDragging: Bool = false
 	@objc func draggingGesture(_ gesture: UIPanGestureRecognizer) {
+		var delta = gesture.translation(in: self)
+
 		switch gesture.state {
-		case .began, .changed:
+		case .began:
+			isDragging = true
+			if let initial = initialPosition {
+				let beg = gesture.location(in: self)
+				delta = delta.minus(initial).plus(beg)
+			}
+		case .changed:
 			isDragging = true
 		default:
 			isDragging = false
 		}
 
-		let delta = gesture.translation(in: gesture.view)
 		arrowPoint = arrowPoint.plus(delta)
 		dragCallback(gesture.state, delta.x, delta.y)
 
-		gesture.setTranslation(.zero, in: gesture.view)
+		gesture.setTranslation(.zero, in: self)
 	}
 
 	@available(*, unavailable)
