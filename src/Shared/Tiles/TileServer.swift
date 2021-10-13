@@ -40,7 +40,7 @@ final class TileServer {
 	let identifier: String
 	let url: String
 	let best: Bool
-	let apiKey: String
+	var apiKey: String
 	let maxZoom: Int
 
 	let polygon: CGPath?
@@ -248,7 +248,6 @@ final class TileServer {
 		attribUrl: "")
 
 	static let mapboxToken = Bundle.main.object(forInfoDictionaryKey: "MBXLocatorToken") as? String ?? ""
-
 	static let mapboxLocator = TileServer(
 		withName: "Mapbox Locator",
 		identifier: MAPBOX_LOCATOR_IDENTIFIER,

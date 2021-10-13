@@ -119,12 +119,14 @@ final class TileServerList {
 
 			guard let identifier = properties["id"] as? String else { continue }
 
+			let isMapBoxLocator = identifier == "mapbox_locator_overlay"
+
 			if let category = properties["category"] as? String,
 			   let supported = categories[category],
 			   supported
 			{
 				// good
-			} else if identifier == "OpenTopoMap" {
+			} else if identifier == "OpenTopoMap" || isMapBoxLocator {
 				// special exception for this one
 			} else {
 				// NSLog(@"category %@ - %@",category,identifier);
@@ -168,7 +170,7 @@ final class TileServerList {
 				// print("Aerial: unsupported type \(type): \(name)")
 				continue
 			}
-			if overlay != 0 {
+			if overlay != 0 && !isMapBoxLocator {
 				// we don@"t support overlays yet
 				continue
 			}
@@ -268,7 +270,14 @@ final class TileServerList {
 			                         attribString: attribString,
 			                         attribIcon: attribIcon,
 			                         attribUrl: attribUrl)
-			externalAerials.append(service)
+			if isMapBoxLocator {
+				if let range = service.url.range(of: "access_token=") {
+					let key = service.url[range.upperBound...]
+					TileServer.mapboxLocator.apiKey = String(key)
+				}
+			} else {
+				externalAerials.append(service)
+			}
 
 			if httpIcon {
 				service.loadIcon(fromWeb: attribIconString)
