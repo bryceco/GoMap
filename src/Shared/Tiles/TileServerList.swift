@@ -219,25 +219,26 @@ final class TileServerList {
 			var attribIcon: UIImage?
 			var httpIcon = false
 			if attribIconString.count > 0 {
-				let prefixList = ["data:image/png;base64,", "data:image/png:base64,", "png:base64,"]
-				for prefix in prefixList {
-					if attribIconString.hasPrefix(prefix) {
-						attribIconString.removeFirst(prefix.count)
+				if attribIconString.hasPrefix("http") {
+					httpIcon = true
+				} else if let range = attribIconString.range(of: ",") {
+					let format = String(attribIconString.prefix(upTo: range.lowerBound))
+					let supported = ["data:image/png;base64" : true,
+									 "png:base64" : true,
+									 "data:image/svg+xml;base64" : false]
+					if supported[format] == true {
+						attribIconString.removeFirst(format.count+1)
 						if let decodedData = Data(base64Encoded: attribIconString, options: []) {
 							attribIcon = UIImage(data: decodedData)
 						}
 						if attribIcon == nil {
 							print("bad icon decode: \(attribIconString)")
 						}
-						break
-					}
-				}
-				if attribIcon == nil {
-					if attribIconString.hasPrefix("http") {
-						httpIcon = true
 					} else {
-						print("Aerial: unsupported icon format in \(name): \(attribIconString)")
+						print("Aerial: unsupported icon format in \(identifier): \(format)")
 					}
+				} else {
+					print("Aerial: unsupported icon format in \(identifier): \(attribIconString)")
 				}
 			}
 
