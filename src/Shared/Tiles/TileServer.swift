@@ -247,24 +247,12 @@ final class TileServer {
 		attribIcon: nil,
 		attribUrl: "")
 
-	static let mapboxToken: String = {
-		guard let a2 = Bundle.main.object(forInfoDictionaryKey: "MBX") as? [Int],
-			  a2.count % 2 == 0
-		else {
-			return ""
-		}
-		return a2.indices
-			.compactMap{ $0 % 2 == 0 ? (64-a2[$0],64-a2[$0+1]) : nil }
-			.sorted(by: {v1,v2 in return v1.1 < v2.1})
-			.map{ "\(Character(UnicodeScalar($0.0)!))" }
-			.joined(separator: "")
-	}()
 	static let mapboxLocator = TileServer(
 		withName: "Mapbox Locator",
 		identifier: MAPBOX_LOCATOR_IDENTIFIER,
 		url: "https://api.mapbox.com/styles/v1/openstreetmap/ckasmteyi1tda1ipfis6wqhuq/tiles/256/{zoom}/{x}/{y}{@2x}?access_token={apikey}",
 		best: false,
-		apiKey: mapboxToken,
+		apiKey: MapboxLocatorToken,
 		maxZoom: 20,
 		roundUp: false,
 		startDate: nil,
