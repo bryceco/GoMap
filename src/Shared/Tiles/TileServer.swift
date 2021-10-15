@@ -40,7 +40,7 @@ final class TileServer {
 	let identifier: String
 	let url: String
 	let best: Bool
-	var apiKey: String
+	let apiKey: String
 	let maxZoom: Int
 
 	let polygon: CGPath?
