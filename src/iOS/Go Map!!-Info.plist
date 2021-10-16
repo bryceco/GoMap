@@ -95,13 +95,15 @@
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Connect to external Bluetooth GPS devices</string>
 	<key>NSCameraUsageDescription</key>
-	<string>The camera is used to measure heights of buildings or objects</string>
+	<string>The camera is used to measure heights of buildings or objects, and to perform text recognition in opening hours signs.</string>
 	<key>NSHumanReadableCopyright</key>
-	<string></string>
+	<string>Copyright 2012-2021 Bryce Cogswell</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Always on location tracking allows the app to record GPX files when inactive.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Your location will be displayed and followed on the map.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Enabling location services allows the app to display objects in your vicinity. This allows you to easily update or add data you survey yourself.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Your location will be displayed and followed on the map.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
