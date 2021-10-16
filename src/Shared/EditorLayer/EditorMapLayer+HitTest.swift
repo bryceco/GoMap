@@ -239,8 +239,8 @@ extension EditorMapLayer {
 			})
 		var objectList = Array(objectSet)
 		objectList.sort(by: { o1, o2 in
-			let diff = (o1.isRelation() != nil ? 2 : o1.isWay() != nil ? 1 : 0) -
-				(o2.isRelation() != nil ? 2 : o2.isWay() != nil ? 1 : 0)
+			let diff = (o1 is OsmRelation ? 2 : o1 is OsmWay ? 1 : 0) -
+				(o2 is OsmRelation ? 2 : o2 is OsmWay ? 1 : 0)
 			if diff != 0 {
 				return -diff < 0
 			}

@@ -126,8 +126,7 @@ final class PresetFeature {
 		return _removeTags ?? addTags()
 	}
 
-	func objectTagsUpdatedForFeature(_ tags: [String:String], geometry: GEOMETRY) -> [String: String]
-	{
+	func objectTagsUpdatedForFeature(_ tags: [String: String], geometry: GEOMETRY) -> [String: String] {
 		var tags = tags
 
 		let oldFeature = PresetsDatabase.shared.matchObjectTagsToFeature(
@@ -158,7 +157,7 @@ final class PresetFeature {
 		}
 
 		// add default values of new feature fields
-		let defaults = self.defaultValuesForGeometry(geometry)
+		let defaults = defaultValuesForGeometry(geometry)
 		for (key, value) in defaults {
 			if tags[key] == nil {
 				tags[key] = value
@@ -170,7 +169,6 @@ final class PresetFeature {
 
 		return tags
 	}
-
 
 	class func parentIDofID(_ featureID: String) -> String? {
 		if let range = featureID.range(of: "/", options: .backwards, range: nil, locale: nil) {

@@ -312,7 +312,7 @@ final class PushPinView: UIButton, CAAnimationDelegate, UIGestureRecognizerDeleg
 
 		if #available(iOS 13.0, macCatalyst 13.0, *) {
 			// also hit the arrow point if they're using a mouse
-			let touch = event?.allTouches?.first	// sometime allTouchess is empty, so assume it's a mouse
+			let touch = event?.allTouches?.first // sometime allTouchess is empty, so assume it's a mouse
 			var isMouse = touch == nil || touch?.type == .indirect
 			if #available(iOS 13.4, macCatalyst 13.0, *),
 			   touch?.type == .indirectPointer
@@ -338,7 +338,7 @@ final class PushPinView: UIButton, CAAnimationDelegate, UIGestureRecognizerDeleg
 		return nil
 	}
 
-	var initialPosition: CGPoint? = nil
+	var initialPosition: CGPoint?
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 		if !isDragging {
 			initialPosition = touches.first?.location(in: self)

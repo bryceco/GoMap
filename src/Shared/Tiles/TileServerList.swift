@@ -221,11 +221,11 @@ final class TileServerList {
 					httpIcon = true
 				} else if let range = attribIconString.range(of: ",") {
 					let format = String(attribIconString.prefix(upTo: range.lowerBound))
-					let supported = ["data:image/png;base64" : true,
-									 "png:base64" : true,
-									 "data:image/svg+xml;base64" : false]
+					let supported = ["data:image/png;base64": true,
+					                 "png:base64": true,
+					                 "data:image/svg+xml;base64": false]
 					if supported[format] == true {
-						attribIconString.removeFirst(format.count+1)
+						attribIconString.removeFirst(format.count + 1)
 						if let decodedData = Data(base64Encoded: attribIconString, options: []) {
 							attribIcon = UIImage(data: decodedData)
 						}

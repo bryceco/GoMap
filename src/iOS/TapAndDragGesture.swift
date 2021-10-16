@@ -56,7 +56,7 @@ class TapAndDragGesture: UIGestureRecognizer {
 		{
 			isIndirect = true
 		}
-		if touches.count != 1 || isIndirect	{
+		if touches.count != 1 || isIndirect {
 			state = tapState == .needDrag ? .cancelled : .failed
 			tapState = .needFirstTap
 			return

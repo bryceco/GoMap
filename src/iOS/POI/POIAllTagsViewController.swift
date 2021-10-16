@@ -35,7 +35,6 @@ class SectionHeaderCell: UITableViewCell {
 }
 
 class POIAllTagsViewController: UITableViewController, POITypeViewControllerDelegate {
-
 	private var tags: [(k: String, v: String)] = []
 	private var relations: [OsmRelation] = []
 	private var members: [OsmMember] = []
@@ -204,12 +203,12 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 	}
 
 	func typeViewController(_ typeViewController: POIFeaturePickerViewController,
-							didChangeFeatureTo newFeature: PresetFeature)
+	                        didChangeFeatureTo newFeature: PresetFeature)
 	{
 		let tabController = tabBarController as! POITabBarController
 		let geometry = tabController.selection?.geometry() ?? GEOMETRY.NODE
 		tabController.keyValueDict = newFeature.objectTagsUpdatedForFeature(tabController.keyValueDict,
-																			geometry: geometry)
+		                                                                    geometry: geometry)
 		_ = updateWithRecomendations(forFeature: true)
 		saveButton.isEnabled = tabController.isTagDictChanged()
 		if #available(iOS 13.0, *) {
@@ -819,7 +818,6 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 	}
 
 	// MARK: - Table view delegate
-
 
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		if section == 0 {
