@@ -310,21 +310,14 @@ final class PushPinView: UIButton, CAAnimationDelegate, UIGestureRecognizerDeleg
 			return self
 		}
 
-		if #available(iOS 13.0, macCatalyst 13.0, *) {
-			// also hit the arrow point if they're using a mouse
-			let touch = event?.allTouches?.first // sometime allTouchess is empty, so assume it's a mouse
-			var isMouse = touch == nil || touch?.type == .indirect
-			if #available(iOS 13.4, macCatalyst 13.0, *),
-			   touch?.type == .indirectPointer
-			{
-				isMouse = true
-			}
-			if isMouse,
-			   abs(point.y) < 12,
-			   abs(point.x - hittestRect.origin.x - hittestRect.size.width / 2) < 12
-			{
-				return self
-			}
+		if #available(iOS 13.0, macCatalyst 13.0, *),
+		   // also hit the arrow point if they're using a mouse
+		   let isIndirect = (UIApplication.shared as? MyApplication)?.currentEventIsIndirect,
+		   isIndirect,
+		   abs(point.y) < 12,
+		   abs(point.x - hittestRect.origin.x - hittestRect.size.width / 2) < 12
+		{
+			return self
 		}
 
 		// and any buttons connected to us
@@ -341,6 +334,7 @@ final class PushPinView: UIButton, CAAnimationDelegate, UIGestureRecognizerDeleg
 	var initialPosition: CGPoint?
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 		if !isDragging {
+			// record the initial touch position to increase tracking accuracy
 			initialPosition = touches.first?.location(in: self)
 		}
 	}

@@ -36,7 +36,15 @@ class MyApplication: UIApplication {
 		}
 	}
 
+	// Work around the fact the hitTest doesn't provide allTouches to detect touch type.
+	// hitTest() is called after tap ended, so no taps are present. We need to store
+	// the result from tap began:
+	var currentEventIsIndirect = false
+
 	override func sendEvent(_ event: UIEvent) {
+		if let touch = event.allTouches?.first {
+			currentEventIsIndirect = touch.type != .direct
+		}
 		super.sendEvent(event)
 
 		if !showTouchCircles {
