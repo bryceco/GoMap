@@ -244,17 +244,17 @@ final class OsmMapData: NSObject, NSCoding {
 	func tagValues(forKey key: String) -> Set<String> {
 		var set = Set<String>()
 
-		for (_, object) in nodes {
+		for object in nodes.values {
 			if let value = object.tags[key] {
 				set.insert(value)
 			}
 		}
-		for (_, object) in nodes {
+		for object in ways.values {
 			if let value = object.tags[key] {
 				set.insert(value)
 			}
 		}
-		for (_, object) in relations {
+		for object in relations.values {
 			if let value = object.tags[key] {
 				set.insert(value)
 			}
