@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="../Shared/Quests/strings/Base.lproj/quest.strings" datatype="plaintext" source-language="en" target-language="zh-Hant">
     <header>
@@ -7,10 +7,12 @@
     <body>
       <trans-unit id="quest_address_street_title" xml:space="preserve">
         <source>What street does the (house) number %s belong to?</source>
+        <target>這(門牌)號碼屬於那一條路的？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_address_title" xml:space="preserve">
         <source>What is the house number of this building?</source>
+        <target>這建築的門牌號碼是多少？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_atm_operator_title" xml:space="preserve">
@@ -2287,7 +2289,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="vpk-jC-yxl.placeholder" xml:space="preserve">
         <source>yes</source>
-        <target>yes</target>
+        <target>是</target>
         <note>Class = "UITextField"; placeholder = "yes"; ObjectID = "vpk-jC-yxl"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="wFE-f1-sQa.text" xml:space="preserve">
@@ -3044,6 +3046,29 @@ http://www.sjjb.co.uk/mapicons
 Other icons by Glyphish:
 http://glyphish.com
 </source>
+        <target>2012-2020 Bryce Cogswell © 版權所有 
+保留所有權利
+
+以開放資料庫授權條款 (Open Database License, ODbL) 授權開放街圖資料：
+https://www.openstreetmap.com/copyright
+
+Bing 空照圖微軟及其供應商所有：
+https://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx
+
+Mapbox 空照圖 Mapbox 及其供應商所有：https://www.mapbox.com/tos
+
+感謝 Robbie Hanson 的 KissXML XML 解析：
+https://github.com/robbiehanson/KissXML
+
+EXIF 解析程式碼 2010-2015 Mayank Lahiri 版權所有 (c)
+https://github.com/mayanklahiri/easyexif
+
+SJJB 提供地圖圖示：
+http://www.sjjb.co.uk/mapicons
+
+其他圖示來自 Glyphish:
+http://glyphish.com
+</target>
         <note>Class = "UITextView"; text = "Copyright © 2012-2020 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nEXIF parsing code Copyright (c) 2010-2015 Mayank Lahiri\nhttps://github.com/mayanklahiri/easyexif\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F";</note>
       </trans-unit>
       <trans-unit id="CHj-a3-gC9.text" xml:space="preserve">
