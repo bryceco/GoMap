@@ -461,7 +461,6 @@
 		02ACBD181671737300BB4414 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		02ACBD2016717BC500BB4414 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		02AFBF1F245774DC00BE43F4 /* OSM-Logo256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "OSM-Logo256.png"; path = "../OSM-Logo256.png"; sourceTree = "<group>"; };
 		02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BingPlaceholderImage.png; path = ../Shared/BingPlaceholderImage.png; sourceTree = "<group>"; };
 		02AFD45B26A3D6D800EFAD48 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		02AFD45C26A3D6D800EFAD48 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1271,7 +1270,6 @@
 				023B892A19C148790060CDB5 /* Images.xcassets */,
 				02ACBA3C16713CCB00BB4414 /* InfoPlist.strings */,
 				02C3194C250EAED500C5D200 /* Localizable.strings */,
-				02AFBF1F245774DC00BE43F4 /* OSM-Logo256.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
