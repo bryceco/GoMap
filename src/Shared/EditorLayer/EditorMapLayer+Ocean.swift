@@ -118,7 +118,7 @@ extension EditorMapLayer {
 		return index >= 0
 	}
 
-	static func ClipLineToRect(p1: OSMPoint, p2: OSMPoint, rect: OSMRect) -> [OSMPoint] {
+	private static func ClipLineToRect(p1: OSMPoint, p2: OSMPoint, rect: OSMRect) -> [OSMPoint] {
 		if p1.x.isInfinite || p2.x.isInfinite {
 			return []
 		}
@@ -179,31 +179,31 @@ extension EditorMapLayer {
 			var firstNode = way.nodes[0] // FIXME: remove these
 			var lastNode = way.nodes.last
 			var nodeList = [firstNode]
-			EditorMapLayer.AppendNodes(&nodeList, way: way, addToBack: true, reverseNodes: false)
+			Self.AppendNodes(&nodeList, way: way, addToBack: true, reverseNodes: false)
 			while nodeList[0] != nodeList.last {
 				// find a way adjacent to current list
 				var found: OsmWay?
 				for way in origList {
 					if lastNode == way.nodes[0] {
-						EditorMapLayer.AppendNodes(&nodeList, way: way, addToBack: true, reverseNodes: false)
+						Self.AppendNodes(&nodeList, way: way, addToBack: true, reverseNodes: false)
 						lastNode = nodeList.last
 						found = way
 						break
 					}
 					if lastNode == way.nodes.last {
-						EditorMapLayer.AppendNodes(&nodeList, way: way, addToBack: true, reverseNodes: true)
+						Self.AppendNodes(&nodeList, way: way, addToBack: true, reverseNodes: true)
 						lastNode = nodeList.last
 						found = way
 						break
 					}
 					if firstNode == way.nodes.last {
-						EditorMapLayer.AppendNodes(&nodeList, way: way, addToBack: false, reverseNodes: false)
+						Self.AppendNodes(&nodeList, way: way, addToBack: false, reverseNodes: false)
 						firstNode = nodeList[0]
 						found = way
 						break
 					}
 					if firstNode == way.nodes[0] {
-						EditorMapLayer.AppendNodes(&nodeList, way: way, addToBack: false, reverseNodes: true)
+						Self.AppendNodes(&nodeList, way: way, addToBack: false, reverseNodes: true)
 						firstNode = nodeList[0]
 						found = way
 						break
@@ -242,7 +242,7 @@ extension EditorMapLayer {
 
 		if isLoop {
 			// rotate loop to ensure start/end point is outside viewRect
-			let ok = EditorMapLayer.RotateLoop(&way, viewRect: viewRect)
+			let ok = Self.RotateLoop(&way, viewRect: viewRect)
 			if !ok {
 				// entire loop is inside view
 				return [way]
@@ -281,17 +281,14 @@ extension EditorMapLayer {
 					}
 				}
 
-				let pts = (isEntry || isExit) ? EditorMapLayer
-					.ClipLineToRect(p1: prevPoint, p2: pt, rect: viewRect) : nil
+				let pts = (isEntry || isExit) ? Self.ClipLineToRect(p1: prevPoint, p2: pt, rect: viewRect) : nil
 				if isEntry {
 					// start tracking trimmed segment
-					// assert( crossCnt >= 1 );
 					let v = pts![0]
 					trimmedSegment = [v]
 				}
 				if isExit {
 					// end of trimmed segment. If the way began inside the viewrect then trimmedSegment is nil and gets ignored
-					// assert( crossCnt >= 1 );
 					if trimmedSegment != nil {
 						let v = pts!.last!
 						trimmedSegment!.append(v)
@@ -366,8 +363,8 @@ extension EditorMapLayer {
 		}
 
 		// connect ways together forming contiguous runs
-		let outerNodes = EditorMapLayer.joinConnectedWays(outerWays)
-		let innerNodes = EditorMapLayer.joinConnectedWays(innerWays)
+		let outerNodes = Self.joinConnectedWays(outerWays)
+		let innerNodes = Self.joinConnectedWays(innerWays)
 
 		// convert lists of nodes to screen points
 		var outerSegments = outerNodes.map { self.convertNodesToScreenPoints($0) }
@@ -381,7 +378,7 @@ extension EditorMapLayer {
 		for index in 0..<outerSegments.count {
 			let way = outerSegments[index]
 			if way[0] == way.last! {
-				if !EditorMapLayer.IsClockwisePolygon(way) {
+				if !Self.IsClockwisePolygon(way) {
 					// reverse points
 					outerSegments[index].reverse()
 				}
@@ -390,7 +387,7 @@ extension EditorMapLayer {
 		for index in 0..<innerSegments.count {
 			let way = innerSegments[index]
 			if way[0] == way.last! {
-				if EditorMapLayer.IsClockwisePolygon(way) {
+				if Self.IsClockwisePolygon(way) {
 					// reverse points
 					innerSegments[index].reverse()
 				}
@@ -404,11 +401,11 @@ extension EditorMapLayer {
 		// trim nodes in segments to only visible paths
 		var visibleSegments = [[OSMPoint]]()
 		for index in 0..<outerSegments.count {
-			let a = EditorMapLayer.visibleSegmentsOfWay(&outerSegments[index], inView: viewRect)
+			let a = Self.visibleSegmentsOfWay(&outerSegments[index], inView: viewRect)
 			visibleSegments.append(contentsOf: a)
 		}
 		for index in 0..<innerSegments.count {
-			let a = EditorMapLayer.visibleSegmentsOfWay(&innerSegments[index], inView: viewRect)
+			let a = Self.visibleSegmentsOfWay(&innerSegments[index], inView: viewRect)
 			visibleSegments.append(contentsOf: a)
 		}
 
@@ -452,7 +449,7 @@ extension EditorMapLayer {
 			let firstOutline = visibleSegments.removeLast()
 			var exit = firstOutline.last!
 
-			EditorMapLayer.addPointList(firstOutline, toPath: path)
+			Self.addPointList(firstOutline, toPath: path)
 
 			while true {
 				// find next point following exit point
@@ -471,8 +468,8 @@ extension EditorMapLayer {
 				if true {
 					var point1 = exit
 					let point2 = entry
-					var wall1 = EditorMapLayer.WallForPoint(point1, rect: viewRect)
-					let wall2 = EditorMapLayer.WallForPoint(point2, rect: viewRect)
+					var wall1 = Self.WallForPoint(point1, rect: viewRect)
+					let wall2 = Self.WallForPoint(point2, rect: viewRect)
 
 					wall_loop: while true {
 						switch wall1 {
@@ -528,9 +525,9 @@ extension EditorMapLayer {
 
 		// draw islands
 		for island in islands {
-			EditorMapLayer.addPointList(island, toPath: path)
+			Self.addPointList(island, toPath: path)
 
-			if !haveCoastline, EditorMapLayer.IsClockwisePolygon(island) {
+			if !haveCoastline, Self.IsClockwisePolygon(island) {
 				// this will still fail if we have an island with a lake in it
 				haveCoastline = true
 			}
@@ -547,8 +544,6 @@ extension EditorMapLayer {
 		layer.bounds = bounds
 		layer.fillColor = UIColor(red: 0, green: 0, blue: 1, alpha: 0.1).cgColor
 		layer.strokeColor = UIColor.blue.cgColor
-		//		layer.lineJoin		= DEFAULT_LINEJOIN
-		//		layer.lineCap		= DEFAULT_LINECAP
 		layer.lineWidth = 2.0
 		//		layer.zPosition		= Z_OCEAN;	// FIXME
 
