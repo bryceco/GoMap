@@ -10,9 +10,6 @@
 /* Privacy - Bluetooth Peripheral Usage Description */
 "NSBluetoothPeripheralUsageDescription" = "Poveži se s vanjskim Bluetooth GPS uređajima";
 
-/* Privacy - Camera Usage Description */
-"NSCameraUsageDescription" = "Kamera se korsiti za mjerenje visine zgrada ili objekata";
-
 /* Privacy - Location Always and When In Use Usage Description */
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "Uvijek uključeno praćenje mjesta omogućuje programu snimanje GPX datoteka kad je neaktivna.";
 

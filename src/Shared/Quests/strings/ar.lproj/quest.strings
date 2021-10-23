@@ -1,62 +1,171 @@
-"quest_sidewalk_title" = "هل يحتوي هذا الشارع على رصيف جانبي؟";
-"quest_address_title" = "ما هو رقم العقار لهذا المبنى؟";
-"quest_bikeParkingCapacity_title" = "كم عدد الدراجات التي يمكن إيقافها هنا؟";
-"quest_toiletsFee_title" = "هل عليك أن تدفع مقابل استخدام هذا الحمام؟";
-"quest_bicycleParkingCoveredStatus_title" = "هل موقف الدراجات هذا مغطى (محمي من الشمس والمطر)؟";
-"quest_recycling_type_title" = "ما نوع مرفق إعادة التدوير هذا؟";
-"quest_fireHydrant_type_title" = "ما هو نوع صنبور الإطفاء هذا؟";
-"quest_crossing_type_title" = "أي نوع من معابر المشاة هذا؟";
-"quest_parkingType_title" = "أي نوع من مواقف السيارات هذا؟";
-"quest_powerPolesMaterial_title" = "ما هي مادة عمود الطاقة/الكهرباء هذا؟";
-"quest_dietType_vegetarian_name_title" = "هل %s يحتوي على وجبات نباتية ومن مشتقات الحيوانات في القائمة؟";
-"quest_dietType_vegan_name_title" = "هل يحتوي %s على وجبات نباتية فقط في القائمة؟";
-"quest_bridge_structure_title" = "ما هو هيكل هذا الجسر؟";
-"quest_internet_access_name_title" = "ما نوع اتصال الإنترنت الذي يقدمه %s ؟";
-"quest_bench_backrest_title" = "هل هذا المقعد به مسند ظهر؟";
-"quest_religion_for_wayside_shrine_title" = "ما هو الدين الذي يمثله هذا الضريح؟";
-"quest_parking_fee_title" = "هل يجب عليك الدفع لركن سيارتك هنا؟";
-"quest_parking_access_title" = "هل هذه المواقف محدد من يقف بها؟";
-"quest_bicycle_parking_type_title" = "ما هو نوع مواقف الدراجات؟";
-"quest_construction_building_title" = "هل اكتمل رسم هذا المبنى؟";
-"quest_playground_access_title" = "هل هذا الملعب متاح للجمهور؟";
-"quest_segregated_title" = "كيف يتم ترتيب مسارات المشاة والدراجات هنا؟";
-"quest_tracktype_title" = "ما مدى صلابة سطح هذا المسار؟";
-"quest_wheelchairAccess_outside_title" = "هل يمكن الوصول إلى هذا المكان على كرسي متحرك؟";
-"quest_traffic_signals_button_title" = "هل تحتوي إشارات المرور هذه على زر لطلب الضوء الأخضر لعبور مسار المشاة؟";
-"quest_motorcycleParkingCapacity_title" = "كم عدد الدراجات النارية التي يمكن إيقافها هنا؟";
-"quest_motorcycleParkingCoveredStatus_title" = "هل موقف الدراجات النارية هذا مغطى (محمي من المطر) ؟";
-"quest_buildingType_title" = "ما هو نوع هذا المبنى؟";
-"quest_leafType_title" = "هل الأشجار هنا بها إِبرْ (شوك) أو أوراق؟";
-"quest_cyclewayPartSurface_title" = "ما هو نوع سطح طريق الدراجات هذا؟";
-"quest_footwayPartSurface_title" = "ما هو سطح طريق المشاة هذا؟";
-"quest_wheelchairAccess_toiletsPart_title" = "هل يمكن الوصول إلى دورة المياه الموجودة في %s بالكرسي المتحرك؟";
-"quest_maxweight_title" = "ما هو الوزن المحدد هنا؟";
-"quest_generalFee_title" = "هل يجب عليك الدفع للدخول إلى %s؟";
-"quest_handrail_title" = "هل هذه السلالم لها درابزين؟";
-"quest_recycling_materials_title" = "ما الذي يمكن تركه هنا لإعادة التدوير؟";
-"quest_recycling_glass_title" = "هل يمكن إعادة تدوير العبوات الزجاجية والبرطمانات الزجاجية فقط هنا، أو أي نوع من الزجاج؟";
+/* (No Comment) */
 "quest_address_street_title" = "إلى أي شارع ينتمي رقم (المنزل) %s؟";
-"quest_board_type_title" = "ما هو موضوع لوحة المعلومات هذه؟";
-"quest_summit_register_title" = "هل يوجد سجل زوار للقمة على %s؟";
-"quest_is_defibrillator_inside_title" = "هل جهاز تنظيم ضربات القلب (AED) داخل المبنى؟";
-"quest_steps_incline_title" = "أي اتجاه يقود إلى الأعلى لهذه السلالم أو الدرج؟";
-"quest_step_count_title" = "كم عدد الدرجات/العتبات هنا؟";
-"quest_traffic_signals_sound_title" = "هل هناك إشارات صوتية للمكفوفين هنا؟";
-"quest_traffic_signals_vibrate_title" = "هل تحتوي إشارات المرور هذه على مؤشر ملموس للمكفوفين عندما يكون العبور آمنًا؟";
-"quest_steps_ramp_title" = "هل تحتوي هذه العتبات/الدرجات التي على السلم على منحدر؟ اي نوع؟";
-"quest_atm_operator_title" = "ما هو اسم البنك مالك جهاز الصراف الآلي هذا؟";
-"quest_clothes_container_operator_title" = "من يقبل التبرعات لصندوق الملابس هذا؟";
-"quest_charging_station_operator_title" = "من هو مشغل محطة الشحن هذه؟";
-"quest_lanes_title" = "كم عدد مسارات الطريق الواحد للسيارات في هذا الطريق؟";
-"quest_tactile_paving_kerb_title" = "هل توجد رصيف بارز للمكفوفين على الرصيف هنا؟";
-"quest_kerb_height_title" = "ما هو ارتفاع هذا الرصيف؟";
-"quest_shop_vacant_type_title" = "هذا المتجر كان فارغًا. ماذا يوجد هنا الآن؟";
-"quest_dietType_kosher_name_title" = "هل تقدم %s منتجات متوافقة مع الشريعة اليهودية؟";
-"quest_bicycle_parking_access_title" = "هل هناك حد لمن يمكنه ركن الدراجة هنا؟";
-"quest_bicycle_parking_fee_title" = "هل عليك أن تدفع مقابل ركن دراجة هنا؟";
-"quest_drinking_water_title" = "هل المياه صالحة للشرب هنا؟ (%s)";
-"quest_postboxRoyalCypher_title" = "ما هو الرمز الملكي على هذا البريد؟";
+
+/* (No Comment) */
+"quest_address_title" = "ما هو رقم العقار لهذا المبنى؟";
+
+/* (No Comment) */
 "quest_barrier_type_title" = "ما نوع هذا الحاجز؟";
-"quest_policeType_title" = "أي نوع من مراكز الشرطة هذا؟";
-"quest_stile_type_title" = "ما نوع هذا الطراز؟";
+
+/* (No Comment) */
+"quest_bench_backrest_title" = "هل هذا المقعد به مسند ظهر؟";
+
+/* (No Comment) */
+"quest_bicycle_parking_access_title" = "هل هناك حد لمن يمكنه ركن الدراجة هنا؟";
+
+/* (No Comment) */
+"quest_bicycle_parking_fee_title" = "هل عليك أن تدفع مقابل ركن دراجة هنا؟";
+
+/* (No Comment) */
+"quest_bicycle_parking_type_title" = "ما هو نوع مواقف الدراجات؟";
+
+/* (No Comment) */
+"quest_bicycleParkingCoveredStatus_title" = "هل موقف الدراجات هذا مغطى (محمي من الشمس والمطر)؟";
+
+/* (No Comment) */
+"quest_bikeParkingCapacity_title" = "كم عدد الدراجات التي يمكن إيقافها هنا؟";
+
+/* (No Comment) */
+"quest_board_type_title" = "ما هو موضوع لوحة المعلومات هذه؟";
+
+/* (No Comment) */
+"quest_bridge_structure_title" = "ما هو هيكل هذا الجسر؟";
+
+/* (No Comment) */
+"quest_buildingType_title" = "ما هو نوع هذا المبنى؟";
+
+/* (No Comment) */
 "quest_camera_type_title" = "أي نوع من كاميرات المراقبة هذه؟";
+
+/* (No Comment) */
+"quest_charging_station_operator_title" = "من هو مشغل محطة الشحن هذه؟";
+
+/* (No Comment) */
+"quest_clothes_container_operator_title" = "من يقبل التبرعات لصندوق الملابس هذا؟";
+
+/* (No Comment) */
+"quest_construction_building_title" = "هل اكتمل رسم هذا المبنى؟";
+
+/* (No Comment) */
+"quest_crossing_type_title" = "أي نوع من معابر المشاة هذا؟";
+
+/* (No Comment) */
+"quest_dietType_kosher_name_title" = "هل تقدم %s منتجات متوافقة مع الشريعة اليهودية؟";
+
+/* (No Comment) */
+"quest_dietType_vegan_name_title" = "هل يحتوي %s على وجبات نباتية فقط في القائمة؟";
+
+/* (No Comment) */
+"quest_dietType_vegetarian_name_title" = "هل %s يحتوي على وجبات نباتية ومن مشتقات الحيوانات في القائمة؟";
+
+/* (No Comment) */
+"quest_drinking_water_title" = "هل المياه صالحة للشرب هنا؟ (%s)";
+
+/* (No Comment) */
+"quest_fireHydrant_type_title" = "ما هو نوع صنبور الإطفاء هذا؟";
+
+/* (No Comment) */
+"quest_generalFee_title" = "هل يجب عليك الدفع للدخول إلى %s؟";
+
+/* (No Comment) */
+"quest_handrail_title" = "هل هذه السلالم لها درابزين؟";
+
+/* (No Comment) */
+"quest_internet_access_name_title" = "ما نوع اتصال الإنترنت الذي يقدمه %s ؟";
+
+/* (No Comment) */
+"quest_is_defibrillator_inside_title" = "هل جهاز تنظيم ضربات القلب (AED) داخل المبنى؟";
+
+/* (No Comment) */
+"quest_kerb_height_title" = "ما هو ارتفاع هذا الرصيف؟";
+
+/* (No Comment) */
+"quest_lanes_title" = "كم عدد مسارات الطريق الواحد للسيارات في هذا الطريق؟";
+
+/* (No Comment) */
+"quest_leafType_title" = "هل الأشجار هنا بها إِبرْ (شوك) أو أوراق؟";
+
+/* (No Comment) */
+"quest_maxweight_title" = "ما هو الوزن المحدد هنا؟";
+
+/* (No Comment) */
+"quest_motorcycleParkingCapacity_title" = "كم عدد الدراجات النارية التي يمكن إيقافها هنا؟";
+
+/* (No Comment) */
+"quest_motorcycleParkingCoveredStatus_title" = "هل موقف الدراجات النارية هذا مغطى (محمي من المطر) ؟";
+
+/* (No Comment) */
+"quest_parking_access_title" = "هل هذه المواقف محدد من يقف بها؟";
+
+/* (No Comment) */
+"quest_parking_fee_title" = "هل يجب عليك الدفع لركن سيارتك هنا؟";
+
+/* (No Comment) */
+"quest_parkingType_title" = "أي نوع من مواقف السيارات هذا؟";
+
+/* (No Comment) */
+"quest_playground_access_title" = "هل هذا الملعب متاح للجمهور؟";
+
+/* (No Comment) */
+"quest_policeType_title" = "أي نوع من مراكز الشرطة هذا؟";
+
+/* (No Comment) */
+"quest_postboxRoyalCypher_title" = "ما هو الرمز الملكي على هذا البريد؟";
+
+/* (No Comment) */
+"quest_powerPolesMaterial_title" = "ما هي مادة عمود الطاقة/الكهرباء هذا؟";
+
+/* (No Comment) */
+"quest_recycling_glass_title" = "هل يمكن إعادة تدوير العبوات الزجاجية والبرطمانات الزجاجية فقط هنا، أو أي نوع من الزجاج؟";
+
+/* (No Comment) */
+"quest_recycling_materials_title" = "ما الذي يمكن تركه هنا لإعادة التدوير؟";
+
+/* (No Comment) */
+"quest_recycling_type_title" = "ما نوع مرفق إعادة التدوير هذا؟";
+
+/* (No Comment) */
+"quest_religion_for_wayside_shrine_title" = "ما هو الدين الذي يمثله هذا الضريح؟";
+
+/* (No Comment) */
+"quest_segregated_title" = "كيف يتم ترتيب مسارات المشاة والدراجات هنا؟";
+
+/* (No Comment) */
+"quest_sidewalk_title" = "هل يحتوي هذا الشارع على رصيف جانبي؟";
+
+/* (No Comment) */
+"quest_step_count_title" = "كم عدد الدرجات/العتبات هنا؟";
+
+/* (No Comment) */
+"quest_steps_incline_title" = "أي اتجاه يقود إلى الأعلى لهذه السلالم أو الدرج؟";
+
+/* (No Comment) */
+"quest_steps_ramp_title" = "هل تحتوي هذه العتبات/الدرجات التي على السلم على منحدر؟ اي نوع؟";
+
+/* (No Comment) */
+"quest_stile_type_title" = "ما نوع هذا الطراز؟";
+
+/* (No Comment) */
+"quest_summit_register_title" = "هل يوجد سجل زوار للقمة على %s؟";
+
+/* (No Comment) */
+"quest_tactile_paving_kerb_title" = "هل توجد رصيف بارز للمكفوفين على الرصيف هنا؟";
+
+/* (No Comment) */
+"quest_toiletsFee_title" = "هل عليك أن تدفع مقابل استخدام هذا الحمام؟";
+
+/* (No Comment) */
+"quest_tracktype_title" = "ما مدى صلابة سطح هذا المسار؟";
+
+/* (No Comment) */
+"quest_traffic_signals_button_title" = "هل تحتوي إشارات المرور هذه على زر لطلب الضوء الأخضر لعبور مسار المشاة؟";
+
+/* (No Comment) */
+"quest_traffic_signals_sound_title" = "هل هناك إشارات صوتية للمكفوفين هنا؟";
+
+/* (No Comment) */
+"quest_wheelchairAccess_outside_title" = "هل يمكن الوصول إلى هذا المكان على كرسي متحرك؟";
+
+/* (No Comment) */
+"quest_wheelchairAccess_toiletsPart_title" = "هل يمكن الوصول إلى دورة المياه الموجودة في %s بالكرسي المتحرك؟";
+

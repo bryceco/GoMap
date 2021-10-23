@@ -10,9 +10,6 @@
 /* Privacy - Bluetooth Peripheral Usage Description */
 "NSBluetoothPeripheralUsageDescription" = "Подключиться к внешнему Bluetooth GPS устройству";
 
-/* Privacy - Camera Usage Description */
-"NSCameraUsageDescription" = "Камера используется для измерения высоты зданий или объектов";
-
 /* Privacy - Location Always and When In Use Usage Description */
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "Постоянное отслеживание местоположения позволяет приложению записывать файлы GPX, даже когда оно неактивно.";
 

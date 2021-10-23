@@ -577,6 +577,9 @@
 "Paste" = "Umetni";
 
 /* No comment provided by engineer. */
+"Pasting %@ characters, maximum tag length is 255" = "Umetanje znakova %@, maksimalna duljina oznake je 255";
+
+/* No comment provided by engineer. */
 "Pasting %ld tag(s)" = "Umetanje %ld oznake(a)";
 
 /* No comment provided by engineer. */

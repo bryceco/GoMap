@@ -10,9 +10,6 @@
 /* Privacy - Bluetooth Peripheral Usage Description */
 "NSBluetoothPeripheralUsageDescription" = "Loo ühendus väliste Bluetooth GPS seadmetega";
 
-/* Privacy - Camera Usage Description */
-"NSCameraUsageDescription" = "Kaamerat kasutatakse hoonete või objektide kõrguse mõõtmiseks";
-
 /* Privacy - Location Always and When In Use Usage Description */
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "Alati sisselülitatud asukoha jälgimine võimaldab rakendusel salvestada GPX-faile, kui see ei ole aktiivne.";
 

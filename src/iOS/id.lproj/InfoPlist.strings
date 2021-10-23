@@ -10,9 +10,6 @@
 /* Privacy - Bluetooth Peripheral Usage Description */
 "NSBluetoothPeripheralUsageDescription" = "Hubungkan dengan perangkat GPS Bluetooth eksternal";
 
-/* Privacy - Camera Usage Description */
-"NSCameraUsageDescription" = "Kamera digunakan untuk mengukur tinggi bangunan atau obyek";
-
 /* Privacy - Location Always Usage Description */
 "NSLocationAlwaysUsageDescription" = "Lokasi Anda akan ditampilkan dan diikuti di peta.";
 

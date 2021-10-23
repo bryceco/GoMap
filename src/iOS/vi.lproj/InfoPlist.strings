@@ -10,9 +10,6 @@
 /* Privacy - Bluetooth Peripheral Usage Description */
 "NSBluetoothPeripheralUsageDescription" = "Kết nối với các thiết bị GPS Bluetooth";
 
-/* Privacy - Camera Usage Description */
-"NSCameraUsageDescription" = "Máy ảnh được sử dụng để đo chiều cao các tòa nhà hoặc đối tượng";
-
 /* Privacy - Location Always and When In Use Usage Description */
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "Chế độ theo dõi luôn luôn cho phép ứng dụng ghi các tập tin GPX ngay cả khi không sử dụng tích cực.";
 

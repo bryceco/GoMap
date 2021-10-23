@@ -10,9 +10,6 @@
 /* Privacy - Bluetooth Peripheral Usage Description */
 "NSBluetoothPeripheralUsageDescription" = "连接到外部蓝牙GPS设备";
 
-/* Privacy - Camera Usage Description */
-"NSCameraUsageDescription" = "照相机用来测量建筑物或物体的高度。";
-
 /* Privacy - Location Always and When In Use Usage Description */
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "始终处于位置跟踪状态，允许应用程序在不活动时记录GPX文件。";
 

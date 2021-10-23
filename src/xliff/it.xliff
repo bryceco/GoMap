@@ -16,8 +16,7 @@
         <note/>
       </trans-unit>
       <trans-unit id="quest_atm_operator_title" xml:space="preserve">
-        <source>What's the name of the bank for this ATM?</source>
-        <target>A che banca appartiene questo bancomat?</target>
+        <source>What’s the name of the bank for this ATM?</source>
         <note/>
       </trans-unit>
       <trans-unit id="quest_barrier_type_title" xml:space="preserve">
@@ -90,19 +89,17 @@
         <target>Questo edificio è stato completato?</target>
         <note/>
       </trans-unit>
-      <trans-unit id="quest_crossing_title" xml:space="preserve">
-        <source>Are there curbs where this way meets this road here? What kind?</source>
-        <target>Ci sono cordoli dove questa via incontra la strada? Di che tipo?</target>
-        <note/>
-      </trans-unit>
       <trans-unit id="quest_crossing_type_title" xml:space="preserve">
         <source>What kind of crossing is this?</source>
         <target>Che tipo di attraversamento pedonale è questo?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_cyclewayPartSurface_title" xml:space="preserve">
-        <source>What's the surface of the cycleway here?</source>
-        <target>Qual è la superficie di questa pista ciclabile?</target>
+        <source>What’s the surface of the cycleway here?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_dietType_halal_name_title" xml:space="preserve">
+        <source>Does %s offer Halal products?</source>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_kosher_name_title" xml:space="preserve">
@@ -125,14 +122,17 @@
         <target>Qui l’acqua è potabile? (%s)</target>
         <note/>
       </trans-unit>
+      <trans-unit id="quest_fireHydrant_diameter_title" xml:space="preserve">
+        <source>What diameter is on this fire hydrant’s sign?</source>
+        <note/>
+      </trans-unit>
       <trans-unit id="quest_fireHydrant_type_title" xml:space="preserve">
         <source>What kind of fire hydrant is this?</source>
         <target>Che tipo di idrante è?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_footwayPartSurface_title" xml:space="preserve">
-        <source>What's the surface of the footway here?</source>
-        <target>Qual è la superficie di questo passaggio pedonale?</target>
+        <source>What’s the surface of the footway here?</source>
         <note/>
       </trans-unit>
       <trans-unit id="quest_generalFee_title" xml:space="preserve">
@@ -163,11 +163,6 @@
       <trans-unit id="quest_lanes_title" xml:space="preserve">
         <source>How many lanes for cars does this road have?</source>
         <target>Quante corsie per automobili ha questa strada?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_laundrySelfService_title" xml:space="preserve">
-        <source>Is this laundry a self service laundry?</source>
-        <target>Questa lavanderia è self service?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_leafType_title" xml:space="preserve">
@@ -203,6 +198,10 @@
       <trans-unit id="quest_parking_fee_title" xml:space="preserve">
         <source>Do you have to pay to park here?</source>
         <target>È necessario pagare per poter parcheggiare qui?</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_picnicTableCover_title" xml:space="preserve">
+        <source>Is this picnic table covered (protected from rain)?</source>
         <note/>
       </trans-unit>
       <trans-unit id="quest_playground_access_title" xml:space="preserve">
@@ -251,8 +250,7 @@
         <note/>
       </trans-unit>
       <trans-unit id="quest_shop_vacant_type_title" xml:space="preserve">
-        <source>This shop has been vacant. What's here now?</source>
-        <target>Questo negozio era libero. Cosa c'è ora?</target>
+        <source>This shop has been vacant. What’s here now?</source>
         <note/>
       </trans-unit>
       <trans-unit id="quest_sidewalk_title" xml:space="preserve">
@@ -300,6 +298,10 @@
         <target>Com'è il grado di solidità della superficie di questa strada?</target>
         <note/>
       </trans-unit>
+      <trans-unit id="quest_traffic_calming_type_title" xml:space="preserve">
+        <source>What type of traffic calming is this?</source>
+        <note/>
+      </trans-unit>
       <trans-unit id="quest_traffic_signals_button_title" xml:space="preserve">
         <source>Do these traffic lights have a button to request a walk signal?</source>
         <target>Il semaforo ha un pulsante per richiedere il verde?</target>
@@ -311,8 +313,7 @@
         <note/>
       </trans-unit>
       <trans-unit id="quest_traffic_signals_vibrate_title" xml:space="preserve">
-        <source>Do these traffic lights have a tactile indication for blind people for when it's safe to cross?</source>
-        <target>Questo semaforo ha un indicatore tattile che indica agli ipovedenti quando attraversare?</target>
+        <source>Do these traffic lights have a tactile indication for blind people for when it’s safe to cross?</source>
         <note/>
       </trans-unit>
       <trans-unit id="quest_wheelchairAccess_outside_title" xml:space="preserve">
@@ -384,12 +385,11 @@
         <note>Privacy - Bluetooth Peripheral Usage Description</note>
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
-        <source>The camera is used to measure heights of buildings or objects</source>
-        <target>La fotocamera viene utilizzata per misurare l'altezza di edifici o oggetti</target>
+        <source>The camera is used to measure heights of buildings or objects, and to perform text recognition in opening hours signs.</source>
         <note>Privacy - Camera Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
-        <source/>
+        <source>Copyright 2012-2021 Bryce Cogswell</source>
         <note>Copyright (human-readable)</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
@@ -401,6 +401,10 @@
         <source>Your location will be displayed and followed on the map.</source>
         <target>La tua posizione verrà visualizzata e seguita sulla mappa.</target>
         <note>Privacy - Location Always Usage Description</note>
+      </trans-unit>
+      <trans-unit id="NSLocationUsageDescription" xml:space="preserve">
+        <source>Enabling location services allows the app to display objects in your vicinity. This allows you to easily update or add data you survey yourself.</source>
+        <note>Privacy - Location Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationWhenInUseUsageDescription" xml:space="preserve">
         <source>Your location will be displayed and followed on the map.</source>

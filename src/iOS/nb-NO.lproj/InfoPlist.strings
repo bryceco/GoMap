@@ -10,9 +10,6 @@
 /* Privacy - Bluetooth Peripheral Usage Description */
 "NSBluetoothPeripheralUsageDescription" = "Koble til eksterne Blåtanns-GPS-enheter";
 
-/* Privacy - Camera Usage Description */
-"NSCameraUsageDescription" = "Kamera brukes for å måle høyden på bygninger eller objekter";
-
 /* Privacy - Location Always and When In Use Usage Description */
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "Sporingstilgang som alltid er på tillater programmet å lage GPX-filer når det er inaktivt.";
 

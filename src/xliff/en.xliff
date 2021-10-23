@@ -16,8 +16,8 @@
         <note/>
       </trans-unit>
       <trans-unit id="quest_atm_operator_title" xml:space="preserve">
-        <source>What's the name of the bank for this ATM?</source>
-        <target>What's the name of the bank for this ATM?</target>
+        <source>What’s the name of the bank for this ATM?</source>
+        <target>What’s the name of the bank for this ATM?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_barrier_type_title" xml:space="preserve">
@@ -90,19 +90,19 @@
         <target>Is this building completed?</target>
         <note/>
       </trans-unit>
-      <trans-unit id="quest_crossing_title" xml:space="preserve">
-        <source>Are there curbs where this way meets this road here? What kind?</source>
-        <target>Are there curbs where this way meets this road here? What kind?</target>
-        <note/>
-      </trans-unit>
       <trans-unit id="quest_crossing_type_title" xml:space="preserve">
         <source>What kind of crossing is this?</source>
         <target>What kind of crossing is this?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_cyclewayPartSurface_title" xml:space="preserve">
-        <source>What's the surface of the cycleway here?</source>
-        <target>What's the surface of the cycleway here?</target>
+        <source>What’s the surface of the cycleway here?</source>
+        <target>What’s the surface of the cycleway here?</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_dietType_halal_name_title" xml:space="preserve">
+        <source>Does %s offer Halal products?</source>
+        <target>Does %s offer Halal products?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_kosher_name_title" xml:space="preserve">
@@ -125,14 +125,19 @@
         <target>Is the water potable here? (%s)</target>
         <note/>
       </trans-unit>
+      <trans-unit id="quest_fireHydrant_diameter_title" xml:space="preserve">
+        <source>What diameter is on this fire hydrant’s sign?</source>
+        <target>What diameter is on this fire hydrant’s sign?</target>
+        <note/>
+      </trans-unit>
       <trans-unit id="quest_fireHydrant_type_title" xml:space="preserve">
         <source>What kind of fire hydrant is this?</source>
         <target>What kind of fire hydrant is this?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_footwayPartSurface_title" xml:space="preserve">
-        <source>What's the surface of the footway here?</source>
-        <target>What's the surface of the footway here?</target>
+        <source>What’s the surface of the footway here?</source>
+        <target>What’s the surface of the footway here?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_generalFee_title" xml:space="preserve">
@@ -163,11 +168,6 @@
       <trans-unit id="quest_lanes_title" xml:space="preserve">
         <source>How many lanes for cars does this road have?</source>
         <target>How many lanes for cars does this road have?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_laundrySelfService_title" xml:space="preserve">
-        <source>Is this laundry a self service laundry?</source>
-        <target>Is this laundry a self service laundry?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_leafType_title" xml:space="preserve">
@@ -203,6 +203,11 @@
       <trans-unit id="quest_parking_fee_title" xml:space="preserve">
         <source>Do you have to pay to park here?</source>
         <target>Do you have to pay to park here?</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_picnicTableCover_title" xml:space="preserve">
+        <source>Is this picnic table covered (protected from rain)?</source>
+        <target>Is this picnic table covered (protected from rain)?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_playground_access_title" xml:space="preserve">
@@ -251,8 +256,8 @@
         <note/>
       </trans-unit>
       <trans-unit id="quest_shop_vacant_type_title" xml:space="preserve">
-        <source>This shop has been vacant. What's here now?</source>
-        <target>This shop has been vacant. What's here now?</target>
+        <source>This shop has been vacant. What’s here now?</source>
+        <target>This shop has been vacant. What’s here now?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_sidewalk_title" xml:space="preserve">
@@ -300,6 +305,11 @@
         <target>What is the surface firmness of this track?</target>
         <note/>
       </trans-unit>
+      <trans-unit id="quest_traffic_calming_type_title" xml:space="preserve">
+        <source>What type of traffic calming is this?</source>
+        <target>What type of traffic calming is this?</target>
+        <note/>
+      </trans-unit>
       <trans-unit id="quest_traffic_signals_button_title" xml:space="preserve">
         <source>Do these traffic lights have a button to request a walk signal?</source>
         <target>Do these traffic lights have a button to request a walk signal?</target>
@@ -311,8 +321,8 @@
         <note/>
       </trans-unit>
       <trans-unit id="quest_traffic_signals_vibrate_title" xml:space="preserve">
-        <source>Do these traffic lights have a tactile indication for blind people for when it's safe to cross?</source>
-        <target>Do these traffic lights have a tactile indication for blind people for when it's safe to cross?</target>
+        <source>Do these traffic lights have a tactile indication for blind people for when it’s safe to cross?</source>
+        <target>Do these traffic lights have a tactile indication for blind people for when it’s safe to cross?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_wheelchairAccess_outside_title" xml:space="preserve">
@@ -390,13 +400,13 @@
         <note>Privacy - Bluetooth Peripheral Usage Description</note>
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
-        <source>The camera is used to measure heights of buildings or objects</source>
-        <target>The camera is used to measure heights of buildings or objects</target>
+        <source>The camera is used to measure heights of buildings or objects, and to perform text recognition in opening hours signs.</source>
+        <target>The camera is used to measure heights of buildings or objects, and to perform text recognition in opening hours signs.</target>
         <note>Privacy - Camera Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
-        <source/>
-        <target/>
+        <source>Copyright 2012-2021 Bryce Cogswell</source>
+        <target>Copyright 2012-2021 Bryce Cogswell</target>
         <note>Copyright (human-readable)</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
@@ -408,6 +418,11 @@
         <source>Your location will be displayed and followed on the map.</source>
         <target>Your location will be displayed and followed on the map.</target>
         <note>Privacy - Location Always Usage Description</note>
+      </trans-unit>
+      <trans-unit id="NSLocationUsageDescription" xml:space="preserve">
+        <source>Enabling location services allows the app to display objects in your vicinity. This allows you to easily update or add data you survey yourself.</source>
+        <target>Enabling location services allows the app to display objects in your vicinity. This allows you to easily update or add data you survey yourself.</target>
+        <note>Privacy - Location Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationWhenInUseUsageDescription" xml:space="preserve">
         <source>Your location will be displayed and followed on the map.</source>

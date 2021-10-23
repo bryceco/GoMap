@@ -28,6 +28,12 @@
 /* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j"; */
 "436-kv-L7j.placeholder" = "Restoran";
 
+/* Class = "UITextField"; placeholder = "ref"; ObjectID = "aCs-vS-YXj"; Note = "Do not translate"; */
+"aCs-vS-YXj.placeholder" = "viide";
+
+/* Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V"; Note = "Do not translate"; */
+"Ak4-ru-E4V.placeholder" = "koer";
+
 /* Class = "UIBarButtonItem"; title = "Configure"; ObjectID = "aLi-Vs-z0k"; */
 "aLi-Vs-z0k.title" = "Seadista";
 
@@ -42,6 +48,9 @@
 
 /* Class = "UITableViewSection"; headerTitle = "Preset Key"; ObjectID = "cTf-Rc-vqr"; */
 "cTf-Rc-vqr.headerTitle" = "Eelseadistatud võti";
+
+/* Class = "UILabel"; text = "Value 8"; ObjectID = "CXe-gQ-Zda"; */
+"CXe-gQ-Zda.text" = "Väärtus 8";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh"; Note = "Do not translate"; */
 "daQ-tl-pKh.text" = "Silt";
@@ -67,6 +76,12 @@
 /* Class = "UILabel"; text = "Value 3"; ObjectID = "Fcv-4Q-gpE"; */
 "Fcv-4Q-gpE.text" = "Väärtus 3";
 
+/* Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; Note = "Do not translate"; */
+"Fe2-dc-zgA.placeholder" = "määratud";
+
+/* Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Do not translate"; */
+"foC-aN-GtH.placeholder" = "puhas";
+
 /* Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3"; */
 "G5R-oP-lp3.title" = "Kohandatud sildid";
 
@@ -84,6 +99,9 @@
 
 /* Class = "UINavigationItem"; title = "Attributes"; ObjectID = "hKU-EH-qxp"; */
 "hKU-EH-qxp.title" = "Atribuudid";
+
+/* Class = "UIButton"; normalTitle = ">"; ObjectID = "IcU-k2-G0m"; */
+"IcU-k2-G0m.normalTitle" = ">";
 
 /* Class = "UILabel"; text = "Changeset"; ObjectID = "ijx-N9-1eO"; */
 "ijx-N9-1eO.text" = "Muudatuste kogum";
@@ -126,6 +144,12 @@
 
 /* Class = "UILabel"; text = "Value 11"; ObjectID = "o63-qY-4vl"; */
 "o63-qY-4vl.text" = "Väärtus 11";
+
+/* Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; Note = "Do not translate"; */
+"oC6-w7-cwN.placeholder" = "rihma otsas";
+
+/* Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; Note = "Do not translate"; */
+"okh-JP-aKZ.placeholder" = "park";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "omf-S9-Yjq"; */
 "omf-S9-Yjq.text" = "Nimi";
@@ -187,8 +211,14 @@
 /* Class = "UILabel"; text = "Food & Drink"; ObjectID = "XBV-Ie-LDT"; Note = "Do not translate"; */
 "XBV-Ie-LDT.text" = "Toit & jook";
 
+/* Class = "UILabel"; text = "PROTOTYPE CELLS"; ObjectID = "XJZ-vI-jat"; */
+"XJZ-vI-jat.text" = "PROTOTÜÜPRAKUD";
+
 /* Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ"; */
 "z19-cc-gHZ.text" = "Väärtus";
+
+/* Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "zpj-gL-2Nt"; */
+"zpj-gL-2Nt.normalTitle" = "ⓘ";
 
 /* Class = "UILabel"; text = "Subtitle"; ObjectID = "ZYn-TK-k7d"; Note = "Do not translate"; */
 "ZYn-TK-k7d.text" = "Alapealkiri";

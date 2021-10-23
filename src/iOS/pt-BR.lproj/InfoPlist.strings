@@ -1,0 +1,18 @@
+/* Bundle name */
+"CFBundleName" = "Go Map!!";
+
+/* (No Comment) */
+"GPS Exchange Format (GPX)" = "GPS Exchange Format (GPX)";
+
+/* Privacy - Bluetooth Peripheral Usage Description */
+"NSBluetoothPeripheralUsageDescription" = "Conectar-se por Bluetooth a GPS externo";
+
+/* Privacy - Location Always and When In Use Usage Description */
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "O rastreamento de localização sempre ativado permite que o aplicativo grave arquivos GPX quando inativo.";
+
+/* Privacy - Location Always Usage Description */
+"NSLocationAlwaysUsageDescription" = "Sua localização será exibida e seguida no mapa.";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "Sua localização será exibida e seguida no mapa.";
+

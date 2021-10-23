@@ -14,7 +14,7 @@
         <note/>
       </trans-unit>
       <trans-unit id="quest_atm_operator_title" xml:space="preserve">
-        <source>What's the name of the bank for this ATM?</source>
+        <source>What’s the name of the bank for this ATM?</source>
         <note/>
       </trans-unit>
       <trans-unit id="quest_barrier_type_title" xml:space="preserve">
@@ -73,16 +73,16 @@
         <source>Is this building completed?</source>
         <note/>
       </trans-unit>
-      <trans-unit id="quest_crossing_title" xml:space="preserve">
-        <source>Are there curbs where this way meets this road here? What kind?</source>
-        <note/>
-      </trans-unit>
       <trans-unit id="quest_crossing_type_title" xml:space="preserve">
         <source>What kind of crossing is this?</source>
         <note/>
       </trans-unit>
       <trans-unit id="quest_cyclewayPartSurface_title" xml:space="preserve">
-        <source>What's the surface of the cycleway here?</source>
+        <source>What’s the surface of the cycleway here?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_dietType_halal_name_title" xml:space="preserve">
+        <source>Does %s offer Halal products?</source>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_kosher_name_title" xml:space="preserve">
@@ -101,12 +101,16 @@
         <source>Is the water potable here? (%s)</source>
         <note/>
       </trans-unit>
+      <trans-unit id="quest_fireHydrant_diameter_title" xml:space="preserve">
+        <source>What diameter is on this fire hydrant’s sign?</source>
+        <note/>
+      </trans-unit>
       <trans-unit id="quest_fireHydrant_type_title" xml:space="preserve">
         <source>What kind of fire hydrant is this?</source>
         <note/>
       </trans-unit>
       <trans-unit id="quest_footwayPartSurface_title" xml:space="preserve">
-        <source>What's the surface of the footway here?</source>
+        <source>What’s the surface of the footway here?</source>
         <note/>
       </trans-unit>
       <trans-unit id="quest_generalFee_title" xml:space="preserve">
@@ -131,10 +135,6 @@
       </trans-unit>
       <trans-unit id="quest_lanes_title" xml:space="preserve">
         <source>How many lanes for cars does this road have?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_laundrySelfService_title" xml:space="preserve">
-        <source>Is this laundry a self service laundry?</source>
         <note/>
       </trans-unit>
       <trans-unit id="quest_leafType_title" xml:space="preserve">
@@ -163,6 +163,10 @@
       </trans-unit>
       <trans-unit id="quest_parking_fee_title" xml:space="preserve">
         <source>Do you have to pay to park here?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="quest_picnicTableCover_title" xml:space="preserve">
+        <source>Is this picnic table covered (protected from rain)?</source>
         <note/>
       </trans-unit>
       <trans-unit id="quest_playground_access_title" xml:space="preserve">
@@ -202,7 +206,7 @@
         <note/>
       </trans-unit>
       <trans-unit id="quest_shop_vacant_type_title" xml:space="preserve">
-        <source>This shop has been vacant. What's here now?</source>
+        <source>This shop has been vacant. What’s here now?</source>
         <note/>
       </trans-unit>
       <trans-unit id="quest_sidewalk_title" xml:space="preserve">
@@ -241,6 +245,10 @@
         <source>What is the surface firmness of this track?</source>
         <note/>
       </trans-unit>
+      <trans-unit id="quest_traffic_calming_type_title" xml:space="preserve">
+        <source>What type of traffic calming is this?</source>
+        <note/>
+      </trans-unit>
       <trans-unit id="quest_traffic_signals_button_title" xml:space="preserve">
         <source>Do these traffic lights have a button to request a walk signal?</source>
         <note/>
@@ -250,7 +258,7 @@
         <note/>
       </trans-unit>
       <trans-unit id="quest_traffic_signals_vibrate_title" xml:space="preserve">
-        <source>Do these traffic lights have a tactile indication for blind people for when it's safe to cross?</source>
+        <source>Do these traffic lights have a tactile indication for blind people for when it’s safe to cross?</source>
         <note/>
       </trans-unit>
       <trans-unit id="quest_wheelchairAccess_outside_title" xml:space="preserve">
@@ -321,12 +329,11 @@
         <note>Privacy - Bluetooth Peripheral Usage Description</note>
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
-        <source>The camera is used to measure heights of buildings or objects</source>
-        <target>照相机用来测量建筑物或物体的高度。</target>
+        <source>The camera is used to measure heights of buildings or objects, and to perform text recognition in opening hours signs.</source>
         <note>Privacy - Camera Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
-        <source/>
+        <source>Copyright 2012-2021 Bryce Cogswell</source>
         <note>Copyright (human-readable)</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
@@ -338,6 +345,10 @@
         <source>Your location will be displayed and followed on the map.</source>
         <target>您的位置将在地图上显示并跟踪。</target>
         <note>Privacy - Location Always Usage Description</note>
+      </trans-unit>
+      <trans-unit id="NSLocationUsageDescription" xml:space="preserve">
+        <source>Enabling location services allows the app to display objects in your vicinity. This allows you to easily update or add data you survey yourself.</source>
+        <note>Privacy - Location Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationWhenInUseUsageDescription" xml:space="preserve">
         <source>Your location will be displayed and followed on the map.</source>

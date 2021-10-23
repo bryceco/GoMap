@@ -1,0 +1,18 @@
+/* Class = "UILabel"; text = "Language"; ObjectID = "osk-Kq-gDX"; */
+"osk-Kq-gDX.text" = "Idioma";
+
+/* Class = "UILabel"; text = "Prepare for Offline"; ObjectID = "rfX-TP-V0l"; */
+"rfX-TP-V0l.text" = "Preparar para offline";
+
+/* Class = "UIButton"; normalTitle = "Start"; ObjectID = "snH-kp-6ib"; */
+"snH-kp-6ib.normalTitle" = "Iniciar";
+
+/* Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5"; */
+"whL-SZ-HD5.text" = "Feedback por e-mail";
+
+/* Class = "UILabel"; text = "GitHub - Issues & Source Code"; ObjectID = "x4m-oT-EG8"; */
+"x4m-oT-EG8.text" = "GitHub - Problemas & Código fonte";
+
+/* Class = "UITableViewSection"; headerTitle = "Developer settings"; ObjectID = "yAO-9B-CTd"; */
+"yAO-9B-CTd.headerTitle" = "Configurações do desenvolvedor";
+

@@ -49,6 +49,9 @@
 /* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "AVI-04-hFN"; */
 "AVI-04-hFN.text" = "空照圖磚";
 
+/* Class = "UITextView"; text = "Copyright © 2012-2020 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nEXIF parsing code Copyright (c) 2010-2015 Mayank Lahiri\nhttps://github.com/mayanklahiri/easyexif\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F"; */
+"BHr-ta-k6F.text" = "2012-2020 Bryce Cogswell © 版權所有 \n保留所有權利\n\n以開放資料庫授權條款 (Open Database License, ODbL) 授權開放街圖資料：\nhttps://www.openstreetmap.com/copyright\n\nBing 空照圖微軟及其供應商所有：\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox 空照圖 Mapbox 及其供應商所有：https://www.mapbox.com/tos\n\n感謝 Robbie Hanson 的 KissXML XML 解析：\nhttps://github.com/robbiehanson/KissXML\n\nEXIF 解析程式碼 2010-2015 Mayank Lahiri 版權所有 (c)\nhttps://github.com/mayanklahiri/easyexif\n\nSJJB 提供地圖圖示：\nhttp://www.sjjb.co.uk/mapicons\n\n其他圖示來自 Glyphish:\nhttp://glyphish.com\n";
+
 /* Class = "UIButton"; normalTitle = "Start"; ObjectID = "bt0-CH-HbH"; */
 "bt0-CH-HbH.normalTitle" = "開始";
 

@@ -176,7 +176,7 @@
 "Vli-Ct-Lpz.text" = "無障礙通行";
 
 /* Class = "UITextField"; placeholder = "yes"; ObjectID = "vpk-jC-yxl"; Note = "Do not translate"; */
-"vpk-jC-yxl.placeholder" = "yes";
+"vpk-jC-yxl.placeholder" = "是";
 
 /* Class = "UILabel"; text = "Value 12"; ObjectID = "wFE-f1-sQa"; */
 "wFE-f1-sQa.text" = "值 12";

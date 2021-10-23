@@ -577,6 +577,9 @@
 "Paste" = "Vložit";
 
 /* No comment provided by engineer. */
+"Pasting %@ characters, maximum tag length is 255" = "Vkládáte %@ znaků, maximální limit značky je 255 znaků.";
+
+/* No comment provided by engineer. */
 "Pasting %ld tag(s)" = "Vkládání %ld tagů";
 
 /* No comment provided by engineer. */
