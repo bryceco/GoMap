@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="../Shared/Quests/strings/Base.lproj/quest.strings" datatype="plaintext" source-language="en" target-language="et">
     <header>
@@ -7,258 +7,322 @@
     <body>
       <trans-unit id="quest_address_street_title" xml:space="preserve">
         <source>What street does the (house) number %s belong to?</source>
+        <target>Millisele tänavale see (maja) number %s kuulub?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_address_title" xml:space="preserve">
         <source>What is the house number of this building?</source>
+        <target>Mis on selle hoone majanumber?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_atm_operator_title" xml:space="preserve">
         <source>What's the name of the bank for this ATM?</source>
+        <target>Mis on selle sularahaautomaadi panga nimi?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_barrier_type_title" xml:space="preserve">
         <source>What type of barrier is this?</source>
+        <target>Mis liiki tõke see on?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bench_backrest_title" xml:space="preserve">
         <source>Does this bench have a backrest?</source>
+        <target>Kas sellel pingil on seljatugi?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bicycleParkingCoveredStatus_title" xml:space="preserve">
         <source>Is this bicycle parking covered (protected from rain)?</source>
+        <target>Kas see jalgrattaparkla on kaetud (vihma eest kaitstud)?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bicycle_parking_access_title" xml:space="preserve">
         <source>Is it restricted who may park a bike here?</source>
+        <target>Kas on piiratud, kes võib siin jalgratast parkida?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bicycle_parking_fee_title" xml:space="preserve">
         <source>Do you have to pay to park a bike here?</source>
+        <target>Kas siin jalgratta parkimise eest peab maksma?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bicycle_parking_type_title" xml:space="preserve">
         <source>What type of bicycle parking is this?</source>
+        <target>Mis liiki jalgrattaparkla see on?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bikeParkingCapacity_title" xml:space="preserve">
         <source>How many bikes can be parked here?</source>
+        <target>Mitu jalgratast mahub siia parkima?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_board_type_title" xml:space="preserve">
         <source>What is the topic of this information board?</source>
+        <target>Mis on selle infotahvli teema?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bridge_structure_title" xml:space="preserve">
         <source>What is the structure of this bridge?</source>
+        <target>Milline on selle silla struktuur?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_buildingType_title" xml:space="preserve">
         <source>What kind of building is this?</source>
+        <target>Mis hoone see selline on?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_camera_type_title" xml:space="preserve">
         <source>What type of surveillance camera is this?</source>
+        <target>Mis liiki valvekaamera see on?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_charging_station_operator_title" xml:space="preserve">
         <source>Who is the operator of this charging station?</source>
+        <target>Kes on selle laadimisjaama operaator?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_clothes_container_operator_title" xml:space="preserve">
         <source>Who accepts donations for this clothing bin?</source>
+        <target>Kes võtab vastu annetusi selle riidekorvi osas?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_construction_building_title" xml:space="preserve">
         <source>Is this building completed?</source>
+        <target>Kas see hoone on valmis?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_crossing_title" xml:space="preserve">
         <source>Are there curbs where this way meets this road here? What kind?</source>
+        <target>Kas kohas, kus need teed siin kokku saavad, on äärekivid? Millised?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_crossing_type_title" xml:space="preserve">
         <source>What kind of crossing is this?</source>
+        <target>Milline ristmik see on?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_cyclewayPartSurface_title" xml:space="preserve">
         <source>What's the surface of the cycleway here?</source>
+        <target>Milline on selle jalgrattatee pinnakate?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_kosher_name_title" xml:space="preserve">
         <source>Does %s offer kosher products?</source>
+        <target>Kas %s pakub koššer tooteid?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_vegan_name_title" xml:space="preserve">
         <source>Does %s have vegan meals on the menu?</source>
+        <target>Kas %s menüüs on vegan-toite?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_vegetarian_name_title" xml:space="preserve">
         <source>Does %s have vegetarian meals on the menu?</source>
+        <target>Kas %s menüüs on taimetoite?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_drinking_water_title" xml:space="preserve">
         <source>Is the water potable here? (%s)</source>
+        <target>Kas siinne vesi on joodav? (%s)</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_fireHydrant_type_title" xml:space="preserve">
         <source>What kind of fire hydrant is this?</source>
+        <target>Milline tuletõrjehüdrant see on?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_footwayPartSurface_title" xml:space="preserve">
         <source>What's the surface of the footway here?</source>
+        <target>Milline on selle kõnnitee pinnakate?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_generalFee_title" xml:space="preserve">
         <source>Do you need to pay to enter %s?</source>
+        <target>Kas %s sisenemine on tasuline?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_handrail_title" xml:space="preserve">
         <source>Do these steps have a handrail?</source>
+        <target>Kas neil treppidel on käsipuu?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_internet_access_name_title" xml:space="preserve">
         <source>What kind of Internet connection does %s offer?</source>
+        <target>Millist internetiühendust %s pakub?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_is_defibrillator_inside_title" xml:space="preserve">
         <source>Is this defibrillator (AED) inside a building?</source>
+        <target>Kas see defibrillaator (AED) asub hoones sees?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_kerb_height_title" xml:space="preserve">
         <source>What is the height of this curb?</source>
+        <target>Kui kõrge see äärekivi on?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_lanes_title" xml:space="preserve">
         <source>How many lanes for cars does this road have?</source>
+        <target>Mitu sõidurada on sellel teel autodele?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_laundrySelfService_title" xml:space="preserve">
         <source>Is this laundry a self service laundry?</source>
+        <target>Kas see on selvepesula?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_leafType_title" xml:space="preserve">
         <source>Do the trees here have needles or leaves?</source>
+        <target>Kas siinsetel puudel on okkad või lehed?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_maxweight_title" xml:space="preserve">
         <source>What is the weight limit here?</source>
+        <target>Milline kaalupiirang siin kehtib?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_motorcycleParkingCapacity_title" xml:space="preserve">
         <source>How many motorcycles can be parked here?</source>
+        <target>Kui palju mootorrattaid mahub siia parkima?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_motorcycleParkingCoveredStatus_title" xml:space="preserve">
         <source>Is this motorcycle parking covered (protected from rain)?</source>
+        <target>Kas see mootorrattaparkla on kaetud (vihma eest kaitstud)?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_parkingType_title" xml:space="preserve">
         <source>What kind of parking is this?</source>
+        <target>Mis liiki parkla see on?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_parking_access_title" xml:space="preserve">
         <source>Is it restricted who may park here?</source>
+        <target>Kas on piiratud, kes võivad siin parkida?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_parking_fee_title" xml:space="preserve">
         <source>Do you have to pay to park here?</source>
+        <target>Kas siin parkimine on tasuline?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_playground_access_title" xml:space="preserve">
         <source>Is this playground publicly accessible?</source>
+        <target>Kas see mänguväljak on avalikult juurdepääsetav?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_policeType_title" xml:space="preserve">
         <source>Which type of police station is this?</source>
+        <target>Mis liiki politseijaoskond see on?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_postboxRoyalCypher_title" xml:space="preserve">
         <source>What is the royal cypher on this postbox?</source>
+        <target>Mis on selle postkasti kuninglik kiri?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_powerPolesMaterial_title" xml:space="preserve">
         <source>What is the material of this power or utility pole?</source>
+        <target>Mis materjalist on see elektri- või kommunaalmast?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_recycling_glass_title" xml:space="preserve">
         <source>Can only glass bottles and jars be recycled here, or any type of glass?</source>
+        <target>Kas siin saab ringlusse võtta ainult klaaspudeleid ja -purke või mis tahes liiki klaasi?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_recycling_materials_title" xml:space="preserve">
         <source>What can be left here for recycling?</source>
+        <target>Mida saab siia jätta ringlussevõtuks?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_recycling_type_title" xml:space="preserve">
         <source>What type of recycling facility is this?</source>
+        <target>Mis liiki ringlussevõtu rajatis see on?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_religion_for_wayside_shrine_title" xml:space="preserve">
         <source>What religion is represented at this shrine?</source>
+        <target>Millist religiooni see pühamu esindab?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_segregated_title" xml:space="preserve">
         <source>How are the footway and cycleway laid out here?</source>
+        <target>Kuidas on jalg- ja jalgrattatee siin paigutatud?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_shop_vacant_type_title" xml:space="preserve">
         <source>This shop has been vacant. What's here now?</source>
+        <target>See pood on olnud tühi. Mis siin nüüd on?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_sidewalk_title" xml:space="preserve">
         <source>Does this street have a sidewalk?</source>
+        <target>Kas sellel tänaval on kõnnitee?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_step_count_title" xml:space="preserve">
         <source>How many steps are here?</source>
+        <target>Mitu trepiastet siin on?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_steps_incline_title" xml:space="preserve">
         <source>Which direction leads upwards for these steps?</source>
+        <target>Milline suund viib nendel trepiastmetel ülespoole?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_steps_ramp_title" xml:space="preserve">
         <source>Do these steps have a ramp? What kind?</source>
+        <target>Kas neil treppidel on kaldtee? Milline?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_stile_type_title" xml:space="preserve">
         <source>What type of stile is this?</source>
+        <target>Mis liiki astang see on?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_summit_register_title" xml:space="preserve">
         <source>Is there a summit register at %s?</source>
+        <target>Kas %s tipus on külastusraamat?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_tactile_paving_kerb_title" xml:space="preserve">
         <source>Is there tactile paving on this curb here?</source>
+        <target>Kas sellel kõnniteel on kombatav sillutis?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_toiletsFee_title" xml:space="preserve">
         <source>Do you have to pay to use this restroom?</source>
+        <target>Kas selle tualeti kasutamine on tasuline?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_tracktype_title" xml:space="preserve">
         <source>What is the surface firmness of this track?</source>
+        <target>Milline on selle raja pinnatugevus?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_traffic_signals_button_title" xml:space="preserve">
         <source>Do these traffic lights have a button to request a walk signal?</source>
+        <target>Kas sellel fooril on nupp jalakäijatele lubava tule tellimiseks?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_traffic_signals_sound_title" xml:space="preserve">
         <source>Are there sound signals for the blind here?</source>
+        <target>Kas siin on helisignaalid pimedatele?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_traffic_signals_vibrate_title" xml:space="preserve">
         <source>Do these traffic lights have a tactile indication for blind people for when it's safe to cross?</source>
+        <target>Kas sellel fooril on pimedatele inimestele mõeldud puudutusmärguanne, millal on ohutu teed ületada?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_wheelchairAccess_outside_title" xml:space="preserve">
         <source>Is this place wheelchair accessible?</source>
+        <target>Kas see koht on ratastooliga ligipääsetav?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_wheelchairAccess_toiletsPart_title" xml:space="preserve">
         <source>Is the restroom at %s wheelchair accessible?</source>
+        <target>Kas %s asuv tualettruum on ratastooliga ligipääsetav?</target>
         <note/>
       </trans-unit>
     </body>
@@ -1227,6 +1291,7 @@ Tegemist on edasijõudnute operatsiooniga, mida tuleks kasutada ainult koos põh
       </trans-unit>
       <trans-unit id="Pasting %@ characters, maximum tag length is 255" xml:space="preserve">
         <source>Pasting %@ characters, maximum tag length is 255</source>
+        <target>%@ tähemärgi kleepimine, maksimaalne sildi pikkus on 255</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)" xml:space="preserve">
@@ -2008,6 +2073,7 @@ Tulemuslikkuse parandamiseks võiksid vahemälu tühjendada (ekraani seadete alt
       </trans-unit>
       <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve">
         <source>dog</source>
+        <target>koer</target>
         <note>Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="Bnh-U0-D7i.text" xml:space="preserve">
@@ -2017,6 +2083,7 @@ Tulemuslikkuse parandamiseks võiksid vahemälu tühjendada (ekraani seadete alt
       </trans-unit>
       <trans-unit id="CXe-gQ-Zda.text" xml:space="preserve">
         <source>Value 8</source>
+        <target>Väärtus 8</target>
         <note>Class = "UILabel"; text = "Value 8"; ObjectID = "CXe-gQ-Zda";</note>
       </trans-unit>
       <trans-unit id="Dfv-TT-J6i.footerTitle" xml:space="preserve">
@@ -2041,6 +2108,7 @@ Tulemuslikkuse parandamiseks võiksid vahemälu tühjendada (ekraani seadete alt
       </trans-unit>
       <trans-unit id="Fe2-dc-zgA.placeholder" xml:space="preserve">
         <source>designated</source>
+        <target>määratud</target>
         <note>Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="G5R-oP-lp3.title" xml:space="preserve">
@@ -2060,6 +2128,7 @@ Tulemuslikkuse parandamiseks võiksid vahemälu tühjendada (ekraani seadete alt
       </trans-unit>
       <trans-unit id="IcU-k2-G0m.normalTitle" xml:space="preserve">
         <source>&gt;</source>
+        <target>&gt;</target>
         <note>Class = "UIButton"; normalTitle = "&gt;"; ObjectID = "IcU-k2-G0m";</note>
       </trans-unit>
       <trans-unit id="JAT-qD-dTS.text" xml:space="preserve">
@@ -2139,6 +2208,7 @@ Tulemuslikkuse parandamiseks võiksid vahemälu tühjendada (ekraani seadete alt
       </trans-unit>
       <trans-unit id="XJZ-vI-jat.text" xml:space="preserve">
         <source>PROTOTYPE CELLS</source>
+        <target>PROTOTÜÜPRAKUD</target>
         <note>Class = "UILabel"; text = "PROTOTYPE CELLS"; ObjectID = "XJZ-vI-jat";</note>
       </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
@@ -2148,6 +2218,7 @@ Tulemuslikkuse parandamiseks võiksid vahemälu tühjendada (ekraani seadete alt
       </trans-unit>
       <trans-unit id="aCs-vS-YXj.placeholder" xml:space="preserve">
         <source>ref</source>
+        <target>viide</target>
         <note>Class = "UITextField"; placeholder = "ref"; ObjectID = "aCs-vS-YXj"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="aLi-Vs-z0k.title" xml:space="preserve">
@@ -2192,6 +2263,7 @@ Tulemuslikkuse parandamiseks võiksid vahemälu tühjendada (ekraani seadete alt
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
         <source>clean</source>
+        <target>puhas</target>
         <note>Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
@@ -2266,10 +2338,12 @@ Tulemuslikkuse parandamiseks võiksid vahemälu tühjendada (ekraani seadete alt
       </trans-unit>
       <trans-unit id="oC6-w7-cwN.placeholder" xml:space="preserve">
         <source>leashed</source>
+        <target>rihma otsas</target>
         <note>Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="okh-JP-aKZ.placeholder" xml:space="preserve">
         <source>park</source>
+        <target>park</target>
         <note>Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="omf-S9-Yjq.text" xml:space="preserve">
@@ -2319,6 +2393,7 @@ Tulemuslikkuse parandamiseks võiksid vahemälu tühjendada (ekraani seadete alt
       </trans-unit>
       <trans-unit id="zpj-gL-2Nt.normalTitle" xml:space="preserve">
         <source>ⓘ</source>
+        <target>ⓘ</target>
         <note>Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "zpj-gL-2Nt";</note>
       </trans-unit>
     </body>
