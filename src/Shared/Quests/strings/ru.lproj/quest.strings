@@ -1,171 +1,63 @@
-/* (No Comment) */
-"quest_address_street_title" = "К какой улице относится дом %s?";
-
-/* (No Comment) */
-"quest_address_title" = "Какой номер дома у этого здания?";
-
-/* (No Comment) */
-"quest_barrier_type_title" = "Что это за барьер?";
-
-/* (No Comment) */
-"quest_bench_backrest_title" = "Есть ли у этой скамейки спинка?";
-
-/* (No Comment) */
-"quest_bicycle_parking_access_title" = "Есть ли здесь ограничения для парковки велосипеда?";
-
-/* (No Comment) */
-"quest_bicycle_parking_fee_title" = "Это платная парковка для велосипеда?";
-
-/* (No Comment) */
-"quest_bicycle_parking_type_title" = "Какого типа данная велопарковка?";
-
-/* (No Comment) */
-"quest_bicycleParkingCoveredStatus_title" = "Эта велосипедная парковка крытая (защищена от дождя)?";
-
-/* (No Comment) */
-"quest_bikeParkingCapacity_title" = "Сколько велосипедов можно здесь припарковать?";
-
-/* (No Comment) */
-"quest_board_type_title" = "Какая информация на этой доске объявлений?";
-
-/* (No Comment) */
-"quest_bridge_structure_title" = "Какая структура этого моста?";
-
-/* (No Comment) */
-"quest_buildingType_title" = "Какого типа это здание?";
-
-/* (No Comment) */
-"quest_camera_type_title" = "Какого типа эта камера видеонаблюдения?";
-
-/* (No Comment) */
-"quest_charging_station_operator_title" = "Кто является оператором этой зарядной станции?";
-
-/* (No Comment) */
-"quest_clothes_container_operator_title" = "Куда идёт пожертвованная здесь одежда?";
-
-/* (No Comment) */
-"quest_construction_building_title" = "Это здание достроено?";
-
-/* (No Comment) */
-"quest_crossing_type_title" = "Какого типа этот пешеходный переход?";
-
-/* (No Comment) */
-"quest_dietType_kosher_name_title" = "Предлагаются ли в %s кошерные продукты?";
-
-/* (No Comment) */
-"quest_dietType_vegan_name_title" = "Есть ли в \"%s\" веганские блюда в меню?";
-
-/* (No Comment) */
-"quest_dietType_vegetarian_name_title" = "Есть ли в \"%s\" вегетарианские блюда в меню?";
-
-/* (No Comment) */
-"quest_drinking_water_title" = "Здесь питьевая вода? (%s)";
-
-/* (No Comment) */
-"quest_fireHydrant_type_title" = "Какого типа этот пожарный гидрант?";
-
-/* (No Comment) */
-"quest_generalFee_title" = "Нужно ли платить за вход в %s?";
-
-/* (No Comment) */
-"quest_handrail_title" = "Есть ли у этой лестницы поручень?";
-
-/* (No Comment) */
-"quest_internet_access_name_title" = "Какой тип Интернет соединения предлагается в %s?";
-
-/* (No Comment) */
-"quest_is_defibrillator_inside_title" = "Дефибриллятор (AED) находится внутри здания?";
-
-/* (No Comment) */
-"quest_kerb_height_title" = "Какая высота у этого бордюра?";
-
-/* (No Comment) */
-"quest_lanes_title" = "Сколько полос имеет эта дорога?";
-
-/* (No Comment) */
-"quest_leafType_title" = "Здесь растут хвойные деревья или лиственные?";
-
-/* (No Comment) */
-"quest_maxweight_title" = "Какое ограничение по весу установлено здесь?";
-
-/* (No Comment) */
-"quest_motorcycleParkingCapacity_title" = "Сколько мотоциклов можно здесь припарковать?";
-
-/* (No Comment) */
-"quest_motorcycleParkingCoveredStatus_title" = "Снабжена ли эта парковка для мотоциклов навесом от дождя?";
-
-/* (No Comment) */
-"quest_parking_access_title" = "Имеются ли здесь ограничения на парковку?";
-
-/* (No Comment) */
-"quest_parking_fee_title" = "Эта парковка платная?";
-
-/* (No Comment) */
-"quest_parkingType_title" = "Какого типа эта парковка?";
-
-/* (No Comment) */
-"quest_playground_access_title" = "Это общедоступная детская площадка?";
-
-/* (No Comment) */
-"quest_policeType_title" = "Какой это полицейский участок?";
-
-/* (No Comment) */
-"quest_postboxRoyalCypher_title" = "Какой Королевский шифр на этом почтовом ящике?";
-
-/* (No Comment) */
-"quest_powerPolesMaterial_title" = "Из чего сделан этот столб ЛЭП?";
-
-/* (No Comment) */
-"quest_recycling_glass_title" = "Здесь можно оставлять на переработку только стеклянные бутылки и банки или принимают и любой другой вид стекла?";
-
-/* (No Comment) */
-"quest_recycling_materials_title" = "Что здесь можно оставить на переработку?";
-
-/* (No Comment) */
-"quest_recycling_type_title" = "Какого типа этот пункт переработки отходов?";
-
-/* (No Comment) */
-"quest_religion_for_wayside_shrine_title" = "К какой религии относится этот храм?";
-
-/* (No Comment) */
-"quest_segregated_title" = "Как здесь расположены пешеходная и велосипедная дорожки?";
-
-/* (No Comment) */
 "quest_sidewalk_title" = "На этой улице есть тротуар?";
-
-/* (No Comment) */
-"quest_step_count_title" = "Сколько здесь ступеней?";
-
-/* (No Comment) */
-"quest_steps_incline_title" = "Какое направление ведёт вверх по этим ступеням?";
-
-/* (No Comment) */
-"quest_steps_ramp_title" = "Есть ли у этих ступеней пандус? Какой?";
-
-/* (No Comment) */
-"quest_stile_type_title" = "Какой тип?";
-
-/* (No Comment) */
-"quest_summit_register_title" = "Здесь есть книга записи посетителей на %s?";
-
-/* (No Comment) */
-"quest_tactile_paving_kerb_title" = "Есть ли здесь на этом бордюре тактильное покрытие?";
-
-/* (No Comment) */
+"quest_address_title" = "Какой номер дома у этого здания?";
+"quest_bikeParkingCapacity_title" = "Сколько велосипедов можно здесь припарковать?";
 "quest_toiletsFee_title" = "Это платные туалеты?";
-
-/* (No Comment) */
+"quest_bicycleParkingCoveredStatus_title" = "Эта велосипедная парковка крытая (защищена от дождя)?";
+"quest_recycling_type_title" = "Какого типа этот пункт переработки отходов?";
+"quest_fireHydrant_type_title" = "Какого типа этот пожарный гидрант?";
+"quest_crossing_type_title" = "Какого типа этот пешеходный переход?";
+"quest_parkingType_title" = "Какого типа эта парковка?";
+"quest_powerPolesMaterial_title" = "Из чего сделан этот столб ЛЭП?";
+"quest_dietType_vegetarian_name_title" = "Есть ли в \"%s\" вегетарианские блюда в меню?";
+"quest_dietType_vegan_name_title" = "Есть ли в \"%s\" веганские блюда в меню?";
+"quest_bridge_structure_title" = "Какая структура этого моста?";
+"quest_internet_access_name_title" = "Какой тип Интернет соединения предлагается в %s?";
+"quest_bench_backrest_title" = "Есть ли у этой скамейки спинка?";
+"quest_religion_for_wayside_shrine_title" = "К какой религии относится этот храм?";
+"quest_parking_fee_title" = "Эта парковка платная?";
+"quest_parking_access_title" = "Имеются ли здесь ограничения на парковку?";
+"quest_bicycle_parking_type_title" = "Какого типа данная велопарковка?";
+"quest_construction_building_title" = "Это здание достроено?";
+"quest_playground_access_title" = "Это общедоступная детская площадка?";
+"quest_segregated_title" = "Как здесь расположены пешеходная и велосипедная дорожки?";
 "quest_tracktype_title" = "Насколько мягкая поверхность этой колеи?";
-
-/* (No Comment) */
-"quest_traffic_signals_button_title" = "Есть ли у этого светофора кнопка для запроса перехода?";
-
-/* (No Comment) */
-"quest_traffic_signals_sound_title" = "Есть ли здесь звуковые сигналы для незрячих?";
-
-/* (No Comment) */
 "quest_wheelchairAccess_outside_title" = "Доступно ли это место для инвалидных колясок?";
-
-/* (No Comment) */
+"quest_traffic_signals_button_title" = "Есть ли у этого светофора кнопка для запроса перехода?";
+"quest_motorcycleParkingCapacity_title" = "Сколько мотоциклов можно здесь припарковать?";
+"quest_motorcycleParkingCoveredStatus_title" = "Снабжена ли эта парковка для мотоциклов навесом от дождя?";
+"quest_buildingType_title" = "Какого типа это здание?";
+"quest_leafType_title" = "Здесь растут хвойные деревья или лиственные?";
+"quest_cyclewayPartSurface_title" = "Какое покрытие у этой велодорожки?";
+"quest_footwayPartSurface_title" = "Какое покрытие у пешеходной дорожки?";
 "quest_wheelchairAccess_toiletsPart_title" = "Этот туалет %s доступен для инвалидных колясок?";
-
+"quest_maxweight_title" = "Какое ограничение по весу установлено здесь?";
+"quest_generalFee_title" = "Нужно ли платить за вход в %s?";
+"quest_handrail_title" = "Есть ли у этой лестницы поручень?";
+"quest_recycling_materials_title" = "Что здесь можно оставить на переработку?";
+"quest_recycling_glass_title" = "Здесь можно оставлять на переработку только стеклянные бутылки и банки или принимают и любой другой вид стекла?";
+"quest_address_street_title" = "К какой улице относится дом %s?";
+"quest_board_type_title" = "Какая информация на этой доске объявлений?";
+"quest_summit_register_title" = "Здесь есть книга записи посетителей на %s?";
+"quest_is_defibrillator_inside_title" = "Дефибриллятор (AED) находится внутри здания?";
+"quest_steps_incline_title" = "Какое направление ведёт вверх по этим ступеням?";
+"quest_step_count_title" = "Сколько здесь ступеней?";
+"quest_traffic_signals_sound_title" = "Есть ли здесь звуковые сигналы для незрячих?";
+"quest_traffic_signals_vibrate_title" = "Имеет ли светофор тактильную индикацию для слепых людей?";
+"quest_steps_ramp_title" = "Есть ли у этих ступеней пандус? Какой?";
+"quest_atm_operator_title" = "Как называется банк этого банкомата?";
+"quest_clothes_container_operator_title" = "Куда идёт пожертвованная здесь одежда?";
+"quest_charging_station_operator_title" = "Кто является оператором этой зарядной станции?";
+"quest_lanes_title" = "Сколько полос имеет эта дорога?";
+"quest_tactile_paving_kerb_title" = "Есть ли здесь на этом бордюре тактильное покрытие?";
+"quest_kerb_height_title" = "Какая высота у этого бордюра?";
+"quest_shop_vacant_type_title" = "Магазин выехал. Что здесь сейчас расположено?";
+"quest_dietType_kosher_name_title" = "Предлагаются ли в %s кошерные продукты?";
+"quest_bicycle_parking_access_title" = "Есть ли здесь ограничения для парковки велосипеда?";
+"quest_bicycle_parking_fee_title" = "Это платная парковка для велосипеда?";
+"quest_drinking_water_title" = "Здесь питьевая вода? (%s)";
+"quest_postboxRoyalCypher_title" = "Какой Королевский шифр на этом почтовом ящике?";
+"quest_barrier_type_title" = "Что это за барьер?";
+"quest_policeType_title" = "Какой это полицейский участок?";
+"quest_stile_type_title" = "Какой тип?";
+"quest_camera_type_title" = "Какого типа эта камера видеонаблюдения?";
+"quest_picnicTableCover_title" = "Столик для пикника под навесом (укрыт от дождя)?";

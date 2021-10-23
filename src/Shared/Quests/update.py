@@ -142,16 +142,35 @@ f = open("./Quests.json", "w")
 f.write(s)
 f.close()
 
+# Get a list of languages we have already translated
+translations = os.listdir("../../xliff")
+
+# Convert SC notation to our notation
+transmap = {
+	"en-rAU": "en-AU",
+	"pt-rBR": "pt-BR",
+	"en-rGB": "en-GB",
+	"zh": "zh-Hans",
+	"zh-rTW": "zh-Hant",
+}
+
+
 # Get translations
 dir=SC+"/app/src/main/res/"
 for (dirpath, dirnames, filenames) in os.walk(dir):
 	# locate translation file
-	match=re.match(".*/values-([a-zA-Z_]+)$",dirpath)
+	match=re.match(".*/values-([a-zA-Z_-]+)$",dirpath)
 	if match == None:
 		continue
 	if not ("strings.xml" in filenames):
 		continue
 	lang = match.groups()[0]
+	print(lang)
+	if lang in transmap:
+		lang = transmap[lang]
+		print(lang)
+	if not (lang+".xliff") in translations:
+		continue
 
 	# parse XML for strings
 	text = ""
