@@ -531,7 +531,9 @@ extension PresetsDatabase {
 			if type == "typeCombo", ignore.contains(key) {
 				return nil
 			}
-			let options = dict["options"] as? [String] ?? taginfoFor(key: key, searchKeys: false, update: update)
+			var options = taginfoFor(key: key, searchKeys: false, update: update)
+			let options2 = (dict["options"] as? [String] ?? []).filter({ !options.contains($0) })
+			options = options2 + options
 			let strings = dict["strings"] as? [String: String]
 			let tag = comboWith(
 				label: label,
