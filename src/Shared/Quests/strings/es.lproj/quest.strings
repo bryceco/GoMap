@@ -32,7 +32,6 @@
 "quest_wheelchairAccess_toiletsPart_title" = "¿Se puede entrar bien con silla de ruedas al servicio de «%s»?";
 "quest_maxweight_title" = "¿Cuál es el límite de peso?";
 "quest_generalFee_title" = "¿Tiene coste entrar en «%s»?";
-"quest_laundrySelfService_title" = "¿Esta lavandería es de autoservicio?";
 "quest_handrail_title" = "¿Estas escaleras tienen barandilla?";
 "quest_recycling_materials_title" = "¿Qué tipo de basura se puede dejar aquí para que la reciclen?";
 "quest_recycling_glass_title" = "¿Solo se pueden reciclar botellas y frascos de vidrio, o cualquier tipo de cristal?";
@@ -61,4 +60,5 @@
 "quest_policeType_title" = "¿Qué tipo de comisaría es esta?";
 "quest_stile_type_title" = "¿Qué tipo de cruce («stile») tiene esta valla?";
 "quest_camera_type_title" = "¿Qué tipo de cámara de vigilancia es?";
-"quest_crossing_title" = "¿Hay algún tipo de bordillo en el punto de unión entre las dos vías? ¿De qué tipo?";
+"quest_dietType_halal_name_title" = "¿«%s» vende productos halal?";
+"quest_picnicTableCover_title" = "¿Esta mesa de merendero está bajo cubierto? (protegida de la lluvia)";

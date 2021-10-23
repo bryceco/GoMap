@@ -32,7 +32,6 @@
 "quest_wheelchairAccess_toiletsPart_title" = "Тоалетната в %s достъпна ли е за инвалидни колички?";
 "quest_maxweight_title" = "Какво е ограничението за тегло тук?";
 "quest_generalFee_title" = "Трябва ли да платите за да влезете в %s?";
-"quest_laundrySelfService_title" = "Тази пералня на самообслужване ли е?";
 "quest_handrail_title" = "Тези стъпала имат ли перила?";
 "quest_recycling_materials_title" = "Какво може да се изхвърля тук?";
 "quest_recycling_glass_title" = "Само за стъклени буркани и бутилки ли е, или може да се оставя всякакъв вид стъкло?";
@@ -61,4 +60,5 @@
 "quest_policeType_title" = "Какъв вид е полицейско управление е това?";
 "quest_stile_type_title" = "Какъв вид врата е това?";
 "quest_camera_type_title" = "Какъв вид е тази камера?";
-"quest_crossing_title" = "Има ли бордюр на мястото къде този път се среща с улицата? Какъв вид?";
+"quest_dietType_halal_name_title" = "%s предлага ли Халал продукти?";
+"quest_picnicTableCover_title" = "Тази пикник маса покрита ли е (защитена ли е от дъжд)?";

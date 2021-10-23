@@ -2,7 +2,7 @@
 "quest_address_title" = "Mi a házszáma ennek az épületnek?";
 "quest_bikeParkingCapacity_title" = "Hány kerékpárt lehet itt tárolni?";
 "quest_toiletsFee_title" = "Fizetős ez a WC?";
-"quest_bicycleParkingCoveredStatus_title" = "Fedett ez a kerékpártároló (védett az esőtől)?";
+"quest_bicycleParkingCoveredStatus_title" = "Fedett (esőtől védett) ez a kerékpártároló?";
 "quest_recycling_type_title" = "Ez milyen típusú újrahasznosító létesítmény?";
 "quest_fireHydrant_type_title" = "Ez milyen típusú tűzcsap?";
 "quest_crossing_type_title" = "Ez milyen típusú gyalogátkelő?";
@@ -32,7 +32,6 @@
 "quest_wheelchairAccess_toiletsPart_title" = "Az itt levő wc: %s kerekesszékkel is használható?";
 "quest_maxweight_title" = "Mekkora itt a tömegkorlátozás?";
 "quest_generalFee_title" = "Fizetni kell ahhoz, hogy ide belépj: %s?";
-"quest_laundrySelfService_title" = "Ez a mosoda önkiszolgáló?";
 "quest_handrail_title" = "Ez a lépcső rendelkezik korláttal?";
 "quest_recycling_materials_title" = "Miket lehet itthagyni újrahasznosításra?";
 "quest_recycling_glass_title" = "Kizárólag üvegpalack és befőttesüveg újrahasznosítható itt, vagy bármilyen üveg?";
@@ -61,4 +60,5 @@
 "quest_policeType_title" = "Ez milyen típusú rendőrőrs?";
 "quest_stile_type_title" = "Ez milyen típusú kerítés feletti átjáró?";
 "quest_camera_type_title" = "Milyen típusú biztonsági kamera ez?";
-"quest_crossing_title" = "Van-e járdaszegély ott, ahol ez a vonal találkozik ezzel az úttal? Ha igen, milyen?";
+"quest_dietType_halal_name_title" = "Rendelkezik a hely halal termékekkel: %s?";
+"quest_picnicTableCover_title" = "Fedett (esőtől védett) ez a piknikezőasztal?";

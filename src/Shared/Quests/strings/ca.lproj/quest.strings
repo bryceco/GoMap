@@ -32,7 +32,6 @@
 "quest_wheelchairAccess_toiletsPart_title" = "Els serveis de %s són accessibles amb cadira de rodes?";
 "quest_maxweight_title" = "Quin és el límit de pes aquí?";
 "quest_generalFee_title" = "Cal pagar per a entrar a %s?";
-"quest_laundrySelfService_title" = "Aquesta bugaderia és d'autoservei?";
 "quest_handrail_title" = "Aquestes escales tenen barana?";
 "quest_recycling_materials_title" = "Què es pot deixar aquí per a reciclar?";
 "quest_recycling_glass_title" = "Només s'hi poden reciclar ampolles i gerres de vidre, o qualsevol tipus de vidre?";
@@ -61,4 +60,3 @@
 "quest_policeType_title" = "Quin tipus de comissaria és aquesta?";
 "quest_stile_type_title" = "Quin tipus d'estil és?";
 "quest_camera_type_title" = "Quins tipus de càmera de videovigilància és?";
-"quest_crossing_title" = "Hi han vorades per on es troba aquest camí? De quina mena?";

@@ -32,7 +32,6 @@
 "quest_wheelchairAccess_toiletsPart_title" = "ห้องน้ำที่ %s เข้าถึงโดยรถเข็นได้หรือไม่?";
 "quest_maxweight_title" = "ที่นี่จำกัดน้ำหนักเท่าไหร่?";
 "quest_generalFee_title" = "คุณต้องจ่ายเงินเพื่อเข้า %s หรือไม่?";
-"quest_laundrySelfService_title" = "บริการซักรีดนี้เป็นบริการซักรีดแบบบริการตนเองหรือไม่";
 "quest_handrail_title" = "ขั้นบันไดตรงนี้มีราวจับหรือไม่?";
 "quest_recycling_materials_title" = "ที่นี่สามารถรับอะไรเพื่อรีไซเคิลได้บ้าง?";
 "quest_recycling_glass_title" = "ที่นี่สามารถรีไซเคิลได้เฉพาะขวดแก้วและขวดโหลเท่านั้น หรือแก้วชนิดใดก็ได้?";

@@ -32,7 +32,6 @@
 "quest_wheelchairAccess_toiletsPart_title" = "Да ли је тоалет у %s доступан за инвалидска колица?";
 "quest_maxweight_title" = "Које је овде ограничење тежине?";
 "quest_generalFee_title" = "Да ли се наплаћује улаз у %s?";
-"quest_laundrySelfService_title" = "Да ли је ово самоуслужна перионица веша?";
 "quest_handrail_title" = "Да ли ове степенице имају рукохват?";
 "quest_recycling_materials_title" = "Шта се овде може оставити за рециклажу?";
 "quest_recycling_glass_title" = "Да ли се овде могу рециклирати само флаше и тегле или било које стакло?";
@@ -61,4 +60,5 @@
 "quest_policeType_title" = "Који тип полицијске станице је ово?";
 "quest_stile_type_title" = "Која је ово врста пролаза?";
 "quest_camera_type_title" = "Ког типа је надзорна камера?";
-"quest_crossing_title" = "Да ли постоје ивичњаци на споју ових путева? Које врсте?";
+"quest_dietType_halal_name_title" = "Да ли %s нуди Халал производе?";
+"quest_picnicTableCover_title" = "Да ли је овај сто за пикник наткривен (пружа ли заштиту од кише)?";

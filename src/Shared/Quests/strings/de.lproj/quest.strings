@@ -1,192 +1,66 @@
-/* (No Comment) */
-"quest_address_street_title" = "Zu welcher Straße gehört die Hausnummer %s?";
-
-/* (No Comment) */
-"quest_address_title" = "Welche Hausnummer hat dieses Gebäude?";
-
-/* (No Comment) */
-"quest_atm_operator_title" = "Zu welcher Bank gehört dieser Geldautomat?";
-
-/* (No Comment) */
-"quest_barrier_type_title" = "Was für eine Barriere ist das?";
-
-/* (No Comment) */
-"quest_bench_backrest_title" = "Hat diese Bank eine Rückenlehne?";
-
-/* (No Comment) */
-"quest_bicycle_parking_access_title" = "Gibt es Einschränkungen, wer hier ein Fahrrad parken darf?";
-
-/* (No Comment) */
-"quest_bicycle_parking_fee_title" = "Fallen hier Parkgebühren für Fahrräder an?";
-
-/* (No Comment) */
-"quest_bicycle_parking_type_title" = "Was für eine Art von Fahrradabstellplatz ist das hier?";
-
-/* (No Comment) */
-"quest_bicycleParkingCoveredStatus_title" = "Ist der Fahrradstellplatz überdacht (Schutz vor Regen)?";
-
-/* (No Comment) */
-"quest_bikeParkingCapacity_title" = "Wie viele Räder können hier abgestellt werden?";
-
-/* (No Comment) */
-"quest_board_type_title" = "Worum geht es auf dieser Tafel?";
-
-/* (No Comment) */
-"quest_bridge_structure_title" = "Welche Konstruktionsform hat diese Brücke?";
-
-/* (No Comment) */
-"quest_buildingType_title" = "Was für ein Gebäude ist das?";
-
-/* (No Comment) */
-"quest_camera_type_title" = "Welche Art von Überwachungskamera ist das?";
-
-/* (No Comment) */
-"quest_charging_station_operator_title" = "Wer ist der Betreiber dieser Ladestation?";
-
-/* (No Comment) */
-"quest_clothes_container_operator_title" = "Wer sammelt Altkleider mit diesem Container?";
-
-/* (No Comment) */
-"quest_construction_building_title" = "Ist dieses Gebäude fertig gebaut?";
-
-/* (No Comment) */
-"quest_crossing_title" = "Gibt es hier, wo dieser Weg auf die Straße trifft, Bordsteine? Was für welche?";
-
-/* (No Comment) */
-"quest_crossing_type_title" = "Welche Art von Fußgängerüberweg ist das?";
-
-/* (No Comment) */
-"quest_cyclewayPartSurface_title" = "Welche Oberfläche hat der Fahrradweg hier?";
-
-/* (No Comment) */
-"quest_dietType_kosher_name_title" = "Bietet %s koschere Produkte an?";
-
-/* (No Comment) */
-"quest_dietType_vegan_name_title" = "Hat %s veganes Essen auf der Karte?";
-
-/* (No Comment) */
-"quest_dietType_vegetarian_name_title" = "Hat %s vegetarisches Essen auf der Karte?";
-
-/* (No Comment) */
-"quest_drinking_water_title" = "Ist das Wasser hier trinkbar? (%s)";
-
-/* (No Comment) */
-"quest_fireHydrant_type_title" = "Was für eine Art Hydrant ist hier?";
-
-/* (No Comment) */
-"quest_footwayPartSurface_title" = "Welche Oberfläche hat der Fußweg hier?";
-
-/* (No Comment) */
-"quest_generalFee_title" = "Kostet %s Eintritt?";
-
-/* (No Comment) */
-"quest_handrail_title" = "Gibt es an dieser Treppe ein Geländer?";
-
-/* (No Comment) */
-"quest_internet_access_name_title" = "Was für einen Internetanschluss bietet %s an?";
-
-/* (No Comment) */
-"quest_is_defibrillator_inside_title" = "Befindet sich dieser Defibrillator innerhalb eines Gebäudes?";
-
-/* (No Comment) */
-"quest_kerb_height_title" = "Wie hoch ist dieser Bordstein?";
-
-/* (No Comment) */
-"quest_lanes_title" = "Wie viele Fahrstreifen für Autos hat diese Straße?";
-
-/* (No Comment) */
-"quest_laundrySelfService_title" = "Ist diese Wäscherei ein Waschsalon?";
-
-/* (No Comment) */
-"quest_leafType_title" = "Haben die Bäume hier Nadeln oder Blätter?";
-
-/* (No Comment) */
-"quest_maxweight_title" = "Was ist das Maximalgewicht hier?";
-
-/* (No Comment) */
-"quest_motorcycleParkingCapacity_title" = "Wie viele Motorräder können hier abgestellt werden?";
-
-/* (No Comment) */
-"quest_motorcycleParkingCoveredStatus_title" = "Ist der Motorradstellplatz überdacht (Schutz vor Regen)?";
-
-/* (No Comment) */
-"quest_parking_access_title" = "Ist es eingeschränkt, wer hier parken darf?";
-
-/* (No Comment) */
-"quest_parking_fee_title" = "Fallen hier Parkgebühren an?";
-
-/* (No Comment) */
-"quest_parkingType_title" = "Welche Art von Parkplatz ist das?";
-
-/* (No Comment) */
-"quest_playground_access_title" = "Ist dies ein öffentlicher Spielplatz?";
-
-/* (No Comment) */
-"quest_policeType_title" = "Was für eine Polizeistation ist das?";
-
-/* (No Comment) */
-"quest_postboxRoyalCypher_title" = "Welches königliche Monogramm ist auf diesem Briefkasten zu sehen?";
-
-/* (No Comment) */
-"quest_powerPolesMaterial_title" = "Aus welchem Material ist der Strommast?";
-
-/* (No Comment) */
-"quest_recycling_glass_title" = "Können hier nur Glasflaschen und -gläser entsorgt werden, oder jede Art von Glas?";
-
-/* (No Comment) */
-"quest_recycling_materials_title" = "Was kann hier entsorgt werden?";
-
-/* (No Comment) */
-"quest_recycling_type_title" = "Was für eine Recycling-Einrichtung ist das?";
-
-/* (No Comment) */
-"quest_religion_for_wayside_shrine_title" = "Welcher Religion gehört dieser Bildstock an?";
-
-/* (No Comment) */
-"quest_segregated_title" = "Wie sind der Radweg und Gehweg hier zueinander gelegen?";
-
-/* (No Comment) */
-"quest_shop_vacant_type_title" = "Dieser Laden stand leer. Was ist hier jetzt?";
-
-/* (No Comment) */
 "quest_sidewalk_title" = "Hat diese Straße einen Bürgersteig?";
-
-/* (No Comment) */
-"quest_step_count_title" = "Wie viele Stufen hat diese Treppe?";
-
-/* (No Comment) */
-"quest_steps_incline_title" = "Welche Richtung führt auf dieser Treppe nach oben?";
-
-/* (No Comment) */
-"quest_steps_ramp_title" = "Hat diese Treppe eine Rampe? Was für eine?";
-
-/* (No Comment) */
-"quest_stile_type_title" = "Was für ein Zauntritt ist das?";
-
-/* (No Comment) */
-"quest_summit_register_title" = "Gibt es bei %s ein Gipfelbuch?";
-
-/* (No Comment) */
-"quest_tactile_paving_kerb_title" = "Hat dieser Bordstein eine spezielle Pflasterung für Blinde?";
-
-/* (No Comment) */
+"quest_address_title" = "Welche Hausnummer hat dieses Gebäude?";
+"quest_bikeParkingCapacity_title" = "Wie viele Räder können hier abgestellt werden?";
 "quest_toiletsFee_title" = "Kostet die Benutzung dieser Toiletten etwas?";
-
-/* (No Comment) */
+"quest_bicycleParkingCoveredStatus_title" = "Ist der Fahrradstellplatz überdacht (regengeschützt)?";
+"quest_recycling_type_title" = "Was für eine Recycling-Einrichtung ist das?";
+"quest_fireHydrant_type_title" = "Was für eine Art Hydrant ist hier?";
+"quest_crossing_type_title" = "Welche Art von Fußgängerüberweg ist das?";
+"quest_parkingType_title" = "Welche Art von Parkplatz ist das?";
+"quest_powerPolesMaterial_title" = "Aus welchem Material ist dieser Telefon- oder Strommast?";
+"quest_dietType_vegetarian_name_title" = "Hat %s vegetarisches Essen auf der Karte?";
+"quest_dietType_vegan_name_title" = "Hat %s veganes Essen auf der Karte?";
+"quest_bridge_structure_title" = "Welche Konstruktionsform hat diese Brücke?";
+"quest_internet_access_name_title" = "Was für einen Internetanschluss bietet %s an?";
+"quest_bench_backrest_title" = "Hat diese Bank eine Rückenlehne?";
+"quest_religion_for_wayside_shrine_title" = "Welcher Religion gehört dieser Bildstock an?";
+"quest_parking_fee_title" = "Fallen hier Parkgebühren an?";
+"quest_parking_access_title" = "Ist es eingeschränkt, wer hier parken darf?";
+"quest_bicycle_parking_type_title" = "Was für eine Art von Fahrradabstellplatz ist das hier?";
+"quest_construction_building_title" = "Ist dieses Gebäude fertig gebaut?";
+"quest_playground_access_title" = "Ist dies ein öffentlicher Spielplatz?";
+"quest_segregated_title" = "Wie sind der Radweg und Gehweg hier zueinander gelegen?";
 "quest_tracktype_title" = "Wie gut ist dieser Weg befestigt?";
-
-/* (No Comment) */
-"quest_traffic_signals_button_title" = "Gibt es an dieser Ampel einen Knopf, um als Fußgänger Grün anzufordern?";
-
-/* (No Comment) */
-"quest_traffic_signals_sound_title" = "Gibt es hier akustische Signale für Sehbehinderte?";
-
-/* (No Comment) */
-"quest_traffic_signals_vibrate_title" = "Gibt es an dieser Ampel einen Taster für Blinde, der signalisiert, wenn man über die Straße gehen kann?";
-
-/* (No Comment) */
 "quest_wheelchairAccess_outside_title" = "Ist dieser Ort zugänglich für Rollstühle?";
-
-/* (No Comment) */
+"quest_traffic_signals_button_title" = "Gibt es an dieser Ampel einen Knopf, um als Fußgänger Grün anzufordern?";
+"quest_motorcycleParkingCapacity_title" = "Wie viele Motorräder können hier abgestellt werden?";
+"quest_motorcycleParkingCoveredStatus_title" = "Ist der Motorradstellplatz überdacht (regengeschützt)?";
+"quest_buildingType_title" = "Was für ein Gebäude ist das?";
+"quest_leafType_title" = "Haben die Bäume hier Nadeln oder Blätter?";
+"quest_cyclewayPartSurface_title" = "Welche Oberfläche hat der Fahrradweg hier?";
+"quest_footwayPartSurface_title" = "Welche Oberfläche hat der Fußweg hier?";
 "quest_wheelchairAccess_toiletsPart_title" = "Ist die Toilette in %s zugänglich für Rollstühle?";
-
+"quest_maxweight_title" = "Was ist das Maximalgewicht hier?";
+"quest_generalFee_title" = "Kostet %s Eintritt?";
+"quest_handrail_title" = "Gibt es an dieser Treppe ein Geländer?";
+"quest_recycling_materials_title" = "Was kann hier entsorgt werden?";
+"quest_recycling_glass_title" = "Können hier nur Glasflaschen und -gläser entsorgt werden, oder jede Art von Glas?";
+"quest_address_street_title" = "Zu welcher Straße gehört die Hausnummer %s?";
+"quest_board_type_title" = "Worum geht es auf dieser Tafel?";
+"quest_summit_register_title" = "Gibt es bei %s ein Gipfelbuch?";
+"quest_is_defibrillator_inside_title" = "Befindet sich dieser Defibrillator innerhalb eines Gebäudes?";
+"quest_steps_incline_title" = "Welche Richtung führt auf dieser Treppe nach oben?";
+"quest_step_count_title" = "Wie viele Stufen hat diese Treppe?";
+"quest_traffic_signals_sound_title" = "Gibt es hier akustische Signale für Sehbehinderte?";
+"quest_traffic_signals_vibrate_title" = "Gibt es an dieser Ampel einen Taster für Blinde, der signalisiert, wenn man über die Straße gehen kann?";
+"quest_steps_ramp_title" = "Hat diese Treppe eine Rampe? Was für eine?";
+"quest_atm_operator_title" = "Zu welcher Bank gehört dieser Geldautomat?";
+"quest_clothes_container_operator_title" = "Wer sammelt Altkleider mit diesem Container?";
+"quest_charging_station_operator_title" = "Wer ist der Betreiber dieser Ladestation?";
+"quest_lanes_title" = "Wie viele Fahrstreifen für Autos hat diese Straße?";
+"quest_tactile_paving_kerb_title" = "Hat dieser Bordstein eine spezielle Pflasterung für Blinde?";
+"quest_kerb_height_title" = "Wie hoch ist dieser Bordstein?";
+"quest_shop_vacant_type_title" = "Dieser Laden stand leer. Was ist hier jetzt?";
+"quest_dietType_kosher_name_title" = "Bietet %s koschere Produkte an?";
+"quest_bicycle_parking_access_title" = "Gibt es Einschränkungen, wer hier ein Fahrrad parken darf?";
+"quest_bicycle_parking_fee_title" = "Fallen hier Parkgebühren für Fahrräder an?";
+"quest_drinking_water_title" = "Ist das Wasser hier trinkbar? (%s)";
+"quest_postboxRoyalCypher_title" = "Welches königliche Monogramm ist auf diesem Briefkasten zu sehen?";
+"quest_barrier_type_title" = "Was für eine Barriere ist das?";
+"quest_policeType_title" = "Was für eine Polizeistation ist das?";
+"quest_stile_type_title" = "Was für ein Zauntritt ist das?";
+"quest_camera_type_title" = "Welche Art von Überwachungskamera ist das?";
+"quest_dietType_halal_name_title" = "Bietet %s halale Produkte an?";
+"quest_picnicTableCover_title" = "Ist dieser Picknicktisch überdacht (regengeschützt)?";
+"quest_traffic_calming_type_title" = "Was für eine Verkehrsberuhigung ist das?";
+"quest_fireHydrant_diameter_title" = "Welcher Durchmesser steht auf dem Hydrantenschild?";

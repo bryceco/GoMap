@@ -32,7 +32,6 @@
 "quest_wheelchairAccess_toiletsPart_title" = "Er toalettet på %s tilgjengelig med rullestol?";
 "quest_maxweight_title" = "Maksimal tillatt vekt?";
 "quest_generalFee_title" = "Koster det noe å komme inn på %s?";
-"quest_laundrySelfService_title" = "Er dette vaskeriet selvbetjent?";
 "quest_handrail_title" = "Har trappen rekkverk?";
 "quest_recycling_materials_title" = "Hva kan leveres til resirkulering her?";
 "quest_recycling_glass_title" = "Kan bare glassembalasje resirkulerers her, eller alle typer glass?";
@@ -61,4 +60,3 @@
 "quest_policeType_title" = "Hva slags politistasjon er dette?";
 "quest_stile_type_title" = "Hva slags passeringspunkt er dette?";
 "quest_camera_type_title" = "Hvilken type overvåkingskamera er dette?";
-"quest_crossing_title" = "Er det kantstein hvor dette anlegget møter veien? Hvilken type?";

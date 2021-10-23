@@ -72,12 +72,17 @@ for file in files:
 		filter1 = '"""\s*(' + filterCore + '[^"]+' + ')"""'
 		filter2 = '"\s*(' + filterCore + '[^"]+' + ')"'
 		filter = ""
+		filters = []
 		for match in re.finditer(filter1,data,re.MULTILINE):
-			if len(match.groups()[0]) > len(filter):
-				filter = match.groups()[0]
+			f = match.groups()[0]
+			filters.append(f)
+			if len(f) > len(filter):
+				filter = f
 		for match in re.finditer(filter2,data,re.MULTILINE):
-			if len(match.groups()[0]) > len(filter):
-				filter = match.groups()[0]
+			f = match.groups()[0]
+			filters.append(f)
+			if len(f) > len(filter):
+				filter = f
 		#print("Filter =",filter)
 
 		# get description
@@ -122,6 +127,7 @@ for file in files:
 			entry["wiki"] = wiki
 			entry["icon"] = icon
 			entry["filter"] = filter
+			entry["filters"] = filters
 			entry["title"] = title
 			if key:
 				entry["key"] = key

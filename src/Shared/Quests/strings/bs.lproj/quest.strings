@@ -32,7 +32,6 @@
 "quest_wheelchairAccess_toiletsPart_title" = "Je li toalet u %s pristupačan za invalidska kolica?";
 "quest_maxweight_title" = "Koje je ovdje ograničenje težine?";
 "quest_generalFee_title" = "Naplaćuje li se ulazak u %s?";
-"quest_laundrySelfService_title" = "Je li ova praonica veša samoposlužna?";
 "quest_handrail_title" = "Imaju li ove stepenice ogradu?";
 "quest_recycling_materials_title" = "Što se sve ovdje može ostaviti za recikliranje?";
 "quest_recycling_glass_title" = "Mogu li se ovdje ostaviti samo staklene boce i tegle, ili bilo koja vrsta stakla?";

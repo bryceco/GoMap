@@ -32,7 +32,6 @@
 "quest_wheelchairAccess_toiletsPart_title" = "Är toaletten på %s tillgänglig med rullstol?";
 "quest_maxweight_title" = "Vad är maxvikten här?";
 "quest_generalFee_title" = "Kostar inträde till %s?";
-"quest_laundrySelfService_title" = "Är denna tvätt en självbetjäningstvätt?";
 "quest_handrail_title" = "Har trappan ett räcke?";
 "quest_recycling_materials_title" = "Vad kan lämnas här för återvinning?";
 "quest_recycling_glass_title" = "Kan bara glasflaskor och burkar återvinnas här eller alla typer av glas?";
@@ -61,4 +60,5 @@
 "quest_policeType_title" = "Vad är detta för slags polisstation?";
 "quest_stile_type_title" = "Vad är detta för slags grind?";
 "quest_camera_type_title" = "Vad är det här för typ av övervakningskamera?";
-"quest_crossing_title" = "Finns det någon trottoarkant där vägarna korsar? Vilken sort?";
+"quest_dietType_halal_name_title" = "Erbjuder %s halalprodukter?";
+"quest_picnicTableCover_title" = "Har det här picknickbordet ett regnskydd?";

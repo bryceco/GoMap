@@ -32,7 +32,6 @@
 "quest_wheelchairAccess_toiletsPart_title" = "%s의 화장실을 휠체어가 사용할 수 있나요?";
 "quest_maxweight_title" = "여기의 하중 제한이 얼마인가요?";
 "quest_generalFee_title" = "%s에 입장료가 있나요?";
-"quest_laundrySelfService_title" = "이 세탁소는 셀프 빨래방인가요?";
 "quest_handrail_title" = "이 계단에 난간이 있나요?";
 "quest_recycling_materials_title" = "이 분리수거함에 무엇을 넣을 수 있나요?";
 "quest_recycling_glass_title" = "유리병만 넣을 수 있나요, 아니면 모든 종류의 유리를 넣을 수 있나요?";
@@ -61,4 +60,3 @@
 "quest_policeType_title" = "어떤 형태의 경찰서인가요?";
 "quest_stile_type_title" = "어떤 형태의 문인가요?";
 "quest_camera_type_title" = "어떤 종류의 카메라인가요?";
-"quest_crossing_title" = "이 길이 도로와 만나는 지점에 연석이 있나교? 어떤 종류인가요?";

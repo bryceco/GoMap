@@ -32,7 +32,6 @@
 "quest_wheelchairAccess_toiletsPart_title" = "Er toalettet til %s tilgjengeleg med rullestol?";
 "quest_maxweight_title" = "Kva er vektgrensa her?";
 "quest_generalFee_title" = "Kostar det noko å komma inn på %s?";
-"quest_laundrySelfService_title" = "Er dette vaskeriet sjølvbetent?";
 "quest_handrail_title" = "Har denne trappa rekkverk?";
 "quest_recycling_materials_title" = "Kva kan du levera til resirkulering her?";
 "quest_recycling_glass_title" = "Kan berre glasflasker og syltetøyglas resirkulerast her, eller alle typar glas?";

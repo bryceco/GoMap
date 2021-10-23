@@ -32,7 +32,6 @@
 "quest_wheelchairAccess_toiletsPart_title" = "Sú záchody v %s dostupné pre vozičkárov?";
 "quest_maxweight_title" = "Aké je tu obmedzenia hmotnosti?";
 "quest_generalFee_title" = "Je tu poplatok pre vstup do %s?";
-"quest_laundrySelfService_title" = "Je táto práčovňa samoobslužná?";
 "quest_handrail_title" = "Majú tieto schody zábradlie?";
 "quest_recycling_materials_title" = "Čo sa tu dá recyklovať?";
 "quest_recycling_glass_title" = "Možno tu recyklovať len sklenené fľaše, alebo akýkoľvek druh skla?";
@@ -61,4 +60,3 @@
 "quest_policeType_title" = "O aký typ policajnej stanice ide?";
 "quest_stile_type_title" = "Čo je to za prechod?";
 "quest_camera_type_title" = "Čo je to za monitorovaciu kameru?";
-"quest_crossing_title" = "Existujú obrubníky, kde sa táto cesta stretáva s touto cestou? Aký druh?";

@@ -31,7 +31,6 @@
 "quest_wheelchairAccess_toiletsPart_title" = "%s tuvalet tekerlekli sandalye erişimine uygun mu?";
 "quest_maxweight_title" = "Buradaki ağırlık sınırı nedir?";
 "quest_generalFee_title" = "%s giriş ücretli mi?";
-"quest_laundrySelfService_title" = "Bu çamaşırhane self servis mi?";
 "quest_handrail_title" = "Bu basamaklarda parmaklık var mı?";
 "quest_recycling_materials_title" = "Buraya geri dönüşüm için neler bırakılabilir?";
 "quest_recycling_glass_title" = "Burada sadece cam şişeler, kavanozlar veya herhangi bir cam türü geri dönüştürülebilir mi?";

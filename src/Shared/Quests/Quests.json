@@ -4,13 +4,33 @@
         "wiki": "Tag:emergency=fire_hydrant",
         "icon": "ic_quest_fire_hydrant",
         "filter": "nodes with emergency = fire_hydrant and !fire_hydrant:type",
+        "filters": [
+            "nodes with emergency = fire_hydrant and !fire_hydrant:type"
+        ],
         "title": "quest_fireHydrant_type_title"
+    },
+    "AddFireHydrantDiameter": {
+        "description": "Add fire hydrant diameter",
+        "wiki": "Tag:emergency=fire_hydrant",
+        "icon": "ic_quest_fire_hydrant_diameter",
+        "filter": "nodes with\n         emergency = fire_hydrant\n         and !fire_hydrant:diameter\n         and fire_hydrant:diameter:signed != no\n    ",
+        "filters": [
+            "nodes with\n         emergency = fire_hydrant\n         and !fire_hydrant:diameter\n         and fire_hydrant:diameter:signed != no\n    ",
+            "nodes with\n         emergency = fire_hydrant\n         and !fire_hydrant:diameter\n         and fire_hydrant:diameter:signed != no\n    "
+        ],
+        "title": "quest_fireHydrant_diameter_title"
     },
     "AddForestLeafType": {
         "description": "Add leaf type",
         "wiki": "Key:leaf_type",
         "icon": "ic_quest_leaf",
         "filter": "ways, relations with (landuse = forest or natural = wood) and !leaf_type\n    ",
+        "filters": [
+            "ways, relations with (landuse = forest or natural = wood) and !leaf_type\n    ",
+            "ways with natural = tree_row and !leaf_type\n    ",
+            "ways, relations with (landuse = forest or natural = wood) and !leaf_type\n    ",
+            "ways with natural = tree_row and !leaf_type\n    "
+        ],
         "title": "quest_leafType_title"
     },
     "AddRecyclingType": {
@@ -18,6 +38,9 @@
         "wiki": "Key:recycling_type",
         "icon": "ic_quest_recycling",
         "filter": "nodes, ways, relations with amenity = recycling and !recycling_type",
+        "filters": [
+            "nodes, ways, relations with amenity = recycling and !recycling_type"
+        ],
         "title": "quest_recycling_type_title"
     },
     "AddPowerPolesMaterial": {
@@ -25,6 +48,10 @@
         "wiki": "Tag:power=pole",
         "icon": "ic_quest_power",
         "filter": "nodes with\n          (power = pole or man_made = utility_pole)\n          and !material\n    ",
+        "filters": [
+            "nodes with\n          (power = pole or man_made = utility_pole)\n          and !material\n    ",
+            "nodes with\n          (power = pole or man_made = utility_pole)\n          and !material\n    "
+        ],
         "title": "quest_powerPolesMaterial_title"
     },
     "AddSidewalk": {
@@ -32,6 +59,11 @@
         "wiki": "Key:sidewalk",
         "icon": "ic_quest_sidewalk",
         "filter": "ways with\n          highway ~ trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential\n          and area != yes\n          and motorroad != yes\n          and !sidewalk and !sidewalk:left and !sidewalk:right and !sidewalk:both\n          and (\n            !maxspeed\n            or maxspeed > 8\n            or (maxspeed ~ ",
+        "filters": [
+            "ways with highway ~ path|footway|cycleway\n    ",
+            "ways with\n          highway ~ trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential\n          and area != yes\n          and motorroad != yes\n          and !sidewalk and !sidewalk:left and !sidewalk:right and !sidewalk:both\n          and (\n            !maxspeed\n            or maxspeed > 8\n            or (maxspeed ~ ",
+            "ways with highway ~ path|footway|cycleway\n    "
+        ],
         "title": "quest_sidewalk_title"
     },
     "AddSummitRegister": {
@@ -39,6 +71,10 @@
         "wiki": "Key:summit:register",
         "icon": "ic_quest_peak",
         "filter": "nodes with\n          natural = peak and name and\n          (!summit:register or summit:register older today -4 years)\n    ",
+        "filters": [
+            "nodes with\n          natural = peak and name and\n          (!summit:register or summit:register older today -4 years)\n    ",
+            "nodes with\n          natural = peak and name and\n          (!summit:register or summit:register older today -4 years)\n    "
+        ],
         "title": "quest_summit_register_title"
     },
     "AddToiletsFee": {
@@ -46,6 +82,10 @@
         "wiki": "Key:fee",
         "icon": "ic_quest_toilet_fee",
         "filter": "nodes, ways with\n          amenity = toilets\n          and access !~ private|customers\n          and !fee\n    ",
+        "filters": [
+            "nodes, ways with\n          amenity = toilets\n          and access !~ private|customers\n          and !fee\n    ",
+            "nodes, ways with\n          amenity = toilets\n          and access !~ private|customers\n          and !fee\n    "
+        ],
         "title": "quest_toiletsFee_title"
     },
     "AddClothingBinOperator": {
@@ -53,6 +93,10 @@
         "wiki": "Tag:amenity=recycling",
         "icon": "ic_quest_recycling_clothes",
         "filter": "nodes with amenity = recycling and recycling_type = container\n         and recycling:clothes = yes\n         and !operator and !name and !brand\n    ",
+        "filters": [
+            "nodes with amenity = recycling and recycling_type = container\n         and recycling:clothes = yes\n         and !operator and !name and !brand\n    ",
+            "nodes with amenity = recycling and recycling_type = container\n         and recycling:clothes = yes\n         and !operator and !name and !brand\n    "
+        ],
         "title": "quest_clothes_container_operator_title"
     },
     "AddMotorcycleParkingCover": {
@@ -60,6 +104,10 @@
         "wiki": "Tag:amenity=motorcycle_parking",
         "icon": "ic_quest_motorcycle_parking_cover",
         "filter": "nodes, ways with amenity = motorcycle_parking\n        and access !~ private|no\n        and !covered\n        and motorcycle_parking !~ shed|garage_boxes|building\n    ",
+        "filters": [
+            "nodes, ways with amenity = motorcycle_parking\n        and access !~ private|no\n        and !covered\n        and motorcycle_parking !~ shed|garage_boxes|building\n    ",
+            "nodes, ways with amenity = motorcycle_parking\n        and access !~ private|no\n        and !covered\n        and motorcycle_parking !~ shed|garage_boxes|building\n    "
+        ],
         "title": "quest_motorcycleParkingCoveredStatus_title"
     },
     "AddParkingType": {
@@ -67,6 +115,10 @@
         "wiki": "Tag:amenity=parking",
         "icon": "ic_quest_parking",
         "filter": "nodes, ways, relations with\n          amenity = parking\n          and (!parking or parking = yes)\n    ",
+        "filters": [
+            "nodes, ways, relations with\n          amenity = parking\n          and (!parking or parking = yes)\n    ",
+            "nodes, ways, relations with\n          amenity = parking\n          and (!parking or parking = yes)\n    "
+        ],
         "title": "quest_parkingType_title"
     },
     "AddTrafficSignalsSound": {
@@ -74,6 +126,12 @@
         "wiki": "Key:$SOUND_SIGNALS",
         "icon": "ic_quest_blind_traffic_lights_sound",
         "filter": "nodes with crossing = traffic_signals and highway ~ crossing|traffic_signals and foot != no\n        and (\n          !$SOUND_SIGNALS\n          or $SOUND_SIGNALS = no and $SOUND_SIGNALS older today -4 years\n          or $SOUND_SIGNALS older today -8 years\n        )\n    ",
+        "filters": [
+            "nodes with crossing = traffic_signals and highway ~ crossing|traffic_signals and foot != no\n        and (\n          !$SOUND_SIGNALS\n          or $SOUND_SIGNALS = no and $SOUND_SIGNALS older today -4 years\n          or $SOUND_SIGNALS older today -8 years\n        )\n    ",
+            "ways with\n          highway = cycleway and foot !~ yes|designated\n    ",
+            "nodes with crossing = traffic_signals and highway ~ crossing|traffic_signals and foot != no\n        and (\n          !$SOUND_SIGNALS\n          or $SOUND_SIGNALS = no and $SOUND_SIGNALS older today -4 years\n          or $SOUND_SIGNALS older today -8 years\n        )\n    ",
+            "ways with\n          highway = cycleway and foot !~ yes|designated\n    "
+        ],
         "title": "quest_traffic_signals_sound_title"
     },
     "AddSelfServiceLaundry": {
@@ -81,6 +139,9 @@
         "wiki": "Tag:shop=laundry",
         "icon": "ic_quest_laundry",
         "filter": "nodes, ways with shop = laundry and !self_service",
+        "filters": [
+            "nodes, ways with shop = laundry and !self_service"
+        ],
         "title": "quest_laundrySelfService_title"
     },
     "AddProhibitedForPedestrians": {
@@ -88,6 +149,10 @@
         "wiki": "Key:foot",
         "icon": "ic_quest_no_pedestrians",
         "filter": "ways with (\n          ~'sidewalk(:both)?' ~ none|no or\n          (sidewalk:left ~ none|no and sidewalk:right ~ none|no)\n        )\n        and shoulder != yes\n        and !foot\n        and access !~ private|no\n        ",
+        "filters": [
+            "ways with (\n          ~'sidewalk(:both)?' ~ none|no or\n          (sidewalk:left ~ none|no and sidewalk:right ~ none|no)\n        )\n        and shoulder != yes\n        and !foot\n        and access !~ private|no\n        ",
+            "ways with (\n          ~'sidewalk(:both)?' ~ none|no or\n          (sidewalk:left ~ none|no and sidewalk:right ~ none|no)\n        )\n        and shoulder != yes\n        and !foot\n        and access !~ private|no\n        "
+        ],
         "title": "quest_accessible_for_pedestrians_title"
     },
     "AddParkingFee": {
@@ -95,6 +160,10 @@
         "wiki": "Tag:amenity=parking",
         "icon": "ic_quest_parking_fee",
         "filter": "nodes, ways, relations with amenity = parking\n        and access ~ yes|customers|public\n        and (\n            !fee and !fee:conditional\n            or fee older today -8 years\n        )\n    ",
+        "filters": [
+            "nodes, ways, relations with amenity = parking\n        and access ~ yes|customers|public\n        and (\n            !fee and !fee:conditional\n            or fee older today -8 years\n        )\n    ",
+            "nodes, ways, relations with amenity = parking\n        and access ~ yes|customers|public\n        and (\n            !fee and !fee:conditional\n            or fee older today -8 years\n        )\n    "
+        ],
         "title": "quest_parking_fee_title"
     },
     "AddBikeParkingFee": {
@@ -102,6 +171,10 @@
         "wiki": "Tag:amenity=bicycle_parking",
         "icon": "ic_quest_bicycle_parking_fee",
         "filter": "nodes, ways, relations with amenity = bicycle_parking\n        and access ~ yes|customers|public\n        and (\n            name\n            or bicycle_parking ~ building|lockers|shed\n            or capacity >= 100\n        )\n        and (\n            !fee and !fee:conditional\n            or fee older today -8 years\n        )\n    ",
+        "filters": [
+            "nodes, ways, relations with amenity = bicycle_parking\n        and access ~ yes|customers|public\n        and (\n            name\n            or bicycle_parking ~ building|lockers|shed\n            or capacity >= 100\n        )\n        and (\n            !fee and !fee:conditional\n            or fee older today -8 years\n        )\n    ",
+            "nodes, ways, relations with amenity = bicycle_parking\n        and access ~ yes|customers|public\n        and (\n            name\n            or bicycle_parking ~ building|lockers|shed\n            or capacity >= 100\n        )\n        and (\n            !fee and !fee:conditional\n            or fee older today -8 years\n        )\n    "
+        ],
         "title": "quest_bicycle_parking_fee_title"
     },
     "AddBoardType": {
@@ -109,13 +182,32 @@
         "wiki": "Key:board_type",
         "icon": "ic_quest_board_type",
         "filter": "nodes with information = board\n         and access !~ private|no\n         and (!board_type or board_type ~ yes|board)\n    ",
+        "filters": [
+            "nodes with information = board\n         and access !~ private|no\n         and (!board_type or board_type ~ yes|board)\n    ",
+            "nodes with information = board\n         and access !~ private|no\n         and (!board_type or board_type ~ yes|board)\n    "
+        ],
         "title": "quest_board_type_title"
+    },
+    "AddPicnicTableCover": {
+        "description": "Add picnic table cover",
+        "wiki": "Key:covered",
+        "icon": "ic_quest_picnic_table_cover",
+        "filter": "nodes with leisure = picnic_table\n        and access !~ private|no\n        and !covered\n    ",
+        "filters": [
+            "nodes with leisure = picnic_table\n        and access !~ private|no\n        and !covered\n    ",
+            "nodes with leisure = picnic_table\n        and access !~ private|no\n        and !covered\n    "
+        ],
+        "title": "quest_picnicTableCover_title"
     },
     "AddMotorcycleParkingCapacity": {
         "description": "Add motorcycle parking capacities",
         "wiki": "Tag:amenity=motorcycle_parking",
         "icon": "ic_quest_motorcycle_parking_capacity",
         "filter": "nodes, ways with amenity = motorcycle_parking\n         and access !~ private|no\n         and (!capacity or capacity older today -4 years)\n    ",
+        "filters": [
+            "nodes, ways with amenity = motorcycle_parking\n         and access !~ private|no\n         and (!capacity or capacity older today -4 years)\n    ",
+            "nodes, ways with amenity = motorcycle_parking\n         and access !~ private|no\n         and (!capacity or capacity older today -4 years)\n    "
+        ],
         "title": "quest_motorcycleParkingCapacity_title"
     },
     "AddTactilePavingKerb": {
@@ -123,6 +215,10 @@
         "wiki": "Key:tactile_paving",
         "icon": "ic_quest_kerb_tactile_paving",
         "filter": "nodes with\n          !tactile_paving\n          or tactile_paving = unknown\n          or tactile_paving = no and tactile_paving older today -4 years\n          or tactile_paving = yes and tactile_paving older today -8 years\n    ",
+        "filters": [
+            "nodes with\n          !tactile_paving\n          or tactile_paving = unknown\n          or tactile_paving = no and tactile_paving older today -4 years\n          or tactile_paving = yes and tactile_paving older today -8 years\n    ",
+            "nodes with\n          !tactile_paving\n          or tactile_paving = unknown\n          or tactile_paving = no and tactile_paving older today -4 years\n          or tactile_paving = yes and tactile_paving older today -8 years\n    "
+        ],
         "title": "quest_tactile_paving_kerb_title"
     },
     "AddTactilePavingCrosswalk": {
@@ -130,13 +226,34 @@
         "wiki": "Key:tactile_paving",
         "icon": "ic_quest_blind_pedestrian_crossing",
         "filter": "nodes with\n          (\n            highway = traffic_signals and crossing = traffic_signals and foot != no\n            or highway = crossing and foot != no\n          )\n          and (\n            !tactile_paving\n            or tactile_paving = unknown\n            or tactile_paving = no and tactile_paving older today -4 years\n            or tactile_paving = yes and tactile_paving older today -8 years\n          )\n    ",
+        "filters": [
+            "nodes with\n          (\n            highway = traffic_signals and crossing = traffic_signals and foot != no\n            or highway = crossing and foot != no\n          )\n          and (\n            !tactile_paving\n            or tactile_paving = unknown\n            or tactile_paving = no and tactile_paving older today -4 years\n            or tactile_paving = yes and tactile_paving older today -8 years\n          )\n    ",
+            "ways with\n          highway = cycleway and foot !~ yes|designated\n          or highway = service and service = driveway\n          or highway and access ~ private|no\n    ",
+            "nodes with\n          (\n            highway = traffic_signals and crossing = traffic_signals and foot != no\n            or highway = crossing and foot != no\n          )\n          and (\n            !tactile_paving\n            or tactile_paving = unknown\n            or tactile_paving = no and tactile_paving older today -4 years\n            or tactile_paving = yes and tactile_paving older today -8 years\n          )\n    ",
+            "ways with\n          highway = cycleway and foot !~ yes|designated\n          or highway = service and service = driveway\n          or highway and access ~ private|no\n    "
+        ],
         "title": "quest_tactilePaving_title"
+    },
+    "AddHalal": {
+        "description": "Add Halal status",
+        "wiki": "Key:diet:halal",
+        "icon": "ic_quest_halal",
+        "filter": "nodes, ways with\n        (\n          amenity ~ restaurant|cafe|fast_food|ice_cream\n          or shop ~ butcher|supermarket|ice_cream\n        )\n        and name and (\n          !diet:halal\n          or diet:halal != only and diet:halal older today -4 years\n        )\n    ",
+        "filters": [
+            "nodes, ways with\n        (\n          amenity ~ restaurant|cafe|fast_food|ice_cream\n          or shop ~ butcher|supermarket|ice_cream\n        )\n        and name and (\n          !diet:halal\n          or diet:halal != only and diet:halal older today -4 years\n        )\n    ",
+            "nodes, ways with\n        (\n          amenity ~ restaurant|cafe|fast_food|ice_cream\n          or shop ~ butcher|supermarket|ice_cream\n        )\n        and name and (\n          !diet:halal\n          or diet:halal != only and diet:halal older today -4 years\n        )\n    "
+        ],
+        "title": "quest_dietType_halal_name_title"
     },
     "AddKosher": {
         "description": "Add kosher status",
         "wiki": "Key:diet:kosher",
         "icon": "ic_quest_kosher",
         "filter": "nodes, ways with\n        (\n          amenity ~ restaurant|cafe|fast_food|ice_cream\n          or shop ~ butcher|supermarket|ice_cream\n        )\n        and name and (\n          !diet:kosher\n          or diet:kosher != only and diet:kosher older today -4 years\n        )\n    ",
+        "filters": [
+            "nodes, ways with\n        (\n          amenity ~ restaurant|cafe|fast_food|ice_cream\n          or shop ~ butcher|supermarket|ice_cream\n        )\n        and name and (\n          !diet:kosher\n          or diet:kosher != only and diet:kosher older today -4 years\n        )\n    ",
+            "nodes, ways with\n        (\n          amenity ~ restaurant|cafe|fast_food|ice_cream\n          or shop ~ butcher|supermarket|ice_cream\n        )\n        and name and (\n          !diet:kosher\n          or diet:kosher != only and diet:kosher older today -4 years\n        )\n    "
+        ],
         "title": "quest_dietType_kosher_name_title"
     },
     "AddVegetarian": {
@@ -144,6 +261,10 @@
         "wiki": "Key:diet",
         "icon": "ic_quest_restaurant_vegetarian",
         "filter": "nodes, ways with\n        (\n          amenity ~ restaurant|cafe|fast_food\n          or amenity = pub and food = yes\n        )\n        and name and diet:vegan != only and (\n          !diet:vegetarian\n          or diet:vegetarian != only and diet:vegetarian older today -2 years\n        )\n    ",
+        "filters": [
+            "nodes, ways with\n        (\n          amenity ~ restaurant|cafe|fast_food\n          or amenity = pub and food = yes\n        )\n        and name and diet:vegan != only and (\n          !diet:vegetarian\n          or diet:vegetarian != only and diet:vegetarian older today -2 years\n        )\n    ",
+            "nodes, ways with\n        (\n          amenity ~ restaurant|cafe|fast_food\n          or amenity = pub and food = yes\n        )\n        and name and diet:vegan != only and (\n          !diet:vegetarian\n          or diet:vegetarian != only and diet:vegetarian older today -2 years\n        )\n    "
+        ],
         "title": "quest_dietType_vegetarian_name_title"
     },
     "AddVegan": {
@@ -151,13 +272,32 @@
         "wiki": "Key:diet",
         "icon": "ic_quest_restaurant_vegan",
         "filter": "nodes, ways with\n        (\n          amenity = ice_cream\n          or diet:vegetarian ~ yes|only and\n          (\n            amenity ~ restaurant|cafe|fast_food\n            or amenity = pub and food = yes\n          )\n        )\n        and name and (\n          !diet:vegan\n          or diet:vegan != only and diet:vegan older today -2 years\n        )\n    ",
+        "filters": [
+            "nodes, ways with\n        (\n          amenity = ice_cream\n          or diet:vegetarian ~ yes|only and\n          (\n            amenity ~ restaurant|cafe|fast_food\n            or amenity = pub and food = yes\n          )\n        )\n        and name and (\n          !diet:vegan\n          or diet:vegan != only and diet:vegan older today -2 years\n        )\n    ",
+            "nodes, ways with\n        (\n          amenity = ice_cream\n          or diet:vegetarian ~ yes|only and\n          (\n            amenity ~ restaurant|cafe|fast_food\n            or amenity = pub and food = yes\n          )\n        )\n        and name and (\n          !diet:vegan\n          or diet:vegan != only and diet:vegan older today -2 years\n        )\n    "
+        ],
         "title": "quest_dietType_vegan_name_title"
+    },
+    "AddTrafficCalmingType": {
+        "description": "Add specific traffic calming type on a point",
+        "wiki": "Key:traffic_calming",
+        "icon": "ic_quest_car_bumpy",
+        "filter": "nodes with traffic_calming=yes\n    ",
+        "filters": [
+            "nodes with traffic_calming=yes\n    ",
+            "nodes with traffic_calming=yes\n    "
+        ],
+        "title": "quest_traffic_calming_type_title"
     },
     "AddCameraType": {
         "description": "Add camera type",
         "wiki": "Tag:surveillance:type",
         "icon": "ic_quest_surveillance_camera",
         "filter": "nodes with\n         surveillance:type = camera\n         and surveillance ~ public|outdoor|traffic\n         and !camera:type\n    ",
+        "filters": [
+            "nodes with\n         surveillance:type = camera\n         and surveillance ~ public|outdoor|traffic\n         and !camera:type\n    ",
+            "nodes with\n         surveillance:type = camera\n         and surveillance ~ public|outdoor|traffic\n         and !camera:type\n    "
+        ],
         "title": "quest_camera_type_title"
     },
     "AddBuildingType": {
@@ -165,6 +305,10 @@
         "wiki": "Key:building",
         "icon": "ic_quest_building",
         "filter": "ways, relations with (building = yes or building = unclassified)\n         and !man_made\n         and !historic\n         and !military\n         and !power\n         and !tourism\n         and !attraction\n         and !amenity\n         and !leisure\n         and !aeroway\n         and !description\n         and location != underground\n         and abandoned != yes\n         and abandoned != building\n         and abandoned:building != yes\n         and ruins != yes and ruined != yes\n    ",
+        "filters": [
+            "ways, relations with (building = yes or building = unclassified)\n         and !man_made\n         and !historic\n         and !military\n         and !power\n         and !tourism\n         and !attraction\n         and !amenity\n         and !leisure\n         and !aeroway\n         and !description\n         and location != underground\n         and abandoned != yes\n         and abandoned != building\n         and abandoned:building != yes\n         and ruins != yes and ruined != yes\n    ",
+            "ways, relations with (building = yes or building = unclassified)\n         and !man_made\n         and !historic\n         and !military\n         and !power\n         and !tourism\n         and !attraction\n         and !amenity\n         and !leisure\n         and !aeroway\n         and !description\n         and location != underground\n         and abandoned != yes\n         and abandoned != building\n         and abandoned:building != yes\n         and ruins != yes and ruined != yes\n    "
+        ],
         "title": "quest_buildingType_title"
     },
     "AddBikeParkingCover": {
@@ -172,13 +316,21 @@
         "wiki": "Tag:amenity=bicycle_parking",
         "icon": "ic_quest_bicycle_parking_cover",
         "filter": "nodes, ways with\n         amenity = bicycle_parking\n         and access !~ private|no\n         and !covered\n         and bicycle_parking !~ shed|lockers|building\n    ",
+        "filters": [
+            "nodes, ways with\n         amenity = bicycle_parking\n         and access !~ private|no\n         and !covered\n         and bicycle_parking !~ shed|lockers|building\n    ",
+            "nodes, ways with\n         amenity = bicycle_parking\n         and access !~ private|no\n         and !covered\n         and bicycle_parking !~ shed|lockers|building\n    "
+        ],
         "title": "quest_bicycleParkingCoveredStatus_title"
     },
     "AddInternetAccess": {
         "description": "Add internet access",
         "wiki": "Key:internet_access",
         "icon": "ic_quest_wifi",
-        "filter": "nodes, ways, relations with\n        (\n          amenity ~ library|community_centre|youth_centre\n          or tourism ~ hotel|guest_house|motel|hostel|alpine_hut|apartment|resort|camp_site|caravan_site|chalet\n        )\n        and name\n        and (\n          !internet_access\n          or internet_access = yes\n          or internet_access older today -2 years\n        )\n    ",
+        "filter": "nodes, ways, relations with\n        (\n          amenity ~ library|community_centre|youth_centre\n          or tourism ~ hotel|guest_house|motel|hostel|alpine_hut|apartment|resort|camp_site|caravan_site|chalet\n        )\n        and access !~ no|private\n        and name\n        and (\n          !internet_access\n          or internet_access = yes\n          or internet_access older today -2 years\n        )\n    ",
+        "filters": [
+            "nodes, ways, relations with\n        (\n          amenity ~ library|community_centre|youth_centre\n          or tourism ~ hotel|guest_house|motel|hostel|alpine_hut|apartment|resort|camp_site|caravan_site|chalet\n        )\n        and access !~ no|private\n        and name\n        and (\n          !internet_access\n          or internet_access = yes\n          or internet_access older today -2 years\n        )\n    ",
+            "nodes, ways, relations with\n        (\n          amenity ~ library|community_centre|youth_centre\n          or tourism ~ hotel|guest_house|motel|hostel|alpine_hut|apartment|resort|camp_site|caravan_site|chalet\n        )\n        and access !~ no|private\n        and name\n        and (\n          !internet_access\n          or internet_access = yes\n          or internet_access older today -2 years\n        )\n    "
+        ],
         "title": "quest_internet_access_name_title"
     },
     "AddBridgeStructure": {
@@ -186,6 +338,9 @@
         "wiki": "Key:bridge:structure",
         "icon": "ic_quest_bridge",
         "filter": "ways with man_made = bridge and !bridge:structure and !bridge:movable",
+        "filters": [
+            "ways with man_made = bridge and !bridge:structure and !bridge:movable"
+        ],
         "title": "quest_bridge_structure_title"
     },
     "AddFootwayPartSurface": {
@@ -193,6 +348,10 @@
         "wiki": "Key:surface",
         "icon": "ic_quest_footway_surface",
         "filter": "ways with (\n          highway = footway\n          or (highway ~ path|cycleway|bridleway and foot != no)\n        )\n        and segregated = yes\n        and !sidewalk\n        and (\n          !footway:surface\n          or footway:surface older today -8 years\n          or (\n            footway:surface ~ paved|unpaved\n            and !footway:surface:note\n            and !note:footway:surface\n          )\n        )\n    ",
+        "filters": [
+            "ways with (\n          highway = footway\n          or (highway ~ path|cycleway|bridleway and foot != no)\n        )\n        and segregated = yes\n        and !sidewalk\n        and (\n          !footway:surface\n          or footway:surface older today -8 years\n          or (\n            footway:surface ~ paved|unpaved\n            and !footway:surface:note\n            and !note:footway:surface\n          )\n        )\n    ",
+            "ways with (\n          highway = footway\n          or (highway ~ path|cycleway|bridleway and foot != no)\n        )\n        and segregated = yes\n        and !sidewalk\n        and (\n          !footway:surface\n          or footway:surface older today -8 years\n          or (\n            footway:surface ~ paved|unpaved\n            and !footway:surface:note\n            and !note:footway:surface\n          )\n        )\n    "
+        ],
         "title": "quest_footwayPartSurface_title"
     },
     "AddCyclewayPartSurface": {
@@ -200,6 +359,10 @@
         "wiki": "Key:surface",
         "icon": "ic_quest_bicycleway_surface",
         "filter": "ways with (\n          highway = cycleway\n          or (highway ~ path|footway and bicycle != no)\n          or (highway = bridleway and bicycle ~ designated|yes)\n        )\n        and segregated = yes\n        and !sidewalk\n        and (\n          !cycleway:surface\n          or cycleway:surface older today -8 years\n          or (\n            cycleway:surface ~ paved|unpaved\n            and !cycleway:surface:note\n            and !note:cycleway:surface\n          )\n        )\n    ",
+        "filters": [
+            "ways with (\n          highway = cycleway\n          or (highway ~ path|footway and bicycle != no)\n          or (highway = bridleway and bicycle ~ designated|yes)\n        )\n        and segregated = yes\n        and !sidewalk\n        and (\n          !cycleway:surface\n          or cycleway:surface older today -8 years\n          or (\n            cycleway:surface ~ paved|unpaved\n            and !cycleway:surface:note\n            and !note:cycleway:surface\n          )\n        )\n    ",
+            "ways with (\n          highway = cycleway\n          or (highway ~ path|footway and bicycle != no)\n          or (highway = bridleway and bicycle ~ designated|yes)\n        )\n        and segregated = yes\n        and !sidewalk\n        and (\n          !cycleway:surface\n          or cycleway:surface older today -8 years\n          or (\n            cycleway:surface ~ paved|unpaved\n            and !cycleway:surface:note\n            and !note:cycleway:surface\n          )\n        )\n    "
+        ],
         "title": "quest_cyclewayPartSurface_title"
     },
     "AddGeneralFee": {
@@ -207,6 +370,10 @@
         "wiki": "Key:fee",
         "icon": "ic_quest_fee",
         "filter": "nodes, ways, relations with\n         (tourism = museum or leisure = beach_resort or tourism = gallery)\n         and access !~ private|no\n         and !fee\n         and name\n    ",
+        "filters": [
+            "nodes, ways, relations with\n         (tourism = museum or leisure = beach_resort or tourism = gallery)\n         and access !~ private|no\n         and !fee\n         and name\n    ",
+            "nodes, ways, relations with\n         (tourism = museum or leisure = beach_resort or tourism = gallery)\n         and access !~ private|no\n         and !fee\n         and name\n    "
+        ],
         "title": "quest_generalFee_title"
     },
     "AddLanes": {
@@ -214,6 +381,9 @@
         "wiki": "Key:lanes",
         "icon": "ic_quest_street_lanes",
         "filter": "ways with\n          (\n            highway ~ motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified\n            or highway = residential and (\n              maxspeed > 30\n              or (maxspeed ~ ",
+        "filters": [
+            "ways with\n          (\n            highway ~ motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified\n            or highway = residential and (\n              maxspeed > 30\n              or (maxspeed ~ "
+        ],
         "title": "quest_lanes_title"
     },
     "AddKerbHeight": {
@@ -221,6 +391,10 @@
         "wiki": "Key:kerb",
         "icon": "ic_quest_kerb_type",
         "filter": "nodes with\n          !kerb\n          or kerb ~ yes|unknown\n          or kerb !~ no|rolled and kerb older today -8 years\n    ",
+        "filters": [
+            "nodes with\n          !kerb\n          or kerb ~ yes|unknown\n          or kerb !~ no|rolled and kerb older today -8 years\n    ",
+            "nodes with\n          !kerb\n          or kerb ~ yes|unknown\n          or kerb !~ no|rolled and kerb older today -8 years\n    "
+        ],
         "title": "quest_kerb_height_title"
     },
     "AddRecyclingContainerMaterials": {
@@ -228,6 +402,10 @@
         "wiki": "Key:recycling",
         "icon": "ic_quest_recycling_container",
         "filter": "nodes with\n          amenity = recycling\n          and recycling_type = container\n          and access !~ private|no\n    ",
+        "filters": [
+            "nodes with\n          amenity = recycling\n          and recycling_type = container\n          and access !~ private|no\n    ",
+            "nodes with\n          amenity = recycling\n          and recycling_type = container\n          and access !~ private|no\n    "
+        ],
         "title": "quest_recycling_materials_title"
     },
     "AddPostboxRoyalCypher": {
@@ -235,6 +413,10 @@
         "wiki": "Key:royal_cypher",
         "icon": "ic_quest_crown",
         "filter": "nodes with\n          amenity = post_box\n          and !royal_cypher\n    ",
+        "filters": [
+            "nodes with\n          amenity = post_box\n          and !royal_cypher\n    ",
+            "nodes with\n          amenity = post_box\n          and !royal_cypher\n    "
+        ],
         "title": "quest_postboxRoyalCypher_title"
     },
     "AddPlaygroundAccess": {
@@ -242,6 +424,9 @@
         "wiki": "Tag:leisure=playground",
         "icon": "ic_quest_playground",
         "filter": "nodes, ways, relations with leisure = playground and (!access or access = unknown)",
+        "filters": [
+            "nodes, ways, relations with leisure = playground and (!access or access = unknown)"
+        ],
         "title": "quest_playground_access_title"
     },
     "AddMaxWeight": {
@@ -249,6 +434,10 @@
         "wiki": "Key:maxweight",
         "icon": "ic_quest_max_weight",
         "filter": "ways with highway ~ trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential|living_street|service\n         and service != driveway\n         and !maxweight and maxweight:signed != no\n         and !maxaxleload\n         and !maxbogieweight\n         and !maxweight:hgv and !maxweight:bus and !maxweight:hgv_articulated and !maxweight:tourist_bus and !maxweight:coach\n         and !maxweightrating and !maxweightrating:hgv and !maxweightrating:bus and !hgv\n         and !maxunladenweight and !maxunladenweight:hgv and !maxunladenweight:bus\n         and bridge and bridge != no\n         and motor_vehicle !~ private|no\n         and vehicle !~ private|no\n         and (access !~ private|no or (foot and foot !~ private|no))\n         and area != yes\n    ",
+        "filters": [
+            "ways with highway ~ trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential|living_street|service\n         and service != driveway\n         and !maxweight and maxweight:signed != no\n         and !maxaxleload\n         and !maxbogieweight\n         and !maxweight:hgv and !maxweight:bus and !maxweight:hgv_articulated and !maxweight:tourist_bus and !maxweight:coach\n         and !maxweightrating and !maxweightrating:hgv and !maxweightrating:bus and !hgv\n         and !maxunladenweight and !maxunladenweight:hgv and !maxunladenweight:bus\n         and bridge and bridge != no\n         and motor_vehicle !~ private|no\n         and vehicle !~ private|no\n         and (access !~ private|no or (foot and foot !~ private|no))\n         and area != yes\n    ",
+            "ways with highway ~ trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential|living_street|service\n         and service != driveway\n         and !maxweight and maxweight:signed != no\n         and !maxaxleload\n         and !maxbogieweight\n         and !maxweight:hgv and !maxweight:bus and !maxweight:hgv_articulated and !maxweight:tourist_bus and !maxweight:coach\n         and !maxweightrating and !maxweightrating:hgv and !maxweightrating:bus and !hgv\n         and !maxunladenweight and !maxunladenweight:hgv and !maxunladenweight:bus\n         and bridge and bridge != no\n         and motor_vehicle !~ private|no\n         and vehicle !~ private|no\n         and (access !~ private|no or (foot and foot !~ private|no))\n         and area != yes\n    "
+        ],
         "title": "quest_maxweight_title"
     },
     "AddReligionToWaysideShrine": {
@@ -256,6 +445,10 @@
         "wiki": "Key:religion",
         "icon": "ic_quest_religion",
         "filter": "nodes, ways, relations with\n          historic = wayside_shrine\n          and !religion\n          and access !~ private|no\n    ",
+        "filters": [
+            "nodes, ways, relations with\n          historic = wayside_shrine\n          and !religion\n          and access !~ private|no\n    ",
+            "nodes, ways, relations with\n          historic = wayside_shrine\n          and !religion\n          and access !~ private|no\n    "
+        ],
         "title": "quest_religion_for_wayside_shrine_title"
     },
     "AddBikeParkingType": {
@@ -263,6 +456,10 @@
         "wiki": "Key:bicycle_parking",
         "icon": "ic_quest_bicycle_parking",
         "filter": "nodes, ways with\n          amenity = bicycle_parking\n          and access !~ private|no\n          and !bicycle_parking\n    ",
+        "filters": [
+            "nodes, ways with\n          amenity = bicycle_parking\n          and access !~ private|no\n          and !bicycle_parking\n    ",
+            "nodes, ways with\n          amenity = bicycle_parking\n          and access !~ private|no\n          and !bicycle_parking\n    "
+        ],
         "title": "quest_bicycle_parking_type_title"
     },
     "AddHandrail": {
@@ -270,6 +467,10 @@
         "wiki": "Key:handrail",
         "icon": "ic_quest_steps_handrail",
         "filter": "ways with highway = steps\n         and (!indoor or indoor = no)\n         and access !~ private|no\n         and (!conveying or conveying = no)\n         and (\n           !handrail and !handrail:center and !handrail:left and !handrail:right\n           or handrail = no and handrail older today -4 years\n           or handrail older today -8 years\n           or older today -8 years\n         )\n    ",
+        "filters": [
+            "ways with highway = steps\n         and (!indoor or indoor = no)\n         and access !~ private|no\n         and (!conveying or conveying = no)\n         and (\n           !handrail and !handrail:center and !handrail:left and !handrail:right\n           or handrail = no and handrail older today -4 years\n           or handrail older today -8 years\n           or older today -8 years\n         )\n    ",
+            "ways with highway = steps\n         and (!indoor or indoor = no)\n         and access !~ private|no\n         and (!conveying or conveying = no)\n         and (\n           !handrail and !handrail:center and !handrail:left and !handrail:right\n           or handrail = no and handrail older today -4 years\n           or handrail older today -8 years\n           or older today -8 years\n         )\n    "
+        ],
         "title": "quest_handrail_title"
     },
     "AddStepsIncline": {
@@ -277,6 +478,10 @@
         "wiki": "Key:incline",
         "icon": "ic_quest_steps",
         "filter": "ways with highway = steps\n         and (!indoor or indoor = no)\n         and area != yes\n         and access !~ private|no\n         and !incline\n    ",
+        "filters": [
+            "ways with highway = steps\n         and (!indoor or indoor = no)\n         and area != yes\n         and access !~ private|no\n         and !incline\n    ",
+            "ways with highway = steps\n         and (!indoor or indoor = no)\n         and area != yes\n         and access !~ private|no\n         and !incline\n    "
+        ],
         "title": "quest_steps_incline_title"
     },
     "AddTracktype": {
@@ -284,20 +489,31 @@
         "wiki": "Key:tracktype",
         "icon": "ic_quest_tractor",
         "filter": "ways with highway = track\n        and (\n          !tracktype\n          or tracktype != grade1 and tracktype older today -4 years\n          or surface ~ ${ANYTHING_UNPAVED.joinToString(",
+        "filters": [
+            "ways with highway = track\n        and (\n          !tracktype\n          or tracktype != grade1 and tracktype older today -4 years\n          or surface ~ ${ANYTHING_UNPAVED.joinToString("
+        ],
         "title": "quest_tracktype_title"
     },
     "AddWheelchairAccessOutside": {
         "description": "Add wheelchair access to outside places",
         "wiki": "Key:wheelchair",
         "icon": "ic_quest_toilets_wheelchair",
-        "filter": "nodes, ways, relations with leisure = dog_park\n         and (!wheelchair or wheelchair older today -8 years)\n    ",
+        "filter": "nodes, ways, relations with leisure = dog_park\n         and access !~ no|private\n         and (!wheelchair or wheelchair older today -8 years)\n    ",
+        "filters": [
+            "nodes, ways, relations with leisure = dog_park\n         and access !~ no|private\n         and (!wheelchair or wheelchair older today -8 years)\n    ",
+            "nodes, ways, relations with leisure = dog_park\n         and access !~ no|private\n         and (!wheelchair or wheelchair older today -8 years)\n    "
+        ],
         "title": "quest_wheelchairAccess_outside_title"
     },
     "AddWheelchairAccessToiletsPart": {
         "description": "Add wheelchair access to toilets",
         "wiki": "Key:toilets:wheelchair",
         "icon": "ic_quest_toilets_wheelchair",
-        "filter": "nodes, ways, relations with name and toilets = yes\n         and (\n           !toilets:wheelchair\n           or toilets:wheelchair != yes and toilets:wheelchair older today -4 years\n           or toilets:wheelchair older today -8 years\n         )\n    ",
+        "filter": "nodes, ways, relations with name and toilets = yes\n         and access !~ no|private\n         and (\n           !toilets:wheelchair\n           or toilets:wheelchair != yes and toilets:wheelchair older today -4 years\n           or toilets:wheelchair older today -8 years\n         )\n    ",
+        "filters": [
+            "nodes, ways, relations with name and toilets = yes\n         and access !~ no|private\n         and (\n           !toilets:wheelchair\n           or toilets:wheelchair != yes and toilets:wheelchair older today -4 years\n           or toilets:wheelchair older today -8 years\n         )\n    ",
+            "nodes, ways, relations with name and toilets = yes\n         and access !~ no|private\n         and (\n           !toilets:wheelchair\n           or toilets:wheelchair != yes and toilets:wheelchair older today -4 years\n           or toilets:wheelchair older today -8 years\n         )\n    "
+        ],
         "title": "quest_wheelchairAccess_toiletsPart_title"
     },
     "AddDrinkingWater": {
@@ -305,6 +521,10 @@
         "wiki": "Key:drinking_water",
         "icon": "ic_quest_drinking_water",
         "filter": "nodes with (\n            man_made = water_tap\n            or man_made = water_well\n            or natural = spring\n        )\n        and access !~ private|no and indoor != yes\n        and !drinking_water and !drinking_water:legal and amenity != drinking_water\n    ",
+        "filters": [
+            "nodes with (\n            man_made = water_tap\n            or man_made = water_well\n            or natural = spring\n        )\n        and access !~ private|no and indoor != yes\n        and !drinking_water and !drinking_water:legal and amenity != drinking_water\n    ",
+            "nodes with (\n            man_made = water_tap\n            or man_made = water_well\n            or natural = spring\n        )\n        and access !~ private|no and indoor != yes\n        and !drinking_water and !drinking_water:legal and amenity != drinking_water\n    "
+        ],
         "title": "quest_drinking_water_title"
     },
     "AddTrafficSignalsVibration": {
@@ -312,6 +532,12 @@
         "wiki": "Key:$VIBRATING_BUTTON",
         "icon": "ic_quest_blind_traffic_lights",
         "filter": "nodes with crossing = traffic_signals and highway ~ crossing|traffic_signals and foot!=no\n        and (\n          !$VIBRATING_BUTTON\n          or $VIBRATING_BUTTON = no and $VIBRATING_BUTTON older today -4 years\n          or $VIBRATING_BUTTON older today -8 years\n        )\n    ",
+        "filters": [
+            "nodes with crossing = traffic_signals and highway ~ crossing|traffic_signals and foot!=no\n        and (\n          !$VIBRATING_BUTTON\n          or $VIBRATING_BUTTON = no and $VIBRATING_BUTTON older today -4 years\n          or $VIBRATING_BUTTON older today -8 years\n        )\n    ",
+            "ways with\n          highway = cycleway and foot !~ yes|designated\n    ",
+            "nodes with crossing = traffic_signals and highway ~ crossing|traffic_signals and foot!=no\n        and (\n          !$VIBRATING_BUTTON\n          or $VIBRATING_BUTTON = no and $VIBRATING_BUTTON older today -4 years\n          or $VIBRATING_BUTTON older today -8 years\n        )\n    ",
+            "ways with\n          highway = cycleway and foot !~ yes|designated\n    "
+        ],
         "title": "quest_traffic_signals_vibrate_title"
     },
     "AddAddressStreet": {
@@ -319,6 +545,12 @@
         "wiki": "Key:addr",
         "icon": "ic_quest_housenumber_street",
         "filter": "nodes, ways, relations with\n          addr:housenumber and !addr:street and !addr:place and !addr:block_number\n          or addr:streetnumber and !addr:street\n    ",
+        "filters": [
+            "nodes, ways, relations with\n          addr:housenumber and !addr:street and !addr:place and !addr:block_number\n          or addr:streetnumber and !addr:street\n    ",
+            "ways with\n          addr:street and addr:interpolation\n    ",
+            "nodes, ways, relations with\n          addr:housenumber and !addr:street and !addr:place and !addr:block_number\n          or addr:streetnumber and !addr:street\n    ",
+            "ways with\n          addr:street and addr:interpolation\n    "
+        ],
         "title": "quest_address_street_title"
     },
     "AddHousenumber": {
@@ -326,6 +558,14 @@
         "wiki": "Key:addr",
         "icon": "ic_quest_housenumber",
         "filter": "ways, relations with\n      building ~ house|residential|apartments|detached|terrace|dormitory|semi|semidetached_house|farm|school|civic|college|university|public|hospital|kindergarten|train_station|hotel|retail|shop|commercial|office|house|residential|apartments|detached|terrace|dormitory|semi|semidetached_house|farm|school|civic|college|university|public|hospital|kindergarten|train_station|hotel|retail|shop|commercial|office\n      and location != underground\n      and ruins != yes\n      and abandoned != yes\n      and !addr:housenumber\n      and !addr:housename\n      and !addr:conscriptionnumber\n      and !addr:streetnumber\n      and !noaddress\n      and !nohousenumber\n    ",
+        "filters": [
+            "ways, relations with\n      building ~ house|residential|apartments|detached|terrace|dormitory|semi|semidetached_house|farm|school|civic|college|university|public|hospital|kindergarten|train_station|hotel|retail|shop|commercial|office|house|residential|apartments|detached|terrace|dormitory|semi|semidetached_house|farm|school|civic|college|university|public|hospital|kindergarten|train_station|hotel|retail|shop|commercial|office\n      and location != underground\n      and ruins != yes\n      and abandoned != yes\n      and !addr:housenumber\n      and !addr:housename\n      and !addr:conscriptionnumber\n      and !addr:streetnumber\n      and !noaddress\n      and !nohousenumber\n    ",
+            "ways, relations with !building",
+            "ways, relations with\n      !building and ~",
+            "relations with\n      type != multipolygon\n      and ~",
+            "nodes with ~",
+            "ways, relations with\n      building ~ house|residential|apartments|detached|terrace|dormitory|semi|semidetached_house|farm|school|civic|college|university|public|hospital|kindergarten|train_station|hotel|retail|shop|commercial|office|house|residential|apartments|detached|terrace|dormitory|semi|semidetached_house|farm|school|civic|college|university|public|hospital|kindergarten|train_station|hotel|retail|shop|commercial|office\n      and location != underground\n      and ruins != yes\n      and abandoned != yes\n      and !addr:housenumber\n      and !addr:housename\n      and !addr:conscriptionnumber\n      and !addr:streetnumber\n      and !noaddress\n      and !nohousenumber\n    "
+        ],
         "title": "quest_address_title"
     },
     "AddStepsRamp": {
@@ -333,6 +573,10 @@
         "wiki": "Key:ramp",
         "icon": "ic_quest_steps_ramp",
         "filter": "ways with highway = steps\n         and (!indoor or indoor = no)\n         and access !~ private|no\n         and (!conveying or conveying = no)\n         and ramp != separate\n         and (\n           !ramp\n           or (ramp = yes and !ramp:stroller and !ramp:bicycle and !ramp:wheelchair)\n           or ramp = no and ramp older today -4 years\n           or ramp older today -8 years\n         )\n    ",
+        "filters": [
+            "ways with highway = steps\n         and (!indoor or indoor = no)\n         and access !~ private|no\n         and (!conveying or conveying = no)\n         and ramp != separate\n         and (\n           !ramp\n           or (ramp = yes and !ramp:stroller and !ramp:bicycle and !ramp:wheelchair)\n           or ramp = no and ramp older today -4 years\n           or ramp older today -8 years\n         )\n    ",
+            "ways with highway = steps\n         and (!indoor or indoor = no)\n         and access !~ private|no\n         and (!conveying or conveying = no)\n         and ramp != separate\n         and (\n           !ramp\n           or (ramp = yes and !ramp:stroller and !ramp:bicycle and !ramp:wheelchair)\n           or ramp = no and ramp older today -4 years\n           or ramp older today -8 years\n         )\n    "
+        ],
         "title": "quest_steps_ramp_title"
     },
     "MarkCompletedBuildingConstruction": {
@@ -340,6 +584,10 @@
         "wiki": "Tag:building=construction",
         "icon": "ic_quest_building_construction",
         "filter": "ways with building = construction\n         and (!opening_date or opening_date < today)\n         and older today -6 months\n    ",
+        "filters": [
+            "ways with building = construction\n         and (!opening_date or opening_date < today)\n         and older today -6 months\n    ",
+            "ways with building = construction\n         and (!opening_date or opening_date < today)\n         and older today -6 months\n    "
+        ],
         "title": "quest_construction_building_title"
     },
     "AddRailwayCrossingBarrier": {
@@ -347,6 +595,12 @@
         "wiki": "Key:crossing:barrier",
         "icon": "ic_quest_railway",
         "filter": "nodes with\n          railway = level_crossing\n          and (!crossing:barrier or crossing:barrier older today -8 years)\n    ",
+        "filters": [
+            "nodes with\n          railway = level_crossing\n          and (!crossing:barrier or crossing:barrier older today -8 years)\n    ",
+            "ways with\n          highway and access ~ private|no\n          or railway ~ tram|abandoned|disused\n    ",
+            "nodes with\n          railway = level_crossing\n          and (!crossing:barrier or crossing:barrier older today -8 years)\n    ",
+            "ways with\n          highway and access ~ private|no\n          or railway ~ tram|abandoned|disused\n    "
+        ],
         "title": "quest_railway_crossing_barrier_title"
     },
     "AddBenchBackrest": {
@@ -354,6 +608,10 @@
         "wiki": "Tag:amenity=bench",
         "icon": "ic_quest_bench_poi",
         "filter": "nodes, ways with\n          amenity = bench\n          and (!area or area = no)\n          and !backrest\n          and !bench:type\n    ",
+        "filters": [
+            "nodes, ways with\n          amenity = bench\n          and (!area or area = no)\n          and !backrest\n          and !bench:type\n    ",
+            "nodes, ways with\n          amenity = bench\n          and (!area or area = no)\n          and !backrest\n          and !bench:type\n    "
+        ],
         "title": "quest_bench_backrest_title"
     },
     "AddPoliceType": {
@@ -361,6 +619,10 @@
         "wiki": "Tag:amenity=police",
         "icon": "ic_quest_police",
         "filter": "nodes, ways with\n          amenity = police\n          and !operator\n    ",
+        "filters": [
+            "nodes, ways with\n          amenity = police\n          and !operator\n    ",
+            "nodes, ways with\n          amenity = police\n          and !operator\n    "
+        ],
         "title": "quest_policeType_title"
     },
     "AddBikeParkingCapacity": {
@@ -368,6 +630,10 @@
         "wiki": "Tag:amenity=bicycle_parking",
         "icon": "ic_quest_bicycle_parking_capacity",
         "filter": "nodes, ways with amenity = bicycle_parking\n         and access !~ private|no\n         and bicycle_parking !~ floor\n         and (\n           !capacity\n           or bicycle_parking ~ stands|wall_loops and capacity older today -4 years\n         )\n    ",
+        "filters": [
+            "nodes, ways with amenity = bicycle_parking\n         and access !~ private|no\n         and bicycle_parking !~ floor\n         and (\n           !capacity\n           or bicycle_parking ~ stands|wall_loops and capacity older today -4 years\n         )\n    ",
+            "nodes, ways with amenity = bicycle_parking\n         and access !~ private|no\n         and bicycle_parking !~ floor\n         and (\n           !capacity\n           or bicycle_parking ~ stands|wall_loops and capacity older today -4 years\n         )\n    "
+        ],
         "title": "quest_bikeParkingCapacity_title"
     },
     "AddTrafficSignalsButton": {
@@ -375,13 +641,22 @@
         "wiki": "Tag:highway=traffic_signals",
         "icon": "ic_quest_traffic_lights",
         "filter": "nodes with\n          crossing = traffic_signals\n          and highway ~ crossing|traffic_signals\n          and foot != no\n          and !button_operated\n    ",
-        "title": "quest_traffic_signals_button_title"
+        "filters": [
+            "nodes with\n          crossing = traffic_signals\n          and highway ~ crossing|traffic_signals\n          and foot != no\n          and !button_operated\n    ",
+            "nodes with\n          crossing = traffic_signals\n          and highway ~ crossing|traffic_signals\n          and foot != no\n          and !button_operated\n    "
+        ],
+        "title": "quest_traffic_signals_button_title",
+        "key": "button_operated"
     },
     "AddStepCount": {
         "description": "Add step count",
         "wiki": "Key:step_count",
         "icon": "ic_quest_steps_count",
         "filter": "ways with highway = steps\n         and (!indoor or indoor = no)\n         and access !~ private|no\n         and (!conveying or conveying = no)\n         and !step_count\n    ",
+        "filters": [
+            "ways with highway = steps\n         and (!indoor or indoor = no)\n         and access !~ private|no\n         and (!conveying or conveying = no)\n         and !step_count\n    ",
+            "ways with highway = steps\n         and (!indoor or indoor = no)\n         and access !~ private|no\n         and (!conveying or conveying = no)\n         and !step_count\n    "
+        ],
         "title": "quest_step_count_title"
     },
     "AddChargingStationOperator": {
@@ -389,6 +664,10 @@
         "wiki": "Tag:amenity=charging_station",
         "icon": "ic_quest_car_charger",
         "filter": "nodes, ways with\n          amenity = charging_station\n          and !operator and !name and !brand\n    ",
+        "filters": [
+            "nodes, ways with\n          amenity = charging_station\n          and !operator and !name and !brand\n    ",
+            "nodes, ways with\n          amenity = charging_station\n          and !operator and !name and !brand\n    "
+        ],
         "title": "quest_charging_station_operator_title"
     },
     "AddIsDefibrillatorIndoor": {
@@ -396,20 +675,23 @@
         "wiki": "Key:indoor",
         "icon": "ic_quest_defibrillator",
         "filter": "nodes with\n         emergency = defibrillator\n         and access !~ private|no\n         and !indoor\n    ",
+        "filters": [
+            "nodes with\n         emergency = defibrillator\n         and access !~ private|no\n         and !indoor\n    ",
+            "nodes with\n         emergency = defibrillator\n         and access !~ private|no\n         and !indoor\n    "
+        ],
         "title": "quest_is_defibrillator_inside_title"
-    },
-    "AddCrossing": {
-        "description": "Add whether there is a crossing",
-        "wiki": "Tag:highway=crossing",
-        "icon": "ic_quest_pedestrian",
-        "filter": "ways with\n          highway ~ trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential\n          and area != yes\n          and (access !~ private|no or (foot and foot !~ private|no))\n    ",
-        "title": "quest_crossing_title"
     },
     "AddCrossingType": {
         "description": "Add crossing type",
         "wiki": "Key:crossing",
         "icon": "ic_quest_pedestrian_crossing",
         "filter": "nodes with highway = crossing\n          and foot != no\n          and (\n            !crossing\n            or crossing ~ island|unknown|yes\n            or (\n              crossing ~ traffic_signals|uncontrolled|zebra|marked|unmarked\n              and crossing older today -8 years\n            )\n          )\n    ",
+        "filters": [
+            "nodes with highway = crossing\n          and foot != no\n          and (\n            !crossing\n            or crossing ~ island|unknown|yes\n            or (\n              crossing ~ traffic_signals|uncontrolled|zebra|marked|unmarked\n              and crossing older today -8 years\n            )\n          )\n    ",
+            "ways with\n          highway and access ~ private|no\n    ",
+            "nodes with highway = crossing\n          and foot != no\n          and (\n            !crossing\n            or crossing ~ island|unknown|yes\n            or (\n              crossing ~ traffic_signals|uncontrolled|zebra|marked|unmarked\n              and crossing older today -8 years\n            )\n          )\n    ",
+            "ways with\n          highway and access ~ private|no\n    "
+        ],
         "title": "quest_crossing_type_title"
     },
     "CheckShopType": {
@@ -417,6 +699,11 @@
         "wiki": "Key:disused:",
         "icon": "ic_quest_check_shop",
         "filter": "nodes, ways, relations with (\n          shop = vacant\n          or ${isKindOfShopExpression(",
+        "filters": [
+            "nodes, ways, relations with ${isKindOfShopExpression()}\n    ",
+            "nodes, ways, relations with (\n          shop = vacant\n          or ${isKindOfShopExpression(",
+            "nodes, ways, relations with ${isKindOfShopExpression()}\n    "
+        ],
         "title": "quest_shop_vacant_type_title"
     },
     "AddStileType": {
@@ -424,6 +711,12 @@
         "wiki": "Key:stile",
         "icon": "ic_quest_cow",
         "filter": "ways with\n          access ~ private|no\n          and foot !~ permissive|yes|designated\n    ",
+        "filters": [
+            "nodes with\n         barrier = stile\n         and (!stile or older today -8 years)\n    ",
+            "ways with\n          access ~ private|no\n          and foot !~ permissive|yes|designated\n    ",
+            "nodes with\n         barrier = stile\n         and (!stile or older today -8 years)\n    ",
+            "ways with\n          access ~ private|no\n          and foot !~ permissive|yes|designated\n    "
+        ],
         "title": "quest_stile_type_title"
     },
     "AddBarrierType": {
@@ -431,6 +724,10 @@
         "wiki": "Key:barrier",
         "icon": "ic_quest_barrier",
         "filter": "nodes with barrier=yes\n         and !man_made\n         and !historic\n         and !military\n         and !power\n         and !tourism\n         and !attraction\n         and !amenity\n         and !leisure\n    ",
+        "filters": [
+            "nodes with barrier=yes\n         and !man_made\n         and !historic\n         and !military\n         and !power\n         and !tourism\n         and !attraction\n         and !amenity\n         and !leisure\n    ",
+            "nodes with barrier=yes\n         and !man_made\n         and !historic\n         and !military\n         and !power\n         and !tourism\n         and !attraction\n         and !amenity\n         and !leisure\n    "
+        ],
         "title": "quest_barrier_type_title"
     },
     "AddBikeParkingAccess": {
@@ -438,6 +735,10 @@
         "wiki": "Tag:amenity=bicycle_parking",
         "icon": "ic_quest_bicycle_parking_access",
         "filter": "nodes, ways, relations with amenity = bicycle_parking\n        and bicycle_parking ~ building|lockers|shed\n        and (!access or access = unknown)\n    ",
+        "filters": [
+            "nodes, ways, relations with amenity = bicycle_parking\n        and bicycle_parking ~ building|lockers|shed\n        and (!access or access = unknown)\n    ",
+            "nodes, ways, relations with amenity = bicycle_parking\n        and bicycle_parking ~ building|lockers|shed\n        and (!access or access = unknown)\n    "
+        ],
         "title": "quest_bicycle_parking_access_title"
     },
     "AddParkingAccess": {
@@ -445,6 +746,10 @@
         "wiki": "Tag:amenity=parking",
         "icon": "ic_quest_parking_access",
         "filter": "nodes, ways, relations with amenity = parking\n        and (\n            access = unknown\n            or (!access and parking !~ street_side|lane)\n        )\n    ",
+        "filters": [
+            "nodes, ways, relations with amenity = parking\n        and (\n            access = unknown\n            or (!access and parking !~ street_side|lane)\n        )\n    ",
+            "nodes, ways, relations with amenity = parking\n        and (\n            access = unknown\n            or (!access and parking !~ street_side|lane)\n        )\n    "
+        ],
         "title": "quest_parking_access_title",
         "key": "access"
     },
@@ -453,6 +758,9 @@
         "wiki": "Key:segregated",
         "icon": "ic_quest_path_segregation",
         "filter": "ways with\n        (\n          (highway = path and bicycle = designated and foot = designated)\n          or (highway = footway and bicycle = designated)\n          or (highway = cycleway and foot ~ designated|yes)\n        )\n        and surface ~ ${ANYTHING_PAVED.joinToString(",
+        "filters": [
+            "ways with\n        (\n          (highway = path and bicycle = designated and foot = designated)\n          or (highway = footway and bicycle = designated)\n          or (highway = cycleway and foot ~ designated|yes)\n        )\n        and surface ~ ${ANYTHING_PAVED.joinToString("
+        ],
         "title": "quest_segregated_title"
     },
     "DetermineRecyclingGlass": {
@@ -460,6 +768,10 @@
         "wiki": "Key:recycling",
         "icon": "ic_quest_recycling_glass",
         "filter": "nodes with amenity = recycling and recycling_type = container\n         and recycling:glass = yes and !recycling:glass_bottles\n    ",
+        "filters": [
+            "nodes with amenity = recycling and recycling_type = container\n         and recycling:glass = yes and !recycling:glass_bottles\n    ",
+            "nodes with amenity = recycling and recycling_type = container\n         and recycling:glass = yes and !recycling:glass_bottles\n    "
+        ],
         "title": "quest_recycling_glass_title"
     },
     "AddAtmOperator": {
@@ -467,6 +779,9 @@
         "wiki": "Tag:amenity=atm",
         "icon": "ic_quest_money",
         "filter": "nodes with amenity = atm and !operator and !name and !brand",
+        "filters": [
+            "nodes with amenity = atm and !operator and !name and !brand"
+        ],
         "title": "quest_atm_operator_title"
     }
 }

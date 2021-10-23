@@ -32,10 +32,11 @@
 "quest_wheelchairAccess_toiletsPart_title" = "Ar poilsio kambarys %s prieinamas neįgaliųjų vežimėliu?";
 "quest_maxweight_title" = "Koks čia yra svorio apribojimas?";
 "quest_generalFee_title" = "Ar reikia mokėti, norint patekti į %s?";
-"quest_laundrySelfService_title" = "Ar ši skalbykla yra savitarnos?";
 "quest_handrail_title" = "Ar šie laiptai turi turėklą?";
 "quest_recycling_materials_title" = "Ką čia galima palikti perdirbimui?";
 "quest_recycling_glass_title" = "Ar čia galima perdirbti tik stiklinius butelius ir stiklainius, ar bet kokį stiklą?";
 "quest_address_street_title" = "Kam priklauso (namo) numeris %s?";
 "quest_board_type_title" = "Kokia yra šios informacinės lentos tema?";
+"quest_steps_incline_title" = "Kuri kryptis veda aukštyn šiais laiptais?";
+"quest_step_count_title" = "Kiek pakopų čia yra?";
 "quest_traffic_signals_sound_title" = "Ar čia yra garso signalai akliesiems?";

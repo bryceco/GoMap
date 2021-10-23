@@ -1,6 +1,6 @@
 "quest_sidewalk_title" = "Espaloia al dago kale honetan?";
 "quest_address_title" = "Zein da eraikin honen zenbakia?";
-"quest_bikeParkingCapacity_title" = "Zenkat bizikleta aparkatu daitezke hemen?";
+"quest_bikeParkingCapacity_title" = "Zenbat bizikleta aparkatu daitezke hemen?";
 "quest_toiletsFee_title" = "Komun hau ordainpekoa da?";
 "quest_bicycleParkingCoveredStatus_title" = "Bizikletentzako aparkaleku hau estalita dago (euriarentzako babesa du)?";
 "quest_recycling_type_title" = "Zer motako birziklatze gunea da hau?";
@@ -20,7 +20,7 @@
 "quest_construction_building_title" = "Eraikin hau eraikitzen bukatuta dago?";
 "quest_playground_access_title" = "Jolasleku hau irisgarria al da publikoari begira?";
 "quest_segregated_title" = "Nola dago oinezkoen eta ziklisten bidea antolatuta hemen?";
-"quest_tracktype_title" = "Zein da bide honen gainazalaren irmotasuna";
+"quest_tracktype_title" = "Zein da bide honen zoladuraren irmotasuna";
 "quest_wheelchairAccess_outside_title" = "Gurpildun aulkientzat irisgarria da?";
 "quest_traffic_signals_button_title" = "Semaforo honek botoi bat al du berde jar dadin eskatzeko?";
 "quest_motorcycleParkingCapacity_title" = "Zenbat motor aparkatu daitezke hemen?";
@@ -32,11 +32,14 @@
 "quest_wheelchairAccess_toiletsPart_title" = "%s(e)ko komuna gurpil-aukientzat irisgarria da?";
 "quest_maxweight_title" = "Zein da pisu muga hemen?";
 "quest_generalFee_title" = "%s(e)n sartzeko ordaindu beharra al dago?";
-"quest_laundrySelfService_title" = "Garbileku honetan norberak erabiltzen ditu garbigailuak?";
 "quest_handrail_title" = "Eskailera hauek heldulekua daukate?";
 "quest_recycling_materials_title" = "Zer utzi daiteke hemen birziklatzeko?";
 "quest_recycling_glass_title" = "Beirazko botilak eta ontziak bakarrik birziklatu daitezke hemen, ala mota guztietako beira?";
 "quest_address_street_title" = "Zein kaleri dagokio %s etxe-zenbaki horrek?";
 "quest_board_type_title" = "Zein da argibide-taula honen gaia?";
-"quest_is_defibrillator_inside_title" = "Desfibriladore hau (AED) eraikin baten barruan dago?";
+"quest_summit_register_title" = "Ba al dago gailurraren erregistroa %s-n?";
+"quest_is_defibrillator_inside_title" = "(AED) desfibriladore hau eraikinaren barruan dago?";
+"quest_steps_incline_title" = "Zein da gorako norabidea?";
+"quest_step_count_title" = "Zenbat urrats daude hemen?";
 "quest_traffic_signals_sound_title" = "Itsuentzako soinuzko seinaleak daude hemen?";
+"quest_traffic_signals_vibrate_title" = "Semaforo hauek ba al dute adierazle taktilak itsuak segurtasunez pasatzeko?";

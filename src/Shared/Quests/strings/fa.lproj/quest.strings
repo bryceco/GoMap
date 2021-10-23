@@ -32,7 +32,6 @@
 "quest_wheelchairAccess_toiletsPart_title" = "آیا دستشویی با صندلی چرخدار %s قابل دسترسی است؟";
 "quest_maxweight_title" = "در اینجا محدودیت وزن چه مقدار است؟";
 "quest_generalFee_title" = "آیا برای ورود به %s هزینه پرداخت می‌شود؟";
-"quest_laundrySelfService_title" = "آیا این خشکشویی یک خشکشویی مشتری محور (کار بوسیله شخص) است؟";
 "quest_handrail_title" = "آیا این راه‌پله نرده جان‌پناه دارد؟";
 "quest_recycling_materials_title" = "چه موادی را می‌توان در اینجا برای بازیافت قرار داد؟";
 "quest_recycling_glass_title" = "آیا فقط بطری‌های شیشه‌ای و شیشه در اینجا بازیافت می‌شود یا هر نوع شیشه؟";
@@ -61,4 +60,5 @@
 "quest_policeType_title" = "این چه نوع پاسگاهی است؟";
 "quest_stile_type_title" = "این چه نوع نرده ای است؟";
 "quest_camera_type_title" = "این چه نوع دوربین نظارتی است؟";
-"quest_crossing_title" = "آیا جداولی وجود دارد که این مسیر در اینجا به این جاده می رسد؟ از چه نوعی؟";
+"quest_dietType_halal_name_title" = "آیا %s محصولات حلال ارائه می دهد؟";
+"quest_picnicTableCover_title" = "آیا این میز مسافرتی پوشیده شده است (از باران محافظت می شود)؟";

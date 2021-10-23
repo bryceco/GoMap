@@ -32,7 +32,6 @@
 "quest_wheelchairAccess_toiletsPart_title" = "La %s ,toaleta este accesibilă scaunului fu rotile?";
 "quest_maxweight_title" = "Care este limita de greutate aici? ";
 "quest_generalFee_title" = "Trebuie să plătești pentru a intra la %s?";
-"quest_laundrySelfService_title" = "Este această spălătorie o spălătorie cu autoservire?";
 "quest_handrail_title" = "Au aceste scări o balustradă?";
 "quest_recycling_materials_title" = "Ce se poate recicla aici?";
 "quest_recycling_glass_title" = "Se pot recicla aici doar sticle și borcane din sticlă sau orice tip de sticlă?";
@@ -61,4 +60,3 @@
 "quest_policeType_title" = "Ce tip de secție de poliție este acesta?";
 "quest_stile_type_title" = "Ce stil este acesta?";
 "quest_camera_type_title" = "Ce tip de cameră de supraveghere este aceasta?";
-"quest_crossing_title" = "Exista borduri aici unde aceasta cale intalneste acest drum? Ce fel de borduri?";

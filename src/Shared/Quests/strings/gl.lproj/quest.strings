@@ -32,7 +32,6 @@
 "quest_wheelchairAccess_toiletsPart_title" = "É o baño de %s accesíbel para cadeiras de rodas?";
 "quest_maxweight_title" = "Cal é o límite de peso aquí?";
 "quest_generalFee_title" = "Hai que pagar por entrar en %s?";
-"quest_laundrySelfService_title" = "Esta lavandaría é de autoservizo?";
 "quest_handrail_title" = "Estas escaleiras teñen pasamáns?";
 "quest_recycling_materials_title" = "Que se pode depositar para reciclar aquí?";
 "quest_recycling_glass_title" = "Só poden reciclarse botellas e frascos de vidro aquí, ou calquera tipo de vidro e cristal?";
@@ -61,4 +60,3 @@
 "quest_policeType_title" = "Que tipo de comisaría é esta?";
 "quest_stile_type_title" = "Que tipo de paso é?";
 "quest_camera_type_title" = "Que tipo de cámara de seguridade é esta?";
-"quest_crossing_title" = "Existe bordo aquí onde este camiño se atopa coa estrada? de que tipo?";
