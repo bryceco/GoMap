@@ -118,7 +118,7 @@ extension EditorMapLayer {
 		return index >= 0
 	}
 
-	private static func ClipLineToRect(p1: OSMPoint, p2: OSMPoint, rect: OSMRect) -> [OSMPoint] {
+	static func ClipLineToRect(p1: OSMPoint, p2: OSMPoint, rect: OSMRect) -> [OSMPoint] {
 		if p1.x.isInfinite || p2.x.isInfinite {
 			return []
 		}

@@ -430,7 +430,7 @@ final class EditorMapLayer: CALayer {
 			var cross: [OSMPoint] = []
 			if !(prevInside && inside) {
 				// at least one point was outside, so determine where line intersects the screen
-				cross = EditorMapLayer.ClipLineToRect(p1: prev, p2: pt, rect: viewRect)
+				cross = Self.ClipLineToRect(p1: prev, p2: pt, rect: viewRect)
 				if cross.isEmpty {
 					// both are outside and didn't cross
 					continue
