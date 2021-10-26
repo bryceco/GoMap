@@ -62,3 +62,5 @@
 "quest_camera_type_title" = "Quel type de caméra de surveillance est-ce ?";
 "quest_dietType_halal_name_title" = "%s propose-t-il des produits halal ?";
 "quest_picnicTableCover_title" = "Cette table de pique-nique est-elle couverte (protégée de la pluie) ?";
+"quest_traffic_calming_type_title" = "Quel type de modération du trafic s'agit-il ?";
+"quest_fireHydrant_diameter_title" = "Quel est le diamètre indiqué sur le panneau de cette bouche d'incendie ?";
