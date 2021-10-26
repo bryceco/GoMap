@@ -56,6 +56,13 @@ for file in files:
 		if name in keyList:
 			key = keyList[name]
 
+		# get constants that might be used in filters
+		for match in re.finditer('const val ([^\\s]+)\\s*=\\s*\"(([^\"]+))\"',data,re.MULTILINE):
+			constant = match.groups()[0]
+			value = match.groups()[1]
+			# in theory this could break if we had a constant foo and there was an entry $food
+			data = re.sub('\$'+constant,value,data)
+
 		# get lists that might be joined together and embedded in filters
 		origData = data
 		for match in re.finditer('\s([a-zA-Z0-9_]+)\s*=\s*listOf\(\s*("([^"]+)"(,\s*("([^"]+)"))*\s*)',origData,re.MULTILINE):
