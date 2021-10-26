@@ -12,6 +12,15 @@ if os.path.exists(SC):
 else:
 	os.system("(cd /tmp/ && rm -rf StreetComplete && git clone --depth 1 https://github.com/streetcomplete/StreetComplete)")
 
+# get a list of all quests
+quests=[]
+q = open(SC+"/app/src/main/java/de/westnordost/streetcomplete/quests/QuestModule.kt", "r")
+questData = q.read()
+q.close()
+for match in re.finditer(r"(?<=^ {8})([A-Z][a-zA-Z]+(?=\())",questData,re.MULTILINE):
+	quest = match.groups()[0]
+	quests.append(quest)
+
 # get a list of all quest files
 files=[]
 for (dirpath, dirnames, filenames) in os.walk(SC+"/app/src/main/java/de/westnordost/streetcomplete/quests"):
@@ -34,6 +43,10 @@ keyList = {
 
 # locate all quests definitions
 for file in files:
+	(questName, ext) = os.path.splitext(os.path.basename(file))
+	if (questName not in quests):
+		# Not a quest
+		continue
 	f = open(file, "r")
 	data = f.read()
 	f.close()
