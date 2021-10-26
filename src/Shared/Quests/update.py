@@ -144,7 +144,7 @@ for file in files:
 			titles.append(title)
 
 # write Quests.json
-s = json.dumps(dict, indent=4)
+s = json.dumps(dict, indent=4, sort_keys=True)
 f = open("./Quests.json", "w")
 f.write(s)
 f.close()
