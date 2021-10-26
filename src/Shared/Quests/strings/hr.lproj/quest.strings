@@ -62,3 +62,5 @@
 "quest_camera_type_title" = "Kakva je ovo vrsta nadzorne kamere?";
 "quest_dietType_halal_name_title" = "Nudi li %s Halal proizvode?";
 "quest_picnicTableCover_title" = "Je li ovaj stol za piknik natkriven (zaštićen od kiše)?";
+"quest_traffic_calming_type_title" = "Kakva je ovo vrsta usporavanja prometa?";
+"quest_fireHydrant_diameter_title" = "Koji je promjer označen na ovom vatrogasnom hidrantu?";

@@ -62,3 +62,5 @@
 "quest_camera_type_title" = "Jaki rodzaj kamery jest tutaj?";
 "quest_dietType_halal_name_title" = "Czy %s oferuje produkty halal?";
 "quest_picnicTableCover_title" = "Czy ten stół piknikowy jest kryty (chroniony przed deszczem)?";
+"quest_traffic_calming_type_title" = "Jaki rodzaj uspokojenia ruchu się tu znajduje?";
+"quest_fireHydrant_diameter_title" = "Jaka średnica jest na znaku tego hydrantu?";
