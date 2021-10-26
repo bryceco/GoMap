@@ -24,9 +24,10 @@ Do you want to help testing pre-releases of Go Map!!?
 
 A number of assets used in the app come from other repositories, and should be periodically updated. Because updating these items can be a lengthy process it is performed manually rather than at build time:
 - iD presets database (https://github.com/openstreetmap/id-tagging-schema) 
-- iD presets icons (https://github.com/ideditor/temaki.git, https://github.com/mapbox/maki.git)
-- Name suggestion index (https://github.com/osmlab/name-suggestion-index)
-- NSI brand imagery (pulled from facebook/twitter/wikipedia)
+- iD presets icons (https://github.com/ideditor/temaki, https://github.com/mapbox/maki)
+- Name Suggestion Index (https://github.com/osmlab/name-suggestion-index)
+- NSI brand imagery (pulled from Facebook/Twitter/Wikipedia)
+- StreetComplete quest filters (https://github.com/streetcomplete/StreetComplete)
 - WebLate translations (https://hosted.weblate.org/projects/go-map/app)
 
 ### How to update external assets
