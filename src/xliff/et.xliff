@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="../Shared/Quests/strings/Base.lproj/quest.strings" source-language="en" target-language="et" datatype="plaintext">
     <header>
@@ -17,6 +17,7 @@
       </trans-unit>
       <trans-unit id="quest_atm_operator_title" xml:space="preserve">
         <source>What’s the name of the bank for this ATM?</source>
+        <target>Mis on selle sularahaautomaadi panga nimi?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_barrier_type_title" xml:space="preserve">
@@ -96,10 +97,12 @@
       </trans-unit>
       <trans-unit id="quest_cyclewayPartSurface_title" xml:space="preserve">
         <source>What’s the surface of the cycleway here?</source>
+        <target>Milline on selle jalgrattatee pinnakate?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_halal_name_title" xml:space="preserve">
         <source>Does %s offer Halal products?</source>
+        <target>Kas %s pakub Halal tooteid?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_kosher_name_title" xml:space="preserve">
@@ -124,6 +127,7 @@
       </trans-unit>
       <trans-unit id="quest_fireHydrant_diameter_title" xml:space="preserve">
         <source>What diameter is on this fire hydrant’s sign?</source>
+        <target>Kui suur diameeter on märgitud selle tulehüdrandi sildil?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_fireHydrant_type_title" xml:space="preserve">
@@ -133,6 +137,7 @@
       </trans-unit>
       <trans-unit id="quest_footwayPartSurface_title" xml:space="preserve">
         <source>What’s the surface of the footway here?</source>
+        <target>Milline on selle kõnnitee pinnakate?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_generalFee_title" xml:space="preserve">
