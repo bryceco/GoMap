@@ -25,6 +25,7 @@
       </trans-unit>
       <trans-unit id="quest_bench_backrest_title" xml:space="preserve">
         <source>Does this bench have a backrest?</source>
+        <target>這個長椅有背板嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bicycleParkingCoveredStatus_title" xml:space="preserve">
