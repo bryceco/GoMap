@@ -30,22 +30,27 @@
       </trans-unit>
       <trans-unit id="quest_bicycleParkingCoveredStatus_title" xml:space="preserve">
         <source>Is this bicycle parking covered (protected from rain)?</source>
+        <target>這座單車停車場有覆蓋(擋住雨水)嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bicycle_parking_access_title" xml:space="preserve">
         <source>Is it restricted who may park a bike here?</source>
+        <target>這個地方有限制誰能停單車在這裡嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bicycle_parking_fee_title" xml:space="preserve">
         <source>Do you have to pay to park a bike here?</source>
+        <target>你停單車在這裡需要付費嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bicycle_parking_type_title" xml:space="preserve">
         <source>What type of bicycle parking is this?</source>
+        <target>這是那種型態的單車停車場？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bikeParkingCapacity_title" xml:space="preserve">
         <source>How many bikes can be parked here?</source>
+        <target>有多少輛單車能停在這裡？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_board_type_title" xml:space="preserve">
