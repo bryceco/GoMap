@@ -79,18 +79,22 @@
       </trans-unit>
       <trans-unit id="quest_construction_building_title" xml:space="preserve">
         <source>Is this building completed?</source>
+        <target>這棟建築完工了嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_crossing_type_title" xml:space="preserve">
         <source>What kind of crossing is this?</source>
+        <target>這是那種類型的穿越道？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_cyclewayPartSurface_title" xml:space="preserve">
         <source>What’s the surface of the cycleway here?</source>
+        <target>這條單車道的路面是？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_halal_name_title" xml:space="preserve">
         <source>Does %s offer Halal products?</source>
+        <target>%s 有提供清真食品嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_kosher_name_title" xml:space="preserve">
