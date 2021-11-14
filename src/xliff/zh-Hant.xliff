@@ -341,6 +341,7 @@
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
         <source>The camera is used to measure heights of buildings or objects, and to perform text recognition in opening hours signs.</source>
+        <target>您的相機將會被用來測量建築物或實體物件的高度，同時也用於營業時間標示的文字辨識。</target>
         <note>Privacy - Camera Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
