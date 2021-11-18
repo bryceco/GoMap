@@ -1306,6 +1306,7 @@ Dit is een geavanceerde actie die alleen gedaan zou moeten worden als je diepgaa
       </trans-unit>
       <trans-unit id="Pasting %@ characters, maximum tag length is 255" xml:space="preserve">
         <source>Pasting %@ characters, maximum tag length is 255</source>
+        <target>%@ tekens plakken, maximale tag lengte is 255</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)" xml:space="preserve">
