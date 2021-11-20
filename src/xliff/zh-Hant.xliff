@@ -17,6 +17,7 @@
       </trans-unit>
       <trans-unit id="quest_atm_operator_title" xml:space="preserve">
         <source>What’s the name of the bank for this ATM?</source>
+        <target>這台自動提款機屬於哪個銀行？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_barrier_type_title" xml:space="preserve">
@@ -30,22 +31,22 @@
       </trans-unit>
       <trans-unit id="quest_bicycleParkingCoveredStatus_title" xml:space="preserve">
         <source>Is this bicycle parking covered (protected from rain)?</source>
-        <target>這座單車停車場有覆蓋(擋住雨水)嗎？</target>
+        <target>這座腳踏車停車場有屋頂(雨遮)嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bicycle_parking_access_title" xml:space="preserve">
         <source>Is it restricted who may park a bike here?</source>
-        <target>這個地方有限制誰能停單車在這裡嗎？</target>
+        <target>這個地方有限制誰才能停腳踏車嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bicycle_parking_fee_title" xml:space="preserve">
         <source>Do you have to pay to park a bike here?</source>
-        <target>你停單車在這裡需要付費嗎？</target>
+        <target>在這裡停放腳踏車需要收費嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bicycle_parking_type_title" xml:space="preserve">
         <source>What type of bicycle parking is this?</source>
-        <target>這是那種型態的單車停車場？</target>
+        <target>這是哪種類型的腳踏車停車場？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bikeParkingCapacity_title" xml:space="preserve">
