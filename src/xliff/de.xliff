@@ -96,10 +96,12 @@
       </trans-unit>
       <trans-unit id="quest_cyclewayPartSurface_title" xml:space="preserve">
         <source>What’s the surface of the cycleway here?</source>
+        <target>Welche Oberfläche hat dieser Fahrradweg?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_halal_name_title" xml:space="preserve">
         <source>Does %s offer Halal products?</source>
+        <target>Bietet %s Halal-Produkte an?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_kosher_name_title" xml:space="preserve">
@@ -124,6 +126,7 @@
       </trans-unit>
       <trans-unit id="quest_fireHydrant_diameter_title" xml:space="preserve">
         <source>What diameter is on this fire hydrant’s sign?</source>
+        <target state="needs-translation">Welcher Durchmesser steht auf dem Schild dieses Feuerhydranten?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_fireHydrant_type_title" xml:space="preserve">
@@ -133,6 +136,7 @@
       </trans-unit>
       <trans-unit id="quest_footwayPartSurface_title" xml:space="preserve">
         <source>What’s the surface of the footway here?</source>
+        <target state="needs-translation">Welche Oberfläche hat dieser Gehweg?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_generalFee_title" xml:space="preserve">
@@ -202,6 +206,7 @@
       </trans-unit>
       <trans-unit id="quest_picnicTableCover_title" xml:space="preserve">
         <source>Is this picnic table covered (protected from rain)?</source>
+        <target state="needs-translation">Ist dieser Picknicktisch überdacht (vor Regen geschützt)?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_playground_access_title" xml:space="preserve">
@@ -251,6 +256,7 @@
       </trans-unit>
       <trans-unit id="quest_shop_vacant_type_title" xml:space="preserve">
         <source>This shop has been vacant. What’s here now?</source>
+        <target>Dieser Laden stand leer. Was ist hier jetzt?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_sidewalk_title" xml:space="preserve">
@@ -1363,6 +1369,7 @@ Es ist eine fortgeschrittene Operation, die nur durchgeführt werden sollte, wen
       </trans-unit>
       <trans-unit id="Restrict" xml:space="preserve">
         <source>Restrict</source>
+        <target state="needs-translation">Einschränken</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Restriction: %@" xml:space="preserve">
