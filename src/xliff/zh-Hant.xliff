@@ -232,86 +232,107 @@
       </trans-unit>
       <trans-unit id="quest_recycling_glass_title" xml:space="preserve">
         <source>Can only glass bottles and jars be recycled here, or any type of glass?</source>
+        <target>只有玻璃瓶罐可以在這邊回收，還是其他的玻璃？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_recycling_materials_title" xml:space="preserve">
         <source>What can be left here for recycling?</source>
+        <target>這裡可以回收什麼？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_recycling_type_title" xml:space="preserve">
         <source>What type of recycling facility is this?</source>
+        <target>這是什麼類型的回收設施？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_religion_for_wayside_shrine_title" xml:space="preserve">
         <source>What religion is represented at this shrine?</source>
+        <target>這間廟是那個宗教的？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_segregated_title" xml:space="preserve">
         <source>How are the footway and cycleway laid out here?</source>
+        <target>步道與單車道的型式是？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_shop_vacant_type_title" xml:space="preserve">
         <source>This shop has been vacant. What’s here now?</source>
+        <target>這間店已經空了，現在是什麼呢？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_sidewalk_title" xml:space="preserve">
         <source>Does this street have a sidewalk?</source>
+        <target>這條路有人行道嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_step_count_title" xml:space="preserve">
         <source>How many steps are here?</source>
+        <target>這階梯有幾階呢？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_steps_incline_title" xml:space="preserve">
         <source>Which direction leads upwards for these steps?</source>
+        <target>這些階梯通往那個方向？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_steps_ramp_title" xml:space="preserve">
         <source>Do these steps have a ramp? What kind?</source>
+        <target>這些階梯有坡道嗎？哪一種？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_stile_type_title" xml:space="preserve">
         <source>What type of stile is this?</source>
+        <target>這是什麼類型的柱子？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_summit_register_title" xml:space="preserve">
         <source>Is there a summit register at %s?</source>
+        <target>這裡有 %s 註冊的峰會嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_tactile_paving_kerb_title" xml:space="preserve">
         <source>Is there tactile paving on this curb here?</source>
+        <target>這裡的路邊有盲人人行鋪路嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_toiletsFee_title" xml:space="preserve">
         <source>Do you have to pay to use this restroom?</source>
+        <target>你需要付費用這廁所嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_tracktype_title" xml:space="preserve">
         <source>What is the surface firmness of this track?</source>
+        <target>這條賽道的表面硬度如何？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_traffic_calming_type_title" xml:space="preserve">
         <source>What type of traffic calming is this?</source>
+        <target>這邊是那種型態的交通寧靜？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_traffic_signals_button_title" xml:space="preserve">
         <source>Do these traffic lights have a button to request a walk signal?</source>
+        <target>這個交通號誌有按鈕來要求人行訊號？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_traffic_signals_sound_title" xml:space="preserve">
         <source>Are there sound signals for the blind here?</source>
+        <target>這裡有盲人用的聲音信號嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_traffic_signals_vibrate_title" xml:space="preserve">
         <source>Do these traffic lights have a tactile indication for blind people for when it’s safe to cross?</source>
+        <target>這些交通號誌是否有盲人可以安全通過的觸覺指示？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_wheelchairAccess_outside_title" xml:space="preserve">
         <source>Is this place wheelchair accessible?</source>
+        <target>這個地方是無障礙可及的嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_wheelchairAccess_toiletsPart_title" xml:space="preserve">
         <source>Is the restroom at %s wheelchair accessible?</source>
+        <target>這間在 %s 的廁所是否是無障礙可及？</target>
         <note/>
       </trans-unit>
     </body>
@@ -323,6 +344,7 @@
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
         <source>Position your device parallel to the direction of the object.</source>
+        <target>將您的設備與物體的方向平行放置。</target>
         <note>Class = "UILabel"; text = "Position your device parallel to the direction of the object."; ObjectID = "4vY-m2-xMW";</note>
       </trans-unit>
       <trans-unit id="Jc3-Um-Aiy.text" xml:space="preserve">
@@ -335,6 +357,7 @@
       </trans-unit>
       <trans-unit id="exg-Jc-FOH.normalTitle" xml:space="preserve">
         <source>Cancel</source>
+        <target>取消</target>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "exg-Jc-FOH";</note>
       </trans-unit>
       <trans-unit id="vtk-nS-Ss4.text" xml:space="preserve">
@@ -379,6 +402,7 @@
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
         <source>Copyright 2012-2021 Bryce Cogswell</source>
+        <target>版權所有 2012-2021 Bryce Cogswell</target>
         <note>Copyright (human-readable)</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
@@ -393,6 +417,7 @@
       </trans-unit>
       <trans-unit id="NSLocationUsageDescription" xml:space="preserve">
         <source>Enabling location services allows the app to display objects in your vicinity. This allows you to easily update or add data you survey yourself.</source>
+        <target>允許位置服務來讓 app 顯示你附近的物件。這讓你很容易在探查時更新或新增資料。</target>
         <note>Privacy - Location Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationWhenInUseUsageDescription" xml:space="preserve">
@@ -549,6 +574,7 @@
       </trans-unit>
       <trans-unit id="Accept" xml:space="preserve">
         <source>Accept</source>
+        <target>接受</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
@@ -618,6 +644,7 @@
       </trans-unit>
       <trans-unit id="Back" xml:space="preserve">
         <source>Back</source>
+        <target>返回</target>
         <note>back button</note>
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
@@ -794,6 +821,7 @@
       </trans-unit>
       <trans-unit id="Database error" xml:space="preserve">
         <source>Database error</source>
+        <target>資料庫錯誤</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Delete" xml:space="preserve">
@@ -810,6 +838,7 @@
       </trans-unit>
       <trans-unit id="Delete %@?" xml:space="preserve">
         <source>Delete %@?</source>
+        <target>刪除 %@ ？</target>
         <note>Confirm deleting a node/way</note>
       </trans-unit>
       <trans-unit id="Delete completely" xml:space="preserve">
@@ -839,6 +868,7 @@
       </trans-unit>
       <trans-unit id="Distance: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Distance: %1$@ ± %2$@ meters</source>
+        <target>距離：%1$@ ± %2$@ 公尺</target>
         <note>Distance to an object with an error value</note>
       </trans-unit>
       <trans-unit id="Done" xml:space="preserve">
@@ -932,6 +962,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Height: %1$@ ± %2$@ meters</source>
+        <target>高度：%1$@ ± %2$@ 公尺</target>
         <note>Height of an object with an error value</note>
       </trans-unit>
       <trans-unit id="I'll do it!" xml:space="preserve">
@@ -1046,6 +1077,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Measure Direction" xml:space="preserve">
         <source>Measure Direction</source>
+        <target>量測方向</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Member of multipolygon relation" xml:space="preserve">
@@ -1276,6 +1308,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Pasting %@ characters, maximum tag length is 255" xml:space="preserve">
         <source>Pasting %@ characters, maximum tag length is 255</source>
+        <target>貼上 %@ 字元，最大標籤長度是 255</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)" xml:space="preserve">
@@ -1375,6 +1408,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Retry" xml:space="preserve">
         <source>Retry</source>
+        <target>重試</target>
         <note>retry opening hours recognition</note>
       </trans-unit>
       <trans-unit id="Reverse" xml:space="preserve">
@@ -1440,6 +1474,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." xml:space="preserve">
         <source>Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.</source>
+        <target>當恢復資料時發生錯誤，任何暫存的變動都遺失了，抱歉。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Sorry, an error occurred while loading the GPX file" xml:space="preserve">
@@ -1559,6 +1594,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="This device is not able to provide heading data." xml:space="preserve">
         <source>This device is not able to provide heading data.</source>
+        <target>這個裝置無法提供方向資料。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
@@ -1607,6 +1643,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Type" xml:space="preserve">
         <source>Type</source>
+        <target>種類</target>
         <note>The 'Type' header in Common Tags</note>
       </trans-unit>
       <trans-unit id="U-Turn from %@ allowed" xml:space="preserve">
@@ -1651,6 +1688,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Update '%@' tag" xml:space="preserve">
         <source>Update '%@' tag</source>
+        <target>更新 '%@' 標籤</target>
         <note>Update the named tag value (e.g. foo=*)</note>
       </trans-unit>
       <trans-unit id="Updating Note..." xml:space="preserve">
@@ -1943,14 +1981,17 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
         <source>OK</source>
+        <target>OK</target>
         <note>Class = "UIButton"; normalTitle = "OK"; ObjectID = "05z-LH-xEK";</note>
       </trans-unit>
       <trans-unit id="Zxw-Em-faC.normalTitle" xml:space="preserve">
         <source>Cancel</source>
+        <target>取消</target>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "Zxw-Em-faC";</note>
       </trans-unit>
       <trans-unit id="cy3-gz-fvk.text" xml:space="preserve">
         <source>Go Map!! will open at the location the photo was taken.</source>
+        <target>Go Map!! 會開啟照片拍攝的地點。</target>
         <note>Class = "UILabel"; text = "Go Map!! will open at the location the photo was taken."; ObjectID = "cy3-gz-fvk";</note>
       </trans-unit>
     </body>
@@ -1977,14 +2018,17 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="Processing data..." xml:space="preserve">
         <source>Processing data...</source>
+        <target>處理資料...</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The URL content isn't recognized." xml:space="preserve">
         <source>The URL content isn't recognized.</source>
+        <target>URL 內容無法辨識。</target>
         <note>Error message when sharing a URL to Go Map!!</note>
       </trans-unit>
       <trans-unit id="Unfortunately the selected image does not contain location information." xml:space="preserve">
         <source>Unfortunately the selected image does not contain location information.</source>
+        <target>不幸的是選取的影像並沒有位置資訊。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>
@@ -2081,6 +2125,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="Fe2-dc-zgA.placeholder" xml:space="preserve">
         <source>designated</source>
+        <target>指定的</target>
         <note>Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="G5R-oP-lp3.title" xml:space="preserve">
@@ -2100,6 +2145,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="IcU-k2-G0m.normalTitle" xml:space="preserve">
         <source>&gt;</source>
+        <target>&gt;</target>
         <note>Class = "UIButton"; normalTitle = "&gt;"; ObjectID = "IcU-k2-G0m";</note>
       </trans-unit>
       <trans-unit id="JAT-qD-dTS.text" xml:space="preserve">
@@ -2179,6 +2225,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="XJZ-vI-jat.text" xml:space="preserve">
         <source>PROTOTYPE CELLS</source>
+        <target>原型細胞</target>
         <note>Class = "UILabel"; text = "PROTOTYPE CELLS"; ObjectID = "XJZ-vI-jat";</note>
       </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
@@ -2188,6 +2235,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="aCs-vS-YXj.placeholder" xml:space="preserve">
         <source>ref</source>
+        <target>編號</target>
         <note>Class = "UITextField"; placeholder = "ref"; ObjectID = "aCs-vS-YXj"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="aLi-Vs-z0k.title" xml:space="preserve">
@@ -2232,6 +2280,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
         <source>clean</source>
+        <target>清除</target>
         <note>Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
@@ -2306,10 +2355,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="oC6-w7-cwN.placeholder" xml:space="preserve">
         <source>leashed</source>
+        <target>拴著的</target>
         <note>Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="okh-JP-aKZ.placeholder" xml:space="preserve">
         <source>park</source>
+        <target>公園</target>
         <note>Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="omf-S9-Yjq.text" xml:space="preserve">
@@ -2922,6 +2973,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="TcP-6i-B8H.text" xml:space="preserve">
         <source>Specify a name ("New York"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object ("way 51014987"):</source>
+        <target>請提定名字 ("紐約")，含有經緯度的網址，或是 OSM 物件的編號 ("路徑 51014987")：</target>
         <note>Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H";</note>
       </trans-unit>
       <trans-unit id="VNE-ee-a7u.text" xml:space="preserve">
