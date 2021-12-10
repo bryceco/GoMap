@@ -22,6 +22,7 @@
       </trans-unit>
       <trans-unit id="quest_barrier_type_title" xml:space="preserve">
         <source>What type of barrier is this?</source>
+        <target>這是什麼類型的障礙？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bench_backrest_title" xml:space="preserve">
@@ -56,26 +57,32 @@
       </trans-unit>
       <trans-unit id="quest_board_type_title" xml:space="preserve">
         <source>What is the topic of this information board?</source>
+        <target>這是什麼種類的資訊看板？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bridge_structure_title" xml:space="preserve">
         <source>What is the structure of this bridge?</source>
+        <target>這橋樑是什麼結構？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_buildingType_title" xml:space="preserve">
         <source>What kind of building is this?</source>
+        <target>這是什麼種類的建築？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_camera_type_title" xml:space="preserve">
         <source>What type of surveillance camera is this?</source>
+        <target>這是什麼類型的監視器？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_charging_station_operator_title" xml:space="preserve">
         <source>Who is the operator of this charging station?</source>
+        <target>這個充電站的經營者是誰？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_clothes_container_operator_title" xml:space="preserve">
         <source>Who accepts donations for this clothing bin?</source>
+        <target>誰接受這個舊衣回收箱？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_construction_building_title" xml:space="preserve">
@@ -100,102 +107,127 @@
       </trans-unit>
       <trans-unit id="quest_dietType_kosher_name_title" xml:space="preserve">
         <source>Does %s offer kosher products?</source>
+        <target>%s 提供猶太食品嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_vegan_name_title" xml:space="preserve">
         <source>Does %s have vegan meals on the menu?</source>
+        <target>%s 的菜單有維根嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_vegetarian_name_title" xml:space="preserve">
         <source>Does %s have vegetarian meals on the menu?</source>
+        <target>%s 菜單上有素食嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_drinking_water_title" xml:space="preserve">
         <source>Is the water potable here? (%s)</source>
+        <target>這裡的水可以喝嗎？(%s)</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_fireHydrant_diameter_title" xml:space="preserve">
         <source>What diameter is on this fire hydrant’s sign?</source>
+        <target>消防栓標誌標示的直徑是多少？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_fireHydrant_type_title" xml:space="preserve">
         <source>What kind of fire hydrant is this?</source>
+        <target>這是什麼類型的消防栓？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_footwayPartSurface_title" xml:space="preserve">
         <source>What’s the surface of the footway here?</source>
+        <target>這邊步道的材質是？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_generalFee_title" xml:space="preserve">
         <source>Do you need to pay to enter %s?</source>
+        <target>你需要付費才能進去 %s 嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_handrail_title" xml:space="preserve">
         <source>Do these steps have a handrail?</source>
+        <target>這些階梯有扶手嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_internet_access_name_title" xml:space="preserve">
         <source>What kind of Internet connection does %s offer?</source>
+        <target>%s 提供何種網路連線呢？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_is_defibrillator_inside_title" xml:space="preserve">
         <source>Is this defibrillator (AED) inside a building?</source>
+        <target>這除顫器 (AED) 在建築裡面嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_kerb_height_title" xml:space="preserve">
         <source>What is the height of this curb?</source>
+        <target>這路綠坡道有多高？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_lanes_title" xml:space="preserve">
         <source>How many lanes for cars does this road have?</source>
+        <target>這條路給車子有幾線？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_leafType_title" xml:space="preserve">
         <source>Do the trees here have needles or leaves?</source>
+        <target>這樹是針葉還是葉子？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_maxweight_title" xml:space="preserve">
         <source>What is the weight limit here?</source>
+        <target>這邊的重量上限是多少？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_motorcycleParkingCapacity_title" xml:space="preserve">
         <source>How many motorcycles can be parked here?</source>
+        <target>這裡可以停多少輛機車？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_motorcycleParkingCoveredStatus_title" xml:space="preserve">
         <source>Is this motorcycle parking covered (protected from rain)?</source>
+        <target>這個機車停車場有遮蓋嗎 (能夠遮雨)？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_parkingType_title" xml:space="preserve">
         <source>What kind of parking is this?</source>
+        <target>這是什麼類型的停車場？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_parking_access_title" xml:space="preserve">
         <source>Is it restricted who may park here?</source>
+        <target>有限制誰可以停在這裡？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_parking_fee_title" xml:space="preserve">
         <source>Do you have to pay to park here?</source>
+        <target>停在這裡需要付費嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_picnicTableCover_title" xml:space="preserve">
         <source>Is this picnic table covered (protected from rain)?</source>
+        <target>這個野餐桌有遮蓋嗎 (能夠遮雨)？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_playground_access_title" xml:space="preserve">
         <source>Is this playground publicly accessible?</source>
+        <target>這個遊樂場是公共可及的嗎？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_policeType_title" xml:space="preserve">
         <source>Which type of police station is this?</source>
+        <target>這是什麼類型的警察局？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_postboxRoyalCypher_title" xml:space="preserve">
         <source>What is the royal cypher on this postbox?</source>
+        <target>這個郵筒的皇家編號是多少？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_powerPolesMaterial_title" xml:space="preserve">
         <source>What is the material of this power or utility pole?</source>
+        <target>這個電力或是設施桿是什麼材質？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_recycling_glass_title" xml:space="preserve">
