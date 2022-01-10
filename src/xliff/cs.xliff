@@ -142,7 +142,7 @@
       </trans-unit>
       <trans-unit id="quest_generalFee_title" xml:space="preserve">
         <source>Do you need to pay to enter %s?</source>
-        <target>Je zde poplatek pro vstup do  %s?</target>
+        <target>Je zde poplatek pro vstup do %s?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_handrail_title" xml:space="preserve">
@@ -267,7 +267,7 @@
       </trans-unit>
       <trans-unit id="quest_step_count_title" xml:space="preserve">
         <source>How many steps are here?</source>
-        <target>Kolik je tu schodů</target>
+        <target>Kolik je tu schodů?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_steps_incline_title" xml:space="preserve">
@@ -2280,6 +2280,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
         <source>clean</source>
+        <target>clean</target>
         <note>Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
@@ -2358,6 +2359,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="okh-JP-aKZ.placeholder" xml:space="preserve">
         <source>park</source>
+        <target>park</target>
         <note>Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="omf-S9-Yjq.text" xml:space="preserve">
