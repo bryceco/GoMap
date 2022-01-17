@@ -7,34 +7,42 @@
     <body>
       <trans-unit id="quest_address_street_title" xml:space="preserve">
         <source>What street does the (house) number %s belong to?</source>
+        <target>Di jalan manakah nomor (rumah) %s berada?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_address_title" xml:space="preserve">
         <source>What is the house number of this building?</source>
+        <target>Berapa nomor rumah gedung ini?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_atm_operator_title" xml:space="preserve">
         <source>What’s the name of the bank for this ATM?</source>
+        <target>Apa nama bank untuk ATM ini?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_barrier_type_title" xml:space="preserve">
         <source>What type of barrier is this?</source>
+        <target>Jenis penghalang apa ini?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bench_backrest_title" xml:space="preserve">
         <source>Does this bench have a backrest?</source>
+        <target>Apakah bangku ini memiliki sandaran?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bicycleParkingCoveredStatus_title" xml:space="preserve">
         <source>Is this bicycle parking covered (protected from rain)?</source>
+        <target>Apakah parkir sepeda ini tertutup (terlindung dari hujan)?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bicycle_parking_access_title" xml:space="preserve">
         <source>Is it restricted who may park a bike here?</source>
+        <target>Apakah dibatasi siapa yang boleh memarkir sepeda di sini?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bicycle_parking_fee_title" xml:space="preserve">
         <source>Do you have to pay to park a bike here?</source>
+        <target>Apakah Anda harus membayar untuk memarkir sepeda di sini?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bicycle_parking_type_title" xml:space="preserve">
@@ -1128,6 +1136,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Only ways/multipolygons can be rotated" xml:space="preserve">
         <source>Only ways/multipolygons can be rotated</source>
+        <target>Hanya jalan/multipoligon yang bisa diputar</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Open Settings" xml:space="preserve">
@@ -1147,6 +1156,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Pasting %@ characters, maximum tag length is 255" xml:space="preserve">
         <source>Pasting %@ characters, maximum tag length is 255</source>
+        <target>Menempelkan %@ karakter, panjang tag maksimum adalah 255</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)" xml:space="preserve">
@@ -1171,6 +1181,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Previous Tracks" xml:space="preserve">
         <source>Previous Tracks</source>
+        <target>Lajur Sebelumnya</target>
         <note>previous GPX track</note>
       </trans-unit>
       <trans-unit id="Purge" xml:space="preserve">
@@ -1180,15 +1191,17 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." xml:space="preserve">
         <source>Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap.</source>
-        <target>Menilai aplikasi ini membuat lebih mudah penyunting peta lain untuk menemukannya dan meningkatkan visibilitas OpenStreetMap.</target>
+        <target>Nilai aplikasi ini supaya memudahkan penyunting peta lain untuk menemukannya dan meningkatkan visibilitas OpenStreetMap.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Recent Aerial Imagery" xml:space="preserve">
         <source>Recent Aerial Imagery</source>
+        <target>Citra Udara Terbaru</target>
         <note>Alert title message</note>
       </trans-unit>
       <trans-unit id="Redo" xml:space="preserve">
         <source>Redo</source>
+        <target>Mengulangi</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation Attributes" xml:space="preserve">
@@ -1203,6 +1216,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Relation: %@" xml:space="preserve">
         <source>Relation: %@</source>
+        <target>Relasi: %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relations" xml:space="preserve">
@@ -1212,10 +1226,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Replace Tags" xml:space="preserve">
         <source>Replace Tags</source>
+        <target>Ganti Tag</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Requires a closed way with at least 3 nodes" xml:space="preserve">
         <source>Requires a closed way with at least 3 nodes</source>
+        <target>Membutuhkan jalan tertutup dengan setidaknya 3 node</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Requires a closed way with at least 4 nodes" xml:space="preserve">
@@ -1239,10 +1255,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Retry" xml:space="preserve">
         <source>Retry</source>
+        <target>Coba lagi</target>
         <note>retry opening hours recognition</note>
       </trans-unit>
       <trans-unit id="Reverse" xml:space="preserve">
         <source>Reverse</source>
+        <target>Balik</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Right" xml:space="preserve">
@@ -1298,10 +1316,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Show Recent Items" xml:space="preserve">
         <source>Show Recent Items</source>
+        <target>Tampilkan Item Terbaru</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." xml:space="preserve">
         <source>Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.</source>
+        <target>Ada yang tidak beres ketika mencoba memulihkan data Anda. Setiap perubahan yang tertunda telah hilang. Maaf.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Sorry, an error occurred while loading the GPX file" xml:space="preserve">
@@ -1316,6 +1336,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Standard imagery" xml:space="preserve">
         <source>Standard imagery</source>
+        <target>Citra standar</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Start" xml:space="preserve">
@@ -1345,6 +1366,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="The XML is improperly formed" xml:space="preserve">
         <source>The XML is improperly formed</source>
+        <target>XML tidak terbentuk dengan benar</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The current location cannot be determined: " xml:space="preserve">
@@ -1354,6 +1376,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="The merged nodes contain conflicting tags" xml:space="preserve">
         <source>The merged nodes contain conflicting tags</source>
+        <target>Node yang digabungkan berisi tag yang saling bertentangan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The nodes have conflicting roles in parent relations" xml:space="preserve">
@@ -1599,6 +1622,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="added to multipolygon relation" xml:space="preserve">
         <source>added to multipolygon relation</source>
+        <target>ditambahkan ke relasi multipoligon</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="computing size..." xml:space="preserve">
@@ -1608,6 +1632,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="create node" xml:space="preserve">
         <source>create node</source>
+        <target>buat node</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="create relation" xml:space="preserve">
@@ -1622,14 +1647,17 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="create way" xml:space="preserve">
         <source>create way</source>
+        <target>buat jalan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete multipolygon" xml:space="preserve">
         <source>delete multipolygon</source>
+        <target>hapus multipoligon</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete node" xml:space="preserve">
         <source>delete node</source>
+        <target>hapus node</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete node from way" xml:space="preserve">
@@ -1709,6 +1737,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="vintage %@ - %@" xml:space="preserve">
         <source>vintage %1$@ - %2$@</source>
+        <target>antik %1$@ - %2$@</target>
         <note>Years aerial imagery was created</note>
       </trans-unit>
       <trans-unit id="way %@" xml:space="preserve">
@@ -1751,6 +1780,7 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
         <source>OK</source>
+        <target>OK</target>
         <note>Class = "UIButton"; normalTitle = "OK"; ObjectID = "05z-LH-xEK";</note>
       </trans-unit>
       <trans-unit id="Zxw-Em-faC.normalTitle" xml:space="preserve">
@@ -1786,6 +1816,7 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="Processing data..." xml:space="preserve">
         <source>Processing data...</source>
+        <target>Memproses data...</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The URL content isn't recognized." xml:space="preserve">
@@ -1794,6 +1825,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="Unfortunately the selected image does not contain location information." xml:space="preserve">
         <source>Unfortunately the selected image does not contain location information.</source>
+        <target>Sayangnya gambar yang dipilih tidak mengandung informasi lokasi.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>
