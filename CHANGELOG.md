@@ -2,7 +2,7 @@
 
 ## 3.1.0
 
-- All Tags now has a Feature picker
+- 'All Tags' tab now has a Feature picker
 - Supports double-tap and drag for zooming
 - Aerial imagery providers now highlight "best" layers
 - Fixes issues with autocomplete
@@ -29,7 +29,7 @@
 
 - Updated translations, presets, and name suggestion index
 - New Yes/No switches for boolean presets
-- Multi-Combo presets (such as "Diet Types" are now presented in prettier and more compact manner
+- Multi-Combo presets (such as "Diet Types") are now presented in prettier and more compact manner
 - Various bug fixes
 - Drops support for iOS 9
 
@@ -56,14 +56,14 @@ Fixes a bug causing the map location to reset on older devices
 
 - Bug fixes
 - Support brand name suggestions
-- Redesign of All Tags view
+- Redesign of 'All Tags' view
 - Performance improvements
 - Many small Ul improvements
 
 ## 1.7.1
 
 - Fixes an issue where presets for a feature were not correctly populated.
-- Adds Beta testing & GitHub information to Contact Us
+- Adds Beta testing & GitHub information to 'Contact Us'
 
 ## 1.7.0
 
@@ -92,14 +92,14 @@ Fixes a crash when editing a multipolygon that is only partially downloaded.
 
 Bug fixes:
 
-- payment:* and service:* tags incorrectly formatted
+-`payment:*` and `service:*` tags incorrectly formatted
 - crash when a relation contains itself as a member
 
 ## 1.5.1
 
 - Updated for iOS 11 and iPhone X
 - Updated presets
-- Multilingual presets (select language in Settings pane)
+- Multilingual presets (select language in 'Settings' pane)
 - Turn restriction editor
 - Duplicate and rotate objects
 - Record GPX tracks in the background
@@ -112,7 +112,7 @@ Bug fixes:
 
 - Updated for iOS 11 and iPhone X
 - Updated presets
-- Multilingual presets (select language in Settings pane)
+- Multilingual presets (select language in 'Settings' pane)
 - Turn restriction editor
 - Duplicate and rotate objects
 - Record GPX tracks in the background
