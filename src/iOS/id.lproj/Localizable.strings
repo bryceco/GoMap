@@ -54,6 +54,9 @@
 "Add Note" = "Tambahkan Catatan";
 
 /* No comment provided by engineer. */
+"added to multipolygon relation" = "ditambahkan ke relasi multipoligon";
+
+/* No comment provided by engineer. */
 "All choices" = "Semua pilihan";
 
 /* No comment provided by engineer. */
@@ -99,6 +102,9 @@
 "Create\n" = "Buat\n";
 
 /* No comment provided by engineer. */
+"create node" = "buat node";
+
+/* No comment provided by engineer. */
 "create relation" = "buat hubungan";
 
 /* Edit action */
@@ -109,6 +115,9 @@
 
 /* No comment provided by engineer. */
 "create turn restriction" = "buat batasan belokan";
+
+/* No comment provided by engineer. */
+"create way" = "buat jalan";
 
 /* Edit action */
 "Delete" = "Hapus";
@@ -121,6 +130,12 @@
 
 /* No comment provided by engineer. */
 "Delete failed" = "Penghapusan gagal";
+
+/* No comment provided by engineer. */
+"delete multipolygon" = "hapus multipoligon";
+
+/* No comment provided by engineer. */
+"delete node" = "hapus node";
 
 /* No comment provided by engineer. */
 "delete object from relation" = "hapus obyek dari hubungan";
@@ -276,6 +291,9 @@
 /* No comment provided by engineer. */
 "OK" = "Oke";
 
+/* No comment provided by engineer. */
+"Only ways/multipolygons can be rotated" = "Hanya jalan/multipoligon yang bisa diputar";
+
 /* Open the iOS Settings app */
 "Open Settings" = "Buka Pengaturan";
 
@@ -289,6 +307,9 @@
 "Paste" = "Tempel";
 
 /* No comment provided by engineer. */
+"Pasting %@ characters, maximum tag length is 255" = "Menempelkan %@ karakter, panjang tag maksimum adalah 255";
+
+/* No comment provided by engineer. */
 "Pasting %ld tag(s)" = "Menempel %ld tag";
 
 /* No comment provided by engineer. */
@@ -300,11 +321,20 @@
 /* No comment provided by engineer. */
 "Previous" = "Sebelumnya";
 
+/* previous GPX track */
+"Previous Tracks" = "Lajur Sebelumnya";
+
 /* Discard editing changes when resetting OSM data cache */
 "Purge" = "Bersihkan";
 
 /* No comment provided by engineer. */
-"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "Menilai aplikasi ini membuat lebih mudah penyunting peta lain untuk menemukannya dan meningkatkan visibilitas OpenStreetMap.";
+"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "Nilai aplikasi ini supaya memudahkan penyunting peta lain untuk menemukannya dan meningkatkan visibilitas OpenStreetMap.";
+
+/* Alert title message */
+"Recent Aerial Imagery" = "Citra Udara Terbaru";
+
+/* No comment provided by engineer. */
+"Redo" = "Mengulangi";
 
 /* No comment provided by engineer. */
 "relation" = "hubungan";
@@ -316,7 +346,16 @@
 "Relation Tags" = "Tag-tag Hubungan";
 
 /* No comment provided by engineer. */
+"Relation: %@" = "Relasi: %@";
+
+/* No comment provided by engineer. */
 "Relations" = "Hubungan-hubungan";
+
+/* No comment provided by engineer. */
+"Replace Tags" = "Ganti Tag";
+
+/* No comment provided by engineer. */
+"Requires a closed way with at least 3 nodes" = "Membutuhkan jalan tertutup dengan setidaknya 3 node";
 
 /* Edit action */
 "Restrict" = "Batasi";
@@ -326,6 +365,12 @@
 
 /* country name,2-character country code */
 "Results for %@ (%@)" = "Hasil untuk %1$@ (%2$@)";
+
+/* retry opening hours recognition */
+"Retry" = "Coba lagi";
+
+/* Edit action */
+"Reverse" = "Balik";
 
 /* No comment provided by engineer. */
 "Right" = "Kanan";
@@ -362,10 +407,19 @@
 "Share" = "Bagikan";
 
 /* No comment provided by engineer. */
+"Show Recent Items" = "Tampilkan Item Terbaru";
+
+/* No comment provided by engineer. */
+"Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." = "Ada yang tidak beres ketika mencoba memulihkan data Anda. Setiap perubahan yang tertunda telah hilang. Maaf.";
+
+/* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "Maaf, sebuah kesalahan terjadi ketika memuat berkas GPX";
 
 /* Edit action */
 "Split" = "Pisahkan";
+
+/* No comment provided by engineer. */
+"Standard imagery" = "Citra standar";
 
 /* Begin downloading tiles */
 "Start" = "Mulai";
@@ -384,6 +438,12 @@
 
 /* No comment provided by engineer. */
 "The current location cannot be determined: " = "Lokasi saat ini tidak dapat ditentukan: ";
+
+/* No comment provided by engineer. */
+"The merged nodes contain conflicting tags" = "Node yang digabungkan berisi tag yang saling bertentangan";
+
+/* No comment provided by engineer. */
+"The XML is improperly formed" = "XML tidak terbentuk dengan benar";
 
 /* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "Tindakan ini memerlukan GPS yang diaktifkan";
@@ -438,6 +498,9 @@
 
 /* OSM object versioh */
 "Version" = "Versi";
+
+/* Years aerial imagery was created */
+"vintage %@ - %@" = "antik %1$@ - %2$@";
 
 /* No comment provided by engineer. */
 "Warning" = "Peringatan";

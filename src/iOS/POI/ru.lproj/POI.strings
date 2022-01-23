@@ -100,6 +100,9 @@
 /* Class = "UINavigationItem"; title = "Attributes"; ObjectID = "hKU-EH-qxp"; */
 "hKU-EH-qxp.title" = "Атрибуты";
 
+/* Class = "UIButton"; normalTitle = ">"; ObjectID = "IcU-k2-G0m"; */
+"IcU-k2-G0m.normalTitle" = ">";
+
 /* Class = "UILabel"; text = "Changeset"; ObjectID = "ijx-N9-1eO"; */
 "ijx-N9-1eO.text" = "Пакет правок";
 

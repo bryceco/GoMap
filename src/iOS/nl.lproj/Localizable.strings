@@ -574,6 +574,9 @@
 "Paste" = "Plakken";
 
 /* No comment provided by engineer. */
+"Pasting %@ characters, maximum tag length is 255" = "%@ tekens plakken, maximale tag lengte is 255";
+
+/* No comment provided by engineer. */
 "Pasting %ld tag(s)" = "%ld tag(s) plakken";
 
 /* No comment provided by engineer. */

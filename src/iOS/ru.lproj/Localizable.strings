@@ -577,6 +577,9 @@
 "Paste" = "Вставить";
 
 /* No comment provided by engineer. */
+"Pasting %@ characters, maximum tag length is 255" = "Вставка %@ символов, максимальная длина тега 255";
+
+/* No comment provided by engineer. */
 "Pasting %ld tag(s)" = "Вставка %ld тегов";
 
 /* No comment provided by engineer. */

@@ -1,0 +1,96 @@
+/* (No Comment) */
+"quest_address_title" = "Vad har den här byggnaden för husnummer?";
+
+/* (No Comment) */
+"quest_atm_operator_title" = "Vad heter banken för denna bankomat?";
+
+/* (No Comment) */
+"quest_barrier_type_title" = "Vad för slags hinder är detta?";
+
+/* (No Comment) */
+"quest_bench_backrest_title" = "Har den här bänken ett ryggstöd?";
+
+/* (No Comment) */
+"quest_bicycle_parking_access_title" = "Är det begränsat vem som får parkera en cykel här?";
+
+/* (No Comment) */
+"quest_bicycle_parking_fee_title" = "Måste man betala för att parkera en cykel här?";
+
+/* (No Comment) */
+"quest_bicycle_parking_type_title" = "Vad för slags cykelparkering är det här?";
+
+/* (No Comment) */
+"quest_bicycleParkingCoveredStatus_title" = "Är det tak över den här cykelparkeringen?";
+
+/* (No Comment) */
+"quest_bikeParkingCapacity_title" = "Hur många cyklar kan parkeras här?";
+
+/* (No Comment) */
+"quest_board_type_title" = "Vad handlar denna informationstavla om?";
+
+/* (No Comment) */
+"quest_bridge_structure_title" = "Vad för slags bro är det här?";
+
+/* (No Comment) */
+"quest_buildingType_title" = "Vilken typ av byggnad är detta?";
+
+/* (No Comment) */
+"quest_camera_type_title" = "Vad är det här för typ av övervakningskamera?";
+
+/* (No Comment) */
+"quest_charging_station_operator_title" = "Vem är operatören för denna laddstation?";
+
+/* (No Comment) */
+"quest_clothes_container_operator_title" = "Vem accepterar donationer för denna klädkorg?";
+
+/* (No Comment) */
+"quest_construction_building_title" = "Är den här byggnaden färdigställd?";
+
+/* (No Comment) */
+"quest_crossing_type_title" = "Vilken typ av övergångsställe är det här?";
+
+/* (No Comment) */
+"quest_cyclewayPartSurface_title" = "Vad har den här cykelvägen för underlag?";
+
+/* (No Comment) */
+"quest_dietType_halal_name_title" = "Erbjuder %s halalprodukter?";
+
+/* (No Comment) */
+"quest_dietType_kosher_name_title" = "Erbjuder %s kosherprodukter?";
+
+/* (No Comment) */
+"quest_dietType_vegan_name_title" = "Har %s veganska rätter på menyn?";
+
+/* (No Comment) */
+"quest_dietType_vegetarian_name_title" = "Har %s vegetariska rätter på menyn?";
+
+/* (No Comment) */
+"quest_drinking_water_title" = "Är vattnet drickbart här? (%s)";
+
+/* (No Comment) */
+"quest_fireHydrant_diameter_title" = "Vilken diameter står angiven för denna brandpost?";
+
+/* (No Comment) */
+"quest_fireHydrant_type_title" = "Vilken typ av brandpost är det här?";
+
+/* (No Comment) */
+"quest_footwayPartSurface_title" = "Vad har den här gångvägen för underlag?";
+
+/* (No Comment) */
+"quest_generalFee_title" = "Kostar inträde till %s?";
+
+/* (No Comment) */
+"quest_handrail_title" = "Har trappan ett räcke?";
+
+/* (No Comment) */
+"quest_internet_access_name_title" = "Vilken typ av internetuppkoppling erbjuder %s?";
+
+/* (No Comment) */
+"quest_is_defibrillator_inside_title" = "Finns det en defibrillator (hjärtstartare) i byggnaden?";
+
+/* (No Comment) */
+"quest_kerb_height_title" = "Vad är höjden på denna trottoarkant?";
+
+/* (No Comment) */
+"quest_lanes_title" = "Hur många körfält för bilar har den här vägen?";
+

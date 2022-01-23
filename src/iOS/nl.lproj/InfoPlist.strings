@@ -10,6 +10,12 @@
 /* Privacy - Bluetooth Peripheral Usage Description */
 "NSBluetoothPeripheralUsageDescription" = "Verbind met externe Bluetooth GPS-apparaten";
 
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "De camera wordt gebruikt om de hoogte van gebouwen of objecten te meten en voor tekstherkenning bij borden met openingstijden.";
+
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "Copyright 2012-2021 Bryce Cogswell";
+
 /* Privacy - Location Always and When In Use Usage Description */
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "De permanent actieve locatiebepaling staat de app toe om GPX-bestanden op te nemen wanneer deze inactief is.";
 

@@ -58,6 +58,9 @@
 /* Class = "UILabel"; text = "Title"; ObjectID = "stf-JU-iga"; */
 "stf-JU-iga.text" = "標題";
 
+/* Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H"; */
+"TcP-6i-B8H.text" = "請提定名字 (\"紐約\")，含有經緯度的網址，或是 OSM 物件的編號 (\"路徑 51014987\")：";
+
 /* Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr"; */
 "vRO-Aj-Sdr.text" = "標題";
 

@@ -80,6 +80,9 @@
 /* No comment provided by engineer. */
 "A relation the node belongs to is not fully downloaded" = "節點所屬的關係沒有全部下載完畢";
 
+/* No comment provided by engineer. */
+"Accept" = "接受";
+
 /* Add to relation */
 "Add inner member" = "新增內部成員";
 
@@ -127,6 +130,9 @@
 
 /* Automatic selection of presets languages */
 "Automatic" = "自動";
+
+/* back button */
+"Back" = "返回";
 
 /* identifies current aerial imagery */
 "Background imagery %@" = "背景影像 %@";
@@ -245,11 +251,17 @@
 /* current GPX track */
 "Current Track" = "當前的航跡";
 
+/* No comment provided by engineer. */
+"Database error" = "資料庫錯誤";
+
 /* Edit action */
 "Delete" = "刪除";
 
 /* No comment provided by engineer. */
 "Delete\n" = "刪除\n";
+
+/* Confirm deleting a node/way */
+"Delete %@?" = "刪除 %@ ？";
 
 /* No comment provided by engineer. */
 "Delete completely" = "完全刪除";
@@ -289,6 +301,9 @@
 
 /* No comment provided by engineer. */
 "Display options" = "顯示選項";
+
+/* Distance to an object with an error value */
+"Distance: %1$@ ± %2$@ meters" = "距離：%1$@ ± %2$@ 公尺";
 
 /* No comment provided by engineer. */
 "Done" = "完成";
@@ -343,6 +358,9 @@
 
 /* No comment provided by engineer. */
 "GPX Upload Failed" = "GPX 上傳失敗";
+
+/* Height of an object with an error value */
+"Height: %1$@ ± %2$@ meters" = "高度：%1$@ ± %2$@ 公尺";
 
 /* rate the app now */
 "I'll do it!" = "來吧！";
@@ -409,6 +427,9 @@
 
 /* rate the app later */
 "Maybe later..." = "可能等一下再來...";
+
+/* No comment provided by engineer. */
+"Measure Direction" = "量測方向";
 
 /* No comment provided by engineer. */
 "Member of multipolygon relation" = "複多邊形關係的成員";
@@ -556,6 +577,9 @@
 "Paste" = "貼上";
 
 /* No comment provided by engineer. */
+"Pasting %@ characters, maximum tag length is 255" = "貼上 %@ 字元，最大標籤長度是 255";
+
+/* No comment provided by engineer. */
 "Pasting %ld tag(s)" = "貼上 %ld 標籤";
 
 /* No comment provided by engineer. */
@@ -615,6 +639,9 @@
 /* country name,2-character country code */
 "Results for %@ (%@)" = "結果： %1$@ (%2$@)";
 
+/* retry opening hours recognition */
+"Retry" = "重試";
+
 /* Edit action */
 "Reverse" = "反轉方向";
 
@@ -654,6 +681,9 @@
 
 /* No comment provided by engineer. */
 "Show Recent Items" = "顯示近期的項目";
+
+/* No comment provided by engineer. */
+"Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." = "當恢復資料時發生錯誤，任何暫存的變動都遺失了，抱歉。";
 
 /* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "抱歉，讀取 GPX 檔的時候遇到錯誤";
@@ -725,6 +755,9 @@
 "This app does not yet support editing turn restrictions without a node as the 'via' member" = "本軟體尚未支援編輯無轉向節點的轉向限制關係";
 
 /* No comment provided by engineer. */
+"This device is not able to provide heading data." = "這個裝置無法提供方向資料。";
+
+/* No comment provided by engineer. */
 "To add another member to the relation 'long press' on the way to be added" = "把另一個成員加入到關係中的做法是在線段上長按就可以新增";
 
 /* No comment provided by engineer. */
@@ -747,6 +780,9 @@
 
 /* No comment provided by engineer. */
 "Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.\n\nSelect the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route." = "轉向限制關係在您抵達路口的時候會指明可以轉往哪一個方向\n\n選擇您進入路口的方向，然後點擊箭號以表示可以轉往的方向。";
+
+/* The 'Type' header in Common Tags */
+"Type" = "種類";
 
 /* No comment provided by engineer. */
 "U-Turn from %@ allowed" = "允許從 %@ 迴轉";
@@ -771,6 +807,9 @@
 
 /* update an osm note */
 "Update" = "更新";
+
+/* Update the named tag value (e.g. foo=*) */
+"Update '%@' tag" = "更新 '%@' 標籤";
 
 /* No comment provided by engineer. */
 "update relation members" = "更新關係的成員";

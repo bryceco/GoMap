@@ -552,6 +552,9 @@
 /* No comment provided by engineer. */
 "Requires a closed way with at least 4 nodes" = "Benötigt einen geschlossenen Weg mit mindestens 4 Knoten";
 
+/* Edit action */
+"Restrict" = "Einschränken";
+
 /* country name,2-character country code */
 "Results for %@ (%@)" = "Ergebnisse für %1$@ (%2$@)";
 

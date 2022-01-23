@@ -1,62 +1,198 @@
-"quest_sidewalk_title" = "這條道路有人行道嗎?";
-"quest_address_title" = "此棟建築物的門牌號碼是?";
-"quest_bikeParkingCapacity_title" = "這裡可以停幾量輛單車？";
-"quest_toiletsFee_title" = "使用這間廁所是否需要費用？";
-"quest_bicycleParkingCoveredStatus_title" = "這座單車停車場是否有遮蔽 (防止淋雨)？";
-"quest_recycling_type_title" = "這是哪一種資源回收設施？";
-"quest_fireHydrant_type_title" = "這是哪一種類的消防栓？";
-"quest_crossing_type_title" = "這是哪種交叉口?";
-"quest_parkingType_title" = "這是哪種停車場?";
-"quest_powerPolesMaterial_title" = "電線桿的材質是？";
-"quest_dietType_vegetarian_name_title" = "%s 的菜單上有素食料理嗎？";
-"quest_dietType_vegan_name_title" = "%s 的菜單上有維根料理嗎？";
-"quest_bridge_structure_title" = "這座橋樑的結構是？";
-"quest_internet_access_name_title" = "%s 提供那種網路連線呢？";
-"quest_bench_backrest_title" = "長椅是否有靠背？";
-"quest_religion_for_wayside_shrine_title" = "這座小廟是遵循那個宗教呢？";
-"quest_parking_fee_title" = "在這裡停車有費用嗎？";
-"quest_parking_access_title" = "在這裡停車有資格限制嗎？";
-"quest_bicycle_parking_type_title" = "這是那種單車停車場？";
-"quest_construction_building_title" = "這棟建築完工了嗎？";
-"quest_playground_access_title" = "這個遊樂設施對公衆開放嗎？";
-"quest_segregated_title" = "這裡的人行道和自行車道是如何編排的？";
-"quest_tracktype_title" = "這一段路徑的表面硬度為何？";
-"quest_wheelchairAccess_outside_title" = "這個地方輪椅可以進入嗎？";
-"quest_traffic_signals_button_title" = "這些紅綠燈是否有按鈕切換綠燈？";
-"quest_motorcycleParkingCapacity_title" = "這裡可以停泊多少台機車/電單車？";
-"quest_motorcycleParkingCoveredStatus_title" = "這個機車/電單車停車場屬於有蓋式嗎(可遮陽擋雨)？";
-"quest_buildingType_title" = "這棟建築物的種類是?";
-"quest_leafType_title" = "這些樹是針葉還是闊葉？";
-"quest_cyclewayPartSurface_title" = "自行車道的鋪面材質？";
-"quest_footwayPartSurface_title" = "人行步道的鋪面材質是什麼？";
-"quest_wheelchairAccess_toiletsPart_title" = "在 %s 的廁所能通行輪椅嗎？";
-"quest_maxweight_title" = "這裡的承重有上限嗎？";
-"quest_generalFee_title" = "進入 %s 需要支付費用嗎？";
-"quest_handrail_title" = "這條階梯有扶手嗎？";
-"quest_recycling_materials_title" = "這裡能拿過去那些回收物品？";
-"quest_recycling_glass_title" = "是只有玻璃瓶罐能回收，還是任何類型的玻璃？";
-"quest_address_street_title" = "房屋門牌 %s 是依靠在哪條街道上？";
-"quest_board_type_title" = "這個資訊板是什麼主題？";
-"quest_summit_register_title" = "%s? 有登山登記處嗎？";
-"quest_is_defibrillator_inside_title" = "這一個去顫器 (AED) 是在建築物裡嗎？";
-"quest_steps_incline_title" = "這階梯的方向是？";
-"quest_step_count_title" = "這裡有幾階？";
-"quest_traffic_signals_sound_title" = "這裡有引導視障人士用的輔助聲響信號嗎？";
-"quest_traffic_signals_vibrate_title" = "交通號誌是否有盲人的觸握指示，來讓人安全穿越？";
-"quest_steps_ramp_title" = "這些階梯是否有斜坡？是那種類型？";
-"quest_atm_operator_title" = "這個 ATM 的銀行名稱是？";
-"quest_clothes_container_operator_title" = "這個舊衣回收箱收集的衣服會捐給誰？";
+/* (No Comment) */
+"quest_address_street_title" = "這(門牌)號碼屬於那一條路的？";
+
+/* (No Comment) */
+"quest_address_title" = "這建築的門牌號碼是多少？";
+
+/* (No Comment) */
+"quest_atm_operator_title" = "這台自動提款機屬於哪個銀行？";
+
+/* (No Comment) */
+"quest_barrier_type_title" = "這是什麼類型的障礙？";
+
+/* (No Comment) */
+"quest_bench_backrest_title" = "這個長椅有背板嗎？";
+
+/* (No Comment) */
+"quest_bicycle_parking_access_title" = "這個地方有限制誰才能停腳踏車嗎？";
+
+/* (No Comment) */
+"quest_bicycle_parking_fee_title" = "在這裡停放腳踏車需要收費嗎？";
+
+/* (No Comment) */
+"quest_bicycle_parking_type_title" = "這是哪種類型的腳踏車停車場？";
+
+/* (No Comment) */
+"quest_bicycleParkingCoveredStatus_title" = "這座腳踏車停車場有屋頂(雨遮)嗎？";
+
+/* (No Comment) */
+"quest_bikeParkingCapacity_title" = "有多少輛單車能停在這裡？";
+
+/* (No Comment) */
+"quest_board_type_title" = "這是什麼種類的資訊看板？";
+
+/* (No Comment) */
+"quest_bridge_structure_title" = "這橋樑是什麼結構？";
+
+/* (No Comment) */
+"quest_buildingType_title" = "這是什麼種類的建築？";
+
+/* (No Comment) */
+"quest_camera_type_title" = "這是什麼類型的監視器？";
+
+/* (No Comment) */
 "quest_charging_station_operator_title" = "這個充電站的經營者是誰？";
-"quest_lanes_title" = "這條路允行車輛通行的車道數多少？";
-"quest_tactile_paving_kerb_title" = "路緣有盲人導盲舖面嗎？";
-"quest_kerb_height_title" = "路緣的高度多少？";
-"quest_shop_vacant_type_title" = "這個商家已經不在，現在這邊是做什麼的？";
-"quest_dietType_kosher_name_title" = "%s 有提供猶太教潔食產品嗎？";
-"quest_bicycle_parking_access_title" = "請問這裡有限制不能停腳踏車嗎？";
-"quest_bicycle_parking_fee_title" = "請問這裡需要付費才能停腳踏車嗎？";
-"quest_drinking_water_title" = "這裡的水質是否可以飲用？(%s)";
-"quest_postboxRoyalCypher_title" = "這個郵筒的皇家徽章是什麼？";
-"quest_barrier_type_title" = "這是什麼樣種類的障礙物？";
-"quest_policeType_title" = "這邊是什麼類型的警政單位？";
-"quest_stile_type_title" = "這是什麼類型的通行門？";
-"quest_camera_type_title" = "這是何種類型的監視鏡頭？";
+
+/* (No Comment) */
+"quest_clothes_container_operator_title" = "誰接受這個舊衣回收箱？";
+
+/* (No Comment) */
+"quest_construction_building_title" = "這棟建築完工了嗎？";
+
+/* (No Comment) */
+"quest_crossing_type_title" = "這是那種類型的穿越道？";
+
+/* (No Comment) */
+"quest_cyclewayPartSurface_title" = "這條單車道的路面是？";
+
+/* (No Comment) */
+"quest_dietType_halal_name_title" = "%s 有提供清真食品嗎？";
+
+/* (No Comment) */
+"quest_dietType_kosher_name_title" = "%s 提供猶太食品嗎？";
+
+/* (No Comment) */
+"quest_dietType_vegan_name_title" = "%s 的菜單有維根嗎？";
+
+/* (No Comment) */
+"quest_dietType_vegetarian_name_title" = "%s 菜單上有素食嗎？";
+
+/* (No Comment) */
+"quest_drinking_water_title" = "這裡的水可以喝嗎？(%s)";
+
+/* (No Comment) */
+"quest_fireHydrant_diameter_title" = "消防栓標誌標示的直徑是多少？";
+
+/* (No Comment) */
+"quest_fireHydrant_type_title" = "這是什麼類型的消防栓？";
+
+/* (No Comment) */
+"quest_footwayPartSurface_title" = "這邊步道的材質是？";
+
+/* (No Comment) */
+"quest_generalFee_title" = "你需要付費才能進去 %s 嗎？";
+
+/* (No Comment) */
+"quest_handrail_title" = "這些階梯有扶手嗎？";
+
+/* (No Comment) */
+"quest_internet_access_name_title" = "%s 提供何種網路連線呢？";
+
+/* (No Comment) */
+"quest_is_defibrillator_inside_title" = "這除顫器 (AED) 在建築裡面嗎？";
+
+/* (No Comment) */
+"quest_kerb_height_title" = "這路綠坡道有多高？";
+
+/* (No Comment) */
+"quest_lanes_title" = "這條路給車子有幾線？";
+
+/* (No Comment) */
+"quest_leafType_title" = "這樹是針葉還是葉子？";
+
+/* (No Comment) */
+"quest_maxweight_title" = "這邊的重量上限是多少？";
+
+/* (No Comment) */
+"quest_motorcycleParkingCapacity_title" = "這裡可以停多少輛機車？";
+
+/* (No Comment) */
+"quest_motorcycleParkingCoveredStatus_title" = "這個機車停車場有遮蓋嗎 (能夠遮雨)？";
+
+/* (No Comment) */
+"quest_parking_access_title" = "有限制誰可以停在這裡？";
+
+/* (No Comment) */
+"quest_parking_fee_title" = "停在這裡需要付費嗎？";
+
+/* (No Comment) */
+"quest_parkingType_title" = "這是什麼類型的停車場？";
+
+/* (No Comment) */
+"quest_picnicTableCover_title" = "這個野餐桌有遮蓋嗎 (能夠遮雨)？";
+
+/* (No Comment) */
+"quest_playground_access_title" = "這個遊樂場是公共可及的嗎？";
+
+/* (No Comment) */
+"quest_policeType_title" = "這是什麼類型的警察局？";
+
+/* (No Comment) */
+"quest_postboxRoyalCypher_title" = "這個郵筒的皇家編號是多少？";
+
+/* (No Comment) */
+"quest_powerPolesMaterial_title" = "這個電力或是設施桿是什麼材質？";
+
+/* (No Comment) */
+"quest_recycling_glass_title" = "只有玻璃瓶罐可以在這邊回收，還是其他的玻璃？";
+
+/* (No Comment) */
+"quest_recycling_materials_title" = "這裡可以回收什麼？";
+
+/* (No Comment) */
+"quest_recycling_type_title" = "這是什麼類型的回收設施？";
+
+/* (No Comment) */
+"quest_religion_for_wayside_shrine_title" = "這間廟是那個宗教的？";
+
+/* (No Comment) */
+"quest_segregated_title" = "步道與單車道的型式是？";
+
+/* (No Comment) */
+"quest_shop_vacant_type_title" = "這間店已經空了，現在是什麼呢？";
+
+/* (No Comment) */
+"quest_sidewalk_title" = "這條路有人行道嗎？";
+
+/* (No Comment) */
+"quest_step_count_title" = "這階梯有幾階呢？";
+
+/* (No Comment) */
+"quest_steps_incline_title" = "這些階梯通往那個方向？";
+
+/* (No Comment) */
+"quest_steps_ramp_title" = "這些階梯有坡道嗎？哪一種？";
+
+/* (No Comment) */
+"quest_stile_type_title" = "這是什麼類型的柱子？";
+
+/* (No Comment) */
+"quest_summit_register_title" = "這裡有 %s 註冊的峰會嗎？";
+
+/* (No Comment) */
+"quest_tactile_paving_kerb_title" = "這裡的路邊有盲人人行鋪路嗎？";
+
+/* (No Comment) */
+"quest_toiletsFee_title" = "你需要付費用這廁所嗎？";
+
+/* (No Comment) */
+"quest_tracktype_title" = "這條賽道的表面硬度如何？";
+
+/* (No Comment) */
+"quest_traffic_calming_type_title" = "這邊是那種型態的交通寧靜？";
+
+/* (No Comment) */
+"quest_traffic_signals_button_title" = "這個交通號誌有按鈕來要求人行訊號？";
+
+/* (No Comment) */
+"quest_traffic_signals_sound_title" = "這裡有盲人用的聲音信號嗎？";
+
+/* (No Comment) */
+"quest_traffic_signals_vibrate_title" = "這些交通號誌是否有盲人可以安全通過的觸覺指示？";
+
+/* (No Comment) */
+"quest_wheelchairAccess_outside_title" = "這個地方是無障礙可及的嗎？";
+
+/* (No Comment) */
+"quest_wheelchairAccess_toiletsPart_title" = "這間在 %s 的廁所是否是無障礙可及？";
+

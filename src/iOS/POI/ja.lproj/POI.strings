@@ -77,7 +77,7 @@
 "Fcv-4Q-gpE.text" = "値 3";
 
 /* Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; Note = "Do not translate"; */
-"Fe2-dc-zgA.placeholder" = "designated";
+"Fe2-dc-zgA.placeholder" = "特定種の通行禁止";
 
 /* Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Do not translate"; */
 "foC-aN-GtH.placeholder" = "クリーン";

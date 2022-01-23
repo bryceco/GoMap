@@ -2,7 +2,7 @@
 "\tRelation " = "\tRelação ";
 
 /* No comment provided by engineer. */
-"\tWay " = "\tCaminho ";
+"\tWay " = "\tLinha ";
 
 /* No comment provided by engineer. */
 " (%d members)\n" = " (%d membros)\n";
@@ -14,13 +14,13 @@
 " (node)" = " nó";
 
 /* No comment provided by engineer. */
-" (way)" = " (caminho)";
+" (way)" = " (linha)";
 
 /* No comment provided by engineer. */
 "(new object)" = "(novo objeto)";
 
 /* No comment provided by engineer. */
-"(node in way)" = "(nó na via)";
+"(node in way)" = "(nó na linha)";
 
 /* No comment provided by engineer. */
 "(node)" = "(nó)";
@@ -29,7 +29,7 @@
 "(relation %@)" = "(relação %@)";
 
 /* No comment provided by engineer. */
-"(way)" = "(via)";
+"(way)" = "(linha)";
 
 /* way length if > 10m */
 "%.0f meters, %ld nodes" = "%1$.0f metros, %2$ld nós";
@@ -44,14 +44,14 @@
 "%@ (relation)" = "%@ (relação)";
 
 /* No comment provided by engineer. */
-"%@ changeset" = "%@ conjunto de modificações";
+"%@ changeset" = "%@ conjunto de alterações";
 
 /* Always plural */
 "%@ meters" = "%@ metros";
 
 /* One or more days
    Plural number of days */
-"%ld Days" = "%ld Dias";
+"%ld Days" = "%ld dias";
 
 /* Brief synopsis of a mapper's activity (count,last active date) */
 "%ld edits, last active %@" = "%1$ld edições, última atividade %2$@";
@@ -63,22 +63,364 @@
 "%ld objects" = "%ld objetos";
 
 /* Always plural */
-"%lu tiles needed" = "%lu quadros necessários";
+"%lu tiles needed" = "%lu quadrículas necessárias";
+
+/* Location of Add Node button on the screen */
+"+ Button Position" = "Posição do botão +";
+
+/* unknown user name */
+"<unknown>" = "<desconhecido>";
+
+/* No comment provided by engineer. */
+"A GPX Track records your path as you travel along a road or trail" = "Uma trilha GPX registra seu percurso conforme você viaja ao longo de uma estrada ou caminho";
+
+/* No comment provided by engineer. */
+"A relation the node belongs to is not fully downloaded" = "Uma relação a qual o nó pertence não foi completamente baixada";
+
+/* No comment provided by engineer. */
+"Accept" = "Aceitar";
+
+/* Add to relation */
+"Add inner member" = "Adicionar membro de dentro";
+
+/* No comment provided by engineer. */
+"add node to way" = "adicionar nó à linha";
+
+/* Edit action */
+"Add Note" = "Adicionar nota";
+
+/* No comment provided by engineer. */
+"add object to relation" = "adicionar relação ao objeto";
+
+/* Add to relation */
+"Add outer member" = "Adicionar membro de fora";
+
+/* No comment provided by engineer. */
+"Add way to multipolygon?" = "Adicionar linha ao multipolígono?";
+
+/* No comment provided by engineer. */
+"added to multipolygon relation" = "adicionado à relação multipolígono";
+
+/* No comment provided by engineer. */
+"Adding members:" = "Adicionando membros:";
+
+/* No comment provided by engineer. */
+"Additional imagery" = "Imagens aéreas adicionais";
+
+/* No comment provided by engineer. */
+"Aerial only" = "Apenas imagens aéreas";
+
+/* No comment provided by engineer. */
+"All choices" = "Todas as escolhas";
+
+/* No comment provided by engineer. */
+"All Tags" = "Todas as etiquetas";
+
+/* No comment provided by engineer. */
+"An unknown error occurred fetching metadata" = "Ocorreu um erro desconhecido ao obter metadados";
+
+/* No comment provided by engineer. */
+"Attention" = "Atenção";
+
+/* node/way/relation attributes */
+"Attributes" = "Atributos";
+
+/* Automatic selection of presets languages */
+"Automatic" = "Automático";
+
+/* back button */
+"Back" = "Voltar";
+
+/* identifies current aerial imagery */
+"Background imagery %@" = "Imagem de fundo %@";
+
+/* No comment provided by engineer. */
+"Bad login" = "Login mal feito";
+
+/* No comment provided by engineer. */
+"Cache size warning" = "Aviso de tamanho de cache";
+
+/* No comment provided by engineer. */
+"Cache trimmed" = "Cache reduzido";
+
+/* No comment provided by engineer. */
+"Can only add ways to multipolygons" = "Pode apenas adicionar linhas aos multipolígonos";
+
+/* No comment provided by engineer. */
+"Can't delete node that is part of a relation" = "Não é possível apagar nós que são parte de uma relação";
+
+/* No comment provided by engineer. */
+"Can't delete relation that is not a multipolygon" = "Não é possível apagar relação que não seja um multipolígono";
+
+/* No comment provided by engineer. */
+"Can't delete way that is part of a Route or similar relation" = "Não é possível apagar a linha que é parte de uma rota ou relação similar";
+
+/* No comment provided by engineer. */
+"Can't extend way" = "Não é possível estender a linha";
+
+/* No comment provided by engineer. */
+"Can't remove component of a Route or similar relation" = "Não é possível remover componente de uma rota ou relação similar";
+
+/* No comment provided by engineer. */
+"Can't remove node in Turn Restriction 'via' way" = "Não é possível remover o nó em restrição de direção da linha com função 'via' (através de)";
+
+/* No comment provided by engineer. */
+"Can't remove Turn Restriction 'via' node" = "Não é possível remover a restrição de direção do nó com função 'via' (através de)";
+
+/* No comment provided by engineer. */
+"Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" = "Não é possível remover a restrição de direção do nó conectando 'to / from' (para / de) a 'via' (através de)";
+
+/* No comment provided by engineer. */
+"Can't remove Turn Restriction to/from way" = "Não é possível remover restrição de direção da linha com função 'to / from' (para / de)";
+
+/* No comment provided by engineer. */
+"Cancel" = "Cancelar";
+
+/* e-mail message */
+"Cannot compose message" = "Não é possível redigir a mensagem";
+
+/* No comment provided by engineer. */
+"Cannot connect an inner way to an outer way" = "Não é possível conectar uma linha de dentro a uma linha de fora";
+
+/* OSM changeset identifier */
+"Changeset" = "Conjunto de alterações";
+
+/* Delete cached data */
+"Clear Aerial Tiles" = "Limpar quadrículas de imagens aéreas";
+
+/* Delete cached data */
+"Clear GPS Overlay Tiles" = "Limpar quadrículas de sobreposição GPS";
+
+/* Delete cached data */
+"Clear GPX Tracks" = "Limpar trilhas GPX";
+
+/* Delete cached data */
+"Clear Locator Overlay Tiles" = "Limpar quadrículas de sobreposição Locator";
+
+/* Delete cached data */
+"Clear Mapnik Tiles" = "Limpar quadrículas Mapnik";
+
+/* Delete cached data */
+"Clear OSM Data" = "Limpar dados OpenStreetMap";
 
 /* No comment provided by engineer. */
 "Commit" = "Confirmar";
 
-/* Edit action */
-"Make Circular" = "Transforme em um círculo";
+/* No comment provided by engineer. */
+"computing size..." = "calculando o tamanho…";
+
+/* No comment provided by engineer. */
+"Configure" = "Configurar";
+
+/* No comment provided by engineer. */
+"Confirm move" = "Confirmar ação de mover";
+
+/* No comment provided by engineer. */
+"Connecting the nodes would damage a relation" = "Conectar os nós danificaria uma relação";
 
 /* Edit action */
-"Make Rectangular" = "Transforme em um retângulo";
+"Copy Tags" = "Copiar etiquetas";
+
+/* No comment provided by engineer. */
+"Could not duplicate object" = "Não foi possível duplicar o objeto";
+
+/* No comment provided by engineer. */
+"Create\n" = "Criar\n";
+
+/* No comment provided by engineer. */
+"create node" = "criar nó";
+
+/* No comment provided by engineer. */
+"create relation" = "criar relação";
+
+/* Edit action */
+"Create Relation" = "Criar relação";
+
+/* No comment provided by engineer. */
+"Create Relation Type" = "Tipo de relação a criar";
+
+/* No comment provided by engineer. */
+"create turn restriction" = "criar restrição de direção";
+
+/* No comment provided by engineer. */
+"create way" = "criar linha";
+
+/* current GPX track */
+"Current Track" = "Trilha atual";
+
+/* No comment provided by engineer. */
+"Database error" = "Erro no banco de dados";
+
+/* Edit action */
+"Delete" = "Apagar";
+
+/* No comment provided by engineer. */
+"Delete\n" = "Apagar\n";
+
+/* Confirm deleting a node/way */
+"Delete %@?" = "Apagar %@?";
+
+/* No comment provided by engineer. */
+"Delete completely" = "Apagar completamente";
+
+/* No comment provided by engineer. */
+"Delete failed" = "Falha na exclusão";
+
+/* No comment provided by engineer. */
+"delete multipolygon" = "apagar multipolígono";
+
+/* No comment provided by engineer. */
+"delete node" = "apagar nó";
+
+/* No comment provided by engineer. */
+"delete node from way" = "apagar nó da linha";
+
+/* No comment provided by engineer. */
+"delete object from relation" = "apagar objeto da relação";
+
+/* No comment provided by engineer. */
+"delete relation" = "apagar relação";
+
+/* No comment provided by engineer. */
+"delete restriction" = "apagar restrição";
+
+/* No comment provided by engineer. */
+"delete route" = "apagar rota";
+
+/* No comment provided by engineer. */
+"delete way" = "apagar linha";
+
+/* No comment provided by engineer. */
+"Detach from relation" = "Separar da relação";
+
+/* Edit action */
+"Disconnect" = "Desconectar";
+
+/* No comment provided by engineer. */
+"Display options" = "Opções de visualização";
+
+/* Distance to an object with an error value */
+"Distance: %1$@ ± %2$@ meters" = "Distância: %1$@ ± %2$@ metros";
+
+/* No comment provided by engineer. */
+"Done" = "Feito";
+
+/* create a duplicate */
+"duplicate" = "duplicar";
+
+/* Edit action */
+"Duplicate" = "Duplicar";
+
+/* No comment provided by engineer. */
+"Edit" = "Editar";
+
+/* No comment provided by engineer. */
+"Edit restrictions" = "Editar restrições";
+
+/* No comment provided by engineer. */
+"Edit XML" = "Editar XML";
+
+/* No comment provided by engineer. */
+"Editing layer not visible" = "Camada de edição não visível";
+
+/* No comment provided by engineer. */
+"Editor only" = "Apenas editor";
+
+/* No comment provided by engineer. */
+"Editor with Aerial" = "Editor com imagens aéreas";
+
+/* No comment provided by engineer. */
+"Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "Assegure-se que os serviços de localização estejam ativados e que você tenha concedido acesso a este aplicativo.\n\nErro: %@";
+
+/* No comment provided by engineer. */
+"Ensure the editor view is visible and displays objects in the local area" = "Certifique-se de que a visualização do editor esteja visível e exiba objetos na área local";
+
+/* Error dialog title */
+"Error" = "Erro";
+
+/* No comment provided by engineer. */
+"Error connecting to way" = "Erro ao conectar a linha";
+
+/* No comment provided by engineer. */
+"Error fetching metadata: %@" = "Erro ao obter metadados: %@";
+
+/* No comment provided by engineer. */
+"Extending a 'via' in a Turn Restriction will break the relation" = "Estender uma linha com a função 'via' (através de) em uma restrição de direção quebrará a relação";
+
+/* No comment provided by engineer. */
+"Extending a way which belongs to a Route or similar relation may damage the relation" = "Estender uma linha que pertence a uma rota ou similar poderá quebrar a relação";
+
+/* No comment provided by engineer. */
+"GPX Upload Complete" = "GPX enviado";
+
+/* No comment provided by engineer. */
+"GPX Upload Failed" = "Falha no envio do GPX";
+
+/* Height of an object with an error value */
+"Height: %1$@ ± %2$@ meters" = "Altura: %1$@ ± %2$@ metros";
+
+/* rate the app now */
+"I'll do it!" = "Sim!";
+
+/* OSM node/way/relation identifier */
+"Identifier" = "Identificador";
+
+/* No comment provided by engineer. */
+"Ignore" = "Ignorar";
+
+/* No comment provided by engineer. */
+"In order to measure height, please enable camera access in the app's settings." = "Para medir a altura, por favor, habilite o acesso à câmera nas configurações do aplicativo.";
+
+/* No comment provided by engineer. */
+"Invalid URL" = "URL inválida";
+
+/* Edit action */
+"Join" = "Unir";
+
+/* No comment provided by engineer. */
+"Joining would invalidate a Turn Restriction the way belongs to" = "A união invalidará uma restrição de direção à qual a linha pertence";
+
+/* No comment provided by engineer. */
+"Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "A seleção de idioma afeta apenas os modelos de etiquetas (somente etiquetas traduzidas no editor iD). A interface principal ainda é em inglês. Futuramente será disponibilizada em outros idiomas.";
+
+/* No comment provided by engineer. */
+"Last updated %@" = "Última atualização %@";
+
+/* coordinates */
+"Lat/Lon" = "Latitude / longitude";
+
+/* No comment provided by engineer. */
+"Left" = "Esquerda";
+
+/* Left-hand side of screen */
+"Left side" = "Lado esquerdo";
+
+/* No comment provided by engineer. */
+"Length" = "Comprimento";
+
+/* No comment provided by engineer. */
+"Location unavailable" = "Localização indisponível";
+
+/* No comment provided by engineer. */
+"Login successful" = "Login bem sucedido";
+
+/* No comment provided by engineer. */
+"Low memory: clearing cache" = "Pouca memória: limpando o cache";
+
+/* No comment provided by engineer. */
+"Mail delivery is not available on this device" = "Envio de e-mail não está disponível neste aparelho";
+
+/* Edit action */
+"Make Circular" = "Circularizar";
+
+/* Edit action */
+"Make Rectangular" = "Ortogonalizar";
 
 /* No comment provided by engineer. */
 "Max nodes after joining is 2000" = "O número máximo de nós após unir é 2000";
 
 /* No comment provided by engineer. */
-"Maximum way length is 2000 nodes" = "O comprimento máximo da via é 2000 nós";
+"Maximum way length is 2000 nodes" = "O comprimento máximo da linha é 2000 nós";
 
 /* rate the app later */
 "Maybe later..." = "Talvez mais tarde...";
@@ -96,7 +438,10 @@
 "Merge Tags" = "Mesclar etiquetas";
 
 /* No comment provided by engineer. */
-"Missing way to connect to" = "Falta um modo de conectar";
+"meters" = "metros";
+
+/* No comment provided by engineer. */
+"Missing way to connect to" = "Falta linha onde se conectar";
 
 /* last modified date */
 "Modified" = "Modificado";
@@ -108,13 +453,16 @@
 "Modify\n" = "Modificar\n";
 
 /* No comment provided by engineer. */
-"Modifying the raw XML data allows you to correct errors that prevent uploading.\n\nIt is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format." = "Modificar os dados XML brutos permite corrigir erros que impedem o upload.\n\nÉ uma operação avançada que só deve ser realizada se você tiver um conhecimento completo do formato do changeset OSM.";
+"Modifying the raw XML data allows you to correct errors that prevent uploading.\n\nIt is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format." = "Modificar os dados XML brutos permite corrigir erros que impedem o envio dos dados para o OpenStreetMap.\n\nÉ uma operação avançada que só deve ser realizada se você tiver um conhecimento avançado do formato dos conjunto de alterações de OpenStreetMap.";
 
 /* Edit action */
 "More..." = "Mais...";
 
 /* No comment provided by engineer. */
 "Most recent" = "Mais recente";
+
+/* No comment provided by engineer. */
+"move" = "mover";
 
 /* No comment provided by engineer. */
 "Move" = "Mover";
@@ -136,40 +484,46 @@
 "Next" = "Próximo";
 
 /* GPX track */
-"No active track" = "Sem track ativo";
+"No active track" = "Sem trilha ativa";
 
 /* Alert title */
 "No Data" = "Sem dados";
 
 /* No comment provided by engineer. */
-"No Left Turn restriction" = "Sem restrição para virar a esquerda";
+"No Left Turn restriction" = "Proibido virar à esquerda";
 
 /* No comment provided by engineer. */
 "No results found" = "Nenhum resultado encontrado";
 
 /* No comment provided by engineer. */
-"No Right Turn restriction" = "Sem restrição para virar a direita";
+"No Right Turn restriction" = "Proibido virar à direita";
 
 /* No comment provided by engineer. */
-"No Straight On restriction" = "Sem restrição para manter-se em frente";
+"No Straight On restriction" = "Proibido seguir em frente";
 
 /* No comment provided by engineer. */
 "No tags to paste" = "Sem etiquetas para colar";
 
 /* No comment provided by engineer. */
-"No U-Turn restriction" = "Sem restrição para retorno";
+"No U-Turn restriction" = "Proibido retornar";
 
 /* No comment provided by engineer. */
 "Node" = "Nó";
 
 /* No comment provided by engineer. */
+"node %@" = "nó %@";
+
+/* No comment provided by engineer. */
+"node %@ (in way)" = "nó %@ (na linha)";
+
+/* No comment provided by engineer. */
 "Node Attributes" = "Atributos do nó";
 
 /* No comment provided by engineer. */
-"Node is not an element of way" = "O nó não é um elemento da via";
+"Node is not an element of way" = "O nó não é um elemento da linha";
 
 /* No comment provided by engineer. */
-"Node must be the first or last node of the way" = "O nó deve ser o primeiro ou o último nó da via";
+"Node must be the first or last node of the way" = "O nó deve ser o primeiro ou o último nó da linha";
 
 /* No comment provided by engineer. */
 "Node Tags" = "Etiquetas do nó";
@@ -181,7 +535,7 @@
 "Note History" = "Histórico de notas";
 
 /* No comment provided by engineer. */
-"Nothing to upload, no changes have been made." = "Nada para enviar, nenhuma modificação foi feita.";
+"Nothing to upload, no changes have been made." = "Nada para enviar, nenhuma alteração foi feita.";
 
 /* No comment provided by engineer. */
 "Number of recent items to display" = "Número de itens recentes para mostrar";
@@ -193,19 +547,19 @@
 "OK" = "Ok";
 
 /* No comment provided by engineer. */
-"Only Left Turn restriction" = "Apenas restrição para virar a esquerda";
+"Only Left Turn restriction" = "Obrigatório virar à esquerda";
 
 /* No comment provided by engineer. */
 "Only multipolygon relations are supported" = "Apenas relações multipoligonais são suportadas";
 
 /* No comment provided by engineer. */
-"Only Right Turn restriction" = "Apenas restrição para virar a direita";
+"Only Right Turn restriction" = "Obrigatório virar à direita";
 
 /* No comment provided by engineer. */
-"Only Straight On restriction" = "Apenas restrição para seguir em frente";
+"Only Straight On restriction" = "Obrigatório seguir em frente";
 
 /* No comment provided by engineer. */
-"Only ways/multipolygons can be rotated" = "Apenas vias/multipolígonos podem ser rotacionados";
+"Only ways/multipolygons can be rotated" = "Apenas linhas/multipolígonos podem ser rotacionados";
 
 /* Open the iOS Settings app */
 "Open Settings" = "Abrir configurações";
@@ -213,11 +567,14 @@
 /* No comment provided by engineer. */
 "Open URL" = "Abrir URL";
 
+/* No comment provided by engineer. */
+"other object" = "outro objeto";
+
 /* Edit action */
 "Paste" = "Colar";
 
 /* No comment provided by engineer. */
-"Pasting %@ characters, maximum tag length is 255" = "Colando %@ caracteres, o comprimento máximo da etiqueta é 255";
+"Pasting %@ characters, maximum tag length is 255" = "Colando %@ caracteres, o comprimento máximo da etiqueta é 255 caracteres";
 
 /* No comment provided by engineer. */
 "Pasting %ld tag(s)" = "Colando %ld etiquetas";
@@ -232,7 +589,7 @@
 "Previous" = "Anterior";
 
 /* previous GPX track */
-"Previous Tracks" = "Tracks anteriores";
+"Previous Tracks" = "Trilhas anteriores";
 
 /* Discard editing changes when resetting OSM data cache */
 "Purge" = "Limpar";
@@ -245,6 +602,9 @@
 
 /* No comment provided by engineer. */
 "Redo" = "Refazer";
+
+/* No comment provided by engineer. */
+"relation" = "relação";
 
 /* No comment provided by engineer. */
 "Relation Attributes" = "Atributos de relação";
@@ -262,10 +622,10 @@
 "Replace Tags" = "Substituir etiquetas";
 
 /* No comment provided by engineer. */
-"Requires a closed way with at least 3 nodes" = "Requer uma via fechada com pelo menos 3 nós";
+"Requires a closed way with at least 3 nodes" = "Requer uma linha fechada (área) com pelo menos 3 nós";
 
 /* No comment provided by engineer. */
-"Requires a closed way with at least 4 nodes" = "Requer a uma via fechada com pelo menos 4 nós";
+"Requires a closed way with at least 4 nodes" = "Requer uma linha fechada (área) com pelo menos 4 nós";
 
 /* Edit action */
 "Restrict" = "Restrito";
@@ -280,7 +640,7 @@
 "Retry" = "Tentar novamente";
 
 /* Edit action */
-"Reverse" = "Reverter";
+"Reverse" = "Inverter";
 
 /* No comment provided by engineer. */
 "Right" = "Direita";
@@ -301,10 +661,13 @@
 "Selected object is off screen" = "O objeto selecionado está fora da tela";
 
 /* set tag value */
-"Set" = "definir";
+"Set" = "Definir";
 
 /* The height=* tag */
 "Set Height Tag" = "Definir etiqueta de altura";
+
+/* No comment provided by engineer. */
+"set tags" = "definir etiquetas";
 
 /* No comment provided by engineer. */
 "Settings" = "Configurações";
@@ -326,7 +689,7 @@
 "Split" = "Dividir";
 
 /* No comment provided by engineer. */
-"Standard imagery" = "Imagens padrão";
+"Standard imagery" = "Imagens aéreas padrão";
 
 /* Begin downloading tiles */
 "Start" = "Iniciar";
@@ -341,16 +704,16 @@
 "Tags" = "Etiquetas";
 
 /* No comment provided by engineer. */
-"The + button can be positioned on either the left or right side of the screen" = "O botão + pode ser posicionado tanto no lado esquerdo quanto no lado direito";
+"The + button can be positioned on either the left or right side of the screen" = "O botão + pode ser posicionado no lado esquerdo ou no lado direito";
 
 /* No comment provided by engineer. */
-"The current location cannot be determined: " = "A localização atual não pode ser determinada ";
+"The current location cannot be determined: " = "A localização atual não pode ser determinada: ";
 
 /* No comment provided by engineer. */
-"The merged nodes contain conflicting tags" = "Os nós mesclados contém etiquetas conflitantes";
+"The merged nodes contain conflicting tags" = "Os nós mesclados contêm etiquetas conflitantes";
 
 /* No comment provided by engineer. */
-"The nodes have conflicting roles in parent relations" = "Os nós têm conflito com as relações principais";
+"The nodes have conflicting roles in parent relations" = "Os nós têm funções conflitantes nas relações-pai";
 
 /* No comment provided by engineer. */
 "The object does not contain any tags" = "O objeto não contém nenhuma etiqueta";
@@ -359,25 +722,25 @@
 "The restriction cannot be deleted" = "A restrição não pode ser apagada";
 
 /* No comment provided by engineer. */
-"The selected way must be completely visible" = "A via selecionada deve estar completamente visível";
+"The selected way must be completely visible" = "O elemento selecionado deve estar completamente visível";
 
 /* No comment provided by engineer. */
-"The target way is ambiguous" = "A via alvo é ambígua";
+"The target way is ambiguous" = "A linha alvo é ambígua";
 
 /* No comment provided by engineer. */
-"The turn contains an unrecognized turn restriction style. Proceeding will destroy it." = "O retorno contém um estilo de restrição de retorno não reconhecido. Continuar irá destruí-lo.";
+"The turn contains an unrecognized turn restriction style. Proceeding will destroy it." = "A direção contém um estilo de restrição de direção não reconhecido. Continuar irá destruí-lo.";
 
 /* No comment provided by engineer. */
-"The way belongs to a relation that is not fully downloaded" = "A via pertence a uma relação que não foi totalmente baixada";
+"The way belongs to a relation that is not fully downloaded" = "A linha pertence a uma relação que não foi totalmente baixada";
 
 /* No comment provided by engineer. */
-"The way is not sufficiently straight" = "A via não é suficientemente reta";
+"The way is not sufficiently straight" = "A linha não é suficientemente reta";
 
 /* No comment provided by engineer. */
-"The way must have at least 2 nodes" = "A via deve ter ao menos 2 nós";
+"The way must have at least 2 nodes" = "A linha deve ter ao menos 2 nós";
 
 /* No comment provided by engineer. */
-"The ways contain incompatible tags" = "A via contém etiquetas incompatíveis";
+"The ways contain incompatible tags" = "As linhas contêm etiquetas incompatíveis";
 
 /* No comment provided by engineer. */
 "The XML is improperly formed" = "O arquivo XML está formatado incorretamente";
@@ -386,13 +749,13 @@
 "This action requires GPS to be turned on" = "Esta ação requer que o GPS esteja ligado";
 
 /* No comment provided by engineer. */
-"This app does not yet support editing turn restrictions without a node as the 'via' member" = "Este aplicativo ainda não oferece suporte à edição de restrições de curva sem um nó como membro da 'via'";
+"This app does not yet support editing turn restrictions without a node as the 'via' member" = "Este aplicativo ainda não permite edição de restrições de direção sem um nó com função 'via' (através de) numa relação";
 
 /* No comment provided by engineer. */
 "This device is not able to provide heading data." = "Este dispositivo não pode fornecer dados de direção.";
 
 /* No comment provided by engineer. */
-"To add another member to the relation 'long press' on the way to be added" = "Para adicionar o membro à relação pressione longamente a via a ser adicionada";
+"To add another member to the relation 'long press' on the way to be added" = "Para adicionar outro membro à relação pressione longamente na linha a ser adicionada";
 
 /* No comment provided by engineer. */
 "Travel ALLOWED from %@ to %@" = "Percurso PERMITIDO de %1$@ para %2$@";
@@ -410,10 +773,10 @@
 "Turn On Location Services to Allow %@ to Determine Your Location" = "Ative os serviços de localização para permitir que %@ determine a sua localização";
 
 /* Edit action */
-"Turn Restrictions" = "Restrições de retorno";
+"Turn Restrictions" = "Restrições de direção";
 
 /* No comment provided by engineer. */
-"Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.\n\nSelect the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route." = "Restrições de retorno especificam em quais estradas você pode virar ao entrar em uma intersecção de uma determinada direção.\n\nSelecione a estrada da qual você está se aproximando da interseção, e toque na seta para alternar se a estrada de destino é uma rota permitida.";
+"Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.\n\nSelect the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route." = "Restrições de direção especificam em quais estradas você pode virar ao entrar em uma intersecção de uma determinada direção.\n\nSelecione a estrada da qual você está se aproximando da interseção, e toque na seta para alternar se a estrada de destino é uma rota permitida.";
 
 /* The 'Type' header in Common Tags */
 "Type" = "Tipo";
@@ -428,16 +791,16 @@
 "UID" = "UID";
 
 /* No comment provided by engineer. */
-"Unable to upload changes" = "Não é possível carregar as modificações";
+"Unable to upload changes" = "Não é possível enviar as alterações";
 
 /* No comment provided by engineer. */
 "Undo" = "Desfazer";
 
 /* relation role=* tag */
-"Unknown role" = "Desconhecido";
+"Unknown role" = "Função desconhecida";
 
 /* No comment provided by engineer. */
-"Unsupported turn restriction type" = "Tipo de restrição de retorno não suportado";
+"Unsupported turn restriction type" = "Tipo de restrição de direção não suportado";
 
 /* update an osm note */
 "Update" = "Atualizar";
@@ -445,17 +808,20 @@
 /* Update the named tag value (e.g. foo=*) */
 "Update '%@' tag" = "Atualizar a etiqueta %@";
 
+/* No comment provided by engineer. */
+"update relation members" = "atualizar membros de relação";
+
 /* OSM Note */
-"Updating Note..." = "Atualizando notas…";
+"Updating Note..." = "Atualizando nota…";
 
 /* No comment provided by engineer. */
-"Upload complete!" = "Upload completo!";
+"Upload complete!" = "Envio completo!";
 
 /* No comment provided by engineer. */
-"Upload to OSM" = "Enviar para OSM";
+"Upload to OSM" = "Enviar para OpenStreetMap";
 
 /* No comment provided by engineer. */
-"Upload your changes" = "Envie suas modificações";
+"Upload your changes" = "Envie suas alterações";
 
 /* No comment provided by engineer. */
 "Uploading GPX..." = "Enviando GPX…";
@@ -469,15 +835,48 @@
 /* OSM object versioh */
 "Version" = "Versão";
 
+/* Year aerial imagery was created */
+"vintage %@" = "criado em %@";
+
+/* Years aerial imagery was created */
+"vintage %@ - %@" = "criado em %1$@ - %2$@";
+
 /* No comment provided by engineer. */
 "Warning" = "Atenção";
 
 /* No comment provided by engineer. */
-"Way Attributes" = "Atributos da via";
+"way %@" = "linha %@";
 
 /* No comment provided by engineer. */
-"Way Tags" = "Etiquetas da via";
+"Way Attributes" = "Atributos da linha";
+
+/* No comment provided by engineer. */
+"Way Tags" = "Etiquetas da linha";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Você está prestes a fazer alterações no banco de dados OpenStreetMap ao vivo. Suas alterações ficarão visíveis para todos no mundo.\n\nPara continuar, pressione Confirmar mais uma vez, caso contrário, pressione Cancelar.";
+
+/* POI editor presets */
+"You can define your own custom presets here" = "Você pode definir seus modelos de etiquetas personalizados aqui";
+
+/* No comment provided by engineer. */
+"You can navigate to a relation member only if it is already downloaded.\nThese members are marked with '>'." = "Você pode navegar até um membro da relação apenas se já tiver sido baixado anteriormente.\nEstes membros são marcados com '>'.";
+
+/* No comment provided by engineer. */
+"You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "Você fez alterações que ainda não foram enviadas ao servidor. Limpar o cache fará com que essas alterações sejam perdidas.";
+
+/* No comment provided by engineer. */
+"You must provide your OSM user name, not an email address." = "Você deve fornecer seu nome de usuário no OpenStreetMap, não um endereço de e-mail.";
+
+/* No comment provided by engineer. */
+"You must save or discard changes to the current object before editing its associated relation" = "Você deve salvar ou descartar as alterações no objeto atual antes de editar sua relação associada";
+
+/* No comment provided by engineer. */
+"You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?" = "Você enviou %ld conjuntos de alterações com esta versão do Go Map!!\n\nAvaliar este app?";
+
+/* No comment provided by engineer. */
+"Your OSM data cache is getting large, which may lead to slow startup and shutdown times.\n\nYou may want to clear the cache (under Display settings) to improve performance." = "Seu cache de dados do OpenStreetMap está se tornando grande, o que pode levar a maiores tempos de inicialização e desligamento.\n\nVocê pode limpar o cache (em configurações de visualização) para aumentar o desempenho.";
+
+/* No comment provided by engineer. */
+"Zoom to Edit" = "Amplie para editar";
 

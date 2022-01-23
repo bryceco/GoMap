@@ -10,6 +10,9 @@
 /* Privacy - Bluetooth Peripheral Usage Description */
 "NSBluetoothPeripheralUsageDescription" = "Подключиться к внешнему Bluetooth GPS устройству";
 
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "Авторское право 2012-2021 Брайс Когсвелл";
+
 /* Privacy - Location Always and When In Use Usage Description */
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "Постоянное отслеживание местоположения позволяет приложению записывать файлы GPX, даже когда оно неактивно.";
 

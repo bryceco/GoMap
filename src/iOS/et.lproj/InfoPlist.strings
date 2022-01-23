@@ -10,11 +10,20 @@
 /* Privacy - Bluetooth Peripheral Usage Description */
 "NSBluetoothPeripheralUsageDescription" = "Loo ühendus väliste Bluetooth GPS seadmetega";
 
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "Kaamerat kasutatakse hoonete või objektide kõrguse mõõtmiseks, samuti tekstituvastuseks lahtiolekuaegade siltidelt.";
+
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "Autoriõigus 2012-2021 Bryce Cogswell";
+
 /* Privacy - Location Always and When In Use Usage Description */
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "Alati sisselülitatud asukoha jälgimine võimaldab rakendusel salvestada GPX-faile, kui see ei ole aktiivne.";
 
 /* Privacy - Location Always Usage Description */
 "NSLocationAlwaysUsageDescription" = "Sinu asukoht kuvatakse ja jälgitakse kaardil.";
+
+/* Privacy - Location Usage Description */
+"NSLocationUsageDescription" = "Asukohateenuste lubamine võimaldab rakendusel kuvada teie läheduses asuvaid objekte. See võimaldab teil hõlpsasti uuendada või lisada andmeid, mida te ise mõõdistate.";
 
 /* Privacy - Location When In Use Usage Description */
 "NSLocationWhenInUseUsageDescription" = "Teie asukoht kuvatakse ja seda jälgitakse kaardil.";
