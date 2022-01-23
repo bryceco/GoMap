@@ -17,6 +17,7 @@
       </trans-unit>
       <trans-unit id="quest_atm_operator_title" xml:space="preserve">
         <source>What’s the name of the bank for this ATM?</source>
+        <target>Jaký je název banky, které patří tento bankomat?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_barrier_type_title" xml:space="preserve">
@@ -96,10 +97,12 @@
       </trans-unit>
       <trans-unit id="quest_cyclewayPartSurface_title" xml:space="preserve">
         <source>What’s the surface of the cycleway here?</source>
+        <target>Jaký povrch má cykloztezka v této části?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_halal_name_title" xml:space="preserve">
         <source>Does %s offer Halal products?</source>
+        <target>Nabízí %s halal produkty?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_kosher_name_title" xml:space="preserve">
@@ -124,6 +127,7 @@
       </trans-unit>
       <trans-unit id="quest_fireHydrant_diameter_title" xml:space="preserve">
         <source>What diameter is on this fire hydrant’s sign?</source>
+        <target>Jaký průměr je na značce tohoto hydrantu?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_fireHydrant_type_title" xml:space="preserve">
@@ -133,11 +137,12 @@
       </trans-unit>
       <trans-unit id="quest_footwayPartSurface_title" xml:space="preserve">
         <source>What’s the surface of the footway here?</source>
+        <target>Jaký povrch má ztezka v této části?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_generalFee_title" xml:space="preserve">
         <source>Do you need to pay to enter %s?</source>
-        <target>Je zde poplatek pro vstup do  %s?</target>
+        <target>Je zde poplatek pro vstup do %s?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_handrail_title" xml:space="preserve">
@@ -202,6 +207,7 @@
       </trans-unit>
       <trans-unit id="quest_picnicTableCover_title" xml:space="preserve">
         <source>Is this picnic table covered (protected from rain)?</source>
+        <target>Je tento piknikový stůl krytý (chráněný před deštěm)?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_playground_access_title" xml:space="preserve">
@@ -251,6 +257,7 @@
       </trans-unit>
       <trans-unit id="quest_shop_vacant_type_title" xml:space="preserve">
         <source>This shop has been vacant. What’s here now?</source>
+        <target>Tento obchod byl prázdný. Co je tu teď?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_sidewalk_title" xml:space="preserve">
@@ -260,7 +267,7 @@
       </trans-unit>
       <trans-unit id="quest_step_count_title" xml:space="preserve">
         <source>How many steps are here?</source>
-        <target>Kolik je tu schodů</target>
+        <target>Kolik je tu schodů?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_steps_incline_title" xml:space="preserve">
@@ -300,6 +307,7 @@
       </trans-unit>
       <trans-unit id="quest_traffic_calming_type_title" xml:space="preserve">
         <source>What type of traffic calming is this?</source>
+        <target>O jaký typ zklidnění dopravy se jedná?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_traffic_signals_button_title" xml:space="preserve">
@@ -314,6 +322,7 @@
       </trans-unit>
       <trans-unit id="quest_traffic_signals_vibrate_title" xml:space="preserve">
         <source>Do these traffic lights have a tactile indication for blind people for when it’s safe to cross?</source>
+        <target>Mají tyto semafory hmatovou signalizaci pro nevidomé, kdy je bezpečné přejít?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_wheelchairAccess_outside_title" xml:space="preserve">
@@ -388,10 +397,12 @@
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
         <source>The camera is used to measure heights of buildings or objects, and to perform text recognition in opening hours signs.</source>
+        <target>Fotoaparát se používá k měření výšky budov nebo objektů a k rozpoznávání textu na cedulích s otevírací dobou.</target>
         <note>Privacy - Camera Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
         <source>Copyright 2012-2021 Bryce Cogswell</source>
+        <target>Copyright 2012–2021 Bryce Cogswell</target>
         <note>Copyright (human-readable)</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
@@ -406,6 +417,7 @@
       </trans-unit>
       <trans-unit id="NSLocationUsageDescription" xml:space="preserve">
         <source>Enabling location services allows the app to display objects in your vicinity. This allows you to easily update or add data you survey yourself.</source>
+        <target>Povolení polohových služeb umožňuje aplikaci zobrazovat objekty ve vašem okolí. Díky tomu můžete snadno aktualizovat nebo přidávat data, která sami prozkoumáte.</target>
         <note>Privacy - Location Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationWhenInUseUsageDescription" xml:space="preserve">
@@ -2113,6 +2125,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="Fe2-dc-zgA.placeholder" xml:space="preserve">
         <source>designated</source>
+        <target>vyhrazeno</target>
         <note>Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="G5R-oP-lp3.title" xml:space="preserve">
@@ -2222,6 +2235,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="aCs-vS-YXj.placeholder" xml:space="preserve">
         <source>ref</source>
+        <target>ref</target>
         <note>Class = "UITextField"; placeholder = "ref"; ObjectID = "aCs-vS-YXj"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="aLi-Vs-z0k.title" xml:space="preserve">
@@ -2266,6 +2280,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
         <source>clean</source>
+        <target>clean</target>
         <note>Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
@@ -2344,6 +2359,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="okh-JP-aKZ.placeholder" xml:space="preserve">
         <source>park</source>
+        <target>park</target>
         <note>Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="omf-S9-Yjq.text" xml:space="preserve">

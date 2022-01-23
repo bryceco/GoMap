@@ -7,266 +7,332 @@
     <body>
       <trans-unit id="quest_address_street_title" xml:space="preserve">
         <source>What street does the (house) number %s belong to?</source>
+        <target>إلى أي شارع ينتمي رقم (المنزل) %s؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_address_title" xml:space="preserve">
         <source>What is the house number of this building?</source>
+        <target>ما هو رقم العقار لهذا المبنى؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_atm_operator_title" xml:space="preserve">
         <source>What’s the name of the bank for this ATM?</source>
+        <target>ما هو اسم البنك الذي يتبعه هذا الصراف الآلي؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_barrier_type_title" xml:space="preserve">
         <source>What type of barrier is this?</source>
+        <target>ما نوع هذا الحاجز؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bench_backrest_title" xml:space="preserve">
         <source>Does this bench have a backrest?</source>
+        <target>هل هذا المقعد به مسند ظهر؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bicycleParkingCoveredStatus_title" xml:space="preserve">
         <source>Is this bicycle parking covered (protected from rain)?</source>
+        <target>هل موقف الدراجات هذا مغطى (محمي من الشمس والمطر)؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bicycle_parking_access_title" xml:space="preserve">
         <source>Is it restricted who may park a bike here?</source>
+        <target>هل هناك حد لمن يمكنه ركن الدراجة هنا؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bicycle_parking_fee_title" xml:space="preserve">
         <source>Do you have to pay to park a bike here?</source>
+        <target>هل عليك أن تدفع مقابل ركن دراجة هنا؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bicycle_parking_type_title" xml:space="preserve">
         <source>What type of bicycle parking is this?</source>
+        <target>ما هو نوع مواقف الدراجات؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bikeParkingCapacity_title" xml:space="preserve">
         <source>How many bikes can be parked here?</source>
+        <target>كم عدد الدراجات التي يمكن إيقافها هنا؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_board_type_title" xml:space="preserve">
         <source>What is the topic of this information board?</source>
+        <target>ما هو موضوع لوحة المعلومات هذه؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bridge_structure_title" xml:space="preserve">
         <source>What is the structure of this bridge?</source>
+        <target>ما هو هيكل هذا الجسر؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_buildingType_title" xml:space="preserve">
         <source>What kind of building is this?</source>
+        <target>ما هو نوع هذا المبنى؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_camera_type_title" xml:space="preserve">
         <source>What type of surveillance camera is this?</source>
+        <target>أي نوع من كاميرات المراقبة هذه؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_charging_station_operator_title" xml:space="preserve">
         <source>Who is the operator of this charging station?</source>
+        <target>من هو مشغل محطة الشحن هذه؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_clothes_container_operator_title" xml:space="preserve">
         <source>Who accepts donations for this clothing bin?</source>
+        <target>من يقبل التبرعات لصندوق الملابس هذا؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_construction_building_title" xml:space="preserve">
         <source>Is this building completed?</source>
+        <target>هل اكتمل رسم هذا المبنى؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_crossing_type_title" xml:space="preserve">
         <source>What kind of crossing is this?</source>
+        <target>أي نوع من معابر المشاة هذا؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_cyclewayPartSurface_title" xml:space="preserve">
         <source>What’s the surface of the cycleway here?</source>
+        <target>ما هو نوع سطح طريق الدراجات هذا؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_halal_name_title" xml:space="preserve">
         <source>Does %s offer Halal products?</source>
+        <target>هل %s يبيع المنتجات الحلال؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_kosher_name_title" xml:space="preserve">
         <source>Does %s offer kosher products?</source>
+        <target>هل تقدم %s منتجات متوافقة مع الشريعة اليهودية؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_vegan_name_title" xml:space="preserve">
         <source>Does %s have vegan meals on the menu?</source>
+        <target>هل يحتوي %s على وجبات نباتية فقط في القائمة؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_vegetarian_name_title" xml:space="preserve">
         <source>Does %s have vegetarian meals on the menu?</source>
+        <target>هل %s يحتوي على وجبات نباتية ومن مشتقات الحيوانات في القائمة؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_drinking_water_title" xml:space="preserve">
         <source>Is the water potable here? (%s)</source>
+        <target>هل المياه صالحة للشرب هنا؟ (%s)</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_fireHydrant_diameter_title" xml:space="preserve">
         <source>What diameter is on this fire hydrant’s sign?</source>
+        <target>ما القطر الموجود على صنبور إطفاء الحرائق هذا؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_fireHydrant_type_title" xml:space="preserve">
         <source>What kind of fire hydrant is this?</source>
+        <target>ما هو نوع صنبور الإطفاء هذا؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_footwayPartSurface_title" xml:space="preserve">
         <source>What’s the surface of the footway here?</source>
+        <target>ما هو نوع سطح طريق المشاة هذا؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_generalFee_title" xml:space="preserve">
         <source>Do you need to pay to enter %s?</source>
+        <target>هل يجب عليك الدفع للدخول إلى %s؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_handrail_title" xml:space="preserve">
         <source>Do these steps have a handrail?</source>
+        <target>هل هذه السلالم لها درابزين؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_internet_access_name_title" xml:space="preserve">
         <source>What kind of Internet connection does %s offer?</source>
+        <target>ما نوع اتصال الإنترنت الذي يقدمه %s ؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_is_defibrillator_inside_title" xml:space="preserve">
         <source>Is this defibrillator (AED) inside a building?</source>
+        <target>هل جهاز تنظيم ضربات القلب (AED) داخل المبنى؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_kerb_height_title" xml:space="preserve">
         <source>What is the height of this curb?</source>
+        <target>ما هو ارتفاع هذا الرصيف؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_lanes_title" xml:space="preserve">
         <source>How many lanes for cars does this road have?</source>
+        <target>كم عدد مسارات الطريق الواحد للسيارات في هذا الطريق؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_leafType_title" xml:space="preserve">
         <source>Do the trees here have needles or leaves?</source>
+        <target>هل الأشجار هنا بها إِبرْ (شوك) أو أوراق؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_maxweight_title" xml:space="preserve">
         <source>What is the weight limit here?</source>
+        <target>ما هو الوزن المحدد هنا؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_motorcycleParkingCapacity_title" xml:space="preserve">
         <source>How many motorcycles can be parked here?</source>
+        <target>كم عدد الدراجات النارية التي يمكن إيقافها هنا؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_motorcycleParkingCoveredStatus_title" xml:space="preserve">
         <source>Is this motorcycle parking covered (protected from rain)?</source>
+        <target>هل موقف الدراجات النارية هذا مغطى (محمي من المطر) ؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_parkingType_title" xml:space="preserve">
         <source>What kind of parking is this?</source>
+        <target>أي نوع من مواقف السيارات هذا؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_parking_access_title" xml:space="preserve">
         <source>Is it restricted who may park here?</source>
+        <target>هل هذه المواقف محدد من يقف بها؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_parking_fee_title" xml:space="preserve">
         <source>Do you have to pay to park here?</source>
+        <target>هل يجب عليك الدفع لركن سيارتك هنا؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_picnicTableCover_title" xml:space="preserve">
         <source>Is this picnic table covered (protected from rain)?</source>
+        <target>هل طاولة النزهة هذه مغطاة (تحمي من المطر)؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_playground_access_title" xml:space="preserve">
         <source>Is this playground publicly accessible?</source>
+        <target>هل هذا الملعب متاح للجمهور؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_policeType_title" xml:space="preserve">
         <source>Which type of police station is this?</source>
+        <target>أي نوع من مراكز الشرطة هذا؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_postboxRoyalCypher_title" xml:space="preserve">
         <source>What is the royal cypher on this postbox?</source>
+        <target>ما هو الرمز الملكي على هذا البريد؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_powerPolesMaterial_title" xml:space="preserve">
         <source>What is the material of this power or utility pole?</source>
+        <target>ما هي مادة عمود الطاقة/الكهرباء هذا؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_recycling_glass_title" xml:space="preserve">
         <source>Can only glass bottles and jars be recycled here, or any type of glass?</source>
+        <target>هل يمكن إعادة تدوير العبوات الزجاجية والبرطمانات الزجاجية فقط هنا، أو أي نوع من الزجاج؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_recycling_materials_title" xml:space="preserve">
         <source>What can be left here for recycling?</source>
+        <target>ما الذي يمكن تركه هنا لإعادة التدوير؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_recycling_type_title" xml:space="preserve">
         <source>What type of recycling facility is this?</source>
+        <target>ما نوع مرفق إعادة التدوير هذا؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_religion_for_wayside_shrine_title" xml:space="preserve">
         <source>What religion is represented at this shrine?</source>
+        <target>ما هو الدين الذي يمثله هذا الضريح؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_segregated_title" xml:space="preserve">
         <source>How are the footway and cycleway laid out here?</source>
+        <target>كيف يتم ترتيب مسارات المشاة والدراجات هنا؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_shop_vacant_type_title" xml:space="preserve">
         <source>This shop has been vacant. What’s here now?</source>
+        <target>هذا المحل محدد على أنه شاغر ماذا الذي يوجد فيه الآن؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_sidewalk_title" xml:space="preserve">
         <source>Does this street have a sidewalk?</source>
+        <target>هل يحتوي هذا الشارع على رصيف جانبي؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_step_count_title" xml:space="preserve">
         <source>How many steps are here?</source>
+        <target>كم عدد الدرجات/العتبات هنا؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_steps_incline_title" xml:space="preserve">
         <source>Which direction leads upwards for these steps?</source>
+        <target>أي اتجاه يقود إلى الأعلى لهذه السلالم أو الدرج؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_steps_ramp_title" xml:space="preserve">
         <source>Do these steps have a ramp? What kind?</source>
+        <target>هل تحتوي هذه العتبات/الدرجات التي على السلم على منحدر؟ اي نوع؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_stile_type_title" xml:space="preserve">
         <source>What type of stile is this?</source>
+        <target>ما نوع هذا الطراز؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_summit_register_title" xml:space="preserve">
         <source>Is there a summit register at %s?</source>
+        <target>هل يوجد سجل زوار للقمة على %s؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_tactile_paving_kerb_title" xml:space="preserve">
         <source>Is there tactile paving on this curb here?</source>
+        <target>هل توجد رصيف بارز للمكفوفين على الرصيف هنا؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_toiletsFee_title" xml:space="preserve">
         <source>Do you have to pay to use this restroom?</source>
+        <target>هل عليك أن تدفع مقابل استخدام هذا الحمام؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_tracktype_title" xml:space="preserve">
         <source>What is the surface firmness of this track?</source>
+        <target>ما مدى صلابة سطح هذا المسار؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_traffic_calming_type_title" xml:space="preserve">
         <source>What type of traffic calming is this?</source>
+        <target>ما نوع تهدئة المرور المطلوبة هنا؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_traffic_signals_button_title" xml:space="preserve">
         <source>Do these traffic lights have a button to request a walk signal?</source>
+        <target>هل تحتوي إشارات المرور هذه على زر لطلب الضوء الأخضر لعبور مسار المشاة؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_traffic_signals_sound_title" xml:space="preserve">
         <source>Are there sound signals for the blind here?</source>
+        <target>هل هناك إشارات صوتية للمكفوفين هنا؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_traffic_signals_vibrate_title" xml:space="preserve">
         <source>Do these traffic lights have a tactile indication for blind people for when it’s safe to cross?</source>
+        <target>هل تحتوي إشارات المرور هذه على مؤشر ملموس للمكفوفين للتنبيه إلى أن العبور آمن؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_wheelchairAccess_outside_title" xml:space="preserve">
         <source>Is this place wheelchair accessible?</source>
+        <target>هل يمكن الوصول إلى هذا المكان على كرسي متحرك؟</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_wheelchairAccess_toiletsPart_title" xml:space="preserve">
         <source>Is the restroom at %s wheelchair accessible?</source>
+        <target>هل يمكن الوصول إلى دورة المياه الموجودة في %s بالكرسي المتحرك؟</target>
         <note/>
       </trans-unit>
     </body>
@@ -331,10 +397,12 @@
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
         <source>The camera is used to measure heights of buildings or objects, and to perform text recognition in opening hours signs.</source>
+        <target>تُستخدم الكاميرا لقياس ارتفاعات المباني أو الأشياء ، وأيضاً للتعرف على النص في لافتات ساعات العمل.</target>
         <note>Privacy - Camera Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
         <source>Copyright 2012-2021 Bryce Cogswell</source>
+        <target>حقوق النشر 2012-2021 Bryce Cogswell</target>
         <note>Copyright (human-readable)</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
@@ -349,6 +417,7 @@
       </trans-unit>
       <trans-unit id="NSLocationUsageDescription" xml:space="preserve">
         <source>Enabling location services allows the app to display objects in your vicinity. This allows you to easily update or add data you survey yourself.</source>
+        <target>عند تمكين خدمات الموقع سيعرض لك التطبيق الأشياء القريبة منك، كما يتيح لك تحديث أو إضافة البيانات التي تقوم باستطلاعها بنفسك بسهولة.</target>
         <note>Privacy - Location Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationWhenInUseUsageDescription" xml:space="preserve">
@@ -1238,6 +1307,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Pasting %@ characters, maximum tag length is 255" xml:space="preserve">
         <source>Pasting %@ characters, maximum tag length is 255</source>
+        <target>قمت بلصق %@ حرفًا، وهذا يتجاوز الحد الأقصى لطول الوسم وهو 255 حرف</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)" xml:space="preserve">
@@ -2019,6 +2089,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve">
         <source>dog</source>
+        <target>كلب</target>
         <note>Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="Bnh-U0-D7i.text" xml:space="preserve">
@@ -2028,6 +2099,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="CXe-gQ-Zda.text" xml:space="preserve">
         <source>Value 8</source>
+        <target>القيمة 8</target>
         <note>Class = "UILabel"; text = "Value 8"; ObjectID = "CXe-gQ-Zda";</note>
       </trans-unit>
       <trans-unit id="Dfv-TT-J6i.footerTitle" xml:space="preserve">
@@ -2052,6 +2124,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="Fe2-dc-zgA.placeholder" xml:space="preserve">
         <source>designated</source>
+        <target>مخصص/محدد</target>
         <note>Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="G5R-oP-lp3.title" xml:space="preserve">
@@ -2071,6 +2144,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="IcU-k2-G0m.normalTitle" xml:space="preserve">
         <source>&gt;</source>
+        <target>&gt;</target>
         <note>Class = "UIButton"; normalTitle = "&gt;"; ObjectID = "IcU-k2-G0m";</note>
       </trans-unit>
       <trans-unit id="JAT-qD-dTS.text" xml:space="preserve">
@@ -2150,6 +2224,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="XJZ-vI-jat.text" xml:space="preserve">
         <source>PROTOTYPE CELLS</source>
+        <target>الخلايا الأولية</target>
         <note>Class = "UILabel"; text = "PROTOTYPE CELLS"; ObjectID = "XJZ-vI-jat";</note>
       </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
@@ -2159,6 +2234,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="aCs-vS-YXj.placeholder" xml:space="preserve">
         <source>ref</source>
+        <target>المرجع</target>
         <note>Class = "UITextField"; placeholder = "ref"; ObjectID = "aCs-vS-YXj"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="aLi-Vs-z0k.title" xml:space="preserve">
@@ -2203,6 +2279,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
         <source>clean</source>
+        <target>مسح</target>
         <note>Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
@@ -2277,10 +2354,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="oC6-w7-cwN.placeholder" xml:space="preserve">
         <source>leashed</source>
+        <target>مقيد</target>
         <note>Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="okh-JP-aKZ.placeholder" xml:space="preserve">
         <source>park</source>
+        <target>حديقة</target>
         <note>Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="omf-S9-Yjq.text" xml:space="preserve">
@@ -2330,6 +2409,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="zpj-gL-2Nt.normalTitle" xml:space="preserve">
         <source>ⓘ</source>
+        <target>ⓘ</target>
         <note>Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "zpj-gL-2Nt";</note>
       </trans-unit>
     </body>
@@ -3066,6 +3146,30 @@ http://www.sjjb.co.uk/mapicons
 Other icons by Glyphish:
 http://glyphish.com
 </source>
+        <target>حقوق النشر © 2012-2020 Bryce Cogswell. 
+ كل الحقوق محفوظة.
+
+ بيانات OpenStreetMap مرخصة بموجب ترخيص Open Data Commons Open Database (ODbL):
+ https://www.openstreetmap.com/copyright
+
+ حقوق نشر صور Bing الجوية لشركة Microsoft ومورديها:
+ https://www.microsoft.com/maps/product/terms.html ، https://www.microsoft.com/maps/assets/docs/terms.aspx
+
+ حقوق الطبع والنشر للصور الجوية لـ Mapbox Mapbox ومورديها:
+ https://www.mapbox.com/tos
+
+ تحليل XML بإذن من روبي هانسون KissXML:
+ https://github.com/robbiehanson/KissXML
+
+ كود تحليل EXIF حقوق النشر (c) 2010-2015 Mayank Lahiri
+ https://github.com/mayanklahiri/easyexif
+
+ أيقونات الخريطة بواسطة SJJB:
+ http://www.sjjb.co.uk/mapicons
+
+ أيقونات أخرى بواسطة Glyphish:
+ http://glyphish.com
+</target>
         <note>Class = "UITextView"; text = "Copyright © 2012-2020 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nEXIF parsing code Copyright (c) 2010-2015 Mayank Lahiri\nhttps://github.com/mayanklahiri/easyexif\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F";</note>
       </trans-unit>
       <trans-unit id="CHj-a3-gC9.text" xml:space="preserve">
