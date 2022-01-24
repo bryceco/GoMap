@@ -268,7 +268,14 @@ final class PresetsDatabase {
 				   let loc = feature.locationSet,
 				   let includes = loc["include"]
 				{
-					if !includes.contains(country) {
+					if !includes.contains(where: {
+						if let dashIndex = $0.firstIndex(of: "-") {
+							// FIXME: we don't yet support checking the state/province following the "-"
+							return $0[..<dashIndex] == country
+						} else {
+							return $0 == country
+						}
+					}) {
 						return
 					}
 				}
