@@ -17,6 +17,7 @@
       </trans-unit>
       <trans-unit id="quest_atm_operator_title" xml:space="preserve">
         <source>What’s the name of the bank for this ATM?</source>
+        <target>Mikä on tämän pankkiautomaatin tarjoajan nimi?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_barrier_type_title" xml:space="preserve">
@@ -46,7 +47,7 @@
       </trans-unit>
       <trans-unit id="quest_bicycle_parking_type_title" xml:space="preserve">
         <source>What type of bicycle parking is this?</source>
-        <target>Minkälainen tämä pyöräparkki on? </target>
+        <target>Minkälainen tämä pyöräparkki on?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bikeParkingCapacity_title" xml:space="preserve">
@@ -96,10 +97,12 @@
       </trans-unit>
       <trans-unit id="quest_cyclewayPartSurface_title" xml:space="preserve">
         <source>What’s the surface of the cycleway here?</source>
+        <target>Mikä on pyörätien pinnoitteen tyyppi tässä?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_halal_name_title" xml:space="preserve">
         <source>Does %s offer Halal products?</source>
+        <target>Tarjoaako %s Halal tuotteita?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_kosher_name_title" xml:space="preserve">
@@ -124,15 +127,17 @@
       </trans-unit>
       <trans-unit id="quest_fireHydrant_diameter_title" xml:space="preserve">
         <source>What diameter is on this fire hydrant’s sign?</source>
+        <target>Mikä on palopostin ilmoitettu halkaisia kyltissä?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_fireHydrant_type_title" xml:space="preserve">
         <source>What kind of fire hydrant is this?</source>
-        <target>Minkälainen vesiposti tämä on?</target>
+        <target>Minkälainen paloposti tämä on?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_footwayPartSurface_title" xml:space="preserve">
         <source>What’s the surface of the footway here?</source>
+        <target>Mikä on tämän jalkakäytävän pinnoitteen tyyppi?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_generalFee_title" xml:space="preserve">
@@ -202,6 +207,7 @@
       </trans-unit>
       <trans-unit id="quest_picnicTableCover_title" xml:space="preserve">
         <source>Is this picnic table covered (protected from rain)?</source>
+        <target>Onko tämä picnic pöytä katettu (suojattu sateelta)?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_playground_access_title" xml:space="preserve">
@@ -251,6 +257,7 @@
       </trans-unit>
       <trans-unit id="quest_shop_vacant_type_title" xml:space="preserve">
         <source>This shop has been vacant. What’s here now?</source>
+        <target>Tämä kauppa on tyhjillään. Mitä siellä on nyt?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_sidewalk_title" xml:space="preserve">
@@ -335,6 +342,7 @@
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
         <source>Position your device parallel to the direction of the object.</source>
+        <target>Aseta laitteesi kohtisuoraan kohti objektia.</target>
         <note>Class = "UILabel"; text = "Position your device parallel to the direction of the object."; ObjectID = "4vY-m2-xMW";</note>
       </trans-unit>
       <trans-unit id="Jc3-Um-Aiy.text" xml:space="preserve">
@@ -386,6 +394,7 @@
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
         <source>The camera is used to measure heights of buildings or objects, and to perform text recognition in opening hours signs.</source>
+        <target>Kameraa käytetään mittaamaan rakennusten tai objektien korkeuksia sekä aukioloaikojen automaattista tunnistukseen.</target>
         <note>Privacy - Camera Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
@@ -398,10 +407,12 @@
       </trans-unit>
       <trans-unit id="NSLocationAlwaysUsageDescription" xml:space="preserve">
         <source>Your location will be displayed and followed on the map.</source>
+        <target>Sijaintiasi näytettään ja seurataan kartalla.</target>
         <note>Privacy - Location Always Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationUsageDescription" xml:space="preserve">
         <source>Enabling location services allows the app to display objects in your vicinity. This allows you to easily update or add data you survey yourself.</source>
+        <target>Sallimalla paikannuspalvelut sovellus voi näyttää lähettyvillä olevat objektit. Tämä tekee lähialueesi päivittämisen ja kartoittamisen helpoksi.</target>
         <note>Privacy - Location Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationWhenInUseUsageDescription" xml:space="preserve">
@@ -552,6 +563,7 @@
       </trans-unit>
       <trans-unit id="Accept" xml:space="preserve">
         <source>Accept</source>
+        <target>Hyväksy</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
@@ -596,6 +608,7 @@
       </trans-unit>
       <trans-unit id="An unknown error occurred fetching metadata" xml:space="preserve">
         <source>An unknown error occurred fetching metadata</source>
+        <target>Tunnistamaton virhe tapahtui metadataa haettaessa.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Attention" xml:space="preserve">
@@ -785,6 +798,7 @@
       </trans-unit>
       <trans-unit id="Delete %@?" xml:space="preserve">
         <source>Delete %@?</source>
+        <target>Poista %@?</target>
         <note>Confirm deleting a node/way</note>
       </trans-unit>
       <trans-unit id="Delete completely" xml:space="preserve">
@@ -814,6 +828,7 @@
       </trans-unit>
       <trans-unit id="Distance: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Distance: %1$@ ± %2$@ meters</source>
+        <target>Etäisyys: %1$@ ± %2$@ metriä</target>
         <note>Distance to an object with an error value</note>
       </trans-unit>
       <trans-unit id="Done" xml:space="preserve">
@@ -894,6 +909,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Height: %1$@ ± %2$@ meters</source>
+        <target>Korkeus: %1$@ ± %2$@ metriä</target>
         <note>Height of an object with an error value</note>
       </trans-unit>
       <trans-unit id="I'll do it!" xml:space="preserve">
@@ -1289,6 +1305,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Retry" xml:space="preserve">
         <source>Retry</source>
+        <target>Yritä uudelleen</target>
         <note>retry opening hours recognition</note>
       </trans-unit>
       <trans-unit id="Reverse" xml:space="preserve">
@@ -1488,6 +1505,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Type" xml:space="preserve">
         <source>Type</source>
+        <target>Tyyppi</target>
         <note>The 'Type' header in Common Tags</note>
       </trans-unit>
       <trans-unit id="U-Turn from %@ allowed" xml:space="preserve">
@@ -1722,6 +1740,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="other object" xml:space="preserve">
         <source>other object</source>
+        <target>muu objekti</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="relation" xml:space="preserve">
@@ -1787,14 +1806,17 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
         <source>OK</source>
+        <target>OK</target>
         <note>Class = "UIButton"; normalTitle = "OK"; ObjectID = "05z-LH-xEK";</note>
       </trans-unit>
       <trans-unit id="Zxw-Em-faC.normalTitle" xml:space="preserve">
         <source>Cancel</source>
+        <target>Peruuta</target>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "Zxw-Em-faC";</note>
       </trans-unit>
       <trans-unit id="cy3-gz-fvk.text" xml:space="preserve">
         <source>Go Map!! will open at the location the photo was taken.</source>
+        <target>Go Map!! avautuu paikassa jossa kuva on otettu.</target>
         <note>Class = "UILabel"; text = "Go Map!! will open at the location the photo was taken."; ObjectID = "cy3-gz-fvk";</note>
       </trans-unit>
     </body>
@@ -1821,14 +1843,17 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="Processing data..." xml:space="preserve">
         <source>Processing data...</source>
+        <target>Käsittellään data..</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The URL content isn't recognized." xml:space="preserve">
         <source>The URL content isn't recognized.</source>
+        <target>URL sisältöä ei tunnistettu.</target>
         <note>Error message when sharing a URL to Go Map!!</note>
       </trans-unit>
       <trans-unit id="Unfortunately the selected image does not contain location information." xml:space="preserve">
         <source>Unfortunately the selected image does not contain location information.</source>
+        <target>Valitettavasti valittu kuva ei sisällä sijaintitietoa.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>
