@@ -102,6 +102,7 @@
       </trans-unit>
       <trans-unit id="quest_dietType_halal_name_title" xml:space="preserve">
         <source>Does %s offer Halal products?</source>
+        <target>%s提供清真制品吗？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_kosher_name_title" xml:space="preserve">
@@ -392,6 +393,7 @@
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
         <source>The camera is used to measure heights of buildings or objects, and to perform text recognition in opening hours signs.</source>
+        <target>照相机被用于测量建筑物或物体的高度，并对标识牌上的开放时间进行文本识别。</target>
         <note>Privacy - Camera Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
@@ -556,7 +558,7 @@
       </trans-unit>
       <trans-unit id="A GPX Track records your path as you travel along a road or trail" xml:space="preserve">
         <source>A GPX Track records your path as you travel along a road or trail</source>
-        <target>当您沿着道路或小径行驶时，GPX轨迹会记录您的路径。</target>
+        <target>当您沿着道路或小径行驶时，GPX轨迹会记录您的路径</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="A relation the node belongs to is not fully downloaded" xml:space="preserve">
@@ -2999,7 +3001,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="CHj-a3-gC9.text" xml:space="preserve">
         <source>Weblate - Translations</source>
-        <target>Weblate 翻译</target>
+        <target>Weblate - 翻译</target>
         <note>Class = "UILabel"; text = "Weblate - Translations"; ObjectID = "CHj-a3-gC9";</note>
       </trans-unit>
       <trans-unit id="DY5-Ls-XZ1.normalTitle" xml:space="preserve">
