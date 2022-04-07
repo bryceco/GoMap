@@ -127,6 +127,7 @@
       </trans-unit>
       <trans-unit id="quest_fireHydrant_diameter_title" xml:space="preserve">
         <source>What diameter is on this fire hydrant’s sign?</source>
+        <target>这个消火栓标志上的直径是多少？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_fireHydrant_type_title" xml:space="preserve">
@@ -206,6 +207,7 @@
       </trans-unit>
       <trans-unit id="quest_picnicTableCover_title" xml:space="preserve">
         <source>Is this picnic table covered (protected from rain)?</source>
+        <target>这张野餐桌有被遮盖（防雨）吗？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_playground_access_title" xml:space="preserve">
@@ -305,6 +307,7 @@
       </trans-unit>
       <trans-unit id="quest_traffic_calming_type_title" xml:space="preserve">
         <source>What type of traffic calming is this?</source>
+        <target state="needs-translation">这是哪种类型的交通宁静化设施？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_traffic_signals_button_title" xml:space="preserve">
