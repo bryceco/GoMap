@@ -896,9 +896,9 @@ final class OsmMapData: NSObject, NSCoding {
 							switch result {
 							case let .success(data):
 								// update the bad element
-								try? merge(data, savingToDatabase: true)
+								try? self.merge(data, savingToDatabase: true)
 								// try again:
-								generateXMLandUploadChangeset(changesetID, retries: retries - 1, completion: completion)
+								self.generateXMLandUploadChangeset(changesetID, retries: retries - 1, completion: completion)
 							case let .failure(error):
 								completion("\(error.localizedDescription)")
 							}
@@ -1694,7 +1694,7 @@ final class OsmMapData: NSObject, NSCoding {
 				Int(nodeCount()) + Int(wayCount()) + Int(relationCount())))
 
 			DispatchQueue.main.async(execute: {
-				previousDiscardDate = Date()
+				self.previousDiscardDate = Date()
 			})
 		})
 

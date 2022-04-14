@@ -2024,9 +2024,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				// define the drag function
 				let dragObjectToPushpin: (() -> Void) = {
 					if let pos = self.pushPin?.arrowPoint {
-						editorLayer.dragContinue(object: object,
+						self.editorLayer.dragContinue(object: object,
 						                         toPoint: pos,
-						                         isRotateObjectMode: isRotateObjectMode)
+										isRotateObjectMode: self.isRotateObjectMode)
 					}
 				}
 
@@ -2251,34 +2251,34 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			UIView.performWithoutAnimation({ [self] in
 				// if a button is no longer in the notes database then it got resolved and can go away
 				var remove: [Int] = []
-				for tag in buttonForButtonId.keys {
-					if notesDatabase.mapMarker(forTag: tag) == nil {
+				for tag in self.buttonForButtonId.keys {
+					if self.notesDatabase.mapMarker(forTag: tag) == nil {
 						remove.append(tag)
 					}
 				}
 				for tag in remove {
-					if let button = buttonForButtonId[tag] {
-						buttonForButtonId.removeValue(forKey: tag)
+					if let button = self.buttonForButtonId[tag] {
+						self.buttonForButtonId.removeValue(forKey: tag)
 						button.removeFromSuperview()
 					}
 				}
 
 				// update new and existing buttons
-				notesDatabase.enumerateNotes({ [self] note in
-					if viewOverlayMask.contains(.NOTES) {
+				self.notesDatabase.enumerateNotes({ [self] note in
+					if self.viewOverlayMask.contains(.NOTES) {
 						// hide unwanted keep right buttons
 						if note is KeepRightMarker,
-						   notesDatabase.isIgnored(note)
+						   self.notesDatabase.isIgnored(note)
 						{
-							if let button = buttonForButtonId[note.buttonId] {
+							if let button = self.buttonForButtonId[note.buttonId] {
 								button.removeFromSuperview()
 							}
 							return
 						}
 
-						if buttonForButtonId[note.buttonId] == nil {
+						if self.buttonForButtonId[note.buttonId] == nil {
 							let button = UIButton(type: .custom)
-							button.addTarget(self, action: #selector(noteButtonPress(_:)), for: .touchUpInside)
+							button.addTarget(self, action: #selector(self.noteButtonPress(_:)), for: .touchUpInside)
 							button.layer.backgroundColor = UIColor.blue.cgColor
 							button.layer.borderColor = UIColor.white.cgColor
 							if let icon = note.buttonIcon {
@@ -2298,16 +2298,16 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 								button.setTitle(note.buttonLabel, for: .normal)
 							}
 							button.tag = note.buttonId
-							addSubview(button)
-							buttonForButtonId[note.buttonId] = button
+							self.addSubview(button)
+							self.buttonForButtonId[note.buttonId] = button
 						}
-						let button = buttonForButtonId[note.buttonId]!
+						let button = self.buttonForButtonId[note.buttonId]!
 
 						if note.shouldHide() {
 							button.removeFromSuperview()
 						} else {
 							let offsetX = (note is KeepRightMarker) || (note is FixmeMarker) ? 0.00001 : 0.0
-							let pos = mapTransform.screenPoint(
+							let pos = self.mapTransform.screenPoint(
 								forLatLon: LatLon(latitude: note.lat, longitude: note.lon + offsetX),
 								birdsEye: true)
 							if pos.x.isInfinite || pos.y.isInfinite {
@@ -2321,9 +2321,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 						}
 					} else {
 						// not displaying any notes at this time
-						if let button = buttonForButtonId[note.buttonId] {
+						if let button = self.buttonForButtonId[note.buttonId] {
 							button.removeFromSuperview()
-							buttonForButtonId.removeValue(forKey: note.buttonId)
+							self.buttonForButtonId.removeValue(forKey: note.buttonId)
 						}
 					}
 				})

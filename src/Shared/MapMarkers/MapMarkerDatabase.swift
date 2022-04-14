@@ -70,13 +70,13 @@ final class MapMarkerDatabase: NSObject {
 					mapData.enumerateObjects(inRegion: box, block: { [self] obj in
 						if let fixme = FixmeMarker.fixmeTag(obj) {
 							let marker = FixmeMarker(object: obj, text: fixme)
-							addOrUpdate(marker)
+							self.addOrUpdate(marker)
 						}
 
 #if DEBUG
 						for quest in QuestList.shared.questsForObject(obj) {
 							let marker = QuestMarker(object: obj, quest: quest)
-							addOrUpdate(marker)
+							self.addOrUpdate(marker)
 						}
 #endif
 					})
