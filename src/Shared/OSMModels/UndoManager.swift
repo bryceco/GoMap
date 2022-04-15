@@ -263,7 +263,7 @@ class MyUndoManager: NSObject, NSCoding {
 		} else {
 			undoStack = coder.decodeObject() as? [UndoAction] ?? []
 			redoStack = coder.decodeObject() as? [UndoAction] ?? []
-			var len: Int = 0
+			var len = 0
 			withUnsafeMutablePointer(to: &len, {
 				if let ptr = coder.decodeBytes(withReturnedLength: $0) {
 					runLoopCounter = ptr.load(as: type(of: runLoopCounter))

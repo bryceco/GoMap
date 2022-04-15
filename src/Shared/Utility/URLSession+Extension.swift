@@ -41,7 +41,7 @@ extension URLSession {
 				// We could potentially look at httpResponse.allHeaderFields or
 				// httpResponse.value(forHTTPHeaderField: "Content-Type") to
 				// determine how to decode the payload.
-				var message: String = ""
+				var message = ""
 				if let data = data, data.count > 0 {
 					message = String(decoding: data, as: UTF8.self)
 				}

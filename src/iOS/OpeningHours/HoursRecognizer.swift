@@ -938,7 +938,7 @@ public class HoursRecognizer: ObservableObject {
 				break
 
 			case .unknown:
-				assert(false)
+				assertionFailure()
 			}
 		}
 		flush()
@@ -1059,7 +1059,7 @@ public class HoursRecognizer: ObservableObject {
 			case .time: return HoursRecognizer.GoodTimesForTokenSequences($0)
 			case .modifier: return $0
 			case .dash: return $0
-			case .unknown: assert(false); return $0
+			case .unknown: assertionFailure(); return $0
 			}
 		}
 
@@ -1074,7 +1074,7 @@ public class HoursRecognizer: ObservableObject {
 			case .modifier: combine = this.isModifier()
 			case .day: combine = this.isDay()
 			case .dash: combine = this.isDash()
-			case .unknown: assert(false); combine = false
+			case .unknown: assertionFailure(); combine = false
 			}
 			if combine {
 				tokenSets[index - 1] += tokenSets[index]

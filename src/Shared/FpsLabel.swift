@@ -18,7 +18,7 @@ final class FpsLabel: UILabel {
 
 	private var timer: DispatchSourceTimer!
 
-	public var showFPS: Bool = false {
+	public var showFPS = false {
 		didSet {
 			if showFPS == oldValue {
 				return

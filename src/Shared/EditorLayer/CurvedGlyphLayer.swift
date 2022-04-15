@@ -21,7 +21,7 @@ private final class PathPoints {
 	public let points: [CGPoint]
 	public let length: CGFloat
 	private var offset: CGFloat = 0.0
-	private var segment: Int = 0
+	private var segment = 0
 
 	init(WithPath path: CGPath) {
 		points = path.getPoints()
@@ -161,7 +161,7 @@ final class CurvedGlyphLayer {
 	public static var foreColor = UIColor.white
 	public static var backColor = UIColor.black.withAlphaComponent(0.3)
 
-	static var whiteOnBlack: Bool = true {
+	static var whiteOnBlack = true {
 		didSet {
 			if oldValue != whiteOnBlack {
 				GlyphLayer.clearCache()

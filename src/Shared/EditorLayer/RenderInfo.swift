@@ -28,7 +28,7 @@ private let g_DefaultRender: RenderInfo = {
 final class RenderInfo {
 	var renderPriority = 0
 
-	var key: String = ""
+	var key = ""
 	var value: String?
 	var lineColor: UIColor?
 	var lineWidth: CGFloat = 0.0

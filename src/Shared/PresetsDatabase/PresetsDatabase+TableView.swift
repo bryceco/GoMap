@@ -667,7 +667,7 @@ extension PresetsDatabase {
 
 		default:
 #if DEBUG
-			assert(false)
+			assertionFailure()
 #endif
 			return nil
 		}

@@ -175,19 +175,19 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 	}
 
-	private var viewStateZoomedOut: Bool = false { // override layer because we're zoomed out
+	private var viewStateZoomedOut = false { // override layer because we're zoomed out
 		willSet(newValue) {
 			viewStateWillChangeTo(viewState, overlays: viewOverlayMask, zoomedOut: newValue)
 		}
 	}
 
-	public var userOverrodeLocationPosition: Bool = false {
+	public var userOverrodeLocationPosition = false {
 		didSet {
 			centerOnGPSButton.isHidden = !userOverrodeLocationPosition || gpsState == .NONE
 		}
 	}
 
-	public var userOverrodeLocationZoom: Bool = false {
+	public var userOverrodeLocationZoom = false {
 		didSet {
 			centerOnGPSButton.isHidden = !userOverrodeLocationZoom || gpsState == .NONE
 		}
@@ -196,16 +196,16 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	private(set) lazy var notesDatabase = MapMarkerDatabase()
 	private(set) var buttonForButtonId: [Int: UIButton] = [:] // convert a note ID to a button on the map
 
-	private(set) lazy var aerialLayer: MercatorTileLayer = { MercatorTileLayer(mapView: self) }()
-	private(set) lazy var mapnikLayer: MercatorTileLayer = { MercatorTileLayer(mapView: self) }()
-	private(set) lazy var noNameLayer: MercatorTileLayer = { MercatorTileLayer(mapView: self) }()
-	private(set) lazy var editorLayer: EditorMapLayer = { EditorMapLayer(owner: self) }()
-	private(set) lazy var gpxLayer: GpxLayer = { GpxLayer(mapView: self) }()
+	private(set) lazy var aerialLayer = MercatorTileLayer(mapView: self)
+	private(set) lazy var mapnikLayer = MercatorTileLayer(mapView: self)
+	private(set) lazy var noNameLayer = MercatorTileLayer(mapView: self)
+	private(set) lazy var editorLayer = EditorMapLayer(owner: self)
+	private(set) lazy var gpxLayer = GpxLayer(mapView: self)
 	private(set) var quadDownloadLayer: QuadDownloadLayer?
 
 	// overlays
-	private(set) lazy var locatorLayer: MercatorTileLayer = { MercatorTileLayer(mapView: self) }()
-	private(set) lazy var gpsTraceLayer: MercatorTileLayer = { MercatorTileLayer(mapView: self) }()
+	private(set) lazy var locatorLayer = MercatorTileLayer(mapView: self)
+	private(set) lazy var gpsTraceLayer = MercatorTileLayer(mapView: self)
 
 	private(set) var backgroundLayers: [CALayer] = [] // list of all layers that need to be resized, etc.
 
@@ -340,7 +340,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	let tileServerList: TileServerList
 
-	var enableBirdsEye: Bool = false {
+	var enableBirdsEye = false {
 		didSet {
 			if !enableBirdsEye {
 				// remove birdsEye
@@ -349,7 +349,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 	}
 
-	var enableRotation: Bool = false {
+	var enableRotation = false {
 		didSet {
 			if !enableRotation {
 				// remove rotation
@@ -360,7 +360,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 	}
 
-	var enableUnnamedRoadHalo: Bool = false {
+	var enableUnnamedRoadHalo = false {
 		didSet {
 			if enableUnnamedRoadHalo != oldValue {
 				editorLayer.clearCachedProperties()
@@ -368,14 +368,14 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 	}
 
-	var displayGpxLogs: Bool = false {
+	var displayGpxLogs = false {
 		didSet {
 			gpxLayer.isHidden = !displayGpxLogs
 			locationManager.allowsBackgroundLocationUpdates = gpsInBackground && displayGpxLogs
 		}
 	}
 
-	var enableTurnRestriction: Bool = false {
+	var enableTurnRestriction = false {
 		didSet {
 			if oldValue != enableTurnRestriction {
 				editorLayer.clearCachedProperties()
@@ -1912,7 +1912,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	// Turn restriction panel
 	func presentTurnRestrictionEditor() {
 		guard let selectedPrimary = editorLayer.selectedPrimary,
-		      let pushPin = self.pushPin
+		      let pushPin = pushPin
 		else { return }
 
 		let showRestrictionEditor: (() -> Void) = { [self] in
@@ -2025,8 +2025,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				let dragObjectToPushpin: (() -> Void) = {
 					if let pos = self.pushPin?.arrowPoint {
 						self.editorLayer.dragContinue(object: object,
-						                         toPoint: pos,
-										isRotateObjectMode: self.isRotateObjectMode)
+						                              toPoint: pos,
+						                              isRotateObjectMode: self.isRotateObjectMode)
 					}
 				}
 
@@ -2198,10 +2198,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				}
 			}
 		} else {
-			assert(false)
+			assertionFailure()
 		}
 		self.blinkLayer = CAShapeLayer()
-		guard let blinkLayer = self.blinkLayer else { fatalError() }
+		guard let blinkLayer = blinkLayer else { fatalError() }
 		blinkLayer.path = path
 		blinkLayer.fillColor = nil
 		blinkLayer.lineWidth = 3.0

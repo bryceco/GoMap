@@ -78,11 +78,11 @@ final class PresetsDatabase {
 		let trans = PresetsDatabase.DictionaryForFile(file) as! [String: [String: Any]]
 		let jsonTranslation = (trans[code]?["presets"] as? [String: [String: Any]]) ?? [String: [String: Any]]()
 		let yesNoDict =
-			((jsonTranslation["fields"])?["internet_access"] as? [String: Any])?["options"] as? [String: String]
+			(jsonTranslation["fields"]?["internet_access"] as? [String: Any])?["options"] as? [String: String]
 		yesForLocale = yesNoDict?["yes"] ?? "Yes"
 		noForLocale = yesNoDict?["no"] ?? "No"
 		unknownForLocale =
-			((jsonTranslation["fields"])?["opening_hours"] as? [String: Any])?["placeholder"] as? String ??
+			(jsonTranslation["fields"]?["opening_hours"] as? [String: Any])?["placeholder"] as? String ??
 			"???"
 
 		// get presets files
@@ -240,7 +240,7 @@ final class PresetsDatabase {
 		guard let objectTags = objectTags else { return nil }
 
 		var bestFeature: PresetFeature?
-		var bestScore: Double = 0.0
+		var bestScore = 0.0
 
 		let index = includeNSI ? nsiIndex : stdIndex
 		let keys = objectTags.keys + [""]

@@ -46,7 +46,7 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		assert(false) // not supported
+		assertionFailure() // not supported
 	}
 
 	override weak var delegate: UITextFieldDelegate? {

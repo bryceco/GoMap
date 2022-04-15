@@ -339,7 +339,7 @@ final class PushPinView: UIButton, CAAnimationDelegate, UIGestureRecognizerDeleg
 		}
 	}
 
-	private(set) var isDragging: Bool = false
+	private(set) var isDragging = false
 	@objc func draggingGesture(_ gesture: UIPanGestureRecognizer) {
 		var delta = gesture.translation(in: self)
 

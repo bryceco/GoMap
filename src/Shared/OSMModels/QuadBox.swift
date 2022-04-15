@@ -429,7 +429,7 @@ final class QuadBox: NSObject, NSCoding {
 			// add to self
 			if members.contains(member) {
 #if DEBUG
-				assert(false) // duplicate entry
+				assertionFailure() // duplicate entry
 #endif
 				return
 			}

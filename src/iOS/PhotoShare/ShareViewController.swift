@@ -39,7 +39,7 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 	@IBOutlet var popupText: UILabel!
 
 	var location: CLLocationCoordinate2D?
-	var direction: Double = 0.0
+	var direction = 0.0
 	var photoText: String!
 
 	override func viewDidLoad() {

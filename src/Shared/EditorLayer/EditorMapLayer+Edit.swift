@@ -55,7 +55,7 @@ extension EditorMapLayer {
 	/// Offers the option to either merge tags or replace them with the copied tags.
 	func pasteTags() {
 		let copyPasteTags = self.copyPasteTags
-		guard let selectedPrimary = self.selectedPrimary else { return }
+		guard let selectedPrimary = selectedPrimary else { return }
 		guard copyPasteTags.count > 0 else {
 			owner.showAlert(NSLocalizedString("No tags to paste", comment: ""), message: nil)
 			return
@@ -90,7 +90,7 @@ extension EditorMapLayer {
 	/// Called by the tag editor when user finally commits changes.
 	/// This method creates a node at the pushpin if there is nothing selected.
 	func setTagsForCurrentObject(_ tags: [String: String]) {
-		if let selectedPrimary = self.selectedPrimary {
+		if let selectedPrimary = selectedPrimary {
 			// update current object
 			mapData.setTags(tags, for: selectedPrimary)
 			owner.didUpdateObject()
@@ -138,7 +138,7 @@ extension EditorMapLayer {
 					selectedWay = nil
 					selectedRelation = nil
 				} else if let hit = hit as? OsmWay {
-					if let selectedRelation = self.selectedRelation,
+					if let selectedRelation = selectedRelation,
 					   hit.parentRelations.contains(selectedRelation)
 					{
 						// selecting way inside previously selected relation
@@ -183,7 +183,7 @@ extension EditorMapLayer {
 
 		owner.removePin()
 
-		if let selectedPrimary = self.selectedPrimary {
+		if let selectedPrimary = selectedPrimary {
 			// adjust tap point to touch object
 			var latLon = owner.mapTransform.latLon(forScreenPoint: point)
 			latLon = selectedPrimary.latLonOnObject(forLatLon: latLon)
@@ -274,14 +274,14 @@ extension EditorMapLayer {
 		if let way = object.isWay() {
 			// update things if we dragged a multipolygon inner member to become outer
 			mapData.updateParentMultipolygonRelationRoles(for: way)
-		} else if let selectedWay = self.selectedWay,
+		} else if let selectedWay = selectedWay,
 		          object.isNode() != nil
 		{
 			// you can also move an inner to an outer by dragging nodes one at a time
 			mapData.updateParentMultipolygonRelationRoles(for: selectedWay)
 		}
 
-		if let selectedWay = self.selectedWay,
+		if let selectedWay = selectedWay,
 		   let dragNode = object.isNode()
 		{
 			// dragging a node that is part of a way
@@ -323,7 +323,7 @@ extension EditorMapLayer {
 		if isRotate {
 			return
 		}
-		if let selectedWay = self.selectedWay,
+		if let selectedWay = selectedWay,
 		   selectedWay.tags.count == 0,
 		   selectedWay.parentRelations.count == 0
 		{
@@ -521,7 +521,7 @@ extension EditorMapLayer {
 	}
 
 	func deleteCurrentSelection() {
-		guard let selectedPrimary = self.selectedPrimary,
+		guard let selectedPrimary = selectedPrimary,
 		      let pushpinView = owner.pushpinView()
 		else { return }
 
@@ -597,8 +597,8 @@ extension EditorMapLayer {
 
 	func editActionsAvailable() -> [EDIT_ACTION] {
 		var actionList: [EDIT_ACTION] = []
-		if let selectedWay = self.selectedWay {
-			if let selectedNode = self.selectedNode {
+		if let selectedWay = selectedWay {
+			if let selectedNode = selectedNode {
 				// node in way
 				let parentWays: [OsmWay] = mapData.waysContaining(selectedNode)
 				let disconnect = parentWays.count > 1 ||
@@ -645,7 +645,7 @@ extension EditorMapLayer {
 		} else if selectedNode != nil {
 			// node
 			actionList = [.COPYTAGS, .DUPLICATE]
-		} else if let selectedRelation = self.selectedRelation {
+		} else if let selectedRelation = selectedRelation {
 			// relation
 			if selectedRelation.isMultipolygon() {
 				actionList = [.COPYTAGS, .ROTATE, .DUPLICATE]
@@ -679,7 +679,7 @@ extension EditorMapLayer {
 		do {
 			switch action {
 			case .COPYTAGS:
-				if let selectedPrimary = self.selectedPrimary {
+				if let selectedPrimary = selectedPrimary {
 					if !copyTags(selectedPrimary) {
 						throw EditError.text(NSLocalizedString("The object does not contain any tags", comment: ""))
 					}
@@ -726,7 +726,7 @@ extension EditorMapLayer {
 					owner.startObjectRotation()
 				}
 			case .RECTANGULARIZE:
-				guard let selectedWay = self.selectedWay else { return }
+				guard let selectedWay = selectedWay else { return }
 				if selectedWay.ident >= 0, !owner.screenLatLonRect().containsRect(selectedWay.boundingBox) {
 					throw EditError.text(NSLocalizedString("The selected way must be completely visible",
 					                                       comment: "")) // avoid bugs where nodes are deleted from other objects
@@ -747,7 +747,7 @@ extension EditorMapLayer {
 				let split = try mapData.canSplitWay(selectedWay!, at: selectedNode!)
 				_ = split()
 			case .STRAIGHTEN:
-				if let selectedWay = self.selectedWay {
+				if let selectedWay = selectedWay {
 					let boundingBox = selectedWay.boundingBox
 					if selectedWay.ident >= 0, !owner.screenLatLonRect().containsRect(boundingBox) {
 						throw EditError.text(NSLocalizedString("The selected way must be completely visible",
@@ -771,7 +771,7 @@ extension EditorMapLayer {
 			case .RESTRICT:
 				owner.presentTurnRestrictionEditor()
 			case .CREATE_RELATION:
-				guard let selectedPrimary = self.selectedPrimary else { return }
+				guard let selectedPrimary = selectedPrimary else { return }
 				let create: ((_ type: String) -> Void) = { [self] type in
 					do {
 						let relation = self.mapData.createRelation()
@@ -913,7 +913,7 @@ extension EditorMapLayer {
 
 	func extendSelectedWay(to newPoint: CGPoint, from pinPoint: CGPoint) -> Result<CGPoint, EditError> {
 		if let way = selectedWay,
-		   self.selectedNode == nil
+		   selectedNode == nil
 		{
 			// insert a new node into way at arrowPoint
 			let pt = owner.mapTransform.latLon(forScreenPoint: pinPoint)
@@ -931,8 +931,8 @@ extension EditorMapLayer {
 
 		let prevNode: OsmNode
 		let way: OsmWay
-		if let selectedNode = self.selectedNode,
-		   let selectedWay = self.selectedWay,
+		if let selectedNode = selectedNode,
+		   let selectedWay = selectedWay,
 		   selectedWay.nodes.count > 0,
 		   selectedWay.isClosed() || (selectedNode != selectedWay.nodes.first && selectedNode != selectedWay.nodes.last)
 		{
@@ -1064,7 +1064,7 @@ extension EditorMapLayer {
 		// converting a dropped pin to a way by adding a new node
 		// or adding a node to a selected way/node combination
 		guard let pushpinView = owner.pushpinView(),
-		      self.selectedNode == nil || selectedWay != nil
+		      selectedNode == nil || selectedWay != nil
 		else {
 			// drop a new pin
 			selectedNode = nil
@@ -1079,8 +1079,8 @@ extension EditorMapLayer {
 			self.owner.flashMessage(NSLocalizedString("Selected object is off screen", comment: ""))
 		}
 
-		if let selectedWay = self.selectedWay,
-		   let selectedNode = self.selectedNode
+		if let selectedWay = selectedWay,
+		   let selectedNode = selectedNode
 		{
 			// already editing a way so try to extend it
 			if selectedWay

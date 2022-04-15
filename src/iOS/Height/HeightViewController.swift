@@ -16,7 +16,7 @@ class HeightViewController: UIViewController {
 	private var captureSession: AVCaptureSession?
 	private var previewLayer: AVCaptureVideoPreviewLayer?
 	private var coreMotion: CMMotionManager?
-	private var cameraFOV: Double = 0.0
+	private var cameraFOV = 0.0
 	private var canZoom = false
 	@IBOutlet var distanceLabel: UIButton!
 	@IBOutlet var heightLabel: UIButton!
@@ -26,8 +26,8 @@ class HeightViewController: UIViewController {
 	private var rulerLayers: [Int: CAShapeLayer] = [:]
 	private var isExiting = false
 	private var scrollPosition: CGFloat = 0.0
-	private var totalZoom: Double = 0.0
-	private var currentHeight: String = ""
+	private var totalZoom = 0.0
+	private var currentHeight = ""
 
 	var callback: ((_ newValue: String) -> Void)?
 
@@ -370,8 +370,8 @@ class HeightViewController: UIViewController {
 		}
 
 		// compute location
-		var distError: Double = 0.0
-		var direction: Double = 0.0
+		var distError = 0.0
+		var direction = 0.0
 		let dist = distanceToObject(error: &distError, direction: &direction)
 		if dist.isNaN {
 			cancel(self)

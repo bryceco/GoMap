@@ -38,7 +38,7 @@ enum OsmParserError: LocalizedError {
 }
 
 class OsmDownloadParser: NSObject, XMLParserDelegate {
-	private var parserCurrentElementText: String = "" // not currently used, it's mostly whitespace
+	private var parserCurrentElementText = "" // not currently used, it's mostly whitespace
 	private var parserStack: [Any] = []
 	private var parseError: Error?
 

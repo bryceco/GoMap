@@ -18,7 +18,7 @@ typealias EditActionReturnNode = () -> OsmNode
 
 // "https://api.openstreetmap.org/"
 let OSM_SERVER_KEY = "OSM Server"
-var OSM_API_URL: String = ""
+var OSM_API_URL = ""
 
 final class OsmUserStatistics {
 	var user = ""
@@ -790,7 +790,7 @@ final class OsmMapData: NSObject, NSCoding {
 		// All relations, including old ones, need to be resolved against new objects
 		// In addition we need to recompute bounding boxes of relations every time
 		// in case a member is another relation that changed size.
-		var didChange: Bool = true
+		var didChange = true
 		while didChange {
 			didChange = false
 			for (_, relation) in relations {
@@ -898,7 +898,10 @@ final class OsmMapData: NSObject, NSCoding {
 								// update the bad element
 								try? self.merge(data, savingToDatabase: true)
 								// try again:
-								self.generateXMLandUploadChangeset(changesetID, retries: retries - 1, completion: completion)
+								self.generateXMLandUploadChangeset(
+									changesetID,
+									retries: retries - 1,
+									completion: completion)
 							case let .failure(error):
 								completion("\(error.localizedDescription)")
 							}
@@ -1409,7 +1412,7 @@ final class OsmMapData: NSObject, NSCoding {
 			} else if let obj = object.isRelation() {
 				relations[object.ident] = obj
 			} else {
-				assert(false)
+				assertionFailure()
 			}
 		}
 
@@ -1730,7 +1733,7 @@ final class OsmMapData: NSObject, NSCoding {
 					deleteRelation.append(obj)
 				}
 			} else {
-				assert(false)
+				assertionFailure()
 			}
 		}
 
@@ -1892,7 +1895,7 @@ final class OsmMapData: NSObject, NSCoding {
 		}
 		if let index = wayCountDict.first(where: { $0.1 != 0 }) {
 			print("node \(index.key) has bad wayCount: \(index.value)")
-			assert(false)
+			assertionFailure()
 		}
 	}
 

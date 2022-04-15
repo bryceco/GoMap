@@ -384,7 +384,7 @@ final class OsmWay: OsmBaseObject {
 	}
 
 	func centerPoint() -> LatLon {
-		var area: Double = 0.0
+		var area = 0.0
 		return centerPointWithArea(&area)
 	}
 
@@ -499,7 +499,7 @@ final class OsmWay: OsmBaseObject {
 	func segmentClosestToPoint(_ point: LatLon) -> Int {
 		let point = OSMPoint(point)
 		var best = -1
-		var bestDist: Double = 100000000.0
+		var bestDist = 100000000.0
 		for index in nodes.indices.dropLast() {
 			let this = nodes[index]
 			let next = nodes[index + 1]

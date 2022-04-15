@@ -133,7 +133,7 @@ class POIAttributesViewController: UITableViewController {
 				cell.value.text = "\(object.changeset)"
 				cell.accessoryType = object.ident > 0 ? .disclosureIndicator : .none
 			default:
-				assert(false)
+				assertionFailure()
 			}
 		} else if let node = object.isNode() {
 			if indexPath.section == SectionType.nodeLatlon.getRawValue() {
@@ -168,7 +168,7 @@ class POIAttributesViewController: UITableViewController {
 			}
 		} else {
 			// shouldn't be here
-			assert(false)
+			assertionFailure()
 		}
 		// do extra work so keyboard won't display if they select a value
 		let value = cell.value

@@ -95,7 +95,7 @@ final class OsmRelation: OsmBaseObject {
 					// relation is not in current view
 				}
 			} else {
-				assert(false)
+				assertionFailure()
 			}
 		}
 		if needsRedraw {

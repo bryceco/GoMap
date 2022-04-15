@@ -80,7 +80,7 @@ extension CGPath {
 				offset -= len
 				previous = nextPt
 			case .addQuadCurveToPoint, .addCurveToPoint, .closeSubpath:
-				assert(false)
+				assertionFailure()
 			@unknown default:
 				break
 			}
@@ -140,7 +140,7 @@ extension CGPath {
 				offset -= len
 				previous = pt
 			case .addQuadCurveToPoint, .addCurveToPoint, .closeSubpath:
-				assert(false)
+				assertionFailure()
 			@unknown default:
 				break
 			}
@@ -156,7 +156,7 @@ extension CGPath {
 	{
 		// Find the point with the maximum distance
 		var dmax = 0.0
-		var index: Int = 0
+		var index = 0
 		let end1 = OSMPoint(points[first])
 		let end2 = OSMPoint(points[last])
 		for i in (first + 1)..<last {

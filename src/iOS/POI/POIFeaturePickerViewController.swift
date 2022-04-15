@@ -25,7 +25,7 @@ class FeaturePickerCell: UITableViewCell {
 }
 
 private var mostRecentArray: [PresetFeature] = []
-private var mostRecentMaximum: Int = 0
+private var mostRecentMaximum = 0
 
 // static so memory cache persists each time we appear
 private var logoCache = PersistentWebCache<UIImage>(name: "presetLogoCache", memorySize: 5 * 1000000)
@@ -48,7 +48,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		} else {
 			mostRecentMaximum = MOST_RECENT_DEFAULT_COUNT
 		}
-		let defaults: String = "mostRecentTypes.\(geometry.rawValue)"
+		let defaults = "mostRecentTypes.\(geometry.rawValue)"
 		let a = UserDefaults.standard.object(forKey: defaults) as? [String] ?? []
 		mostRecentArray = a.compactMap({ PresetsDatabase.shared.presetFeatureForFeatureID($0) })
 	}
@@ -181,7 +181,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 #if true
 				// fetch icons from our private server
 				let name: String = feature.featureID.replacingOccurrences(of: "/", with: "_")
-				let url: String = "http://gomaposm.com/brandIcons/" + name
+				let url = "http://gomaposm.com/brandIcons/" + name
 				return URL(string: url)
 #else
 				// Fetch icons from a named public server. There are several downsides:
@@ -213,7 +213,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 			}
 #endif
 		}
-		let brand: String = "☆ "
+		let brand = "☆ "
 		let tabController = tabBarController as? POITabBarController
 		let geometry = currentSelectionGeometry()
 		let currentFeature = PresetsDatabase.shared.matchObjectTagsToFeature(

@@ -10,7 +10,7 @@ import Foundation
 
 // A possible value for a preset key
 final class PresetValue: NSObject, NSSecureCoding {
-	static let supportsSecureCoding: Bool = true
+	static let supportsSecureCoding = true
 
 	let name: String
 	let details: String?

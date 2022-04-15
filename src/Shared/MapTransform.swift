@@ -24,7 +24,7 @@ import Foundation
 final class MapTransform {
 	var center: CGPoint = .zero // screen center, needed for bird's eye calculations
 
-	static let latitudeLimit: Double = 85.051128
+	static let latitudeLimit = 85.051128
 
 	// This matrix translates between a "mapPoint" (a 256x256 mercator map of the world) and the screen
 	var transform = OSMTransform.identity {

@@ -23,7 +23,7 @@ public struct OpeningHoursRecognizerView: View {
 	public let onCancel: () -> Void
 
 	@StateObject public var recognizer: HoursRecognizer
-	@State private var restart: Bool = false
+	@State private var restart = false
 
 	init(
 		onAccept: @escaping ((String) -> Void),

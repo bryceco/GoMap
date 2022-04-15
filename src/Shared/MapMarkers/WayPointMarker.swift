@@ -33,7 +33,7 @@ class WayPointMarker: MapMarker {
 		      let lat = Double(lat2)
 		else { return nil }
 
-		var description: String = ""
+		var description = ""
 		var extensions: [DDXMLNode] = []
 
 		for child in waypointElement.children ?? [] {

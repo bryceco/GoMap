@@ -221,8 +221,8 @@ extension OsmMapData {
 
 			if points.count == 3 {
 				var score = 0.0
-				var corner: Int = 0
-				var dotp: Double = 1.0
+				var corner = 0
+				var dotp = 1.0
 
 				for _ in 0..<1000 {
 					let motions = points.indices.map {
@@ -1342,7 +1342,7 @@ extension OsmMapData {
 						continue
 					}
 				}
-				let PATH_SCALING: Double = 0.0
+				let PATH_SCALING = 0.0
 				var pt = MapTransform.mapPoint(forLatLon: node!.latLon)
 				pt = Sub(pt, refPoint)
 				pt = Mult(pt, PATH_SCALING)

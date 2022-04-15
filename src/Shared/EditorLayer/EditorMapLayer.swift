@@ -411,7 +411,7 @@ final class EditorMapLayer: CALayer {
 		block: @escaping (_ p1: OSMPoint, _ p2: OSMPoint, _ isEntry: Bool, _ isExit: Bool) -> Bool)
 	{
 		let viewRect = OSMRect(bounds)
-		var prevInside: Bool = false
+		var prevInside = false
 		var prev = OSMPoint.zero
 		var first = true
 
@@ -705,7 +705,7 @@ final class EditorMapLayer: CALayer {
 						// if its a building then add walls for 3D
 						if object.tags["building"] != nil {
 							// calculate height in meters
-							var height: Double = 0.0
+							var height = 0.0
 							if let value = object.tags["height"] {
 								// height in meters?
 								var v1: Double = 0

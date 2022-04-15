@@ -82,7 +82,7 @@ class ExternalGPS: NSObject, StreamDelegate {
 	// http://www.gpsinformation.org/dale/nmea.htm
 	func processNMEA(_ data: inout Data) {
 		while data.count > 8 {
-			var str: String = ""
+			var str = ""
 			data.withUnsafeBytes({ bytes in
 				str = bytes.load(as: String.self)
 			})
@@ -212,7 +212,7 @@ class ExternalGPS: NSObject, StreamDelegate {
 
 	func sendData() {
 		while session?.outputStream?.hasSpaceAvailable ?? false, writeBuffer.count > 0 {
-			var bytesWritten: Int = 0
+			var bytesWritten = 0
 			writeBuffer.withContiguousStorageIfAvailable({ ptr in
 				bytesWritten = session?.outputStream?.write(ptr.baseAddress!, maxLength: writeBuffer.count) ?? 0
 			})

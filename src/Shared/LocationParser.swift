@@ -117,8 +117,8 @@ class LocationParser {
 				case "center":
 					// scan center
 					let scanner = Scanner(string: queryItem.value ?? "")
-					var pLat: Double = 0.0
-					var pLon: Double = 0.0
+					var pLat = 0.0
+					var pLon = 0.0
 					if scanner.scanDouble(&pLat),
 					   scanner.scanString(",", into: nil),
 					   scanner.scanDouble(&pLon),

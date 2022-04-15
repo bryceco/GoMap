@@ -155,7 +155,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 	}
 
 	private func removeUnneededTiles(for rect: OSMRect, zoomLevel: Int) {
-		guard let sublayers = self.sublayers else { return }
+		guard let sublayers = sublayers else { return }
 
 		let MAX_ZOOM = 30
 

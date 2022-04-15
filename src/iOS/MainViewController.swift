@@ -61,7 +61,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 					return
 				}
 			}
-			assert(false) // didn't find the constraint
+			assertionFailure() // didn't find the constraint
 		}
 	}
 

@@ -10,7 +10,7 @@ import UIKit
 
 class GpxConfigureViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 	@IBOutlet var pickerView: UIPickerView!
-	var expirationValue: Int = 0
+	var expirationValue = 0
 	var completion: ((_ pick: Int) -> Void)?
 
 	override func viewDidLoad() {

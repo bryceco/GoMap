@@ -171,7 +171,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 			}
 		}
 
-		var imagery: String = ""
+		var imagery = ""
 		if appDelegate.mapView.viewState == MapViewState.EDITORAERIAL || appDelegate.mapView.viewState == MapViewState
 			.AERIAL
 		{

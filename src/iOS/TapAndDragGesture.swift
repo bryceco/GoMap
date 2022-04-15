@@ -115,7 +115,7 @@ class TapAndDragGesture: UIGestureRecognizer {
 		super.touchesMoved(touches, with: event)
 
 		guard let touch = touches.first,
-		      let view = self.view
+		      let view = view
 		else { return }
 		let delta = TouchTranslation(touch, view)
 		if delta.x == 0, delta.y == 0 {

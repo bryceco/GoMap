@@ -349,7 +349,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 	// suitable for drawing polygon areas with holes, etc.
 	func shapePathForObject(withRefPoint pRefPoint: UnsafeMutablePointer<OSMPoint>) -> CGPath? {
-		assert(false)
+		assertionFailure()
 		return nil
 	}
 

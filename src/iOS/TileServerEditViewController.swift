@@ -15,10 +15,10 @@ class TileServerEditViewController: UITableViewController {
 	var picker = UIPickerView()
 
 	// these are initialized by the segue manager:
-	var name: String = ""
-	var url: String = ""
-	var zoom: Int = 0
-	var projection: String = ""
+	var name = ""
+	var url = ""
+	var zoom = 0
+	var projection = ""
 	var completion: ((_ service: TileServer) -> Void)?
 
 	private let TMS_PROJECTION_NAME = "(TMS)"
@@ -33,7 +33,7 @@ class TileServerEditViewController: UITableViewController {
 		picker.delegate = self
 
 		picker.reloadAllComponents()
-		var row: Int = 0
+		var row = 0
 		if projection.count == 0 {
 			row = 0
 		} else {

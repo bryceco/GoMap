@@ -61,7 +61,7 @@ class DisplayViewController: UITableViewController {
 			}
 		}
 
-		var mask: Int = 0
+		var mask = 0
 		mask |= notesSwitch.isOn ? Int(MapViewOverlays.NOTES.rawValue) : 0
 		mask |= gpsTraceSwitch.isOn ? Int(MapViewOverlays.GPSTRACE.rawValue) : 0
 		mask |= unnamedRoadSwitch.isOn ? Int(MapViewOverlays.NONAME.rawValue) : 0
