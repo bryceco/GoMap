@@ -150,8 +150,8 @@ extension EditorMapLayer {
 							relation.isMultipolygon() || relation.isBoundary() || relation.isWaterway()
 						}
 						if relations.count == 0, !hit.hasInterestingTags() {
-							relations = hit
-								.parentRelations // if the way doesn't have tags then always promote to containing relation
+							// if the way doesn't have tags then always promote to containing relation
+							relations = hit.parentRelations
 						}
 						if let relation = relations.first {
 							selectedNode = nil
@@ -665,8 +665,11 @@ extension EditorMapLayer {
 		switch action {
 		case .RECTANGULARIZE, .STRAIGHTEN, .REVERSE, .DUPLICATE, .ROTATE, .CIRCULARIZE, .COPYTAGS, .PASTETAGS,
 		     .EDITTAGS, .CREATE_RELATION:
-			if selectedWay != nil, selectedNode != nil, (selectedNode?.tags.count ?? 0) == 0,
-			   (selectedWay?.tags.count ?? 0) == 0, !(selectedWay?.isMultipolygonMember() ?? false)
+			if let way = selectedWay,
+			   let node = selectedNode,
+			   node.tags.count == 0,
+			   way.tags.count == 0,
+			   !way.isMultipolygonMember()
 			{
 				// promote the selection to the way
 				selectedNode = nil
@@ -688,12 +691,6 @@ extension EditorMapLayer {
 				if selectedPrimary == nil {
 					// pasting to brand new object, so we need to create it first
 					setTagsForCurrentObject([:])
-				}
-
-				if selectedWay != nil, selectedNode != nil, selectedWay?.tags.count ?? 0 == 0 {
-					// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
-					selectedNode = nil
-					owner.didUpdateObject()
 				}
 				pasteTags()
 			case .DUPLICATE:
