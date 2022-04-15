@@ -254,11 +254,10 @@ extension PresetsDatabase {
 
 		DispatchQueue.global(qos: .default).async(execute: {
 			let cleanKey = searchKeys ? key.trimmingCharacters(in: CharacterSet(charactersIn: ":")) : key
+			let abibase = "https://taginfo.openstreetmap.org/api/4"
 			let urlText = searchKeys
-				?
-				"https://taginfo.openstreetmap.org/api/4/keys/all?query=\(cleanKey)&filter=characters_colon&page=1&rp=10&sortname=count_all&sortorder=desc"
-				:
-				"https://taginfo.openstreetmap.org/api/4/key/values?key=\(cleanKey)&page=1&rp=25&sortname=count_all&sortorder=desc"
+				? "\(abibase)/keys/all?query=\(cleanKey)&page=1&rp=25&sortname=count_all&sortorder=desc"
+				: "\(abibase)/key/values?key=\(cleanKey)&page=1&rp=25&sortname=count_all&sortorder=desc"
 			guard let url = URL(string: urlText),
 			      let rawData = try? Data(contentsOf: url)
 			else { return }
@@ -272,7 +271,10 @@ extension PresetsDatabase {
 					if !inWiki, (v["count_all"] as? NSNumber)?.intValue ?? 0 < 1000 {
 						continue // it's a very uncommon value, so ignore it
 					}
-					if let k = v["key"] as? String {
+					if let k = v["key"] as? String,
+					   k.hasPrefix(key),
+					   k.count > key.count
+					{
 						resultList.append(k)
 					}
 				}
