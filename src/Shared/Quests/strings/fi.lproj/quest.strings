@@ -5,6 +5,9 @@
 "quest_address_title" = "Mikä on tämän rakennuksen numero?";
 
 /* (No Comment) */
+"quest_atm_operator_title" = "Mikä on tämän pankkiautomaatin tarjoajan nimi?";
+
+/* (No Comment) */
 "quest_barrier_type_title" = "Minkä tyylinen este tämä on?";
 
 /* (No Comment) */
@@ -17,7 +20,7 @@
 "quest_bicycle_parking_fee_title" = "Maksaako pyörän pysäköiminen tässä?";
 
 /* (No Comment) */
-"quest_bicycle_parking_type_title" = "Minkälainen tämä pyöräparkki on? ";
+"quest_bicycle_parking_type_title" = "Minkälainen tämä pyöräparkki on?";
 
 /* (No Comment) */
 "quest_bicycleParkingCoveredStatus_title" = "Onko tämä pyöräpysäkki katoksellinen (suojattu sateelta)?";
@@ -50,6 +53,12 @@
 "quest_crossing_type_title" = "Minkälainen ylityspaikka tämä on?";
 
 /* (No Comment) */
+"quest_cyclewayPartSurface_title" = "Mikä on pyörätien pinnoitteen tyyppi tässä?";
+
+/* (No Comment) */
+"quest_dietType_halal_name_title" = "Tarjoaako %s Halal tuotteita?";
+
+/* (No Comment) */
 "quest_dietType_kosher_name_title" = "Tarjoaako %s kosher tuotteita?";
 
 /* (No Comment) */
@@ -62,7 +71,13 @@
 "quest_drinking_water_title" = "Onko vesi täällä juotavaa? (%s)";
 
 /* (No Comment) */
-"quest_fireHydrant_type_title" = "Minkälainen vesiposti tämä on?";
+"quest_fireHydrant_diameter_title" = "Mikä on palopostin ilmoitettu halkaisia kyltissä?";
+
+/* (No Comment) */
+"quest_fireHydrant_type_title" = "Minkälainen paloposti tämä on?";
+
+/* (No Comment) */
+"quest_footwayPartSurface_title" = "Mikä on tämän jalkakäytävän pinnoitteen tyyppi?";
 
 /* (No Comment) */
 "quest_generalFee_title" = "Onko tänne %s sisäänpääsymaksua?";
@@ -104,6 +119,9 @@
 "quest_parkingType_title" = "Minkälainen pysäköintipaikka tämä on?";
 
 /* (No Comment) */
+"quest_picnicTableCover_title" = "Onko tämä picnic pöytä katettu (suojattu sateelta)?";
+
+/* (No Comment) */
 "quest_playground_access_title" = "Onko tämä leikkikenttä julkisesti käytössä?";
 
 /* (No Comment) */
@@ -129,6 +147,9 @@
 
 /* (No Comment) */
 "quest_segregated_title" = "Miten kevyenliikenteenväylä on jaettu jalankulkijoille ja pyöräilijöille?";
+
+/* (No Comment) */
+"quest_shop_vacant_type_title" = "Tämä kauppa on tyhjillään. Mitä siellä on nyt?";
 
 /* (No Comment) */
 "quest_sidewalk_title" = "Onko tällä tiellä jalkakäytävää?";

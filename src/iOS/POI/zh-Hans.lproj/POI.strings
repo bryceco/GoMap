@@ -79,6 +79,9 @@
 /* Class = "UINavigationItem"; title = "Attributes"; ObjectID = "hKU-EH-qxp"; */
 "hKU-EH-qxp.title" = "属性";
 
+/* Class = "UIButton"; normalTitle = ">"; ObjectID = "IcU-k2-G0m"; */
+"IcU-k2-G0m.normalTitle" = ">";
+
 /* Class = "UILabel"; text = "Changeset"; ObjectID = "ijx-N9-1eO"; */
 "ijx-N9-1eO.text" = "变更集";
 
@@ -174,6 +177,9 @@
 
 /* Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ"; */
 "z19-cc-gHZ.text" = "值";
+
+/* Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "zpj-gL-2Nt"; */
+"zpj-gL-2Nt.normalTitle" = "ⓘ";
 
 /* Class = "UILabel"; text = "Subtitle"; ObjectID = "ZYn-TK-k7d"; Note = "Do not translate"; */
 "ZYn-TK-k7d.text" = "子标题";

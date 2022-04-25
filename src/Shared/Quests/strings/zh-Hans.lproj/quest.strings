@@ -1,62 +1,195 @@
-"quest_sidewalk_title" = "这条街道有人行道吗?";
-"quest_address_title" = "此栋建筑物的门牌号码是?";
-"quest_bikeParkingCapacity_title" = "这里能够停放多少辆自行车？";
-"quest_toiletsFee_title" = "这个卫生间需要付费吗？";
-"quest_bicycleParkingCoveredStatus_title" = "这个自行车停放设施有遮雨棚吗？";
-"quest_recycling_type_title" = "这是哪一种资源回收设施？";
-"quest_fireHydrant_type_title" = "这是哪一种消防栓？";
-"quest_crossing_type_title" = "这是哪一种交叉路口？";
-"quest_parkingType_title" = "这是哪一种停车场？";
-"quest_powerPolesMaterial_title" = "电线杆的材质是？";
-"quest_dietType_vegetarian_name_title" = "%s 的菜单上有素食料理吗？";
-"quest_dietType_vegan_name_title" = "%s 的菜单上有纯素食料理吗？";
-"quest_bridge_structure_title" = "这座桥梁的结构是？";
-"quest_internet_access_name_title" = "%s 提供哪种网络连接方式？";
-"quest_bench_backrest_title" = "此长椅是否有靠背？";
-"quest_religion_for_wayside_shrine_title" = "这座小庙是遵循那个宗教呢？";
-"quest_parking_fee_title" = "在这里停车需要付费吗？";
-"quest_parking_access_title" = "是否有限制谁可以在此停车？";
-"quest_bicycle_parking_type_title" = "这是哪种自行车停放设施？";
-"quest_construction_building_title" = "这栋建筑是否已完工？";
-"quest_playground_access_title" = "这个游乐设施对公众开放吗？";
-"quest_segregated_title" = "这里的人行道与自行车道是如何排列的？";
-"quest_tracktype_title" = "这条跑道的路面硬度如何？";
-"quest_wheelchairAccess_outside_title" = "这个地方对轮椅使用者友善吗？";
-"quest_traffic_signals_button_title" = "这些交通灯有按钮供行人发送行走指示吗？";
-"quest_motorcycleParkingCapacity_title" = "这里能够停放多少辆摩托车？";
-"quest_motorcycleParkingCoveredStatus_title" = "这个摩托车停放设施有遮雨棚吗？";
-"quest_buildingType_title" = "这栋建筑物的类型是什么?";
-"quest_leafType_title" = "这些树是针叶树还是阔叶树？";
-"quest_cyclewayPartSurface_title" = "这条自行车道的路面是什么材质的？";
-"quest_footwayPartSurface_title" = "这条步行道的路面是什么材质的？";
-"quest_wheelchairAccess_toiletsPart_title" = "%s 的卫生间是否可以轮椅无障碍通行？";
-"quest_maxweight_title" = "最大承重限制是多少？";
-"quest_generalFee_title" = "是否需要付费才能进入 %s？";
-"quest_handrail_title" = "台阶有扶手么？";
-"quest_recycling_materials_title" = "这里可以回收哪些资源？";
-"quest_recycling_glass_title" = "是否只能回收玻璃瓶罐，还是能回收各种玻璃制品？";
+/* (No Comment) */
 "quest_address_street_title" = "%s（房屋）号码属于那条街道？";
-"quest_board_type_title" = "该信息板的主题是什么？";
-"quest_summit_register_title" = "在 %s 有登山登记处吗 ？";
-"quest_is_defibrillator_inside_title" = "这个心脏除颤器（AED）位于建筑物里吗？";
-"quest_steps_incline_title" = "这阶梯的方向是？";
-"quest_step_count_title" = "有多少步？";
-"quest_traffic_signals_sound_title" = "这个交通灯带有声音，供盲人使用吗？";
-"quest_traffic_signals_vibrate_title" = "这些交通信号灯是否有触觉指示以告知盲人何时能够安全通过？";
-"quest_steps_ramp_title" = "该阶梯有坡道吗？什么类型？";
+
+/* (No Comment) */
+"quest_address_title" = "此栋建筑物的门牌号码是?";
+
+/* (No Comment) */
 "quest_atm_operator_title" = "该ATM所属银行名字是？";
-"quest_clothes_container_operator_title" = "谁接收该衣物箱的捐赠？";
-"quest_charging_station_operator_title" = "谁是这个充电站的经营者？";
-"quest_lanes_title" = "该道路有多少车道？";
-"quest_tactile_paving_kerb_title" = "这里的路缘有触觉铺设吗？";
-"quest_kerb_height_title" = "这的路缘的有多高？";
-"quest_shop_vacant_type_title" = "这个商家已经不在，现在这边是做什么的？";
-"quest_dietType_kosher_name_title" = "%s有提供犹太教洁食产品吗？";
-"quest_bicycle_parking_access_title" = "请问这里有限制不能停脚踏车吗？";
-"quest_bicycle_parking_fee_title" = "在这里停放自行车需要付费吗？";
-"quest_drinking_water_title" = "这里的水质是否可以饮用？(%s)";
-"quest_postboxRoyalCypher_title" = "这个邮筒的官方标志是什么？";
+
+/* (No Comment) */
 "quest_barrier_type_title" = "这是什么种类的障碍物？";
-"quest_policeType_title" = "这边是什么类型的警政单位？";
-"quest_stile_type_title" = "这是什么类型的通行门？";
+
+/* (No Comment) */
+"quest_bench_backrest_title" = "此长椅是否有靠背？";
+
+/* (No Comment) */
+"quest_bicycle_parking_access_title" = "请问这里有限制不能停脚踏车吗？";
+
+/* (No Comment) */
+"quest_bicycle_parking_fee_title" = "在这里停放自行车需要付费吗？";
+
+/* (No Comment) */
+"quest_bicycle_parking_type_title" = "这是哪种自行车停放设施？";
+
+/* (No Comment) */
+"quest_bicycleParkingCoveredStatus_title" = "这个自行车停放设施有遮雨棚吗？";
+
+/* (No Comment) */
+"quest_bikeParkingCapacity_title" = "这里能够停放多少辆自行车？";
+
+/* (No Comment) */
+"quest_board_type_title" = "该信息板的主题是什么？";
+
+/* (No Comment) */
+"quest_bridge_structure_title" = "这座桥梁的结构是？";
+
+/* (No Comment) */
+"quest_buildingType_title" = "这栋建筑物的类型是什么?";
+
+/* (No Comment) */
 "quest_camera_type_title" = "这是什么类型的监视镜头？";
+
+/* (No Comment) */
+"quest_charging_station_operator_title" = "谁是这个充电站的经营者？";
+
+/* (No Comment) */
+"quest_clothes_container_operator_title" = "谁接收该衣物箱的捐赠？";
+
+/* (No Comment) */
+"quest_construction_building_title" = "这栋建筑是否已完工？";
+
+/* (No Comment) */
+"quest_crossing_type_title" = "这是哪一种交叉路口？";
+
+/* (No Comment) */
+"quest_cyclewayPartSurface_title" = "这条自行车道的路面是什么材质的？";
+
+/* (No Comment) */
+"quest_dietType_halal_name_title" = "%s提供清真制品吗？";
+
+/* (No Comment) */
+"quest_dietType_kosher_name_title" = "%s有提供犹太教洁食产品吗？";
+
+/* (No Comment) */
+"quest_dietType_vegan_name_title" = "%s 的菜单上有纯素食料理吗？";
+
+/* (No Comment) */
+"quest_dietType_vegetarian_name_title" = "%s 的菜单上有素食料理吗？";
+
+/* (No Comment) */
+"quest_drinking_water_title" = "这里的水质是否可以饮用？(%s)";
+
+/* (No Comment) */
+"quest_fireHydrant_diameter_title" = "这个消火栓标志上的直径是多少？";
+
+/* (No Comment) */
+"quest_fireHydrant_type_title" = "这是哪一种消防栓？";
+
+/* (No Comment) */
+"quest_footwayPartSurface_title" = "这条步行道的路面是什么材质的？";
+
+/* (No Comment) */
+"quest_generalFee_title" = "是否需要付费才能进入 %s？";
+
+/* (No Comment) */
+"quest_handrail_title" = "台阶有扶手么？";
+
+/* (No Comment) */
+"quest_internet_access_name_title" = "%s 提供哪种网络连接方式？";
+
+/* (No Comment) */
+"quest_is_defibrillator_inside_title" = "这个心脏除颤器（AED）位于建筑物里吗？";
+
+/* (No Comment) */
+"quest_kerb_height_title" = "这的路缘的有多高？";
+
+/* (No Comment) */
+"quest_lanes_title" = "该道路有多少车道？";
+
+/* (No Comment) */
+"quest_leafType_title" = "这些树是针叶树还是阔叶树？";
+
+/* (No Comment) */
+"quest_maxweight_title" = "最大承重限制是多少？";
+
+/* (No Comment) */
+"quest_motorcycleParkingCapacity_title" = "这里能够停放多少辆摩托车？";
+
+/* (No Comment) */
+"quest_motorcycleParkingCoveredStatus_title" = "这个摩托车停放设施有遮雨棚吗？";
+
+/* (No Comment) */
+"quest_parking_access_title" = "是否有限制谁可以在此停车？";
+
+/* (No Comment) */
+"quest_parking_fee_title" = "在这里停车需要付费吗？";
+
+/* (No Comment) */
+"quest_parkingType_title" = "这是哪一种停车场？";
+
+/* (No Comment) */
+"quest_picnicTableCover_title" = "这张野餐桌有被遮盖（防雨）吗？";
+
+/* (No Comment) */
+"quest_playground_access_title" = "这个游乐设施对公众开放吗？";
+
+/* (No Comment) */
+"quest_policeType_title" = "这边是什么类型的警政单位？";
+
+/* (No Comment) */
+"quest_postboxRoyalCypher_title" = "这个邮筒的官方标志是什么？";
+
+/* (No Comment) */
+"quest_powerPolesMaterial_title" = "电线杆的材质是？";
+
+/* (No Comment) */
+"quest_recycling_glass_title" = "是否只能回收玻璃瓶罐，还是能回收各种玻璃制品？";
+
+/* (No Comment) */
+"quest_recycling_materials_title" = "这里可以回收哪些资源？";
+
+/* (No Comment) */
+"quest_recycling_type_title" = "这是哪一种资源回收设施？";
+
+/* (No Comment) */
+"quest_religion_for_wayside_shrine_title" = "这座小庙是遵循那个宗教呢？";
+
+/* (No Comment) */
+"quest_segregated_title" = "这里的人行道与自行车道是如何排列的？";
+
+/* (No Comment) */
+"quest_shop_vacant_type_title" = "这个商家已经不在，现在这边是做什么的？";
+
+/* (No Comment) */
+"quest_sidewalk_title" = "这条街道有人行道吗?";
+
+/* (No Comment) */
+"quest_step_count_title" = "有多少步？";
+
+/* (No Comment) */
+"quest_steps_incline_title" = "这阶梯的方向是？";
+
+/* (No Comment) */
+"quest_steps_ramp_title" = "该阶梯有坡道吗？什么类型？";
+
+/* (No Comment) */
+"quest_stile_type_title" = "这是什么类型的通行门？";
+
+/* (No Comment) */
+"quest_summit_register_title" = "在 %s 有登山登记处吗 ？";
+
+/* (No Comment) */
+"quest_tactile_paving_kerb_title" = "这里的路缘有触觉铺设吗？";
+
+/* (No Comment) */
+"quest_toiletsFee_title" = "这个卫生间需要付费吗？";
+
+/* (No Comment) */
+"quest_tracktype_title" = "这条跑道的路面硬度如何？";
+
+/* (No Comment) */
+"quest_traffic_signals_button_title" = "这些交通灯有按钮供行人发送行走指示吗？";
+
+/* (No Comment) */
+"quest_traffic_signals_sound_title" = "这个交通灯带有声音，供盲人使用吗？";
+
+/* (No Comment) */
+"quest_traffic_signals_vibrate_title" = "这些交通信号灯是否有触觉指示以告知盲人何时能够安全通过？";
+
+/* (No Comment) */
+"quest_wheelchairAccess_outside_title" = "这个地方对轮椅使用者友善吗？";
+
+/* (No Comment) */
+"quest_wheelchairAccess_toiletsPart_title" = "%s 的卫生间是否可以轮椅无障碍通行？";
+

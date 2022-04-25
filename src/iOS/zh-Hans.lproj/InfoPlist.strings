@@ -5,10 +5,13 @@
 "CFBundleName" = "Go Map!!";
 
 /* (No Comment) */
-"GPS Exchange Format (GPX)" = "GPS交换格式(GPX)";
+"GPS Exchange Format (GPX)" = "GPS Exchange Format (GPX)";
 
 /* Privacy - Bluetooth Peripheral Usage Description */
 "NSBluetoothPeripheralUsageDescription" = "连接到外部蓝牙GPS设备";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "照相机被用于测量建筑物或物体的高度，并对标识牌上的开放时间进行文本识别。";
 
 /* Privacy - Location Always and When In Use Usage Description */
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "始终处于位置跟踪状态，允许应用程序在不活动时记录GPX文件。";

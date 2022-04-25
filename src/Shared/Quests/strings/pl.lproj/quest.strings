@@ -5,6 +5,9 @@
 "quest_address_title" = "Jaki numer ma ten budynek?";
 
 /* (No Comment) */
+"quest_atm_operator_title" = "Jak nazywa się bank dla tego bankomatu?";
+
+/* (No Comment) */
 "quest_barrier_type_title" = "Jaki rodzaj bariery jest w tym punkcie?";
 
 /* (No Comment) */

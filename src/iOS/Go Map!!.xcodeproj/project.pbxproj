@@ -316,6 +316,7 @@
 		020F1E7D279D15D6004496EB /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Settings.strings; sourceTree = "<group>"; };
 		020F1E7E279D15D6004496EB /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Changeset.strings; sourceTree = "<group>"; };
 		020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsDatabase.swift; sourceTree = "<group>"; };
+		020F517B2816557A00999FA8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainInterface.strings"; sourceTree = "<group>"; };
 		02128F7B2575D925003D2551 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Height.strings"; sourceTree = "<group>"; };
 		02128F7C2575D925003D2551 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Display.strings"; sourceTree = "<group>"; };
 		021BCDE52724CB06005D3869 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = quest.strings; sourceTree = "<group>"; };
@@ -406,6 +407,9 @@
 		027AB50B250E9D0700C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Changeset.storyboard; sourceTree = "<group>"; };
 		027AD5D119F5A18700120654 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		027AD5D319F5EA7D00120654 /* libobjc.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libobjc.A.dylib; path = usr/lib/libobjc.A.dylib; sourceTree = SDKROOT; };
+		027F32872816554A00F1DED9 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
+		027F32882816554A00F1DED9 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		027F32892816554A00F1DED9 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0282C4C6265F32E800F2D282 /* Sqlite3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sqlite3.swift; sourceTree = "<group>"; };
 		0282C4C826617E7400F2D282 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = ../Shared/MapView.swift; sourceTree = "<group>"; };
 		028556A926F004FB009986E9 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = et.lproj/MainInterface.strings; sourceTree = "<group>"; };
@@ -1931,6 +1935,7 @@
 				02062A26279D15D400B70551 /* pt-BR */,
 				020F1E79279D15D6004496EB /* pt */,
 				02583B3A279D15E70088977A /* zh-Hant */,
+				027F32892816554A00F1DED9 /* fi */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1959,6 +1964,7 @@
 				02F4035E279D15CF0089FD41 /* oc */,
 				020F1E74279D15D6004496EB /* pt */,
 				02583B38279D15E70088977A /* zh-Hant */,
+				027F32872816554A00F1DED9 /* fi */,
 			);
 			name = DirectionViewController.xib;
 			sourceTree = "<group>";
@@ -2227,6 +2233,8 @@
 				02062A25279D15D400B70551 /* pt-BR */,
 				020F1E78279D15D6004496EB /* pt */,
 				02583B39279D15E70088977A /* zh-Hant */,
+				027F32882816554A00F1DED9 /* fi */,
+				020F517B2816557A00999FA8 /* zh-Hans */,
 			);
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";

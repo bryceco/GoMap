@@ -146,7 +146,7 @@
 "quest_stile_type_title" = "Який це тип перелазу?";
 
 /* (No Comment) */
-"quest_summit_register_title" = "\nЧи є книга реєстрації відвідувачів у %s?";
+"quest_summit_register_title" = "Чи є книга реєстрації відвідувачів у %s?";
 
 /* (No Comment) */
 "quest_tactile_paving_kerb_title" = "На цьому бордюрі є тактильна бруківка?";

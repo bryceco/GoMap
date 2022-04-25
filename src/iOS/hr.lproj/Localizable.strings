@@ -207,7 +207,7 @@
 "Clear OSM Data" = "Izbriši OSM podatke";
 
 /* No comment provided by engineer. */
-"Commit" = "Spremi";
+"Commit" = "Potvrdi";
 
 /* No comment provided by engineer. */
 "computing size..." = "izračunavanje veličine …";
@@ -857,7 +857,7 @@
 "Way Tags" = "Oznake puta";
 
 /* No comment provided by engineer. */
-"You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Promijenit ćeš podatke u aktivnoj OpenStreetMap bazi podataka. Tvoje promjene će vidjeti svi na svijetu.\n\nZa nastavak pritisni još jednom „Spremi”, inače pritisni „Odustani”.";
+"You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Promijenit ćeš podatke u aktivnoj OpenStreetMap bazi podataka. Tvoje promjene će vidjeti svi na svijetu.\n\nNastavi ponovnim pritiskom na „Potvrdi”, inače pritisni „Odustani”.";
 
 /* POI editor presets */
 "You can define your own custom presets here" = "Ovdje možeš definirati vlastite predodređene postavke";

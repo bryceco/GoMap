@@ -5,7 +5,7 @@
 "BAY-7z-hwv.text" = "Lorem ipsum dolor sit er elit lamet,";
 
 /* Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "feW-AK-msn"; */
-"feW-AK-msn.title" = "Spremi";
+"feW-AK-msn.title" = "Potvrdi";
 
 /* Class = "UIButton"; normalTitle = "Edit"; ObjectID = "hcE-yO-3eH"; */
 "hcE-yO-3eH.normalTitle" = "Uredi";
