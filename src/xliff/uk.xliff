@@ -280,8 +280,7 @@
       </trans-unit>
       <trans-unit id="quest_summit_register_title" xml:space="preserve">
         <source>Is there a summit register at %s?</source>
-        <target>
-Чи є книга реєстрації відвідувачів у %s?</target>
+        <target>Чи є книга реєстрації відвідувачів у %s?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_tactile_paving_kerb_title" xml:space="preserve">

@@ -769,7 +769,7 @@
       </trans-unit>
       <trans-unit id="Commit" xml:space="preserve">
         <source>Commit</source>
-        <target>Spremi</target>
+        <target>Potvrdi</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Configure" xml:space="preserve">
@@ -1752,7 +1752,7 @@ Odaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu 
 To continue press Commit once again, otherwise press Cancel.</source>
         <target>Promijenit ćeš podatke u aktivnoj OpenStreetMap bazi podataka. Tvoje promjene će vidjeti svi na svijetu.
 
-Za nastavak pritisni još jednom „Spremi”, inače pritisni „Odustani”.</target>
+Nastavi ponovnim pritiskom na „Potvrdi”, inače pritisni „Odustani”.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You can define your own custom presets here" xml:space="preserve">
@@ -2993,7 +2993,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="gdu-Sf-XrE.title" xml:space="preserve">
         <source>Commit</source>
-        <target>Spremi</target>
+        <target>Potvrdi</target>
         <note>Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "gdu-Sf-XrE";</note>
       </trans-unit>
       <trans-unit id="l7S-YL-RKK.text" xml:space="preserve">
@@ -3435,7 +3435,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="feW-AK-msn.title" xml:space="preserve">
         <source>Commit</source>
-        <target>Spremi</target>
+        <target>Potvrdi</target>
         <note>Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "feW-AK-msn";</note>
       </trans-unit>
       <trans-unit id="hcE-yO-3eH.normalTitle" xml:space="preserve">
