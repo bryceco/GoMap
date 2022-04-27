@@ -1,16 +1,14 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "KissXML",
-        "repositoryURL": "https://github.com/robbiehanson/KissXML",
-        "state": {
-          "branch": "master",
-          "revision": "990cdef080213b5a3f0d9709b845d553bd3ddb97",
-          "version": null
-        }
+  "pins" : [
+    {
+      "identity" : "kissxml",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/robbiehanson/KissXML",
+      "state" : {
+        "branch" : "master",
+        "revision" : "990cdef080213b5a3f0d9709b845d553bd3ddb97"
       }
-    ]
-  },
-  "version": 1
+    }
+  ],
+  "version" : 2
 }
