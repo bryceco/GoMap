@@ -460,7 +460,7 @@ extension PresetsDatabase {
 		var autocorrect = UITextAutocorrectionType.no
 
 		switch type {
-		case "defaultcheck", "check", "onewayCheck":
+		case "defaultCheck", "check", "onewayCheck":
 			let key = dict["key"] as! String
 			let tag = yesNoWith(
 				label: label,
