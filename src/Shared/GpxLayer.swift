@@ -785,10 +785,6 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 		let tScale = mapView.screenFromMapTransform.scale()
 		let pScale = tScale / PATH_SCALING
 		var scale = Int(floor(-log(pScale)))
-		//        var scale = floor(-log(-Double.greatestFiniteMagnitude))
-		//        var scale = floor(-log(Double.infinity))
-		//        var scale = floor(-log(pScale))
-		//	DLog(@"gpx scale = %f, %ld",log(pScale),scale);
 		if scale < 0 {
 			scale = 0
 		}
@@ -798,7 +794,7 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 
 			if track.shapePaths[scale] == nil {
 				let epsilon = pow(Double(10.0), Double(scale)) / 256.0
-				track.shapePaths[scale] = track.shapePaths[0]?.pathWithReducePoints(epsilon)
+				track.shapePaths[scale] = track.shapePaths[0]?.pathWithReducedPoints(epsilon)
 			}
 			//		DLog(@"reduce %ld to %ld\n",CGPathPointCount(track->shapePaths[0]),CGPathPointCount(track->shapePaths[scale]));
 			layer.path = track.shapePaths[scale]
