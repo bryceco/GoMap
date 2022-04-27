@@ -376,8 +376,7 @@ final class TileServerList {
 			dict[service.identifier] = service
 		}
 		for service in [
-			TileServer.maxarPremiumAerial,
-			TileServer.maxarStandardAerial
+			TileServer.maxarPremiumAerial
 		] {
 			dict[service.identifier] = service
 		}
@@ -414,7 +413,6 @@ final class TileServerList {
 			}
 		}
 		result.append(TileServer.maxarPremiumAerial)
-		result.append(TileServer.maxarStandardAerial)
 
 		result = result.sorted(by: {
 			if $0.best, !$1.best {

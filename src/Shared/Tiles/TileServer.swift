@@ -193,28 +193,6 @@ final class TileServer {
 		return service
 	}()
 
-	static let maxarStandardAerial: TileServer = {
-		let url =
-			"eZ5AGZGcRQyKahl/+UTyIm+vENuJECB4Hvu4ytCzjBoCBDeRMbsOkaQ7zD5rUAYfRDaQwnQRiqE4lj0KYTenPe1d1spljlcYgvYRsqjEtYp6AhCoBPO4Rz6d0Z9enlPqPj7KCvxyOcB8A/+3HkYjpMGMEcvA6oeSX9I0RH/PS9mdAZEC5TmU3odUJQ0hNzczrKtUDmNujrTNfFVHhZZWPLEVZUC9cE94VF/AJkoIigdmXooJ+5UcPtH/uzc6NbOb"
-		let service = TileServer(
-			withName: "Maxar Standard Aerial",
-			identifier: MAXAR_STANDARD_IDENTIFIER,
-			url: aes.decryptString(url),
-			best: false,
-			apiKey: "",
-			maxZoom: 21,
-			roundUp: true,
-			startDate: nil,
-			endDate: nil,
-			wmsProjection: nil,
-			polygon: nil,
-			attribString: "Maxar Standard",
-			attribIcon: nil,
-			attribUrl: "https://wiki.openstreetmap.org/wiki/DigitalGlobe")
-		service.loadIcon(fromWeb: "https://osmlab.github.io/editor-layer-index/sources/world/Maxar.png")
-		return service
-	}()
-
 	static let mapnik = TileServer(
 		withName: "MapnikTiles",
 		identifier: MAPNIK_IDENTIFIER,
