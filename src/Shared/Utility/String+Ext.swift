@@ -14,7 +14,7 @@ extension String {
 	func addingPercentEncodingForNonASCII() -> String
 	{
 		return self.utf8.map({
-			return $0 >= 32 && $0 < 128
+			return $0 > 32 && $0 < 128
 				? String(Character(UnicodeScalar($0)))
 				: "%"+String($0, radix: 16, uppercase: true)
 		}).joined(separator: "")
