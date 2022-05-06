@@ -109,6 +109,7 @@
 		02C8C56F26F447C3003B0122 /* KeepRightMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56E26F447C3003B0122 /* KeepRightMarker.swift */; };
 		02C8C57426FAAFF0003B0122 /* QuestEditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C57326FAAFF0003B0122 /* QuestEditorController.swift */; };
 		02C8C57626FBCBF4003B0122 /* QuestFilterParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C57526FBCBF4003B0122 /* QuestFilterParser.swift */; };
+		02CA15512824A6B40047B0E5 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CA15502824A6B40047B0E5 /* String+Ext.swift */; };
 		02CB2405265DB7CB00835F32 /* OpeningHoursRecognizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB2401265DB7CB00835F32 /* OpeningHoursRecognizerView.swift */; };
 		02CB2406265DB7CB00835F32 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB2402265DB7CB00835F32 /* CameraView.swift */; };
 		02CB2407265DB7CB00835F32 /* LevenshteinDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB2403265DB7CB00835F32 /* LevenshteinDistance.swift */; };
@@ -513,6 +514,7 @@
 		02C91CFB26BF1D4C00C92555 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		02C91CFC26BF1D4C00C92555 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		02C91CFD26BF1D4C00C92555 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		02CA15502824A6B40047B0E5 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		02CB2401265DB7CB00835F32 /* OpeningHoursRecognizerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpeningHoursRecognizerView.swift; sourceTree = "<group>"; };
 		02CB2402265DB7CB00835F32 /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		02CB2403265DB7CB00835F32 /* LevenshteinDistance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevenshteinDistance.swift; sourceTree = "<group>"; };
@@ -1238,6 +1240,7 @@
 				C3D096CE263EA0DB00E3B129 /* KeyChain.swift */,
 				02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */,
 				C3FA924C263FFEF9000A2A99 /* PathUtil.swift */,
+				02CA15502824A6B40047B0E5 /* String+Ext.swift */,
 				0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */,
 			);
 			name = Utility;
@@ -1651,6 +1654,7 @@
 				0286EAA62656FEAC007CFEE9 /* EditorMapLayer+Ocean.swift in Sources */,
 				ED9649C12601C33E00EC0A60 /* AdvancedSettingsViewController.swift in Sources */,
 				C3D0969C263CBC1100E3B129 /* POIFeaturePickerViewController.swift in Sources */,
+				02CA15512824A6B40047B0E5 /* String+Ext.swift in Sources */,
 				02CD9974265C65C200213AD6 /* EditorFilters.swift in Sources */,
 				647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */,
 				02EA1C6B26631D0D00A0F827 /* VectorMath.swift in Sources */,

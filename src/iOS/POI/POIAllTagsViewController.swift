@@ -306,7 +306,8 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 			else { return }
 			string = "https://www.wikidata.org/wiki/\(page)"
 		} else if value.hasPrefix("http://") || value.hasPrefix("https://") {
-			string = value
+			// percent-encode non-ASCII characters
+			string = value.addingPercentEncodingForNonASCII()
 		} else {
 			return
 		}
