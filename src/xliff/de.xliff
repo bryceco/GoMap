@@ -1872,6 +1872,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="delete restriction" xml:space="preserve">
         <source>delete restriction</source>
+        <target state="translated">Lösche Einschränkung</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete route" xml:space="preserve">
