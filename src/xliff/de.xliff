@@ -3294,6 +3294,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="jcn-Lx-tj3.text" xml:space="preserve">
         <source>Nearby Mappers</source>
+        <target state="translated">Mapper in der Nähe</target>
         <note>Class = "UILabel"; text = "Nearby Mappers"; ObjectID = "jcn-Lx-tj3";</note>
       </trans-unit>
       <trans-unit id="k0y-gf-6DY.text" xml:space="preserve">
