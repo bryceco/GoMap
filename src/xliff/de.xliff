@@ -2530,11 +2530,12 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="MPq-PX-jf0.text" xml:space="preserve">
         <source>Editor with Aerial</source>
-        <target state="translated">Editor mit Satellit</target>
+        <target state="translated">Editor mit Luftbild</target>
         <note>Class = "UILabel"; text = "Editor with Aerial"; ObjectID = "MPq-PX-jf0";</note>
       </trans-unit>
       <trans-unit id="MZF-am-tCM.title" xml:space="preserve">
         <source>Aerial Provider</source>
+        <target state="translated">Luftbild-Anbieter</target>
         <note>Class = "UINavigationItem"; title = "Aerial Provider"; ObjectID = "MZF-am-tCM";</note>
       </trans-unit>
       <trans-unit id="MeQ-4N-FqC.text" xml:space="preserve">
@@ -2564,6 +2565,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="RxO-IV-UE7.text" xml:space="preserve">
         <source>Service Roads</source>
+        <target state="translated">Wirtschaftswege</target>
         <note>Class = "UILabel"; text = "Service Roads"; ObjectID = "RxO-IV-UE7";</note>
       </trans-unit>
       <trans-unit id="SNa-W1-wga.footerTitle" xml:space="preserve">
@@ -2572,6 +2574,11 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
 Warning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.
 
 Clear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed.</source>
+        <target state="translated">Leeren Sie den OSM-Zwischenspeicher, wenn der Anwendungsstatus nicht mehr mit dem OSM-Server synchronisiert ist. Dies kann der Fall sein, wenn jemand anderes Daten ändert, die Sie gerade bearbeiten, oder wenn einer Ihrer Uploads fehlschlägt, so dass Sie keine weiteren Daten hochladen können.
+
+Achtung! Wenn Sie den OSM-Zwischenspeicher leeren, gehen alle Änderungen, die noch nicht hochgeladen wurden, verloren.
+
+Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterzuladen, die Ihre Änderungen zeigen, die Sie bereits hochgeladen haben. Es kann bis zu 24 Stunden dauern, bis Ihre Änderungen verarbeitet sind.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. \n\nWarning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.\n\nClear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed."; ObjectID = "SNa-W1-wga";</note>
       </trans-unit>
       <trans-unit id="SNa-W1-wga.headerTitle" xml:space="preserve">
