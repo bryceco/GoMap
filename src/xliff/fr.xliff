@@ -2145,6 +2145,7 @@ Vous pouvez vider le cache (dans Paramètres d'affichage) pour améliorer les pe
       </trans-unit>
       <trans-unit id="IcU-k2-G0m.normalTitle" xml:space="preserve">
         <source>&gt;</source>
+        <target state="needs-translation">&gt;</target>
         <note>Class = "UIButton"; normalTitle = "&gt;"; ObjectID = "IcU-k2-G0m";</note>
       </trans-unit>
       <trans-unit id="JAT-qD-dTS.text" xml:space="preserve">
@@ -2279,6 +2280,7 @@ Vous pouvez vider le cache (dans Paramètres d'affichage) pour améliorer les pe
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
         <source>clean</source>
+        <target state="needs-translation">clean</target>
         <note>Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
@@ -2353,6 +2355,7 @@ Vous pouvez vider le cache (dans Paramètres d'affichage) pour améliorer les pe
       </trans-unit>
       <trans-unit id="oC6-w7-cwN.placeholder" xml:space="preserve">
         <source>leashed</source>
+        <target state="needs-translation">leashed</target>
         <note>Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="okh-JP-aKZ.placeholder" xml:space="preserve">
