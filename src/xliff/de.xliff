@@ -1872,11 +1872,12 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="delete restriction" xml:space="preserve">
         <source>delete restriction</source>
-        <target state="translated">Lösche Einschränkung</target>
+        <target state="translated">Beschränkung löschen</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete route" xml:space="preserve">
         <source>delete route</source>
+        <target state="translated">Route löschen</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete way" xml:space="preserve">
@@ -1911,6 +1912,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="other object" xml:space="preserve">
         <source>other object</source>
+        <target state="translated">anderes Objekt</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="relation" xml:space="preserve">
@@ -1920,18 +1922,22 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="set tags" xml:space="preserve">
         <source>set tags</source>
+        <target state="translated">Tags setzen</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="update relation members" xml:space="preserve">
         <source>update relation members</source>
+        <target state="translated">Relations-Mitglieder aktualisieren</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="vintage %@" xml:space="preserve">
         <source>vintage %@</source>
+        <target state="translated">Aufnahmejahr %@</target>
         <note>Year aerial imagery was created</note>
       </trans-unit>
       <trans-unit id="vintage %@ - %@" xml:space="preserve">
         <source>vintage %1$@ - %2$@</source>
+        <target state="translated">Aufnahmejahr %1$@ - %2$@</target>
         <note>Years aerial imagery was created</note>
       </trans-unit>
       <trans-unit id="way %@" xml:space="preserve">
@@ -1948,6 +1954,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
         <source>Set Height</source>
+        <target state="translated">Höhe angeben</target>
         <note>Class = "UIButton"; normalTitle = "Set Height"; ObjectID = "QZK-2k-kEa";</note>
       </trans-unit>
       <trans-unit id="SdH-uy-BuK.normalTitle" xml:space="preserve">
@@ -1974,6 +1981,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
     <body>
       <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
         <source>OK</source>
+        <target state="translated">OK</target>
         <note>Class = "UIButton"; normalTitle = "OK"; ObjectID = "05z-LH-xEK";</note>
       </trans-unit>
       <trans-unit id="Zxw-Em-faC.normalTitle" xml:space="preserve">
@@ -1983,6 +1991,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="cy3-gz-fvk.text" xml:space="preserve">
         <source>Go Map!! will open at the location the photo was taken.</source>
+        <target state="translated">Go Map!! wird an dem Ort geöffnet, an dem das Foto aufgenommen wurde.</target>
         <note>Class = "UILabel"; text = "Go Map!! will open at the location the photo was taken."; ObjectID = "cy3-gz-fvk";</note>
       </trans-unit>
     </body>
@@ -2009,14 +2018,17 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
     <body>
       <trans-unit id="Processing data..." xml:space="preserve">
         <source>Processing data...</source>
+        <target state="translated">Daten verarbeiten...</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The URL content isn't recognized." xml:space="preserve">
         <source>The URL content isn't recognized.</source>
+        <target state="translated">Der Inhalt der URL wird nicht erkannt.</target>
         <note>Error message when sharing a URL to Go Map!!</note>
       </trans-unit>
       <trans-unit id="Unfortunately the selected image does not contain location information." xml:space="preserve">
         <source>Unfortunately the selected image does not contain location information.</source>
+        <target state="translated">Leider enthält das ausgewählte Bild keine Standortdaten.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>
@@ -2067,6 +2079,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="19J-sp-UTX.title" xml:space="preserve">
         <source>All Tags</source>
+        <target state="translated">Alle Tags</target>
         <note>Class = "UITabBarItem"; title = "All Tags"; ObjectID = "19J-sp-UTX";</note>
       </trans-unit>
       <trans-unit id="436-kv-L7j.placeholder" xml:space="preserve">
@@ -2081,6 +2094,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="Bnh-U0-D7i.text" xml:space="preserve">
         <source>Add New</source>
+        <target state="translated">Neue hinzufügen</target>
         <note>Class = "UILabel"; text = "Add New"; ObjectID = "Bnh-U0-D7i";</note>
       </trans-unit>
       <trans-unit id="CXe-gQ-Zda.text" xml:space="preserve">
@@ -2115,10 +2129,12 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="G5R-oP-lp3.title" xml:space="preserve">
         <source>Custom Tags</source>
+        <target state="translated">Benutzerdefinierte Tags</target>
         <note>Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3";</note>
       </trans-unit>
       <trans-unit id="GIO-W7-q5U.title" xml:space="preserve">
         <source>Custom Presets</source>
+        <target state="translated">Benutzerdefinierte Vorlagen</target>
         <note>Class = "UINavigationItem"; title = "Custom Presets"; ObjectID = "GIO-W7-q5U";</note>
       </trans-unit>
       <trans-unit id="Hgu-iP-FnG.title" xml:space="preserve">
@@ -2128,6 +2144,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="IcU-k2-G0m.normalTitle" xml:space="preserve">
         <source>&gt;</source>
+        <target state="translated">&gt;</target>
         <note>Class = "UIButton"; normalTitle = "&gt;"; ObjectID = "IcU-k2-G0m";</note>
       </trans-unit>
       <trans-unit id="JAT-qD-dTS.text" xml:space="preserve">
@@ -2147,6 +2164,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="OND-s7-I6f.title" xml:space="preserve">
         <source>Custom Preset</source>
+        <target state="translated">Benutzerdefinierte Vorlage</target>
         <note>Class = "UINavigationItem"; title = "Custom Preset"; ObjectID = "OND-s7-I6f";</note>
       </trans-unit>
       <trans-unit id="P3A-5n-1Iq.text" xml:space="preserve">
@@ -2156,6 +2174,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="QDv-7w-nbx.headerTitle" xml:space="preserve">
         <source>Preset Name</source>
+        <target state="translated">Vorlagename</target>
         <note>Class = "UITableViewSection"; headerTitle = "Preset Name"; ObjectID = "QDv-7w-nbx";</note>
       </trans-unit>
       <trans-unit id="R0q-aM-ULf.text" xml:space="preserve">
@@ -2180,6 +2199,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="Vli-Ct-Lpz.text" xml:space="preserve">
         <source>Wheelchair Access</source>
+        <target state="translated">Rollstuhlzugang</target>
         <note>Class = "UILabel"; text = "Wheelchair Access"; ObjectID = "Vli-Ct-Lpz";</note>
       </trans-unit>
       <trans-unit id="Wim-Qa-dYQ.text" xml:space="preserve">
@@ -2213,6 +2233,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="aCs-vS-YXj.placeholder" xml:space="preserve">
         <source>ref</source>
+        <target state="translated">Ref</target>
         <note>Class = "UITextField"; placeholder = "ref"; ObjectID = "aCs-vS-YXj"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="aLi-Vs-z0k.title" xml:space="preserve">
@@ -2222,6 +2243,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="cN9-3h-H3l.title" xml:space="preserve">
         <source>All Tags</source>
+        <target state="translated">Alle Tags</target>
         <note>Class = "UINavigationItem"; title = "All Tags"; ObjectID = "cN9-3h-H3l";</note>
       </trans-unit>
       <trans-unit id="cP3-lR-lzM.placeholder" xml:space="preserve">
@@ -2231,10 +2253,12 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="cTf-Rc-vqr.headerTitle" xml:space="preserve">
         <source>Preset Key</source>
+        <target state="translated">Vorlagenschlüssel</target>
         <note>Class = "UITableViewSection"; headerTitle = "Preset Key"; ObjectID = "cTf-Rc-vqr";</note>
       </trans-unit>
       <trans-unit id="daQ-tl-pKh.text" xml:space="preserve">
         <source>Label</source>
+        <target state="translated">Bezeichnung</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="dsA-B6-s7R.text" xml:space="preserve">
@@ -2254,10 +2278,12 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
         <source>clean</source>
+        <target state="translated">sauber</target>
         <note>Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
         <source>Label</source>
+        <target state="translated">Bezeichnung</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="hKU-EH-qxp.title" xml:space="preserve">
@@ -2287,10 +2313,12 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="kPA-ky-U48.placeholder" xml:space="preserve">
         <source>leisure </source>
+        <target state="translated">Freizeit </target>
         <note>Class = "UITextField"; placeholder = "leisure "; ObjectID = "kPA-ky-U48"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="lPv-s6-uEz.title" xml:space="preserve">
         <source>Common Tags</source>
+        <target state="translated">Häufige Tags</target>
         <note>Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz";</note>
       </trans-unit>
       <trans-unit id="li7-oV-pgT.text" xml:space="preserve">
@@ -2300,6 +2328,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="mAb-DX-pqb.title" xml:space="preserve">
         <source>Common tags</source>
+        <target state="translated">Häufige Tags</target>
         <note>Class = "UINavigationItem"; title = "Common tags"; ObjectID = "mAb-DX-pqb";</note>
       </trans-unit>
       <trans-unit id="mcN-gM-s7u.text" xml:space="preserve">
@@ -2324,10 +2353,12 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="oC6-w7-cwN.placeholder" xml:space="preserve">
         <source>leashed</source>
+        <target state="translated">angeleint</target>
         <note>Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="okh-JP-aKZ.placeholder" xml:space="preserve">
         <source>park</source>
+        <target state="translated">Park</target>
         <note>Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="omf-S9-Yjq.text" xml:space="preserve">
@@ -2394,6 +2425,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="1f0-8q-yCi.text" xml:space="preserve">
         <source>GPX Tracks</source>
+        <target state="translated">GPX-Tracks</target>
         <note>Class = "UILabel"; text = "GPX Tracks"; ObjectID = "1f0-8q-yCi";</note>
       </trans-unit>
       <trans-unit id="2Ku-Lb-uCf.text" xml:space="preserve">
@@ -2418,6 +2450,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="7df-49-qTa.text" xml:space="preserve">
         <source>Rail Features</source>
+        <target state="translated">Schienenobjekte</target>
         <note>Class = "UILabel"; text = "Rail Features"; ObjectID = "7df-49-qTa";</note>
       </trans-unit>
       <trans-unit id="7ga-PZ-MfV.placeholder" xml:space="preserve">
