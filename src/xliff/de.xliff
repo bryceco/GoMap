@@ -2480,7 +2480,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="186-0W-Nrr.title" xml:space="preserve">
         <source>Display</source>
-        <target state="translated">Anzeigen</target>
+        <target state="translated">Anzeige</target>
         <note>Class = "UINavigationItem"; title = "Display"; ObjectID = "186-0W-Nrr";</note>
       </trans-unit>
       <trans-unit id="DmO-dW-3Fh.text" xml:space="preserve">
@@ -2510,10 +2510,12 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="H3p-Ta-kIy.title" xml:space="preserve">
         <source>QA Poole No Name Tiles</source>
+        <target state="translated">QA Poole Objekte ohne Namen</target>
         <note>Class = "UINavigationItem"; title = "QA Poole No Name Tiles"; ObjectID = "H3p-Ta-kIy"; Note = "Title for Simon Poole's \"No name\" (missing name) tile overlay";</note>
       </trans-unit>
       <trans-unit id="Idx-2G-6F7.text" xml:space="preserve">
         <source>Power Features</source>
+        <target state="translated">Energieinfrastruktur</target>
         <note>Class = "UILabel"; text = "Power Features"; ObjectID = "Idx-2G-6F7";</note>
       </trans-unit>
       <trans-unit id="Jz1-GP-Wbe.text" xml:space="preserve">
