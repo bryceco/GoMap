@@ -2460,7 +2460,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="8HT-Bc-Q2z.title" xml:space="preserve">
         <source>Aerial Imagery</source>
-        <target state="translated">Satellit-Aufnahmen</target>
+        <target state="translated">Luftbilder</target>
         <note>Class = "UINavigationItem"; title = "Aerial Imagery"; ObjectID = "8HT-Bc-Q2z";</note>
       </trans-unit>
       <trans-unit id="8S7-Kw-QHF.normalTitle" xml:space="preserve">
