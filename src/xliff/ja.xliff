@@ -7,6 +7,7 @@
     <body>
       <trans-unit id="quest_address_street_title" xml:space="preserve">
         <source>What street does the (house) number %s belong to?</source>
+        <target state="translated">(住居)番号 %s が属している街路名は?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_address_title" xml:space="preserve">
@@ -16,10 +17,12 @@
       </trans-unit>
       <trans-unit id="quest_atm_operator_title" xml:space="preserve">
         <source>What’s the name of the bank for this ATM?</source>
+        <target state="translated">このATMの銀行名は？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_barrier_type_title" xml:space="preserve">
         <source>What type of barrier is this?</source>
+        <target state="translated">この障害物の種類は？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bench_backrest_title" xml:space="preserve">
@@ -54,6 +57,7 @@
       </trans-unit>
       <trans-unit id="quest_board_type_title" xml:space="preserve">
         <source>What is the topic of this information board?</source>
+        <target state="translated">この案内板のトピックは？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_bridge_structure_title" xml:space="preserve">
@@ -68,6 +72,7 @@
       </trans-unit>
       <trans-unit id="quest_camera_type_title" xml:space="preserve">
         <source>What type of surveillance camera is this?</source>
+        <target state="translated">この監視カメラの種類は？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_charging_station_operator_title" xml:space="preserve">
@@ -92,14 +97,17 @@
       </trans-unit>
       <trans-unit id="quest_cyclewayPartSurface_title" xml:space="preserve">
         <source>What’s the surface of the cycleway here?</source>
+        <target state="translated">この自転車道の路面は？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_halal_name_title" xml:space="preserve">
         <source>Does %s offer Halal products?</source>
+        <target state="translated">%s はハラール製品を提供していますか？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_kosher_name_title" xml:space="preserve">
         <source>Does %s offer kosher products?</source>
+        <target state="translated">%s はコーシャ製品を提供していますか？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_dietType_vegan_name_title" xml:space="preserve">
@@ -119,6 +127,7 @@
       </trans-unit>
       <trans-unit id="quest_fireHydrant_diameter_title" xml:space="preserve">
         <source>What diameter is on this fire hydrant’s sign?</source>
+        <target state="translated">この消火栓に表示されている直径は？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_fireHydrant_type_title" xml:space="preserve">
@@ -128,10 +137,12 @@
       </trans-unit>
       <trans-unit id="quest_footwayPartSurface_title" xml:space="preserve">
         <source>What’s the surface of the footway here?</source>
+        <target state="translated">この歩道の路面は？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_generalFee_title" xml:space="preserve">
         <source>Do you need to pay to enter %s?</source>
+        <target state="translated">%s への入場は有料ですか？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_handrail_title" xml:space="preserve">
@@ -151,10 +162,12 @@
       </trans-unit>
       <trans-unit id="quest_kerb_height_title" xml:space="preserve">
         <source>What is the height of this curb?</source>
+        <target state="translated">この縁石の高さは？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_lanes_title" xml:space="preserve">
         <source>How many lanes for cars does this road have?</source>
+        <target state="translated">この道路の車両レーン数は？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_leafType_title" xml:space="preserve">
@@ -164,6 +177,7 @@
       </trans-unit>
       <trans-unit id="quest_maxweight_title" xml:space="preserve">
         <source>What is the weight limit here?</source>
+        <target state="translated">ここの重量制限は？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_motorcycleParkingCapacity_title" xml:space="preserve">
@@ -173,7 +187,7 @@
       </trans-unit>
       <trans-unit id="quest_motorcycleParkingCoveredStatus_title" xml:space="preserve">
         <source>Is this motorcycle parking covered (protected from rain)?</source>
-        <target>このオートバイの駐車場に屋根はありますか? (雨から守られていますか)</target>
+        <target state="translated">このオートバイの駐車場に(雨から守る)屋根はありますか?</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_parkingType_title" xml:space="preserve">
@@ -193,6 +207,7 @@
       </trans-unit>
       <trans-unit id="quest_picnicTableCover_title" xml:space="preserve">
         <source>Is this picnic table covered (protected from rain)?</source>
+        <target state="translated">このピクニックテーブルには雨除けがありますか？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_playground_access_title" xml:space="preserve">
@@ -202,10 +217,12 @@
       </trans-unit>
       <trans-unit id="quest_policeType_title" xml:space="preserve">
         <source>Which type of police station is this?</source>
+        <target state="translated">この警察署の種類は？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_postboxRoyalCypher_title" xml:space="preserve">
         <source>What is the royal cypher on this postbox?</source>
+        <target state="translated">この郵便ボックスのロイヤルサイファは？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_powerPolesMaterial_title" xml:space="preserve">
@@ -220,6 +237,7 @@
       </trans-unit>
       <trans-unit id="quest_recycling_materials_title" xml:space="preserve">
         <source>What can be left here for recycling?</source>
+        <target state="translated">リサイクルの対象は？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_recycling_type_title" xml:space="preserve">
@@ -239,6 +257,7 @@
       </trans-unit>
       <trans-unit id="quest_shop_vacant_type_title" xml:space="preserve">
         <source>This shop has been vacant. What’s here now?</source>
+        <target state="translated">これは空き店舗でした。現在は？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_sidewalk_title" xml:space="preserve">
@@ -263,10 +282,12 @@
       </trans-unit>
       <trans-unit id="quest_stile_type_title" xml:space="preserve">
         <source>What type of stile is this?</source>
+        <target state="translated">この木戸の種類は？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_summit_register_title" xml:space="preserve">
         <source>Is there a summit register at %s?</source>
+        <target state="translated">%s にはサミットレジスター(山頂訪問者記録)がありますか？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_tactile_paving_kerb_title" xml:space="preserve">
@@ -286,6 +307,7 @@
       </trans-unit>
       <trans-unit id="quest_traffic_calming_type_title" xml:space="preserve">
         <source>What type of traffic calming is this?</source>
+        <target state="translated">交通静穏化装置の種類は？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_traffic_signals_button_title" xml:space="preserve">
@@ -300,6 +322,7 @@
       </trans-unit>
       <trans-unit id="quest_traffic_signals_vibrate_title" xml:space="preserve">
         <source>Do these traffic lights have a tactile indication for blind people for when it’s safe to cross?</source>
+        <target state="translated">この信号には視覚障害者向けに安全に渡れるタイミングを示すものがありますか？</target>
         <note/>
       </trans-unit>
       <trans-unit id="quest_wheelchairAccess_outside_title" xml:space="preserve">
@@ -309,6 +332,7 @@
       </trans-unit>
       <trans-unit id="quest_wheelchairAccess_toiletsPart_title" xml:space="preserve">
         <source>Is the restroom at %s wheelchair accessible?</source>
+        <target state="translated">%s のトイレは車いすで行けますか？</target>
         <note/>
       </trans-unit>
     </body>
@@ -373,10 +397,12 @@
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
         <source>The camera is used to measure heights of buildings or objects, and to perform text recognition in opening hours signs.</source>
+        <target state="translated">カメラは建物やオブジェクトの高さ計測と開店時間のテキスト認識に使われます。</target>
         <note>Privacy - Camera Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
         <source>Copyright 2012-2021 Bryce Cogswell</source>
+        <target state="translated">著作権 2012-2021 Bryce Cogswell</target>
         <note>Copyright (human-readable)</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
@@ -391,6 +417,7 @@
       </trans-unit>
       <trans-unit id="NSLocationUsageDescription" xml:space="preserve">
         <source>Enabling location services allows the app to display objects in your vicinity. This allows you to easily update or add data you survey yourself.</source>
+        <target state="translated">位置サービスを有効化するとあなたの周りのオブジェクトの表示をアプリに許可します。これにより自身の調査によるデータ追加・更新が容易になります。</target>
         <note>Privacy - Location Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationWhenInUseUsageDescription" xml:space="preserve">
@@ -1281,6 +1308,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Pasting %@ characters, maximum tag length is 255" xml:space="preserve">
         <source>Pasting %@ characters, maximum tag length is 255</source>
+        <target state="translated">%@ 文字をペースト中、最大タグ長は255</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)" xml:space="preserve">
@@ -2117,6 +2145,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="IcU-k2-G0m.normalTitle" xml:space="preserve">
         <source>&gt;</source>
+        <target state="translated">&gt;</target>
         <note>Class = "UIButton"; normalTitle = "&gt;"; ObjectID = "IcU-k2-G0m";</note>
       </trans-unit>
       <trans-unit id="JAT-qD-dTS.text" xml:space="preserve">
@@ -2196,6 +2225,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="XJZ-vI-jat.text" xml:space="preserve">
         <source>PROTOTYPE CELLS</source>
+        <target state="translated">プロトタイプセル</target>
         <note>Class = "UILabel"; text = "PROTOTYPE CELLS"; ObjectID = "XJZ-vI-jat";</note>
       </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
