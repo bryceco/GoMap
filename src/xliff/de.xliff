@@ -1067,7 +1067,7 @@ Error: %@</target>
       </trans-unit>
       <trans-unit id="Maximum way length is 2000 nodes" xml:space="preserve">
         <source>Maximum way length is 2000 nodes</source>
-        <target>Maximale Weglänge sind 2000 Knoten</target>
+        <target state="translated">Die maximale Weglänge beträgt 2000 Knoten</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Maybe later..." xml:space="preserve">
@@ -1857,7 +1857,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="delete node from way" xml:space="preserve">
         <source>delete node from way</source>
-        <target>Lösche Knoten von Weg</target>
+        <target state="translated">Knoten vom Weg löschen</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete object from relation" xml:space="preserve">
@@ -2225,6 +2225,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="XJZ-vI-jat.text" xml:space="preserve">
         <source>PROTOTYPE CELLS</source>
+        <target state="translated">PROTOTYP ZELLEN</target>
         <note>Class = "UILabel"; text = "PROTOTYPE CELLS"; ObjectID = "XJZ-vI-jat";</note>
       </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
@@ -2541,7 +2542,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="MeQ-4N-FqC.text" xml:space="preserve">
         <source>GPX Tracks you record or download will be automatically deleted after:</source>
-        <target>GPX-Tracks die du aufnimmst, werden automatisch gelöscht nach:</target>
+        <target state="translated">Aufgenommene GPX-Tracks, werden automatisch gelöscht nach:</target>
         <note>Class = "UILabel"; text = "GPX Tracks you record or download will be automatically deleted after:"; ObjectID = "MeQ-4N-FqC";</note>
       </trans-unit>
       <trans-unit id="O0U-6M-7AT.text" xml:space="preserve">
@@ -3061,6 +3062,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       </trans-unit>
       <trans-unit id="1SU-BF-K3n.title" xml:space="preserve">
         <source>Credits</source>
+        <target state="translated">Beteiligte</target>
         <note>Class = "UINavigationItem"; title = "Credits"; ObjectID = "1SU-BF-K3n";</note>
       </trans-unit>
       <trans-unit id="2TW-mO-uX2.footerTitle" xml:space="preserve">
@@ -3085,6 +3087,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.footerTitle" xml:space="preserve">
         <source>Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.</source>
+        <target state="translated">Geben Sie einen Host an, wenn Sie Daten bearbeiten möchten, die sich auf einem anderen OSM-Server befinden. Der Standard-Host ist api.openstreetmap.org.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org."; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.headerTitle" xml:space="preserve">
@@ -3104,7 +3107,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       </trans-unit>
       <trans-unit id="34N-Ep-rpf.text" xml:space="preserve">
         <source>OpenStreetMap Login</source>
-        <target>OpenStreetMap Login</target>
+        <target state="translated">OpenStreetMap Anmeldung</target>
         <note>Class = "UILabel"; text = "OpenStreetMap Login"; ObjectID = "34N-Ep-rpf";</note>
       </trans-unit>
       <trans-unit id="66J-ih-Lfh.placeholder" xml:space="preserve">
@@ -3151,6 +3154,29 @@ http://www.sjjb.co.uk/mapicons
 Other icons by Glyphish:
 http://glyphish.com
 </source>
+        <target state="translated">Urheberrecht © 2012-2020 Bryce Cogswell.
+Alle Rechte vorbehalten.
+
+OpenStreetMap-Daten sind lizenziert unter der Open Data Commons Open Database License (ODbL):
+https://www.openstreetmap.com/copyright
+
+Bing-Luftbilddaten unterliegen dem Copyright von Microsoft und seinen Zulieferern:
+https://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx
+
+Mapbox-Luftbilddaten unterliegen dem Copyright von Mapbox und seinen Lieferanten: https://www.mapbox.com/tos
+
+XML-Parsing mit freundlicher Genehmigung von Robbie Hanson's KissXML:
+https://github.com/robbiehanson/KissXML
+
+EXIF-Parsing-Code Urheberrecht (c) 2010-2015 Mayank Lahiri
+https://github.com/mayanklahiri/easyexif
+
+Kartensymbole von SJJB:
+http://www.sjjb.co.uk/mapicons
+
+Andere Symbole von Glyphish:
+http://glyphish.com
+</target>
         <note>Class = "UITextView"; text = "Copyright © 2012-2020 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nEXIF parsing code Copyright (c) 2010-2015 Mayank Lahiri\nhttps://github.com/mayanklahiri/easyexif\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F";</note>
       </trans-unit>
       <trans-unit id="CHj-a3-gC9.text" xml:space="preserve">
@@ -3208,6 +3234,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="TGa-tJ-nrC.text" xml:space="preserve">
         <source>Credits</source>
+        <target state="translated">Beteiligte</target>
         <note>Class = "UILabel"; text = "Credits"; ObjectID = "TGa-tJ-nrC";</note>
       </trans-unit>
       <trans-unit id="Tkc-bW-kNS.footerTitle" xml:space="preserve">
