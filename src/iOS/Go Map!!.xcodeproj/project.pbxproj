@@ -120,7 +120,7 @@
 		02D5B5F3248F154D00FEE448 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D5B5F2248F154D00FEE448 /* Colors.swift */; };
 		02D6238226A6628300A4F147 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D6238126A6628300A4F147 /* ShareViewController.swift */; };
 		02D6238526A6628300A4F147 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02D6238326A6628300A4F147 /* MainInterface.storyboard */; };
-		02D6238926A6628300A4F147 /* PhotoShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 02D6237F26A6628300A4F147 /* PhotoShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		02D6238926A6628300A4F147 /* PhotoShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 02D6237F26A6628300A4F147 /* PhotoShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		02D623B626A8AFFC00A4F147 /* exif.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02D6239426A8AFFC00A4F147 /* exif.cpp */; };
 		02D623D626A8B16900A4F147 /* ExifGeolocation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02D623D526A8B16900A4F147 /* ExifGeolocation.mm */; };
 		02DC59811671B79100213558 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02DC59801671B79100213558 /* CoreText.framework */; };
@@ -249,15 +249,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		02D6238E26A6628300A4F147 /* Embed App Extensions */ = {
+		02D6238E26A6628300A4F147 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				02D6238926A6628300A4F147 /* PhotoShare.appex in Embed App Extensions */,
+				02D6238926A6628300A4F147 /* PhotoShare.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -1364,7 +1364,7 @@
 				02ACBA2B16713CCB00BB4414 /* Sources */,
 				02ACBA2C16713CCB00BB4414 /* Frameworks */,
 				02ACBA2D16713CCB00BB4414 /* Resources */,
-				02D6238E26A6628300A4F147 /* Embed App Extensions */,
+				02D6238E26A6628300A4F147 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 				022B2FD92718C9FC00AB4C28 /* PBXBuildRule */,
@@ -1440,7 +1440,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1250;
-				LastUpgradeCheck = 1330;
+				LastUpgradeCheck = 1400;
 				ORGANIZATIONNAME = Bryce;
 				TargetAttributes = {
 					02ACBA2E16713CCB00BB4414 = {
