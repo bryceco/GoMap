@@ -787,7 +787,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	func compass(on layer: CALayer, withRadius radius: CGFloat) {
-		let needleWidth = CGFloat(round(Double(radius / 5)))
+		let needleWidth = round(radius / 5)
 		layer.bounds = CGRect(x: 0, y: 0, width: 2 * radius, height: 2 * radius)
 		layer.cornerRadius = radius
 		do {
@@ -795,7 +795,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			let path = UIBezierPath()
 			path.move(to: CGPoint(x: -needleWidth, y: 0))
 			path.addLine(to: CGPoint(x: needleWidth, y: 0))
-			path.addLine(to: CGPoint(x: 0, y: CGFloat(-round(Double(radius * 0.9)))))
+			path.addLine(to: CGPoint(x: 0, y: -round(radius * 0.9)))
 			path.close()
 			north.path = path.cgPath
 			north.fillColor = UIColor.systemRed.cgColor
@@ -807,7 +807,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			let path = UIBezierPath()
 			path.move(to: CGPoint(x: -needleWidth, y: 0))
 			path.addLine(to: CGPoint(x: needleWidth, y: 0))
-			path.addLine(to: CGPoint(x: 0, y: CGFloat(round(Double(radius * 0.9)))))
+			path.addLine(to: CGPoint(x: 0, y: round(radius * 0.9)))
 			path.close()
 			south.path = path.cgPath
 			south.fillColor = UIColor.lightGray.cgColor
