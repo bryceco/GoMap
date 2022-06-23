@@ -77,8 +77,8 @@ fileprivate typealias StringRect = (string: String, rect: CGRect)
 @available(iOS 13.0, *)
 fileprivate class RectScanner {
 	let substring: Substring
-	let scanner: Scanner
-	let rectf: (Range<String.Index>) -> CGRect
+	private let rectf: (Range<String.Index>) -> CGRect
+	private let scanner: Scanner
 
 	private static let allLetters = CharacterSet.uppercaseLetters.union(CharacterSet.lowercaseLetters)
 
@@ -100,8 +100,11 @@ fileprivate class RectScanner {
 	var isAtEnd: Bool { return scanner.isAtEnd }
 
 	private func result(_ sub: Substring) -> StringRect {
-		let d1 = sub.distance(from: sub.base.startIndex, to: sub.startIndex)
-		let d2 = sub.distance(from: sub.base.startIndex, to: sub.endIndex)
+		// get offset of start and end of sub relative to scanner string
+		let d1 = sub.base.distance(from: sub.base.startIndex, to: sub.startIndex)
+		let d2 = sub.base.distance(from: sub.base.startIndex, to: sub.endIndex)
+
+		// convert offset to be relative to substring
 		let p1 = substring.index(substring.startIndex, offsetBy: d1)
 		let p2 = substring.index(substring.startIndex, offsetBy: d2)
 		let rect = rectf(p1..<p2)
