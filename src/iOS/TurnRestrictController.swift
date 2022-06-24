@@ -64,6 +64,9 @@ class TurnRestrictController: UIViewController {
 		let conectedNodes = TurnRestrictController.getAdjacentNodes(centralNode, ways: parentWays)
 		createHighwayViews(conectedNodes)
 
+		// Ensure detailText is above Highway views
+		detailView.bringSubviewToFront(detailText)
+
 		// if there is only one reasonable thing to highlight initially select it
 		var fromWay: OsmWay?
 		if allRelations.count == 1 {
