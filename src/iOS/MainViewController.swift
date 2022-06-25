@@ -73,7 +73,6 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		undoButton.isEnabled = mapView.editorLayer.mapData.canUndo()
 		redoButton.isEnabled = mapView.editorLayer.mapData.canRedo()
 		undoRedoView.isHidden = mapView.editorLayer.isHidden || (!undoButton.isEnabled && !redoButton.isEnabled)
-		uploadButton.isHidden = !mapView.editorLayer.mapData.canUndo()
 	}
 
 	func updateUploadButtonState() {
@@ -90,6 +89,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		}
 		uploadButton.tintColor = color
 		uploadButton.isEnabled = changeCount > 0
+		uploadButton.isHidden = changeCount == 0
 	}
 
 	override func viewDidLoad() {
