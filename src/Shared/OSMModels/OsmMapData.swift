@@ -1906,9 +1906,9 @@ final class OsmMapData: NSObject, NSCoding {
 	func consistencyCheck() {
 #if DEBUG
 		if isUnderDebugger() {
-			print("start check")
+			print("start consistency check")
 			consistencyCheckDebugOnly()
-			print("finish check")
+			print("finish consistency check")
 		}
 #endif
 	}

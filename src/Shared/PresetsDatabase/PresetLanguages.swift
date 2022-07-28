@@ -29,13 +29,12 @@ final class PresetLanguages {
 	}
 
 	func preferredLanguageCode() -> String {
-		var code = UserDefaults.standard.object(forKey: "preferredLanguage") as? String
-		if code == nil {
-			let userPrefs = NSLocale.preferredLanguages
-			let matches = Bundle.preferredLocalizations(from: PresetLanguages.codeList, forPreferences: userPrefs)
-			code = matches.first ?? "en"
+		if let code = UserDefaults.standard.object(forKey: "preferredLanguage") as? String {
+			return code
 		}
-		return code!
+		let userPrefs = NSLocale.preferredLanguages
+		let matches = Bundle.preferredLocalizations(from: PresetLanguages.codeList, forPreferences: userPrefs)
+		return matches.first ?? "en"
 	}
 
 	func setPreferredLanguageCode(_ code: String?) {
