@@ -472,9 +472,9 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 			pair.infoButton.isEnabled = true
 			pair.infoButton.titleLabel?.layer.opacity = 1.0
 			if let url = url,
-			   view.window != nil,
-			   let viewController = SFSafariViewController(url: url)
+			   view.window != nil
 			{
+				let viewController = SFSafariViewController(url: url)
 				childViewPresented = true
 				present(viewController, animated: true)
 			}

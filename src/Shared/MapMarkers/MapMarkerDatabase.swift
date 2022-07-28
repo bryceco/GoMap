@@ -72,13 +72,6 @@ final class MapMarkerDatabase: NSObject {
 							let marker = FixmeMarker(object: obj, text: fixme)
 							self.addOrUpdate(marker)
 						}
-
-#if DEBUG
-						for quest in QuestList.shared.questsForObject(obj) {
-							let marker = QuestMarker(object: obj, quest: quest)
-							self.addOrUpdate(marker)
-						}
-#endif
 					})
 
 					completion()

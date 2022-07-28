@@ -18,22 +18,6 @@
 		020EBA7926506156001D56F4 /* MercatorTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925326411C2B000A2A99 /* MercatorTileLayer.swift */; };
 		020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */; };
 		020F4ADE24AAD4E700D9E34A /* PresetsDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */; };
-		021BCE132724CB06005D3869 /* quest.strings in Resources */ = {isa = PBXBuildFile; fileRef = 021BCDE42724CB06005D3869 /* quest.strings */; };
-		021BCE142724CB06005D3869 /* quest.strings in Resources */ = {isa = PBXBuildFile; fileRef = 021BCDE72724CB06005D3869 /* quest.strings */; };
-		021BCE152724CB06005D3869 /* quest.strings in Resources */ = {isa = PBXBuildFile; fileRef = 021BCDEA2724CB06005D3869 /* quest.strings */; };
-		021BCE162724CB06005D3869 /* quest.strings in Resources */ = {isa = PBXBuildFile; fileRef = 021BCDED2724CB06005D3869 /* quest.strings */; };
-		021BCE172724CB06005D3869 /* quest.strings in Resources */ = {isa = PBXBuildFile; fileRef = 021BCDF02724CB06005D3869 /* quest.strings */; };
-		021BCE182724CB06005D3869 /* quest.strings in Resources */ = {isa = PBXBuildFile; fileRef = 021BCDF32724CB06005D3869 /* quest.strings */; };
-		021BCE192724CB06005D3869 /* quest.strings in Resources */ = {isa = PBXBuildFile; fileRef = 021BCDF62724CB06005D3869 /* quest.strings */; };
-		021BCE1A2724CB06005D3869 /* quest.strings in Resources */ = {isa = PBXBuildFile; fileRef = 021BCDF92724CB06005D3869 /* quest.strings */; };
-		021BCE1B2724CB06005D3869 /* quest.strings in Resources */ = {isa = PBXBuildFile; fileRef = 021BCDFC2724CB06005D3869 /* quest.strings */; };
-		021BCE1C2724CB06005D3869 /* quest.strings in Resources */ = {isa = PBXBuildFile; fileRef = 021BCDFF2724CB06005D3869 /* quest.strings */; };
-		021BCE1D2724CB06005D3869 /* quest.strings in Resources */ = {isa = PBXBuildFile; fileRef = 021BCE022724CB06005D3869 /* quest.strings */; };
-		021BCE1E2724CB06005D3869 /* quest.strings in Resources */ = {isa = PBXBuildFile; fileRef = 021BCE052724CB06005D3869 /* quest.strings */; };
-		021BCE1F2724CB06005D3869 /* quest.strings in Resources */ = {isa = PBXBuildFile; fileRef = 021BCE082724CB06005D3869 /* quest.strings */; };
-		021BCE202724CB06005D3869 /* quest.strings in Resources */ = {isa = PBXBuildFile; fileRef = 021BCE0B2724CB06005D3869 /* quest.strings */; };
-		021BCE212724CB06005D3869 /* quest.strings in Resources */ = {isa = PBXBuildFile; fileRef = 021BCE0E2724CB06005D3869 /* quest.strings */; };
-		021BCE222724CB06005D3869 /* quest.strings in Resources */ = {isa = PBXBuildFile; fileRef = 021BCE112724CB06005D3869 /* quest.strings */; };
 		021C6AB3168768C800FB17B0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021C6AB2168768C800FB17B0 /* MessageUI.framework */; };
 		021F9D2026BF1D3100331027 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 021F9D1E26BF1D3100331027 /* Localizable.strings */; };
 		021FADBB258591D000F6E1C0 /* PresetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADBA258591D000F6E1C0 /* PresetKey.swift */; };
@@ -55,10 +39,6 @@
 		024909C9267BF9F70027E531 /* MapTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024909C8267BF9F70027E531 /* MapTransform.swift */; };
 		024909CB267D99190027E531 /* OsmDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024909CA267D99190027E531 /* OsmDownloader.swift */; };
 		024909CF267EADC70027E531 /* OsmXmlGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024909CE267EADC70027E531 /* OsmXmlGenerator.swift */; };
-		0256631E26FCF8220009D950 /* QuestList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0256631D26FCF8220009D950 /* QuestList.swift */; };
-		0256632026FCF9730009D950 /* Quests.json in Resources */ = {isa = PBXBuildFile; fileRef = 0256631F26FCF9730009D950 /* Quests.json */; };
-		0256660B26FD1C9B0009D950 /* QuestEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0256660A26FD1C9B0009D950 /* QuestEditor.storyboard */; };
-		0256660D26FD802C0009D950 /* quest_icons in Resources */ = {isa = PBXBuildFile; fileRef = 0256660C26FD802C0009D950 /* quest_icons */; };
 		025CCA12271244B800074726 /* KissXML in Frameworks */ = {isa = PBXBuildFile; productRef = 025CCA11271244B800074726 /* KissXML */; };
 		0266DE862655A21F007A502E /* Superview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0266DE852655A21F007A502E /* Superview.swift */; };
 		026FC76726509D6E005DDAFF /* SpeechBalloonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */; };
@@ -104,11 +84,8 @@
 		02C8C56526F446FD003B0122 /* MapMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56426F446FD003B0122 /* MapMarker.swift */; };
 		02C8C56726F44728003B0122 /* OsmNoteMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56626F44728003B0122 /* OsmNoteMarker.swift */; };
 		02C8C56926F44759003B0122 /* FixmeMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56826F44759003B0122 /* FixmeMarker.swift */; };
-		02C8C56B26F44776003B0122 /* QuestMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56A26F44776003B0122 /* QuestMarker.swift */; };
 		02C8C56D26F4479A003B0122 /* WayPointMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56C26F4479A003B0122 /* WayPointMarker.swift */; };
 		02C8C56F26F447C3003B0122 /* KeepRightMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56E26F447C3003B0122 /* KeepRightMarker.swift */; };
-		02C8C57426FAAFF0003B0122 /* QuestEditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C57326FAAFF0003B0122 /* QuestEditorController.swift */; };
-		02C8C57626FBCBF4003B0122 /* QuestFilterParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C57526FBCBF4003B0122 /* QuestFilterParser.swift */; };
 		02CA15512824A6B40047B0E5 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CA15502824A6B40047B0E5 /* String+Ext.swift */; };
 		02CB2405265DB7CB00835F32 /* OpeningHoursRecognizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB2401265DB7CB00835F32 /* OpeningHoursRecognizerView.swift */; };
 		02CB2406265DB7CB00835F32 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB2402265DB7CB00835F32 /* CameraView.swift */; };
@@ -304,7 +281,6 @@
 		0208898826BB1539003AF6BF /* ars */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ars; path = ars.lproj/Settings.strings; sourceTree = "<group>"; };
 		0208898926BB1539003AF6BF /* ars */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ars; path = ars.lproj/Changeset.strings; sourceTree = "<group>"; };
 		020E160A267A82050037DE49 /* TileServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileServer.swift; sourceTree = "<group>"; };
-		020F1E73279D15D6004496EB /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = ../pt.lproj/quest.strings; sourceTree = "<group>"; };
 		020F1E74279D15D6004496EB /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		020F1E75279D15D6004496EB /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		020F1E76279D15D6004496EB /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -320,22 +296,6 @@
 		020F517B2816557A00999FA8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainInterface.strings"; sourceTree = "<group>"; };
 		02128F7B2575D925003D2551 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Height.strings"; sourceTree = "<group>"; };
 		02128F7C2575D925003D2551 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Display.strings"; sourceTree = "<group>"; };
-		021BCDE52724CB06005D3869 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = quest.strings; sourceTree = "<group>"; };
-		021BCDE82724CB06005D3869 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = quest.strings; sourceTree = "<group>"; };
-		021BCDEB2724CB06005D3869 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = quest.strings; sourceTree = "<group>"; };
-		021BCDEE2724CB06005D3869 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = quest.strings; sourceTree = "<group>"; };
-		021BCDF12724CB06005D3869 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = quest.strings; sourceTree = "<group>"; };
-		021BCDF42724CB06005D3869 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = quest.strings; sourceTree = "<group>"; };
-		021BCDF72724CB06005D3869 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = quest.strings; sourceTree = "<group>"; };
-		021BCDFA2724CB06005D3869 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = quest.strings; sourceTree = "<group>"; };
-		021BCDFD2724CB06005D3869 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = quest.strings; sourceTree = "<group>"; };
-		021BCE002724CB06005D3869 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = quest.strings; sourceTree = "<group>"; };
-		021BCE032724CB06005D3869 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = quest.strings; sourceTree = "<group>"; };
-		021BCE062724CB06005D3869 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = quest.strings; sourceTree = "<group>"; };
-		021BCE092724CB06005D3869 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = quest.strings; sourceTree = "<group>"; };
-		021BCE0C2724CB06005D3869 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = quest.strings; sourceTree = "<group>"; };
-		021BCE0F2724CB06005D3869 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = quest.strings; sourceTree = "<group>"; };
-		021BCE122724CB06005D3869 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = quest.strings; sourceTree = "<group>"; };
 		021C6AB2168768C800FB17B0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		021F9D1D26BF1D3100331027 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		021F9D1F26BF1D3100331027 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -357,7 +317,6 @@
 		02263CDE2677F93A002BA72F /* QuadBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadBox.swift; sourceTree = "<group>"; };
 		0226B770268300C9005DB9E2 /* Data+Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Wrapper.swift"; sourceTree = "<group>"; };
 		0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extension.swift"; sourceTree = "<group>"; };
-		022AE4F3279D15DD000AD76C /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = ../sv.lproj/quest.strings; sourceTree = "<group>"; };
 		022AE4F4279D15DD000AD76C /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/POI.strings; sourceTree = "<group>"; };
 		022B2FDA2718CCAC00AB4C28 /* MapboxLocator.secret */ = {isa = PBXFileReference; lastKnownFileType = text; path = MapboxLocator.secret; sourceTree = "<group>"; };
 		02354F79246349E100878A04 /* CurvedGlyphLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurvedGlyphLayer.swift; sourceTree = "<group>"; };
@@ -374,10 +333,6 @@
 		024909CE267EADC70027E531 /* OsmXmlGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmXmlGenerator.swift; sourceTree = "<group>"; };
 		024E6D2E24CBBCE500E1E2A3 /* apple-app-site-association */ = {isa = PBXFileReference; lastKnownFileType = text; name = "apple-app-site-association"; path = "../apple-app-site-association"; sourceTree = "<group>"; };
 		0254C6CD2579CD88000705B4 /* POI-Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "POI-Icons"; path = "../POI-Icons"; sourceTree = "<group>"; };
-		0256631D26FCF8220009D950 /* QuestList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestList.swift; sourceTree = "<group>"; };
-		0256631F26FCF9730009D950 /* Quests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Quests.json; sourceTree = "<group>"; };
-		0256660A26FD1C9B0009D950 /* QuestEditor.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = QuestEditor.storyboard; sourceTree = "<group>"; };
-		0256660C26FD802C0009D950 /* quest_icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = quest_icons; sourceTree = "<group>"; };
 		02583B38279D15E70088977A /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/DirectionViewController.strings"; sourceTree = "<group>"; };
 		02583B39279D15E70088977A /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/MainInterface.strings"; sourceTree = "<group>"; };
 		02583B3A279D15E70088977A /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -398,7 +353,6 @@
 		026365DD26BB154400CB8F6E /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = et.lproj/Changeset.strings; sourceTree = "<group>"; };
 		026436C926F004F700EB1667 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		0266DE852655A21F007A502E /* Superview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Superview.swift; sourceTree = "<group>"; };
-		02758B34279D15B100690E47 /* ars */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ars; path = ../ars.lproj/quest.strings; sourceTree = "<group>"; };
 		0277E29316A673CC00456BED /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		027AB506250E9D0600C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Display.storyboard; sourceTree = "<group>"; };
 		027AB507250E9D0600C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
@@ -429,7 +383,6 @@
 		029F8C1A26F004FF0073A813 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		02A123EC264CAE6F005638C1 /* Atomic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
 		02A194B119C6A432002338DA /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
-		02A234B6279D15BA00AF4984 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = ../et.lproj/quest.strings; sourceTree = "<group>"; };
 		02A41837256A2026005BF1AB /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/Height.strings; sourceTree = "<group>"; };
 		02A41838256A2026005BF1AB /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/Changeset.strings; sourceTree = "<group>"; };
 		02A7710B26BB154C00D4DE5D /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
@@ -499,18 +452,14 @@
 		02C3199B250EBCAC00C5D200 /* nb-NO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-NO"; path = "nb-NO.lproj/Changeset.strings"; sourceTree = "<group>"; };
 		02C3199C250EBCAC00C5D200 /* nb-NO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-NO"; path = "nb-NO.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		02C3199D250EBCAC00C5D200 /* nb-NO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-NO"; path = "nb-NO.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		02C702AD279D15C400F791A7 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = ../id.lproj/quest.strings; sourceTree = "<group>"; };
 		02C702AE279D15C400F791A7 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		02C702AF279D15C400F791A7 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		02C702B0279D15C400F791A7 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
 		02C8C56426F446FD003B0122 /* MapMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarker.swift; sourceTree = "<group>"; };
 		02C8C56626F44728003B0122 /* OsmNoteMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmNoteMarker.swift; sourceTree = "<group>"; };
 		02C8C56826F44759003B0122 /* FixmeMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixmeMarker.swift; sourceTree = "<group>"; };
-		02C8C56A26F44776003B0122 /* QuestMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestMarker.swift; sourceTree = "<group>"; };
 		02C8C56C26F4479A003B0122 /* WayPointMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WayPointMarker.swift; sourceTree = "<group>"; };
 		02C8C56E26F447C3003B0122 /* KeepRightMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeepRightMarker.swift; sourceTree = "<group>"; };
-		02C8C57326FAAFF0003B0122 /* QuestEditorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestEditorController.swift; sourceTree = "<group>"; };
-		02C8C57526FBCBF4003B0122 /* QuestFilterParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestFilterParser.swift; sourceTree = "<group>"; };
 		02C91CFB26BF1D4C00C92555 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		02C91CFC26BF1D4C00C92555 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		02C91CFD26BF1D4C00C92555 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -768,157 +717,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		021BCDE32724CB06005D3869 /* hr.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				021BCDE42724CB06005D3869 /* quest.strings */,
-			);
-			path = hr.lproj;
-			sourceTree = "<group>";
-		};
-		021BCDE62724CB06005D3869 /* uk.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				021BCDE72724CB06005D3869 /* quest.strings */,
-			);
-			path = uk.lproj;
-			sourceTree = "<group>";
-		};
-		021BCDE92724CB06005D3869 /* fi.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				021BCDEA2724CB06005D3869 /* quest.strings */,
-			);
-			path = fi.lproj;
-			sourceTree = "<group>";
-		};
-		021BCDEC2724CB06005D3869 /* cs.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				021BCDED2724CB06005D3869 /* quest.strings */,
-			);
-			path = cs.lproj;
-			sourceTree = "<group>";
-		};
-		021BCDEF2724CB06005D3869 /* fr.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				021BCDF02724CB06005D3869 /* quest.strings */,
-			);
-			path = fr.lproj;
-			sourceTree = "<group>";
-		};
-		021BCDF22724CB06005D3869 /* nl.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				021BCDF32724CB06005D3869 /* quest.strings */,
-			);
-			path = nl.lproj;
-			sourceTree = "<group>";
-		};
-		021BCDF52724CB06005D3869 /* pl.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				021BCDF62724CB06005D3869 /* quest.strings */,
-			);
-			path = pl.lproj;
-			sourceTree = "<group>";
-		};
-		021BCDF82724CB06005D3869 /* ru.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				021BCDF92724CB06005D3869 /* quest.strings */,
-			);
-			path = ru.lproj;
-			sourceTree = "<group>";
-		};
-		021BCDFB2724CB06005D3869 /* ar.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				021BCDFC2724CB06005D3869 /* quest.strings */,
-			);
-			path = ar.lproj;
-			sourceTree = "<group>";
-		};
-		021BCDFE2724CB06005D3869 /* Base.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				021BCDFF2724CB06005D3869 /* quest.strings */,
-			);
-			path = Base.lproj;
-			sourceTree = "<group>";
-		};
-		021BCE012724CB06005D3869 /* it.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				021BCE022724CB06005D3869 /* quest.strings */,
-			);
-			path = it.lproj;
-			sourceTree = "<group>";
-		};
-		021BCE042724CB06005D3869 /* ja.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				021BCE052724CB06005D3869 /* quest.strings */,
-			);
-			path = ja.lproj;
-			sourceTree = "<group>";
-		};
-		021BCE072724CB06005D3869 /* pt-BR.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				021BCE082724CB06005D3869 /* quest.strings */,
-			);
-			path = "pt-BR.lproj";
-			sourceTree = "<group>";
-		};
-		021BCE0A2724CB06005D3869 /* zh-Hant.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				021BCE0B2724CB06005D3869 /* quest.strings */,
-			);
-			path = "zh-Hant.lproj";
-			sourceTree = "<group>";
-		};
-		021BCE0D2724CB06005D3869 /* zh-Hans.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				021BCE0E2724CB06005D3869 /* quest.strings */,
-			);
-			path = "zh-Hans.lproj";
-			sourceTree = "<group>";
-		};
-		021BCE102724CB06005D3869 /* de.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				021BCE112724CB06005D3869 /* quest.strings */,
-			);
-			path = de.lproj;
-			sourceTree = "<group>";
-		};
-		027A111526FE8288009A95CE /* strings */ = {
-			isa = PBXGroup;
-			children = (
-				021BCDFB2724CB06005D3869 /* ar.lproj */,
-				021BCDFE2724CB06005D3869 /* Base.lproj */,
-				021BCDEC2724CB06005D3869 /* cs.lproj */,
-				021BCE102724CB06005D3869 /* de.lproj */,
-				021BCDE92724CB06005D3869 /* fi.lproj */,
-				021BCDEF2724CB06005D3869 /* fr.lproj */,
-				021BCDE32724CB06005D3869 /* hr.lproj */,
-				021BCE012724CB06005D3869 /* it.lproj */,
-				021BCE042724CB06005D3869 /* ja.lproj */,
-				021BCDF22724CB06005D3869 /* nl.lproj */,
-				021BCDF52724CB06005D3869 /* pl.lproj */,
-				021BCE072724CB06005D3869 /* pt-BR.lproj */,
-				021BCDF82724CB06005D3869 /* ru.lproj */,
-				021BCDE62724CB06005D3869 /* uk.lproj */,
-				021BCE0D2724CB06005D3869 /* zh-Hans.lproj */,
-				021BCE0A2724CB06005D3869 /* zh-Hant.lproj */,
-			);
-			path = strings;
-			sourceTree = "<group>";
-		};
 		0291D83A2442822300F793BE /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -1026,8 +824,6 @@
 				02CB2409265DB7D600835F32 /* OpeningHours */,
 				02A3598F2704E51700101369 /* POI */,
 				028F504619BA2F460093C423 /* presets */,
-				0256660A26FD1C9B0009D950 /* QuestEditor.storyboard */,
-				02C8C57326FAAFF0003B0122 /* QuestEditorController.swift */,
 				ED9649DA2601CB7A00EC0A60 /* SettingsViewController.swift */,
 				02ACBCFF16713F7F00BB4414 /* Shared */,
 				0291D83A2442822300F793BE /* Storyboards */,
@@ -1080,7 +876,6 @@
 				02CC01CF2584190A004444EF /* PresetsDatabase */,
 				C381C30A263FE518003142BA /* PushPinView.swift */,
 				0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */,
-				02C8C57026FAAFB9003B0122 /* Quests */,
 				C3D096B5263DF82F00E3B129 /* RulerView.swift */,
 				C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */,
 				C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */,
@@ -1111,24 +906,10 @@
 				02C8C56426F446FD003B0122 /* MapMarker.swift */,
 				02C8C56626F44728003B0122 /* OsmNoteMarker.swift */,
 				02034742266C2CB9000A7C3D /* MapMarkerDatabase.swift */,
-				02C8C56A26F44776003B0122 /* QuestMarker.swift */,
 				02C8C56C26F4479A003B0122 /* WayPointMarker.swift */,
 			);
 			name = MapMarkers;
 			path = ../Shared/MapMarkers;
-			sourceTree = "<group>";
-		};
-		02C8C57026FAAFB9003B0122 /* Quests */ = {
-			isa = PBXGroup;
-			children = (
-				0256660C26FD802C0009D950 /* quest_icons */,
-				02C8C57526FBCBF4003B0122 /* QuestFilterParser.swift */,
-				0256631D26FCF8220009D950 /* QuestList.swift */,
-				0256631F26FCF9730009D950 /* Quests.json */,
-				027A111526FE8288009A95CE /* strings */,
-			);
-			name = Quests;
-			path = ../Shared/Quests;
 			sourceTree = "<group>";
 		};
 		02CB2409265DB7D600835F32 /* OpeningHours */ = {
@@ -1523,41 +1304,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				021BCE162724CB06005D3869 /* quest.strings in Resources */,
 				029A17C8257AB8A70035C6ED /* POI-Icons.xcassets in Resources */,
 				02ACBA3E16713CCB00BB4414 /* InfoPlist.strings in Resources */,
-				021BCE1B2724CB06005D3869 /* quest.strings in Resources */,
 				028F504719BA2F460093C423 /* presets in Resources */,
 				02AFBF242458C1E800BE43F4 /* BingPlaceholderImage.png in Resources */,
-				021BCE192724CB06005D3869 /* quest.strings in Resources */,
-				0256632026FCF9730009D950 /* Quests.json in Resources */,
 				02BE6190245D1F9D00E92662 /* EsriPlaceholderImage.jpg in Resources */,
-				021BCE172724CB06005D3869 /* quest.strings in Resources */,
 				02ACBA4D16713CCB00BB4414 /* MainStoryboard.storyboard in Resources */,
 				0291D83724427AFA00F793BE /* Display.storyboard in Resources */,
 				027AB4FA250E9C8000C404CD /* Settings.storyboard in Resources */,
 				02ED19811BBF119C00A57CF4 /* Launch Screen.storyboard in Resources */,
-				021BCE1E2724CB06005D3869 /* quest.strings in Resources */,
-				021BCE142724CB06005D3869 /* quest.strings in Resources */,
 				027AB503250E9CA500C404CD /* Changeset.storyboard in Resources */,
-				0256660B26FD1C9B0009D950 /* QuestEditor.storyboard in Resources */,
-				0256660D26FD802C0009D950 /* quest_icons in Resources */,
-				021BCE202724CB06005D3869 /* quest.strings in Resources */,
 				027AB4FD250E9C8A00C404CD /* POI.storyboard in Resources */,
-				021BCE1D2724CB06005D3869 /* quest.strings in Resources */,
 				0246A78126A4AA3A00941A44 /* DirectionViewController.xib in Resources */,
 				02C3194E250EAED500C5D200 /* Localizable.strings in Resources */,
-				021BCE222724CB06005D3869 /* quest.strings in Resources */,
-				021BCE1F2724CB06005D3869 /* quest.strings in Resources */,
-				021BCE182724CB06005D3869 /* quest.strings in Resources */,
 				027AB500250E9C9B00C404CD /* Height.storyboard in Resources */,
-				021BCE212724CB06005D3869 /* quest.strings in Resources */,
 				023B892B19C148790060CDB5 /* Images.xcassets in Resources */,
-				021BCE152724CB06005D3869 /* quest.strings in Resources */,
 				02ACBCFD16713F2B00BB4414 /* RenderInfo.json in Resources */,
-				021BCE1C2724CB06005D3869 /* quest.strings in Resources */,
-				021BCE1A2724CB06005D3869 /* quest.strings in Resources */,
-				021BCE132724CB06005D3869 /* quest.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1641,11 +1403,9 @@
 				024909C9267BF9F70027E531 /* MapTransform.swift in Sources */,
 				0282C4C7265F32E800F2D282 /* Sqlite3.swift in Sources */,
 				02F6A459268AE42800F2ACE7 /* Debugger.swift in Sources */,
-				0256631E26FCF8220009D950 /* QuestList.swift in Sources */,
 				6442666922540EDF00C0D545 /* Observable.swift in Sources */,
 				02C8C56F26F447C3003B0122 /* KeepRightMarker.swift in Sources */,
 				0203473D26695B2A000A7C3D /* EditorMapLayer+Edit.swift in Sources */,
-				02C8C57426FAAFF0003B0122 /* QuestEditorController.swift in Sources */,
 				024909CB267D99190027E531 /* OsmDownloader.swift in Sources */,
 				02A123EA264C8BA3005638C1 /* TileServerList.swift in Sources */,
 				C3D096AC263D48F700E3B129 /* AppDelegate.swift in Sources */,
@@ -1674,7 +1434,6 @@
 				6442666822540EDF00C0D545 /* Disposable.swift in Sources */,
 				ED56E5C726027A50000B368C /* CreditsViewController.swift in Sources */,
 				ED9649F92601D58900EC0A60 /* POIPresetValuePickerController.swift in Sources */,
-				02C8C56B26F44776003B0122 /* QuestMarker.swift in Sources */,
 				64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */,
 				02FEDAF42651DCC100DF15D7 /* POIAllTagsViewController.swift in Sources */,
 				C3D096DB263EB73E00E3B129 /* main.swift in Sources */,
@@ -1683,7 +1442,6 @@
 				ED56E5EB26028B5F000B368C /* GpxConfigureViewController.swift in Sources */,
 				02EA1C6C2663398C00A0F827 /* TileQuadKey.swift in Sources */,
 				021FADD725873D0100F6E1C0 /* PresetsForFeature.swift in Sources */,
-				02C8C57626FBCBF4003B0122 /* QuestFilterParser.swift in Sources */,
 				02A123ED264CAE6F005638C1 /* Atomic.swift in Sources */,
 				02008650265B25DC008F37DD /* Database.swift in Sources */,
 				020E160B267A82050037DE49 /* TileServer.swift in Sources */,
@@ -1787,139 +1545,6 @@
 				020685D726D3253F00A447F9 /* uk */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		021BCDE42724CB06005D3869 /* quest.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				021BCDE52724CB06005D3869 /* hr */,
-			);
-			name = quest.strings;
-			sourceTree = "<group>";
-		};
-		021BCDE72724CB06005D3869 /* quest.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				021BCDE82724CB06005D3869 /* uk */,
-			);
-			name = quest.strings;
-			sourceTree = "<group>";
-		};
-		021BCDEA2724CB06005D3869 /* quest.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				021BCDEB2724CB06005D3869 /* fi */,
-			);
-			name = quest.strings;
-			sourceTree = "<group>";
-		};
-		021BCDED2724CB06005D3869 /* quest.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				021BCDEE2724CB06005D3869 /* cs */,
-			);
-			name = quest.strings;
-			sourceTree = "<group>";
-		};
-		021BCDF02724CB06005D3869 /* quest.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				021BCDF12724CB06005D3869 /* fr */,
-			);
-			name = quest.strings;
-			sourceTree = "<group>";
-		};
-		021BCDF32724CB06005D3869 /* quest.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				021BCDF42724CB06005D3869 /* nl */,
-			);
-			name = quest.strings;
-			sourceTree = "<group>";
-		};
-		021BCDF62724CB06005D3869 /* quest.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				021BCDF72724CB06005D3869 /* pl */,
-			);
-			name = quest.strings;
-			sourceTree = "<group>";
-		};
-		021BCDF92724CB06005D3869 /* quest.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				021BCDFA2724CB06005D3869 /* ru */,
-			);
-			name = quest.strings;
-			sourceTree = "<group>";
-		};
-		021BCDFC2724CB06005D3869 /* quest.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				021BCDFD2724CB06005D3869 /* ar */,
-			);
-			name = quest.strings;
-			sourceTree = "<group>";
-		};
-		021BCDFF2724CB06005D3869 /* quest.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				021BCE002724CB06005D3869 /* Base */,
-				02758B34279D15B100690E47 /* ars */,
-				02A234B6279D15BA00AF4984 /* et */,
-				02C702AD279D15C400F791A7 /* id */,
-				020F1E73279D15D6004496EB /* pt */,
-				022AE4F3279D15DD000AD76C /* sv */,
-			);
-			name = quest.strings;
-			sourceTree = "<group>";
-		};
-		021BCE022724CB06005D3869 /* quest.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				021BCE032724CB06005D3869 /* it */,
-			);
-			name = quest.strings;
-			sourceTree = "<group>";
-		};
-		021BCE052724CB06005D3869 /* quest.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				021BCE062724CB06005D3869 /* ja */,
-			);
-			name = quest.strings;
-			sourceTree = "<group>";
-		};
-		021BCE082724CB06005D3869 /* quest.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				021BCE092724CB06005D3869 /* pt-BR */,
-			);
-			name = quest.strings;
-			sourceTree = "<group>";
-		};
-		021BCE0B2724CB06005D3869 /* quest.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				021BCE0C2724CB06005D3869 /* zh-Hant */,
-			);
-			name = quest.strings;
-			sourceTree = "<group>";
-		};
-		021BCE0E2724CB06005D3869 /* quest.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				021BCE0F2724CB06005D3869 /* zh-Hans */,
-			);
-			name = quest.strings;
-			sourceTree = "<group>";
-		};
-		021BCE112724CB06005D3869 /* quest.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				021BCE122724CB06005D3869 /* de */,
-			);
-			name = quest.strings;
 			sourceTree = "<group>";
 		};
 		021F9D1E26BF1D3100331027 /* Localizable.strings */ = {
