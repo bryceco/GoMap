@@ -237,7 +237,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 				cell.valueField.isEnabled = false
 			} else if presetKey.isYesNo() {
 				// special case for yes/no tristate
-				let button = TristateButton()
+				let button = TristateYesNoButton()
 				var value = keyValueDict[presetKey.tagKey] ?? ""
 				if presetKey.tagKey == "tunnel", keyValueDict["waterway"] != nil, value == "culvert" {
 					// Special hack for tunnel=culvert when used with waterways:
@@ -271,10 +271,33 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 				}
 			} else {
 				// Regular cell
-				var value = keyValueDict[presetKey.tagKey]
-				value = presetKey.prettyNameForTagValue(value ?? "")
+				let value = presetKey.prettyNameForTagValue(keyValueDict[presetKey.tagKey] ?? "")
 				cell.valueField.text = value
 				cell.valueField.isEnabled = true
+
+				if presetKey.type == "roadspeed" {
+					let button = TristateKmhMphButton()
+					cell.valueField.rightView = button
+					cell.valueField.rightViewMode = .always
+					button.onSelect = { newValue in
+						// update units on existing value
+						if let number = cell.valueField.text?.prefix(while: { $0.isNumber || $0 == "." }),
+						   number != ""
+						{
+							let v: String
+							if let newValue = newValue {
+								v = number + " " + newValue
+							} else {
+								v = String(number)
+							}
+							self.updateTag(withValue: v, forKey: presetKey.tagKey)
+							cell.valueField.text = v
+						} else {
+							button.setSelection(forString: "")
+						}
+					}
+					button.setSelection(forString: value)
+				}
 			}
 			return cell
 
@@ -417,8 +440,10 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			textField.text = newValue
 		}
 
-		if presetKey.isYesNo() {
-			let tri = cell.valueField.rightView as! TristateButton
+		if let tri = cell.valueField.rightView as? TristateYesNoButton {
+			tri.setSelection(forString: textField.text ?? "")
+		}
+		if let tri = cell.valueField.rightView as? TristateKmhMphButton {
 			tri.setSelection(forString: textField.text ?? "")
 		}
 	}

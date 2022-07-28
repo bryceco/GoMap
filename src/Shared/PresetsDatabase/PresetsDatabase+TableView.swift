@@ -375,6 +375,7 @@ extension PresetsDatabase {
 		}
 		let tag = PresetKey(
 			name: label,
+			type: "",
 			tagKey: key,
 			defaultValue: defaultValue,
 			placeholder: placeholder,
@@ -401,6 +402,7 @@ extension PresetsDatabase {
 		]
 		let tag = PresetKey(
 			name: label,
+			type: "",
 			tagKey: key,
 			defaultValue: defaultValue,
 			placeholder: placeholder,
@@ -618,6 +620,7 @@ extension PresetsDatabase {
 					let tagKey = "\(addressPrefix):\(addressKey)"
 					let tag = PresetKey(
 						name: name!,
+						type: type,
 						tagKey: tagKey,
 						defaultValue: defaultValue,
 						placeholder: placeholder,
@@ -653,6 +656,7 @@ extension PresetsDatabase {
 			let key = dict["key"] as! String
 			let tag = PresetKey(
 				name: label,
+				type: type,
 				tagKey: key,
 				defaultValue: defaultValue,
 				placeholder: placeholder,

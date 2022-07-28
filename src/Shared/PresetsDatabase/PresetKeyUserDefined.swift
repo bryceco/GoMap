@@ -41,6 +41,7 @@ final class PresetKeyUserDefined: PresetKey {
 		self.appliesToKey = appliesToKey
 		self.appliesToValue = appliesToValue
 		super.init(name: name,
+				   type: "",
 		           tagKey: key,
 		           defaultValue: nil,
 		           placeholder: placeholder,

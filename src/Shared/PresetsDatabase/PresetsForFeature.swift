@@ -136,6 +136,7 @@ final class PresetsForFeature {
 		// Always start with Type and Name
 		let typeTag = PresetKey(
 			name: NSLocalizedString("Type", comment: "The 'Type' header in Common Tags"),
+			type: "",
 			tagKey: "",
 			defaultValue: nil,
 			placeholder: "",
@@ -146,6 +147,7 @@ final class PresetsForFeature {
 		let name = PresetsDatabase.shared.jsonFields["name"] as? [String: Any]
 		let nameTag = PresetKey(
 			name: name?["label"] as? String ?? "Name",
+			type: "",
 			tagKey: "name",
 			defaultValue: nil,
 			placeholder: name?["placeholder"] as? String,

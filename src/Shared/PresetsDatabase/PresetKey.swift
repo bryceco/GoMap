@@ -37,6 +37,7 @@ class PresetKey: NSObject, NSSecureCoding {
 	public class var supportsSecureCoding: Bool { return true }
 
 	let name: String // name of the preset, e.g. Hours
+	let type: String // the type of value, e.g. "roadspeed"
 	let tagKey: String // the key being set, e.g. opening_hours
 	let defaultValue: String?
 	let placeholder: String // placeholder text in the UITextField
@@ -47,6 +48,7 @@ class PresetKey: NSObject, NSSecureCoding {
 
 	init(
 		name: String,
+		type: String,
 		tagKey tag: String,
 		defaultValue: String?,
 		placeholder: String?,
@@ -56,6 +58,7 @@ class PresetKey: NSObject, NSSecureCoding {
 		presets: [PresetValue]?)
 	{
 		self.name = name
+		self.type = type
 		tagKey = tag
 		self.placeholder = placeholder ?? PresetKey.placeholderForPresets(presets) ?? PresetsDatabase.shared
 			.unknownForLocale
@@ -78,6 +81,7 @@ class PresetKey: NSObject, NSSecureCoding {
 		   	.decodeInteger(forKey: "capitalize"))
 		{
 			self.name = name
+			self.type = ""
 			self.tagKey = tagKey
 			self.placeholder = placeholder
 			self.presetList = presetList
