@@ -735,12 +735,12 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		flashLabel.layer.zPosition = Z_FLASH
 		flashLabel.isHidden = true
 
-		#if false
+#if false
 		// Support zoom via tap and drag
 		tapAndDragGesture = TapAndDragGesture(target: self, action: #selector(handleTapAndDragGesture(_:)))
 		tapAndDragGesture.delegate = self
 		addGestureRecognizer(tapAndDragGesture)
-		#endif
+#endif
 
 		// these need to be loaded late because assigning to them changes the view
 		viewState = MapViewState(rawValue: UserDefaults.standard.integer(forKey: "mapViewState")) ?? MapViewState

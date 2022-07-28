@@ -132,8 +132,9 @@ final class EditorMapLayer: CALayer {
 					title: NSLocalizedString("Cache size warning", comment: ""),
 					message: text,
 					preferredStyle: .alert)
-				alert!
-					.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+				alert!.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+				                               style: .cancel,
+				                               handler: nil))
 			}
 			self.mapData = mapData
 		} catch {

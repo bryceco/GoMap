@@ -33,15 +33,14 @@ class TurnRestrictHwyView: UIView {
 	let parentWaysArray: [OsmWay]
 
 	init(frame: CGRect,
-		 wayObj: OsmWay,
-			  centerNode: OsmNode,
-		 connectedNode: OsmNode,
-		 centerPoint: CGPoint,
-		 endPoint: CGPoint,
-		 parentWaysArray: [OsmWay],
-			 highwayLayer: CAShapeLayer,
-			highlightLayer: CAShapeLayer
-	)
+	     wayObj: OsmWay,
+	     centerNode: OsmNode,
+	     connectedNode: OsmNode,
+	     centerPoint: CGPoint,
+	     endPoint: CGPoint,
+	     parentWaysArray: [OsmWay],
+	     highwayLayer: CAShapeLayer,
+	     highlightLayer: CAShapeLayer)
 	{
 		self.centerNode = centerNode
 		self.connectedNode = connectedNode
@@ -50,18 +49,19 @@ class TurnRestrictHwyView: UIView {
 
 		self.wayObj = wayObj
 
-		self.arrowButton = Self.createTurnRestrictionButton(centerPoint: centerPoint, endPoint: endPoint)
+		arrowButton = Self.createTurnRestrictionButton(centerPoint: centerPoint, endPoint: endPoint)
 
 		self.highwayLayer = highwayLayer
 		self.highlightLayer = highlightLayer
 		self.parentWaysArray = parentWaysArray
-		self.restriction = .NONE
+		restriction = .NONE
 		super.init(frame: frame)
 
 		addSubview(arrowButton)
-		self.arrowButton.addTarget(self, action: #selector(restrictionButtonPressed(_:)), for: .touchUpInside)
+		arrowButton.addTarget(self, action: #selector(restrictionButtonPressed(_:)), for: .touchUpInside)
 	}
 
+	@available(*, unavailable)
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
@@ -145,7 +145,7 @@ class TurnRestrictHwyView: UIView {
 		arrow.anchorPoint = CGPoint(x: 0.5, y: 0.5)
 
 		let angle = CGFloat(isForward ? TurnRestrictHwyView.heading(from: location, to: center)
-									: TurnRestrictHwyView.heading(from: center, to: location))
+			: TurnRestrictHwyView.heading(from: center, to: location))
 		arrow.setAffineTransform(CGAffineTransform(rotationAngle: angle))
 		arrow.position = location
 
@@ -168,9 +168,9 @@ class TurnRestrictHwyView: UIView {
 
 	func isOneWayEnteringCenter() -> Bool {
 		if wayObj.isOneWay != .NONE,
-			let centerIndex = wayObj.nodes.firstIndex(of: centerNode),
-			let otherIndex = wayObj.nodes.firstIndex(of: connectedNode),
-			(otherIndex < centerIndex) == (wayObj.isOneWay == ONEWAY.FORWARD)
+		   let centerIndex = wayObj.nodes.firstIndex(of: centerNode),
+		   let otherIndex = wayObj.nodes.firstIndex(of: connectedNode),
+		   (otherIndex < centerIndex) == (wayObj.isOneWay == ONEWAY.FORWARD)
 		{
 			return true
 		}

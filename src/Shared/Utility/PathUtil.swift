@@ -156,12 +156,12 @@ extension CGPath {
 		let p1 = OSMPoint(points.first!)
 		let p2 = OSMPoint(points.last!)
 		let distances = points.map({ OSMPoint($0).distanceToLineSegment(p1, p2) })
-		let maxDist = distances.indices.max(by: {distances[$0] < distances[$1]})!
+		let maxDist = distances.indices.max(by: { distances[$0] < distances[$1] })!
 
 		// If max distance is greater than epsilon, recursively simplify
 		if distances[maxDist] > epsilon {
 			// Recursive call
-			let midpoint = points.startIndex+maxDist
+			let midpoint = points.startIndex + maxDist
 			DouglasPeuckerCore(points[..<midpoint], epsilon, &result)
 			result.removeLast()
 			DouglasPeuckerCore(points[midpoint...], epsilon, &result)
