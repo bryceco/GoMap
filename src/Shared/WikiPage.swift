@@ -11,8 +11,8 @@ import Foundation
 class WikiPage {
 	static let shared = WikiPage()
 
-	func wikiLanguage(forLanguageCode code: String) -> String? {
-		if code.count == 0 {
+	func wikiLanguage(forLanguageCode code: String) -> String {
+		if code == "" {
 			return ""
 		}
 		let special = [
@@ -28,12 +28,11 @@ class WikiPage {
 			"zh-HK": "Zh-hant:",
 			"zh-TW": "Zh-hant:"
 		]
-		var result = special[code]
-		if result != "" {
+		if let result = special[code] {
 			return result
 		}
 
-		result = (code as NSString).substring(to: 1).uppercased() + (code as NSString).substring(from: 1) + ":"
+		let result = code.prefix(1).uppercased() + code.dropFirst() + ":"
 		return result
 	}
 
@@ -65,28 +64,21 @@ class WikiPage {
 		language: String,
 		completion: @escaping (_ url: URL?) -> Void)
 	{
-		var tagKey = tagKey
-		var tagValue = tagValue
-		var language = language
-		if let lang = wikiLanguage(forLanguageCode: language) {
-			language = lang
-		}
+		let language = wikiLanguage(forLanguageCode: language)
+		let tagKey = tagKey.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
 
 		var pageList: [String] = []
 
-		tagKey = tagKey.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
-		tagValue = tagValue.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
-
 		// key+value
-		if tagValue.count != 0 {
+		if let tagValue = tagValue.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) {
 			// exact language
 			pageList.append("\(language)Tag:\(tagKey)=\(tagValue)")
-			if language.count != 0 {
+			if language != "" {
 				pageList.append("Tag:\(tagKey)=\(tagValue)")
 			}
 		}
 		pageList.append("\(language)Key:\(tagKey)")
-		if language.count != 0 {
+		if language != "" {
 			pageList.append("Key:\(tagKey)")
 		}
 

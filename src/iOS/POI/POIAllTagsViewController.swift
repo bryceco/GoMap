@@ -471,15 +471,12 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 			progress.removeFromSuperview()
 			pair.infoButton.isEnabled = true
 			pair.infoButton.titleLabel?.layer.opacity = 1.0
-			if url != nil, view.window != nil {
-				var viewController: SFSafariViewController?
-				if let url = url {
-					viewController = SFSafariViewController(url: url)
-				}
+			if let url = url,
+			   view.window != nil,
+			   let viewController = SFSafariViewController(url: url)
+			{
 				childViewPresented = true
-				if let viewController = viewController {
-					present(viewController, animated: true)
-				}
+				present(viewController, animated: true)
 			}
 		}
 	}

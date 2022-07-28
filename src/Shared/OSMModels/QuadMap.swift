@@ -83,7 +83,9 @@ class QuadMap: NSObject, NSCoding {
 
 	@objc func addMember(_ member: OsmBaseObject, undo: MyUndoManager?) {
 		if let undo = undo {
-			undo.registerUndo(withTarget: self, selector: #selector(removeMember(_:undo:)), objects: [member, undo])
+			undo.registerUndo(withTarget: self,
+			                  selector: #selector(removeMember(_:undo:)),
+			                  objects: [member, undo])
 		}
 		let boundingBox = member.boundingBox
 		rootQuad.addMember(member, bbox: boundingBox)
@@ -92,8 +94,8 @@ class QuadMap: NSObject, NSCoding {
 	@objc func removeMember(_ member: OsmBaseObject, undo: MyUndoManager?) -> Bool {
 		let boundingBox = member.boundingBox
 		let ok = rootQuad.removeMember(member, bbox: boundingBox)
-		if ok, undo != nil {
-			undo?.registerUndo(
+		if ok, let undo = undo {
+			undo.registerUndo(
 				withTarget: self,
 				selector: #selector(addMember(_:undo:)),
 				objects: [member, undo as Any])
@@ -190,6 +192,7 @@ class QuadMap: NSObject, NSCoding {
 			if obj is OsmNode { nCount += 1 }
 			if obj is OsmWay { wCount += 1 }
 			if obj is OsmRelation { rCount += 1 }
+			assert(!obj.deleted)
 		}
 		assert(dict.first(where: { $0.value != 1 }) == nil)
 		assert(nCount == nodes.lazy.filter({ !$0.deleted }).count)
