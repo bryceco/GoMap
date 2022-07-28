@@ -1,323 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
-  <file original="../Shared/Quests/strings/Base.lproj/quest.strings" source-language="en" target-language="id" datatype="plaintext">
-    <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
-    </header>
-    <body>
-      <trans-unit id="quest_address_street_title" xml:space="preserve">
-        <source>What street does the (house) number %s belong to?</source>
-        <target>Di jalan manakah nomor (rumah) %s berada?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_address_title" xml:space="preserve">
-        <source>What is the house number of this building?</source>
-        <target state="translated">Berapakah nomor rumah gedung ini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_atm_operator_title" xml:space="preserve">
-        <source>What’s the name of the bank for this ATM?</source>
-        <target>Apa nama bank untuk ATM ini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_barrier_type_title" xml:space="preserve">
-        <source>What type of barrier is this?</source>
-        <target state="translated">Apa jenis penghalang ini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_bench_backrest_title" xml:space="preserve">
-        <source>Does this bench have a backrest?</source>
-        <target>Apakah bangku ini memiliki sandaran?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_bicycleParkingCoveredStatus_title" xml:space="preserve">
-        <source>Is this bicycle parking covered (protected from rain)?</source>
-        <target>Apakah parkir sepeda ini tertutup (terlindung dari hujan)?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_bicycle_parking_access_title" xml:space="preserve">
-        <source>Is it restricted who may park a bike here?</source>
-        <target>Apakah dibatasi siapa yang boleh memarkir sepeda di sini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_bicycle_parking_fee_title" xml:space="preserve">
-        <source>Do you have to pay to park a bike here?</source>
-        <target>Apakah Anda harus membayar untuk memarkir sepeda di sini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_bicycle_parking_type_title" xml:space="preserve">
-        <source>What type of bicycle parking is this?</source>
-        <target state="translated">Apa jenis parkir sepeda ini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_bikeParkingCapacity_title" xml:space="preserve">
-        <source>How many bikes can be parked here?</source>
-        <target state="translated">Berapa sepeda yang dapat diparkir di sini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_board_type_title" xml:space="preserve">
-        <source>What is the topic of this information board?</source>
-        <target state="translated">Apa topik pada papan informasi ini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_bridge_structure_title" xml:space="preserve">
-        <source>What is the structure of this bridge?</source>
-        <target state="translated">Apa struktur jembatan ini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_buildingType_title" xml:space="preserve">
-        <source>What kind of building is this?</source>
-        <target state="translated">Apa jenis bangunan ini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_camera_type_title" xml:space="preserve">
-        <source>What type of surveillance camera is this?</source>
-        <target state="translated">Apa jenis kamera pengawas ini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_charging_station_operator_title" xml:space="preserve">
-        <source>Who is the operator of this charging station?</source>
-        <target state="translated">Siapa operator stasiun pengisian daya ini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_clothes_container_operator_title" xml:space="preserve">
-        <source>Who accepts donations for this clothing bin?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_construction_building_title" xml:space="preserve">
-        <source>Is this building completed?</source>
-        <target state="translated">Apa bangunan ini sudah selesai?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_crossing_type_title" xml:space="preserve">
-        <source>What kind of crossing is this?</source>
-        <target state="translated">Apa jenis penyeberangan ini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_cyclewayPartSurface_title" xml:space="preserve">
-        <source>What’s the surface of the cycleway here?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_dietType_halal_name_title" xml:space="preserve">
-        <source>Does %s offer Halal products?</source>
-        <target state="translated">Apa %s menawarkan produk Halal?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_dietType_kosher_name_title" xml:space="preserve">
-        <source>Does %s offer kosher products?</source>
-        <target state="translated">Apa %s menawarkan produk kosher?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_dietType_vegan_name_title" xml:space="preserve">
-        <source>Does %s have vegan meals on the menu?</source>
-        <target state="translated">Apa %s memiliki makanan vegan pada menunya?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_dietType_vegetarian_name_title" xml:space="preserve">
-        <source>Does %s have vegetarian meals on the menu?</source>
-        <target state="translated">Apa %s memiliki makanan vegetarian pada menunya?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_drinking_water_title" xml:space="preserve">
-        <source>Is the water potable here? (%s)</source>
-        <target state="translated">Apakah air di sini dapat diminum? (%s)</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_fireHydrant_diameter_title" xml:space="preserve">
-        <source>What diameter is on this fire hydrant’s sign?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_fireHydrant_type_title" xml:space="preserve">
-        <source>What kind of fire hydrant is this?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_footwayPartSurface_title" xml:space="preserve">
-        <source>What’s the surface of the footway here?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_generalFee_title" xml:space="preserve">
-        <source>Do you need to pay to enter %s?</source>
-        <target state="translated">Apa Anda harus bayar untuk memasuki %s?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_handrail_title" xml:space="preserve">
-        <source>Do these steps have a handrail?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_internet_access_name_title" xml:space="preserve">
-        <source>What kind of Internet connection does %s offer?</source>
-        <target state="translated">Apa jenis koneksi Internet yang ditawarkan %s?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_is_defibrillator_inside_title" xml:space="preserve">
-        <source>Is this defibrillator (AED) inside a building?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_kerb_height_title" xml:space="preserve">
-        <source>What is the height of this curb?</source>
-        <target state="translated">Berapa tinggi trotoar ini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_lanes_title" xml:space="preserve">
-        <source>How many lanes for cars does this road have?</source>
-        <target state="translated">Berapakah lajur untuk mobil pada jalan ini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_leafType_title" xml:space="preserve">
-        <source>Do the trees here have needles or leaves?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_maxweight_title" xml:space="preserve">
-        <source>What is the weight limit here?</source>
-        <target state="translated">Berapa batas berat di sini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_motorcycleParkingCapacity_title" xml:space="preserve">
-        <source>How many motorcycles can be parked here?</source>
-        <target state="translated">Berapa sepeda motor yang dapat diparkir di sini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_motorcycleParkingCoveredStatus_title" xml:space="preserve">
-        <source>Is this motorcycle parking covered (protected from rain)?</source>
-        <target state="translated">Apa parkir sepeda motor ini tertutup (terlindung dari hujan)?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_parkingType_title" xml:space="preserve">
-        <source>What kind of parking is this?</source>
-        <target state="translated">Apa jenis parkir di sini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_parking_access_title" xml:space="preserve">
-        <source>Is it restricted who may park here?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_parking_fee_title" xml:space="preserve">
-        <source>Do you have to pay to park here?</source>
-        <target state="translated">Apa Anda harus membayar untuk parkir di sini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_picnicTableCover_title" xml:space="preserve">
-        <source>Is this picnic table covered (protected from rain)?</source>
-        <target state="translated">Apa meja piknik ini tertutup (terlindungi dari hujan)?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_playground_access_title" xml:space="preserve">
-        <source>Is this playground publicly accessible?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_policeType_title" xml:space="preserve">
-        <source>Which type of police station is this?</source>
-        <target state="translated">Apa jenis pos polisi ini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_postboxRoyalCypher_title" xml:space="preserve">
-        <source>What is the royal cypher on this postbox?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_powerPolesMaterial_title" xml:space="preserve">
-        <source>What is the material of this power or utility pole?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_recycling_glass_title" xml:space="preserve">
-        <source>Can only glass bottles and jars be recycled here, or any type of glass?</source>
-        <target state="translated">Apa hanya botol dan toples kaca yang didaur ulang di sini, atau segala jenis kaca?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_recycling_materials_title" xml:space="preserve">
-        <source>What can be left here for recycling?</source>
-        <target state="translated">Apa yang bisa didaur ulang di sini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_recycling_type_title" xml:space="preserve">
-        <source>What type of recycling facility is this?</source>
-        <target state="translated">Apa jenis fasilitas daur ulang ini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_religion_for_wayside_shrine_title" xml:space="preserve">
-        <source>What religion is represented at this shrine?</source>
-        <target state="translated">Agama apa yang diwakili di kuil ini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_segregated_title" xml:space="preserve">
-        <source>How are the footway and cycleway laid out here?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_shop_vacant_type_title" xml:space="preserve">
-        <source>This shop has been vacant. What’s here now?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_sidewalk_title" xml:space="preserve">
-        <source>Does this street have a sidewalk?</source>
-        <target state="translated">Apa jalan ini memiliki trotoar?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_step_count_title" xml:space="preserve">
-        <source>How many steps are here?</source>
-        <target state="translated">Ada berapa anak tangga di sini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_steps_incline_title" xml:space="preserve">
-        <source>Which direction leads upwards for these steps?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_steps_ramp_title" xml:space="preserve">
-        <source>Do these steps have a ramp? What kind?</source>
-        <target state="translated">Apa tangga ini memiliki tanjakan? Apa jenisnya?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_stile_type_title" xml:space="preserve">
-        <source>What type of stile is this?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_summit_register_title" xml:space="preserve">
-        <source>Is there a summit register at %s?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_tactile_paving_kerb_title" xml:space="preserve">
-        <source>Is there tactile paving on this curb here?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_toiletsFee_title" xml:space="preserve">
-        <source>Do you have to pay to use this restroom?</source>
-        <target state="translated">Apa Anda harus membayar untuk menggunakan kamar kecil ini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_tracktype_title" xml:space="preserve">
-        <source>What is the surface firmness of this track?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_traffic_calming_type_title" xml:space="preserve">
-        <source>What type of traffic calming is this?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_traffic_signals_button_title" xml:space="preserve">
-        <source>Do these traffic lights have a button to request a walk signal?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_traffic_signals_sound_title" xml:space="preserve">
-        <source>Are there sound signals for the blind here?</source>
-        <target state="translated">Apa ada sinyal suara untuk orang yang buta di sini?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_traffic_signals_vibrate_title" xml:space="preserve">
-        <source>Do these traffic lights have a tactile indication for blind people for when it’s safe to cross?</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_wheelchairAccess_outside_title" xml:space="preserve">
-        <source>Is this place wheelchair accessible?</source>
-        <target state="translated">Apa tempat ini dapat diakses dengan kursi roda?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_wheelchairAccess_toiletsPart_title" xml:space="preserve">
-        <source>Is the restroom at %s wheelchair accessible?</source>
-        <target state="translated">Apa kamar kecil di %s dapat diakses dengan kursi roda?</target>
-        <note/>
-      </trans-unit>
-    </body>
-  </file>
   <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="id" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
@@ -345,7 +30,7 @@
   </file>
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="id" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -374,17 +59,17 @@
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
         <source>The camera is used to measure heights of buildings or objects, and to perform text recognition in opening hours signs.</source>
-        <target state="translated">Kamera digunakan untuk mengukur tinggi bangunan atau objek, dan untuk melakukan pengenalan teks pada tanda jam buka.</target>
+        <target>Kamera digunakan untuk mengukur tinggi bangunan atau objek, dan untuk melakukan pengenalan teks pada tanda jam buka.</target>
         <note>Privacy - Camera Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
         <source>Copyright 2012-2021 Bryce Cogswell</source>
-        <target state="translated">Hak Cipta 2012-2021 Bryce Cogswell</target>
+        <target>Hak Cipta 2012-2021 Bryce Cogswell</target>
         <note>Copyright (human-readable)</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
         <source>Always on location tracking allows the app to record GPX files when inactive.</source>
-        <target state="translated">Pelacakan lokasi yang selalu aktif memungkinkan aplikasi untuk merekam berkas GPX saat nonaktif.</target>
+        <target>Pelacakan lokasi yang selalu aktif memungkinkan aplikasi untuk merekam berkas GPX saat nonaktif.</target>
         <note>Privacy - Location Always and When In Use Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysUsageDescription" xml:space="preserve">
@@ -394,19 +79,19 @@
       </trans-unit>
       <trans-unit id="NSLocationUsageDescription" xml:space="preserve">
         <source>Enabling location services allows the app to display objects in your vicinity. This allows you to easily update or add data you survey yourself.</source>
-        <target state="translated">Mengaktifkan layanan lokasi memungkinkan aplikasi untuk menampilkan objek di sekitar Anda. Ini memungkinkan Anda untuk memperbarui atau menambahkan data yang Anda survei sendiri dengan mudah.</target>
+        <target>Mengaktifkan layanan lokasi memungkinkan aplikasi untuk menampilkan objek di sekitar Anda. Ini memungkinkan Anda untuk memperbarui atau menambahkan data yang Anda survei sendiri dengan mudah.</target>
         <note>Privacy - Location Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationWhenInUseUsageDescription" xml:space="preserve">
         <source>Your location will be displayed and followed on the map.</source>
-        <target state="translated">Lokasi Anda akan ditampilkan dan diikuti pada peta.</target>
+        <target>Lokasi Anda akan ditampilkan dan diikuti pada peta.</target>
         <note>Privacy - Location When In Use Usage Description</note>
       </trans-unit>
     </body>
   </file>
   <file original="en.lproj/Localizable.strings" source-language="en" target-language="id" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="&#9;Relation " xml:space="preserve">
@@ -416,7 +101,7 @@
       </trans-unit>
       <trans-unit id="&#9;Way " xml:space="preserve">
         <source>	Way </source>
-        <target state="translated">	Way </target>
+        <target>	Way </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;" xml:space="preserve">
@@ -429,28 +114,28 @@
       <trans-unit id=" (%d nodes)&#10;" xml:space="preserve">
         <source> (%d nodes)
 </source>
-        <target state="translated"> (%d node)
+        <target> (%d node)
 </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (node)" xml:space="preserve">
         <source> (node)</source>
-        <target state="translated"> (node)</target>
+        <target> (node)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (way)" xml:space="preserve">
         <source> (way)</source>
-        <target state="translated"> (way)</target>
+        <target> (way)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
         <source>%1$.0f meters, %2$ld nodes</source>
-        <target state="translated">%1$.0f meter, %2$ld node</target>
+        <target>%1$.0f meter, %2$ld node</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
         <source>%1$.1f meters, %2$ld nodes</source>
-        <target state="translated">%1$.1f meter, %2$ld node</target>
+        <target>%1$.1f meter, %2$ld node</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
@@ -460,12 +145,12 @@
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
         <source>%@ (relation)</source>
-        <target state="translated">%@ (relasi)</target>
+        <target>%@ (relasi)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ changeset" xml:space="preserve">
         <source>%@ changeset</source>
-        <target state="translated">%@ perubahan</target>
+        <target>%@ perubahan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ meters" xml:space="preserve">
@@ -505,12 +190,12 @@
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
         <source>(node in way)</source>
-        <target state="translated">(node pada way)</target>
+        <target>(node pada way)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(node)" xml:space="preserve">
         <source>(node)</source>
-        <target state="translated">(node)</target>
+        <target>(node)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(relation %@)" xml:space="preserve">
@@ -520,7 +205,7 @@
       </trans-unit>
       <trans-unit id="(way)" xml:space="preserve">
         <source>(way)</source>
-        <target state="translated">(way)</target>
+        <target>(way)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="+ Button Position" xml:space="preserve">
@@ -565,7 +250,7 @@
       </trans-unit>
       <trans-unit id="Add way to multipolygon?" xml:space="preserve">
         <source>Add way to multipolygon?</source>
-        <target state="translated">Tambahkan way ke multipolygon?</target>
+        <target>Tambahkan way ke multipolygon?</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Adding members:" xml:space="preserve">
@@ -597,7 +282,7 @@
       </trans-unit>
       <trans-unit id="Attention" xml:space="preserve">
         <source>Attention</source>
-        <target state="translated">Perhatian</target>
+        <target>Perhatian</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Attributes" xml:space="preserve">
@@ -612,7 +297,7 @@
       </trans-unit>
       <trans-unit id="Back" xml:space="preserve">
         <source>Back</source>
-        <target state="translated">Kembali</target>
+        <target>Kembali</target>
         <note>back button</note>
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
@@ -635,17 +320,17 @@
       </trans-unit>
       <trans-unit id="Can only add ways to multipolygons" xml:space="preserve">
         <source>Can only add ways to multipolygons</source>
-        <target state="translated">Hanya dapat menambahkan way ke multipolygon</target>
+        <target>Hanya dapat menambahkan way ke multipolygon</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't delete node that is part of a relation" xml:space="preserve">
         <source>Can't delete node that is part of a relation</source>
-        <target state="translated">Tidak dapat menghapus node yang merupakan anggota dari relasi</target>
+        <target>Tidak dapat menghapus node yang merupakan anggota dari relasi</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't delete relation that is not a multipolygon" xml:space="preserve">
         <source>Can't delete relation that is not a multipolygon</source>
-        <target state="translated">Tidak dapat menghapus relasi yang bukan merupakan multipolygon</target>
+        <target>Tidak dapat menghapus relasi yang bukan merupakan multipolygon</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't delete way that is part of a Route or similar relation" xml:space="preserve">
@@ -666,7 +351,7 @@
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction to/from way" xml:space="preserve">
         <source>Can't remove Turn Restriction to/from way</source>
-        <target state="translated">Tidak dapat menghapus way ke/dari pada Pembatasan Belokan</target>
+        <target>Tidak dapat menghapus way ke/dari pada Pembatasan Belokan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove component of a Route or similar relation" xml:space="preserve">
@@ -740,12 +425,12 @@
       </trans-unit>
       <trans-unit id="Copy Tags" xml:space="preserve">
         <source>Copy Tags</source>
-        <target state="translated">Salin Tag</target>
+        <target>Salin Tag</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Could not duplicate object" xml:space="preserve">
         <source>Could not duplicate object</source>
-        <target state="translated">Tidak dapat menduplikasi objek</target>
+        <target>Tidak dapat menduplikasi objek</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Create&#10;" xml:space="preserve">
@@ -871,7 +556,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Error connecting to way" xml:space="preserve">
         <source>Error connecting to way</source>
-        <target state="translated">Gagal menghubungkan ke way</target>
+        <target>Gagal menghubungkan ke way</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Error fetching metadata: %@" xml:space="preserve">
@@ -987,17 +672,17 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Make Rectangular" xml:space="preserve">
         <source>Make Rectangular</source>
-        <target state="translated">Buat Kotak</target>
+        <target>Buat Kotak</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Max nodes after joining is 2000" xml:space="preserve">
         <source>Max nodes after joining is 2000</source>
-        <target state="translated">Node maksimum setelah menggabungkan adalah 2000</target>
+        <target>Node maksimum setelah menggabungkan adalah 2000</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Maximum way length is 2000 nodes" xml:space="preserve">
         <source>Maximum way length is 2000 nodes</source>
-        <target state="translated">Panjang maksimum way adalah 2000 node</target>
+        <target>Panjang maksimum way adalah 2000 node</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Maybe later..." xml:space="preserve">
@@ -1011,17 +696,17 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Member of multipolygon relation" xml:space="preserve">
         <source>Member of multipolygon relation</source>
-        <target state="translated">Anggota relasi multipolygon</target>
+        <target>Anggota relasi multipolygon</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Members" xml:space="preserve">
         <source>Members</source>
-        <target state="translated">Anggota</target>
+        <target>Anggota</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Merge Tags" xml:space="preserve">
         <source>Merge Tags</source>
-        <target state="translated">Satukan Tag</target>
+        <target>Satukan Tag</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Missing way to connect to" xml:space="preserve">
@@ -1073,7 +758,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Multipolygon" xml:space="preserve">
         <source>Multipolygon</source>
-        <target state="translated">Multipolygon</target>
+        <target>Multipolygon</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Network error" xml:space="preserve">
@@ -1109,7 +794,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="No Straight On restriction" xml:space="preserve">
         <source>No Straight On restriction</source>
-        <target state="translated">Batasan Dilarang Lurus</target>
+        <target>Batasan Dilarang Lurus</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No U-Turn restriction" xml:space="preserve">
@@ -1128,12 +813,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="No tags to paste" xml:space="preserve">
         <source>No tags to paste</source>
-        <target state="translated">Tak ada tag untuk ditempel</target>
+        <target>Tak ada tag untuk ditempel</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node" xml:space="preserve">
         <source>Node</source>
-        <target state="translated">Node</target>
+        <target>Node</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node Attributes" xml:space="preserve">
@@ -1142,17 +827,17 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Node Tags" xml:space="preserve">
         <source>Node Tags</source>
-        <target state="translated">Tag Node</target>
+        <target>Tag Node</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node is not an element of way" xml:space="preserve">
         <source>Node is not an element of way</source>
-        <target state="translated">Node bukan elemen dari way</target>
+        <target>Node bukan elemen dari way</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node must be the first or last node of the way" xml:space="preserve">
         <source>Node must be the first or last node of the way</source>
-        <target state="translated">Node harus menjadi node pertama atau terakhir pada way</target>
+        <target>Node harus menjadi node pertama atau terakhir pada way</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Not found" xml:space="preserve">
@@ -1190,27 +875,27 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Only Left Turn restriction" xml:space="preserve">
         <source>Only Left Turn restriction</source>
-        <target state="translated">Batasan Harus Belok Kiri</target>
+        <target>Batasan Harus Belok Kiri</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only Right Turn restriction" xml:space="preserve">
         <source>Only Right Turn restriction</source>
-        <target state="translated">Batasan Harus Belok Kanan</target>
+        <target>Batasan Harus Belok Kanan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only Straight On restriction" xml:space="preserve">
         <source>Only Straight On restriction</source>
-        <target state="translated">Batasan Harus Lurus</target>
+        <target>Batasan Harus Lurus</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only multipolygon relations are supported" xml:space="preserve">
         <source>Only multipolygon relations are supported</source>
-        <target state="translated">Hanya relasi multipolygon yang didukung</target>
+        <target>Hanya relasi multipolygon yang didukung</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only ways/multipolygons can be rotated" xml:space="preserve">
         <source>Only ways/multipolygons can be rotated</source>
-        <target state="translated">Hanya way/multipolygon yang bisa diputar</target>
+        <target>Hanya way/multipolygon yang bisa diputar</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Open Settings" xml:space="preserve">
@@ -1305,12 +990,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Requires a closed way with at least 3 nodes" xml:space="preserve">
         <source>Requires a closed way with at least 3 nodes</source>
-        <target state="translated">Membutuhkan way tertutup dengan setidaknya 3 node</target>
+        <target>Membutuhkan way tertutup dengan setidaknya 3 node</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Requires a closed way with at least 4 nodes" xml:space="preserve">
         <source>Requires a closed way with at least 4 nodes</source>
-        <target state="translated">Membutuhkan way tertutup dengan setidaknya 4 node</target>
+        <target>Membutuhkan way tertutup dengan setidaknya 4 node</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Restrict" xml:space="preserve">
@@ -1360,7 +1045,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Select a highway approaching the intersection" xml:space="preserve">
         <source>Select a highway approaching the intersection</source>
-        <target state="translated">Pilih jalan yang mendekati persimpangan</target>
+        <target>Pilih jalan yang mendekati persimpangan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Selected object is off screen" xml:space="preserve">
@@ -1460,17 +1145,17 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="The object does not contain any tags" xml:space="preserve">
         <source>The object does not contain any tags</source>
-        <target state="translated">Objek ini tidak punya tag apapun</target>
+        <target>Objek ini tidak punya tag apapun</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The restriction cannot be deleted" xml:space="preserve">
         <source>The restriction cannot be deleted</source>
-        <target state="translated">Batasan ini tidak dapat dihapus</target>
+        <target>Batasan ini tidak dapat dihapus</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The selected way must be completely visible" xml:space="preserve">
         <source>The selected way must be completely visible</source>
-        <target state="translated">Way yang dipilih harus sepenuhnya terlihat</target>
+        <target>Way yang dipilih harus sepenuhnya terlihat</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The target way is ambiguous" xml:space="preserve">
@@ -1479,27 +1164,27 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="The turn contains an unrecognized turn restriction style. Proceeding will destroy it." xml:space="preserve">
         <source>The turn contains an unrecognized turn restriction style. Proceeding will destroy it.</source>
-        <target state="translated">Belokan ini mengandung gaya pembatasan belokan yang tidak dikenal. Melanjutkan akan menghancurkannya.</target>
+        <target>Belokan ini mengandung gaya pembatasan belokan yang tidak dikenal. Melanjutkan akan menghancurkannya.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way belongs to a relation that is not fully downloaded" xml:space="preserve">
         <source>The way belongs to a relation that is not fully downloaded</source>
-        <target state="translated">Way ini merupakan anggota dari relasi yang belum sepenuhnya diunduh</target>
+        <target>Way ini merupakan anggota dari relasi yang belum sepenuhnya diunduh</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way is not sufficiently straight" xml:space="preserve">
         <source>The way is not sufficiently straight</source>
-        <target state="translated">Way ini tidak cukup lurus</target>
+        <target>Way ini tidak cukup lurus</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way must have at least 2 nodes" xml:space="preserve">
         <source>The way must have at least 2 nodes</source>
-        <target state="translated">Way ini harus memiliki setidaknya 2 node</target>
+        <target>Way ini harus memiliki setidaknya 2 node</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The ways contain incompatible tags" xml:space="preserve">
         <source>The ways contain incompatible tags</source>
-        <target state="translated">Way ini mengandung tag yang tidak kompatibel</target>
+        <target>Way ini mengandung tag yang tidak kompatibel</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="This action requires GPS to be turned on" xml:space="preserve">
@@ -1517,7 +1202,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
         <source>To add another member to the relation 'long press' on the way to be added</source>
-        <target state="translated">Untuk menambahkan anggota lain ke relasi 'tekan yang lama' pada way yang ingin ditambahkan</target>
+        <target>Untuk menambahkan anggota lain ke relasi 'tekan yang lama' pada way yang ingin ditambahkan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel ALLOWED from %@ to %@" xml:space="preserve">
@@ -1541,7 +1226,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Turn On Location Services to Allow %@ to Determine Your Location" xml:space="preserve">
         <source>Turn On Location Services to Allow %@ to Determine Your Location</source>
-        <target state="translated">Aktifkan Layanan Lokasi untuk Mengizinkan %@ untuk Menentukan Lokasi Anda</target>
+        <target>Aktifkan Layanan Lokasi untuk Mengizinkan %@ untuk Menentukan Lokasi Anda</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Turn Restrictions" xml:space="preserve">
@@ -1707,7 +1392,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="added to multipolygon relation" xml:space="preserve">
         <source>added to multipolygon relation</source>
-        <target state="translated">ditambahkan ke relasi multipolygon</target>
+        <target>ditambahkan ke relasi multipolygon</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="computing size..." xml:space="preserve">
@@ -1732,12 +1417,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="create way" xml:space="preserve">
         <source>create way</source>
-        <target state="translated">buat way</target>
+        <target>buat way</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete multipolygon" xml:space="preserve">
         <source>delete multipolygon</source>
-        <target state="translated">hapus multipolygon</target>
+        <target>hapus multipolygon</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete node" xml:space="preserve">
@@ -1833,7 +1518,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="id" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
@@ -1860,7 +1545,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="PhotoShare/Base.lproj/MainInterface.storyboard" source-language="en" target-language="id" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
@@ -1881,7 +1566,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="PhotoShare/en.lproj/InfoPlist.strings" datatype="plaintext" source-language="en" target-language="id">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -1896,7 +1581,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="PhotoShare/en.lproj/Localizable.strings" source-language="en" target-language="id" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="Processing data..." xml:space="preserve">
@@ -1917,7 +1602,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="POI/Base.lproj/POI.storyboard" source-language="en" target-language="id" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
@@ -2291,7 +1976,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="Storyboards/Base.lproj/Display.storyboard" source-language="en" target-language="id" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
@@ -2728,7 +2413,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="id" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
@@ -2896,7 +2581,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/Settings.storyboard" source-language="en" target-language="id" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
@@ -3193,7 +2878,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="rfX-TP-V0l.text" xml:space="preserve">
         <source>Prepare for Offline</source>
-        <target state="translated">Siapkan untuk Luring</target>
+        <target>Siapkan untuk Luring</target>
         <note>Class = "UILabel"; text = "Prepare for Offline"; ObjectID = "rfX-TP-V0l";</note>
       </trans-unit>
       <trans-unit id="snH-kp-6ib.normalTitle" xml:space="preserve">
@@ -3203,7 +2888,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="whL-SZ-HD5.text" xml:space="preserve">
         <source>Email Feedback</source>
-        <target state="translated">Surel Masukan</target>
+        <target>Surel Masukan</target>
         <note>Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5";</note>
       </trans-unit>
       <trans-unit id="x4m-oT-EG8.text" xml:space="preserve">
@@ -3220,7 +2905,7 @@ http://glyphish.com
   </file>
   <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="id" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">

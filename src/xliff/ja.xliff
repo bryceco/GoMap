@@ -1,345 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
-  <file original="../Shared/Quests/strings/Base.lproj/quest.strings" source-language="en" target-language="ja" datatype="plaintext">
-    <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
-    </header>
-    <body>
-      <trans-unit id="quest_address_street_title" xml:space="preserve">
-        <source>What street does the (house) number %s belong to?</source>
-        <target state="translated">(住居)番号 %s が属している街路名は?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_address_title" xml:space="preserve">
-        <source>What is the house number of this building?</source>
-        <target>この建物の住居表示は何ですか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_atm_operator_title" xml:space="preserve">
-        <source>What’s the name of the bank for this ATM?</source>
-        <target state="translated">このATMの銀行名は？</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_barrier_type_title" xml:space="preserve">
-        <source>What type of barrier is this?</source>
-        <target state="translated">この障害物の種類は？</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_bench_backrest_title" xml:space="preserve">
-        <source>Does this bench have a backrest?</source>
-        <target>このベンチは背もたれがありますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_bicycleParkingCoveredStatus_title" xml:space="preserve">
-        <source>Is this bicycle parking covered (protected from rain)?</source>
-        <target>この駐輪場は屋根がありますか (雨から守られていますか)?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_bicycle_parking_access_title" xml:space="preserve">
-        <source>Is it restricted who may park a bike here?</source>
-        <target>ここに自転車を止められる人は制限されていますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_bicycle_parking_fee_title" xml:space="preserve">
-        <source>Do you have to pay to park a bike here?</source>
-        <target>有料の駐輪場ですか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_bicycle_parking_type_title" xml:space="preserve">
-        <source>What type of bicycle parking is this?</source>
-        <target>この駐輪場の種類は何ですか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_bikeParkingCapacity_title" xml:space="preserve">
-        <source>How many bikes can be parked here?</source>
-        <target>ここに何台の自転車を駐車できますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_board_type_title" xml:space="preserve">
-        <source>What is the topic of this information board?</source>
-        <target state="translated">この案内板のトピックは？</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_bridge_structure_title" xml:space="preserve">
-        <source>What is the structure of this bridge?</source>
-        <target>この橋の構造は何ですか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_buildingType_title" xml:space="preserve">
-        <source>What kind of building is this?</source>
-        <target>これはどんな建物ですか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_camera_type_title" xml:space="preserve">
-        <source>What type of surveillance camera is this?</source>
-        <target state="translated">この監視カメラの種類は？</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_charging_station_operator_title" xml:space="preserve">
-        <source>Who is the operator of this charging station?</source>
-        <target>この充電ステーションはどこが運営していますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_clothes_container_operator_title" xml:space="preserve">
-        <source>Who accepts donations for this clothing bin?</source>
-        <target>この衣類収集箱への寄付は誰が受け取りますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_construction_building_title" xml:space="preserve">
-        <source>Is this building completed?</source>
-        <target>この建物は完成していますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_crossing_type_title" xml:space="preserve">
-        <source>What kind of crossing is this?</source>
-        <target>この交差点はどのような種類ですか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_cyclewayPartSurface_title" xml:space="preserve">
-        <source>What’s the surface of the cycleway here?</source>
-        <target state="translated">この自転車道の路面は？</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_dietType_halal_name_title" xml:space="preserve">
-        <source>Does %s offer Halal products?</source>
-        <target state="translated">%s はハラール製品を提供していますか？</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_dietType_kosher_name_title" xml:space="preserve">
-        <source>Does %s offer kosher products?</source>
-        <target state="translated">%s はコーシャ製品を提供していますか？</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_dietType_vegan_name_title" xml:space="preserve">
-        <source>Does %s have vegan meals on the menu?</source>
-        <target>%s は完全菜食（ビーガン）のメニューがありますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_dietType_vegetarian_name_title" xml:space="preserve">
-        <source>Does %s have vegetarian meals on the menu?</source>
-        <target>%s は菜食（ベジタリアン）のメニューがありますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_drinking_water_title" xml:space="preserve">
-        <source>Is the water potable here? (%s)</source>
-        <target>ここの水は飲用ですか? (%s)</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_fireHydrant_diameter_title" xml:space="preserve">
-        <source>What diameter is on this fire hydrant’s sign?</source>
-        <target state="translated">この消火栓に表示されている直径は？</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_fireHydrant_type_title" xml:space="preserve">
-        <source>What kind of fire hydrant is this?</source>
-        <target>これはどのような消火栓ですか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_footwayPartSurface_title" xml:space="preserve">
-        <source>What’s the surface of the footway here?</source>
-        <target state="translated">この歩道の路面は？</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_generalFee_title" xml:space="preserve">
-        <source>Do you need to pay to enter %s?</source>
-        <target state="translated">%s への入場は有料ですか？</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_handrail_title" xml:space="preserve">
-        <source>Do these steps have a handrail?</source>
-        <target>この階段に手すりはありますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_internet_access_name_title" xml:space="preserve">
-        <source>What kind of Internet connection does %s offer?</source>
-        <target>%s はどのような種類のインターネット接続を提供していますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_is_defibrillator_inside_title" xml:space="preserve">
-        <source>Is this defibrillator (AED) inside a building?</source>
-        <target>この除細動器 (AED) は建物内にありますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_kerb_height_title" xml:space="preserve">
-        <source>What is the height of this curb?</source>
-        <target state="translated">この縁石の高さは？</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_lanes_title" xml:space="preserve">
-        <source>How many lanes for cars does this road have?</source>
-        <target state="translated">この道路の車両レーン数は？</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_leafType_title" xml:space="preserve">
-        <source>Do the trees here have needles or leaves?</source>
-        <target>ここの樹木の葉の種類は何ですか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_maxweight_title" xml:space="preserve">
-        <source>What is the weight limit here?</source>
-        <target state="translated">ここの重量制限は？</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_motorcycleParkingCapacity_title" xml:space="preserve">
-        <source>How many motorcycles can be parked here?</source>
-        <target>ここに何台のオートバイを駐車できますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_motorcycleParkingCoveredStatus_title" xml:space="preserve">
-        <source>Is this motorcycle parking covered (protected from rain)?</source>
-        <target state="translated">このオートバイの駐車場に(雨から守る)屋根はありますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_parkingType_title" xml:space="preserve">
-        <source>What kind of parking is this?</source>
-        <target>ここはどのような種類の駐車場ですか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_parking_access_title" xml:space="preserve">
-        <source>Is it restricted who may park here?</source>
-        <target>ここに駐車する人は制限されていますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_parking_fee_title" xml:space="preserve">
-        <source>Do you have to pay to park here?</source>
-        <target>ここに駐車するのに料金がかかりますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_picnicTableCover_title" xml:space="preserve">
-        <source>Is this picnic table covered (protected from rain)?</source>
-        <target state="translated">このピクニックテーブルには雨除けがありますか？</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_playground_access_title" xml:space="preserve">
-        <source>Is this playground publicly accessible?</source>
-        <target>この遊び場は誰でも利用できますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_policeType_title" xml:space="preserve">
-        <source>Which type of police station is this?</source>
-        <target state="translated">この警察署の種類は？</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_postboxRoyalCypher_title" xml:space="preserve">
-        <source>What is the royal cypher on this postbox?</source>
-        <target state="translated">この郵便ボックスのロイヤルサイファは？</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_powerPolesMaterial_title" xml:space="preserve">
-        <source>What is the material of this power or utility pole?</source>
-        <target>この電柱の材質は何ですか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_recycling_glass_title" xml:space="preserve">
-        <source>Can only glass bottles and jars be recycled here, or any type of glass?</source>
-        <target>リサイクルできるのはガラス瓶だけですか、それともあらゆるガラス製品を含みますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_recycling_materials_title" xml:space="preserve">
-        <source>What can be left here for recycling?</source>
-        <target state="translated">リサイクルの対象は？</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_recycling_type_title" xml:space="preserve">
-        <source>What type of recycling facility is this?</source>
-        <target>これはどのようなリサイクル施設ですか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_religion_for_wayside_shrine_title" xml:space="preserve">
-        <source>What religion is represented at this shrine?</source>
-        <target>この神社にはどのような宗教がありますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_segregated_title" xml:space="preserve">
-        <source>How are the footway and cycleway laid out here?</source>
-        <target>歩道と自転車道はどのように割り当てられていますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_shop_vacant_type_title" xml:space="preserve">
-        <source>This shop has been vacant. What’s here now?</source>
-        <target state="translated">これは空き店舗でした。現在は？</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_sidewalk_title" xml:space="preserve">
-        <source>Does this street have a sidewalk?</source>
-        <target>この通りに歩道がありますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_step_count_title" xml:space="preserve">
-        <source>How many steps are here?</source>
-        <target>階段の何段ですか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_steps_incline_title" xml:space="preserve">
-        <source>Which direction leads upwards for these steps?</source>
-        <target>階段はどの方向に上っていますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_steps_ramp_title" xml:space="preserve">
-        <source>Do these steps have a ramp? What kind?</source>
-        <target>階段にはスロープがありますか? どんな種類ですか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_stile_type_title" xml:space="preserve">
-        <source>What type of stile is this?</source>
-        <target state="translated">この木戸の種類は？</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_summit_register_title" xml:space="preserve">
-        <source>Is there a summit register at %s?</source>
-        <target state="translated">%s にはサミットレジスター(山頂訪問者記録)がありますか？</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_tactile_paving_kerb_title" xml:space="preserve">
-        <source>Is there tactile paving on this curb here?</source>
-        <target>この縁石に点字ブロックはありますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_toiletsFee_title" xml:space="preserve">
-        <source>Do you have to pay to use this restroom?</source>
-        <target>これらのトイレは有料ですか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_tracktype_title" xml:space="preserve">
-        <source>What is the surface firmness of this track?</source>
-        <target>この農道の路面の硬さは?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_traffic_calming_type_title" xml:space="preserve">
-        <source>What type of traffic calming is this?</source>
-        <target state="translated">交通静穏化装置の種類は？</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_traffic_signals_button_title" xml:space="preserve">
-        <source>Do these traffic lights have a button to request a walk signal?</source>
-        <target>この信号には歩行者用の押ボタンがありますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_traffic_signals_sound_title" xml:space="preserve">
-        <source>Are there sound signals for the blind here?</source>
-        <target>この信号に視覚障害者のための音響装置はありますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_traffic_signals_vibrate_title" xml:space="preserve">
-        <source>Do these traffic lights have a tactile indication for blind people for when it’s safe to cross?</source>
-        <target state="translated">この信号には視覚障害者向けに安全に渡れるタイミングを示すものがありますか？</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_wheelchairAccess_outside_title" xml:space="preserve">
-        <source>Is this place wheelchair accessible?</source>
-        <target>この場所は車椅子でアクセスできますか?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_wheelchairAccess_toiletsPart_title" xml:space="preserve">
-        <source>Is the restroom at %s wheelchair accessible?</source>
-        <target state="translated">%s のトイレは車いすで行けますか？</target>
-        <note/>
-      </trans-unit>
-    </body>
-  </file>
   <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
@@ -368,7 +31,7 @@
   </file>
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -397,12 +60,12 @@
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
         <source>The camera is used to measure heights of buildings or objects, and to perform text recognition in opening hours signs.</source>
-        <target state="translated">カメラは建物やオブジェクトの高さ計測と開店時間のテキスト認識に使われます。</target>
+        <target>カメラは建物やオブジェクトの高さ計測と開店時間のテキスト認識に使われます。</target>
         <note>Privacy - Camera Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
         <source>Copyright 2012-2021 Bryce Cogswell</source>
-        <target state="translated">著作権 2012-2021 Bryce Cogswell</target>
+        <target>著作権 2012-2021 Bryce Cogswell</target>
         <note>Copyright (human-readable)</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
@@ -417,7 +80,7 @@
       </trans-unit>
       <trans-unit id="NSLocationUsageDescription" xml:space="preserve">
         <source>Enabling location services allows the app to display objects in your vicinity. This allows you to easily update or add data you survey yourself.</source>
-        <target state="translated">位置サービスを有効化するとあなたの周りのオブジェクトの表示をアプリに許可します。これにより自身の調査によるデータ追加・更新が容易になります。</target>
+        <target>位置サービスを有効化するとあなたの周りのオブジェクトの表示をアプリに許可します。これにより自身の調査によるデータ追加・更新が容易になります。</target>
         <note>Privacy - Location Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationWhenInUseUsageDescription" xml:space="preserve">
@@ -429,7 +92,7 @@
   </file>
   <file original="en.lproj/Localizable.strings" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="&#9;Relation " xml:space="preserve">
@@ -1308,7 +971,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Pasting %@ characters, maximum tag length is 255" xml:space="preserve">
         <source>Pasting %@ characters, maximum tag length is 255</source>
-        <target state="translated">%@ 文字をペースト中、最大タグ長は255</target>
+        <target>%@ 文字をペースト中、最大タグ長は255</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)" xml:space="preserve">
@@ -1949,7 +1612,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
@@ -1976,7 +1639,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="PhotoShare/Base.lproj/MainInterface.storyboard" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
@@ -1998,7 +1661,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="PhotoShare/en.lproj/InfoPlist.strings" datatype="plaintext" source-language="en" target-language="ja">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -2013,7 +1676,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="PhotoShare/en.lproj/Localizable.strings" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="Processing data..." xml:space="preserve">
@@ -2035,7 +1698,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="POI/Base.lproj/POI.storyboard" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
@@ -2145,7 +1808,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="IcU-k2-G0m.normalTitle" xml:space="preserve">
         <source>&gt;</source>
-        <target state="translated">&gt;</target>
+        <target>&gt;</target>
         <note>Class = "UIButton"; normalTitle = "&gt;"; ObjectID = "IcU-k2-G0m";</note>
       </trans-unit>
       <trans-unit id="JAT-qD-dTS.text" xml:space="preserve">
@@ -2225,7 +1888,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="XJZ-vI-jat.text" xml:space="preserve">
         <source>PROTOTYPE CELLS</source>
-        <target state="translated">プロトタイプセル</target>
+        <target>プロトタイプセル</target>
         <note>Class = "UILabel"; text = "PROTOTYPE CELLS"; ObjectID = "XJZ-vI-jat";</note>
       </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
@@ -2417,7 +2080,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="Storyboards/Base.lproj/Display.storyboard" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
@@ -2881,7 +2544,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
@@ -3054,7 +2717,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/Settings.storyboard" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
@@ -3405,7 +3068,7 @@ http://glyphish.com
   </file>
   <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">

@@ -577,6 +577,9 @@
 "Paste" = "貼付";
 
 /* No comment provided by engineer. */
+"Pasting %@ characters, maximum tag length is 255" = "%@ 文字をペースト中、最大タグ長は255";
+
+/* No comment provided by engineer. */
 "Pasting %ld tag(s)" = "%ld 件のタグを貼り付け中";
 
 /* No comment provided by engineer. */

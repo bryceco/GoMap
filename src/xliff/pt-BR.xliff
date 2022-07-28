@@ -1,345 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
-  <file original="../Shared/Quests/strings/Base.lproj/quest.strings" source-language="en" target-language="pt-BR" datatype="plaintext">
-    <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
-    </header>
-    <body>
-      <trans-unit id="quest_address_street_title" xml:space="preserve">
-        <source>What street does the (house) number %s belong to?</source>
-        <target>A que rua pertence o número %s (casa)?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_address_title" xml:space="preserve">
-        <source>What is the house number of this building?</source>
-        <target>Qual é o número deste edifício?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_atm_operator_title" xml:space="preserve">
-        <source>What’s the name of the bank for this ATM?</source>
-        <target>Qual é o nome do banco desse caixa eletrônico?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_barrier_type_title" xml:space="preserve">
-        <source>What type of barrier is this?</source>
-        <target>Que tipo de barreira é essa?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_bench_backrest_title" xml:space="preserve">
-        <source>Does this bench have a backrest?</source>
-        <target>Esse banco tem encosto?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_bicycleParkingCoveredStatus_title" xml:space="preserve">
-        <source>Is this bicycle parking covered (protected from rain)?</source>
-        <target>Esse estacionamento de bicicletas é coberto (protege contra chuva)?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_bicycle_parking_access_title" xml:space="preserve">
-        <source>Is it restricted who may park a bike here?</source>
-        <target>Há alguma restrição pessoal para estacionar a bicicleta aqui?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_bicycle_parking_fee_title" xml:space="preserve">
-        <source>Do you have to pay to park a bike here?</source>
-        <target>Precisa pagar para estacionar a bicicleta aqui?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_bicycle_parking_type_title" xml:space="preserve">
-        <source>What type of bicycle parking is this?</source>
-        <target>Qual tipo de estacionamento de bicicletas é esse?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_bikeParkingCapacity_title" xml:space="preserve">
-        <source>How many bikes can be parked here?</source>
-        <target>Quantas bicicletas podem estacionar aqui?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_board_type_title" xml:space="preserve">
-        <source>What is the topic of this information board?</source>
-        <target>Qual é o tópico deste painel de informações?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_bridge_structure_title" xml:space="preserve">
-        <source>What is the structure of this bridge?</source>
-        <target>Qual é a estrutura dessa ponte?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_buildingType_title" xml:space="preserve">
-        <source>What kind of building is this?</source>
-        <target>Qual o tipo desse edifício?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_camera_type_title" xml:space="preserve">
-        <source>What type of surveillance camera is this?</source>
-        <target>Que tipo de câmera de vigilância é essa?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_charging_station_operator_title" xml:space="preserve">
-        <source>Who is the operator of this charging station?</source>
-        <target>Quem é o operador dessa estação de carregamento?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_clothes_container_operator_title" xml:space="preserve">
-        <source>Who accepts donations for this clothing bin?</source>
-        <target>Quem aceita doações para esta caixa de roupas?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_construction_building_title" xml:space="preserve">
-        <source>Is this building completed?</source>
-        <target>O edifício está terminado?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_crossing_type_title" xml:space="preserve">
-        <source>What kind of crossing is this?</source>
-        <target>Qual o tipo de travessia é essa?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_cyclewayPartSurface_title" xml:space="preserve">
-        <source>What’s the surface of the cycleway here?</source>
-        <target>Qual o tipo de pavimento dessa ciclovia?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_dietType_halal_name_title" xml:space="preserve">
-        <source>Does %s offer Halal products?</source>
-        <target>%s tem produtos halal (dieta islâmica)?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_dietType_kosher_name_title" xml:space="preserve">
-        <source>Does %s offer kosher products?</source>
-        <target>%s tem produtos kosher (dieta judaica)?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_dietType_vegan_name_title" xml:space="preserve">
-        <source>Does %s have vegan meals on the menu?</source>
-        <target>%s tem refeições veganas no menu?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_dietType_vegetarian_name_title" xml:space="preserve">
-        <source>Does %s have vegetarian meals on the menu?</source>
-        <target>%s tem refeições vegetarianas no menu?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_drinking_water_title" xml:space="preserve">
-        <source>Is the water potable here? (%s)</source>
-        <target>Essa água é potável? (%s)</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_fireHydrant_diameter_title" xml:space="preserve">
-        <source>What diameter is on this fire hydrant’s sign?</source>
-        <target>Qual o diâmetro da placa desse hidrante?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_fireHydrant_type_title" xml:space="preserve">
-        <source>What kind of fire hydrant is this?</source>
-        <target>Qual o tipo desse hidrante aqui?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_footwayPartSurface_title" xml:space="preserve">
-        <source>What’s the surface of the footway here?</source>
-        <target>Qual o tipo de pavimento dessa calçada?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_generalFee_title" xml:space="preserve">
-        <source>Do you need to pay to enter %s?</source>
-        <target>É necessário pagar para entrar em %s?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_handrail_title" xml:space="preserve">
-        <source>Do these steps have a handrail?</source>
-        <target>Essas escadas tem corrimão?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_internet_access_name_title" xml:space="preserve">
-        <source>What kind of Internet connection does %s offer?</source>
-        <target>Qual tipo de conexão à internet %s oferece?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_is_defibrillator_inside_title" xml:space="preserve">
-        <source>Is this defibrillator (AED) inside a building?</source>
-        <target>Esse desfibrilador (DEA) está dentro de um edifício?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_kerb_height_title" xml:space="preserve">
-        <source>What is the height of this curb?</source>
-        <target>Qual é a altura desse meio-fio?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_lanes_title" xml:space="preserve">
-        <source>How many lanes for cars does this road have?</source>
-        <target>Quantas faixas para carros essa estrada tem?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_leafType_title" xml:space="preserve">
-        <source>Do the trees here have needles or leaves?</source>
-        <target>As árvores aqui têm agulhas ou folhas?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_maxweight_title" xml:space="preserve">
-        <source>What is the weight limit here?</source>
-        <target>Qual é o limite de peso aqui?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_motorcycleParkingCapacity_title" xml:space="preserve">
-        <source>How many motorcycles can be parked here?</source>
-        <target>Quantas motocicletas podem estacionar aqui?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_motorcycleParkingCoveredStatus_title" xml:space="preserve">
-        <source>Is this motorcycle parking covered (protected from rain)?</source>
-        <target>Este estacionamento para motocicletas é coberto (protegido da chuva)?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_parkingType_title" xml:space="preserve">
-        <source>What kind of parking is this?</source>
-        <target>Qual o tipo desse estacionamento?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_parking_access_title" xml:space="preserve">
-        <source>Is it restricted who may park here?</source>
-        <target>Há alguma restrição sobre quem pode estacionar aqui?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_parking_fee_title" xml:space="preserve">
-        <source>Do you have to pay to park here?</source>
-        <target>É necessário pagar para estacionar aqui?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_picnicTableCover_title" xml:space="preserve">
-        <source>Is this picnic table covered (protected from rain)?</source>
-        <target>Esta mesa de piquenique é coberta (protegida da chuva)?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_playground_access_title" xml:space="preserve">
-        <source>Is this playground publicly accessible?</source>
-        <target>Este parquinho é acessível ao público?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_policeType_title" xml:space="preserve">
-        <source>Which type of police station is this?</source>
-        <target>Que tipo de delegacia é esta?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_postboxRoyalCypher_title" xml:space="preserve">
-        <source>What is the royal cypher on this postbox?</source>
-        <target>Qual é o monograma desta caixa de correio? (apenas reino unido e commonwealth)</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_powerPolesMaterial_title" xml:space="preserve">
-        <source>What is the material of this power or utility pole?</source>
-        <target>De qual material é este poste de energia?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_recycling_glass_title" xml:space="preserve">
-        <source>Can only glass bottles and jars be recycled here, or any type of glass?</source>
-        <target>Só podem ser reciclados garrafas e potes de vidro aqui, ou qualquer tipo de vidro?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_recycling_materials_title" xml:space="preserve">
-        <source>What can be left here for recycling?</source>
-        <target>O que pode ser deixado aqui para reciclagem?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_recycling_type_title" xml:space="preserve">
-        <source>What type of recycling facility is this?</source>
-        <target>Que tipo de instalação de reciclagem é essa?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_religion_for_wayside_shrine_title" xml:space="preserve">
-        <source>What religion is represented at this shrine?</source>
-        <target>Que religião está representada neste santuário?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_segregated_title" xml:space="preserve">
-        <source>How are the footway and cycleway laid out here?</source>
-        <target>Como estão dispostos aqui a calçada e a ciclovia?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_shop_vacant_type_title" xml:space="preserve">
-        <source>This shop has been vacant. What’s here now?</source>
-        <target>Esta loja estava vazia. O que há aqui agora?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_sidewalk_title" xml:space="preserve">
-        <source>Does this street have a sidewalk?</source>
-        <target>Esta rua tem uma calçada?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_step_count_title" xml:space="preserve">
-        <source>How many steps are here?</source>
-        <target>Quantos degraus têm aqui?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_steps_incline_title" xml:space="preserve">
-        <source>Which direction leads upwards for these steps?</source>
-        <target>Qual direção leva para cima nesta escada?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_steps_ramp_title" xml:space="preserve">
-        <source>Do these steps have a ramp? What kind?</source>
-        <target>Esta escadaria tem uma rampa? De qual tipo?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_stile_type_title" xml:space="preserve">
-        <source>What type of stile is this?</source>
-        <target>De que tipo é essa travessia antigado?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_summit_register_title" xml:space="preserve">
-        <source>Is there a summit register at %s?</source>
-        <target>Existe um livro de montanha aqui em %s?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_tactile_paving_kerb_title" xml:space="preserve">
-        <source>Is there tactile paving on this curb here?</source>
-        <target>Existe piso tátil neste meio-fio aqui?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_toiletsFee_title" xml:space="preserve">
-        <source>Do you have to pay to use this restroom?</source>
-        <target>É necessário pagar para usar esse banheiro?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_tracktype_title" xml:space="preserve">
-        <source>What is the surface firmness of this track?</source>
-        <target>Qual é a firmeza da superfície desta pista?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_traffic_calming_type_title" xml:space="preserve">
-        <source>What type of traffic calming is this?</source>
-        <target>Qual é o tipo deste redutor de velocidade?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_traffic_signals_button_title" xml:space="preserve">
-        <source>Do these traffic lights have a button to request a walk signal?</source>
-        <target>Estes semáforos têm um botão para acionamento pelo pedestre?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_traffic_signals_sound_title" xml:space="preserve">
-        <source>Are there sound signals for the blind here?</source>
-        <target>Existem sinais sonoros para cegos aqui?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_traffic_signals_vibrate_title" xml:space="preserve">
-        <source>Do these traffic lights have a tactile indication for blind people for when it’s safe to cross?</source>
-        <target>Esses semáforos têm uma indicação tátil para cegos, quando é seguro atravessar?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_wheelchairAccess_outside_title" xml:space="preserve">
-        <source>Is this place wheelchair accessible?</source>
-        <target>Esse lugar é acessível para cadeirantes?</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="quest_wheelchairAccess_toiletsPart_title" xml:space="preserve">
-        <source>Is the restroom at %s wheelchair accessible?</source>
-        <target>Esse banheiro é acessível para cadeirantes?</target>
-        <note/>
-      </trans-unit>
-    </body>
-  </file>
   <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="pt-BR" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
@@ -368,7 +31,7 @@
   </file>
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="pt-BR" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -429,7 +92,7 @@
   </file>
   <file original="en.lproj/Localizable.strings" source-language="en" target-language="pt-BR" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="&#9;Relation " xml:space="preserve">
@@ -1948,7 +1611,7 @@ Você pode limpar o cache (em configurações de visualização) para aumentar o
   </file>
   <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="pt-BR" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
@@ -1975,7 +1638,7 @@ Você pode limpar o cache (em configurações de visualização) para aumentar o
   </file>
   <file original="PhotoShare/Base.lproj/MainInterface.storyboard" source-language="en" target-language="pt-BR" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
@@ -1997,7 +1660,7 @@ Você pode limpar o cache (em configurações de visualização) para aumentar o
   </file>
   <file original="PhotoShare/en.lproj/InfoPlist.strings" datatype="plaintext" source-language="en" target-language="pt-BR">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -2012,7 +1675,7 @@ Você pode limpar o cache (em configurações de visualização) para aumentar o
   </file>
   <file original="PhotoShare/en.lproj/Localizable.strings" source-language="en" target-language="pt-BR" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="Processing data..." xml:space="preserve">
@@ -2034,7 +1697,7 @@ Você pode limpar o cache (em configurações de visualização) para aumentar o
   </file>
   <file original="POI/Base.lproj/POI.storyboard" source-language="en" target-language="pt-BR" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
@@ -2416,7 +2079,7 @@ Você pode limpar o cache (em configurações de visualização) para aumentar o
   </file>
   <file original="Storyboards/Base.lproj/Display.storyboard" source-language="en" target-language="pt-BR" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
@@ -2875,7 +2538,7 @@ Limpe as quadrículas Mapnik ou de sobreposição para poder baixar as últimas 
   </file>
   <file original="Storyboards/Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="pt-BR" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
@@ -3040,7 +2703,7 @@ Limpe as quadrículas Mapnik ou de sobreposição para poder baixar as últimas 
   </file>
   <file original="Storyboards/Base.lproj/Settings.storyboard" source-language="en" target-language="pt-BR" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
@@ -3388,7 +3051,7 @@ http://glyphish.com
   </file>
   <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="pt-BR" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.3.1" build-num="13E500a"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
     </header>
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">

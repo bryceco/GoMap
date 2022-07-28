@@ -125,7 +125,7 @@
 "osk-Kq-gDX.text" = "Bahasa";
 
 /* Class = "UILabel"; text = "Prepare for Offline"; ObjectID = "rfX-TP-V0l"; */
-"rfX-TP-V0l.text" = "Bersiap untuk Offline";
+"rfX-TP-V0l.text" = "Siapkan untuk Luring";
 
 /* Class = "UIButton"; normalTitle = "Start"; ObjectID = "snH-kp-6ib"; */
 "snH-kp-6ib.normalTitle" = "Mulai";
@@ -152,7 +152,7 @@
 "VDO-HW-SLB.title" = "Pemeta terdekat";
 
 /* Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5"; */
-"whL-SZ-HD5.text" = "Umpan balik Email";
+"whL-SZ-HD5.text" = "Surel Masukan";
 
 /* Class = "UILabel"; text = "GitHub - Issues & Source Code"; ObjectID = "x4m-oT-EG8"; */
 "x4m-oT-EG8.text" = "GitHub - Masalah & Kode Sumber";

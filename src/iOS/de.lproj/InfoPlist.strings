@@ -10,11 +10,20 @@
 /* Privacy - Bluetooth Peripheral Usage Description */
 "NSBluetoothPeripheralUsageDescription" = "Verbinde mit externen Bluetooth GPS-Geräten";
 
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "Die Kamera wird zur Höhenmessung von Gebäuden oder Objekten und zur Texterkennung bei Öffnungszeitenschildern eingesetzt.";
+
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "Urheberrecht 2012-2021 Bryce Cogswell";
+
 /* Privacy - Location Always and When In Use Usage Description */
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "Die Standortdienste immer zu erlauben, ermöglicht der App, GPX-Dateien auch dann aufzuzeichnen, wenn sie inaktiv ist.";
 
 /* Privacy - Location Always Usage Description */
 "NSLocationAlwaysUsageDescription" = "Dein Standort wird angezeigt und auf der Karte verfolgt.";
+
+/* Privacy - Location Usage Description */
+"NSLocationUsageDescription" = "Wenn Sie die Standortdienste aktivieren, kann die App Objekte in der Nähe anzeigen. So können Sie selbst erhobene Daten leicht aktualisieren oder hinzufügen.";
 
 /* Privacy - Location When In Use Usage Description */
 "NSLocationWhenInUseUsageDescription" = "Dein Standort wird angezeigt und auf der Karte verfolgt.";

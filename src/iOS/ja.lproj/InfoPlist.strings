@@ -10,11 +10,20 @@
 /* Privacy - Bluetooth Peripheral Usage Description */
 "NSBluetoothPeripheralUsageDescription" = "外部Bluetooth GPS装置に接続";
 
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "カメラは建物やオブジェクトの高さ計測と開店時間のテキスト認識に使われます。";
+
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "著作権 2012-2021 Bryce Cogswell";
+
 /* Privacy - Location Always and When In Use Usage Description */
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "非アクティブ時にGPXファイルの記録による現在地のトラッキングをアプリに常時許可する。";
 
 /* Privacy - Location Always Usage Description */
 "NSLocationAlwaysUsageDescription" = "マップ上にあなたの位置が表示、追跡されます。";
+
+/* Privacy - Location Usage Description */
+"NSLocationUsageDescription" = "位置サービスを有効化するとあなたの周りのオブジェクトの表示をアプリに許可します。これにより自身の調査によるデータ追加・更新が容易になります。";
 
 /* Privacy - Location When In Use Usage Description */
 "NSLocationWhenInUseUsageDescription" = "マップ上にあなたの位置が表示、追跡されます。";

@@ -10,6 +10,21 @@
 /* Privacy - Bluetooth Peripheral Usage Description */
 "NSBluetoothPeripheralUsageDescription" = "Hubungkan dengan perangkat GPS Bluetooth eksternal";
 
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "Kamera digunakan untuk mengukur tinggi bangunan atau objek, dan untuk melakukan pengenalan teks pada tanda jam buka.";
+
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "Hak Cipta 2012-2021 Bryce Cogswell";
+
+/* Privacy - Location Always and When In Use Usage Description */
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Pelacakan lokasi yang selalu aktif memungkinkan aplikasi untuk merekam berkas GPX saat nonaktif.";
+
 /* Privacy - Location Always Usage Description */
 "NSLocationAlwaysUsageDescription" = "Lokasi Anda akan ditampilkan dan diikuti di peta.";
+
+/* Privacy - Location Usage Description */
+"NSLocationUsageDescription" = "Mengaktifkan layanan lokasi memungkinkan aplikasi untuk menampilkan objek di sekitar Anda. Ini memungkinkan Anda untuk memperbarui atau menambahkan data yang Anda survei sendiri dengan mudah.";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "Lokasi Anda akan ditampilkan dan diikuti pada peta.";
 

@@ -16,6 +16,9 @@
 /* Class = "UINavigationItem"; title = "Upload"; ObjectID = "Mdj-M0-0mZ"; */
 "Mdj-M0-0mZ.title" = "Hochladen";
 
+/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "Plh-7W-ceY"; */
+"Plh-7W-ceY.text" = "Lorem ipsum dolor sit er elit lamet,";
+
 /* Class = "UITextField"; placeholder = "survey, Bing, etc."; ObjectID = "ps9-Hb-Vow"; */
 "ps9-Hb-Vow.placeholder" = "Beobachtungen, Bing, etc.";
 
