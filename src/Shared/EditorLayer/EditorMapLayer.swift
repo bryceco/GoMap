@@ -1062,7 +1062,7 @@ final class EditorMapLayer: CALayer {
 		var directionValue: String?
 		if highway == "traffic_signals" {
 			directionValue = node.tags["traffic_signals:direction"]
-		} else if highway == "stop" {
+		} else if highway == "stop" || highway == "give_way" {
 			directionValue = node.tags["direction"]
 		}
 		if let directionValue = directionValue {
