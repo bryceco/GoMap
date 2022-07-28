@@ -56,7 +56,7 @@ class TurnRestrictController: UIViewController {
 
 		// get highways that contain selection
 		let mapData = AppDelegate.shared.mapView.editorLayer.mapData
-		self.parentWays = mapData.waysContaining(centralNode).filter({ $0.tags["highway"] != nil })
+		parentWays = mapData.waysContaining(centralNode).filter({ $0.tags["highway"] != nil })
 
 		// Creating roads using adjacent connected nodes
 		let conectedNodes = TurnRestrictController.getAdjacentNodes(centralNode, ways: parentWays)
@@ -214,24 +214,24 @@ class TurnRestrictController: UIViewController {
 			highwayLayer.lineCap = .round
 			highwayLayer.path = bezierPath.cgPath
 			highwayLayer.strokeColor = node.turnRestrictionParentWay.renderInfo?.lineColor?.cgColor
-										?? UIColor.black.cgColor
+				?? UIColor.black.cgColor
 			highwayLayer.bounds = detailView.bounds
 			highwayLayer.position = detailViewCenter
 			highwayLayer.masksToBounds = false
 
 			// Highway view
 			let hwyView = TurnRestrictHwyView(frame: detailView.bounds,
-											  wayObj: node.turnRestrictionParentWay,
-											  centerNode: centralNode,
-											  connectedNode: node,
-											  centerPoint: detailViewCenter,
-											  endPoint: nodePoint,
-											  parentWaysArray: parentWays,
-											  highwayLayer: highwayLayer,
-											  highlightLayer: highlightLayer)
+			                                  wayObj: node.turnRestrictionParentWay,
+			                                  centerNode: centralNode,
+			                                  connectedNode: node,
+			                                  centerPoint: detailViewCenter,
+			                                  endPoint: nodePoint,
+			                                  parentWaysArray: parentWays,
+			                                  highwayLayer: highwayLayer,
+			                                  highlightLayer: highlightLayer)
 			hwyView.backgroundColor = UIColor.clear
 
-			hwyView.layer.insertSublayer(highwayLayer, at:0)
+			hwyView.layer.insertSublayer(highwayLayer, at: 0)
 			hwyView.layer.insertSublayer(highlightLayer, below: highwayLayer)
 
 			hwyView.createOneWayArrowsForHighway()
@@ -291,21 +291,21 @@ class TurnRestrictController: UIViewController {
 		let fromName = fromHwy.wayObj.friendlyDescription()
 		let toName = toHwy.wayObj.friendlyDescription()
 		switch toHwy.restriction {
-			case .NONE:
-				return String.localizedStringWithFormat(
-					NSLocalizedString("Travel ALLOWED from %@ to %@", comment: ""),
-					fromName,
-					toName)
-			case .NO:
-				return String.localizedStringWithFormat(
-					NSLocalizedString("Travel PROHIBITED from %@ to %@", comment: ""),
-					fromName,
-					toName)
-			case .ONLY:
-				return String.localizedStringWithFormat(
-					NSLocalizedString("Travel ONLY from %@ to %@", comment: ""),
-					fromName,
-					toName)
+		case .NONE:
+			return String.localizedStringWithFormat(
+				NSLocalizedString("Travel ALLOWED from %@ to %@", comment: ""),
+				fromName,
+				toName)
+		case .NO:
+			return String.localizedStringWithFormat(
+				NSLocalizedString("Travel PROHIBITED from %@ to %@", comment: ""),
+				fromName,
+				toName)
+		case .ONLY:
+			return String.localizedStringWithFormat(
+				NSLocalizedString("Travel ONLY from %@ to %@", comment: ""),
+				fromName,
+				toName)
 		}
 	}
 
@@ -331,7 +331,7 @@ class TurnRestrictController: UIViewController {
 
 		let friendlyDescription = selectedHwy.wayObj.friendlyDescription()
 		detailText.text = String.localizedStringWithFormat(NSLocalizedString("Travel from %@", comment: ""),
-														   friendlyDescription)
+		                                                   friendlyDescription)
 
 		// highway exits center one-way
 		let selectedHwyIsOneWayExit = selectedHwy.isOneWayExitingCenter()
@@ -396,6 +396,7 @@ class TurnRestrictController: UIViewController {
 	{
 		var relation = findRelation(inList: allRelations, from: fromWay, via: centralNode, to: toWay)
 		var newWays: [OsmWay] = []
+		AppDelegate.shared.mapView.editorLayer.mapData.consistencyCheck()
 		relation = mapData.updateTurnRestrictionRelation(
 			relation,
 			via: centralNode,
@@ -406,6 +407,7 @@ class TurnRestrictController: UIViewController {
 			turn: restriction,
 			newWays: &newWays,
 			willSplit: nil)
+		AppDelegate.shared.mapView.editorLayer.mapData.consistencyCheck()
 		if newWays.count != 0 {
 			// had to split some ways to create restriction, so process them
 			parentWays.append(contentsOf: newWays)

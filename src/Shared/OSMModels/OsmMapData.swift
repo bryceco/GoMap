@@ -388,7 +388,7 @@ final class OsmMapData: NSObject, NSCoding {
 				while memberIndex < relation.members.count {
 					let member = relation.members[memberIndex]
 					if member.obj == object {
-						deleteMember(inRelationUnsafe: relation, index: memberIndex)
+						deleteMember(inRelationUnsafe: relation, index: memberIndex, deletingRelationIfEmpty: true)
 					} else {
 						memberIndex += 1
 					}
@@ -500,15 +500,19 @@ final class OsmMapData: NSObject, NSCoding {
 		}
 	}
 
-	func deleteMember(inRelationUnsafe relation: OsmRelation, index: Int) {
-		if relation.members.count == 1 {
+	func deleteMember(inRelationUnsafe relation: OsmRelation, index: Int, deletingRelationIfEmpty: Bool) {
+		if deletingRelationIfEmpty, relation.members.count == 1 {
 			// deleting last member of relation, so delete relation
 			deleteRelationUnsafe(relation)
 		} else {
+			AppDelegate.shared.mapView.editorLayer.mapData.consistencyCheck()
+
 			registerUndoCommentString(NSLocalizedString("delete object from relation", comment: ""))
 			let bbox = relation.boundingBox
 			relation.removeMemberAtIndex(index, undo: undoManager)
 			spatial.updateMember(relation, fromBox: bbox, undo: undoManager)
+			AppDelegate.shared.mapView.editorLayer.mapData.consistencyCheck()
+
 			updateMultipolygonRelationRoles(relation)
 		}
 	}
@@ -1902,7 +1906,9 @@ final class OsmMapData: NSObject, NSCoding {
 	func consistencyCheck() {
 #if DEBUG
 		if isUnderDebugger() {
+			print("start check")
 			consistencyCheckDebugOnly()
+			print("finish check")
 		}
 #endif
 	}

@@ -186,7 +186,7 @@ extension OsmMapData {
 			for index in relation.members.indices.reversed() {
 				let member = relation.members[index]
 				if member.obj == obj {
-					deleteMember(inRelationUnsafe: relation, index: index)
+					deleteMember(inRelationUnsafe: relation, index: index, deletingRelationIfEmpty: true)
 				}
 			}
 		}
@@ -501,7 +501,7 @@ extension OsmMapData {
 					let member = relation.members[index]
 					let newMember = OsmMember(obj: survivor, role: member.role)
 					addMemberUnsafe(newMember, to: relation, at: index + 1)
-					deleteMember(inRelationUnsafe: relation, index: index)
+					deleteMember(inRelationUnsafe: relation, index: index, deletingRelationIfEmpty: true)
 				}
 			}
 			deleteNodeUnsafe(deadNode)
@@ -620,7 +620,7 @@ extension OsmMapData {
 					   let index = relation.members.firstIndex(of: member)
 					{
 						let newMember = OsmMember(obj: way, role: newRole)
-						deleteMember(inRelationUnsafe: relation, index: index)
+						deleteMember(inRelationUnsafe: relation, index: index, deletingRelationIfEmpty: false)
 						addMemberUnsafe(newMember, to: relation, at: index)
 					}
 				}
@@ -839,7 +839,10 @@ extension OsmMapData {
 								if memberA.obj == wayA {
 									let memberB = OsmMember(obj: wayB, role: memberA.role)
 									addMemberUnsafe(memberB, to: relation, at: index + 1)
-									deleteMember(inRelationUnsafe: relation, index: index)
+									deleteMember(
+										inRelationUnsafe: relation,
+										index: index,
+										deletingRelationIfEmpty: false)
 								}
 							}
 						}
@@ -965,13 +968,15 @@ extension OsmMapData {
 			}
 			newWays.append(newWay)
 		}
+		AppDelegate.shared.mapView.editorLayer.mapData.consistencyCheck()
 
 		var restriction = restriction
 		if restriction == nil {
 			restriction = createRelation()
 		} else {
 			while restriction!.members.count > 0 {
-				deleteMember(inRelationUnsafe: restriction!, index: 0)
+				deleteMember(inRelationUnsafe: restriction!, index: 0, deletingRelationIfEmpty: false)
+				AppDelegate.shared.mapView.editorLayer.mapData.consistencyCheck()
 			}
 		}
 
@@ -985,8 +990,12 @@ extension OsmMapData {
 		let toM = OsmMember(obj: toWay, role: "to")
 
 		addMemberUnsafe(fromM, to: restriction!, at: 0)
+		AppDelegate.shared.mapView.editorLayer.mapData.consistencyCheck()
 		addMemberUnsafe(viaM, to: restriction!, at: 1)
+		AppDelegate.shared.mapView.editorLayer.mapData.consistencyCheck()
 		addMemberUnsafe(toM, to: restriction!, at: 2)
+
+		AppDelegate.shared.mapView.editorLayer.mapData.consistencyCheck()
 
 		resultWays = newWays
 
