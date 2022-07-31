@@ -284,12 +284,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 						if let number = cell.valueField.text?.prefix(while: { $0.isNumber || $0 == "." }),
 						   number != ""
 						{
-							let v: String
-							if let newValue = newValue {
-								v = number + " " + newValue
-							} else {
-								v = String(number)
-							}
+							let v = newValue == nil ? String(number) : number + " " + newValue!
 							self.updateTag(withValue: v, forKey: presetKey.tagKey)
 							cell.valueField.text = v
 						} else {
