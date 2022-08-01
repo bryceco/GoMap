@@ -540,9 +540,9 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
             return name
         }
         //then try any other name:* tag
-        if let name = tags.filter({ key, _ in
+        if let name = tags.first(where: { key, _ in
             key.starts(with: "name:")
-        }).first?.value {
+        })?.value {
             return name
         }
         //for ways, use ref tag
