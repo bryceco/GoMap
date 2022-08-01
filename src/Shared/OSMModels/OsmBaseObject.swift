@@ -531,21 +531,21 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		"living_street": .name
 	]
 	func givenName() -> String? {
-		//first try name tag
-        if let name = tags["name"] {
+		// first try name tag
+		if let name = tags["name"] {
 			return name
 		}
-        //then try name:en
-        if let name = tags["name:en"] {
-            return name
-        }
-        //then try any other name:* tag
-        if let name = tags.first(where: { key, _ in
-            key.starts(with: "name:")
-        })?.value {
-            return name
-        }
-        //for ways, use ref tag
+		// then try name:en
+		if let name = tags["name:en"] {
+			return name
+		}
+		// then try any other name:* tag
+		if let name = tags.first(where: { key, _ in
+			key.starts(with: "name:")
+		})?.value {
+			return name
+		}
+		// for ways, use ref tag
 		if isWay() != nil,
 		   let highway = tags["highway"],
 		   let uses = OsmBaseObject.givenNameHighwayTypes[highway],
@@ -554,7 +554,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		{
 			return name
 		}
-        //final fallback use brand
+		// final fallback use brand
 		return tags["brand"]
 	}
 

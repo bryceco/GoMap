@@ -81,7 +81,7 @@ class PresetKey: NSObject, NSSecureCoding {
 		   	.decodeInteger(forKey: "capitalize"))
 		{
 			self.name = name
-			self.type = ""
+			type = ""
 			self.tagKey = tagKey
 			self.placeholder = placeholder
 			self.presetList = presetList

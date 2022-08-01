@@ -45,9 +45,10 @@ class TristateButton: UISegmentedControl {
 class TristateYesNoButton: TristateButton {
 	required init() {
 		super.init(withLeftText: PresetsDatabase.shared.noForLocale,
-				   rightText: PresetsDatabase.shared.yesForLocale)
+		           rightText: PresetsDatabase.shared.yesForLocale)
 	}
-	
+
+	@available(*, unavailable)
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
@@ -68,12 +69,12 @@ class TristateYesNoButton: TristateButton {
 }
 
 class TristateKmhMphButton: TristateButton {
-	
 	required init() {
 		super.init(withLeftText: NSLocalizedString("km/h", comment: "kilometers per hour speed"),
-				   rightText: NSLocalizedString("mph", comment: "miles per hour speed"))
+		           rightText: NSLocalizedString("mph", comment: "miles per hour speed"))
 	}
 
+	@available(*, unavailable)
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
@@ -85,7 +86,7 @@ class TristateKmhMphButton: TristateButton {
 	// input is a value like "55 mph"
 	override func setSelection(forString value: String) {
 		let text: String
-		if let index = value.firstIndex(where: {!($0.isNumber || $0 == "." || $0 == " ")}) {
+		if let index = value.firstIndex(where: { !($0.isNumber || $0 == "." || $0 == " ") }) {
 			text = String(value.suffix(from: index))
 		} else {
 			text = ""
