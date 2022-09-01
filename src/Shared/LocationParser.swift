@@ -10,6 +10,53 @@ import Foundation
 
 /// An object that parses URLs and text for coordinates
 class LocationParser {
+	static func scanDegreesMinutesSeconds(scanner: Scanner) -> Double? {
+		var sign: Double
+		if scanner.scanString("+", into: nil) {
+			sign = 1.0
+		} else if scanner.scanString("-", into: nil) {
+			sign = -1.0
+		} else {
+			sign = 1.0
+		}
+
+		// Parse degrees, minutes, seconds:
+		var degrees = 0
+		var minutes = 0
+		var seconds = 0.0
+		guard scanner.scanInt(&degrees), // Degrees (integer),
+		      scanner.scanString("°", into: nil), // followed by °,
+		      scanner.scanInt(&minutes), // minutes (integer)
+		      scanner.scanString("'", into: nil), // followed by '
+		      scanner.scanDouble(&seconds), // seconds (floating point),
+		      scanner.scanString("\"", into: nil) // followed by "
+		else { return nil }
+		if scanner.scanString("N", into: nil) {
+			// ignore
+		} else if scanner.scanString("S", into: nil) {
+			sign = -sign
+		} else if scanner.scanString("E", into: nil) {
+			sign = -sign
+		} else if scanner.scanString("W", into: nil) {
+			// ignore
+		}
+
+		return sign * (Double(degrees) + Double(minutes) / 60.0 + seconds / 3600.0)
+	}
+
+	static func scanDegreesMinutesSecondsPair(string: String) -> (Double, Double)? {
+		let scanner = Scanner(string: string)
+		scanner.charactersToBeSkipped = nil
+		let delim = CharacterSet.whitespaces.union(CharacterSet(charactersIn: ","))
+		if let lat = scanDegreesMinutesSeconds(scanner: scanner),
+		   scanner.scanCharacters(from: .whitespaces, into: nil),
+		   let lon = scanDegreesMinutesSeconds(scanner: scanner)
+		{
+			return (lat, lon)
+		}
+		return nil
+	}
+
 	class func mapLocationFrom(text: String) -> MapLocation? {
 		// first try parsing as a URL
 		let text = text.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -17,6 +64,14 @@ class LocationParser {
 		   let loc = Self.mapLocationFrom(url: url)
 		{
 			return loc
+		}
+
+		// Try a formatted value like 26°35'36"N 106°40'44"E
+		if let latLon = scanDegreesMinutesSecondsPair(string: text) {
+			return MapLocation(longitude: latLon.1,
+			                   latitude: latLon.0,
+			                   zoom: 0.0,
+			                   viewState: nil)
 		}
 
 		// look for any pair of adjacent potential lat/lon decimal numbers

@@ -77,7 +77,7 @@ class KmhMphToggle: UISegmentedControl {
 
 	init() {
 		super.init(items: [NSLocalizedString("km/h", comment: "kilometers per hour speed"),
-						   NSLocalizedString("mph", comment: "miles per hour speed")])
+		                   NSLocalizedString("mph", comment: "miles per hour speed")])
 		apportionsSegmentWidthsByContent = true
 		setEnabled(true, forSegmentAt: 0)
 		addTarget(self, action: #selector(valueChanged(_:)), for: .valueChanged)
