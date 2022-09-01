@@ -68,36 +68,51 @@ class TristateYesNoButton: TristateButton {
 	}
 }
 
-class TristateKmhMphButton: TristateButton {
-	required init() {
-		super.init(withLeftText: NSLocalizedString("km/h", comment: "kilometers per hour speed"),
-		           rightText: NSLocalizedString("mph", comment: "miles per hour speed"))
+class KmhMphToggle: UISegmentedControl {
+	var onSelect: ((String?) -> Void)?
+
+	override init(frame: CGRect) {
+		super.init(frame: frame)
 	}
 
-	@available(*, unavailable)
+	init() {
+		super.init(items: [NSLocalizedString("km/h", comment: "kilometers per hour speed"),
+						   NSLocalizedString("mph", comment: "miles per hour speed")])
+		apportionsSegmentWidthsByContent = true
+		setEnabled(true, forSegmentAt: 0)
+		addTarget(self, action: #selector(valueChanged(_:)), for: .valueChanged)
+	}
+
+	@objc private func valueChanged(_ sender: Any?) {
+		if let onSelect = onSelect {
+			onSelect(stringForSelection())
+		}
+	}
+
 	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
+		super.init(coder: coder)
 	}
 
-	override func stringForSelection() -> String? {
-		return ["km/h", nil, "mph"][selectedSegmentIndex]
+	func stringForSelection() -> String? {
+		return [nil, "mph"][selectedSegmentIndex]
 	}
 
 	// input is a value like "55 mph"
-	override func setSelection(forString value: String) {
+	func setSelection(forString value: String) {
 		let text: String
-		if let index = value.firstIndex(where: { !($0.isNumber || $0 == "." || $0 == " ") }) {
-			text = String(value.suffix(from: index))
+		if let index = value.firstIndex(where: { !($0.isNumber || $0 == ".") }) {
+			text = String(value.suffix(from: index)).trimmingCharacters(in: .whitespacesAndNewlines)
 		} else {
 			text = ""
 		}
 
-		if text == "km/h" {
+		switch text {
+		case "":
 			super.selectedSegmentIndex = 0
-		} else if text == "mph" {
-			super.selectedSegmentIndex = 2
-		} else {
+		case "mph":
 			super.selectedSegmentIndex = 1
+		default:
+			break
 		}
 	}
 }

@@ -276,7 +276,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 				cell.valueField.isEnabled = true
 
 				if presetKey.type == "roadspeed" {
-					let button = TristateKmhMphButton()
+					let button = KmhMphToggle()
 					cell.valueField.rightView = button
 					cell.valueField.rightViewMode = .always
 					button.onSelect = { newValue in
@@ -438,7 +438,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		if let tri = cell.valueField.rightView as? TristateYesNoButton {
 			tri.setSelection(forString: textField.text ?? "")
 		}
-		if let tri = cell.valueField.rightView as? TristateKmhMphButton {
+		if let tri = cell.valueField.rightView as? KmhMphToggle {
 			tri.setSelection(forString: textField.text ?? "")
 		}
 	}
