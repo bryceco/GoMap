@@ -1389,10 +1389,8 @@ final class OsmMapData: NSObject, NSCoding {
 
 		// add nodes in ways to dirty set, because we must preserve them to maintain consistency
 		for way in Array(dirty) {
-			if way is OsmWay {
-				if let way = way as? OsmWay {
-					dirty.formUnion(Set(way.nodes))
-				}
+			if let way = way as? OsmWay {
+				dirty.formUnion(way.nodes)
 			}
 		}
 

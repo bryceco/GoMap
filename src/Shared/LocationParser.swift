@@ -47,7 +47,6 @@ class LocationParser {
 	static func scanDegreesMinutesSecondsPair(string: String) -> (Double, Double)? {
 		let scanner = Scanner(string: string)
 		scanner.charactersToBeSkipped = nil
-		let delim = CharacterSet.whitespaces.union(CharacterSet(charactersIn: ","))
 		if let lat = scanDegreesMinutesSeconds(scanner: scanner),
 		   scanner.scanCharacters(from: .whitespaces, into: nil),
 		   let lon = scanDegreesMinutesSeconds(scanner: scanner)
