@@ -54,11 +54,11 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 
 		let tabController = tabBarController as! POITabBarController
 
-		if tabController.selection?.isNode() != nil {
+		if tabController.selection is OsmNode {
 			title = NSLocalizedString("Node Tags", comment: "")
-		} else if tabController.selection?.isWay() != nil {
+		} else if tabController.selection is OsmWay {
 			title = NSLocalizedString("Way Tags", comment: "")
-		} else if tabController.selection?.isRelation() != nil {
+		} else if tabController.selection is OsmRelation {
 			if let type = tabController.keyValueDict["type"],
 			   !type.isEmpty
 			{
