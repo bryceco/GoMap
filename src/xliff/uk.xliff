@@ -7,6 +7,7 @@
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
         <source>Position your device parallel to the direction of the object.</source>
+        <target state="translated">Розташуйте пристрій паралельно до напрямку руху обʼєкта.</target>
         <note>Class = "UILabel"; text = "Position your device parallel to the direction of the object."; ObjectID = "4vY-m2-xMW";</note>
       </trans-unit>
       <trans-unit id="Jc3-Um-Aiy.text" xml:space="preserve">
@@ -19,6 +20,7 @@
       </trans-unit>
       <trans-unit id="exg-Jc-FOH.normalTitle" xml:space="preserve">
         <source>Cancel</source>
+        <target state="translated">Скасувати</target>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "exg-Jc-FOH";</note>
       </trans-unit>
       <trans-unit id="vtk-nS-Ss4.text" xml:space="preserve">
@@ -34,6 +36,7 @@
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>Go Map!!</source>
+        <target state="translated">Go Map!!</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleGetInfoString" xml:space="preserve">
@@ -42,38 +45,47 @@
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>Go Map!!</source>
+        <target state="translated">Go Map!!</target>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="GPS Exchange Format (GPX)" xml:space="preserve">
         <source>GPS Exchange Format (GPX)</source>
+        <target state="translated">GPS Exchange Format (GPX)</target>
         <note/>
       </trans-unit>
       <trans-unit id="NSBluetoothPeripheralUsageDescription" xml:space="preserve">
         <source>Connect to external Bluetooth GPS devices</source>
+        <target state="translated">Зʼєднати з GPS-пристроєм через Bluetooth</target>
         <note>Privacy - Bluetooth Peripheral Usage Description</note>
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
         <source>The camera is used to measure heights of buildings or objects, and to perform text recognition in opening hours signs.</source>
+        <target state="translated">Камера потрібна щоб вимірювати висоту будівель чи інших обʼєктів та щоб розпізнавати текст на табличках з часом роботи.</target>
         <note>Privacy - Camera Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
         <source>Copyright 2012-2021 Bryce Cogswell</source>
+        <target state="translated">Усі права застережено 2012—2022 Брюс Коґсвелл</target>
         <note>Copyright (human-readable)</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
         <source>Always on location tracking allows the app to record GPX files when inactive.</source>
+        <target state="translated">Постійно увімкнене відстеження локації дозволить застосунку записувати файли GPX у фоновому режимі.</target>
         <note>Privacy - Location Always and When In Use Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysUsageDescription" xml:space="preserve">
         <source>Your location will be displayed and followed on the map.</source>
+        <target state="translated">Ваша локація зʼявиться на мапі та оновлюватиметься.</target>
         <note>Privacy - Location Always Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationUsageDescription" xml:space="preserve">
         <source>Enabling location services allows the app to display objects in your vicinity. This allows you to easily update or add data you survey yourself.</source>
+        <target state="translated">Якщо увімкнете служби локації застосунок зможе показувати об’єкти неподалік. Так ви легко оновите чи додасте дані які збираєте.</target>
         <note>Privacy - Location Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationWhenInUseUsageDescription" xml:space="preserve">
         <source>Your location will be displayed and followed on the map.</source>
+        <target state="translated">Ваша локація з’явиться на мапі та оновлюватиметься.</target>
         <note>Privacy - Location When In Use Usage Description</note>
       </trans-unit>
     </body>
@@ -85,97 +97,122 @@
     <body>
       <trans-unit id="&#9;Relation " xml:space="preserve">
         <source>	Relation </source>
+        <target state="translated">	Зв’язок </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="&#9;Way " xml:space="preserve">
         <source>	Way </source>
+        <target state="translated">	Лінія </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;" xml:space="preserve">
         <source> (%d members)
 </source>
+        <target state="translated"> (%d членів)
+</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;" xml:space="preserve">
         <source> (%d nodes)
 </source>
+        <target state="translated"> (%d точок)
+</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (node)" xml:space="preserve">
         <source> (node)</source>
+        <target state="translated"> (точка)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (way)" xml:space="preserve">
         <source> (way)</source>
+        <target state="translated"> (лінія)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
         <source>%1$.0f meters, %2$ld nodes</source>
+        <target state="translated">%1$.0f метрів, %2$ld точок</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
         <source>%1$.1f meters, %2$ld nodes</source>
+        <target state="translated">%1$.1f метрів, %2$ld точок</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
         <source>%1$.2f MB, %2$ld files</source>
+        <target state="translated">%1$.2f МБ, %2$ld файлів</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
         <source>%@ (relation)</source>
+        <target state="translated">%@ (звʼязок)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ changeset" xml:space="preserve">
         <source>%@ changeset</source>
+        <target state="translated">%@ набір змін</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ meters" xml:space="preserve">
         <source>%@ meters</source>
+        <target state="translated">%@ метрів</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="%ld Days" xml:space="preserve">
         <source>%ld Days</source>
+        <target state="translated">%ld днів</target>
         <note>One or more days
    Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@" xml:space="preserve">
         <source>%1$ld edits, last active %2$@</source>
+        <target state="translated">%1$ld змін, остання %2$@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$ld meters, %2$ld points</source>
+        <target state="translated">%1$ld метрів, %2$ld точок</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld objects" xml:space="preserve">
         <source>%ld objects</source>
+        <target state="translated">%ld обʼєктів</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%lu tiles needed" xml:space="preserve">
         <source>%lu tiles needed</source>
+        <target state="translated">Потрібно %lu тайлів</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="(new object)" xml:space="preserve">
         <source>(new object)</source>
+        <target state="translated">(новий обʼєкт)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
         <source>(node in way)</source>
+        <target state="translated">(точка на лінії)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(node)" xml:space="preserve">
         <source>(node)</source>
+        <target state="translated">(точка)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(relation %@)" xml:space="preserve">
         <source>(relation %@)</source>
+        <target state="translated">(звʼзок %@)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(way)" xml:space="preserve">
         <source>(way)</source>
+        <target state="translated">(лінія)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="+ Button Position" xml:space="preserve">
         <source>+ Button Position</source>
+        <target state="translated">Позиція кнопки +</target>
         <note>Location of Add Node button on the screen</note>
       </trans-unit>
       <trans-unit id="1 Day" xml:space="preserve">
@@ -184,562 +221,707 @@
       </trans-unit>
       <trans-unit id="&lt;unknown&gt;" xml:space="preserve">
         <source>&lt;unknown&gt;</source>
+        <target state="translated">&lt;невідомець&gt;</target>
         <note>unknown user name</note>
       </trans-unit>
       <trans-unit id="A GPX Track records your path as you travel along a road or trail" xml:space="preserve">
         <source>A GPX Track records your path as you travel along a road or trail</source>
+        <target state="translated">GPX-трек записує ваш шлях поки ви рухаєтеся вздовж дороги чи стежки</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="A relation the node belongs to is not fully downloaded" xml:space="preserve">
         <source>A relation the node belongs to is not fully downloaded</source>
+        <target state="translated">Звʼязок до якого належить точка не завантажений повністю</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Accept" xml:space="preserve">
         <source>Accept</source>
+        <target state="translated">Підтвердити</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
         <source>Add Note</source>
+        <target state="translated">Додати нотатку</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Add inner member" xml:space="preserve">
         <source>Add inner member</source>
+        <target state="translated">Додати член з роллю «inner»</target>
         <note>Add to relation</note>
       </trans-unit>
       <trans-unit id="Add outer member" xml:space="preserve">
         <source>Add outer member</source>
+        <target state="translated">Додати член з роллю «outer»</target>
         <note>Add to relation</note>
       </trans-unit>
       <trans-unit id="Add way to multipolygon?" xml:space="preserve">
         <source>Add way to multipolygon?</source>
+        <target state="translated">Додати лінію до мультиполігона?</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Adding members:" xml:space="preserve">
         <source>Adding members:</source>
+        <target state="translated">Додавання членів:</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Additional imagery" xml:space="preserve">
         <source>Additional imagery</source>
+        <target state="translated">Додаткові фони</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
         <source>Aerial only</source>
+        <target state="translated">Тільки аерознімки</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="All Tags" xml:space="preserve">
         <source>All Tags</source>
+        <target state="translated">Усі теґи</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="All choices" xml:space="preserve">
         <source>All choices</source>
+        <target state="translated">Усі варіанти</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="An unknown error occurred fetching metadata" xml:space="preserve">
         <source>An unknown error occurred fetching metadata</source>
+        <target state="translated">Невідома помилка під час отримання метаданих</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Attention" xml:space="preserve">
         <source>Attention</source>
+        <target state="translated">Увага</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Attributes" xml:space="preserve">
         <source>Attributes</source>
+        <target state="translated">Атрибути</target>
         <note>node/way/relation attributes</note>
       </trans-unit>
       <trans-unit id="Automatic" xml:space="preserve">
         <source>Automatic</source>
+        <target state="translated">Автоматично</target>
         <note>Automatic selection of presets languages</note>
       </trans-unit>
       <trans-unit id="Back" xml:space="preserve">
         <source>Back</source>
+        <target state="translated">Назад</target>
         <note>back button</note>
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
         <source>Background imagery %@</source>
+        <target state="translated">Фонове зображення %@</target>
         <note>identifies current aerial imagery</note>
       </trans-unit>
       <trans-unit id="Bad login" xml:space="preserve">
         <source>Bad login</source>
+        <target state="translated">Неправильний логін</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
         <source>Cache size warning</source>
+        <target state="translated">Заувага про обсяг кешу</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache trimmed" xml:space="preserve">
         <source>Cache trimmed</source>
+        <target state="translated">Кеш очищений</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can only add ways to multipolygons" xml:space="preserve">
         <source>Can only add ways to multipolygons</source>
+        <target state="translated">До мультиполігонів можна додавати тільки лінії</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't delete node that is part of a relation" xml:space="preserve">
         <source>Can't delete node that is part of a relation</source>
+        <target state="translated">Не можна видалити точку що є членом звʼязку</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't delete relation that is not a multipolygon" xml:space="preserve">
         <source>Can't delete relation that is not a multipolygon</source>
+        <target state="translated">Не можна видалити звʼязок що не є мультиполігоном</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't delete way that is part of a Route or similar relation" xml:space="preserve">
         <source>Can't delete way that is part of a Route or similar relation</source>
+        <target state="translated">Не можна видалити лінію що є частиною маршруту чи схожого звʼязку</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't extend way" xml:space="preserve">
         <source>Can't extend way</source>
+        <target state="translated">Не можна подовжити лінію</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction 'via' node" xml:space="preserve">
         <source>Can't remove Turn Restriction 'via' node</source>
+        <target state="translated">Не можна видалити точку «via» зі звʼязка для обмежень маневрів</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" xml:space="preserve">
         <source>Can't remove Turn Restriction node connecting 'to'/'from' to 'via'</source>
+        <target state="translated">Не можна видалити точку обмежень маневрів що зʼєднує «to»/«from» з «via»</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction to/from way" xml:space="preserve">
         <source>Can't remove Turn Restriction to/from way</source>
+        <target state="translated">Не можна видалити лінію з роллю «to» або «from» якою позначене обмеження маневрів</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove component of a Route or similar relation" xml:space="preserve">
         <source>Can't remove component of a Route or similar relation</source>
+        <target state="translated">Не можна видалити компонент маршруту чи схожого звʼязка</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove node in Turn Restriction 'via' way" xml:space="preserve">
         <source>Can't remove node in Turn Restriction 'via' way</source>
+        <target state="translated">Не можна видалити точку з лінії «via» що позначає обмеження маневрів</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cancel" xml:space="preserve">
         <source>Cancel</source>
+        <target state="translated">Скасувати</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cannot compose message" xml:space="preserve">
         <source>Cannot compose message</source>
+        <target state="translated">Не вдалося скласти повідомлення</target>
         <note>e-mail message</note>
       </trans-unit>
       <trans-unit id="Cannot connect an inner way to an outer way" xml:space="preserve">
         <source>Cannot connect an inner way to an outer way</source>
+        <target state="translated">Не вдалося зʼєднати лінію «inner» з лінією «outer»</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Changeset" xml:space="preserve">
         <source>Changeset</source>
+        <target state="translated">Набір змін</target>
         <note>OSM changeset identifier</note>
       </trans-unit>
       <trans-unit id="Clear Aerial Tiles" xml:space="preserve">
         <source>Clear Aerial Tiles</source>
+        <target state="translated">Почистити тайли аерознімків</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear GPS Overlay Tiles" xml:space="preserve">
         <source>Clear GPS Overlay Tiles</source>
+        <target state="translated">Почистити тайли GPS-треків</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear GPX Tracks" xml:space="preserve">
         <source>Clear GPX Tracks</source>
+        <target state="translated">Видалити GPX-треки</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear Locator Overlay Tiles" xml:space="preserve">
         <source>Clear Locator Overlay Tiles</source>
+        <target state="translated">Видалити тайли шару «Локатор»</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear Mapnik Tiles" xml:space="preserve">
         <source>Clear Mapnik Tiles</source>
+        <target state="translated">Почистити тайли Mapnik</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear OSM Data" xml:space="preserve">
         <source>Clear OSM Data</source>
+        <target state="translated">Почистити дані OSM</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Commit" xml:space="preserve">
         <source>Commit</source>
+        <target state="translated">Змінити</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Configure" xml:space="preserve">
         <source>Configure</source>
+        <target state="translated">Налаштувати</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Confirm move" xml:space="preserve">
         <source>Confirm move</source>
+        <target state="translated">Підтвердити рух</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Connecting the nodes would damage a relation" xml:space="preserve">
         <source>Connecting the nodes would damage a relation</source>
+        <target state="translated">Обʼєднання точок може пошкодити звʼязок</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Copy Tags" xml:space="preserve">
         <source>Copy Tags</source>
+        <target state="translated">Копіювати теґи</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Could not duplicate object" xml:space="preserve">
         <source>Could not duplicate object</source>
+        <target state="translated">Не можна здублювати обʼєкт</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Create&#10;" xml:space="preserve">
         <source>Create
 </source>
+        <target state="translated">Створити
+</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Create Relation" xml:space="preserve">
         <source>Create Relation</source>
+        <target state="translated">Створити звʼязок</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Create Relation Type" xml:space="preserve">
         <source>Create Relation Type</source>
+        <target state="translated">Зазначити тип звʼязку</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
         <source>Current Track</source>
+        <target state="translated">Поточний трек</target>
         <note>current GPX track</note>
       </trans-unit>
       <trans-unit id="Database error" xml:space="preserve">
         <source>Database error</source>
+        <target state="translated">Помилка бази даних</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Delete" xml:space="preserve">
         <source>Delete</source>
+        <target state="translated">Видалити</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Delete&#10;" xml:space="preserve">
         <source>Delete
 </source>
+        <target state="translated">Видалити
+</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Delete %@?" xml:space="preserve">
         <source>Delete %@?</source>
+        <target state="translated">Видалити %@?</target>
         <note>Confirm deleting a node/way</note>
       </trans-unit>
       <trans-unit id="Delete completely" xml:space="preserve">
         <source>Delete completely</source>
+        <target state="translated">Видалити повністю</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Delete failed" xml:space="preserve">
         <source>Delete failed</source>
+        <target state="translated">Не вдалося видалити</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Detach from relation" xml:space="preserve">
         <source>Detach from relation</source>
+        <target state="translated">Прибрати зі звʼязку</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Disconnect" xml:space="preserve">
         <source>Disconnect</source>
+        <target state="translated">Відʼєднати</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Display options" xml:space="preserve">
         <source>Display options</source>
+        <target state="translated">Налаштування вигляду</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Distance: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Distance: %1$@ ± %2$@ meters</source>
+        <target state="translated">Відстань: %1$@ ± %2$@ метрів</target>
         <note>Distance to an object with an error value</note>
       </trans-unit>
       <trans-unit id="Done" xml:space="preserve">
         <source>Done</source>
+        <target state="translated">Готово</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Duplicate" xml:space="preserve">
         <source>Duplicate</source>
+        <target state="translated">Дублікувати</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Edit" xml:space="preserve">
         <source>Edit</source>
+        <target state="translated">Редагувати</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Edit XML" xml:space="preserve">
         <source>Edit XML</source>
+        <target state="translated">Редагувати XML</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Edit restrictions" xml:space="preserve">
         <source>Edit restrictions</source>
+        <target state="translated">Редагувати обмеження</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Editing layer not visible" xml:space="preserve">
         <source>Editing layer not visible</source>
+        <target state="translated">Шар що редагується прихований</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Editor only" xml:space="preserve">
         <source>Editor only</source>
+        <target state="translated">Тільки редактор</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Editor with Aerial" xml:space="preserve">
         <source>Editor with Aerial</source>
+        <target state="translated">Редактор з аерознімком</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Ensure Location Services is enabled and you have granted this application access.&#10;&#10;Error: %@" xml:space="preserve">
         <source>Ensure Location Services is enabled and you have granted this application access.
 
 Error: %@</source>
+        <target state="translated">Впевніться що служби локації працюють і ви надали доступ цьому застосунку.
+
+Помилка: %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Ensure the editor view is visible and displays objects in the local area" xml:space="preserve">
         <source>Ensure the editor view is visible and displays objects in the local area</source>
+        <target state="translated">Впевніться що режим редагування увімкнений і видно обʼєкти навколо</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Error" xml:space="preserve">
         <source>Error</source>
+        <target state="translated">Помилка</target>
         <note>Error dialog title</note>
       </trans-unit>
       <trans-unit id="Error connecting to way" xml:space="preserve">
         <source>Error connecting to way</source>
+        <target state="translated">Помилка підʼєднання до лінії</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Error fetching metadata: %@" xml:space="preserve">
         <source>Error fetching metadata: %@</source>
+        <target state="translated">Помилка завантаження метаданих: %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Extending a 'via' in a Turn Restriction will break the relation" xml:space="preserve">
         <source>Extending a 'via' in a Turn Restriction will break the relation</source>
+        <target state="translated">Подовження лінії «via» яка бере участь у обмеженні маневрів зламає звʼязок</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Extending a way which belongs to a Route or similar relation may damage the relation" xml:space="preserve">
         <source>Extending a way which belongs to a Route or similar relation may damage the relation</source>
+        <target state="translated">Подовження лінії що входить до маршруту чи схожого звʼязку може пошкодити звʼязок</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="GPX Upload Complete" xml:space="preserve">
         <source>GPX Upload Complete</source>
+        <target state="translated">Завантаження GPX завершене</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="GPX Upload Failed" xml:space="preserve">
         <source>GPX Upload Failed</source>
+        <target state="translated">Завантажити GPX не вдалося</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Height: %1$@ ± %2$@ meters</source>
+        <target state="translated">Висота: %1$@ ± %2$@ метрів</target>
         <note>Height of an object with an error value</note>
       </trans-unit>
       <trans-unit id="I'll do it!" xml:space="preserve">
         <source>I'll do it!</source>
+        <target state="translated">Я зроблю це!</target>
         <note>rate the app now</note>
       </trans-unit>
       <trans-unit id="Identifier" xml:space="preserve">
         <source>Identifier</source>
+        <target state="translated">Ідентифікатор</target>
         <note>OSM node/way/relation identifier</note>
       </trans-unit>
       <trans-unit id="Ignore" xml:space="preserve">
         <source>Ignore</source>
+        <target state="translated">Ігнорувати</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="In order to measure height, please enable camera access in the app's settings." xml:space="preserve">
         <source>In order to measure height, please enable camera access in the app's settings.</source>
+        <target state="translated">Щоб виміряти висоту, будь ласка надайде доступ до камери у налаштуваннях застосунку.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Invalid URL" xml:space="preserve">
         <source>Invalid URL</source>
+        <target state="translated">Помилковий URL</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Join" xml:space="preserve">
         <source>Join</source>
+        <target state="translated">Приєднати</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Joining would invalidate a Turn Restriction the way belongs to" xml:space="preserve">
         <source>Joining would invalidate a Turn Restriction the way belongs to</source>
+        <target state="translated">Приєднання зробить недійсним обмеження маневрів до якого входить лінія</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." xml:space="preserve">
         <source>Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English.</source>
+        <target state="translated">Змінення мови вплине тільки на заготовки й лише на ті що перекладені для iD. Основний інтерфейс буде англійською.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Last updated %@" xml:space="preserve">
         <source>Last updated %@</source>
+        <target state="translated">Востаннє оновлено %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Lat/Lon" xml:space="preserve">
         <source>Lat/Lon</source>
+        <target state="translated">Широта/Довгота</target>
         <note>coordinates</note>
       </trans-unit>
       <trans-unit id="Left" xml:space="preserve">
         <source>Left</source>
+        <target state="translated">Зліва</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Left side" xml:space="preserve">
         <source>Left side</source>
+        <target state="translated">Лівий бік</target>
         <note>Left-hand side of screen</note>
       </trans-unit>
       <trans-unit id="Length" xml:space="preserve">
         <source>Length</source>
+        <target state="translated">Довжина</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
         <source>Location unavailable</source>
+        <target state="translated">Локація недоступна</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Login successful" xml:space="preserve">
         <source>Login successful</source>
+        <target state="translated">Ви увійшли</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Low memory: clearing cache" xml:space="preserve">
         <source>Low memory: clearing cache</source>
+        <target state="translated">Недостатньо памʼяті: очищення кешу</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Mail delivery is not available on this device" xml:space="preserve">
         <source>Mail delivery is not available on this device</source>
+        <target state="translated">Доставка пошти недоступна на цьому пристрої</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Make Circular" xml:space="preserve">
         <source>Make Circular</source>
+        <target state="translated">Зробити круглим</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Make Rectangular" xml:space="preserve">
         <source>Make Rectangular</source>
+        <target state="translated">Зробити кути прямими</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Max nodes after joining is 2000" xml:space="preserve">
         <source>Max nodes after joining is 2000</source>
+        <target state="translated">Максимальна кількість точок після приєднання — 2000</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Maximum way length is 2000 nodes" xml:space="preserve">
         <source>Maximum way length is 2000 nodes</source>
+        <target state="translated">Максимальна довжина лінії — 2000 точок</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Maybe later..." xml:space="preserve">
         <source>Maybe later...</source>
+        <target state="translated">Можливо, пізніше…</target>
         <note>rate the app later</note>
       </trans-unit>
       <trans-unit id="Measure Direction" xml:space="preserve">
         <source>Measure Direction</source>
+        <target state="translated">Виміряти напрямок</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Member of multipolygon relation" xml:space="preserve">
         <source>Member of multipolygon relation</source>
+        <target state="translated">Член мультиполігона</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Members" xml:space="preserve">
         <source>Members</source>
+        <target state="translated">Члени</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Merge Tags" xml:space="preserve">
         <source>Merge Tags</source>
+        <target state="translated">Обʼєднати теґи</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Missing way to connect to" xml:space="preserve">
         <source>Missing way to connect to</source>
+        <target state="translated">Немає лінії для приєднання</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Modified" xml:space="preserve">
         <source>Modified</source>
+        <target state="translated">Змінено</target>
         <note>last modified date</note>
       </trans-unit>
       <trans-unit id="Modify" xml:space="preserve">
         <source>Modify</source>
+        <target state="translated">Змінити</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Modify&#10;" xml:space="preserve">
         <source>Modify
 </source>
+        <target state="translated">Змінити
+</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Modifying the raw XML data allows you to correct errors that prevent uploading.&#10;&#10;It is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format." xml:space="preserve">
         <source>Modifying the raw XML data allows you to correct errors that prevent uploading.
 
 It is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format.</source>
+        <target state="translated">Модифікуючи сирцеві XML-дані зможете виправити помилки що заважають відправити набір змін.
+
+Це просунута операція яку маєте здійснювати лише якщо повністю розумієте формат даних набору змін OSM.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="More..." xml:space="preserve">
         <source>More...</source>
+        <target state="translated">Більше…</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Most recent" xml:space="preserve">
         <source>Most recent</source>
+        <target state="translated">Останній</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Move" xml:space="preserve">
         <source>Move</source>
+        <target state="translated">Сунути</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Move selected object?" xml:space="preserve">
         <source>Move selected object?</source>
+        <target state="translated">Сунути вибраний обʼєкт?</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Multipolygon" xml:space="preserve">
         <source>Multipolygon</source>
+        <target state="translated">Мультиполігон</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Network error" xml:space="preserve">
         <source>Network error</source>
+        <target state="translated">Мережева помилка</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Never" xml:space="preserve">
         <source>Never</source>
+        <target state="translated">Ніколи</target>
         <note>Never delete old GPX tracks
    Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Next" xml:space="preserve">
         <source>Next</source>
+        <target state="translated">Наступний</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No Data" xml:space="preserve">
         <source>No Data</source>
+        <target state="translated">Немає даних</target>
         <note>Alert title</note>
       </trans-unit>
       <trans-unit id="No Left Turn restriction" xml:space="preserve">
         <source>No Left Turn restriction</source>
+        <target state="translated">Заборона лівого повороту</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No Right Turn restriction" xml:space="preserve">
         <source>No Right Turn restriction</source>
+        <target state="translated">Заборона правого повороту</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No Straight On restriction" xml:space="preserve">
         <source>No Straight On restriction</source>
+        <target state="translated">Заборона руху прямо</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No U-Turn restriction" xml:space="preserve">
         <source>No U-Turn restriction</source>
+        <target state="translated">Заборона розвороту</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No active track" xml:space="preserve">
         <source>No active track</source>
+        <target state="translated">Немає активного трека</target>
         <note>GPX track</note>
       </trans-unit>
       <trans-unit id="No results found" xml:space="preserve">
         <source>No results found</source>
+        <target state="translated">Нічого не знайдено</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No tags to paste" xml:space="preserve">
         <source>No tags to paste</source>
+        <target state="translated">Немає теґів щоб їх вставити</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node" xml:space="preserve">
         <source>Node</source>
+        <target state="translated">Точка</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node Attributes" xml:space="preserve">
         <source>Node Attributes</source>
+        <target state="translated">Атрибути точки</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node Tags" xml:space="preserve">
         <source>Node Tags</source>
+        <target state="translated">Теґи точки</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node is not an element of way" xml:space="preserve">
         <source>Node is not an element of way</source>
+        <target state="translated">Точка не належить лінії</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node must be the first or last node of the way" xml:space="preserve">
         <source>Node must be the first or last node of the way</source>
+        <target state="translated">Точка має бути на початку або в кінці лінії</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Not found" xml:space="preserve">
         <source>Not found</source>
+        <target state="translated">Не знайдено</target>
         <note>User credentials not found</note>
       </trans-unit>
       <trans-unit id="Note History" xml:space="preserve">
         <source>Note History</source>
+        <target state="translated">Історія нотатки</target>
         <note>OSM note</note>
       </trans-unit>
       <trans-unit id="Nothing to upload, no changes have been made." xml:space="preserve">
         <source>Nothing to upload, no changes have been made.</source>
+        <target state="translated">Нема чого завантажувати, жодних змін не відбулося.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Number of recent items to display" xml:space="preserve">
         <source>Number of recent items to display</source>
+        <target state="translated">Кількість останніх елементів щоб показати</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="OK" xml:space="preserve">
         <source>OK</source>
+        <target state="translated">Гаразд</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Object modified" xml:space="preserve">
         <source>Object modified</source>
+        <target state="translated">Обʼєкт змінений</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Old value: (oldValue)" xml:space="preserve">
@@ -748,295 +930,368 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Only Left Turn restriction" xml:space="preserve">
         <source>Only Left Turn restriction</source>
+        <target state="translated">Лише поворот наліво</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only Right Turn restriction" xml:space="preserve">
         <source>Only Right Turn restriction</source>
+        <target state="translated">Лише поворот направо</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only Straight On restriction" xml:space="preserve">
         <source>Only Straight On restriction</source>
+        <target state="translated">Лише прямо</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only multipolygon relations are supported" xml:space="preserve">
         <source>Only multipolygon relations are supported</source>
+        <target state="translated">Підтримуються лише звʼязки типу «мультиполігон»</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only ways/multipolygons can be rotated" xml:space="preserve">
         <source>Only ways/multipolygons can be rotated</source>
+        <target state="translated">Повертати можна лише лінії чи мультиполігони</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Open Settings" xml:space="preserve">
         <source>Open Settings</source>
+        <target state="translated">Відкрити налаштування</target>
         <note>Open the iOS Settings app</note>
       </trans-unit>
       <trans-unit id="Open URL" xml:space="preserve">
         <source>Open URL</source>
+        <target state="translated">Відкрити посилання</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Paste" xml:space="preserve">
         <source>Paste</source>
+        <target state="translated">Вставити</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Pasting %@ characters, maximum tag length is 255" xml:space="preserve">
         <source>Pasting %@ characters, maximum tag length is 255</source>
+        <target state="translated">Вставлення %@ символів, максимальна довжина теґу — 255</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)" xml:space="preserve">
         <source>Pasting %ld tag(s)</source>
+        <target state="translated">Вставлення %ld теґів</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Perform Action" xml:space="preserve">
         <source>Perform Action</source>
+        <target state="translated">Здійснити дію</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Please wait" xml:space="preserve">
         <source>Please wait</source>
+        <target state="translated">Зачекайте</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
         <source>Previous</source>
+        <target state="translated">Попередній</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Previous Tracks" xml:space="preserve">
         <source>Previous Tracks</source>
+        <target state="translated">Попередні треки</target>
         <note>previous GPX track</note>
       </trans-unit>
       <trans-unit id="Purge" xml:space="preserve">
         <source>Purge</source>
+        <target state="translated">Вичистити</target>
         <note>Discard editing changes when resetting OSM data cache</note>
       </trans-unit>
       <trans-unit id="Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." xml:space="preserve">
         <source>Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap.</source>
+        <target state="translated">Якщо оціните застосунок — допоможете іншим картографам шукати його та зробите OpenStreetMap популярнішим.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Recent Aerial Imagery" xml:space="preserve">
         <source>Recent Aerial Imagery</source>
+        <target state="translated">Нещодавні аерознімки</target>
         <note>Alert title message</note>
       </trans-unit>
       <trans-unit id="Redo" xml:space="preserve">
         <source>Redo</source>
+        <target state="translated">Повторити</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation Attributes" xml:space="preserve">
         <source>Relation Attributes</source>
+        <target state="translated">Атрибути звʼзку</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation Tags" xml:space="preserve">
         <source>Relation Tags</source>
+        <target state="translated">Теґи звʼязка</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation: %@" xml:space="preserve">
         <source>Relation: %@</source>
+        <target state="translated">Звʼязок: %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relations" xml:space="preserve">
         <source>Relations</source>
+        <target state="translated">Звʼязки</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Replace Tags" xml:space="preserve">
         <source>Replace Tags</source>
+        <target state="translated">Замінити теґи</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Requires a closed way with at least 3 nodes" xml:space="preserve">
         <source>Requires a closed way with at least 3 nodes</source>
+        <target state="translated">Потрібна замкнена лінія щонайменше із трьома точками</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Requires a closed way with at least 4 nodes" xml:space="preserve">
         <source>Requires a closed way with at least 4 nodes</source>
+        <target state="translated">Потрібна замкнена лінія щонайменше із чотирма точками</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Restrict" xml:space="preserve">
         <source>Restrict</source>
+        <target state="translated">Заборонити</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Restriction: %@" xml:space="preserve">
         <source>Restriction: %@</source>
+        <target state="translated">Обмеження: %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Results for %@ (%@)" xml:space="preserve">
         <source>Results for %1$@ (%2$@)</source>
+        <target state="translated">Результати для %1$@ (%2$@)</target>
         <note>country name,2-character country code</note>
       </trans-unit>
       <trans-unit id="Retry" xml:space="preserve">
         <source>Retry</source>
+        <target state="translated">Повторити</target>
         <note>retry opening hours recognition</note>
       </trans-unit>
       <trans-unit id="Reverse" xml:space="preserve">
         <source>Reverse</source>
+        <target state="translated">Змінити напрямок</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Right" xml:space="preserve">
         <source>Right</source>
+        <target state="translated">Праворуч</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Right side" xml:space="preserve">
         <source>Right side</source>
+        <target state="translated">Правий бік</target>
         <note>Right-hand side of screen</note>
       </trans-unit>
       <trans-unit id="Rotate" xml:space="preserve">
         <source>Rotate</source>
+        <target state="translated">Повернути</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Select Object" xml:space="preserve">
         <source>Select Object</source>
+        <target state="translated">Вибрати обʼєкт</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Select a highway approaching the intersection" xml:space="preserve">
         <source>Select a highway approaching the intersection</source>
+        <target state="translated">Вибрати дорогу що веде до перехрестя</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Selected object is off screen" xml:space="preserve">
         <source>Selected object is off screen</source>
+        <target state="translated">Вибрані обʼєкти поза екраном</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Set" xml:space="preserve">
         <source>Set</source>
+        <target state="translated">Додати</target>
         <note>set tag value</note>
       </trans-unit>
       <trans-unit id="Set Height Tag" xml:space="preserve">
         <source>Set Height Tag</source>
+        <target state="translated">Додати теґ висоти</target>
         <note>The height=* tag</note>
       </trans-unit>
       <trans-unit id="Settings" xml:space="preserve">
         <source>Settings</source>
+        <target state="translated">Налаштування</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Share" xml:space="preserve">
         <source>Share</source>
+        <target state="translated">Поділитися</target>
         <note>Open iOS sharing sheet
    Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Show Recent Items" xml:space="preserve">
         <source>Show Recent Items</source>
+        <target state="translated">Показати останні елементи</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." xml:space="preserve">
         <source>Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.</source>
+        <target state="translated">Щось пішло не так під час відновлення ваших даних. Всі зміни що «зависли» було втрачено. Пробачте.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Sorry, an error occurred while loading the GPX file" xml:space="preserve">
         <source>Sorry, an error occurred while loading the GPX file</source>
+        <target state="translated">Пробачте, під час завантаження GPX-файлу виникла помилка</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Split" xml:space="preserve">
         <source>Split</source>
+        <target state="translated">Розділити</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Standard imagery" xml:space="preserve">
         <source>Standard imagery</source>
+        <target state="translated">Стандартні знімки</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Start" xml:space="preserve">
         <source>Start</source>
+        <target state="translated">Старт</target>
         <note>Begin downloading tiles</note>
       </trans-unit>
       <trans-unit id="Stop" xml:space="preserve">
         <source>Stop</source>
+        <target state="translated">Стоп</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Straighten" xml:space="preserve">
         <source>Straighten</source>
+        <target state="translated">Випрямити</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Tags" xml:space="preserve">
         <source>Tags</source>
+        <target state="translated">Теґи</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
         <source>The + button can be positioned on either the left or right side of the screen</source>
+        <target state="translated">Кнопку з плюсом можна розташувати як зліва так і справа на екрані</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The XML is improperly formed" xml:space="preserve">
         <source>The XML is improperly formed</source>
+        <target state="translated">Цей XML сформований некоректно</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The current location cannot be determined: " xml:space="preserve">
         <source>The current location cannot be determined: </source>
+        <target state="translated">Поточну локацію не вдається визначити: </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The merged nodes contain conflicting tags" xml:space="preserve">
         <source>The merged nodes contain conflicting tags</source>
+        <target state="translated">Обʼєднані точки містять теґи що конфліктують</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The nodes have conflicting roles in parent relations" xml:space="preserve">
         <source>The nodes have conflicting roles in parent relations</source>
+        <target state="translated">Точки мають ролі що конфліктують у батьківському звʼязку</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The object does not contain any tags" xml:space="preserve">
         <source>The object does not contain any tags</source>
+        <target state="translated">Обʼєкт не містить жодних теґів</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The restriction cannot be deleted" xml:space="preserve">
         <source>The restriction cannot be deleted</source>
+        <target state="translated">Обмеження не може бути видалене</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The selected way must be completely visible" xml:space="preserve">
         <source>The selected way must be completely visible</source>
+        <target state="translated">Лінія яку обрали має бути цілком на видноті</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The target way is ambiguous" xml:space="preserve">
         <source>The target way is ambiguous</source>
+        <target state="translated">Цільова лінія невизначена</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The turn contains an unrecognized turn restriction style. Proceeding will destroy it." xml:space="preserve">
         <source>The turn contains an unrecognized turn restriction style. Proceeding will destroy it.</source>
+        <target state="translated">Поворот містить нерозпізнане обмеження маневру. Якщо продовжите, знищите його.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way belongs to a relation that is not fully downloaded" xml:space="preserve">
         <source>The way belongs to a relation that is not fully downloaded</source>
+        <target state="translated">Лінія належить до звʼязку що не повністю завантажений</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way is not sufficiently straight" xml:space="preserve">
         <source>The way is not sufficiently straight</source>
+        <target state="translated">Лінія недостатньо пряма</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way must have at least 2 nodes" xml:space="preserve">
         <source>The way must have at least 2 nodes</source>
+        <target state="translated">Лінія має мати хоча б дві точки</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The ways contain incompatible tags" xml:space="preserve">
         <source>The ways contain incompatible tags</source>
+        <target state="translated">Лінії містять несумісні теґи</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="This action requires GPS to be turned on" xml:space="preserve">
         <source>This action requires GPS to be turned on</source>
+        <target state="translated">Щоб здійснити дію GPS має бути увімкненим</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="This app does not yet support editing turn restrictions without a node as the 'via' member" xml:space="preserve">
         <source>This app does not yet support editing turn restrictions without a node as the 'via' member</source>
+        <target state="translated">Цей застосунок поки що не підтримує редагування обмежень повороту без точки з роллю «via»</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="This device is not able to provide heading data." xml:space="preserve">
         <source>This device is not able to provide heading data.</source>
+        <target state="translated">Цей пристрій не може надати дані про курс.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
         <source>To add another member to the relation 'long press' on the way to be added</source>
+        <target state="translated">Щоб додати інший член до звʼязку «затримайте» палець на лінії яку хочете додати</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel ALLOWED from %@ to %@" xml:space="preserve">
         <source>Travel ALLOWED from %1$@ to %2$@</source>
+        <target state="translated">Рух ДОЗВОЛЕНО з %1$@ в %2$@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel ONLY from %@ to %@" xml:space="preserve">
         <source>Travel ONLY from %1$@ to %2$@</source>
+        <target state="translated">Рух ТІЛЬКИ з %1$@ до %2$@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel PROHIBITED from %@ to %@" xml:space="preserve">
         <source>Travel PROHIBITED from %1$@ to %2$@</source>
+        <target state="translated">Рух ЗАБОРОНЕНО з %1$@ в %2$@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel from %@" xml:space="preserve">
         <source>Travel from %@</source>
+        <target state="translated">Маршрут з %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Turn On Location Services to Allow %@ to Determine Your Location" xml:space="preserve">
         <source>Turn On Location Services to Allow %@ to Determine Your Location</source>
+        <target state="translated">Увікніть служби локації щоб дозволити %@ визначити ваше місцеперебування</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Turn Restrictions" xml:space="preserve">
         <source>Turn Restrictions</source>
+        <target state="translated">Обмеження маневру</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.&#10;&#10;Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route." xml:space="preserve">
@@ -1067,6 +1322,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Undo" xml:space="preserve">
         <source>Undo</source>
+        <target state="translated">Скасувати</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Unknown role" xml:space="preserve">
@@ -1127,6 +1383,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Way Tags" xml:space="preserve">
         <source>Way Tags</source>
+        <target state="translated">Теґи лінії</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.&#10;&#10;To continue press Commit once again, otherwise press Cancel." xml:space="preserve">
@@ -1266,6 +1523,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="set tags" xml:space="preserve">
         <source>set tags</source>
+        <target state="translated">надати теґи</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="update relation members" xml:space="preserve">
@@ -1324,6 +1582,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="cy3-gz-fvk.text" xml:space="preserve">
         <source>Go Map!! will open at the location the photo was taken.</source>
+        <target state="translated">Go Map!! відкриє локацію де було зроблено світлину.</target>
         <note>Class = "UILabel"; text = "Go Map!! will open at the location the photo was taken."; ObjectID = "cy3-gz-fvk";</note>
       </trans-unit>
     </body>
@@ -1358,6 +1617,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="Unfortunately the selected image does not contain location information." xml:space="preserve">
         <source>Unfortunately the selected image does not contain location information.</source>
+        <target state="translated">Нажаль вибране зображення не містить інформації про локацію.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>
@@ -1401,6 +1661,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="19J-sp-UTX.title" xml:space="preserve">
         <source>All Tags</source>
+        <target state="translated">Усі теґи</target>
         <note>Class = "UITabBarItem"; title = "All Tags"; ObjectID = "19J-sp-UTX";</note>
       </trans-unit>
       <trans-unit id="436-kv-L7j.placeholder" xml:space="preserve">
@@ -1441,6 +1702,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="G5R-oP-lp3.title" xml:space="preserve">
         <source>Custom Tags</source>
+        <target state="translated">Власні теґи</target>
         <note>Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3";</note>
       </trans-unit>
       <trans-unit id="GIO-W7-q5U.title" xml:space="preserve">
@@ -1533,6 +1795,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="cN9-3h-H3l.title" xml:space="preserve">
         <source>All Tags</source>
+        <target state="translated">Усі теґи</target>
         <note>Class = "UINavigationItem"; title = "All Tags"; ObjectID = "cN9-3h-H3l";</note>
       </trans-unit>
       <trans-unit id="cP3-lR-lzM.placeholder" xml:space="preserve">
@@ -1593,6 +1856,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="lPv-s6-uEz.title" xml:space="preserve">
         <source>Common Tags</source>
+        <target state="translated">Поширені теґи</target>
         <note>Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz";</note>
       </trans-unit>
       <trans-unit id="li7-oV-pgT.text" xml:space="preserve">
@@ -1601,6 +1865,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="mAb-DX-pqb.title" xml:space="preserve">
         <source>Common tags</source>
+        <target state="translated">Поширені теґи</target>
         <note>Class = "UINavigationItem"; title = "Common tags"; ObjectID = "mAb-DX-pqb";</note>
       </trans-unit>
       <trans-unit id="mcN-gM-s7u.text" xml:space="preserve">
@@ -2086,6 +2351,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="FaM-WV-S6I.title" xml:space="preserve">
         <source>Search for Location</source>
+        <target state="translated">Шукати локацію</target>
         <note>Class = "UINavigationItem"; title = "Search for Location"; ObjectID = "FaM-WV-S6I";</note>
       </trans-unit>
       <trans-unit id="Fo4-Nq-pAz.normalTitle" xml:space="preserve">
@@ -2150,6 +2416,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="siu-I6-IEp.title" xml:space="preserve">
         <source>Search for Location</source>
+        <target state="translated">Шукати локацію</target>
         <note>Class = "UIViewController"; title = "Search for Location"; ObjectID = "siu-I6-IEp";</note>
       </trans-unit>
       <trans-unit id="stf-JU-iga.text" xml:space="preserve">
@@ -2170,6 +2437,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="zrW-uc-hfQ.segmentTitles[0]" xml:space="preserve">
         <source>Tags</source>
+        <target state="translated">Теґи</target>
         <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[0] = "Tags"; ObjectID = "zrW-uc-hfQ";</note>
       </trans-unit>
       <trans-unit id="zrW-uc-hfQ.segmentTitles[1]" xml:space="preserve">
