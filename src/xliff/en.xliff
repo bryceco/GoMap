@@ -1558,6 +1558,11 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target>duplicate</target>
         <note>create a duplicate</note>
       </trans-unit>
+      <trans-unit id="km/h" xml:space="preserve">
+        <source>km/h</source>
+        <target>km/h</target>
+        <note>kilometers per hour speed</note>
+      </trans-unit>
       <trans-unit id="meters" xml:space="preserve">
         <source>meters</source>
         <target>meters</target>
@@ -1567,6 +1572,11 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>move</source>
         <target>move</target>
         <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="mph" xml:space="preserve">
+        <source>mph</source>
+        <target>mph</target>
+        <note>miles per hour speed</note>
       </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">
         <source>node %@</source>

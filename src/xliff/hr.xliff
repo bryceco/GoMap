@@ -1553,6 +1553,10 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
         <target>duplikat</target>
         <note>create a duplicate</note>
       </trans-unit>
+      <trans-unit id="km/h" xml:space="preserve">
+        <source>km/h</source>
+        <note>kilometers per hour speed</note>
+      </trans-unit>
       <trans-unit id="meters" xml:space="preserve">
         <source>meters</source>
         <target>metara</target>
@@ -1562,6 +1566,10 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
         <source>move</source>
         <target>premjesti</target>
         <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="mph" xml:space="preserve">
+        <source>mph</source>
+        <note>miles per hour speed</note>
       </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">
         <source>node %@</source>

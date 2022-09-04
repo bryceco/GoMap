@@ -1383,6 +1383,10 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target>monista</target>
         <note>create a duplicate</note>
       </trans-unit>
+      <trans-unit id="km/h" xml:space="preserve">
+        <source>km/h</source>
+        <note>kilometers per hour speed</note>
+      </trans-unit>
       <trans-unit id="meters" xml:space="preserve">
         <source>meters</source>
         <target>metriä</target>
@@ -1392,6 +1396,10 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>move</source>
         <target>siirrä</target>
         <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="mph" xml:space="preserve">
+        <source>mph</source>
+        <note>miles per hour speed</note>
       </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">
         <source>node %@</source>
