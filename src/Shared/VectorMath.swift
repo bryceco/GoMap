@@ -635,6 +635,10 @@ struct LatLon {
 	init(_ pt: OSMPoint) {
 		self.init(lon: pt.x, lat: pt.y)
 	}
+
+	@inline(__always) public static func ==(_ a: LatLon, _ b: LatLon) -> Bool {
+		return a.lon == b.lon && a.lat == b.lat
+	}
 }
 
 // MARK: miscellaneous
@@ -674,4 +678,46 @@ func GreatCircleDistance(_ p1: LatLon, _ p2: LatLon) -> Double {
 	let c: Double = 2 * atan2(sqrt(a), sqrt(1 - a))
 	let meters = EarthRadius * c
 	return meters
+}
+
+// area of a closed polygon (first and last points repeat), and boolean if it's clockwise
+func AreaOfPolygonClockwise(_ points: [OSMPoint]) -> (Double, Bool)? {
+	if points.count < 4 {
+		return nil // not a polygon
+	}
+	if points[0] != points.last! {
+		return nil // first and last aren't identical
+	}
+	var area = 0.0
+	var previous = points[0]
+	for point in points[1..<points.count] {
+		area += (previous.x + point.x) * (previous.y - point.y)
+		previous = point
+	}
+	area *= 0.5
+	return area >= 0 ? (area, true) : (-area, false)
+}
+
+func IsClockwisePolygon(_ points: [OSMPoint]) -> Bool {
+	guard let (_, clockwise) = AreaOfPolygonClockwise(points) else {
+		return false
+	}
+	return clockwise
+}
+
+// Input is a list of points in degrees, with the first and last points being equal
+func AreaInSquareMeters(points: [LatLon]) -> Double {
+	guard points.count > 3, points[0] == points.last! else { return 0.0 }
+	// convert to radians
+	let radians = points.map { LatLon(lon: $0.lon * (.pi / 180),
+	                                  lat: $0.lat * (.pi / 180)) }
+	var area = 0.0
+	var p1 = radians[0]
+	for p2 in radians[1..<radians.count] {
+		let delta = (p2.lon - p1.lon) * (2 + sin(p1.lat) + sin(p2.lat))
+		area += delta
+		p1 = p2
+	}
+	area = area * EarthRadius * EarthRadius / 2
+	return abs(area)
 }

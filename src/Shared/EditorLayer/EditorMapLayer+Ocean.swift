@@ -69,26 +69,6 @@ extension EditorMapLayer {
 		fatalError()
 	}
 
-	private static func IsClockwisePolygon(_ points: [OSMPoint]) -> Bool {
-		if points.count < 4 { // first and last repeat
-			return false // invalid
-		}
-		if points[0] != points.last! {
-			return false // invalid
-		}
-		var area = 0.0
-		let offset = points[0]
-		var previous = OSMPoint(x: 0, y: 0)
-
-		for point in points[1..<points.count] {
-			let current = OSMPoint(x: point.x - offset.x, y: point.y - offset.y)
-			area += previous.x * current.y - previous.y * current.x
-			previous = current
-		}
-		area *= 0.5
-		return area >= 0
-	}
-
 	private static func RotateLoop(_ loop: inout [OSMPoint], viewRect: OSMRect) -> Bool {
 		if loop.count < 4 {
 			return false // bad loop
@@ -378,7 +358,7 @@ extension EditorMapLayer {
 		for index in 0..<outerSegments.count {
 			let way = outerSegments[index]
 			if way[0] == way.last! {
-				if !Self.IsClockwisePolygon(way) {
+				if !IsClockwisePolygon(way) {
 					// reverse points
 					outerSegments[index].reverse()
 				}
@@ -387,7 +367,7 @@ extension EditorMapLayer {
 		for index in 0..<innerSegments.count {
 			let way = innerSegments[index]
 			if way[0] == way.last! {
-				if Self.IsClockwisePolygon(way) {
+				if IsClockwisePolygon(way) {
 					// reverse points
 					innerSegments[index].reverse()
 				}
@@ -527,7 +507,7 @@ extension EditorMapLayer {
 		for island in islands {
 			Self.addPointList(island, toPath: path)
 
-			if !haveCoastline, Self.IsClockwisePolygon(island) {
+			if !haveCoastline, IsClockwisePolygon(island) {
 				// this will still fail if we have an island with a lake in it
 				haveCoastline = true
 			}

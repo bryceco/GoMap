@@ -403,6 +403,11 @@ final class OsmWay: OsmBaseObject {
 		return len
 	}
 
+	func areaInSquareMeters() -> Double {
+		let points = nodes.map { $0.latLon }
+		return AreaInSquareMeters(points: points)
+	}
+
 	// pick a point close to the center of the way
 	override func selectionPoint() -> LatLon {
 		var dist = lengthInMeters() / 2

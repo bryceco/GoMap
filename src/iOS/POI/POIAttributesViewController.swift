@@ -79,13 +79,13 @@ class POIAttributesViewController: UITableViewController {
 		if section == SectionType.metadata.getRawValue() {
 			return 6
 		}
-		if object.isNode() != nil {
+		if object is OsmNode {
 			if section == SectionType.nodeLatlon.getRawValue() {
 				return 1 // longitude/latitude
 			}
-		} else if let way = object.isWay() {
+		} else if let way = object as? OsmWay {
 			if section == SectionType.wayExtra.getRawValue() {
-				return 1
+				return way.isClosed() ? 2 : 1
 			} else if section == SectionType.wayNodes.getRawValue() {
 				return way.nodes.count // all nodes
 			}
@@ -135,26 +135,39 @@ class POIAttributesViewController: UITableViewController {
 			default:
 				assertionFailure()
 			}
-		} else if let node = object.isNode() {
+		} else if let node = object as? OsmNode {
 			if indexPath.section == SectionType.nodeLatlon.getRawValue() {
 				cell.title.text = NSLocalizedString("Lat/Lon", comment: "coordinates")
 				cell.value.text = "\(node.latLon.lat),\(node.latLon.lon)"
 			}
-		} else if let way = object.isWay() {
+		} else if let way = object as? OsmWay {
 			if indexPath.section == SectionType.wayExtra.getRawValue() {
-				let len = way.lengthInMeters()
-				let nodes = way.nodes.count
-				cell.title.text = NSLocalizedString("Length", comment: "")
-				cell.value.text = len >= 10
-					? String.localizedStringWithFormat(
-						NSLocalizedString("%.0f meters, %ld nodes", comment: "way length if > 10m"),
-						len,
-						nodes)
-					: String.localizedStringWithFormat(
-						NSLocalizedString("%.1f meters, %ld nodes", comment: "way length if < 10m"),
-						len,
-						nodes)
-				cell.accessoryType = .none
+				switch indexPath.row {
+				case 0:
+					// length
+					let len = way.lengthInMeters()
+					let nodes = way.nodes.count
+					cell.title.text = NSLocalizedString("Length", comment: "")
+					cell.value.text = len >= 10
+						? String.localizedStringWithFormat(
+							NSLocalizedString("%.0f meters, %ld nodes", comment: "way length if > 10m"),
+							len,
+							nodes)
+						: String.localizedStringWithFormat(
+							NSLocalizedString("%.1f meters, %ld nodes", comment: "way length if < 10m"),
+							len,
+							nodes)
+					cell.accessoryType = .none
+				case 1:
+					// area (only if closed way)
+					let len = way.areaInSquareMeters()
+					cell.title.text = NSLocalizedString("Area", comment: "Area of an object in m^2")
+					cell.value.text = String.localizedStringWithFormat(
+						NSLocalizedString("%.0f m^2", comment: "area in m^2"), len)
+					cell.accessoryType = .none
+				default:
+					break
+				}
 			} else if indexPath.section == SectionType.wayNodes.getRawValue() {
 				let node = way.nodes[indexPath.row]
 				cell.title.text = NSLocalizedString("Node", comment: "")
