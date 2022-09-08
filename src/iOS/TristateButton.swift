@@ -53,6 +53,10 @@ class TristateYesNoButton: TristateButton {
 		fatalError("init(coder:) has not been implemented")
 	}
 
+	override init(frame: CGRect) {
+		super.init(frame: frame)
+	}
+
 	override func stringForSelection() -> String? {
 		return ["no", nil, "yes"][selectedSegmentIndex]
 	}
