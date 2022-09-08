@@ -378,7 +378,7 @@
 		028C51E525CB7A23004A88F7 /* TristateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TristateButton.swift; sourceTree = "<group>"; };
 		028F504619BA2F460093C423 /* presets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = presets; path = ../presets; sourceTree = "<group>"; };
 		0290E76A279D15B6000810B9 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MainInterface.strings; sourceTree = "<group>"; };
-		0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QuadDownloadLayer.swift; path = ../Shared/QuadDownloadLayer.swift; sourceTree = "<group>"; };
+		0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadDownloadLayer.swift; sourceTree = "<group>"; };
 		029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "POI-Icons.xcassets"; path = "../POI-Icons/POI-Icons.xcassets"; sourceTree = "<group>"; };
 		029F8C1826F004FF0073A813 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		029F8C1926F004FF0073A813 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainInterface.strings; sourceTree = "<group>"; };
@@ -610,17 +610,17 @@
 		C3004F53263A99DC006BF313 /* POIAttributesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POIAttributesViewController.swift; sourceTree = "<group>"; };
 		C3004F61263B2524006BF313 /* POIAllTagsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POIAllTagsViewController.swift; sourceTree = "<group>"; };
 		C341E1522639DECC0022E983 /* WikiPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WikiPage.swift; path = ../Shared/WikiPage.swift; sourceTree = "<group>"; };
-		C341E1552639DEFC0022E983 /* FpsLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FpsLabel.swift; path = ../Shared/FpsLabel.swift; sourceTree = "<group>"; };
+		C341E1552639DEFC0022E983 /* FpsLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FpsLabel.swift; sourceTree = "<group>"; };
 		C341E1572639DF090022E983 /* Geekbench.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Geekbench.swift; sourceTree = "<group>"; };
 		C341E1592639DF210022E983 /* NotesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotesTableViewController.swift; sourceTree = "<group>"; };
 		C341E15B2639DF440022E983 /* NearbyMappersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyMappersViewController.swift; sourceTree = "<group>"; };
 		C365A562263FC53F007DEC94 /* TurnRestrictHwyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurnRestrictHwyView.swift; sourceTree = "<group>"; };
-		C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeechBalloonView.swift; path = ../Shared/SpeechBalloonView.swift; sourceTree = "<group>"; };
+		C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeechBalloonView.swift; sourceTree = "<group>"; };
 		C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapAndDragGesture.swift; sourceTree = "<group>"; };
 		C381C305263FD0CA003142BA /* VectorMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VectorMath.swift; path = ../Shared/VectorMath.swift; sourceTree = "<group>"; };
 		C381C306263FD0E8003142BA /* UndoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UndoManager.swift; sourceTree = "<group>"; };
 		C381C308263FD294003142BA /* DLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLog.swift; sourceTree = "<group>"; };
-		C381C30A263FE518003142BA /* PushPinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PushPinView.swift; path = ../Shared/PushPinView.swift; sourceTree = "<group>"; };
+		C381C30A263FE518003142BA /* PushPinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushPinView.swift; sourceTree = "<group>"; };
 		C3D0969B263CBC1100E3B129 /* POIFeaturePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POIFeaturePickerViewController.swift; sourceTree = "<group>"; };
 		C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistentWebCache.swift; path = ../Shared/PersistentWebCache.swift; sourceTree = "<group>"; };
 		C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorMapLayer.swift; sourceTree = "<group>"; };
@@ -628,14 +628,14 @@
 		C3D096AD263D4BFB00E3B129 /* UploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 		C3D096AF263D4FF500E3B129 /* TurnRestrictController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurnRestrictController.swift; sourceTree = "<group>"; };
 		C3D096B2263D618E00E3B129 /* HeightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightViewController.swift; sourceTree = "<group>"; };
-		C3D096B5263DF82F00E3B129 /* RulerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RulerView.swift; path = ../Shared/RulerView.swift; sourceTree = "<group>"; };
+		C3D096B5263DF82F00E3B129 /* RulerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RulerView.swift; sourceTree = "<group>"; };
 		C3D096B8263DFA2A00E3B129 /* RenderInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderInfo.swift; sourceTree = "<group>"; };
 		C3D096BD263E178600E3B129 /* aes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = aes.swift; sourceTree = "<group>"; };
 		C3D096C1263E567200E3B129 /* DisplayLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DisplayLink.swift; path = ../Shared/DisplayLink.swift; sourceTree = "<group>"; };
 		C3D096CA263E9A1100E3B129 /* DownloadThreadPool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadThreadPool.swift; path = ../Shared/DownloadThreadPool.swift; sourceTree = "<group>"; };
 		C3D096CE263EA0DB00E3B129 /* KeyChain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
 		C3D096D1263EA7E100E3B129 /* LayerProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerProperties.swift; sourceTree = "<group>"; };
-		C3D096D4263EACFF00E3B129 /* LocationBallLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationBallLayer.swift; path = ../Shared/LocationBallLayer.swift; sourceTree = "<group>"; };
+		C3D096D4263EACFF00E3B129 /* LocationBallLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationBallLayer.swift; sourceTree = "<group>"; };
 		C3D096D7263EAE1E00E3B129 /* MyApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyApplication.swift; sourceTree = "<group>"; };
 		C3D096DA263EB73E00E3B129 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		C3D096EE263EBE5D00E3B129 /* OsmMember.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OsmMember.swift; sourceTree = "<group>"; };
@@ -650,7 +650,7 @@
 		C3FA924F2640329B000A2A99 /* TileServerList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileServerList.swift; sourceTree = "<group>"; };
 		C3FA925126411557000A2A99 /* TileQuadKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileQuadKey.swift; sourceTree = "<group>"; };
 		C3FA925326411C2B000A2A99 /* MercatorTileLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercatorTileLayer.swift; sourceTree = "<group>"; };
-		C3FA925626416BF5000A2A99 /* GpxLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GpxLayer.swift; path = ../Shared/GpxLayer.swift; sourceTree = "<group>"; };
+		C3FA925626416BF5000A2A99 /* GpxLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxLayer.swift; sourceTree = "<group>"; };
 		ED56E5AA26024DA5000B368C /* AutocompleteTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteTextField.swift; sourceTree = "<group>"; };
 		ED56E5B226026541000B368C /* BingMetadataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BingMetadataViewController.swift; sourceTree = "<group>"; };
 		ED56E5B326026541000B368C /* ClearCacheViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClearCacheViewController.swift; sourceTree = "<group>"; };
@@ -862,15 +862,13 @@
 		02ACBCFF16713F7F00BB4414 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				02B52E7828CAA8F800CB55F3 /* CustomViews */,
 				02F5329B267AD0A50088DF41 /* Database */,
 				C3D096C1263E567200E3B129 /* DisplayLink.swift */,
 				C3D096CA263E9A1100E3B129 /* DownloadThreadPool.swift */,
 				02F53299267ACFBB0088DF41 /* EditorLayer */,
 				0203473E266C1EDD000A7C3D /* ExternalGPS.swift */,
-				C341E1552639DEFC0022E983 /* FpsLabel.swift */,
 				02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */,
-				C3FA925626416BF5000A2A99 /* GpxLayer.swift */,
-				C3D096D4263EACFF00E3B129 /* LocationBallLayer.swift */,
 				C3FA9248263FF95B000A2A99 /* LocationParser.swift */,
 				02C8C56326F446A3003B0122 /* MapMarkers */,
 				024909C8267BF9F70027E531 /* MapTransform.swift */,
@@ -879,10 +877,6 @@
 				6453776323D38D1F00656A1C /* OSMModels */,
 				C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */,
 				02CC01CF2584190A004444EF /* PresetsDatabase */,
-				C381C30A263FE518003142BA /* PushPinView.swift */,
-				0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */,
-				C3D096B5263DF82F00E3B129 /* RulerView.swift */,
-				C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */,
 				C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */,
 				02F5329A267AD0250088DF41 /* Tiles */,
 				C365A562263FC53F007DEC94 /* TurnRestrictHwyView.swift */,
@@ -892,6 +886,20 @@
 				C341E1522639DECC0022E983 /* WikiPage.swift */,
 			);
 			name = Shared;
+			sourceTree = "<group>";
+		};
+		02B52E7828CAA8F800CB55F3 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				C341E1552639DEFC0022E983 /* FpsLabel.swift */,
+				C3FA925626416BF5000A2A99 /* GpxLayer.swift */,
+				C3D096D4263EACFF00E3B129 /* LocationBallLayer.swift */,
+				C381C30A263FE518003142BA /* PushPinView.swift */,
+				0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */,
+				C3D096B5263DF82F00E3B129 /* RulerView.swift */,
+				C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */,
+			);
+			path = CustomViews;
 			sourceTree = "<group>";
 		};
 		02BC04E924C6767100BFA5EF /* Height */ = {
