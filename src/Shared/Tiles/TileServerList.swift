@@ -21,12 +21,18 @@ final class TileServerList {
 		set { UserDefaults.standard.set(newValue, forKey: "lastImageryDownloadDate") }
 	}
 
+	var onChange: (() -> Void)?
+
 	init() {
 		TileServer.fetchDynamicBingServer(nil)
 
-		fetchOsmLabAerials({ [self] in
-			// if a non-builtin aerial service is current then we need to select it once the list is loaded
-			load()
+		fetchOsmLabAerials({ isAsync in
+			// This completion might be called twice: first when the cached version loads
+			// and then again when an update is downloaded from the internet
+			self.load()
+			if isAsync {
+				self.onChange?()
+			}
 		})
 	}
 
@@ -306,7 +312,7 @@ final class TileServerList {
 		return []
 	}
 
-	private func fetchOsmLabAerials(_ completion: @escaping () -> Void) {
+	private func fetchOsmLabAerials(_ completion: @escaping (_ isAsync: Bool) -> Void) {
 		// get cached data
 		var cachedData = NSData(contentsOfFile: pathToExternalAerialsCache()) as Data?
 		if let data = cachedData {
@@ -315,7 +321,7 @@ final class TileServerList {
 			delta = CACurrentMediaTime() - delta
 			print("TileServerList decode time = \(delta)")
 			downloadedList = externalAerials
-			completion()
+			completion(false)
 
 			if externalAerials.count < 100 {
 				// something went wrong, so we need to download
@@ -351,7 +357,7 @@ final class TileServerList {
 							// notify caller of update
 							DispatchQueue.main.async(execute: { [self] in
 								downloadedList = externalAerials
-								completion()
+								completion(true)
 							})
 						}
 					}
@@ -361,7 +367,8 @@ final class TileServerList {
 	}
 
 	private func load() {
-		let list = UserDefaults.standard.object(forKey: CUSTOMAERIALLIST_KEY) as? [[String: Any]] ?? []
+		let defaults = UserDefaults.standard
+		let list = defaults.object(forKey: CUSTOMAERIALLIST_KEY) as? [[String: Any]] ?? []
 		userDefinedList = list.map({ TileServer(withDictionary: $0) })
 
 		// build a dictionary of all known sources
@@ -375,18 +382,16 @@ final class TileServerList {
 		for service in userDefinedList {
 			dict[service.identifier] = service
 		}
-		for service in [
-			TileServer.maxarPremiumAerial
-		] {
+		for service in [TileServer.maxarPremiumAerial] {
 			dict[service.identifier] = service
 		}
 
 		// fetch and decode recently used list
-		let recentIdentiers: [String] = UserDefaults.standard.object(forKey: RECENTLY_USED_KEY) as? [String] ?? []
+		let recentIdentiers: [String] = defaults.object(forKey: RECENTLY_USED_KEY) as? [String] ?? []
 		_recentlyUsed = recentIdentiers.compactMap({ dict[$0] })
 
-		let currentIdentifier: String = (UserDefaults.standard.object(forKey: CUSTOMAERIALSELECTION_KEY) as? String) ??
-			TileServer.defaultServer
+		let currentIdentifier = (defaults.object(forKey: CUSTOMAERIALSELECTION_KEY) as? String)
+			?? TileServer.defaultServer
 		currentServer = dict[currentIdentifier] ?? dict[TileServer.defaultServer] ?? builtinServers()[0]
 	}
 

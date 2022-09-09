@@ -130,14 +130,14 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 			preferredStyle: .alert)
 		present(alert, animated: true)
 
-		mapView.notesDatabase.update(note: note, close: resolve, comment: s) { [self] result in
+		mapView.mapMarkerDatabase.updateNote(note: note, close: resolve, comment: s) { [self] result in
 			alert.dismiss(animated: true)
 			switch result {
 			case let .success(newNote):
 				note = newNote
 				DispatchQueue.main.async(execute: { [self] in
 					done(nil)
-					mapView.refreshNoteButtonsFromDatabase()
+					mapView.refreshMapMarkerButtonsFromDatabase()
 				})
 			case let .failure(error):
 				let alert2 = UIAlertController(

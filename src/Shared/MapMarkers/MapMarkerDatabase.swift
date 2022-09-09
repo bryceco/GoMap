@@ -12,7 +12,7 @@ import Foundation
 final class MapMarkerDatabase: NSObject {
 	private let workQueue = OperationQueue()
 	private var _keepRightIgnoreList: [Int: Bool]? // FIXME: Use UserDefaults for storage so this becomes non-optional
-	private var noteForTag: [Int: MapMarker] = [:] // return the note with the given button tag (tagId)
+	private var markerForTag: [Int: MapMarker] = [:] // return the note with the given button tag (tagId)
 	private var tagForKey: [String: Int] = [:]
 	weak var mapData: OsmMapData!
 
@@ -23,7 +23,7 @@ final class MapMarkerDatabase: NSObject {
 
 	func reset() {
 		workQueue.cancelAllOperations()
-		noteForTag.removeAll()
+		markerForTag.removeAll()
 		tagForKey.removeAll()
 	}
 
@@ -34,10 +34,10 @@ final class MapMarkerDatabase: NSObject {
 		let newTag = newNote.buttonId
 		if let oldTag = tagForKey[key] {
 			// remove any existing tag with the same key
-			noteForTag.removeValue(forKey: oldTag)
+			markerForTag.removeValue(forKey: oldTag)
 		}
 		tagForKey[key] = newTag
-		noteForTag[newTag] = newNote
+		markerForTag[newTag] = newNote
 	}
 
 	func updateMarkers(forRegion box: OSMRect, fixmeData mapData: OsmMapData, completion: @escaping () -> Void) {
@@ -161,13 +161,13 @@ final class MapMarkerDatabase: NSObject {
 		})
 	}
 
-	func enumerateNotes(_ callback: (_ note: MapMarker) -> Void) {
-		for note in noteForTag.values {
-			callback(note)
+	func enumerateMapMarkers(_ callback: (_ note: MapMarker) -> Void) {
+		for marker in markerForTag.values {
+			callback(marker)
 		}
 	}
 
-	func update(
+	func updateNote(
 		note: OsmNoteMarker,
 		close: Bool,
 		comment: String,
@@ -214,7 +214,7 @@ final class MapMarkerDatabase: NSObject {
 	}
 
 	func mapMarker(forTag tag: Int) -> MapMarker? {
-		return noteForTag[tag]
+		return markerForTag[tag]
 	}
 
 	// MARK: Ignore list
