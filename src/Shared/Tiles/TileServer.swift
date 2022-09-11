@@ -196,7 +196,7 @@ final class TileServer {
 	static let mapnik = TileServer(
 		withName: "MapnikTiles",
 		identifier: MAPNIK_IDENTIFIER,
-		url: "https://{switch:a,b,c}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+		url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
 		best: false,
 		apiKey: "",
 		maxZoom: 19,
