@@ -212,7 +212,7 @@ final class TileServer {
 	static let gpsTrace = TileServer(
 		withName: "OSM GPS Traces",
 		identifier: OSM_GPS_TRACE_IDENTIFIER,
-		url: "https://gps-{switch:a,b,c}.tile.openstreetmap.org/lines/{z}/{x}/{y}.png",
+		url: "https://gps.tile.openstreetmap.org/lines/{z}/{x}/{y}.png",
 		best: false,
 		apiKey: "",
 		maxZoom: 20,
