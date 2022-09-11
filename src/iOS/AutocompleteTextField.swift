@@ -324,4 +324,20 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 		}
 		return true
 	}
+
+	@available(iOS 16.0, *)
+	func textField(_ textField: UITextField, editMenuForCharactersIn range: NSRange, suggestedActions: [UIMenuElement]) -> UIMenu? {
+		return realDelegate?.textField?(textField, editMenuForCharactersIn: range, suggestedActions: suggestedActions)
+			?? UIMenu(children:suggestedActions)
+	}
+
+	@available(iOS 16.0, *)
+	func textField(_ textField: UITextField, willPresentEditMenuWith animator: UIEditMenuInteractionAnimating) {
+		realDelegate?.textField?(textField, willPresentEditMenuWith: animator)
+	}
+
+	@available(iOS 16.0, *)
+	func textField(_ textField: UITextField, willDismissEditMenuWith animator: UIEditMenuInteractionAnimating) {
+		realDelegate?.textField?(textField, willDismissEditMenuWith: animator)
+	}
 }
