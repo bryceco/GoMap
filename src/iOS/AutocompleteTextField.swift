@@ -325,6 +325,9 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 		return true
 	}
 
+	// The delegate value (which will return realDelegate) is tested to determine whether
+	// the EditMenu functions are implemented, so these won't be called typically,
+	// instead they'll be called in realDelegate.
 	@available(iOS 16.0, *)
 	func textField(_ textField: UITextField, editMenuForCharactersIn range: NSRange, suggestedActions: [UIMenuElement]) -> UIMenu? {
 		return realDelegate?.textField?(textField, editMenuForCharactersIn: range, suggestedActions: suggestedActions)
