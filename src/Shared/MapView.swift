@@ -2545,9 +2545,14 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 	}
 
+	// unfortunately macCatalyst does't handle setting pinch.scale correctly, so
+	// we need to track the previous scale
+	var prevousPinchScale = 0.0
+
 	@objc func handlePinchGesture(_ pinch: UIPinchGestureRecognizer) {
 		switch pinch.state {
 		case .began:
+			prevousPinchScale = 1.0
 			fallthrough
 		case .changed:
 			userOverrodeLocationZoom = true
@@ -2555,8 +2560,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			DisplayLink.shared.removeName(DisplayLinkPanning)
 
 			let zoomCenter = pinch.location(in: self)
-			adjustZoom(by: pinch.scale, aroundScreenPoint: zoomCenter)
-			pinch.scale = 1.0
+
+			let scale = pinch.scale / prevousPinchScale
+			adjustZoom(by: scale, aroundScreenPoint: zoomCenter)
+			prevousPinchScale = pinch.scale
 		case .ended:
 			updateMapMarkersFromServer(withDelay: 0)
 		default:
