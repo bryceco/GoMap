@@ -328,10 +328,13 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 	// The delegate value (which will return realDelegate) is tested to determine whether
 	// the EditMenu functions are implemented, so these won't be called typically,
 	// instead they'll be called in realDelegate.
+#if targetEnvironment(macCatalyst)
+	// Various errors on MacCatalyst for these
+#else
 	@available(iOS 16.0, *)
 	func textField(_ textField: UITextField, editMenuForCharactersIn range: NSRange, suggestedActions: [UIMenuElement]) -> UIMenu? {
 		return realDelegate?.textField?(textField, editMenuForCharactersIn: range, suggestedActions: suggestedActions)
-			?? UIMenu(children:suggestedActions)
+				?? UIMenu(children:suggestedActions)
 	}
 
 	@available(iOS 16.0, *)
@@ -343,4 +346,5 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 	func textField(_ textField: UITextField, willDismissEditMenuWith animator: UIEditMenuInteractionAnimating) {
 		realDelegate?.textField?(textField, willDismissEditMenuWith: animator)
 	}
+#endif
 }
