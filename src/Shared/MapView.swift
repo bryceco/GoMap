@@ -1123,7 +1123,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			                              	comment: ""),
 			                              preferredStyle: .alert)
 			alert.addAction(UIAlertAction(title: NSLocalizedString("Ignore", comment: ""), style: .cancel,
-										  handler: nil))
+			                              handler: nil))
 			alert.addAction(UIAlertAction(title: NSLocalizedString("Change", comment: ""), style: .default,
 			                              handler: { _ in
 			                              	self.tileServerList.currentServer = best
