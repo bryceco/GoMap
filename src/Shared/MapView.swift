@@ -2559,8 +2559,15 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 			DisplayLink.shared.removeName(DisplayLinkPanning)
 
+#if targetEnvironment(macCatalyst)
+			// On Mac we want to zoom around the screen center, not the cursor.
+			// This is better determined by testing for indirect touches, but
+			// that information isn't exposed by the gesture recognizer.
+			// If we're zooming via mouse then we'll follow the zoom path, not the pinch path.
+			let zoomCenter = crossHairs.position
+#else
 			let zoomCenter = pinch.location(in: self)
-
+#endif
 			let scale = pinch.scale / prevousPinchScale
 			adjustZoom(by: scale, aroundScreenPoint: zoomCenter)
 			prevousPinchScale = pinch.scale
