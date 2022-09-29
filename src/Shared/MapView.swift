@@ -2661,7 +2661,14 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			case .began:
 				break // ignore
 			case .changed:
+#if targetEnvironment(macCatalyst)
+				// On Mac we want to rotate around the screen center, not the cursor.
+				// This is better determined by testing for indirect touches, but
+				// that information isn't exposed by the gesture recognizer.
+				let centerPoint = crossHairs.position
+#else
 				let centerPoint = rotationGesture.location(in: self)
+#endif
 				let angle = rotationGesture.rotation
 				rotate(by: angle, aroundScreenPoint: centerPoint)
 				rotationGesture.rotation = 0.0
