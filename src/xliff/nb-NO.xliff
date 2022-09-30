@@ -957,7 +957,7 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="Please wait" xml:space="preserve">
         <source>Please wait</source>
-        <target>Vent …</target>
+        <target state="translated">Vent</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
@@ -1564,7 +1564,7 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
         <source>Set Height</source>
-        <target>Set Height</target>
+        <target state="translated">Sett høyde</target>
         <note>Class = "UIButton"; normalTitle = "Set Height"; ObjectID = "QZK-2k-kEa";</note>
       </trans-unit>
       <trans-unit id="SdH-uy-BuK.normalTitle" xml:space="preserve">
@@ -1574,7 +1574,7 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
       </trans-unit>
       <trans-unit id="juy-LX-vDs.normalTitle" xml:space="preserve">
         <source>Height</source>
-        <target>Height</target>
+        <target state="translated">Høyde</target>
         <note>Class = "UIButton"; normalTitle = "Height"; ObjectID = "juy-LX-vDs";</note>
       </trans-unit>
       <trans-unit id="l5O-tO-QFr.normalTitle" xml:space="preserve">
@@ -2078,7 +2078,7 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
       </trans-unit>
       <trans-unit id="DmO-dW-3Fh.text" xml:space="preserve">
         <source>Collect in background:</source>
-        <target>Samle inn i bakgrunnen</target>
+        <target state="translated">Samle inn i bakgrunnen:</target>
         <note>Class = "UILabel"; text = "Collect in background:"; ObjectID = "DmO-dW-3Fh";</note>
       </trans-unit>
       <trans-unit id="EHa-L5-Hcz.text" xml:space="preserve">
@@ -2415,6 +2415,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="w75-Lj-3jF.placeholder" xml:space="preserve">
         <source>Portlandia GIS</source>
+        <target state="translated">Portlandia GIS</target>
         <note>Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF"; Note = "A hypothetical aerial imagery provider";</note>
       </trans-unit>
       <trans-unit id="wev-ax-u4C.headerTitle" xml:space="preserve">
