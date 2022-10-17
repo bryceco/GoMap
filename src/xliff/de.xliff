@@ -317,7 +317,7 @@
       </trans-unit>
       <trans-unit id="Bad login" xml:space="preserve">
         <source>Bad login</source>
-        <target state="translated">Name und / oder Passwort ungültig</target>
+        <target state="translated">Login fehlgeschlagen</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
