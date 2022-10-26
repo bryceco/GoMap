@@ -64,25 +64,6 @@ final class TileServerList {
 		return ""
 	}
 
-	private func addPoints(_ points: [[NSNumber]], to path: CGMutablePath) {
-		var first = true
-		for pt in points {
-			if pt.count != 2 {
-				continue
-			}
-			let lon = CGFloat(pt[0].doubleValue)
-			let lat = CGFloat(pt[1].doubleValue)
-			let cgPoint = CGPoint(x: lon, y: lat)
-			if first {
-				path.move(to: cgPoint)
-				first = false
-			} else {
-				path.addLine(to: cgPoint)
-			}
-		}
-		path.closeSubpath()
-	}
-
 	private func processOsmLabAerialsList(_ featureArray: [Any]?, isGeoJSON: Bool) -> [TileServer] {
 		let categories = [
 			"photo": true,
@@ -188,36 +169,17 @@ final class TileServerList {
 				}
 			}
 
-			var polygonPoints: [Any]?
-			var isMultiPolygon = false // a GeoJSON multipolygon, which has an extra layer of nesting
+			var polygon: CGPath?
 			if isGeoJSON {
 				if let geometry = entry["geometry"] as? [String: Any] {
-					polygonPoints = geometry["coordinates"] as? [Any]
-					isMultiPolygon = (geometry["type"] as? String ?? "") == "MultiPolygon"
+					polygon = GeoJSON(geometry: geometry)?.bezierPath.cgPath
 				}
 			} else {
-				polygonPoints = propExtent["polygon"] as? [Any]
-			}
-
-			var polygon: CGPath?
-			if let polygonPoints = polygonPoints {
-				let path = CGMutablePath()
-				if isMultiPolygon {
-					if let polygonPoints = polygonPoints as? [[[[NSNumber]]]] {
-						for outer in polygonPoints {
-							for loop in outer {
-								addPoints(loop, to: path)
-							}
-						}
-					}
-				} else {
-					if let polygonPoints = polygonPoints as? [[[NSNumber]]] {
-						for loop in polygonPoints {
-							addPoints(loop, to: path)
-						}
-					}
+				if let coordinates = propExtent["polygon"] as? [Any] {
+					let geometry: [String: Any] = ["type": "Polygon",
+					                               "coordinates": coordinates]
+					polygon = GeoJSON(geometry: geometry)?.bezierPath.cgPath
 				}
-				polygon = path.copy()
 			}
 
 			var attribIcon: UIImage?

@@ -34,11 +34,12 @@ extension PresetsDatabase {
 				}
 			}
 		} else {
-			let countryCode = AppDelegate.shared.mapView.countryCodeForLocation
+			let mapview = AppDelegate.shared.mapView!
+			let latLon = mapview.mapTransform.latLon(forScreenPoint: mapview.crosshairs())
 			list = PresetsDatabase.shared.featuresMatchingSearchText(
 				searchText,
 				geometry: geometry,
-				country: countryCode)
+				latLon: latLon)
 		}
 		list.sort(by: { obj1, obj2 -> Bool in
 			if obj1.score != obj2.score {

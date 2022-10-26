@@ -21,7 +21,7 @@ final class PresetFeature {
 	let geometry: [String]
 	let icon: String? // icon on the map
 	let logoURL: String? // NSI brand image
-	let locationSet: [String: [String]]?
+	let locationSet: [String: [Any]]?
 	let matchScore: Float
 	let moreFields: [String]?
 	let name: String?
@@ -40,10 +40,10 @@ final class PresetFeature {
 		geometry = jsonDict["geometry"] as? [String] ?? []
 		icon = jsonDict["icon"] as? String
 		logoURL = jsonDict["imageURL"] as? String
-		locationSet = PresetFeature.convertLocationSet(jsonDict["locationSet"] as? [String: [String]])
+		locationSet = jsonDict["locationSet"] as? [String: [Any]]
 		matchScore = Float(jsonDict["matchScore"] as? Double ?? 1.0)
 		moreFields = jsonDict["moreFields"] as? [String]
-		name = jsonDict["name"] as? String
+		name = jsonDict["name"] as? String ?? ""
 		reference = jsonDict["reference"] as? [String: String]
 		_removeTags = jsonDict["removeTags"] as? [String: String]
 		searchable = jsonDict["searchable"] as? Bool ?? true
@@ -56,22 +56,6 @@ final class PresetFeature {
 		aliases = (jsonDict["aliases"] as? String)?.split(separator: "\n").map({ String($0) }) ?? []
 
 		nsiSuggestion = isNSI
-	}
-
-	class func convertLocationSet(_ locationSet: [String: [String]]?) -> [String: [String]]? {
-		// convert locations to country codes
-		guard var includes = locationSet?["include"] else { return nil }
-		for i in 0..<includes.count {
-			switch includes[i] {
-			case "conus":
-				includes[i] = "us"
-			case "001":
-				return nil
-			default:
-				continue
-			}
-		}
-		return ["include": includes]
 	}
 
 	let nsiSuggestion: Bool // is from NSI

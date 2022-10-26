@@ -6,7 +6,9 @@
 //  Copyright © 2020 Bryce Cogswell. All rights reserved.
 //
 
+import CountryCoder
 import Foundation
+import UIKit.UIBezierPath
 
 final class PresetsDatabase {
 	static var shared = PresetsDatabase()
@@ -21,6 +23,7 @@ final class PresetsDatabase {
 	// these map a tag key to a list of features that require that key
 	let stdIndex: [String: [PresetFeature]] // generic preset index
 	var nsiIndex: [String: [PresetFeature]] // generic+NSI index
+	var nsiGeoJson: [String: GeoJSON] // geojson regions for NSI
 
 	private class func DictionaryForFile(_ file: String?) -> Any? {
 		guard let file = file else { return nil }
@@ -106,6 +109,7 @@ final class PresetsDatabase {
 		// name suggestion index
 		nsiPresets = [String: PresetFeature]()
 		nsiIndex = stdIndex
+		nsiGeoJson = [String: GeoJSON]()
 
 		DispatchQueue.global(qos: .userInitiated).async {
 			let jsonNsiPresetsDict = PresetsDatabase.DictionaryForFile("nsi_presets.json")
@@ -133,6 +137,28 @@ final class PresetsDatabase {
 					                       update: nil)
 				}
 #endif
+			}
+		}
+
+		DispatchQueue.global(qos: .userInitiated).async {
+			if let json = Self.DictionaryForFile("nsi_geojson.json"),
+			   let dict = json as? [String: Any?],
+			   let features = dict["features"] as? [Any]
+			{
+				var featureDict = [String: GeoJSON]()
+				for feature2 in features {
+					guard let feature = feature2 as? [String: Any?] else { continue }
+					if feature["type"] as? String == "Feature",
+					   let name = feature["id"] as? String,
+					   let geomDict = feature["geometry"] as? [String: Any?],
+					   let geojson = GeoJSON(geometry: geomDict)
+					{
+						featureDict[name] = geojson
+					}
+				}
+				DispatchQueue.main.async {
+					self.nsiGeoJson = featureDict
+				}
 			}
 		}
 	}
@@ -195,10 +221,10 @@ final class PresetsDatabase {
 	}
 
 	func enumeratePresetsAndNsiUsingBlock(_ block: (_ feature: PresetFeature) -> Void) {
-		for (_, v) in stdPresets {
+		for v in stdPresets.values {
 			block(v)
 		}
-		for (_, v) in nsiPresets {
+		for v in nsiPresets.values {
 			block(v)
 		}
 	}
@@ -259,30 +285,62 @@ final class PresetsDatabase {
 	}
 
 	func featuresMatchingSearchText(_ searchText: String?, geometry: GEOMETRY,
-	                                country: String?) -> [(PresetFeature, Int)]
+	                                latLon: LatLon) -> [(PresetFeature, Int)]
 	{
+		let latLonAsPoint = CGPoint(OSMPoint(latLon))
 		var list = [(PresetFeature, Int)]()
 		enumeratePresetsAndNsiUsingBlock { feature in
-			if feature.searchable {
-				if let country = country,
-				   let loc = feature.locationSet,
-				   let includes = loc["include"]
-				{
-					if !includes.contains(where: {
-						if let dashIndex = $0.firstIndex(of: "-") {
-							// FIXME: we don't yet support checking the state/province following the "-"
-							return $0[..<dashIndex] == country
+			guard feature.searchable,
+			      let score = feature.matchesSearchText(searchText, geometry: geometry)
+			else {
+				return
+			}
+			if let loc = feature.locationSet,
+			   let includes = loc["include"]
+			{
+				let okay = includes.contains(where: { include in
+
+					if let include = include as? String {
+						if include == "001" {
+							return true
+						} else if include.hasSuffix(".geojson") {
+							if let geojson = self.nsiGeoJson[include],
+							   geojson.bezierPath.contains(latLonAsPoint)
+							{
+								print("accepting \(include)")
+								return true
+							}
+							return false
 						} else {
-							return $0 == country
+							guard let bezier = CountryCoder.shared?.geometryForCountryCode(include) else {
+								print("unknown code: \(feature.name ?? "?"): \(include)")
+								return false
+							}
+							if bezier.contains(latLonAsPoint) {
+								print("accepting \(include)")
+								return true
+							}
+							return false
 						}
-					}) {
-						return
+					} else if let numbers = include as? [NSNumber],
+					          (2...3).contains(numbers.count)
+					{
+						// lat, lon, radius
+						let lon = numbers[0].doubleValue
+						let lat = numbers[1].doubleValue
+						let radius = numbers.count > 2 ? numbers[2].doubleValue : 25000.0
+						let dist = GreatCircleDistance(LatLon(lon: lon, lat: lat),
+						                               latLon)
+						return dist <= radius
 					}
-				}
-				if let score = feature.matchesSearchText(searchText, geometry: geometry) {
-					list.append((feature, score))
+					print("unknown include: \(feature.name ?? "?"): \(include)")
+					return false
+				})
+				if !okay {
+					return
 				}
 			}
+			list.append((feature, score))
 		}
 		return list
 	}
