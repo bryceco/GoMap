@@ -380,6 +380,9 @@
 /* No comment provided by engineer. */
 "Joining would invalidate a Turn Restriction the way belongs to" = "A união invalidará uma restrição de viragem à qual o elemento pertence";
 
+/* kilometers per hour speed */
+"km/h" = "km/h";
+
 /* No comment provided by engineer. */
 "Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "Atualmente a escolha do idioma só altera o idioma dos modelos de etiquetas (se estiverem traduzidos no editor iD). A interface principal ainda é mostrada em inglês. Futuramente estará disponível em outros idiomas.";
 
@@ -469,6 +472,9 @@
 
 /* No comment provided by engineer. */
 "Move selected object?" = "Mover o objeto selecionado?";
+
+/* miles per hour speed */
+"mph" = "mph";
 
 /* No comment provided by engineer. */
 "Multipolygon" = "Multipolígono";

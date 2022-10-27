@@ -383,6 +383,9 @@
 /* No comment provided by engineer. */
 "Joining would invalidate a Turn Restriction the way belongs to" = "ジョインするとこのウェイが属する進行方向制限を無効にする可能性があります";
 
+/* kilometers per hour speed */
+"km/h" = "km/時";
+
 /* No comment provided by engineer. */
 "Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "言語選択はiD用に翻訳されたプリセットにだけ影響します。メインのインタフェースはまだ英語だけです。";
 
@@ -472,6 +475,9 @@
 
 /* No comment provided by engineer. */
 "Move selected object?" = "選択したオブジェクトを移動しますか？";
+
+/* miles per hour speed */
+"mph" = "mph";
 
 /* No comment provided by engineer. */
 "Multipolygon" = "マルチポリゴン";

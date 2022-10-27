@@ -108,7 +108,10 @@
 "Adding members:" = "Tillegg av medlemmer:";
 
 /* No comment provided by engineer. */
-"Additional imagery" = "Ytterligere bildemateriale.";
+"Additional imagery" = "Ytterligere bildemateriale";
+
+/* No comment provided by engineer. */
+"Aerial only" = "Kun flyfoto";
 
 /* No comment provided by engineer. */
 "All choices" = "Alle valg";
@@ -157,6 +160,18 @@
 
 /* No comment provided by engineer. */
 "Can't extend way" = "Kan ikke forlenge vei";
+
+/* No comment provided by engineer. */
+"Can't remove component of a Route or similar relation" = "Kan ikke fjerne en komponent i en rute eller lignende relasjon";
+
+/* No comment provided by engineer. */
+"Can't remove Turn Restriction 'via' node" = "Kan ikke fjerne svingerestriksjon 'via' node";
+
+/* No comment provided by engineer. */
+"Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" = "Kan ikke fjerne node i svingerestriksjonen som kobler 'til'/'fra' til 'via'";
+
+/* No comment provided by engineer. */
+"Can't remove Turn Restriction to/from way" = "Kan ikke fjerne svingerestriksjon til/fra vei";
 
 /* No comment provided by engineer. */
 "Cancel" = "Avbryt";
@@ -475,7 +490,7 @@
 "Perform Action" = "Utfør handling";
 
 /* No comment provided by engineer. */
-"Please wait" = "Vent …";
+"Please wait" = "Vent";
 
 /* No comment provided by engineer. */
 "Previous" = "Forrige";
@@ -632,7 +647,7 @@
 "Updating Note..." = "Oppdaterer notat …";
 
 /* No comment provided by engineer. */
-"Upload complete!" = "Oppdatert.";
+"Upload complete!" = "Opplasting fullført!";
 
 /* No comment provided by engineer. */
 "Upload to OSM" = "Last opp til OSM";

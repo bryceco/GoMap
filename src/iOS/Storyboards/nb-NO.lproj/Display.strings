@@ -50,7 +50,7 @@
 "dIe-MC-t44.text" = "Automatisk";
 
 /* Class = "UILabel"; text = "Collect in background:"; ObjectID = "DmO-dW-3Fh"; */
-"DmO-dW-3Fh.text" = "Samle inn i bakgrunnen";
+"DmO-dW-3Fh.text" = "Samle inn i bakgrunnen:";
 
 /* Class = "UIButton"; normalTitle = "Bing"; ObjectID = "eac-Db-EaW"; */
 "eac-Db-EaW.normalTitle" = "Bing";
@@ -177,6 +177,9 @@
 
 /* Class = "UILabel"; text = "Enable Rotation"; ObjectID = "VUR-wT-knn"; */
 "VUR-wT-knn.text" = "Skru på rotasjon";
+
+/* Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF"; Note = "A hypothetical aerial imagery provider"; */
+"w75-Lj-3jF.placeholder" = "Portlandia GIS";
 
 /* Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C"; */
 "wev-ax-u4C.headerTitle" = "Tilbakestill";

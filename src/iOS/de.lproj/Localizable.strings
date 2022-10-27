@@ -138,7 +138,7 @@
 "Background imagery %@" = "Hintergrundbilder %@";
 
 /* No comment provided by engineer. */
-"Bad login" = "Schlechter Login";
+"Bad login" = "Login fehlgeschlagen";
 
 /* No comment provided by engineer. */
 "Cache size warning" = "Cachegrößen-Warnung";
@@ -383,6 +383,9 @@
 /* No comment provided by engineer. */
 "Joining would invalidate a Turn Restriction the way belongs to" = "Verbinden würde eine Abbiegebeschränkung des Wegs ungültig machen";
 
+/* kilometers per hour speed */
+"km/h" = "km/h";
+
 /* No comment provided by engineer. */
 "Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "Die Sprachauswahl betrifft nur Vorlagen und nur jene Vorlagen die für iD übersetzt wurden. Die Hauptoberfläche ist immer noch englisch.";
 
@@ -472,6 +475,9 @@
 
 /* No comment provided by engineer. */
 "Move selected object?" = "Ausgewähltes Objekt bewegen?";
+
+/* miles per hour speed */
+"mph" = "mph";
 
 /* No comment provided by engineer. */
 "Multipolygon" = "Multipolygon";

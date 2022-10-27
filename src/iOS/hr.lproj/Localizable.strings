@@ -383,6 +383,9 @@
 /* No comment provided by engineer. */
 "Joining would invalidate a Turn Restriction the way belongs to" = "Spajanje bi poništilo zabranu skretanja s puta kojemu pripada";
 
+/* kilometers per hour speed */
+"km/h" = "km/h";
+
 /* No comment provided by engineer. */
 "Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "Odabir jezika utječe samo na predodređene postavke i na one, koje su prevedene za iD. Jezik glavnog sučelja je i nadalje engleski.";
 
@@ -472,6 +475,9 @@
 
 /* No comment provided by engineer. */
 "Move selected object?" = "Premjestiti odabrani objekt?";
+
+/* miles per hour speed */
+"mph" = "milja/h";
 
 /* No comment provided by engineer. */
 "Multipolygon" = "Mnogokut";
