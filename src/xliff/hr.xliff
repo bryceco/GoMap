@@ -1555,6 +1555,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
       </trans-unit>
       <trans-unit id="km/h" xml:space="preserve">
         <source>km/h</source>
+        <target state="translated">km/h</target>
         <note>kilometers per hour speed</note>
       </trans-unit>
       <trans-unit id="meters" xml:space="preserve">
@@ -1569,6 +1570,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
       </trans-unit>
       <trans-unit id="mph" xml:space="preserve">
         <source>mph</source>
+        <target state="translated">milja/h</target>
         <note>miles per hour speed</note>
       </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">
