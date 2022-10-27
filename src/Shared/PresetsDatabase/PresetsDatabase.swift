@@ -8,7 +8,6 @@
 
 import CountryCoder
 import Foundation
-import UIKit.UIBezierPath
 
 final class PresetsDatabase {
 	static var shared = PresetsDatabase()
@@ -305,7 +304,7 @@ final class PresetsDatabase {
 							return true
 						} else if include.hasSuffix(".geojson") {
 							if let geojson = self.nsiGeoJson[include],
-							   geojson.bezierPath.contains(latLonAsPoint)
+							   geojson.contains(latLonAsPoint)
 							{
 								print("accepting \(include)")
 								return true

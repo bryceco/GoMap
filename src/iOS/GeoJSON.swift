@@ -11,47 +11,70 @@ import Foundation
 import UIKit.UIBezierPath
 
 final class GeoJSON {
-	let bezierPath: UIBezierPath
+	enum GeoJsonError: Error {
+		case invalidFormat
+	}
 
-	private static func addPoints(_ points: [[NSNumber]], to path: UIBezierPath) {
-		var first = true
-		for pt in points {
-			if pt.count != 2 {
-				continue
-			}
-			let lon = CGFloat(pt[0].doubleValue)
-			let lat = CGFloat(pt[1].doubleValue)
-			let cgPoint = CGPoint(x: lon, y: lat)
-			if first {
-				path.move(to: cgPoint)
-				first = false
-			} else {
-				path.addLine(to: cgPoint)
-			}
+	private let bezierPath: UIBezierPath
+
+	var cgPath: CGPath { return bezierPath.cgPath }
+
+	func contains(_ point: CGPoint) -> Bool {
+		return bezierPath.contains(point)
+	}
+
+	private static func pointForPointArray(_ point: [NSNumber]) throws -> CGPoint {
+		if point.count != 2 {
+			throw GeoJsonError.invalidFormat
+		}
+		let lon = CGFloat(point[0].doubleValue)
+		let lat = CGFloat(point[1].doubleValue)
+		return CGPoint(x: lon, y: lat)
+	}
+
+	private static func addLoopPoints(_ points: [[NSNumber]], to path: UIBezierPath) throws {
+		if points.count < 4 {
+			throw GeoJsonError.invalidFormat
+		}
+		path.move(to: try Self.pointForPointArray(points[0]))
+		for pt in points.dropFirst() {
+			path.addLine(to: try Self.pointForPointArray(pt))
 		}
 		path.close()
 	}
 
+	// A Polygon is an outer ring plus optional holes
+	private static func addPolygonPoints(_ points: [[[NSNumber]]], to path: UIBezierPath) throws {
+		for loop in points {
+			try Self.addLoopPoints(loop, to: path)
+		}
+	}
+
+	// A MultiPolygon is a list of Polygons
+	private static func addMultiPolygonPoints(_ points: [[[[NSNumber]]]], to path: UIBezierPath) throws {
+		for loop in points {
+			try Self.addPolygonPoints(loop, to: path)
+		}
+	}
+
 	init?(geometry: [String: Any?]) {
-		guard let polygonPoints = geometry["coordinates"],
+		guard let points = geometry["coordinates"],
 		      let type = geometry["type"] as? String
 		else { return nil }
 
 		let path = UIBezierPath()
-		switch type {
-		case "Polygon":
-			guard let polygonPoints = polygonPoints as? [[[NSNumber]]] else { return nil }
-			for loop in polygonPoints {
-				Self.addPoints(loop, to: path)
+		do {
+			switch type {
+			case "Polygon":
+				guard let points = points as? [[[NSNumber]]] else { return nil }
+				try Self.addPolygonPoints(points, to: path)
+			case "MultiPolygon":
+				guard let points = points as? [[[[NSNumber]]]] else { return nil }
+				try Self.addMultiPolygonPoints(points, to: path)
+			default:
+				return nil
 			}
-		case "MultiPolygon":
-			guard let polygonPoints = polygonPoints as? [[[[NSNumber]]]] else { return nil }
-			for outer in polygonPoints {
-				for loop in outer {
-					Self.addPoints(loop, to: path)
-				}
-			}
-		default:
+		} catch {
 			return nil
 		}
 		bezierPath = path

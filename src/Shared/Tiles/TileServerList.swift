@@ -172,13 +172,13 @@ final class TileServerList {
 			var polygon: CGPath?
 			if isGeoJSON {
 				if let geometry = entry["geometry"] as? [String: Any] {
-					polygon = GeoJSON(geometry: geometry)?.bezierPath.cgPath
+					polygon = GeoJSON(geometry: geometry)?.cgPath
 				}
 			} else {
 				if let coordinates = propExtent["polygon"] as? [Any] {
 					let geometry: [String: Any] = ["type": "Polygon",
 					                               "coordinates": coordinates]
-					polygon = GeoJSON(geometry: geometry)?.bezierPath.cgPath
+					polygon = GeoJSON(geometry: geometry)?.cgPath
 				}
 			}
 
