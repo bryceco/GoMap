@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		02008650265B25DC008F37DD /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028816A2265AD9D100C30EA2 /* Database.swift */; };
 		0200C1C22703B42600A79804 /* LocationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0200C1C12703B42600A79804 /* LocationParser.swift */; };
-		0200FECB290885EE002C3F94 /* CountryCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 0200FECA290885EE002C3F94 /* CountryCoder */; };
 		0200FECD2908B0EB002C3F94 /* GeoJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0200FECC2908B0EB002C3F94 /* GeoJSON.swift */; };
 		0203473D26695B2A000A7C3D /* EditorMapLayer+Edit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0203473C26695B2A000A7C3D /* EditorMapLayer+Edit.swift */; };
 		0203473F266C1EDD000A7C3D /* ExternalGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0203473E266C1EDD000A7C3D /* ExternalGPS.swift */; };
@@ -30,6 +29,7 @@
 		021FADD725873D0100F6E1C0 /* PresetsForFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADD625873D0100F6E1C0 /* PresetsForFeature.swift */; };
 		021FADE22588474300F6E1C0 /* PresetCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADE12588474300F6E1C0 /* PresetCategory.swift */; };
 		021FADEF25884BB900F6E1C0 /* OsmTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADEE25884BB900F6E1C0 /* OsmTags.swift */; };
+		0220526429283498003C6AE1 /* CountryCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220526329283498003C6AE1 /* CountryCoder.swift */; };
 		02263CDF2677F93A002BA72F /* QuadBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02263CDE2677F93A002BA72F /* QuadBox.swift */; };
 		0226B771268300C9005DB9E2 /* Data+Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B770268300C9005DB9E2 /* Data+Wrapper.swift */; };
 		0226B7732683BCB6005DB9E2 /* URLSession+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */; };
@@ -312,6 +312,7 @@
 		021FADE12588474300F6E1C0 /* PresetCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetCategory.swift; sourceTree = "<group>"; };
 		021FADEE25884BB900F6E1C0 /* OsmTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmTags.swift; sourceTree = "<group>"; };
 		022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorMapLayer+Ocean.swift"; sourceTree = "<group>"; };
+		0220526329283498003C6AE1 /* CountryCoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryCoder.swift; sourceTree = "<group>"; };
 		0221950026BB153B00A2F5F7 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		0221D55926D3251C00EAD649 /* ars */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ars; path = ars.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		0221D55A26D3251C00EAD649 /* ars */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ars; path = ars.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -367,7 +368,6 @@
 		027AB50B250E9D0700C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Changeset.storyboard; sourceTree = "<group>"; };
 		027AD5D119F5A18700120654 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		027AD5D319F5EA7D00120654 /* libobjc.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libobjc.A.dylib; path = usr/lib/libobjc.A.dylib; sourceTree = SDKROOT; };
-		027C030228EFA2BA00B95F2E /* CountryCoder */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CountryCoder; path = "../../../country-coder/src/CountryCoder"; sourceTree = "<group>"; };
 		027F32872816554A00F1DED9 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		027F32882816554A00F1DED9 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		027F32892816554A00F1DED9 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -696,7 +696,6 @@
 				02ACBD1F16717BBB00BB4414 /* QuartzCore.framework in Frameworks */,
 				02E6267219973A0700565D62 /* Security.framework in Frameworks */,
 				02ACBA3416713CCB00BB4414 /* UIKit.framework in Frameworks */,
-				0200FECB290885EE002C3F94 /* CountryCoder in Frameworks */,
 				02A194B219C6A432002338DA /* libsqlite3.0.dylib in Frameworks */,
 				02ACBD191671737300BB4414 /* libxml2.dylib in Frameworks */,
 			);
@@ -726,14 +725,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		027C030128EFA2BA00B95F2E /* Packages */ = {
-			isa = PBXGroup;
-			children = (
-				027C030228EFA2BA00B95F2E /* CountryCoder */,
-			);
-			name = Packages;
-			sourceTree = "<group>";
-		};
 		0291D83A2442822300F793BE /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -762,7 +753,6 @@
 		02ACBA2416713CCB00BB4414 = {
 			isa = PBXGroup;
 			children = (
-				027C030128EFA2BA00B95F2E /* Packages */,
 				02BACD22205A1DDB00C74A49 /* Go Map!!.entitlements */,
 				024E6D2E24CBBCE500E1E2A3 /* apple-app-site-association */,
 				02ACBA3916713CCB00BB4414 /* Go Map! */,
@@ -954,6 +944,7 @@
 		02CC01CF2584190A004444EF /* PresetsDatabase */ = {
 			isa = PBXGroup;
 			children = (
+				0220526329283498003C6AE1 /* CountryCoder.swift */,
 				021FADE12588474300F6E1C0 /* PresetCategory.swift */,
 				02CC01D02584195E004444EF /* PresetFeature.swift */,
 				021FADC42585951E00F6E1C0 /* PresetGroup.swift */,
@@ -1184,7 +1175,6 @@
 			name = "Go Map!!";
 			packageProductDependencies = (
 				025CCA11271244B800074726 /* KissXML */,
-				0200FECA290885EE002C3F94 /* CountryCoder */,
 			);
 			productName = OSMiOS;
 			productReference = 02ACBA2F16713CCB00BB4414 /* Go Map!!.app */;
@@ -1397,6 +1387,7 @@
 				ED9649D32601C4CE00EC0A60 /* TileServerListViewController.swift in Sources */,
 				ED9649C22601C33E00EC0A60 /* TileServerEditViewController.swift in Sources */,
 				02CB2405265DB7CB00835F32 /* OpeningHoursRecognizerView.swift in Sources */,
+				0220526429283498003C6AE1 /* CountryCoder.swift in Sources */,
 				C3D096B6263DF82F00E3B129 /* RulerView.swift in Sources */,
 				C341E15A2639DF210022E983 /* NotesTableViewController.swift in Sources */,
 				C3D096AE263D4BFB00E3B129 /* UploadViewController.swift in Sources */,
@@ -2428,10 +2419,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0200FECA290885EE002C3F94 /* CountryCoder */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CountryCoder;
-		};
 		025CCA11271244B800074726 /* KissXML */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 025CCA10271244B800074726 /* XCRemoteSwiftPackageReference "KissXML" */;

@@ -6,7 +6,6 @@
 //  Copyright © 2020 Bryce Cogswell. All rights reserved.
 //
 
-import CountryCoder
 import Foundation
 
 final class PresetsDatabase {
