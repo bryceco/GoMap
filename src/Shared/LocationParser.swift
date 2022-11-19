@@ -236,8 +236,8 @@ class LocationParser {
 		// parse as an Organic Maps shared link
 		// See https://github.com/organicmaps/organicmaps/blob/e27bad2e3b53590208a3b3d5bf18dd226fefc7ad/ge0/parser.cpp#L55
 		if components.host == "omaps.app",
-			let base64 = components.path.components(separatedBy: "/").dropFirst().first,
-			base64.count == 10
+		   let base64 = components.path.components(separatedBy: "/").dropFirst().first,
+		   base64.count == 10
 		{
 			let map = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
 			func decode(_ c: Character) -> Int? {
@@ -262,11 +262,11 @@ class LocationParser {
 			lon += 4
 			let maxValue = Double((1 << 30) - 1)
 			let dLat = Double(lat) / maxValue * 180 - 90
-			let dLon = Double(lon) / (maxValue+1) * 360 - 180
+			let dLon = Double(lon) / (maxValue + 1) * 360 - 180
 			return MapLocation(longitude: dLon,
-							   latitude: dLat,
-							   zoom: Double(zoom) / 4 + 4,
-							   viewState: nil)
+			                   latitude: dLat,
+			                   zoom: Double(zoom) / 4 + 4,
+			                   viewState: nil)
 		}
 
 		// try parsing as any URL containing lat=,lon=

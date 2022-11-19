@@ -211,7 +211,7 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 	@IBAction func buttonPressOK() {
 		guard let coord = location else { return }
 		var string = "gomaposm://?center=\(coord.latitude),\(coord.longitude)&direction=\(direction)"
-		if let zoom = self.zoom {
+		if let zoom = zoom {
 			string += "&zoom=\(zoom)"
 		}
 		let app = URL(string: string)!
