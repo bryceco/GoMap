@@ -131,6 +131,7 @@
       </trans-unit>
       <trans-unit id="%.0f m^2" xml:space="preserve">
         <source>%.0f m^2</source>
+        <target state="translated">%.0f m^2</target>
         <note>area in m^2</note>
       </trans-unit>
       <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
@@ -295,6 +296,7 @@
       </trans-unit>
       <trans-unit id="Area" xml:space="preserve">
         <source>Area</source>
+        <target state="translated">Área</target>
         <note>Area of an object in m^2</note>
       </trans-unit>
       <trans-unit id="Attention" xml:space="preserve">
@@ -329,10 +331,12 @@
       </trans-unit>
       <trans-unit id="Better background imagery is available for your location. Would you like to change to it?" xml:space="preserve">
         <source>Better background imagery is available for your location. Would you like to change to it?</source>
+        <target state="translated">Estão disponíveis melhores imagens de fundo para a sua localização. Gostaria de alterar para elas?</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Better imagery available" xml:space="preserve">
         <source>Better imagery available</source>
+        <target state="translated">Melhores imagens disponíveis</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
@@ -412,6 +416,7 @@
       </trans-unit>
       <trans-unit id="Change" xml:space="preserve">
         <source>Change</source>
+        <target state="translated">Alterar</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Changeset" xml:space="preserve">
