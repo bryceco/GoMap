@@ -122,6 +122,9 @@
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "Při stahování metadat došlo k neznámé chybě";
 
+/* Area of an object in m^2 */
+"Area" = "Plocha";
+
 /* No comment provided by engineer. */
 "Attention" = "Upozornění";
 
@@ -139,6 +142,12 @@
 
 /* No comment provided by engineer. */
 "Bad login" = "Špatné přihlášení";
+
+/* No comment provided by engineer. */
+"Better background imagery is available for your location. Would you like to change to it?" = "Pro vaši lokalitu jsou k dispozici lepší snímky na pozadí. Chcete je použít?";
+
+/* No comment provided by engineer. */
+"Better imagery available" = "K dispozici jsou lepší snímky";
 
 /* No comment provided by engineer. */
 "Cache size warning" = "Upozornění na velikost mezipaměti";
@@ -184,6 +193,9 @@
 
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "Vnitřní a vnější linie nelze spojit";
+
+/* No comment provided by engineer. */
+"Change" = "Změnit";
 
 /* OSM changeset identifier */
 "Changeset" = "Sada změn";

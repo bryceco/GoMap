@@ -31,6 +31,9 @@
 /* No comment provided by engineer. */
 "(way)" = "(put)";
 
+/* area in m^2 */
+"%.0f m^2" = "%.0f m^2";
+
 /* way length if > 10m */
 "%.0f meters, %ld nodes" = "%1$.0f m, broj čvorova: %2$ld";
 
@@ -122,6 +125,9 @@
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "Dogodila se nepoznata greška pri dohvaćanju metapodataka";
 
+/* Area of an object in m^2 */
+"Area" = "Područje";
+
 /* No comment provided by engineer. */
 "Attention" = "Oprez";
 
@@ -139,6 +145,12 @@
 
 /* No comment provided by engineer. */
 "Bad login" = "Neispravna prijava";
+
+/* No comment provided by engineer. */
+"Better background imagery is available for your location. Would you like to change to it?" = "Za tvoju lokaciju su dostupne bolje pozadinske slike. Želiš li prijeći na njih?";
+
+/* No comment provided by engineer. */
+"Better imagery available" = "Dostupne su bolje slike";
 
 /* No comment provided by engineer. */
 "Cache size warning" = "Upozorenje o veličini predmemorije";
@@ -184,6 +196,9 @@
 
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "Nije moguće povezati unutarnji put s vanjskim putom";
+
+/* No comment provided by engineer. */
+"Change" = "Promijeni";
 
 /* OSM changeset identifier */
 "Changeset" = "Skup promjena";

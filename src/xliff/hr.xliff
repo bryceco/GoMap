@@ -131,7 +131,7 @@
       </trans-unit>
       <trans-unit id="%.0f m^2" xml:space="preserve">
         <source>%.0f m^2</source>
-        <target state="translated">%.0f m^2</target>
+        <target>%.0f m^2</target>
         <note>area in m^2</note>
       </trans-unit>
       <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
@@ -297,7 +297,7 @@
       </trans-unit>
       <trans-unit id="Area" xml:space="preserve">
         <source>Area</source>
-        <target state="translated">Područje</target>
+        <target>Područje</target>
         <note>Area of an object in m^2</note>
       </trans-unit>
       <trans-unit id="Attention" xml:space="preserve">
@@ -332,12 +332,12 @@
       </trans-unit>
       <trans-unit id="Better background imagery is available for your location. Would you like to change to it?" xml:space="preserve">
         <source>Better background imagery is available for your location. Would you like to change to it?</source>
-        <target state="translated">Za tvoju lokaciju su dostupne bolje pozadinske slike. Želiš li prijeći na njih?</target>
+        <target>Za tvoju lokaciju su dostupne bolje pozadinske slike. Želiš li prijeći na njih?</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Better imagery available" xml:space="preserve">
         <source>Better imagery available</source>
-        <target state="translated">Dostupne su bolje slike</target>
+        <target>Dostupne su bolje slike</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
@@ -417,7 +417,7 @@
       </trans-unit>
       <trans-unit id="Change" xml:space="preserve">
         <source>Change</source>
-        <target state="translated">Promijeni</target>
+        <target>Promijeni</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Changeset" xml:space="preserve">

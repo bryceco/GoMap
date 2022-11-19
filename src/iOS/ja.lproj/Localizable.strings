@@ -31,6 +31,9 @@
 /* No comment provided by engineer. */
 "(way)" = "(ウェイ)";
 
+/* area in m^2 */
+"%.0f m^2" = "%.0f m^2";
+
 /* way length if > 10m */
 "%.0f meters, %ld nodes" = "%1$.0f メートル, %2$ld ノード";
 
@@ -122,6 +125,9 @@
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "メタデータ取得時に不明なエラーが発生しました";
 
+/* Area of an object in m^2 */
+"Area" = "エリア";
+
 /* No comment provided by engineer. */
 "Attention" = "注意";
 
@@ -139,6 +145,12 @@
 
 /* No comment provided by engineer. */
 "Bad login" = "不正なログイン";
+
+/* No comment provided by engineer. */
+"Better background imagery is available for your location. Would you like to change to it?" = "この場所にはより良好な背景画像があります。切り替えますか？";
+
+/* No comment provided by engineer. */
+"Better imagery available" = "良質画像あり";
 
 /* No comment provided by engineer. */
 "Cache size warning" = "キャッシュサイズの警告";
@@ -184,6 +196,9 @@
 
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "innerウェイはouterウェイに接続できません";
+
+/* No comment provided by engineer. */
+"Change" = "変更";
 
 /* OSM changeset identifier */
 "Changeset" = "変更セット";

@@ -31,6 +31,9 @@
 /* No comment provided by engineer. */
 "(way)" = "(Weg)";
 
+/* area in m^2 */
+"%.0f m^2" = "%.0f m^2";
+
 /* way length if > 10m */
 "%.0f meters, %ld nodes" = "%1$.0f Meter, %2$ld Knoten";
 
@@ -122,6 +125,9 @@
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "Ein unbekannter Fehler beim Abrufen der Metadaten ist aufgetreten";
 
+/* Area of an object in m^2 */
+"Area" = "Fläche";
+
 /* No comment provided by engineer. */
 "Attention" = "Achtung";
 
@@ -139,6 +145,12 @@
 
 /* No comment provided by engineer. */
 "Bad login" = "Login fehlgeschlagen";
+
+/* No comment provided by engineer. */
+"Better background imagery is available for your location. Would you like to change to it?" = "Für Ihren Standort ist besseres Bildmaterial verfügbar. Möchten Sie darauf umsteigen?";
+
+/* No comment provided by engineer. */
+"Better imagery available" = "Besseres Bildmaterial verfügbar";
 
 /* No comment provided by engineer. */
 "Cache size warning" = "Cachegrößen-Warnung";
@@ -184,6 +196,9 @@
 
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "Kann inneren Weg nicht mit äußerem Weg verbinden";
+
+/* No comment provided by engineer. */
+"Change" = "Wechseln";
 
 /* OSM changeset identifier */
 "Changeset" = "Änderungssatz";
