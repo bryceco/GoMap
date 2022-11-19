@@ -530,7 +530,7 @@ extension PresetsDatabase {
 				return group
 			}
 
-		case "combo", "semiCombo", "networkCombo", "typeCombo":
+		case "combo", "semiCombo", "networkCombo", "typeCombo", "colour":
 
 			let key = dict["key"] as! String
 			if type == "typeCombo", ignore.contains(key) {
