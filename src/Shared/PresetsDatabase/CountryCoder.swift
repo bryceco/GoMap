@@ -48,8 +48,6 @@ struct Region {
 }
 
 public class CountryCoder {
-    public private(set) var text = "Hello, World!"
-
     public static let shared = CountryCoder()
 
     let regionList: [Region]

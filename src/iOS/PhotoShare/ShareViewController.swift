@@ -39,6 +39,7 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 	@IBOutlet var popupText: UILabel!
 
 	var location: CLLocationCoordinate2D?
+	var zoom: Double?
 	var direction = 0.0
 	var photoText: String!
 
@@ -92,6 +93,7 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 						{
 							DispatchQueue.main.async {
 								self.location = location.coordinate
+								self.zoom = nil
 								self.direction = location.course
 								self.buttonOK.isEnabled = true
 								self.popupText.text = self.photoText
@@ -131,6 +133,7 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 							DispatchQueue.main.async {
 								self.location = CLLocationCoordinate2D(latitude: loc.latitude,
 								                                       longitude: loc.longitude)
+								self.zoom = loc.zoom
 								self.buttonOK.isEnabled = true
 								self.buttonPressOK()
 							}
@@ -207,7 +210,11 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 
 	@IBAction func buttonPressOK() {
 		guard let coord = location else { return }
-		let app = URL(string: "gomaposm://?center=\(coord.latitude),\(coord.longitude)&direction=\(direction)")!
+		var string = "gomaposm://?center=\(coord.latitude),\(coord.longitude)&direction=\(direction)"
+		if let zoom = self.zoom {
+			string += "&zoom=\(zoom)"
+		}
+		let app = URL(string: string)!
 		openApp(withUrl: app)
 		extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
 	}

@@ -233,6 +233,42 @@ class LocationParser {
 			}
 		}
 
+		// parse as an Organic Maps shared link
+		// See https://github.com/organicmaps/organicmaps/blob/e27bad2e3b53590208a3b3d5bf18dd226fefc7ad/ge0/parser.cpp#L55
+		if components.host == "omaps.app",
+			let base64 = components.path.components(separatedBy: "/").dropFirst().first,
+			base64.count == 10
+		{
+			let map = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
+			func decode(_ c: Character) -> Int? {
+				if let index = map.firstIndex(of: c) {
+					return map.distance(from: map.startIndex, to: index)
+				}
+				return nil
+			}
+			let zoom = decode(base64.first!) ?? 0
+			var lat = 0
+			var lon = 0
+			for c in base64.dropFirst() {
+				let a = decode(c) ?? 0
+				let lat1 = (((a >> 5) & 1) << 2 | ((a >> 3) & 1) << 1 | ((a >> 1) & 1))
+				let lon1 = (((a >> 4) & 1) << 2 | ((a >> 2) & 1) << 1 | (a & 1))
+				lat |= Int(lat1)
+				lon |= Int(lon1)
+				lat <<= 3
+				lon <<= 3
+			}
+			lat += 4
+			lon += 4
+			let maxValue = Double((1 << 30) - 1)
+			let dLat = Double(lat) / maxValue * 180 - 90
+			let dLon = Double(lon) / (maxValue+1) * 360 - 180
+			return MapLocation(longitude: dLon,
+							   latitude: dLat,
+							   zoom: Double(zoom) / 4 + 4,
+							   viewState: nil)
+		}
+
 		// try parsing as any URL containing lat=,lon=
 		if let lat2 = components.queryItems?.first(where: { $0.name == "lat" })?.value,
 		   let lon2 = components.queryItems?.first(where: { $0.name == "lon" })?.value,
