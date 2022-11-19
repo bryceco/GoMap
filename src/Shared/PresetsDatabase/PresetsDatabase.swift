@@ -310,11 +310,11 @@ final class PresetsDatabase {
 							}
 							return false
 						} else {
-							guard let bezier = CountryCoder.shared?.geometryForCountryCode(include) else {
+							guard let (box,bezier) = CountryCoder.shared?.geometryForCountryCode(include) else {
 								print("unknown code: \(feature.name ?? "?"): \(include)")
 								return false
 							}
-							if bezier.contains(latLonAsPoint) {
+							if box.contains(latLonAsPoint) && bezier.contains(latLonAsPoint) {
 								print("accepting \(include)")
 								return true
 							}

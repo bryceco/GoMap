@@ -8,6 +8,17 @@ struct Region {
 	let m49: String? // UN M49 code
 
 	let bezierPath: UIBezierPath
+	let boundingBox: CGRect
+
+	init(country: String?, iso1A2: String?, iso1A3: String?, iso1N3: String?, m49: String?, bezierPath: UIBezierPath) {
+		self.country = country
+		self.iso1A2 = iso1A2
+		self.iso1A3 = iso1A3
+		self.iso1N3 = iso1N3
+		self.m49 = m49
+		self.bezierPath = bezierPath
+		self.boundingBox = bezierPath.bounds
+	}
 
 	func matchesCode(_ code: String) -> Bool {
 		return code == country ||
@@ -119,10 +130,10 @@ public class CountryCoder {
 		regionDict = dict
 	}
 
-	public func geometryForCountryCode(_ code: String) -> UIBezierPath? {
+	public func geometryForCountryCode(_ code: String) -> (CGRect,UIBezierPath)? {
 		let upper = code.uppercased()
 		if let region = regionDict[upper] {
-			return region.bezierPath
+			return (region.boundingBox,region.bezierPath)
 		}
 		return nil
 	}
