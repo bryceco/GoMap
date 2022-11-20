@@ -414,6 +414,25 @@ extension PresetsDatabase {
 		return tag
 	}
 
+	func redirectedField(_ field: String, in dict: [String: Any]) -> Any? {
+		let value = field == "strings"
+			? dict["stringsCrossReference"] ?? dict["strings"]
+			: dict[field]
+		if let value = value as? String,
+		   value.hasPrefix("{"),
+		   value.hasSuffix("}")
+		{
+			let redirect = String(value.dropFirst().dropLast())
+			if let newDict = jsonFields[redirect] as? [String: Any],
+			   let newValue = redirectedField(field, in: newDict)
+			{
+				// print("\(field) -> \(value) -> \(newValue)")
+				return newValue
+			}
+		}
+		return value
+	}
+
 	func groupForField(fieldName: String,
 	                   objectTags: [String: String],
 	                   geometry: GEOMETRY,
@@ -452,10 +471,24 @@ extension PresetsDatabase {
 			}
 		}
 
+		if let locationSet = dict["locationSet"] as? [String: [String]] {
+			let countryCode = AppDelegate.shared.mapView.countryCodeForLocation
+			if let includeList = locationSet["include"],
+			   !includeList.map({ $0.lowercased() }).contains(countryCode)
+			{
+				return nil
+			}
+			if let excludeList = locationSet["exclude"],
+			   excludeList.map({ $0.lowercased() }).contains(countryCode)
+			{
+				return nil
+			}
+		}
+
 		let type = dict["type"] as! String
 		let keyType = dict["key"] as? String ?? fieldName
-		let label = dict["label"] as? String ?? OsmTags.PrettyTag(keyType)
-		let placeholder = dict["placeholder"] as? String
+		let label = (redirectedField("label", in: dict) as? String) ?? OsmTags.PrettyTag(keyType)
+		let placeholder = redirectedField("placeholder", in: dict) as? String
 		let defaultValue = dict["default"] as? String
 		var keyboard = UIKeyboardType.default
 		var capitalize = keyType.hasPrefix("name:") || keyType == "operator"
@@ -489,7 +522,7 @@ extension PresetsDatabase {
 				// prepend key: to options
 				options = options!.map { k -> String in (dict["key"] as! String) + k }
 			}
-			let strings = dict["strings"] as? [String: String]
+			let strings = redirectedField("strings", in: dict) as? [String: String]
 
 			if isMultiCombo || dict["keys"] != nil {
 				// a list of booleans
@@ -539,7 +572,7 @@ extension PresetsDatabase {
 			var options = taginfoFor(key: key, searchKeys: false, update: update)
 			let options2 = (dict["options"] as? [String] ?? []).filter({ !options.contains($0) })
 			options = options2 + options
-			let strings = dict["strings"] as? [String: String]
+			let strings = redirectedField("strings", in: dict) as? [String: String]
 			let tag = comboWith(
 				label: label,
 				key: key,
@@ -559,7 +592,7 @@ extension PresetsDatabase {
 
 			let keys = dict["keys"] as! [String]
 			let types = dict["types"] as! [String: String]
-			let strings = dict["strings"] as! [String: [String: String]]
+			let strings = redirectedField("strings", in: dict) as! [String: [String: String]]
 			let options = dict["options"] as! [String]
 			for key in keys {
 				let name = types[key] ?? OsmTags.PrettyTag(key)
