@@ -17,7 +17,7 @@ struct Region {
 		self.iso1N3 = iso1N3
 		self.m49 = m49
 		self.bezierPath = bezierPath
-		self.boundingBox = bezierPath.bounds
+		boundingBox = bezierPath.bounds
 	}
 
 	func matchesCode(_ code: String) -> Bool {
@@ -64,7 +64,7 @@ public class CountryCoder {
 	let regionList: [Region]
 	let regionDict: [String: Region]
 
-	private init?() {
+	private init() {
 		guard let path = Bundle.main.resourcePath,
 		      let data = try? Data(
 		      	contentsOf: URL(fileURLWithPath: path + "/presets/borders.json"),
@@ -74,12 +74,7 @@ public class CountryCoder {
 		      (jsonResult["type"] as? String) == "FeatureCollection",
 		      let features = jsonResult["features"] as? [Any]
 		else {
-#if DEBUG
-			if isUnderDebugger() {
-				assertionFailure()
-			}
-#endif
-			return nil
+			fatalError()
 		}
 
 		var regions: [Region] = []
@@ -88,7 +83,7 @@ public class CountryCoder {
 			guard let feature = featureAny as? [String: Any],
 			      let properties = feature["properties"] as? [String: Any]
 			else {
-				return nil
+				fatalError()
 			}
 			guard let geometry = feature["geometry"] as? [String: Any] else {
 				let name = properties["nameEn"] as! String
@@ -105,7 +100,7 @@ public class CountryCoder {
 			switch geometry["type"] as? String {
 			case "MultiPolygon":
 				guard let mp = geometry["coordinates"] as? [[[[Double]]]] else {
-					return nil
+					fatalError()
 				}
 				regions.append(Region(country: country,
 				                      iso1A2: iso1A2,
@@ -114,7 +109,7 @@ public class CountryCoder {
 				                      m49: m49,
 				                      bezierPath: Region.geometryAsBezier(mp)))
 			default:
-				return nil
+				fatalError()
 			}
 		}
 		regionList = regions
@@ -130,11 +125,14 @@ public class CountryCoder {
 		regionDict = dict
 	}
 
-	public func geometryForCountryCode(_ code: String) -> (CGRect,UIBezierPath)? {
+	public func region(_ code: String, contains latLon: CGPoint) -> Bool {
 		let upper = code.uppercased()
-		if let region = regionDict[upper] {
-			return (region.boundingBox,region.bezierPath)
+		if let region = regionDict[upper],
+		   region.boundingBox.contains(latLon),
+		   region.bezierPath.contains(latLon)
+		{
+			return true
 		}
-		return nil
+		return false
 	}
 }
