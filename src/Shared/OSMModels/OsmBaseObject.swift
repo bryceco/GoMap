@@ -565,6 +565,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 		if let feature = PresetsDatabase.shared.matchObjectTagsToFeature(tags,
 		                                                                 geometry: geometry(),
+		                                                                 latLon: LatLon(boundingBox.origin),
 		                                                                 includeNSI: true),
 			!feature.isGeneric()
 		{

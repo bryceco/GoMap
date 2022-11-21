@@ -23,6 +23,11 @@ final class GeoJSON {
 		return bezierPath.contains(point)
 	}
 
+	func contains(_ latLon: LatLon) -> Bool {
+		let cgPoint = CGPoint(x: latLon.lon, y: latLon.lat)
+		return contains(cgPoint)
+	}
+
 	private static func pointForPointArray(_ point: [NSNumber]) throws -> CGPoint {
 		if point.count != 2 {
 			throw GeoJsonError.invalidFormat

@@ -35,11 +35,10 @@ extension PresetsDatabase {
 			}
 		} else {
 			let mapview = AppDelegate.shared.mapView!
-			let latLon = mapview.mapTransform.latLon(forScreenPoint: mapview.crosshairs())
 			list = PresetsDatabase.shared.featuresMatchingSearchText(
 				searchText,
 				geometry: geometry,
-				latLon: latLon)
+				latLon: mapview.currentLatLon())
 		}
 		list.sort(by: { obj1, obj2 -> Bool in
 			if obj1.score != obj2.score {
@@ -414,6 +413,7 @@ extension PresetsDatabase {
 		return tag
 	}
 
+	// Some field values can have a redirect to a different field using a {other_field} notation
 	func redirectedField(_ field: String, in dict: [String: Any]) -> Any? {
 		let value = field == "strings"
 			? dict["stringsCrossReference"] ?? dict["strings"]
@@ -471,6 +471,8 @@ extension PresetsDatabase {
 			}
 		}
 
+		// The locationSet test for presets uses only country codes,
+		// while the locationSet for features is more general.
 		if let locationSet = dict["locationSet"] as? [String: [String]] {
 			let countryCode = AppDelegate.shared.mapView.countryCodeForLocation
 			if let includeList = locationSet["include"],

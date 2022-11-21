@@ -9,6 +9,19 @@
 import Foundation
 import UIKit
 
+typealias PresetLocation = String
+enum NsiLocation {
+	case region(String)
+	case latLonRadius([NSNumber])
+}
+
+typealias PresetLocationSet = [String: [PresetLocation]]
+typealias NsiLocationSet = [String: [NsiLocation]]
+enum LocationSet {
+	case preset(PresetLocationSet)
+	case nsi(NsiLocationSet)
+}
+
 // A feature-defining tag such as amenity=shop
 final class PresetFeature {
 	static let uninitializedImage = UIImage()
@@ -24,7 +37,7 @@ final class PresetFeature {
 	let locationSet: [String: [Any]]?
 	let matchScore: Float
 	let moreFields: [String]?
-	let name: String?
+	let nameWithRedirect: String
 	let reference: [String: String]?
 	let _removeTags: [String: String]?
 	let searchable: Bool
@@ -43,7 +56,7 @@ final class PresetFeature {
 		locationSet = jsonDict["locationSet"] as? [String: [Any]]
 		matchScore = Float(jsonDict["matchScore"] as? Double ?? 1.0)
 		moreFields = jsonDict["moreFields"] as? [String]
-		name = jsonDict["name"] as? String ?? ""
+		nameWithRedirect = jsonDict["name"] as? String ?? featureID
 		reference = jsonDict["reference"] as? [String: String]
 		_removeTags = jsonDict["removeTags"] as? [String: String]
 		searchable = jsonDict["searchable"] as? Bool ?? true
@@ -68,6 +81,17 @@ final class PresetFeature {
 		return featureID
 	}
 
+	var name: String {
+		// This has to be done in a lazy manner because the redirect may not exist yet when we are instantiated
+		if nameWithRedirect.hasPrefix("{"), nameWithRedirect.hasSuffix("}") {
+			let redirect = String(nameWithRedirect.dropFirst().dropLast())
+			if let preset = PresetsDatabase.shared.presetFeatureForFeatureID(redirect) {
+				return preset.name
+			}
+		}
+		return nameWithRedirect
+	}
+
 	func isGeneric() -> Bool {
 		return featureID == "point" ||
 			featureID == "line" ||
@@ -75,7 +99,7 @@ final class PresetFeature {
 	}
 
 	func friendlyName() -> String {
-		return name ?? featureID
+		return name
 	}
 
 	func summary() -> String? {
@@ -110,12 +134,13 @@ final class PresetFeature {
 		return _removeTags ?? addTags()
 	}
 
-	func objectTagsUpdatedForFeature(_ tags: [String: String], geometry: GEOMETRY) -> [String: String] {
+	func objectTagsUpdatedForFeature(_ tags: [String: String], geometry: GEOMETRY, latLon: LatLon) -> [String: String] {
 		var tags = tags
 
 		let oldFeature = PresetsDatabase.shared.matchObjectTagsToFeature(
 			tags,
 			geometry: geometry,
+			latLon: latLon,
 			includeNSI: true)
 
 		// remove previous feature tags
@@ -180,9 +205,7 @@ final class PresetFeature {
 		if !self.geometry.contains(geometry.rawValue) {
 			return nil
 		}
-		if let name = name,
-		   let range = name.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive])
-		{
+		if let range = name.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) {
 			return (range.lowerBound == name.startIndex
 				? PresetMatchScore.namePrefix : PresetMatchScore.nameInternal).rawValue
 		}
@@ -205,8 +228,12 @@ final class PresetFeature {
 		return nil
 	}
 
-	func matchObjectTagsScore(_ objectTags: [String: String], geometry: GEOMETRY) -> Double {
+	func matchObjectTagsScore(_ objectTags: [String: String], geometry: GEOMETRY, latLon: LatLon) -> Double {
 		guard self.geometry.contains(geometry.rawValue) else { return 0.0 }
+
+		if !locationSetIncludes(latLon) {
+			return 0.0
+		}
 
 		var totalScore: Float = 1.0
 
@@ -249,5 +276,52 @@ final class PresetFeature {
 			}
 		}
 		return result
+	}
+
+	func locationMatches(_ location: Any, at latLon: LatLon) -> Bool {
+		if let location = location as? String {
+			if location == "001" {
+				return true
+			} else if location.hasSuffix(".geojson") {
+				if let geojson = PresetsDatabase.shared.nsiGeoJson[location],
+				   geojson.contains(latLon)
+				{
+					return true
+				}
+				return false
+			} else {
+				if CountryCoder.shared.region(location, contains: latLon) {
+					return true
+				}
+				return false
+			}
+		} else if let numbers = location as? [NSNumber],
+		          (2...3).contains(numbers.count)
+		{
+			// lat, lon, radius
+			let lon = numbers[0].doubleValue
+			let lat = numbers[1].doubleValue
+			let radius = numbers.count > 2 ? numbers[2].doubleValue : 25000.0
+			let dist = GreatCircleDistance(LatLon(lon: lon, lat: lat),
+			                               latLon)
+			return dist <= radius
+		}
+		print("unknown locationSet entry: \(location)")
+		return false
+	}
+
+	func locationSetIncludes(_ latLon: LatLon) -> Bool {
+		guard let locationSet = locationSet else { return true }
+		if let includeList = locationSet["include"] {
+			if !includeList.contains(where: { self.locationMatches($0, at: latLon) }) {
+				return false
+			}
+		}
+		if let excludeList = locationSet["exclude"] {
+			if excludeList.contains(where: { self.locationMatches($0, at: latLon) }) {
+				return false
+			}
+		}
+		return true
 	}
 }

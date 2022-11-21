@@ -914,6 +914,14 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		return true
 	}
 
+	func currentLatLon() -> LatLon {
+		if let point = pushPin?.arrowPoint {
+			return mapTransform.latLon(forScreenPoint: point)
+		} else {
+			return mapTransform.latLon(forScreenPoint: crossHairs.position)
+		}
+	}
+
 	func updateAerialAttributionButton() {
 		let service = aerialLayer.tileServer
 		aerialServiceLogo.isHidden = aerialLayer

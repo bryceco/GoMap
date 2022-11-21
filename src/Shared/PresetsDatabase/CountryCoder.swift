@@ -58,7 +58,7 @@ struct Region {
 	}
 }
 
-public class CountryCoder {
+public final class CountryCoder {
 	public static let shared = CountryCoder()
 
 	let regionList: [Region]
@@ -134,5 +134,10 @@ public class CountryCoder {
 			return true
 		}
 		return false
+	}
+
+	func region(_ code: String, contains latLon: LatLon) -> Bool {
+		let cgPoint = CGPoint(x: latLon.lon, y: latLon.lat)
+		return region(code, contains: cgPoint)
 	}
 }

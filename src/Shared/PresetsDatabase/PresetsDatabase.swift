@@ -259,6 +259,7 @@ final class PresetsDatabase {
 
 	func matchObjectTagsToFeature(_ objectTags: [String: String]?,
 	                              geometry: GEOMETRY,
+	                              latLon: LatLon,
 	                              includeNSI: Bool) -> PresetFeature?
 	{
 		guard let objectTags = objectTags else { return nil }
@@ -271,7 +272,7 @@ final class PresetsDatabase {
 		for key in keys {
 			if let list = index[key] {
 				for feature in list {
-					let score = feature.matchObjectTagsScore(objectTags, geometry: geometry)
+					let score = feature.matchObjectTagsScore(objectTags, geometry: geometry, latLon: latLon)
 					if score > bestScore {
 						bestScore = score
 						bestFeature = feature
@@ -285,54 +286,13 @@ final class PresetsDatabase {
 	func featuresMatchingSearchText(_ searchText: String?, geometry: GEOMETRY,
 	                                latLon: LatLon) -> [(PresetFeature, Int)]
 	{
-		let latLonAsPoint = CGPoint(OSMPoint(latLon))
 		var list = [(PresetFeature, Int)]()
 		enumeratePresetsAndNsiUsingBlock { feature in
 			guard feature.searchable,
+			      feature.locationSetIncludes(latLon),
 			      let score = feature.matchesSearchText(searchText, geometry: geometry)
 			else {
 				return
-			}
-			if let loc = feature.locationSet,
-			   let includes = loc["include"]
-			{
-				let okay = includes.contains(where: { include in
-
-					if let include = include as? String {
-						if include == "001" {
-							return true
-						} else if include.hasSuffix(".geojson") {
-							if let geojson = self.nsiGeoJson[include],
-							   geojson.contains(latLonAsPoint)
-							{
-								print("accepting \(include)")
-								return true
-							}
-							return false
-						} else {
-							if CountryCoder.shared.region(include, contains: latLonAsPoint) {
-								print("accepting \(include)")
-								return true
-							}
-							return false
-						}
-					} else if let numbers = include as? [NSNumber],
-					          (2...3).contains(numbers.count)
-					{
-						// lat, lon, radius
-						let lon = numbers[0].doubleValue
-						let lat = numbers[1].doubleValue
-						let radius = numbers.count > 2 ? numbers[2].doubleValue : 25000.0
-						let dist = GreatCircleDistance(LatLon(lon: lon, lat: lat),
-						                               latLon)
-						return dist <= radius
-					}
-					print("unknown include: \(feature.name ?? "?"): \(include)")
-					return false
-				})
-				if !okay {
-					return
-				}
 			}
 			list.append((feature, score))
 		}

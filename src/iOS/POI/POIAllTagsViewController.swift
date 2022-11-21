@@ -83,6 +83,7 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 		let newFeature = PresetsDatabase.shared.matchObjectTagsToFeature(
 			dict,
 			geometry: geometry,
+			latLon: AppDelegate.shared.mapView.currentLatLon(),
 			includeNSI: true)
 
 		if !forceReload, newFeature?.featureID == currentFeature?.featureID {
@@ -207,8 +208,10 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 	{
 		let tabController = tabBarController as! POITabBarController
 		let geometry = tabController.selection?.geometry() ?? GEOMETRY.NODE
+		let latLon = AppDelegate.shared.mapView.currentLatLon()
 		tabController.keyValueDict = newFeature.objectTagsUpdatedForFeature(tabController.keyValueDict,
-		                                                                    geometry: geometry)
+		                                                                    geometry: geometry,
+		                                                                    latLon: latLon)
 		_ = updateWithRecomendations(forFeature: true)
 		saveButton.isEnabled = tabController.isTagDictChanged()
 		if #available(iOS 13.0, *) {
