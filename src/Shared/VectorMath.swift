@@ -606,7 +606,7 @@ extension OSMTransform {
 	}
 }
 
-struct LatLon {
+struct LatLon: Codable {
 	var lon: Double
 	var lat: Double
 

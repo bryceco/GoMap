@@ -95,19 +95,19 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
 		if isTopLevel, section == 1 {
-			let countryCode = AppDelegate.shared.mapView.countryCodeForLocation
+			let countryCode = AppDelegate.shared.mapView.currentRegion.country
 			let locale = NSLocale.current as NSLocale
-			let countryName = locale.displayName(forKey: .countryCode, value: countryCode ?? "")
+			let countryName = locale.displayName(forKey: .countryCode, value: countryCode) ?? ""
 
-			if (countryCode?.count ?? 0) == 0 || (countryName?.count ?? 0) == 0 {
+			if countryCode.count == 0 || countryName.count == 0 {
 				// There's nothing to display.
 				return nil
 			}
 
 			return String.localizedStringWithFormat(
 				NSLocalizedString("Results for %@ (%@)", comment: "country name,2-character country code"),
-				countryName ?? "",
-				countryCode?.uppercased() ?? "")
+				countryName,
+				countryCode.uppercased())
 		}
 		return nil
 	}
@@ -220,7 +220,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		let currentFeature = PresetsDatabase.shared.matchObjectTagsToFeature(
 			tabController?.keyValueDict,
 			geometry: geometry,
-			location: AppDelegate.shared.mapView.currentLocationAndCountry(),
+			location: AppDelegate.shared.mapView.currentRegion,
 			includeNSI: true)
 		let cell = tableView.dequeueReusableCell(withIdentifier: "FinalCell", for: indexPath) as! FeaturePickerCell
 		cell.title.text = feature.nsiSuggestion ? (brand + feature.friendlyName()) : feature.friendlyName()

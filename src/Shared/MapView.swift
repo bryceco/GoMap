@@ -265,7 +265,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			updateMouseCoordinates()
 			updateUserLocationIndicator(nil)
 
-			updateCountryCodeForLocationUsingNominatim()
+			updateCountryCodeForLocationUsingCountryCoder()
 
 			// update pushpin location
 			if let pushpinView = pushPin,
@@ -453,8 +453,25 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	private(set) var crossHairs: CAShapeLayer
-	private(set) var countryCodeForLocation: String?
-	private(set) var countryCodeLocation: LatLon
+
+	struct CurrentRegion: Codable {
+		let latLon: LatLon
+		let country: String
+		let regions: [String]
+
+		func saveToUserDefaults() {
+			UserDefaults.standard.set(try? PropertyListEncoder().encode(self), forKey: "CurrentRegion")
+		}
+
+		static func fromUserDefaults() -> Self? {
+			if let data = UserDefaults.standard.value(forKey: "CurrentRegion") as? Data {
+				return try? PropertyListDecoder().decode(CurrentRegion.self, from: data)
+			}
+			return nil
+		}
+	}
+
+	private(set) var currentRegion: CurrentRegion
 
 	private var locating: Bool {
 		didSet {
@@ -502,7 +519,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		tileServerList = TileServerList()
 		locationBallLayer = LocationBallLayer()
 		locating = false
-		countryCodeLocation = .zero
+		currentRegion = CurrentRegion(latLon: LatLon(x: 0, y: 0),
+		                              country: "",
+		                              regions: [])
 
 		super.init(coder: coder)
 
@@ -757,7 +776,15 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		displayGpxLogs = UserDefaults.standard.bool(forKey: "mapViewEnableBreadCrumb")
 		enableTurnRestriction = UserDefaults.standard.bool(forKey: "mapViewEnableTurnRestriction")
 
-		countryCodeForLocation = UserDefaults.standard.object(forKey: "countryCodeForLocation") as? String
+		if let loc = CurrentRegion.fromUserDefaults() {
+			currentRegion = loc
+		} else {
+			currentRegion = CurrentRegion(latLon: LatLon(x: 0, y: 0), country: "", regions: [])
+		}
+		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now().advanced(by: .seconds(2)),
+		                              execute: {
+		                              	self.updateCountryCodeForLocationUsingCountryCoder()
+		                              })
 
 		updateAerialAttributionButton()
 
@@ -860,7 +887,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		UserDefaults.standard.set(enableTurnRestriction, forKey: "mapViewEnableTurnRestriction")
 		UserDefaults.standard.set(enableAutomaticCacheManagement, forKey: "automaticCacheManagement")
 
-		UserDefaults.standard.set(countryCodeForLocation, forKey: "countryCodeForLocation")
+		currentRegion.saveToUserDefaults()
 
 		UserDefaults.standard.synchronize()
 
@@ -912,17 +939,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	func isFlipped() -> Bool {
 		return true
-	}
-
-	func currentLocationAndCountry() -> LocationAndCountry {
-		let latLon: LatLon
-		if let point = pushPin?.arrowPoint {
-			latLon = mapTransform.latLon(forScreenPoint: point)
-		} else {
-			latLon = mapTransform.latLon(forScreenPoint: crossHairs.position)
-		}
-		return LocationAndCountry(latLon: latLon,
-		                          country: countryCodeForLocation ?? "")
 	}
 
 	func updateAerialAttributionButton() {
@@ -1144,34 +1160,20 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 	}
 
-	func updateCountryCodeForLocationUsingNominatim() {
+	func updateCountryCodeForLocationUsingCountryCoder() {
 		if viewStateZoomedOut {
 			return
 		}
 
-		// if we moved a significant distance then check our country location
+		// if we moved a significant distance then check our location
 		let loc = mapTransform.latLon(forScreenPoint: center)
-		let distance = GreatCircleDistance(loc, countryCodeLocation)
-		if distance < 10 * 1000 {
+		if GreatCircleDistance(loc, currentRegion.latLon) < 10 * 1000 {
 			return
 		}
-		countryCodeLocation = loc
-
-		let urlString =
-			"https://nominatim.openstreetmap.org/reverse?zoom=13&addressdetails=1&format=json&lat=\(loc.lat)&lon=\(loc.lon)"
-		if let url = URL(string: urlString) {
-			URLSession.shared.data(with: url, completionHandler: { result in
-				if case let .success(data) = result,
-				   let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-				   let address = json["address"] as? [String: Any],
-				   let code = address["country_code"] as? String
-				{
-					DispatchQueue.main.async(execute: {
-						self.countryCodeForLocation = code
-					})
-				}
-			})
-		}
+		let regions = CountryCoder.shared.regionsAt(loc)
+		currentRegion = CurrentRegion(latLon: loc,
+		                              country: CountryCoder.countryforRegions(regions),
+		                              regions: CountryCoder.regionsStringsForRegions(regions))
 
 		// Check if new, better aerial imagery is available
 		promptForBetterBackgroundImagery()

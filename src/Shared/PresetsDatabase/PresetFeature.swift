@@ -9,12 +9,6 @@
 import Foundation
 import UIKit
 
-// This is used for looking up presets
-struct LocationAndCountry {
-	let latLon: LatLon
-	let country: String
-}
-
 // A feature-defining tag such as amenity=shop
 final class PresetFeature {
 	static let uninitializedImage = UIImage()
@@ -128,7 +122,7 @@ final class PresetFeature {
 	}
 
 	func objectTagsUpdatedForFeature(_ tags: [String: String], geometry: GEOMETRY,
-	                                 location: LocationAndCountry) -> [String: String]
+	                                 location: MapView.CurrentRegion) -> [String: String]
 	{
 		var tags = tags
 
@@ -224,7 +218,7 @@ final class PresetFeature {
 	}
 
 	func matchObjectTagsScore(_ objectTags: [String: String], geometry: GEOMETRY,
-	                          location: LocationAndCountry) -> Double
+	                          location: MapView.CurrentRegion) -> Double
 	{
 		guard self.geometry.contains(geometry.rawValue),
 		      locationSetIncludes(location)
@@ -275,19 +269,19 @@ final class PresetFeature {
 		return result
 	}
 
-	func locationMatches(_ location: Any, at latLon: LatLon) -> Bool {
+	func locationMatches(_ location: Any, at currentLocation: MapView.CurrentRegion) -> Bool {
 		if let location = location as? String {
 			if location == "001" {
 				return true
 			} else if location.hasSuffix(".geojson") {
 				if let geojson = PresetsDatabase.shared.nsiGeoJson[location],
-				   geojson.contains(latLon)
+				   geojson.contains(currentLocation.latLon)
 				{
 					return true
 				}
 				return false
 			} else {
-				if CountryCoder.shared.region(location, contains: latLon) {
+				if currentLocation.regions.contains(location) {
 					return true
 				}
 				return false
@@ -300,18 +294,18 @@ final class PresetFeature {
 			let lat = numbers[1].doubleValue
 			let radius = numbers.count > 2 ? numbers[2].doubleValue : 25000.0
 			let dist = GreatCircleDistance(LatLon(lon: lon, lat: lat),
-			                               latLon)
+			                               currentLocation.latLon)
 			return dist <= radius
 		}
 		print("unknown locationSet entry: \(location)")
 		return false
 	}
 
-	func locationSetIncludes(_ location: LocationAndCountry) -> Bool {
+	func locationSetIncludes(_ location: MapView.CurrentRegion) -> Bool {
 		guard let locationSet = locationSet else { return true }
 		if let includeList = locationSet["include"] {
 			if nsiSuggestion {
-				if !includeList.contains(where: { locationMatches($0, at: location.latLon) }) {
+				if !includeList.contains(where: { locationMatches($0, at: location) }) {
 					return false
 				}
 			} else {
@@ -322,7 +316,7 @@ final class PresetFeature {
 		}
 		if let excludeList = locationSet["exclude"] {
 			if nsiSuggestion {
-				if excludeList.contains(where: { locationMatches($0, at: location.latLon) }) {
+				if excludeList.contains(where: { locationMatches($0, at: location) }) {
 					return false
 				}
 			} else {

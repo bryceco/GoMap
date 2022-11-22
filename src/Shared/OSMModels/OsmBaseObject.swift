@@ -563,8 +563,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 			return name
 		}
 
-		let location = LocationAndCountry(latLon: LatLon(boundingBox.origin),
-		                                  country: AppDelegate.shared.mapView.countryCodeForLocation ?? "")
+		let location = AppDelegate.shared.mapView.currentRegion
 		if let feature = PresetsDatabase.shared.matchObjectTagsToFeature(tags,
 		                                                                 geometry: geometry(),
 		                                                                 location: location,

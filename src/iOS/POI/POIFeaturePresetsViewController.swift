@@ -55,7 +55,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			let feature = selectedFeature ?? PresetsDatabase.shared.matchObjectTagsToFeature(
 				dict,
 				geometry: geometry,
-				location: AppDelegate.shared.mapView.currentLocationAndCountry(),
+				location: AppDelegate.shared.mapView.currentRegion,
 				includeNSI: true)
 			if let feature = feature {
 				POIFeaturePickerViewController.loadMostRecent(forGeometry: geometry)
@@ -137,7 +137,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		selectedFeature = newFeature
 		let tabController = tabBarController as! POITabBarController
 		let geometry = tabController.selection?.geometry() ?? GEOMETRY.NODE
-		let location = AppDelegate.shared.mapView.currentLocationAndCountry()
+		let location = AppDelegate.shared.mapView.currentRegion
 		tabController.keyValueDict = newFeature.objectTagsUpdatedForFeature(tabController.keyValueDict,
 		                                                                    geometry: geometry,
 		                                                                    location: location)

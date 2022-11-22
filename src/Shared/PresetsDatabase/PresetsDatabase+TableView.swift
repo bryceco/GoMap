@@ -37,7 +37,7 @@ extension PresetsDatabase {
 			list = PresetsDatabase.shared.featuresMatchingSearchText(
 				searchText,
 				geometry: geometry,
-				location: AppDelegate.shared.mapView.currentLocationAndCountry())
+				location: AppDelegate.shared.mapView.currentRegion)
 		}
 		list.sort(by: { obj1, obj2 -> Bool in
 			if obj1.score != obj2.score {
@@ -473,7 +473,7 @@ extension PresetsDatabase {
 		// The locationSet test for presets uses only country codes,
 		// while the locationSet for features is more general.
 		if let locationSet = dict["locationSet"] as? [String: [String]] {
-			let countryCode = AppDelegate.shared.mapView.countryCodeForLocation
+			let countryCode = AppDelegate.shared.mapView.currentRegion.country
 			if let includeList = locationSet["include"],
 			   !includeList.map({ $0.lowercased() }).contains(countryCode)
 			{
@@ -624,7 +624,7 @@ extension PresetsDatabase {
 				"unit"
 			]
 
-			let countryCode = AppDelegate.shared.mapView.countryCodeForLocation ?? "<unknown>"
+			let countryCode = AppDelegate.shared.mapView.currentRegion.country
 			var keysForCountry: [[String]]?
 			for localeDict in jsonAddressFormats {
 				guard let localeDict = localeDict as? [String: Any] else { continue }
