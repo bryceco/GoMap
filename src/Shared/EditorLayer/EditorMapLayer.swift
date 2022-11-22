@@ -873,9 +873,11 @@ final class EditorMapLayer: CALayer {
 		var drawRef = true
 
 		// fetch icon
+		let location = LocationAndCountry(latLon: node.latLon,
+										  country: AppDelegate.shared.mapView.countryCodeForLocation ?? "")
 		let feature = PresetsDatabase.shared.matchObjectTagsToFeature(node.tags,
 		                                                              geometry: node.geometry(),
-		                                                              latLon: node.latLon,
+		                                                              location: location,
 		                                                              includeNSI: false)
 		var icon = feature?.iconScaled24()
 		if icon == nil {

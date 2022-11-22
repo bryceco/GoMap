@@ -9,17 +9,10 @@
 import Foundation
 import UIKit
 
-typealias PresetLocation = String
-enum NsiLocation {
-	case region(String)
-	case latLonRadius([NSNumber])
-}
-
-typealias PresetLocationSet = [String: [PresetLocation]]
-typealias NsiLocationSet = [String: [NsiLocation]]
-enum LocationSet {
-	case preset(PresetLocationSet)
-	case nsi(NsiLocationSet)
+// This is used for looking up presets
+struct LocationAndCountry {
+	let latLon: LatLon
+	let country: String
 }
 
 // A feature-defining tag such as amenity=shop
@@ -134,13 +127,15 @@ final class PresetFeature {
 		return _removeTags ?? addTags()
 	}
 
-	func objectTagsUpdatedForFeature(_ tags: [String: String], geometry: GEOMETRY, latLon: LatLon) -> [String: String] {
+	func objectTagsUpdatedForFeature(_ tags: [String: String], geometry: GEOMETRY,
+	                                 location: LocationAndCountry) -> [String: String]
+	{
 		var tags = tags
 
 		let oldFeature = PresetsDatabase.shared.matchObjectTagsToFeature(
 			tags,
 			geometry: geometry,
-			latLon: latLon,
+			location: location,
 			includeNSI: true)
 
 		// remove previous feature tags
@@ -228,10 +223,12 @@ final class PresetFeature {
 		return nil
 	}
 
-	func matchObjectTagsScore(_ objectTags: [String: String], geometry: GEOMETRY, latLon: LatLon) -> Double {
-		guard self.geometry.contains(geometry.rawValue) else { return 0.0 }
-
-		if !locationSetIncludes(latLon) {
+	func matchObjectTagsScore(_ objectTags: [String: String], geometry: GEOMETRY,
+	                          location: LocationAndCountry) -> Double
+	{
+		guard self.geometry.contains(geometry.rawValue),
+		      locationSetIncludes(location)
+		else {
 			return 0.0
 		}
 
@@ -310,16 +307,28 @@ final class PresetFeature {
 		return false
 	}
 
-	func locationSetIncludes(_ latLon: LatLon) -> Bool {
+	func locationSetIncludes(_ location: LocationAndCountry) -> Bool {
 		guard let locationSet = locationSet else { return true }
 		if let includeList = locationSet["include"] {
-			if !includeList.contains(where: { self.locationMatches($0, at: latLon) }) {
-				return false
+			if nsiSuggestion {
+				if !includeList.contains(where: { locationMatches($0, at: location.latLon) }) {
+					return false
+				}
+			} else {
+				if !includeList.contains(where: { $0 as? String == location.country }) {
+					return false
+				}
 			}
 		}
 		if let excludeList = locationSet["exclude"] {
-			if excludeList.contains(where: { self.locationMatches($0, at: latLon) }) {
-				return false
+			if nsiSuggestion {
+				if excludeList.contains(where: { locationMatches($0, at: location.latLon) }) {
+					return false
+				}
+			} else {
+				if excludeList.contains(where: { $0 as? String == location.country }) {
+					return false
+				}
 			}
 		}
 		return true

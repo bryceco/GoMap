@@ -914,12 +914,15 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		return true
 	}
 
-	func currentLatLon() -> LatLon {
+	func currentLocationAndCountry() -> LocationAndCountry {
+		let latLon: LatLon
 		if let point = pushPin?.arrowPoint {
-			return mapTransform.latLon(forScreenPoint: point)
+			latLon = mapTransform.latLon(forScreenPoint: point)
 		} else {
-			return mapTransform.latLon(forScreenPoint: crossHairs.position)
+			latLon = mapTransform.latLon(forScreenPoint: crossHairs.position)
 		}
+		return LocationAndCountry(latLon: latLon,
+		                          country: countryCodeForLocation ?? "")
 	}
 
 	func updateAerialAttributionButton() {

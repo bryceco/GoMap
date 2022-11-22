@@ -216,13 +216,11 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		let brand = "☆ "
 		let tabController = tabBarController as? POITabBarController
 		let geometry = currentSelectionGeometry()
-		let latLon = AppDelegate.shared.mapView.mapTransform.latLon(forScreenPoint:
-			AppDelegate.shared.mapView.center)
 
 		let currentFeature = PresetsDatabase.shared.matchObjectTagsToFeature(
 			tabController?.keyValueDict,
 			geometry: geometry,
-			latLon: latLon,
+			location: AppDelegate.shared.mapView.currentLocationAndCountry(),
 			includeNSI: true)
 		let cell = tableView.dequeueReusableCell(withIdentifier: "FinalCell", for: indexPath) as! FeaturePickerCell
 		cell.title.text = feature.nsiSuggestion ? (brand + feature.friendlyName()) : feature.friendlyName()

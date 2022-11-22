@@ -259,7 +259,7 @@ final class PresetsDatabase {
 
 	func matchObjectTagsToFeature(_ objectTags: [String: String]?,
 	                              geometry: GEOMETRY,
-	                              latLon: LatLon,
+	                              location: LocationAndCountry,
 	                              includeNSI: Bool) -> PresetFeature?
 	{
 		guard let objectTags = objectTags else { return nil }
@@ -272,7 +272,10 @@ final class PresetsDatabase {
 		for key in keys {
 			if let list = index[key] {
 				for feature in list {
-					let score = feature.matchObjectTagsScore(objectTags, geometry: geometry, latLon: latLon)
+					var score = feature.matchObjectTagsScore(objectTags, geometry: geometry, location: location)
+					if !feature.searchable {
+						score *= 0.999
+					}
 					if score > bestScore {
 						bestScore = score
 						bestFeature = feature
@@ -284,12 +287,15 @@ final class PresetsDatabase {
 	}
 
 	func featuresMatchingSearchText(_ searchText: String?, geometry: GEOMETRY,
-	                                latLon: LatLon) -> [(PresetFeature, Int)]
+	                                location: LocationAndCountry) -> [(PresetFeature, Int)]
 	{
 		var list = [(PresetFeature, Int)]()
 		enumeratePresetsAndNsiUsingBlock { feature in
+			if feature.name == "Oxxo" {
+				print("oxxo")
+			}
 			guard feature.searchable,
-			      feature.locationSetIncludes(latLon),
+			      feature.locationSetIncludes(location),
 			      let score = feature.matchesSearchText(searchText, geometry: geometry)
 			else {
 				return
