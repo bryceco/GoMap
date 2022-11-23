@@ -31,6 +31,9 @@
 /* No comment provided by engineer. */
 "(way)" = "(線段)";
 
+/* area in m^2 */
+"%.0f m^2" = "%.0f 平方公尺";
+
 /* way length if > 10m */
 "%.0f meters, %ld nodes" = "%1$.0f 公尺, %2$ld 節點";
 
@@ -122,6 +125,9 @@
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "更新詮釋資料時發生未知錯誤";
 
+/* Area of an object in m^2 */
+"Area" = "面積";
+
 /* No comment provided by engineer. */
 "Attention" = "注意";
 
@@ -139,6 +145,12 @@
 
 /* No comment provided by engineer. */
 "Bad login" = "無效登入";
+
+/* No comment provided by engineer. */
+"Better background imagery is available for your location. Would you like to change to it?" = "您所在的位置有更好的影像底圖，是否要使用看看？";
+
+/* No comment provided by engineer. */
+"Better imagery available" = "有更好的影像";
 
 /* No comment provided by engineer. */
 "Cache size warning" = "快取總量的警告";
@@ -184,6 +196,9 @@
 
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "無法將內部線段連結到外部線段";
+
+/* No comment provided by engineer. */
+"Change" = "變更";
 
 /* OSM changeset identifier */
 "Changeset" = "變更集";
@@ -383,6 +398,9 @@
 /* No comment provided by engineer. */
 "Joining would invalidate a Turn Restriction the way belongs to" = "若要加入，將會使線段所屬的轉向限制關係失效";
 
+/* kilometers per hour speed */
+"km/h" = "公里/小時";
+
 /* No comment provided by engineer. */
 "Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "語言選擇只會套用到預設組合以及那些在 iD 編輯器中已經翻譯完的預設組合。介面仍然是英文。";
 
@@ -472,6 +490,9 @@
 
 /* No comment provided by engineer. */
 "Move selected object?" = "移動所選物件？";
+
+/* miles per hour speed */
+"mph" = "英里/小時";
 
 /* No comment provided by engineer. */
 "Multipolygon" = "複多邊形";

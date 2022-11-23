@@ -131,7 +131,7 @@
       </trans-unit>
       <trans-unit id="%.0f m^2" xml:space="preserve">
         <source>%.0f m^2</source>
-        <target state="translated">%.0f 平方公尺</target>
+        <target>%.0f 平方公尺</target>
         <note>area in m^2</note>
       </trans-unit>
       <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
@@ -297,7 +297,7 @@
       </trans-unit>
       <trans-unit id="Area" xml:space="preserve">
         <source>Area</source>
-        <target state="translated">面積</target>
+        <target>面積</target>
         <note>Area of an object in m^2</note>
       </trans-unit>
       <trans-unit id="Attention" xml:space="preserve">
@@ -332,12 +332,12 @@
       </trans-unit>
       <trans-unit id="Better background imagery is available for your location. Would you like to change to it?" xml:space="preserve">
         <source>Better background imagery is available for your location. Would you like to change to it?</source>
-        <target state="translated">您所在的位置有更好的影像底圖，是否要使用看看？</target>
+        <target>您所在的位置有更好的影像底圖，是否要使用看看？</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Better imagery available" xml:space="preserve">
         <source>Better imagery available</source>
-        <target state="translated">有更好的影像</target>
+        <target>有更好的影像</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
@@ -417,7 +417,7 @@
       </trans-unit>
       <trans-unit id="Change" xml:space="preserve">
         <source>Change</source>
-        <target state="translated">變更</target>
+        <target>變更</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Changeset" xml:space="preserve">
@@ -1580,7 +1580,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="km/h" xml:space="preserve">
         <source>km/h</source>
-        <target state="translated">公里/小時</target>
+        <target>公里/小時</target>
         <note>kilometers per hour speed</note>
       </trans-unit>
       <trans-unit id="meters" xml:space="preserve">
@@ -1595,7 +1595,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="mph" xml:space="preserve">
         <source>mph</source>
-        <target state="translated">英里/小時</target>
+        <target>英里/小時</target>
         <note>miles per hour speed</note>
       </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">
