@@ -23,21 +23,12 @@ public struct CountryCoderRegion {
 		self.iso1N3 = iso1N3 // numeric code
 		self.m49 = m49 // numeric code
 		self.wikidata = wikidata?.lowercased()
-		self.groups = groups.map({$0.lowercased()})
+		self.groups = groups.map({ $0.lowercased() })
 		self.bezierPath = bezierPath
 		boundingBox = bezierPath == nil ? CGRect() : bezierPath!.bounds
 	}
 
-	func matchesCode(_ code: String) -> Bool {
-		return code == country ||
-			code == iso1A2 ||
-			code == iso1A3 ||
-			code == iso1N3 ||
-			code == m49 ||
-			code == wikidata
-	}
-
-	func addSynonyms(to list: inout [String]) {
+	fileprivate func addSynonyms(to list: inout [String]) {
 		if let s = iso1A2 { list.append(s) }
 		if let s = iso1A3 { list.append(s) }
 		if let s = m49 { list.append(s) }
@@ -64,7 +55,7 @@ public struct CountryCoderRegion {
 		path.close()
 	}
 
-	static func geometryAsBezier(_ geometry: [[[[Double]]]]) -> UIBezierPath {
+	fileprivate static func geometryAsBezier(_ geometry: [[[[Double]]]]) -> UIBezierPath {
 		let path = UIBezierPath()
 		for outer in geometry {
 			for loop in outer {
@@ -147,31 +138,6 @@ public final class CountryCoder {
 		regionDict = dict
 	}
 
-	public func region(_ code: String, contains latLon: CGPoint) -> Bool {
-		let upper = code.uppercased()
-		if let region = regionDict[upper],
-		   region.boundingBox.contains(latLon),
-		   region.bezierPath?.contains(latLon) ?? false
-		{
-			return true
-		}
-		return false
-	}
-
-	func region(_ code: String, contains latLon: LatLon) -> Bool {
-		let cgPoint = CGPoint(x: latLon.lon, y: latLon.lat)
-		return region(code, contains: cgPoint)
-	}
-
-	private func addRegion(_ region: CountryCoderRegion, to list: inout [String]) {
-		region.addSynonyms(to: &list)
-		for group in region.groups {
-			if let r = regionDict[group] {
-				addRegion(r, to: &list)
-			}
-		}
-	}
-
 	func regionsAt(_ loc: LatLon) -> [CountryCoderRegion] {
 		var list: [CountryCoderRegion] = []
 		let cgPoint = CGPoint(OSMPoint(loc))
@@ -182,8 +148,8 @@ public final class CountryCoder {
 				list.append(region)
 			}
 		}
-		if let countryCode = list.first(where: {$0.country != nil})?.country,
-			let country = regionDict[countryCode]
+		if let countryCode = list.first(where: { $0.country != nil })?.country,
+		   let country = regionDict[countryCode]
 		{
 			list.append(country)
 		}
@@ -206,10 +172,10 @@ public final class CountryCoder {
 	}
 
 	static func countryforRegions(_ list: [CountryCoderRegion]) -> String {
-		if let country = list.first(where: {$0.country != nil})?.country {
+		if let country = list.first(where: { $0.country != nil })?.country {
 			return country
 		}
-		if let country = list.first(where: {$0.iso1A2 != nil})?.iso1A2 {
+		if let country = list.first(where: { $0.iso1A2 != nil })?.iso1A2 {
 			return country
 		}
 		return ""

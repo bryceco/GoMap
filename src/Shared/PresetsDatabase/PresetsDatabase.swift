@@ -287,7 +287,7 @@ final class PresetsDatabase {
 	}
 
 	func featuresMatchingSearchText(_ searchText: String?,
-									geometry: GEOMETRY,
+	                                geometry: GEOMETRY,
 	                                location: MapView.CurrentRegion) -> [(PresetFeature, Int)]
 	{
 		var list = [(PresetFeature, Int)]()
