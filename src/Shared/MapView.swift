@@ -265,7 +265,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			updateMouseCoordinates()
 			updateUserLocationIndicator(nil)
 
-			updateCountryCodeForLocationUsingCountryCoder()
+			updateCurrentRegionForLocationUsingCountryCoder()
 
 			// update pushpin location
 			if let pushpinView = pushPin,
@@ -781,9 +781,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		} else {
 			currentRegion = CurrentRegion(latLon: LatLon(x: 0, y: 0), country: "", regions: [])
 		}
-		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now().advanced(by: .seconds(2)),
+		DispatchQueue.main.asyncAfter(deadline: .now()+2.0,
 		                              execute: {
-		                              	self.updateCountryCodeForLocationUsingCountryCoder()
+		                              	self.updateCurrentRegionForLocationUsingCountryCoder()
 		                              })
 
 		updateAerialAttributionButton()
@@ -1160,7 +1160,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 	}
 
-	func updateCountryCodeForLocationUsingCountryCoder() {
+	func updateCurrentRegionForLocationUsingCountryCoder() {
 		if viewStateZoomedOut {
 			return
 		}

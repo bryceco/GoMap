@@ -7,6 +7,7 @@ public struct CountryCoderRegion {
 	let iso1N3: String? // ISO 3166-1 numeric-3 code
 	let m49: String? // UN M49 code
 	let wikidata: String?
+	let aliases: [String]
 	let groups: [String]
 
 	let bezierPath: UIBezierPath?
@@ -14,7 +15,8 @@ public struct CountryCoderRegion {
 
 	init(country: String?,
 	     iso1A2: String?, iso1A3: String?, iso1N3: String?, m49: String?, wikidata: String?,
-	     groups: [String],
+		 aliases: [String],
+		 groups: [String],
 	     bezierPath: UIBezierPath?)
 	{
 		self.country = country?.lowercased()
@@ -23,6 +25,7 @@ public struct CountryCoderRegion {
 		self.iso1N3 = iso1N3 // numeric code
 		self.m49 = m49 // numeric code
 		self.wikidata = wikidata?.lowercased()
+		self.aliases = aliases.map({ $0.lowercased() })
 		self.groups = groups.map({ $0.lowercased() })
 		self.bezierPath = bezierPath
 		boundingBox = bezierPath == nil ? CGRect() : bezierPath!.bounds
@@ -34,6 +37,7 @@ public struct CountryCoderRegion {
 		if let s = m49 { list.append(s) }
 		if let s = iso1N3 { list.append(s) }
 		if let s = wikidata { list.append(s) }
+		list.append(contentsOf: self.aliases)
 	}
 
 	private static func addPoints(_ points: [[Double]], to path: UIBezierPath) {
@@ -100,6 +104,7 @@ public final class CountryCoder {
 			let iso1N3 = properties["iso1N3"] as? String
 			let m49 = properties["m49"] as? String
 			let wikidata = properties["wikidata"] as? String
+			let aliases = properties["aliases"] as? [String] ?? []
 			let groups = properties["groups"] as? [String] ?? []
 			let bezierPath: UIBezierPath?
 
@@ -121,7 +126,8 @@ public final class CountryCoder {
 			                                  iso1A3: iso1A3,
 			                                  iso1N3: iso1N3,
 			                                  m49: m49,
-			                                  wikidata: wikidata,
+											  wikidata: wikidata,
+											  aliases: aliases,
 			                                  groups: groups,
 			                                  bezierPath: bezierPath))
 		}
