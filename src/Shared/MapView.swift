@@ -781,7 +781,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		} else {
 			currentRegion = CurrentRegion(latLon: LatLon(x: 0, y: 0), country: "", regions: [])
 		}
-		DispatchQueue.main.asyncAfter(deadline: .now()+2.0,
+		DispatchQueue.main.asyncAfter(deadline: .now() + 2.0,
 		                              execute: {
 		                              	self.updateCurrentRegionForLocationUsingCountryCoder()
 		                              })

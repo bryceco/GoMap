@@ -15,8 +15,8 @@ public struct CountryCoderRegion {
 
 	init(country: String?,
 	     iso1A2: String?, iso1A3: String?, iso1N3: String?, m49: String?, wikidata: String?,
-		 aliases: [String],
-		 groups: [String],
+	     aliases: [String],
+	     groups: [String],
 	     bezierPath: UIBezierPath?)
 	{
 		self.country = country?.lowercased()
@@ -37,7 +37,7 @@ public struct CountryCoderRegion {
 		if let s = m49 { list.append(s) }
 		if let s = iso1N3 { list.append(s) }
 		if let s = wikidata { list.append(s) }
-		list.append(contentsOf: self.aliases)
+		list.append(contentsOf: aliases)
 	}
 
 	private static func addPoints(_ points: [[Double]], to path: UIBezierPath) {
@@ -126,8 +126,8 @@ public final class CountryCoder {
 			                                  iso1A3: iso1A3,
 			                                  iso1N3: iso1N3,
 			                                  m49: m49,
-											  wikidata: wikidata,
-											  aliases: aliases,
+			                                  wikidata: wikidata,
+			                                  aliases: aliases,
 			                                  groups: groups,
 			                                  bezierPath: bezierPath))
 		}
