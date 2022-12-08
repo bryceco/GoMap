@@ -19,10 +19,19 @@ for opt, arg in opts:
 		sys.exit()
 
 FILE='./nsi_presets.json'
-SIZE=60
+SIZE=60 # maximum image size in pixels
+headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
 
+# Get the list images that NSI references
 dict=json.load(open(FILE,))
 dict=dict["presets"]
+
+# Get the list of images we already have on the server
+response = requests.get('https://gomaposm.com/brandIconsFileList.php', headers=headers)
+# Convert response to an array of file names
+existing = response.content.decode().split(' ')
+# convert array to a dictionary
+existing = {value:"" for (index, value) in enumerate(existing)}
 
 types = {
 	"image/jpeg" 	: ".jpg",
@@ -37,18 +46,18 @@ os.system("rm -rf ./brandIcons")
 os.mkdir("./brandIcons")
 os.chdir("./brandIcons")
 
-headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
-
 cnt=0
 for ident,fields in dict.items():
 	if 'imageURL' in fields:
 		cnt=cnt+1
 		if cnt < skip:
 			continue
-		if cnt > 2000000:
-			break
 		url=fields['imageURL']
 		ident=ident.replace("/","_")
+
+		if ident in existing:
+			# print(cnt,ident,"already uploaded")
+			continue
 
 		try:
 			response = requests.get(url, headers=headers, stream=True)
