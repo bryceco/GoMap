@@ -487,18 +487,17 @@ extension PresetsDatabase {
 		}
 
 		let type = dict["type"] as! String
-		let keyType = dict["key"] as? String ?? fieldName
-		let label = (redirectedField("label", in: dict) as? String) ?? OsmTags.PrettyTag(keyType)
+		let key = dict["key"] as? String ?? fieldName
+		let label = (redirectedField("label", in: dict) as? String) ?? OsmTags.PrettyTag(key)
 		let placeholder = redirectedField("placeholder", in: dict) as? String
 		let defaultValue = dict["default"] as? String
 		var keyboard = UIKeyboardType.default
-		var capitalize = keyType.hasPrefix("name:") || keyType == "operator"
+		var capitalize = key.hasPrefix("name:") || key == "operator"
 			? UITextAutocapitalizationType.words : UITextAutocapitalizationType.none
 		var autocorrect = UITextAutocorrectionType.no
 
 		switch type {
 		case "defaultCheck", "check", "onewayCheck":
-			let key = dict["key"] as! String
 			let tag = yesNoWith(
 				label: label,
 				key: key,
@@ -517,11 +516,10 @@ extension PresetsDatabase {
 			var options = dict["options"] as? [String]
 			if options == nil {
 				// need to get options from taginfo
-				let key = dict["key"] as! String
 				options = taginfoFor(key: key, searchKeys: isMultiCombo, update: update)
 			} else if isMultiCombo {
 				// prepend key: to options
-				options = options!.map { k -> String in (dict["key"] as! String) + k }
+				options = options!.map { k -> String in key + k }
 			}
 			let strings = redirectedField("strings", in: dict) as? [String: String]
 
@@ -549,7 +547,6 @@ extension PresetsDatabase {
 				return group
 			} else {
 				// a multiple selection
-				let key = dict["key"] as! String
 				let tag = comboWith(
 					label: label,
 					key: key,
@@ -566,7 +563,6 @@ extension PresetsDatabase {
 
 		case "combo", "semiCombo", "networkCombo", "typeCombo", "colour":
 
-			let key = dict["key"] as! String
 			if type == "typeCombo", ignore.contains(key) {
 				return nil
 			}
@@ -614,7 +610,7 @@ extension PresetsDatabase {
 
 		case "address":
 
-			let addressPrefix = dict["key"] as! String
+			let addressPrefix = key
 			let numericFields = [
 				"block_number",
 				"conscriptionnumber",
@@ -688,7 +684,6 @@ extension PresetsDatabase {
 			default:
 				break
 			}
-			let key = dict["key"] as! String
 			let tag = PresetKey(
 				name: label,
 				type: type,
