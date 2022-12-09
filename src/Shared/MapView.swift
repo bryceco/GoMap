@@ -469,6 +469,12 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			}
 			return nil
 		}
+
+		func callingCode() -> String? {
+			let regionDict = CountryCoder.shared.regionDict
+			let regionList = regions.compactMap({ regionDict[$0] })
+			return regionList.first(where: { $0.callingCodes.count > 0 })?.callingCodes[0]
+		}
 	}
 
 	private(set) var currentRegion: CurrentRegion

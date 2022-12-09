@@ -20,7 +20,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	private var selectedFeature: PresetFeature? // the feature selected by the user, not derived from tags (e.g. Address)
 	private var childPushed = false
 	private var drillDownGroup: PresetGroup?
-	private var textFieldIsEditing = false
+	private var textFieldIsEditing: UITextField?
 
 	override func viewDidLoad() {
 		// have to update presets before call super because super asks for the number of sections
@@ -392,6 +392,53 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		sender.resignFirstResponder()
 	}
 
+	@objc func setCallingCodeText(_ sender: Any?) {
+		if let text = textFieldIsEditing?.text,
+		   !text.hasPrefix("+"),
+		   let code = AppDelegate.shared.mapView.currentRegion.callingCode()
+		{
+			textFieldIsEditing?.text = "+" + code + " " + text
+		}
+	}
+
+	@objc func insertSpace(_ sender: Any?) {
+		textFieldIsEditing?.insertText(" ")
+	}
+
+	@objc func insertDash(_ sender: Any?) {
+		textFieldIsEditing?.insertText("-")
+	}
+
+	@objc func phonePadDone(_ sender: Any?) {
+		textFieldIsEditing?.resignFirstResponder()
+	}
+
+	func addTelephoneToolbarToKeyboard(for textField: UITextField) {
+		let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 44))
+		toolbar.items = [
+			UIBarButtonItem(
+				title: "+1",
+				style: .plain,
+				target: self,
+				action: #selector(setCallingCodeText(_:))),
+			UIBarButtonItem(
+				title: NSLocalizedString("Space", comment: ""),
+				style: .plain,
+				target: self,
+				action: #selector(insertSpace(_:))),
+			UIBarButtonItem(
+				title: NSLocalizedString("-", comment: ""),
+				style: .plain,
+				target: self,
+				action: #selector(insertDash(_:))),
+			UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
+			UIBarButtonItem(barButtonSystemItem: .done,
+			                target: self,
+			                action: #selector(phonePadDone(_:)))
+		]
+		textField.inputAccessoryView = toolbar
+	}
+
 	@IBAction func textFieldEditingDidBegin(_ textField: AutocompleteTextField?) {
 		if let textField = textField {
 			// get list of values for current key
@@ -405,7 +452,10 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 					let list = [String](values)
 					textField.autocompleteStrings = list
 				}
-				textFieldIsEditing = true
+				if presetKey.keyboardType == .phonePad {
+					addTelephoneToolbarToKeyboard(for: textField)
+				}
+				textFieldIsEditing = textField
 			}
 		}
 	}
@@ -427,7 +477,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 
 		// convert to raw value if necessary
 		let tagValue = presetKey.tagValueForPrettyName(prettyValue)
-		textFieldIsEditing = false
+		textFieldIsEditing = nil
 		updateTag(withValue: tagValue, forKey: presetKey.tagKey)
 
 		// do automatic value updates for special keys

@@ -673,7 +673,7 @@ extension PresetsDatabase {
 			case "number", "roadheight", "roadspeed":
 				keyboard = .numbersAndPunctuation // UIKeyboardTypeDecimalPad doesn't have Done button
 			case "tel":
-				keyboard = .numbersAndPunctuation // UIKeyboardTypePhonePad doesn't have Done Button
+				keyboard = .phonePad
 			case "url":
 				keyboard = .URL
 			case "email":

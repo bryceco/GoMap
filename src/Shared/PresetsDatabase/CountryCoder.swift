@@ -17,7 +17,7 @@ public struct CountryCoderRegion {
 	init(country: String?,
 	     iso1A2: String?, iso1A3: String?, iso1N3: String?, m49: String?, wikidata: String?,
 	     aliases: [String],
-		 callingCodes: [String],
+	     callingCodes: [String],
 	     groups: [String],
 	     bezierPath: UIBezierPath?)
 	{
@@ -131,8 +131,8 @@ public final class CountryCoder {
 			                                  iso1N3: iso1N3,
 			                                  m49: m49,
 			                                  wikidata: wikidata,
-											  aliases: aliases,
-											  callingCodes: callingCodes,
+			                                  aliases: aliases,
+			                                  callingCodes: callingCodes,
 			                                  groups: groups,
 			                                  bezierPath: bezierPath))
 		}
