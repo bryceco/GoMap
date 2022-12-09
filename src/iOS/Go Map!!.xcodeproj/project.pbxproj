@@ -836,7 +836,6 @@
 				ED9649DA2601CB7A00EC0A60 /* SettingsViewController.swift */,
 				02ACBCFF16713F7F00BB4414 /* Shared */,
 				0291D83A2442822300F793BE /* Storyboards */,
-				0266DE852655A21F007A502E /* Superview.swift */,
 				02ACBA3A16713CCB00BB4414 /* Supporting Files */,
 				ED9649C02601C33E00EC0A60 /* TileServerEditViewController.swift */,
 				ED9649D22601C4CE00EC0A60 /* TileServerListViewController.swift */,
@@ -1041,6 +1040,7 @@
 				02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */,
 				C3FA924C263FFEF9000A2A99 /* PathUtil.swift */,
 				02CA15502824A6B40047B0E5 /* String+Ext.swift */,
+				0266DE852655A21F007A502E /* Superview.swift */,
 				0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */,
 			);
 			name = Utility;
