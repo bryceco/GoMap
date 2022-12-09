@@ -394,9 +394,9 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 
 	@objc func setCallingCodeText(_ sender: Any?) {
 		if let text = textFieldIsEditing?.text,
-		   !text.hasPrefix("+"),
-		   let code = AppDelegate.shared.mapView.currentRegion.callingCode()
+		   !text.hasPrefix("+")
 		{
+			let code = AppDelegate.shared.mapView.currentRegion.callingCode() ?? ""
 			textFieldIsEditing?.text = "+" + code + " " + text
 		}
 	}
@@ -422,12 +422,12 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 				target: self,
 				action: #selector(setCallingCodeText(_:))),
 			UIBarButtonItem(
-				title: NSLocalizedString("Space", comment: ""),
+				title: NSLocalizedString("Space", comment: "Space key on the keyboard"),
 				style: .plain,
 				target: self,
 				action: #selector(insertSpace(_:))),
 			UIBarButtonItem(
-				title: NSLocalizedString("-", comment: ""),
+				title: "-",
 				style: .plain,
 				target: self,
 				action: #selector(insertDash(_:))),
