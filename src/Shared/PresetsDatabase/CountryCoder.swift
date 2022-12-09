@@ -8,6 +8,7 @@ public struct CountryCoderRegion {
 	let m49: String? // UN M49 code
 	let wikidata: String?
 	let aliases: [String]
+	let callingCodes: [String]
 	let groups: [String]
 
 	let bezierPath: UIBezierPath?
@@ -16,6 +17,7 @@ public struct CountryCoderRegion {
 	init(country: String?,
 	     iso1A2: String?, iso1A3: String?, iso1N3: String?, m49: String?, wikidata: String?,
 	     aliases: [String],
+		 callingCodes: [String],
 	     groups: [String],
 	     bezierPath: UIBezierPath?)
 	{
@@ -26,6 +28,7 @@ public struct CountryCoderRegion {
 		self.m49 = m49 // numeric code
 		self.wikidata = wikidata?.lowercased()
 		self.aliases = aliases.map({ $0.lowercased() })
+		self.callingCodes = callingCodes
 		self.groups = groups.map({ $0.lowercased() })
 		self.bezierPath = bezierPath
 		boundingBox = bezierPath == nil ? CGRect() : bezierPath!.bounds
@@ -105,6 +108,7 @@ public final class CountryCoder {
 			let m49 = properties["m49"] as? String
 			let wikidata = properties["wikidata"] as? String
 			let aliases = properties["aliases"] as? [String] ?? []
+			let callingCodes = properties["callingCodes"] as? [String] ?? []
 			let groups = properties["groups"] as? [String] ?? []
 			let bezierPath: UIBezierPath?
 
@@ -127,7 +131,8 @@ public final class CountryCoder {
 			                                  iso1N3: iso1N3,
 			                                  m49: m49,
 			                                  wikidata: wikidata,
-			                                  aliases: aliases,
+											  aliases: aliases,
+											  callingCodes: callingCodes,
 			                                  groups: groups,
 			                                  bezierPath: bezierPath))
 		}
