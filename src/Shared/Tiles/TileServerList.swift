@@ -370,12 +370,11 @@ final class TileServerList {
 		defaults.set(recents, forKey: RECENTLY_USED_KEY)
 	}
 
-	func services(forRegion rect: OSMRect) -> [TileServer] {
+	func services(latLon: LatLon) -> [TileServer] {
 		// find imagery relavent to the viewport
-		let center = CGPoint(x: rect.origin.x + rect.size.width / 2, y: rect.origin.y + rect.size.height / 2)
 		var result: [TileServer] = []
 		for service in downloadedList {
-			if service.polygon == nil || (service.polygon?.contains(center, using: .winding) ?? false) {
+			if service.coversLocation(latLon) {
 				result.append(service)
 			}
 		}

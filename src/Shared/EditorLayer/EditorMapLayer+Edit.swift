@@ -697,13 +697,13 @@ extension EditorMapLayer {
 				guard let primary = selectedPrimary,
 				      let pushpinView = owner.pushpinView()
 				else { return }
-				let delta = CGPoint(x: owner.crosshairs().x - pushpinView.arrowPoint.x,
-				                    y: owner.crosshairs().y - pushpinView.arrowPoint.y)
+				let delta = CGPoint(x: owner.centerPoint().x - pushpinView.arrowPoint.x,
+				                    y: owner.centerPoint().y - pushpinView.arrowPoint.y)
 				var offset: OSMPoint
 				if hypot(delta.x, delta.y) > 20 {
 					// move to position of crosshairs
 					let p1 = owner.mapTransform.latLon(forScreenPoint: pushpinView.arrowPoint)
-					let p2 = owner.mapTransform.latLon(forScreenPoint: owner.crosshairs())
+					let p2 = owner.mapTransform.latLon(forScreenPoint: owner.centerPoint())
 					offset = OSMPoint(x: p2.lon - p1.lon, y: p2.lat - p1.lat)
 				} else {
 					offset = OSMPoint(x: 0.00005, y: -0.00005)

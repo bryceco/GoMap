@@ -43,7 +43,7 @@ final class TileServer {
 	let apiKey: String
 	let maxZoom: Int
 
-	let polygon: CGPath?
+	private let polygon: CGPath?
 	let roundZoomUp: Bool
 	let startDate: String?
 	let endDate: String?
@@ -120,6 +120,15 @@ final class TileServer {
 
 	func isMaxar() -> Bool {
 		return (identifier == MAXAR_PREMIUM_IDENTIFIER) || (identifier == MAXAR_STANDARD_IDENTIFIER)
+	}
+
+	func coversLocation(_ point: LatLon) -> Bool {
+		guard let polygon = polygon else { return true }
+		return polygon.contains(CGPoint(OSMPoint(point)), using: .winding)
+	}
+
+	func isGlobalImagery() -> Bool {
+		return polygon == nil
 	}
 
 	static var dateFormatterList: [DateFormatter] = {

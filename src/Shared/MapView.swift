@@ -19,6 +19,10 @@ enum MapViewState: Int {
 	case EDITORAERIAL
 	case AERIAL
 	case MAPNIK
+
+	func showsAerial() -> Bool {
+		return self == .EDITORAERIAL || self == .AERIAL
+	}
 }
 
 /// Overlays on top of the map: Locator when zoomed, GPS traces, etc.
@@ -353,7 +357,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		didSet {
 			if !enableRotation {
 				// remove rotation
-				let centerPoint = bounds.center()
+				let centerPoint = centerPoint()
 				let angle = CGFloat(screenFromMapTransform.rotation())
 				rotate(by: -angle, aroundScreenPoint: centerPoint)
 			}
@@ -872,9 +876,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	func save() {
 		// save defaults firs
-		var center = OSMPoint(crossHairs.position)
-		center = mapTransform.mapPoint(forScreenPoint: center, birdsEye: false)
-		let latLon = MapTransform.latLon(forMapPoint: center)
+		let latLon = screenCenterLatLon()
 		let scale = screenFromMapTransform.scale()
 #if false && DEBUG
 		assert(scale > 1.0)
@@ -1145,15 +1147,34 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	private func promptForBetterBackgroundImagery() {
-		let viewport = screenLatLonRect()
-		let imageryForRegion = tileServerList.services(forRegion: viewport)
-		if !tileServerList.currentServer.best,
-		   let best = imageryForRegion.first(where: { $0.best && $0 !== self.tileServerList.currentServer })
+		guard viewState.showsAerial() else { return }
+
+		let latLon = screenCenterLatLon()
+		let imageryForRegion = tileServerList.services(latLon: latLon)
+		let best = imageryForRegion.first(where: { $0.best && $0 !== self.tileServerList.currentServer })
+		if !tileServerList.currentServer.coversLocation(latLon) {
+			// current imagery layer doesn't exist at current location
+			let best = best ?? tileServerList.builtinServers()[0]
+			tileServerList.currentServer = best
+			setAerialTileServer(best)
+		} else if !tileServerList.currentServer.best,
+		          tileServerList.currentServer.isGlobalImagery(),
+		          let best = best
 		{
+			// There's better imagery available at this location
+			var message = NSLocalizedString(
+				"Better background imagery is available for your location. Would you like to change to it?",
+				comment: "")
+			message += "\n\n"
+			message += best.name
+			if best.description != "",
+			   best.description != best.name
+			{
+				message += "\n\n"
+				message += best.description
+			}
 			let alert = UIAlertController(title: NSLocalizedString("Better imagery available", comment: ""),
-			                              message: NSLocalizedString(
-			                              	"Better background imagery is available for your location. Would you like to change to it?",
-			                              	comment: ""),
+			                              message: message,
 			                              preferredStyle: .alert)
 			alert.addAction(UIAlertAction(title: NSLocalizedString("Ignore", comment: ""), style: .cancel,
 			                              handler: nil))
@@ -1167,21 +1188,20 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	func updateCurrentRegionForLocationUsingCountryCoder() {
-		if viewStateZoomedOut {
-			return
-		}
-
-		// if we moved a significant distance then check our location
-		let loc = mapTransform.latLon(forScreenPoint: center)
+		let loc = screenCenterLatLon()
 		if GreatCircleDistance(loc, currentRegion.latLon) < 10 * 1000 {
 			return
 		}
-		let regions = CountryCoder.shared.regionsAt(loc)
-		currentRegion = CurrentRegion(latLon: loc,
-		                              country: CountryCoder.countryforRegions(regions),
-		                              regions: CountryCoder.regionsStringsForRegions(regions))
+		if !viewStateZoomedOut {
+			// if we moved a significant distance then check our location
+			let regions = CountryCoder.shared.regionsAt(loc)
+			currentRegion = CurrentRegion(latLon: loc,
+			                              country: CountryCoder.countryforRegions(regions),
+			                              regions: CountryCoder.regionsStringsForRegions(regions))
+		}
 
 		// Check if new, better aerial imagery is available
+		// FIXME: only do this when location changes
 		promptForBetterBackgroundImagery()
 	}
 
@@ -1324,6 +1344,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		let rc = boundingMapRectForScreen()
 		let rect = MapTransform.latLon(forMapRect: rc)
 		return rect
+	}
+
+	func screenCenterLatLon() -> LatLon {
+		return mapTransform.latLon(forScreenPoint: centerPoint())
 	}
 
 	func setTransformFor(latLon: LatLon) {
@@ -1489,7 +1513,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		if gpsState == .HEADING {
 			// rotate to new heading
-			let center = bounds.center()
+			let center = centerPoint()
 			let delta = -(heading + screenAngle)
 			rotate(by: CGFloat(delta), aroundScreenPoint: center)
 		} else if !locationBallLayer.isHidden {
@@ -1802,8 +1826,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			angle = -currentRotation
 		}
 
-		let center = bounds.center()
-		let offset = mapTransform.mapPoint(forScreenPoint: OSMPoint(center), birdsEye: false)
+		let offset = mapTransform.mapPoint(forScreenPoint: OSMPoint(centerPoint()), birdsEye: false)
 
 		t = t.translatedBy(dx: offset.x, dy: offset.y)
 #if TRANSFORM_3D
@@ -1821,7 +1844,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	func rotateToNorth() {
 		// Rotate to face North
-		let center = bounds.center()
+		let center = centerPoint()
 		let rotation = screenFromMapTransform.rotation()
 		animateRotation(by: -rotation, aroundPoint: center)
 	}
@@ -1829,7 +1852,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	func rotateToHeading() {
 		// Rotate to face current compass heading
 		if let heading = locationManager.heading {
-			let center = bounds.center()
+			let center = centerPoint()
 			let screenAngle = screenFromMapTransform.rotation()
 			let heading = self.heading(for: heading)
 			animateRotation(by: -(screenAngle + heading), aroundPoint: center)
@@ -2103,7 +2126,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 				if scrollx != 0.0 || scrolly != 0.0 {
 					// if we're dragging at a diagonal then scroll diagonally as well, in the direction the user is dragging
-					let center = self.bounds.center()
+					let center = self.centerPoint()
 					let v = Sub(OSMPoint(arrow), OSMPoint(center)).unitVector()
 					scrollx = SCROLL_SPEED * CGFloat(v.x)
 					scrolly = SCROLL_SPEED * CGFloat(v.y)
@@ -2606,7 +2629,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 			let delta = tapAndDrag.translation(in: self)
 			let scale = 1.0 - delta.y * 0.01
-			let zoomCenter = bounds.center()
+			let zoomCenter = centerPoint()
 			adjustZoom(by: scale, aroundScreenPoint: zoomCenter)
 		} else if tapAndDrag.state == .ended {
 			updateMapMarkersFromServer(withDelay: 0)
@@ -2740,8 +2763,8 @@ extension MapView: EditorMapLayerOwner {
 		updateEditControl()
 	}
 
-	func crosshairs() -> CGPoint {
-		return crossHairs.position
+	func centerPoint() -> CGPoint {
+		return bounds.center()
 	}
 
 	func useTurnRestrictions() -> Bool {

@@ -37,7 +37,7 @@ enum MenuLocation {
 protocol EditorMapLayerOwner: UIView, MapViewProgress {
 	var mapTransform: MapTransform { get }
 
-	func crosshairs() -> CGPoint
+	func centerPoint() -> CGPoint
 
 	func pushpinView() -> PushPinView? // fetch the pushpin from owner
 	func removePin()
