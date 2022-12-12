@@ -135,7 +135,7 @@
       </trans-unit>
       <trans-unit id="%.0f m^2" xml:space="preserve">
         <source>%.0f m^2</source>
-        <target/>
+        <target state="translated">%.0f m²</target>
         <note>area in m^2</note>
       </trans-unit>
       <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
@@ -181,7 +181,7 @@
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$ld meters, %2$ld points</source>
-        <target/>
+        <target state="translated">%1$ld metros, %2$ld puntos</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld objects" xml:space="preserve">
@@ -281,7 +281,7 @@
       </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
         <source>Aerial only</source>
-        <target/>
+        <target state="translated">Solo aéreas</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="All Tags" xml:space="preserve">
@@ -336,12 +336,12 @@
       </trans-unit>
       <trans-unit id="Better background imagery is available for your location. Would you like to change to it?" xml:space="preserve">
         <source>Better background imagery is available for your location. Would you like to change to it?</source>
-        <target/>
+        <target state="translated">Hay mejores imágenes de fondo para su ubicación. ¿Quiere cambiar?</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Better imagery available" xml:space="preserve">
         <source>Better imagery available</source>
-        <target/>
+        <target state="translated">Mejores imágenes disponibles</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
@@ -1037,7 +1037,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Recent Aerial Imagery" xml:space="preserve">
         <source>Recent Aerial Imagery</source>
-        <target/>
+        <target state="translated">Imágenes aéreas recientes</target>
         <note>Alert title message</note>
       </trans-unit>
       <trans-unit id="Redo" xml:space="preserve">
@@ -1067,7 +1067,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Replace Tags" xml:space="preserve">
         <source>Replace Tags</source>
-        <target/>
+        <target state="translated">Reemplazar etiquetas</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Requires a closed way with at least 3 nodes" xml:space="preserve">
@@ -1137,7 +1137,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Set" xml:space="preserve">
         <source>Set</source>
-        <target/>
+        <target state="translated">Establecer</target>
         <note>set tag value</note>
       </trans-unit>
       <trans-unit id="Set Height Tag" xml:space="preserve">
@@ -1178,7 +1178,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Standard imagery" xml:space="preserve">
         <source>Standard imagery</source>
-        <target/>
+        <target state="translated">Imágenes estándares</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Start" xml:space="preserve">
@@ -1208,7 +1208,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="The XML is improperly formed" xml:space="preserve">
         <source>The XML is improperly formed</source>
-        <target/>
+        <target state="translated">El XML no está bien formado</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The current location cannot be determined: " xml:space="preserve">
@@ -1238,12 +1238,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="The selected way must be completely visible" xml:space="preserve">
         <source>The selected way must be completely visible</source>
-        <target/>
+        <target state="translated">La vía seleccionada debe ser totalmente visible</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The target way is ambiguous" xml:space="preserve">
         <source>The target way is ambiguous</source>
-        <target/>
+        <target state="translated">La vía de destino es ambigua</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The turn contains an unrecognized turn restriction style. Proceeding will destroy it." xml:space="preserve">
@@ -1253,7 +1253,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="The way belongs to a relation that is not fully downloaded" xml:space="preserve">
         <source>The way belongs to a relation that is not fully downloaded</source>
-        <target/>
+        <target state="translated">La vía pertenece a una relación que no se ha descargado por completo</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way is not sufficiently straight" xml:space="preserve">
@@ -1268,12 +1268,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="The ways contain incompatible tags" xml:space="preserve">
         <source>The ways contain incompatible tags</source>
-        <target/>
+        <target state="translated">Las vías contienen etiquetas incompatibles</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="This action requires GPS to be turned on" xml:space="preserve">
         <source>This action requires GPS to be turned on</source>
-        <target/>
+        <target state="translated">Esta acción requiere encender el GPS</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="This app does not yet support editing turn restrictions without a node as the 'via' member" xml:space="preserve">
@@ -1365,7 +1365,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Unsupported turn restriction type" xml:space="preserve">
         <source>Unsupported turn restriction type</source>
-        <target/>
+        <target state="translated">Tipo de restricción de giro no admitido</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Update" xml:space="preserve">
@@ -1380,27 +1380,27 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Updating Note..." xml:space="preserve">
         <source>Updating Note...</source>
-        <target/>
+        <target state="translated">Actualizando la nota…</target>
         <note>OSM Note</note>
       </trans-unit>
       <trans-unit id="Upload complete!" xml:space="preserve">
         <source>Upload complete!</source>
-        <target/>
+        <target state="translated">Finalizó la carga.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Upload to OSM" xml:space="preserve">
         <source>Upload to OSM</source>
-        <target/>
+        <target state="translated">Cargar a OSM</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Upload your changes" xml:space="preserve">
         <source>Upload your changes</source>
-        <target/>
+        <target state="translated">Cargar sus cambios</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Uploading GPX..." xml:space="preserve">
         <source>Uploading GPX...</source>
-        <target/>
+        <target state="translated">Cargando GPX…</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="User" xml:space="preserve">
@@ -1442,7 +1442,7 @@ To continue press Commit once again, otherwise press Cancel.</source>
       </trans-unit>
       <trans-unit id="You can define your own custom presets here" xml:space="preserve">
         <source>You can define your own custom presets here</source>
-        <target/>
+        <target state="translated">Puede definir sus propias preconfiguraciones aquí</target>
         <note>POI editor presets</note>
       </trans-unit>
       <trans-unit id="You can navigate to a relation member only if it is already downloaded.&#10;These members are marked with '&gt;'." xml:space="preserve">
