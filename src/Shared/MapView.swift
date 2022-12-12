@@ -19,10 +19,6 @@ enum MapViewState: Int {
 	case EDITORAERIAL
 	case AERIAL
 	case MAPNIK
-
-	func showsAerial() -> Bool {
-		return self == .EDITORAERIAL || self == .AERIAL
-	}
 }
 
 /// Overlays on top of the map: Locator when zoomed, GPS traces, etc.
@@ -266,10 +262,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			}
 			viewStateZoomedOut = isZoomedOut
 
-			updateMouseCoordinates()
 			updateUserLocationIndicator(nil)
-
 			updateCurrentRegionForLocationUsingCountryCoder()
+			promptForBetterBackgroundImagery()
 
 			// update pushpin location
 			if let pushpinView = pushPin,
@@ -794,6 +789,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		DispatchQueue.main.asyncAfter(deadline: .now() + 2.0,
 		                              execute: {
 		                              	self.updateCurrentRegionForLocationUsingCountryCoder()
+		                              	self.promptForBetterBackgroundImagery()
 		                              })
 
 		updateAerialAttributionButton()
@@ -1147,19 +1143,30 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	private func promptForBetterBackgroundImagery() {
-		guard viewState.showsAerial() else { return }
+		if aerialLayer.isHidden {
+			return
+		}
 
+		// Check if we've moved a long distance from the last check
 		let latLon = screenCenterLatLon()
-		let imageryForRegion = tileServerList.services(latLon: latLon)
-		let best = imageryForRegion.first(where: { $0.best && $0 !== self.tileServerList.currentServer })
+		if let prevLatLonData = UserDefaults.standard.value(forKey: "LatestAerialCheckLatLon") as? Data,
+		   let prevLatLon = try? PropertyListDecoder().decode(LatLon.self, from: prevLatLonData),
+		   GreatCircleDistance(latLon, prevLatLon) < 10 * 1000
+		{
+			return
+		}
+
 		if !tileServerList.currentServer.coversLocation(latLon) {
 			// current imagery layer doesn't exist at current location
-			let best = best ?? tileServerList.builtinServers()[0]
+			let best = tileServerList.bestService(at: latLon) ?? tileServerList.builtinServers()[0]
 			tileServerList.currentServer = best
 			setAerialTileServer(best)
+		} else if mapTransform.zoom() < 15 {
+			// return here instead of updating last check location
+			return
 		} else if !tileServerList.currentServer.best,
 		          tileServerList.currentServer.isGlobalImagery(),
-		          let best = best
+		          let best = tileServerList.bestService(at: latLon)
 		{
 			// There's better imagery available at this location
 			var message = NSLocalizedString(
@@ -1185,24 +1192,25 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			                              }))
 			mainViewController.present(alert, animated: true)
 		}
+
+		UserDefaults.standard.set(try? PropertyListEncoder().encode(latLon), forKey: "LatestAerialCheckLatLon")
 	}
 
 	func updateCurrentRegionForLocationUsingCountryCoder() {
-		let loc = screenCenterLatLon()
-		if GreatCircleDistance(loc, currentRegion.latLon) < 10 * 1000 {
+		if editorLayer.isHidden {
 			return
 		}
-		if !viewStateZoomedOut {
-			// if we moved a significant distance then check our location
-			let regions = CountryCoder.shared.regionsAt(loc)
-			currentRegion = CurrentRegion(latLon: loc,
-			                              country: CountryCoder.countryforRegions(regions),
-			                              regions: CountryCoder.regionsStringsForRegions(regions))
+
+		// if we moved a significant distance then check our location
+		let latLon = screenCenterLatLon()
+		if GreatCircleDistance(latLon, currentRegion.latLon) < 10 * 1000 {
+			return
 		}
 
-		// Check if new, better aerial imagery is available
-		// FIXME: only do this when location changes
-		promptForBetterBackgroundImagery()
+		let regions = CountryCoder.shared.regionsAt(latLon)
+		currentRegion = CurrentRegion(latLon: latLon,
+		                              country: CountryCoder.countryforRegions(regions),
+		                              regions: CountryCoder.regionsStringsForRegions(regions))
 	}
 
 	// MARK: Rotate object
@@ -1697,8 +1705,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	func isLocationSpecified() -> Bool {
 		return !(screenFromMapTransform == .identity)
 	}
-
-	func updateMouseCoordinates() {}
 
 	func adjustOrigin(by delta: CGPoint) {
 		if delta.x == 0.0, delta.y == 0.0 {

@@ -370,7 +370,7 @@ final class TileServerList {
 		defaults.set(recents, forKey: RECENTLY_USED_KEY)
 	}
 
-	func services(latLon: LatLon) -> [TileServer] {
+	func allServices(at latLon: LatLon) -> [TileServer] {
 		// find imagery relavent to the viewport
 		var result: [TileServer] = []
 		for service in downloadedList {
@@ -390,6 +390,17 @@ final class TileServerList {
 			return $0.name.caseInsensitiveCompare($1.name) == .orderedAscending
 		})
 		return result
+	}
+
+	func bestService(at latLon: LatLon) -> TileServer? {
+		for service in downloadedList {
+			if service.best,
+			   service.coversLocation(latLon)
+			{
+				return service
+			}
+		}
+		return nil
 	}
 
 	var currentServer = TileServer.bingAerial {

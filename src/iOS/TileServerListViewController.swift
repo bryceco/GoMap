@@ -22,7 +22,7 @@ class TileServerListViewController: UITableViewController {
 		serverList = appDelegate.mapView.tileServerList
 
 		let latLon = appDelegate.mapView.screenCenterLatLon()
-		imageryForRegion = serverList.services(latLon: latLon)
+		imageryForRegion = serverList.allServices(at: latLon)
 
 		super.viewDidLoad()
 
