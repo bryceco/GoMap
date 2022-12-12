@@ -77,7 +77,7 @@
 "Fcv-4Q-gpE.text" = "Hodnota 3";
 
 /* Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; Note = "Do not translate"; */
-"Fe2-dc-zgA.placeholder" = "vyhrazeno";
+"Fe2-dc-zgA.placeholder" = "designated";
 
 /* Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Do not translate"; */
 "foC-aN-GtH.placeholder" = "clean";
@@ -144,6 +144,9 @@
 
 /* Class = "UILabel"; text = "Value 11"; ObjectID = "o63-qY-4vl"; */
 "o63-qY-4vl.text" = "Hodnota 11";
+
+/* Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; Note = "Do not translate"; */
+"oC6-w7-cwN.placeholder" = "leashed";
 
 /* Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; Note = "Do not translate"; */
 "okh-JP-aKZ.placeholder" = "park";

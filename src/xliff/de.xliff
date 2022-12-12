@@ -1170,6 +1170,10 @@ Es ist eine fortgeschrittene Operation, die nur durchgeführt werden sollte, wen
         <target>Entschuldigung, ein Fehler beim Laden der GPX-Datei ist aufgetreten</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Space" xml:space="preserve">
+        <source>Space</source>
+        <note>Space key on the keyboard</note>
+      </trans-unit>
       <trans-unit id="Split" xml:space="preserve">
         <source>Split</source>
         <target>Teilen</target>

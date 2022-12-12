@@ -131,7 +131,7 @@
       </trans-unit>
       <trans-unit id="%.0f m^2" xml:space="preserve">
         <source>%.0f m^2</source>
-        <target state="translated">%.0f m^2</target>
+        <target>%.0f m^2</target>
         <note>area in m^2</note>
       </trans-unit>
       <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
@@ -296,7 +296,7 @@
       </trans-unit>
       <trans-unit id="Area" xml:space="preserve">
         <source>Area</source>
-        <target state="translated">مساحة</target>
+        <target>مساحة</target>
         <note>Area of an object in m^2</note>
       </trans-unit>
       <trans-unit id="Attention" xml:space="preserve">
@@ -331,12 +331,12 @@
       </trans-unit>
       <trans-unit id="Better background imagery is available for your location. Would you like to change to it?" xml:space="preserve">
         <source>Better background imagery is available for your location. Would you like to change to it?</source>
-        <target state="translated">يوجد صور خلفية أفضل لموقعك الحالي، هل ترغب في التغيير إليها؟</target>
+        <target>يوجد صور خلفية أفضل لموقعك الحالي، هل ترغب في التغيير إليها؟</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Better imagery available" xml:space="preserve">
         <source>Better imagery available</source>
-        <target state="translated">أفضل الصور المتاحة</target>
+        <target>أفضل الصور المتاحة</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
@@ -416,7 +416,7 @@
       </trans-unit>
       <trans-unit id="Change" xml:space="preserve">
         <source>Change</source>
-        <target state="translated">تغيير</target>
+        <target>تغيير</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Changeset" xml:space="preserve">
@@ -1169,6 +1169,10 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>عذرا، حدث خطأ أثناء تحميل ملف GPX</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Space" xml:space="preserve">
+        <source>Space</source>
+        <note>Space key on the keyboard</note>
+      </trans-unit>
       <trans-unit id="Split" xml:space="preserve">
         <source>Split</source>
         <target>تقسيم</target>
@@ -1579,7 +1583,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="km/h" xml:space="preserve">
         <source>km/h</source>
-        <target state="translated">كم/ساعة</target>
+        <target>كم/ساعة</target>
         <note>kilometers per hour speed</note>
       </trans-unit>
       <trans-unit id="meters" xml:space="preserve">
@@ -1594,7 +1598,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="mph" xml:space="preserve">
         <source>mph</source>
-        <target state="translated">ميل في الساعة</target>
+        <target>ميل في الساعة</target>
         <note>miles per hour speed</note>
       </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">

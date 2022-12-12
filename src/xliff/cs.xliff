@@ -131,7 +131,7 @@
       </trans-unit>
       <trans-unit id="%.0f m^2" xml:space="preserve">
         <source>%.0f m^2</source>
-        <target state="translated">%.0f m^2</target>
+        <target>%.0f m^2</target>
         <note>area in m^2</note>
       </trans-unit>
       <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
@@ -1170,6 +1170,10 @@ Jedná se o pokročilou funkci, kterou byste měli použít jen pokud skutečně
         <target>Omlouváme se, při načítání GPX souboru došlo k chybě</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Space" xml:space="preserve">
+        <source>Space</source>
+        <note>Space key on the keyboard</note>
+      </trans-unit>
       <trans-unit id="Split" xml:space="preserve">
         <source>Split</source>
         <target>Rozdělit</target>
@@ -1823,7 +1827,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="Fe2-dc-zgA.placeholder" xml:space="preserve">
         <source>designated</source>
-        <target state="translated">designated</target>
+        <target>designated</target>
         <note>Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="G5R-oP-lp3.title" xml:space="preserve">
@@ -2053,7 +2057,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="oC6-w7-cwN.placeholder" xml:space="preserve">
         <source>leashed</source>
-        <target state="translated">leashed</target>
+        <target>leashed</target>
         <note>Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="okh-JP-aKZ.placeholder" xml:space="preserve">
@@ -2851,7 +2855,7 @@ http://www.sjjb.co.uk/mapicons
 Other icons by Glyphish:
 http://glyphish.com
 </source>
-        <target state="translated">Copyright © 2012-2022 Bryce Cogswell. 
+        <target>Copyright © 2012-2022 Bryce Cogswell. 
 Všechna práva vyhrazena.
 
 OpenStreetMap data jsou licencována pod Open Data Commons Open Database License (ODbL):

@@ -122,6 +122,9 @@
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "Ukjent feil ved innhenting av metadata";
 
+/* Area of an object in m^2 */
+"Area" = "Flate";
+
 /* No comment provided by engineer. */
 "Attention" = "Merk";
 
@@ -139,6 +142,9 @@
 
 /* No comment provided by engineer. */
 "Bad login" = "Feil innlogging";
+
+/* No comment provided by engineer. */
+"Better imagery available" = "Bedre bakgrunnsbilder tilgjengelig";
 
 /* No comment provided by engineer. */
 "Cache size warning" = "Advarsel om hurtiglagerstørrelse";
@@ -181,6 +187,9 @@
 
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "Kan ikke koble til en indre vei til en ytre vei";
+
+/* No comment provided by engineer. */
+"Change" = "Endre";
 
 /* OSM changeset identifier */
 "Changeset" = "Endringsflis";
@@ -251,6 +260,9 @@
 /* No comment provided by engineer. */
 "Delete\n" = "Slett\n";
 
+/* Confirm deleting a node/way */
+"Delete %@?" = "Slett %@?";
+
 /* No comment provided by engineer. */
 "Delete completely" = "Slett fullstendig";
 
@@ -290,6 +302,9 @@
 /* No comment provided by engineer. */
 "Display options" = "Visningsinnstillinger";
 
+/* Distance to an object with an error value */
+"Distance: %1$@ ± %2$@ meters" = "Avstand: %1$@ ± %2$@ meter";
+
 /* No comment provided by engineer. */
 "Done" = "Ferdig";
 
@@ -312,6 +327,12 @@
 "Editing layer not visible" = "Redigeringslag ikke synlig";
 
 /* No comment provided by engineer. */
+"Editor only" = "Kun redigerer";
+
+/* No comment provided by engineer. */
+"Editor with Aerial" = "Redigerer med luftfoto";
+
+/* No comment provided by engineer. */
 "Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "Sørg for at plasseringstjenester er påslått og at du har innvilget denne programtilgangen.\n\nFeil: %@";
 
 /* Error dialog title */
@@ -325,6 +346,9 @@
 
 /* No comment provided by engineer. */
 "GPX Upload Failed" = "Klarte ikke å laste opp GPX-fil";
+
+/* Height of an object with an error value */
+"Height: %1$@ ± %2$@ meters" = "Høyde: %1$@ ± %2$@ meter";
 
 /* rate the app now */
 "I'll do it!" = "På saken!";
@@ -353,11 +377,17 @@
 /* coordinates */
 "Lat/Lon" = "Bredde-/lengdegrad";
 
+/* No comment provided by engineer. */
+"Left" = "Venstre";
+
 /* Left-hand side of screen */
 "Left side" = "Venstre side";
 
 /* No comment provided by engineer. */
 "Length" = "Lengde";
+
+/* No comment provided by engineer. */
+"Login successful" = "Innlogget";
 
 /* No comment provided by engineer. */
 "Mail delivery is not available on this device" = "Forsendelse per e-post er ikke tilgjengelig på denne enheten";
@@ -429,6 +459,9 @@
 /* No comment provided by engineer. */
 "Next" = "Neste";
 
+/* GPX track */
+"No active track" = "Ingen aktive spor";
+
 /* Alert title */
 "No Data" = "Ingen data";
 
@@ -439,6 +472,9 @@
 "No tags to paste" = "Ingen etiketter å lime inn";
 
 /* No comment provided by engineer. */
+"No U-Turn restriction" = "Ingen u-sving-begrensning";
+
+/* No comment provided by engineer. */
 "Node" = "Node";
 
 /* No comment provided by engineer. */
@@ -446,6 +482,9 @@
 
 /* No comment provided by engineer. */
 "node %@ (in way)" = "node %@ (i vei)";
+
+/* No comment provided by engineer. */
+"Node Attributes" = "Node-attributter";
 
 /* No comment provided by engineer. */
 "Node Tags" = "Nodeetiketter";
@@ -470,6 +509,9 @@
 
 /* previous tag value */
 "Old value: (oldValue)" = "Gammel verdi: (gammelVerdi)";
+
+/* No comment provided by engineer. */
+"Only multipolygon relations are supported" = "Kun multipolygonsrelasjoner støttes";
 
 /* Open the iOS Settings app */
 "Open Settings" = "Åpne innstillingene";
@@ -501,11 +543,17 @@
 /* Discard editing changes when resetting OSM data cache */
 "Purge" = "Tøm";
 
+/* Alert title message */
+"Recent Aerial Imagery" = "Nylige luftbilder";
+
 /* No comment provided by engineer. */
 "Redo" = "Gjenta";
 
 /* No comment provided by engineer. */
 "relation" = "relasjon";
+
+/* No comment provided by engineer. */
+"Relation Attributes" = "Relasjons-attributter";
 
 /* No comment provided by engineer. */
 "Relation: %@" = "Relasjon: %@";
@@ -524,6 +572,12 @@
 
 /* country name,2-character country code */
 "Results for %@ (%@)" = "Resultater for %1$@ (%2$@)";
+
+/* retry opening hours recognition */
+"Retry" = "Prøv igjen";
+
+/* No comment provided by engineer. */
+"Right" = "Høyre";
 
 /* Right-hand side of screen */
 "Right side" = "Høyre side";
@@ -624,6 +678,15 @@
 
 /* No comment provided by engineer. */
 "Turn On Location Services to Allow %@ to Determine Your Location" = "Skru på posisjonstjenester for å tillate %@ å fastsette din posisjon";
+
+/* The 'Type' header in Common Tags */
+"Type" = "Type";
+
+/* No comment provided by engineer. */
+"U-Turn from %@ allowed" = "U-sving fra %@ tillatt";
+
+/* No comment provided by engineer. */
+"U-Turn from %@ prohibited" = "U-sving fra %@ forbudt";
 
 /* OSM numeric user ID */
 "UID" = "UID";

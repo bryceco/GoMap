@@ -1164,6 +1164,10 @@ Tegemist on edasijõudnute operatsiooniga, mida tuleks kasutada ainult koos põh
         <target>Vabandust, GPX faili laadimisel tekkis viga</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Space" xml:space="preserve">
+        <source>Space</source>
+        <note>Space key on the keyboard</note>
+      </trans-unit>
       <trans-unit id="Split" xml:space="preserve">
         <source>Split</source>
         <target>Poolita</target>

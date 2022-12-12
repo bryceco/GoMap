@@ -31,6 +31,9 @@
 /* No comment provided by engineer. */
 "(way)" = "(طريق)";
 
+/* area in m^2 */
+"%.0f m^2" = "%.0f m^2";
+
 /* way length if > 10m */
 "%.0f meters, %ld nodes" = "%1$.0f أمتار، %2$ld عقد";
 
@@ -119,6 +122,9 @@
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "حدث خطأ غير معروف أثناء جلب البيانات الوصفية";
 
+/* Area of an object in m^2 */
+"Area" = "مساحة";
+
 /* No comment provided by engineer. */
 "Attention" = "تحذير";
 
@@ -136,6 +142,12 @@
 
 /* No comment provided by engineer. */
 "Bad login" = "تسجيل دخول غير صحيح";
+
+/* No comment provided by engineer. */
+"Better background imagery is available for your location. Would you like to change to it?" = "يوجد صور خلفية أفضل لموقعك الحالي، هل ترغب في التغيير إليها؟";
+
+/* No comment provided by engineer. */
+"Better imagery available" = "أفضل الصور المتاحة";
 
 /* No comment provided by engineer. */
 "Cache size warning" = "تحذير عن حجم ذاكرة التخزين المؤقت";
@@ -181,6 +193,9 @@
 
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "لا يمكن توصيل الخط الذي يمثل أطراف داخلية بخطوط الأطراف خارجية";
+
+/* No comment provided by engineer. */
+"Change" = "تغيير";
 
 /* OSM changeset identifier */
 "Changeset" = "مجموعة التغييرات";
@@ -380,6 +395,9 @@
 /* No comment provided by engineer. */
 "Joining would invalidate a Turn Restriction the way belongs to" = "قد يؤدي الانضمام إلى إبطال قيد الانعطاف الذي ينتمي إليه الطريق";
 
+/* kilometers per hour speed */
+"km/h" = "كم/ساعة";
+
 /* No comment provided by engineer. */
 "Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "اختيارك للغة يؤثر على الإعدادات المسبقة للوسوم والتي تمت ترجمتها لمحرر iD، أما الواجهة الأساسية للتطبيق لا تزال بالإنجليزية.";
 
@@ -469,6 +487,9 @@
 
 /* No comment provided by engineer. */
 "Move selected object?" = "نقل عنصر محدد؟";
+
+/* miles per hour speed */
+"mph" = "ميل في الساعة";
 
 /* No comment provided by engineer. */
 "Multipolygon" = "المضلعات المتعددة";

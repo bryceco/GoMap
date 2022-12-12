@@ -1170,6 +1170,10 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>すみません、GPXファイルのアップロード中にエラーが発生しました</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Space" xml:space="preserve">
+        <source>Space</source>
+        <note>Space key on the keyboard</note>
+      </trans-unit>
       <trans-unit id="Split" xml:space="preserve">
         <source>Split</source>
         <target>分割</target>

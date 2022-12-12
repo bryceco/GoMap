@@ -7,6 +7,9 @@
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "1Yx-Ce-yfq"; */
 "1Yx-Ce-yfq.title" = "Tilbake";
 
+/* Class = "UITabBarItem"; title = "Attributes"; ObjectID = "2cB-FV-ozw"; */
+"2cB-FV-ozw.title" = "Attributter";
+
 /* Class = "UILabel"; text = "Title"; ObjectID = "2Q5-Vd-FED"; Note = "Do not translate"; */
 "2Q5-Vd-FED.text" = "Tittel";
 
@@ -88,6 +91,9 @@
 /* Class = "UINavigationItem"; title = "Attributes"; ObjectID = "hKU-EH-qxp"; */
 "hKU-EH-qxp.title" = "Attributter";
 
+/* Class = "UIButton"; normalTitle = ">"; ObjectID = "IcU-k2-G0m"; */
+"IcU-k2-G0m.normalTitle" = ">";
+
 /* Class = "UILabel"; text = "Changeset"; ObjectID = "ijx-N9-1eO"; */
 "ijx-N9-1eO.text" = "Endringssett";
 
@@ -123,6 +129,9 @@
 
 /* Class = "UILabel"; text = "Value 11"; ObjectID = "o63-qY-4vl"; */
 "o63-qY-4vl.text" = "Verdi 11";
+
+/* Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; Note = "Do not translate"; */
+"okh-JP-aKZ.placeholder" = "park";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "omf-S9-Yjq"; */
 "omf-S9-Yjq.text" = "Navn";
@@ -186,6 +195,9 @@
 
 /* Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ"; */
 "z19-cc-gHZ.text" = "Verdi";
+
+/* Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "zpj-gL-2Nt"; */
+"zpj-gL-2Nt.normalTitle" = "ⓘ";
 
 /* Class = "UILabel"; text = "Subtitle"; ObjectID = "ZYn-TK-k7d"; Note = "Do not translate"; */
 "ZYn-TK-k7d.text" = "Undertekst";

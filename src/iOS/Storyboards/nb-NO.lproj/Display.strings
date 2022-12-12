@@ -28,6 +28,9 @@
 /* Class = "UILabel"; text = "Mapnik only"; ObjectID = "9L3-JO-Whj"; */
 "9L3-JO-Whj.text" = "Kun Mapnik";
 
+/* Class = "UINavigationItem"; title = "Display"; ObjectID = "186-0W-Nrr"; */
+"186-0W-Nrr.title" = "Visning";
+
 /* Class = "UITableViewSection"; footerTitle = "Go Map!! will automatically discard old data to optimize performance."; ObjectID = "bmY-Hw-jv6"; */
 "bmY-Hw-jv6.footerTitle" = "Go Map!! vil automatisk forkaste gammel data for å forbedre ytelsen.";
 
@@ -120,6 +123,9 @@
 
 /* Class = "UILabel"; text = "Enable Filters"; ObjectID = "LxX-tl-ZLH"; */
 "LxX-tl-ZLH.text" = "Skru på filter";
+
+/* Class = "UILabel"; text = "Editor with Aerial"; ObjectID = "MPq-PX-jf0"; */
+"MPq-PX-jf0.text" = "Redigerer med flyfoto";
 
 /* Class = "UINavigationItem"; title = "Aerial Provider"; ObjectID = "MZF-am-tCM"; */
 "MZF-am-tCM.title" = "Flyfoto-tilbyder";

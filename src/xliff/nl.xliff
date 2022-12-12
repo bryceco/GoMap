@@ -1163,6 +1163,10 @@ Dit is een geavanceerde actie die alleen gedaan zou moeten worden als je diepgaa
         <target>Sorry, een fout is opgetreden bij het laden van het GPX-bestand</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Space" xml:space="preserve">
+        <source>Space</source>
+        <note>Space key on the keyboard</note>
+      </trans-unit>
       <trans-unit id="Split" xml:space="preserve">
         <source>Split</source>
         <target>Splitsen</target>

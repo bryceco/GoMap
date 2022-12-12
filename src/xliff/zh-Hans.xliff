@@ -1126,6 +1126,10 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>抱歉，加载GPX文件时发生错误</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Space" xml:space="preserve">
+        <source>Space</source>
+        <note>Space key on the keyboard</note>
+      </trans-unit>
       <trans-unit id="Split" xml:space="preserve">
         <source>Split</source>
         <target>拆分</target>

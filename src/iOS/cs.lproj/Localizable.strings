@@ -31,6 +31,9 @@
 /* No comment provided by engineer. */
 "(way)" = "(linie)";
 
+/* area in m^2 */
+"%.0f m^2" = "%.0f m^2";
+
 /* way length if > 10m */
 "%.0f meters, %ld nodes" = "%1$.0f metrů, %2$ld bodů";
 

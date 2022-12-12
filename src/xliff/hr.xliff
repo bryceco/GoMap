@@ -1170,6 +1170,10 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
         <target>Oprosti, došlo je do greške tijekom učitavanja GPX datoteke</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Space" xml:space="preserve">
+        <source>Space</source>
+        <note>Space key on the keyboard</note>
+      </trans-unit>
       <trans-unit id="Split" xml:space="preserve">
         <source>Split</source>
         <target>Razdvoji</target>
