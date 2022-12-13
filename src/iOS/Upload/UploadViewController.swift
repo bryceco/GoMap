@@ -38,6 +38,12 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 		xmlTextView.layer.borderColor = color.cgColor
 		xmlTextView.layer.borderWidth = 2.0
 		xmlTextView.layer.cornerRadius = 10.0
+
+		if #available(iOS 13.0, *) {
+			progressView.style = .large
+		} else {
+			progressView.style = .whiteLarge
+		}
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
