@@ -1172,6 +1172,7 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       </trans-unit>
       <trans-unit id="Space" xml:space="preserve">
         <source>Space</source>
+        <target state="translated">Ramaknica</target>
         <note>Space key on the keyboard</note>
       </trans-unit>
       <trans-unit id="Split" xml:space="preserve">
