@@ -13,7 +13,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	private var resultsArray: [[String: Any]] = []
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 	@IBOutlet var tableView: UITableView!
-	private var historyArray: [String] = []
+	private var historyArray = MostRecentlyUsed<String>(maxCount: 20, userDefaultsKey: "searchHistory")
 	private var showingHistory = true
 
 	override func viewDidLoad() {
@@ -24,8 +24,6 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		searchBar.becomeFirstResponder()
-
-		historyArray = UserDefaults.standard.object(forKey: "searchHistory") as? [String] ?? []
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -65,7 +63,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			for: indexPath)
 
 		if showingHistory {
-			cell.textLabel?.text = historyArray[indexPath.row]
+			cell.textLabel?.text = historyArray.items[indexPath.row]
 		} else {
 			let dict = resultsArray[indexPath.row]
 			cell.textLabel?.text = dict["display_name"] as? String
@@ -99,7 +97,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		if showingHistory {
 			// history item
-			searchBar.text = historyArray[indexPath.row]
+			searchBar.text = historyArray.items[indexPath.row]
 			searchBarSearchButtonClicked(searchBar)
 			return
 		}
@@ -175,11 +173,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	}
 
 	func updateHistory(with string: String) {
-		historyArray.removeAll { $0 == string }
-		historyArray.insert(string, at: 0)
-		while historyArray.count > 20 {
-			historyArray.removeLast()
-		}
+		historyArray.updateWith(string)
 	}
 
 	// MARK: Search bar delegate

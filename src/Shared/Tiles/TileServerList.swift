@@ -15,7 +15,9 @@ private let RECENTLY_USED_KEY = "AerialListRecentlyUsed"
 final class TileServerList {
 	private var userDefinedList: [TileServer] = [] // user-defined tile servers
 	private var downloadedList: [TileServer] = [] // downloaded on each launch
-	private var _recentlyUsed: [TileServer] = []
+	private var _recentlyUsed = MostRecentlyUsed<TileServer>(maxCount: 6,
+															 userDefaultsKey: RECENTLY_USED_KEY,
+															 autoLoadSave: false)
 	private(set) var lastDownloadDate: Date? {
 		get { UserDefaults.standard.object(forKey: "lastImageryDownloadDate") as? Date }
 		set { UserDefaults.standard.set(newValue, forKey: "lastImageryDownloadDate") }
@@ -349,8 +351,7 @@ final class TileServerList {
 		}
 
 		// fetch and decode recently used list
-		let recentIdentiers: [String] = defaults.object(forKey: RECENTLY_USED_KEY) as? [String] ?? []
-		_recentlyUsed = recentIdentiers.compactMap({ dict[$0] })
+		_recentlyUsed.load(withMapping: { dict[$0] })
 
 		let currentIdentifier = (defaults.object(forKey: CUSTOMAERIALSELECTION_KEY) as? String)
 			?? TileServer.defaultServer
@@ -363,11 +364,7 @@ final class TileServerList {
 		defaults.set(a, forKey: CUSTOMAERIALLIST_KEY)
 		defaults.set(currentServer.identifier, forKey: CUSTOMAERIALSELECTION_KEY)
 
-		var recents: [Any] = []
-		for service in _recentlyUsed {
-			recents.append(service.identifier)
-		}
-		defaults.set(recents, forKey: RECENTLY_USED_KEY)
+		_recentlyUsed.save(withMapping: { $0.identifier })
 	}
 
 	func allServices(at latLon: LatLon) -> [TileServer] {
@@ -405,19 +402,12 @@ final class TileServerList {
 
 	var currentServer = TileServer.bingAerial {
 		didSet {
-			// update recently used
-			let MAX_ITEMS = 6
-			_recentlyUsed.removeAll { $0 === currentServer }
-			_recentlyUsed.insert(currentServer, at: 0)
-
-			while _recentlyUsed.count > MAX_ITEMS {
-				_recentlyUsed.removeLast()
-			}
+			_recentlyUsed.updateWith(currentServer)
 		}
 	}
 
 	func recentlyUsed() -> [TileServer] {
-		return _recentlyUsed
+		return _recentlyUsed.items
 	}
 
 	func count() -> Int {
@@ -436,11 +426,11 @@ final class TileServerList {
 		if index >= userDefinedList.count {
 			return
 		}
-		let s = userDefinedList[index]
+		let service = userDefinedList[index]
 		userDefinedList.remove(at: index)
-		if s === currentServer {
+		if service == currentServer {
 			currentServer = builtinServers()[0]
 		}
-		_recentlyUsed.removeAll { $0 as AnyObject === s as AnyObject }
+		_recentlyUsed.remove( service )
 	}
 }

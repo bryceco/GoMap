@@ -27,7 +27,8 @@ private let MAXAR_PREMIUM_IDENTIFIER = "Maxar-Premium"
 private let MAXAR_STANDARD_IDENTIFIER = "Maxar-Standard"
 
 /// A provider of tile imagery, such as Bing or Mapbox
-final class TileServer {
+final class TileServer: Equatable {
+
 	private static let iconCache: PersistentWebCache<UIImage> = {
 		let cache = PersistentWebCache<UIImage>(name: "AerialServiceIconCache", memorySize: 10000)
 		cache.removeObjectsAsyncOlderThan(Date(timeIntervalSinceNow: -30.0 * (24.0 * 60.0 * 60.0)))
@@ -104,6 +105,10 @@ final class TileServer {
 		attributionIcon = attribIcon
 
 		placeholderImage = TileServer.getPlaceholderImage(forIdentifier: identifier)
+	}
+
+	static func == (lhs: TileServer, rhs: TileServer) -> Bool {
+		return lhs.identifier == rhs.identifier
 	}
 
 	func isBingAerial() -> Bool {

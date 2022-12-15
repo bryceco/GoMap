@@ -91,8 +91,8 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 
 		clearCommentButton.isHidden = true
 
-		commentHistoryButton.isHidden = recentCommentList.list.count == 0
-		sourceTextField.rightViewMode = recentSourceList.list.count > 0 ? .always : .never
+		commentHistoryButton.isHidden = recentCommentList.count == 0
+		sourceTextField.rightViewMode = recentSourceList.count > 0 ? .always : .never
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
@@ -139,11 +139,11 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 	}
 
 	@IBAction func showCommitMessageHistory(_ sender: Any) {
-		showHistorySheet(recentCommentList.list, button: commentHistoryButton, textView: commentTextView)
+		showHistorySheet(recentCommentList.items, button: commentHistoryButton, textView: commentTextView)
 	}
 
 	@IBAction func showSourceHistory(_ sender: Any) {
-		showHistorySheet(recentSourceList.list, button: sourceHistoryButton, textView: sourceTextField)
+		showHistorySheet(recentSourceList.items, button: sourceHistoryButton, textView: sourceTextField)
 	}
 
 	@IBAction func commit(_ sender: Any?) {
