@@ -29,7 +29,6 @@ class TextPairTableCell: UITableViewCell {
 	}
 }
 
-
 protocol KeyValueProvider: UITableViewController {
 	var allPresetKeys: [PresetKey] { get }
 	var childViewPresented: Bool { get set }
@@ -38,7 +37,6 @@ protocol KeyValueProvider: UITableViewController {
 }
 
 class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate {
-
 	var owner: KeyValueProvider!
 	var key: String { return text1?.text ?? "" }
 	var value: String { return text2?.text ?? "" }
@@ -70,9 +68,9 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate {
 
 	// This is shared between All Tags and Common Tags
 	static func shouldChangeTag(origText: String,
-								charactersIn remove: NSRange,
-								replacementString insert: String,
-								warningVC: UIViewController?) -> Bool
+	                            charactersIn remove: NSRange,
+	                            replacementString insert: String,
+	                            warningVC: UIViewController?) -> Bool
 	{
 		let MAX_LENGTH = 255
 		let newLength = origText.count - remove.length + insert.count
@@ -84,35 +82,35 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate {
 			let format = NSLocalizedString("Pasting %@ characters, maximum tag length is 255", comment: "")
 			let message = String(format: format, NSNumber(value: insert.count))
 			let alert = UIAlertController(title: NSLocalizedString("Error", comment: ""),
-										  message: message,
-										  preferredStyle: .alert)
+			                              message: message,
+			                              preferredStyle: .alert)
 			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
-										  style: .default,
-										  handler: nil))
+			                              style: .default,
+			                              handler: nil))
 			vc.present(alert, animated: true)
 		}
 		return allowed
 	}
 
 	@objc func textField(_ textField: UITextField,
-						 shouldChangeCharactersIn remove: NSRange,
-						 replacementString insert: String) -> Bool
+	                     shouldChangeCharactersIn remove: NSRange,
+	                     replacementString insert: String) -> Bool
 	{
 		guard let origText = textField.text else { return false }
 		return Self.shouldChangeTag(origText: origText,
-									charactersIn: remove,
-									replacementString: insert,
-									warningVC: owner)
+		                            charactersIn: remove,
+		                            replacementString: insert,
+		                            warningVC: owner)
 	}
-	@IBAction func textFieldEditingDidBegin(_ textField: AutocompleteTextField) {
 
+	@IBAction func textFieldEditingDidBegin(_ textField: AutocompleteTextField) {
 		owner.currentTextField = textField
 
-		let isValue = textField == self.text2
+		let isValue = textField == text2
 
 		if isValue {
 			// set up capitalization and autocorrect
-			setTextAttributesForKey(key: self.text1?.text ?? "", textField: self.text2)
+			setTextAttributesForKey(key: text1?.text ?? "", textField: text2)
 
 			// get list of values for current key
 			if let key = text1?.text,
@@ -137,7 +135,7 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate {
 	@IBAction func textFieldEditingDidEnd(_ textField: UITextField) {
 		updateAssociatedContent()
 
-		if key != "" && value != ""		{
+		if key != "", value != "" {
 			// do automatic value updates for special keys
 			// for example add https:// prefix to website=
 			if let newValue = OsmTags.convertWikiUrlToReference(withKey: key, value: value)
@@ -148,7 +146,6 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate {
 		}
 		owner.keyValueChanged(for: self)
 	}
-
 
 	// MARK: Accessory buttons
 
@@ -176,15 +173,15 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate {
 
 	@IBAction func openWebsite(_ sender: UIView?) {
 		guard let pair: TextPairTableCell = sender?.superviewOfType(),
-			  let key = pair.text1.text,
-			  let value = pair.text2.text
+		      let key = pair.text1.text,
+		      let value = pair.text2.text
 		else { return }
 		let string: String
 		if key == "wikipedia" || key.hasSuffix(":wikipedia") {
 			let a = value.components(separatedBy: ":")
 			guard a.count >= 2,
-				  let lang = a[0].addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed),
-				  let page = a[1].addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)
+			      let lang = a[0].addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed),
+			      let page = a[1].addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)
 			else { return }
 			string = "https://\(lang).wikipedia.org/wiki/\(page)"
 		} else if key == "wikidata" || key.hasSuffix(":wikidata") {
@@ -328,8 +325,8 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate {
 			?? getDirectionButton(for: self)
 			?? getHeightButton(for: self)
 
-		self.text2.rightView = associatedView
-		self.text2.rightViewMode = associatedView != nil ? .always : .never
+		text2.rightView = associatedView
+		text2.rightViewMode = associatedView != nil ? .always : .never
 	}
 
 	@IBAction func infoButtonPressed(_ sender: Any?) {
@@ -337,8 +334,8 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate {
 
 		// show OSM wiki page
 		guard let key = pair.text1.text,
-			  let value = pair.text2.text,
-			  !key.isEmpty
+		      let value = pair.text2.text,
+		      !key.isEmpty
 		else { return }
 		let languageCode = PresetLanguages().preferredLanguageCode()
 		let progress = UIActivityIndicatorView(style: .gray)
@@ -348,8 +345,8 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate {
 		pair.infoButton.titleLabel?.layer.opacity = 0.0
 		progress.startAnimating()
 		WikiPage.shared.bestWikiPage(forKey: key,
-									 value: value,
-									 language: languageCode)
+		                             value: value,
+		                             language: languageCode)
 		{ [self] url in
 			progress.removeFromSuperview()
 			pair.infoButton.isEnabled = true
@@ -363,6 +360,4 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate {
 			}
 		}
 	}
-
-
 }

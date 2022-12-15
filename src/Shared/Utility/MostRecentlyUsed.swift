@@ -18,8 +18,8 @@ class MostRecentlyUsed<T: Equatable> {
 	var count: Int { return items.count }
 
 	init(maxCount: Int,
-		 userDefaultsKey: String,
-		 autoLoadSave: Bool = false)
+	     userDefaultsKey: String,
+	     autoLoadSave: Bool = false)
 	{
 		self.maxCount = maxCount
 		self.userDefaultsKey = userDefaultsKey
@@ -31,12 +31,12 @@ class MostRecentlyUsed<T: Equatable> {
 		}
 	}
 
-	func load(withMapping:(String) -> T?) {
+	func load(withMapping: (String) -> T?) {
 		let strings = UserDefaults.standard.object(forKey: userDefaultsKey) as? [String] ?? []
 		items = strings.compactMap(withMapping)
 	}
 
-	func save(withMapping:(T) -> String) {
+	func save(withMapping: (T) -> String) {
 		let strings = items.map(withMapping)
 		UserDefaults.standard.set(strings, forKey: userDefaultsKey)
 	}

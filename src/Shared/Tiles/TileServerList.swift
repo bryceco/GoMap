@@ -16,8 +16,8 @@ final class TileServerList {
 	private var userDefinedList: [TileServer] = [] // user-defined tile servers
 	private var downloadedList: [TileServer] = [] // downloaded on each launch
 	private var _recentlyUsed = MostRecentlyUsed<TileServer>(maxCount: 6,
-															 userDefaultsKey: RECENTLY_USED_KEY,
-															 autoLoadSave: false)
+	                                                         userDefaultsKey: RECENTLY_USED_KEY,
+	                                                         autoLoadSave: false)
 	private(set) var lastDownloadDate: Date? {
 		get { UserDefaults.standard.object(forKey: "lastImageryDownloadDate") as? Date }
 		set { UserDefaults.standard.set(newValue, forKey: "lastImageryDownloadDate") }
@@ -431,6 +431,6 @@ final class TileServerList {
 		if service == currentServer {
 			currentServer = builtinServers()[0]
 		}
-		_recentlyUsed.remove( service )
+		_recentlyUsed.remove(service)
 	}
 }

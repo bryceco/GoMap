@@ -53,8 +53,8 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 			title = NSLocalizedString("All Tags", comment: "")
 		}
 
-		self.prevNextToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 44))
-		self.prevNextToolbar.items = [
+		prevNextToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 44))
+		prevNextToolbar.items = [
 			UIBarButtonItem(
 				title: NSLocalizedString("Previous", comment: ""),
 				style: .plain,
@@ -66,7 +66,6 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 				target: self,
 				action: #selector(tabNext(_:)))
 		]
-
 	}
 
 	// return -1 if unchanged, else row to set focus
@@ -264,7 +263,9 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.section == 0 {
 			// Tags
-			let cell = tableView.dequeueReusableCell(withIdentifier: "KeyValueCell", for: indexPath) as! KeyValueTableCell
+			let cell = tableView.dequeueReusableCell(
+				withIdentifier: "KeyValueCell",
+				for: indexPath) as! KeyValueTableCell
 			cell.owner = self
 			// assign text contents of fields
 			let kv = tags[indexPath.row]
@@ -362,7 +363,6 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 		let tabController = tabBarController as! POITabBarController
 
 		if pair.key != "", pair.value != "" {
-
 			let dict = keyValueDictionary()
 			saveButton.isEnabled = tabController.isTagDictChanged(dict)
 			if #available(iOS 13.0, *) {
@@ -371,7 +371,7 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 
 			// move the edited row up
 			var index = (0..<indexPath.row)
-			   .first(where: { tags[$0].k.count == 0 || tags[$0].v.count == 0 }) ?? indexPath.row
+				.first(where: { tags[$0].k.count == 0 || tags[$0].v.count == 0 }) ?? indexPath.row
 			if index < indexPath.row {
 				tags.remove(at: indexPath.row)
 				tags.insert(kv, at: index)

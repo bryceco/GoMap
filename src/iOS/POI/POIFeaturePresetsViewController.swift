@@ -522,9 +522,9 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	{
 		guard let origText = textField.text else { return false }
 		return KeyValueTableCell.shouldChangeTag(origText: origText,
-												 charactersIn: remove,
-												 replacementString: insert,
-												 warningVC: self)
+		                                         charactersIn: remove,
+		                                         replacementString: insert,
+		                                         warningVC: self)
 	}
 
 	/**
