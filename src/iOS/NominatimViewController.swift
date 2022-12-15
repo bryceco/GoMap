@@ -30,7 +30,6 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		view.endEditing(true)
 
 		super.viewWillDisappear(animated)
-		UserDefaults.standard.set(historyArray, forKey: "searchHistory")
 	}
 
 	// MARK: - Table view data source
