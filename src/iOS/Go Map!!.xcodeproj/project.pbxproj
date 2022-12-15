@@ -34,6 +34,7 @@
 		0226B771268300C9005DB9E2 /* Data+Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B770268300C9005DB9E2 /* Data+Wrapper.swift */; };
 		0226B7732683BCB6005DB9E2 /* URLSession+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */; };
 		022B2FDB2718CCAC00AB4C28 /* MapboxLocator.secret in Sources */ = {isa = PBXBuildFile; fileRef = 022B2FDA2718CCAC00AB4C28 /* MapboxLocator.secret */; };
+		0235349B294A9BDD00ED5BBE /* MostRecentlyUsed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0235349A294A9BDD00ED5BBE /* MostRecentlyUsed.swift */; };
 		02354F7A246349E100878A04 /* CurvedGlyphLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02354F79246349E100878A04 /* CurvedGlyphLayer.swift */; };
 		023B892B19C148790060CDB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B892A19C148790060CDB5 /* Images.xcassets */; };
 		02401F361DE021EE00F32AF5 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */; };
@@ -324,6 +325,7 @@
 		0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extension.swift"; sourceTree = "<group>"; };
 		022AE4F4279D15DD000AD76C /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/POI.strings; sourceTree = "<group>"; };
 		022B2FDA2718CCAC00AB4C28 /* MapboxLocator.secret */ = {isa = PBXFileReference; lastKnownFileType = text; path = MapboxLocator.secret; sourceTree = "<group>"; };
+		0235349A294A9BDD00ED5BBE /* MostRecentlyUsed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostRecentlyUsed.swift; sourceTree = "<group>"; };
 		02354F79246349E100878A04 /* CurvedGlyphLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurvedGlyphLayer.swift; sourceTree = "<group>"; };
 		0235604426BB1568005CE9FE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/DirectionViewController.strings"; sourceTree = "<group>"; };
 		023A3F7D26BB155800748DF3 /* nb-NO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-NO"; path = "nb-NO.lproj/DirectionViewController.strings"; sourceTree = "<group>"; };
@@ -1054,6 +1056,7 @@
 				02CA15502824A6B40047B0E5 /* String+Ext.swift */,
 				0266DE852655A21F007A502E /* Superview.swift */,
 				0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */,
+				0235349A294A9BDD00ED5BBE /* MostRecentlyUsed.swift */,
 			);
 			name = Utility;
 			path = ../Shared/Utility;
@@ -1408,6 +1411,7 @@
 				C365A569263FCC9C007DEC94 /* TapAndDragGesture.swift in Sources */,
 				ED91352526020945006A637A /* OfflineViewController.swift in Sources */,
 				ED9649DB2601CB7A00EC0A60 /* SettingsViewController.swift in Sources */,
+				0235349B294A9BDD00ED5BBE /* MostRecentlyUsed.swift in Sources */,
 				0203473F266C1EDD000A7C3D /* ExternalGPS.swift in Sources */,
 				C365A563263FC53F007DEC94 /* TurnRestrictHwyView.swift in Sources */,
 				C3D096B3263D618E00E3B129 /* HeightViewController.swift in Sources */,
