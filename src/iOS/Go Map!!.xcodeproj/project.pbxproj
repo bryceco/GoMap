@@ -81,6 +81,7 @@
 		02ACBD191671737300BB4414 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD181671737300BB4414 /* libxml2.dylib */; };
 		02ACBD1F16717BBB00BB4414 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */; };
 		02ACBD2116717BC500BB4414 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD2016717BC500BB4414 /* CoreLocation.framework */; };
+		02AEBEAF294ABE0700009163 /* KeyValueTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AEBEAE294ABE0700009163 /* KeyValueTableCell.swift */; };
 		02AFBF242458C1E800BE43F4 /* BingPlaceholderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */; };
 		02B52E7728C9788200CB55F3 /* libswiftCoreGraphics.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 02B52E7628C9784700CB55F3 /* libswiftCoreGraphics.tbd */; };
 		02BE6190245D1F9D00E92662 /* EsriPlaceholderImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */; };
@@ -415,6 +416,7 @@
 		02ACBD181671737300BB4414 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		02ACBD2016717BC500BB4414 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		02AEBEAE294ABE0700009163 /* KeyValueTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueTableCell.swift; sourceTree = "<group>"; };
 		02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BingPlaceholderImage.png; path = ../Shared/BingPlaceholderImage.png; sourceTree = "<group>"; };
 		02AFD45B26A3D6D800EFAD48 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		02AFD45C26A3D6D800EFAD48 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -753,6 +755,7 @@
 		02A3598F2704E51700101369 /* POI */ = {
 			isa = PBXGroup;
 			children = (
+				02AEBEAE294ABE0700009163 /* KeyValueTableCell.swift */,
 				027AB4FF250E9C8A00C404CD /* POI.storyboard */,
 				C3004F61263B2524006BF313 /* POIAllTagsViewController.swift */,
 				C3004F53263A99DC006BF313 /* POIAttributesViewController.swift */,
@@ -1389,6 +1392,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02AEBEAF294ABE0700009163 /* KeyValueTableCell.swift in Sources */,
 				EDB2C3A62609E6E100C08293 /* LoginViewController.swift in Sources */,
 				647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */,
 				021FADD225873CC000F6E1C0 /* PresetKeyUserDefined.swift in Sources */,

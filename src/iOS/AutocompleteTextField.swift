@@ -281,7 +281,7 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 	               replacementString string: String) -> Bool
 	{
 		let shouldChange: Bool
-		if let delegate = realDelegate as? POIAllTagsViewController {
+		if let delegate = realDelegate as? KeyValueTableCell {
 			// FIXME: forwarding to this view controller doesn't work following
 			// the normal code path (Swift bug?), so hack it:
 			shouldChange = delegate.textField(textField,
