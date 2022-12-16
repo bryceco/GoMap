@@ -13,14 +13,30 @@ class FeaturePresetCell: UITableViewCell {
 	var presetKey: PresetKeyOrGroup?
 }
 
-class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegate, POITypeViewControllerDelegate {
+class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegate, POITypeViewControllerDelegate,
+	KeyValueTableCellOwner
+{
 	@IBOutlet var saveButton: UIBarButtonItem!
+	private var allPresets: PresetsForFeature? {
+		didSet { computeExtraTags() }
+	}
 
-	private var allPresets: PresetsForFeature?
 	private var selectedFeature: PresetFeature? // the feature selected by the user, not derived from tags (e.g. Address)
 	private var childPushed = false
 	private var drillDownGroup: PresetGroup?
 	private var textFieldIsEditing: UITextField?
+	private var extraTags: [(k: String, v: String)] = []
+
+	// These are needed to satisfy requirements as KeyValueTableCell owner
+	var allPresetKeys: [PresetKey] { allPresets?.allPresetKeys() ?? [] }
+	var childViewPresented = false
+	var currentTextField: UITextField?
+	func keyValueChanged(for kv: KeyValueTableCell) {
+		updateTag(withValue: kv.value, forKey: kv.key)
+		if kv.key != "", kv.value != "" {
+			updatePresets()
+		}
+	}
 
 	override func viewDidLoad() {
 		// have to update presets before call super because super asks for the number of sections
@@ -52,24 +68,24 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			let geometry = object?.geometry() ?? GEOMETRY.NODE
 
 			// update most recent feature
-			let feature = selectedFeature ?? PresetsDatabase.shared.matchObjectTagsToFeature(
+			selectedFeature = selectedFeature ?? PresetsDatabase.shared.matchObjectTagsToFeature(
 				dict,
 				geometry: geometry,
 				location: AppDelegate.shared.mapView.currentRegion,
 				includeNSI: true)
-			if let feature = feature {
+			if let feature = selectedFeature {
 				POIFeaturePickerViewController.loadMostRecent(forGeometry: geometry)
 				POIFeaturePickerViewController.updateMostRecentArray(withSelection: feature, geometry: geometry)
 			}
 
 			weak var weakself = self
-			allPresets = PresetsForFeature(withFeature: feature, objectTags: dict, geometry: geometry, update: {
+			allPresets = PresetsForFeature(withFeature: selectedFeature, objectTags: dict, geometry: geometry, update: {
 				// this may complete much later, even after we've been dismissed
 				if let weakself = weakself,
 				   !weakself.isEditing
 				{
 					weakself.allPresets = PresetsForFeature(
-						withFeature: feature,
+						withFeature: weakself.selectedFeature,
 						objectTags: dict,
 						geometry: geometry,
 						update: nil)
@@ -79,6 +95,21 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		}
 
 		tableView.reloadData()
+	}
+
+	func computeExtraTags() {
+		var presetKeys = (allPresets?.allPresetKeys() ?? []).map { $0.tagKey }
+		// The first entry is the Feature Type, so we need to special case it
+		if let feature = selectedFeature {
+			presetKeys.remove(at: 0)
+			presetKeys += feature.addTags().keys
+		}
+		let dict = (tabBarController as! POITabBarController).keyValueDict
+		var extraKeys = Array(dict.keys)
+		for key in presetKeys {
+			extraKeys.removeAll(where: { $0 == key })
+		}
+		extraTags = extraKeys.sorted().map { ($0, dict[$0]!) }
 	}
 
 	// MARK: display
@@ -146,7 +177,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	// MARK: - Table view data source
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return (drillDownGroup != nil) ? 1 : (allPresets?.sectionCount() ?? 0) + 1
+		return (drillDownGroup != nil) ? 1 : (allPresets?.sectionCount() ?? 0) + 2
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -154,10 +185,10 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			return drillDownGroup?.name
 		}
 		if section == (allPresets?.sectionCount() ?? 0) {
-			return nil
+			return nil // extra tags
 		}
 		if section > (allPresets?.sectionCount() ?? 0) {
-			return nil
+			return nil // customize button
 		}
 
 		let group = allPresets?.sectionAtIndex(section)
@@ -169,10 +200,10 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			return drillDownGroup?.presetKeys.count ?? 0
 		}
 		if section == (allPresets?.sectionCount() ?? 0) {
-			return 1
+			return extraTags.count + 1 // tags plus an empty slot
 		}
 		if section > (allPresets?.sectionCount() ?? 0) {
-			return 0
+			return 1 // customize button
 		}
 		return allPresets?.tagsInSection(section) ?? 0
 	}
@@ -180,6 +211,22 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if drillDownGroup == nil {
 			if indexPath.section == allPresets?.sectionCount() {
+				// extra tags
+				let cell = tableView.dequeueReusableCell(
+					withIdentifier: "KeyValueCell",
+					for: indexPath) as! KeyValueTableCell
+				cell.owner = self
+				if indexPath.row < extraTags.count {
+					cell.text1?.text = extraTags[indexPath.row].k
+					cell.text2?.text = extraTags[indexPath.row].v
+				} else {
+					cell.text1?.text = ""
+					cell.text2?.text = ""
+				}
+				cell.updateAssociatedContent()
+				return cell
+			} else if indexPath.section > (allPresets?.sectionCount() ?? 0) {
+				// customize button
 				let cell = tableView.dequeueReusableCell(withIdentifier: "CustomizePresets", for: indexPath)
 				return cell
 			}
@@ -376,6 +423,30 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 
 	// MARK: - Table view delegate
 
+	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+		return indexPath.section == allPresets?.sectionCount()
+	}
+
+	override func tableView(_ tableView: UITableView,
+	                        commit editingStyle: UITableViewCell.EditingStyle,
+	                        forRowAt indexPath: IndexPath)
+	{
+		if editingStyle == .delete {
+			if indexPath.row < extraTags.count {
+				let kv = extraTags[indexPath.row]
+				extraTags.remove(at: indexPath.row)
+				updateTag(withValue: "", forKey: kv.k)
+				tableView.deleteRows(at: [indexPath], with: .fade)
+			} else {
+				// it's the last row, which is the empty row, so fake it
+				if let kv = tableView.cellForRow(at: indexPath) as? KeyValueTableCell {
+					kv.text1.text = ""
+					kv.text2.text = ""
+				}
+			}
+		}
+	}
+
 	func resignAll() {
 		if tableView.window == nil {
 			return
@@ -504,7 +575,9 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			return
 		}
 
-		if value.count != 0 {
+		if key == "" {
+			// do nothing
+		} else if value != "" {
 			tabController.keyValueDict[key] = value
 		} else {
 			tabController.keyValueDict.removeValue(forKey: key)

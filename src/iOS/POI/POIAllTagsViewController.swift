@@ -14,7 +14,7 @@ class SectionHeaderCell: UITableViewCell {
 	@IBOutlet var label: UILabel!
 }
 
-class POIAllTagsViewController: UITableViewController, POITypeViewControllerDelegate, KeyValueProvider {
+class POIAllTagsViewController: UITableViewController, POITypeViewControllerDelegate, KeyValueTableCellOwner {
 	private var tags: [(k: String, v: String)] = []
 	private var relations: [OsmRelation] = []
 	private var members: [OsmMember] = []
@@ -278,14 +278,6 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 
 			cell.updateAssociatedContent()
 
-			weak var weakCell = cell
-			cell.text1.didSelectAutocomplete = {
-				weakCell?.text2.becomeFirstResponder()
-			}
-			cell.text2.didSelectAutocomplete = {
-				weakCell?.text2.resignFirstResponder()
-			}
-
 			return cell
 		} else if indexPath.section == 1 {
 			// Relations
@@ -499,10 +491,9 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 		}
 	}
 
-	override func tableView(
-		_ tableView: UITableView,
-		commit editingStyle: UITableViewCell.EditingStyle,
-		forRowAt indexPath: IndexPath)
+	override func tableView(_ tableView: UITableView,
+	                        commit editingStyle: UITableViewCell.EditingStyle,
+	                        forRowAt indexPath: IndexPath)
 	{
 		if editingStyle == .delete {
 			// Delete the row from the data source
@@ -530,7 +521,6 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 
 	@IBAction func cancel(_ sender: Any) {
 		view.endEditing(true)
-
 		dismiss(animated: true)
 	}
 

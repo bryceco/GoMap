@@ -161,6 +161,78 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="KeyValueCell" id="YDF-cY-7Ck" userLabel="KeyValueCell" customClass="KeyValueTableCell" customModule="Go_Map__" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="231.5" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YDF-cY-7Ck" id="C3T-nH-Ohr">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="key" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XCc-6y-qYt" userLabel="Text1" customClass="AutocompleteTextField" customModule="Go_Map__" customModuleProvider="target">
+                                            <rect key="frame" x="20" y="5" width="121" height="34"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" priority="200" constant="121" id="DG2-2P-Kzu"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Do not translate"/>
+                                            </attributedString>
+                                            <connections>
+                                                <action selector="textFieldEditingDidBegin:" destination="YDF-cY-7Ck" eventType="editingDidBegin" id="fK0-iy-M8A"/>
+                                                <action selector="textFieldEditingDidEnd:" destination="YDF-cY-7Ck" eventType="editingDidEnd" id="kee-gI-R1O"/>
+                                                <action selector="textFieldReturn:" destination="YDF-cY-7Ck" eventType="editingDidEndOnExit" id="lZK-k6-tew"/>
+                                                <outlet property="delegate" destination="YDF-cY-7Ck" id="aIy-tS-Fxb"/>
+                                            </connections>
+                                        </textField>
+                                        <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="value" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="sHA-cr-GLb" customClass="AutocompleteTextField" customModule="Go_Map__" customModuleProvider="target">
+                                            <rect key="frame" x="154" y="5" width="220" height="34"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Do not translate"/>
+                                            </attributedString>
+                                            <connections>
+                                                <action selector="textFieldEditingDidBegin:" destination="YDF-cY-7Ck" eventType="editingDidBegin" id="lan-wf-in5"/>
+                                                <action selector="textFieldEditingDidEnd:" destination="YDF-cY-7Ck" eventType="editingDidEnd" id="j5K-Z5-Zn6"/>
+                                                <action selector="textFieldReturn:" destination="YDF-cY-7Ck" eventType="editingDidEndOnExit" id="6sA-9a-Xxu"/>
+                                                <outlet property="delegate" destination="YDF-cY-7Ck" id="Cyq-sJ-DeZ"/>
+                                            </connections>
+                                        </textField>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nil-45-Wvp">
+                                            <rect key="frame" x="378" y="6" width="32" height="32"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="32" id="Gzd-0Q-6ni"/>
+                                                <constraint firstAttribute="height" constant="32" id="ODQ-1x-7H0"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                            <state key="normal" title="ⓘ">
+                                                <color key="titleColor" systemColor="systemBlueColor"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="infoButtonPressed:" destination="YDF-cY-7Ck" eventType="touchUpInside" id="ffT-dz-CEa"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="nil-45-Wvp" firstAttribute="leading" secondItem="sHA-cr-GLb" secondAttribute="trailing" constant="4" id="DxG-mK-ark"/>
+                                        <constraint firstItem="nil-45-Wvp" firstAttribute="centerY" secondItem="C3T-nH-Ohr" secondAttribute="centerY" id="Vgc-4W-CUE"/>
+                                        <constraint firstAttribute="trailing" secondItem="nil-45-Wvp" secondAttribute="trailing" constant="4" id="r11-D7-9BS"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <constraints>
+                                    <constraint firstItem="XCc-6y-qYt" firstAttribute="top" secondItem="sHA-cr-GLb" secondAttribute="top" id="AMh-vG-TOG"/>
+                                    <constraint firstItem="XCc-6y-qYt" firstAttribute="leading" secondItem="C3T-nH-Ohr" secondAttribute="leading" constant="20" id="B5O-vQ-1DJ"/>
+                                    <constraint firstItem="sHA-cr-GLb" firstAttribute="centerY" secondItem="C3T-nH-Ohr" secondAttribute="centerY" id="RKx-T5-lDz"/>
+                                    <constraint firstItem="sHA-cr-GLb" firstAttribute="leading" secondItem="XCc-6y-qYt" secondAttribute="trailing" constant="13" id="dz3-WX-pRo"/>
+                                    <constraint firstItem="XCc-6y-qYt" firstAttribute="bottom" secondItem="sHA-cr-GLb" secondAttribute="bottom" id="fgq-UX-c9B"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="infoButton" destination="nil-45-Wvp" id="7DA-hc-V9Y"/>
+                                    <outlet property="text1" destination="XCc-6y-qYt" id="V6z-rs-Zur"/>
+                                    <outlet property="text2" destination="sHA-cr-GLb" id="fID-97-dWQ"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <sections/>
                         <connections>
@@ -1318,7 +1390,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value 11" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o63-qY-4vl">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Value 11" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o63-qY-4vl">
                                                     <rect key="frame" x="23" y="12" width="104" height="20.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="104" id="ehF-e9-KzR"/>
@@ -1327,7 +1399,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YdC-9G-Tni">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YdC-9G-Tni">
                                                     <rect key="frame" x="132" y="5" width="262" height="34"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
@@ -1352,7 +1424,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value 12" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wFE-f1-sQa">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Value 12" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wFE-f1-sQa">
                                                     <rect key="frame" x="23" y="12" width="104" height="20.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="104" id="HaZ-63-BDM"/>
@@ -1361,7 +1433,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Hi5-M7-Q5C">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Hi5-M7-Q5C">
                                                     <rect key="frame" x="132" y="5" width="262" height="34"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
@@ -1497,7 +1569,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="ZKT-be-rhK"/>
         <segue reference="g2g-Jn-Tdv"/>
-        <segue reference="0gB-9H-f1m"/>
+        <segue reference="N2O-bF-plb"/>
         <segue reference="MpY-p5-COc"/>
     </inferredMetricsTieBreakers>
     <resources>

@@ -29,7 +29,7 @@ class TextPairTableCell: UITableViewCell {
 	}
 }
 
-protocol KeyValueProvider: UITableViewController {
+protocol KeyValueTableCellOwner: UITableViewController {
 	var allPresetKeys: [PresetKey] { get }
 	var childViewPresented: Bool { get set }
 	var currentTextField: UITextField? { get set }
@@ -37,13 +37,21 @@ protocol KeyValueProvider: UITableViewController {
 }
 
 class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate {
-	var owner: KeyValueProvider!
+	var owner: KeyValueTableCellOwner!
 	var key: String { return text1?.text ?? "" }
 	var value: String { return text2?.text ?? "" }
 
 	override func awakeFromNib() {
-		text1.delegate = self
-		text2.delegate = self
+		text1.autocorrectionType = .no
+		text2.autocorrectionType = .no
+
+		weak var weakSelf = self
+		self.text1.didSelectAutocomplete = {
+			weakSelf?.text2.becomeFirstResponder()
+		}
+		self.text2.didSelectAutocomplete = {
+			weakSelf?.text2.becomeFirstResponder()
+		}
 	}
 
 	@IBAction func textFieldReturn(_ sender: UIView) {
@@ -52,21 +60,22 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate {
 
 	func setTextAttributesForKey(key: String, textField: UITextField) {
 		// set text formatting options for text field
-		switch key {
-		case "note", "comment", "description", "fixme":
-			textField.autocapitalizationType = .sentences
-			textField.autocorrectionType = .yes
-		default:
-			textField.autocapitalizationType = .none
-			textField.autocorrectionType = .no
-		}
 		if let preset = owner.allPresetKeys.first(where: { key == $0.tagKey }) {
 			textField.autocapitalizationType = preset.autocapitalizationType
 			textField.autocorrectionType = preset.autocorrectType
+		} else {
+			switch key {
+			case "note", "comment", "description", "fixme":
+				textField.autocapitalizationType = .sentences
+				textField.autocorrectionType = .yes
+			default:
+				textField.autocapitalizationType = .none
+				textField.autocorrectionType = .no
+			}
 		}
 	}
 
-	// This is shared between All Tags and Common Tags
+	// This function is shared between All Tags and Common Tags
 	static func shouldChangeTag(origText: String,
 	                            charactersIn remove: NSRange,
 	                            replacementString insert: String,
@@ -133,6 +142,8 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate {
 	}
 
 	@IBAction func textFieldEditingDidEnd(_ textField: UITextField) {
+		textField.text = textField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
+
 		updateAssociatedContent()
 
 		if key != "", value != "" {
