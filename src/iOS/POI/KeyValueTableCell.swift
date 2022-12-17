@@ -46,10 +46,10 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate {
 		text2.autocorrectionType = .no
 
 		weak var weakSelf = self
-		self.text1.didSelectAutocomplete = {
+		text1.didSelectAutocomplete = {
 			weakSelf?.text2.becomeFirstResponder()
 		}
-		self.text2.didSelectAutocomplete = {
+		text2.didSelectAutocomplete = {
 			weakSelf?.text2.becomeFirstResponder()
 		}
 	}

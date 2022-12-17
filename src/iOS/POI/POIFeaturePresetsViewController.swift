@@ -34,6 +34,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	func keyValueChanged(for kv: KeyValueTableCell) {
 		updateTag(withValue: kv.value, forKey: kv.key)
 		if kv.key != "", kv.value != "" {
+			selectedFeature = nil
 			updatePresets()
 		}
 	}
@@ -100,7 +101,9 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	func computeExtraTags() {
 		var presetKeys = (allPresets?.allPresetKeys() ?? []).map { $0.tagKey }
 		// The first entry is the Feature Type, so we need to special case it
-		if let feature = selectedFeature {
+		if let feature = selectedFeature,
+		   presetKeys.first == ""
+		{
 			presetKeys.remove(at: 0)
 			presetKeys += feature.addTags().keys
 		}
@@ -210,6 +213,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if drillDownGroup == nil {
+			// special case the key/value cells and the customize button
 			if indexPath.section == allPresets?.sectionCount() {
 				// extra tags
 				let cell = tableView.dequeueReusableCell(
@@ -225,7 +229,8 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 				}
 				cell.updateAssociatedContent()
 				return cell
-			} else if indexPath.section > (allPresets?.sectionCount() ?? 0) {
+			}
+			if indexPath.section > (allPresets?.sectionCount() ?? 0) {
 				// customize button
 				let cell = tableView.dequeueReusableCell(withIdentifier: "CustomizePresets", for: indexPath)
 				return cell
@@ -281,7 +286,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			}
 
 			if drillDownGroup == nil, indexPath.section == 0, indexPath.row == 0 {
-				// Type cell
+				// Feature type cell
 				let text = allPresets?.featureName() ?? ""
 				cell.valueField.text = text
 				cell.valueField.isEnabled = false
