@@ -11,6 +11,7 @@ import SafariServices
 import UIKit
 
 class TextPairTableCell: UITableViewCell {
+	@IBOutlet var isSet: UIView!
 	@IBOutlet var text1: AutocompleteTextField!
 	@IBOutlet var text2: AutocompleteTextField!
 	@IBOutlet var infoButton: UIButton!

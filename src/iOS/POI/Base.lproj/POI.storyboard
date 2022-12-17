@@ -24,6 +24,13 @@
                                     <rect key="frame" x="0.0" y="0.0" width="383.5" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ecw-SG-Dzj" userLabel="isSet View">
+                                            <rect key="frame" x="0.0" y="0.0" width="7" height="44"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="7" id="MQn-22-zNi"/>
+                                            </constraints>
+                                        </view>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P3A-5n-1Iq">
                                             <rect key="frame" x="15" y="10" width="100" height="24"/>
                                             <constraints>
@@ -34,7 +41,7 @@
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
                                         <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="240" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Restaurant" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="pxY-di-zg7" customClass="AutocompleteTextField" customModule="Go_Map__" customModuleProvider="target">
-                                            <rect key="frame" x="120" y="9.5" width="260" height="25.5"/>
+                                            <rect key="frame" x="120" y="9.5" width="260" height="25"/>
                                             <color key="textColor" systemColor="systemBlueColor"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="done"/>
@@ -43,7 +50,10 @@
                                     <constraints>
                                         <constraint firstItem="P3A-5n-1Iq" firstAttribute="top" secondItem="5MU-Jz-yPQ" secondAttribute="top" constant="10" id="5mQ-Ti-k3X"/>
                                         <constraint firstItem="pxY-di-zg7" firstAttribute="leading" secondItem="P3A-5n-1Iq" secondAttribute="trailing" constant="5" id="7uA-46-IKR"/>
+                                        <constraint firstItem="Ecw-SG-Dzj" firstAttribute="leading" secondItem="5MU-Jz-yPQ" secondAttribute="leading" id="Ajd-aE-52b"/>
+                                        <constraint firstItem="Ecw-SG-Dzj" firstAttribute="top" secondItem="5MU-Jz-yPQ" secondAttribute="top" id="B2a-K8-5fL"/>
                                         <constraint firstAttribute="bottom" secondItem="P3A-5n-1Iq" secondAttribute="bottom" constant="10" id="gSr-RH-E11"/>
+                                        <constraint firstAttribute="bottom" secondItem="Ecw-SG-Dzj" secondAttribute="bottom" id="pnX-C3-qaJ"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <constraints>
@@ -52,6 +62,7 @@
                                     <constraint firstItem="P3A-5n-1Iq" firstAttribute="leading" secondItem="l7g-Wi-ks5" secondAttribute="leading" constant="15" id="i97-d1-ltK"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="isSet" destination="Ecw-SG-Dzj" id="VRb-Pz-eNf"/>
                                     <outlet property="nameLabel" destination="P3A-5n-1Iq" id="tqE-4g-nUM"/>
                                     <outlet property="valueField" destination="pxY-di-zg7" id="yoH-3C-IlU"/>
                                 </connections>
@@ -63,6 +74,13 @@
                                     <rect key="frame" x="0.0" y="0.0" width="383.5" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L5n-3M-9nc" userLabel="isSet View">
+                                            <rect key="frame" x="0.0" y="-0.5" width="7" height="44"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="7" id="vkQ-tA-Lre"/>
+                                            </constraints>
+                                        </view>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="omf-S9-Yjq">
                                             <rect key="frame" x="15" y="10" width="100" height="24"/>
                                             <constraints>
@@ -73,7 +91,7 @@
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
                                         <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="240" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Restaurant" textAlignment="natural" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="436-kv-L7j" customClass="AutocompleteTextField" customModule="Go_Map__" customModuleProvider="target">
-                                            <rect key="frame" x="120" y="9.5" width="260" height="25.5"/>
+                                            <rect key="frame" x="120" y="9.5" width="260" height="25"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="done"/>
                                         </textField>
@@ -81,7 +99,10 @@
                                     <constraints>
                                         <constraint firstItem="436-kv-L7j" firstAttribute="leading" secondItem="omf-S9-Yjq" secondAttribute="trailing" constant="5" id="F7h-eO-rc3"/>
                                         <constraint firstItem="omf-S9-Yjq" firstAttribute="top" secondItem="FgP-J6-pzd" secondAttribute="top" constant="10" id="JCW-a7-KbV"/>
+                                        <constraint firstItem="L5n-3M-9nc" firstAttribute="leading" secondItem="FgP-J6-pzd" secondAttribute="leading" id="TdT-Kp-krQ"/>
+                                        <constraint firstItem="L5n-3M-9nc" firstAttribute="top" secondItem="FgP-J6-pzd" secondAttribute="top" constant="-0.5" id="dZq-PJ-9LM"/>
                                         <constraint firstAttribute="bottom" secondItem="omf-S9-Yjq" secondAttribute="bottom" constant="10" id="kKT-P1-dTo"/>
+                                        <constraint firstAttribute="bottom" secondItem="L5n-3M-9nc" secondAttribute="bottom" constant="0.5" id="zCy-Of-xvS"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <constraints>
@@ -90,6 +111,7 @@
                                     <constraint firstItem="436-kv-L7j" firstAttribute="centerY" secondItem="8db-Vj-7ih" secondAttribute="centerY" id="uEn-2V-NNs"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="isSet" destination="L5n-3M-9nc" id="X6c-5o-xjU"/>
                                     <outlet property="nameLabel" destination="omf-S9-Yjq" id="fMS-Mn-xbw"/>
                                     <outlet property="valueField" destination="436-kv-L7j" id="cf2-yp-can"/>
                                 </connections>
@@ -101,6 +123,13 @@
                                     <rect key="frame" x="0.0" y="0.0" width="383.5" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9KO-9e-Ygo" userLabel="isSet View">
+                                            <rect key="frame" x="0.0" y="-0.5" width="7" height="44"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="7" id="otO-5O-FTj"/>
+                                            </constraints>
+                                        </view>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Wheelchair Access" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vli-Ct-Lpz">
                                             <rect key="frame" x="15" y="10" width="155" height="24"/>
                                             <constraints>
@@ -122,15 +151,19 @@
                                     <constraints>
                                         <constraint firstItem="Vli-Ct-Lpz" firstAttribute="top" secondItem="dDC-Qx-OfJ" secondAttribute="top" constant="10" id="Bhr-rv-iJO"/>
                                         <constraint firstItem="9Nw-ha-JK5" firstAttribute="leading" secondItem="Vli-Ct-Lpz" secondAttribute="trailing" constant="6" id="FZk-Bd-8gd"/>
+                                        <constraint firstItem="9KO-9e-Ygo" firstAttribute="leading" secondItem="dDC-Qx-OfJ" secondAttribute="leading" id="PjZ-FN-2dJ"/>
                                         <constraint firstAttribute="bottom" secondItem="Vli-Ct-Lpz" secondAttribute="bottom" constant="10" id="QeP-ah-s92"/>
+                                        <constraint firstItem="9KO-9e-Ygo" firstAttribute="top" secondItem="dDC-Qx-OfJ" secondAttribute="top" constant="-0.5" id="Rkw-IN-DxC"/>
                                         <constraint firstAttribute="trailing" secondItem="9Nw-ha-JK5" secondAttribute="trailing" constant="5" id="Vfb-2V-gkb"/>
                                         <constraint firstItem="9Nw-ha-JK5" firstAttribute="centerY" secondItem="dDC-Qx-OfJ" secondAttribute="centerY" id="Vml-zj-qvM"/>
+                                        <constraint firstAttribute="bottom" secondItem="9KO-9e-Ygo" secondAttribute="bottom" constant="0.5" id="Xmu-g4-7g1"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <constraints>
                                     <constraint firstItem="Vli-Ct-Lpz" firstAttribute="leading" secondItem="hWx-B4-Qoo" secondAttribute="leading" constant="15" id="ZGH-l1-Rgu"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="isSet" destination="9KO-9e-Ygo" id="8zI-nE-Owu"/>
                                     <outlet property="nameLabel" destination="Vli-Ct-Lpz" id="yVs-k8-pQR"/>
                                     <outlet property="valueField" destination="9Nw-ha-JK5" id="NIc-ST-cSI"/>
                                 </connections>
@@ -168,6 +201,13 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B9b-Kf-bWy" userLabel="isSet View">
+                                            <rect key="frame" x="0.0" y="-0.5" width="7" height="44"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="7" id="6gd-lu-ey9"/>
+                                            </constraints>
+                                        </view>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="key" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XCc-6y-qYt" userLabel="Text1" customClass="AutocompleteTextField" customModule="Go_Map__" customModuleProvider="target">
                                             <rect key="frame" x="20" y="5" width="121" height="34"/>
                                             <constraints>
@@ -216,8 +256,11 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="nil-45-Wvp" firstAttribute="leading" secondItem="sHA-cr-GLb" secondAttribute="trailing" constant="4" id="DxG-mK-ark"/>
+                                        <constraint firstItem="B9b-Kf-bWy" firstAttribute="leading" secondItem="C3T-nH-Ohr" secondAttribute="leading" id="PSk-3d-G74"/>
                                         <constraint firstItem="nil-45-Wvp" firstAttribute="centerY" secondItem="C3T-nH-Ohr" secondAttribute="centerY" id="Vgc-4W-CUE"/>
                                         <constraint firstAttribute="trailing" secondItem="nil-45-Wvp" secondAttribute="trailing" constant="4" id="r11-D7-9BS"/>
+                                        <constraint firstAttribute="bottom" secondItem="B9b-Kf-bWy" secondAttribute="bottom" constant="0.5" id="wWY-yJ-wsh"/>
+                                        <constraint firstItem="B9b-Kf-bWy" firstAttribute="top" secondItem="C3T-nH-Ohr" secondAttribute="top" constant="-0.5" id="yrB-Ge-xxy"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <constraints>
@@ -229,6 +272,7 @@
                                 </constraints>
                                 <connections>
                                     <outlet property="infoButton" destination="nil-45-Wvp" id="7DA-hc-V9Y"/>
+                                    <outlet property="isSet" destination="B9b-Kf-bWy" id="CbB-4Y-Cb3"/>
                                     <outlet property="text1" destination="XCc-6y-qYt" id="V6z-rs-Zur"/>
                                     <outlet property="text2" destination="sHA-cr-GLb" id="fID-97-dWQ"/>
                                 </connections>

@@ -10,6 +10,7 @@ import UIKit
 class FeaturePresetCell: UITableViewCell {
 	@IBOutlet var nameLabel: UILabel!
 	@IBOutlet var valueField: AutocompleteTextField!
+	@IBOutlet var isSet: UIView!
 	var presetKey: PresetKeyOrGroup?
 }
 
@@ -26,6 +27,8 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	private var drillDownGroup: PresetGroup?
 	private var textFieldIsEditing: UITextField?
 	private var extraTags: [(k: String, v: String)] = []
+
+	let isSetHighlight = UIColor.systemGreen
 
 	// These are needed to satisfy requirements as KeyValueTableCell owner
 	var allPresetKeys: [PresetKey] { allPresets?.allPresetKeys() ?? [] }
@@ -227,6 +230,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 					cell.text1?.text = ""
 					cell.text2?.text = ""
 				}
+				cell.isSet.backgroundColor = cell.value == "" ? nil : isSetHighlight
 				cell.updateAssociatedContent()
 				return cell
 			}
@@ -270,6 +274,8 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 				action: #selector(UITextFieldDelegate.textFieldDidEndEditing(_:)),
 				for: .editingDidEnd)
 
+			cell.isSet.backgroundColor = keyValueDict[presetKey.tagKey] == nil ? nil : isSetHighlight
+
 			cell.valueField.rightView = nil
 
 			if presetKey.isYesNo() {
@@ -290,6 +296,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 				let text = allPresets?.featureName() ?? ""
 				cell.valueField.text = text
 				cell.valueField.isEnabled = false
+				cell.isSet.backgroundColor = (selectedFeature?.addTags().count ?? 0) > 0 ? isSetHighlight : nil
 			} else if presetKey.isYesNo() {
 				// special case for yes/no tristate
 				let button = TristateYesNoButton()
@@ -364,6 +371,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			cell.valueField.rightView = nil
 			cell.presetKey = .group(drillDownGroup)
 			cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+			cell.isSet.backgroundColor = nil
 
 			return cell
 		}
