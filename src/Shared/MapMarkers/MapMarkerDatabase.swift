@@ -80,47 +80,14 @@ final class MapMarkerDatabase: NSObject {
 		}
 	}
 
-	func update(withGpxWaypoints xmlText: String, mapData: OsmMapData, completion: @escaping () -> Void) {
-		guard let xmlDoc = try? DDXMLDocument(xmlString: xmlText, options: 0)
-		else {
-			return
-		}
-
+	func updateGpxWaypoints() {
 		DispatchQueue.main.async(execute: { [self] in
-
-			if let namespace1 = DDXMLElement.namespace(
-				withName: "ns1",
-				stringValue: "http://www.topografix.com/GPX/1/0") as? DDXMLElement
-			{
-				xmlDoc.rootElement()?.addNamespace(namespace1)
-			}
-			if let namespace2 = DDXMLElement.namespace(
-				withName: "ns2",
-				stringValue: "http://www.topografix.com/GPX/1/1") as? DDXMLElement
-			{
-				xmlDoc.rootElement()?.addNamespace(namespace2)
-			}
-			for ns in ["ns1:", "ns2:", ""] {
-				let path = "./\(ns)gpx/\(ns)wpt"
-
-				guard let a: [DDXMLNode] = try? xmlDoc.nodes(forXPath: path) as? [DDXMLElement]
-				else {
-					continue
-				}
-
-				for waypointElement in a {
-					guard let waypointElement = waypointElement as? DDXMLElement else {
-						continue
-					}
-					if let note = KeepRightMarker(gpxWaypointXml: waypointElement,
-					                              namespace: ns,
-					                              mapData: mapData)
-					{
-						addOrUpdate(note)
-					}
+			for track in AppDelegate.shared.mapView.gpxLayer.allTracks() {
+				for point in track.wayPoints {
+					let note = WayPointMarker(with: point.latLon, description: point.name)
+					addOrUpdate(note)
 				}
 			}
-			completion()
 		})
 	}
 
@@ -136,9 +103,16 @@ final class MapMarkerDatabase: NSObject {
 		guard let url1 = URL(string: url) else { return }
 		URLSession.shared.data(with: url1, completionHandler: { [self] result in
 			if case let .success(data) = result,
-			   let xmlText = String(data: data, encoding: .utf8)
+			   let gpxTrack = try? GpxTrack(xmlData: data)
 			{
-				update(withGpxWaypoints: xmlText, mapData: mapData, completion: completion)
+				DispatchQueue.main.async(execute: { [self] in
+					for point in gpxTrack.wayPoints {
+						if let note = KeepRightMarker(gpxWaypoint: point, mapData: mapData) {
+							addOrUpdate(note)
+						}
+					}
+					completion()
+				})
 			}
 		})
 	}
@@ -155,6 +129,7 @@ final class MapMarkerDatabase: NSObject {
 		})
 		workQueue.addOperation({ [self] in
 			updateMarkers(forRegion: bbox, fixmeData: mapData, completion: completion)
+			updateGpxWaypoints()
 #if false
 			updateKeepRight(forRegion: bbox, mapData: mapData, completion: completion)
 #endif

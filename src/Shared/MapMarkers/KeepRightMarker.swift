@@ -21,7 +21,7 @@ class KeepRightMarker: MapMarker {
 	override var buttonLabel: String { "R" }
 
 	/// Initialize based on KeepRight query
-	init?(gpxWaypointXml waypointElement: DDXMLElement, namespace ns: String, mapData: OsmMapData) {
+	init?(gpxWaypoint gpx: GpxPoint, mapData: OsmMapData) {
 		//		<wpt lon="-122.2009985" lat="47.6753189">
 		//		<name><![CDATA[website, http error]]></name>
 		//		<desc><![CDATA[The URL (<a target="_blank" href="http://www.stjamesespresso.com/">http://www.stjamesespresso.com/</a>) cannot be opened (HTTP status code 301)]]></desc>
@@ -32,9 +32,6 @@ class KeepRightMarker: MapMarker {
 		//								<object_type>node</object_type>
 		//								<object_id>2627663149</object_id>
 		//		</extensions></wpt>
-
-		guard let gpx = try? GpxPoint(withXML: waypointElement)
-		else { return nil }
 
 		var osmIdent: OsmIdentifier?
 		var osmType: String?

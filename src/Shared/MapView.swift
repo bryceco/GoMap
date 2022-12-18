@@ -2455,20 +2455,25 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			text = text.replacingOccurrences(of: "&quot;", with: "\"")
 
 			let alertKeepRight = UIAlertController(title: title, message: text, preferredStyle: .alert)
-			alertKeepRight
-				.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: { _ in
-				}))
-			alertKeepRight
-				.addAction(UIAlertAction(title: NSLocalizedString("Ignore", comment: ""), style: .default,
-				                         handler: { [self] _ in
-				                         	// they want to hide this button from now on
-				                         	mapMarkerDatabase.ignore(marker)
-				                         	refreshMapMarkerButtonsFromDatabase()
-				                         	editorLayer.selectedNode = nil
-				                         	editorLayer.selectedWay = nil
-				                         	editorLayer.selectedRelation = nil
-				                         	removePin()
-				                         }))
+			alertKeepRight.addAction(
+				UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+				              style: .cancel,
+				              handler: { _ in
+				              }))
+			if marker is KeepRightMarker {
+				alertKeepRight.addAction(
+					UIAlertAction(title: NSLocalizedString("Ignore", comment: ""),
+								  style: .default,
+								  handler: { [self] _ in
+									  // they want to hide this button from now on
+									  mapMarkerDatabase.ignore(marker)
+									  refreshMapMarkerButtonsFromDatabase()
+									  editorLayer.selectedNode = nil
+									  editorLayer.selectedWay = nil
+									  editorLayer.selectedRelation = nil
+									  removePin()
+								  }))
+			}
 			mainViewController.present(alertKeepRight, animated: true)
 		} else if let object = object {
 			// Fixme marker or Quest marker

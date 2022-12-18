@@ -12,16 +12,13 @@ import Foundation
 class WayPointMarker: MapMarker {
 	let description: String
 
-	// init from
-	init(withXML node: DDXMLNode) throws {
-		let gpxPoint = try GpxPoint(withXML: node)
-
-		description = gpxPoint.desc
-		super.init(lat: gpxPoint.latLon.lat, lon: gpxPoint.latLon.lon)
+	init(with latLon: LatLon, description: String) {
+		self.description = description
+		super.init(lat: latLon.lat, lon: latLon.lon)
 	}
 
 	override var key: String {
-		fatalError() // return "waypoint-()"
+		return "waypoint-\(lat),\(lon)"
 	}
 
 	override var buttonLabel: String { "W" }

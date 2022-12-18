@@ -25,16 +25,18 @@ final class GpxPoint: NSObject, NSCoding {
 	let elevation: Double
 	let timestamp: Date? // imported GPX files may not contain a date
 	// These fields are only used by waypoints
+	let name: String
 	let desc: String
 	let extensions: [DDXMLNode]
 
 	init(latLon: LatLon, accuracy: Double, elevation: Double, timestamp: Date?,
-	     desc: String, extensions: [DDXMLNode])
+	     name: String, desc: String, extensions: [DDXMLNode])
 	{
 		self.latLon = latLon
 		self.accuracy = accuracy
 		self.elevation = elevation
 		self.timestamp = timestamp
+		self.name = name
 		self.desc = desc
 		self.extensions = extensions
 		super.init()
@@ -62,6 +64,7 @@ final class GpxPoint: NSObject, NSCoding {
 			elevation = ele
 		}
 
+		var name = ""
 		var description = ""
 		var extensions: [DDXMLNode] = []
 
@@ -71,8 +74,7 @@ final class GpxPoint: NSObject, NSCoding {
 			}
 			switch child.name {
 			case "name":
-				// ignore for now
-				break
+				name = child.stringValue ?? ""
 			case "desc":
 				description = child.stringValue ?? ""
 			case "extensions":
@@ -88,6 +90,7 @@ final class GpxPoint: NSObject, NSCoding {
 		          accuracy: 0.0,
 		          elevation: elevation,
 		          timestamp: timestamp,
+		          name: name,
 		          desc: description,
 		          extensions: extensions)
 	}
@@ -99,6 +102,7 @@ final class GpxPoint: NSObject, NSCoding {
 		accuracy = aDecoder.decodeDouble(forKey: "acc")
 		elevation = aDecoder.decodeDouble(forKey: "ele")
 		timestamp = aDecoder.decodeObject(forKey: "time") as? Date
+		name = ""
 		desc = ""
 		extensions = []
 		super.init()
@@ -151,6 +155,7 @@ final class GpxTrack: NSObject, NSCoding {
 
 	var creationDate = Date() // when trace was recorded or downloaded
 	private(set) var points: [GpxPoint] = []
+	private(set) var wayPoints: [GpxPoint] = []
 	var shapeLayer: GpxTrackLayerWithProperties?
 
 	func addPoint(_ location: CLLocation) {
@@ -175,6 +180,7 @@ final class GpxTrack: NSObject, NSCoding {
 		                  accuracy: location.horizontalAccuracy,
 		                  elevation: location.altitude,
 		                  timestamp: location.timestamp,
+		                  name: "",
 		                  desc: "",
 		                  extensions: [])
 
@@ -293,8 +299,8 @@ final class GpxTrack: NSObject, NSCoding {
 		var wptNodes: [DDXMLNode] = []
 		for ns in nsList {
 			let trkPath = "./\(ns)gpx/\(ns)trk/\(ns)trkseg/\(ns)trkpt"
-			trkNodes = (try? doc.nodes(forXPath: trkPath)) ?? []
 			let wptPath = "./\(ns)gpx/\(ns)wpt"
+			trkNodes = (try? doc.nodes(forXPath: trkPath)) ?? []
 			wptNodes = (try? doc.nodes(forXPath: wptPath)) ?? []
 			if trkNodes.count > 0 || wptNodes.count > 0 {
 				break
@@ -304,23 +310,12 @@ final class GpxTrack: NSObject, NSCoding {
 			throw GpxError.fewerThanTwoPoints
 		}
 
-		var wayPoints: [GpxPoint] = []
-		for pt in wptNodes {
-			let waypoint = try GpxPoint(withXML: pt)
-			wayPoints.append(waypoint)
-		}
-
-		var points: [GpxPoint] = []
-		for pt in trkNodes {
-			let point = try GpxPoint(withXML: pt)
-			points.append(point)
-		}
-		if points.count < 2 {
-			throw GpxError.fewerThanTwoPoints
-		}
+		let trkPoints: [GpxPoint] = try trkNodes.map { try GpxPoint(withXML: $0) }
+		let wptPoints: [GpxPoint] = try wptNodes.map { try GpxPoint(withXML: $0) }
 
 		self.init()
-		self.points = points
+		points = trkPoints
+		wayPoints = wptPoints
 		creationDate = Date()
 	}
 
@@ -710,14 +705,19 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 	}
 
 	func center(on track: GpxTrack) {
-		// get midpoint
-		var mid = track.points.count / 2
-		if mid >= track.points.count {
-			mid = 0
+		let center: GpxPoint
+		if let wayPoint = track.wayPoints.first {
+			center = wayPoint
+		} else {
+			// get midpoint
+			var mid = track.points.count / 2
+			if mid >= track.points.count {
+				mid = 0
+			}
+			center = track.points[mid]
 		}
-		let pt = track.points[mid]
 		let widthDegrees = (20.0 /* meters */ / EarthRadius) * 360.0
-		mapView.setTransformFor(latLon: pt.latLon, width: widthDegrees)
+		mapView.setTransformFor(latLon: center.latLon, width: widthDegrees)
 	}
 
 	// Load a GPX trace from an external source
