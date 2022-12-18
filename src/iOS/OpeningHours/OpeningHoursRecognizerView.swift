@@ -93,7 +93,12 @@ struct CameraViewWrapper: UIViewRepresentable {
 			!recognizer.finished
 		}
 		cam.languages = [recognizer.language.isoCode]
+		cam.startRunning()
 		return cam
+	}
+
+	static func dismantleUIView(_ uiView: Self.UIViewType, coordinator: Self.Coordinator) {
+		uiView.stopRunning()
 	}
 
 	func updateUIView(_ uiView: CameraView, context: Context) {
