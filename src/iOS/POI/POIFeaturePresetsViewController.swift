@@ -39,6 +39,8 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		if kv.key != "", kv.value != "" {
 			selectedFeature = nil
 			updatePresets()
+		} else {
+			kv.isSet.backgroundColor = nil
 		}
 	}
 
@@ -330,6 +332,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 					self.updateTag(withValue: newValue ?? "", forKey: presetKey.tagKey)
 					cell.valueField.text = nil
 					cell.valueField.resignFirstResponder()
+					cell.isSet.backgroundColor = newValue == nil ? nil : self.isSetHighlight
 				}
 			} else {
 				// Regular cell
@@ -371,7 +374,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			cell.valueField.rightView = nil
 			cell.presetKey = .group(drillDownGroup)
 			cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-			cell.isSet.backgroundColor = nil
+			cell.isSet.backgroundColor = cell.valueField.text == "" ? nil : isSetHighlight
 
 			return cell
 		}
@@ -459,6 +462,8 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			}
 		}
 	}
+
+	// MARK: - Text field functions
 
 	func resignAll() {
 		if tableView.window == nil {
@@ -548,6 +553,9 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		saveButton.isEnabled = true
 		if #available(iOS 13.0, *) {
 			tabBarController?.isModalInPresentation = saveButton.isEnabled
+		}
+		if let cell: FeaturePresetCell = textField.superviewOfType() {
+			cell.isSet.backgroundColor = cell.valueField.text == "" ? nil : isSetHighlight
 		}
 	}
 
