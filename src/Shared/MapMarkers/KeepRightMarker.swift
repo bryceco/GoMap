@@ -33,13 +33,13 @@ class KeepRightMarker: MapMarker {
 		//								<object_id>2627663149</object_id>
 		//		</extensions></wpt>
 
-		guard let (lon, lat, desc, extensions) = WayPointMarker.parseXML(gpxWaypointXml: waypointElement, namespace: ns)
+		guard let gpx = try? GpxPoint(withXML: waypointElement)
 		else { return nil }
 
 		var osmIdent: OsmIdentifier?
 		var osmType: String?
 		var keepRightID: Int?
-		for child2 in extensions {
+		for child2 in gpx.extensions {
 			guard let child2 = child2 as? DDXMLElement else {
 				continue
 			}
@@ -70,10 +70,10 @@ class KeepRightMarker: MapMarker {
 			objectName = "\(osmType) \(osmIdent)"
 		}
 
-		description = "\(objectName): \(desc)"
+		description = "\(objectName): \(gpx.desc)"
 		self.keepRightID = keepRightID
 		self.objectId = objectId
-		super.init(lat: lat,
-		           lon: lon)
+		super.init(lat: gpx.latLon.lat,
+		           lon: gpx.latLon.lon)
 	}
 }

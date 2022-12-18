@@ -24,13 +24,72 @@ final class GpxPoint: NSObject, NSCoding {
 	let accuracy: Double
 	let elevation: Double
 	let timestamp: Date? // imported GPX files may not contain a date
+	// These fields are only used by waypoints
+	let desc: String
+	let extensions: [DDXMLNode]
 
-	init(latLon: LatLon, accuracy: Double, elevation: Double, timestamp: Date?) {
+	init(latLon: LatLon, accuracy: Double, elevation: Double, timestamp: Date?,
+	     desc: String, extensions: [DDXMLNode])
+	{
 		self.latLon = latLon
 		self.accuracy = accuracy
 		self.elevation = elevation
 		self.timestamp = timestamp
+		self.desc = desc
+		self.extensions = extensions
 		super.init()
+	}
+
+	convenience init(withXML pt: DDXMLNode) throws {
+		guard let pt = pt as? DDXMLElement,
+		      let lat2 = pt.attribute(forName: "lat")?.stringValue,
+		      let lon2 = pt.attribute(forName: "lon")?.stringValue,
+		      let lat = Double(lat2),
+		      let lon = Double(lon2)
+		else {
+			throw GpxError.badGpxFormat
+		}
+
+		let latLon = LatLon(latitude: lat, longitude: lon)
+		var timestamp: Date?
+		var elevation = 0.0
+		if let time = pt.elements(forName: "time").last?.stringValue {
+			timestamp = OsmBaseObject.rfc3339DateFormatter().date(from: time)
+		}
+		if let ele2 = pt.elements(forName: "ele").last?.stringValue,
+		   let ele = Double(ele2)
+		{
+			elevation = ele
+		}
+
+		var description = ""
+		var extensions: [DDXMLNode] = []
+
+		for child in pt.children ?? [] {
+			guard let child = child as? DDXMLElement else {
+				continue
+			}
+			switch child.name {
+			case "name":
+				// ignore for now
+				break
+			case "desc":
+				description = child.stringValue ?? ""
+			case "extensions":
+				if let children = child.children {
+					extensions = children
+				}
+			default:
+				break
+			}
+		}
+
+		self.init(latLon: latLon,
+		          accuracy: 0.0,
+		          elevation: elevation,
+		          timestamp: timestamp,
+		          desc: description,
+		          extensions: extensions)
 	}
 
 	required init(coder aDecoder: NSCoder) {
@@ -40,6 +99,8 @@ final class GpxPoint: NSObject, NSCoding {
 		accuracy = aDecoder.decodeDouble(forKey: "acc")
 		elevation = aDecoder.decodeDouble(forKey: "ele")
 		timestamp = aDecoder.decodeObject(forKey: "time") as? Date
+		desc = ""
+		extensions = []
 		super.init()
 	}
 
@@ -113,7 +174,9 @@ final class GpxTrack: NSObject, NSCoding {
 		let pt = GpxPoint(latLon: coordinate,
 		                  accuracy: location.horizontalAccuracy,
 		                  elevation: location.altitude,
-		                  timestamp: location.timestamp)
+		                  timestamp: location.timestamp,
+		                  desc: "",
+		                  extensions: [])
 
 		points.append(pt)
 	}
@@ -206,22 +269,19 @@ final class GpxTrack: NSObject, NSCoding {
 			throw GpxError.noData
 		}
 
-		guard let namespace1 = DDXMLElement.namespace(
-			withName: "ns1",
-			stringValue: "http://www.topografix.com/GPX/1/0") as? DDXMLNode,
-			let namespace2 = DDXMLElement.namespace(
-				withName: "ns2",
-				stringValue: "http://www.topografix.com/GPX/1/1") as? DDXMLNode,
-			let namespace3 = DDXMLElement.namespace(
-				withName: "ns3",
-				stringValue: "http://topografix.com/GPX/1/1") as? DDXMLNode // HOT OSM uses this
+		guard let ns1 = DDXMLElement.namespace(withName: "ns1",
+		                                       stringValue: "http://www.topografix.com/GPX/1/0") as? DDXMLNode,
+			let ns2 = DDXMLElement.namespace(withName: "ns2",
+			                                 stringValue: "http://www.topografix.com/GPX/1/1") as? DDXMLNode,
+			let ns3 = DDXMLElement.namespace(withName: "ns3",
+			                                 stringValue: "http://topografix.com/GPX/1/1") as? DDXMLNode // HOT OSM uses this
 		else {
 			throw GpxError.badGpxFormat
 		}
 
-		doc.rootElement()?.addNamespace(namespace1)
-		doc.rootElement()?.addNamespace(namespace2)
-		doc.rootElement()?.addNamespace(namespace3)
+		doc.rootElement()?.addNamespace(ns1)
+		doc.rootElement()?.addNamespace(ns2)
+		doc.rootElement()?.addNamespace(ns3)
 
 		let nsList = [
 			"ns1:",
@@ -229,47 +289,30 @@ final class GpxTrack: NSObject, NSCoding {
 			"ns3:",
 			""
 		]
-		var a: [DDXMLNode] = []
+		var trkNodes: [DDXMLNode] = []
+		var wptNodes: [DDXMLNode] = []
 		for ns in nsList {
-			let xpath = "./\(ns)gpx/\(ns)trk/\(ns)trkseg/\(ns)trkpt"
-			a = (try? doc.nodes(forXPath: xpath)) ?? []
-			if a.count > 0 {
+			let trkPath = "./\(ns)gpx/\(ns)trk/\(ns)trkseg/\(ns)trkpt"
+			trkNodes = (try? doc.nodes(forXPath: trkPath)) ?? []
+			let wptPath = "./\(ns)gpx/\(ns)wpt"
+			wptNodes = (try? doc.nodes(forXPath: wptPath)) ?? []
+			if trkNodes.count > 0 || wptNodes.count > 0 {
 				break
 			}
 		}
-		if a.count < 2 {
+		if wptNodes.count == 0, trkNodes.count < 2 {
 			throw GpxError.fewerThanTwoPoints
 		}
 
+		var wayPoints: [GpxPoint] = []
+		for pt in wptNodes {
+			let waypoint = try GpxPoint(withXML: pt)
+			wayPoints.append(waypoint)
+		}
+
 		var points: [GpxPoint] = []
-		let dateFormatter = OsmBaseObject.rfc3339DateFormatter()
-		for pt in a {
-			guard let pt = pt as? DDXMLElement,
-			      let lat2 = pt.attribute(forName: "lat")?.stringValue,
-			      let lon2 = pt.attribute(forName: "lon")?.stringValue,
-			      let lat = Double(lat2),
-			      let lon = Double(lon2)
-			else {
-				throw GpxError.badGpxFormat
-			}
-
-			let latLon = LatLon(latitude: lat, longitude: lon)
-			var timestamp: Date?
-			var elevation = 0.0
-			if let time = pt.elements(forName: "time").last?.stringValue {
-				timestamp = dateFormatter.date(from: time)
-			}
-			if let ele2 = pt.elements(forName: "ele").last?.stringValue,
-			   let ele = Double(ele2)
-			{
-				elevation = ele
-			}
-
-			let point = GpxPoint(latLon: latLon,
-			                     accuracy: 0.0,
-			                     elevation: elevation,
-			                     timestamp: timestamp)
-
+		for pt in trkNodes {
+			let point = try GpxPoint(withXML: pt)
 			points.append(point)
 		}
 		if points.count < 2 {
