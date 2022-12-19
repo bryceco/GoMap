@@ -158,6 +158,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	@IBOutlet var progressIndicator: UIActivityIndicatorView!
 	@IBOutlet var editControl: UISegmentedControl!
 
+	private var magnifyingGlass: MagnifyingGlass!
+
 	private var editControlActions: [EDIT_ACTION] = []
 
 	let locationManager = CLLocationManager()
@@ -451,7 +453,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 	}
 
-	private(set) var crossHairs: CAShapeLayer
+	private(set) var crossHairs: CAShapeLayer!
 
 	struct CurrentRegion: Codable {
 		let latLon: LatLon
@@ -520,7 +522,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	// MARK: initialization
 
 	required init?(coder: NSCoder) {
-		crossHairs = CAShapeLayer()
 		tileServerList = TileServerList()
 		locationBallLayer = LocationBallLayer()
 		locating = false
@@ -612,43 +613,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 
 		// implement crosshairs
-		do {
-			var path = UIBezierPath()
-			let radius: CGFloat = 12
-			path.move(to: CGPoint(x: -radius, y: 0))
-			path.addLine(to: CGPoint(x: radius, y: 0))
-			path.move(to: CGPoint(x: 0, y: -radius))
-			path.addLine(to: CGPoint(x: 0, y: radius))
-			crossHairs.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-			crossHairs.path = path.cgPath
-			crossHairs.strokeColor = UIColor(red: 1.0, green: 1.0, blue: 0.5, alpha: 1.0).cgColor
-			crossHairs.bounds = CGRect(x: -radius, y: -radius, width: 2 * radius, height: 2 * radius)
-			crossHairs.lineWidth = 2.0
-			crossHairs.zPosition = Z_CROSSHAIRS
-
-			path = UIBezierPath()
-			let shadowWidth: CGFloat = 2.0
-			let p1 = UIBezierPath(rect: CGRect(
-				x: -(radius + shadowWidth - 1),
-				y: -shadowWidth,
-				width: 2 * (radius + shadowWidth - 1),
-				height: 2 * shadowWidth))
-			let p2 = UIBezierPath(rect: CGRect(
-				x: -shadowWidth,
-				y: -(radius + shadowWidth - 1),
-				width: 2 * shadowWidth,
-				height: 2 * (radius + shadowWidth - 1)))
-			path.append(p1)
-			path.append(p2)
-			crossHairs.shadowColor = UIColor.black.cgColor
-			crossHairs.shadowOpacity = 1.0
-			crossHairs.shadowPath = path.cgPath
-			crossHairs.shadowRadius = 0
-			crossHairs.shadowOffset = CGSize(width: 0, height: 0)
-
-			crossHairs.position = bounds.center()
-			layer.addSublayer(crossHairs)
-		}
+		crossHairs = CrossHairsLayer(radius: 12.0)
+		crossHairs.position = bounds.center()
+		crossHairs.zPosition = Z_CROSSHAIRS
+		layer.addSublayer(crossHairs)
 
 		locationBallLayer.zPosition = Z_BALL
 		locationBallLayer.heading = 0.0
@@ -762,6 +730,23 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		flashLabel.layer.masksToBounds = true
 		flashLabel.layer.zPosition = Z_FLASH
 		flashLabel.isHidden = true
+
+		// magnifying glass
+		magnifyingGlass = MagnifyingGlass(sourceView: self, radius: 100.0, scale: 2.0)
+		superview!.addSubview(magnifyingGlass)
+		magnifyingGlass.translatesAutoresizingMaskIntoConstraints = false
+		if #available(iOS 11.0, *) {
+			magnifyingGlass.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
+			magnifyingGlass.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor).isActive = true
+		} else {
+			magnifyingGlass.topAnchor.constraint(equalTo: superview!.topAnchor, constant: layoutMargins.top)
+				.isActive = true
+			magnifyingGlass.leftAnchor.constraint(equalTo: superview!.leftAnchor, constant: layoutMargins.left)
+				.isActive = true
+		}
+		magnifyingGlass.widthAnchor.constraint(equalToConstant: 2 * magnifyingGlass.radius).isActive = true
+		magnifyingGlass.heightAnchor.constraint(equalToConstant: 2 * magnifyingGlass.radius).isActive = true
+		magnifyingGlass.isHidden = true
 
 #if false
 		// Support zoom via tap and drag
@@ -2080,6 +2065,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 		pushPin = nil
 		updateEditControl()
+		magnifyingGlass.isHidden = true
 	}
 
 	private func pushpinDragCallbackFor(object: OsmBaseObject) -> PushPinViewDragCallback {
@@ -2159,6 +2145,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 				// move the object
 				dragObjectToPushpin()
+
+				magnifyingGlass.setSourceCenter(arrow, in: self)
 			default:
 				break
 			}
@@ -2177,6 +2165,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		if let object = object {
 			pushpinView.dragCallback = pushpinDragCallbackFor(object: object)
+		} else {
+			pushpinView.dragCallback = { [self] state, dx, dy in
+				magnifyingGlass.setSourceCenter(pushpinView.arrowPoint, in: self)
+			}
 		}
 
 		if object == nil {
@@ -2222,6 +2214,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		addSubview(pushpinView)
 
 		updateEditControl()
+		magnifyingGlass.setSourceCenter(pushpinView.arrowPoint, in: self)
 	}
 
 	func refreshPushpinText() {
@@ -2463,16 +2456,16 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			if marker is KeepRightMarker {
 				alertKeepRight.addAction(
 					UIAlertAction(title: NSLocalizedString("Ignore", comment: ""),
-								  style: .default,
-								  handler: { [self] _ in
-									  // they want to hide this button from now on
-									  mapMarkerDatabase.ignore(marker)
-									  refreshMapMarkerButtonsFromDatabase()
-									  editorLayer.selectedNode = nil
-									  editorLayer.selectedWay = nil
-									  editorLayer.selectedRelation = nil
-									  removePin()
-								  }))
+					              style: .default,
+					              handler: { [self] _ in
+					              	// they want to hide this button from now on
+					              	mapMarkerDatabase.ignore(marker)
+					              	refreshMapMarkerButtonsFromDatabase()
+					              	editorLayer.selectedNode = nil
+					              	editorLayer.selectedWay = nil
+					              	editorLayer.selectedRelation = nil
+					              	removePin()
+					              }))
 			}
 			mainViewController.present(alertKeepRight, animated: true)
 		} else if let object = object {

@@ -310,13 +310,11 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 						button.tintColor = UIColor.systemBlue
 					}
 					if button == mapView.addNodeButton {
-						button
-							.imageEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15,
-							                                right: 15) // resize images on button to be smaller
+						// resize images on button to be smaller
+						button.imageEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
 					} else {
-						button
-							.imageEdgeInsets = UIEdgeInsets(top: 9, left: 9, bottom: 9,
-							                                right: 9) // resize images on button to be smaller
+						// resize images on button to be smaller
+						button.imageEdgeInsets = UIEdgeInsets(top: 9, left: 9, bottom: 9, right: 9)
 					}
 				}
 			}
