@@ -732,7 +732,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		flashLabel.isHidden = true
 
 		// magnifying glass
-		magnifyingGlass = MagnifyingGlass(sourceView: self, radius: 100.0, scale: 2.0)
+		magnifyingGlass = MagnifyingGlass(sourceView: self, radius: 70.0, scale: 2.0)
 		superview!.addSubview(magnifyingGlass)
 		magnifyingGlass.translatesAutoresizingMaskIntoConstraints = false
 		if #available(iOS 11.0, *) {
@@ -756,8 +756,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 #endif
 
 		// these need to be loaded late because assigning to them changes the view
-		viewState = MapViewState(rawValue: UserDefaults.standard.integer(forKey: "mapViewState")) ?? MapViewState
-			.EDITORAERIAL
+		viewState = MapViewState(rawValue: UserDefaults.standard.integer(forKey: "mapViewState"))
+			?? MapViewState.EDITORAERIAL
 		viewOverlayMask = MapViewOverlays(rawValue: UserDefaults.standard.integer(forKey: "mapViewOverlays"))
 
 		enableRotation = UserDefaults.standard.bool(forKey: "mapViewEnableRotation")
@@ -2166,8 +2166,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		if let object = object {
 			pushpinView.dragCallback = pushpinDragCallbackFor(object: object)
 		} else {
-			pushpinView.dragCallback = { [self] state, dx, dy in
-				magnifyingGlass.setSourceCenter(pushpinView.arrowPoint, in: self)
+			pushpinView.dragCallback = { _, _, _ in
+				self.magnifyingGlass.setSourceCenter(pushpinView.arrowPoint, in: self)
 			}
 		}
 
