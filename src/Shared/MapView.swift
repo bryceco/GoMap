@@ -734,18 +734,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		// magnifying glass
 		magnifyingGlass = MagnifyingGlass(sourceView: self, radius: 70.0, scale: 2.0)
 		superview!.addSubview(magnifyingGlass)
-		magnifyingGlass.translatesAutoresizingMaskIntoConstraints = false
-		if #available(iOS 11.0, *) {
-			magnifyingGlass.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
-			magnifyingGlass.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor).isActive = true
-		} else {
-			magnifyingGlass.topAnchor.constraint(equalTo: superview!.topAnchor, constant: layoutMargins.top)
-				.isActive = true
-			magnifyingGlass.leftAnchor.constraint(equalTo: superview!.leftAnchor, constant: layoutMargins.left)
-				.isActive = true
-		}
-		magnifyingGlass.widthAnchor.constraint(equalToConstant: 2 * magnifyingGlass.radius).isActive = true
-		magnifyingGlass.heightAnchor.constraint(equalToConstant: 2 * magnifyingGlass.radius).isActive = true
+		magnifyingGlass.setPosition(.topLeft, animated: false)
 		magnifyingGlass.isHidden = true
 
 #if false
@@ -1942,15 +1931,14 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				editorLayer.performEdit(value)
 			}))
 		}
-		actionSheet
-			.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { _ in
-			}))
+		actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+		                                    style: .cancel,
+		                                    handler: nil))
 		mainViewController.present(actionSheet, animated: true)
 
 		// compute location for action sheet to originate
 		var button = editControl.bounds
-		let segmentWidth = button.size
-			.width /
+		let segmentWidth = button.size.width /
 			CGFloat(editControl.numberOfSegments) // hack because we can't get the frame for an individual segment
 		button.origin.x += button.size.width - segmentWidth
 		button.size.width = segmentWidth
@@ -2018,13 +2006,14 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					Modififying these restrictions may destroy important information.
 					""",
 					preferredStyle: .alert)
+				alert.addAction(UIAlertAction(title: NSLocalizedString("Edit restrictions", comment: ""),
+				                              style: .destructive,
+				                              handler: { _ in
+				                              	showRestrictionEditor()
+				                              }))
 				alert
-					.addAction(UIAlertAction(title: NSLocalizedString("Edit restrictions", comment: ""),
-					                         style: .destructive, handler: { _ in
-					                         	showRestrictionEditor()
-					                         }))
-				alert
-					.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel,
+					.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+					                         style: .cancel,
 					                         handler: nil))
 				mainViewController.present(alert, animated: true)
 			} else {
