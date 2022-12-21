@@ -313,18 +313,25 @@ class GpxViewController: UITableViewController {
 		startDate = DateFormatter.localizedString(from: creationDate, dateStyle: .short, timeStyle: .short)
 
 		let duration = String(format: "%d:%02d:%02d", dur / 3600, dur / 60 % 60, dur % 60)
-		let trackDistanceInt = Int(track.lengthInMeters())
-		let trackPointsInt = track.points.count
-		let meters = String.localizedStringWithFormat(
-			NSLocalizedString("%ld meters, %ld points", comment: "length of a gpx track"),
-			trackDistanceInt,
-			trackPointsInt)
+		let subtitle: String
+		if track.wayPoints.count > 0 {
+			subtitle = String.localizedStringWithFormat(
+				NSLocalizedString("%ld meters, %ld points, %ld waypoints", comment: "length of a gpx track"),
+				Int(track.lengthInMeters()),
+				track.points.count,
+				track.wayPoints.count)
+		} else {
+			subtitle = String.localizedStringWithFormat(
+				NSLocalizedString("%ld meters, %ld points", comment: "length of a gpx track"),
+				Int(track.lengthInMeters()),
+				track.points.count)
+		}
 		let cell = tableView.dequeueReusableCell(
 			withIdentifier: "GpxTrackTableCell",
 			for: indexPath) as! GpxTrackTableCell
 		cell.startDate.text = startDate
 		cell.duration.text = duration
-		cell.details.text = meters
+		cell.details.text = subtitle
 		cell.gpxTrack = track
 		cell.tableView = self
 		let name = track.name

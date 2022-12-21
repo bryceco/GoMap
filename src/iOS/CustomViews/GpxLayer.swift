@@ -102,7 +102,7 @@ final class GpxPoint: NSObject, NSCoding {
 		accuracy = aDecoder.decodeDouble(forKey: "acc")
 		elevation = aDecoder.decodeDouble(forKey: "ele")
 		timestamp = aDecoder.decodeObject(forKey: "time") as? Date
-		name = ""
+		name = aDecoder.decodeObject(forKey: "name") as? String ?? ""
 		desc = ""
 		extensions = []
 		super.init()
@@ -114,6 +114,7 @@ final class GpxPoint: NSObject, NSCoding {
 		aCoder.encode(accuracy, forKey: "acc")
 		aCoder.encode(elevation, forKey: "ele")
 		aCoder.encode(timestamp, forKey: "time")
+		aCoder.encode(name, forKey: "name")
 	}
 }
 
@@ -346,10 +347,6 @@ final class GpxTrack: NSObject, NSCoding {
 	}
 
 	func duration() -> TimeInterval {
-		if points.count == 0 {
-			return 0.0
-		}
-
 		guard let start = points.first?.timestamp,
 		      let finish = points.last?.timestamp
 		else { return 0.0 }
@@ -359,12 +356,14 @@ final class GpxTrack: NSObject, NSCoding {
 	required init?(coder aDecoder: NSCoder) {
 		super.init()
 		points = aDecoder.decodeObject(forKey: "points") as? [GpxPoint] ?? []
+		wayPoints = aDecoder.decodeObject(forKey: "waypoints") as? [GpxPoint] ?? []
 		name = aDecoder.decodeObject(forKey: "name") as? String ?? ""
 		creationDate = aDecoder.decodeObject(forKey: "creationDate") as? Date ?? Date()
 	}
 
 	func encode(with aCoder: NSCoder) {
 		aCoder.encode(points, forKey: "points")
+		aCoder.encode(wayPoints, forKey: "waypoints")
 		aCoder.encode(name, forKey: "name")
 		aCoder.encode(creationDate, forKey: "creationDate")
 	}
@@ -468,14 +467,12 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 	}
 
 	func save(toDisk track: GpxTrack) {
-		if track.points.count >= 2 {
+		if track.points.count >= 2 || track.wayPoints.count > 0 {
 			// make sure save directory exists
 			var time = TimeInterval(CACurrentMediaTime())
 			let dir = saveDirectory()
 			let path = URL(fileURLWithPath: dir).appendingPathComponent(track.fileName()).path
-			do {
-				try FileManager.default.createDirectory(atPath: dir, withIntermediateDirectories: true, attributes: nil)
-			} catch {}
+			try? FileManager.default.createDirectory(atPath: dir, withIntermediateDirectories: true, attributes: nil)
 			NSKeyedArchiver.archiveRootObject(track, toFile: path)
 			time = TimeInterval(CACurrentMediaTime() - time)
 			DLog("GPX track \(track.points.count) points, save time = \(time)")
@@ -631,9 +628,8 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 			let dir = saveDirectory()
 			var files = (try? FileManager.default.contentsOfDirectory(atPath: dir)) ?? []
 
-			files = files.sorted { $0.compare($1, options: .caseInsensitive) == .orderedAscending }
-				.reversed() // file names are timestamps, so sort increasing
-			// newest first
+			// file names are timestamps, so sort increasing newest first
+			files = files.sorted { $0.compare($1, options: .caseInsensitive) == .orderedAscending }.reversed()
 
 			for file in files {
 				if file.hasSuffix(".track") {
