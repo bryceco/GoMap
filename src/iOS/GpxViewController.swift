@@ -307,11 +307,8 @@ class GpxViewController: UITableViewController {
 		// active track or previous tracks
 		let track = indexPath.section == SECTION_ACTIVE_TRACK ? gpxLayer.activeTrack!
 			: gpxLayer.previousTracks[indexPath.row]
+		let startDate = DateFormatter.localizedString(from: track.creationDate, dateStyle: .short, timeStyle: .short)
 		let dur = Int(round(track.duration()))
-		var startDate: String?
-		let creationDate = track.creationDate
-		startDate = DateFormatter.localizedString(from: creationDate, dateStyle: .short, timeStyle: .short)
-
 		let duration = String(format: "%d:%02d:%02d", dur / 3600, dur / 60 % 60, dur % 60)
 		let subtitle: String
 		if track.wayPoints.count > 0 {
