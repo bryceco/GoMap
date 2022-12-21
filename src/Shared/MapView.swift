@@ -2186,8 +2186,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 				let text = CATextLayer()
 				text.foregroundColor = UIColor.white.cgColor
-				text.foregroundColor = UIColor(red: 0, green: 0, blue: 0.5, alpha: 1.0).cgColor
-				text.foregroundColor = UIColor.white.cgColor
 				text.string = "?"
 				text.fontSize = 18
 				text.font = UIFont.boldSystemFont(ofSize: text.fontSize)
