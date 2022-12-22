@@ -66,7 +66,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	private var textFieldIsEditing: UITextField?
 	private var extraTags: [(k: String, v: String)] = []
 
-	let isSetHighlight = UIColor.systemGreen
+	let isSetHighlight = UIColor.systemBlue
 
 	// These are needed to satisfy requirements as KeyValueTableCell owner
 	var allPresetKeys: [PresetKey] { allPresets?.allPresetKeys() ?? [] }
