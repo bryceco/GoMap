@@ -66,7 +66,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	private var textFieldIsEditing: UITextField?
 	private var extraTags: [(k: String, v: String)] = []
 
-	let isSetHighlight = UIColor.systemBlue
+	static let isSetHighlight = UIColor.systemBlue
 
 	// These are needed to satisfy requirements as KeyValueTableCell owner
 	var allPresetKeys: [PresetKey] { allPresets?.allPresetKeys() ?? [] }
@@ -274,7 +274,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 					cell.text1?.text = ""
 					cell.text2?.text = ""
 				}
-				cell.isSet.backgroundColor = cell.value == "" ? nil : isSetHighlight
+				cell.isSet.backgroundColor = cell.value == "" ? nil : Self.isSetHighlight
 				cell.updateAssociatedContent()
 				return cell
 			}
@@ -302,7 +302,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 					for: indexPath) as! FeaturePresetAreaCell
 				cell.valueField.delegate = self
 				let value = keyValueDict[presetKey.tagKey] ?? ""
-				cell.isSet.backgroundColor = value == "" ? nil : isSetHighlight
+				cell.isSet.backgroundColor = value == "" ? nil : Self.isSetHighlight
 				cell.valueField.text = value
 				cell.valueField.returnKeyType = .done
 				cell.accessoryType = .none
@@ -344,7 +344,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 				action: #selector(UITextFieldDelegate.textFieldDidEndEditing(_:)),
 				for: .editingDidEnd)
 
-			cell.isSet.backgroundColor = keyValueDict[presetKey.tagKey] == nil ? nil : isSetHighlight
+			cell.isSet.backgroundColor = keyValueDict[presetKey.tagKey] == nil ? nil : Self.isSetHighlight
 
 			cell.valueField.rightView = nil
 
@@ -366,7 +366,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 				let text = allPresets?.featureName() ?? ""
 				cell.valueField.text = text
 				cell.valueField.isEnabled = false
-				cell.isSet.backgroundColor = (selectedFeature?.addTags().count ?? 0) > 0 ? isSetHighlight : nil
+				cell.isSet.backgroundColor = (selectedFeature?.addTags().count ?? 0) > 0 ? Self.isSetHighlight : nil
 			} else if presetKey.isYesNo() {
 				// special case for yes/no tristate
 				let button = TristateYesNoButton()
@@ -400,7 +400,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 					self.updateTag(withValue: newValue ?? "", forKey: presetKey.tagKey)
 					cell.valueField.text = nil
 					cell.valueField.resignFirstResponder()
-					cell.isSet.backgroundColor = newValue == nil ? nil : self.isSetHighlight
+					cell.isSet.backgroundColor = newValue == nil ? nil : Self.isSetHighlight
 				}
 			} else {
 				// Regular cell
@@ -442,7 +442,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			cell.valueField.rightView = nil
 			cell.presetKey = .group(drillDownGroup)
 			cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-			cell.isSet.backgroundColor = cell.valueField.text == "" ? nil : isSetHighlight
+			cell.isSet.backgroundColor = cell.valueField.text == "" ? nil : Self.isSetHighlight
 
 			return cell
 		}
@@ -508,7 +508,15 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	// MARK: - Table view delegate
 
 	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		return indexPath.section == allPresets?.sectionCount()
+		if indexPath.section == 0 && indexPath.row == 0 {
+			// Feature type
+			return false
+		}
+		if indexPath.section > (allPresets?.sectionCount() ?? 0) {
+			// Customize button
+			return false
+		}
+		return true
 	}
 
 	override func tableView(_ tableView: UITableView,
@@ -516,16 +524,34 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	                        forRowAt indexPath: IndexPath)
 	{
 		if editingStyle == .delete {
-			if indexPath.row < extraTags.count {
-				let kv = extraTags[indexPath.row]
-				extraTags.remove(at: indexPath.row)
-				updateTag(withValue: "", forKey: kv.k)
-				tableView.deleteRows(at: [indexPath], with: .fade)
+			if indexPath.section == allPresets?.sectionCount() {
+				// Extra tags section
+				if indexPath.row < extraTags.count {
+					let kv = extraTags[indexPath.row]
+					extraTags.remove(at: indexPath.row)
+					updateTag(withValue: "", forKey: kv.k)
+					tableView.deleteRows(at: [indexPath], with: .fade)
+				} else {
+					// it's the last row, which is the empty row, so fake it
+					if let kv = tableView.cellForRow(at: indexPath) as? KeyValueTableCell {
+						kv.text1.text = ""
+						kv.text2.text = ""
+					}
+				}
 			} else {
-				// it's the last row, which is the empty row, so fake it
-				if let kv = tableView.cellForRow(at: indexPath) as? KeyValueTableCell {
-					kv.text1.text = ""
-					kv.text2.text = ""
+				// for regular cells just set the value to ""
+				let cell = tableView.cellForRow(at: indexPath)
+				if let cell = cell as? FeaturePresetCell {
+					cell.valueField.text = ""
+					cell.isSet.backgroundColor = nil
+					for preset in cell.presetKey?.flattenedPresets() ?? [] {
+						updateTag(withValue: "", forKey: preset.tagKey)
+					}
+				}
+				if let cell = cell as? FeaturePresetAreaCell {
+					cell.valueField.text = ""
+					cell.isSet.backgroundColor = nil
+					updateTag(withValue: "", forKey: cell.presetKey.tagKey)
 				}
 			}
 		}
@@ -623,7 +649,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			tabBarController?.isModalInPresentation = saveButton.isEnabled
 		}
 		if let cell: FeaturePresetCell = textField.superviewOfType() {
-			cell.isSet.backgroundColor = cell.valueField.text == "" ? nil : isSetHighlight
+			cell.isSet.backgroundColor = cell.valueField.text == "" ? nil : Self.isSetHighlight
 		}
 	}
 

@@ -11,6 +11,15 @@ import Foundation
 enum PresetKeyOrGroup {
 	case key(PresetKey)
 	case group(PresetGroup)
+
+	func flattenedPresets() -> [PresetKey] {
+		switch self {
+		case let .key(presetKey):
+			return [presetKey]
+		case let.group(pg):
+			return pg.presetKeys.flatMap { $0.flattenedPresets() }
+		}
+	}
 }
 
 // A group of related tags, such as address tags, organized for display purposes
