@@ -16,8 +16,8 @@ enum PresetKeyOrGroup {
 		switch self {
 		case let .key(presetKey):
 			return [presetKey]
-		case let.group(pg):
-			return pg.presetKeys.flatMap { $0.flattenedPresets() }
+		case let .group(group):
+			return group.presetKeys.flatMap { $0.flattenedPresets() }
 		}
 	}
 }

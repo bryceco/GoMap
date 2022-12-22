@@ -60,8 +60,9 @@ class PresetKey: NSObject, NSSecureCoding {
 		self.name = name
 		self.type = type
 		tagKey = tag
-		self.placeholder = placeholder ?? PresetKey.placeholderForPresets(presets) ?? PresetsDatabase.shared
-			.unknownForLocale
+		self.placeholder = placeholder
+			?? PresetKey.placeholderForPresets(presets)
+			?? PresetsDatabase.shared.unknownForLocale
 		keyboardType = keyboard
 		autocapitalizationType = capitalize
 		autocorrectType = autocorrect
@@ -77,8 +78,8 @@ class PresetKey: NSObject, NSSecureCoding {
 		   let placeholder = coder.decodeObject(forKey: "placeholder") as? String,
 		   let presetList = coder.decodeObject(forKey: "presetList") as? [PresetValue],
 		   let keyboardType = UIKeyboardType(rawValue: coder.decodeInteger(forKey: "keyboardType")),
-		   let autocapitalizationType = UITextAutocapitalizationType(rawValue: coder
-		   	.decodeInteger(forKey: "capitalize"))
+		   let autocapitalizationType = UITextAutocapitalizationType(rawValue:
+		   	coder.decodeInteger(forKey: "capitalize"))
 		{
 			self.name = name
 			type = ""

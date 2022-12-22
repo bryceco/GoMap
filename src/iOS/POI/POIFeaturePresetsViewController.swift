@@ -508,7 +508,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	// MARK: - Table view delegate
 
 	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		if indexPath.section == 0 && indexPath.row == 0 {
+		if indexPath.section == 0, indexPath.row == 0 {
 			// Feature type
 			return false
 		}
@@ -761,9 +761,9 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		// use our update function that guarantees that values are less than 255 chars
 		guard let origText = textView.text else { return false }
 		return KeyValueTableCell.shouldChangeTag(origText: origText,
-												 charactersIn: range,
-												 replacementString: text,
-												 warningVC: self)
+		                                         charactersIn: range,
+		                                         replacementString: text,
+		                                         warningVC: self)
 	}
 
 	// MARK: utility functions
