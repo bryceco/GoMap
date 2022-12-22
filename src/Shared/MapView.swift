@@ -2196,12 +2196,13 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				text.contentsScale = UIScreen.main.scale
 				layer.addSublayer(text)
 			}
+
+			magnifyingGlass.setSourceCenter(pushpinView.arrowPoint, in: self)
 		}
 
 		addSubview(pushpinView)
 
 		updateEditControl()
-		magnifyingGlass.setSourceCenter(pushpinView.arrowPoint, in: self)
 	}
 
 	func refreshPushpinText() {
