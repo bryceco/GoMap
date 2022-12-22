@@ -14,8 +14,46 @@ class FeaturePresetCell: UITableViewCell {
 	var presetKey: PresetKeyOrGroup?
 }
 
-class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegate, POITypeViewControllerDelegate,
-	KeyValueTableCellOwner
+class FeaturePresetAreaCell: UITableViewCell {
+	@IBOutlet var nameLabel: UILabel!
+	@IBOutlet var valueField: UITextView!
+	@IBOutlet var isSet: UIView!
+	var presetKey: PresetKey!
+
+	static let placeholderText = NSLocalizedString("Unknown", comment: "")
+	static let placeholderColor: UIColor = {
+		if #available(iOS 13.0, *) {
+			return UIColor.placeholderText
+		} else {
+			return UIColor.lightText
+		}
+	}()
+
+	static let regularColor: UIColor = {
+		if #available(iOS 13.0, *) {
+			return UIColor.label
+		} else {
+			return UIColor.black
+		}
+	}()
+
+	static func addPlaceholderText(_ textView: UITextView) {
+		if textView.text == "" {
+			textView.textColor = Self.placeholderColor
+			textView.text = Self.placeholderText
+		}
+	}
+
+	static func removePlaceholderText(_ textView: UITextView) {
+		if textView.text == Self.placeholderText, textView.textColor == Self.placeholderColor {
+			textView.textColor = Self.regularColor
+			textView.text = ""
+		}
+	}
+}
+
+class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegate, UITextViewDelegate,
+	POITypeViewControllerDelegate, KeyValueTableCellOwner
 {
 	@IBOutlet var saveButton: UIBarButtonItem!
 	private var allPresets: PresetsForFeature? {
@@ -184,6 +222,10 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 
 	// MARK: - Table view data source
 
+	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return UITableView.automaticDimension
+	}
+
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		return (drillDownGroup != nil) ? 1 : (allPresets?.sectionCount() ?? 0) + 2
 	}
@@ -252,6 +294,32 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		switch rowObject {
 		case let PresetKeyOrGroup.key(presetKey):
 			let key = presetKey.tagKey
+
+			if presetKey.type == "textarea" {
+				// special case for keys that contain large amounts of text
+				let cell = tableView.dequeueReusableCell(
+					withIdentifier: "CommonTagArea",
+					for: indexPath) as! FeaturePresetAreaCell
+				cell.valueField.delegate = self
+				let value = keyValueDict[presetKey.tagKey] ?? ""
+				cell.isSet.backgroundColor = value == "" ? nil : isSetHighlight
+				cell.valueField.text = value
+				cell.valueField.returnKeyType = .done
+				cell.accessoryType = .none
+				cell.nameLabel.text = presetKey.name
+				cell.presetKey = presetKey
+				if value != "" {
+					// This shouldn't be necessary but the cell height isn't correct
+					// when the cell first appears.
+					DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
+						self.updateTextViewSize(cell.valueField)
+					})
+				} else {
+					FeaturePresetAreaCell.addPlaceholderText(cell.valueField)
+				}
+				return cell
+			}
+
 			let cellName = key == "" ? "CommonTagType"
 				: key == "name" ? "CommonTagName"
 				: "CommonTagSingle"
@@ -620,6 +688,59 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		                                         replacementString: insert,
 		                                         warningVC: self)
 	}
+
+	// MARK: UITextView delegate
+
+	func updateTextViewSize(_ textView: UITextView) {
+		// This resizes the cell to be appropriate for the content
+		UIView.setAnimationsEnabled(false)
+		textView.sizeToFit()
+		tableView.beginUpdates()
+		tableView.endUpdates()
+		UIView.setAnimationsEnabled(true)
+	}
+
+	func textViewDidBeginEditing(_ textView: UITextView) {
+		FeaturePresetAreaCell.removePlaceholderText(textView)
+	}
+
+	func textViewDidChange(_ textView: UITextView) {
+		saveButton.isEnabled = true
+		if #available(iOS 13.0, *) {
+			tabBarController?.isModalInPresentation = saveButton.isEnabled
+		}
+
+		// This resizes the cell to be appropriate for the content
+		updateTextViewSize(textView)
+	}
+
+	func textViewDidEndEditing(_ textView: UITextView) {
+		guard let cell: FeaturePresetAreaCell = textView.superviewOfType()
+		else { return }
+
+		let value = textView.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
+		textView.text = value
+		textViewDidChange(textView)
+		updateTag(withValue: value, forKey: cell.presetKey.tagKey)
+
+		// fake placeholder text
+		FeaturePresetAreaCell.addPlaceholderText(textView)
+	}
+
+	func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+		if text == "\n" {
+			textView.resignFirstResponder()
+			return false
+		}
+		// use our update function that guarantees that values are less than 255 chars
+		guard let origText = textView.text else { return false }
+		return KeyValueTableCell.shouldChangeTag(origText: origText,
+												 charactersIn: range,
+												 replacementString: text,
+												 warningVC: self)
+	}
+
+	// MARK: utility functions
 
 	/**
 	 Determines whether the `DirectionViewController` can be used to measure the value for the tag with the given key.
