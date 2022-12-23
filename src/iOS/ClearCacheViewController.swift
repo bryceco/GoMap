@@ -132,14 +132,14 @@ class ClearCacheViewController: UITableViewController {
 					title: NSLocalizedString("Purge", comment: "Discard editing changes when resetting OSM data cache"),
 					style: .default,
 					handler: { _ in
-						appDelegate.mapView.editorLayer.purgeCachedDataHard(true)
+						appDelegate.mapView.editorLayer.purgeCachedData(hard: true)
 						appDelegate.mapView.placePushpinForSelection()
 						self.navigationController?.popViewController(animated: true)
 					}))
 				present(alert, animated: true)
 				return
 			}
-			appDelegate.mapView.editorLayer.purgeCachedDataHard(true)
+			appDelegate.mapView.editorLayer.purgeCachedData(hard: true)
 			appDelegate.mapView.removePin()
 		case .mapnik /* Mapnik */:
 			appDelegate.mapView.mapnikLayer.purgeTileCache()

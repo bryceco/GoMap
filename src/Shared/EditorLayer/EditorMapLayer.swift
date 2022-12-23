@@ -280,7 +280,7 @@ final class EditorMapLayer: CALayer {
 		setNeedsLayout()
 	}
 
-	func purgeCachedDataHard(_ hard: Bool) {
+	func purgeCachedData(hard: Bool) {
 		owner.removePin()
 		selectedNode = nil
 		selectedWay = nil
@@ -327,7 +327,7 @@ final class EditorMapLayer: CALayer {
 	}
 
 	func didReceiveMemoryWarning() {
-		purgeCachedDataHard(false)
+		purgeCachedData(hard: false)
 		save()
 	}
 

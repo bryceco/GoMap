@@ -1366,33 +1366,16 @@ final class OsmMapData: NSObject, NSCoding {
 	func purgeSoft() {
 		// get a list of all dirty objects
 		var dirty: Set<OsmBaseObject> = []
-
-		for (_, object) in nodes {
-			if object.isModified() {
-				_ = dirty.insert(object)
-			}
-		}
-		for (_, object) in ways {
-			if object.isModified() {
-				_ = dirty.insert(object)
-			}
-		}
-		for (_, object) in relations {
-			if object.isModified() {
-				_ = dirty.insert(object)
-			}
-		}
+		dirty.formUnion(nodes.values.compactMap({ $0.isModified() ? $0 : nil }))
+		dirty.formUnion(ways.values.compactMap({ $0.isModified() ? $0 : nil }))
+		dirty.formUnion(relations.values.compactMap({ $0.isModified() ? $0 : nil }))
 
 		// get objects referenced by undo manager
 		let undoRefs = undoManager.objectRefs()
 		dirty = dirty.union(undoRefs)
 
 		// add nodes in ways to dirty set, because we must preserve them to maintain consistency
-		for way in Array(dirty) {
-			if let way = way as? OsmWay {
-				dirty.formUnion(way.nodes)
-			}
-		}
+		dirty.formUnion(dirty.flatMap({ ($0 as? OsmWay)?.nodes ?? [] }))
 
 		// deresolve relations
 		for rel in dirty {
@@ -1415,6 +1398,16 @@ final class OsmMapData: NSObject, NSCoding {
 				relations[object.ident] = obj
 			} else {
 				assertionFailure()
+			}
+		}
+
+		// reset way counts in nodes
+		for node in nodes.values {
+			node.setWayCount(0, undo: nil)
+		}
+		for way in ways.values {
+			for node in way.nodes {
+				node.setWayCount(node.wayCount + 1, undo: nil)
 			}
 		}
 
