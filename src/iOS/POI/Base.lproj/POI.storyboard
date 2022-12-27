@@ -386,7 +386,7 @@
                                         <stackView opaque="NO" contentMode="center" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="DcA-k0-mZa">
                                             <rect key="frame" x="90" y="15" width="43.5" height="36.5"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gv7-b8-wUw" userLabel="Title">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gv7-b8-wUw" userLabel="Title">
                                                     <rect key="frame" x="0.0" y="0.0" width="43.5" height="20.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
@@ -395,7 +395,7 @@
                                                         <fragment content="Do not translate"/>
                                                     </attributedString>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="daQ-tl-pKh" userLabel="Details">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="daQ-tl-pKh" userLabel="Details">
                                                     <rect key="frame" x="0.0" y="20.5" width="43.5" height="16"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
@@ -563,7 +563,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="key" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="X1y-nK-nVJ" userLabel="Text1" customClass="AutocompleteTextField" customModule="Go_Map__" customModuleProvider="target">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="key" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="X1y-nK-nVJ" userLabel="Text1" customClass="AutocompleteTextField" customModule="Go_Map__" customModuleProvider="target">
                                             <rect key="frame" x="20" y="5" width="121" height="34"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="200" constant="121" id="usV-OU-r22"/>
@@ -613,12 +613,11 @@
                                         <constraint firstAttribute="trailing" secondItem="zpj-gL-2Nt" secondAttribute="trailing" constant="4" id="Syd-9i-c0E"/>
                                         <constraint firstItem="zpj-gL-2Nt" firstAttribute="leading" secondItem="cP3-lR-lzM" secondAttribute="trailing" constant="4" id="Zbs-Gm-K7N"/>
                                         <constraint firstItem="zpj-gL-2Nt" firstAttribute="centerY" secondItem="sNa-Uq-eZb" secondAttribute="centerY" id="awn-BH-fl0"/>
+                                        <constraint firstItem="X1y-nK-nVJ" firstAttribute="centerY" secondItem="sNa-Uq-eZb" secondAttribute="centerY" id="hXa-f3-jYw"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <constraints>
                                     <constraint firstItem="X1y-nK-nVJ" firstAttribute="leading" secondItem="sNa-Uq-eZb" secondAttribute="leading" constant="20" id="8i3-2v-jVU"/>
-                                    <constraint firstItem="X1y-nK-nVJ" firstAttribute="bottom" secondItem="cP3-lR-lzM" secondAttribute="bottom" id="Qug-EU-hvo"/>
-                                    <constraint firstItem="X1y-nK-nVJ" firstAttribute="top" secondItem="cP3-lR-lzM" secondAttribute="top" id="Rf0-f7-oEx"/>
                                     <constraint firstItem="cP3-lR-lzM" firstAttribute="centerY" secondItem="sNa-Uq-eZb" secondAttribute="centerY" id="vfj-SJ-cEY"/>
                                     <constraint firstItem="cP3-lR-lzM" firstAttribute="leading" secondItem="X1y-nK-nVJ" secondAttribute="trailing" constant="13" id="vqt-5E-Wez"/>
                                 </constraints>
@@ -1665,7 +1664,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="ZKT-be-rhK"/>
         <segue reference="g2g-Jn-Tdv"/>
-        <segue reference="N2O-bF-plb"/>
+        <segue reference="0gB-9H-f1m"/>
         <segue reference="MpY-p5-COc"/>
     </inferredMetricsTieBreakers>
     <resources>

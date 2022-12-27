@@ -267,6 +267,8 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 					withIdentifier: "KeyValueCell",
 					for: indexPath) as! KeyValueTableCell
 				cell.owner = self
+				cell.textView?.removeFromSuperview()
+				cell.textView = nil
 				if indexPath.row < extraTags.count {
 					cell.text1?.text = extraTags[indexPath.row].k
 					cell.text2?.text = extraTags[indexPath.row].v

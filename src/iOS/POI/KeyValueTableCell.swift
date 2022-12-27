@@ -37,12 +37,17 @@ protocol KeyValueTableCellOwner: UITableViewController {
 	func keyValueChanged(for kv: KeyValueTableCell)
 }
 
-class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate {
+class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDelegate {
+	var textView: UITextView!
 	var owner: KeyValueTableCellOwner!
-	var key: String { return text1?.text ?? "" }
-	var value: String { return text2?.text ?? "" }
+	var key: String { return text1.text ?? "" }
+	var value: String { return (textView?.isHidden ?? true) ? text2.text! : textView.text! }
 
 	override func awakeFromNib() {
+
+		contentView.autoresizingMask = .flexibleHeight
+		contentView.autoresizesSubviews = false
+
 		text1.autocorrectionType = .no
 		text2.autocorrectionType = .no
 
@@ -55,23 +60,99 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate {
 		}
 	}
 
+	override func willTransition(to state: UITableViewCell.StateMask) {
+		textView.resignFirstResponder()
+		super.willTransition(to: state)
+	}
+
+	func updateTextViewSize() {
+		// This resizes the cell to be appropriate for the content
+		UIView.setAnimationsEnabled(false)
+		textView.sizeToFit()
+		owner.tableView.beginUpdates()
+		owner.tableView.endUpdates()
+		UIView.setAnimationsEnabled(true)
+	}
+
+	private func createTextView() -> UITextView {
+		let textView = UITextView()
+		textView.translatesAutoresizingMaskIntoConstraints = false
+		textView.isScrollEnabled = false
+		textView.layer.borderColor = UIColor.lightGray.cgColor
+		textView.layer.borderWidth = 0.5
+		textView.layer.cornerRadius = 5.0
+		textView.font = UIFont.preferredFont(forTextStyle: .headline)
+		textView.autocapitalizationType = .sentences
+		textView.autocorrectionType = .yes
+		textView.delegate = self
+		contentView.addSubview(textView)
+
+		for c in contentView.constraints {
+			if c.firstItem === text1 || c.secondItem === text1 {
+				let item1 = c.firstItem === text2 ? textView : c.firstItem
+				let item2 = c.secondItem === text2 ? textView : c.secondItem
+				if item1 === textView || item2 === textView {
+					let con = NSLayoutConstraint(item: item1 as Any, attribute: c.firstAttribute, relatedBy: c.relation,
+												 toItem: item2, attribute: c.secondAttribute, multiplier: c.multiplier, constant: c.constant)
+					con.isActive = true
+				}
+			}
+		}
+
+//		textView.leftAnchor.constraint(equalTo: text2.leftAnchor).isActive = true
+		textView.rightAnchor.constraint(equalTo: text2.rightAnchor).isActive = true
+		textView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5.0).isActive = true
+		textView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5.0).isActive = true
+		return textView
+	}
+
+	func useTextView() {
+		if text2.isHidden {
+			return
+		}
+		if textView == nil {
+			textView = createTextView()
+		}
+		textView.text = text2.text
+		textView.isHidden = false
+		text2.isHidden = true
+		updateTextViewSize()
+	}
+
+	func useTextField() {
+		if !text2.isHidden {
+			return
+		}
+		text2.text = textView.text
+		text2.isHidden = false
+		textView?.isHidden = true
+		updateTextViewSize()
+	}
+
 	@IBAction func textFieldReturn(_ sender: UIView) {
 		sender.resignFirstResponder()
 	}
 
-	func setTextAttributesForKey(key: String, textField: UITextField) {
+	func setTextAttributesForKey(key: String) {
 		// set text formatting options for text field
 		if let preset = owner.allPresetKeys.first(where: { key == $0.tagKey }) {
-			textField.autocapitalizationType = preset.autocapitalizationType
-			textField.autocorrectionType = preset.autocorrectType
+			text2.autocapitalizationType = preset.autocapitalizationType
+			text2.autocorrectionType = preset.autocorrectType
+			if preset.type == "textarea" {
+				useTextView()
+			} else {
+				useTextField()
+			}
 		} else {
 			switch key {
-			case "note", "comment", "description", "fixme":
-				textField.autocapitalizationType = .sentences
-				textField.autocorrectionType = .yes
+			case "note", "comment", "description", "fixme", "inscription", "source":
+				text2.autocapitalizationType = .sentences
+				text2.autocorrectionType = .yes
+				useTextView()
 			default:
-				textField.autocapitalizationType = .none
-				textField.autocorrectionType = .no
+				text2.autocapitalizationType = .none
+				text2.autocorrectionType = .no
+				useTextField()
 			}
 		}
 	}
@@ -120,7 +201,7 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate {
 
 		if isValue {
 			// set up capitalization and autocorrect
-			setTextAttributesForKey(key: text1?.text ?? "", textField: text2)
+			setTextAttributesForKey(key: text1?.text ?? "")
 
 			// get list of values for current key
 			if let key = text1?.text,
@@ -157,6 +238,15 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate {
 			}
 		}
 		owner.keyValueChanged(for: self)
+	}
+
+	func textViewDidChange(_ textView: UITextView) {
+		updateTextViewSize()
+	}
+
+	func textViewDidEndEditing(_ textView: UITextView) {
+		owner.keyValueChanged(for: self)
+		self.useTextField()
 	}
 
 	// MARK: Accessory buttons
@@ -342,27 +432,24 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate {
 	}
 
 	@IBAction func infoButtonPressed(_ sender: Any?) {
-		guard let pair: TextPairTableCell = (sender as? UIView)?.superviewOfType() else { return }
-
 		// show OSM wiki page
-		guard let key = pair.text1.text,
-		      let value = pair.text2.text,
-		      !key.isEmpty
+		guard let key = text1.text,
+			  !value.isEmpty
 		else { return }
 		let languageCode = PresetLanguages().preferredLanguageCode()
 		let progress = UIActivityIndicatorView(style: .gray)
-		progress.frame = pair.infoButton.bounds
-		pair.infoButton.addSubview(progress)
-		pair.infoButton.isEnabled = false
-		pair.infoButton.titleLabel?.layer.opacity = 0.0
+		progress.frame = infoButton.bounds
+		infoButton.addSubview(progress)
+		infoButton.isEnabled = false
+		infoButton.titleLabel?.layer.opacity = 0.0
 		progress.startAnimating()
 		WikiPage.shared.bestWikiPage(forKey: key,
 		                             value: value,
 		                             language: languageCode)
 		{ [self] url in
 			progress.removeFromSuperview()
-			pair.infoButton.isEnabled = true
-			pair.infoButton.titleLabel?.layer.opacity = 1.0
+			infoButton.isEnabled = true
+			infoButton.titleLabel?.layer.opacity = 1.0
 			if let url = url,
 			   owner.view.window != nil
 			{

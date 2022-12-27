@@ -28,10 +28,12 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		let editButton = editButtonItem
-		editButton.target = self
-		editButton.action = #selector(toggleTableRowEditing(_:))
-		navigationItem.rightBarButtonItems = [navigationItem.rightBarButtonItem, editButton].compactMap { $0 }
+		editButtonItem.target = self
+		editButtonItem.action = #selector(toggleTableRowEditing(_:))
+		navigationItem.rightBarButtonItems = [navigationItem.rightBarButtonItem, editButtonItem].compactMap { $0 }
+
+		tableView.estimatedRowHeight = 44.0
+		tableView.rowHeight = UITableView.automaticDimension
 
 		let tabController = tabBarController as! POITabBarController
 
@@ -260,6 +262,10 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 		}
 	}
 
+	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return UITableView.automaticDimension
+	}
+
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.section == 0 {
 			// Tags
@@ -275,6 +281,8 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 			cell.text2.text = kv.v
 			cell.text1.inputAccessoryView = prevNextToolbar
 			cell.text2.inputAccessoryView = prevNextToolbar
+			cell.textView?.removeFromSuperview()
+			cell.textView = nil
 
 			cell.updateAssociatedContent()
 
