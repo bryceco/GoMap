@@ -53,7 +53,7 @@ class FeaturePresetAreaCell: UITableViewCell {
 }
 
 class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegate, UITextViewDelegate,
-	POITypeViewControllerDelegate, KeyValueTableCellOwner
+	POIFeaturePickerViewControllerDelegate, KeyValueTableCellOwner
 {
 	@IBOutlet var saveButton: UIBarButtonItem!
 	private var allPresets: PresetsForFeature? {
@@ -61,10 +61,11 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	}
 
 	private var selectedFeature: PresetFeature? // the feature selected by the user, not derived from tags (e.g. Address)
+	private var currentFeature: PresetFeature? // the feature that was most recently inferred from the tags
 	private var childPushed = false
 	private var drillDownGroup: PresetGroup?
-	private var textFieldIsEditing: UITextField?
-	private var extraTags: [(k: String, v: String)] = []
+	private var firstResponderTextField: UITextField?
+	private var extraTags: [(k: String, v: String)] = [] // array of key/values not covered by presets
 
 	static let isSetHighlight = UIColor.systemBlue
 
@@ -73,7 +74,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	var childViewPresented = false
 	var currentTextField: UITextField?
 	func keyValueChanged(for kv: KeyValueTableCell) {
-		updateTag(withValue: kv.value, forKey: kv.key)
+		updateTagDict(withValue: kv.value, forKey: kv.key)
 		if kv.key != "", kv.value != "" {
 			selectedFeature = nil
 			updatePresets()
@@ -98,6 +99,54 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		}
 	}
 
+	func cellForKey(_ key: String) -> UITableViewCell? {
+		for cell in tableView.visibleCells {
+			if let presetList = (cell as? FeaturePresetCell)?.presetKey?.flattenedPresets(),
+			   presetList.contains(where: { $0.tagKey == key })
+			{
+				return cell
+			} else if (cell as? FeaturePresetAreaCell)?.presetKey.tagKey == key {
+				return cell
+			} else if (cell as? KeyValueTableCell)?.key == key {
+				return cell
+			}
+		}
+		return nil
+	}
+
+	func indexPathForKey(_ key: String) -> IndexPath? {
+		if let cell = cellForKey(key) {
+			return tableView.indexPath(for: cell)
+		}
+		return nil
+	}
+
+	func updateTagDict(withValue value: String, forKey key: String) {
+		guard let tabController = tabBarController as? POITabBarController else {
+			// This shouldn't happen, but there are crashes here
+			// originating from textFieldDidEndEditing(). Maybe
+			// when closing the modal somehow?
+			return
+		}
+
+		if key == "" {
+			// do nothing
+		} else if value != "" {
+			tabController.keyValueDict[key] = value
+		} else {
+			tabController.keyValueDict.removeValue(forKey: key)
+		}
+
+		saveButton.isEnabled = tabController.isTagDictChanged()
+		if #available(iOS 13.0, *) {
+			tabController.isModalInPresentation = saveButton.isEnabled
+		}
+
+		if let indexPath = indexPathForKey(key) {
+			tableView.reloadRows(at: [indexPath], with: .none)
+		}
+	}
+
 	func updatePresets() {
 		let tabController = tabBarController as! POITabBarController
 
@@ -112,11 +161,16 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			let geometry = object?.geometry() ?? GEOMETRY.NODE
 
 			// update most recent feature
-			selectedFeature = selectedFeature ?? PresetsDatabase.shared.matchObjectTagsToFeature(
-				dict,
+			selectedFeature = selectedFeature ?? PresetsDatabase.shared.presetFeatureMatching(
+				tags: dict,
 				geometry: geometry,
 				location: AppDelegate.shared.mapView.currentRegion,
 				includeNSI: true)
+			if currentFeature === selectedFeature {
+				return
+			}
+			currentFeature = selectedFeature
+
 			if let feature = selectedFeature {
 				POIFeaturePickerViewController.loadMostRecent(forGeometry: geometry)
 				POIFeaturePickerViewController.updateMostRecentArray(withSelection: feature, geometry: geometry)
@@ -124,13 +178,15 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 
 			weak var weakself = self
 			allPresets = PresetsForFeature(withFeature: selectedFeature, objectTags: dict, geometry: geometry, update: {
-				// this may complete much later, even after we've been dismissed
+				// This closure is called whenever results from TagInfo return, which
+				// may be much later, even after we've been dismissed. We need to rebuild
+				// the preset list in response.
 				if let weakself = weakself,
 				   !weakself.isEditing
 				{
 					weakself.allPresets = PresetsForFeature(
-						withFeature: weakself.selectedFeature,
-						objectTags: dict,
+						withFeature: weakself.currentFeature,
+						objectTags: tabController.keyValueDict,
 						geometry: geometry,
 						update: nil)
 					weakself.tableView.reloadData()
@@ -165,7 +221,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 
 		if isMovingToParent {
 		} else {
-			updatePresets()
+//			updatePresets()
 		}
 	}
 
@@ -173,6 +229,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		resignAll()
 		super.viewWillDisappear(animated)
 		selectedFeature = nil
+		currentFeature = nil
 		childPushed = true
 	}
 
@@ -201,7 +258,10 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 					})
 				}
 
-			} else if !childPushed, (tabController.selection?.ident ?? 0) <= 0, tabController.keyValueDict.count == 0 {
+			} else if !childPushed,
+			          (tabController.selection?.ident ?? 0) <= 0,
+			          tabController.keyValueDict.count == 0
+			{
 				// if we're being displayed for a newly created node then go straight to the Type picker
 				performSegue(withIdentifier: "POITypeSegue", sender: nil)
 			}
@@ -267,8 +327,6 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 					withIdentifier: "KeyValueCell",
 					for: indexPath) as! KeyValueTableCell
 				cell.owner = self
-				cell.textView?.removeFromSuperview()
-				cell.textView = nil
 				if indexPath.row < extraTags.count {
 					cell.text1?.text = extraTags[indexPath.row].k
 					cell.text2?.text = extraTags[indexPath.row].v
@@ -399,7 +457,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 							newValue = nil // "no" isn't allowed
 						}
 					}
-					self.updateTag(withValue: newValue ?? "", forKey: presetKey.tagKey)
+					self.updateTagDict(withValue: newValue ?? "", forKey: presetKey.tagKey)
 					cell.valueField.text = nil
 					cell.valueField.resignFirstResponder()
 					cell.isSet.backgroundColor = newValue == nil ? nil : Self.isSetHighlight
@@ -420,7 +478,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 						   number != ""
 						{
 							let v = newValue == nil ? String(number) : number + " " + newValue!
-							self.updateTag(withValue: v, forKey: presetKey.tagKey)
+							self.updateTagDict(withValue: v, forKey: presetKey.tagKey)
 							cell.valueField.text = v
 						} else {
 							button.setSelection(forString: "")
@@ -486,8 +544,11 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		let cell = sender as? FeaturePresetCell
 		if let dest = segue.destination as? POIPresetValuePickerController {
 			if case let .key(presetKey) = cell?.presetKey {
-				dest.tag = presetKey.tagKey
-				dest.valueDefinitions = presetKey.presetList
+				dest.key = presetKey.tagKey
+				dest.valueDefinitions = presetKey.presetList ?? []
+				dest.onSetValue = {
+					self.updateTagDict(withValue: $0, forKey: presetKey.tagKey)
+				}
 				dest.navigationItem.title = presetKey.name
 			}
 		} else if let dest = segue.destination as? POIFeaturePickerViewController {
@@ -526,12 +587,13 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	                        forRowAt indexPath: IndexPath)
 	{
 		if editingStyle == .delete {
+			// user swiped to delete a cell
 			if indexPath.section == allPresets?.sectionCount() {
 				// Extra tags section
 				if indexPath.row < extraTags.count {
 					let kv = extraTags[indexPath.row]
 					extraTags.remove(at: indexPath.row)
-					updateTag(withValue: "", forKey: kv.k)
+					updateTagDict(withValue: "", forKey: kv.k)
 					tableView.deleteRows(at: [indexPath], with: .fade)
 				} else {
 					// it's the last row, which is the empty row, so fake it
@@ -547,13 +609,12 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 					cell.valueField.text = ""
 					cell.isSet.backgroundColor = nil
 					for preset in cell.presetKey?.flattenedPresets() ?? [] {
-						updateTag(withValue: "", forKey: preset.tagKey)
+						updateTagDict(withValue: "", forKey: preset.tagKey)
 					}
-				}
-				if let cell = cell as? FeaturePresetAreaCell {
+				} else if let cell = cell as? FeaturePresetAreaCell {
 					cell.valueField.text = ""
 					cell.isSet.backgroundColor = nil
-					updateTag(withValue: "", forKey: cell.presetKey.tagKey)
+					updateTagDict(withValue: "", forKey: cell.presetKey.tagKey)
 				}
 			}
 		}
@@ -578,24 +639,24 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	}
 
 	@objc func setCallingCodeText(_ sender: Any?) {
-		if let text = textFieldIsEditing?.text,
+		if let text = firstResponderTextField?.text,
 		   !text.hasPrefix("+")
 		{
 			let code = AppDelegate.shared.mapView.currentRegion.callingCode() ?? ""
-			textFieldIsEditing?.text = "+" + code + " " + text
+			firstResponderTextField?.text = "+" + code + " " + text
 		}
 	}
 
 	@objc func insertSpace(_ sender: Any?) {
-		textFieldIsEditing?.insertText(" ")
+		firstResponderTextField?.insertText(" ")
 	}
 
 	@objc func insertDash(_ sender: Any?) {
-		textFieldIsEditing?.insertText("-")
+		firstResponderTextField?.insertText("-")
 	}
 
 	@objc func phonePadDone(_ sender: Any?) {
-		textFieldIsEditing?.resignFirstResponder()
+		firstResponderTextField?.resignFirstResponder()
 	}
 
 	func addTelephoneToolbarToKeyboard(for textField: UITextField) {
@@ -640,7 +701,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 				if presetKey.keyboardType == .phonePad {
 					addTelephoneToolbarToKeyboard(for: textField)
 				}
-				textFieldIsEditing = textField
+				firstResponderTextField = textField
 			}
 		}
 	}
@@ -665,8 +726,8 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 
 		// convert to raw value if necessary
 		let tagValue = presetKey.tagValueForPrettyName(prettyValue)
-		textFieldIsEditing = nil
-		updateTag(withValue: tagValue, forKey: presetKey.tagKey)
+		firstResponderTextField = nil
+		updateTagDict(withValue: tagValue, forKey: presetKey.tagKey)
 
 		// do automatic value updates for special keys
 		if tagValue.count > 0,
@@ -681,28 +742,6 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		}
 		if let tri = cell.valueField.rightView as? KmhMphToggle {
 			tri.setSelection(forString: textField.text ?? "")
-		}
-	}
-
-	func updateTag(withValue value: String, forKey key: String) {
-		guard let tabController = tabBarController as? POITabBarController else {
-			// This shouldn't happen, but there are crashes here
-			// originating from textFieldDidEndEditing(). Maybe
-			// when closing the modal somehow?
-			return
-		}
-
-		if key == "" {
-			// do nothing
-		} else if value != "" {
-			tabController.keyValueDict[key] = value
-		} else {
-			tabController.keyValueDict.removeValue(forKey: key)
-		}
-
-		saveButton.isEnabled = tabController.isTagDictChanged()
-		if #available(iOS 13.0, *) {
-			tabController.isModalInPresentation = saveButton.isEnabled
 		}
 	}
 
@@ -749,7 +788,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		let value = textView.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
 		textView.text = value
 		textViewDidChange(textView)
-		updateTag(withValue: value, forKey: cell.presetKey.tagKey)
+		updateTagDict(withValue: value, forKey: cell.presetKey.tagKey)
 
 		// fake placeholder text
 		FeaturePresetAreaCell.addPlaceholderText(textView)
@@ -792,7 +831,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			key: key,
 			value: value,
 			setValue: { newValue in
-				self.updateTag(withValue: newValue ?? "", forKey: key)
+				self.updateTagDict(withValue: newValue, forKey: key)
 			})
 		navigationController?.pushViewController(directionViewController, animated: true)
 	}
@@ -807,7 +846,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		}
 		let vc = HeightViewController.instantiate()
 		vc.callback = { newValue in
-			self.updateTag(withValue: newValue, forKey: key)
+			self.updateTagDict(withValue: newValue, forKey: key)
 		}
 		navigationController?.pushViewController(vc, animated: true)
 	}
@@ -830,7 +869,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			let feedback = UINotificationFeedbackGenerator()
 			feedback.prepare()
 			let vc = OpeningHoursRecognizerController.with(onAccept: { newValue in
-				self.updateTag(withValue: newValue, forKey: key)
+				self.updateTagDict(withValue: newValue, forKey: key)
 				self.navigationController?.popViewController(animated: true)
 			}, onCancel: {
 				self.navigationController?.popViewController(animated: true)

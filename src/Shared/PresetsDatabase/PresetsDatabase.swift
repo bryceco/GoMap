@@ -246,8 +246,7 @@ final class PresetsDatabase {
 	}
 
 	func inheritedValueOfFeature(_ featureID: String?,
-	                             fieldGetter: @escaping (_ feature: PresetFeature) -> Any?)
-		-> Any?
+	                             fieldGetter: @escaping (_ feature: PresetFeature) -> Any?) -> Any?
 	{
 		// This is currently never used for NSI entries, so we can ignore nsiPresets
 		return PresetsDatabase.inheritedFieldForPresetsDict(stdPresets, featureID: featureID, field: fieldGetter)
@@ -257,10 +256,10 @@ final class PresetsDatabase {
 		return stdPresets[featureID] ?? nsiPresets[featureID]
 	}
 
-	func matchObjectTagsToFeature(_ objectTags: [String: String]?,
-	                              geometry: GEOMETRY,
-	                              location: MapView.CurrentRegion,
-	                              includeNSI: Bool) -> PresetFeature?
+	func presetFeatureMatching(tags objectTags: [String: String]?,
+	                           geometry: GEOMETRY,
+	                           location: MapView.CurrentRegion,
+	                           includeNSI: Bool) -> PresetFeature?
 	{
 		guard let objectTags = objectTags else { return nil }
 

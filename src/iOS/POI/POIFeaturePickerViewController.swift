@@ -8,10 +8,9 @@
 
 import UIKit
 
-protocol POITypeViewControllerDelegate: NSObjectProtocol {
-	func typeViewController(
-		_ typeViewController: POIFeaturePickerViewController,
-		didChangeFeatureTo feature: PresetFeature)
+protocol POIFeaturePickerViewControllerDelegate: NSObjectProtocol {
+	func typeViewController(_ typeViewController: POIFeaturePickerViewController,
+	                        didChangeFeatureTo feature: PresetFeature)
 }
 
 private let MOST_RECENT_DEFAULT_COUNT = 5
@@ -38,7 +37,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	private var isTopLevel = false
 
 	var parentCategory: PresetCategory?
-	weak var delegate: POITypeViewControllerDelegate?
+	weak var delegate: POIFeaturePickerViewControllerDelegate?
 
 	class func loadMostRecent(forGeometry geometry: GEOMETRY) {
 		if let max = UserDefaults.standard.object(forKey: "mostRecentTypesMaximum") as? NSNumber,
@@ -217,8 +216,8 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		let tabController = tabBarController as? POITabBarController
 		let geometry = currentSelectionGeometry()
 
-		let currentFeature = PresetsDatabase.shared.matchObjectTagsToFeature(
-			tabController?.keyValueDict,
+		let currentFeature = PresetsDatabase.shared.presetFeatureMatching(
+			tags: tabController?.keyValueDict,
 			geometry: geometry,
 			location: AppDelegate.shared.mapView.currentRegion,
 			includeNSI: true)

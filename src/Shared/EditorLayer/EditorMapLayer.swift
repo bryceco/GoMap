@@ -874,10 +874,10 @@ final class EditorMapLayer: CALayer {
 
 		// fetch icon
 		let location = AppDelegate.shared.mapView.currentRegion
-		let feature = PresetsDatabase.shared.matchObjectTagsToFeature(node.tags,
-		                                                              geometry: node.geometry(),
-		                                                              location: location,
-		                                                              includeNSI: false)
+		let feature = PresetsDatabase.shared.presetFeatureMatching(tags: node.tags,
+		                                                           geometry: node.geometry(),
+		                                                           location: location,
+		                                                           includeNSI: false)
 		var icon = feature?.iconScaled24()
 		if icon == nil {
 			if node.tags["amenity"] != nil || node.tags["name"] != nil {

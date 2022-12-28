@@ -564,10 +564,10 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		}
 
 		let location = AppDelegate.shared.mapView.currentRegion
-		if let feature = PresetsDatabase.shared.matchObjectTagsToFeature(tags,
-		                                                                 geometry: geometry(),
-		                                                                 location: location,
-		                                                                 includeNSI: true),
+		if let feature = PresetsDatabase.shared.presetFeatureMatching(tags: tags,
+		                                                              geometry: geometry(),
+		                                                              location: location,
+		                                                              includeNSI: true),
 			!feature.isGeneric()
 		{
 			return feature.friendlyName()

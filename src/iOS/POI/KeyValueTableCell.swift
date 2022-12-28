@@ -16,14 +16,17 @@ class TextPairTableCell: UITableViewCell {
 	@IBOutlet var text2: AutocompleteTextField!
 	@IBOutlet var infoButton: UIButton!
 
+	// don't allow editing text while deleting
+	func shouldResignFirstResponder(forState state: UITableViewCell.StateMask) -> Bool {
+		return state.contains(.showingEditControl)
+			|| state.contains(.showingDeleteConfirmation)
+	}
+
 	override func willTransition(to state: UITableViewCell.StateMask) {
 		super.willTransition(to: state)
 
 		// don't allow editing text while deleting
-		if state.rawValue != 0,
-		   (UITableViewCell.StateMask.showingEditControl.rawValue != 0) ||
-		   (UITableViewCell.StateMask.showingDeleteConfirmation.rawValue != 0)
-		{
+		if shouldResignFirstResponder(forState: state) {
 			text1.resignFirstResponder()
 			text2.resignFirstResponder()
 		}
@@ -38,13 +41,12 @@ protocol KeyValueTableCellOwner: UITableViewController {
 }
 
 class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDelegate {
-	var textView: UITextView!
+	var textView: UITextView?
 	var owner: KeyValueTableCellOwner!
 	var key: String { return text1.text ?? "" }
-	var value: String { return (textView?.isHidden ?? true) ? text2.text! : textView.text! }
+	var value: String { return textView?.text ?? text2.text! }
 
 	override func awakeFromNib() {
-
 		contentView.autoresizingMask = .flexibleHeight
 		contentView.autoresizesSubviews = false
 
@@ -60,15 +62,23 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 		}
 	}
 
+	override func prepareForReuse() {
+		textView?.removeFromSuperview()
+		textView = nil
+		prevKV = ("", "")
+	}
+
 	override func willTransition(to state: UITableViewCell.StateMask) {
-		textView.resignFirstResponder()
-		super.willTransition(to: state)
+		if shouldResignFirstResponder(forState: state) {
+			textView?.resignFirstResponder()
+			super.willTransition(to: state)
+		}
 	}
 
 	func updateTextViewSize() {
 		// This resizes the cell to be appropriate for the content
 		UIView.setAnimationsEnabled(false)
-		textView.sizeToFit()
+		textView?.sizeToFit()
 		owner.tableView.beginUpdates()
 		owner.tableView.endUpdates()
 		UIView.setAnimationsEnabled(true)
@@ -93,7 +103,8 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 				let item2 = c.secondItem === text2 ? textView : c.secondItem
 				if item1 === textView || item2 === textView {
 					let con = NSLayoutConstraint(item: item1 as Any, attribute: c.firstAttribute, relatedBy: c.relation,
-												 toItem: item2, attribute: c.secondAttribute, multiplier: c.multiplier, constant: c.constant)
+					                             toItem: item2, attribute: c.secondAttribute, multiplier: c.multiplier,
+					                             constant: c.constant)
 					con.isActive = true
 				}
 			}
@@ -107,30 +118,39 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 	}
 
 	func useTextView() {
-		if text2.isHidden {
+		if textView != nil {
 			return
 		}
-		if textView == nil {
-			textView = createTextView()
-		}
+		let textView = createTextView()
+		self.textView = textView
 		textView.text = text2.text
-		textView.isHidden = false
+		textView.selectedRange = NSRange(location: textView.text.count, length: 0)
+		textView.becomeFirstResponder()
 		text2.isHidden = true
 		updateTextViewSize()
 	}
 
 	func useTextField() {
-		if !text2.isHidden {
+		guard let textView = textView else {
 			return
 		}
 		text2.text = textView.text
 		text2.isHidden = false
-		textView?.isHidden = true
+		textView.removeFromSuperview()
+		self.textView = nil
 		updateTextViewSize()
 	}
 
 	@IBAction func textFieldReturn(_ sender: UIView) {
 		sender.resignFirstResponder()
+	}
+
+	var prevKV = ("", "")
+	func notifyKeyValueChange() {
+		if key != prevKV.0 || value != prevKV.1 {
+			prevKV = (key, value)
+			owner.keyValueChanged(for: self)
+		}
 	}
 
 	func setTextAttributesForKey(key: String) {
@@ -196,6 +216,7 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 
 	@IBAction func textFieldEditingDidBegin(_ textField: AutocompleteTextField) {
 		owner.currentTextField = textField
+		prevKV = (key,value)
 
 		let isValue = textField == text2
 
@@ -237,7 +258,7 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 				text2.text = newValue
 			}
 		}
-		owner.keyValueChanged(for: self)
+		notifyKeyValueChange()
 	}
 
 	func textViewDidChange(_ textView: UITextView) {
@@ -245,8 +266,8 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 	}
 
 	func textViewDidEndEditing(_ textView: UITextView) {
-		owner.keyValueChanged(for: self)
-		self.useTextField()
+		notifyKeyValueChange()
+		useTextField()
 	}
 
 	// MARK: Accessory buttons
@@ -334,15 +355,13 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 	}
 
 	@IBAction func setSurveyDate(_ sender: UIView?) {
-		guard let pair: TextPairTableCell = sender?.superviewOfType() else { return }
-
 		let now = Date()
 		let dateFormatter = ISO8601DateFormatter()
 		dateFormatter.formatOptions = [.withYear, .withMonth, .withDay, .withDashSeparatorInDate]
 		dateFormatter.timeZone = NSTimeZone.local
 		let text = dateFormatter.string(from: now)
-		pair.text2.text = text
-		owner.keyValueChanged(for: self)
+		text2.text = text
+		notifyKeyValueChange()
 	}
 
 	private func getSurveyDateButton(for cell: TextPairTableCell) -> UIView? {
@@ -367,14 +386,12 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 	}
 
 	@IBAction func setDirection(_ sender: Any) {
-		guard let pair: TextPairTableCell = (sender as? UIView)?.superviewOfType() else { return }
-
 		let directionViewController = DirectionViewController(
-			key: pair.text1.text ?? "",
-			value: pair.text2.text,
+			key: text1.text ?? "",
+			value: text2.text,
 			setValue: { [self] newValue in
-				pair.text2.text = newValue
-				owner.keyValueChanged(for: self)
+				text2.text = newValue
+				notifyKeyValueChange()
 			})
 		owner.childViewPresented = true
 		owner.present(directionViewController, animated: true)
@@ -396,16 +413,14 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 	}
 
 	@IBAction func setHeight(_ sender: UIView?) {
-		guard let pair: TextPairTableCell = sender?.superviewOfType() else { return }
-
 		if HeightViewController.unableToInstantiate(withUserWarning: owner) {
 			return
 		}
 
 		let vc = HeightViewController.instantiate()
 		vc.callback = { newValue in
-			pair.text2.text = newValue
-			self.owner.keyValueChanged(for: self)
+			self.text2.text = newValue
+			self.notifyKeyValueChange()
 		}
 		owner.present(vc, animated: true)
 		owner.childViewPresented = true
@@ -434,7 +449,7 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 	@IBAction func infoButtonPressed(_ sender: Any?) {
 		// show OSM wiki page
 		guard let key = text1.text,
-			  !value.isEmpty
+		      !value.isEmpty
 		else { return }
 		let languageCode = PresetLanguages().preferredLanguageCode()
 		let progress = UIActivityIndicatorView(style: .gray)

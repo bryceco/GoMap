@@ -126,8 +126,8 @@ final class PresetFeature {
 	{
 		var tags = tags
 
-		let oldFeature = PresetsDatabase.shared.matchObjectTagsToFeature(
-			tags,
+		let oldFeature = PresetsDatabase.shared.presetFeatureMatching(
+			tags: tags,
 			geometry: geometry,
 			location: location,
 			includeNSI: true)

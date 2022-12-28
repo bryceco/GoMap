@@ -8,8 +8,9 @@
 import UIKit
 
 class POIPresetValuePickerController: UITableViewController {
-	var tag = ""
-	var valueDefinitions: [PresetValue]?
+	var key = ""
+	var valueDefinitions: [PresetValue] = []
+	var onSetValue: ((String) -> Void)?
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -25,7 +26,7 @@ class POIPresetValuePickerController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		valueDefinitions?.count ?? 0
+		valueDefinitions.count
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -37,37 +38,35 @@ class POIPresetValuePickerController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		var cell: UITableViewCell?
-		let preset = valueDefinitions?[indexPath.row]
+		let preset = valueDefinitions[indexPath.row]
 
-		if preset?.details != nil {
+		var cell: UITableViewCell
+		if preset.details != nil {
 			cell = tableView.dequeueReusableCell(withIdentifier: "SubtitleCell", for: indexPath)
 		} else {
 			cell = tableView.dequeueReusableCell(withIdentifier: "BasicCell", for: indexPath)
 		}
 
-		if preset?.name != nil {
-			cell?.textLabel?.text = preset?.name
-			cell?.detailTextLabel?.text = preset?.details
+		if preset.name != "" {
+			cell.textLabel?.text = preset.name
+			cell.detailTextLabel?.text = preset.details
 		} else {
-			var text = preset?.tagValue.replacingOccurrences(of: "_", with: " ")
-			text = text?.capitalized
-			cell?.textLabel?.text = text
-			cell?.detailTextLabel?.text = nil
+			var text = preset.tagValue.replacingOccurrences(of: "_", with: " ")
+			text = text.capitalized
+			cell.textLabel?.text = text
+			cell.detailTextLabel?.text = nil
 		}
 
 		let tabController = tabBarController as? POITabBarController
-		let selected = tabController?.keyValueDict[tag] == preset?.tagValue
-		cell?.accessoryType = selected ? .checkmark : .none
+		let selected = tabController?.keyValueDict[key] == preset.tagValue
+		cell.accessoryType = selected ? .checkmark : .none
 
-		return cell!
+		return cell
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let preset = valueDefinitions?[indexPath.row]
-		let tab = tabBarController as? POITabBarController
-		tab?.keyValueDict[tag] = preset?.tagValue
-
+		let preset = valueDefinitions[indexPath.row]
+		onSetValue?(preset.tagValue)
 		navigationController?.popViewController(animated: true)
 	}
 }

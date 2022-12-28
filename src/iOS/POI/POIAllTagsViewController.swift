@@ -14,7 +14,7 @@ class SectionHeaderCell: UITableViewCell {
 	@IBOutlet var label: UILabel!
 }
 
-class POIAllTagsViewController: UITableViewController, POITypeViewControllerDelegate, KeyValueTableCellOwner {
+class POIAllTagsViewController: UITableViewController, POIFeaturePickerViewControllerDelegate, KeyValueTableCellOwner {
 	private var tags: [(k: String, v: String)] = []
 	private var relations: [OsmRelation] = []
 	private var members: [OsmMember] = []
@@ -75,8 +75,8 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 		let tabController = tabBarController as? POITabBarController
 		let geometry = tabController?.selection?.geometry() ?? GEOMETRY.NODE
 		let dict = keyValueDictionary()
-		let newFeature = PresetsDatabase.shared.matchObjectTagsToFeature(
-			dict,
+		let newFeature = PresetsDatabase.shared.presetFeatureMatching(
+			tags: dict,
 			geometry: geometry,
 			location: AppDelegate.shared.mapView.currentRegion,
 			includeNSI: true)
@@ -281,8 +281,6 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 			cell.text2.text = kv.v
 			cell.text1.inputAccessoryView = prevNextToolbar
 			cell.text2.inputAccessoryView = prevNextToolbar
-			cell.textView?.removeFromSuperview()
-			cell.textView = nil
 
 			cell.updateAssociatedContent()
 

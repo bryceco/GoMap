@@ -260,7 +260,7 @@
                                                 <constraint firstAttribute="width" constant="7" id="6gd-lu-ey9"/>
                                             </constraints>
                                         </view>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="key" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XCc-6y-qYt" userLabel="Text1" customClass="AutocompleteTextField" customModule="Go_Map__" customModuleProvider="target">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="key" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XCc-6y-qYt" userLabel="Text1" customClass="AutocompleteTextField" customModule="Go_Map__" customModuleProvider="target">
                                             <rect key="frame" x="20" y="5" width="121" height="34"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="200" constant="121" id="DG2-2P-Kzu"/>
@@ -1664,7 +1664,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="ZKT-be-rhK"/>
         <segue reference="g2g-Jn-Tdv"/>
-        <segue reference="0gB-9H-f1m"/>
+        <segue reference="N2O-bF-plb"/>
         <segue reference="MpY-p5-COc"/>
     </inferredMetricsTieBreakers>
     <resources>

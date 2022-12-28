@@ -39,4 +39,8 @@ final class PresetValue: NSObject, NSSecureCoding {
 			return nil
 		}
 	}
+
+	override var description: String {
+		return "PresetValue \"\(name.isEmpty ? tagValue : name)\""
+	}
 }

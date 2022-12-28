@@ -13,7 +13,7 @@ class DirectionViewController: UIViewController {
 
 	private let viewModel: MeasureDirectionViewModel
 	private var disposal = Disposal()
-	private let callback: (String?) -> Void
+	private let onSetValue: (String) -> Void
 
 	@IBOutlet var valueLabel: UILabel!
 	@IBOutlet var oldValueLabel: UILabel!
@@ -22,9 +22,9 @@ class DirectionViewController: UIViewController {
 
 	// MARK: Initializer
 
-	init(key: String, value: String?, setValue: @escaping (String?) -> Void) {
+	init(key: String, value: String?, setValue: @escaping (String) -> Void) {
 		viewModel = MeasureDirectionViewModel(key: key, value: value)
-		callback = setValue
+		onSetValue = setValue
 
 		super.init(nibName: nil, bundle: nil)
 
@@ -112,7 +112,7 @@ class DirectionViewController: UIViewController {
 
 extension DirectionViewController: MeasureDirectionViewModelDelegate {
 	func didFinishUpdatingTag(key _: String, value: String) {
-		callback(value)
+		onSetValue(value)
 		if navigationController?.popViewController(animated: true) == nil {
 			dismiss(animated: true, completion: nil)
 		}
