@@ -141,11 +141,11 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		if #available(iOS 13.0, *) {
 			tabController.isModalInPresentation = saveButton.isEnabled
 		}
-		#if false
+#if false
 		if let indexPath = indexPathForKey(key) {
 			tableView.reloadRows(at: [indexPath], with: .none)
 		}
-		#endif
+#endif
 	}
 
 	func updatePresets() {

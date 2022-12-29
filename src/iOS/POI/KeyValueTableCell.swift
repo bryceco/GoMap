@@ -41,12 +41,7 @@ protocol KeyValueTableCellOwner: UITableViewController {
 }
 
 class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDelegate {
-	var textView: UITextView? {
-		willSet {
-			print("set \(self) \"\(text1.text)\" -> \(newValue)")
-			print("")
-		}
-	}
+	var textView: UITextView?
 	var owner: KeyValueTableCellOwner!
 	var key: String { return text1.text ?? "" }
 	var value: String { return textView?.text ?? text2.text! }
@@ -110,8 +105,8 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 			let item2 = c.secondItem === textField ? textView : c.secondItem
 			if item1 === textView || item2 === textView {
 				NSLayoutConstraint(item: item1 as Any, attribute: c.firstAttribute, relatedBy: c.relation,
-											 toItem: item2, attribute: c.secondAttribute, multiplier: c.multiplier,
-											 constant: c.constant).isActive = true
+				                   toItem: item2, attribute: c.secondAttribute, multiplier: c.multiplier,
+				                   constant: c.constant).isActive = true
 			}
 		}
 		textView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5.0).isActive = true
@@ -218,7 +213,7 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 	}
 
 	func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-		prevKV = (key,value)
+		prevKV = (key, value)
 		if textField === text2 {
 			// set up capitalization and autocorrect
 			setTextAttributesForKey(key: text1?.text ?? "")
