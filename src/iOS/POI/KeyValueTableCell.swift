@@ -42,7 +42,7 @@ protocol KeyValueTableCellOwner: UITableViewController {
 
 class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDelegate {
 	var textView: UITextView?
-	var owner: KeyValueTableCellOwner!
+	weak var owner: KeyValueTableCellOwner!
 	var key: String { return text1.text ?? "" }
 	var value: String { return textView?.text ?? text2.text! }
 
@@ -66,7 +66,6 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 		textView?.removeFromSuperview()
 		textView = nil
 		text2.isHidden = false
-		prevKV = ("", "")
 	}
 
 	override func willTransition(to state: UITableViewCell.StateMask) {
@@ -92,7 +91,7 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 		textView.layer.borderColor = UIColor.lightGray.cgColor
 		textView.layer.borderWidth = 0.5
 		textView.layer.cornerRadius = 5.0
-		textView.font = textField.font
+		textView.font = text1.font	// Don't copy text2 here because it might have been resized smaller
 		textView.autocapitalizationType = textField.autocapitalizationType
 		textView.autocorrectionType = textField.autocorrectionType
 		textView.keyboardType = textField.keyboardType
@@ -100,6 +99,7 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 		textView.delegate = self
 		contentView.addSubview(textView)
 
+		// Copy all constraints from textField to textView
 		for c in contentView.constraints {
 			let item1 = c.firstItem === textField ? textView : c.firstItem
 			let item2 = c.secondItem === textField ? textView : c.secondItem
@@ -109,6 +109,7 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 				                   constant: c.constant).isActive = true
 			}
 		}
+		// Add constraints to force cell to grow vertically when textView expands
 		textView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5.0).isActive = true
 		textView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5.0).isActive = true
 		return textView
@@ -124,7 +125,7 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 		textView.text = text2.text
 		textView.selectedRange = NSRange(location: textView.text.count, length: 0)
 		updateTextViewSize()
-		// need to do this last because it can cause table cells to reload, interfering with code above
+		// need to do this last because it can cause table cells to reload, interfering with the code above
 		textView.becomeFirstResponder()
 	}
 
@@ -143,12 +144,8 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 		sender.resignFirstResponder()
 	}
 
-	var prevKV = ("", "")
 	func notifyKeyValueChange() {
-		if key != prevKV.0 || value != prevKV.1 {
-			prevKV = (key, value)
-			owner.keyValueChanged(for: self)
-		}
+		owner.keyValueChanged(for: self)
 	}
 
 	func setTextAttributesForKey(key: String) {
@@ -213,7 +210,6 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 	}
 
 	func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-		prevKV = (key, value)
 		if textField === text2 {
 			// set up capitalization and autocorrect
 			setTextAttributesForKey(key: text1?.text ?? "")
