@@ -96,6 +96,7 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 		textView.autocorrectionType = textField.autocorrectionType
 		textView.keyboardType = textField.keyboardType
 		textView.inputAccessoryView = textField.inputAccessoryView
+		textView.returnKeyType = .done
 		textView.delegate = self
 		contentView.addSubview(textView)
 
@@ -139,6 +140,8 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 		self.textView = nil
 		updateTextViewSize()
 	}
+
+	// MARK: textField delegate functions
 
 	@IBAction func textFieldReturn(_ sender: UIView) {
 		sender.resignFirstResponder()
@@ -265,7 +268,10 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 		notifyKeyValueChange()
 	}
 
+	// MARK: textView delegate functions
+
 	func textViewDidBeginEditing(_ textView: UITextView) {
+		// set the current textField to the underlying textField
 		owner.currentTextField = text2
 	}
 
@@ -276,6 +282,14 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 	func textViewDidEndEditing(_ textView: UITextView) {
 		notifyKeyValueChange()
 		useTextField()
+	}
+
+	func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+		if text == "\n" {
+			textView.resignFirstResponder()
+			return false
+		}
+		return true
 	}
 
 	// MARK: Accessory buttons
