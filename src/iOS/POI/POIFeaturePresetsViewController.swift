@@ -141,10 +141,11 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		if #available(iOS 13.0, *) {
 			tabController.isModalInPresentation = saveButton.isEnabled
 		}
-
+		#if false
 		if let indexPath = indexPathForKey(key) {
 			tableView.reloadRows(at: [indexPath], with: .none)
 		}
+		#endif
 	}
 
 	func updatePresets() {
@@ -167,7 +168,8 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 				location: AppDelegate.shared.mapView.currentRegion,
 				includeNSI: true)
 			if currentFeature === selectedFeature {
-				return
+//				computeExtraTags()
+//				return
 			}
 			currentFeature = selectedFeature
 
@@ -221,7 +223,8 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 
 		if isMovingToParent {
 		} else {
-//			updatePresets()
+			// When coming from All Tags or other views we need to recompute everything
+			updatePresets()
 		}
 	}
 

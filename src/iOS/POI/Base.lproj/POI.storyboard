@@ -263,7 +263,7 @@
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="key" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XCc-6y-qYt" userLabel="Text1" customClass="AutocompleteTextField" customModule="Go_Map__" customModuleProvider="target">
                                             <rect key="frame" x="20" y="5" width="121" height="34"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" priority="200" constant="121" id="DG2-2P-Kzu"/>
+                                                <constraint firstAttribute="width" priority="750" constant="121" id="DG2-2P-Kzu"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
@@ -307,6 +307,7 @@
                                         </button>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="XCc-6y-qYt" firstAttribute="centerY" secondItem="C3T-nH-Ohr" secondAttribute="centerY" id="Cz4-DH-7rR"/>
                                         <constraint firstItem="nil-45-Wvp" firstAttribute="leading" secondItem="sHA-cr-GLb" secondAttribute="trailing" constant="4" id="DxG-mK-ark"/>
                                         <constraint firstItem="B9b-Kf-bWy" firstAttribute="leading" secondItem="C3T-nH-Ohr" secondAttribute="leading" id="PSk-3d-G74"/>
                                         <constraint firstItem="nil-45-Wvp" firstAttribute="centerY" secondItem="C3T-nH-Ohr" secondAttribute="centerY" id="Vgc-4W-CUE"/>
@@ -316,11 +317,9 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <constraints>
-                                    <constraint firstItem="XCc-6y-qYt" firstAttribute="top" secondItem="sHA-cr-GLb" secondAttribute="top" id="AMh-vG-TOG"/>
                                     <constraint firstItem="XCc-6y-qYt" firstAttribute="leading" secondItem="C3T-nH-Ohr" secondAttribute="leading" constant="20" id="B5O-vQ-1DJ"/>
                                     <constraint firstItem="sHA-cr-GLb" firstAttribute="centerY" secondItem="C3T-nH-Ohr" secondAttribute="centerY" id="RKx-T5-lDz"/>
                                     <constraint firstItem="sHA-cr-GLb" firstAttribute="leading" secondItem="XCc-6y-qYt" secondAttribute="trailing" constant="13" id="dz3-WX-pRo"/>
-                                    <constraint firstItem="XCc-6y-qYt" firstAttribute="bottom" secondItem="sHA-cr-GLb" secondAttribute="bottom" id="fgq-UX-c9B"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="infoButton" destination="nil-45-Wvp" id="7DA-hc-V9Y"/>
@@ -566,7 +565,7 @@
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="key" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="X1y-nK-nVJ" userLabel="Text1" customClass="AutocompleteTextField" customModule="Go_Map__" customModuleProvider="target">
                                             <rect key="frame" x="20" y="5" width="121" height="34"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" priority="200" constant="121" id="usV-OU-r22"/>
+                                                <constraint firstAttribute="width" priority="750" constant="121" id="usV-OU-r22"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>

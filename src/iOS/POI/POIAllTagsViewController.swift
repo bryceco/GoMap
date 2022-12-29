@@ -407,6 +407,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerViewContr
 				tableView.insertRows(at: [newPath], with: .none)
 			}
 		}
+		saveState()
 	}
 
 	func tab(toNext forward: Bool) {

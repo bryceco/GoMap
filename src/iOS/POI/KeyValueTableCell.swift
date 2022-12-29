@@ -41,7 +41,12 @@ protocol KeyValueTableCellOwner: UITableViewController {
 }
 
 class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDelegate {
-	var textView: UITextView?
+	var textView: UITextView? {
+		willSet {
+			print("set \(self) \"\(text1.text)\" -> \(newValue)")
+			print("")
+		}
+	}
 	var owner: KeyValueTableCellOwner!
 	var key: String { return text1.text ?? "" }
 	var value: String { return textView?.text ?? text2.text! }
@@ -65,6 +70,7 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 	override func prepareForReuse() {
 		textView?.removeFromSuperview()
 		textView = nil
+		text2.isHidden = false
 		prevKV = ("", "")
 	}
 
@@ -84,34 +90,30 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 		UIView.setAnimationsEnabled(true)
 	}
 
-	private func createTextView() -> UITextView {
+	private func createTextView(for textField: UITextField) -> UITextView {
 		let textView = UITextView()
 		textView.translatesAutoresizingMaskIntoConstraints = false
 		textView.isScrollEnabled = false
 		textView.layer.borderColor = UIColor.lightGray.cgColor
 		textView.layer.borderWidth = 0.5
 		textView.layer.cornerRadius = 5.0
-		textView.font = UIFont.preferredFont(forTextStyle: .headline)
-		textView.autocapitalizationType = .sentences
-		textView.autocorrectionType = .yes
+		textView.font = textField.font
+		textView.autocapitalizationType = textField.autocapitalizationType
+		textView.autocorrectionType = textField.autocorrectionType
+		textView.keyboardType = textField.keyboardType
+		textView.inputAccessoryView = textField.inputAccessoryView
 		textView.delegate = self
 		contentView.addSubview(textView)
 
 		for c in contentView.constraints {
-			if c.firstItem === text1 || c.secondItem === text1 {
-				let item1 = c.firstItem === text2 ? textView : c.firstItem
-				let item2 = c.secondItem === text2 ? textView : c.secondItem
-				if item1 === textView || item2 === textView {
-					let con = NSLayoutConstraint(item: item1 as Any, attribute: c.firstAttribute, relatedBy: c.relation,
-					                             toItem: item2, attribute: c.secondAttribute, multiplier: c.multiplier,
-					                             constant: c.constant)
-					con.isActive = true
-				}
+			let item1 = c.firstItem === textField ? textView : c.firstItem
+			let item2 = c.secondItem === textField ? textView : c.secondItem
+			if item1 === textView || item2 === textView {
+				NSLayoutConstraint(item: item1 as Any, attribute: c.firstAttribute, relatedBy: c.relation,
+											 toItem: item2, attribute: c.secondAttribute, multiplier: c.multiplier,
+											 constant: c.constant).isActive = true
 			}
 		}
-
-//		textView.leftAnchor.constraint(equalTo: text2.leftAnchor).isActive = true
-		textView.rightAnchor.constraint(equalTo: text2.rightAnchor).isActive = true
 		textView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5.0).isActive = true
 		textView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5.0).isActive = true
 		return textView
@@ -121,13 +123,14 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 		if textView != nil {
 			return
 		}
-		let textView = createTextView()
+		text2.isHidden = true
+		let textView = createTextView(for: text2)
 		self.textView = textView
 		textView.text = text2.text
 		textView.selectedRange = NSRange(location: textView.text.count, length: 0)
-		textView.becomeFirstResponder()
-		text2.isHidden = true
 		updateTextViewSize()
+		// need to do this last because it can cause table cells to reload, interfering with code above
+		textView.becomeFirstResponder()
 	}
 
 	func useTextField() {
@@ -214,16 +217,26 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 		                            warningVC: owner)
 	}
 
+	func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+		prevKV = (key,value)
+		if textField === text2 {
+			// set up capitalization and autocorrect
+			setTextAttributesForKey(key: text1?.text ?? "")
+
+			// if we enabled the textView then we don't want to edit the textField
+			if textView != nil {
+				return false
+			}
+		}
+		return true
+	}
+
 	@IBAction func textFieldEditingDidBegin(_ textField: AutocompleteTextField) {
 		owner.currentTextField = textField
-		prevKV = (key,value)
 
 		let isValue = textField == text2
 
 		if isValue {
-			// set up capitalization and autocorrect
-			setTextAttributesForKey(key: text1?.text ?? "")
-
 			// get list of values for current key
 			if let key = text1?.text,
 			   key != "",
@@ -259,6 +272,10 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 			}
 		}
 		notifyKeyValueChange()
+	}
+
+	func textViewDidBeginEditing(_ textView: UITextView) {
+		owner.currentTextField = text2
 	}
 
 	func textViewDidChange(_ textView: UITextView) {
