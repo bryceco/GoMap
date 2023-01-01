@@ -1172,6 +1172,7 @@ Jedná se o pokročilou funkci, kterou byste měli použít jen pokud skutečně
       </trans-unit>
       <trans-unit id="Space" xml:space="preserve">
         <source>Space</source>
+        <target state="translated">Mezerník</target>
         <note>Space key on the keyboard</note>
       </trans-unit>
       <trans-unit id="Split" xml:space="preserve">
