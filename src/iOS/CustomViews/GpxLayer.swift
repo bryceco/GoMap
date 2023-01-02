@@ -475,9 +475,14 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 			// make sure save directory exists
 			var time = TimeInterval(CACurrentMediaTime())
 			let dir = saveDirectory()
-			let path = URL(fileURLWithPath: dir).appendingPathComponent(track.fileName()).path
-			try? FileManager.default.createDirectory(atPath: dir, withIntermediateDirectories: true, attributes: nil)
-			NSKeyedArchiver.archiveRootObject(track, toFile: path)
+			let path = URL(fileURLWithPath: dir).appendingPathComponent(track.fileName())
+			do {
+				try FileManager.default.createDirectory(atPath: dir, withIntermediateDirectories: true, attributes: nil)
+				let data = try NSKeyedArchiver.archivedData(withRootObject: track, requiringSecureCoding: true)
+				try data.write(to: path)
+			} catch {
+				print("\(error)")
+			}
 			time = TimeInterval(CACurrentMediaTime() - time)
 			DLog("GPX track \(track.points.count) points, save time = \(time)")
 		}
