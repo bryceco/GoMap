@@ -91,7 +91,7 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 		textView.layer.borderColor = UIColor.lightGray.cgColor
 		textView.layer.borderWidth = 0.5
 		textView.layer.cornerRadius = 5.0
-		textView.font = text1.font	// Don't copy text2 here because it might have been resized smaller
+		textView.font = text1.font // Don't copy text2 here because it might have been resized smaller
 		textView.autocapitalizationType = textField.autocapitalizationType
 		textView.autocorrectionType = textField.autocorrectionType
 		textView.keyboardType = textField.keyboardType

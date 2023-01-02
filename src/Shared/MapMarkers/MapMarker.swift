@@ -9,11 +9,11 @@
 import UIKit
 
 class MapMarker {
-	let buttonId: Int // a unique value we assign to track note buttons. If > 0 this is the noteID, otherwise it is assigned by us.
+	let buttonId: Int // a unique value we assign to track note buttons.
 	let lat: Double
 	let lon: Double
 
-	// a unique identifier for a note across multiple downloads
+	// a unique identifier for a marker across multiple downloads
 	var key: String {
 		fatalError()
 	}

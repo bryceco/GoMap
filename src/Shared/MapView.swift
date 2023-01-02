@@ -2327,8 +2327,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				self.mapMarkerDatabase.enumerateMapMarkers({ [self] note in
 					if self.viewOverlayMask.contains(.NOTES) {
 						// hide unwanted keep right buttons
-						if note is KeepRightMarker,
-						   self.mapMarkerDatabase.isIgnored(note)
+						if let note = note as? KeepRightMarker,
+						   note.isIgnored()
 						{
 							if let button = self.buttonForButtonId[note.buttonId] {
 								button.removeFromSuperview()
@@ -2441,13 +2441,13 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				              style: .cancel,
 				              handler: { _ in
 				              }))
-			if marker is KeepRightMarker {
+			if let marker = marker as? KeepRightMarker {
 				alertKeepRight.addAction(
 					UIAlertAction(title: NSLocalizedString("Ignore", comment: ""),
 					              style: .default,
 					              handler: { [self] _ in
 					              	// they want to hide this button from now on
-					              	mapMarkerDatabase.ignore(marker)
+					              	marker.ignore()
 					              	refreshMapMarkerButtonsFromDatabase()
 					              	editorLayer.selectedNode = nil
 					              	editorLayer.selectedWay = nil

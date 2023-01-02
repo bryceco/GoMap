@@ -11,7 +11,6 @@ import Foundation
 
 final class MapMarkerDatabase: NSObject {
 	private let workQueue = OperationQueue()
-	private var _keepRightIgnoreList: [Int: Bool]? // FIXME: Use UserDefaults for storage so this becomes non-optional
 	private var markerForTag: [Int: MapMarker] = [:] // return the note with the given button tag (tagId)
 	private var tagForKey: [String: Int] = [:]
 	weak var mapData: OsmMapData!
@@ -190,38 +189,5 @@ final class MapMarkerDatabase: NSObject {
 
 	func mapMarker(forTag tag: Int) -> MapMarker? {
 		return markerForTag[tag]
-	}
-
-	// MARK: Ignore list
-
-	// FIXME: change this to just use non-optional _keepRightIgnoreList
-	func ignoreList() -> [Int: Bool] {
-		if _keepRightIgnoreList == nil {
-			let path = URL(fileURLWithPath: FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)
-				.map(\.path).last ?? "").appendingPathComponent("keepRightIgnoreList").path
-			_keepRightIgnoreList = NSKeyedUnarchiver.unarchiveObject(withFile: path) as? [Int: Bool]
-			if _keepRightIgnoreList == nil {
-				_keepRightIgnoreList = [:]
-			}
-		}
-		return _keepRightIgnoreList!
-	}
-
-	func ignore(_ note: MapMarker) {
-		if _keepRightIgnoreList == nil {
-			_keepRightIgnoreList = [:]
-		}
-		_keepRightIgnoreList![note.buttonId] = true
-
-		let path = URL(fileURLWithPath: FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)
-			.map(\.path).last ?? "").appendingPathComponent("keepRightIgnoreList").path
-		NSKeyedArchiver.archiveRootObject(_keepRightIgnoreList!, toFile: path)
-	}
-
-	func isIgnored(_ note: MapMarker) -> Bool {
-		if ignoreList()[note.buttonId] != nil {
-			return true
-		}
-		return false
 	}
 }

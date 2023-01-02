@@ -20,6 +20,8 @@ class KeepRightMarker: MapMarker {
 
 	override var buttonLabel: String { "R" }
 
+	private static var ignoreList: [Int: Bool] = KeepRightMarker.readIgnoreList()
+
 	/// Initialize based on KeepRight query
 	init?(gpxWaypoint gpx: GpxPoint, mapData: OsmMapData) {
 		//		<wpt lon="-122.2009985" lat="47.6753189">
@@ -72,5 +74,37 @@ class KeepRightMarker: MapMarker {
 		self.objectId = objectId
 		super.init(lat: gpx.latLon.lat,
 		           lon: gpx.latLon.lon)
+	}
+
+	func ignore() {
+		Self.ignoreList[keepRightID] = true
+		Self.writeIgnoreList()
+	}
+
+	func isIgnored() -> Bool {
+		return Self.ignoreList[keepRightID] != nil
+	}
+
+	static func readIgnoreList() -> [Int: Bool] {
+		if let path = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first?
+			.appendingPathComponent("keepRightIgnoreList"),
+			let data = try? Data(contentsOf: path),
+			let unarchiver = try? NSKeyedUnarchiver(forReadingFrom: data),
+			let list = unarchiver.decodeDecodable([Int: Bool].self, forKey: NSKeyedArchiveRootObjectKey)
+		{
+			return list
+		} else {
+			return [:]
+		}
+	}
+
+	static func writeIgnoreList() {
+		let archiver = NSKeyedArchiver(requiringSecureCoding: true)
+		if let path = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first?
+			.appendingPathComponent("keepRightIgnoreList"),
+			(try? archiver.encodeEncodable(ignoreList, forKey: NSKeyedArchiveRootObjectKey)) != nil
+		{
+			try? archiver.encodedData.write(to: path)
+		}
 	}
 }
