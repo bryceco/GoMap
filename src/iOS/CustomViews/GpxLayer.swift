@@ -19,7 +19,9 @@ final class GpxTrackLayerWithProperties: CAShapeLayer {
 	var props = Properties(position: nil, lineWidth: 0.0)
 }
 
-final class GpxPoint: NSObject, NSCoding {
+final class GpxPoint: NSObject, NSSecureCoding, NSCoding {
+	static let supportsSecureCoding = true
+
 	let latLon: LatLon
 	let accuracy: Double
 	let elevation: Double
@@ -134,7 +136,9 @@ enum GpxError: LocalizedError {
 	}
 }
 
-final class GpxTrack: NSObject, NSCoding {
+final class GpxTrack: NSObject, NSSecureCoding, NSCoding {
+	static let supportsSecureCoding = true
+
 	private var recording = false
 	private var distance = 0.0
 
@@ -633,8 +637,15 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 
 			for file in files {
 				if file.hasSuffix(".track") {
-					let path = URL(fileURLWithPath: dir).appendingPathComponent(file).path
-					guard let track = NSKeyedUnarchiver.unarchiveObject(withFile: path) as? GpxTrack else {
+					let url = URL(fileURLWithPath: dir).appendingPathComponent(file)
+					guard
+						let data = try? Data(contentsOf: url, options: .alwaysMapped),
+						let track = try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [GpxTrack.self,
+						                                                                GpxPoint.self,
+						                                                                NSDate.self,
+						                                                                NSArray.self],
+						                                                    from: data) as? GpxTrack
+					else {
 						continue
 					}
 
