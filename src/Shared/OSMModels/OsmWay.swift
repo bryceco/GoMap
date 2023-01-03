@@ -8,7 +8,9 @@
 
 import UIKit
 
-final class OsmWay: OsmBaseObject {
+final class OsmWay: OsmBaseObject, NSSecureCoding {
+	static let supportsSecureCoding = true
+
 	var nodeRefs: [OsmIdentifier]? // only used during construction
 	private(set) var nodes: [OsmNode]
 

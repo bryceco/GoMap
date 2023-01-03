@@ -8,7 +8,9 @@
 
 import Foundation
 
-class QuadMap: NSObject, NSCoding {
+class QuadMap: NSObject, NSSecureCoding {
+	static let supportsSecureCoding = true
+
 	let rootQuad: QuadBox
 	let encodingContentsOnSave: Bool
 

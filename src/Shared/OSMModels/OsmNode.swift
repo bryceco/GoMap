@@ -6,7 +6,9 @@
 //  Copyright © 2020 Bryce Cogswell. All rights reserved.
 //
 
-final class OsmNode: OsmBaseObject {
+final class OsmNode: OsmBaseObject, NSSecureCoding {
+	static let supportsSecureCoding: Bool = true
+	
 	private(set) var latLon: LatLon
 	private(set) var wayCount: Int
 

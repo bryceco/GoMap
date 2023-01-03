@@ -9,7 +9,9 @@
 import UIKit
 
 @objcMembers
-final class OsmRelation: OsmBaseObject {
+final class OsmRelation: OsmBaseObject, NSSecureCoding {
+	static let supportsSecureCoding = true
+
 	private(set) var members: [OsmMember]
 
 	override var description: String {

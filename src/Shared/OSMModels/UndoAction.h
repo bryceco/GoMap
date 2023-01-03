@@ -10,11 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface UndoAction : NSObject <NSCoding>
-@property (readonly,nonatomic)  NSString        *       selector;
-@property (readonly,nonatomic)  id                      target;
-@property (readonly,nonatomic)  NSArray         *       objects;
-@property (assign,nonatomic)    NSInteger               group;
+@interface UndoAction : NSObject <NSSecureCoding>
+@property(class, readonly) BOOL supportsSecureCoding;
+
+@property (readonly,nonatomic)  NSString        		*	selector;
+@property (readonly,nonatomic)  id                      	target;
+@property (readonly,nonatomic)  NSArray					*	objects;
+@property (assign,nonatomic)    NSInteger					group;
 
 -(instancetype)initWithTarget:(id)target selector:(SEL)selector objects:(NSArray *)objects;
 -(void)performAction;

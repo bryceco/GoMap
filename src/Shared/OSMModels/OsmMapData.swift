@@ -49,7 +49,9 @@ enum OsmMapDataError: LocalizedError {
 	}
 }
 
-final class OsmMapData: NSObject, NSCoding {
+final class OsmMapData: NSObject, NSSecureCoding {
+	static let supportsSecureCoding = true
+	
 	// only used when saving/restoring undo manager
 	public static var g_EditorMapLayerForArchive: EditorMapLayer?
 
@@ -1939,13 +1941,28 @@ class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 			print("Archive file doesn't exist")
 			throw MapDataError.archiveDoesNotExist
 		}
-		guard let data = try? Data(contentsOf: url) else {
+		guard
+			let data = try? Data(contentsOf: url),
+			let unarchiver = try? NSKeyedUnarchiver(forReadingFrom: data)
+		else {
 			print("Archive file doesn't exist")
 			throw MapDataError.archiveCannotBeRead
 		}
-		let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
 		unarchiver.delegate = self
-		guard let decode = unarchiver.decodeObject(forKey: "OsmMapData") as? OsmMapData else {
+
+		guard let decode = unarchiver.decodeObject(of: [OsmMapData.self,
+		                                                OsmNode.self,
+		                                                OsmWay.self,
+		                                                OsmRelation.self,
+														OsmMember.self,
+		                                                QuadMap.self,
+		                                                QuadBox.self,
+		                                                MyUndoManager.self,
+														UndoAction.self,
+		                                                NSDictionary.self,
+		                                                NSArray.self],
+		                                           forKey: "OsmMapData") as? OsmMapData
+		else {
 			print("Couldn't decode archive file")
 			if let error = unarchiver.error {
 				print("\(error)")

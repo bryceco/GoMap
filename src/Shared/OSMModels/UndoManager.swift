@@ -10,7 +10,9 @@ import Foundation
 
 typealias UndoManagerChangeCallback = () -> Void
 
-class MyUndoManager: NSObject, NSCoding {
+class MyUndoManager: NSObject, NSSecureCoding {
+	static let supportsSecureCoding = true
+
 	private var runLoopObserver: CFRunLoopObserver?
 	private var undoStack: [UndoAction] = []
 	private var redoStack: [UndoAction] = []

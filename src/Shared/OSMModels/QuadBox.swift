@@ -21,7 +21,9 @@ enum QUAD_ENUM: Int, CaseIterable {
 	case NW = 3
 }
 
-final class QuadBox: NSObject, NSCoding {
+final class QuadBox: NSObject, NSSecureCoding {
+	static let supportsSecureCoding = true
+
 	static let emptyChildren: [QuadBox?] = [nil, nil, nil, nil]
 
 	let rect: OSMRect

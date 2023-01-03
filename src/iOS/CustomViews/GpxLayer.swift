@@ -19,7 +19,7 @@ final class GpxTrackLayerWithProperties: CAShapeLayer {
 	var props = Properties(position: nil, lineWidth: 0.0)
 }
 
-final class GpxPoint: NSObject, NSSecureCoding, NSCoding {
+final class GpxPoint: NSObject, NSSecureCoding {
 	static let supportsSecureCoding = true
 
 	let latLon: LatLon
@@ -103,7 +103,7 @@ final class GpxPoint: NSObject, NSSecureCoding, NSCoding {
 		latLon = LatLon(latitude: lat, longitude: lon)
 		accuracy = aDecoder.decodeDouble(forKey: "acc")
 		elevation = aDecoder.decodeDouble(forKey: "ele")
-		timestamp = aDecoder.decodeObject(forKey: "time") as? Date
+		timestamp = aDecoder.decodeObject(of: NSDate.self, forKey: "time") as? Date
 		name = aDecoder.decodeObject(forKey: "name") as? String ?? ""
 		desc = ""
 		extensions = []
@@ -136,7 +136,7 @@ enum GpxError: LocalizedError {
 	}
 }
 
-final class GpxTrack: NSObject, NSSecureCoding, NSCoding {
+final class GpxTrack: NSObject, NSSecureCoding {
 	static let supportsSecureCoding = true
 
 	private var recording = false
