@@ -7,8 +7,8 @@
 //
 
 final class OsmNode: OsmBaseObject, NSSecureCoding {
-	static let supportsSecureCoding: Bool = true
-	
+	static let supportsSecureCoding = true
+
 	private(set) var latLon: LatLon
 	private(set) var wayCount: Int
 

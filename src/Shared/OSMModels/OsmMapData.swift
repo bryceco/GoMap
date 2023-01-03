@@ -51,7 +51,7 @@ enum OsmMapDataError: LocalizedError {
 
 final class OsmMapData: NSObject, NSSecureCoding {
 	static let supportsSecureCoding = true
-	
+
 	// only used when saving/restoring undo manager
 	public static var g_EditorMapLayerForArchive: EditorMapLayer?
 
@@ -1954,11 +1954,11 @@ class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 		                                                OsmNode.self,
 		                                                OsmWay.self,
 		                                                OsmRelation.self,
-														OsmMember.self,
+		                                                OsmMember.self,
 		                                                QuadMap.self,
 		                                                QuadBox.self,
 		                                                MyUndoManager.self,
-														UndoAction.self,
+		                                                UndoAction.self,
 		                                                NSDictionary.self,
 		                                                NSArray.self],
 		                                           forKey: "OsmMapData") as? OsmMapData

@@ -7,7 +7,7 @@
 //
 
 final class OsmMember: NSObject, NSSecureCoding {
-	static let supportsSecureCoding: Bool = true
+	static let supportsSecureCoding = true
 
 	let ref: OsmIdentifier
 	private(set) var type: OSM_TYPE // way, node, or relation
