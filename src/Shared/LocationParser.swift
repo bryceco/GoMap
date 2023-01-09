@@ -44,6 +44,7 @@ class LocationParser {
 		return sign * (Double(degrees) + Double(minutes) / 60.0 + seconds / 3600.0)
 	}
 
+	// parse a string like 19°33'51.6"N+155°56'07.7"W
 	static func scanDegreesMinutesSecondsPair(string: String) -> (Double, Double)? {
 		let scanner = Scanner(string: string)
 		scanner.charactersToBeSkipped = nil
@@ -56,10 +57,19 @@ class LocationParser {
 		return nil
 	}
 
+	class func urlFor(string: String) -> URL? {
+		var urlText = string.addingPercentEncodingForNonASCII()
+		var c = CharacterSet()
+		c.insert(charactersIn: "'")
+		c.invert()
+		urlText = urlText.addingPercentEncoding(withAllowedCharacters: c)!
+		return URL(string: urlText)
+	}
+
 	class func mapLocationFrom(text: String) -> MapLocation? {
 		// first try parsing as a URL
 		let text = text.trimmingCharacters(in: .whitespacesAndNewlines)
-		if let url = URL(string: text),
+		if let url = Self.urlFor(string: text),
 		   let loc = Self.mapLocationFrom(url: url)
 		{
 			return loc
@@ -267,6 +277,35 @@ class LocationParser {
 			                   latitude: dLat,
 			                   zoom: Double(zoom) / 4 + 4,
 			                   viewState: nil)
+		}
+
+		// parse as a Google Maps link
+		// https://www.google.com/maps/place/Living+Aquaponics+Inc/@19.5643765,-155.935126,20.97z/data=!4m13!1m7!3m6!1s0x0:0xd6494344d03eaa48!2zMTnCsDMzJzUxLjYiTiAxNTXCsDU2JzA3LjciVw!3b1!8m2!3d19.5643333!4d-155.9354722!3m4!1s0x7954071e92209063:0x43b62535ef648685!8m2!3d19.5611044!4d-155.935151
+		// https://www.google.com/maps/place/19°33'51.6%22N+155°56'07.7%22W/@19.5637643,-155.9361706,18.29z/data=!4m5!3m4!1s0x0:0xd6494344d03eaa48!8m2!3d19.5643333!4d-155.9354722
+		if components.host == "www.google.com" {
+			var path = components.path
+			while path.hasPrefix("/") {
+				path = String(path.dropFirst())
+			}
+			while path != "" {
+				let name = (path as NSString).lastPathComponent
+				if name.hasPrefix("@") {
+					let scanner = Scanner(string: String(name.dropFirst()))
+					var lat = 0.0, lon = 0.0, zoom = 0.0
+					if scanner.scanDouble(&lat),
+					   scanner.scanString(",", into: nil),
+					   scanner.scanDouble(&lon),
+					   scanner.scanString(",", into: nil),
+					   scanner.scanDouble(&zoom)
+					{
+						return MapLocation(longitude: lon,
+						                   latitude: lat,
+						                   zoom: zoom,
+						                   viewState: nil)
+					}
+				}
+				path = (path as NSString).deletingLastPathComponent
+			}
 		}
 
 		// try parsing as any URL containing lat=,lon=

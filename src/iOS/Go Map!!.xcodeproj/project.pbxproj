@@ -51,6 +51,7 @@
 		027AB500250E9C9B00C404CD /* Height.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB502250E9C9B00C404CD /* Height.storyboard */; };
 		027AB503250E9CA500C404CD /* Changeset.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB505250E9CA500C404CD /* Changeset.storyboard */; };
 		027AD5D219F5A18700120654 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027AD5D119F5A18700120654 /* CoreFoundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		027C7FDC296CCF28005C53A8 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027C7FDB296CCF28005C53A8 /* String+Ext.swift */; };
 		0282C4C7265F32E800F2D282 /* Sqlite3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282C4C6265F32E800F2D282 /* Sqlite3.swift */; };
 		0282C4C926617E7400F2D282 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282C4C826617E7400F2D282 /* MapView.swift */; };
 		0286EAA52656F15A007CFEE9 /* EditorMapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */; };
@@ -384,6 +385,7 @@
 		027AB50B250E9D0700C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Changeset.storyboard; sourceTree = "<group>"; };
 		027AD5D119F5A18700120654 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		027AD5D319F5EA7D00120654 /* libobjc.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libobjc.A.dylib; path = usr/lib/libobjc.A.dylib; sourceTree = SDKROOT; };
+		027C7FDB296CCF28005C53A8 /* String+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Ext.swift"; path = "../../Shared/Utility/String+Ext.swift"; sourceTree = "<group>"; };
 		027F32872816554A00F1DED9 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		027F32882816554A00F1DED9 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		027F32892816554A00F1DED9 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -996,6 +998,7 @@
 				02D623D726A8B8DD00A4F147 /* PhotoShare-Bridging-Header.h */,
 				02D6238A26A6628300A4F147 /* PhotoShare.entitlements */,
 				02D6238126A6628300A4F147 /* ShareViewController.swift */,
+				027C7FDB296CCF28005C53A8 /* String+Ext.swift */,
 			);
 			path = PhotoShare;
 			sourceTree = "<group>";
@@ -1538,6 +1541,7 @@
 				02D6238226A6628300A4F147 /* ShareViewController.swift in Sources */,
 				0200C1C22703B42600A79804 /* LocationParser.swift in Sources */,
 				02D623B626A8AFFC00A4F147 /* exif.cpp in Sources */,
+				027C7FDC296CCF28005C53A8 /* String+Ext.swift in Sources */,
 				02D623D626A8B16900A4F147 /* ExifGeolocation.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
