@@ -23,7 +23,8 @@ enum WebCacheError: LocalizedError {
 final class PersistentWebCache<T: AnyObject> {
 	private let cacheDirectory: URL
 	private let memoryCache: NSCache<NSString, T>
-	// track objects we're already downloading so we don't issue multiple requests
+	// Track objects we're already downloading so we don't issue duplicate requests.
+	// Each object has a list of completions to call when it becomes available.
 	private var pending: [String: [(Result<T, Error>) -> Void]]
 
 	class func encodeKey(forFilesystem string: String) -> String {
@@ -80,9 +81,7 @@ final class PersistentWebCache<T: AnyObject> {
 			guard let url = url as? URL else {
 				continue
 			}
-			do {
-				try FileManager.default.removeItem(at: url)
-			} catch {}
+			try? FileManager.default.removeItem(at: url)
 		}
 		memoryCache.removeAllObjects()
 	}
@@ -130,9 +129,10 @@ final class PersistentWebCache<T: AnyObject> {
 			return cachedObject
 		}
 
-		if let plist = pending[cacheKey] {
+		if var plist = pending[cacheKey] {
 			// already being downloaded
-			pending[cacheKey] = plist + [completion]
+			plist.append(completion)
+			pending[cacheKey] = plist
 			return nil
 		}
 		pending[cacheKey] = [completion]
@@ -154,7 +154,7 @@ final class PersistentWebCache<T: AnyObject> {
 				r = .failure(error)
 			}
 			DispatchQueue.main.async(execute: {
-				if case let .success(obj) = r {
+				if let obj = try? r.get() {
 					self.memoryCache.setObject(obj,
 					                           forKey: cacheKey as NSString,
 					                           cost: size)
@@ -181,7 +181,7 @@ final class PersistentWebCache<T: AnyObject> {
 				}
 				URLSession.shared.data(with: url, completionHandler: { result in
 					if processData(result),
-					   case let .success(data) = result
+					   let data = try? result.get()
 					{
 						DispatchQueue.global(qos: .default).async(execute: {
 							(data as NSData).write(to: filePath, atomically: true)
