@@ -74,19 +74,26 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		dismiss(animated: true)
 	}
 
-	func jump(toLat lat: Double, lon: Double) {
+	func jumpTo(lat: Double, lon: Double, zoom: Double?) {
 		let appDelegate = AppDelegate.shared
-		let metersPerDegree = MetersPerDegreeAt(latitude: lat)
-		let minMeters: Double = 50
-		let widthDegrees = minMeters / metersPerDegree.y
 
 		// disable GPS
 		while appDelegate.mapView.gpsState != GPS_STATE.NONE {
 			appDelegate.mapView.mainViewController.toggleLocationButton(self)
 		}
+		let latLon = LatLon(latitude: lat, longitude: lon)
 
-		appDelegate.mapView.setTransformFor(latLon: LatLon(latitude: lat, longitude: lon),
-		                                    width: widthDegrees)
+		if let zoom = zoom,
+		   zoom > 1 && zoom < 24
+		{
+			let scale = pow( 2.0, zoom)
+			appDelegate.mapView.setTransformFor(latLon: latLon, scale: scale)
+		} else {
+			let metersPerDegree = MetersPerDegreeAt(latitude: lat)
+			let minMeters: Double = 50
+			let widthDegrees = minMeters / metersPerDegree.y
+			appDelegate.mapView.setTransformFor(latLon: latLon, width: widthDegrees)
+		}
 
 		dismiss(animated: true)
 	}
@@ -111,7 +118,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			let lat = (lat1 + lat2) / 2
 			let lon = (lon1 + lon2) / 2
 
-			jump(toLat: lat, lon: lon)
+			jumpTo(lat: lat, lon: lon, zoom: nil)
 		}
 	}
 
@@ -119,7 +126,9 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	func containsLatLon(_ text: String) -> Bool {
 		if let loc = LocationParser.mapLocationFrom(text: text) {
 			updateHistory(with: "\(loc.latitude),\(loc.longitude)")
-			jump(toLat: loc.latitude, lon: loc.longitude)
+			jumpTo(lat: loc.latitude,
+				 lon: loc.longitude,
+				 zoom: loc.zoom > 0.0 ? loc.zoom : nil)
 			return true
 		}
 		return false
@@ -157,7 +166,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 					case let .success(data):
 						if let node = data.nodes.first {
 							self.updateHistory(with: "\(objType2.string) \(objIdent2)")
-							self.jump(toLat: node.latLon.lat, lon: node.latLon.lon)
+							self.jumpTo(lat: node.latLon.lat, lon: node.latLon.lon, zoom: nil)
 						} else {
 							self.presentErrorMessage()
 						}
