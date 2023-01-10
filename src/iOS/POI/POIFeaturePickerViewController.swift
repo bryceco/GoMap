@@ -147,70 +147,18 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 				feature = f
 			}
 		}
+		// If its an NSI feature then retrieve the logo icon
 		if feature.nsiSuggestion, feature.nsiLogo == nil, feature.logoURL != nil {
-#if false
-			// use built-in logo files
-			if feature.nsiLogo == nil {
-				feature.nsiLogo = feature.iconUnscaled()
-				DispatchQueue.global(qos: .default).async(execute: {
-					var name = feature.featureID.replacingOccurrences(of: "/", with: "_")
-					name = "presets/brandIcons/" + name
-					let path = Bundle.main.path(forResource: name, ofType: "jpg") ?? Bundle.main
-						.path(forResource: name, ofType: "png") ?? Bundle.main
-						.path(forResource: name, ofType: "gif") ?? Bundle.main
-						.path(forResource: name, ofType: "bmp") ?? nil
-					if let image = UIImage(contentsOfFile: path ?? "") {
-						DispatchQueue.main.async(execute: {
-							feature.nsiLogo = image
-							for cell in tableView.visibleCells {
-								guard let cell = cell as? FeaturePickerCell else {
-									continue
-								}
-								if cell.featureID == feature.featureID {
-									cell.pickerImage.image = image
-								}
-							}
-						})
+			retrieveLogoForNsiItem(feature, whenFinished: {
+				// If it completes later then update any cells using it
+				for cell in self.tableView.visibleCells {
+					if let cell = cell as? FeaturePickerCell,
+					   cell.featureID == feature.featureID
+					{
+						cell.pickerImage.image = feature.nsiLogo
 					}
-				})
-			}
-#else
-			feature.nsiLogo = feature.iconUnscaled()
-			let logo = logoCache.object(withKey: feature.featureID, fallbackURL: {
-#if true
-				// fetch icons from our private server
-				let name: String = feature.featureID.replacingOccurrences(of: "/", with: "_")
-				let url = "http://gomaposm.com/brandIcons/" + name
-				return URL(string: url)
-#else
-				// Fetch icons from a named public server. There are several downsides:
-				// * some image files are very large (megabytes)
-				// * many images are SVG which we don't support
-				return URL(string: feature.logoURL)
-#endif
-			}, objectForData: { data in
-				if let image = UIImage(data: data) {
-					return EditorMapLayer.ImageScaledToSize(image, 60.0)
-				} else {
-					return UIImage()
 				}
-			}, completion: { result in
-				DispatchQueue.main.async(execute: {
-					let image = try? result.get()
-					feature.nsiLogo = image
-					for cell in tableView.visibleCells {
-						if let cell = cell as? FeaturePickerCell,
-						   cell.featureID == feature.featureID
-						{
-							cell.pickerImage.image = image
-						}
-					}
-				})
 			})
-			if logo != nil {
-				feature.nsiLogo = logo
-			}
-#endif
 		}
 		let brand = "☆ "
 		let tabController = tabBarController as? POITabBarController
@@ -334,5 +282,62 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 
 	@IBAction func back(_ sender: Any) {
 		dismiss(animated: true)
+	}
+
+	// MARK: NSI Logo icon retrieval
+
+	private func retrieveLogoFromBundle(_ feature: PresetFeature, whenFinished: @escaping () -> Void) {
+		// use built-in logo files
+		if feature.nsiLogo == nil {
+			feature.nsiLogo = feature.iconUnscaled()
+			DispatchQueue.global(qos: .default).async(execute: {
+				var name = feature.featureID.replacingOccurrences(of: "/", with: "_")
+				name = "presets/brandIcons/" + name
+				let path = Bundle.main.path(forResource: name, ofType: "jpg") ?? Bundle.main
+					.path(forResource: name, ofType: "png") ?? Bundle.main
+					.path(forResource: name, ofType: "gif") ?? Bundle.main
+					.path(forResource: name, ofType: "bmp") ?? nil
+				if let image = UIImage(contentsOfFile: path ?? "") {
+					DispatchQueue.main.async(execute: {
+						feature.nsiLogo = image
+						whenFinished()
+					})
+				}
+			})
+		}
+	}
+
+	private func retrieveLogoFromServer(_ feature: PresetFeature, whenFinished: @escaping () -> Void) {
+		feature.nsiLogo = feature.iconUnscaled()
+		let logo = logoCache.object(withKey: feature.featureID, fallbackURL: {
+			// fetch icons from our private server
+			let name: String = feature.featureID.replacingOccurrences(of: "/", with: "_")
+			let url = "http://gomaposm.com/brandIcons/" + name
+			return URL(string: url)
+		}, objectForData: { data in
+			if let image = UIImage(data: data) {
+				return EditorMapLayer.ImageScaledToSize(image, 60.0)
+			} else {
+				return UIImage()
+			}
+		}, completion: { result in
+			DispatchQueue.main.async(execute: {
+				if let image = try? result.get() {
+					feature.nsiLogo = image
+					whenFinished()
+				}
+			})
+		})
+		if logo != nil {
+			feature.nsiLogo = logo
+		}
+	}
+
+	private func retrieveLogoForNsiItem(_ feature: PresetFeature, whenFinished: @escaping () -> Void) {
+#if true
+		retrieveLogoFromServer(feature, whenFinished: whenFinished)
+#else
+		retrieveLogoFromBundle(feature, whenFinished: onFinished)
+#endif
 	}
 }
