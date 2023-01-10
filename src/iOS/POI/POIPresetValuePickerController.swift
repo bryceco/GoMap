@@ -8,9 +8,48 @@
 import UIKit
 
 class POIPresetValuePickerController: UITableViewController {
+	static let ImageWidth = 80
 	var key = ""
-	var valueDefinitions: [PresetValue] = []
+	var presetValueList: [PresetValue] = []
 	var onSetValue: ((String) -> Void)?
+	var descriptions: [String: String] = [:]
+	var images: [String: UIImage] = [:]
+
+	let placeholderImage: UIImage = {
+		UIGraphicsBeginImageContextWithOptions(
+			CGSize(width: ImageWidth, height: ImageWidth / 2),
+			false,
+			UIScreen.main.scale)
+		let image = UIGraphicsGetImageFromCurrentImageContext()!
+		UIGraphicsEndImageContext()
+		return image
+	}()
+
+	func displayImagesAndDescriptions() {
+		let languageCode = PresetLanguages().preferredLanguageCode()
+		for preset in presetValueList {
+			if let meta = WikiPage.shared.wikiDataFor(
+				key: key,
+				value: preset.tagValue,
+				language: languageCode,
+				imageWidth: Self.ImageWidth,
+				completion: { meta in
+					let tag = meta.key + "=" + meta.value
+					self.descriptions[tag] = meta.description
+					self.images[tag] = meta.image
+					self.tableView.reloadData()
+				})
+			{
+				let tag = meta.key + "=" + meta.value
+				descriptions[tag] = meta.description
+				images[tag] = meta.image
+			}
+		}
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		// displayImagesAndDescriptions()
+	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -26,7 +65,7 @@ class POIPresetValuePickerController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		valueDefinitions.count
+		presetValueList.count
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -38,23 +77,21 @@ class POIPresetValuePickerController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let preset = valueDefinitions[indexPath.row]
+		let preset = presetValueList[indexPath.row]
 
-		var cell: UITableViewCell
-		if preset.details != nil {
-			cell = tableView.dequeueReusableCell(withIdentifier: "SubtitleCell", for: indexPath)
-		} else {
-			cell = tableView.dequeueReusableCell(withIdentifier: "BasicCell", for: indexPath)
-		}
+		let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "SubtitleCell", for: indexPath)
+		let tag = key + "=" + preset.tagValue
 
 		if preset.name != "" {
 			cell.textLabel?.text = preset.name
-			cell.detailTextLabel?.text = preset.details
+			cell.detailTextLabel?.text = preset.details ?? descriptions[tag] ?? ""
 		} else {
-			var text = preset.tagValue.replacingOccurrences(of: "_", with: " ")
-			text = text.capitalized
+			let text = preset.tagValue.replacingOccurrences(of: "_", with: " ").capitalized
 			cell.textLabel?.text = text
-			cell.detailTextLabel?.text = nil
+			cell.detailTextLabel?.text = descriptions[tag] ?? ""
+		}
+		if images.count > 0 {
+			cell.imageView?.image = images[tag] ?? placeholderImage
 		}
 
 		let tabController = tabBarController as? POITabBarController
@@ -65,7 +102,7 @@ class POIPresetValuePickerController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let preset = valueDefinitions[indexPath.row]
+		let preset = presetValueList[indexPath.row]
 		onSetValue?(preset.tagValue)
 		navigationController?.popViewController(animated: true)
 	}

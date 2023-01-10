@@ -548,7 +548,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		if let dest = segue.destination as? POIPresetValuePickerController {
 			if case let .key(presetKey) = cell?.presetKey {
 				dest.key = presetKey.tagKey
-				dest.valueDefinitions = presetKey.presetList ?? []
+				dest.presetValueList = presetKey.presetList ?? []
 				dest.onSetValue = {
 					self.updateTagDict(withValue: $0, forKey: presetKey.tagKey)
 				}
