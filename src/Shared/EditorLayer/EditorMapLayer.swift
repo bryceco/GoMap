@@ -280,14 +280,20 @@ final class EditorMapLayer: CALayer {
 		setNeedsLayout()
 	}
 
-	func purgeCachedData(hard: Bool) {
+	enum MapDataPurgeStyle {
+		case hard // purges everything
+		case soft // purges everything except user edits
+	}
+
+	func purgeCachedData(_ style: MapDataPurgeStyle) {
 		owner.removePin()
 		selectedNode = nil
 		selectedWay = nil
 		selectedRelation = nil
-		if hard {
+		switch style {
+		case .hard:
 			mapData.purgeHard()
-		} else {
+		case .soft:
 			mapData.purgeSoft()
 		}
 
@@ -327,7 +333,7 @@ final class EditorMapLayer: CALayer {
 	}
 
 	func didReceiveMemoryWarning() {
-		purgeCachedData(hard: false)
+		purgeCachedData(.soft)
 		save()
 	}
 

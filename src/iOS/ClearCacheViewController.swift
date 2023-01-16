@@ -116,30 +116,52 @@ class ClearCacheViewController: UITableViewController {
 
 		switch row {
 		case .osmData /* OSM */:
+			let alert = UIAlertController(
+				title: NSLocalizedString("Warning", comment: ""),
+				message: NSLocalizedString(
+					"You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost.",
+					comment: ""),
+				preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel,
+			                              handler: { _ in
+			                              	self.navigationController?.popViewController(animated: true)
+			                              }))
 			if appDelegate.mapView.editorLayer.mapData.changesetAsXml() != nil {
-				let alert = UIAlertController(
-					title: NSLocalizedString("Warning", comment: ""),
-					message: NSLocalizedString(
-						"You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost.",
-						comment: ""),
-					preferredStyle: .alert)
-				alert
-					.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel,
-					                         handler: { _ in
-					                         	self.navigationController?.popViewController(animated: true)
-					                         }))
 				alert.addAction(UIAlertAction(
 					title: NSLocalizedString("Purge", comment: "Discard editing changes when resetting OSM data cache"),
 					style: .default,
 					handler: { _ in
-						appDelegate.mapView.editorLayer.purgeCachedData(hard: true)
+						appDelegate.mapView.editorLayer.purgeCachedData(.hard)
 						appDelegate.mapView.placePushpinForSelection()
 						self.navigationController?.popViewController(animated: true)
 					}))
+			}
+			// These actions are available only for debugging purposes
+			if isUnderDebugger() {
+				// Soft purge is used to simulate a low-memory condition
+				alert.addAction(UIAlertAction(
+					title: "Debug: Soft Purge",
+					style: .destructive,
+					handler: { _ in
+						appDelegate.mapView.editorLayer.purgeCachedData(.soft)
+						appDelegate.mapView.placePushpinForSelection()
+						self.navigationController?.popViewController(animated: true)
+					}))
+				// Discard stale is used to simulate automatic cache management
+				alert.addAction(UIAlertAction(
+					title: "Debug: Discard Stale Data",
+					style: .destructive,
+					handler: { _ in
+						_ = appDelegate.mapView.editorLayer.mapData.discardStaleData(maxObjects: 1000)
+						appDelegate.mapView.placePushpinForSelection()
+						self.navigationController?.popViewController(animated: true)
+					}))
+			}
+			if alert.actions.count > 1 {
 				present(alert, animated: true)
 				return
 			}
-			appDelegate.mapView.editorLayer.purgeCachedData(hard: true)
+			appDelegate.mapView.editorLayer.purgeCachedData(.hard)
 			appDelegate.mapView.removePin()
 		case .mapnik /* Mapnik */:
 			appDelegate.mapView.mapnikLayer.purgeTileCache()

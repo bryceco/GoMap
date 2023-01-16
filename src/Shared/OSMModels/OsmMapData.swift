@@ -1486,7 +1486,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		})
 	}
 
-	func discardStaleData() -> Bool {
+	func discardStaleData(maxObjects: Int = 100000, maxAge: Int = 24 * 60 * 60) -> Bool {
 #if DEBUG
 		let minTimeBetweenDiscards = 5.0 // seconds
 #else
@@ -1503,16 +1503,11 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			return false
 		}
 
-// remove objects if they are too old, or we have too many:
-#if DEBUG
-		let limit = 500000
-#else
-		let limit = 100000
-#endif
-		var oldest = Date(timeIntervalSinceNow: -24 * 60 * 60)
+		// remove objects if they are too old, or we have too many:
+		var oldest = Date(timeIntervalSinceNow: -Double(maxAge))
 
 		// get rid of old quads marked as downloaded
-		var fraction = Double(nodes.count + ways.count + relations.count) / Double(limit)
+		var fraction = Double(nodes.count + ways.count + relations.count) / Double(maxObjects)
 		if fraction <= 1.0 {
 			// the number of objects is acceptable
 			fraction = 0.0
@@ -1620,7 +1615,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 			print(String(format: "remove %ld objects\n", removeNodes.count + removeWays.count + removeRelations.count))
 
-			if Double(nodes.count + ways.count + relations.count) < (Double(limit) * 1.3) {
+			if Double(nodes.count + ways.count + relations.count) < (Double(maxObjects) * 1.3) {
 				// good enough
 				if !didExpand, removeNodes.count + removeWays.count + removeRelations.count == 0 {
 					previousDiscardDate = now

@@ -84,9 +84,10 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		let latLon = LatLon(latitude: lat, longitude: lon)
 
 		if let zoom = zoom,
-		   zoom > 1 && zoom < 24
+		   zoom > 1,
+		   zoom < 24
 		{
-			let scale = pow( 2.0, zoom)
+			let scale = pow(2.0, zoom)
 			appDelegate.mapView.setTransformFor(latLon: latLon, scale: scale)
 		} else {
 			let metersPerDegree = MetersPerDegreeAt(latitude: lat)
@@ -127,8 +128,8 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		if let loc = LocationParser.mapLocationFrom(text: text) {
 			updateHistory(with: "\(loc.latitude),\(loc.longitude)")
 			jumpTo(lat: loc.latitude,
-				 lon: loc.longitude,
-				 zoom: loc.zoom > 0.0 ? loc.zoom : nil)
+			       lon: loc.longitude,
+			       zoom: loc.zoom > 0.0 ? loc.zoom : nil)
 			return true
 		}
 		return false
