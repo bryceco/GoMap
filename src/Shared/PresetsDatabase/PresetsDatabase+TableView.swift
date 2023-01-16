@@ -136,9 +136,9 @@ extension PresetsDatabase {
 		PresetsDatabase.shared.enumeratePresetsUsingBlock({ feature in
 			if feature.nsiSuggestion ||
 				!feature.geometry.contains("area") ||
-				feature.tags
-				.count >
-				1 // very specific tags aren't suitable for whitelist, since we don't know which key is primary (in iD the JSON order is preserved and it would be the first key)
+				// very specific tags aren't suitable for whitelist, since we don't know which key is primary
+				// (in iD the JSON order is preserved and it would be the first key)
+				feature.tags.count > 1
 			{
 				return
 			}
