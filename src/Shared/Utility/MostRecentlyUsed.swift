@@ -19,7 +19,7 @@ class MostRecentlyUsed<T: Equatable> {
 
 	init(maxCount: Int,
 	     userDefaultsKey: String,
-	     autoLoadSave: Bool = false)
+	     autoLoadSave: Bool = true)
 	{
 		self.maxCount = maxCount
 		self.userDefaultsKey = userDefaultsKey
