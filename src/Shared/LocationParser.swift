@@ -12,9 +12,9 @@ import Foundation
 class LocationParser {
 	static func scanDegreesMinutesSeconds(scanner: Scanner) -> Double? {
 		var sign: Double
-		if scanner.scanString("+", into: nil) {
+		if scanner.scanCharacters(from: CharacterSet(charactersIn: "+NE"), into: nil) {
 			sign = 1.0
-		} else if scanner.scanString("-", into: nil) {
+		} else if scanner.scanCharacters(from: CharacterSet(charactersIn: "-SW"), into: nil) {
 			sign = -1.0
 		} else {
 			sign = 1.0
