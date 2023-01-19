@@ -132,41 +132,29 @@ extension PresetsDatabase {
 		var areaKeys = [String: [String: Bool]]()
 		let ignore = ["barrier", "highway", "footway", "railway", "type"]
 
-		// whitelist
+		// whitelist: get every key that can be an area
 		PresetsDatabase.shared.enumeratePresetsUsingBlock({ feature in
-			if feature.nsiSuggestion ||
-				!feature.geometry.contains("area") ||
-				// very specific tags aren't suitable for whitelist, since we don't know which key is primary
-				// (in iD the JSON order is preserved and it would be the first key)
-				feature.tags.count > 1
+			if feature.geometry.contains("area"),
+			   // very specific tags aren't suitable for whitelist, since we don't know which key is primary
+			   // (in iD the JSON order is preserved and it would be the first key)
+			   feature.tags.count == 1,
+			   let key = feature.tags.keys.first,
+			   !ignore.contains(key)
 			{
-				return
-			}
-			for (key, _) in feature.tags {
-				if ignore.contains(key) {
-					return
-				}
 				areaKeys[key] = [String: Bool]()
 			}
 		})
 
-		// blacklist
+		// blacklist: refine key/value pairs that don't have area
 		PresetsDatabase.shared.enumeratePresetsUsingBlock({ feature in
-			if feature.nsiSuggestion ||
-				feature.geometry.contains("area")
-			{
+			guard !feature.geometry.contains("area") else {
 				return
 			}
 			for (key, value) in feature.tags {
-				if ignore.contains(key) {
+				if ignore.contains(key) || value == "*" {
 					return
 				}
-				if value == "*" {
-					return
-				}
-				if var d = areaKeys[key] {
-					d[value] = true
-				}
+				areaKeys[key]?[value] = true
 			}
 		})
 		return areaKeys

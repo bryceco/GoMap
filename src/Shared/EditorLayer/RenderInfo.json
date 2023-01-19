@@ -60,6 +60,10 @@
 	"areaColor" : "F7EFB7"
   },
 
+  "attraction" : {
+	"areaColor" : "E6598E"
+  },
+
   "barrier" : {
 	"lineColor" : "F0F050",
 	"lineWidth" : 1
