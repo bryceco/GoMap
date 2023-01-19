@@ -15,9 +15,9 @@ private let RECENTLY_USED_KEY = "AerialListRecentlyUsed"
 final class TileServerList {
 	private var userDefinedList: [TileServer] = [] // user-defined tile servers
 	private var downloadedList: [TileServer] = [] // downloaded on each launch
-	private var _recentlyUsed = MostRecentlyUsed<TileServer>(maxCount: 6,
-	                                                         userDefaultsKey: RECENTLY_USED_KEY,
-	                                                         autoLoadSave: false)
+	private var recentlyUsedList = MostRecentlyUsed<TileServer>(maxCount: 6,
+	                                                        userDefaultsKey: RECENTLY_USED_KEY,
+	                                                        autoLoadSave: false)
 	private(set) var lastDownloadDate: Date? {
 		get { UserDefaults.standard.object(forKey: "lastImageryDownloadDate") as? Date }
 		set { UserDefaults.standard.set(newValue, forKey: "lastImageryDownloadDate") }
@@ -351,7 +351,7 @@ final class TileServerList {
 		}
 
 		// fetch and decode recently used list
-		_recentlyUsed.load(withMapping: { dict[$0] })
+		recentlyUsedList.load(withMapping: { dict[$0] })
 
 		let currentIdentifier = (defaults.object(forKey: CUSTOMAERIALSELECTION_KEY) as? String)
 			?? TileServer.defaultServer
@@ -364,7 +364,7 @@ final class TileServerList {
 		defaults.set(a, forKey: CUSTOMAERIALLIST_KEY)
 		defaults.set(currentServer.identifier, forKey: CUSTOMAERIALSELECTION_KEY)
 
-		_recentlyUsed.save(withMapping: { $0.identifier })
+		recentlyUsedList.save(withMapping: { $0.identifier })
 	}
 
 	func allServices(at latLon: LatLon) -> [TileServer] {
@@ -402,12 +402,12 @@ final class TileServerList {
 
 	var currentServer = TileServer.bingAerial {
 		didSet {
-			_recentlyUsed.updateWith(currentServer)
+			recentlyUsedList.updateWith(currentServer)
 		}
 	}
 
 	func recentlyUsed() -> [TileServer] {
-		return _recentlyUsed.items
+		return recentlyUsedList.items
 	}
 
 	func count() -> Int {
@@ -431,6 +431,6 @@ final class TileServerList {
 		if service == currentServer {
 			currentServer = builtinServers()[0]
 		}
-		_recentlyUsed.remove(service)
+		recentlyUsedList.remove(service)
 	}
 }
