@@ -544,16 +544,23 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	}
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		let cell = sender as? FeaturePresetCell
-		if let dest = segue.destination as? POIPresetValuePickerController {
-			if case let .key(presetKey) = cell?.presetKey {
-				dest.key = presetKey.tagKey
-				dest.presetValueList = presetKey.presetList ?? []
-				dest.onSetValue = {
-					self.updateTagDict(withValue: $0, forKey: presetKey.tagKey)
-				}
-				dest.navigationItem.title = presetKey.name
+		if let dest = segue.destination as? POIPresetValuePickerController,
+		   let cell = sender as? FeaturePresetCell,
+		   case let .key(presetKey) = cell.presetKey
+		{
+			dest.key = presetKey.tagKey
+			dest.presetValueList = presetKey.presetList ?? []
+			dest.onSetValue = {
+				self.updateTagDict(withValue: $0, forKey: presetKey.tagKey)
 			}
+			var name = presetKey.name
+			if let indexPath = tableView.indexPath(for: cell),
+			   let groupName = tableView(tableView, titleForHeaderInSection: indexPath.section),
+			   groupName != ""
+			{
+				name = groupName + " - " + name
+			}
+			dest.navigationItem.title = name
 		} else if let dest = segue.destination as? POIFeaturePickerViewController {
 			dest.delegate = self
 		}
