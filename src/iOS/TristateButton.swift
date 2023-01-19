@@ -35,6 +35,9 @@ class TristateButton: UISegmentedControl {
 		if let onSelect = onSelect {
 			onSelect(stringForSelection())
 		}
+		// Generate haptic feedback
+		let feedback = UIImpactFeedbackGenerator(style: .light)
+		feedback.impactOccurred()
 	}
 
 	required init?(coder: NSCoder) {
@@ -91,6 +94,9 @@ class KmhMphToggle: UISegmentedControl {
 		if let onSelect = onSelect {
 			onSelect(stringForSelection())
 		}
+		// Generate haptic feedback
+		let feedback = UIImpactFeedbackGenerator(style: .light)
+		feedback.impactOccurred()
 	}
 
 	required init?(coder: NSCoder) {
