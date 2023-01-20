@@ -282,7 +282,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					let wasInside = bounds.contains(pushpinView.arrowPoint)
 					pushpinView.arrowPoint = mapTransform.screenPoint(forLatLon: pp,
 					                                                  birdsEye: true)
-
 					let isInside = bounds.contains(pushpinView.arrowPoint)
 					if wasInside, !isInside {
 						// generate feedback if the user scrolled the pushpin off the screen

@@ -179,26 +179,42 @@ class QuadMap: NSObject, NSSecureCoding {
 
 	func consistencyCheck(nodes: [OsmNode], ways: [OsmWay], relations: [OsmRelation]) {
 		// check that every object appears exactly once in the object tree
-		var dict: [OsmExtendedIdentifier: Int] = [:]
-		var nCount = 0
-		var wCount = 0
-		var rCount = 0
+		var countDict: [OsmExtendedIdentifier: Int] = [:]
+		var quadNodes: Set<OsmIdentifier> = []
+		var quadWays: Set<OsmIdentifier> = []
+		var quadRelations: Set<OsmIdentifier> = []
 		rootQuad.enumerateObjects { obj, rect in
-			let id = obj.extendedIdentifier
-			if let cnt = dict[id] {
-				dict[id] = cnt + 1
-			} else {
-				dict[id] = 1
-			}
 			assert(rect.containsRect(obj.boundingBox))
-			if obj is OsmNode { nCount += 1 }
-			if obj is OsmWay { wCount += 1 }
-			if obj is OsmRelation { rCount += 1 }
 			assert(!obj.deleted)
+			let id = obj.extendedIdentifier
+			if let cnt = countDict[id] {
+				countDict[id] = cnt + 1
+			} else {
+				countDict[id] = 1
+			}
+			if let obj = obj as? OsmNode { quadNodes.insert(obj.ident) }
+			if let obj = obj as? OsmWay { quadWays.insert(obj.ident) }
+			if let obj = obj as? OsmRelation { quadRelations.insert(obj.ident) }
 		}
-		assert(dict.first(where: { $0.value != 1 }) == nil)
-		assert(nCount == nodes.lazy.filter({ !$0.deleted }).count)
-		assert(wCount == ways.lazy.filter({ !$0.deleted }).count)
-		assert(rCount == relations.lazy.filter({ !$0.deleted }).count)
+		// assert that no object appears multiple times in quad tree
+		assert(countDict.first(where: { $0.value != 1 }) == nil)
+
+		// check if there are any items that are missing from quad tree
+		let allNodes = Set<OsmIdentifier>(nodes.lazy.filter({ !$0.deleted }).map { $0.ident })
+		let allWays = Set<OsmIdentifier>(ways.lazy.filter({ !$0.deleted }).map { $0.ident })
+		let allRelations = Set<OsmIdentifier>(relations.lazy.filter({ !$0.deleted }).map { $0.ident })
+		let diffNodes = allNodes.subtracting(quadNodes)
+		let diffWays = allWays.subtracting(quadWays)
+		let diffRelations = allRelations.subtracting(quadRelations)
+		for extra in diffNodes {
+			print("node \(extra)")
+		}
+		for extra in diffWays {
+			print("way \(extra)")
+		}
+		for extra in diffRelations {
+			print("relation \(extra)")
+		}
+		assert(diffNodes.isEmpty && diffWays.isEmpty && diffRelations.isEmpty)
 	}
 }
