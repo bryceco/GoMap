@@ -1171,6 +1171,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Space" xml:space="preserve">
         <source>Space</source>
+        <target state="translated">Espaço</target>
         <note>Space key on the keyboard</note>
       </trans-unit>
       <trans-unit id="Split" xml:space="preserve">

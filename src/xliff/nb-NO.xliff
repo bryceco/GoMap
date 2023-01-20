@@ -333,6 +333,7 @@
       </trans-unit>
       <trans-unit id="Better background imagery is available for your location. Would you like to change to it?" xml:space="preserve">
         <source>Better background imagery is available for your location. Would you like to change to it?</source>
+        <target state="translated">Bedre bakgrunnsbilder er tilgjengelig for posisjonen din. Vil du bytte til det?</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Better imagery available" xml:space="preserve">
@@ -617,11 +618,12 @@ Feil: %@</target>
       </trans-unit>
       <trans-unit id="Error connecting to way" xml:space="preserve">
         <source>Error connecting to way</source>
+        <target state="translated">Kunne ikke koble til bane</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Error fetching metadata: %@" xml:space="preserve">
         <source>Error fetching metadata: %@</source>
-        <target>Klarte ikke å hente metadata: %@</target>
+        <target state="translated">Kunne ikke hente metadata: %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Extending a 'via' in a Turn Restriction will break the relation" xml:space="preserve">
@@ -898,6 +900,7 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="Node is not an element of way" xml:space="preserve">
         <source>Node is not an element of way</source>
+        <target state="translated">Node er ikke et veielement</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node must be the first or last node of the way" xml:space="preserve">
@@ -1541,6 +1544,7 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
       </trans-unit>
       <trans-unit id="km/h" xml:space="preserve">
         <source>km/h</source>
+        <target state="translated">km/t</target>
         <note>kilometers per hour speed</note>
       </trans-unit>
       <trans-unit id="meters" xml:space="preserve">
@@ -1555,6 +1559,7 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
       </trans-unit>
       <trans-unit id="mph" xml:space="preserve">
         <source>mph</source>
+        <target state="translated">mp/t</target>
         <note>miles per hour speed</note>
       </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">

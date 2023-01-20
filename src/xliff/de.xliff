@@ -1172,6 +1172,7 @@ Es ist eine fortgeschrittene Operation, die nur durchgeführt werden sollte, wen
       </trans-unit>
       <trans-unit id="Space" xml:space="preserve">
         <source>Space</source>
+        <target state="translated">Leertaste</target>
         <note>Space key on the keyboard</note>
       </trans-unit>
       <trans-unit id="Split" xml:space="preserve">
