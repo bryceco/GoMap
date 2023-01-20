@@ -279,8 +279,16 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					pushpinView.dragCallback(.changed, drag.x, drag.y)
 				} else {
 					// if not dragging then make sure pin placement is updated
+					let wasInside = bounds.contains(pushpinView.arrowPoint)
 					pushpinView.arrowPoint = mapTransform.screenPoint(forLatLon: pp,
 					                                                  birdsEye: true)
+
+					let isInside = bounds.contains(pushpinView.arrowPoint)
+					if wasInside, !isInside {
+						// generate feedback if the user scrolled the pushpin off the screen
+						let feedback = UINotificationFeedbackGenerator()
+						feedback.notificationOccurred(.warning)
+					}
 				}
 			}
 
