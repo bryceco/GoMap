@@ -709,6 +709,9 @@
 /* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "すみません、GPXファイルのアップロード中にエラーが発生しました";
 
+/* Space key on the keyboard */
+"Space" = "スペース";
+
 /* Edit action */
 "Split" = "分割";
 

@@ -706,6 +706,9 @@
 /* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "Lamento, ocorreu um erro ao carregar o ficheiro GPX";
 
+/* Space key on the keyboard */
+"Space" = "Espaço";
+
 /* Edit action */
 "Split" = "Dividir";
 

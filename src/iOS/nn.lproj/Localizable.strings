@@ -1,0 +1,48 @@
+/* No comment provided by engineer. */
+"Accept" = "Godta";
+
+/* Add to relation */
+"Add inner member" = "Legg til indre medlem";
+
+/* Edit action */
+"Add Note" = "Legg til notat";
+
+/* Add to relation */
+"Add outer member" = "Legg til ytre medlem";
+
+/* No comment provided by engineer. */
+"Add way to multipolygon?" = "Legg veg til multipolygon?";
+
+/* No comment provided by engineer. */
+"Adding members:" = "Legg til medlem:";
+
+/* No comment provided by engineer. */
+"Additional imagery" = "Fleire visuelle element";
+
+/* No comment provided by engineer. */
+"Aerial only" = "Kun flybilete";
+
+/* No comment provided by engineer. */
+"All choices" = "Alle val";
+
+/* No comment provided by engineer. */
+"All Tags" = "Alle stikkord";
+
+/* No comment provided by engineer. */
+"An unknown error occurred fetching metadata" = "Det oppstod ein ukjent feil under innhenting av metadata";
+
+/* Area of an object in m^2 */
+"Area" = "Område";
+
+/* Automatic selection of presets languages */
+"Automatic" = "Automatisk";
+
+/* back button */
+"Back" = "Tilbake";
+
+/* identifies current aerial imagery */
+"Background imagery %@" = "Visuelle bakgrunnselement %@";
+
+/* No comment provided by engineer. */
+"Bad login" = "Innlogging feila";
+

@@ -709,6 +709,9 @@
 /* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "Oprosti, došlo je do greške tijekom učitavanja GPX datoteke";
 
+/* Space key on the keyboard */
+"Space" = "Ramaknica";
+
 /* Edit action */
 "Split" = "Razdvoji";
 

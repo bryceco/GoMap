@@ -709,6 +709,9 @@
 /* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "抱歉，讀取 GPX 檔的時候遇到錯誤";
 
+/* Space key on the keyboard */
+"Space" = "空白";
+
 /* Edit action */
 "Split" = "拆分";
 

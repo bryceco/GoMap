@@ -599,6 +599,10 @@
 		02F53297267AB41C0088DF41 /* EditorMapLayer+HitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorMapLayer+HitTest.swift"; sourceTree = "<group>"; };
 		02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Ext.swift"; sourceTree = "<group>"; };
 		02F6A458268AE42800F2ACE7 /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
+		02F85A01297A45DE008F57C8 /* nn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nn; path = nn.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
+		02F85A02297A45DE008F57C8 /* nn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nn; path = nn.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		02F85A03297A45DE008F57C8 /* nn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nn; path = nn.lproj/Localizable.strings; sourceTree = "<group>"; };
+		02F85A04297A45DE008F57C8 /* nn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nn; path = nn.lproj/Changeset.strings; sourceTree = "<group>"; };
 		02F8DE8D26790A830022460C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		02F8DE8E26790A830022460C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		02F8DE8F26790A830022460C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Height.strings; sourceTree = "<group>"; };
@@ -1329,6 +1333,7 @@
 				pt,
 				sv,
 				es,
+				nn,
 			);
 			mainGroup = 02ACBA2416713CCB00BB4414;
 			packageReferences = (
@@ -1652,6 +1657,7 @@
 				02583B38279D15E70088977A /* zh-Hant */,
 				027F32872816554A00F1DED9 /* fi */,
 				025465192947F60200C7C2F8 /* es */,
+				02F85A01297A45DE008F57C8 /* nn */,
 			);
 			name = DirectionViewController.xib;
 			sourceTree = "<group>";
@@ -1778,6 +1784,7 @@
 				02D2D11D2724B20F003654A8 /* pt-BR */,
 				020F1E7E279D15D6004496EB /* pt */,
 				025465232947F60200C7C2F8 /* es */,
+				02F85A04297A45DE008F57C8 /* nn */,
 			);
 			name = Changeset.storyboard;
 			sourceTree = "<group>";
@@ -1840,6 +1847,7 @@
 				02F4035F279D15CF0089FD41 /* oc */,
 				020F1E75279D15D6004496EB /* pt */,
 				0254651A2947F60200C7C2F8 /* es */,
+				02F85A02297A45DE008F57C8 /* nn */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1903,6 +1911,7 @@
 				02F40360279D15CF0089FD41 /* oc */,
 				020F1E76279D15D6004496EB /* pt */,
 				0254651B2947F60200C7C2F8 /* es */,
+				02F85A03297A45DE008F57C8 /* nn */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

@@ -144,6 +144,9 @@
 "Bad login" = "Feil innlogging";
 
 /* No comment provided by engineer. */
+"Better background imagery is available for your location. Would you like to change to it?" = "Bedre bakgrunnsbilder er tilgjengelig for posisjonen din. Vil du bytte til det?";
+
+/* No comment provided by engineer. */
 "Better imagery available" = "Bedre bakgrunnsbilder tilgjengelig";
 
 /* No comment provided by engineer. */
@@ -339,7 +342,10 @@
 "Error" = "Feil";
 
 /* No comment provided by engineer. */
-"Error fetching metadata: %@" = "Klarte ikke å hente metadata: %@";
+"Error connecting to way" = "Kunne ikke koble til bane";
+
+/* No comment provided by engineer. */
+"Error fetching metadata: %@" = "Kunne ikke hente metadata: %@";
 
 /* No comment provided by engineer. */
 "GPX Upload Complete" = "GPX-fil opplastet";
@@ -367,6 +373,9 @@
 
 /* Edit action */
 "Join" = "Knytt sammen";
+
+/* kilometers per hour speed */
+"km/h" = "km/t";
 
 /* No comment provided by engineer. */
 "Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "Språkvalg har kun innvirkning på forvalg, som også er oversatt for iD. Hovedgrensesnittet er fremdeles Engelsk.";
@@ -446,6 +455,9 @@
 /* No comment provided by engineer. */
 "Move selected object?" = "Flytt valgt object?";
 
+/* miles per hour speed */
+"mph" = "mp/t";
+
 /* No comment provided by engineer. */
 "Multipolygon" = "Multipolygon";
 
@@ -485,6 +497,9 @@
 
 /* No comment provided by engineer. */
 "Node Attributes" = "Node-attributter";
+
+/* No comment provided by engineer. */
+"Node is not an element of way" = "Node er ikke et veielement";
 
 /* No comment provided by engineer. */
 "Node Tags" = "Nodeetiketter";

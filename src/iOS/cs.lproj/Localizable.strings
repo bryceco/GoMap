@@ -709,6 +709,9 @@
 /* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "Omlouváme se, při načítání GPX souboru došlo k chybě";
 
+/* Space key on the keyboard */
+"Space" = "Mezerník";
+
 /* Edit action */
 "Split" = "Rozdělit";
 
