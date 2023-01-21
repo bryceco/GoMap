@@ -10,16 +10,8 @@ import Foundation
 
 // not used as a class yet, maybe someday
 final class OsmTags {
-	private static let PrettyTagExpr: NSRegularExpression = {
-		do {
-			let e = try NSRegularExpression(
-				pattern: "^[abcdefghijklmnopqrstuvwxyz_:;]+$",
-				options: [])
-			return e
-		} catch {
-			abort()
-		}
-	}()
+	private static let PrettyTagExpr = try! NSRegularExpression(pattern: "^[abcdefghijklmnopqrstuvwxyz_:;]+$",
+	                                                            options: [])
 
 	class func PrettyTag(_ tag: String) -> String {
 		if PrettyTagExpr.matches(in: tag, options: [], range: NSRange(location: 0, length: tag.count)).count > 0 {

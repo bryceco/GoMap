@@ -426,8 +426,10 @@ extension PresetsDatabase {
 	                   ignore: [String],
 	                   update: (() -> Void)?) -> PresetGroup?
 	{
-		guard let dict = jsonFields[fieldName] as? [String: Any] else { return nil }
-		if dict.count == 0 {
+		guard
+			let dict = jsonFields[fieldName] as? [String: Any],
+			dict.count > 0
+		else {
 			return nil
 		}
 
@@ -474,7 +476,7 @@ extension PresetsDatabase {
 			}
 		}
 
-		let type = dict["type"] as! String
+		guard let type = dict["type"] as? String else { return nil }
 		let key = dict["key"] as? String ?? fieldName
 		let label = (redirectedField("label", in: dict) as? String) ?? OsmTags.PrettyTag(key)
 		let placeholder = redirectedField("placeholder", in: dict) as? String
@@ -577,7 +579,7 @@ extension PresetsDatabase {
 
 			let keys = dict["keys"] as! [String]
 			let types = dict["types"] as? [String: String] ?? [:]
-			let strings = redirectedField("strings", in: dict) as! [String: [String: String]]
+			let strings = redirectedField("strings", in: dict) as? [String: [String: String]] ?? [:]
 			let options = dict["options"] as! [String]
 			for key in keys {
 				let name = types[key] ?? OsmTags.PrettyTag(key)
