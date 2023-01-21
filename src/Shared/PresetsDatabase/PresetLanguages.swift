@@ -8,6 +8,8 @@
 
 import Foundation
 
+// This class provides a list of all languages that iD presets have been translated into,
+// which is a larger list than the languages the app has been translated into.
 final class PresetLanguages {
 	static let codeList: [String] = {
 		let path = Bundle.main.resourcePath! + "/presets/translations"
@@ -16,19 +18,17 @@ final class PresetLanguages {
 		list.sort(by: { code1, code2 -> Bool in
 			let s1 = PresetLanguages.languageNameForCode(code1) ?? ""
 			let s2 = PresetLanguages.languageNameForCode(code2) ?? ""
-			return s1.caseInsensitiveCompare(s2) == ComparisonResult.orderedAscending
+			return s1.caseInsensitiveCompare(s2) == .orderedAscending
 		})
 		return list
 	}()
 
-	init() {}
-
-	func preferredLanguageIsDefault() -> Bool {
+	class func preferredLanguageIsDefault() -> Bool {
 		let code = UserDefaults.standard.object(forKey: "preferredLanguage") as? String
 		return code == nil
 	}
 
-	func preferredLanguageCode() -> String {
+	class func preferredLanguageCode() -> String {
 		if let code = UserDefaults.standard.object(forKey: "preferredLanguage") as? String {
 			return code
 		}
@@ -37,12 +37,13 @@ final class PresetLanguages {
 		return matches.first ?? "en"
 	}
 
-	func setPreferredLanguageCode(_ code: String?) {
+	// code is either a language core, or nil if the default is requested
+	class func setPreferredLanguageCode(_ code: String?) {
 		UserDefaults.standard.set(code, forKey: "preferredLanguage")
 	}
 
-	func languageCodes() -> [String] {
-		return PresetLanguages.codeList
+	class func languageCodes() -> [String] {
+		return Self.codeList
 	}
 
 	class func languageNameForCode(_ code: String) -> String? {

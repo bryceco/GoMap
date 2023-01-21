@@ -576,7 +576,7 @@ extension PresetsDatabase {
 			var tagList: [PresetKeyOrGroup] = []
 
 			let keys = dict["keys"] as! [String]
-			let types = dict["types"] as! [String: String]
+			let types = dict["types"] as? [String: String] ?? [:]
 			let strings = redirectedField("strings", in: dict) as! [String: [String: String]]
 			let options = dict["options"] as! [String]
 			for key in keys {

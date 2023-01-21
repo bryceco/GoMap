@@ -471,7 +471,7 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 	@IBAction func infoButtonPressed(_ sender: Any?) {
 		// show OSM wiki page
 		guard let key = text1.text else { return }
-		let languageCode = PresetLanguages().preferredLanguageCode()
+		let languageCode = PresetLanguages.preferredLanguageCode()
 		let progress = UIActivityIndicatorView(style: .gray)
 		progress.frame = infoButton.bounds
 		infoButton.addSubview(progress)

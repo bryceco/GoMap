@@ -72,9 +72,7 @@ final class PresetsDatabase {
 
 	init() {
 		// get translations for current language
-		let presetLanguages =
-			PresetLanguages() // don't need to save this, it doesn't get used again unless user changes the language
-		let code = presetLanguages.preferredLanguageCode()
+		let code = PresetLanguages.preferredLanguageCode()
 		let file = "translations/" + code + ".json"
 		let trans = PresetsDatabase.DictionaryForFile(file) as! [String: [String: Any]]
 		let jsonTranslation = (trans[code]?["presets"] as? [String: [String: Any]]) ?? [String: [String: Any]]()

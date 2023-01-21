@@ -194,7 +194,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 			recentSourceList.updateWith(source)
 		}
 
-		let locale = PresetLanguages().preferredLanguageCode()
+		let locale = PresetLanguages.preferredLanguageCode()
 
 		let completion: ((String?) -> Void) = { [self] error in
 			progressView.stopAnimating()
