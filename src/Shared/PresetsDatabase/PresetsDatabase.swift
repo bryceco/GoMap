@@ -9,10 +9,10 @@
 import Foundation
 
 final class PresetsDatabase {
-	static var shared = PresetsDatabase()
-	class func reload() {
+	static var shared = PresetsDatabase(withLanguageCode: PresetLanguages.preferredLanguageCode())
+	class func reload(withLanguageCode code: String) {
 		// called when language changes
-		shared = PresetsDatabase()
+		shared = PresetsDatabase(withLanguageCode: code)
 	}
 
 	// these map a FeatureID to a feature
@@ -23,9 +23,8 @@ final class PresetsDatabase {
 	var nsiIndex: [String: [PresetFeature]] // generic+NSI index
 	var nsiGeoJson: [String: GeoJSON] // geojson regions for NSI
 
-	private class func DictionaryForFile(_ file: String?) -> Any? {
-		guard let file = file,
-		      let path = Bundle.main.resourcePath?.appending("/presets/" + file),
+	private class func jsonForFile(_ file: String) -> Any? {
+		guard let path = Bundle.main.resourcePath?.appending("/presets/" + file),
 		      let rootPresetData = try? NSData(contentsOfFile: path) as Data,
 		      let dict = try? JSONSerialization.jsonObject(with: rootPresetData, options: [])
 		else {
@@ -68,11 +67,10 @@ final class PresetsDatabase {
 	let noForLocale: String
 	let unknownForLocale: String
 
-	init() {
+	init(withLanguageCode code: String) {
 		// get translations for current language
-		let code = PresetLanguages.preferredLanguageCode()
 		let file = "translations/" + code + ".json"
-		let trans = Self.DictionaryForFile(file) as! [String: [String: Any]]
+		let trans = Self.jsonForFile(file) as! [String: [String: Any]]
 		let jsonTranslation = (trans[code]?["presets"] as? [String: [String: Any]]) ?? [:]
 		// get localized common words
 		let fieldTrans = jsonTranslation["fields"] as? [String: [String: Any]] ?? [:]
@@ -82,21 +80,18 @@ final class PresetsDatabase {
 		unknownForLocale = fieldTrans["opening_hours"]?["placeholder"] as? String ?? "???"
 
 		// get presets files
-		let jsonDefaultsPre = Self.DictionaryForFile("preset_defaults.json")!
-		let jsonCategoriesPre = Self.DictionaryForFile("preset_categories.json")!
-		let jsonFieldsPre = Self.DictionaryForFile("fields.json")!
-		jsonDefaults = Self.Translate(jsonDefaultsPre,
+		jsonDefaults = Self.Translate(Self.jsonForFile("preset_defaults.json")!,
 		                              jsonTranslation["defaults"]) as! [String: Any]
-		jsonCategories = Self.Translate(jsonCategoriesPre,
+		jsonCategories = Self.Translate(Self.jsonForFile("preset_categories.json")!,
 		                                jsonTranslation["categories"]) as! [String: Any]
-		jsonFields = Self.Translate(jsonFieldsPre,
+		jsonFields = Self.Translate(Self.jsonForFile("fields.json")!,
 		                            jsonTranslation["fields"]) as! [String: Any]
 
 		// address formats
-		jsonAddressFormats = Self.DictionaryForFile("address_formats.json") as! [Any]
+		jsonAddressFormats = Self.jsonForFile("address_formats.json") as! [Any]
 
 		// initialize presets and index them
-		var jsonPresetsDict = Self.DictionaryForFile("presets.json")!
+		var jsonPresetsDict = Self.jsonForFile("presets.json")!
 		jsonPresetsDict = Self.Translate(jsonPresetsDict, jsonTranslation["presets"])
 		stdPresets = Self.featureDictForJsonDict(jsonPresetsDict as! [String: [String: Any]], isNSI: false)
 		stdIndex = Self.buildTagIndex([stdPresets], basePresets: stdPresets)
@@ -107,7 +102,7 @@ final class PresetsDatabase {
 		nsiGeoJson = [String: GeoJSON]()
 
 		DispatchQueue.global(qos: .userInitiated).async {
-			let jsonNsiPresetsDict = Self.DictionaryForFile("nsi_presets.json")
+			let jsonNsiPresetsDict = Self.jsonForFile("nsi_presets.json")
 			let nsiPresets2 = Self.featureDictForJsonDict(
 				jsonNsiPresetsDict as! [String: [String: Any]],
 				isNSI: true)
@@ -136,7 +131,7 @@ final class PresetsDatabase {
 		}
 
 		DispatchQueue.global(qos: .userInitiated).async {
-			if let json = Self.DictionaryForFile("nsi_geojson.json"),
+			if let json = Self.jsonForFile("nsi_geojson.json"),
 			   let dict = json as? [String: Any?],
 			   let features = dict["features"] as? [Any]
 			{

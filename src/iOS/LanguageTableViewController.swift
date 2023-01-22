@@ -32,7 +32,7 @@ class LanguageTableViewController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return PresetLanguages.languageCodes().count + 1
+		return PresetLanguages.languageCodeList.count + 1
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -48,7 +48,7 @@ class LanguageTableViewController: UITableViewController {
 			cell.textLabel?.text = NSLocalizedString("Automatic", comment: "Automatic selection of presets languages")
 			cell.detailTextLabel?.text = nil
 		} else {
-			code = PresetLanguages.languageCodes()[indexPath.row - 1]
+			code = PresetLanguages.languageCodeList[indexPath.row - 1]
 
 			// name in native language
 			cell.textLabel?.text = PresetLanguages.languageNameForCode(code ?? "") ?? ""
@@ -72,13 +72,13 @@ class LanguageTableViewController: UITableViewController {
 		if indexPath.row == 0 {
 			PresetLanguages.setPreferredLanguageCode(nil)
 		} else {
-			let code = PresetLanguages.languageCodes()[indexPath.row - 1]
+			let code = PresetLanguages.languageCodeList[indexPath.row - 1]
 			PresetLanguages.setPreferredLanguageCode(code)
 		}
 
 		self.tableView.reloadData()
 
-		PresetsDatabase.reload() // reset tags
+		PresetsDatabase.reload(withLanguageCode: PresetLanguages.preferredLanguageCode()) // reset tags
 		AppDelegate.shared.mapView.refreshPushpinText()
 	}
 }

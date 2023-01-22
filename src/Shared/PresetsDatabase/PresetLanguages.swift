@@ -11,7 +11,7 @@ import Foundation
 // This class provides a list of all languages that iD presets have been translated into,
 // which is a larger list than the languages the app has been translated into.
 final class PresetLanguages {
-	static let codeList: [String] = {
+	static let languageCodeList: [String] = {
 		let path = Bundle.main.resourcePath! + "/presets/translations"
 		var list = (try? FileManager.default.contentsOfDirectory(atPath: path)) ?? []
 		list = list.map({ $0.replacingOccurrences(of: ".json", with: "") })
@@ -33,17 +33,13 @@ final class PresetLanguages {
 			return code
 		}
 		let userPrefs = NSLocale.preferredLanguages
-		let matches = Bundle.preferredLocalizations(from: PresetLanguages.codeList, forPreferences: userPrefs)
+		let matches = Bundle.preferredLocalizations(from: PresetLanguages.languageCodeList, forPreferences: userPrefs)
 		return matches.first ?? "en"
 	}
 
 	// code is either a language core, or nil if the default is requested
 	class func setPreferredLanguageCode(_ code: String?) {
 		UserDefaults.standard.set(code, forKey: "preferredLanguage")
-	}
-
-	class func languageCodes() -> [String] {
-		return Self.codeList
 	}
 
 	class func languageNameForCode(_ code: String) -> String? {

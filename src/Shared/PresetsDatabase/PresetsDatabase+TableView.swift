@@ -14,7 +14,7 @@ enum PresetFeatureOrCategory {
 	case feature(PresetFeature)
 }
 
-// The entire presets database from iD
+// Methods used to generate a UITableView
 extension PresetsDatabase {
 	func featuresAndCategoriesForGeometry(_ geometry: GEOMETRY) -> [PresetFeatureOrCategory] {
 		let list = jsonDefaults[geometry.rawValue] as! [String]
@@ -34,7 +34,7 @@ extension PresetsDatabase {
 				}
 			}
 		} else {
-			list = PresetsDatabase.shared.featuresMatchingSearchText(
+			list = Self.shared.featuresMatchingSearchText(
 				searchText,
 				geometry: geometry,
 				location: AppDelegate.shared.mapView.currentRegion)
@@ -102,7 +102,7 @@ extension PresetsDatabase {
 				set.formUnion(list)
 			}
 		}
-		PresetsDatabase.shared.enumeratePresetsUsingBlock({ feature in
+		Self.shared.enumeratePresetsUsingBlock({ feature in
 			if let value = feature.tags[key] {
 				set.insert(value)
 			}
@@ -124,10 +124,10 @@ extension PresetsDatabase {
 	}()
 
 	func allFeatureKeys() -> Set<String> {
-		return PresetsDatabase.allFeatureKeysSet
+		return Self.allFeatureKeysSet
 	}
 
-	static let areaTagsDictionary: [String: [String: Bool]] = {
+	private static let areaTagsDictionary: [String: [String: Bool]] = {
 		// make a list of items that can/cannot be areas
 		var areaKeys = [String: [String: Bool]]()
 		let ignore = ["barrier", "highway", "footway", "railway", "type"]
@@ -176,7 +176,7 @@ extension PresetsDatabase {
 			return true // newly created closed way
 		}
 		for (key, val) in way.tags {
-			if let exclusions = PresetsDatabase.areaTagsDictionary[key] {
+			if let exclusions = Self.areaTagsDictionary[key] {
 				if exclusions[val] == nil {
 					return true
 				}
@@ -185,7 +185,7 @@ extension PresetsDatabase {
 		return false
 	}
 
-	static var autocompleteIgnoreList: [String: Bool] = [
+	static let autocompleteIgnoreList: [String: Bool] = [
 		"capacity": true,
 		"depth": true,
 		"ele": true,
@@ -200,10 +200,10 @@ extension PresetsDatabase {
 		"width": true
 	]
 	func eligibleForAutocomplete(_ key: String) -> Bool {
-		if PresetsDatabase.autocompleteIgnoreList[key] != nil {
+		if Self.autocompleteIgnoreList[key] != nil {
 			return false
 		}
-		for (suffix, isSuffix) in PresetsDatabase.autocompleteIgnoreList {
+		for (suffix, isSuffix) in Self.autocompleteIgnoreList {
 			if isSuffix, key.hasSuffix(suffix), key.dropLast(suffix.count).hasSuffix(":") {
 				return false
 			}
@@ -218,7 +218,7 @@ extension PresetsDatabase {
 				let category = PresetCategory(categoryID: featureID)
 				list.append(.category(category))
 			} else {
-				if let feature = PresetsDatabase.shared.presetFeatureForFeatureID(featureID) {
+				if let feature = Self.shared.presetFeatureForFeatureID(featureID) {
 					list.append(.feature(feature))
 				}
 			}
@@ -384,8 +384,8 @@ extension PresetsDatabase {
 		autocorrect: UITextAutocorrectionType) -> PresetKey
 	{
 		let presets = [
-			PresetValue(name: PresetsDatabase.shared.yesForLocale, details: nil, tagValue: "yes"),
-			PresetValue(name: PresetsDatabase.shared.noForLocale, details: nil, tagValue: "no")
+			PresetValue(name: Self.shared.yesForLocale, details: nil, tagValue: "yes"),
+			PresetValue(name: Self.shared.noForLocale, details: nil, tagValue: "no")
 		]
 		let tag = PresetKey(
 			name: label,
@@ -413,7 +413,6 @@ extension PresetsDatabase {
 			if let newDict = jsonFields[redirect] as? [String: Any],
 			   let newValue = redirectedField(field, in: newDict)
 			{
-				// print("\(field) -> \(value) -> \(newValue)")
 				return newValue
 			}
 		}
@@ -482,8 +481,7 @@ extension PresetsDatabase {
 		let placeholder = redirectedField("placeholder", in: dict) as? String
 		let defaultValue = dict["default"] as? String
 		var keyboard = UIKeyboardType.default
-		var capitalize = key.hasPrefix("name:") || key == "operator"
-			? UITextAutocapitalizationType.words : UITextAutocapitalizationType.none
+		var capitalize: UITextAutocapitalizationType = key.hasPrefix("name:") || key == "operator" ? .words : .none
 		var autocorrect = UITextAutocorrectionType.no
 
 		switch type {
