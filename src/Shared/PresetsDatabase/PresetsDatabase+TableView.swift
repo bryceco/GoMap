@@ -126,64 +126,6 @@ extension PresetsDatabase {
 		return Self.allFeatureKeysSet
 	}
 
-	private static let areaTagsDictionary: [String: [String: Bool]] = {
-		// make a list of items that can/cannot be areas
-		var areaKeys = [String: [String: Bool]]()
-		let ignore = ["barrier", "highway", "footway", "railway", "type"]
-
-		// whitelist: get every key that can be an area
-		PresetsDatabase.shared.enumeratePresetsUsingBlock({ feature in
-			if feature.geometry.contains("area"),
-			   // very specific tags aren't suitable for whitelist, since we don't know which key is primary
-			   // (in iD the JSON order is preserved and it would be the first key)
-			   feature.tags.count == 1,
-			   let key = feature.tags.keys.first,
-			   !ignore.contains(key)
-			{
-				areaKeys[key] = [String: Bool]()
-			}
-		})
-
-		// blacklist: refine key/value pairs that don't have area
-		PresetsDatabase.shared.enumeratePresetsUsingBlock({ feature in
-			guard !feature.geometry.contains("area") else {
-				return
-			}
-			for (key, value) in feature.tags {
-				if ignore.contains(key) || value == "*" {
-					return
-				}
-				areaKeys[key]?[value] = true
-			}
-		})
-		return areaKeys
-	}()
-
-	func isArea(_ way: OsmWay) -> Bool {
-		if let value = way.tags["area"] {
-			if OsmTags.isOsmBooleanTrue(value) {
-				return true
-			}
-			if OsmTags.isOsmBooleanFalse(value) {
-				return false
-			}
-		}
-		if !way.isClosed() {
-			return false
-		}
-		if way.tags.count == 0 {
-			return true // newly created closed way
-		}
-		for (key, val) in way.tags {
-			if let exclusions = Self.areaTagsDictionary[key] {
-				if exclusions[val] == nil {
-					return true
-				}
-			}
-		}
-		return false
-	}
-
 	static let autocompleteIgnoreList: [String: Bool] = [
 		"capacity": true,
 		"depth": true,

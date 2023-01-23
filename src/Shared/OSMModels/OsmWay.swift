@@ -87,7 +87,7 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 	}
 
 	func isArea() -> Bool {
-		return PresetsDatabase.shared.isArea(self)
+		return PresetArea.shared.isArea(self)
 	}
 
 	func isClosed() -> Bool {

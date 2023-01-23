@@ -46,6 +46,8 @@ final class PresetField {
 	var type: String { jsonDict["type"] as! String }
 	var defaultValue: String? { jsonDict["default"] as? String }
 	var options: [String]? { jsonDict["options"] as? [String] }
+	var autoSuggestions: Bool { jsonDict["autoSuggestions"] as? Bool ?? true }
+	var replacement: String? { jsonDict["replacement"] as? String }
 
 	// preconditions
 	var geometry: [String]? { jsonDict["geometry"] as? [String] }

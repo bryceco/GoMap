@@ -32,6 +32,9 @@ final class PresetFeature {
 	let terms: [String]
 	let aliases: [String] // an alias is a localizable alternative to 'name'
 
+	var addTags: [String: String] { return _addTags ?? tags }
+	var removeTags: [String: String] { return _removeTags ?? addTags }
+
 	init?(withID featureID: String, jsonDict: [String: Any], isNSI: Bool) {
 		guard jsonDict["tags"] is [String: String] else { return nil }
 
@@ -115,14 +118,6 @@ final class PresetFeature {
 		return _iconScaled24
 	}
 
-	func addTags() -> [String: String] {
-		return _addTags ?? tags
-	}
-
-	func removeTags() -> [String: String] {
-		return _removeTags ?? addTags()
-	}
-
 	func objectTagsUpdatedForFeature(_ tags: [String: String], geometry: GEOMETRY,
 	                                 location: MapView.CurrentRegion) -> [String: String]
 	{
@@ -135,8 +130,8 @@ final class PresetFeature {
 			includeNSI: true)
 
 		// remove previous feature tags
-		var removeTags = oldFeature?.removeTags() ?? [:]
-		for key in addTags().keys {
+		var removeTags = oldFeature?.removeTags ?? [:]
+		for key in addTags.keys {
 			removeTags.removeValue(forKey: key)
 		}
 		for key in removeTags.keys {
@@ -144,7 +139,7 @@ final class PresetFeature {
 		}
 
 		// add new feature tags
-		for (key, value) in addTags() {
+		for (key, value) in addTags {
 			if value == "*" {
 				if tags[key] == nil {
 					tags[key] = "yes"
@@ -162,6 +157,11 @@ final class PresetFeature {
 			if tags[key] == nil {
 				tags[key] = value
 			}
+		}
+
+		// add area=yes if it is implied
+		if PresetArea.shared.needsAreaKey(forTags: tags, geometry: geometry, feature: self) {
+			tags["area"] = "yes"
 		}
 
 		// remove any empty values

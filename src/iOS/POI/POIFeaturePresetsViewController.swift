@@ -206,7 +206,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		   presetKeys.first == ""
 		{
 			presetKeys.remove(at: 0)
-			presetKeys += feature.addTags().keys
+			presetKeys += feature.addTags.keys
 		}
 		let dict = (tabBarController as! POITabBarController).keyValueDict
 		var extraKeys = Array(dict.keys)
@@ -429,7 +429,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 				let text = allPresets?.featureName() ?? ""
 				cell.valueField.text = text
 				cell.valueField.isEnabled = false
-				cell.isSet.backgroundColor = (selectedFeature?.addTags().count ?? 0) > 0 ? Self.isSetHighlight : nil
+				cell.isSet.backgroundColor = (selectedFeature?.addTags.count ?? 0) > 0 ? Self.isSetHighlight : nil
 			} else if presetKey.isYesNo() {
 				// special case for yes/no tristate
 				let button = TristateYesNoButton()

@@ -157,11 +157,11 @@ final class PresetsDatabase {
 									geometry = GEOMETRY(rawValue: geom[0])!
 								}
 								_ = presets.presetGroupForField(fieldName: name,
-																objectTags: [:],
-																geometry: geometry,
-																countryCode: "us",
-																ignore: [],
-																update: nil)
+								                                objectTags: [:],
+								                                geometry: geometry,
+								                                countryCode: "us",
+								                                ignore: [],
+								                                update: nil)
 							}
 						}
 					}
