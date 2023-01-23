@@ -17,7 +17,7 @@ enum PresetFeatureOrCategory {
 // Methods used to generate a UITableView
 extension PresetsDatabase {
 	func featuresAndCategoriesForGeometry(_ geometry: GEOMETRY) -> [PresetFeatureOrCategory] {
-		let list = jsonDefaults[geometry.rawValue] as! [String]
+		let list = jsonDefaults[geometry.rawValue]!
 		let featureList = featuresAndCategoriesForMemberList(memberList: list)
 		return featureList
 	}
@@ -25,7 +25,7 @@ extension PresetsDatabase {
 	func featuresInCategory(_ category: PresetCategory?,
 	                        matching searchText: String,
 	                        geometry: GEOMETRY,
-							location: MapView.CurrentRegion) -> [PresetFeature]
+	                        location: MapView.CurrentRegion) -> [PresetFeature]
 	{
 		var list = [(feature: PresetFeature, score: Int)]()
 		if let category = category {
@@ -402,7 +402,7 @@ extension PresetsDatabase {
 	func presetGroupForField(fieldName: String,
 	                         objectTags: [String: String],
 	                         geometry: GEOMETRY,
-							 countryCode: String,
+	                         countryCode: String,
 	                         ignore: [String],
 	                         update: (() -> Void)?) -> PresetGroup?
 	{
@@ -565,47 +565,43 @@ extension PresetsDatabase {
 				"postcode",
 				"unit"
 			]
-			var keysForCountry: [[String]]?
-			for localeDict in jsonAddressFormats {
-				guard let localeDict = localeDict as? [String: Any] else { continue }
-				if let countryCodeList = localeDict["countryCodes"] as? [String],
-				   countryCodeList.contains(countryCode)
+			var keysForCountry: [String]?
+			for locale in presetAddressFormats {
+				if let countryCodes = locale.countryCodes,
+				   countryCodes.contains(countryCode)
 				{
 					// country specific format
-					keysForCountry = localeDict["format"] as? [[String]]
+					keysForCountry = locale.addressKeys
 					break
 				} else {
 					// default
-					keysForCountry = localeDict["format"] as? [[String]]
+					keysForCountry = locale.addressKeys
 				}
 			}
 
 			let placeholders = field.placeholders
 			var addrs: [PresetKeyOrGroup] = []
-			for addressGroup in keysForCountry ?? [] {
-				for addressKey in addressGroup {
-					var name: String
-					let placeholder = placeholders?[addressKey] as? String
-					if let placeholder = placeholder, placeholder != "123" {
-						name = placeholder
-					} else {
-						name = OsmTags.PrettyTag(addressKey)
-					}
-					let keyboard: UIKeyboardType = numericFields
-						.contains(addressKey) ? .numbersAndPunctuation : .default
-					let tagKey = "\(addressPrefix):\(addressKey)"
-					let tag = PresetKey(
-						name: name,
-						type: field.type,
-						tagKey: tagKey,
-						defaultValue: field.defaultValue,
-						placeholder: placeholder,
-						keyboard: keyboard,
-						capitalize: .words,
-						autocorrect: .no,
-						presets: nil)
-					addrs.append(.key(tag))
+			for addressKey in keysForCountry ?? [] {
+				let name: String
+				let placeholder = placeholders?[addressKey] as? String
+				if let placeholder = placeholder, placeholder != "123" {
+					name = placeholder
+				} else {
+					name = OsmTags.PrettyTag(addressKey)
 				}
+				let keyboard: UIKeyboardType = numericFields.contains(addressKey) ? .numbersAndPunctuation : .default
+				let tagKey = "\(addressPrefix):\(addressKey)"
+				let tag = PresetKey(
+					name: name,
+					type: field.type,
+					tagKey: tagKey,
+					defaultValue: field.defaultValue,
+					placeholder: placeholder,
+					keyboard: keyboard,
+					capitalize: .words,
+					autocorrect: .no,
+					presets: nil)
+				addrs.append(.key(tag))
 			}
 			let group = PresetGroup(name: label, tags: addrs)
 			return group

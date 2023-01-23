@@ -59,9 +59,9 @@ final class PresetsDatabase {
 		return newDict
 	}
 
-	let jsonAddressFormats: [Any] // address formats for different countries
-	let jsonDefaults: [String: Any] // map a geometry to a set of features/categories
-	let jsonCategories: [String: Any] // map a top-level category ("building") to a set of specific features ("building/retail")
+	let presetAddressFormats: [PresetAddressFormat] // address formats for different countries
+	let jsonDefaults: [String: [String]] // map a geometry to a set of features/categories
+	let jsonCategories: [String: [String: Any]] // map a top-level category ("building") to a set of specific features ("building/retail")
 	let presetFields: [String: PresetField] // possible values for a preset key ("oneway=")
 
 	let yesForLocale: String
@@ -83,15 +83,16 @@ final class PresetsDatabase {
 
 		// get presets files
 		jsonDefaults = Self.Translate(Self.jsonForFile("preset_defaults.json")!,
-		                              jsonTranslation["defaults"]) as! [String: Any]
+		                              jsonTranslation["defaults"]) as! [String: [String]]
 		jsonCategories = Self.Translate(Self.jsonForFile("preset_categories.json")!,
-		                                jsonTranslation["categories"]) as! [String: Any]
+		                                jsonTranslation["categories"]) as! [String: [String: Any]]
 		presetFields = (Self.Translate(Self.jsonForFile("fields.json")!,
 		                               jsonTranslation["fields"]) as! [String: Any])
 			.compactMapValues({ PresetField(withJson: $0 as! [String: Any]) })
 
 		// address formats
-		jsonAddressFormats = Self.jsonForFile("address_formats.json") as! [Any]
+		presetAddressFormats = (Self.jsonForFile("address_formats.json") as! [Any])
+			.map({ PresetAddressFormat(withJson: $0 as! [String: Any]) })
 
 		// initialize presets and index them
 		var jsonPresetsDict = Self.jsonForFile("presets.json")!
@@ -125,11 +126,11 @@ final class PresetsDatabase {
 								geometry = GEOMETRY(rawValue: geom[0])!
 							}
 							_ = presets.presetGroupForField(fieldName: name,
-															objectTags: [:],
-															geometry: geometry,
-															countryCode: "us",
-															ignore: [],
-															update: nil)
+							                                objectTags: [:],
+							                                geometry: geometry,
+							                                countryCode: "us",
+							                                ignore: [],
+							                                update: nil)
 						}
 					}
 				}

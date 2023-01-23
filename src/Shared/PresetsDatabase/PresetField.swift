@@ -14,17 +14,17 @@ struct LocationSet {
 
 	init?(withJson json: Any?) {
 		guard let json = json as? [String: Any] else { return nil }
-		self.include = json["include"] as? [String]
-		self.exclude = json["exclude"] as? [String]
+		include = json["include"] as? [String]
+		exclude = json["exclude"] as? [String]
 	}
 
 	func contains(countryCode: String) -> Bool {
-		if let includeList = self.include,
+		if let includeList = include,
 		   !includeList.map({ $0.lowercased() }).contains(countryCode)
 		{
 			return false
 		}
-		if let excludeList = self.exclude,
+		if let excludeList = exclude,
 		   excludeList.map({ $0.lowercased() }).contains(countryCode)
 		{
 			return false
@@ -37,7 +37,7 @@ final class PresetField {
 	let jsonDict: [String: Any]
 
 	init?(withJson json: [String: Any]) {
-		guard json["type"] is String else {	return nil}
+		guard json["type"] is String else { return nil }
 		jsonDict = json
 	}
 
