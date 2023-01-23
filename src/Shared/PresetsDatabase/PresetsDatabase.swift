@@ -49,8 +49,9 @@ final class PresetsDatabase {
 				newDict[key] = Translate(obj, translation[key])
 			}
 		}
+
+		// need to add things that don't exist in orig
 		for (key, obj) in translation {
-			// need to add things that don't exist in orig
 			if newDict[key] == nil {
 				newDict[key] = obj
 			}
@@ -61,7 +62,7 @@ final class PresetsDatabase {
 	let jsonAddressFormats: [Any] // address formats for different countries
 	let jsonDefaults: [String: Any] // map a geometry to a set of features/categories
 	let jsonCategories: [String: Any] // map a top-level category ("building") to a set of specific features ("building/retail")
-	let jsonFields: [String: Any] // possible values for a preset key ("oneway=")
+	let presetFields: [String: PresetField] // possible values for a preset key ("oneway=")
 
 	let yesForLocale: String
 	let noForLocale: String
@@ -72,6 +73,7 @@ final class PresetsDatabase {
 		let file = "translations/" + code + ".json"
 		let trans = Self.jsonForFile(file) as! [String: [String: Any]]
 		let jsonTranslation = (trans[code]?["presets"] as? [String: [String: Any]]) ?? [:]
+
 		// get localized common words
 		let fieldTrans = jsonTranslation["fields"] as? [String: [String: Any]] ?? [:]
 		let yesNoDict = fieldTrans["internet_access"]?["options"] as? [String: String]
@@ -84,8 +86,9 @@ final class PresetsDatabase {
 		                              jsonTranslation["defaults"]) as! [String: Any]
 		jsonCategories = Self.Translate(Self.jsonForFile("preset_categories.json")!,
 		                                jsonTranslation["categories"]) as! [String: Any]
-		jsonFields = Self.Translate(Self.jsonForFile("fields.json")!,
-		                            jsonTranslation["fields"]) as! [String: Any]
+		presetFields = (Self.Translate(Self.jsonForFile("fields.json")!,
+		                               jsonTranslation["fields"]) as! [String: Any])
+			.compactMapValues({ PresetField(withJson: $0 as! [String: Any]) })
 
 		// address formats
 		jsonAddressFormats = Self.jsonForFile("address_formats.json") as! [Any]
@@ -102,29 +105,33 @@ final class PresetsDatabase {
 		nsiGeoJson = [String: GeoJSON]()
 
 		DispatchQueue.global(qos: .userInitiated).async {
-			let jsonNsiPresetsDict = Self.jsonForFile("nsi_presets.json")
-			let nsiPresets2 = Self.featureDictForJsonDict(
-				jsonNsiPresetsDict as! [String: [String: Any]],
-				isNSI: true)
-			let nsiIndex2 = Self.buildTagIndex([self.stdPresets, nsiPresets2], basePresets: self.stdPresets)
+			let jsonNsiPresetsDict = Self.jsonForFile("nsi_presets.json") as! [String: [String: Any]]
+			let nsiPresets2 = Self.featureDictForJsonDict(jsonNsiPresetsDict,
+			                                              isNSI: true)
+			let nsiIndex2 = Self.buildTagIndex([self.stdPresets, nsiPresets2],
+			                                   basePresets: self.stdPresets)
 			DispatchQueue.main.async {
 				self.nsiPresets = nsiPresets2
 				self.nsiIndex = nsiIndex2
 
 #if DEBUG
 				// verify all fields can be read
-				for (field, info) in self.jsonFields {
-					var geometry = GEOMETRY.LINE
-					if let info = info as? [String: Any],
-					   let geom = info["geometry"] as? [String]
-					{
-						geometry = GEOMETRY(rawValue: geom[0])!
+				for langCode in PresetLanguages.languageCodeList {
+					DispatchQueue.global(qos: .background).async {
+						let presets = PresetsDatabase(withLanguageCode: langCode)
+						for (name, field) in presets.presetFields {
+							var geometry = GEOMETRY.LINE
+							if let geom = field.geometry {
+								geometry = GEOMETRY(rawValue: geom[0])!
+							}
+							_ = presets.presetGroupForField(fieldName: name,
+															objectTags: [:],
+															geometry: geometry,
+															countryCode: "us",
+															ignore: [],
+															update: nil)
+						}
 					}
-					_ = self.groupForField(fieldName: field,
-					                       objectTags: [:],
-					                       geometry: geometry,
-					                       ignore: [],
-					                       update: nil)
 				}
 #endif
 			}
@@ -162,7 +169,9 @@ final class PresetsDatabase {
 		var presets = [String: PresetFeature]()
 		presets.reserveCapacity(presetDict.count)
 		for (name, values) in presetDict {
-			presets[name] = PresetFeature(withID: name, jsonDict: values, isNSI: isNSI)
+			if let feature = PresetFeature(withID: name, jsonDict: values, isNSI: isNSI) {
+				presets[name] = feature
+			}
 		}
 		return presets
 	}

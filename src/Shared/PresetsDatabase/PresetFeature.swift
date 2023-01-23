@@ -32,7 +32,9 @@ final class PresetFeature {
 	let terms: [String]
 	let aliases: [String] // an alias is a localizable alternative to 'name'
 
-	init(withID featureID: String, jsonDict: [String: Any], isNSI: Bool) {
+	init?(withID featureID: String, jsonDict: [String: Any], isNSI: Bool) {
+		guard jsonDict["tags"] is [String: String] else { return nil }
+
 		self.featureID = featureID
 
 		_addTags = jsonDict["addTags"] as? [String: String]
@@ -257,10 +259,10 @@ final class PresetFeature {
 		var result: [String: String] = [:]
 		let fields = PresetsForFeature.fieldsFor(featureID: featureID, field: { f in f.fields })
 		for fieldName in fields {
-			if let field = PresetsDatabase.shared.jsonFields[fieldName] as? [String: Any],
-			   let key = field["key"] as? String,
-			   let def = field["default"] as? String,
-			   let geom = field["geometry"] as? [String],
+			if let field = PresetsDatabase.shared.presetFields[fieldName],
+			   let key = field.key,
+			   let def = field.defaultValue,
+			   let geom = field.geometry,
 			   geom.contains(geometry.rawValue)
 			{
 				result[key] = def

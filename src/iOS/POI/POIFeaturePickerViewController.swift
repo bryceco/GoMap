@@ -250,7 +250,8 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 			searchArrayAll = PresetsDatabase.shared.featuresInCategory(
 				parentCategory,
 				matching: searchText,
-				geometry: geometry)
+				geometry: geometry,
+				location: AppDelegate.shared.mapView.currentRegion)
 			searchArrayRecent = mostRecentArray.filter { $0.matchesSearchText(searchText, geometry: geometry) != nil }
 		}
 		tableView.reloadData()

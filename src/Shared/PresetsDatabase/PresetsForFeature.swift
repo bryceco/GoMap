@@ -103,10 +103,11 @@ final class PresetsForFeature {
 			}
 			_ = dupSet.insert(field)
 
-			guard let group = PresetsDatabase.shared.groupForField(
+			guard let group = PresetsDatabase.shared.presetGroupForField(
 				fieldName: field,
 				objectTags: objectTags,
 				geometry: geometry,
+				countryCode: AppDelegate.shared.mapView.currentRegion.country,
 				ignore: ignore,
 				update: update)
 			else {
@@ -144,13 +145,13 @@ final class PresetsForFeature {
 			capitalize: UITextAutocapitalizationType.none,
 			autocorrect: UITextAutocorrectionType.no,
 			presets: nil)
-		let name = PresetsDatabase.shared.jsonFields["name"] as? [String: Any]
+		let nameField = PresetsDatabase.shared.presetFields["name"]!
 		let nameTag = PresetKey(
-			name: name?["label"] as? String ?? "Name",
+			name: nameField.label ?? "Name",
 			type: "",
 			tagKey: "name",
 			defaultValue: nil,
-			placeholder: name?["placeholder"] as? String,
+			placeholder: nameField.placeholder,
 			keyboard: UIKeyboardType.default,
 			capitalize: UITextAutocapitalizationType.words,
 			autocorrect: UITextAutocorrectionType.no,

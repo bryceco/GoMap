@@ -73,6 +73,7 @@
 		02A123EF264EE7BC005638C1 /* aes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096BD263E178600E3B129 /* aes.swift */; };
 		02A123F1264EF139005638C1 /* QuadMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA924A263FFD7E000A2A99 /* QuadMap.swift */; };
 		02A194B219C6A432002338DA /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A194B119C6A432002338DA /* libsqlite3.0.dylib */; };
+		02A59EDB297DE4E100B0A676 /* PresetField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A59EDA297DE4E100B0A676 /* PresetField.swift */; };
 		02ACBA3416713CCB00BB4414 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3316713CCB00BB4414 /* UIKit.framework */; };
 		02ACBA3616713CCB00BB4414 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3516713CCB00BB4414 /* Foundation.framework */; };
 		02ACBA3816713CCB00BB4414 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3716713CCB00BB4414 /* CoreGraphics.framework */; };
@@ -409,6 +410,7 @@
 		02A194B119C6A432002338DA /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		02A41837256A2026005BF1AB /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/Height.strings; sourceTree = "<group>"; };
 		02A41838256A2026005BF1AB /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/Changeset.strings; sourceTree = "<group>"; };
+		02A59EDA297DE4E100B0A676 /* PresetField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetField.swift; sourceTree = "<group>"; };
 		02A7710B26BB154C00D4DE5D /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		02ACBA2F16713CCB00BB4414 /* Go Map!!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Go Map!!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		02ACBA3316713CCB00BB4414 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -975,6 +977,7 @@
 				0220526329283498003C6AE1 /* CountryCoder.swift */,
 				021FADE12588474300F6E1C0 /* PresetCategory.swift */,
 				02CC01D02584195E004444EF /* PresetFeature.swift */,
+				02A59EDA297DE4E100B0A676 /* PresetField.swift */,
 				021FADC42585951E00F6E1C0 /* PresetGroup.swift */,
 				021FADBA258591D000F6E1C0 /* PresetKey.swift */,
 				021FADD125873CC000F6E1C0 /* PresetKeyUserDefined.swift */,
@@ -1427,6 +1430,7 @@
 				C3D096AE263D4BFB00E3B129 /* UploadViewController.swift in Sources */,
 				0288169E265895FA00C30EA2 /* OsmMapData+Edit.swift in Sources */,
 				C365A569263FCC9C007DEC94 /* TapAndDragGesture.swift in Sources */,
+				02A59EDB297DE4E100B0A676 /* PresetField.swift in Sources */,
 				ED91352526020945006A637A /* OfflineViewController.swift in Sources */,
 				ED9649DB2601CB7A00EC0A60 /* SettingsViewController.swift in Sources */,
 				0235349B294A9BDD00ED5BBE /* MostRecentlyUsed.swift in Sources */,
