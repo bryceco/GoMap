@@ -17,7 +17,7 @@ enum PresetFeatureOrCategory {
 // Methods used to generate a UITableView
 extension PresetsDatabase {
 	func featuresAndCategoriesForGeometry(_ geometry: GEOMETRY) -> [PresetFeatureOrCategory] {
-		let list = jsonDefaults[geometry.rawValue]!
+		let list = presetDefaults[geometry.rawValue]!
 		let featureList = featuresAndCategoriesForMemberList(memberList: list)
 		return featureList
 	}
@@ -211,16 +211,15 @@ extension PresetsDatabase {
 	}
 
 	func featuresAndCategoriesForMemberList(memberList: [String]) -> [PresetFeatureOrCategory] {
-		var list: [PresetFeatureOrCategory] = []
-		for featureID in memberList {
-			if featureID.hasPrefix("category-") {
-				let category = PresetCategory(categoryID: featureID)
-				list.append(.category(category))
-			} else {
-				if let feature = Self.shared.presetFeatureForFeatureID(featureID) {
-					list.append(.feature(feature))
-				}
+		let list: [PresetFeatureOrCategory] = memberList.compactMap { featureID in
+			if featureID.hasPrefix("category-"),
+			   let cat = self.presetCategories[featureID]
+			{
+				return .category(cat)
+			} else if let feature = Self.shared.presetFeatureForFeatureID(featureID) {
+				return .feature(feature)
 			}
+			return nil
 		}
 		return list // list of PresetFeature or PresetCategory
 	}

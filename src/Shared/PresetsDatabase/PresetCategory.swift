@@ -12,30 +12,23 @@ import UIKit
 // A top-level group such as road, building, for building hierarchical menus
 final class PresetCategory {
 	let categoryID: String
+	let name: String
 	let members: [PresetFeature]
 
 	var friendlyName: String? {
-		let dict = PresetsDatabase.shared.jsonCategories[categoryID]
-		return dict?["name"] as? String
+		return name
 	}
 
 	var icon: UIImage? {
 		return nil
 	}
 
-	init(categoryID: String) {
+	init(withID categoryID: String, json: Any, presets: [String: PresetFeature]) {
+		let dict = json as! [String: Any]
 		self.categoryID = categoryID
-		members = {
-			guard let dict = PresetsDatabase.shared.jsonCategories[categoryID],
-			      let members = dict["members"] as? [String]
-			else { return [] }
-			var result: [PresetFeature] = []
-			for featureID in members {
-				if let feature = PresetsDatabase.shared.presetFeatureForFeatureID(featureID) {
-					result.append(feature)
-				}
-			}
-			return result
-		}()
+		name = dict["name"] as? String ?? categoryID
+		members = (dict["members"] as! [String]).map({
+			presets[$0]!
+		})
 	}
 }

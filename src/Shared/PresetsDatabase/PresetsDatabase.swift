@@ -8,6 +8,29 @@
 
 import Foundation
 
+extension Dictionary {
+	// a version of mapValues that also lets the transform inspect the key
+	func mapValuesWithKeys<T>(_ transform: (_ key: Key, _ value: Value) -> T) -> [Key: T] {
+		var result = [Key: T]()
+		result.reserveCapacity(count)
+		for (key, val) in self {
+			result[key] = transform(key, val)
+		}
+		return result
+	}
+
+	func compactMapValuesWithKeys<T>(_ transform: (_ key: Key, _ value: Value) -> T?) -> [Key: T] {
+		var result = [Key: T]()
+		result.reserveCapacity(count)
+		for (key, val) in self {
+			if let t = transform(key, val) {
+				result[key] = t
+			}
+		}
+		return result
+	}
+}
+
 final class PresetsDatabase {
 	static var shared = PresetsDatabase(withLanguageCode: PresetLanguages.preferredLanguageCode())
 	class func reload(withLanguageCode code: String) {
@@ -60,8 +83,8 @@ final class PresetsDatabase {
 	}
 
 	let presetAddressFormats: [PresetAddressFormat] // address formats for different countries
-	let jsonDefaults: [String: [String]] // map a geometry to a set of features/categories
-	let jsonCategories: [String: [String: Any]] // map a top-level category ("building") to a set of specific features ("building/retail")
+	let presetDefaults: [String: [String]] // map a geometry to a set of features/categories
+	let presetCategories: [String: PresetCategory] // map a top-level category ("building") to a set of specific features ("building/retail")
 	let presetFields: [String: PresetField] // possible values for a preset key ("oneway=")
 
 	let yesForLocale: String
@@ -82,10 +105,8 @@ final class PresetsDatabase {
 		unknownForLocale = fieldTrans["opening_hours"]?["placeholder"] as? String ?? "???"
 
 		// get presets files
-		jsonDefaults = Self.Translate(Self.jsonForFile("preset_defaults.json")!,
-		                              jsonTranslation["defaults"]) as! [String: [String]]
-		jsonCategories = Self.Translate(Self.jsonForFile("preset_categories.json")!,
-		                                jsonTranslation["categories"]) as! [String: [String: Any]]
+		presetDefaults = Self.Translate(Self.jsonForFile("preset_defaults.json")!,
+		                                jsonTranslation["defaults"]) as! [String: [String]]
 		presetFields = (Self.Translate(Self.jsonForFile("fields.json")!,
 		                               jsonTranslation["fields"]) as! [String: Any])
 			.compactMapValues({ PresetField(withJson: $0 as! [String: Any]) })
@@ -95,10 +116,17 @@ final class PresetsDatabase {
 			.map({ PresetAddressFormat(withJson: $0 as! [String: Any]) })
 
 		// initialize presets and index them
-		var jsonPresetsDict = Self.jsonForFile("presets.json")!
-		jsonPresetsDict = Self.Translate(jsonPresetsDict, jsonTranslation["presets"])
-		stdPresets = Self.featureDictForJsonDict(jsonPresetsDict as! [String: [String: Any]], isNSI: false)
+		let presets = (Self.Translate(Self.jsonForFile("presets.json")!,
+		                              jsonTranslation["presets"]) as! [String: Any])
+			.compactMapValuesWithKeys({ k, v in
+				PresetFeature(withID: k, jsonDict: v as! [String: Any], isNSI: false)
+			})
+		stdPresets = presets
 		stdIndex = Self.buildTagIndex([stdPresets], basePresets: stdPresets)
+
+		presetCategories = (Self.Translate(Self.jsonForFile("preset_categories.json")!,
+		                                   jsonTranslation["categories"]) as! [String: Any])
+			.mapValuesWithKeys({ k, v in PresetCategory(withID: k, json: v, presets: presets) })
 
 		// name suggestion index
 		nsiPresets = [String: PresetFeature]()
@@ -106,31 +134,35 @@ final class PresetsDatabase {
 		nsiGeoJson = [String: GeoJSON]()
 
 		DispatchQueue.global(qos: .userInitiated).async {
-			let jsonNsiPresetsDict = Self.jsonForFile("nsi_presets.json") as! [String: [String: Any]]
-			let nsiPresets2 = Self.featureDictForJsonDict(jsonNsiPresetsDict,
-			                                              isNSI: true)
-			let nsiIndex2 = Self.buildTagIndex([self.stdPresets, nsiPresets2],
-			                                   basePresets: self.stdPresets)
+			let nsiDict = Self.jsonForFile("nsi_presets.json") as! [String: Any]
+			let nsiPresets = (nsiDict["presets"] as! [String: Any])
+				.mapValuesWithKeys({ k, v in
+					PresetFeature(withID: k, jsonDict: v as! [String: Any], isNSI: true)!
+				})
+			let nsiIndex = Self.buildTagIndex([self.stdPresets, nsiPresets],
+			                                  basePresets: self.stdPresets)
 			DispatchQueue.main.async {
-				self.nsiPresets = nsiPresets2
-				self.nsiIndex = nsiIndex2
+				self.nsiPresets = nsiPresets
+				self.nsiIndex = nsiIndex
 
 #if DEBUG
-				// verify all fields can be read
-				for langCode in PresetLanguages.languageCodeList {
-					DispatchQueue.global(qos: .background).async {
-						let presets = PresetsDatabase(withLanguageCode: langCode)
-						for (name, field) in presets.presetFields {
-							var geometry = GEOMETRY.LINE
-							if let geom = field.geometry {
-								geometry = GEOMETRY(rawValue: geom[0])!
+				// verify all fields can be read in all languages
+				if isUnderDebugger() {
+					for langCode in PresetLanguages.languageCodeList {
+						DispatchQueue.global(qos: .background).async {
+							let presets = PresetsDatabase(withLanguageCode: langCode)
+							for (name, field) in presets.presetFields {
+								var geometry = GEOMETRY.LINE
+								if let geom = field.geometry {
+									geometry = GEOMETRY(rawValue: geom[0])!
+								}
+								_ = presets.presetGroupForField(fieldName: name,
+																objectTags: [:],
+																geometry: geometry,
+																countryCode: "us",
+																ignore: [],
+																update: nil)
 							}
-							_ = presets.presetGroupForField(fieldName: name,
-							                                objectTags: [:],
-							                                geometry: geometry,
-							                                countryCode: "us",
-							                                ignore: [],
-							                                update: nil)
 						}
 					}
 				}
@@ -138,6 +170,7 @@ final class PresetsDatabase {
 			}
 		}
 
+		// Load geojson outlines for NSI in the background
 		DispatchQueue.global(qos: .userInitiated).async {
 			if let json = Self.jsonForFile("nsi_geojson.json"),
 			   let dict = json as? [String: Any?],
@@ -163,19 +196,6 @@ final class PresetsDatabase {
 
 	// OSM TagInfo database in the cloud: contains either a group or an array of values
 	var taginfoCache = [String: [String]]()
-
-	// initialize presets database
-	private class func featureDictForJsonDict(_ dict: [String: [String: Any]], isNSI: Bool) -> [String: PresetFeature] {
-		let presetDict = isNSI ? dict["presets"] as! [String: [String: Any]] : dict
-		var presets = [String: PresetFeature]()
-		presets.reserveCapacity(presetDict.count)
-		for (name, values) in presetDict {
-			if let feature = PresetFeature(withID: name, jsonDict: values, isNSI: isNSI) {
-				presets[name] = feature
-			}
-		}
-		return presets
-	}
 
 	/// basePresets is always the regular presets
 	/// inputList is either regular presets, or both presets and NSI
