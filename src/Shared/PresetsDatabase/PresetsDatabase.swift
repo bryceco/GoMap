@@ -8,29 +8,6 @@
 
 import Foundation
 
-extension Dictionary {
-	// a version of mapValues that also lets the transform inspect the key
-	func mapValuesWithKeys<T>(_ transform: (_ key: Key, _ value: Value) -> T) -> [Key: T] {
-		var result = [Key: T]()
-		result.reserveCapacity(count)
-		for (key, val) in self {
-			result[key] = transform(key, val)
-		}
-		return result
-	}
-
-	func compactMapValuesWithKeys<T>(_ transform: (_ key: Key, _ value: Value) -> T?) -> [Key: T] {
-		var result = [Key: T]()
-		result.reserveCapacity(count)
-		for (key, val) in self {
-			if let t = transform(key, val) {
-				result[key] = t
-			}
-		}
-		return result
-	}
-}
-
 final class PresetsDatabase {
 	static var shared = PresetsDatabase(withLanguageCode: PresetLanguages.preferredLanguageCode())
 	class func reload(withLanguageCode code: String) {
@@ -91,7 +68,7 @@ final class PresetsDatabase {
 	let noForLocale: String
 	let unknownForLocale: String
 
-	init(withLanguageCode code: String) {
+	init(withLanguageCode code: String, debug: Bool = true) {
 		// get translations for current language
 		let file = "translations/" + code + ".json"
 		let trans = Self.jsonForFile(file) as! [String: [String: Any]]
@@ -144,27 +121,9 @@ final class PresetsDatabase {
 			DispatchQueue.main.async {
 				self.nsiPresets = nsiPresets
 				self.nsiIndex = nsiIndex
-
 #if DEBUG
-				// verify all fields can be read in all languages
-				if isUnderDebugger() {
-					for langCode in PresetLanguages.languageCodeList {
-						DispatchQueue.global(qos: .background).async {
-							let presets = PresetsDatabase(withLanguageCode: langCode)
-							for (name, field) in presets.presetFields {
-								var geometry = GEOMETRY.LINE
-								if let geom = field.geometry {
-									geometry = GEOMETRY(rawValue: geom[0])!
-								}
-								_ = presets.presetGroupForField(fieldName: name,
-								                                objectTags: [:],
-								                                geometry: geometry,
-								                                countryCode: "us",
-								                                ignore: [],
-								                                update: nil)
-							}
-						}
-					}
+				if debug, isUnderDebugger() {
+					self.testAllPresetFields()
 				}
 #endif
 			}
@@ -323,4 +282,27 @@ final class PresetsDatabase {
 		}
 		return list
 	}
+
+#if DEBUG
+	func testAllPresetFields() {
+		// Verify all fields can be read in all languages
+		for langCode in PresetLanguages.languageCodeList {
+			DispatchQueue.global(qos: .background).async {
+				let presets = PresetsDatabase(withLanguageCode: langCode, debug: false)
+				for (name, field) in presets.presetFields {
+					var geometry = GEOMETRY.LINE
+					if let geom = field.geometry {
+						geometry = GEOMETRY(rawValue: geom[0])!
+					}
+					_ = presets.presetGroupForField(fieldName: name,
+					                                objectTags: [:],
+					                                geometry: geometry,
+					                                countryCode: "us",
+					                                ignore: [],
+					                                update: nil)
+				}
+			}
+		}
+	}
+#endif
 }

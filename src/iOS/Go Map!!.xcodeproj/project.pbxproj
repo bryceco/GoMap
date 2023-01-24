@@ -76,6 +76,7 @@
 		02A59EDB297DE4E100B0A676 /* PresetField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A59EDA297DE4E100B0A676 /* PresetField.swift */; };
 		02A59EDD297E444500B0A676 /* PresetAddressFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A59EDC297E444500B0A676 /* PresetAddressFormat.swift */; };
 		02A59EDF297F358900B0A676 /* PresetArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A59EDE297F358900B0A676 /* PresetArea.swift */; };
+		02A59EE1297F6E6A00B0A676 /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A59EE0297F6E6A00B0A676 /* Dictionary+Extension.swift */; };
 		02ACBA3416713CCB00BB4414 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3316713CCB00BB4414 /* UIKit.framework */; };
 		02ACBA3616713CCB00BB4414 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3516713CCB00BB4414 /* Foundation.framework */; };
 		02ACBA3816713CCB00BB4414 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3716713CCB00BB4414 /* CoreGraphics.framework */; };
@@ -415,6 +416,7 @@
 		02A59EDA297DE4E100B0A676 /* PresetField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetField.swift; sourceTree = "<group>"; };
 		02A59EDC297E444500B0A676 /* PresetAddressFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetAddressFormat.swift; sourceTree = "<group>"; };
 		02A59EDE297F358900B0A676 /* PresetArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetArea.swift; sourceTree = "<group>"; };
+		02A59EE0297F6E6A00B0A676 /* Dictionary+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extension.swift"; sourceTree = "<group>"; };
 		02A7710B26BB154C00D4DE5D /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		02ACBA2F16713CCB00BB4414 /* Go Map!!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Go Map!!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		02ACBA3316713CCB00BB4414 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -1072,16 +1074,17 @@
 				02A123EC264CAE6F005638C1 /* Atomic.swift */,
 				0226B770268300C9005DB9E2 /* Data+Wrapper.swift */,
 				02F6A458268AE42800F2ACE7 /* Debugger.swift */,
+				02A59EE0297F6E6A00B0A676 /* Dictionary+Extension.swift */,
 				C381C308263FD294003142BA /* DLog.swift */,
 				C341E1572639DF090022E983 /* Geekbench.swift */,
 				028816A02659B4A600C30EA2 /* GZip.swift */,
 				C3D096CE263EA0DB00E3B129 /* KeyChain.swift */,
+				0235349A294A9BDD00ED5BBE /* MostRecentlyUsed.swift */,
 				02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */,
 				C3FA924C263FFEF9000A2A99 /* PathUtil.swift */,
 				02CA15502824A6B40047B0E5 /* String+Ext.swift */,
 				0266DE852655A21F007A502E /* Superview.swift */,
 				0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */,
-				0235349A294A9BDD00ED5BBE /* MostRecentlyUsed.swift */,
 			);
 			name = Utility;
 			path = ../Shared/Utility;
@@ -1456,6 +1459,7 @@
 				02C8C56D26F4479A003B0122 /* WayPointMarker.swift in Sources */,
 				0286EAA726570382007CFEE9 /* LayerProperties.swift in Sources */,
 				EDB2C3A12609E2A000C08293 /* LanguageTableViewController.swift in Sources */,
+				02A59EE1297F6E6A00B0A676 /* Dictionary+Extension.swift in Sources */,
 				02EDBF6926535BB700B7072E /* OsmWay.swift in Sources */,
 				ED56E5C426027A50000B368C /* CustomPresetController.swift in Sources */,
 				02A123EE264CBBE5005638C1 /* DisplayLink.swift in Sources */,
