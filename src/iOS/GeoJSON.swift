@@ -62,7 +62,7 @@ final class GeoJSON {
 		}
 	}
 
-	init?(geometry: [String: Any?]) {
+	init?(geometry: [String: Any]) {
 		guard let points = geometry["coordinates"],
 		      let type = geometry["type"] as? String
 		else { return nil }

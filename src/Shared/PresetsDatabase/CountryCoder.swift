@@ -80,14 +80,14 @@ public final class CountryCoder {
 	let regionDict: [String: CountryCoderRegion]
 
 	private init() {
-		guard let path = Bundle.main.resourcePath,
-		      let data = try? Data(
-		      	contentsOf: URL(fileURLWithPath: path + "/presets/borders.json"),
-		      	options: .mappedIfSafe),
-		      let jsonResult = try? JSONSerialization.jsonObject(with: data, options: []),
-		      let jsonResult = jsonResult as? [String: Any],
-		      (jsonResult["type"] as? String) == "FeatureCollection",
-		      let features = jsonResult["features"] as? [Any]
+		guard
+			let path = Bundle.main.resourcePath,
+			let data = try? Data(contentsOf: URL(fileURLWithPath: path + "/presets/borders.json"),
+			                     options: .mappedIfSafe),
+			let jsonResult = try? JSONSerialization.jsonObject(with: data, options: []),
+			let jsonResult = jsonResult as? [String: Any],
+			(jsonResult["type"] as? String) == "FeatureCollection",
+			let features = jsonResult["features"] as? [Any]
 		else {
 			fatalError()
 		}
@@ -95,29 +95,26 @@ public final class CountryCoder {
 		var regions: [CountryCoderRegion] = []
 
 		for featureAny in features {
-			guard let feature = featureAny as? [String: Any],
-			      let properties = feature["properties"] as? [String: Any]
-			else {
-				fatalError()
-			}
-			let geometry = feature["geometry"] as? [String: Any]
-			let country = properties["country"] as? String
-			let iso1A2 = properties["iso1A2"] as? String
-			let iso1A3 = properties["iso1A3"] as? String
-			let iso1N3 = properties["iso1N3"] as? String
-			let m49 = properties["m49"] as? String
-			let wikidata = properties["wikidata"] as? String
-			let aliases = properties["aliases"] as? [String] ?? []
-			let callingCodes = properties["callingCodes"] as? [String] ?? []
-			let groups = properties["groups"] as? [String] ?? []
+			let feature = featureAny as! [String: Any]
+			let properties = feature["properties"] as! [String: Any]
+
+			let geometryAny = feature["geometry"]!
+			let geometry = (geometryAny is NSNull) ? nil : (geometryAny as! [String: Any])
+			let country = properties["country"] as! String?
+			let iso1A2 = properties["iso1A2"] as! String?
+			let iso1A3 = properties["iso1A3"] as! String?
+			let iso1N3 = properties["iso1N3"] as! String?
+			let m49 = properties["m49"] as! String?
+			let wikidata = properties["wikidata"] as! String?
+			let aliases = properties["aliases"] as! [String]? ?? []
+			let callingCodes = properties["callingCodes"] as! [String]? ?? []
+			let groups = properties["groups"] as! [String]? ?? []
 			let bezierPath: UIBezierPath?
 
 			if let geometry = geometry {
 				switch geometry["type"] as? String {
 				case "MultiPolygon":
-					guard let mp = geometry["coordinates"] as? [[[[Double]]]] else {
-						fatalError()
-					}
+					let mp = geometry["coordinates"] as! [[[[Double]]]]
 					bezierPath = CountryCoderRegion.geometryAsBezier(mp)
 				default:
 					fatalError()

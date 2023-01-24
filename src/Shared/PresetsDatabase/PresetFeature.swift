@@ -40,26 +40,25 @@ final class PresetFeature {
 
 		self.featureID = featureID
 
-		_addTags = jsonDict["addTags"] as? [String: String]
-		fields = jsonDict["fields"] as? [String]
-		geometry = jsonDict["geometry"] as? [String] ?? []
-		icon = jsonDict["icon"] as? String
-		logoURL = jsonDict["imageURL"] as? String
-		locationSet = jsonDict["locationSet"] as? [String: [Any]]
-		matchScore = Float(jsonDict["matchScore"] as? Double ?? 1.0)
-		moreFields = jsonDict["moreFields"] as? [String]
-		nameWithRedirect = jsonDict["name"] as? String ?? featureID
-		reference = jsonDict["reference"] as? [String: String]
-		_removeTags = jsonDict["removeTags"] as? [String: String]
-		searchable = jsonDict["searchable"] as? Bool ?? true
+		_addTags = jsonDict["addTags"] as! [String: String]?
+		fields = jsonDict["fields"] as! [String]?
+		geometry = jsonDict["geometry"] as! [String]? ?? []
+		icon = jsonDict["icon"] as! String?
+		logoURL = jsonDict["imageURL"] as! String?
+		locationSet = jsonDict["locationSet"] as! [String: [Any]]?
+		matchScore = Float(jsonDict["matchScore"] as! Double? ?? 1.0)
+		moreFields = jsonDict["moreFields"] as! [String]?
+		nameWithRedirect = jsonDict["name"] as! String? ?? featureID
+		reference = jsonDict["reference"] as! [String: String]?
+		_removeTags = jsonDict["removeTags"] as! [String: String]?
+		searchable = jsonDict["searchable"] as! Bool? ?? true
 		tags = jsonDict["tags"] as! [String: String]
 		if let terms = jsonDict["terms"] as? String {
 			self.terms = terms.split(separator: ",").map({ String($0) })
 		} else {
-			terms = jsonDict["terms"] as? [String] ?? jsonDict["matchNames"] as? [String] ?? []
+			terms = jsonDict["terms"] as! [String]? ?? jsonDict["matchNames"] as! [String]? ?? []
 		}
-		aliases = (jsonDict["aliases"] as? String)?.split(separator: "\n").map({ String($0) }) ?? []
-
+		aliases = (jsonDict["aliases"] as! String?)?.split(separator: "\n").map({ String($0) }) ?? []
 		nsiSuggestion = isNSI
 	}
 

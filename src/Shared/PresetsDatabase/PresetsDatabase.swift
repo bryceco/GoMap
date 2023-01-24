@@ -72,14 +72,14 @@ final class PresetsDatabase {
 		// get translations for current language
 		let file = "translations/" + code + ".json"
 		let trans = Self.jsonForFile(file) as! [String: [String: Any]]
-		let jsonTranslation = (trans[code]?["presets"] as? [String: [String: Any]]) ?? [:]
+		let jsonTranslation = (trans[code]?["presets"] as! [String: [String: Any]]?) ?? [:]
 
 		// get localized common words
-		let fieldTrans = jsonTranslation["fields"] as? [String: [String: Any]] ?? [:]
-		let yesNoDict = fieldTrans["internet_access"]?["options"] as? [String: String]
+		let fieldTrans = jsonTranslation["fields"] as! [String: [String: Any]]? ?? [:]
+		let yesNoDict = fieldTrans["internet_access"]?["options"] as! [String: String]?
 		yesForLocale = yesNoDict?["yes"] ?? "Yes"
 		noForLocale = yesNoDict?["no"] ?? "No"
-		unknownForLocale = fieldTrans["opening_hours"]?["placeholder"] as? String ?? "???"
+		unknownForLocale = fieldTrans["opening_hours"]?["placeholder"] as! String? ?? "???"
 
 		// get presets files
 		presetDefaults = Self.Translate(Self.jsonForFile("preset_defaults.json")!,
@@ -131,18 +131,14 @@ final class PresetsDatabase {
 
 		// Load geojson outlines for NSI in the background
 		DispatchQueue.global(qos: .userInitiated).async {
-			if let json = Self.jsonForFile("nsi_geojson.json"),
-			   let dict = json as? [String: Any?],
-			   let features = dict["features"] as? [Any]
-			{
+			if let json = Self.jsonForFile("nsi_geojson.json") {
+				let featureList = (json as! [String: Any])["features"] as! [[String: Any]]
 				var featureDict = [String: GeoJSON]()
-				for feature2 in features {
-					guard let feature = feature2 as? [String: Any?] else { continue }
-					if feature["type"] as? String == "Feature",
-					   let name = feature["id"] as? String,
-					   let geomDict = feature["geometry"] as? [String: Any?],
-					   let geojson = GeoJSON(geometry: geomDict)
-					{
+				for feature in featureList {
+					if feature["type"] as! String == "Feature" {
+						let name = feature["id"] as! String
+						let geomDict = feature["geometry"] as! [String: Any]
+						let geojson = GeoJSON(geometry: geomDict)
 						featureDict[name] = geojson
 					}
 				}
