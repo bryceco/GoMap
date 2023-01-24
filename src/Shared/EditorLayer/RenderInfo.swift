@@ -43,9 +43,7 @@ final class RenderInfo {
 	}
 
 	class func color(forHexString text: String?) -> UIColor? {
-		guard let text = text else {
-			return nil
-		}
+		guard let text = text else { return nil }
 		assert(text.count == 6)
 
 		var r: CGFloat = 0
@@ -95,7 +93,6 @@ final class RenderInfo {
 				case ("natural", "water"): renderPriority = 31
 				case ("waterway", "riverbank"): renderPriority = 30
 				case ("landuse", _): renderPriority = 29
-
 				case ("highway", "motorway"): renderPriority = 29
 				case ("highway", "trunk"): renderPriority = 28
 				case ("highway", "motorway_link"): renderPriority = 27
@@ -164,6 +161,9 @@ final class RenderInfo {
 			let newSum = countOfPriority[i] + prevSum
 			countOfPriority[i] = newSum
 			if max == listCount {
+				// we are returning only the first k items, but we don't want to
+				// throw out other items of the same priority, so include them as well
+				// as long as it means we don't exceed 2*k items.
 				if prevSum >= k || newSum >= 2 * k {
 					max = prevSum
 				}
@@ -188,20 +188,12 @@ final class RenderInfoDatabase {
 	var keyDict: [String: [String: RenderInfo]] = [:]
 
 	static let shared = RenderInfoDatabase()
+	static let nsZero = NSNumber(value: 0.0)
 
 	class func readConfiguration() -> [RenderInfo] {
-		var text = NSData(contentsOfFile: "RenderInfo.json") as Data?
-		if text == nil {
-			if let path = Bundle.main.path(forResource: "RenderInfo", ofType: "json") {
-				text = NSData(contentsOfFile: path) as Data?
-			}
-		}
-		var features: [String: [String: Any]] = [:]
-		do {
-			if let text = text {
-				features = try JSONSerialization.jsonObject(with: text, options: []) as? [String: [String: Any]] ?? [:]
-			}
-		} catch {}
+		let path = Bundle.main.path(forResource: "RenderInfo", ofType: "json")!
+		let data = NSData(contentsOfFile: path)! as Data
+		let features = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: [String: Any]]
 
 		var renderList: [RenderInfo] = []
 
@@ -210,9 +202,9 @@ final class RenderInfoDatabase {
 			let render = RenderInfo()
 			render.key = keyValue[0]
 			render.value = keyValue.count > 1 ? keyValue[1] : ""
-			render.lineColor = RenderInfo.color(forHexString: dict["lineColor"] as? String)
-			render.areaColor = RenderInfo.color(forHexString: dict["areaColor"] as? String)
-			render.lineWidth = CGFloat((dict["lineWidth"] as? NSNumber ?? NSNumber(value: 0)).doubleValue)
+			render.lineColor = RenderInfo.color(forHexString: dict["lineColor"] as! String?)
+			render.areaColor = RenderInfo.color(forHexString: dict["areaColor"] as! String?)
+			render.lineWidth = CGFloat((dict["lineWidth"] as! NSNumber? ?? Self.nsZero).doubleValue)
 			renderList.append(render)
 		}
 		return renderList
