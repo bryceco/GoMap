@@ -62,6 +62,9 @@
 /* length of a gpx track */
 "%ld meters, %ld points" = "%1$ld メートル, %2$ld ポイント";
 
+/* length of a gpx track */
+"%ld meters, %ld points, %ld waypoints" = "%1$ld メートル, %2$ld ポイント, %3$ld ウェイポイント";
+
 /* Number of tiles/objects in cache */
 "%ld objects" = "%ld オブジェクト";
 
@@ -822,6 +825,9 @@
 
 /* No comment provided by engineer. */
 "Undo" = "元に戻す";
+
+/* No comment provided by engineer. */
+"Unknown" = "不明";
 
 /* relation role=* tag */
 "Unknown role" = "不明なロール";

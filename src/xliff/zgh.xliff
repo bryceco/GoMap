@@ -7,7 +7,7 @@
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
         <source>Position your device parallel to the direction of the object.</source>
-        <target state="translated">ⵙⵔⵙ ⴰⵍⵍⴰⵍ ⵙ ⵓⵎⵏⴰⵡⴰⵢ ⴷ ⵓⵎⵏⵉⴷ ⵏ ⵓⵙⴽⴽⵉⵏ.</target>
+        <target>ⵙⵔⵙ ⴰⵍⵍⴰⵍ ⵙ ⵓⵎⵏⴰⵡⴰⵢ ⴷ ⵓⵎⵏⵉⴷ ⵏ ⵓⵙⴽⴽⵉⵏ.</target>
         <note>Class = "UILabel"; text = "Position your device parallel to the direction of the object."; ObjectID = "4vY-m2-xMW";</note>
       </trans-unit>
       <trans-unit id="Jc3-Um-Aiy.text" xml:space="preserve">
@@ -20,7 +20,7 @@
       </trans-unit>
       <trans-unit id="exg-Jc-FOH.normalTitle" xml:space="preserve">
         <source>Cancel</source>
-        <target state="translated">ⵙⵙⵔ</target>
+        <target>ⵙⵙⵔ</target>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "exg-Jc-FOH";</note>
       </trans-unit>
       <trans-unit id="vtk-nS-Ss4.text" xml:space="preserve">
@@ -36,17 +36,16 @@
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>Go Map!!</source>
-        <target state="translated">Go Map!!</target>
+        <target>Go Map!!</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleGetInfoString" xml:space="preserve">
         <source/>
-        <target/>
         <note>Get Info string</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>Go Map!!</source>
-        <target state="translated">Go Map!!</target>
+        <target>Go Map!!</target>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="GPS Exchange Format (GPX)" xml:space="preserve">
@@ -55,7 +54,7 @@
       </trans-unit>
       <trans-unit id="NSBluetoothPeripheralUsageDescription" xml:space="preserve">
         <source>Connect to external Bluetooth GPS devices</source>
-        <target state="translated">ⴰⵎⵢⴰⵡⴰⴹ ⴷ ⵡⴰⵍⵍⴰⵍⵏ ⵏ ⴱⵍⵓⵜⵓⵜ GPS ⵏ ⴱⵕⵕⴰ</target>
+        <target>ⴰⵎⵢⴰⵡⴰⴹ ⴷ ⵡⴰⵍⵍⴰⵍⵏ ⵏ ⴱⵍⵓⵜⵓⵜ GPS ⵏ ⴱⵕⵕⴰ</target>
         <note>Privacy - Bluetooth Peripheral Usage Description</note>
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
@@ -84,7 +83,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="en.lproj/Localizable.strings" source-language="en" target-language="zgh" datatype="plaintext">
+  <file original="en.lproj/Localizable.strings" datatype="plaintext" source-language="en" target-language="zgh">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.2" build-num="14C18"/>
     </header>
@@ -1332,7 +1331,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
     </body>
   </file>
-  <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="zgh" datatype="plaintext">
+  <file original="Height/Base.lproj/Height.storyboard" datatype="plaintext" source-language="en" target-language="zgh">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.2" build-num="14C18"/>
     </header>
@@ -1355,7 +1354,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
     </body>
   </file>
-  <file original="PhotoShare/Base.lproj/MainInterface.storyboard" source-language="en" target-language="zgh" datatype="plaintext">
+  <file original="PhotoShare/Base.lproj/MainInterface.storyboard" datatype="plaintext" source-language="en" target-language="zgh">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.2" build-num="14C18"/>
     </header>
@@ -1374,7 +1373,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
     </body>
   </file>
-  <file original="PhotoShare/en.lproj/InfoPlist.strings" source-language="en" target-language="zgh" datatype="plaintext">
+  <file original="PhotoShare/en.lproj/InfoPlist.strings" datatype="plaintext" source-language="en" target-language="zgh">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.2" build-num="14C18"/>
     </header>
@@ -1389,7 +1388,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
     </body>
   </file>
-  <file original="PhotoShare/en.lproj/Localizable.strings" source-language="en" target-language="zgh" datatype="plaintext">
+  <file original="PhotoShare/en.lproj/Localizable.strings" datatype="plaintext" source-language="en" target-language="zgh">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.2" build-num="14C18"/>
     </header>
@@ -1408,7 +1407,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
     </body>
   </file>
-  <file original="POI/Base.lproj/POI.storyboard" source-language="en" target-language="zgh" datatype="plaintext">
+  <file original="POI/Base.lproj/POI.storyboard" datatype="plaintext" source-language="en" target-language="zgh">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.2" build-num="14C18"/>
     </header>
@@ -1735,7 +1734,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
     </body>
   </file>
-  <file original="Storyboards/Base.lproj/Display.storyboard" source-language="en" target-language="zgh" datatype="plaintext">
+  <file original="Storyboards/Base.lproj/Display.storyboard" datatype="plaintext" source-language="en" target-language="zgh">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.2" build-num="14C18"/>
     </header>
@@ -2104,7 +2103,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
     </body>
   </file>
-  <file original="Storyboards/Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="zgh" datatype="plaintext">
+  <file original="Storyboards/Base.lproj/MainStoryboard.storyboard" datatype="plaintext" source-language="en" target-language="zgh">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.2" build-num="14C18"/>
     </header>
@@ -2247,7 +2246,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
     </body>
   </file>
-  <file original="Storyboards/Base.lproj/Settings.storyboard" source-language="en" target-language="zgh" datatype="plaintext">
+  <file original="Storyboards/Base.lproj/Settings.storyboard" datatype="plaintext" source-language="en" target-language="zgh">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.2" build-num="14C18"/>
     </header>
@@ -2516,7 +2515,7 @@ http://glyphish.com
       </trans-unit>
     </body>
   </file>
-  <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="zgh" datatype="plaintext">
+  <file original="Upload/Base.lproj/Changeset.storyboard" datatype="plaintext" source-language="en" target-language="zgh">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.2" build-num="14C18"/>
     </header>
