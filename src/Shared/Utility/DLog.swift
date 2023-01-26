@@ -10,7 +10,12 @@ import Foundation
 
 // #define OpenStreetMap_DLog_h
 
-// #define DLog(...) NSLog( __VA_ARGS__ )
+func DLog(_ args: String...) {
+#if DEBUG
+	print(args)
+#endif
+}
+
 func DbgAssert(_ x: Bool) {
 #if DEBUG
 	assert(x, "unspecified")

@@ -8,12 +8,6 @@
 
 import UIKit
 
-func DLog(_ args: String...) {
-#if DEBUG
-	print(args)
-#endif
-}
-
 class GpxTrackTableCell: UITableViewCell, UIActionSheetDelegate {
 	@IBOutlet var startDate: UILabel!
 	@IBOutlet var duration: UILabel!
@@ -100,12 +94,9 @@ class GpxViewController: UITableViewController {
 
 		// let progress window display before we submit work
 		DispatchQueue.main.async(execute: {
-			let appDelegate = AppDelegate.shared
-
 			let url = OSM_API_URL + "api/0.6/gpx/create"
 
-			guard let url1 = URL(string: url) else { return }
-			let request = NSMutableURLRequest(url: url1)
+			guard var request = AppDelegate.shared.oAuth2.urlRequest(string: url) else { return }
 			let boundary = "----------------------------d10f7aa230e8"
 			request.httpMethod = "POST"
 			let contentType = "multipart/form-data; boundary=\(boundary)"
@@ -122,9 +113,8 @@ class GpxViewController: UITableViewController {
 
 			var body = Data()
 			body.append("--\(boundary)\r\n".data(using: .utf8)!)
-			body
-				.append("Content-Disposition: form-data; name=\"file\"; filename=\"GoMap__\(startDateFile).gpx\"\r\n"
-					.data(using: .utf8)!)
+			body.append("Content-Disposition: form-data; name=\"file\"; filename=\"GoMap__\(startDateFile).gpx\"\r\n"
+				.data(using: .utf8)!)
 			body.append("Content-Type: application/octet-stream\r\n\r\n".data(using: .utf8)!)
 			body.append(track.gpxXmlData()!)
 			body.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
@@ -143,12 +133,7 @@ class GpxViewController: UITableViewController {
 			request.httpBody = body
 			request.setValue(String(format: "%ld", body.count), forHTTPHeaderField: "Content-Length")
 
-			var auth = "\(appDelegate.userName):\(appDelegate.userPassword)"
-			auth = OsmMapData.encodeBase64(auth)
-			auth = "Basic \(auth)"
-			request.setValue(auth, forHTTPHeaderField: "Authorization")
-
-			URLSession.shared.data(with: request as URLRequest, completionHandler: { result in
+			URLSession.shared.data(with: request, completionHandler: { result in
 				DispatchQueue.main.async(execute: {
 					progress.dismiss(animated: true)
 
@@ -158,9 +143,9 @@ class GpxViewController: UITableViewController {
 							title: NSLocalizedString("GPX Upload Complete", comment: ""),
 							message: nil,
 							preferredStyle: .alert)
-						success
-							.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel,
-							                         handler: nil))
+						success.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+						                                style: .cancel,
+						                                handler: nil))
 						self.present(success, animated: true)
 
 						// mark track as uploaded in UI
@@ -172,9 +157,9 @@ class GpxViewController: UITableViewController {
 							title: NSLocalizedString("GPX Upload Failed", comment: ""),
 							message: "\(error.localizedDescription)",
 							preferredStyle: .alert)
-						failure
-							.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel,
-							                         handler: nil))
+						failure.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+						                                style: .cancel,
+						                                handler: nil))
 						self.present(failure, animated: true)
 					}
 				})

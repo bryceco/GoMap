@@ -77,7 +77,8 @@
 		02A59EDD297E444500B0A676 /* PresetAddressFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A59EDC297E444500B0A676 /* PresetAddressFormat.swift */; };
 		02A59EDF297F358900B0A676 /* PresetArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A59EDE297F358900B0A676 /* PresetArea.swift */; };
 		02A59EE1297F6E6A00B0A676 /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A59EE0297F6E6A00B0A676 /* Dictionary+Extension.swift */; };
-		02A59EE92981D75700B0A676 /* OAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A59EE82981D75700B0A676 /* OAuth.swift */; };
+		02A59EE92981D75700B0A676 /* OAuth2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A59EE82981D75700B0A676 /* OAuth2.swift */; };
+		02A59EEB298312F500B0A676 /* Require.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A59EEA298312F500B0A676 /* Require.swift */; };
 		02ACBA3416713CCB00BB4414 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3316713CCB00BB4414 /* UIKit.framework */; };
 		02ACBA3616713CCB00BB4414 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3516713CCB00BB4414 /* Foundation.framework */; };
 		02ACBA3816713CCB00BB4414 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3716713CCB00BB4414 /* CoreGraphics.framework */; };
@@ -147,7 +148,6 @@
 		647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */; };
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
 		64C072FA226227D500598078 /* PresetKeyTagCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C072F9226227D500598078 /* PresetKeyTagCase.swift */; };
-		64C072FE22622B9C00598078 /* Require.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C072FD22622B9C00598078 /* Require.swift */; };
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
 		64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */; };
 		64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */; };
@@ -420,7 +420,8 @@
 		02A59EDC297E444500B0A676 /* PresetAddressFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetAddressFormat.swift; sourceTree = "<group>"; };
 		02A59EDE297F358900B0A676 /* PresetArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetArea.swift; sourceTree = "<group>"; };
 		02A59EE0297F6E6A00B0A676 /* Dictionary+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extension.swift"; sourceTree = "<group>"; };
-		02A59EE82981D75700B0A676 /* OAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth.swift; sourceTree = "<group>"; };
+		02A59EE82981D75700B0A676 /* OAuth2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2.swift; sourceTree = "<group>"; };
+		02A59EEA298312F500B0A676 /* Require.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Require.swift; sourceTree = "<group>"; };
 		02A7710B26BB154C00D4DE5D /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		02ACBA2F16713CCB00BB4414 /* Go Map!!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Go Map!!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		02ACBA3316713CCB00BB4414 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -643,7 +644,6 @@
 		647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModel.swift; sourceTree = "<group>"; };
 		647F46D02253F08200CEC482 /* HeadingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProvider.swift; sourceTree = "<group>"; };
 		64C072F9226227D500598078 /* PresetKeyTagCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetKeyTagCase.swift; sourceTree = "<group>"; };
-		64C072FD22622B9C00598078 /* Require.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Require.swift; sourceTree = "<group>"; };
 		64D74BF12253DF49004FFD20 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSMMapDataTestCase.swift; sourceTree = "<group>"; };
 		64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+UserDefaults.swift"; sourceTree = "<group>"; };
@@ -1085,7 +1085,7 @@
 				C3D096CE263EA0DB00E3B129 /* KeyChain.swift */,
 				0235349A294A9BDD00ED5BBE /* MostRecentlyUsed.swift */,
 				02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */,
-				02A59EE82981D75700B0A676 /* OAuth.swift */,
+				02A59EE82981D75700B0A676 /* OAuth2.swift */,
 				C3FA924C263FFEF9000A2A99 /* PathUtil.swift */,
 				02CA15502824A6B40047B0E5 /* String+Ext.swift */,
 				0266DE852655A21F007A502E /* Superview.swift */,
@@ -1177,7 +1177,7 @@
 		64C072FC22622B9C00598078 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				64C072FD22622B9C00598078 /* Require.swift */,
+				02A59EEA298312F500B0A676 /* Require.swift */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -1446,7 +1446,7 @@
 				0288169E265895FA00C30EA2 /* OsmMapData+Edit.swift in Sources */,
 				C365A569263FCC9C007DEC94 /* TapAndDragGesture.swift in Sources */,
 				02A59EDB297DE4E100B0A676 /* PresetField.swift in Sources */,
-				02A59EE92981D75700B0A676 /* OAuth.swift in Sources */,
+				02A59EE92981D75700B0A676 /* OAuth2.swift in Sources */,
 				ED91352526020945006A637A /* OfflineViewController.swift in Sources */,
 				ED9649DB2601CB7A00EC0A60 /* SettingsViewController.swift in Sources */,
 				0235349B294A9BDD00ED5BBE /* MostRecentlyUsed.swift in Sources */,
@@ -1584,8 +1584,8 @@
 				64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */,
 				64305F7423E723B200232BB9 /* LocationURLParserTestCase.swift in Sources */,
 				64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */,
+				02A59EEB298312F500B0A676 /* Require.swift in Sources */,
 				64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */,
-				64C072FE22622B9C00598078 /* Require.swift in Sources */,
 				64348CFD225E867800ADE7FB /* CLHeadingMock.swift in Sources */,
 				64348D03225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift in Sources */,
 				64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */,

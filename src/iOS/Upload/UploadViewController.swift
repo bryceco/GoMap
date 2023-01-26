@@ -148,7 +148,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 
 	@IBAction func commit(_ sender: Any?) {
 		let appDelegate = AppDelegate.shared
-		if appDelegate.userName.count == 0 || appDelegate.userPassword.count == 0 {
+		if !appDelegate.oAuth2.isAuthorized() {
 			performSegue(withIdentifier: "loginSegue", sender: self)
 			return
 		}
@@ -196,14 +196,22 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 
 		let locale = PresetLanguages.preferredLanguageCode()
 
-		let completion: ((String?) -> Void) = { [self] error in
+		let completion: ((Error?) -> Void) = { [self] error in
 			progressView.stopAnimating()
 			commitButton.isEnabled = true
 			cancelButton.isEnabled = true
-			if let error = error {
+			if let error = error as? UrlSessionError,
+			   case let .badStatusCode(code, _) = error,
+			   code == 401
+			{
+				// authentication error, so redirect to login page
+				appDelegate.oAuth2.removeAuthorization()
+				performSegue(withIdentifier: "loginSegue", sender: self)
+				return
+			} else if let error = error {
 				let alert = UIAlertController(
 					title: NSLocalizedString("Unable to upload changes", comment: ""),
-					message: error,
+					message: error.localizedDescription,
 					preferredStyle: .alert)
 				alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
 				                              style: .cancel,
@@ -247,7 +255,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 			do {
 				xmlDoc = try DDXMLDocument(xmlString: xmlText, options: 0)
 			} catch {
-				completion(NSLocalizedString("The XML is improperly formed", comment: ""))
+				completion(error)
 				return
 			}
 			mapData?.openChangesetAndUpload(

@@ -18,11 +18,13 @@ class PresetKeyTagCase: XCTestCase {
 		let secondPreset = PresetValue(name: "Nein", details: "", tagValue: "no")
 
 		let tagKey = PresetKey(name: "Rückenlehne",
+		                       type: "text",
 		                       tagKey: "backreset",
 		                       defaultValue: nil,
 		                       placeholder: placeholder,
 		                       keyboard: .default,
 		                       capitalize: .none,
+		                       autocorrect: .no,
 		                       presets: [firstPreset, secondPreset])
 
 		XCTAssertEqual(tagKey.placeholder, placeholder)
@@ -36,11 +38,13 @@ class PresetKeyTagCase: XCTestCase {
 		let secondPreset = PresetValue(name: secondPresentName, details: "", tagValue: "no")
 
 		let tagKey = PresetKey(name: "Rückenlehne",
+		                       type: "text",
 		                       tagKey: "backreset",
 		                       defaultValue: nil,
 		                       placeholder: nil,
 		                       keyboard: .default,
 		                       capitalize: .none,
+		                       autocorrect: .no,
 		                       presets: [firstPreset, secondPreset])
 
 		XCTAssertEqual(tagKey.placeholder, "\(firstPresetName), \(secondPresentName)...")

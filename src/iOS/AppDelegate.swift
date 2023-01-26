@@ -17,9 +17,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
 	weak var mapView: MapView!
-	var userName = ""
-	var userPassword = ""
 	private(set) var isAppUpgrade = false
+
+	let oAuth2 = OAuth2()
+
+	var userName: String? {
+		get { UserDefaults.standard.string(forKey: "userName") }
+		set { UserDefaults.standard.set(newValue, forKey: "userName") }
+	}
 
 	override init() {
 		super.init()
@@ -59,16 +64,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		_ application: UIApplication,
 		didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool
 	{
-#if DEBUG
-		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-			OAuth.shared.requestAccessFromUser(onComplete: { result in
-				if let _ = try? result.get() {
-					OAuth.shared.getUserDetails(callback: { _ in })
-				}
-			})
-		})
-#endif
-
 #if false
 		// This code sets the screen size as mandated for Mac App Store screen shots
 		let setScreenSizeForAppStoreScreenShots = false
@@ -93,12 +88,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 		defaults.set(appVersion(), forKey: "appVersion")
 
-		// read name/password from keychain
-		userName = KeyChain.getStringForIdentifier("username") ?? ""
-		userPassword = KeyChain.getStringForIdentifier("password") ?? ""
-
-		removePlaintextCredentialsFromUserDefaults()
-
 		return true
 	}
 
@@ -114,12 +103,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			}
 		}
 		return false
-	}
-
-	/// Makes sure that the user defaults do not contain plaintext credentials from previous app versions.
-	func removePlaintextCredentialsFromUserDefaults() {
-		UserDefaults.standard.removeObject(forKey: "username")
-		UserDefaults.standard.removeObject(forKey: "password")
 	}
 
 	func setMapLocation(_ location: MapLocation) {
@@ -211,7 +194,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			   components.path == "/callback"
 			{
 				// OAuth result
-				OAuth.shared.redirectHandler(url: url, options: options)
+				oAuth2.redirectHandler(url: url, options: options)
 				return true
 			}
 
