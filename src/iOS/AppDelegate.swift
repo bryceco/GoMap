@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var userName = ""
 	var userPassword = ""
 	private(set) var isAppUpgrade = false
-	var externalGPS: ExternalGPS?
 
 	override init() {
 		super.init()
@@ -60,6 +59,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		_ application: UIApplication,
 		didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool
 	{
+#if DEBUG
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+			OAuth.shared.requestAccessFromUser(onComplete: { result in
+				if let _ = try? result.get() {
+					OAuth.shared.getUserDetails(callback: { _ in })
+				}
+			})
+		})
+#endif
+
 #if false
 		// This code sets the screen size as mandated for Mac App Store screen shots
 		let setScreenSizeForAppStoreScreenShots = false
@@ -85,12 +94,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		defaults.set(appVersion(), forKey: "appVersion")
 
 		// read name/password from keychain
-		userName = KeyChain.getStringForIdentifier("username")
-		userPassword = KeyChain.getStringForIdentifier("password")
+		userName = KeyChain.getStringForIdentifier("username") ?? ""
+		userPassword = KeyChain.getStringForIdentifier("password") ?? ""
 
 		removePlaintextCredentialsFromUserDefaults()
-
-		// self.externalGPS = [[ExternalGPS alloc] init];
 
 		return true
 	}
@@ -198,6 +205,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		} else {
 			guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else { return false }
+
+			if components.scheme == "gomaposm",
+			   components.host == "oauth",
+			   components.path == "/callback"
+			{
+				// OAuth result
+				OAuth.shared.redirectHandler(url: url, options: options)
+				return true
+			}
 
 			if components.scheme == "gomaposm",
 			   let base64 = components.queryItems?.first(where: { $0.name == "gpxurl" })?.value,

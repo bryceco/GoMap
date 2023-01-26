@@ -64,8 +64,9 @@ class LoginViewController: UITableViewController {
 					title: NSLocalizedString("Bad login", comment: ""),
 					message: errorMessage,
 					preferredStyle: .alert)
-				alert
-					.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+				alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+				                              style: .cancel,
+				                              handler: nil))
 				self.present(alert, animated: true)
 			} else {
 				// verifying credentials may update the appDelegate values when we subsitute name for correct case:
@@ -80,11 +81,11 @@ class LoginViewController: UITableViewController {
 					title: NSLocalizedString("Login successful", comment: ""),
 					message: nil,
 					preferredStyle: .alert)
-				alert
-					.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel,
-					                         handler: { _ in
-					                         	self.navigationController?.popToRootViewController(animated: true)
-					                         }))
+				alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+				                              style: .cancel,
+				                              handler: { _ in
+				                              	self.navigationController?.popToRootViewController(animated: true)
+				                              }))
 				self.present(alert, animated: true)
 			}
 		})
@@ -109,4 +110,6 @@ class LoginViewController: UITableViewController {
 
 		saveButton.isEnabled = (username.text?.count ?? 0) != 0 && (password.text?.count ?? 0) != 0
 	}
+
+	@IBAction func loginWithOAuth(_ sender: Any?) {}
 }
