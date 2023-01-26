@@ -98,7 +98,7 @@ class OAuth2 {
 		onComplete callback: @escaping (Result<Void, Error>) -> Void)
 	{
 		authCallback = callback
-		state = "\(Int.random(in: 0..<1000000000))-\(Int.random(in: 0..<1000000000))"
+		state = "\(Int.random(in: 0..<1000_000000))-\(Int.random(in: 0..<1000_000000))"
 		let url = url(withPath: "authorize", with: [
 			"client_id": client_id,
 			"redirect_uri": Self.redirect_uri,

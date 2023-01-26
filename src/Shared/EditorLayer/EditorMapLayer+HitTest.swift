@@ -35,7 +35,7 @@ extension EditorMapLayer {
 	private static func osmHitTest(way: OsmWay, location: LatLon, maxDegrees: OSMSize, segment: inout Int) -> CGFloat {
 		var previous = LatLon.zero
 		var seg = -1
-		var bestDist: CGFloat = 1000000
+		var bestDist: CGFloat = 1_000000
 		for node in way.nodes {
 			if seg >= 0 {
 				let dist = HitTestLineSegment(location, maxDegrees, node.latLon, previous)
@@ -160,7 +160,7 @@ extension EditorMapLayer {
 			return nil
 		}
 
-		var bestDist: CGFloat = 1000000
+		var bestDist: CGFloat = 1_000000
 		var best: [OsmBaseObject: Int] = [:]
 		EditorMapLayer.osmHitTestEnumerate(
 			point,
@@ -260,7 +260,7 @@ extension EditorMapLayer {
 			return nil
 		}
 		var hit: OsmNode?
-		var bestDist: CGFloat = 1000000
+		var bestDist: CGFloat = 1_000000
 		EditorMapLayer.osmHitTestEnumerate(point,
 		                                   radius: radius,
 		                                   owner: owner,

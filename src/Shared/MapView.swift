@@ -1083,7 +1083,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	func showInAppStore() {
-		let appStoreId = 592990211
+		let appStoreId = 592_990211
 #if true
 		let urlText = "itms-apps://itunes.apple.com/app/id\(appStoreId)"
 		let url = URL(string: urlText)
