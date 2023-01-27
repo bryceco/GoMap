@@ -295,6 +295,9 @@
 		0208898826BB1539003AF6BF /* ars */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ars; path = ars.lproj/Settings.strings; sourceTree = "<group>"; };
 		0208898926BB1539003AF6BF /* ars */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ars; path = ars.lproj/Changeset.strings; sourceTree = "<group>"; };
 		020E160A267A82050037DE49 /* TileServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileServer.swift; sourceTree = "<group>"; };
+		020E765929835D2C00B862B8 /* tzm */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tzm; path = tzm.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
+		020E765A29835D2C00B862B8 /* tzm */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tzm; path = tzm.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		020E765B29835D2C00B862B8 /* tzm */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tzm; path = tzm.lproj/Localizable.strings; sourceTree = "<group>"; };
 		020F1E74279D15D6004496EB /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		020F1E75279D15D6004496EB /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		020F1E76279D15D6004496EB /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1353,6 +1356,7 @@
 				es,
 				nn,
 				zgh,
+				tzm,
 			);
 			mainGroup = 02ACBA2416713CCB00BB4414;
 			packageReferences = (
@@ -1683,6 +1687,7 @@
 				025465192947F60200C7C2F8 /* es */,
 				02F85A01297A45DE008F57C8 /* nn */,
 				028088A22980DF0500E1947B /* zgh */,
+				020E765929835D2C00B862B8 /* tzm */,
 			);
 			name = DirectionViewController.xib;
 			sourceTree = "<group>";
@@ -1874,6 +1879,7 @@
 				0254651A2947F60200C7C2F8 /* es */,
 				02F85A02297A45DE008F57C8 /* nn */,
 				028088A32980DF0500E1947B /* zgh */,
+				020E765A29835D2C00B862B8 /* tzm */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1939,6 +1945,7 @@
 				0254651B2947F60200C7C2F8 /* es */,
 				02F85A03297A45DE008F57C8 /* nn */,
 				0237CF5029835BDB0048ED2A /* zgh */,
+				020E765B29835D2C00B862B8 /* tzm */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

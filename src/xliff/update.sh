@@ -20,6 +20,7 @@ git pull
 
 # Convert language codes that are different than what iOS uses
 # Currently we only handle zgh -> tzm
+mv -f zgh.xliff tzm.xliff
 sed -i '' "s/target-language=\"zgh\"/target-language=\"tzm\"/" zgh.xliff
 
 # Strip empty translations
@@ -47,6 +48,9 @@ xcodebuild -exportLocalizations -localizationPath $TMP_XLIFF -project "$PROJECT"
 
 # Copy XLIFF files back here
 cp $TMP_XLIFF/*/Localized\ Contents/*.xliff .
+
+# Rename tzm back to zgh
+mv tzm.xliff zgh.xliff
 
 # Make sure newly added strings are tracked by git
 find .. -name '*.strings' -print0 | xargs -0 git add
