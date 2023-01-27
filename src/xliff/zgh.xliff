@@ -83,25 +83,25 @@
       </trans-unit>
     </body>
   </file>
-  <file original="en.lproj/Localizable.strings" datatype="plaintext" source-language="en" target-language="zgh">
+  <file original="en.lproj/Localizable.strings" source-language="en" target-language="zgh" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.2" build-num="14C18"/>
     </header>
     <body>
       <trans-unit id="&#9;Relation " xml:space="preserve">
         <source>	Relation </source>
-        <target state="translated">	ⵜⴰⵙⵇⵇⵏⵜ </target>
+        <target>	ⵜⴰⵙⵇⵇⵏⵜ </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="&#9;Way " xml:space="preserve">
         <source>	Way </source>
-        <target state="translated">	ⴰⴱⵔⵉⴷ </target>
+        <target>	ⴰⴱⵔⵉⴷ </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;" xml:space="preserve">
         <source> (%d members)
 </source>
-        <target state="translated"> (%d ⵏ ⵉⴳⵎⴰⵎⵏ)
+        <target> (%d ⵏ ⵉⴳⵎⴰⵎⵏ)
 </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
@@ -116,12 +116,12 @@
       </trans-unit>
       <trans-unit id=" (way)" xml:space="preserve">
         <source> (way)</source>
-        <target state="translated"> (ⴰⴱⵔⵉⴷ)</target>
+        <target> (ⴰⴱⵔⵉⴷ)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%.0f m^2" xml:space="preserve">
         <source>%.0f m^2</source>
-        <target state="translated">%.0f m^2</target>
+        <target>%.0f m^2</target>
         <note>area in m^2</note>
       </trans-unit>
       <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
@@ -138,7 +138,7 @@
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
         <source>%@ (relation)</source>
-        <target state="translated">%@ (ⵜⴰⵙⵇⵇⵏⵜ)</target>
+        <target>%@ (ⵜⴰⵙⵇⵇⵏⵜ)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ changeset" xml:space="preserve">
@@ -151,7 +151,7 @@
       </trans-unit>
       <trans-unit id="%ld Days" xml:space="preserve">
         <source>%ld Days</source>
-        <target state="translated">%ld ⵏ ⵡⵓⵙⵙⴰⵏ</target>
+        <target>%ld ⵏ ⵡⵓⵙⵙⴰⵏ</target>
         <note>One or more days
    Plural number of days</note>
       </trans-unit>

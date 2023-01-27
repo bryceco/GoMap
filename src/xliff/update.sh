@@ -18,6 +18,10 @@ curl -d operation=push -H "Authorization: Token $WEBLATE_TOKEN" $WEBLATE_REPO
 # Download the updated XLIFFs to the local machine
 git pull
 
+# Convert language codes that are different than what iOS uses
+# Currently we only handle zgh -> tzm
+sed -i '' "s/target-language=\"zgh\"/target-language=\"tzm\"/" zgh.xliff
+
 # Strip empty translations
 sed -i ''  '/<target\/>/d' *.xliff
 
