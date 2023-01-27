@@ -50,7 +50,7 @@ xcodebuild -exportLocalizations -localizationPath $TMP_XLIFF -project "$PROJECT"
 cp $TMP_XLIFF/*/Localized\ Contents/*.xliff .
 
 # Rename tzm back to zgh
-mv tzm.xliff zgh.xliff
+mv -f tzm.xliff zgh.xliff
 
 # Make sure newly added strings are tracked by git
 find .. -name '*.strings' -print0 | xargs -0 git add
