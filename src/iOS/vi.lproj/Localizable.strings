@@ -539,9 +539,6 @@
 "The ways contain incompatible tags" = "Các lối có thẻ mâu thuẫn";
 
 /* No comment provided by engineer. */
-"The XML is improperly formed" = "XML bị hư hỏng";
-
-/* No comment provided by engineer. */
 "Travel ALLOWED from %@ to %@" = "CHO PHÉP đi từ %1$@ sang %2$@";
 
 /* No comment provided by engineer. */

@@ -28,9 +28,6 @@
 /* Class = "UILabel"; text = "Detail"; ObjectID = "6Lj-wh-z9f"; */
 "6Lj-wh-z9f.text" = "التفاصيل";
 
-/* Class = "UILabel"; text = "Name"; ObjectID = "7cc-E7-pzw"; */
-"7cc-E7-pzw.text" = "الاسم";
-
 /* Class = "UILabel"; text = "OpenStreetMap Login"; ObjectID = "34N-Ep-rpf"; */
 "34N-Ep-rpf.text" = "تسجيل الدخول إلى خريطة الشارع المفتوحة";
 
@@ -64,9 +61,6 @@
 /* Class = "UIButton"; normalTitle = "Register new account"; ObjectID = "DY5-Ls-XZ1"; */
 "DY5-Ls-XZ1.normalTitle" = "تسجيل حساب جديد";
 
-/* Class = "UITextField"; placeholder = "password"; ObjectID = "e7I-rE-dAW"; */
-"e7I-rE-dAW.placeholder" = "كلمة المرور";
-
 /* Class = "UITableViewSection"; headerTitle = "Credentials"; ObjectID = "fbD-Hr-HNI"; */
 "fbD-Hr-HNI.headerTitle" = "معلومات تسجيل الدخول";
 
@@ -93,9 +87,6 @@
 
 /* Class = "UILabel"; text = "Nearby Mappers"; ObjectID = "jcn-Lx-tj3"; */
 "jcn-Lx-tj3.text" = "رساموا الخرائط القريبون";
-
-/* Class = "UILabel"; text = "Password"; ObjectID = "k0y-gf-6DY"; */
-"k0y-gf-6DY.text" = "كلمة المرور";
 
 /* Class = "UILabel"; text = "Subtitle"; ObjectID = "KIO-8j-QsO"; */
 "KIO-8j-QsO.text" = "عنوان فرعي";
@@ -165,7 +156,4 @@
 
 /* Class = "UITableViewSection"; headerTitle = "Developer settings"; ObjectID = "yAO-9B-CTd"; */
 "yAO-9B-CTd.headerTitle" = "إعدادات المطور";
-
-/* Class = "UITextField"; placeholder = "username"; ObjectID = "YQ4-05-lQz"; */
-"YQ4-05-lQz.placeholder" = "اسم المستخدم";
 

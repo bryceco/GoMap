@@ -165,9 +165,6 @@
 "way %@" = "linia %@";
 
 /* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "Musisz podać swoją nazwę użytkownika OSM, a nie adres e-mail.";
-
-/* No comment provided by engineer. */
 "You must save or discard changes to the current object before editing its associated relation" = "Przed edycją skojarzonej relacji należy zapisać lub odrzucić zmiany w bieżącym obiekcie";
 
 /* No comment provided by engineer. */

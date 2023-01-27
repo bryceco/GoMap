@@ -22,9 +22,6 @@
 /* Class = "UILabel"; text = "Detail"; ObjectID = "6Lj-wh-z9f"; */
 "6Lj-wh-z9f.text" = "详情";
 
-/* Class = "UILabel"; text = "Name"; ObjectID = "7cc-E7-pzw"; */
-"7cc-E7-pzw.text" = "名称";
-
 /* Class = "UILabel"; text = "OpenStreetMap Login"; ObjectID = "34N-Ep-rpf"; */
 "34N-Ep-rpf.text" = "OpenStreetMap登录";
 
@@ -55,9 +52,6 @@
 /* Class = "UIButton"; normalTitle = "Register new account"; ObjectID = "DY5-Ls-XZ1"; */
 "DY5-Ls-XZ1.normalTitle" = "注册新帐号";
 
-/* Class = "UITextField"; placeholder = "password"; ObjectID = "e7I-rE-dAW"; */
-"e7I-rE-dAW.placeholder" = "密码";
-
 /* Class = "UITableViewSection"; headerTitle = "Credentials"; ObjectID = "fbD-Hr-HNI"; */
 "fbD-Hr-HNI.headerTitle" = "证书";
 
@@ -84,9 +78,6 @@
 
 /* Class = "UILabel"; text = "Nearby Mappers"; ObjectID = "jcn-Lx-tj3"; */
 "jcn-Lx-tj3.text" = "附近的编辑者";
-
-/* Class = "UILabel"; text = "Password"; ObjectID = "k0y-gf-6DY"; */
-"k0y-gf-6DY.text" = "密码";
 
 /* Class = "UILabel"; text = "Subtitle"; ObjectID = "KIO-8j-QsO"; */
 "KIO-8j-QsO.text" = "子标题";
@@ -156,7 +147,4 @@
 
 /* Class = "UITableViewSection"; headerTitle = "Developer settings"; ObjectID = "yAO-9B-CTd"; */
 "yAO-9B-CTd.headerTitle" = "开发者设置";
-
-/* Class = "UITextField"; placeholder = "username"; ObjectID = "YQ4-05-lQz"; */
-"YQ4-05-lQz.placeholder" = "用户名";
 

@@ -674,9 +674,6 @@
 "The ways contain incompatible tags" = "Лінії містять несумісні теґи";
 
 /* No comment provided by engineer. */
-"The XML is improperly formed" = "Цей XML сформований некоректно";
-
-/* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "Щоб здійснити дію GPS має бути увімкненим";
 
 /* No comment provided by engineer. */

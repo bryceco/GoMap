@@ -560,9 +560,6 @@
 "The ways contain incompatible tags" = "Las vías contienen etiquetas incompatibles";
 
 /* No comment provided by engineer. */
-"The XML is improperly formed" = "El XML no está bien formado";
-
-/* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "Esta acción requiere encender el GPS";
 
 /* No comment provided by engineer. */
@@ -627,9 +624,6 @@
 
 /* No comment provided by engineer. */
 "You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "Ha hecho cambios que todavía no se cargan en el servidor. Si vacía la antememoria, esas modificaciones se perderán.";
-
-/* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "Debe proporcionar su nombre de usuario de OSM, no una dirección de correo electrónico.";
 
 /* No comment provided by engineer. */
 "Zoom to Edit" = "Acérquese para editar";

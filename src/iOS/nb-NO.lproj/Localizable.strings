@@ -674,9 +674,6 @@
 "The ways contain incompatible tags" = "Veiene inneholder ufullstendige etiketter";
 
 /* No comment provided by engineer. */
-"The XML is improperly formed" = "Feilformatert XML";
-
-/* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "Handlingen krever at GPS er påslått";
 
 /* No comment provided by engineer. */
@@ -762,9 +759,6 @@
 
 /* No comment provided by engineer. */
 "You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "Du har gjort endringer som ikke har blitt lastet opp til tjeneren enda. Tømming av hurtiglageret vil medføre tap av disse endringene.";
-
-/* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "Du må angi ditt OSM-brukernavn, ikke en e-postadresse.";
 
 /* No comment provided by engineer. */
 "You must save or discard changes to the current object before editing its associated relation" = "Du må lagre eller forkaste endringer i nåværende objekt før redigering av dets tilknyttede relasjon";
