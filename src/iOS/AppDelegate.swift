@@ -17,10 +17,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
 	weak var mapView: MapView!
-	var userName = ""
-	var userPassword = ""
 	private(set) var isAppUpgrade = false
-	var externalGPS: ExternalGPS?
+
+	let oAuth2 = OAuth2()
+
+	var userName: String? {
+		get { UserDefaults.standard.string(forKey: "userName") }
+		set { UserDefaults.standard.set(newValue, forKey: "userName") }
+	}
 
 	override init() {
 		super.init()
@@ -84,14 +88,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 		defaults.set(appVersion(), forKey: "appVersion")
 
-		// read name/password from keychain
-		userName = KeyChain.getStringForIdentifier("username")
-		userPassword = KeyChain.getStringForIdentifier("password")
-
-		removePlaintextCredentialsFromUserDefaults()
-
-		// self.externalGPS = [[ExternalGPS alloc] init];
-
 		return true
 	}
 
@@ -107,12 +103,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			}
 		}
 		return false
-	}
-
-	/// Makes sure that the user defaults do not contain plaintext credentials from previous app versions.
-	func removePlaintextCredentialsFromUserDefaults() {
-		UserDefaults.standard.removeObject(forKey: "username")
-		UserDefaults.standard.removeObject(forKey: "password")
 	}
 
 	func setMapLocation(_ location: MapLocation) {
@@ -198,6 +188,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		} else {
 			guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else { return false }
+
+			if components.scheme == "gomaposm",
+			   components.host == "oauth",
+			   components.path == "/callback"
+			{
+				// OAuth result
+				oAuth2.redirectHandler(url: url, options: options)
+				return true
+			}
 
 			if components.scheme == "gomaposm",
 			   let base64 = components.queryItems?.first(where: { $0.name == "gpxurl" })?.value,

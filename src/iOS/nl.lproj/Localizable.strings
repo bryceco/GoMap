@@ -743,9 +743,6 @@
 "The ways contain incompatible tags" = "De wegen bevatten onverenigbare tags";
 
 /* No comment provided by engineer. */
-"The XML is improperly formed" = "De XML is verkeerd gevormd";
-
-/* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "Voor deze actie moet GPS aan staan";
 
 /* No comment provided by engineer. */
@@ -864,9 +861,6 @@
 
 /* No comment provided by engineer. */
 "You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "Je hebt verandering gemaakt die nog niet geüpload zijn naar de server. Het leegmaken van de cache zal ervoor zorgen dat alle veranderingen verloren zullen gaan.";
-
-/* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "Je moet je OSM-gebruikersnaam invullen, niet een e-mailadres.";
 
 /* No comment provided by engineer. */
 "You must save or discard changes to the current object before editing its associated relation" = "Je moet veranderingen aan huidige objecten opslaan of verwerpen om de bijbehorende relatie te bewerken";

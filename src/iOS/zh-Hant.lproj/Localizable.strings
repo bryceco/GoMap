@@ -770,9 +770,6 @@
 "The ways contain incompatible tags" = "線段包含不相容的標籤";
 
 /* No comment provided by engineer. */
-"The XML is improperly formed" = "XML 格式錯誤";
-
-/* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "這個行為需要啟用 GPS 功能";
 
 /* No comment provided by engineer. */
@@ -891,9 +888,6 @@
 
 /* No comment provided by engineer. */
 "You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "您所編輯的內容尚未上傳到伺服器。清除快取將一併刪除這些內容。";
-
-/* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "您必須提供您的 OSM 使用者名稱，而非電子郵件信箱。";
 
 /* No comment provided by engineer. */
 "You must save or discard changes to the current object before editing its associated relation" = "您必須先儲存或捨棄對於所選物件的變更，然後才能編輯該物件的關係";

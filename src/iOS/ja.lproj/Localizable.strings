@@ -773,9 +773,6 @@
 "The ways contain incompatible tags" = "このウェイには互換性のないタグが含まれています";
 
 /* No comment provided by engineer. */
-"The XML is improperly formed" = "XML形式が誤っています";
-
-/* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "この操作にはGPSを有効化している必要があります";
 
 /* No comment provided by engineer. */
@@ -897,9 +894,6 @@
 
 /* No comment provided by engineer. */
 "You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "まだサーバーにアップロードされていない変更があります。キャッシュをクリアするとこれらの変更が失われることになります。";
-
-/* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "メールアドレスではなくOSMユーザー名を入力してください。";
 
 /* No comment provided by engineer. */
 "You must save or discard changes to the current object before editing its associated relation" = "関連するリレーションを編集する前に、現在のオブジェクトへの変更を保存するか破棄するかしなければなりません";

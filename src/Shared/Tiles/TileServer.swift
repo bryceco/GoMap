@@ -459,7 +459,7 @@ final class TileServer: Equatable {
 		} else {
 			// EPSG:3857 and others
 			loc = OSMPoint(x: lon, y: log(tan((.pi / 2 + lat) / 2))) // mercatorRaw
-			loc = Mult(loc, 20037508.34 / .pi)
+			loc = Mult(loc, 20_037508.34 / .pi)
 		}
 		return loc
 	}

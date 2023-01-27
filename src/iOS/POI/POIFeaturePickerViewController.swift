@@ -27,7 +27,7 @@ private var mostRecentArray: [PresetFeature] = []
 private var mostRecentMaximum = 0
 
 // static so memory cache persists each time we appear
-private var logoCache = PersistentWebCache<UIImage>(name: "presetLogoCache", memorySize: 5 * 1000000)
+private var logoCache = PersistentWebCache<UIImage>(name: "presetLogoCache", memorySize: 5 * 1_000000)
 
 class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate {
 	private var featureList: [PresetFeatureOrCategory] = []

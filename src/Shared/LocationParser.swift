@@ -168,7 +168,8 @@ class LocationParser {
 
 		// https://gomaposm.com/edit?center=47.679056,-122.212559&zoom=21&view=aerial%2Beditor
 		if components.scheme == "gomaposm" ||
-			components.host == "gomaposm.com"
+			components.host == "gomaposm.com" ||
+			components.host == "www.gomaposm.com"
 		{
 			var lat: Double?
 			var lon: Double?

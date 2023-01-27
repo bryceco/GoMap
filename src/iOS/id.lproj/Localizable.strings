@@ -569,9 +569,6 @@
 "The ways contain incompatible tags" = "Way ini mengandung tag yang tidak kompatibel";
 
 /* No comment provided by engineer. */
-"The XML is improperly formed" = "XML tidak terbentuk dengan benar";
-
-/* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "Tindakan ini memerlukan GPS yang diaktifkan";
 
 /* No comment provided by engineer. */
@@ -639,7 +636,4 @@
 
 /* No comment provided by engineer. */
 "You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "Anda telah membuat perubahan-perubahan yang bellum diunggah ke server. Menghapus cache akan menghilangkan perubahan-perubahan tersebut.";
-
-/* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "Anda harus memberikan nama pengguna OSM, bukan alamat surel.";
 

@@ -28,9 +28,6 @@
 /* Class = "UILabel"; text = "Detail"; ObjectID = "6Lj-wh-z9f"; */
 "6Lj-wh-z9f.text" = "Détail";
 
-/* Class = "UILabel"; text = "Name"; ObjectID = "7cc-E7-pzw"; */
-"7cc-E7-pzw.text" = "Nom";
-
 /* Class = "UILabel"; text = "OpenStreetMap Login"; ObjectID = "34N-Ep-rpf"; */
 "34N-Ep-rpf.text" = "Identifiant OpenStreetMap";
 
@@ -67,9 +64,6 @@
 /* Class = "UIButton"; normalTitle = "Register new account"; ObjectID = "DY5-Ls-XZ1"; */
 "DY5-Ls-XZ1.normalTitle" = "Créer un compte";
 
-/* Class = "UITextField"; placeholder = "password"; ObjectID = "e7I-rE-dAW"; */
-"e7I-rE-dAW.placeholder" = "mot de passe";
-
 /* Class = "UITableViewSection"; headerTitle = "Credentials"; ObjectID = "fbD-Hr-HNI"; */
 "fbD-Hr-HNI.headerTitle" = "Identifiants";
 
@@ -96,9 +90,6 @@
 
 /* Class = "UILabel"; text = "Nearby Mappers"; ObjectID = "jcn-Lx-tj3"; */
 "jcn-Lx-tj3.text" = "Cartographes à proximité";
-
-/* Class = "UILabel"; text = "Password"; ObjectID = "k0y-gf-6DY"; */
-"k0y-gf-6DY.text" = "Mot de passe";
 
 /* Class = "UILabel"; text = "Subtitle"; ObjectID = "KIO-8j-QsO"; */
 "KIO-8j-QsO.text" = "Sous-titre";
@@ -168,7 +159,4 @@
 
 /* Class = "UITableViewSection"; headerTitle = "Developer settings"; ObjectID = "yAO-9B-CTd"; */
 "yAO-9B-CTd.headerTitle" = "Paramètres développeur";
-
-/* Class = "UITextField"; placeholder = "username"; ObjectID = "YQ4-05-lQz"; */
-"YQ4-05-lQz.placeholder" = "identifiant";
 

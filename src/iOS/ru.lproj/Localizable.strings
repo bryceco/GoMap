@@ -743,9 +743,6 @@
 "The ways contain incompatible tags" = "Линии содержат несовместимые теги";
 
 /* No comment provided by engineer. */
-"The XML is improperly formed" = "Некорректно сформирован XML";
-
-/* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "Это действие требует, чтобы GPS был включён";
 
 /* No comment provided by engineer. */
@@ -861,9 +858,6 @@
 
 /* No comment provided by engineer. */
 "You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "Вы сделали правки, которые ещё не были загружены на сервер. Очистка кэша приведёт к их потере.";
-
-/* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "Вы должны указать имя пользователя OSM, а не адрес электронной почты.";
 
 /* No comment provided by engineer. */
 "You must save or discard changes to the current object before editing its associated relation" = "Вы должны сохранить или отменить правки текущего объекта перед тем, как редактировать связанное отношение";

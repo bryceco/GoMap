@@ -595,9 +595,6 @@
 /* No comment provided by engineer. */
 "The current location cannot be determined: " = "无法确定当前位置： ";
 
-/* No comment provided by engineer. */
-"The XML is improperly formed" = "XML格式不正确";
-
 /* Edit action */
 "Turn Restrictions" = "转向限制";
 
@@ -657,9 +654,6 @@
 
 /* POI editor presets */
 "You can define your own custom presets here" = "您可以在这里定义自己的自定义预设";
-
-/* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "你必须提供你的OSM用户名，而不是电子邮件地址。";
 
 /* No comment provided by engineer. */
 "You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?" = "您已使用此版本的 Go Map 上传了 %ld 个变更集！！\n\n为这个应用软件评分？";

@@ -8,12 +8,6 @@
 
 import UIKit
 
-func DLog(_ args: String...) {
-#if DEBUG
-	print(args)
-#endif
-}
-
 class GpxTrackTableCell: UITableViewCell, UIActionSheetDelegate {
 	@IBOutlet var startDate: UILabel!
 	@IBOutlet var duration: UILabel!
@@ -28,38 +22,37 @@ class GpxTrackTableCell: UITableViewCell, UIActionSheetDelegate {
 			message: nil,
 			preferredStyle: .actionSheet)
 		alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
-		alert
-			.addAction(UIAlertAction(title: NSLocalizedString("Upload to OSM", comment: ""), style: .default,
-			                         handler: { _ in
-			                         	self.tableView?.share(self.gpxTrack)
-			                         }))
-		alert
-			.addAction(UIAlertAction(title: NSLocalizedString("Share", comment: "Open iOS sharing sheet"),
-			                         style: .default, handler: { _ in
-			                         	let creationDate = self.gpxTrack.creationDate
-			                         	let appName = AppDelegate.shared.appName()
-			                         	let fileName = "\(appName) \(creationDate).gpx"
+		alert.addAction(UIAlertAction(title: NSLocalizedString("Upload to OSM", comment: ""),
+		                              style: .default,
+		                              handler: { _ in
+		                              	self.tableView?.share(self.gpxTrack)
+		                              }))
+		alert.addAction(UIAlertAction(
+			title: NSLocalizedString("Share", comment: "Open iOS sharing sheet"),
+			style: .default, handler: { _ in
+				let creationDate = self.gpxTrack.creationDate
+				let appName = AppDelegate.shared.appName()
+				let fileName = "\(appName) \(creationDate).gpx"
 
-			                         	guard let gpx = self.gpxTrack.gpxXmlString() else { return }
+				guard let gpx = self.gpxTrack.gpxXmlString() else { return }
 
-			                         	let url = FileManager.default.temporaryDirectory
-			                         		.appendingPathComponent(fileName)
-			                         	try? FileManager.default.removeItem(at: url)
+				let url = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
+				try? FileManager.default.removeItem(at: url)
 
-			                         	if (try? gpx.write(to: url, atomically: true, encoding: .utf8)) != nil {
-			                         		let controller = UIActivityViewController(
-			                         			activityItems: [fileName, url].compactMap { $0 },
-			                         			applicationActivities: nil)
-			                         		controller.completionWithItemsHandler = { _, completed, _, _ in
-			                         			if completed {
-			                         				let gpxLayer = AppDelegate.shared.mapView.gpxLayer
-			                         				gpxLayer.markTrackUploaded(self.gpxTrack)
-			                         				self.tableView?.tableView.reloadData()
-			                         			}
-			                         		}
-			                         		self.tableView?.present(controller, animated: true)
-			                         	}
-			                         }))
+				if (try? gpx.write(to: url, atomically: true, encoding: .utf8)) != nil {
+					let controller = UIActivityViewController(
+						activityItems: [fileName, url].compactMap { $0 },
+						applicationActivities: nil)
+					controller.completionWithItemsHandler = { _, completed, _, _ in
+						if completed {
+							let gpxLayer = AppDelegate.shared.mapView.gpxLayer
+							gpxLayer.markTrackUploaded(self.gpxTrack)
+							self.tableView?.tableView.reloadData()
+						}
+					}
+					self.tableView?.present(controller, animated: true)
+				}
+			}))
 
 		tableView?.present(alert, animated: true)
 		// set location of popup
@@ -100,12 +93,9 @@ class GpxViewController: UITableViewController {
 
 		// let progress window display before we submit work
 		DispatchQueue.main.async(execute: {
-			let appDelegate = AppDelegate.shared
-
 			let url = OSM_API_URL + "api/0.6/gpx/create"
 
-			guard let url1 = URL(string: url) else { return }
-			let request = NSMutableURLRequest(url: url1)
+			guard var request = AppDelegate.shared.oAuth2.urlRequest(string: url) else { return }
 			let boundary = "----------------------------d10f7aa230e8"
 			request.httpMethod = "POST"
 			let contentType = "multipart/form-data; boundary=\(boundary)"
@@ -120,35 +110,28 @@ class GpxViewController: UITableViewController {
 				dateStyle: .short,
 				timeStyle: .short)
 
-			var body = Data()
-			body.append("--\(boundary)\r\n".data(using: .utf8)!)
-			body
-				.append("Content-Disposition: form-data; name=\"file\"; filename=\"GoMap__\(startDateFile).gpx\"\r\n"
-					.data(using: .utf8)!)
-			body.append("Content-Type: application/octet-stream\r\n\r\n".data(using: .utf8)!)
-			body.append(track.gpxXmlData()!)
-			body.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-			body.append("Content-Disposition: form-data; name=\"description\"\r\n\r\n".data(using: .utf8)!)
-			body.append("Go Map!! \(startDateFriendly)".data(using: .utf8)!)
-			body.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-			body.append("Content-Disposition: form-data; name=\"tags\"\r\n\r\n".data(using: .utf8)!)
-			body.append("GoMap".data(using: .utf8)!)
-			body.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-			body.append("Content-Disposition: form-data; name=\"public\"\r\n\r\n".data(using: .utf8)!)
-			body.append("1".data(using: .utf8)!)
-			body.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-			body.append("Content-Disposition: form-data; name=\"visibility\"\r\n\r\n".data(using: .utf8)!)
-			body.append("public".data(using: .utf8)!)
-			body.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
-			request.httpBody = body
+			var body = ""
+			body += "--\(boundary)\r\n"
+			body += "Content-Disposition: form-data; name=\"file\"; filename=\"GoMap__\(startDateFile).gpx\"\r\n"
+			body += "Content-Type: application/octet-stream\r\n\r\n"
+			body += track.gpxXmlString()!
+			body += "\r\n--\(boundary)\r\n"
+			body += "Content-Disposition: form-data; name=\"description\"\r\n\r\n"
+			body += "Go Map!! \(startDateFriendly)"
+			body += "\r\n--\(boundary)\r\n"
+			body += "Content-Disposition: form-data; name=\"tags\"\r\n\r\n"
+			body += "GoMap"
+			body += "\r\n--\(boundary)\r\n"
+			body += "Content-Disposition: form-data; name=\"public\"\r\n\r\n"
+			body += "1"
+			body += "\r\n--\(boundary)\r\n"
+			body += "Content-Disposition: form-data; name=\"visibility\"\r\n\r\n"
+			body += "public"
+			body += "\r\n--\(boundary)--\r\n"
+			request.httpBody = body.data(using: .utf8)
 			request.setValue(String(format: "%ld", body.count), forHTTPHeaderField: "Content-Length")
 
-			var auth = "\(appDelegate.userName):\(appDelegate.userPassword)"
-			auth = OsmMapData.encodeBase64(auth)
-			auth = "Basic \(auth)"
-			request.setValue(auth, forHTTPHeaderField: "Authorization")
-
-			URLSession.shared.data(with: request as URLRequest, completionHandler: { result in
+			URLSession.shared.data(with: request, completionHandler: { result in
 				DispatchQueue.main.async(execute: {
 					progress.dismiss(animated: true)
 
@@ -158,9 +141,9 @@ class GpxViewController: UITableViewController {
 							title: NSLocalizedString("GPX Upload Complete", comment: ""),
 							message: nil,
 							preferredStyle: .alert)
-						success
-							.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel,
-							                         handler: nil))
+						success.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+						                                style: .cancel,
+						                                handler: nil))
 						self.present(success, animated: true)
 
 						// mark track as uploaded in UI
@@ -172,9 +155,9 @@ class GpxViewController: UITableViewController {
 							title: NSLocalizedString("GPX Upload Failed", comment: ""),
 							message: "\(error.localizedDescription)",
 							preferredStyle: .alert)
-						failure
-							.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel,
-							                         handler: nil))
+						failure.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+						                                style: .cancel,
+						                                handler: nil))
 						self.present(failure, animated: true)
 					}
 				})

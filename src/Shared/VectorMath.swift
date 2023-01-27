@@ -644,7 +644,7 @@ struct LatLon: Codable {
 // MARK: miscellaneous
 
 /// Radius in meters
-let EarthRadius = 6378137.0
+let EarthRadius = 6_378137.0
 
 @inline(__always) func radiansFromDegrees(_ degrees: Double) -> Double {
 	return degrees * (.pi / 180)

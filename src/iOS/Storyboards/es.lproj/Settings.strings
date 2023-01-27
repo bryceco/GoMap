@@ -13,9 +13,6 @@
 /* Class = "UILabel"; text = "Detail"; ObjectID = "6Lj-wh-z9f"; */
 "6Lj-wh-z9f.text" = "Detalle";
 
-/* Class = "UILabel"; text = "Name"; ObjectID = "7cc-E7-pzw"; */
-"7cc-E7-pzw.text" = "Nombre";
-
 /* Class = "UITableViewSection"; headerTitle = "Language"; ObjectID = "355-dx-Oi8"; */
 "355-dx-Oi8.headerTitle" = "Idioma";
 
@@ -30,9 +27,6 @@
 
 /* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "ctb-pg-pM9"; */
 "ctb-pg-pM9.title" = "Guardar";
-
-/* Class = "UITextField"; placeholder = "password"; ObjectID = "e7I-rE-dAW"; */
-"e7I-rE-dAW.placeholder" = "contraseña";
 
 /* Class = "UILabel"; text = "Advanced Settings"; ObjectID = "gec-8l-k4H"; */
 "gec-8l-k4H.text" = "Configuración avanzada";
@@ -51,9 +45,6 @@
 
 /* Class = "UILabel"; text = "Nearby Mappers"; ObjectID = "jcn-Lx-tj3"; */
 "jcn-Lx-tj3.text" = "Cartógrafos cercanos";
-
-/* Class = "UILabel"; text = "Password"; ObjectID = "k0y-gf-6DY"; */
-"k0y-gf-6DY.text" = "Contraseña";
 
 /* Class = "UILabel"; text = "Subtitle"; ObjectID = "KIO-8j-QsO"; */
 "KIO-8j-QsO.text" = "Subtítulo";
@@ -96,7 +87,4 @@
 
 /* Class = "UITableViewSection"; headerTitle = "Developer settings"; ObjectID = "yAO-9B-CTd"; */
 "yAO-9B-CTd.headerTitle" = "Configuración de desarrollo";
-
-/* Class = "UITextField"; placeholder = "username"; ObjectID = "YQ4-05-lQz"; */
-"YQ4-05-lQz.placeholder" = "nombre de usuario";
 

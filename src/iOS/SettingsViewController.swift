@@ -33,15 +33,19 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 		let appDelegate = AppDelegate.shared
 
 		username.text = ""
-		if appDelegate.userName.count > 0 {
-			appDelegate.mapView.editorLayer.mapData.verifyUserCredentials(withCompletion: { [self] errorMessage in
-				if errorMessage != nil {
-					username.text = NSLocalizedString("<unknown>", comment: "unknown user name")
+		if let userName = appDelegate.userName {
+			username.text = userName
+		} else {
+			appDelegate.oAuth2.getUserDetails(callback: { dict in
+				if let dict = dict,
+				   let name = dict["display_name"] as? String
+				{
+					self.username.text = name
 				} else {
-					username.text = appDelegate.userName
+					self.username.text = NSLocalizedString("<unknown>", comment: "unknown user name")
 				}
 
-				tableView.reloadData()
+				self.tableView.reloadData()
 			})
 		}
 	}

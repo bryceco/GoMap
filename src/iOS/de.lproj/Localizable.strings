@@ -773,9 +773,6 @@
 "The ways contain incompatible tags" = "Die Wege enthalten inkompatible Attribute";
 
 /* No comment provided by engineer. */
-"The XML is improperly formed" = "Das XML ist falsch geformt";
-
-/* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "Diese Aktion erfordert, dass GPS eingeschalten ist";
 
 /* No comment provided by engineer. */
@@ -897,9 +894,6 @@
 
 /* No comment provided by engineer. */
 "You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "Es wurden Änderungen gemacht, welche noch nicht zum Server hochgeladen wurden. Den Cache zu leeren, würde den Verlust dieser Veränderungen bedeuten.";
-
-/* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "Der OSM-Nutzername muss eingetragen sein, keine E-Mail-Addresse.";
 
 /* No comment provided by engineer. */
 "You must save or discard changes to the current object before editing its associated relation" = "Sie müssen Änderungen am aktuellen Objekt speichern oder verwerfen, bevor Sie die zugehörige Relation bearbeiten";

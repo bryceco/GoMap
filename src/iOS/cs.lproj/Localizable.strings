@@ -770,9 +770,6 @@
 "The ways contain incompatible tags" = "Linie obsahují nekompatibilní značky";
 
 /* No comment provided by engineer. */
-"The XML is improperly formed" = "XML soubor je nesprávně naformatován";
-
-/* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "Tato akce vyžaduje zapnutou GPS";
 
 /* No comment provided by engineer. */
@@ -891,9 +888,6 @@
 
 /* No comment provided by engineer. */
 "You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "Provedli jste změny, které ještě nebyly nahrány na server. Vyčištěním mezipaměti o tyto neuložené změny přijdete.";
-
-/* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "Zadejte své OSM uživatelské jméno, nikoliv e-mailovou adresu.";
 
 /* No comment provided by engineer. */
 "You must save or discard changes to the current object before editing its associated relation" = "Nejprve musíte uložit, nebo zahodit změny aktuálního objektu než začnete upravovat jeho související relaci";

@@ -1220,11 +1220,6 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>The + button can be positioned on either the left or right side of the screen</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="The XML is improperly formed" xml:space="preserve">
-        <source>The XML is improperly formed</source>
-        <target>The XML is improperly formed</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
       <trans-unit id="The current location cannot be determined: " xml:space="preserve">
         <source>The current location cannot be determined: </source>
         <target>The current location cannot be determined: </target>
@@ -1478,11 +1473,6 @@ These members are marked with '&gt;'.</target>
       <trans-unit id="You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." xml:space="preserve">
         <source>You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost.</source>
         <target>You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost.</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="You must provide your OSM user name, not an email address." xml:space="preserve">
-        <source>You must provide your OSM user name, not an email address.</source>
-        <target>You must provide your OSM user name, not an email address.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You must save or discard changes to the current object before editing its associated relation" xml:space="preserve">
@@ -2856,11 +2846,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <target>Detail</target>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "6Lj-wh-z9f";</note>
       </trans-unit>
-      <trans-unit id="7cc-E7-pzw.text" xml:space="preserve">
-        <source>Name</source>
-        <target>Name</target>
-        <note>Class = "UILabel"; text = "Name"; ObjectID = "7cc-E7-pzw";</note>
-      </trans-unit>
       <trans-unit id="34N-Ep-rpf.text" xml:space="preserve">
         <source>OpenStreetMap Login</source>
         <target>OpenStreetMap Login</target>
@@ -3025,11 +3010,6 @@ http://glyphish.com
         <target>Nearby Mappers</target>
         <note>Class = "UINavigationItem"; title = "Nearby Mappers"; ObjectID = "VDO-HW-SLB";</note>
       </trans-unit>
-      <trans-unit id="YQ4-05-lQz.placeholder" xml:space="preserve">
-        <source>username</source>
-        <target>username</target>
-        <note>Class = "UITextField"; placeholder = "username"; ObjectID = "YQ4-05-lQz";</note>
-      </trans-unit>
       <trans-unit id="ags-Mx-c1q.text" xml:space="preserve">
         <source>Contact Us</source>
         <target>Contact Us</target>
@@ -3045,15 +3025,15 @@ http://glyphish.com
         <target>Save</target>
         <note>Class = "UIBarButtonItem"; title = "Save"; ObjectID = "ctb-pg-pM9";</note>
       </trans-unit>
+      <trans-unit id="dIM-oE-zAg.normalTitle" xml:space="preserve">
+        <source>Sign In</source>
+        <target>Sign In</target>
+        <note>Class = "UIButton"; normalTitle = "Sign In"; ObjectID = "dIM-oE-zAg";</note>
+      </trans-unit>
       <trans-unit id="dbi-X6-Day.headerTitle" xml:space="preserve">
         <source>Bug Reports &amp; Suggestions</source>
         <target>Bug Reports &amp; Suggestions</target>
         <note>Class = "UITableViewSection"; headerTitle = "Bug Reports &amp; Suggestions"; ObjectID = "dbi-X6-Day";</note>
-      </trans-unit>
-      <trans-unit id="e7I-rE-dAW.placeholder" xml:space="preserve">
-        <source>password</source>
-        <target>password</target>
-        <note>Class = "UITextField"; placeholder = "password"; ObjectID = "e7I-rE-dAW";</note>
       </trans-unit>
       <trans-unit id="fbD-Hr-HNI.headerTitle" xml:space="preserve">
         <source>Credentials</source>
@@ -3084,11 +3064,6 @@ http://glyphish.com
         <source>Nearby Mappers</source>
         <target>Nearby Mappers</target>
         <note>Class = "UILabel"; text = "Nearby Mappers"; ObjectID = "jcn-Lx-tj3";</note>
-      </trans-unit>
-      <trans-unit id="k0y-gf-6DY.text" xml:space="preserve">
-        <source>Password</source>
-        <target>Password</target>
-        <note>Class = "UILabel"; text = "Password"; ObjectID = "k0y-gf-6DY";</note>
       </trans-unit>
       <trans-unit id="kt1-K7-kcu.title" xml:space="preserve">
         <source>Back</source>

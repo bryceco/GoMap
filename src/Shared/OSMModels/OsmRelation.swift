@@ -421,7 +421,7 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 	}
 
 	override func distance(toLineSegment point1: OSMPoint, point point2: OSMPoint) -> Double {
-		var dist = 1000000.0
+		var dist = 1_000000.0
 		for member in members {
 			if let object = member.obj {
 				if object.isRelation() == nil {
@@ -437,7 +437,7 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 
 	override func latLonOnObject(forLatLon target: LatLon) -> LatLon {
 		var bestPoint = target
-		var bestDistance = 10000000.0
+		var bestDistance = 10_000000.0
 		for object in allMemberObjects() {
 			let pt = object.latLonOnObject(forLatLon: target)
 			let dist = OSMPoint(target).distanceToPoint(OSMPoint(pt))

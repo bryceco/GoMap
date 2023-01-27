@@ -767,9 +767,6 @@
 "The ways contain incompatible tags" = "As linhas contêm etiquetas incompatíveis";
 
 /* No comment provided by engineer. */
-"The XML is improperly formed" = "O ficheiro XML está formatado incorretamente";
-
-/* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "Esta ação requer que o GPS esteja ligado";
 
 /* No comment provided by engineer. */
@@ -888,9 +885,6 @@
 
 /* No comment provided by engineer. */
 "You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "Fez alterações que ainda não foram enviadas para o servidor. Limpar os ficheiros temporários fará com que essas alterações sejam perdidas.";
-
-/* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "Deve fornecer o seu nome de utilizador no OpenStreetMap e não um endereço de e-mail.";
 
 /* No comment provided by engineer. */
 "You must save or discard changes to the current object before editing its associated relation" = "Deve guardar ou descartar as alterações no objeto atual antes de editar a relação associada a este";

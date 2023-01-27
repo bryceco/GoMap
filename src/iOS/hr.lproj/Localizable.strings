@@ -770,9 +770,6 @@
 "The ways contain incompatible tags" = "Putovi sadrže nekompatibilne oznake";
 
 /* No comment provided by engineer. */
-"The XML is improperly formed" = "Neispravan oblik XML-a";
-
-/* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "Za ovu je radnju potrebno uključiti GPS";
 
 /* No comment provided by engineer. */
@@ -891,9 +888,6 @@
 
 /* No comment provided by engineer. */
 "You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "Imaš promjene koje još nisu prenesene na poslužitelj. Ako izbrišeš predmemoriju, izgubit ćeš promjene.";
-
-/* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "Moraš zadati tvoje korisničko ime za OSM, a ne e-adresu.";
 
 /* No comment provided by engineer. */
 "You must save or discard changes to the current object before editing its associated relation" = "Moraš spremiti ili odbaciti promjene na trenutačnom objektu prije uređivanja njegove povezane veze";

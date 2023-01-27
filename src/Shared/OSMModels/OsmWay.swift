@@ -279,7 +279,7 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 		if nodes.count == 1 {
 			return nodes.last!.distance(toLineSegment: point1, point: point2)
 		}
-		var dist = 1000000.0
+		var dist = 1_000000.0
 		var prevNode: OsmNode?
 		for node in nodes {
 			if let prevNode = prevNode,
@@ -506,7 +506,7 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 	func segmentClosestToPoint(_ point: LatLon) -> Int {
 		let point = OSMPoint(point)
 		var best = -1
-		var bestDist = 100000000.0
+		var bestDist = 100_000000.0
 		for index in nodes.indices.dropLast() {
 			let this = nodes[index]
 			let next = nodes[index + 1]
