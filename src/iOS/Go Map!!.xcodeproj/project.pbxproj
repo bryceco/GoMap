@@ -340,7 +340,6 @@
 		0235349A294A9BDD00ED5BBE /* MostRecentlyUsed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostRecentlyUsed.swift; sourceTree = "<group>"; };
 		02354F79246349E100878A04 /* CurvedGlyphLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurvedGlyphLayer.swift; sourceTree = "<group>"; };
 		0235604426BB1568005CE9FE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/DirectionViewController.strings"; sourceTree = "<group>"; };
-		0237CF5029835BDB0048ED2A /* zgh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zgh; path = zgh.lproj/Localizable.strings; sourceTree = "<group>"; };
 		023A3F7D26BB155800748DF3 /* nb-NO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-NO"; path = "nb-NO.lproj/DirectionViewController.strings"; sourceTree = "<group>"; };
 		023B892A19C148790060CDB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
 		02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
@@ -398,8 +397,6 @@
 		027F32872816554A00F1DED9 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		027F32882816554A00F1DED9 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		027F32892816554A00F1DED9 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
-		028088A22980DF0500E1947B /* zgh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zgh; path = zgh.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
-		028088A32980DF0500E1947B /* zgh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zgh; path = zgh.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0282C4C6265F32E800F2D282 /* Sqlite3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sqlite3.swift; sourceTree = "<group>"; };
 		0282C4C826617E7400F2D282 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = ../Shared/MapView.swift; sourceTree = "<group>"; };
 		028556A926F004FB009986E9 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = et.lproj/MainInterface.strings; sourceTree = "<group>"; };
@@ -1355,7 +1352,6 @@
 				sv,
 				es,
 				nn,
-				zgh,
 				tzm,
 			);
 			mainGroup = 02ACBA2416713CCB00BB4414;
@@ -1686,7 +1682,6 @@
 				027F32872816554A00F1DED9 /* fi */,
 				025465192947F60200C7C2F8 /* es */,
 				02F85A01297A45DE008F57C8 /* nn */,
-				028088A22980DF0500E1947B /* zgh */,
 				020E765929835D2C00B862B8 /* tzm */,
 			);
 			name = DirectionViewController.xib;
@@ -1878,7 +1873,6 @@
 				020F1E75279D15D6004496EB /* pt */,
 				0254651A2947F60200C7C2F8 /* es */,
 				02F85A02297A45DE008F57C8 /* nn */,
-				028088A32980DF0500E1947B /* zgh */,
 				020E765A29835D2C00B862B8 /* tzm */,
 			);
 			name = InfoPlist.strings;
@@ -1944,7 +1938,6 @@
 				020F1E76279D15D6004496EB /* pt */,
 				0254651B2947F60200C7C2F8 /* es */,
 				02F85A03297A45DE008F57C8 /* nn */,
-				0237CF5029835BDB0048ED2A /* zgh */,
 				020E765B29835D2C00B862B8 /* tzm */,
 			);
 			name = Localizable.strings;
@@ -2113,7 +2106,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CURRENT_PROJECT_VERSION = 3200;
+				CURRENT_PROJECT_VERSION = 3201;
 				DEVELOPMENT_TEAM = MKTTC6734C;
 				DISPLAY_NAME = "Go Map!! Debug";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2127,7 +2120,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.2.0;
+				MARKETING_VERSION = 3.2.1;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-DDEBUG ";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap;
 				PRODUCT_NAME = "Go Map!!";
@@ -2157,7 +2150,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CURRENT_PROJECT_VERSION = 3200;
+				CURRENT_PROJECT_VERSION = 3201;
 				DEVELOPMENT_TEAM = MKTTC6734C;
 				DISPLAY_NAME = "Go Map!!";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2171,7 +2164,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.2.0;
+				MARKETING_VERSION = 3.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap;
 				PRODUCT_NAME = "Go Map!!";
 				PROVISIONING_PROFILE = "";
@@ -2204,7 +2197,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3200;
+				CURRENT_PROJECT_VERSION = 3201;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = MKTTC6734C;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -2218,7 +2211,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.2.0;
+				MARKETING_VERSION = 3.2.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap.PhotoShare;
@@ -2252,7 +2245,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3200;
+				CURRENT_PROJECT_VERSION = 3201;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = MKTTC6734C;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -2267,7 +2260,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.2.0;
+				MARKETING_VERSION = 3.2.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap.PhotoShare;
