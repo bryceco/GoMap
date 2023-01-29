@@ -10,6 +10,16 @@ import CoreGraphics.CGPath
 import Foundation
 import UIKit.UIBezierPath
 
+protocol DoubleValue {
+	var doubleValue: Double { get }
+}
+
+extension Double: DoubleValue {
+	var doubleValue: Double { self }
+}
+
+extension NSNumber: DoubleValue {}
+
 final class GeoJSON {
 	struct Geometry: Decodable {
 		enum PointList: Decodable {
@@ -57,16 +67,16 @@ final class GeoJSON {
 		return contains(cgPoint)
 	}
 
-	private static func pointForPointArray(_ point: [Double]) throws -> CGPoint {
-		if point.count != 2 {
+	private static func pointForPointArray<T: DoubleValue>(_ point: [T]) throws -> CGPoint {
+		guard point.count == 2 else {
 			throw GeoJsonError.invalidFormat
 		}
-		let lon = point[0]
-		let lat = point[1]
+		let lon = point[0].doubleValue
+		let lat = point[1].doubleValue
 		return CGPoint(x: lon, y: lat)
 	}
 
-	private static func addLoopPoints(_ points: [[Double]], to path: UIBezierPath) throws {
+	private static func addLoopPoints<T: DoubleValue>(_ points: [[T]], to path: UIBezierPath) throws {
 		if points.count < 4 {
 			throw GeoJsonError.invalidFormat
 		}
@@ -78,35 +88,16 @@ final class GeoJSON {
 	}
 
 	// A Polygon is an outer ring plus optional holes
-	private static func addPolygonPoints(_ points: [[[Double]]], to path: UIBezierPath) throws {
+	private static func addPolygonPoints<T: DoubleValue>(_ points: [[[T]]], to path: UIBezierPath) throws {
 		for loop in points {
 			try Self.addLoopPoints(loop, to: path)
 		}
 	}
 
 	// A MultiPolygon is a list of Polygons
-	private static func addMultiPolygonPoints(_ points: [[[[Double]]]], to path: UIBezierPath) throws {
+	private static func addMultiPolygonPoints<T: DoubleValue>(_ points: [[[[T]]]], to path: UIBezierPath) throws {
 		for loop in points {
 			try Self.addPolygonPoints(loop, to: path)
-		}
-	}
-
-	convenience init(geometry: [String: Any]) throws {
-		guard let type = geometry["type"] as? String,
-		      let type = GeometryType(rawValue: type),
-		      let points = geometry["coordinates"] as? [Any]
-		else {
-			throw GeoJsonError.invalidFormat
-		}
-		switch type {
-		case .polygon:
-			guard let nsPoints = points as? [[[NSNumber]]] else { throw GeoJsonError.invalidFormat }
-			let points: [[[Double]]] = nsPoints.map { $0.map { $0.map { $0.doubleValue } } }
-			try self.init(type: type, points: .polygon(points))
-		case .multiPolygon:
-			guard let nsPoints = points as? [[[[NSNumber]]]] else { throw GeoJsonError.invalidFormat }
-			let points: [[[[Double]]]] = nsPoints.map { $0.map { $0.map { $0.map { $0.doubleValue } } } }
-			try self.init(type: type, points: .multiPolygon(points))
 		}
 	}
 
@@ -129,5 +120,24 @@ final class GeoJSON {
 
 	convenience init(geometry: Geometry) throws {
 		try self.init(type: geometry.type, points: geometry.coordinates)
+	}
+
+	init(geometry: [String: Any]) throws {
+		guard let type = geometry["type"] as? String,
+		      let type = GeometryType(rawValue: type),
+		      let points = geometry["coordinates"] as? [Any]
+		else {
+			throw GeoJsonError.invalidFormat
+		}
+		let path = UIBezierPath()
+		switch type {
+		case .polygon:
+			guard let nsPoints = points as? [[[NSNumber]]] else { throw GeoJsonError.invalidFormat }
+			try Self.addPolygonPoints(nsPoints, to: path)
+		case .multiPolygon:
+			guard let nsPoints = points as? [[[[NSNumber]]]] else { throw GeoJsonError.invalidFormat }
+			try Self.addMultiPolygonPoints(nsPoints, to: path)
+		}
+		bezierPath = path
 	}
 }
