@@ -66,7 +66,7 @@ final class TileServerList {
 		return ""
 	}
 
-	private func processOsmLabAerialsList(_ featureArray: [Any]?, isGeoJSON: Bool) -> [TileServer] {
+	private func processOsmLabAerialsList(_ featureArray: [Any]?) -> [TileServer] {
 		let categories = [
 			"photo": true,
 			"historicphoto": true,
@@ -90,14 +90,15 @@ final class TileServerList {
 				continue
 			}
 
-			if isGeoJSON {
-				let type = entry["type"] as? String ?? "<undefined>"
-				if type != "Feature" {
-					print("Aerial: skipping type \(type)")
-					continue
-				}
+			guard
+				let type = entry["type"] as? String,
+					type == "Feature"
+			else {
+				print("Aerial: skipping non-Feature")
+				continue
 			}
-			guard let properties: [String: Any] = isGeoJSON ? entry["properties"] as? [String: Any] : entry
+
+			guard let properties: [String: Any] = entry["properties"] as? [String: Any]
 			else { continue }
 
 			guard let name = properties["name"] as? String else { continue }
@@ -140,9 +141,7 @@ final class TileServerList {
 				continue
 			}
 
-			let propExtent = properties["extent"] as? [String: Any] ?? [:]
-
-			let maxZoom = ((isGeoJSON ? properties : propExtent)["max_zoom"] as? NSNumber)?.intValue ?? 0
+			let maxZoom = (properties["max_zoom"] as? NSNumber)?.intValue ?? 0
 			var attribIconString = properties["icon"] as? String ?? ""
 
 			let attribDict = properties["attribution"] as? [String: Any] ?? [:]
@@ -172,16 +171,8 @@ final class TileServerList {
 			}
 
 			var polygon: CGPath?
-			if isGeoJSON {
-				if let geometry = entry["geometry"] as? [String: Any] {
-					polygon = (try! GeoJSON(geometry: geometry)).cgPath
-				}
-			} else {
-				if let coordinates = propExtent["polygon"] as? [Any] {
-					let geometry: [String: Any] = ["type": "Polygon",
-					                               "coordinates": coordinates]
-					polygon = (try! GeoJSON(geometry: geometry)).cgPath
-				}
+			if let geometry = entry["geometry"] as? [String: Any] {
+				polygon = (try! GeoJSON(geometry: geometry)).cgPath
 			}
 
 			var attribIcon: UIImage?
@@ -255,10 +246,6 @@ final class TileServerList {
 		else { return [] }
 
 		let json = try? JSONSerialization.jsonObject(with: data, options: [])
-		if let json = json as? [Any] {
-			// unversioned (old ELI) variety
-			return processOsmLabAerialsList(json, isGeoJSON: false)
-		}
 		if let json = json as? [String: Any] {
 			if let meta = json["meta"] as? [String: Any] {
 				// new ELI variety
@@ -271,7 +258,7 @@ final class TileServerList {
 				// josm variety
 			}
 			let features = json["features"] as? [Any]
-			return processOsmLabAerialsList(features, isGeoJSON: true)
+			return processOsmLabAerialsList(features)
 		}
 		return []
 	}
