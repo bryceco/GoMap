@@ -8,9 +8,14 @@
 
 import UIKit
 
+private struct NominatimResult: Decodable {
+	let boundingbox: [String]
+	let display_name: String
+}
+
 class NominatimViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
 	@IBOutlet var searchBar: UISearchBar!
-	private var resultsArray: [[String: Any]] = []
+	private var resultsArray: [NominatimResult] = []
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 	@IBOutlet var tableView: UITableView!
 	private var historyArray = MostRecentlyUsed<String>(maxCount: 20, userDefaultsKey: "searchHistory")
@@ -64,8 +69,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		if showingHistory {
 			cell.textLabel?.text = historyArray.items[indexPath.row]
 		} else {
-			let dict = resultsArray[indexPath.row]
-			cell.textLabel?.text = dict["display_name"] as? String
+			cell.textLabel?.text = resultsArray[indexPath.row].display_name
 		}
 		return cell
 	}
@@ -109,13 +113,12 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			return
 		}
 
-		let dict = resultsArray[indexPath.row]
-		if let box = dict["boundingbox"] as? [String] {
-			let lat1 = Double(box[0]) ?? 0.0
-			let lat2 = Double(box[1]) ?? 0.0
-			let lon1 = Double(box[2]) ?? 0.0
-			let lon2 = Double(box[3]) ?? 0.0
-
+		let box = resultsArray[indexPath.row].boundingbox.compactMap { Double($0) }
+		if box.count == 4 {
+			let lat1 = box[0]
+			let lat2 = box[1]
+			let lon1 = box[2]
+			let lon2 = box[3]
 			let lat = (lat1 + lat2) / 2
 			let lon = (lon1 + lon2) / 2
 
@@ -226,10 +229,8 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 
 					switch result {
 					case let .success(data):
-						if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
-							resultsArray = json as? [[String: Any]] ?? []
-							tableView.reloadData()
-						}
+						resultsArray = (try? JSONDecoder().decode([NominatimResult].self, from: data)) ?? []
+						tableView.reloadData()
 
 						if resultsArray.count > 0 {
 							updateHistory(with: string)

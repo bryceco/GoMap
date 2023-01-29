@@ -80,57 +80,60 @@ public final class CountryCoder {
 	let regionDict: [String: CountryCoderRegion]
 
 	private init() {
+		struct Welcome: Decodable {
+			let type: String
+			let features: [Feature]
+		}
+		struct Feature: Decodable {
+			let type: String
+			let properties: Properties
+			let geometry: GeoJSON.Geometry?
+		}
+		struct Geometry: Decodable {
+			let type: String
+			let coordinates: [[[[Double]]]]
+		}
+		struct Properties: Decodable {
+			let wikidata, nameEn: String
+			let aliases: [String]?
+			let country: String?
+			let groups: [String]?
+			let driveSide, roadSpeedUnit, roadHeightUnit: String?
+			let callingCodes: [String]?
+			let level, m49, iso1A2, iso1A3: String?
+			let isoStatus, iso1N3, ccTLD: String?
+		}
+
 		guard
 			let path = Bundle.main.resourcePath,
 			let data = try? Data(contentsOf: URL(fileURLWithPath: path + "/presets/borders.json"),
 			                     options: .mappedIfSafe),
-			let jsonResult = try? JSONSerialization.jsonObject(with: data, options: []),
-			let jsonResult = jsonResult as? [String: Any],
-			(jsonResult["type"] as? String) == "FeatureCollection",
-			let features = jsonResult["features"] as? [Any]
+			let jsonResult = try? JSONDecoder().decode(Welcome.self, from: data),
+			jsonResult.type == "FeatureCollection"
 		else {
 			fatalError()
 		}
 
 		var regions: [CountryCoderRegion] = []
 
-		for featureAny in features {
-			let feature = featureAny as! [String: Any]
-			let properties = feature["properties"] as! [String: Any]
-
-			let geometryAny = feature["geometry"]!
-			let geometry = (geometryAny is NSNull) ? nil : (geometryAny as! [String: Any])
-			let country = properties["country"] as! String?
-			let iso1A2 = properties["iso1A2"] as! String?
-			let iso1A3 = properties["iso1A3"] as! String?
-			let iso1N3 = properties["iso1N3"] as! String?
-			let m49 = properties["m49"] as! String?
-			let wikidata = properties["wikidata"] as! String?
-			let aliases = properties["aliases"] as! [String]? ?? []
-			let callingCodes = properties["callingCodes"] as! [String]? ?? []
-			let groups = properties["groups"] as! [String]? ?? []
+		for feature in jsonResult.features {
 			let bezierPath: UIBezierPath?
 
-			if let geometry = geometry {
-				switch geometry["type"] as? String {
-				case "MultiPolygon":
-					let mp = geometry["coordinates"] as! [[[[Double]]]]
-					bezierPath = CountryCoderRegion.geometryAsBezier(mp)
-				default:
-					fatalError()
-				}
+			if let geometry = feature.geometry {
+				bezierPath = try! GeoJSON(geometry: geometry).bezierPath
 			} else {
 				bezierPath = nil
 			}
-			regions.append(CountryCoderRegion(country: country,
-			                                  iso1A2: iso1A2,
-			                                  iso1A3: iso1A3,
-			                                  iso1N3: iso1N3,
-			                                  m49: m49,
-			                                  wikidata: wikidata,
-			                                  aliases: aliases,
-			                                  callingCodes: callingCodes,
-			                                  groups: groups,
+			let properties = feature.properties
+			regions.append(CountryCoderRegion(country: properties.country,
+			                                  iso1A2: properties.iso1A2,
+			                                  iso1A3: properties.iso1A3,
+			                                  iso1N3: properties.iso1N3,
+			                                  m49: properties.m49,
+			                                  wikidata: properties.wikidata,
+			                                  aliases: properties.aliases ?? [],
+			                                  callingCodes: properties.callingCodes ?? [],
+			                                  groups: properties.groups ?? [],
 			                                  bezierPath: bezierPath))
 		}
 		regionList = regions

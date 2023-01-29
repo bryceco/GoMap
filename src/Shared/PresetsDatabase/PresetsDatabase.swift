@@ -23,14 +23,20 @@ final class PresetsDatabase {
 	var nsiIndex: [String: [PresetFeature]] // generic+NSI index
 	var nsiGeoJson: [String: GeoJSON] // geojson regions for NSI
 
-	private class func jsonForFile(_ file: String) -> Any? {
-		guard let path = Bundle.main.resourcePath?.appending("/presets/" + file),
-		      let rootPresetData = try? NSData(contentsOfFile: path) as Data,
-		      let dict = try? JSONSerialization.jsonObject(with: rootPresetData, options: [])
+	private class func dataForFile(_ file: String) -> Data? {
+		guard
+			let path = Bundle.main.resourceURL?
+			.appendingPathComponent("presets")
+			.appendingPathComponent(file)
 		else {
 			return nil
 		}
-		return dict
+		return try? Data(contentsOf: path)
+	}
+
+	private class func jsonForFile(_ file: String) -> Any? {
+		guard let data = dataForFile(file) else { return nil }
+		return try? JSONSerialization.jsonObject(with: data, options: [])
 	}
 
 	private class func Translate(_ orig: Any, _ translation: Any?) -> Any {
@@ -138,8 +144,12 @@ final class PresetsDatabase {
 					if feature["type"] as! String == "Feature" {
 						let name = feature["id"] as! String
 						let geomDict = feature["geometry"] as! [String: Any]
-						let geojson = GeoJSON(geometry: geomDict)
-						featureDict[name] = geojson
+						do {
+							let geojson = try GeoJSON(geometry: geomDict)
+							featureDict[name] = geojson
+						} catch {
+							print("\(error)")
+						}
 					}
 				}
 				DispatchQueue.main.async {

@@ -12,6 +12,64 @@ private let CUSTOMAERIALLIST_KEY = "AerialList"
 private let CUSTOMAERIALSELECTION_KEY = "AerialListSelection"
 private let RECENTLY_USED_KEY = "AerialListRecentlyUsed"
 
+private struct Welcome: Decodable {
+	let features: [Feature]
+	let meta: Meta?
+	let type: String
+}
+
+private struct Feature: Decodable {
+	let geometry: GeoJSON.Geometry?
+	let properties: Properties
+	let type: String
+}
+
+private struct Properties: Decodable {
+	let attribution: Attribution?
+	let category: Category?
+	let icon: String?
+	let id: String
+	let max_zoom: Int?
+	let name: String
+	let start_date, end_date: String?
+	let type: PropertiesType
+	let url: String
+	let best: Bool?
+	let available_projections: [String]?
+	let overlay: Bool?
+	let transparent: Bool?
+}
+
+private struct Attribution: Decodable {
+	let attributionRequired: Bool?
+	let text: String
+	let url: String?
+}
+
+private enum Category: String, Decodable {
+	case elevation
+	case historicmap
+	case historicphoto
+	case map
+	case osmbasedmap
+	case other
+	case photo
+	case qa
+}
+
+private enum PropertiesType: String, Decodable {
+	case bing
+	case scanex
+	case tms
+	case wms
+	case wms_endpoint
+	case wmts
+}
+
+private struct Meta: Decodable {
+	let format_version, generated: String
+}
+
 final class TileServerList {
 	private var userDefinedList: [TileServer] = [] // user-defined tile servers
 	private var downloadedList: [TileServer] = [] // downloaded on each launch
@@ -66,49 +124,37 @@ final class TileServerList {
 		return ""
 	}
 
-	private func processOsmLabAerialsList(_ featureArray: [Any]?, isGeoJSON: Bool) -> [TileServer] {
-		let categories = [
-			"photo": true,
-			"historicphoto": true,
-			"elevation": true
+	private func processOsmLabAerialsList(_ featureArray: [Feature]) -> [TileServer] {
+		let categories: [Category: Bool] = [
+			.photo: true,
+			.historicphoto: true,
+			.elevation: true
 		]
 
-		let supportedTypes = [
-			"tms": true,
-			"wms": true,
-			"scanex": false,
-			"wms_endpoint": false,
-			"wmts": false,
-			"bing": false
+		let supportedTypes: [PropertiesType: Bool] = [
+			.tms: true,
+			.wms: true,
+			.scanex: false,
+			.wms_endpoint: false,
+			.wmts: false,
+			.bing: false
 		]
 
 		let supportedProjections = Set<String>(TileServer.supportedProjections)
 
 		var externalAerials: [TileServer] = []
-		for entry in featureArray ?? [] {
-			guard let entry = entry as? [String: Any] else {
+		for entry in featureArray {
+			guard entry.type == "Feature" else {
+				print("Aerial: skipping type \(entry.type)")
 				continue
 			}
-
-			if isGeoJSON {
-				let type = entry["type"] as? String ?? "<undefined>"
-				if type != "Feature" {
-					print("Aerial: skipping type \(type)")
-					continue
-				}
-			}
-			guard let properties: [String: Any] = isGeoJSON ? entry["properties"] as? [String: Any] : entry
-			else { continue }
-
-			guard let name = properties["name"] as? String else { continue }
-			if name.hasPrefix("Maxar ") {
+			guard !entry.properties.name.hasPrefix("Maxar ") else {
 				// we special case their imagery because they require a special key
 				continue
 			}
 
-			guard let identifier = properties["id"] as? String else { continue }
-
-			if let category = properties["category"] as? String,
+			let identifier = entry.properties.id
+			if let category = entry.properties.category,
 			   let supported = categories[category],
 			   supported
 			{
@@ -116,39 +162,31 @@ final class TileServerList {
 			} else if identifier == "OpenTopoMap" {
 				// special exception for this one
 			} else {
-				// NSLog(@"category %@ - %@",category,identifier);
 				continue
 			}
-			let startDateString = properties["start_date"] as? String
-			let endDateString = properties["end_date"] as? String
+			let startDateString = entry.properties.start_date
+			let endDateString = entry.properties.end_date
 			let endDate = TileServer.date(from: endDateString)
 			if let endDate = endDate,
 			   endDate.timeIntervalSinceNow < -20 * 365.0 * 24 * 60 * 60
 			{
 				continue
 			}
-			guard let type = properties["type"] as? String else {
-				print("Aerial: missing properties: \(name)")
-				continue
-			}
-			let projections = properties["available_projections"] as? [String]
-			guard let url = properties["url"] as? String,
-			      url.hasPrefix("http:") || url.hasPrefix("https:")
+			let type = entry.properties.type
+			let projections = entry.properties.available_projections
+			guard
+				entry.properties.url.hasPrefix("http:") || entry.properties.url.hasPrefix("https:")
 			else {
 				// invalid url
-				print("Aerial: bad url: \(name)")
+				print("Aerial: bad url: \(entry.properties.name)")
 				continue
 			}
 
-			let propExtent = properties["extent"] as? [String: Any] ?? [:]
+			let maxZoom = entry.properties.max_zoom ?? 0
+			var attribIconString = entry.properties.icon ?? ""
 
-			let maxZoom = ((isGeoJSON ? properties : propExtent)["max_zoom"] as? NSNumber)?.intValue ?? 0
-			var attribIconString = properties["icon"] as? String ?? ""
-
-			let attribDict = properties["attribution"] as? [String: Any] ?? [:]
-			let attribString = attribDict["text"] as? String ?? ""
-			let attribUrl = attribDict["url"] as? String ?? ""
-			let overlay = (properties["overlay"] as? NSNumber)?.intValue ?? 0
+			let attribString = entry.properties.attribution?.text ?? ""
+			let attribUrl = entry.properties.attribution?.url ?? ""
 			if let supported = supportedTypes[type],
 			   supported == true
 			{
@@ -157,30 +195,28 @@ final class TileServerList {
 				// print("Aerial: unsupported type \(type): \(name)")
 				continue
 			}
-			if overlay != 0 {
+			if let overlay = entry.properties.overlay,
+			   overlay
+			{
 				// we don@"t support overlays yet
 				continue
 			}
 
 			// we only support some types of WMS projections
 			var projection: String?
-			if type == "wms" {
+			if type == .wms {
 				projection = projections?.first(where: { supportedProjections.contains($0) })
 				if projection == nil {
 					continue
 				}
 			}
 
-			var polygon: CGPath?
-			if isGeoJSON {
-				if let geometry = entry["geometry"] as? [String: Any] {
-					polygon = GeoJSON(geometry: geometry)?.cgPath
-				}
-			} else {
-				if let coordinates = propExtent["polygon"] as? [Any] {
-					let geometry: [String: Any] = ["type": "Polygon",
-					                               "coordinates": coordinates]
-					polygon = GeoJSON(geometry: geometry)?.cgPath
+			var polygon: UIBezierPath?
+			if let geometry = entry.geometry {
+				do {
+					polygon = try GeoJSON(geometry: geometry).bezierPath
+				} catch {
+					print("\(error)")
 				}
 			}
 
@@ -210,24 +246,24 @@ final class TileServerList {
 				}
 			}
 
-			let best = properties["best"] != nil
+			let best = entry.properties.best ?? false
 
 			// support for {apikey}
 			var apikey = ""
-			if url.contains(".thunderforest.com/") {
+			if entry.properties.url.contains(".thunderforest.com/") {
 				// Please don't use in other apps. Sign up for a free account at Thunderforest.com insead.
 				apikey = "be3dc024e3924c22beb5f841d098a8a3"
 			}
 
-			if url.contains("{apikey}"),
+			if entry.properties.url.contains("{apikey}"),
 			   apikey == ""
 			{
 				continue
 			}
 
-			let service = TileServer(withName: name,
+			let service = TileServer(withName: entry.properties.name,
 			                         identifier: identifier,
-			                         url: url,
+			                         url: entry.properties.url,
 			                         best: best,
 			                         apiKey: apikey,
 			                         maxZoom: maxZoom,
@@ -235,7 +271,7 @@ final class TileServerList {
 			                         startDate: startDateString,
 			                         endDate: endDateString,
 			                         wmsProjection: projection,
-			                         polygon: polygon,
+			                         polygon: polygon?.cgPath,
 			                         attribString: attribString,
 			                         attribIcon: attribIcon,
 			                         attribUrl: attribUrl)
@@ -254,24 +290,19 @@ final class TileServerList {
 		      data.count > 0
 		else { return [] }
 
-		let json = try? JSONSerialization.jsonObject(with: data, options: [])
-		if let json = json as? [Any] {
-			// unversioned (old ELI) variety
-			return processOsmLabAerialsList(json, isGeoJSON: false)
-		}
-		if let json = json as? [String: Any] {
-			if let meta = json["meta"] as? [String: Any] {
+		do {
+			let json = try JSONDecoder().decode(Welcome.self, from: data)
+			if let meta = json.meta {
 				// new ELI variety
-				guard let formatVersion = meta["format_version"] as? String,
-				      formatVersion == "1.0",
-				      let metaType = json["type"] as? String,
-				      metaType == "FeatureCollection"
+				guard meta.format_version == "1.0",
+				      json.type == "FeatureCollection"
 				else { return [] }
 			} else {
 				// josm variety
 			}
-			let features = json["features"] as? [Any]
-			return processOsmLabAerialsList(features, isGeoJSON: true)
+			return processOsmLabAerialsList(json.features)
+		} catch {
+			print("\(error)")
 		}
 		return []
 	}

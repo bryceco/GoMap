@@ -191,9 +191,15 @@ final class RenderInfoDatabase {
 	static let nsZero = NSNumber(value: 0.0)
 
 	class func readConfiguration() -> [RenderInfo] {
+		struct RenderInfoEntry: Decodable {
+			let lineColor: String?
+			let lineWidth: Double?
+			let areaColor: String?
+		}
+
 		let path = Bundle.main.path(forResource: "RenderInfo", ofType: "json")!
 		let data = NSData(contentsOfFile: path)! as Data
-		let features = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: [String: Any]]
+		let features = try! JSONDecoder().decode([String: RenderInfoEntry].self, from: data)
 
 		var renderList: [RenderInfo] = []
 
@@ -202,9 +208,9 @@ final class RenderInfoDatabase {
 			let render = RenderInfo()
 			render.key = keyValue[0]
 			render.value = keyValue.count > 1 ? keyValue[1] : ""
-			render.lineColor = RenderInfo.color(forHexString: dict["lineColor"] as! String?)
-			render.areaColor = RenderInfo.color(forHexString: dict["areaColor"] as! String?)
-			render.lineWidth = CGFloat((dict["lineWidth"] as! NSNumber? ?? Self.nsZero).doubleValue)
+			render.lineColor = RenderInfo.color(forHexString: dict.lineColor)
+			render.areaColor = RenderInfo.color(forHexString: dict.areaColor)
+			render.lineWidth = dict.lineWidth ?? 0.0
 			renderList.append(render)
 		}
 		return renderList

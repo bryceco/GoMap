@@ -293,59 +293,72 @@ final class TileServer: Equatable {
 	}
 
 	static func fetchDynamicBingServer(_ callback: ((Result<TileServer, Error>) -> Void)?) {
+		struct Welcome: Decodable {
+			let brandLogoUri: String
+			let resourceSets: [ResourceSet]
+			let statusCode: Int
+		}
+		struct ResourceSet: Decodable {
+			let resources: [Resource]
+		}
+		struct Resource: Decodable {
+			let __type: String
+			let imageUrl: String
+			let imageUrlSubdomains: [String]
+			let zoomMax, zoomMin: Int
+		}
 		let url = "https://dev.virtualearth.net/REST/v1/Imagery/Metadata/Aerial?include=ImageryProviders&key=" +
 			BING_MAPS_KEY
-		if let url = URL(string: url) {
-			URLSession.shared.data(with: url, completionHandler: { result in
-				DispatchQueue.main.async(execute: {
-					switch result {
-					case let .success(data):
-						if let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-						   let statusCode = json["statusCode"] as? Int,
-						   statusCode == 200,
-						   let brandLogoUri = json["brandLogoUri"] as? String,
-						   let resourceSets = json["resourceSets"] as? [Any],
-						   let resourceSet = resourceSets.first as? [String: Any],
-						   let resources = resourceSet["resources"] as? [Any],
-						   let res = resources.first as? [String: Any],
-						   var imageUrl = res["imageUrl"] as? String,
-						   let subdomains = res["imageUrlSubdomains"] as? [String],
-						   let zoomMax = res["zoomMax"] as? Int
-						{
-							let subdomains = subdomains.joined(separator: ",")
-							imageUrl = imageUrl.replacingOccurrences(of: "http://",
-							                                         with: "https://")
-							imageUrl = imageUrl.replacingOccurrences(of: "{subdomain}",
-							                                         with: "{switch:\(subdomains)}")
-							imageUrl = imageUrl.replacingOccurrences(of: "{quadkey}",
-							                                         with: "{u}")
-							imageUrl += "&key={apikey}"
-							let bing = TileServer(withName: Self.builtinBingAerial.name,
-							                      identifier: Self.builtinBingAerial.identifier,
-							                      url: imageUrl,
-							                      best: false,
-							                      apiKey: BING_MAPS_KEY,
-							                      maxZoom: zoomMax,
-							                      roundUp: Self.builtinBingAerial.roundZoomUp,
-							                      startDate: Self.builtinBingAerial.startDate,
-							                      endDate: Self.builtinBingAerial.endDate,
-							                      wmsProjection: Self.builtinBingAerial.wmsProjection,
-							                      polygon: Self.builtinBingAerial.polygon,
-							                      attribString: Self.builtinBingAerial.attributionString,
-							                      attribIcon: Self.builtinBingAerial.attributionIcon,
-							                      attribUrl: Self.builtinBingAerial.attributionUrl)
-							bing.loadIcon(fromWeb: brandLogoUri)
-							Self.dynamicBingAerial = bing
-							callback?(.success(bing))
-						} else {
+		guard let url = URL(string: url) else { return }
+		URLSession.shared.data(with: url, completionHandler: { result in
+			DispatchQueue.main.async(execute: {
+				switch result {
+				case let .success(data):
+					do {
+						let json = try JSONDecoder().decode(Welcome.self, from: data)
+						guard
+							json.statusCode == 200,
+							let resource = json.resourceSets.first?.resources.first
+						else {
 							callback?(.failure(NSError()))
+							return
 						}
-					case let .failure(error):
+
+						let subdomains = resource.imageUrlSubdomains.joined(separator: ",")
+						var imageUrl = resource.imageUrl
+						imageUrl = imageUrl.replacingOccurrences(of: "http://",
+						                                         with: "https://")
+						imageUrl = imageUrl.replacingOccurrences(of: "{subdomain}",
+						                                         with: "{switch:\(subdomains)}")
+						imageUrl = imageUrl.replacingOccurrences(of: "{quadkey}",
+						                                         with: "{u}")
+						imageUrl += "&key={apikey}"
+						let bing = TileServer(withName: Self.builtinBingAerial.name,
+						                      identifier: Self.builtinBingAerial.identifier,
+						                      url: imageUrl,
+						                      best: false,
+						                      apiKey: BING_MAPS_KEY,
+						                      maxZoom: resource.zoomMax,
+						                      roundUp: Self.builtinBingAerial.roundZoomUp,
+						                      startDate: Self.builtinBingAerial.startDate,
+						                      endDate: Self.builtinBingAerial.endDate,
+						                      wmsProjection: Self.builtinBingAerial.wmsProjection,
+						                      polygon: Self.builtinBingAerial.polygon,
+						                      attribString: Self.builtinBingAerial.attributionString,
+						                      attribIcon: Self.builtinBingAerial.attributionIcon,
+						                      attribUrl: Self.builtinBingAerial.attributionUrl)
+						bing.loadIcon(fromWeb: json.brandLogoUri)
+						Self.dynamicBingAerial = bing
+						callback?(.success(bing))
+					} catch {
+						print("\(error)")
 						callback?(.failure(error))
 					}
-				})
+				case let .failure(error):
+					callback?(.failure(error))
+				}
 			})
-		}
+		})
 	}
 
 	func dictionary() -> [String: Any] {
