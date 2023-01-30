@@ -101,13 +101,13 @@ struct GeoJSON {
 		}
 	}
 
-	static func bezierPathFor<T: DoubleValue>(polygon points: [[[T]]]) throws -> UIBezierPath  {
+	static func bezierPathFor<T: DoubleValue>(polygon points: [[[T]]]) throws -> UIBezierPath {
 		let path = UIBezierPath()
 		try Self.addPolygonPoints(points, to: path)
 		return path
 	}
 
-	static func bezierPathFor<T: DoubleValue>(multipolygon points: [[[[T]]]]) throws -> UIBezierPath  {
+	static func bezierPathFor<T: DoubleValue>(multipolygon points: [[[[T]]]]) throws -> UIBezierPath {
 		let path = UIBezierPath()
 		try Self.addMultiPolygonPoints(points, to: path)
 		return path
@@ -119,12 +119,12 @@ struct GeoJSON {
 			guard case let .polygon(points) = points else {
 				throw GeoJsonError.invalidFormat
 			}
-			self.bezierPath = try Self.bezierPathFor(polygon: points)
+			bezierPath = try Self.bezierPathFor(polygon: points)
 		case .multiPolygon:
 			guard case let .multiPolygon(points) = points else {
 				throw GeoJsonError.invalidFormat
 			}
-			self.bezierPath = try Self.bezierPathFor(multipolygon: points)
+			bezierPath = try Self.bezierPathFor(multipolygon: points)
 		}
 	}
 
@@ -132,8 +132,9 @@ struct GeoJSON {
 		try self.init(type: geometry.type, points: geometry.coordinates)
 	}
 
-	init(geometry: [String: Any]) throws {
-		guard let type = geometry["type"] as? String,
+	init(geometry: [String: Any]?) throws {
+		guard let geometry = geometry,
+		      let type = geometry["type"] as? String,
 		      let points = geometry["coordinates"] as? [Any]
 		else {
 			throw GeoJsonError.invalidFormat
@@ -141,10 +142,10 @@ struct GeoJSON {
 		switch type {
 		case GeometryType.polygon.rawValue:
 			guard let nsPoints = points as? [[[NSNumber]]] else { throw GeoJsonError.invalidFormat }
-			self.bezierPath = try Self.bezierPathFor(polygon: nsPoints)
+			bezierPath = try Self.bezierPathFor(polygon: nsPoints)
 		case GeometryType.multiPolygon.rawValue:
 			guard let nsPoints = points as? [[[[NSNumber]]]] else { throw GeoJsonError.invalidFormat }
-			self.bezierPath = try Self.bezierPathFor(multipolygon: nsPoints)
+			bezierPath = try Self.bezierPathFor(multipolygon: nsPoints)
 		default:
 			throw GeoJsonError.invalidFormat
 		}

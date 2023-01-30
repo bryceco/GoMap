@@ -12,6 +12,109 @@ private let CUSTOMAERIALLIST_KEY = "AerialList"
 private let CUSTOMAERIALSELECTION_KEY = "AerialListSelection"
 private let RECENTLY_USED_KEY = "AerialListRecentlyUsed"
 
+
+enum TypeCheckCast: Error {
+	case invalidType
+}
+
+fileprivate func optional<T>(_ val:Any?) throws -> T? {
+	guard let val = val else { return nil }
+	guard let val = val as? T else { throw TypeCheckCast.invalidType }
+	return val
+}
+fileprivate func nonOptional<T>(_ val:Any?) throws -> T {
+	guard let val = val as? T else { throw TypeCheckCast.invalidType }
+	return val
+}
+
+private struct Welcome {
+	let json: [String: Any]
+	var features: [Feature] { get throws { (try nonOptional(json["features"]) as [Any]).map { Feature(json: $0)! } } }
+	var meta: Meta? { Meta(json: json["meta"]) }
+	var type: String { get throws { try nonOptional( json["type"]) as String} }
+	init(json: Any?) throws {
+		guard let json = json as! [String: Any]? else { throw TypeCheckCast.invalidType }
+		self.json = json
+	}
+}
+
+private struct Feature {
+	let json: [String: Any]
+	var geometry: GeoJSON? { try? GeoJSON(geometry: json["geometry"] as? [String: Any]) }
+	var properties: Properties { Properties(json: json["properties"])! }
+	var type: String { json["type"] as! String }
+	init?(json: Any?) {
+		guard let json = json as! [String: Any]? else { return nil }
+		self.json = json
+	}
+}
+
+private struct Properties {
+	let json: [String: Any]
+	var attribution: Attribution? { Attribution(json: json["attribution"]) }
+	var category: Category? {
+		let cat = json["category"] as! String?; return cat != nil ? Category(rawValue: cat!) : nil
+	}
+
+	var icon: String? { json["icon"] as! String? }
+	var id: String { json["id"] as! String }
+	var max_zoom: Int? { (json["max_zoom"] as! NSNumber?)?.intValue }
+	var name: String { json["name"] as! String }
+	var start_date: String? { json["start_date"] as! String? }
+	var end_date: String? { json["end_date"] as! String? }
+	var type: PropertiesType { PropertiesType(rawValue: json["type"] as! String)! }
+	var url: String { json["url"] as! String }
+	var best: Bool? { json["best"] as! Bool? }
+	var available_projections: [String]? { json["available_projections"] as! [String]? }
+	var overlay: Bool? { (json["overlay"] as! NSNumber?)?.boolValue }
+	var transparent: Bool? { json["transparent"] as! Bool? }
+	init?(json: Any?) {
+		guard let json = json as! [String: Any]? else { return nil }
+		self.json = json
+	}
+}
+
+private struct Attribution {
+	let json: [String: Any]
+	var attributionRequired: Bool? { json["attributionRequired"] as! Bool? }
+	var text: String { json["text"] as! String }
+	var url: String? { json["url"] as! String? }
+	init?(json: Any?) {
+		guard let json = json as! [String: Any]? else { return nil }
+		self.json = json
+	}
+}
+
+private enum Category: String {
+	case elevation
+	case historicmap
+	case historicphoto
+	case map
+	case osmbasedmap
+	case other
+	case photo
+	case qa
+}
+
+private enum PropertiesType: String {
+	case bing
+	case scanex
+	case tms
+	case wms
+	case wms_endpoint
+	case wmts
+}
+
+private struct Meta {
+	let json: [String: Any]
+	var format_version: String { json["format_version"] as! String }
+	var generated: String { json["generated"] as! String }
+	init?(json: Any?) {
+		guard let json = json as! [String: Any]? else { return nil }
+		self.json = json
+	}
+}
+
 final class TileServerList {
 	private var userDefinedList: [TileServer] = [] // user-defined tile servers
 	private var downloadedList: [TileServer] = [] // downloaded on each launch
@@ -66,11 +169,11 @@ final class TileServerList {
 		return ""
 	}
 
-	private func processOsmLabAerialsList(_ featureArray: [Any]?) -> [TileServer] {
-		let categories = [
-			"photo": true,
-			"historicphoto": true,
-			"elevation": true
+	private func processOsmLabAerialsList(_ featureArray: [Feature]) throws -> [TileServer] {
+		let categories: [Category: Bool] = [
+			.photo: true,
+			.historicphoto: true,
+			.elevation: true
 		]
 
 		let supportedTypes = [
@@ -85,31 +188,24 @@ final class TileServerList {
 		let supportedProjections = Set<String>(TileServer.supportedProjections)
 
 		var externalAerials: [TileServer] = []
-		for entry in featureArray ?? [] {
-			guard let entry = entry as? [String: Any] else {
-				continue
-			}
-
+		for entry in featureArray {
 			guard
-				let type = entry["type"] as? String,
-					type == "Feature"
+				entry.type == "Feature"
 			else {
 				print("Aerial: skipping non-Feature")
 				continue
 			}
 
-			guard let properties: [String: Any] = entry["properties"] as? [String: Any]
-			else { continue }
-
-			guard let name = properties["name"] as? String else { continue }
+			let properties = entry.properties
+			let name = properties.name
 			if name.hasPrefix("Maxar ") {
 				// we special case their imagery because they require a special key
 				continue
 			}
 
-			guard let identifier = properties["id"] as? String else { continue }
+			let identifier = properties.id
 
-			if let category = properties["category"] as? String,
+			if let category = properties.category,
 			   let supported = categories[category],
 			   supported
 			{
@@ -120,35 +216,27 @@ final class TileServerList {
 				// NSLog(@"category %@ - %@",category,identifier);
 				continue
 			}
-			let startDateString = properties["start_date"] as? String
-			let endDateString = properties["end_date"] as? String
+			let startDateString = properties.start_date
+			let endDateString = properties.end_date
 			let endDate = TileServer.date(from: endDateString)
 			if let endDate = endDate,
 			   endDate.timeIntervalSinceNow < -20 * 365.0 * 24 * 60 * 60
 			{
 				continue
 			}
-			guard let type = properties["type"] as? String else {
-				print("Aerial: missing properties: \(name)")
-				continue
-			}
-			let projections = properties["available_projections"] as? [String]
-			guard let url = properties["url"] as? String,
-			      url.hasPrefix("http:") || url.hasPrefix("https:")
+			let url = properties.url
+			guard
+				url.hasPrefix("http:") || url.hasPrefix("https:")
 			else {
 				// invalid url
 				print("Aerial: bad url: \(name)")
 				continue
 			}
 
-			let maxZoom = (properties["max_zoom"] as? NSNumber)?.intValue ?? 0
-			var attribIconString = properties["icon"] as? String ?? ""
+			let maxZoom = properties.max_zoom ?? 0
 
-			let attribDict = properties["attribution"] as? [String: Any] ?? [:]
-			let attribString = attribDict["text"] as? String ?? ""
-			let attribUrl = attribDict["url"] as? String ?? ""
-			let overlay = (properties["overlay"] as? NSNumber)?.intValue ?? 0
-			if let supported = supportedTypes[type],
+			let type = properties.type
+			if let supported = supportedTypes[type.rawValue],
 			   supported == true
 			{
 				// great
@@ -156,30 +244,35 @@ final class TileServerList {
 				// print("Aerial: unsupported type \(type): \(name)")
 				continue
 			}
-			if overlay != 0 {
+
+			if properties.overlay ?? false {
 				// we don@"t support overlays yet
 				continue
 			}
 
 			// we only support some types of WMS projections
 			var projection: String?
-			if type == "wms" {
-				projection = projections?.first(where: { supportedProjections.contains($0) })
+			if type == .wms {
+				projection = properties.available_projections?.first(where: { supportedProjections.contains($0) })
 				if projection == nil {
 					continue
 				}
 			}
 
 			var polygon: CGPath?
-			if let geometry = entry["geometry"] as? [String: Any] {
-				polygon = (try! GeoJSON(geometry: geometry)).cgPath
+			if let geometry = entry.geometry {
+				polygon = geometry.cgPath
 			}
 
+			let attribIconString = properties.icon
+			var attribIconStringIsHttp = false
 			var attribIcon: UIImage?
-			var httpIcon = false
-			if attribIconString.count > 0 {
+			let attribDict = properties.attribution
+			let attribString = attribDict?.text ?? ""
+			let attribUrl = attribDict?.url ?? ""
+			if var attribIconString = attribIconString {
 				if attribIconString.hasPrefix("http") {
-					httpIcon = true
+					attribIconStringIsHttp = true
 				} else if let range = attribIconString.range(of: ",") {
 					let format = String(attribIconString.prefix(upTo: range.lowerBound))
 					let supported = ["data:image/png;base64": true,
@@ -201,7 +294,7 @@ final class TileServerList {
 				}
 			}
 
-			let best = properties["best"] != nil
+			let best = properties.best ?? false
 
 			// support for {apikey}
 			var apikey = ""
@@ -233,8 +326,8 @@ final class TileServerList {
 
 			externalAerials.append(service)
 
-			if httpIcon {
-				service.loadIcon(fromWeb: attribIconString)
+			if attribIconStringIsHttp {
+				service.loadIcon(fromWeb: attribIconString!)
 			}
 		}
 		return externalAerials
@@ -245,22 +338,25 @@ final class TileServerList {
 		      data.count > 0
 		else { return [] }
 
-		let json = try? JSONSerialization.jsonObject(with: data, options: [])
-		if let json = json as? [String: Any] {
-			if let meta = json["meta"] as? [String: Any] {
+		do {
+
+			let json = try JSONSerialization.jsonObject(with: data, options: [])
+			let welcome = try Welcome(json: json)
+
+			if let meta = welcome.meta {
 				// new ELI variety
-				guard let formatVersion = meta["format_version"] as? String,
-				      formatVersion == "1.0",
-				      let metaType = json["type"] as? String,
-				      metaType == "FeatureCollection"
+				guard meta.format_version == "1.0",
+					 try welcome.type == "FeatureCollection"
 				else { return [] }
 			} else {
 				// josm variety
 			}
-			let features = json["features"] as? [Any]
-			return processOsmLabAerialsList(features)
+			let features = try welcome.features
+			return try processOsmLabAerialsList(features)
+		} catch {
+			print("\(error)")
+			return []
 		}
-		return []
 	}
 
 	private func fetchOsmLabAerials(_ completion: @escaping (_ isAsync: Bool) -> Void) {
