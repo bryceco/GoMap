@@ -295,8 +295,8 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 				view.layer.shadowOffset = CGSize(width: 0, height: 0)
 				view.layer.shadowRadius = 3
 				view.layer.shadowOpacity = 0.5
-				view.layer.shadowPath = UIBezierPath(roundedRect: view.bounds, cornerRadius: view.layer.cornerRadius)
-					.cgPath
+				view.layer.shadowPath = UIBezierPath(roundedRect: view.bounds,
+				                                     cornerRadius: view.layer.cornerRadius).cgPath
 				view.layer.masksToBounds = false
 			}
 			// image blue tint
@@ -359,19 +359,27 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 	}
 
 	@objc func makeButtonHighlight(_ button: UIView) {
+#if targetEnvironment(macCatalyst)
+// This messes up the button styling on macOS
+#else
 		if #available(iOS 13.0, *) {
 			button.backgroundColor = UIColor.secondarySystemBackground
 		} else {
 			button.backgroundColor = UIColor.lightGray
 		}
+#endif
 	}
 
 	@objc func makeButtonNormal(_ button: UIView) {
+#if targetEnvironment(macCatalyst)
+// This messes up the button styling on macOS
+#else
 		if #available(iOS 13.0, *) {
 			button.backgroundColor = UIColor.systemBackground
 		} else {
 			button.backgroundColor = UIColor.white
 		}
+#endif
 	}
 
 #if USER_MOVABLE_BUTTONS
