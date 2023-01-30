@@ -132,10 +132,11 @@ struct GeoJSON {
 		try self.init(type: geometry.type, points: geometry.coordinates)
 	}
 
-	init(geometry: [String: Any]?) throws {
-		guard let geometry = geometry,
-		      let type = geometry["type"] as? String,
-		      let points = geometry["coordinates"] as? [Any]
+	init?(geometry: [String: Any]?) throws {
+		guard let geometry = geometry else { return nil }
+		guard
+			let type = geometry["type"] as? String,
+			let points = geometry["coordinates"] as? [Any]
 		else {
 			throw GeoJsonError.invalidFormat
 		}

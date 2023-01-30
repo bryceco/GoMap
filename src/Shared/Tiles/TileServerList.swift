@@ -12,76 +12,153 @@ private let CUSTOMAERIALLIST_KEY = "AerialList"
 private let CUSTOMAERIALSELECTION_KEY = "AerialListSelection"
 private let RECENTLY_USED_KEY = "AerialListRecentlyUsed"
 
-
 enum TypeCheckCast: Error {
 	case invalidType
+	case unexpectedNil
 }
 
-fileprivate func optional<T>(_ val:Any?) throws -> T? {
-	guard let val = val else { return nil }
-	guard let val = val as? T else { throw TypeCheckCast.invalidType }
-	return val
+func Unwrap<T>(_ value: T?) throws -> T {
+	guard let value = value else {
+		throw TypeCheckCast.unexpectedNil
+	}
+	return value
 }
-fileprivate func nonOptional<T>(_ val:Any?) throws -> T {
-	guard let val = val as? T else { throw TypeCheckCast.invalidType }
-	return val
+
+private struct JSONDict {
+	let json: [String: Any]
+	init(_ json: Any) throws {
+		guard let json = json as? [String: Any] else {
+			throw TypeCheckCast.invalidType
+		}
+		self.json = json
+	}
+
+	func string(_ key: String) throws -> String {
+		return try getReq(key) as String
+	}
+
+	func optString(_ key: String) throws -> String? {
+		return try getOpt(key) as String?
+	}
+
+	func integer(_ key: String) throws -> Int {
+		return (try getReq(key) as NSNumber).intValue
+	}
+
+	func optInteger(_ key: String) throws -> Int? {
+		return (try getOpt(key) as NSNumber?)?.intValue
+	}
+
+	func bool(_ key: String) throws -> Bool {
+		return (try getReq(key) as NSNumber).boolValue
+	}
+
+	func optBool(_ key: String) throws -> Bool? {
+		return (try getOpt(key) as NSNumber?)?.boolValue
+	}
+
+	func array(_ key: String) throws -> [Any] {
+		return try getReq(key) as [Any]
+	}
+
+	func optArray(_ key: String) throws -> [Any]? {
+		return try getOpt(key) as [Any]?
+	}
+
+	func dict(_ key: String) throws -> [String: Any] {
+		return try getReq(key) as [String: Any]
+	}
+
+	func optDict(_ key: String) throws -> [String: Any]? {
+		return try getOpt(key) as [String: Any]?
+	}
+
+	func getOpt<T>(_ key: String) throws -> T? {
+		guard let value = json[key] else { return nil }
+		guard let value = value as? T else {
+			if value is NSNull {
+				return nil
+			}
+			throw TypeCheckCast.invalidType
+		}
+		return value
+	}
+
+	func getReq<T>(_ key: String) throws -> T {
+		guard let value = json[key] as? T else {
+			throw TypeCheckCast.invalidType
+		}
+		return value
+	}
 }
 
 private struct Welcome {
-	let json: [String: Any]
-	var features: [Feature] { get throws { (try nonOptional(json["features"]) as [Any]).map { Feature(json: $0)! } } }
-	var meta: Meta? { Meta(json: json["meta"]) }
-	var type: String { get throws { try nonOptional( json["type"]) as String} }
-	init(json: Any?) throws {
-		guard let json = json as! [String: Any]? else { throw TypeCheckCast.invalidType }
-		self.json = json
+	let json: JSONDict
+	var features: [Feature] { get throws { try json.array("features").map({ try Feature($0) }) }}
+	var meta: Meta? { get throws { try Meta(try json.optDict("meta")) } }
+	var type: String { get throws { try json.string("type") } }
+	init(_ json: Any?) throws {
+		guard let json = json else { throw TypeCheckCast.unexpectedNil }
+		self.json = try JSONDict(json)
+	}
+}
+
+private struct Meta {
+	let json: JSONDict
+	var format_version: String { get throws { try json.string("format_version") } }
+	var generated: String { get throws { try json.string("generated") } }
+	init?(_ json: Any?) throws {
+		guard let json = json else { return nil }
+		self.json = try JSONDict(json)
 	}
 }
 
 private struct Feature {
-	let json: [String: Any]
-	var geometry: GeoJSON? { try? GeoJSON(geometry: json["geometry"] as? [String: Any]) }
-	var properties: Properties { Properties(json: json["properties"])! }
-	var type: String { json["type"] as! String }
-	init?(json: Any?) {
-		guard let json = json as! [String: Any]? else { return nil }
-		self.json = json
+	let json: JSONDict
+	var geometry: GeoJSON? { get throws { try GeoJSON(geometry: try json.optDict("geometry")) } }
+	var properties: Properties { get throws { try Properties(try json.dict("properties")) } }
+	var type: String { get throws { try json.string("type") } }
+	init(_ json: Any?) throws {
+		guard let json = json else { throw TypeCheckCast.unexpectedNil }
+		self.json = try JSONDict(json)
 	}
 }
 
 private struct Properties {
-	let json: [String: Any]
-	var attribution: Attribution? { Attribution(json: json["attribution"]) }
-	var category: Category? {
-		let cat = json["category"] as! String?; return cat != nil ? Category(rawValue: cat!) : nil
+	private let json: JSONDict
+	var attribution: Attribution? { get throws { try Attribution(try json.optDict("attribution")) }}
+	var category: Category? { get throws {
+		let cat = try json.optString("category")
+		return cat != nil ? try Unwrap(Category(rawValue: cat!)) : nil
+	}}
+	var icon: String? { get throws { try json.optString("icon") } }
+	var id: String { get throws { try json.string("id") }}
+	var max_zoom: Int? { get throws { try json.optInteger("max_zoom") } }
+	var name: String { get throws { try json.string("name") } }
+	var start_date: String? { get throws { try json.optString("start_date") }}
+	var end_date: String? { get throws { try json.optString("end_date") } }
+	var type: PropertiesType { get throws { try Unwrap(PropertiesType(rawValue: try json.string("type"))) }}
+	var url: String { get throws { try json.string("url") }}
+	var best: Bool? { get throws { try json.optBool("best") }}
+	var available_projections: [String]? {
+		get throws { try json.optArray("available_projections")?.map { try Unwrap($0 as? String) } }
 	}
 
-	var icon: String? { json["icon"] as! String? }
-	var id: String { json["id"] as! String }
-	var max_zoom: Int? { (json["max_zoom"] as! NSNumber?)?.intValue }
-	var name: String { json["name"] as! String }
-	var start_date: String? { json["start_date"] as! String? }
-	var end_date: String? { json["end_date"] as! String? }
-	var type: PropertiesType { PropertiesType(rawValue: json["type"] as! String)! }
-	var url: String { json["url"] as! String }
-	var best: Bool? { json["best"] as! Bool? }
-	var available_projections: [String]? { json["available_projections"] as! [String]? }
-	var overlay: Bool? { (json["overlay"] as! NSNumber?)?.boolValue }
-	var transparent: Bool? { json["transparent"] as! Bool? }
-	init?(json: Any?) {
-		guard let json = json as! [String: Any]? else { return nil }
-		self.json = json
+	var overlay: Bool? { get throws { try json.optBool("overlay") } }
+	var transparent: Bool? { get throws { try json.optBool("transparent") } }
+	init(_ json: [String: Any]) throws {
+		self.json = try JSONDict(json)
 	}
 }
 
 private struct Attribution {
-	let json: [String: Any]
-	var attributionRequired: Bool? { json["attributionRequired"] as! Bool? }
-	var text: String { json["text"] as! String }
-	var url: String? { json["url"] as! String? }
-	init?(json: Any?) {
-		guard let json = json as! [String: Any]? else { return nil }
-		self.json = json
+	let json: JSONDict
+	var attributionRequired: Bool? { get throws { try json.optBool("attributionRequired") } }
+	var text: String { get throws { try json.string("text") } }
+	var url: String? { get throws { try json.optString("url") }}
+	init?(_ json: Any?) throws {
+		guard let json = json else { return nil }
+		self.json = try JSONDict( json)
 	}
 }
 
@@ -103,16 +180,6 @@ private enum PropertiesType: String {
 	case wms
 	case wms_endpoint
 	case wmts
-}
-
-private struct Meta {
-	let json: [String: Any]
-	var format_version: String { json["format_version"] as! String }
-	var generated: String { json["generated"] as! String }
-	init?(json: Any?) {
-		guard let json = json as! [String: Any]? else { return nil }
-		self.json = json
-	}
 }
 
 final class TileServerList {
@@ -190,22 +257,22 @@ final class TileServerList {
 		var externalAerials: [TileServer] = []
 		for entry in featureArray {
 			guard
-				entry.type == "Feature"
+				try entry.type == "Feature"
 			else {
 				print("Aerial: skipping non-Feature")
 				continue
 			}
 
-			let properties = entry.properties
-			let name = properties.name
+			let properties = try entry.properties
+			let name = try properties.name
 			if name.hasPrefix("Maxar ") {
 				// we special case their imagery because they require a special key
 				continue
 			}
 
-			let identifier = properties.id
+			let identifier = try properties.id
 
-			if let category = properties.category,
+			if let category = try properties.category,
 			   let supported = categories[category],
 			   supported
 			{
@@ -216,15 +283,15 @@ final class TileServerList {
 				// NSLog(@"category %@ - %@",category,identifier);
 				continue
 			}
-			let startDateString = properties.start_date
-			let endDateString = properties.end_date
+			let startDateString = try properties.start_date
+			let endDateString = try properties.end_date
 			let endDate = TileServer.date(from: endDateString)
 			if let endDate = endDate,
 			   endDate.timeIntervalSinceNow < -20 * 365.0 * 24 * 60 * 60
 			{
 				continue
 			}
-			let url = properties.url
+			let url = try properties.url
 			guard
 				url.hasPrefix("http:") || url.hasPrefix("https:")
 			else {
@@ -233,9 +300,9 @@ final class TileServerList {
 				continue
 			}
 
-			let maxZoom = properties.max_zoom ?? 0
+			let maxZoom = try properties.max_zoom ?? 0
 
-			let type = properties.type
+			let type = try properties.type
 			if let supported = supportedTypes[type.rawValue],
 			   supported == true
 			{
@@ -245,7 +312,7 @@ final class TileServerList {
 				continue
 			}
 
-			if properties.overlay ?? false {
+			if try properties.overlay ?? false {
 				// we don@"t support overlays yet
 				continue
 			}
@@ -253,23 +320,23 @@ final class TileServerList {
 			// we only support some types of WMS projections
 			var projection: String?
 			if type == .wms {
-				projection = properties.available_projections?.first(where: { supportedProjections.contains($0) })
+				projection = try properties.available_projections?.first(where: { supportedProjections.contains($0) })
 				if projection == nil {
 					continue
 				}
 			}
 
 			var polygon: CGPath?
-			if let geometry = entry.geometry {
+			if let geometry = try entry.geometry {
 				polygon = geometry.cgPath
 			}
 
-			let attribIconString = properties.icon
+			let attribIconString = try properties.icon
 			var attribIconStringIsHttp = false
 			var attribIcon: UIImage?
-			let attribDict = properties.attribution
-			let attribString = attribDict?.text ?? ""
-			let attribUrl = attribDict?.url ?? ""
+			let attribDict = try properties.attribution
+			let attribString = try attribDict?.text ?? ""
+			let attribUrl = try attribDict?.url ?? ""
 			if var attribIconString = attribIconString {
 				if attribIconString.hasPrefix("http") {
 					attribIconStringIsHttp = true
@@ -294,7 +361,7 @@ final class TileServerList {
 				}
 			}
 
-			let best = properties.best ?? false
+			let best = try properties.best ?? false
 
 			// support for {apikey}
 			var apikey = ""
@@ -339,14 +406,13 @@ final class TileServerList {
 		else { return [] }
 
 		do {
-
 			let json = try JSONSerialization.jsonObject(with: data, options: [])
-			let welcome = try Welcome(json: json)
+			let welcome = try Welcome(json)
 
-			if let meta = welcome.meta {
+			if let meta = try welcome.meta {
 				// new ELI variety
-				guard meta.format_version == "1.0",
-					 try welcome.type == "FeatureCollection"
+				guard try meta.format_version == "1.0",
+				      try welcome.type == "FeatureCollection"
 				else { return [] }
 			} else {
 				// josm variety
