@@ -289,7 +289,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 	}
 
-	class func askUser(toAllowLocationAccess parentVC: UIViewController?) {
+	class func askUser(toAllowLocationAccess parentVC: UIViewController) {
 		let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
 		let title = String.localizedStringWithFormat(
 			NSLocalizedString("Turn On Location Services to Allow %@ to Determine Your Location", comment: ""),
@@ -298,7 +298,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		AppDelegate.askUserToOpenSettings(withAlertTitle: title, message: nil, parentVC: parentVC)
 	}
 
-	class func askUserToOpenSettings(withAlertTitle title: String?, message: String?, parentVC: UIViewController?) {
+	class func askUserToOpenSettings(withAlertTitle title: String, message: String?, parentVC: UIViewController) {
 		let alertController = UIAlertController(
 			title: title,
 			message: message,
@@ -317,7 +317,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		alertController.addAction(openSettings)
 		alertController.addAction(okayAction)
 
-		parentVC?.present(alertController, animated: true)
+		parentVC.present(alertController, animated: true)
 	}
 
 	class func openAppSettings() {
