@@ -745,7 +745,9 @@ public class HoursRecognizer: ObservableObject {
 		var tokenLines = tokenLines
 
 		if tokenLines.count > 10 {
+#if false
 			print("hit")
+#endif
 		}
 
 		// find lines that don't have many known tokens
@@ -1016,7 +1018,7 @@ public class HoursRecognizer: ObservableObject {
 		// split into lines of text
 		let stringLines = HoursRecognizer.getStringLines(strings)
 
-#if true
+#if false
 		print("")
 		print("string lines:")
 		for line in stringLines {
@@ -1029,7 +1031,7 @@ public class HoursRecognizer: ObservableObject {
 		// convert strings to tokens
 		var tokenSets = HoursRecognizer.tokenLinesForStringLines(stringLines, language: language)
 
-#if true
+#if false
 		print("")
 		print("token lines:")
 		for s in tokenSets {
@@ -1045,7 +1047,7 @@ public class HoursRecognizer: ObservableObject {
 		// get homogeneous day/time sets
 		tokenSets = HoursRecognizer.homogeneousSequencesForTokenLines(tokenSets)
 
-#if true
+#if false
 		print("")
 		print("homogeneous:")
 		for line in tokenSets {
@@ -1087,7 +1089,7 @@ public class HoursRecognizer: ObservableObject {
 			}
 		}
 
-#if true
+#if false
 		print("")
 		for line in tokenSets {
 			let s1 = line.map({ "\($0.token)" }).joined(separator: " ")

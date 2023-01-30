@@ -69,11 +69,10 @@ public struct OpeningHoursRecognizerView: View {
 					Text(lang.name).tag(lang)
 				}
 			}
-			.pickerStyle(MenuPickerStyle())
-			.foregroundColor(.white)
-			.padding()
-			.overlay(Capsule(style: .continuous)
-				.stroke(Color.white, lineWidth: 2.0))
+			.pickerStyle(.menu)
+			.background(
+				RoundedRectangle(cornerRadius: 50.0, style: .continuous)
+					.fill(.white))
 		}
 	}
 }

@@ -158,7 +158,7 @@ private struct Attribution {
 	var url: String? { get throws { try json.optString("url") }}
 	init?(_ json: Any?) throws {
 		guard let json = json else { return nil }
-		self.json = try JSONDict( json)
+		self.json = try JSONDict(json)
 	}
 }
 

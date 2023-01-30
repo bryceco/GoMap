@@ -65,7 +65,9 @@ class CameraView: UIView, AVCapturePhotoCaptureDelegate, AVCaptureVideoDataOutpu
 	}
 
 	public func startRunning() {
-		captureSession?.startRunning()
+		DispatchQueue.global(qos: .default).async(execute: {
+			self.captureSession?.startRunning()
+		})
 	}
 
 	public func stopRunning() {
