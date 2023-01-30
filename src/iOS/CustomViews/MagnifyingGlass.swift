@@ -13,7 +13,6 @@ final class MagnifyingGlass: UIView {
 	let sourceView: UIView
 	private var sourceCenter: CGPoint {
 		didSet {
-			isHidden = false
 			setNeedsLayout()
 		}
 	}
@@ -98,13 +97,14 @@ final class MagnifyingGlass: UIView {
 		}
 	}
 
-	func setSourceCenter(_ point: CGPoint, in view: UIView) {
+	func setSourceCenter(_ point: CGPoint, in view: UIView, visible: Bool) {
 		sourceCenter = point
 		let localPoint = convert(point, from: view)
 		if bounds.contains(localPoint) {
 			let newPos: Position = position == .topLeft ? .topRight : .topLeft
 			setPosition(newPos, animated: true)
 		}
+		isHidden = !visible
 	}
 
 	func captureViewAt(_ rect: CGRect) -> UIView {

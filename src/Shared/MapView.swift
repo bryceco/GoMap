@@ -2142,7 +2142,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				// move the object
 				dragObjectToPushpin()
 
-				magnifyingGlass.setSourceCenter(arrow, in: self)
+				magnifyingGlass.setSourceCenter(arrow, in: self, visible: !self.aerialLayer.isHidden)
 			default:
 				break
 			}
@@ -2163,7 +2163,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			pushpinView.dragCallback = pushpinDragCallbackFor(object: object)
 		} else {
 			pushpinView.dragCallback = { _, _, _ in
-				self.magnifyingGlass.setSourceCenter(pushpinView.arrowPoint, in: self)
+				self.magnifyingGlass.setSourceCenter(
+					pushpinView.arrowPoint,
+					in: self,
+					visible: !self.aerialLayer.isHidden)
 			}
 		}
 
@@ -2204,7 +2207,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				layer.addSublayer(text)
 			}
 
-			magnifyingGlass.setSourceCenter(pushpinView.arrowPoint, in: self)
+			magnifyingGlass.setSourceCenter(pushpinView.arrowPoint, in: self, visible: !aerialLayer.isHidden)
 		}
 
 		addSubview(pushpinView)
