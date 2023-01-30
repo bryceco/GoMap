@@ -12,153 +12,86 @@ private let CUSTOMAERIALLIST_KEY = "AerialList"
 private let CUSTOMAERIALSELECTION_KEY = "AerialListSelection"
 private let RECENTLY_USED_KEY = "AerialListRecentlyUsed"
 
-enum TypeCheckCast: Error {
+enum TypeCastError: Error {
 	case invalidType
 	case unexpectedNil
+	case invalidEnum
 }
 
-func Unwrap<T>(_ value: T?) throws -> T {
-	guard let value = value else {
-		throw TypeCheckCast.unexpectedNil
+infix operator -->: AssignmentPrecedence
+func --> <T>(lhs: Any?, rhs: T.Type) throws -> T {
+	guard let lhs = lhs as? T else {
+		throw TypeCastError.invalidType
 	}
-	return value
-}
-
-private struct JSONDict {
-	let json: [String: Any]
-	init(_ json: Any) throws {
-		guard let json = json as? [String: Any] else {
-			throw TypeCheckCast.invalidType
-		}
-		self.json = json
-	}
-
-	func string(_ key: String) throws -> String {
-		return try getReq(key) as String
-	}
-
-	func optString(_ key: String) throws -> String? {
-		return try getOpt(key) as String?
-	}
-
-	func integer(_ key: String) throws -> Int {
-		return (try getReq(key) as NSNumber).intValue
-	}
-
-	func optInteger(_ key: String) throws -> Int? {
-		return (try getOpt(key) as NSNumber?)?.intValue
-	}
-
-	func bool(_ key: String) throws -> Bool {
-		return (try getReq(key) as NSNumber).boolValue
-	}
-
-	func optBool(_ key: String) throws -> Bool? {
-		return (try getOpt(key) as NSNumber?)?.boolValue
-	}
-
-	func array(_ key: String) throws -> [Any] {
-		return try getReq(key) as [Any]
-	}
-
-	func optArray(_ key: String) throws -> [Any]? {
-		return try getOpt(key) as [Any]?
-	}
-
-	func dict(_ key: String) throws -> [String: Any] {
-		return try getReq(key) as [String: Any]
-	}
-
-	func optDict(_ key: String) throws -> [String: Any]? {
-		return try getOpt(key) as [String: Any]?
-	}
-
-	func getOpt<T>(_ key: String) throws -> T? {
-		guard let value = json[key] else { return nil }
-		guard let value = value as? T else {
-			if value is NSNull {
-				return nil
-			}
-			throw TypeCheckCast.invalidType
-		}
-		return value
-	}
-
-	func getReq<T>(_ key: String) throws -> T {
-		guard let value = json[key] as? T else {
-			throw TypeCheckCast.invalidType
-		}
-		return value
-	}
+	return lhs
 }
 
 private struct Welcome {
-	let json: JSONDict
-	var features: [Feature] { get throws { try json.array("features").map({ try Feature($0) }) }}
-	var meta: Meta? { get throws { try Meta(try json.optDict("meta")) } }
-	var type: String { get throws { try json.string("type") } }
+	private let json: [String: Any]
+	var features: [Feature] { get throws { try (json["features"] --> [Any].self).map({ try Feature($0) }) }}
+	var meta: Meta? { get throws { try Meta(json["meta"]) } }
+	var type: String { get throws { try json["type"] --> String.self } }
+
 	init(_ json: Any?) throws {
-		guard let json = json else { throw TypeCheckCast.unexpectedNil }
-		self.json = try JSONDict(json)
+		self.json = try json --> [String: Any].self
 	}
 }
 
 private struct Meta {
-	let json: JSONDict
-	var format_version: String { get throws { try json.string("format_version") } }
-	var generated: String { get throws { try json.string("generated") } }
+	private let json: [String: Any]
+	var format_version: String { get throws { try json["format_version"] --> String.self } }
+	var generated: String { get throws { try json["generated"] --> String.self } }
 	init?(_ json: Any?) throws {
 		guard let json = json else { return nil }
-		self.json = try JSONDict(json)
+		self.json = try json --> [String: Any].self
 	}
 }
 
 private struct Feature {
-	let json: JSONDict
-	var geometry: GeoJSON? { get throws { try GeoJSON(geometry: try json.optDict("geometry")) } }
-	var properties: Properties { get throws { try Properties(try json.dict("properties")) } }
-	var type: String { get throws { try json.string("type") } }
+	private let json: [String: Any]
+	var geometry: GeoJSON? { get throws {
+		if json["geometry"] is NSNull { return nil }
+		return try GeoJSON(geometry: json["geometry"] --> [String: Any]?.self)
+	} }
+	var properties: Properties { get throws { try Properties(json["properties"] --> Any.self) } }
+	var type: String { get throws { try json["type"] --> String.self } }
 	init(_ json: Any?) throws {
-		guard let json = json else { throw TypeCheckCast.unexpectedNil }
-		self.json = try JSONDict(json)
+		self.json = try json --> [String: Any].self
 	}
 }
 
 private struct Properties {
-	private let json: JSONDict
-	var attribution: Attribution? { get throws { try Attribution(try json.optDict("attribution")) }}
+	private let json: [String: Any]
+	var attribution: Attribution? { get throws { try Attribution(json["attribution"]) }}
 	var category: Category? { get throws {
-		let cat = try json.optString("category")
-		return cat != nil ? try Unwrap(Category(rawValue: cat!)) : nil
+		let cat = try json["category"] --> String?.self
+		return cat != nil ? try Category(string: cat!) : nil
 	}}
-	var icon: String? { get throws { try json.optString("icon") } }
-	var id: String { get throws { try json.string("id") }}
-	var max_zoom: Int? { get throws { try json.optInteger("max_zoom") } }
-	var name: String { get throws { try json.string("name") } }
-	var start_date: String? { get throws { try json.optString("start_date") }}
-	var end_date: String? { get throws { try json.optString("end_date") } }
-	var type: PropertiesType { get throws { try Unwrap(PropertiesType(rawValue: try json.string("type"))) }}
-	var url: String { get throws { try json.string("url") }}
-	var best: Bool? { get throws { try json.optBool("best") }}
-	var available_projections: [String]? {
-		get throws { try json.optArray("available_projections")?.map { try Unwrap($0 as? String) } }
-	}
-
-	var overlay: Bool? { get throws { try json.optBool("overlay") } }
-	var transparent: Bool? { get throws { try json.optBool("transparent") } }
-	init(_ json: [String: Any]) throws {
-		self.json = try JSONDict(json)
+	var icon: String? { get throws { try json["icon"] --> String?.self } }
+	var id: String { get throws { try json["id"] --> String.self }}
+	var max_zoom: Int? { get throws { try json["max_zoom"] --> Int?.self }}
+	var name: String { get throws { try json["name"] --> String.self }}
+	var start_date: String? { get throws { try json["start_date"] --> String?.self }}
+	var end_date: String? { get throws { try json["end_date"] --> String?.self }}
+	var type: PropertiesType { get throws { try PropertiesType(string: json["type"] --> String.self) }}
+	var url: String { get throws { try json["url"] --> String.self }}
+	var best: Bool? { get throws { try json["best"] --> Bool?.self }}
+	var available_projections: [String]? { get throws { try (json["available_projections"] --> [String]?.self) }}
+	var overlay: Bool? { get throws { try json["overlay"] --> Bool?.self } }
+	var transparent: Bool? { get throws { try json["transparent"] --> Bool?.self } }
+	init(_ json: Any?) throws {
+		self.json = try json --> [String: Any].self
 	}
 }
 
 private struct Attribution {
-	let json: JSONDict
-	var attributionRequired: Bool? { get throws { try json.optBool("attributionRequired") } }
-	var text: String { get throws { try json.string("text") } }
-	var url: String? { get throws { try json.optString("url") }}
+	private let json: [String: Any]
+	var attributionRequired: Bool? { get throws { try json["attributionRequired"] --> Bool?.self } }
+	var text: String { get throws { try json["text"] --> String.self } }
+	var url: String? { get throws { try json["url"] --> String?.self }}
 	init?(_ json: Any?) throws {
 		guard let json = json else { return nil }
-		self.json = try JSONDict(json)
+		self.json = try json --> [String: Any].self
 	}
 }
 
@@ -171,6 +104,12 @@ private enum Category: String {
 	case other
 	case photo
 	case qa
+	init(string: String) throws {
+		guard let value = Self(rawValue: string) else {
+			throw TypeCastError.invalidEnum
+		}
+		self = value
+	}
 }
 
 private enum PropertiesType: String {
@@ -180,6 +119,12 @@ private enum PropertiesType: String {
 	case wms
 	case wms_endpoint
 	case wmts
+	init(string: String) throws {
+		guard let value = Self(rawValue: string) else {
+			throw TypeCastError.invalidEnum
+		}
+		self = value
+	}
 }
 
 final class TileServerList {
