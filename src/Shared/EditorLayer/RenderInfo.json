@@ -358,6 +358,9 @@
 	"areaColor" : "B62C2C"
   },
 
+  "natural" : {
+	"areaColor" : "002F00"
+  },
   "natural/bay" : {
 	"areaColor" : "002F00"
   },
