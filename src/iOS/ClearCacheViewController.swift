@@ -156,6 +156,15 @@ class ClearCacheViewController: UITableViewController {
 						appDelegate.mapView.placePushpinForSelection()
 						self.navigationController?.popViewController(animated: true)
 					}))
+				// Regular purge
+				alert.addAction(UIAlertAction(
+					title: "Debug: Purge Hard",
+					style: .destructive,
+					handler: { _ in
+						appDelegate.mapView.editorLayer.purgeCachedData(.hard)
+						appDelegate.mapView.removePin()
+						self.navigationController?.popViewController(animated: true)
+					}))
 			}
 			if alert.actions.count > 1 {
 				present(alert, animated: true)
