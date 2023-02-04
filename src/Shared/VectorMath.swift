@@ -19,7 +19,12 @@ let TRANSFORM_3D = 0
 
 // MARK: Point
 
-extension CGPoint {
+extension CGPoint: Hashable {
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(x)
+		hasher.combine(y)
+	}
+
 	static let zero = CGPoint(x: 0.0, y: 0.0)
 
 	@inline(__always) func withOffset(_ dx: CGFloat, _ dy: CGFloat) -> CGPoint {
@@ -112,6 +117,69 @@ extension CGRect {
 		          y: rc.origin.y,
 		          width: rc.size.width,
 		          height: rc.size.height)
+	}
+
+	func intersectsLineSegment(_ p1: CGPoint, _ p2: CGPoint) -> Bool {
+		let a_rectangleMinX = origin.x
+		let a_rectangleMinY = origin.y
+		let a_rectangleMaxX = origin.x + size.width
+		let a_rectangleMaxY = origin.y + size.height
+		let a_p1x = p1.x
+		let a_p1y = p1.y
+		let a_p2x = p2.x
+		let a_p2y = p2.y
+
+		// Find min and max X for the segment
+		var minX = a_p1x
+		var maxX = a_p2x
+
+		if a_p1x > a_p2x {
+			minX = a_p2x
+			maxX = a_p1x
+		}
+
+		// Find the intersection of the segment's and rectangle's x-projections
+		if maxX > a_rectangleMaxX {
+			maxX = a_rectangleMaxX
+		}
+		if minX < a_rectangleMinX {
+			minX = a_rectangleMinX
+		}
+		if minX > maxX {
+			// If their projections do not intersect return false
+			return false
+		}
+
+		// Find corresponding min and max Y for min and max X we found before
+		var minY = a_p1y
+		var maxY = a_p2y
+		let dx = a_p2x - a_p1x
+		if abs(dx) > 0.0000001 {
+			let a = (a_p2y - a_p1y) / dx
+			let b = a_p1y - a * a_p1x
+			minY = a * minX + b
+			maxY = a * maxX + b
+		}
+
+		if minY > maxY {
+			let tmp = maxY
+			maxY = minY
+			minY = tmp
+		}
+
+		// Find the intersection of the segment's and rectangle's y-projections
+		if maxY > a_rectangleMaxY {
+			maxY = a_rectangleMaxY
+		}
+		if minY < a_rectangleMinY {
+			minY = a_rectangleMinY
+		}
+		if minY > maxY {
+			// If Y-projections do not intersect return false
+			return false
+		}
+
+		return true
 	}
 }
 
@@ -335,69 +403,6 @@ extension OSMRect {
 		return rect
 	}
 
-	func intersectsLineSegment(_ p1: OSMPoint, _ p2: OSMPoint) -> Bool {
-		let a_rectangleMinX = origin.x
-		let a_rectangleMinY = origin.y
-		let a_rectangleMaxX = origin.x + size.width
-		let a_rectangleMaxY = origin.y + size.height
-		let a_p1x = p1.x
-		let a_p1y = p1.y
-		let a_p2x = p2.x
-		let a_p2y = p2.y
-
-		// Find min and max X for the segment
-		var minX = a_p1x
-		var maxX = a_p2x
-
-		if a_p1x > a_p2x {
-			minX = a_p2x
-			maxX = a_p1x
-		}
-
-		// Find the intersection of the segment's and rectangle's x-projections
-		if maxX > a_rectangleMaxX {
-			maxX = a_rectangleMaxX
-		}
-		if minX < a_rectangleMinX {
-			minX = a_rectangleMinX
-		}
-		if minX > maxX {
-			// If their projections do not intersect return false
-			return false
-		}
-
-		// Find corresponding min and max Y for min and max X we found before
-		var minY = a_p1y
-		var maxY = a_p2y
-		let dx = a_p2x - a_p1x
-		if abs(dx) > 0.0000001 {
-			let a = (a_p2y - a_p1y) / dx
-			let b = a_p1y - a * a_p1x
-			minY = a * minX + b
-			maxY = a * maxX + b
-		}
-
-		if minY > maxY {
-			let tmp = maxY
-			maxY = minY
-			minY = tmp
-		}
-
-		// Find the intersection of the segment's and rectangle's y-projections
-		if maxY > a_rectangleMaxY {
-			maxY = a_rectangleMaxY
-		}
-		if minY < a_rectangleMinY {
-			minY = a_rectangleMinY
-		}
-		if minY > maxY {
-			// If Y-projections do not intersect return false
-			return false
-		}
-
-		return true
-	}
-
 	func metersSizeForLatLon() -> OSMSize {
 		let w = GreatCircleDistance(LatLon(x: origin.x, y: origin.y), LatLon(x: origin.x + size.width, y: origin.y))
 		let h = GreatCircleDistance(LatLon(x: origin.x, y: origin.y), LatLon(x: origin.x, y: origin.y + size.height))
@@ -606,7 +611,7 @@ extension OSMTransform {
 	}
 }
 
-struct LatLon: Codable {
+struct LatLon: Equatable, Codable {
 	var lon: Double
 	var lat: Double
 
@@ -681,7 +686,7 @@ func GreatCircleDistance(_ p1: LatLon, _ p2: LatLon) -> Double {
 }
 
 // area of a closed polygon (first and last points repeat), and boolean if it's clockwise
-func AreaOfPolygonClockwise(_ points: [OSMPoint]) -> (Double, Bool)? {
+func AreaOfPolygonClockwise(_ points: [CGPoint]) -> (Double, Bool)? {
 	if points.count < 4 {
 		return nil // not a polygon
 	}
@@ -698,7 +703,7 @@ func AreaOfPolygonClockwise(_ points: [OSMPoint]) -> (Double, Bool)? {
 	return area >= 0 ? (area, true) : (-area, false)
 }
 
-func IsClockwisePolygon(_ points: [OSMPoint]) -> Bool {
+func IsClockwisePolygon(_ points: [CGPoint]) -> Bool {
 	guard let (_, clockwise) = AreaOfPolygonClockwise(points) else {
 		return false
 	}
