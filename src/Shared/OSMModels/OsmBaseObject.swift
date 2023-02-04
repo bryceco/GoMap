@@ -240,16 +240,20 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	}
 
 	func isCoastline() -> Bool {
-		let natural = tags["natural"]
-		if let natural = natural {
-			if natural == "coastline" {
-				return true
-			}
-			if natural == "water" {
-				if isRelation() == nil, parentRelations.count == 0 {
-					return false // its a lake or something
-				}
-				return true
+		guard let natural = tags["natural"] else {
+			return false
+		}
+		if natural == "coastline" {
+			return self is OsmWay
+		}
+		if natural == "water" {
+			if let way = self as? OsmWay {
+				// if it is closed it's a lake
+				return !way.isClosed()
+			} else if let relation = self as? OsmRelation {
+				// If the way is part of a larger body of water then process it as coastline,
+				// since we need to connect the various pieces together for rendering
+				return relation.isMultipolygon()
 			}
 		}
 		return false
