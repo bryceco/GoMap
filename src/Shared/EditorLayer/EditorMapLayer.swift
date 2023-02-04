@@ -415,16 +415,16 @@ final class EditorMapLayer: CALayer {
 
 	func invoke(
 		alongScreenClippedWay way: OsmWay,
-		block: @escaping (_ p1: OSMPoint, _ p2: OSMPoint, _ isEntry: Bool, _ isExit: Bool) -> Bool)
+		block: @escaping (_ p1: CGPoint, _ p2: CGPoint, _ isEntry: Bool, _ isExit: Bool) -> Bool)
 	{
-		let viewRect = OSMRect(bounds)
+		let viewRect = bounds
 		var prevInside = false
-		var prev = OSMPoint.zero
+		var prev = CGPoint.zero
 		var first = true
 
 		for node in way.nodes {
-			let pt = OSMPoint(owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false))
-			let inside = viewRect.containsPoint(pt)
+			let pt = owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false)
+			let inside = viewRect.contains(pt)
 			defer {
 				prev = pt
 				prevInside = inside
@@ -434,7 +434,7 @@ final class EditorMapLayer: CALayer {
 				continue
 			}
 
-			var cross: [OSMPoint] = []
+			var cross: [CGPoint] = []
 			if !(prevInside && inside) {
 				// at least one point was outside, so determine where line intersects the screen
 				cross = Self.ClipLineToRect(p1: prev, p2: pt, rect: viewRect)
@@ -487,8 +487,8 @@ final class EditorMapLayer: CALayer {
 	func pathClipped(toViewRect way: OsmWay, length pLength: UnsafeMutablePointer<CGFloat>?) -> CGPath? {
 		var path: CGMutablePath?
 		var length = 0.0
-		var firstPoint = OSMPoint.zero
-		var lastPoint = OSMPoint.zero
+		var firstPoint = CGPoint.zero
+		var lastPoint = CGPoint.zero
 
 		invoke(alongScreenClippedWay: way, block: { p1, p2, _, isExit in
 			if path == nil {
@@ -1630,8 +1630,7 @@ final class EditorMapLayer: CALayer {
 		highlightLayers = getShapeLayersForHighlights()
 
 		// get ocean
-		let ocean = getOceanLayer(shownObjects)
-		if let ocean = ocean {
+		if let ocean = getOceanLayer(shownObjects) {
 			highlightLayers.append(ocean)
 		}
 		for layer in highlightLayers {
