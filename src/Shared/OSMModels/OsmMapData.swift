@@ -742,6 +742,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	// MARK: Download
 
 	func merge(_ newData: OsmDownloadData, savingToDatabase save: Bool) throws {
+		if newData.nodes.count + newData.ways.count + newData.relations.count == 0 {
+			return
+		}
 		var newNodes: [OsmNode] = []
 		var newWays: [OsmWay] = []
 		var newRelations: [OsmRelation] = []
@@ -1724,8 +1727,10 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		_ = archiver.saveArchive(mapData: self)
 
 		t = CACurrentMediaTime() - t
-		DLog(
-			"Archive save \(nodeCount()),\(wayCount()),\(relationCount()),\(undoManager.countUndoGroups),\(region.countOfObjects()) = \(t)")
+		DLog("""
+		Archive save \(nodeCount()),\(wayCount()),\(relationCount()),\
+		 \(undoManager.countUndoGroups),\(region.countOfObjects()) = \(t)
+		""")
 
 		// restore originals
 		nodes = origNodes
