@@ -192,17 +192,14 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		}
 	}
 
-#if DEBUG
-	// sometimes we end up with duplicates of objects and they need to be disambiguated:
-	func address() -> UnsafeRawPointer {
-		return UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
-	}
-#endif
-
 	var osmType: OSM_TYPE { return self is OsmNode ? .NODE : self is OsmWay ? .WAY : .RELATION }
 
 	var extendedIdentifier: OsmExtendedIdentifier {
 		return OsmExtendedIdentifier(self)
+	}
+
+	override var debugDescription: String {
+		return description
 	}
 
 	// attributes
