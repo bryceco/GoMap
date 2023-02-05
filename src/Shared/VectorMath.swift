@@ -686,28 +686,26 @@ func GreatCircleDistance(_ p1: LatLon, _ p2: LatLon) -> Double {
 }
 
 // area of a closed polygon (first and last points repeat), and boolean if it's clockwise
-func AreaOfPolygonClockwise(_ points: [CGPoint]) -> (Double, Bool)? {
+func AreaOfPolygonClockwise(_ points: [CGPoint]) -> (area: Double, clockwise: Bool)? {
 	if points.count < 4 {
 		return nil // not a polygon
 	}
 	if points[0] != points.last! {
 		return nil // first and last aren't identical
 	}
+	// we skip the last/first wrap-around, but last is a duplicate of first so the algorithm still works correctly
 	var area = 0.0
 	var previous = points[0]
-	for point in points[1..<points.count] {
+	for point in points.dropFirst() {
 		area += (previous.x + point.x) * (previous.y - point.y)
 		previous = point
 	}
 	area *= 0.5
-	return area >= 0 ? (area, true) : (-area, false)
+	return area < 0 ? (-area, true) : (area, false)
 }
 
-func IsClockwisePolygon(_ points: [CGPoint]) -> Bool {
-	guard let (_, clockwise) = AreaOfPolygonClockwise(points) else {
-		return false
-	}
-	return clockwise
+func IsClockwisePolygon(_ points: [CGPoint]) -> Bool? {
+	return AreaOfPolygonClockwise(points)?.clockwise
 }
 
 // Input is a list of points in degrees, with the first and last points being equal
