@@ -190,6 +190,9 @@
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Placeholder - Don't translate"/>
+                                            </attributedString>
                                         </label>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" text="Lorem ipsum dolor " textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hAy-aU-g8L">
                                             <rect key="frame" x="176" y="6" width="202.5" height="32"/>
@@ -197,6 +200,9 @@
                                             <color key="textColor" systemColor="labelColor"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Placeholder - Don't translate"/>
+                                            </attributedString>
                                         </textView>
                                     </subviews>
                                     <constraints>
