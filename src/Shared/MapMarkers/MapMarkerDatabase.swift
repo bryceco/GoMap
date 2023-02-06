@@ -19,7 +19,7 @@ final class MapMarkerDatabase {
 		workQueue.maxConcurrentOperationCount = 1
 	}
 
-	var allMapMarkers: AnySequence<MapMarker> { AnySequence( markerForButtonId.values ) }
+	var allMapMarkers: AnySequence<MapMarker> { AnySequence(markerForButtonId.values) }
 
 	func removeAll() {
 		workQueue.cancelAllOperations()

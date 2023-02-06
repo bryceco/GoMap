@@ -10,6 +10,24 @@ import UIKit
 
 class QuestTextEntryCell: UITableViewCell {
 	@IBOutlet var textField: UITextField?
+	var didChange: ((Bool)->())?
+
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+	}
+
+	override func prepareForReuse() {
+		textField!.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
+	}
+
+	@objc func textFieldChanged(_ sender: Any?) {
+		// need at least some number of digits
+		let okay = (textField?.text ?? "")
+			.unicodeScalars
+			.compactMap({ CharacterSet.decimalDigits.contains($0) ? true : nil })
+			.count > 5
+		didChange?(okay)
+	}
 }
 
 class QuestEditorController: UITableViewController {
@@ -39,9 +57,13 @@ class QuestEditorController: UITableViewController {
 
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
+		setFirstResponder()
+	}
+
+	func setFirstResponder() {
 		if presetKey?.presetList?.count == nil {
 			// set text cell to first responder
-			if let cell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)),
+			if let cell = tableView.cellForRow(at: IndexPath(row: 2, section: 0)),
 			   let cell2 = cell as? QuestTextEntryCell
 			{
 				cell2.textField?.becomeFirstResponder()
@@ -57,15 +79,17 @@ class QuestEditorController: UITableViewController {
 			update: {
 				self.refreshPresetKey()
 				self.tableView.reloadData()
+				self.setFirstResponder()
 			})
-		top_loop:
-			for section in presets.sectionList {
+
+		for section in presets.sectionList {
 			for g in section.presetKeys {
 				let list = Self.presetsForGroup(g)
 				for preset in list {
 					if preset.tagKey == quest.tagKey {
 						presetKey = preset
-						break top_loop
+						self.tableView.separatorColor = presetKey?.presetList?.count == nil ? .clear : nil
+						return
 					}
 				}
 			}
@@ -81,7 +105,7 @@ class QuestEditorController: UITableViewController {
 
 		vc.object = object
 		vc.quest = quest
-		vc.title = quest.title
+		vc.title = "Your Quest"
 		vc.onClose = onClose
 		vc.presetFeature = PresetsDatabase.shared.presetFeatureMatching(
 			tags: object.tags,
@@ -132,28 +156,47 @@ class QuestEditorController: UITableViewController {
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if let answerCount = presetKey?.presetList?.count {
-			// title + open editor + answer list
-			return 2 + answerCount
+			// title + object + answer list + open editor
+			return 3 + answerCount
 		} else {
-			// title + open editor + text field
-			return 3
+			// title + object + text field + open editor
+			return 4
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.row == 0 {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestTitle", for: indexPath)
+			cell.textLabel?.text = object.friendlyDescription()
+			cell.textLabel?.textAlignment = .center
+			cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .title2)
+			return cell
+		} else if indexPath.row == 1 {
+			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestTitle", for: indexPath)
 			cell.textLabel?.text = quest.title
+			cell.textLabel?.textAlignment = .natural
+			cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
 			return cell
 		} else if indexPath.row == self.tableView(tableView, numberOfRowsInSection: 0) - 1 {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestOpenEditor", for: indexPath)
 			return cell
 		} else if let _ = presetKey?.presetList?.count {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestTagValue", for: indexPath)
-			cell.textLabel?.text = presetKey?.presetList?[indexPath.row - 1].name ?? ""
+			cell.textLabel?.text = presetKey?.presetList?[indexPath.row - 2].name ?? ""
 			return cell
 		} else {
-			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestTextEntry", for: indexPath)
+			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestTextEntry",
+			                                         for: indexPath) as! QuestTextEntryCell
+			if presetKey?.keyboardType == .phonePad,
+			   let textField = cell.textField
+			{
+				textField.keyboardType = .phonePad
+				textField.inputAccessoryView = TelephoneToolbar(forTextField: textField,
+				                                                frame: view.frame)
+			}
+			cell.didChange = { okay in
+				self.navigationItem.rightBarButtonItem?.isEnabled = okay
+			}
 			return cell
 		}
 	}
