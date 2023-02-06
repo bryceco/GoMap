@@ -164,12 +164,17 @@ final class MapMarkerDatabase: NSObject {
 		including: MapMarkerSet,
 		completion: @escaping () -> Void)
 	{
+		// Schedule work to be done in a short while, but if we're called before then
+		// cancel that operation and schedule a new one.
 		workQueue.cancelAllOperations()
 		workQueue.addOperation({
 			usleep(UInt32(1000 * (delay + 0.25)))
 		})
 		workQueue.addOperation({ [self] in
-			updateMarkers(forRegion: bbox, mapData: mapData, including: including, completion: completion)
+			DispatchQueue.main.async {
+				print("update")
+				self.updateMarkers(forRegion: bbox, mapData: mapData, including: including, completion: completion)
+			}
 		})
 	}
 
