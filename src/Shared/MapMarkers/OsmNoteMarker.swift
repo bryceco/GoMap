@@ -33,7 +33,7 @@ class OsmNoteMarker: MapMarker {
 	let dateCreated: String
 	private(set) var comments: [OsmNoteComment]
 
-	override var key: String {
+	override var markerIdentifier: String {
 		return "note-\(noteId)"
 	}
 

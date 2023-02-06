@@ -14,7 +14,7 @@ class KeepRightMarker: MapMarker {
 	let keepRightID: Int
 	let objectId: OsmExtendedIdentifier
 
-	override var key: String {
+	override var markerIdentifier: String {
 		return "keepright-\(keepRightID)"
 	}
 

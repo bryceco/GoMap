@@ -17,7 +17,7 @@ class WayPointMarker: MapMarker {
 		super.init(lat: latLon.lat, lon: latLon.lon)
 	}
 
-	override var key: String {
+	override var markerIdentifier: String {
 		return "waypoint-\(lat),\(lon)"
 	}
 

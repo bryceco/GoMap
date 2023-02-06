@@ -2361,18 +2361,18 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				return
 			}
 
-			self.mapMarkerDatabase.enumerateMapMarkers({ [self] note in
+			self.mapMarkerDatabase.enumerateMapMarkers({ [self] marker in
 				// hide unwanted keep right buttons
-				if let note = note as? KeepRightMarker,
-				   note.isIgnored()
+				if let marker = marker as? KeepRightMarker,
+				   marker.isIgnored()
 				{
-					if let button = self.buttonForButtonId[note.buttonId] {
+					if let button = self.buttonForButtonId[marker.buttonId] {
 						button.removeFromSuperview()
 					}
 					return
 				}
 
-				if self.buttonForButtonId[note.buttonId] == nil {
+				if self.buttonForButtonId[marker.buttonId] == nil {
 					let button = UIButton(type: .custom)
 					button.addTarget(
 						self,
@@ -2380,7 +2380,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 						for: .touchUpInside)
 					button.layer.backgroundColor = UIColor.blue.cgColor
 					button.layer.borderColor = UIColor.white.cgColor
-					if let icon = note.buttonIcon {
+					if let icon = marker.buttonIcon {
 						// icon button
 						button.bounds = CGRect(x: 0, y: 0, width: 34, height: 34)
 						button.layer.cornerRadius = button.bounds.width / 2
@@ -2394,20 +2394,20 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 						button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
 						button.titleLabel?.textColor = UIColor.white
 						button.titleLabel?.textAlignment = .center
-						button.setTitle(note.buttonLabel, for: .normal)
+						button.setTitle(marker.buttonLabel, for: .normal)
 					}
-					button.tag = note.buttonId
+					button.tag = marker.buttonId
 					self.addSubview(button)
-					self.buttonForButtonId[note.buttonId] = button
+					self.buttonForButtonId[marker.buttonId] = button
 				}
-				let button = self.buttonForButtonId[note.buttonId]!
+				let button = self.buttonForButtonId[marker.buttonId]!
 
-				if note.shouldHide() {
+				if marker.shouldHide() {
 					button.removeFromSuperview()
 				} else {
-					let offsetX = (note is KeepRightMarker) || (note is FixmeMarker) ? 0.00001 : 0.0
+					let offsetX = (marker is KeepRightMarker) || (marker is FixmeMarker) ? 0.00001 : 0.0
 					let pos = self.mapTransform.screenPoint(
-						forLatLon: LatLon(latitude: note.lat, longitude: note.lon + offsetX),
+						forLatLon: LatLon(latitude: marker.lat, longitude: marker.lon + offsetX),
 						birdsEye: true)
 					if pos.x.isInfinite || pos.y.isInfinite {
 						return

@@ -11,8 +11,8 @@ import Foundation
 
 final class MapMarkerDatabase: NSObject {
 	private let workQueue = OperationQueue()
-	private var markerForTag: [Int: MapMarker] = [:] // return the marker with the given button tag (tagId)
-	private var tagForKey: [String: Int] = [:] // map the marker key (unique string) to a tag
+	private var markerForButtonId: [Int: MapMarker] = [:] // return the marker with the given button tag (tagId)
+	private var buttonIdForMarkerIdentifier: [String: Int] = [:] // map the marker key (unique string) to a tag
 	weak var mapData: OsmMapData!
 
 	override init() {
@@ -22,21 +22,19 @@ final class MapMarkerDatabase: NSObject {
 
 	func removeAll() {
 		workQueue.cancelAllOperations()
-		markerForTag.removeAll()
-		tagForKey.removeAll()
+		markerForButtonId.removeAll()
+		buttonIdForMarkerIdentifier.removeAll()
 	}
 
-	/// This is called when we download a new note. If it is an update to an existing note then
+	/// This is called when we get a new marker. If it is an update to an existing marker then
 	/// we need to delete the reference to the previous tag, so the button can be replaced.
-	func addOrUpdate(_ newMarker: MapMarker) {
-		let key = newMarker.key
-		let newTag = newMarker.buttonId
-		if let oldTag = tagForKey[key] {
-			// remove any existing tag with the same key
-			markerForTag.removeValue(forKey: oldTag)
+	func addOrUpdate(marker newMarker: MapMarker) {
+		if let buttonId = buttonIdForMarkerIdentifier[newMarker.markerIdentifier] {
+			// remove any existing tag with the same markerIdentifier
+			markerForButtonId.removeValue(forKey: buttonId)
 		}
-		tagForKey[key] = newTag
-		markerForTag[newTag] = newMarker
+		buttonIdForMarkerIdentifier[newMarker.markerIdentifier] = newMarker.buttonId
+		markerForButtonId[newMarker.buttonId] = newMarker
 	}
 
 	func updateNoteMarkers(forRegion box: OSMRect, completion: @escaping () -> Void) {
@@ -62,7 +60,7 @@ final class MapMarkerDatabase: NSObject {
 				DispatchQueue.main.async(execute: { [self] in
 					// add downloaded notes
 					for note in newNotes {
-						addOrUpdate(note)
+						addOrUpdate(marker: note)
 					}
 
 					completion()
@@ -76,7 +74,7 @@ final class MapMarkerDatabase: NSObject {
 		mapData.enumerateObjects(inRegion: box, block: { [self] obj in
 			if let fixme = FixmeMarker.fixmeTag(obj) {
 				let marker = FixmeMarker(object: obj, text: fixme)
-				self.addOrUpdate(marker)
+				self.addOrUpdate(marker: marker)
 			}
 		})
 	}
@@ -85,7 +83,7 @@ final class MapMarkerDatabase: NSObject {
 		mapData.enumerateObjects(inRegion: box, block: { obj in
 			for quest in QuestList.shared.questsForObject(obj) {
 				let marker = QuestMarker(object: obj, quest: quest)
-				self.addOrUpdate(marker)
+				self.addOrUpdate(marker: marker)
 			}
 		})
 	}
@@ -95,7 +93,7 @@ final class MapMarkerDatabase: NSObject {
 			for track in AppDelegate.shared.mapView.gpxLayer.allTracks() {
 				for point in track.wayPoints {
 					let note = WayPointMarker(with: point.latLon, description: point.name)
-					addOrUpdate(note)
+					addOrUpdate(marker: note)
 				}
 			}
 		})
@@ -118,7 +116,7 @@ final class MapMarkerDatabase: NSObject {
 				DispatchQueue.main.async(execute: { [self] in
 					for point in gpxTrack.wayPoints {
 						if let note = KeepRightMarker(gpxWaypoint: point, mapData: mapData) {
-							addOrUpdate(note)
+							addOrUpdate(marker: note)
 						}
 					}
 					completion()
@@ -178,9 +176,9 @@ final class MapMarkerDatabase: NSObject {
 		})
 	}
 
-	func enumerateMapMarkers(_ callback: (_ note: MapMarker) -> Void) {
-		for note in markerForTag.values {
-			callback(note)
+	func enumerateMapMarkers(_ callback: (_ marker: MapMarker) -> Void) {
+		for marker in markerForButtonId.values {
+			callback(marker)
 		}
 	}
 
@@ -216,7 +214,7 @@ final class MapMarkerDatabase: NSObject {
 			   let noteElement = list.first,
 			   let newNote = OsmNoteMarker(noteXml: noteElement)
 			{
-				addOrUpdate(newNote)
+				addOrUpdate(marker: newNote)
 				completion(.success(newNote))
 			} else {
 				if case let .failure(error) = result {
@@ -231,6 +229,6 @@ final class MapMarkerDatabase: NSObject {
 	}
 
 	func mapMarker(forTag tag: Int) -> MapMarker? {
-		return markerForTag[tag]
+		return markerForButtonId[tag]
 	}
 }

@@ -13,7 +13,7 @@ class FixmeMarker: MapMarker {
 	let fixmeID: OsmExtendedIdentifier
 	weak var object: OsmBaseObject?
 
-	override var key: String {
+	override var markerIdentifier: String {
 		return "fixme-\(fixmeID)"
 	}
 
