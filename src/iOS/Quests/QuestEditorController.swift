@@ -10,7 +10,7 @@ import UIKit
 
 class QuestTextEntryCell: UITableViewCell {
 	@IBOutlet var textField: UITextField?
-	var didChange: ((Bool)->())?
+	var didChange: ((Bool) -> Void)?
 
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
@@ -89,10 +89,10 @@ class QuestEditorController: UITableViewController {
 				for preset in list {
 					if preset.tagKey == quest.tagKey {
 						if presetKey == preset {
-							return false	// no change
+							return false // no change
 						} else {
 							presetKey = preset
-							self.tableView.separatorColor = presetKey?.presetList?.count == nil ? .clear : nil
+							tableView.separatorColor = presetKey?.presetList?.count == nil ? .clear : nil
 							return true
 						}
 					}

@@ -2409,22 +2409,31 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 				if marker.shouldHide() {
 					button.removeFromSuperview()
+					continue
+				}
+
+				if !self.viewOverlayMask.contains(.QUESTS),
+				   marker is QuestMarker
+				{
+					button.removeFromSuperview()
+					self.buttonForButtonId.removeValue(forKey: marker.buttonId)
+					continue
+				}
+
+				let offsetX = (marker is KeepRightMarker) || (marker is FixmeMarker) ? 0.00001 : 0.0
+				let pos = self.mapTransform.screenPoint(
+					forLatLon: LatLon(latitude: marker.lat, longitude: marker.lon + offsetX),
+					birdsEye: true)
+				if pos.x.isInfinite || pos.y.isInfinite {
+					return
+				}
+				if let button = button as? MapMarkerButton {
+					button.arrowPoint = pos
 				} else {
-					let offsetX = (marker is KeepRightMarker) || (marker is FixmeMarker) ? 0.00001 : 0.0
-					let pos = self.mapTransform.screenPoint(
-						forLatLon: LatLon(latitude: marker.lat, longitude: marker.lon + offsetX),
-						birdsEye: true)
-					if pos.x.isInfinite || pos.y.isInfinite {
-						return
-					}
-					if let button = button as? MapMarkerButton {
-						button.arrowPoint = pos
-					} else {
-						var rc = button.bounds
-						rc = rc.offsetBy(dx: pos.x - rc.size.width / 2,
-										 dy: pos.y - rc.size.height / 2)
-						button.frame = rc
-					}
+					var rc = button.bounds
+					rc = rc.offsetBy(dx: pos.x - rc.size.width / 2,
+					                 dy: pos.y - rc.size.height / 2)
+					button.frame = rc
 				}
 			}
 		})

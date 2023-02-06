@@ -10,9 +10,8 @@ import UIKit
 
 @IBDesignable
 final class MapMarkerButton: UIButton {
-
-	let radius = 12.0	// radius of ciruclar part
-	let height = 24.0	// distance from center of circle to bottom vertex
+	let radius = 12.0 // radius of ciruclar part
+	let height = 24.0 // distance from center of circle to bottom vertex
 
 	init() {
 		arrowPoint = CGPoint.zero
@@ -21,12 +20,11 @@ final class MapMarkerButton: UIButton {
 
 		// build the path for it, starting at the bottom vertex
 		let arcAngle = asin(radius / height)
-
 		let path = UIBezierPath()
-		path.move(to: CGPoint(x: radius, y: height+radius))
-		path.addArc(withCenter: CGPoint(x:radius,y:radius),
-					radius: radius,
-					startAngle: Double.pi-arcAngle, endAngle: arcAngle, clockwise: true)
+		path.move(to: CGPoint(x: radius, y: height + radius))
+		path.addArc(withCenter: CGPoint(x: radius, y: radius),
+		            radius: radius,
+		            startAngle: Double.pi - arcAngle, endAngle: arcAngle, clockwise: true)
 		path.close()
 
 		let shapeLayer = CAShapeLayer()
@@ -35,19 +33,19 @@ final class MapMarkerButton: UIButton {
 		shapeLayer.borderWidth = 2.0
 		shapeLayer.path = path.cgPath
 
-		self.layer.addSublayer(shapeLayer)
-		frame = CGRect(x: arrowPoint.x-radius, y: arrowPoint.y, width: 2*radius, height: height+radius)
+		layer.addSublayer(shapeLayer)
 	}
 
 	var arrowPoint: CGPoint {
 		didSet {
-			self.frame = CGRect(x: arrowPoint.x-radius,
-								y: arrowPoint.y-(height+radius),
-								width: 2*radius,
-								height: height+radius)
+			frame = CGRect(x: arrowPoint.x - radius,
+			               y: arrowPoint.y - (height + radius),
+			               width: 2 * radius,
+			               height: height + radius)
 		}
 	}
 
+	@available(*, unavailable)
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
