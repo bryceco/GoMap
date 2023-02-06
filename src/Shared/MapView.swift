@@ -2373,29 +2373,34 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				}
 
 				if self.buttonForButtonId[marker.buttonId] == nil {
-					let button = UIButton(type: .custom)
+					let button: UIButton
+					if marker is QuestMarker {
+						button = MapMarkerButton()
+					} else {
+						button = UIButton(type: .custom)
+						button.layer.backgroundColor = UIColor.blue.cgColor
+						button.layer.borderColor = UIColor.white.cgColor
+						if let icon = marker.buttonIcon {
+							// icon button
+							button.bounds = CGRect(x: 0, y: 0, width: 34, height: 34)
+							button.layer.cornerRadius = button.bounds.width / 2
+							button.setImage(icon, for: .normal)
+							button.layer.borderColor = UIColor.white.cgColor
+							button.layer.borderWidth = 2.0
+						} else {
+							// text button
+							button.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
+							button.layer.cornerRadius = 5
+							button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+							button.titleLabel?.textColor = UIColor.white
+							button.titleLabel?.textAlignment = .center
+							button.setTitle(marker.buttonLabel, for: .normal)
+						}
+					}
 					button.addTarget(
 						self,
 						action: #selector(self.mapMarkerButtonPress(_:)),
 						for: .touchUpInside)
-					button.layer.backgroundColor = UIColor.blue.cgColor
-					button.layer.borderColor = UIColor.white.cgColor
-					if let icon = marker.buttonIcon {
-						// icon button
-						button.bounds = CGRect(x: 0, y: 0, width: 34, height: 34)
-						button.layer.cornerRadius = button.bounds.width / 2
-						button.setImage(icon, for: .normal)
-						button.layer.borderColor = UIColor.white.cgColor
-						button.layer.borderWidth = 2.0
-					} else {
-						// text button
-						button.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
-						button.layer.cornerRadius = 5
-						button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
-						button.titleLabel?.textColor = UIColor.white
-						button.titleLabel?.textAlignment = .center
-						button.setTitle(marker.buttonLabel, for: .normal)
-					}
 					button.tag = marker.buttonId
 					self.addSubview(button)
 					self.buttonForButtonId[marker.buttonId] = button
@@ -2412,11 +2417,14 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					if pos.x.isInfinite || pos.y.isInfinite {
 						return
 					}
-
-					var rc = button.bounds
-					rc = rc.offsetBy(dx: pos.x - rc.size.width / 2,
-					                 dy: pos.y - rc.size.height / 2)
-					button.frame = rc
+					if let button = button as? MapMarkerButton {
+						button.arrowPoint = pos
+					} else {
+						var rc = button.bounds
+						rc = rc.offsetBy(dx: pos.x - rc.size.width / 2,
+										 dy: pos.y - rc.size.height / 2)
+						button.frame = rc
+					}
 				}
 			}
 		})

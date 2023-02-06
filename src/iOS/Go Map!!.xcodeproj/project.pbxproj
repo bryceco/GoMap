@@ -114,6 +114,7 @@
 		02CE3CE32990A2C800DDACE0 /* QuestEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02CB523D299097C3007F758D /* QuestEditor.storyboard */; };
 		02CE3CE52990A8CE00DDACE0 /* QuestSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE3CE42990A8CE00DDACE0 /* QuestSelectionController.swift */; };
 		02CE3CE7299187C100DDACE0 /* TelephoneToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE3CE6299187C100DDACE0 /* TelephoneToolbar.swift */; };
+		02CE3CE929919FC400DDACE0 /* MapMarkerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE3CE829919FC400DDACE0 /* MapMarkerButton.swift */; };
 		02D5B5F3248F154D00FEE448 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D5B5F2248F154D00FEE448 /* Colors.swift */; };
 		02D6238226A6628300A4F147 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D6238126A6628300A4F147 /* ShareViewController.swift */; };
 		02D6238526A6628300A4F147 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02D6238326A6628300A4F147 /* MainInterface.storyboard */; };
@@ -525,6 +526,7 @@
 		02CD9973265C65C200213AD6 /* EditorFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorFilters.swift; sourceTree = "<group>"; };
 		02CE3CE42990A8CE00DDACE0 /* QuestSelectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestSelectionController.swift; sourceTree = "<group>"; };
 		02CE3CE6299187C100DDACE0 /* TelephoneToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelephoneToolbar.swift; sourceTree = "<group>"; };
+		02CE3CE829919FC400DDACE0 /* MapMarkerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerButton.swift; sourceTree = "<group>"; };
 		02D002CB279D15C600B38E7C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		02D002CC279D15C600B38E7C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		02D2D1182724B20F003654A8 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/DirectionViewController.strings"; sourceTree = "<group>"; };
@@ -953,6 +955,7 @@
 				C3FA925626416BF5000A2A99 /* GpxLayer.swift */,
 				C3D096D4263EACFF00E3B129 /* LocationBallLayer.swift */,
 				02B5669C294F9D7E00710632 /* MagnifyingGlass.swift */,
+				02CE3CE829919FC400DDACE0 /* MapMarkerButton.swift */,
 				C381C30A263FE518003142BA /* PushPinView.swift */,
 				0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */,
 				C3D096B5263DF82F00E3B129 /* RulerView.swift */,
@@ -1499,6 +1502,7 @@
 				02EDBF6926535BB700B7072E /* OsmWay.swift in Sources */,
 				ED56E5C426027A50000B368C /* CustomPresetController.swift in Sources */,
 				02A123EE264CBBE5005638C1 /* DisplayLink.swift in Sources */,
+				02CE3CE929919FC400DDACE0 /* MapMarkerButton.swift in Sources */,
 				EDDBA55326130287001E7D5C /* GpxViewController.swift in Sources */,
 				021FADBB258591D000F6E1C0 /* PresetKey.swift in Sources */,
 				C381C30B263FE518003142BA /* PushPinView.swift in Sources */,

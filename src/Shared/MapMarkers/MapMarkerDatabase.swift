@@ -171,7 +171,6 @@ final class MapMarkerDatabase {
 		})
 		workQueue.addOperation({ [self] in
 			DispatchQueue.main.async {
-				print("update")
 				self.updateMarkers(forRegion: bbox, mapData: mapData, including: including, completion: completion)
 			}
 		})
