@@ -13,7 +13,7 @@ final class MapMarkerButton: UIButton {
 	let radius = 12.0 // radius of ciruclar part
 	let height = 24.0 // distance from center of circle to bottom vertex
 
-	init() {
+	init(withIcon icon: UIImage) {
 		arrowPoint = CGPoint.zero
 
 		super.init(frame: CGRect.zero)
@@ -28,10 +28,15 @@ final class MapMarkerButton: UIButton {
 		path.close()
 
 		let shapeLayer = CAShapeLayer()
-		shapeLayer.fillColor = UIColor.blue.cgColor
-		shapeLayer.strokeColor = UIColor.white.cgColor
+		shapeLayer.fillColor = UIColor.clear.cgColor
+		shapeLayer.strokeColor = UIColor.blue.cgColor
 		shapeLayer.borderWidth = 2.0
 		shapeLayer.path = path.cgPath
+
+		let iconLayer = CALayer()
+		iconLayer.contents = icon.cgImage
+		shapeLayer.addSublayer(iconLayer)
+		iconLayer.frame = CGRect(x: 1, y: 1, width: 2*radius-2, height: 2*radius-2)
 
 		layer.addSublayer(shapeLayer)
 	}

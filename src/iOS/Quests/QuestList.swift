@@ -92,7 +92,7 @@ class QuestList {
 			ident: "BuildingType",
 			title: "Add Building Type",
 			tagKey: "building",
-			icon: nil,
+			icon: UIImage(named: "ic_quest_building")!,
 			filter: {
 				$0.tags["building"] == "yes"
 			})
@@ -100,7 +100,7 @@ class QuestList {
 			ident: "SidewalkSurface",
 			title: "Add Sidewalk Surface",
 			tagKey: "surface",
-			icon: nil,
+			icon: UIImage(named: "ic_quest_sidewalk")!,
 			filter: {
 				if let tags = ($0 as? OsmWay)?.tags,
 				   tags["highway"] == "footway",
@@ -127,7 +127,7 @@ class QuestList {
 			ident: "TelephoneNumber",
 			title: "Add Telephone Number",
 			tagKey: "phone",
-			icon: nil,
+			icon: UIImage(named: "ic_quest_check_shop")!,
 			filter: { Self.isShop($0) &&
 				$0.tags["phone"] ==
 				nil && $0.tags["contact:phone"] == nil

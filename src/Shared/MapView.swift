@@ -2375,7 +2375,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				if self.buttonForButtonId[marker.buttonId] == nil {
 					let button: UIButton
 					if marker is QuestMarker {
-						button = MapMarkerButton()
+						button = MapMarkerButton(withIcon: marker.buttonIcon!)
 					} else {
 						button = UIButton(type: .custom)
 						button.layer.backgroundColor = UIColor.blue.cgColor
