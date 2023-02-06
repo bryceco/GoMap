@@ -2350,18 +2350,18 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			guard
 				self.viewOverlayMask.contains(.NOTES) || self.viewOverlayMask.contains(.QUESTS)
 			else {
-				// not displaying any notes at this time
-				self.mapMarkerDatabase.enumerateMapMarkers({ [self] marker in
+				// not displaying any markers at this time
+				for marker: MapMarker in self.mapMarkerDatabase.allMapMarkers {
 					if let button = self.buttonForButtonId[marker.buttonId] {
 						button.removeFromSuperview()
 						self.buttonForButtonId.removeValue(forKey: marker.buttonId)
 					}
-				})
+				}
 				self.mapMarkerDatabase.removeAll()
 				return
 			}
 
-			self.mapMarkerDatabase.enumerateMapMarkers({ [self] marker in
+			for marker in self.mapMarkerDatabase.allMapMarkers {
 				// hide unwanted keep right buttons
 				if let marker = marker as? KeepRightMarker,
 				   marker.isIgnored()
@@ -2418,7 +2418,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					                 dy: pos.y - rc.size.height / 2)
 					button.frame = rc
 				}
-			})
+			}
 		})
 	}
 

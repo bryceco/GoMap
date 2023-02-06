@@ -20,6 +20,8 @@ final class MapMarkerDatabase: NSObject {
 		workQueue.maxConcurrentOperationCount = 1
 	}
 
+	var allMapMarkers: AnySequence<MapMarker> { AnySequence( markerForButtonId.values ) }
+
 	func removeAll() {
 		workQueue.cancelAllOperations()
 		markerForButtonId.removeAll()
@@ -174,12 +176,6 @@ final class MapMarkerDatabase: NSObject {
 				self.updateMarkers(forRegion: bbox, mapData: mapData, including: including, completion: completion)
 			}
 		})
-	}
-
-	func enumerateMapMarkers(_ callback: (_ marker: MapMarker) -> Void) {
-		for marker in markerForButtonId.values {
-			callback(marker)
-		}
 	}
 
 	func update(
