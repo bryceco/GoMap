@@ -10,7 +10,7 @@ import UIKit
 
 class QuestTextEntryCell: UITableViewCell {
 	@IBOutlet var textField: UITextField?
-	var didChange: ((Bool) -> Void)?
+	var didChange: ((String) -> Void)?
 
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
@@ -21,12 +21,7 @@ class QuestTextEntryCell: UITableViewCell {
 	}
 
 	@objc func textFieldChanged(_ sender: Any?) {
-		// need at least some number of digits
-		let okay = (textField?.text ?? "")
-			.unicodeScalars
-			.compactMap({ CharacterSet.decimalDigits.contains($0) ? true : nil })
-			.count > 5
-		didChange?(okay)
+		didChange?(textField?.text ?? "")
 	}
 }
 
@@ -208,7 +203,8 @@ class QuestEditorController: UITableViewController {
 				textField.inputAccessoryView = TelephoneToolbar(forTextField: textField,
 				                                                frame: view.frame)
 			}
-			cell.didChange = { okay in
+			cell.didChange = { text in
+				let okay = self.quest.accepts(tagValue: text)
 				self.navigationItem.rightBarButtonItem?.isEnabled = okay
 			}
 			return cell

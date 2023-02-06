@@ -14,9 +14,10 @@ protocol QuestProtocol {
 	var tagKey: String { get }
 	var icon: UIImage? { get }
 	func appliesTo(_ object: OsmBaseObject) -> Bool
+	func accepts(tagValue: String) -> Bool
 }
 
-class QuestHighwaySurface: QuestProtocol {
+struct QuestHighwaySurface: QuestProtocol {
 	var ident: String { "QuestHighwaySurface" }
 	var title: String { "Highway surface" }
 	var tagKey: String { "surface" }
@@ -31,11 +32,15 @@ class QuestHighwaySurface: QuestProtocol {
 		}
 		return false
 	}
+
+	func accepts(tagValue: String) -> Bool {
+		return !tagValue.isEmpty
+	}
 }
 
 typealias QuestElementFilter = (OsmBaseObject) -> Bool
 
-class QuestDefinition: QuestProtocol {
+struct QuestDefinition: QuestProtocol {
 	let ident: String // Uniquely identify the quest
 	let title: String // This provides additional instructions on what action to take
 	let tagKey: String // This is the key that is being updated
@@ -44,13 +49,23 @@ class QuestDefinition: QuestProtocol {
 		return filter(object)
 	}
 
+	func accepts(tagValue: String) -> Bool {
+		return accepts(tagValue)
+	}
+
 	private let filter: QuestElementFilter
-	init(ident: String, title: String, tagKey: String, icon: UIImage?, filter: @escaping QuestElementFilter) {
+	private let accepts: (String) -> Bool
+
+	init(ident: String, title: String, tagKey: String, icon: UIImage,
+	     filter: @escaping QuestElementFilter,
+	     accepts: ((String) -> Bool)? = nil)
+	{
 		self.ident = ident
 		self.title = title
 		self.tagKey = tagKey
 		self.icon = icon
 		self.filter = filter
+		self.accepts = accepts ?? { _ in true }
 	}
 }
 
@@ -96,6 +111,7 @@ class QuestList {
 			filter: {
 				$0.tags["building"] == "yes"
 			})
+
 		let addSidewalkSurface = QuestDefinition(
 			ident: "SidewalkSurface",
 			title: "Add Sidewalk Surface",
@@ -111,18 +127,23 @@ class QuestList {
 				}
 				return false
 			})
+
+#if false
 		let addAddressNumber = QuestDefinition(
 			ident: "AddressNumber",
 			title: "Add Address Number",
 			tagKey: "addr:housenumber",
-			icon: nil,
+			icon: UIImage(named: "")!,
 			filter: { Self.isShop($0) && $0.tags["addr:housenumber"] == nil })
+
 		let addAddressStreet = QuestDefinition(
 			ident: "AddressStreet",
 			title: "Add Address Street",
 			tagKey: "addr:street",
-			icon: nil,
+			icon: UIImage(named: "")!,
 			filter: { Self.isShop($0) && $0.tags["addr:street"] == nil })
+#endif
+
 		let addPhoneNumber = QuestDefinition(
 			ident: "TelephoneNumber",
 			title: "Add Telephone Number",
@@ -131,6 +152,14 @@ class QuestList {
 			filter: { Self.isShop($0) &&
 				$0.tags["phone"] ==
 				nil && $0.tags["contact:phone"] == nil
+			},
+			accepts: { text in
+				// need at least some number of digits
+				let okay = text
+					.unicodeScalars
+					.compactMap({ CharacterSet.decimalDigits.contains($0) ? true : nil })
+					.count > 5
+				return okay
 			})
 
 		list = [
