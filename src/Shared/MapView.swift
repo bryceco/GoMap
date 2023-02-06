@@ -2330,97 +2330,94 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	func refreshMapMarkerButtonsFromDatabase() {
-		DispatchQueue.main.async(execute: { [self] in
-			// need this to disable implicit animation
-
-			UIView.performWithoutAnimation({ [self] in
-				// if a button is no longer in the notes database then it got resolved and can go away
-				var remove: [Int] = []
-				for tag in self.buttonForButtonId.keys {
-					if self.mapMarkerDatabase.mapMarker(forTag: tag) == nil {
-						remove.append(tag)
-					}
+		// need this to disable implicit animation
+		UIView.performWithoutAnimation({ [self] in
+			// if a button is no longer in the notes database then it got resolved and can go away
+			var remove: [Int] = []
+			for tag in self.buttonForButtonId.keys {
+				if self.mapMarkerDatabase.mapMarker(forTag: tag) == nil {
+					remove.append(tag)
 				}
-				for tag in remove {
-					if let button = self.buttonForButtonId[tag] {
-						self.buttonForButtonId.removeValue(forKey: tag)
+			}
+			for tag in remove {
+				if let button = self.buttonForButtonId[tag] {
+					self.buttonForButtonId.removeValue(forKey: tag)
+					button.removeFromSuperview()
+				}
+			}
+
+			// update new and existing buttons
+			guard
+				self.viewOverlayMask.contains(.NOTES) || self.viewOverlayMask.contains(.QUESTS)
+			else {
+				// not displaying any notes at this time
+				self.mapMarkerDatabase.enumerateMapMarkers({ [self] marker in
+					if let button = self.buttonForButtonId[marker.buttonId] {
+						button.removeFromSuperview()
+						self.buttonForButtonId.removeValue(forKey: marker.buttonId)
+					}
+				})
+				self.mapMarkerDatabase.removeAll()
+				return
+			}
+
+			self.mapMarkerDatabase.enumerateMapMarkers({ [self] note in
+				// hide unwanted keep right buttons
+				if let note = note as? KeepRightMarker,
+				   note.isIgnored()
+				{
+					if let button = self.buttonForButtonId[note.buttonId] {
 						button.removeFromSuperview()
 					}
-				}
-
-				// update new and existing buttons
-				guard
-					self.viewOverlayMask.contains(.NOTES) || self.viewOverlayMask.contains(.QUESTS)
-				else {
-					// not displaying any notes at this time
-					self.mapMarkerDatabase.enumerateMapMarkers({ [self] marker in
-						if let button = self.buttonForButtonId[marker.buttonId] {
-							button.removeFromSuperview()
-							self.buttonForButtonId.removeValue(forKey: marker.buttonId)
-						}
-					})
-					self.mapMarkerDatabase.removeAll()
 					return
 				}
 
-				self.mapMarkerDatabase.enumerateMapMarkers({ [self] note in
-					// hide unwanted keep right buttons
-					if let note = note as? KeepRightMarker,
-					   note.isIgnored()
-					{
-						if let button = self.buttonForButtonId[note.buttonId] {
-							button.removeFromSuperview()
-						}
+				if self.buttonForButtonId[note.buttonId] == nil {
+					let button = UIButton(type: .custom)
+					button.addTarget(
+						self,
+						action: #selector(self.mapMarkerButtonPress(_:)),
+						for: .touchUpInside)
+					button.layer.backgroundColor = UIColor.blue.cgColor
+					button.layer.borderColor = UIColor.white.cgColor
+					if let icon = note.buttonIcon {
+						// icon button
+						button.bounds = CGRect(x: 0, y: 0, width: 34, height: 34)
+						button.layer.cornerRadius = button.bounds.width / 2
+						button.setImage(icon, for: .normal)
+						button.layer.borderColor = UIColor.white.cgColor
+						button.layer.borderWidth = 2.0
+					} else {
+						// text button
+						button.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
+						button.layer.cornerRadius = 5
+						button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+						button.titleLabel?.textColor = UIColor.white
+						button.titleLabel?.textAlignment = .center
+						button.setTitle(note.buttonLabel, for: .normal)
+					}
+					button.tag = note.buttonId
+					self.addSubview(button)
+					self.buttonForButtonId[note.buttonId] = button
+				}
+				let button = self.buttonForButtonId[note.buttonId]!
+
+				if note.shouldHide() {
+					button.removeFromSuperview()
+				} else {
+					let offsetX = (note is KeepRightMarker) || (note is FixmeMarker) ? 0.00001 : 0.0
+					let pos = self.mapTransform.screenPoint(
+						forLatLon: LatLon(latitude: note.lat, longitude: note.lon + offsetX),
+						birdsEye: true)
+					if pos.x.isInfinite || pos.y.isInfinite {
 						return
 					}
 
-					if self.buttonForButtonId[note.buttonId] == nil {
-						let button = UIButton(type: .custom)
-						button.addTarget(
-							self,
-							action: #selector(self.mapMarkerButtonPress(_:)),
-							for: .touchUpInside)
-						button.layer.backgroundColor = UIColor.blue.cgColor
-						button.layer.borderColor = UIColor.white.cgColor
-						if let icon = note.buttonIcon {
-							// icon button
-							button.bounds = CGRect(x: 0, y: 0, width: 34, height: 34)
-							button.layer.cornerRadius = button.bounds.width / 2
-							button.setImage(icon, for: .normal)
-							button.layer.borderColor = UIColor.white.cgColor
-							button.layer.borderWidth = 2.0
-						} else {
-							// text button
-							button.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
-							button.layer.cornerRadius = 5
-							button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
-							button.titleLabel?.textColor = UIColor.white
-							button.titleLabel?.textAlignment = .center
-							button.setTitle(note.buttonLabel, for: .normal)
-						}
-						button.tag = note.buttonId
-						self.addSubview(button)
-						self.buttonForButtonId[note.buttonId] = button
-					}
-					let button = self.buttonForButtonId[note.buttonId]!
-
-					if note.shouldHide() {
-						button.removeFromSuperview()
-					} else {
-						let offsetX = (note is KeepRightMarker) || (note is FixmeMarker) ? 0.00001 : 0.0
-						let pos = self.mapTransform.screenPoint(
-							forLatLon: LatLon(latitude: note.lat, longitude: note.lon + offsetX),
-							birdsEye: true)
-						if pos.x.isInfinite || pos.y.isInfinite {
-							return
-						}
-
-						var rc = button.bounds
-						rc = rc.offsetBy(dx: pos.x - rc.size.width / 2,
-						                 dy: pos.y - rc.size.height / 2)
-						button.frame = rc
-					}
-				})
+					var rc = button.bounds
+					rc = rc.offsetBy(dx: pos.x - rc.size.width / 2,
+					                 dy: pos.y - rc.size.height / 2)
+					button.frame = rc
+				}
 			})
 		})
 	}

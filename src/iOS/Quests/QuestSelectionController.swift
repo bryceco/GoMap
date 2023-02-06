@@ -20,7 +20,6 @@ class QuestSelectionTableCell: UITableViewCell {
 }
 
 class QuestSelectionController: UITableViewController {
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		navigationItem.rightBarButtonItem?.isEnabled = false

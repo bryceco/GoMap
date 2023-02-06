@@ -147,6 +147,7 @@ class QuestList {
 		let prefs = UserDefaults.standard.object(forKey: "QuestTypeEnabledDict")
 		return prefs as? [String: Bool] ?? [:]
 	}
+
 	func savePrefs() {
 		UserDefaults.standard.set(enabled, forKey: "QuestTypeEnabledDict")
 	}
