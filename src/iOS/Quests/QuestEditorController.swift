@@ -71,15 +71,16 @@ class QuestEditorController: UITableViewController {
 		}
 	}
 
-	func refreshPresetKey() {
+	func refreshPresetKey() -> Bool {
 		let presets = PresetsForFeature(
 			withFeature: presetFeature,
 			objectTags: object.tags,
 			geometry: object.geometry(),
 			update: {
-				self.refreshPresetKey()
-				self.tableView.reloadData()
-				self.setFirstResponder()
+				if self.refreshPresetKey() {
+					self.tableView.reloadData()
+					self.setFirstResponder()
+				}
 			})
 
 		for section in presets.sectionList {
@@ -87,13 +88,18 @@ class QuestEditorController: UITableViewController {
 				let list = Self.presetsForGroup(g)
 				for preset in list {
 					if preset.tagKey == quest.tagKey {
-						presetKey = preset
-						self.tableView.separatorColor = presetKey?.presetList?.count == nil ? .clear : nil
-						return
+						if presetKey == preset {
+							return false	// no change
+						} else {
+							presetKey = preset
+							self.tableView.separatorColor = presetKey?.presetList?.count == nil ? .clear : nil
+							return true
+						}
 					}
 				}
 			}
 		}
+		return false
 	}
 
 	public class func instantiate(quest: QuestProtocol, object: OsmBaseObject,
@@ -112,7 +118,7 @@ class QuestEditorController: UITableViewController {
 			geometry: object.geometry(),
 			location: AppDelegate.shared.mapView.currentRegion,
 			includeNSI: false)
-		vc.refreshPresetKey()
+		_ = vc.refreshPresetKey()
 		return vc2
 	}
 
