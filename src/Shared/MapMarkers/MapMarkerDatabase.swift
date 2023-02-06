@@ -9,14 +9,13 @@
 import CoreGraphics
 import Foundation
 
-final class MapMarkerDatabase: NSObject {
+final class MapMarkerDatabase {
 	private let workQueue = OperationQueue()
 	private var markerForButtonId: [Int: MapMarker] = [:] // return the marker with the given button tag (tagId)
 	private var buttonIdForMarkerIdentifier: [String: Int] = [:] // map the marker key (unique string) to a tag
 	weak var mapData: OsmMapData!
 
-	override init() {
-		super.init()
+	init() {
 		workQueue.maxConcurrentOperationCount = 1
 	}
 
