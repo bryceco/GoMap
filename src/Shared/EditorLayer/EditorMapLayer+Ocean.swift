@@ -463,8 +463,6 @@ extension EditorMapLayer {
 			}
 		})
 
-		let haveCoastline = visibleSegments.contains(where: { $0.coastType == .landOnLeft })
-
 		// get list of all external points
 		var pointSet: Set<CGPoint> = []
 		var entryDict: [CGPoint: Coastline<CGPoint>] = [:]

@@ -11,8 +11,8 @@ import Foundation
 
 final class MapMarkerDatabase: NSObject {
 	private let workQueue = OperationQueue()
-	private var markerForTag: [Int: MapMarker] = [:] // return the note with the given button tag (tagId)
-	private var tagForKey: [String: Int] = [:]
+	private var markerForTag: [Int: MapMarker] = [:] // return the marker with the given button tag (tagId)
+	private var tagForKey: [String: Int] = [:] // map the marker key (unique string) to a tag
 	weak var mapData: OsmMapData!
 
 	override init() {
@@ -20,7 +20,7 @@ final class MapMarkerDatabase: NSObject {
 		workQueue.maxConcurrentOperationCount = 1
 	}
 
-	func reset() {
+	func removeAll() {
 		workQueue.cancelAllOperations()
 		markerForTag.removeAll()
 		tagForKey.removeAll()
@@ -28,18 +28,18 @@ final class MapMarkerDatabase: NSObject {
 
 	/// This is called when we download a new note. If it is an update to an existing note then
 	/// we need to delete the reference to the previous tag, so the button can be replaced.
-	func addOrUpdate(_ newNote: MapMarker) {
-		let key = newNote.key
-		let newTag = newNote.buttonId
+	func addOrUpdate(_ newMarker: MapMarker) {
+		let key = newMarker.key
+		let newTag = newMarker.buttonId
 		if let oldTag = tagForKey[key] {
 			// remove any existing tag with the same key
 			markerForTag.removeValue(forKey: oldTag)
 		}
 		tagForKey[key] = newTag
-		markerForTag[newTag] = newNote
+		markerForTag[newTag] = newMarker
 	}
 
-	func updateMarkers(forRegion box: OSMRect, fixmeData mapData: OsmMapData, completion: @escaping () -> Void) {
+	func updateNoteMarkers(forRegion box: OSMRect, completion: @escaping () -> Void) {
 		let url = OSM_API_URL +
 			"api/0.6/notes?closed=0&bbox=\(box.origin.x),\(box.origin.y),\(box.origin.x + box.size.width),\(box.origin.y + box.size.height)"
 		if let url1 = URL(string: url) {
@@ -65,18 +65,29 @@ final class MapMarkerDatabase: NSObject {
 						addOrUpdate(note)
 					}
 
-					// add from FIXME=yes tags
-					mapData.enumerateObjects(inRegion: box, block: { [self] obj in
-						if let fixme = FixmeMarker.fixmeTag(obj) {
-							let marker = FixmeMarker(object: obj, text: fixme)
-							self.addOrUpdate(marker)
-						}
-					})
-
 					completion()
 				})
 			})
 		}
+	}
+
+	// add from FIXME=yes tags
+	func updateFixmeMarkers(forRegion box: OSMRect, mapData: OsmMapData) {
+		mapData.enumerateObjects(inRegion: box, block: { [self] obj in
+			if let fixme = FixmeMarker.fixmeTag(obj) {
+				let marker = FixmeMarker(object: obj, text: fixme)
+				self.addOrUpdate(marker)
+			}
+		})
+	}
+
+	func updateQuestMarkers(forRegion box: OSMRect, mapData: OsmMapData) {
+		mapData.enumerateObjects(inRegion: box, block: { obj in
+			for quest in QuestList.shared.questsForObject(obj) {
+				let marker = QuestMarker(object: obj, quest: quest)
+				self.addOrUpdate(marker)
+			}
+		})
 	}
 
 	func updateGpxWaypoints() {
@@ -116,10 +127,41 @@ final class MapMarkerDatabase: NSObject {
 		})
 	}
 
+	struct MapMarkerSet: OptionSet {
+		let rawValue: Int
+		static let notes = MapMarkerSet(rawValue: 1 << 0)
+		static let fixme = MapMarkerSet(rawValue: 1 << 1)
+		static let quest = MapMarkerSet(rawValue: 1 << 2)
+		static let gpx = MapMarkerSet(rawValue: 1 << 3)
+	}
+
+	func updateMarkers(
+		forRegion box: OSMRect,
+		mapData: OsmMapData,
+		including: MapMarkerSet,
+		completion: @escaping () -> Void)
+	{
+		if including.contains(.fixme) {
+			updateFixmeMarkers(forRegion: box, mapData: mapData)
+		}
+		if including.contains(.quest) {
+			updateQuestMarkers(forRegion: box, mapData: mapData)
+		}
+		if including.contains(.gpx) {
+			updateGpxWaypoints()
+		}
+		if including.contains(.notes) {
+			updateNoteMarkers(forRegion: box, completion: completion)
+		} else {
+			completion()
+		}
+	}
+
 	func updateRegion(
 		_ bbox: OSMRect,
 		withDelay delay: CGFloat,
-		fixmeData mapData: OsmMapData,
+		mapData: OsmMapData,
+		including: MapMarkerSet,
 		completion: @escaping () -> Void)
 	{
 		workQueue.cancelAllOperations()
@@ -127,21 +169,17 @@ final class MapMarkerDatabase: NSObject {
 			usleep(UInt32(1000 * (delay + 0.25)))
 		})
 		workQueue.addOperation({ [self] in
-			updateMarkers(forRegion: bbox, fixmeData: mapData, completion: completion)
-			updateGpxWaypoints()
-#if false
-			updateKeepRight(forRegion: bbox, mapData: mapData, completion: completion)
-#endif
+			updateMarkers(forRegion: bbox, mapData: mapData, including: including, completion: completion)
 		})
 	}
 
 	func enumerateMapMarkers(_ callback: (_ note: MapMarker) -> Void) {
-		for marker in markerForTag.values {
-			callback(marker)
+		for note in markerForTag.values {
+			callback(note)
 		}
 	}
 
-	func updateNote(
+	func update(
 		note: OsmNoteMarker,
 		close: Bool,
 		comment: String,

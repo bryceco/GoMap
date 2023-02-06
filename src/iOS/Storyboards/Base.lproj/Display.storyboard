@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21503.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21501.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -269,7 +269,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Automatic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dIe-MC-t44">
-                                                    <rect key="frame" x="16" y="12" width="325" height="20.5"/>
+                                                    <rect key="frame" x="16" y="11.5" width="325" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -668,7 +668,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="URL" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="swu-t3-p5w">
-                                                    <rect key="frame" x="23" y="12" width="33" height="20.5"/>
+                                                    <rect key="frame" x="23" y="11.5" width="33" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -701,7 +701,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Max Zoom" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="voF-Yf-33h">
-                                                    <rect key="frame" x="23" y="12" width="83" height="20.5"/>
+                                                    <rect key="frame" x="23" y="11.5" width="83" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -739,7 +739,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Projection" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5hB-2Y-Wgl">
-                                                    <rect key="frame" x="23" y="12" width="81" height="20.5"/>
+                                                    <rect key="frame" x="23" y="11.5" width="81" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1277,7 +1277,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aerial only" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOd-BB-zEq">
-                                                    <rect key="frame" x="16" y="12" width="83" height="20.5"/>
+                                                    <rect key="frame" x="16" y="11.5" width="83" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1356,7 +1356,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GPX Tracks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1f0-8q-yCi">
-                                                    <rect key="frame" x="16" y="12" width="91.5" height="20.5"/>
+                                                    <rect key="frame" x="16" y="11.5" width="91.5" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1387,21 +1387,21 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Rkj-Pf-H5s">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Rkj-Pf-H5s">
                                         <rect key="frame" x="0.0" y="415.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Rkj-Pf-H5s" id="dPO-Dt-hWP">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="383.5" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes and Fixmes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O0U-6M-7AT">
-                                                    <rect key="frame" x="15" y="12" width="141.5" height="20.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quests" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O0U-6M-7AT">
+                                                    <rect key="frame" x="15" y="11.5" width="56.5" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fC8-R7-fUP">
-                                                    <rect key="frame" x="335" y="6.5" width="51" height="31"/>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fC8-R7-fUP" userLabel="Quests Switch">
+                                                    <rect key="frame" x="316.5" y="6.5" width="51" height="31"/>
                                                 </switch>
                                             </subviews>
                                             <constraints>
@@ -1412,9 +1412,38 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                                 <constraint firstItem="fC8-R7-fUP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="O0U-6M-7AT" secondAttribute="trailing" constant="1" id="Vyt-Cl-L37"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="REI-FR-Yb0" kind="push" id="nfU-JA-UgS"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="XXd-fu-iuM">
+                                        <rect key="frame" x="0.0" y="459.5" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XXd-fu-iuM" id="EES-Rl-awj">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes and Fixmes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PSE-3C-cDx">
+                                                    <rect key="frame" x="15" y="11.5" width="141.5" height="21"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aVH-WM-e7u">
+                                                    <rect key="frame" x="335" y="6.5" width="51" height="31"/>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="aVH-WM-e7u" firstAttribute="centerY" secondItem="EES-Rl-awj" secondAttribute="centerY" id="A2a-xc-kt9"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="aVH-WM-e7u" secondAttribute="trailing" constant="10" id="Fjg-3Z-pCg"/>
+                                                <constraint firstItem="aVH-WM-e7u" firstAttribute="centerY" secondItem="PSE-3C-cDx" secondAttribute="centerY" id="ON1-bR-h8C"/>
+                                                <constraint firstItem="aVH-WM-e7u" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="PSE-3C-cDx" secondAttribute="trailing" constant="1" id="OSp-Jq-HXW"/>
+                                                <constraint firstItem="PSE-3C-cDx" firstAttribute="leading" secondItem="EES-Rl-awj" secondAttribute="leading" constant="15" id="qqp-fR-06N"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="cGq-6U-evk">
-                                        <rect key="frame" x="0.0" y="459.5" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="503.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cGq-6U-evk" id="AON-uS-Yvc">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -1424,7 +1453,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                                     <rect key="frame" x="335" y="6.5" width="51" height="31"/>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="500" text="OpenStreetMap GPS Traces" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMJ-yP-XJe">
-                                                    <rect key="frame" x="15" y="12" width="222" height="20.5"/>
+                                                    <rect key="frame" x="15" y="11.5" width="222" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1440,7 +1469,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="iJ9-QG-aZS">
-                                        <rect key="frame" x="0.0" y="503.5" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="547.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iJ9-QG-aZS" id="TJc-OL-gWP">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -1450,7 +1479,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                                     <rect key="frame" x="335" y="6.5" width="51" height="31"/>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Turn Restrictions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r6a-cT-Ufa">
-                                                    <rect key="frame" x="15" y="12" width="136" height="20.5"/>
+                                                    <rect key="frame" x="15" y="11.5" width="136" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1466,7 +1495,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="8y9-up-ght">
-                                        <rect key="frame" x="0.0" y="547.5" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="591.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8y9-up-ght" id="42b-hz-6KV">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -1476,7 +1505,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                                     <rect key="frame" x="335" y="6.5" width="51" height="31"/>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unnamed Roads" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZP1-qY-kXe">
-                                                    <rect key="frame" x="16" y="12" width="130.5" height="20.5"/>
+                                                    <rect key="frame" x="16" y="11.5" width="130.5" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1504,14 +1533,14 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                             <tableViewSection headerTitle="Filter Objects" id="scg-Po-M3L">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="aQI-EZ-rd6">
-                                        <rect key="frame" x="0.0" y="639.5" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="683.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aQI-EZ-rd6" id="pIi-Ie-btg">
                                             <rect key="frame" x="0.0" y="0.0" width="383.5" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Filters" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LxX-tl-ZLH">
-                                                    <rect key="frame" x="15" y="12" width="107" height="20.5"/>
+                                                    <rect key="frame" x="15" y="11.5" width="107" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1540,14 +1569,14 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                             <tableViewSection headerTitle="Interactions" id="RJU-Z2-QFh">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="WpQ-Uc-2gz">
-                                        <rect key="frame" x="0.0" y="731.5" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="775.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WpQ-Uc-2gz" id="LSM-B0-YI9">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Position + Button on " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eLW-GB-ugG">
-                                                    <rect key="frame" x="15" y="12" width="164.5" height="20.5"/>
+                                                    <rect key="frame" x="15" y="11.5" width="164.5" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1575,14 +1604,14 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="IqK-Jw-3YY">
-                                        <rect key="frame" x="0.0" y="775.5" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="819.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IqK-Jw-3YY" id="5R9-J2-ycr">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Rotation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VUR-wT-knn">
-                                                    <rect key="frame" x="15" y="12" width="124.5" height="20.5"/>
+                                                    <rect key="frame" x="15" y="11.5" width="124.5" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1620,8 +1649,9 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                         <outlet property="addButtonPosition" destination="el8-h8-H1F" id="gtU-mk-rXW"/>
                         <outlet property="gpsTraceSwitch" destination="hvT-hi-s8k" id="aav-pU-882"/>
                         <outlet property="gpxLoggingSwitch" destination="1jq-Mx-hmn" id="Xjp-YQ-1CM"/>
-                        <outlet property="notesSwitch" destination="fC8-R7-fUP" id="1ot-P9-Y8q"/>
+                        <outlet property="notesSwitch" destination="aVH-WM-e7u" id="xGS-hj-vN8"/>
                         <outlet property="objectFiltersSwitch" destination="sdA-WB-aRv" id="Gfo-Ch-zqZ"/>
+                        <outlet property="questsSwitch" destination="fC8-R7-fUP" id="X3O-2F-ZfH"/>
                         <outlet property="rotationSwitch" destination="H71-wV-6i5" id="ayi-ju-aO9"/>
                         <outlet property="turnRestrictionSwitch" destination="CPE-7e-MTX" id="OYA-e4-dd9"/>
                         <outlet property="unnamedRoadSwitch" destination="CUT-E6-72l" id="BE3-wk-4oS"/>
@@ -1630,6 +1660,66 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qfn-yi-XU8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-4116" y="558"/>
+        </scene>
+        <!--Quest Selection-->
+        <scene sceneID="mLR-da-eni">
+            <objects>
+                <tableViewController id="REI-FR-Yb0" userLabel="Quest Selection" customClass="QuestSelectionController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="54M-6j-Hqz">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="QuestSelectionTableCell" id="Jqx-2E-Fvw" customClass="QuestSelectionTableCell" customModule="Go_Map__" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="414" height="43"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Jqx-2E-Fvw" id="hdy-yO-LLj">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lOo-Bh-qGh" userLabel="Enable Quest">
+                                            <rect key="frame" x="345" y="6" width="51" height="31"/>
+                                            <connections>
+                                                <action selector="didSwitch:" destination="Jqx-2E-Fvw" eventType="valueChanged" id="pou-ag-Gsv"/>
+                                            </connections>
+                                        </switch>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="500" text="Add Sidewalk Surface" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cjq-BK-3eN">
+                                            <rect key="frame" x="20" y="11" width="174" height="21"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                            <size key="shadowOffset" width="0.0" height="0.0"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Placeholder - do not translate"/>
+                                            </attributedString>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="Cjq-BK-3eN" secondAttribute="bottom" constant="11" id="9Vz-kc-T36"/>
+                                        <constraint firstItem="lOo-Bh-qGh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Cjq-BK-3eN" secondAttribute="trailing" constant="8" symbolic="YES" id="Klt-hR-hXu"/>
+                                        <constraint firstItem="lOo-Bh-qGh" firstAttribute="centerY" secondItem="hdy-yO-LLj" secondAttribute="centerY" id="O5i-Tj-qNb"/>
+                                        <constraint firstItem="Cjq-BK-3eN" firstAttribute="top" secondItem="hdy-yO-LLj" secondAttribute="top" constant="11" id="V4r-OI-biv"/>
+                                        <constraint firstAttribute="trailing" secondItem="lOo-Bh-qGh" secondAttribute="trailing" constant="20" symbolic="YES" id="fOI-vd-W0X"/>
+                                        <constraint firstItem="Cjq-BK-3eN" firstAttribute="leading" secondItem="hdy-yO-LLj" secondAttribute="leading" constant="20" symbolic="YES" id="hSg-Sx-FGd"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="title" destination="Cjq-BK-3eN" id="2xl-fD-m1Z"/>
+                                    <outlet property="uiSwitch" destination="lOo-Bh-qGh" id="uZg-pO-Ye9"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="REI-FR-Yb0" id="pHe-eO-5xm"/>
+                            <outlet property="delegate" destination="REI-FR-Yb0" id="mGJ-0X-CfJ"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Select Quests" id="mNN-LL-gG7"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mfl-Yl-jcK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-742" y="1685"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

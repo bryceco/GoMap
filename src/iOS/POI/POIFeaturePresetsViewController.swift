@@ -297,15 +297,18 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		if drillDownGroup != nil {
 			return drillDownGroup?.name
 		}
-		if section == (allPresets?.sectionCount() ?? 0) {
+		guard let allPresets = allPresets else {
+			return nil
+		}
+		if section == allPresets.sectionCount() {
 			return nil // extra tags
 		}
-		if section > (allPresets?.sectionCount() ?? 0) {
+		if section > allPresets.sectionCount() {
 			return nil // customize button
 		}
 
-		let group = allPresets?.sectionAtIndex(section)
-		return group?.name
+		let group = allPresets.sectionList[section]
+		return group.name
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -426,7 +429,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 
 			if drillDownGroup == nil, indexPath.section == 0, indexPath.row == 0 {
 				// Feature type cell
-				let text = allPresets?.featureName() ?? ""
+				let text = allPresets?.featureName ?? ""
 				cell.valueField.text = text
 				cell.valueField.isEnabled = false
 				cell.isSet.backgroundColor = (selectedFeature?.addTags.count ?? 0) > 0 ? Self.isSetHighlight : nil

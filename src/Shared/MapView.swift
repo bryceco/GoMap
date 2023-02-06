@@ -28,6 +28,7 @@ struct MapViewOverlays: OptionSet {
 	static let GPSTRACE = MapViewOverlays(rawValue: 1 << 1)
 	static let NOTES = MapViewOverlays(rawValue: 1 << 2)
 	static let NONAME = MapViewOverlays(rawValue: 1 << 3)
+	static let QUESTS = MapViewOverlays(rawValue: 1 << 4)
 }
 
 enum GPS_STATE: Int {
@@ -800,7 +801,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			}
 
 			// get notes
-			updateMapMarkersFromServer(withDelay: 0)
+			updateMapMarkersFromServer(withDelay: 0, including: [])
 		}
 	}
 
@@ -1305,7 +1306,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		CATransaction.commit()
 
-		updateMapMarkersFromServer(withDelay: 0)
+		updateMapMarkersFromServer(withDelay: 0, including: [])
 
 		// enable/disable editing buttons based on visibility
 		mainViewController.updateUndoRedoButtonState()
@@ -2303,13 +2304,27 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	// MARK: Map Markers
 
-	func updateMapMarkersFromServer(withDelay delay: CGFloat) {
-		if viewOverlayMask.contains(.NOTES) {
-			let rc = screenLatLonRect()
-			mapMarkerDatabase.updateRegion(rc, withDelay: delay, fixmeData: editorLayer.mapData) { [self] in
-				refreshMapMarkerButtonsFromDatabase()
+	func updateMapMarkersFromServer(withDelay delay: CGFloat, including: MapMarkerDatabase.MapMarkerSet) {
+		var including = including
+		if including.isEmpty {
+			// compute the list
+			if viewOverlayMask.contains(.NOTES) {
+				including.insert(.notes)
+				including.insert(.fixme)
 			}
-		} else {
+			if viewOverlayMask.contains(.QUESTS) {
+				including.insert(.quest)
+			}
+			if displayGpxLogs {
+				including.insert(.gpx)
+			}
+		}
+
+		mapMarkerDatabase.updateRegion(screenLatLonRect(),
+		                               withDelay: delay,
+		                               mapData: editorLayer.mapData,
+		                               including: including)
+		{ [self] in
 			refreshMapMarkerButtonsFromDatabase()
 		}
 	}
@@ -2334,77 +2349,79 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				}
 
 				// update new and existing buttons
+				guard
+					self.viewOverlayMask.contains(.NOTES) || self.viewOverlayMask.contains(.QUESTS)
+				else {
+					// not displaying any notes at this time
+					self.mapMarkerDatabase.enumerateMapMarkers({ [self] marker in
+						if let button = self.buttonForButtonId[marker.buttonId] {
+							button.removeFromSuperview()
+							self.buttonForButtonId.removeValue(forKey: marker.buttonId)
+						}
+					})
+					self.mapMarkerDatabase.removeAll()
+					return
+				}
+
 				self.mapMarkerDatabase.enumerateMapMarkers({ [self] note in
-					if self.viewOverlayMask.contains(.NOTES) {
-						// hide unwanted keep right buttons
-						if let note = note as? KeepRightMarker,
-						   note.isIgnored()
-						{
-							if let button = self.buttonForButtonId[note.buttonId] {
-								button.removeFromSuperview()
-							}
+					// hide unwanted keep right buttons
+					if let note = note as? KeepRightMarker,
+					   note.isIgnored()
+					{
+						if let button = self.buttonForButtonId[note.buttonId] {
+							button.removeFromSuperview()
+						}
+						return
+					}
+
+					if self.buttonForButtonId[note.buttonId] == nil {
+						let button = UIButton(type: .custom)
+						button.addTarget(
+							self,
+							action: #selector(self.mapMarkerButtonPress(_:)),
+							for: .touchUpInside)
+						button.layer.backgroundColor = UIColor.blue.cgColor
+						button.layer.borderColor = UIColor.white.cgColor
+						if let icon = note.buttonIcon {
+							// icon button
+							button.bounds = CGRect(x: 0, y: 0, width: 34, height: 34)
+							button.layer.cornerRadius = button.bounds.width / 2
+							button.setImage(icon, for: .normal)
+							button.layer.borderColor = UIColor.white.cgColor
+							button.layer.borderWidth = 2.0
+						} else {
+							// text button
+							button.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
+							button.layer.cornerRadius = 5
+							button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+							button.titleLabel?.textColor = UIColor.white
+							button.titleLabel?.textAlignment = .center
+							button.setTitle(note.buttonLabel, for: .normal)
+						}
+						button.tag = note.buttonId
+						self.addSubview(button)
+						self.buttonForButtonId[note.buttonId] = button
+					}
+					let button = self.buttonForButtonId[note.buttonId]!
+
+					if note.shouldHide() {
+						button.removeFromSuperview()
+					} else {
+						let offsetX = (note is KeepRightMarker) || (note is FixmeMarker) ? 0.00001 : 0.0
+						let pos = self.mapTransform.screenPoint(
+							forLatLon: LatLon(latitude: note.lat, longitude: note.lon + offsetX),
+							birdsEye: true)
+						if pos.x.isInfinite || pos.y.isInfinite {
 							return
 						}
 
-						if self.buttonForButtonId[note.buttonId] == nil {
-							let button = UIButton(type: .custom)
-							button.addTarget(
-								self,
-								action: #selector(self.mapMarkerButtonPress(_:)),
-								for: .touchUpInside)
-							button.layer.backgroundColor = UIColor.blue.cgColor
-							button.layer.borderColor = UIColor.white.cgColor
-							if let icon = note.buttonIcon {
-								// icon button
-								button.bounds = CGRect(x: 0, y: 0, width: 34, height: 34)
-								button.layer.cornerRadius = button.bounds.width / 2
-								button.setImage(icon, for: .normal)
-								button.layer.borderColor = UIColor.white.cgColor
-								button.layer.borderWidth = 2.0
-							} else {
-								// text button
-								button.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
-								button.layer.cornerRadius = 5
-								button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
-								button.titleLabel?.textColor = UIColor.white
-								button.titleLabel?.textAlignment = .center
-								button.setTitle(note.buttonLabel, for: .normal)
-							}
-							button.tag = note.buttonId
-							self.addSubview(button)
-							self.buttonForButtonId[note.buttonId] = button
-						}
-						let button = self.buttonForButtonId[note.buttonId]!
-
-						if note.shouldHide() {
-							button.removeFromSuperview()
-						} else {
-							let offsetX = (note is KeepRightMarker) || (note is FixmeMarker) ? 0.00001 : 0.0
-							let pos = self.mapTransform.screenPoint(
-								forLatLon: LatLon(latitude: note.lat, longitude: note.lon + offsetX),
-								birdsEye: true)
-							if pos.x.isInfinite || pos.y.isInfinite {
-								return
-							}
-
-							var rc = button.bounds
-							rc = rc.offsetBy(dx: pos.x - rc.size.width / 2,
-							                 dy: pos.y - rc.size.height / 2)
-							button.frame = rc
-						}
-					} else {
-						// not displaying any notes at this time
-						if let button = self.buttonForButtonId[note.buttonId] {
-							button.removeFromSuperview()
-							self.buttonForButtonId.removeValue(forKey: note.buttonId)
-						}
+						var rc = button.bounds
+						rc = rc.offsetBy(dx: pos.x - rc.size.width / 2,
+						                 dy: pos.y - rc.size.height / 2)
+						button.frame = rc
 					}
 				})
 			})
-
-			if !viewOverlayMask.contains(.NOTES) {
-				mapMarkerDatabase.reset()
-			}
 		})
 	}
 
@@ -2418,6 +2435,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			object = editorLayer.mapData.object(withExtendedIdentifier: note.objectId)
 		} else if let note = marker as? FixmeMarker {
 			object = note.object
+		} else if let quest = marker as? QuestMarker {
+			object = quest.object
 		}
 
 		if !editorLayer.isHidden,
@@ -2469,13 +2488,26 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		} else if let object = object {
 			// Fixme marker or Quest marker
 			if !editorLayer.isHidden {
-				presentTagEditor(nil)
+				if let marker = marker as? QuestMarker {
+					let onClose = {
+						// Need to update the QuestMarker icon
+						self.updateMapMarkersFromServer(withDelay: 0.0, including: [.quest])
+					}
+					let vc = QuestEditorController.instantiate(quest: marker.quest,
+					                                           object: object,
+					                                           onClose: onClose)
+					mainViewController.present(vc, animated: true)
+				} else {
+					presentTagEditor(nil)
+				}
 			} else {
 				let text: String
 				if let fixme = marker as? FixmeMarker,
 				   let object = fixme.object
 				{
 					text = FixmeMarker.fixmeTag(object) ?? ""
+				} else if let quest = marker as? QuestMarker {
+					text = quest.quest.title
 				} else {
 					text = ""
 				}
@@ -2581,7 +2613,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					}
 				})
 			}
-			updateMapMarkersFromServer(withDelay: CGFloat(duration))
+			updateMapMarkersFromServer(withDelay: CGFloat(duration), including: [])
 		} else if pan.state == .failed {
 			DLog("pan gesture failed")
 		} else {
@@ -2616,7 +2648,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			adjustZoom(by: scale, aroundScreenPoint: zoomCenter)
 			prevousPinchScale = pinch.scale
 		case .ended:
-			updateMapMarkersFromServer(withDelay: 0)
+			updateMapMarkersFromServer(withDelay: 0, including: [])
 		default:
 			break
 		}
@@ -2634,7 +2666,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			let zoomCenter = centerPoint()
 			adjustZoom(by: scale, aroundScreenPoint: zoomCenter)
 		} else if tapAndDrag.state == .ended {
-			updateMapMarkersFromServer(withDelay: 0)
+			updateMapMarkersFromServer(withDelay: 0, including: [])
 		}
 	}
 
@@ -2721,7 +2753,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					gpsState = .LOCATION
 				}
 			case .ended:
-				updateMapMarkersFromServer(withDelay: 0)
+				updateMapMarkersFromServer(withDelay: 0, including: [])
 			default:
 				break // ignore
 			}

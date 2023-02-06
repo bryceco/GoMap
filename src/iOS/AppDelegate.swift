@@ -163,7 +163,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [self] in
 					do {
 						try mapView.gpxLayer.loadGPXData(data, center: true)
-						mapView.updateMapMarkersFromServer(withDelay: 0.1)
+						mapView.updateMapMarkersFromServer(withDelay: 0.1, including: [.gpx])
 					} catch {
 						displayGpxError(error)
 					}
@@ -210,7 +210,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 						case let .success(data):
 							do {
 								try mapView.gpxLayer.loadGPXData(data, center: true)
-								mapView.updateMapMarkersFromServer(withDelay: 0.1)
+								mapView.updateMapMarkersFromServer(withDelay: 0.1, including: [.gpx])
 							} catch {
 								displayGpxError(error)
 							}

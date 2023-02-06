@@ -11,12 +11,8 @@ import UIKit
 
 // All presets for a feature, for presentation in Common Tags table view
 final class PresetsForFeature {
-	var _featureName: String
-	var _sectionList: [PresetGroup]
-
-	func featureName() -> String {
-		return _featureName
-	}
+	let featureName: String
+	private(set) var sectionList: [PresetGroup]
 
 	private class func forEachPresetKeyInGroup(_ group: PresetKeyOrGroup, closure: (PresetKey) -> Void) {
 		switch group {
@@ -30,7 +26,7 @@ final class PresetsForFeature {
 	}
 
 	func forEachPresetKey(_ closure: (PresetKey) -> Void) {
-		for section in _sectionList {
+		for section in sectionList {
 			for g in section.presetKeys {
 				Self.forEachPresetKeyInGroup(g, closure: closure)
 			}
@@ -44,20 +40,16 @@ final class PresetsForFeature {
 	}
 
 	func sectionCount() -> Int {
-		return _sectionList.count
+		return sectionList.count
 	}
 
 	func tagsInSection(_ index: Int) -> Int {
-		let group = _sectionList[index]
+		let group = sectionList[index]
 		return group.presetKeys.count
 	}
 
-	func sectionAtIndex(_ index: Int) -> PresetGroup {
-		return _sectionList[index]
-	}
-
 	func presetAtSection(_ section: Int, row: Int) -> PresetKeyOrGroup {
-		let group = _sectionList[section]
+		let group = sectionList[section]
 		let tag = group.presetKeys[row]
 		return tag
 	}
@@ -114,16 +106,16 @@ final class PresetsForFeature {
 				continue
 			}
 			// if both this group and the previous don't have a name then merge them
-			if group.name == nil || group.isDrillDown, _sectionList.count > 1 {
-				var prev = _sectionList.last!
+			if group.name == nil || group.isDrillDown, sectionList.count > 1 {
+				var prev = sectionList.last!
 				if prev.name == nil {
 					prev = PresetGroup(fromMerger: prev, with: group)
-					_sectionList.removeLast()
-					_sectionList.append(prev)
+					sectionList.removeLast()
+					sectionList.append(prev)
 					continue
 				}
 			}
-			_sectionList.append(group)
+			sectionList.append(group)
 		}
 	}
 
@@ -132,7 +124,7 @@ final class PresetsForFeature {
 	     geometry: GEOMETRY,
 	     update: (() -> Void)?)
 	{
-		_featureName = feature?.name ?? ""
+		featureName = feature?.name ?? ""
 
 		// Always start with Type and Name
 		let typeTag = PresetKey(
@@ -157,7 +149,7 @@ final class PresetsForFeature {
 			autocorrect: UITextAutocorrectionType.no,
 			presets: nil)
 		let typeGroup = PresetGroup(name: "Type", tags: [.key(typeTag), .key(nameTag)])
-		_sectionList = [typeGroup]
+		sectionList = [typeGroup]
 
 		// Add user-defined presets
 		var customGroup: [PresetKeyOrGroup] = []
@@ -177,7 +169,7 @@ final class PresetsForFeature {
 		}
 		if customGroup.count != 0 {
 			let group = PresetGroup(name: nil, tags: customGroup)
-			_sectionList.append(group)
+			sectionList.append(group)
 		}
 
 		// Add presets specific to the type
@@ -195,9 +187,9 @@ final class PresetsForFeature {
 			ignore: ignoreTags,
 			dupSet: &dupSet,
 			update: update)
-		_sectionList
-			.append(PresetGroup(name: nil,
-			                    tags: [PresetKeyOrGroup]())) // Create a break between the common items and the rare items
+		// Create a break between the common items and the rare items
+		sectionList.append(PresetGroup(name: nil,
+		                               tags: [PresetKeyOrGroup]()))
 		addPresetsForFields(
 			inFeatureID: feature.featureID,
 			objectTags: objectTags,

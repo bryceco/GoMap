@@ -105,9 +105,14 @@
 		02CB2406265DB7CB00835F32 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB2402265DB7CB00835F32 /* CameraView.swift */; };
 		02CB2407265DB7CB00835F32 /* LevenshteinDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB2403265DB7CB00835F32 /* LevenshteinDistance.swift */; };
 		02CB2408265DB7CB00835F32 /* HoursRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB2404265DB7CB00835F32 /* HoursRecognizer.swift */; };
+		02CB523429907832007F758D /* QuestMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB523329907832007F758D /* QuestMarker.swift */; };
+		02CB52362990801E007F758D /* QuestList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB52352990801E007F758D /* QuestList.swift */; };
 		02CC01D12584195E004444EF /* PresetFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC01D02584195E004444EF /* PresetFeature.swift */; };
 		02CC01DC25843F2F004444EF /* PresetLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC01DB25843F2F004444EF /* PresetLanguages.swift */; };
 		02CD9974265C65C200213AD6 /* EditorFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CD9973265C65C200213AD6 /* EditorFilters.swift */; };
+		02CE3CE229909D1D00DDACE0 /* QuestEditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB523E299097C3007F758D /* QuestEditorController.swift */; };
+		02CE3CE32990A2C800DDACE0 /* QuestEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02CB523D299097C3007F758D /* QuestEditor.storyboard */; };
+		02CE3CE52990A8CE00DDACE0 /* QuestSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE3CE42990A8CE00DDACE0 /* QuestSelectionController.swift */; };
 		02D5B5F3248F154D00FEE448 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D5B5F2248F154D00FEE448 /* Colors.swift */; };
 		02D6238226A6628300A4F147 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D6238126A6628300A4F147 /* ShareViewController.swift */; };
 		02D6238526A6628300A4F147 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02D6238326A6628300A4F147 /* MainInterface.storyboard */; };
@@ -510,9 +515,14 @@
 		02CB2402265DB7CB00835F32 /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		02CB2403265DB7CB00835F32 /* LevenshteinDistance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevenshteinDistance.swift; sourceTree = "<group>"; };
 		02CB2404265DB7CB00835F32 /* HoursRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoursRecognizer.swift; sourceTree = "<group>"; };
+		02CB523329907832007F758D /* QuestMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestMarker.swift; sourceTree = "<group>"; };
+		02CB52352990801E007F758D /* QuestList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestList.swift; sourceTree = "<group>"; };
+		02CB523D299097C3007F758D /* QuestEditor.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QuestEditor.storyboard; sourceTree = "<group>"; };
+		02CB523E299097C3007F758D /* QuestEditorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestEditorController.swift; sourceTree = "<group>"; };
 		02CC01D02584195E004444EF /* PresetFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetFeature.swift; sourceTree = "<group>"; };
 		02CC01DB25843F2F004444EF /* PresetLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetLanguages.swift; sourceTree = "<group>"; };
 		02CD9973265C65C200213AD6 /* EditorFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorFilters.swift; sourceTree = "<group>"; };
+		02CE3CE42990A8CE00DDACE0 /* QuestSelectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestSelectionController.swift; sourceTree = "<group>"; };
 		02D002CB279D15C600B38E7C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		02D002CC279D15C600B38E7C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		02D2D1182724B20F003654A8 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/DirectionViewController.strings"; sourceTree = "<group>"; };
@@ -873,6 +883,7 @@
 				02CB2409265DB7D600835F32 /* OpeningHours */,
 				02A3598F2704E51700101369 /* POI */,
 				028F504619BA2F460093C423 /* presets */,
+				02CB523C299097C3007F758D /* Quests */,
 				ED9649DA2601CB7A00EC0A60 /* SettingsViewController.swift */,
 				02ACBCFF16713F7F00BB4414 /* Shared */,
 				0291D83A2442822300F793BE /* Storyboards */,
@@ -965,6 +976,7 @@
 				02C8C56426F446FD003B0122 /* MapMarker.swift */,
 				02C8C56626F44728003B0122 /* OsmNoteMarker.swift */,
 				02034742266C2CB9000A7C3D /* MapMarkerDatabase.swift */,
+				02CB523329907832007F758D /* QuestMarker.swift */,
 				02C8C56C26F4479A003B0122 /* WayPointMarker.swift */,
 			);
 			name = MapMarkers;
@@ -980,6 +992,17 @@
 				02CB2401265DB7CB00835F32 /* OpeningHoursRecognizerView.swift */,
 			);
 			path = OpeningHours;
+			sourceTree = "<group>";
+		};
+		02CB523C299097C3007F758D /* Quests */ = {
+			isa = PBXGroup;
+			children = (
+				02CB523D299097C3007F758D /* QuestEditor.storyboard */,
+				02CB523E299097C3007F758D /* QuestEditorController.swift */,
+				02CB52352990801E007F758D /* QuestList.swift */,
+				02CE3CE42990A8CE00DDACE0 /* QuestSelectionController.swift */,
+			);
+			path = Quests;
 			sourceTree = "<group>";
 		};
 		02CC01CF2584190A004444EF /* PresetsDatabase */ = {
@@ -1375,6 +1398,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02CE3CE32990A2C800DDACE0 /* QuestEditor.storyboard in Resources */,
 				029A17C8257AB8A70035C6ED /* POI-Icons.xcassets in Resources */,
 				02ACBA3E16713CCB00BB4414 /* InfoPlist.strings in Resources */,
 				028F504719BA2F460093C423 /* presets in Resources */,
@@ -1425,6 +1449,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02CE3CE229909D1D00DDACE0 /* QuestEditorController.swift in Sources */,
 				02AEBEAF294ABE0700009163 /* KeyValueTableCell.swift in Sources */,
 				EDB2C3A62609E6E100C08293 /* LoginViewController.swift in Sources */,
 				647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */,
@@ -1521,6 +1546,7 @@
 				C3D096DB263EB73E00E3B129 /* main.swift in Sources */,
 				02034743266C2CB9000A7C3D /* MapMarkerDatabase.swift in Sources */,
 				C3FA9249263FF95B000A2A99 /* LocationParser.swift in Sources */,
+				02CB523429907832007F758D /* QuestMarker.swift in Sources */,
 				ED56E5EB26028B5F000B368C /* GpxConfigureViewController.swift in Sources */,
 				02EA1C6C2663398C00A0F827 /* TileQuadKey.swift in Sources */,
 				021FADD725873D0100F6E1C0 /* PresetsForFeature.swift in Sources */,
@@ -1553,10 +1579,12 @@
 				02C8C56726F44728003B0122 /* OsmNoteMarker.swift in Sources */,
 				028816A12659B4A600C30EA2 /* GZip.swift in Sources */,
 				C3D096D0263EA76500E3B129 /* Geekbench.swift in Sources */,
+				02CE3CE52990A8CE00DDACE0 /* QuestSelectionController.swift in Sources */,
 				024909CF267EADC70027E531 /* OsmXmlGenerator.swift in Sources */,
 				020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */,
 				0226B7732683BCB6005DB9E2 /* URLSession+Extension.swift in Sources */,
 				021FADC0258594EE00F6E1C0 /* PresetValue.swift in Sources */,
+				02CB52362990801E007F758D /* QuestList.swift in Sources */,
 				02E049BA2650B0E10028B57F /* TurnRestrictController.swift in Sources */,
 				ED9649F12601CEC800EC0A60 /* POITabBarController.swift in Sources */,
 				022B2FDB2718CCAC00AB4C28 /* MapboxLocator.secret in Sources */,

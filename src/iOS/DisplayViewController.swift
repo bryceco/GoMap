@@ -15,6 +15,7 @@ private let CACHE_SECTION = 3
 class DisplayViewController: UITableViewController {
 	@IBOutlet var rotationSwitch: UISwitch!
 	@IBOutlet var notesSwitch: UISwitch!
+	@IBOutlet var questsSwitch: UISwitch!
 	@IBOutlet var gpsTraceSwitch: UISwitch!
 	@IBOutlet var unnamedRoadSwitch: UISwitch!
 	@IBOutlet var gpxLoggingSwitch: UISwitch!
@@ -63,9 +64,10 @@ class DisplayViewController: UITableViewController {
 
 		var mask = 0
 		mask |= notesSwitch.isOn ? Int(MapViewOverlays.NOTES.rawValue) : 0
+		mask |= questsSwitch.isOn ? Int(MapViewOverlays.QUESTS.rawValue) : 0
 		mask |= gpsTraceSwitch.isOn ? Int(MapViewOverlays.GPSTRACE.rawValue) : 0
 		mask |= unnamedRoadSwitch.isOn ? Int(MapViewOverlays.NONAME.rawValue) : 0
-		mapView.viewOverlayMask = MapViewOverlays(rawValue: MapViewOverlays.RawValue(mask))
+		mapView.viewOverlayMask = MapViewOverlays(rawValue: mask)
 
 		mapView.enableRotation = rotationSwitch.isOn
 		mapView.enableUnnamedRoadHalo = unnamedRoadSwitch.isOn
@@ -102,6 +104,7 @@ class DisplayViewController: UITableViewController {
 		navigationController?.isNavigationBarHidden = false
 
 		notesSwitch.isOn = mapView.viewOverlayMask.contains(.NOTES)
+		questsSwitch.isOn = mapView.viewOverlayMask.contains(.QUESTS)
 		gpsTraceSwitch.isOn = !mapView.gpsTraceLayer.isHidden
 
 		rotationSwitch.isOn = mapView.enableRotation

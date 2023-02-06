@@ -148,7 +148,7 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 			preferredStyle: .alert)
 		present(alert, animated: true)
 
-		mapView.mapMarkerDatabase.updateNote(note: note, close: resolves, comment: text) { [self] result in
+		mapView.mapMarkerDatabase.update(note: note, close: resolves, comment: text) { [self] result in
 			alert.dismiss(animated: true)
 			switch result {
 			case let .success(newNote):
