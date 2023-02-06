@@ -651,51 +651,8 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		sender.resignFirstResponder()
 	}
 
-	@objc func setCallingCodeText(_ sender: Any?) {
-		if let text = firstResponderTextField?.text,
-		   !text.hasPrefix("+")
-		{
-			let code = AppDelegate.shared.mapView.currentRegion.callingCode() ?? ""
-			firstResponderTextField?.text = "+" + code + " " + text
-		}
-	}
-
-	@objc func insertSpace(_ sender: Any?) {
-		firstResponderTextField?.insertText(" ")
-	}
-
-	@objc func insertDash(_ sender: Any?) {
-		firstResponderTextField?.insertText("-")
-	}
-
-	@objc func phonePadDone(_ sender: Any?) {
-		firstResponderTextField?.resignFirstResponder()
-	}
-
 	func addTelephoneToolbarToKeyboard(for textField: UITextField) {
-		let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 44))
-		toolbar.items = [
-			UIBarButtonItem(
-				title: "+1",
-				style: .plain,
-				target: self,
-				action: #selector(setCallingCodeText(_:))),
-			UIBarButtonItem(
-				title: NSLocalizedString("Space", comment: "Space key on the keyboard"),
-				style: .plain,
-				target: self,
-				action: #selector(insertSpace(_:))),
-			UIBarButtonItem(
-				title: "-",
-				style: .plain,
-				target: self,
-				action: #selector(insertDash(_:))),
-			UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
-			UIBarButtonItem(barButtonSystemItem: .done,
-			                target: self,
-			                action: #selector(phonePadDone(_:)))
-		]
-		textField.inputAccessoryView = toolbar
+		textField.inputAccessoryView = TelephoneToolbar(forTextField: textField, frame: view.frame)
 	}
 
 	@IBAction func textFieldEditingDidBegin(_ textField: AutocompleteTextField?) {
