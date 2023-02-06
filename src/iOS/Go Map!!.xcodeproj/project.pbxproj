@@ -960,6 +960,7 @@
 				0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */,
 				C3D096B5263DF82F00E3B129 /* RulerView.swift */,
 				C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */,
+				02CE3CE6299187C100DDACE0 /* TelephoneToolbar.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -1118,7 +1119,6 @@
 				C3FA924C263FFEF9000A2A99 /* PathUtil.swift */,
 				02CA15502824A6B40047B0E5 /* String+Ext.swift */,
 				0266DE852655A21F007A502E /* Superview.swift */,
-				02CE3CE6299187C100DDACE0 /* TelephoneToolbar.swift */,
 				0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */,
 			);
 			name = Utility;
