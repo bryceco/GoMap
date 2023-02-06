@@ -134,12 +134,20 @@ class QuestEditorController: UITableViewController {
 
 	@IBAction func Accept(with sender: Any) {
 		let editor = AppDelegate.shared.mapView.editorLayer
-		if var tags = editor.selectedPrimary?.tags,
-		   let index = tableView.indexPathForSelectedRow
+		guard var tags = editor.selectedPrimary?.tags else { return }
+		if let index = tableView.indexPathForSelectedRow,
+		   let text = presetKey?.presetList?[index.row].tagValue
 		{
-			let row = index.row
-			tags[quest.tagKey] = presetKey?.presetList?[row].tagValue ?? ""
+			// user selected a preset
+			tags[quest.tagKey] = text
 			editor.setTagsForCurrentObject(tags)
+		} else if let cell = tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? QuestTextEntryCell,
+		          let text = cell.textField?.text
+		{
+			tags[quest.tagKey] = text
+			editor.setTagsForCurrentObject(tags)
+		} else {
+			return
 		}
 		dismiss(animated: true, completion: nil)
 	}

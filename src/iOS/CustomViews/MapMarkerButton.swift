@@ -36,7 +36,7 @@ final class MapMarkerButton: UIButton {
 		let iconLayer = CALayer()
 		iconLayer.contents = icon.cgImage
 		shapeLayer.addSublayer(iconLayer)
-		iconLayer.frame = CGRect(x: 1, y: 1, width: 2*radius-2, height: 2*radius-2)
+		iconLayer.frame = CGRect(x: 1, y: 1, width: 2 * radius - 2, height: 2 * radius - 2)
 
 		layer.addSublayer(shapeLayer)
 	}
