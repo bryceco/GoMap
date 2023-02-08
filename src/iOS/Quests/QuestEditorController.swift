@@ -82,7 +82,7 @@ class QuestEditorController: UITableViewController {
 			for g in section.presetKeys {
 				let list = Self.presetsForGroup(g)
 				for preset in list {
-					if preset.tagKey == quest.tagKey {
+					if preset.tagKey == quest.presetField.key {
 						if presetKey == preset {
 							return false // no change
 						} else {
@@ -134,12 +134,12 @@ class QuestEditorController: UITableViewController {
 		   let text = presetKey?.presetList?[index.row].tagValue
 		{
 			// user selected a preset
-			tags[quest.tagKey] = text
+			tags[quest.presetField.key!] = text
 			editor.setTagsForCurrentObject(tags)
 		} else if let cell = tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? QuestTextEntryCell,
 		          let text = cell.textField?.text
 		{
-			tags[quest.tagKey] = text
+			tags[quest.presetField.key!] = text
 			editor.setTagsForCurrentObject(tags)
 		} else {
 			return

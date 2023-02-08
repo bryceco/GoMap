@@ -11,10 +11,15 @@ import UIKit
 protocol QuestProtocol {
 	var ident: String { get }
 	var title: String { get }
-	var tagKey: String { get }
 	var icon: UIImage? { get }
+	var presetField: PresetField { get }
 	func appliesTo(_ object: OsmBaseObject) -> Bool
 	func accepts(tagValue: String) -> Bool
+}
+
+enum QuestError: Error {
+	case unknownField(String)
+	case unknownFeature(String)
 }
 
 struct QuestHighwaySurface: QuestProtocol {
@@ -22,6 +27,7 @@ struct QuestHighwaySurface: QuestProtocol {
 	var title: String { "Highway surface" }
 	var tagKey: String { "surface" }
 	var icon: UIImage? { nil }
+	var presetField: PresetField
 
 	func appliesTo(_ object: OsmBaseObject) -> Bool {
 		if let way = object as? OsmWay,
@@ -38,34 +44,151 @@ struct QuestHighwaySurface: QuestProtocol {
 	}
 }
 
-typealias QuestElementFilter = (OsmBaseObject) -> Bool
-
-struct QuestDefinition: QuestProtocol {
+private
+class QuestDefinition: QuestProtocol {
+	// These items define the quest
 	let ident: String // Uniquely identify the quest
 	let title: String // This provides additional instructions on what action to take
-	let tagKey: String // This is the key that is being updated
 	let icon: UIImage?
+	let presetField: PresetField // The value the user is being asked to set
+	let appliesToGeometry: [GEOMETRY]
+	let appliesToObject: (OsmBaseObject) -> Bool
+	let acceptsValue: (String) -> Bool
+
 	func appliesTo(_ object: OsmBaseObject) -> Bool {
-		return filter(object)
+		return appliesToObject(object)
 	}
 
 	func accepts(tagValue: String) -> Bool {
-		return accepts(tagValue)
+		return acceptsValue(tagValue)
 	}
 
-	private let filter: QuestElementFilter
-	private let accepts: (String) -> Bool
-
-	init(ident: String, title: String, tagKey: String, icon: UIImage,
-	     filter: @escaping QuestElementFilter,
-	     accepts: ((String) -> Bool)? = nil)
+	init(ident: String,
+	     title: String,
+	     icon: UIImage?,
+	     presetField: PresetField,
+	     appliesToGeometry: [GEOMETRY],
+	     appliesToObject: @escaping (OsmBaseObject) -> Bool,
+	     acceptsValue: @escaping (String) -> Bool)
 	{
 		self.ident = ident
 		self.title = title
-		self.tagKey = tagKey
 		self.icon = icon
-		self.filter = filter
-		self.accepts = accepts ?? { _ in true }
+		self.presetField = presetField
+		self.appliesToGeometry = appliesToGeometry
+		self.appliesToObject = appliesToObject
+		self.acceptsValue = acceptsValue
+	}
+
+	convenience init(ident: String,
+	                 title: String,
+	                 icon: UIImage,
+	                 presetField: PresetField, // The value the user is being asked to set
+	                 // The set of features the user is interested in (everything if empty)
+	                 appliesToGeometry: [GEOMETRY],
+	                 includeFeatures: [PresetFeature],
+	                 excludeFeatures: [PresetFeature], // The set of features to exclude
+	                 accepts: @escaping ((String) -> Bool) // This is acceptance criteria for a value the user typed in
+	) throws {
+		typealias Validator = (OsmBaseObject) -> Bool
+
+		let geomFunc: Validator = appliesToGeometry.isEmpty ? { _ in true } : { obj in
+			appliesToGeometry.contains(obj.geometry())
+		}
+		let includeFunc = Self.getMatchFunc(includeFeatures.map { $0.tags })
+		let excludeFunc = Self.getMatchFunc(excludeFeatures.map { $0.tags })
+		let applies: Validator = { obj in
+			includeFunc(obj.tags) && !excludeFunc(obj.tags) && geomFunc(obj)
+		}
+		self.init(ident: ident,
+		          title: title,
+		          icon: icon,
+		          presetField: presetField,
+		          appliesToGeometry: appliesToGeometry,
+		          appliesToObject: applies,
+		          acceptsValue: accepts)
+	}
+
+	static func getMatchFunc(_ featureList: [[String: String]]) -> (([String: String]) -> Bool) {
+		if featureList.isEmpty {
+			return { _ in false }
+		}
+		return { candidate in
+			// iterate through array of features
+			for feature in featureList {
+				// check whether candidate object matches all tags in feature
+				var matches = true
+				for kv in feature {
+					guard let value = candidate[kv.key],
+					      value == kv.value || kv.value == "*"
+					else {
+						matches = false
+						break
+					}
+				}
+				if matches {
+					return true
+				}
+			}
+			return false
+		}
+	}
+
+	convenience
+	init(ident: String,
+	     title: String,
+	     icon: UIImage,
+	     presetField: String, // The value the user is being asked to set
+	     appliesToGeometry: [GEOMETRY],
+	     includeFeatures: [String], // The set of features the user is interested in (everything if empty)
+	     excludeFeatures: [String], // The set of features to exclude
+	     accepts: ((String) -> Bool)? = nil // This is acceptance criteria for a value the user typed in
+	) throws {
+		guard let presetFieldRef = PresetsDatabase.shared.presetFields[presetField] else {
+			throw QuestError.unknownField(presetField)
+		}
+
+		// If the user didn't define any features then infer them
+		var includeFeatures = includeFeatures
+		if includeFeatures.isEmpty {
+			includeFeatures = Self.featuresContaining(field: presetField, geometry: appliesToGeometry)
+		}
+
+		let include = try includeFeatures.map {
+			guard let feature = PresetsDatabase.shared.stdPresets[$0] else { throw QuestError.unknownFeature($0) }
+			return feature
+		}
+		let exclude = try excludeFeatures.map {
+			guard let feature = PresetsDatabase.shared.stdPresets[$0] else { throw QuestError.unknownFeature($0) }
+			return feature
+		}
+
+		try self.init(ident: ident,
+		              title: title,
+		              icon: icon,
+		              presetField: presetFieldRef,
+		              appliesToGeometry: appliesToGeometry,
+		              includeFeatures: include,
+		              excludeFeatures: exclude,
+		              accepts: accepts ?? { _ in true })
+	}
+
+	static func featuresContaining(field: String, geometry: [GEOMETRY]) -> [String] {
+		// find all features containing the desired field
+		var featureNames = Set<String>()
+		let appliesToGeometrySet = Set(geometry.map { $0.rawValue })
+		for feature in PresetsDatabase.shared.stdPresets.values {
+			if !feature.geometry.isEmpty,
+			   !appliesToGeometrySet.isEmpty,
+			   appliesToGeometrySet.intersection(feature.geometry).isEmpty
+			{
+				continue
+			}
+			guard feature.fields?.contains(field) ?? false
+			else { continue }
+			featureNames.insert(feature.featureID)
+		}
+		return Array(featureNames)
 	}
 }
 
@@ -75,100 +198,57 @@ class QuestList {
 	let list: [QuestProtocol]
 	var enabled: [String: Bool]
 
-	static let poiList = [
-		("shop", "convenience"),
-		("amenity", "atm"),
-		("shop", "hairdresser"),
-		("shop", "beauty"),
-		("shop", "florist"),
-		("amenity", "pharmacy"),
-		("shop", "clothes"),
-		("shop", "shoes"),
-		("amenity", "toilets"),
-		("shop", "bakery"),
-		("amenity", "restaurant"),
-		("amenity", "cafe"),
-		("amenity", "fast_food"),
-		("amenity", "bar"),
-		("amenity", "fuel"),
-		("amenity", "car_wash")
-	]
-	static func isShop(_ obj: OsmBaseObject) -> Bool {
-		if [GEOMETRY.AREA, GEOMETRY.NODE].contains(obj.geometry()),
-		   Self.poiList.contains(where: { obj.tags[$0.0] == $0.1 })
-		{
-			return true
-		}
-		return false
-	}
-
 	init() {
-		let addBuildingType = QuestDefinition(
-			ident: "BuildingType",
-			title: "Add Building Type",
-			tagKey: "building",
-			icon: UIImage(named: "ic_quest_building")!,
-			filter: {
-				$0.tags["building"] == "yes"
-			})
+		do {
+			let addBuildingType = QuestDefinition(
+				ident: "BuildingType",
+				title: "Add Building Type",
+				icon: UIImage(named: "ic_quest_building")!,
+				presetField: PresetField(withJson: [
+					"key": "building",
+					"type": "combo"
+				])!,
+				appliesToGeometry: [.AREA, .NODE],
+				appliesToObject: { obj in
+					obj.tags["building"] == "yes"
+				},
+				acceptsValue: { _ in true })
 
-		let addSidewalkSurface = QuestDefinition(
-			ident: "SidewalkSurface",
-			title: "Add Sidewalk Surface",
-			tagKey: "surface",
-			icon: UIImage(named: "ic_quest_sidewalk")!,
-			filter: {
-				if let tags = ($0 as? OsmWay)?.tags,
-				   tags["highway"] == "footway",
-				   tags["footway"] == "sidewalk",
-				   tags["surface"] == nil
-				{
-					return true
-				}
-				return false
-			})
+			let addSidewalkSurface = try QuestDefinition(
+				ident: "SidewalkSurface",
+				title: "Add Sidewalk Surface",
+				icon: UIImage(named: "ic_quest_sidewalk")!,
+				presetField: "surface",
+				appliesToGeometry: [.LINE],
+				includeFeatures: ["highway/footway/sidewalk"],
+				excludeFeatures: [])
 
-#if false
-		let addAddressNumber = QuestDefinition(
-			ident: "AddressNumber",
-			title: "Add Address Number",
-			tagKey: "addr:housenumber",
-			icon: UIImage(named: "")!,
-			filter: { Self.isShop($0) && $0.tags["addr:housenumber"] == nil })
-
-		let addAddressStreet = QuestDefinition(
-			ident: "AddressStreet",
-			title: "Add Address Street",
-			tagKey: "addr:street",
-			icon: UIImage(named: "")!,
-			filter: { Self.isShop($0) && $0.tags["addr:street"] == nil })
-#endif
-
-		let addPhoneNumber = QuestDefinition(
-			ident: "TelephoneNumber",
-			title: "Add Telephone Number",
-			tagKey: "phone",
-			icon: UIImage(named: "ic_quest_check_shop")!,
-			filter: { Self.isShop($0) &&
-				$0.tags["phone"] ==
-				nil && $0.tags["contact:phone"] == nil
-			},
-			accepts: { text in
-				// need at least some number of digits
-				let okay = text
-					.unicodeScalars
-					.compactMap({ CharacterSet.decimalDigits.contains($0) ? true : nil })
-					.count > 5
-				return okay
-			})
-
-		list = [
-			addBuildingType,
-			addSidewalkSurface,
-			addPhoneNumber
-//			addressNumber,
-//			addressStreet
-		]
+			let addPhoneNumber = try QuestDefinition(
+				ident: "TelephoneNumber",
+				title: "Add Telephone Number",
+				icon: UIImage(named: "ic_quest_check_shop")!,
+				presetField: "phone",
+				appliesToGeometry: [.NODE, .AREA],
+				includeFeatures: [],
+				excludeFeatures: [])
+			let addOpeningHours = try QuestDefinition(
+				ident: "OpeningHours",
+				title: "Add Opening Hours",
+				icon: UIImage(named: "ic_quest_check_shop")!,
+				presetField: "opening_hours",
+				appliesToGeometry: [.NODE, .AREA],
+				includeFeatures: [],
+				excludeFeatures: [])
+			list = [
+				addBuildingType,
+				addSidewalkSurface,
+				addPhoneNumber,
+				addOpeningHours
+			]
+		} catch {
+			print("Quest initialization error: \(error)")
+			list = []
+		}
 		enabled = Self.loadPrefs()
 	}
 
