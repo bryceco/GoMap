@@ -109,7 +109,7 @@ class QuestEditorController: UITableViewController {
 
 		vc.object = object
 		vc.quest = quest
-		vc.title = "Your Quest"
+		vc.title = NSLocalizedString("Your Quest", comment: "The current Quest the user is answering")
 		vc.onClose = onClose
 		vc.presetFeature = PresetsDatabase.shared.presetFeatureMatching(
 			tags: object.tags,
