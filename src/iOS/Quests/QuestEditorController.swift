@@ -25,6 +25,9 @@ class QuestTextEntryCell: UITableViewCell {
 	}
 }
 
+private let NUMBER_OF_HEADERS = 2 // feature name + quest name
+private let NUMBER_OF_FOOTERS = 1 // open tag editor
+
 class QuestEditorController: UITableViewController {
 	var quest: QuestProtocol!
 	var object: OsmBaseObject!
@@ -58,7 +61,7 @@ class QuestEditorController: UITableViewController {
 	func setFirstResponder() {
 		if presetKey?.presetList?.count == nil {
 			// set text cell to first responder
-			if let cell = tableView.cellForRow(at: IndexPath(row: 2, section: 0)),
+			if let cell = tableView.cellForRow(at: IndexPath(row: NUMBER_OF_HEADERS, section: 0)),
 			   let cell2 = cell as? QuestTextEntryCell
 			{
 				cell2.textField?.becomeFirstResponder()
@@ -131,13 +134,14 @@ class QuestEditorController: UITableViewController {
 		let editor = AppDelegate.shared.mapView.editorLayer
 		guard var tags = editor.selectedPrimary?.tags else { return }
 		if let index = tableView.indexPathForSelectedRow,
-		   let text = presetKey?.presetList?[index.row].tagValue
+		   let text = presetKey?.presetList?[index.row - NUMBER_OF_HEADERS].tagValue
 		{
 			// user selected a preset
 			tags[quest.presetField.key!] = text
 			editor.setTagsForCurrentObject(tags)
-		} else if let cell = tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? QuestTextEntryCell,
-		          let text = cell.textField?.text
+		} else if let cell = tableView
+			.cellForRow(at: IndexPath(row: NUMBER_OF_HEADERS, section: 0)) as? QuestTextEntryCell,
+			let text = cell.textField?.text
 		{
 			tags[quest.presetField.key!] = text
 			editor.setTagsForCurrentObject(tags)
@@ -173,38 +177,52 @@ class QuestEditorController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if let answerCount = presetKey?.presetList?.count {
+		if let presetKey = presetKey,
+		   let answerCount = presetKey.presetList?.count,
+		   !isOpeningHours(key: presetKey)
+		{
 			// title + object + answer list + open editor
-			return 3 + answerCount
+			return NUMBER_OF_HEADERS + answerCount + NUMBER_OF_FOOTERS
 		} else {
 			// title + object + text field + open editor
-			return 4
+			return NUMBER_OF_HEADERS + 1 + NUMBER_OF_FOOTERS
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.row == 0 {
+			// The name of the object being edited
 			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestTitle", for: indexPath)
 			cell.textLabel?.text = object.friendlyDescription()
 			cell.textLabel?.textAlignment = .center
 			cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .title2)
 			return cell
 		} else if indexPath.row == 1 {
+			// The name of the quest
 			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestTitle", for: indexPath)
 			cell.textLabel?.text = quest.title
 			cell.textLabel?.textAlignment = .natural
 			cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
 			return cell
 		} else if indexPath.row == self.tableView(tableView, numberOfRowsInSection: 0) - 1 {
+			// A button to open the regular tag editor
 			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestOpenEditor", for: indexPath)
 			return cell
-		} else if let _ = presetKey?.presetList?.count {
+		} else if let presetKey = presetKey,
+		          presetKey.presetList?.count != nil,
+		          !isOpeningHours(key: presetKey)
+		{
+			// A selection among a combo of possible values
 			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestTagValue", for: indexPath)
-			cell.textLabel?.text = presetKey?.presetList?[indexPath.row - 2].name ?? ""
+			cell.textLabel?.text = presetKey.presetList?[indexPath.row - NUMBER_OF_HEADERS].name ?? ""
 			return cell
 		} else {
+			// A text box to type something in
 			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestTextEntry",
 			                                         for: indexPath) as! QuestTextEntryCell
+			cell.textField?.autocorrectionType = (presetKey?.autocorrectType) ?? .no
+			cell.textField?.autocapitalizationType = presetKey?.autocapitalizationType ?? .none
+
 			if presetKey?.keyboardType == .phonePad,
 			   let textField = cell.textField
 			{
@@ -212,11 +230,56 @@ class QuestEditorController: UITableViewController {
 				textField.inputAccessoryView = TelephoneToolbar(forTextField: textField,
 				                                                frame: view.frame)
 			}
+
 			cell.didChange = { text in
 				let okay = self.quest.accepts(tagValue: text)
 				self.navigationItem.rightBarButtonItem?.isEnabled = okay
 			}
+			if let presetKey = presetKey,
+			   isOpeningHours(key: presetKey)
+			{
+				let button = UIButton(type: .custom)
+				button.setTitle("📷", for: .normal)
+				button.addTarget(self, action: #selector(recognizeOpeningHours), for: .touchUpInside)
+				cell.textField?.rightView = button
+				cell.textField?.rightViewMode = .always
+			}
+
 			return cell
 		}
+	}
+}
+
+extension QuestEditorController {
+	func isOpeningHours(key: PresetKey) -> Bool {
+#if !targetEnvironment(macCatalyst)
+#if arch(arm64) || arch(x86_64) // old architectures don't support SwiftUI
+		if #available(iOS 14.0, *) {
+			return key.tagKey == "opening_hours" || key.tagKey.hasSuffix(":opening_hours")
+		}
+#endif
+#endif
+		return false
+	}
+
+	@objc func recognizeOpeningHours() {
+#if !targetEnvironment(macCatalyst)
+#if arch(arm64) || arch(x86_64) // old architectures don't support SwiftUI
+		if #available(iOS 14.0, *) {
+			let vc = OpeningHoursRecognizerController.with(
+				onAccept: { newValue in
+					if let cell = self.tableView
+						.cellForRow(at: IndexPath(row: NUMBER_OF_HEADERS, section: 0)) as? QuestTextEntryCell
+					{
+						cell.textField?.text = newValue
+					}
+				}, onCancel: {
+					self.navigationController?.popViewController(animated: true)
+				}, onRecognize: { _ in
+				})
+			self.navigationController?.pushViewController(vc, animated: true)
+		}
+#endif
+#endif
 	}
 }

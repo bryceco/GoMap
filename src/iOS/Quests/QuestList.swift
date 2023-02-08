@@ -88,8 +88,8 @@ class QuestDefinition: QuestProtocol {
 	                 appliesToGeometry: [GEOMETRY],
 	                 includeFeatures: [PresetFeature],
 	                 excludeFeatures: [PresetFeature], // The set of features to exclude
-	                 accepts: @escaping ((String) -> Bool) // This is acceptance criteria for a value the user typed in
-	) throws {
+	                 accepts: @escaping ((String) -> Bool)) // This is acceptance criteria for a value the user typed in
+	{
 		typealias Validator = (OsmBaseObject) -> Bool
 
 		let geomFunc: Validator = appliesToGeometry.isEmpty ? { _ in true } : { obj in
@@ -97,7 +97,9 @@ class QuestDefinition: QuestProtocol {
 		}
 		let includeFunc = Self.getMatchFunc(includeFeatures.map { $0.tags })
 		let excludeFunc = Self.getMatchFunc(excludeFeatures.map { $0.tags })
+		let tagKey = presetField.key!
 		let applies: Validator = { obj in
+			obj.tags[tagKey] == nil &&
 			includeFunc(obj.tags) && !excludeFunc(obj.tags) && geomFunc(obj)
 		}
 		self.init(ident: ident,
@@ -163,14 +165,14 @@ class QuestDefinition: QuestProtocol {
 			return feature
 		}
 
-		try self.init(ident: ident,
-		              title: title,
-		              icon: icon,
-		              presetField: presetFieldRef,
-		              appliesToGeometry: appliesToGeometry,
-		              includeFeatures: include,
-		              excludeFeatures: exclude,
-		              accepts: accepts ?? { _ in true })
+		self.init(ident: ident,
+		          title: title,
+		          icon: icon,
+		          presetField: presetFieldRef,
+		          appliesToGeometry: appliesToGeometry,
+		          includeFeatures: include,
+		          excludeFeatures: exclude,
+		          accepts: accepts ?? { _ in true })
 	}
 
 	static func featuresContaining(field: String, geometry: [GEOMETRY]) -> [String] {
@@ -230,7 +232,10 @@ class QuestList {
 				presetField: "phone",
 				appliesToGeometry: [.NODE, .AREA],
 				includeFeatures: [],
-				excludeFeatures: [])
+				excludeFeatures: [],
+				accepts: { text in
+					text.unicodeScalars.compactMap { CharacterSet.decimalDigits.contains($0) ? true : nil }.count > 5
+				})
 			let addOpeningHours = try QuestDefinition(
 				ident: "OpeningHours",
 				title: "Add Opening Hours",
