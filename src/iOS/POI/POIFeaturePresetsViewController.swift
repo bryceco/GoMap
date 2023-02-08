@@ -836,16 +836,12 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 #if !targetEnvironment(macCatalyst)
 #if arch(arm64) || arch(x86_64) // old architectures don't support SwiftUI
 		if #available(iOS 14.0, *) {
-			let feedback = UINotificationFeedbackGenerator()
-			feedback.prepare()
 			let vc = OpeningHoursRecognizerController.with(onAccept: { newValue in
 				self.updateTagDict(withValue: newValue, forKey: key)
 				self.navigationController?.popViewController(animated: true)
 			}, onCancel: {
 				self.navigationController?.popViewController(animated: true)
 			}, onRecognize: { _ in
-				feedback.notificationOccurred(.success)
-				feedback.prepare()
 			})
 			self.navigationController?.pushViewController(vc, animated: true)
 		}

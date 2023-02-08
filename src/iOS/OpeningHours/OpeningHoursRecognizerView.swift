@@ -31,11 +31,17 @@ public struct OpeningHoursRecognizerView: View {
 		onRecognize: ((String) -> Void)? = nil)
 	{
 		let recognizer = HoursRecognizer()
-		recognizer.onRecognize = onRecognize
-
 		self.onAccept = onAccept
 		self.onCancel = onCancel
 		_recognizer = StateObject(wrappedValue: recognizer)
+
+		let feedback = UINotificationFeedbackGenerator()
+		feedback.prepare()
+		recognizer.onRecognize = {
+			feedback.notificationOccurred(.success)
+			onRecognize?($0)
+			feedback.prepare()
+		}
 	}
 
 	public var body: some View {
