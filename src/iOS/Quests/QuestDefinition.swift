@@ -63,12 +63,12 @@ class QuestDefinition: QuestProtocol {
 	}
 
 	init(ident: String,
-		 title: String,
-		 icon: UIImage?,
-		 presetField: PresetField,
-		 appliesToGeometry: [GEOMETRY],
-		 appliesToObject: @escaping (OsmBaseObject) -> Bool,
-		 acceptsValue: @escaping (String) -> Bool)
+	     title: String,
+	     icon: UIImage?,
+	     presetField: PresetField,
+	     appliesToGeometry: [GEOMETRY],
+	     appliesToObject: @escaping (OsmBaseObject) -> Bool,
+	     acceptsValue: @escaping (String) -> Bool)
 	{
 		self.ident = ident
 		self.title = title
@@ -80,14 +80,14 @@ class QuestDefinition: QuestProtocol {
 	}
 
 	convenience init(ident: String,
-					 title: String,
-					 icon: UIImage,
-					 presetField: PresetField, // The value the user is being asked to set
-					 // The set of features the user is interested in (everything if empty)
-					 appliesToGeometry: [GEOMETRY],
-					 includeFeatures: [PresetFeature],
-					 excludeFeatures: [PresetFeature], // The set of features to exclude
-					 accepts: @escaping ((String) -> Bool)) // This is acceptance criteria for a value the user typed in
+	                 title: String,
+	                 icon: UIImage,
+	                 presetField: PresetField, // The value the user is being asked to set
+	                 // The set of features the user is interested in (everything if empty)
+	                 appliesToGeometry: [GEOMETRY],
+	                 includeFeatures: [PresetFeature],
+	                 excludeFeatures: [PresetFeature], // The set of features to exclude
+	                 accepts: @escaping ((String) -> Bool)) // This is acceptance criteria for a value the user typed in
 	{
 		typealias Validator = (OsmBaseObject) -> Bool
 
@@ -98,52 +98,26 @@ class QuestDefinition: QuestProtocol {
 		let excludeFunc = Self.getMatchFunc(excludeFeatures.map { $0.tags })
 		let tagKey = presetField.key ?? presetField.keys![0] // FIXME: support multiple keys
 		let applies: Validator = { obj in
-			obj.tags[tagKey] == nil &&
-			includeFunc(obj.tags) && !excludeFunc(obj.tags) && geomFunc(obj)
+			obj.tags[tagKey] == nil && includeFunc(obj.tags) && !excludeFunc(obj.tags) && geomFunc(obj)
 		}
 		self.init(ident: ident,
-				  title: title,
-				  icon: icon,
-				  presetField: presetField,
-				  appliesToGeometry: appliesToGeometry,
-				  appliesToObject: applies,
-				  acceptsValue: accepts)
-	}
-
-	static func getMatchFunc(_ featureList: [[String: String]]) -> (([String: String]) -> Bool) {
-		if featureList.isEmpty {
-			return { _ in false }
-		}
-		return { candidate in
-			// iterate through array of features
-			for feature in featureList {
-				// check whether candidate object matches all tags in feature
-				var matches = true
-				for kv in feature {
-					guard let value = candidate[kv.key],
-						  value == kv.value || kv.value == "*"
-					else {
-						matches = false
-						break
-					}
-				}
-				if matches {
-					return true
-				}
-			}
-			return false
-		}
+		          title: title,
+		          icon: icon,
+		          presetField: presetField,
+		          appliesToGeometry: appliesToGeometry,
+		          appliesToObject: applies,
+		          acceptsValue: accepts)
 	}
 
 	convenience
 	init(ident: String,
-		 title: String,
-		 icon: UIImage,
-		 presetField: String, // The value the user is being asked to set
-		 appliesToGeometry: [GEOMETRY],
-		 includeFeatures: [String], // The set of features the user is interested in (everything if empty)
-		 excludeFeatures: [String], // The set of features to exclude
-		 accepts: ((String) -> Bool)? = nil // This is acceptance criteria for a value the user typed in
+	     title: String,
+	     icon: UIImage,
+	     presetField: String, // The value the user is being asked to set
+	     appliesToGeometry: [GEOMETRY],
+	     includeFeatures: [String], // The set of features the user is interested in (everything if empty)
+	     excludeFeatures: [String], // The set of features to exclude
+	     accepts: ((String) -> Bool)? = nil // This is acceptance criteria for a value the user typed in
 	) throws {
 		guard let presetFieldRef = PresetsDatabase.shared.presetFields[presetField] else {
 			throw QuestError.unknownField(presetField)
@@ -165,13 +139,56 @@ class QuestDefinition: QuestProtocol {
 		}
 
 		self.init(ident: ident,
-				  title: title,
-				  icon: icon,
-				  presetField: presetFieldRef,
-				  appliesToGeometry: appliesToGeometry,
-				  includeFeatures: include,
-				  excludeFeatures: exclude,
-				  accepts: accepts ?? { _ in true })
+		          title: title,
+		          icon: icon,
+		          presetField: presetFieldRef,
+		          appliesToGeometry: appliesToGeometry,
+		          includeFeatures: include,
+		          excludeFeatures: exclude,
+		          accepts: accepts ?? { !$0.isEmpty })
+	}
+
+	// Compute a function that determines whether a given tag dictionary matches the feature(s) of the quest
+	static func getMatchFunc(_ featureList: [[String: String]]) -> (([String: String]) -> Bool) {
+		if featureList.isEmpty {
+			return { _ in false }
+		}
+
+		// build a dictionary of tags that must match
+		var matchDict: [String: [[String: String]]] = [:]
+		for feature in featureList {
+			for key in feature.keys {
+				if matchDict[key]?.append(feature) == nil {
+					matchDict[key] = [feature]
+				}
+			}
+		}
+
+		// check whether candidate object matches all tags in feature
+		@inline(__always)
+		func matchTagsOf(candidate: [String: String], to feature: [String: String]) -> Bool {
+			// check whether candidate object matches all tags in feature
+			for kv in feature {
+				guard let value = candidate[kv.key],
+				      value == kv.value || kv.value == "*"
+				else {
+					return false
+				}
+			}
+			return true
+		}
+
+		return { candidate in
+			for key in candidate.keys {
+				guard let features = matchDict[key] else { continue }
+				for feature in features {
+					if matchTagsOf(candidate: candidate, to: feature) {
+						return true
+					}
+				}
+			}
+			return false
+		}
 	}
 
 	static func featuresContaining(field: String, geometry: [GEOMETRY]) -> [String] {
