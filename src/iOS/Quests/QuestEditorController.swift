@@ -147,6 +147,15 @@ class QuestEditorController: UITableViewController {
 		dismiss(animated: true, completion: nil)
 	}
 
+	override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+		guard
+			indexPath.row >= 2
+		else {
+			return nil
+		}
+		return indexPath
+	}
+
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		if indexPath.row == self.tableView(tableView, numberOfRowsInSection: 0) - 1 {
 			dismiss(animated: false, completion: nil)
