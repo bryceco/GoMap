@@ -20,17 +20,29 @@ class QuestBuilder: UIViewController {
 
 		if #available(iOS 15.0, *) {
 			for button in [geometryArea!, geometryWay!, geometryNode!, geometryVertex!] {
-				button.addAction(UIAction(handler:{_ in}), for: .touchUpInside)
+				button.addAction(UIAction(handler: { _ in }), for: .touchUpInside)
 			}
 
 			// get all possible fields
 			let presetItems: [UIAction] = Array(PresetsDatabase.shared.presetFields)
-				.sorted(by: { a, b in a.key < b.key })
-				.map { key, _ in
-					UIAction(title: key, handler: { _ in })
-				}
+				.compactMap({ ident, field in
+					guard
+						let key = field.key,
+						!key.hasSuffix(":") // multiCombo isn't supported
+					else {
+						return nil
+					}
+					return UIAction(title: "\(key) - \(field.label ?? ident)", handler: { _ in })
+				})
+				.sorted(by: { a, b in a.title < b.title })
+#if DEBUG
+			print("\n")
+			for p in presetItems {
+				print("\(p.title)")
+			}
+#endif
 			presetField?.menu = UIMenu(title: NSLocalizedString("Preset Field", comment: ""),
-									   children: presetItems)
+			                           children: presetItems)
 			presetField?.showsMenuAsPrimaryAction = true
 		}
 	}

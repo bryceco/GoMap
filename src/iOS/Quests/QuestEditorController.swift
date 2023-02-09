@@ -268,11 +268,13 @@ extension QuestEditorController {
 		if #available(iOS 14.0, *) {
 			let vc = OpeningHoursRecognizerController.with(
 				onAccept: { newValue in
-					if let cell = self.tableView
-						.cellForRow(at: IndexPath(row: NUMBER_OF_HEADERS, section: 0)) as? QuestTextEntryCell
+					if let cell = self.tableView.cellForRow(at: IndexPath(row: NUMBER_OF_HEADERS, section: 0)),
+					   let cell = cell as? QuestTextEntryCell
 					{
 						cell.textField?.text = newValue
+						self.navigationItem.rightBarButtonItem?.isEnabled = true
 					}
+					self.navigationController?.popViewController(animated: true)
 				}, onCancel: {
 					self.navigationController?.popViewController(animated: true)
 				}, onRecognize: { _ in
