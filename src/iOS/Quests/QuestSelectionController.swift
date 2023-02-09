@@ -19,6 +19,14 @@ class QuestSelectionTableCell: UITableViewCell {
 	}
 }
 
+class BuildYourOwnQuestTableCell: UITableViewCell {
+	var vc: UIViewController?
+	@IBAction func didPress(_ sender: Any) {
+		let vc2 = QuestBuilder.instantiate()
+		vc?.present(vc2, animated: true)
+	}
+}
+
 class QuestSelectionController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -52,16 +60,29 @@ class QuestSelectionController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return QuestList.shared.list.count
+		if #available(iOS 15.0, *) {
+			return QuestList.shared.list.count + 1
+		} else {
+			return QuestList.shared.list.count
+		}
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "QuestSelectionTableCell", for: indexPath)
-			as! QuestSelectionTableCell
-		let quest = QuestList.shared.list[indexPath.row]
-		cell.quest = quest
-		cell.title?.text = quest.title
-		cell.uiSwitch?.isOn = QuestList.shared.isEnabled(quest)
-		return cell
+		if indexPath.row < QuestList.shared.list.count {
+			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestSelectionTableCell", for: indexPath)
+				as! QuestSelectionTableCell
+			let quest = QuestList.shared.list[indexPath.row]
+			cell.quest = quest
+			cell.title?.text = quest.title
+			cell.uiSwitch?.isOn = QuestList.shared.isEnabled(quest)
+			return cell
+		} else if #available(iOS 15.0, *) {
+			let cell = tableView.dequeueReusableCell(withIdentifier: "BuildYourOwnQuestTableCell", for: indexPath)
+			let cell2 = cell as! BuildYourOwnQuestTableCell
+			cell2.vc = self
+			return cell2
+		} else {
+			fatalError()
+		}
 	}
 }

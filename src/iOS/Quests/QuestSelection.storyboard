@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="REI-FR-Yb0">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Quest Selection-->
+        <scene sceneID="mLR-da-eni">
+            <objects>
+                <tableViewController id="REI-FR-Yb0" userLabel="Quest Selection" customClass="QuestSelectionController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="54M-6j-Hqz">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="QuestSelectionTableCell" id="Jqx-2E-Fvw" customClass="QuestSelectionTableCell" customModule="Go_Map__" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Jqx-2E-Fvw" id="hdy-yO-LLj">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lOo-Bh-qGh" userLabel="Enable Quest">
+                                            <rect key="frame" x="324" y="6.3333333333333321" width="51" height="30.999999999999996"/>
+                                            <connections>
+                                                <action selector="didSwitch:" destination="Jqx-2E-Fvw" eventType="valueChanged" id="pou-ag-Gsv"/>
+                                            </connections>
+                                        </switch>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="500" text="Add Sidewalk Surface" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cjq-BK-3eN">
+                                            <rect key="frame" x="20" y="11.000000000000002" width="174" height="21.666666666666671"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                            <size key="shadowOffset" width="0.0" height="0.0"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Placeholder - do not translate"/>
+                                            </attributedString>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="Cjq-BK-3eN" secondAttribute="bottom" constant="11" id="9Vz-kc-T36"/>
+                                        <constraint firstItem="lOo-Bh-qGh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Cjq-BK-3eN" secondAttribute="trailing" constant="8" symbolic="YES" id="Klt-hR-hXu"/>
+                                        <constraint firstItem="lOo-Bh-qGh" firstAttribute="centerY" secondItem="hdy-yO-LLj" secondAttribute="centerY" id="O5i-Tj-qNb"/>
+                                        <constraint firstItem="Cjq-BK-3eN" firstAttribute="top" secondItem="hdy-yO-LLj" secondAttribute="top" constant="11" id="V4r-OI-biv"/>
+                                        <constraint firstAttribute="trailing" secondItem="lOo-Bh-qGh" secondAttribute="trailing" constant="20" symbolic="YES" id="fOI-vd-W0X"/>
+                                        <constraint firstItem="Cjq-BK-3eN" firstAttribute="leading" secondItem="hdy-yO-LLj" secondAttribute="leading" constant="20" symbolic="YES" id="hSg-Sx-FGd"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="title" destination="Cjq-BK-3eN" id="2xl-fD-m1Z"/>
+                                    <outlet property="uiSwitch" destination="lOo-Bh-qGh" id="uZg-pO-Ye9"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BuildYourOwnQuestTableCell" id="wFx-Nm-hoF" customClass="BuildYourOwnQuestTableCell" customModule="Go_Map__" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="93.666667938232422" width="393" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wFx-Nm-hoF" id="1a8-5E-lPA">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fBZ-xs-ZeA">
+                                            <rect key="frame" x="102" y="4" width="190" height="35"/>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" title="Build Your Own Quest"/>
+                                            <connections>
+                                                <action selector="didPress:" destination="wFx-Nm-hoF" eventType="touchUpInside" id="Fb0-L1-v0o"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="fBZ-xs-ZeA" firstAttribute="centerX" secondItem="1a8-5E-lPA" secondAttribute="centerX" id="1jB-oY-aMW"/>
+                                        <constraint firstItem="fBZ-xs-ZeA" firstAttribute="centerY" secondItem="1a8-5E-lPA" secondAttribute="centerY" id="4Ij-2o-bRW"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="REI-FR-Yb0" id="pHe-eO-5xm"/>
+                            <outlet property="delegate" destination="REI-FR-Yb0" id="mGJ-0X-CfJ"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Select Quests" id="mNN-LL-gG7"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mfl-Yl-jcK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-742" y="1685"/>
+        </scene>
+    </scenes>
+</document>
