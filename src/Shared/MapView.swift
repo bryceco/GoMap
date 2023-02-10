@@ -2545,11 +2545,13 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			view = view?.superview
 		}
 		if view != nil {
-			// we touched a button, slider, or other UIControl
-			if gestureRecognizer == addNodeButtonLongPressGestureRecognizer {
-				return true
+			// We touched a button, slider, or other UIControl.
+			// When the user taps a button we don't want to
+			// select the object underneath it, so we reject
+			// Tap recognizers.
+			if gestureRecognizer is UITapGestureRecognizer {
+				return false  // ignore the touch
 			}
-			return false // ignore the touch
 		}
 		return true // handle the touch
 	}
@@ -2558,29 +2560,36 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		_ gestureRecognizer: UIGestureRecognizer,
 		shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool
 	{
-		if gestureRecognizer == addNodeButtonLongPressGestureRecognizer || otherGestureRecognizer ==
-			addNodeButtonLongPressGestureRecognizer
+		if gestureRecognizer == addNodeButtonLongPressGestureRecognizer ||
+			otherGestureRecognizer == addNodeButtonLongPressGestureRecognizer
 		{
-			return true // if holding down the + button then always allow other gestures to proceeed
+			// if holding down the + button then always allow other gestures to proceeed
+			return true
 		}
+		
 		if gestureRecognizer is UILongPressGestureRecognizer ||
 			otherGestureRecognizer is UILongPressGestureRecognizer
 		{
-			return false // don't register long-press when other gestures are occuring
+			// don't register long-press when other gestures are occuring
+			return false
 		}
 
 		if (gestureRecognizer is UIPanGestureRecognizer && otherGestureRecognizer is TapAndDragGesture) ||
 			(gestureRecognizer is TapAndDragGesture && otherGestureRecognizer is UIPanGestureRecognizer)
 		{
+			// Tap-and-drag is a shortcut for zooming, so it's not compatible with the Pan gesture
 			return false
 		} else if gestureRecognizer is TapAndDragGesture {
 			return true
 		}
 
 		if gestureRecognizer is UITapGestureRecognizer || otherGestureRecognizer is UITapGestureRecognizer {
-			return false // don't register taps during panning/zooming/rotating
+			// don't register taps during panning/zooming/rotating
+			return false
 		}
-		return true // allow other things so we can pan/zoom/rotate simultaneously
+
+		// allow other things so we can pan/zoom/rotate simultaneously
+		return true
 	}
 
 	@objc func handlePanGesture(_ pan: UIPanGestureRecognizer) {
