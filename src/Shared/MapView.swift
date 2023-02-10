@@ -2373,11 +2373,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				}
 
 				if self.buttonForButtonId[marker.buttonId] == nil {
-					let button: UIButton
+					let button: MapViewButton
 					if marker is QuestMarker {
 						button = MapMarkerButton(withIcon: marker.buttonIcon!)
 					} else {
-						button = UIButton(type: .custom)
+						button = MapViewButton(type: .custom)
 						button.layer.backgroundColor = UIColor.blue.cgColor
 						button.layer.borderColor = UIColor.white.cgColor
 						if let icon = marker.buttonIcon {
@@ -2566,7 +2566,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			// if holding down the + button then always allow other gestures to proceeed
 			return true
 		}
-		
+
 		if gestureRecognizer is UILongPressGestureRecognizer ||
 			otherGestureRecognizer is UILongPressGestureRecognizer
 		{
@@ -2867,4 +2867,53 @@ extension MapView: EditorMapLayerOwner {
 			removePin()
 		}
 	}
+}
+
+// This is a button that knows that it can be dragged around on the MapView,
+// and if that happens then it shouldn't activate on touchUpInside.
+//
+// When it sees touchDown it records its position and then on touchUpInside
+// it checks if it has moved a significant distance, and only calls the
+// target selector if it is close by.
+class MapViewButton: UIButton {
+	var loc = CGPoint.zero
+	var target: NSObject?
+	var requestedAction: Selector?
+
+	override init(frame: CGRect) {
+		super.init(frame: frame)
+		addTarget(self, action: #selector(touchDown(_:)), for: .touchDown)
+	}
+
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		addTarget(self, action: #selector(touchDown(_:)), for: .touchDown)
+	}
+
+	@objc func touchDown(_ sender: Any?) {
+		self.loc = self.frame.origin
+	}
+
+	override func addTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event) {
+		if controlEvents == .touchUpInside {
+			// we need to intercept the event and ignore it potentially
+			self.target = (target as? NSObject)!
+			self.requestedAction = action
+			super.addTarget(self, action: #selector(touchUpInside), for: controlEvents)
+		} else {
+			super.addTarget(target, action: action, for: controlEvents)
+		}
+	}
+
+	@objc func touchUpInside() {
+		let pos1 = self.loc
+		let pos2 = self.frame.origin
+		if hypot(pos1.x-pos2.x,pos1.y-pos2.y) > self.frame.size.width {
+			// we moved, so ignore event
+		} else {
+			// good to go: invoke the original action
+			let _ = target!.perform(requestedAction!, with: self).takeUnretainedValue()
+		}
+	}
+
 }

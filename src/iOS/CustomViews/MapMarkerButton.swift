@@ -9,7 +9,7 @@
 import UIKit
 
 @IBDesignable
-final class MapMarkerButton: UIButton {
+final class MapMarkerButton: MapViewButton {
 	let radius = 12.0 // radius of ciruclar part
 	let height = 24.0 // distance from center of circle to bottom vertex
 
