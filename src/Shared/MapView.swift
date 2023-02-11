@@ -197,7 +197,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	private(set) lazy var mapMarkerDatabase = MapMarkerDatabase()
-	private(set) var buttonForButtonId: [Int: MapViewButton] = [:] // convert a note ID to a button on the map
 
 	private(set) lazy var aerialLayer = MercatorTileLayer(mapView: self)
 	private(set) lazy var mapnikLayer = MercatorTileLayer(mapView: self)
@@ -292,6 +291,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				}
 			}
 
+			// We moved to a new location so update markers
 			refreshMapMarkerButtonsFromDatabase()
 		}
 	}
@@ -721,7 +721,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 
 		mapMarkerDatabase.mapData = editorLayer.mapData
-		buttonForButtonId = [:]
 
 		// center button
 		centerOnGPSButton.isHidden = true
@@ -2324,33 +2323,18 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		                               withDelay: delay,
 		                               mapData: editorLayer.mapData,
 		                               including: including)
-		{ [self] in
-			refreshMapMarkerButtonsFromDatabase()
+		{
+			self.refreshMapMarkerButtonsFromDatabase()
 		}
 	}
 
 	func refreshMapMarkerButtonsFromDatabase() {
 		// need this to disable implicit animation
-		UIView.performWithoutAnimation({ [self] in
-			// if a button is no longer in the notes database then it got resolved and can go away
-			let remove: [Int] = self.buttonForButtonId.keys.compactMap { buttonId in
-				self.mapMarkerDatabase.mapMarker(forTag: buttonId) == nil ? buttonId : nil
-			}
-			for buttonId in remove {
-				if let button = self.buttonForButtonId[buttonId] {
-					self.buttonForButtonId.removeValue(forKey: buttonId)
-					button.removeFromSuperview()
-				}
-			}
-
+		UIView.performWithoutAnimation({
 			// If we're not currently showing map markers then remove everything
 			guard
 				self.viewOverlayMask.contains(.NOTES) || self.viewOverlayMask.contains(.QUESTS)
 			else {
-				for button in self.buttonForButtonId.values {
-					button.removeFromSuperview()
-				}
-				self.buttonForButtonId.removeAll()
 				self.mapMarkerDatabase.removeAll()
 				return
 			}
@@ -2358,63 +2342,23 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			// update new and existing buttons
 			for marker in self.mapMarkerDatabase.allMapMarkers {
 				// hide unwanted keep right buttons
-				if let marker = marker as? KeepRightMarker,
-				   marker.isIgnored()
-				{
-					if let button = self.buttonForButtonId[marker.buttonId] {
-						button.removeFromSuperview()
-					}
-					return
+				if marker.shouldHide() {
+					marker.button = nil
+					continue
 				}
 
-				if self.buttonForButtonId[marker.buttonId] == nil {
-					let button: MapViewButton
-					if marker is QuestMarker {
-						button = MapMarkerButton(withIcon: marker.buttonIcon!)
-					} else {
-						button = MapViewButton(type: .custom)
-						button.layer.backgroundColor = UIColor.blue.cgColor
-						button.layer.borderColor = UIColor.white.cgColor
-						if let icon = marker.buttonIcon {
-							// icon button
-							button.bounds = CGRect(x: 0, y: 0, width: 34, height: 34)
-							button.layer.cornerRadius = button.bounds.width / 2
-							button.setImage(icon, for: .normal)
-							button.layer.borderColor = UIColor.white.cgColor
-							button.layer.borderWidth = 2.0
-						} else {
-							// text button
-							button.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
-							button.layer.cornerRadius = 5
-							button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
-							button.titleLabel?.textColor = UIColor.white
-							button.titleLabel?.textAlignment = .center
-							button.setTitle(marker.buttonLabel, for: .normal)
-						}
-					}
-					button.addTarget(
-						self,
-						action: #selector(self.mapMarkerButtonPress(_:)),
-						for: .touchUpInside)
+				// create buttons that haven't been created
+				if marker.button == nil {
+					let button = marker.makeButton()
+					button.addTarget(self,
+					                 action: #selector(self.mapMarkerButtonPress(_:)),
+					                 for: .touchUpInside)
 					button.tag = marker.buttonId
 					self.addSubview(button)
-					self.buttonForButtonId[marker.buttonId] = button
 				}
-				let button = self.buttonForButtonId[marker.buttonId]!
+				let button = marker.button!
 
-				if marker.shouldHide() {
-					button.removeFromSuperview()
-					continue
-				}
-
-				if !self.viewOverlayMask.contains(.QUESTS),
-				   marker is QuestMarker
-				{
-					button.removeFromSuperview()
-					self.buttonForButtonId.removeValue(forKey: marker.buttonId)
-					continue
-				}
-
+				// Update the location of the button
 				let offsetX = (marker is KeepRightMarker) || (marker is FixmeMarker) ? 0.00001 : 0.0
 				let pos = self.mapTransform.screenPoint(
 					forLatLon: LatLon(latitude: marker.lat, longitude: marker.lon + offsetX),
@@ -2440,12 +2384,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		else { return }
 
 		var object: OsmBaseObject?
-		if let note = marker as? KeepRightMarker {
-			object = editorLayer.mapData.object(withExtendedIdentifier: note.objectId)
-		} else if let note = marker as? FixmeMarker {
-			object = note.object
-		} else if let quest = marker as? QuestMarker {
-			object = quest.object
+		if let marker = marker as? KeepRightMarker {
+			object = marker.object(from: editorLayer.mapData)
+		} else {
+			object = marker.object
 		}
 
 		if !editorLayer.isHidden,
@@ -2465,15 +2407,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			let title = marker is WayPointMarker ? "Waypoint" : "Keep Right"
 
 			// use regular alertview
-			var text = comment
-			if let r1 = text.range(of: "<a "),
-			   let r2 = text.range(of: "\">")
-			{
-				text.removeSubrange(r1.lowerBound..<r2.upperBound)
-			}
-			text = text.replacingOccurrences(of: "&quot;", with: "\"")
-
-			let alertKeepRight = UIAlertController(title: title, message: text, preferredStyle: .alert)
+			let alertKeepRight = UIAlertController(title: title, message: comment, preferredStyle: .alert)
 			alertKeepRight.addAction(
 				UIAlertAction(title: NSLocalizedString("OK", comment: ""),
 				              style: .cancel,
@@ -2486,7 +2420,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					              handler: { [self] _ in
 					              	// they want to hide this button from now on
 					              	marker.ignore()
-					              	refreshMapMarkerButtonsFromDatabase()
 					              	editorLayer.selectedNode = nil
 					              	editorLayer.selectedWay = nil
 					              	editorLayer.selectedRelation = nil
@@ -2544,7 +2477,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			// When the user taps a button we don't want to
 			// select the object underneath it, so we reject
 			// Tap recognizers.
-			if gestureRecognizer is UITapGestureRecognizer {
+			if gestureRecognizer is UITapGestureRecognizer || view is PushPinView {
 				return false // ignore the touch
 			}
 		}

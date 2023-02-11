@@ -12,7 +12,7 @@ import Foundation
 class KeepRightMarker: MapMarker {
 	let description: String
 	let keepRightID: Int
-	let objectId: OsmExtendedIdentifier
+	private let objectId: OsmExtendedIdentifier
 
 	override var markerIdentifier: String {
 		return "keepright-\(keepRightID)"
@@ -20,7 +20,11 @@ class KeepRightMarker: MapMarker {
 
 	override var buttonLabel: String { "R" }
 
-	private static var ignoreList: [Int: Bool] = KeepRightMarker.readIgnoreList()
+	private static var ignoreList: Set<Int> = Set(KeepRightMarker.readIgnoreList())
+
+	func object(from mapData: OsmMapData) -> OsmBaseObject? {
+		return mapData.object(withExtendedIdentifier: objectId)
+	}
 
 	/// Initialize based on KeepRight query
 	init?(gpxWaypoint gpx: GpxPoint, mapData: OsmMapData) {
@@ -77,24 +81,25 @@ class KeepRightMarker: MapMarker {
 	}
 
 	func ignore() {
-		Self.ignoreList[keepRightID] = true
+		Self.ignoreList.insert(keepRightID)
 		Self.writeIgnoreList()
+		button = nil
 	}
 
-	func isIgnored() -> Bool {
-		return Self.ignoreList[keepRightID] != nil
+	override func shouldHide() -> Bool {
+		return Self.ignoreList.contains(keepRightID)
 	}
 
-	static func readIgnoreList() -> [Int: Bool] {
+	static func readIgnoreList() -> [Int] {
 		if let path = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first?
 			.appendingPathComponent("keepRightIgnoreList"),
 			let data = try? Data(contentsOf: path),
 			let unarchiver = try? NSKeyedUnarchiver(forReadingFrom: data),
-			let list = unarchiver.decodeDecodable([Int: Bool].self, forKey: NSKeyedArchiveRootObjectKey)
+			let list = unarchiver.decodeDecodable([Int].self, forKey: NSKeyedArchiveRootObjectKey)
 		{
 			return list
 		} else {
-			return [:]
+			return []
 		}
 	}
 
@@ -102,7 +107,7 @@ class KeepRightMarker: MapMarker {
 		let archiver = NSKeyedArchiver(requiringSecureCoding: true)
 		if let path = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first?
 			.appendingPathComponent("keepRightIgnoreList"),
-			(try? archiver.encodeEncodable(ignoreList, forKey: NSKeyedArchiveRootObjectKey)) != nil
+			(try? archiver.encodeEncodable(Array(ignoreList), forKey: NSKeyedArchiveRootObjectKey)) != nil
 		{
 			try? archiver.encodedData.write(to: path)
 		}

@@ -11,66 +11,37 @@ import Foundation
 
 final class MapMarkerDatabase {
 	private let workQueue = OperationQueue()
-	private var markerForButtonId: [Int: MapMarker] = [:] // return the marker with the given button tag (tagId)
-	private var buttonIdForMarkerIdentifier: [String: Int] = [:] // map the marker key (unique string) to a tag
+	private var markerForIdentifier: [String: MapMarker] = [:] // map the marker key (unique string) to a marker
 	weak var mapData: OsmMapData!
 
 	init() {
 		workQueue.maxConcurrentOperationCount = 1
 	}
 
-	var allMapMarkers: AnySequence<MapMarker> { AnySequence(markerForButtonId.values) }
+	var allMapMarkers: AnySequence<MapMarker> { AnySequence(markerForIdentifier.values) }
 
 	func removeAll() {
 		workQueue.cancelAllOperations()
-		markerForButtonId.removeAll()
-		buttonIdForMarkerIdentifier.removeAll()
+		markerForIdentifier.removeAll()
+	}
+
+	// Remove any markers from database that don't meet the given predicate.
+	func validateMarkers(withPredicate predicate: (MapMarker) -> Bool) {
+		markerForIdentifier = markerForIdentifier.compactMapValues({ marker in
+			predicate(marker) ? marker : nil
+		})
 	}
 
 	/// This is called when we get a new marker. If it is an update to an existing marker then
 	/// we need to delete the reference to the previous tag, so the button can be replaced.
 	func addOrUpdate(marker newMarker: MapMarker) {
-		if let buttonId = buttonIdForMarkerIdentifier[newMarker.markerIdentifier] {
-			// remove any existing tag with the same markerIdentifier
-			markerForButtonId.removeValue(forKey: buttonId)
+		guard markerForIdentifier[newMarker.markerIdentifier] == nil else {
+			// This marker is already in our database
+			return
 		}
-		buttonIdForMarkerIdentifier[newMarker.markerIdentifier] = newMarker.buttonId
-		markerForButtonId[newMarker.buttonId] = newMarker
+		markerForIdentifier[newMarker.markerIdentifier] = newMarker
 	}
 
-	func updateNoteMarkers(forRegion box: OSMRect, completion: @escaping () -> Void) {
-		let url = OSM_API_URL +
-			"api/0.6/notes?closed=0&bbox=\(box.origin.x),\(box.origin.y),\(box.origin.x + box.size.width),\(box.origin.y + box.size.height)"
-		if let url1 = URL(string: url) {
-			URLSession.shared.data(with: url1, completionHandler: { [self] result in
-				guard case let .success(data) = result,
-				      let xmlText = String(data: data, encoding: .utf8),
-				      let xmlDoc = try? DDXMLDocument(xmlString: xmlText, options: 0)
-				else { return }
-
-				var newNotes: [OsmNoteMarker] = []
-				for noteElement in (try? xmlDoc.rootElement()?.nodes(forXPath: "./note")) ?? [] {
-					guard let noteElement = noteElement as? DDXMLElement else {
-						continue
-					}
-					if let note = OsmNoteMarker(noteXml: noteElement) {
-						newNotes.append(note)
-					}
-				}
-
-				DispatchQueue.main.async(execute: { [self] in
-					// add downloaded notes
-					for note in newNotes {
-						addOrUpdate(marker: note)
-					}
-
-					completion()
-				})
-			})
-		}
-	}
-
-	// add from FIXME=yes tags
 	func updateFixmeMarkers(forRegion box: OSMRect, mapData: OsmMapData) {
 		mapData.enumerateObjects(inRegion: box, block: { [self] obj in
 			if let fixme = FixmeMarker.fixmeTag(obj) {
@@ -93,8 +64,8 @@ final class MapMarkerDatabase {
 		DispatchQueue.main.async(execute: { [self] in
 			for track in AppDelegate.shared.mapView.gpxLayer.allTracks() {
 				for point in track.wayPoints {
-					let note = WayPointMarker(with: point.latLon, description: point.name)
-					addOrUpdate(marker: note)
+					let marker = WayPointMarker(with: point)
+					addOrUpdate(marker: marker)
 				}
 			}
 		})
@@ -176,6 +147,45 @@ final class MapMarkerDatabase {
 		})
 	}
 
+	func mapMarker(forTag tag: Int) -> MapMarker? {
+		return markerForIdentifier.values.first(where: { $0.buttonId == tag })
+	}
+}
+
+// Notes functions
+extension MapMarkerDatabase {
+	func updateNoteMarkers(forRegion box: OSMRect, completion: @escaping () -> Void) {
+		let url = OSM_API_URL +
+			"api/0.6/notes?closed=0&bbox=\(box.origin.x),\(box.origin.y),\(box.origin.x + box.size.width),\(box.origin.y + box.size.height)"
+		if let url1 = URL(string: url) {
+			URLSession.shared.data(with: url1, completionHandler: { [self] result in
+				guard case let .success(data) = result,
+				      let xmlText = String(data: data, encoding: .utf8),
+				      let xmlDoc = try? DDXMLDocument(xmlString: xmlText, options: 0)
+				else { return }
+
+				var newNotes: [OsmNoteMarker] = []
+				for noteElement in (try? xmlDoc.rootElement()?.nodes(forXPath: "./note")) ?? [] {
+					guard let noteElement = noteElement as? DDXMLElement else {
+						continue
+					}
+					if let note = OsmNoteMarker(noteXml: noteElement) {
+						newNotes.append(note)
+					}
+				}
+
+				DispatchQueue.main.async(execute: { [self] in
+					// add downloaded notes
+					for note in newNotes {
+						addOrUpdate(marker: note)
+					}
+
+					completion()
+				})
+			})
+		}
+	}
+
 	func update(
 		note: OsmNoteMarker,
 		close: Bool,
@@ -220,9 +230,5 @@ final class MapMarkerDatabase {
 				}
 			}
 		})
-	}
-
-	func mapMarker(forTag tag: Int) -> MapMarker? {
-		return markerForButtonId[tag]
 	}
 }

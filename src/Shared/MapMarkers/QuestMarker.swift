@@ -13,7 +13,6 @@ import UIKit
 class QuestMarker: MapMarker {
 	let objectId: OsmExtendedIdentifier
 	let quest: QuestProtocol
-	weak var object: OsmBaseObject?
 
 	override var markerIdentifier: String {
 		return "quest-\(objectId)"
@@ -29,9 +28,9 @@ class QuestMarker: MapMarker {
 
 	init(object: OsmBaseObject, quest: QuestProtocol) {
 		let center = object.selectionPoint()
-		self.object = object
 		self.quest = quest
 		objectId = object.extendedIdentifier
 		super.init(lat: center.lat, lon: center.lon)
+		self.object = object
 	}
 }

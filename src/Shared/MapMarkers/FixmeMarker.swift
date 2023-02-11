@@ -11,7 +11,6 @@ import Foundation
 // An OSM object containing a fixme= tag
 class FixmeMarker: MapMarker {
 	let fixmeID: OsmExtendedIdentifier
-	weak var object: OsmBaseObject?
 
 	override var markerIdentifier: String {
 		return "fixme-\(fixmeID)"
@@ -35,9 +34,9 @@ class FixmeMarker: MapMarker {
 	/// Initialize from FIXME data
 	init(object: OsmBaseObject, text: String) {
 		let center = object.selectionPoint()
-		self.object = object
 		fixmeID = object.extendedIdentifier
 		super.init(lat: center.lat,
 		           lon: center.lon)
+		self.object = object
 	}
 }
