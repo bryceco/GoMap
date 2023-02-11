@@ -2333,34 +2333,29 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		// need this to disable implicit animation
 		UIView.performWithoutAnimation({ [self] in
 			// if a button is no longer in the notes database then it got resolved and can go away
-			var remove: [Int] = []
-			for tag in self.buttonForButtonId.keys {
-				if self.mapMarkerDatabase.mapMarker(forTag: tag) == nil {
-					remove.append(tag)
-				}
+			let remove: [Int] = self.buttonForButtonId.keys.compactMap { buttonId in
+				self.mapMarkerDatabase.mapMarker(forTag: buttonId) == nil ? buttonId : nil
 			}
-			for tag in remove {
-				if let button = self.buttonForButtonId[tag] {
-					self.buttonForButtonId.removeValue(forKey: tag)
+			for buttonId in remove {
+				if let button = self.buttonForButtonId[buttonId] {
+					self.buttonForButtonId.removeValue(forKey: buttonId)
 					button.removeFromSuperview()
 				}
 			}
 
-			// update new and existing buttons
+			// If we're not currently showing map markers then remove everything
 			guard
 				self.viewOverlayMask.contains(.NOTES) || self.viewOverlayMask.contains(.QUESTS)
 			else {
-				// not displaying any markers at this time
-				for marker: MapMarker in self.mapMarkerDatabase.allMapMarkers {
-					if let button = self.buttonForButtonId[marker.buttonId] {
-						button.removeFromSuperview()
-						self.buttonForButtonId.removeValue(forKey: marker.buttonId)
-					}
+				for button in self.buttonForButtonId.values {
+					button.removeFromSuperview()
 				}
+				self.buttonForButtonId.removeAll()
 				self.mapMarkerDatabase.removeAll()
 				return
 			}
 
+			// update new and existing buttons
 			for marker in self.mapMarkerDatabase.allMapMarkers {
 				// hide unwanted keep right buttons
 				if let marker = marker as? KeepRightMarker,

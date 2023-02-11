@@ -27,7 +27,7 @@ class MapMarker {
 	init(lat: Double,
 	     lon: Double)
 	{
-		buttonId = MapMarker.NextButtonID()
+		buttonId = Self.NextButtonID()
 		self.lat = lat
 		self.lon = lon
 	}

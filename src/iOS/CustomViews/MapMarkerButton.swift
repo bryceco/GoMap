@@ -28,20 +28,29 @@ final class MapMarkerButton: MapView.MapViewButton {
 			// The botton portion is more pointy
 			let radius2 = (height * height / radius - radius) / 2
 			path.addArc(withCenter: CGPoint(x: radius - radius2, y: height + radius),
-			            radius: radius2, startAngle: 0.0, endAngle: -arcAngle, clockwise: false)
+			            radius: radius2,
+			            startAngle: 0.0,
+			            endAngle: -arcAngle,
+			            clockwise: false)
 			path.addArc(withCenter: CGPoint(x: radius, y: radius),
 			            radius: radius,
-			            startAngle: Double.pi - arcAngle, endAngle: arcAngle, clockwise: true)
+			            startAngle: Double.pi - arcAngle,
+			            endAngle: arcAngle,
+			            clockwise: true)
 			path.addArc(withCenter: CGPoint(x: radius + radius2, y: height + radius),
-			            radius: radius2, startAngle: Double.pi + arcAngle, endAngle: Double.pi, clockwise: false)
+			            radius: radius2,
+			            startAngle: Double.pi + arcAngle,
+			            endAngle: Double.pi,
+			            clockwise: false)
 			path.close()
 		} else {
 			// The bottom portion is a simple triangle
 			path.move(to: CGPoint(x: radius, y: height + radius))
 			path.addArc(withCenter: CGPoint(x: radius, y: radius),
 			            radius: radius,
-			            startAngle: Double.pi - arcAngle, endAngle: arcAngle, clockwise: true)
-
+			            startAngle: Double.pi - arcAngle,
+			            endAngle: arcAngle,
+			            clockwise: true)
 			path.close()
 		}
 
