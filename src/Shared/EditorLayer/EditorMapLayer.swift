@@ -587,8 +587,8 @@ final class EditorMapLayer: CALayer {
 	}
 
 	func getShapeLayers(for object: OsmBaseObject) -> [CALayer & LayerPropertiesProviding] {
-		if object.shapeLayers != nil {
-			return object.shapeLayers!
+		if let shapeLayers = object.shapeLayers {
+			return shapeLayers
 		}
 
 		let renderInfo = object.renderInfo!

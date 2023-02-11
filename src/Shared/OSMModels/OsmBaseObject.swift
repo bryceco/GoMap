@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-enum OsmObject: LocalizedError {
+enum OsmObjectError: Error {
 	case invalidRelationMemberType
 
 	public var errorDescription: String? {
@@ -37,7 +37,7 @@ enum OSM_TYPE: Int {
 		case "node": self = .NODE
 		case "way": self = .WAY
 		case "relation": self = .RELATION
-		default: throw OsmObject.invalidRelationMemberType
+		default: throw OsmObjectError.invalidRelationMemberType
 		}
 	}
 }
@@ -103,6 +103,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	final var renderInfo: RenderInfo?
 	private(set) final var modifyCount: Int32 = 0
 	private(set) final var parentRelations: [OsmRelation] = []
+	final var observer: ((OsmBaseObject) -> Void)?
 
 	override init() {
 		ident = 0
@@ -144,14 +145,13 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		assert(ident != 0)
 	}
 
-	init(
-		withVersion version: Int,
-		changeset: Int64,
-		user: String,
-		uid: Int,
-		ident: Int64,
-		timestamp: String,
-		tags: [String: String])
+	init(withVersion version: Int,
+	     changeset: Int64,
+	     user: String,
+	     uid: Int,
+	     ident: Int64,
+	     timestamp: String,
+	     tags: [String: String])
 	{
 		var timestamp = timestamp
 		if timestamp == "" {
@@ -424,6 +424,13 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 			layer.removeFromSuperlayer()
 		}
 		shapeLayers = nil
+
+		if let observer = observer {
+			// need to do this async because changes won't have been applied to the object yet
+			DispatchQueue.main.async {
+				observer(self)
+			}
+		}
 	}
 
 	func isModified() -> Bool {

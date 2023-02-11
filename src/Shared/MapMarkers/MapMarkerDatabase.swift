@@ -25,11 +25,26 @@ final class MapMarkerDatabase {
 		markerForIdentifier.removeAll()
 	}
 
-	// Remove any markers from database that don't meet the given predicate.
-	func validateMarkers(withPredicate predicate: (MapMarker) -> Bool) {
-		markerForIdentifier = markerForIdentifier.compactMapValues({ marker in
-			predicate(marker) ? marker : nil
-		})
+	func refresh(object: OsmBaseObject) -> [MapMarker] {
+		let remove = markerForIdentifier.compactMap { k, v in v.object === object ? k : nil }
+		for k in remove {
+			markerForIdentifier.removeValue(forKey: k)
+		}
+		if object.deleted {
+			return []
+		}
+		var list = [MapMarker]()
+		for quest in QuestList.shared.questsForObject(object) {
+			let marker = QuestMarker(object: object, quest: quest)
+			addOrUpdate(marker: marker)
+			list.append(marker)
+		}
+		if let fixme = FixmeMarker.fixmeTag(object) {
+			let marker = FixmeMarker(object: object, text: fixme)
+			addOrUpdate(marker: marker)
+			list.append(marker)
+		}
+		return list
 	}
 
 	/// This is called when we get a new marker. If it is an update to an existing marker then

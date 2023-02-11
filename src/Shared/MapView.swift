@@ -2303,6 +2303,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	// MARK: Map Markers
 
+	// This performs an expensive update with a time delay, coalescing multiple calls
+	// into a single update.
 	func updateMapMarkersFromServer(withDelay delay: CGFloat, including: MapMarkerDatabase.MapMarkerSet) {
 		var including = including
 		if including.isEmpty {
@@ -2328,6 +2330,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 	}
 
+	// This performs an inexpensive update using only data we've already downloaded
 	func refreshMapMarkerButtonsFromDatabase() {
 		// need this to disable implicit animation
 		UIView.performWithoutAnimation({
@@ -2347,35 +2350,50 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					continue
 				}
 
-				// create buttons that haven't been created
-				if marker.button == nil {
-					let button = marker.makeButton()
-					button.addTarget(self,
-					                 action: #selector(self.mapMarkerButtonPress(_:)),
-					                 for: .touchUpInside)
-					button.tag = marker.buttonId
-					self.addSubview(button)
-				}
-				let button = marker.button!
-
 				// Update the location of the button
-				let offsetX = (marker is KeepRightMarker) || (marker is FixmeMarker) ? 0.00001 : 0.0
-				let pos = self.mapTransform.screenPoint(
-					forLatLon: LatLon(latitude: marker.lat, longitude: marker.lon + offsetX),
-					birdsEye: true)
-				if pos.x.isInfinite || pos.y.isInfinite {
-					return
-				}
-				if let button = button as? MapMarkerButton {
-					button.arrowPoint = pos
-				} else {
-					var rc = button.bounds
-					rc = rc.offsetBy(dx: pos.x - rc.size.width / 2,
-					                 dy: pos.y - rc.size.height / 2)
-					button.frame = rc
-				}
+				updateButtonForMapMarker(marker: marker)
 			}
 		})
+	}
+
+	// Update the location of the button
+	private func updateButtonForMapMarker(marker: MapMarker) {
+		// create buttons that haven't been created
+		if marker.button == nil {
+			let button = marker.makeButton()
+			button.addTarget(self,
+							 action: #selector(self.mapMarkerButtonPress(_:)),
+							 for: .touchUpInside)
+			button.tag = marker.buttonId
+			self.addSubview(button)
+			if let object = marker.object {
+				// If marker is associated with an object then the marker needs to be
+				// updated when the object changes:
+				object.observer = { obj in
+					let markers = self.mapMarkerDatabase.refresh(object: obj)
+					for marker in markers {
+						self.updateButtonForMapMarker(marker: marker)
+					}
+				}
+			}
+		}
+
+		let button = marker.button!
+		let offsetX = (marker is KeepRightMarker) || (marker is FixmeMarker) ? 0.00001 : 0.0
+		let pos = mapTransform.screenPoint(
+			forLatLon: LatLon(latitude: marker.lat, longitude: marker.lon + offsetX),
+			birdsEye: true)
+		if pos.x.isInfinite || pos.y.isInfinite {
+			return
+		}
+		if let button = button as? MapMarkerButton {
+			button.arrowPoint = pos
+		} else {
+			var rc = button.bounds
+			rc = rc.offsetBy(dx: pos.x - rc.size.width / 2,
+			                 dy: pos.y - rc.size.height / 2)
+			button.frame = rc
+		}
 	}
 
 	@objc func mapMarkerButtonPress(_ sender: Any?) {

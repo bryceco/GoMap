@@ -11,11 +11,11 @@ import UIKit
 
 // An OSM object for a quest
 class QuestMarker: MapMarker {
-	let objectId: OsmExtendedIdentifier
+	let ident: String
 	let quest: QuestProtocol
 
 	override var markerIdentifier: String {
-		return "quest-\(objectId)"
+		return ident
 	}
 
 	override func shouldHide() -> Bool {
@@ -29,7 +29,7 @@ class QuestMarker: MapMarker {
 	init(object: OsmBaseObject, quest: QuestProtocol) {
 		let center = object.selectionPoint()
 		self.quest = quest
-		objectId = object.extendedIdentifier
+		ident = "quest-\(quest.ident)-\(object is OsmNode ? "n" : object is OsmWay ? "w" : "r")\(object.ident)"
 		super.init(lat: center.lat, lon: center.lon)
 		self.object = object
 	}
