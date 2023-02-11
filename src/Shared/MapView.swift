@@ -1305,7 +1305,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		CATransaction.commit()
 
-		updateMapMarkersFromServer(withDelay: 0, including: [])
+		DispatchQueue.main.async {
+			// Async because the state change hasn't happened yet.
+			// This entire function should be based on didChange instead of willChange.
+			self.updateMapMarkersFromServer(withDelay: 0, including: [])
+		}
 
 		// enable/disable editing buttons based on visibility
 		mainViewController.updateUndoRedoButtonState()
@@ -2334,17 +2338,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	func refreshMapMarkerButtonsFromDatabase() {
 		// need this to disable implicit animation
 		UIView.performWithoutAnimation({
-			// If we're not currently showing map markers then remove everything
-			guard
-				self.viewOverlayMask.contains(.NOTES) || self.viewOverlayMask.contains(.QUESTS)
-			else {
-				self.mapMarkerDatabase.removeAll()
-				return
-			}
-
 			// update new and existing buttons
 			for marker in self.mapMarkerDatabase.allMapMarkers {
-				// hide unwanted keep right buttons
+				// Don't update unwanted buttons
 				if marker.shouldHide() {
 					marker.button = nil
 					continue
@@ -2362,10 +2358,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		if marker.button == nil {
 			let button = marker.makeButton()
 			button.addTarget(self,
-							 action: #selector(self.mapMarkerButtonPress(_:)),
-							 for: .touchUpInside)
+			                 action: #selector(mapMarkerButtonPress(_:)),
+			                 for: .touchUpInside)
 			button.tag = marker.buttonId
-			self.addSubview(button)
+			addSubview(button)
 			if let object = marker.object {
 				// If marker is associated with an object then the marker needs to be
 				// updated when the object changes:

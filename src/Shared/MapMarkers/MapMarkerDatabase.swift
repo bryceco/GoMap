@@ -126,19 +126,33 @@ final class MapMarkerDatabase {
 		including: MapMarkerSet,
 		completion: @escaping () -> Void)
 	{
+		var remove = [String]()
 		if including.contains(.fixme) {
 			updateFixmeMarkers(forRegion: box, mapData: mapData)
+		} else {
+			remove += markerForIdentifier.compactMap { k, v in v is FixmeMarker ? k : nil }
 		}
 		if including.contains(.quest) {
 			updateQuestMarkers(forRegion: box, mapData: mapData)
+		} else {
+			remove += markerForIdentifier.compactMap { k, v in v is QuestMarker ? k : nil }
 		}
 		if including.contains(.gpx) {
 			updateGpxWaypoints()
+		} else {
+			remove += markerForIdentifier.compactMap { k, v in v is WayPointMarker ? k : nil }
 		}
 		if including.contains(.notes) {
 			updateNoteMarkers(forRegion: box, completion: completion)
 		} else {
-			completion()
+			remove += markerForIdentifier.compactMap { k, v in v is OsmNoteMarker ? k : nil }
+			DispatchQueue.main.async {
+				// call this after we've removed items
+				completion()
+			}
+		}
+		for key in remove {
+			markerForIdentifier.removeValue(forKey: key)
 		}
 	}
 
