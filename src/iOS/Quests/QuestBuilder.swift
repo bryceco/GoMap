@@ -25,13 +25,10 @@ class QuestBuilderFeatureCell: UICollectionViewCell {
 
 class QuestBuilder: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 	@IBOutlet var presetField: UIButton?
-	@IBOutlet var geometryArea: UIButton?
-	@IBOutlet var geometryWay: UIButton?
-	@IBOutlet var geometryNode: UIButton?
-	@IBOutlet var geometryVertex: UIButton?
 	@IBOutlet var includeFeaturesView: UICollectionView?
 	@IBOutlet var excludeFeaturesView: UICollectionView?
 	@IBOutlet var includeFeaturesHeightConstraint: NSLayoutConstraint?
+	@IBOutlet var excludeFeaturesHeightConstraint: NSLayoutConstraint?
 
 	var includeFeatures: [String] = []
 	var excludeFeatures: [String] = []
@@ -45,53 +42,74 @@ class QuestBuilder: UIViewController, UICollectionViewDataSource, UICollectionVi
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		includeFeaturesView?.layer.borderWidth = 1.0
-		includeFeaturesView?.layer.borderColor = UIColor.gray.cgColor
-		includeFeaturesView?.layer.cornerRadius = 5.0
+		for featureView in [includeFeaturesView, excludeFeaturesView] {
+			featureView?.layer.borderWidth = 1.0
+			featureView?.layer.borderColor = UIColor.gray.cgColor
+			featureView?.layer.cornerRadius = 5.0
+		}
+
+		if #available(iOS 13.0, *) {
+			// prevent swiping down to dismiss
+			self.isModalInPresentation = true
+		}
 
 		if let flowLayout = includeFeaturesView?.collectionViewLayout as? UICollectionViewFlowLayout {
 			flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
 		}
 
-		if #available(iOS 15.0, *) {
-			for button in [geometryArea!, geometryWay!, geometryNode!, geometryVertex!] {
-				button.addAction(UIAction(handler: { _ in }), for: .touchUpInside)
-			}
-
+		if #available(iOS 14.0, *) {
 			// get all possible fields
 			let keys: [String] = PresetsDatabase.shared.presetFields.values
 				.compactMap({ field in
 					guard
 						let key = field.key,
-						!key.hasSuffix(":") // multiCombo isn't supported
+						!key.hasSuffix(":"), // multiCombo isn't supported
+						!allFeaturesWithKey(key).isEmpty
 					else {
 						return nil
 					}
 					return key
 				})
+			let handler: (_: Any?) -> Void = { _ in self.didAddAllInclude(nil) }
 			let presetItems: [UIAction] = Array(Set(keys))
 				.sorted()
-				.map { UIAction(title: "\($0)", handler: { _ in }) }
+				.map { UIAction(title: "\($0)", handler: handler) }
 			presetField?.menu = UIMenu(title: NSLocalizedString("Preset Field", comment: ""),
 			                           children: presetItems)
 			presetField?.showsMenuAsPrimaryAction = true
 		}
 	}
 
-	@IBAction func didToggleGeometry(_ sender: Any?) {
-		guard let button = sender as? UIButton else { return }
-		button.isSelected.toggle()
+	@IBAction func didChangePresetKey(_ sender: Any?) {
+		didAddAllInclude(nil)
 	}
 
 	@IBAction func didAddAllInclude(_ sender: Any?) {
 		guard let key = presetField?.title(for: .normal) else { return }
 		let features = allFeaturesWithKey(key)
-		includeFeatures = features.map{ $0.name }.sorted()
+		includeFeatures = features.map { $0.name }.sorted()
 		includeFeaturesView?.reloadData()
 	}
 
-	func allFeaturesWithKey(_ key:String) -> [PresetFeature] {
-		let presets = PresetsDatabase.shared.stdPresets.values.compactMap{ feature in
+	@IBAction func didRemoveAllInclude(_ sender: Any?) {
+		includeFeatures = []
+		includeFeaturesView?.reloadData()
+	}
+
+	@IBAction func didAddAllExclude(_ sender: Any?) {
+		guard let key = presetField?.title(for: .normal) else { return }
+		let features = allFeaturesWithKey(key)
+		excludeFeatures = features.map { $0.name }.sorted()
+		excludeFeaturesView?.reloadData()
+	}
+
+	@IBAction func didRemoveAllExclude(_ sender: Any?) {
+		excludeFeatures = []
+		excludeFeaturesView?.reloadData()
+	}
+
+	func allFeaturesWithKey(_ key: String) -> [PresetFeature] {
+		let presets = PresetsDatabase.shared.stdPresets.values.compactMap { feature in
 			for fieldName in feature.fields ?? [] {
 				guard let field = PresetsDatabase.shared.presetFields[fieldName] else { continue }
 				if field.key == key {
@@ -103,15 +121,14 @@ class QuestBuilder: UIViewController, UICollectionViewDataSource, UICollectionVi
 		return presets
 	}
 
-	@IBAction func didRemoveAllInclude(_ sender: Any?) {
-		includeFeatures = []
-		includeFeaturesView?.reloadData()
-	}
-
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
-		let height = includeFeaturesView?.collectionViewLayout.collectionViewContentSize.height ?? 0.0
-		includeFeaturesHeightConstraint?.constant = max(height, 25.0)
+		let heightInclude = includeFeaturesView?.collectionViewLayout.collectionViewContentSize.height ?? 0.0
+		includeFeaturesHeightConstraint?.constant = max(heightInclude, 25.0)
+
+		let heightExclude = excludeFeaturesView?.collectionViewLayout.collectionViewContentSize.height ?? 0.0
+		excludeFeaturesHeightConstraint?.constant = max(heightExclude, 25.0)
+
 		view.layoutIfNeeded()
 	}
 
