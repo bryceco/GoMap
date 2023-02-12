@@ -102,7 +102,7 @@ class QuestBuilder: UIViewController, UICollectionViewDataSource, UICollectionVi
 			let presetItems: [UIAction] = Array(Set(keys))
 				.sorted()
 				.map { UIAction(title: "\($0)", handler: handler) }
-			presetField?.menu = UIMenu(title: NSLocalizedString("Preset Field", comment: ""),
+			presetField?.menu = UIMenu(title: NSLocalizedString("Tag Key", comment: ""),
 			                           children: presetItems)
 			presetField?.showsMenuAsPrimaryAction = true
 		}
