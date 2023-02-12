@@ -12,20 +12,20 @@ protocol QuestProtocol {
 	var ident: String { get }
 	var title: String { get }
 	var icon: UIImage? { get }
-	var presetField: PresetField { get }
+	var presetKey: String { get }
 	func appliesTo(_ object: OsmBaseObject) -> Bool
 	func accepts(tagValue: String) -> Bool
 }
 
 enum QuestError: Error {
-	case unknownField(String)
+	case unknownKey(String)
 	case unknownFeature(String)
 }
 
 struct QuestHighwaySurface: QuestProtocol {
 	var ident: String { "QuestHighwaySurface" }
 	var title: String { "Highway surface" }
-	var tagKey: String { "surface" }
+	var presetKey: String { "surface" }
 	var icon: UIImage? { nil }
 	var presetField: PresetField
 
@@ -47,10 +47,9 @@ struct QuestHighwaySurface: QuestProtocol {
 class QuestDefinition: QuestProtocol {
 	// These items define the quest
 	let ident: String // Uniquely identify the quest
-	let title: String // This provides additional instructions on what action to take
+	let title: String // Localized instructions on what action to take
 	let icon: UIImage?
-	let presetField: PresetField // The value the user is being asked to set
-	let appliesToGeometry: [GEOMETRY]
+	let presetKey: String // The value the user is being asked to set
 	let appliesToObject: (OsmBaseObject) -> Bool
 	let acceptsValue: (String) -> Bool
 
@@ -65,16 +64,14 @@ class QuestDefinition: QuestProtocol {
 	init(ident: String,
 	     title: String,
 	     icon: UIImage?,
-	     presetField: PresetField,
-	     appliesToGeometry: [GEOMETRY],
+	     presetKey: String,
 	     appliesToObject: @escaping (OsmBaseObject) -> Bool,
 	     acceptsValue: @escaping (String) -> Bool)
 	{
 		self.ident = ident
 		self.title = title
 		self.icon = icon
-		self.presetField = presetField
-		self.appliesToGeometry = appliesToGeometry
+		self.presetKey = presetKey
 		self.appliesToObject = appliesToObject
 		self.acceptsValue = acceptsValue
 	}
@@ -82,29 +79,23 @@ class QuestDefinition: QuestProtocol {
 	convenience init(ident: String,
 	                 title: String,
 	                 icon: UIImage,
-	                 presetField: PresetField, // The value the user is being asked to set
+	                 presetKey: String, // The value the user is being asked to set
 	                 // The set of features the user is interested in (everything if empty)
-	                 appliesToGeometry: [GEOMETRY],
 	                 includeFeatures: [PresetFeature],
 	                 excludeFeatures: [PresetFeature], // The set of features to exclude
 	                 accepts: @escaping ((String) -> Bool)) // This is acceptance criteria for a value the user typed in
 	{
 		typealias Validator = (OsmBaseObject) -> Bool
 
-		let geomFunc: Validator = appliesToGeometry.isEmpty ? { _ in true } : { obj in
-			appliesToGeometry.contains(obj.geometry())
-		}
 		let includeFunc = Self.getMatchFunc(includeFeatures.map { $0.tags })
 		let excludeFunc = Self.getMatchFunc(excludeFeatures.map { $0.tags })
-		let tagKey = presetField.key ?? presetField.keys![0] // FIXME: support multiple keys
 		let applies: Validator = { obj in
-			obj.tags[tagKey] == nil && includeFunc(obj.tags) && !excludeFunc(obj.tags) && geomFunc(obj)
+			obj.tags[presetKey] == nil && includeFunc(obj.tags) && !excludeFunc(obj.tags)
 		}
 		self.init(ident: ident,
 		          title: title,
 		          icon: icon,
-		          presetField: presetField,
-		          appliesToGeometry: appliesToGeometry,
+		          presetKey: presetKey,
 		          appliesToObject: applies,
 		          acceptsValue: accepts)
 	}
@@ -113,20 +104,15 @@ class QuestDefinition: QuestProtocol {
 	init(ident: String,
 	     title: String,
 	     icon: UIImage,
-	     presetField: String, // The value the user is being asked to set
-	     appliesToGeometry: [GEOMETRY],
+	     presetKey: String, // The value the user is being asked to set
 	     includeFeatures: [String], // The set of features the user is interested in (everything if empty)
 	     excludeFeatures: [String], // The set of features to exclude
 	     accepts: ((String) -> Bool)? = nil // This is acceptance criteria for a value the user typed in
 	) throws {
-		guard let presetFieldRef = PresetsDatabase.shared.presetFields[presetField] else {
-			throw QuestError.unknownField(presetField)
-		}
-
 		// If the user didn't define any features then infer them
 		var includeFeatures = includeFeatures
 		if includeFeatures.isEmpty {
-			includeFeatures = Self.featuresContaining(field: presetField, geometry: appliesToGeometry)
+			includeFeatures = try Self.featuresContaining(presetKey: presetKey)
 		}
 
 		let include = try includeFeatures.map {
@@ -141,11 +127,19 @@ class QuestDefinition: QuestProtocol {
 		self.init(ident: ident,
 		          title: title,
 		          icon: icon,
-		          presetField: presetFieldRef,
-		          appliesToGeometry: appliesToGeometry,
+		          presetKey: presetKey,
 		          includeFeatures: include,
 		          excludeFeatures: exclude,
 		          accepts: accepts ?? { !$0.isEmpty })
+	}
+
+	convenience init(userQuest quest: QuestUserDefition) throws {
+		try self.init(ident: quest.title,
+		              title: quest.title,
+		              icon: UIImage(),
+		              presetKey: quest.presetKey,
+		              includeFeatures: quest.includeFeatures,
+		              excludeFeatures: quest.excludeFeatures)
 	}
 
 	// Compute a function that determines whether a given tag dictionary matches the feature(s) of the quest
@@ -191,21 +185,29 @@ class QuestDefinition: QuestProtocol {
 		}
 	}
 
-	static func featuresContaining(field: String, geometry: [GEOMETRY]) -> [String] {
+	static func featuresContaining(presetKey: String) throws -> [String] {
 		// find all features containing the desired field
 		var featureNames = Set<String>()
-		let appliesToGeometrySet = Set(geometry.map { $0.rawValue })
 		for feature in PresetsDatabase.shared.stdPresets.values {
-			if !feature.geometry.isEmpty,
-			   !appliesToGeometrySet.isEmpty,
-			   appliesToGeometrySet.intersection(feature.geometry).isEmpty
-			{
-				continue
+			for fieldName in feature.fields ?? [] {
+				if let field = PresetsDatabase.shared.presetFields[fieldName],
+				   field.key == presetKey
+				{
+					featureNames.insert(feature.featureID)
+					break
+				}
 			}
-			guard feature.fields?.contains(field) ?? false
-			else { continue }
-			featureNames.insert(feature.featureID)
+		}
+		if featureNames.isEmpty {
+			throw QuestError.unknownKey(presetKey)
 		}
 		return Array(featureNames)
 	}
+}
+
+struct QuestUserDefition: Codable {
+	var title: String
+	var presetKey: String
+	var includeFeatures: [String] // list of featureID
+	var excludeFeatures: [String] // list of featureID
 }

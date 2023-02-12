@@ -34,22 +34,46 @@ class QuestBuilder: UIViewController, UICollectionViewDataSource, UICollectionVi
 	@IBOutlet var scrollView: UIScrollView?
 	@IBOutlet var saveButton: UIBarButtonItem?
 	@IBOutlet var nameField: UITextField?
+	var quest: QuestUserDefition?
 
-	var includeFeatures: [String] = []
-	var excludeFeatures: [String] = []
+	var includeFeatures: [(name: String, ident: String)] = []
+	var excludeFeatures: [(name: String, ident: String)] = []
 
-	public class func instantiate() -> UIViewController {
+	public class func instantiateNew() -> UINavigationController {
 		let sb = UIStoryboard(name: "QuestBuilder", bundle: nil)
-		let vc = sb.instantiateViewController(withIdentifier: "QuestBuilderNavigation")
+		let vc = sb.instantiateViewController(withIdentifier: "QuestBuilderNavigation") as! UINavigationController
 		return vc
 	}
 
-	@IBAction func onSave(_ sender: Any) {
-		dismiss(animated: true)
+	public class func instantiateWith(quest: QuestUserDefition) -> UIViewController {
+		let sb = UIStoryboard(name: "QuestBuilder", bundle: nil)
+		let vc = sb.instantiateViewController(withIdentifier: "QuestBuilder") as! QuestBuilder
+		vc.quest = quest
+		return vc
 	}
 
-	@IBAction func onCancel(_ sender: Any) {
-		dismiss(animated: true)
+	@IBAction func onSave(_ sender: Any?) {
+		do {
+			let quest = QuestUserDefition(title: nameField!.text!,
+			                              presetKey: presetField!.title(for: .normal)!,
+			                              includeFeatures: includeFeatures.map { $0.ident },
+			                              excludeFeatures: excludeFeatures.map { $0.ident })
+			try QuestList.shared.addQuest(quest)
+			onCancel(sender)
+		} catch {
+			let alertView = UIAlertController(title: NSLocalizedString("Quest Definition Error", comment: ""),
+			                                  message: "",
+			                                  preferredStyle: .actionSheet)
+			alertView.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel))
+			present(alertView, animated: true)
+			return
+		}
+	}
+
+	@IBAction func onCancel(_ sender: Any?) {
+		if navigationController?.popViewController(animated: true) == nil {
+			dismiss(animated: true)
+		}
 	}
 
 	@objc func nameFieldDidChange(_ sender: Any?) {
@@ -106,12 +130,29 @@ class QuestBuilder: UIViewController, UICollectionViewDataSource, UICollectionVi
 			                           children: presetItems)
 			presetField?.showsMenuAsPrimaryAction = true
 		}
+
+		// if we're editing an existing quest then fill in the fields
+		if let quest = quest {
+			let features = PresetsDatabase.shared.stdPresets
+			includeFeatures = quest.includeFeatures.map { (features[$0]?.name ?? $0, $0) }
+			excludeFeatures = quest.excludeFeatures.map { (features[$0]?.name ?? $0, $0) }
+			nameField?.text = quest.title
+			presetField?.setTitle(quest.presetKey, for: .normal)
+			if #available(iOS 15.0, *) {
+				// select the current presetKey
+				if let item = presetField?.menu?.children.first(where: {$0.title == quest.presetKey}),
+				   let action = item as? UIAction
+				{
+					action.state = .on
+				}
+			}
+		}
 	}
 
 	@IBAction func didAddAllInclude(_ sender: Any?) {
 		guard let key = presetField?.title(for: .normal) else { return }
 		let features = allFeaturesWithKey(key)
-		includeFeatures = features.map { $0.name }.sorted()
+		includeFeatures = features.map { ($0.name, $0.featureID) }.sorted(by: { a, b in a.name < b.name })
 		includeFeaturesView?.reloadData()
 	}
 
@@ -123,7 +164,7 @@ class QuestBuilder: UIViewController, UICollectionViewDataSource, UICollectionVi
 	@IBAction func didAddAllExclude(_ sender: Any?) {
 		guard let key = presetField?.title(for: .normal) else { return }
 		let features = allFeaturesWithKey(key)
-		excludeFeatures = features.map { $0.name }.sorted()
+		excludeFeatures = features.map { ($0.name, $0.featureID) }.sorted(by: { a, b in a.name < b.name })
 		excludeFeaturesView?.reloadData()
 	}
 
@@ -173,9 +214,9 @@ class QuestBuilder: UIViewController, UICollectionViewDataSource, UICollectionVi
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FeatureCell",
 		                                              for: indexPath) as! QuestBuilderFeatureCell
 		if collectionView === includeFeaturesView {
-			cell.label?.text = includeFeatures[indexPath.row]
+			cell.label?.text = includeFeatures[indexPath.row].name
 		} else {
-			cell.label?.text = excludeFeatures[indexPath.row]
+			cell.label?.text = excludeFeatures[indexPath.row].name
 		}
 		cell.onDelete = { cell in
 			if let indexPath = collectionView.indexPath(for: cell) {
@@ -214,14 +255,13 @@ class QuestBuilder: UIViewController, UICollectionViewDataSource, UICollectionVi
 		   let keyboardInfo = userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue
 		{
 			guard let scrollView = scrollView,
-			let nameField = nameField
+			      let nameField = nameField
 			else { return }
 			let keyboardSize = keyboardInfo.cgRectValue.size
 			let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
 			scrollView.contentInset = contentInsets
 			scrollView.scrollIndicatorInsets = contentInsets
-//			let rect = nameField.frame.offsetBy(dx: 0, dy: keyboardSize.height)
-			let rect = CGRect(x: 0, y: scrollView.contentSize.height-10, width: 10, height: 5)
+			let rect = nameField.frame.offsetBy(dx: 0, dy: keyboardSize.height)
 			scrollView.scrollRectToVisible(rect, animated: true)
 		}
 	}

@@ -377,7 +377,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="tqn-OS-YEv">
                             <connections>
-                                <action selector="onDone:" destination="Y6W-OH-hqX" id="4EB-xa-me3"/>
+                                <action selector="onSave:" destination="Y6W-OH-hqX" id="osc-1e-D9c"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

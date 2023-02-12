@@ -11,8 +11,9 @@ import UIKit
 class QuestList {
 	static let shared = QuestList()
 
-	let list: [QuestProtocol]
-	var enabled: [String: Bool]
+	private(set) var list: [QuestProtocol]
+	private(set) var userQuests: [QuestUserDefition] = []
+	var enabled: [String: Bool] = [:]
 
 	init() {
 		do {
@@ -20,11 +21,7 @@ class QuestList {
 				ident: "BuildingType",
 				title: "Add Building Type",
 				icon: UIImage(named: "ic_quest_building")!,
-				presetField: PresetField(withJson: [
-					"key": "building",
-					"type": "combo"
-				])!,
-				appliesToGeometry: [.AREA, .NODE],
+				presetKey: "building",
 				appliesToObject: { obj in
 					obj.tags["building"] == "yes"
 				},
@@ -34,17 +31,15 @@ class QuestList {
 				ident: "SidewalkSurface",
 				title: "Add Sidewalk Surface",
 				icon: UIImage(named: "ic_quest_sidewalk")!,
-				presetField: "surface",
-				appliesToGeometry: [.LINE],
+				presetKey: "surface",
 				includeFeatures: ["highway/footway/sidewalk"],
 				excludeFeatures: [])
 
-			let addPhoneNumber = try QuestDefinition(
+			let addPhoneNumber = QuestDefinition(
 				ident: "TelephoneNumber",
 				title: "Add Telephone Number",
 				icon: UIImage(named: "ic_quest_check_shop")!,
-				presetField: "phone",
-				appliesToGeometry: [.NODE, .AREA],
+				presetKey: "phone",
 				includeFeatures: [],
 				excludeFeatures: [],
 				accepts: { text in
@@ -54,8 +49,7 @@ class QuestList {
 				ident: "OpeningHours",
 				title: "Add Opening Hours",
 				icon: UIImage(named: "ic_quest_check_shop")!,
-				presetField: "opening_hours",
-				appliesToGeometry: [.NODE, .AREA],
+				presetKey: "opening_hours",
 				includeFeatures: [],
 				excludeFeatures: [])
 			list = [
@@ -68,16 +62,29 @@ class QuestList {
 			print("Quest initialization error: \(error)")
 			list = []
 		}
-		enabled = Self.loadPrefs()
+		loadPrefs()
+		list += userQuests.compactMap { try? QuestDefinition(userQuest: $0) }
 	}
 
-	static func loadPrefs() -> [String: Bool] {
-		let prefs = UserDefaults.standard.object(forKey: "QuestTypeEnabledDict")
-		return prefs as? [String: Bool] ?? [:]
+	func loadPrefs() {
+		enabled = UserDefaults.standard.object(forKey: "QuestTypeEnabledDict") as? [String: Bool] ?? [:]
+		if let data = UserDefaults.standard.object(forKey: "QuestUserDefinedList") as! Data? {
+			userQuests = try! JSONDecoder().decode([QuestUserDefition].self, from: data)
+		}
 	}
 
 	func savePrefs() {
 		UserDefaults.standard.set(enabled, forKey: "QuestTypeEnabledDict")
+		let encoded = try! JSONEncoder().encode(userQuests)
+		UserDefaults.standard.set(encoded, forKey: "QuestUserDefinedList")
+	}
+
+	func addQuest(_ quest: QuestUserDefition) throws {
+		let questDef = try QuestDefinition(userQuest: quest)
+		userQuests.append(quest)
+		userQuests.sort(by: { a, b in a.title < b.title })
+		list.append(questDef)
+		savePrefs()
 	}
 
 	func questsForObject(_ object: OsmBaseObject) -> [QuestProtocol] {
@@ -91,5 +98,9 @@ class QuestList {
 
 	func isEnabled(_ quest: QuestProtocol) -> Bool {
 		return enabled[quest.ident] ?? true
+	}
+
+	func isUserQuest(_ quest: QuestProtocol) -> Bool {
+		return userQuests.contains(where: { $0.title == quest.title })
 	}
 }

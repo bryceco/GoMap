@@ -467,7 +467,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 #if DEBUG
 		do {
-			let vc = QuestBuilder.instantiate()
+			let vc = QuestBuilder.instantiateNew()
 			present(vc, animated: true)
 		}
 #endif

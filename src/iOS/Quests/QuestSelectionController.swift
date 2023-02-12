@@ -22,7 +22,7 @@ class QuestSelectionTableCell: UITableViewCell {
 class BuildYourOwnQuestTableCell: UITableViewCell {
 	var vc: UIViewController?
 	@IBAction func didPress(_ sender: Any) {
-		let vc2 = QuestBuilder.instantiate()
+		let vc2 = QuestBuilder.instantiateNew()
 		vc?.present(vc2, animated: true)
 	}
 }
@@ -75,6 +75,7 @@ class QuestSelectionController: UITableViewController {
 			cell.quest = quest
 			cell.title?.text = quest.title
 			cell.uiSwitch?.isOn = QuestList.shared.isEnabled(quest)
+			cell.accessoryType = QuestList.shared.isUserQuest(quest) ? .disclosureIndicator : .none
 			return cell
 		} else if #available(iOS 15.0, *) {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "BuildYourOwnQuestTableCell", for: indexPath)
@@ -83,6 +84,21 @@ class QuestSelectionController: UITableViewController {
 			return cell2
 		} else {
 			fatalError()
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		guard let cell = tableView.cellForRow(at: indexPath),
+		      cell.accessoryType == .disclosureIndicator
+		else { return }
+
+		// transition to quest builder for item
+		if let cell = cell as? QuestSelectionTableCell,
+		   let title = cell.title?.text,
+		   let quest = QuestList.shared.userQuests.first(where: { $0.title == title })
+		{
+			let vc = QuestBuilder.instantiateWith(quest: quest)
+			navigationController?.pushViewController(vc, animated: true)
 		}
 	}
 }
