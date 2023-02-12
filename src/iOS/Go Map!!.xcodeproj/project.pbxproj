@@ -60,7 +60,7 @@
 		0286EAA52656F15A007CFEE9 /* EditorMapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */; };
 		0286EAA62656FEAC007CFEE9 /* EditorMapLayer+Ocean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */; };
 		0286EAA726570382007CFEE9 /* LayerProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096D1263EA7E100E3B129 /* LayerProperties.swift */; };
-		0287D25229947B2900BEAD9E /* QuestSelection.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0287D25129947B2900BEAD9E /* QuestSelection.storyboard */; };
+		0287D25229947B2900BEAD9E /* QuestChooser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0287D25129947B2900BEAD9E /* QuestChooser.storyboard */; };
 		0288169E265895FA00C30EA2 /* OsmMapData+Edit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0288169C265895FA00C30EA2 /* OsmMapData+Edit.swift */; };
 		0288169F265895FA00C30EA2 /* OsmMapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0288169D265895FA00C30EA2 /* OsmMapData.swift */; };
 		028816A12659B4A600C30EA2 /* GZip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028816A02659B4A600C30EA2 /* GZip.swift */; };
@@ -114,9 +114,9 @@
 		02CC01D12584195E004444EF /* PresetFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC01D02584195E004444EF /* PresetFeature.swift */; };
 		02CC01DC25843F2F004444EF /* PresetLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC01DB25843F2F004444EF /* PresetLanguages.swift */; };
 		02CD9974265C65C200213AD6 /* EditorFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CD9973265C65C200213AD6 /* EditorFilters.swift */; };
-		02CE3CE229909D1D00DDACE0 /* QuestEditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB523E299097C3007F758D /* QuestEditorController.swift */; };
-		02CE3CE32990A2C800DDACE0 /* QuestEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02CB523D299097C3007F758D /* QuestEditor.storyboard */; };
-		02CE3CE52990A8CE00DDACE0 /* QuestSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE3CE42990A8CE00DDACE0 /* QuestSelectionController.swift */; };
+		02CE3CE229909D1D00DDACE0 /* QuestSolverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB523E299097C3007F758D /* QuestSolverController.swift */; };
+		02CE3CE32990A2C800DDACE0 /* QuestSolver.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02CB523D299097C3007F758D /* QuestSolver.storyboard */; };
+		02CE3CE52990A8CE00DDACE0 /* QuestChooserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE3CE42990A8CE00DDACE0 /* QuestChooserController.swift */; };
 		02CE3CE7299187C100DDACE0 /* TelephoneToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE3CE6299187C100DDACE0 /* TelephoneToolbar.swift */; };
 		02CE3CE929919FC400DDACE0 /* MapMarkerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE3CE829919FC400DDACE0 /* MapMarkerButton.swift */; };
 		02CE3CEB2991B5FA00DDACE0 /* QuestIcons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02CE3CEA2991B5FA00DDACE0 /* QuestIcons.xcassets */; };
@@ -416,7 +416,7 @@
 		0282C4C826617E7400F2D282 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = ../Shared/MapView.swift; sourceTree = "<group>"; };
 		028556A926F004FB009986E9 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = et.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		028556AA26F004FB009986E9 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = et.lproj/Localizable.strings; sourceTree = "<group>"; };
-		0287D25129947B2900BEAD9E /* QuestSelection.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = QuestSelection.storyboard; sourceTree = "<group>"; };
+		0287D25129947B2900BEAD9E /* QuestChooser.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = QuestChooser.storyboard; sourceTree = "<group>"; };
 		0288169C265895FA00C30EA2 /* OsmMapData+Edit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OsmMapData+Edit.swift"; sourceTree = "<group>"; };
 		0288169D265895FA00C30EA2 /* OsmMapData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OsmMapData.swift; sourceTree = "<group>"; };
 		028816A02659B4A600C30EA2 /* GZip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GZip.swift; sourceTree = "<group>"; };
@@ -528,12 +528,12 @@
 		02CB2404265DB7CB00835F32 /* HoursRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoursRecognizer.swift; sourceTree = "<group>"; };
 		02CB523329907832007F758D /* QuestMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestMarker.swift; sourceTree = "<group>"; };
 		02CB52352990801E007F758D /* QuestList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestList.swift; sourceTree = "<group>"; };
-		02CB523D299097C3007F758D /* QuestEditor.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QuestEditor.storyboard; sourceTree = "<group>"; };
-		02CB523E299097C3007F758D /* QuestEditorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestEditorController.swift; sourceTree = "<group>"; };
+		02CB523D299097C3007F758D /* QuestSolver.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QuestSolver.storyboard; sourceTree = "<group>"; };
+		02CB523E299097C3007F758D /* QuestSolverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestSolverController.swift; sourceTree = "<group>"; };
 		02CC01D02584195E004444EF /* PresetFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetFeature.swift; sourceTree = "<group>"; };
 		02CC01DB25843F2F004444EF /* PresetLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetLanguages.swift; sourceTree = "<group>"; };
 		02CD9973265C65C200213AD6 /* EditorFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorFilters.swift; sourceTree = "<group>"; };
-		02CE3CE42990A8CE00DDACE0 /* QuestSelectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestSelectionController.swift; sourceTree = "<group>"; };
+		02CE3CE42990A8CE00DDACE0 /* QuestChooserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestChooserController.swift; sourceTree = "<group>"; };
 		02CE3CE6299187C100DDACE0 /* TelephoneToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelephoneToolbar.swift; sourceTree = "<group>"; };
 		02CE3CE829919FC400DDACE0 /* MapMarkerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerButton.swift; sourceTree = "<group>"; };
 		02CE3CEA2991B5FA00DDACE0 /* QuestIcons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = QuestIcons.xcassets; sourceTree = "<group>"; };
@@ -1015,13 +1015,13 @@
 			children = (
 				02079802299470FB00D3C654 /* QuestBuilder.storyboard */,
 				020798002994706000D3C654 /* QuestBuilder.swift */,
+				0287D25129947B2900BEAD9E /* QuestChooser.storyboard */,
+				02CE3CE42990A8CE00DDACE0 /* QuestChooserController.swift */,
 				020797FC299454D800D3C654 /* QuestDefinition.swift */,
-				02CB523D299097C3007F758D /* QuestEditor.storyboard */,
-				02CB523E299097C3007F758D /* QuestEditorController.swift */,
 				02CE3CEA2991B5FA00DDACE0 /* QuestIcons.xcassets */,
 				02CB52352990801E007F758D /* QuestList.swift */,
-				0287D25129947B2900BEAD9E /* QuestSelection.storyboard */,
-				02CE3CE42990A8CE00DDACE0 /* QuestSelectionController.swift */,
+				02CB523D299097C3007F758D /* QuestSolver.storyboard */,
+				02CB523E299097C3007F758D /* QuestSolverController.swift */,
 			);
 			path = Quests;
 			sourceTree = "<group>";
@@ -1419,7 +1419,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02CE3CE32990A2C800DDACE0 /* QuestEditor.storyboard in Resources */,
+				02CE3CE32990A2C800DDACE0 /* QuestSolver.storyboard in Resources */,
 				029A17C8257AB8A70035C6ED /* POI-Icons.xcassets in Resources */,
 				02ACBA3E16713CCB00BB4414 /* InfoPlist.strings in Resources */,
 				028F504719BA2F460093C423 /* presets in Resources */,
@@ -1435,7 +1435,7 @@
 				0246A78126A4AA3A00941A44 /* DirectionViewController.xib in Resources */,
 				02C3194E250EAED500C5D200 /* Localizable.strings in Resources */,
 				027AB500250E9C9B00C404CD /* Height.storyboard in Resources */,
-				0287D25229947B2900BEAD9E /* QuestSelection.storyboard in Resources */,
+				0287D25229947B2900BEAD9E /* QuestChooser.storyboard in Resources */,
 				023B892B19C148790060CDB5 /* Images.xcassets in Resources */,
 				02ACBCFD16713F2B00BB4414 /* RenderInfo.json in Resources */,
 				02079803299470FB00D3C654 /* QuestBuilder.storyboard in Resources */,
@@ -1474,7 +1474,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				020798012994706000D3C654 /* QuestBuilder.swift in Sources */,
-				02CE3CE229909D1D00DDACE0 /* QuestEditorController.swift in Sources */,
+				02CE3CE229909D1D00DDACE0 /* QuestSolverController.swift in Sources */,
 				02AEBEAF294ABE0700009163 /* KeyValueTableCell.swift in Sources */,
 				EDB2C3A62609E6E100C08293 /* LoginViewController.swift in Sources */,
 				647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */,
@@ -1607,7 +1607,7 @@
 				02C8C56726F44728003B0122 /* OsmNoteMarker.swift in Sources */,
 				028816A12659B4A600C30EA2 /* GZip.swift in Sources */,
 				C3D096D0263EA76500E3B129 /* Geekbench.swift in Sources */,
-				02CE3CE52990A8CE00DDACE0 /* QuestSelectionController.swift in Sources */,
+				02CE3CE52990A8CE00DDACE0 /* QuestChooserController.swift in Sources */,
 				024909CF267EADC70027E531 /* OsmXmlGenerator.swift in Sources */,
 				020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */,
 				0226B7732683BCB6005DB9E2 /* URLSession+Extension.swift in Sources */,

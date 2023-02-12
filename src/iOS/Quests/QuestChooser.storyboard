@@ -10,13 +10,13 @@
         <!--Quest Selection-->
         <scene sceneID="mLR-da-eni">
             <objects>
-                <tableViewController id="REI-FR-Yb0" userLabel="Quest Selection" customClass="QuestSelectionController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="REI-FR-Yb0" userLabel="Quest Selection" customClass="QuestChooserController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="54M-6j-Hqz">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="QuestSelectionTableCell" id="Jqx-2E-Fvw" customClass="QuestSelectionTableCell" customModule="Go_Map__" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="QuestChooserTableCell" id="Jqx-2E-Fvw" customClass="QuestChooserTableCell" customModule="Go_Map__" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Jqx-2E-Fvw" id="hdy-yO-LLj">
@@ -62,7 +62,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fBZ-xs-ZeA">
-                                            <rect key="frame" x="102" y="4" width="190" height="35"/>
+                                            <rect key="frame" x="101.66666666666669" y="4.3333333333333321" width="190" height="35"/>
                                             <state key="normal" title="Button"/>
                                             <buttonConfiguration key="configuration" style="plain" title="Build Your Own Quest"/>
                                             <connections>

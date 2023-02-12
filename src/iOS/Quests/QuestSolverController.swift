@@ -1,5 +1,5 @@
 //
-//  QuestEditorController.swift
+//  QuestSolverController.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 2/5/23.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class QuestTextEntryCell: UITableViewCell {
+class QuestSolverTextEntryCell: UITableViewCell {
 	@IBOutlet var textField: UITextField?
 	var didChange: ((String) -> Void)?
 
@@ -28,7 +28,7 @@ class QuestTextEntryCell: UITableViewCell {
 private let NUMBER_OF_HEADERS = 2 // feature name + quest name
 private let NUMBER_OF_FOOTERS = 1 // open tag editor
 
-class QuestEditorController: UITableViewController {
+class QuestSolverController: UITableViewController {
 	var quest: QuestProtocol!
 	var object: OsmBaseObject!
 	var presetFeature: PresetFeature?
@@ -62,7 +62,7 @@ class QuestEditorController: UITableViewController {
 		if presetKey?.presetList?.count == nil {
 			// set text cell to first responder
 			if let cell = tableView.cellForRow(at: IndexPath(row: NUMBER_OF_HEADERS, section: 0)),
-			   let cell2 = cell as? QuestTextEntryCell
+			   let cell2 = cell as? QuestSolverTextEntryCell
 			{
 				cell2.textField?.becomeFirstResponder()
 			}
@@ -103,9 +103,9 @@ class QuestEditorController: UITableViewController {
 	public class func instantiate(quest: QuestProtocol, object: OsmBaseObject,
 	                              onClose: @escaping () -> Void) -> UINavigationController
 	{
-		let sb = UIStoryboard(name: "QuestEditor", bundle: nil)
-		let vc2 = sb.instantiateViewController(withIdentifier: "QuestEditor") as! UINavigationController
-		let vc = vc2.viewControllers.first as! QuestEditorController
+		let sb = UIStoryboard(name: "QuestSolver", bundle: nil)
+		let vc2 = sb.instantiateViewController(withIdentifier: "QuestSolver") as! UINavigationController
+		let vc = vc2.viewControllers.first as! QuestSolverController
 
 		vc.object = object
 		vc.quest = quest
@@ -140,7 +140,7 @@ class QuestEditorController: UITableViewController {
 			tags[quest.presetKey] = text
 			editor.setTagsForCurrentObject(tags)
 		} else if let cell = tableView
-			.cellForRow(at: IndexPath(row: NUMBER_OF_HEADERS, section: 0)) as? QuestTextEntryCell,
+			.cellForRow(at: IndexPath(row: NUMBER_OF_HEADERS, section: 0)) as? QuestSolverTextEntryCell,
 			let text = cell.textField?.text
 		{
 			tags[quest.presetKey] = text
@@ -219,7 +219,7 @@ class QuestEditorController: UITableViewController {
 		} else {
 			// A text box to type something in
 			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestTextEntry",
-			                                         for: indexPath) as! QuestTextEntryCell
+			                                         for: indexPath) as! QuestSolverTextEntryCell
 			cell.textField?.autocorrectionType = (presetKey?.autocorrectType) ?? .no
 			cell.textField?.autocapitalizationType = presetKey?.autocapitalizationType ?? .none
 
@@ -250,7 +250,7 @@ class QuestEditorController: UITableViewController {
 	}
 }
 
-extension QuestEditorController {
+extension QuestSolverController {
 	func isOpeningHours(key: PresetKey) -> Bool {
 #if !targetEnvironment(macCatalyst)
 #if arch(arm64) || arch(x86_64) // old architectures don't support SwiftUI
@@ -269,7 +269,7 @@ extension QuestEditorController {
 			let vc = OpeningHoursRecognizerController.with(
 				onAccept: { newValue in
 					if let cell = self.tableView.cellForRow(at: IndexPath(row: NUMBER_OF_HEADERS, section: 0)),
-					   let cell = cell as? QuestTextEntryCell
+					   let cell = cell as? QuestSolverTextEntryCell
 					{
 						cell.textField?.text = newValue
 						self.navigationItem.rightBarButtonItem?.isEnabled = true

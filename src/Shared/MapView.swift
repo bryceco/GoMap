@@ -2449,7 +2449,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 						// Need to update the QuestMarker icon
 						self.updateMapMarkersFromServer(withDelay: 0.0, including: [.quest])
 					}
-					let vc = QuestEditorController.instantiate(quest: marker.quest,
+					let vc = QuestSolverController.instantiate(quest: marker.quest,
 					                                           object: object,
 					                                           onClose: onClose)
 					mainViewController.present(vc, animated: true)

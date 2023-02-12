@@ -1,5 +1,5 @@
 //
-//  QuestSelectionController.swift
+//  QuestChooserController.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 2/5/23.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class QuestSelectionTableCell: UITableViewCell {
+class QuestChooserTableCell: UITableViewCell {
 	@IBOutlet var title: UILabel?
 	@IBOutlet var uiSwitch: UISwitch?
 	var quest: QuestProtocol?
@@ -27,7 +27,7 @@ class BuildYourOwnQuestTableCell: UITableViewCell {
 	}
 }
 
-class QuestSelectionController: UITableViewController {
+class QuestChooserController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		navigationItem.rightBarButtonItem?.isEnabled = false
@@ -69,8 +69,8 @@ class QuestSelectionController: UITableViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.row < QuestList.shared.list.count {
-			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestSelectionTableCell", for: indexPath)
-				as! QuestSelectionTableCell
+			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestChooserTableCell", for: indexPath)
+				as! QuestChooserTableCell
 			let quest = QuestList.shared.list[indexPath.row]
 			cell.quest = quest
 			cell.title?.text = quest.title
@@ -93,7 +93,7 @@ class QuestSelectionController: UITableViewController {
 		else { return }
 
 		// transition to quest builder for item
-		if let cell = cell as? QuestSelectionTableCell,
+		if let cell = cell as? QuestChooserTableCell,
 		   let title = cell.title?.text,
 		   let quest = QuestList.shared.userQuests.first(where: { $0.title == title })
 		{
