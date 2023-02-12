@@ -11,7 +11,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Quest Builder-->
+        <!--Build Your Own Quest-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
                 <viewController storyboardIdentifier="QuestBuilder" id="Y6W-OH-hqX" customClass="QuestBuilder" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
@@ -32,7 +32,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use this page to design your own quest." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qwN-yr-c8Y">
-                                                <rect key="frame" x="0.0" y="53.666666666666671" width="353" height="20.333333333333329"/>
+                                                <rect key="frame" x="0.0" y="53.666666666666657" width="353" height="20.333333333333329"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -44,7 +44,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zky-iv-Ndr">
-                                                <rect key="frame" x="0.0" y="156.33333333333334" width="353" height="14"/>
+                                                <rect key="frame" x="0.0" y="156.33333333333331" width="353" height="14"/>
                                                 <menu key="menu" id="tV4-fa-TwO">
                                                     <children>
                                                         <command title="Select" id="HH2-zV-rgg"/>
@@ -54,7 +54,7 @@
                                                 <buttonConfiguration key="configuration" style="filled"/>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ky4-Gk-al2">
-                                                <rect key="frame" x="0.0" y="190.33333333333334" width="353" height="64.333333333333343"/>
+                                                <rect key="frame" x="0.0" y="190.33333333333331" width="353" height="64.333333333333314"/>
                                                 <string key="text">Which features (objects) should this quest apply to? Leave this empty to use all features applicable to the value selected above.</string>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <nil key="textColor"/>
@@ -160,7 +160,7 @@
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Which features would you like to exclude from this quest?" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ddj-Da-38T">
-                                                <rect key="frame" x="0.0" y="414.66666666666669" width="353" height="42.333333333333314"/>
+                                                <rect key="frame" x="0.0" y="414.66666666666663" width="353" height="42.333333333333314"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -297,15 +297,48 @@
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="JI9-1A-mDD" secondAttribute="bottom" id="sJw-r1-mzZ"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Build Your Own Quest" id="2uK-jm-43Q">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Br4-L7-AfF">
+                            <connections>
+                                <action selector="onCancel:" destination="Y6W-OH-hqX" id="meg-u1-XBj"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="tqn-OS-YEv">
+                            <connections>
+                                <action selector="onDone:" destination="Y6W-OH-hqX" id="4EB-xa-me3"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="excludeFeaturesHeightConstraint" destination="EjS-Zg-Gh5" id="Bdi-S2-Kgj"/>
                         <outlet property="excludeFeaturesView" destination="Iyk-eM-VgN" id="Rrs-mf-hWK"/>
                         <outlet property="includeFeaturesHeightConstraint" destination="esc-NC-I4p" id="0Uk-t4-iRe"/>
                         <outlet property="includeFeaturesView" destination="rWl-dF-SoK" id="rck-TH-KhF"/>
+                        <outlet property="nameField" destination="zSF-SH-Kt7" id="Aqr-2Q-rYb"/>
                         <outlet property="presetField" destination="Zky-iv-Ndr" id="kPs-g3-iXH"/>
+                        <outlet property="saveButton" destination="tqn-OS-YEv" id="N2V-JO-tH9"/>
+                        <outlet property="scrollView" destination="JI9-1A-mDD" id="EnS-NS-AcI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1046.5648854961833" y="-28.169014084507044"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="jhz-9I-Nk9">
+            <objects>
+                <navigationController storyboardIdentifier="QuestBuilderNavigation" automaticallyAdjustsScrollViewInsets="NO" id="KHg-g5-0SQ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="rQJ-vU-aqZ">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="vG8-jD-GOM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nKT-T4-rGt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="119.84732824427481" y="-28.169014084507044"/>
         </scene>

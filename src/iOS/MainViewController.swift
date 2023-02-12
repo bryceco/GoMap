@@ -465,6 +465,13 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		// this is necessary because we need the frame to be set on the view before we set the previous lat/lon for the view
 		mapView.viewDidAppear()
 
+#if DEBUG
+		do {
+			let vc = QuestBuilder.instantiate()
+			present(vc, animated: true)
+		}
+#endif
+
 #if false && DEBUG
 		let speech = SpeechBalloonView(text: "Press here to create a new node,\nor to begin a way")
 		speech.targetView = toolbar
