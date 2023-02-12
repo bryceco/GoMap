@@ -70,7 +70,10 @@ class QuestBuilder: UIViewController, UICollectionViewDataSource, UICollectionVi
 					}
 					return key
 				})
-			let handler: (_: Any?) -> Void = { _ in self.didAddAllInclude(nil) }
+			let handler: (_: Any?) -> Void = { _ in
+				self.didAddAllInclude(nil)
+				self.didRemoveAllExclude(nil)
+			}
 			let presetItems: [UIAction] = Array(Set(keys))
 				.sorted()
 				.map { UIAction(title: "\($0)", handler: handler) }
@@ -78,10 +81,6 @@ class QuestBuilder: UIViewController, UICollectionViewDataSource, UICollectionVi
 			                           children: presetItems)
 			presetField?.showsMenuAsPrimaryAction = true
 		}
-	}
-
-	@IBAction func didChangePresetKey(_ sender: Any?) {
-		didAddAllInclude(nil)
 	}
 
 	@IBAction func didAddAllInclude(_ sender: Any?) {
@@ -137,7 +136,7 @@ class QuestBuilder: UIViewController, UICollectionViewDataSource, UICollectionVi
 		if collectionView === includeFeaturesView {
 			return includeFeatures.count
 		}
-		if collectionView == excludeFeaturesView {
+		if collectionView === excludeFeaturesView {
 			return excludeFeatures.count
 		}
 		return 0

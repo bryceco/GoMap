@@ -23,7 +23,7 @@
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" ambiguous="YES" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="XNI-xS-8yh">
-                                        <rect key="frame" x="20" y="0.0" width="353" height="556.66666666666663"/>
+                                        <rect key="frame" x="20" y="0.0" width="353" height="691.33333333333337"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Build Your Own Quest" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44G-za-6lM">
                                                 <rect key="frame" x="0.0" y="0.0" width="353" height="33.666666666666664"/>
@@ -31,14 +31,20 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What key will you be setting with this quest? This is a tag key such as &quot;surface&quot;." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qwN-yr-c8Y">
-                                                <rect key="frame" x="0.0" y="53.666666666666671" width="353" height="42.333333333333329"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use this page to design your own quest." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qwN-yr-c8Y">
+                                                <rect key="frame" x="0.0" y="53.666666666666671" width="353" height="20.333333333333329"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What key will you be setting with this quest? This is a tag key such as &quot;surface&quot;." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UtJ-Wh-nDa">
+                                                <rect key="frame" x="0.0" y="94" width="353" height="42.333333333333343"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zky-iv-Ndr">
-                                                <rect key="frame" x="0.0" y="116" width="353" height="14"/>
+                                                <rect key="frame" x="0.0" y="156.33333333333334" width="353" height="14"/>
                                                 <menu key="menu" id="tV4-fa-TwO">
                                                     <children>
                                                         <command title="Select" id="HH2-zV-rgg"/>
@@ -46,19 +52,16 @@
                                                 </menu>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="filled"/>
-                                                <connections>
-                                                    <action selector="didChangePresetKey:" destination="Y6W-OH-hqX" eventType="valueChanged" id="hdd-IP-7hK"/>
-                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ky4-Gk-al2">
-                                                <rect key="frame" x="0.0" y="150" width="353" height="64.333333333333314"/>
+                                                <rect key="frame" x="0.0" y="190.33333333333334" width="353" height="64.333333333333343"/>
                                                 <string key="text">Which features (objects) should this quest apply to? Leave this empty to use all features applicable to the value selected above.</string>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rWl-dF-SoK">
-                                                <rect key="frame" x="0.0" y="234.33333333333331" width="353" height="50"/>
+                                                <rect key="frame" x="0.0" y="274.66666666666669" width="353" height="50"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="esc-NC-I4p"/>
@@ -120,7 +123,7 @@
                                                 </connections>
                                             </collectionView>
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Iru-L4-v6W">
-                                                <rect key="frame" x="0.0" y="304.33333333333331" width="353" height="50"/>
+                                                <rect key="frame" x="0.0" y="344.66666666666669" width="353" height="50"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GcS-W8-dAb">
                                                         <rect key="frame" x="0.0" y="0.0" width="77.666666666666671" height="50"/>
@@ -128,7 +131,7 @@
                                                         <state key="normal" title="Add All"/>
                                                         <buttonConfiguration key="configuration" style="plain" title="Add All"/>
                                                         <connections>
-                                                            <action selector="didAddAllInclude:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Gho-0W-boC"/>
+                                                            <action selector="didAddAllInclude:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="eWi-yj-oJ0"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Oy-Oz-CSr">
@@ -136,7 +139,7 @@
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="plain" title="Remove All"/>
                                                         <connections>
-                                                            <action selector="didRemoveAllInclude:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="BxD-UF-2xi"/>
+                                                            <action selector="didRemoveAllInclude:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="YZZ-pL-tre"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RaN-9K-98B">
@@ -157,13 +160,13 @@
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Which features would you like to exclude from this quest?" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ddj-Da-38T">
-                                                <rect key="frame" x="0.0" y="374.33333333333331" width="353" height="42.333333333333314"/>
+                                                <rect key="frame" x="0.0" y="414.66666666666669" width="353" height="42.333333333333314"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Iyk-eM-VgN">
-                                                <rect key="frame" x="0.0" y="436.66666666666669" width="353" height="50"/>
+                                                <rect key="frame" x="0.0" y="477" width="353" height="50"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="EjS-Zg-Gh5"/>
@@ -225,7 +228,7 @@
                                                 </connections>
                                             </collectionView>
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rid-J4-GYJ">
-                                                <rect key="frame" x="0.0" y="506.66666666666663" width="353" height="50"/>
+                                                <rect key="frame" x="0.0" y="547" width="353" height="50"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lpd-sp-8op">
                                                         <rect key="frame" x="0.0" y="0.0" width="77.666666666666671" height="50"/>
@@ -233,8 +236,7 @@
                                                         <state key="normal" title="Add All"/>
                                                         <buttonConfiguration key="configuration" style="plain" title="Add All"/>
                                                         <connections>
-                                                            <action selector="didAddAllExclude:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="KUD-LE-Ndh"/>
-                                                            <action selector="didAddAllInclude:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="R01-Mj-iDv"/>
+                                                            <action selector="didAddAllExclude:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="PyP-kB-S3F"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x7F-hF-3Qo">
@@ -242,8 +244,7 @@
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="plain" title="Remove All"/>
                                                         <connections>
-                                                            <action selector="didRemoveAllExclude:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="hBV-v4-CNU"/>
-                                                            <action selector="didRemoveAllInclude:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Oc3-rn-eon"/>
+                                                            <action selector="didRemoveAllExclude:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="nji-Te-Ac0"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpA-dL-B5J">
@@ -263,6 +264,17 @@
                                                     <constraint firstItem="lpd-sp-8op" firstAttribute="trailing" secondItem="x7F-hF-3Qo" secondAttribute="leading" constant="10" id="xEs-wy-M5G"/>
                                                 </constraints>
                                             </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Provide a name for your quest:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xpT-OT-hKN" userLabel="Provide a unique name for your quest:">
+                                                <rect key="frame" x="0.0" y="617" width="353" height="20.333333333333371"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zSF-SH-Kt7">
+                                                <rect key="frame" x="0.0" y="657.33333333333337" width="353" height="34"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
                                         </subviews>
                                     </stackView>
                                 </subviews>
