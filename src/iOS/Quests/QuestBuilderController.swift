@@ -1,5 +1,5 @@
 //
-//  QuestBuilder.swift
+//  QuestBuilderController.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 2/8/23.
@@ -23,7 +23,7 @@ class QuestBuilderFeatureCell: UICollectionViewCell {
 	}
 }
 
-class QuestBuilder: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
+class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
 	UITextFieldDelegate
 {
 	@IBOutlet var presetField: UIButton?
@@ -34,8 +34,11 @@ class QuestBuilder: UIViewController, UICollectionViewDataSource, UICollectionVi
 	@IBOutlet var scrollView: UIScrollView?
 	@IBOutlet var saveButton: UIBarButtonItem?
 	@IBOutlet var nameField: UITextField?
+	@IBOutlet var addOneIncludeButton: UIButton?
+	@IBOutlet var addOneExcludeButton: UIButton?
 	var quest: QuestUserDefition?
 
+	var allFeatures: [PresetFeature] = [] // all features for current presetField
 	var includeFeatures: [(name: String, ident: String)] = []
 	var excludeFeatures: [(name: String, ident: String)] = []
 
@@ -47,7 +50,7 @@ class QuestBuilder: UIViewController, UICollectionViewDataSource, UICollectionVi
 
 	public class func instantiateWith(quest: QuestUserDefition) -> UIViewController {
 		let sb = UIStoryboard(name: "QuestBuilder", bundle: nil)
-		let vc = sb.instantiateViewController(withIdentifier: "QuestBuilder") as! QuestBuilder
+		let vc = sb.instantiateViewController(withIdentifier: "QuestBuilder") as! QuestBuilderController
 		vc.quest = quest
 		return vc
 	}
@@ -74,10 +77,6 @@ class QuestBuilder: UIViewController, UICollectionViewDataSource, UICollectionVi
 		if navigationController?.popViewController(animated: true) == nil {
 			dismiss(animated: true)
 		}
-	}
-
-	@objc func nameFieldDidChange(_ sender: Any?) {
-		saveButton?.isEnabled = (nameField?.text?.count ?? 0) > 0
 	}
 
 	override func viewDidLoad() {
@@ -119,10 +118,7 @@ class QuestBuilder: UIViewController, UICollectionViewDataSource, UICollectionVi
 					}
 					return key
 				})
-			let handler: (_: Any?) -> Void = { _ in
-				self.didAddAllInclude(nil)
-				self.didRemoveAllExclude(nil)
-			}
+			let handler: (_: Any?) -> Void = { _ in self.presetKeyChanged() }
 			let presetItems: [UIAction] = Array(Set(keys))
 				.sorted()
 				.map { UIAction(title: "\($0)", handler: handler) }
@@ -146,26 +142,71 @@ class QuestBuilder: UIViewController, UICollectionViewDataSource, UICollectionVi
 					action.state = .on
 				}
 			}
+			allFeatures = allFeaturesWithKey(quest.presetKey)
+		} else {
+			if #available(iOS 15.0, *) {
+				allFeatures = allFeaturesWithKey(presetField?.menu?.selectedElements.first?.title ?? "")
+			}
+		}
+
+		setupAddOneMenu(button: addOneIncludeButton!,
+		                featureList: { self.includeFeatures },
+		                featureView: includeFeaturesView!,
+		                addFeature: { self.includeFeatures.append($0) })
+		setupAddOneMenu(button: addOneExcludeButton!,
+		                featureList: { self.excludeFeatures },
+		                featureView: excludeFeaturesView!,
+		                addFeature: { self.excludeFeatures.append($0) })
+	}
+
+	private func setupAddOneMenu(button: UIButton,
+	                             featureList: @escaping () -> [(name: String, ident: String)],
+	                             featureView: UICollectionView,
+	                             addFeature: @escaping ((name: String, ident: String)) -> Void)
+	{
+		if #available(iOS 15.0, *) {
+			let deferred = UIDeferredMenuElement.uncached { completion in
+				let featureList = featureList()
+				let items: [UIAction] = self.allFeatures
+					.map { feature in UIAction(title: "\(feature.name)", handler: { _ in
+						let newFeature = (feature.name, feature.featureID)
+						if !featureList.contains(where: { $0.ident == newFeature.1 }) {
+							addFeature(newFeature)
+						}
+						featureView.reloadData()
+					}) }
+				completion(items)
+			}
+			button.menu = UIMenu(children: [
+				UIAction(title: "", handler: { _ in }),
+				deferred
+			])
+			button.showsMenuAsPrimaryAction = true
+			button.setTitle("+", for: .normal)
 		}
 	}
 
+	func presetKeyChanged() {
+		if let key = presetField?.title(for: .normal) {
+			allFeatures = allFeaturesWithKey(key)
+		}
+		self.didAddAllInclude(nil)
+		self.didRemoveAllExclude(nil)
+	}
+
 	@IBAction func didAddAllInclude(_ sender: Any?) {
-		guard let key = presetField?.title(for: .normal) else { return }
-		let features = allFeaturesWithKey(key)
-		includeFeatures = features.map { ($0.name, $0.featureID) }.sorted(by: { a, b in a.name < b.name })
+		includeFeatures = allFeatures.map { ($0.name, $0.featureID) }
 		includeFeaturesView?.reloadData()
+	}
+
+	@IBAction func didAddAllExclude(_ sender: Any?) {
+		excludeFeatures = allFeatures.map { ($0.name, $0.featureID) }
+		excludeFeaturesView?.reloadData()
 	}
 
 	@IBAction func didRemoveAllInclude(_ sender: Any?) {
 		includeFeatures = []
 		includeFeaturesView?.reloadData()
-	}
-
-	@IBAction func didAddAllExclude(_ sender: Any?) {
-		guard let key = presetField?.title(for: .normal) else { return }
-		let features = allFeaturesWithKey(key)
-		excludeFeatures = features.map { ($0.name, $0.featureID) }.sorted(by: { a, b in a.name < b.name })
-		excludeFeaturesView?.reloadData()
 	}
 
 	@IBAction func didRemoveAllExclude(_ sender: Any?) {
@@ -183,7 +224,7 @@ class QuestBuilder: UIViewController, UICollectionViewDataSource, UICollectionVi
 			}
 			return nil
 		}
-		return presets
+		return presets.sorted(by: { a, b in a.name < b.name })
 	}
 
 	override func viewDidLayoutSubviews() {
@@ -232,7 +273,16 @@ class QuestBuilder: UIViewController, UICollectionViewDataSource, UICollectionVi
 		return cell
 	}
 
-	// MARK: keyboard appeared
+	@objc func nameFieldDidChange(_ sender: Any?) {
+		saveButton?.isEnabled = (nameField?.text?.count ?? 0) > 0
+	}
+
+	// MARK: keyboard
+
+	@objc func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		textField.resignFirstResponder()
+		return false
+	}
 
 	func registerKeyboardNotifications() {
 		NotificationCenter.default.addObserver(self,

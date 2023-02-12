@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Quest Builder-->
+        <!--Quest Builder Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController storyboardIdentifier="QuestBuilder" id="Y6W-OH-hqX" customClass="QuestBuilder" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="QuestBuilder" id="Y6W-OH-hqX" customClass="QuestBuilderController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -150,6 +150,9 @@
                                                                 <rect key="frame" x="67.666666666666686" y="0.0" width="108.33333333333331" height="34.333333333333336"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="plain" title="Remove All"/>
+                                                                <connections>
+                                                                    <action selector="didRemoveAllInclude:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="CcN-kV-Dwd"/>
+                                                                </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FRf-jj-b4b">
                                                                 <rect key="frame" x="166" y="0.0" width="34.333333333333343" height="34.333333333333336"/>
@@ -272,7 +275,6 @@
                                                                 <buttonConfiguration key="configuration" style="plain" title="Remove All"/>
                                                                 <connections>
                                                                     <action selector="didRemoveAllExclude:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="ib9-aq-4Gs"/>
-                                                                    <action selector="didRemoveAllInclude:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="zUE-Nb-s60"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kyg-qX-HOE">
@@ -320,6 +322,9 @@
                                                         <rect key="frame" x="0.0" y="20.333333333333265" width="353" height="107.66666666666669"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="Y6W-OH-hqX" id="fo7-c8-QIk"/>
+                                                        </connections>
                                                     </textField>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -376,6 +381,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addOneExcludeButton" destination="Kyg-qX-HOE" id="bhq-WR-wWO"/>
+                        <outlet property="addOneIncludeButton" destination="FRf-jj-b4b" id="oAR-Mb-t0C"/>
                         <outlet property="excludeFeaturesHeightConstraint" destination="fT2-4M-ppG" id="eE8-B3-kzr"/>
                         <outlet property="excludeFeaturesView" destination="MPZ-Nh-kjH" id="Biu-Py-Ic1"/>
                         <outlet property="includeFeaturesHeightConstraint" destination="esc-NC-I4p" id="0Uk-t4-iRe"/>

@@ -22,7 +22,7 @@ class QuestChooserTableCell: UITableViewCell {
 class BuildYourOwnQuestTableCell: UITableViewCell {
 	var vc: UIViewController?
 	@IBAction func didPress(_ sender: Any) {
-		let vc2 = QuestBuilder.instantiateNew()
+		let vc2 = QuestBuilderController.instantiateNew()
 		vc?.present(vc2, animated: true)
 	}
 }
@@ -97,7 +97,7 @@ class QuestChooserController: UITableViewController {
 		   let title = cell.title?.text,
 		   let quest = QuestList.shared.userQuests.first(where: { $0.title == title })
 		{
-			let vc = QuestBuilder.instantiateWith(quest: quest)
+			let vc = QuestBuilderController.instantiateWith(quest: quest)
 			navigationController?.pushViewController(vc, animated: true)
 		}
 	}
