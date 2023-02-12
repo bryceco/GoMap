@@ -2,11 +2,10 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment version="5376" identifier="iOS"/>
+        <deployment version="5120" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
-        <capability name="UIMenu" message="Requires Xcode 11 or later." minToolsVersion="11.0" requiredIntegratedClassName="UICommandDiff"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" ambiguous="YES" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="XNI-xS-8yh">
-                                        <rect key="frame" x="20" y="0.0" width="353" height="692.33333333333337"/>
+                                        <rect key="frame" x="20" y="0.0" width="353" height="631.33333333333337"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Build Your Own Quest" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44G-za-6lM">
                                                 <rect key="frame" x="0.0" y="0.0" width="353" height="33.666666666666664"/>
@@ -37,8 +36,8 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3bH-HQ-yyA">
-                                                <rect key="frame" x="0.0" y="104" width="353" height="128"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3bH-HQ-yyA" userLabel="Key selection">
+                                                <rect key="frame" x="0.0" y="104" width="353" height="67"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What key will you be setting with this quest? This is a tag key such as &quot;surface&quot;." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UtJ-Wh-nDa">
                                                         <rect key="frame" x="0.0" y="0.0" width="353" height="42.333333333333336"/>
@@ -47,12 +46,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zky-iv-Ndr">
-                                                        <rect key="frame" x="0.0" y="42.33333333333335" width="353" height="85.666666666666686"/>
-                                                        <menu key="menu" id="tV4-fa-TwO">
-                                                            <children>
-                                                                <command title="Select" id="HH2-zV-rgg"/>
-                                                            </children>
-                                                        </menu>
+                                                        <rect key="frame" x="0.0" y="42.333333333333343" width="353" height="24.666666666666671"/>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="filled"/>
                                                     </button>
@@ -69,7 +63,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eKj-3l-pdY" userLabel="Include Features View">
-                                                <rect key="frame" x="0.0" y="257" width="353" height="128.66666666666663"/>
+                                                <rect key="frame" x="0.0" y="196" width="353" height="128.66666666666663"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ky4-Gk-al2">
                                                         <rect key="frame" x="0.0" y="5" width="353" height="64.333333333333329"/>
@@ -190,7 +184,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="caa-IJ-irj" userLabel="Exclude Features View">
-                                                <rect key="frame" x="0.0" y="410.66666666666663" width="353" height="128.66666666666663"/>
+                                                <rect key="frame" x="0.0" y="349.66666666666669" width="353" height="128.66666666666669"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Which features would you like to exclude from this quest?" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Bl-mh-rUO">
                                                         <rect key="frame" x="0.0" y="5" width="353" height="42.333333333333336"/>
@@ -314,7 +308,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tpG-3J-HeH" userLabel="Name View">
-                                                <rect key="frame" x="0.0" y="564.33333333333337" width="353" height="128"/>
+                                                <rect key="frame" x="0.0" y="503.33333333333337" width="353" height="128"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Provide a name for your quest:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xpT-OT-hKN" userLabel="Provide a unique name for your quest:">
                                                         <rect key="frame" x="0.0" y="0.0" width="353" height="20.333333333333332"/>

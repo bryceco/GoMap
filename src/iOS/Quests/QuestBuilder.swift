@@ -138,9 +138,9 @@ class QuestBuilder: UIViewController, UICollectionViewDataSource, UICollectionVi
 			excludeFeatures = quest.excludeFeatures.map { (features[$0]?.name ?? $0, $0) }
 			nameField?.text = quest.title
 			presetField?.setTitle(quest.presetKey, for: .normal)
-			if #available(iOS 15.0, *) {
+			if #available(iOS 14.0, *) {
 				// select the current presetKey
-				if let item = presetField?.menu?.children.first(where: {$0.title == quest.presetKey}),
+				if let item = presetField?.menu?.children.first(where: { $0.title == quest.presetKey }),
 				   let action = item as? UIAction
 				{
 					action.state = .on
