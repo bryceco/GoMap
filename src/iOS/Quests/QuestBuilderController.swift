@@ -57,7 +57,8 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 
 	@IBAction func onSave(_ sender: Any?) {
 		do {
-			let quest = QuestUserDefition(title: nameField!.text!,
+			let name = nameField!.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+			let quest = QuestUserDefition(title: name,
 			                              presetKey: presetField!.title(for: .normal)!,
 			                              includeFeatures: includeFeatures.map { $0.ident },
 			                              excludeFeatures: excludeFeatures.map { $0.ident })
@@ -227,6 +228,10 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 			for fieldName in fields {
 				guard let field = PresetsDatabase.shared.presetFields[fieldName] else { continue }
 				if field.key == key {
+					// ignore if this field was included because it's a reference
+					if field.reference?["key"] == key {
+						continue
+					}
 					return feature
 				}
 			}
@@ -282,7 +287,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 	}
 
 	@objc func nameFieldDidChange(_ sender: Any?) {
-		saveButton?.isEnabled = (nameField?.text?.count ?? 0) > 0
+		saveButton?.isEnabled = (nameField?.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count ?? 0) > 0
 	}
 
 	// MARK: keyboard
