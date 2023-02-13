@@ -147,7 +147,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		} else {
 			if #available(iOS 15.0, *) {
 				let key = presetField?.menu?.selectedElements.first?.title ?? ""
-				allFeatures = allFeaturesWithKey(key,									 more: false)
+				allFeatures = allFeaturesWithKey(key, more: false)
 			}
 		}
 
@@ -191,8 +191,8 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 	func presetKeyChanged() {
 		let key = presetField!.title(for: .normal)!
 		allFeatures = allFeaturesWithKey(key, more: false)
-		self.didAddAllInclude(nil)
-		self.didRemoveAllExclude(nil)
+		didAddAllInclude(nil)
+		didRemoveAllExclude(nil)
 	}
 
 	@IBAction func didAddMoreInclude(_ sender: Any?) {
@@ -287,7 +287,8 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 	}
 
 	@objc func nameFieldDidChange(_ sender: Any?) {
-		saveButton?.isEnabled = (nameField?.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count ?? 0) > 0
+		saveButton?
+			.isEnabled = (nameField?.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count ?? 0) > 0
 	}
 
 	// MARK: keyboard

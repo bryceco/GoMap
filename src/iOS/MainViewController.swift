@@ -10,13 +10,13 @@ import CoreLocation
 import SafariServices
 import UIKit
 
-enum BUTTON_LAYOUT: Int {
-	case _ADD_ON_LEFT
-	case _ADD_ON_RIGHT
+enum MainViewButtonLayout: Int {
+	case buttonsOnLeft
+	case buttonsOnRight
 }
 
 class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureRecognizerDelegate,
-	UIContextMenuInteractionDelegate, UIPointerInteractionDelegate
+	UIContextMenuInteractionDelegate, UIPointerInteractionDelegate, UIAdaptivePresentationControllerDelegate
 {
 	@IBOutlet var uploadButton: UIButton!
 	@IBOutlet var undoButton: UIButton!
@@ -30,38 +30,9 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 	override var shouldAutorotate: Bool { true }
 	override var supportedInterfaceOrientations: UIInterfaceOrientationMask { .all }
 
-	var buttonLayout: BUTTON_LAYOUT! {
+	var buttonLayout: MainViewButtonLayout! {
 		didSet {
-			UserDefaults.standard.set(buttonLayout.rawValue, forKey: "buttonLayout")
-
-			let left = buttonLayout == ._ADD_ON_LEFT
-			let attribute: NSLayoutConstraint.Attribute = left ? .leading : .trailing
-			let addButton = mapView.addNodeButton
-			let superview = addButton?.superview
-			for c in superview?.constraints ?? [] {
-				if (c.firstItem as? UIView) != addButton {
-					continue
-				}
-				if !((c.secondItem is UILayoutGuide) || (c.secondItem is UIView)) {
-					continue
-				}
-				if c.firstAttribute == .leading || c.firstAttribute == .trailing,
-				   c.secondAttribute == .leading || c.secondAttribute == .trailing
-				{
-					superview?.removeConstraint(c)
-					let c2 = NSLayoutConstraint(
-						item: c.firstItem as Any,
-						attribute: attribute,
-						relatedBy: .equal,
-						toItem: c.secondItem,
-						attribute: attribute,
-						multiplier: 1.0,
-						constant: CGFloat(left ? abs(Float(c.constant)) : -abs(Float(c.constant))))
-					superview?.addConstraint(c2)
-					return
-				}
-			}
-			assertionFailure() // didn't find the constraint
+			updateButtonPositionsFor(layout: buttonLayout)
 		}
 	}
 
@@ -91,6 +62,41 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		uploadButton.isEnabled = changeCount > 0
 		uploadButton.isHidden = changeCount == 0
 	}
+
+	func updateButtonPositionsFor(layout: MainViewButtonLayout) {
+		UserDefaults.standard.set(layout.rawValue, forKey: "buttonLayout")
+
+		let isLeft = layout == .buttonsOnLeft
+		let attribute: NSLayoutConstraint.Attribute = isLeft ? .leading : .trailing
+		let addButton = mapView.addNodeButton
+		let superview = addButton?.superview
+		for c in superview?.constraints ?? [] {
+			if (c.firstItem as? UIView) != addButton {
+				continue
+			}
+			if !((c.secondItem is UILayoutGuide) || (c.secondItem is UIView)) {
+				continue
+			}
+			if c.firstAttribute == .leading || c.firstAttribute == .trailing,
+			   c.secondAttribute == .leading || c.secondAttribute == .trailing
+			{
+				superview?.removeConstraint(c)
+				let c2 = NSLayoutConstraint(
+					item: c.firstItem as Any,
+					attribute: attribute,
+					relatedBy: .equal,
+					toItem: c.secondItem,
+					attribute: attribute,
+					multiplier: 1.0,
+					constant: CGFloat(isLeft ? abs(Float(c.constant)) : -abs(Float(c.constant))))
+				superview?.addConstraint(c2)
+				return
+			}
+		}
+		assertionFailure() // didn't find the constraint
+	}
+
+	// MARK: Initialization
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -122,30 +128,15 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			object: nil)
 	}
 
-	func setupAccessibility() {
-		locationButton.accessibilityIdentifier = "location_button"
-		undoButton.accessibilityLabel = NSLocalizedString("Undo", comment: "")
-		redoButton.accessibilityLabel = NSLocalizedString("Redo", comment: "")
-		settingsButton.accessibilityLabel = NSLocalizedString("Settings", comment: "")
-		uploadButton.accessibilityLabel = NSLocalizedString("Upload your changes", comment: "")
-		displayButton.accessibilityLabel = NSLocalizedString("Display options", comment: "")
-	}
-
-	override func viewDidLayoutSubviews() {
-		// Set button shadows, colors, etc.
-		// Need to do this after layout to propery support dynamic text
-		setButtonAppearances()
-	}
-
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		navigationController?.isNavigationBarHidden = true
 
 		// update button layout constraints
 		UserDefaults.standard.register(defaults: [
-			"buttonLayout": NSNumber(value: BUTTON_LAYOUT._ADD_ON_RIGHT.rawValue)
+			"buttonLayout": NSNumber(value: MainViewButtonLayout.buttonsOnRight.rawValue)
 		])
-		buttonLayout = BUTTON_LAYOUT(rawValue: UserDefaults.standard.integer(forKey: "buttonLayout"))
+		buttonLayout = MainViewButtonLayout(rawValue: UserDefaults.standard.integer(forKey: "buttonLayout"))
 
 		if #available(iOS 13.4, macCatalyst 13.0, *) {
 			// mouseover support for Mac Catalyst and iPad:
@@ -164,6 +155,37 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			mapView.addGestureRecognizer(rightClick)
 #endif
 		}
+	}
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+#if USER_MOVABLE_BUTTONS
+		makeMovableButtons()
+#endif
+
+		// this is necessary because we need the frame to be set on the view before we set the previous lat/lon for the view
+		mapView.viewDidAppear()
+	}
+
+	func setupAccessibility() {
+		locationButton.accessibilityIdentifier = "location_button"
+		undoButton.accessibilityLabel = NSLocalizedString("Undo", comment: "")
+		redoButton.accessibilityLabel = NSLocalizedString("Redo", comment: "")
+		settingsButton.accessibilityLabel = NSLocalizedString("Settings", comment: "")
+		uploadButton.accessibilityLabel = NSLocalizedString("Upload your changes", comment: "")
+		displayButton.accessibilityLabel = NSLocalizedString("Display options", comment: "")
+	}
+
+	// MARK: Notifications
+
+	override func viewDidLayoutSubviews() {
+		// Set button shadows, colors, etc.
+		// Need to do this after layout to propery support dynamic text
+		setButtonAppearances()
+	}
+
+	func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+		print("\(presentationController)")
 	}
 
 	@objc func rightClick(_ recognizer: UIGestureRecognizer) {
@@ -255,6 +277,8 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		}
 	}
 #endif
+
+	// MARK: Button configuration
 
 	func setButtonAppearances() {
 		// Update button styling
@@ -382,6 +406,8 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 #endif
 	}
 
+	// MARK: User-movable buttons
+
 #if USER_MOVABLE_BUTTONS
 	func removeConstrains(on view: UIView?) {
 		var superview = view?.superview
@@ -456,39 +482,6 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 	}
 #endif
 
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-#if USER_MOVABLE_BUTTONS
-		makeMovableButtons()
-#endif
-
-		// this is necessary because we need the frame to be set on the view before we set the previous lat/lon for the view
-		mapView.viewDidAppear()
-
-#if DEBUG
-		do {
-			let vc = QuestBuilderController.instantiateNew()
-			present(vc, animated: true)
-		}
-#endif
-
-#if false && DEBUG
-		let speech = SpeechBalloonView(text: "Press here to create a new node,\nor to begin a way")
-		speech.targetView = toolbar
-		view.addSubview(speech)
-#endif
-	}
-
-	@IBAction func openHelp() {
-		let urlAsString = "https://wiki.openstreetmap.org/w/index.php?title=Go_Map!!&mobileaction=toggle_view_mobile"
-		guard let url = URL(string: urlAsString) else { return }
-
-		let safariViewController = SFSafariViewController(url: url)
-		safariViewController.modalPresentationStyle = .pageSheet
-		safariViewController.popoverPresentationController?.sourceView = view
-		present(safariViewController, animated: true)
-	}
-
 	// MARK: Keyboard shortcuts
 
 	override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
@@ -539,6 +532,16 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 	// MARK: Gesture recognizers
 
+	// disable gestures inside toolbar buttons
+	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+		// http://stackoverflow.com/questions/3344341/uibutton-inside-a-view-that-has-a-uitapgesturerecognizer
+		if (touch.view is UIControl) || (touch.view is UIToolbar) {
+			// we touched a button, slider, or other UIControl
+			return false // ignore the touch
+		}
+		return true // handle the touch
+	}
+
 	func installGestureRecognizer(_ gesture: UIGestureRecognizer, on button: UIButton) {
 		if (button.gestureRecognizers?.count ?? 0) == 0 {
 			button.addGestureRecognizer(gesture)
@@ -547,68 +550,85 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 	@objc func displayButtonLongPressGesture(_ recognizer: UILongPressGestureRecognizer) {
 		if recognizer.state == .began {
-			// show the most recently used aerial imagery
-			let tileServerlList = mapView.tileServerList
-			let actionSheet = UIAlertController(
-				title: NSLocalizedString("Recent Aerial Imagery", comment: "Alert title message"),
-				message: nil,
-				preferredStyle: .actionSheet)
-			for service in tileServerlList.recentlyUsed() {
-				actionSheet.addAction(UIAlertAction(title: service.name, style: .default, handler: { [self] _ in
-					tileServerlList.currentServer = service
-					mapView.setAerialTileServer(service)
-					if mapView.viewState == MapViewState.EDITOR {
-						mapView.viewState = MapViewState.EDITORAERIAL
-					} else if mapView.viewState == MapViewState.MAPNIK {
-						mapView.viewState = MapViewState.EDITORAERIAL
-					}
-				}))
-			}
-
-			// add options for changing display
-			let prefix = "🌐 "
-			let editorOnly = UIAlertAction(
-				title: prefix + NSLocalizedString("Editor only", comment: ""),
-				style: .default,
-				handler: { [self] _ in
-					mapView.viewState = MapViewState.EDITOR
-				})
-			let aerialOnly = UIAlertAction(
-				title: prefix + NSLocalizedString("Aerial only", comment: ""),
-				style: .default,
-				handler: { [self] _ in
-					mapView.viewState = MapViewState.AERIAL
-				})
-			let editorAerial = UIAlertAction(
-				title: prefix + NSLocalizedString("Editor with Aerial", comment: ""),
-				style: .default,
-				handler: { [self] _ in
-					mapView.viewState = MapViewState.EDITORAERIAL
-				})
-
-			switch mapView.viewState {
-			case .EDITOR:
-				actionSheet.addAction(editorAerial)
-				actionSheet.addAction(aerialOnly)
-			case .EDITORAERIAL:
-				actionSheet.addAction(editorOnly)
-				actionSheet.addAction(aerialOnly)
-			case .AERIAL:
-				actionSheet.addAction(editorAerial)
-				actionSheet.addAction(editorOnly)
-			case .MAPNIK:
-				actionSheet.addAction(editorAerial)
-				actionSheet.addAction(editorOnly)
-				actionSheet.addAction(aerialOnly)
-			}
-
-			actionSheet
-				.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
-			present(actionSheet, animated: true)
-			// set location of popup
-			actionSheet.popoverPresentationController?.sourceView = displayButton
-			actionSheet.popoverPresentationController?.sourceRect = displayButton.bounds
+			showPopupToSelectFromRecentAerialImagery()
 		}
+	}
+
+	func showPopupToSelectFromRecentAerialImagery() {
+		// show the most recently used aerial imagery
+		let tileServerlList = mapView.tileServerList
+		let actionSheet = UIAlertController(
+			title: NSLocalizedString("Recent Aerial Imagery", comment: "Alert title message"),
+			message: nil,
+			preferredStyle: .actionSheet)
+		for service in tileServerlList.recentlyUsed() {
+			actionSheet.addAction(UIAlertAction(title: service.name, style: .default, handler: { [self] _ in
+				tileServerlList.currentServer = service
+				mapView.setAerialTileServer(service)
+				if mapView.viewState == MapViewState.EDITOR {
+					mapView.viewState = MapViewState.EDITORAERIAL
+				} else if mapView.viewState == MapViewState.MAPNIK {
+					mapView.viewState = MapViewState.EDITORAERIAL
+				}
+			}))
+		}
+
+		// add options for changing display
+		let prefix = "🌐 "
+		let editorOnly = UIAlertAction(
+			title: prefix + NSLocalizedString("Editor only", comment: ""),
+			style: .default,
+			handler: { [self] _ in
+				mapView.viewState = MapViewState.EDITOR
+			})
+		let aerialOnly = UIAlertAction(
+			title: prefix + NSLocalizedString("Aerial only", comment: ""),
+			style: .default,
+			handler: { [self] _ in
+				mapView.viewState = MapViewState.AERIAL
+			})
+		let editorAerial = UIAlertAction(
+			title: prefix + NSLocalizedString("Editor with Aerial", comment: ""),
+			style: .default,
+			handler: { [self] _ in
+				mapView.viewState = MapViewState.EDITORAERIAL
+			})
+
+		switch mapView.viewState {
+		case .EDITOR:
+			actionSheet.addAction(editorAerial)
+			actionSheet.addAction(aerialOnly)
+		case .EDITORAERIAL:
+			actionSheet.addAction(editorOnly)
+			actionSheet.addAction(aerialOnly)
+		case .AERIAL:
+			actionSheet.addAction(editorAerial)
+			actionSheet.addAction(editorOnly)
+		case .MAPNIK:
+			actionSheet.addAction(editorAerial)
+			actionSheet.addAction(editorOnly)
+			actionSheet.addAction(aerialOnly)
+		}
+
+		actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+		                                    style: .cancel,
+		                                    handler: nil))
+		present(actionSheet, animated: true)
+		// set location of popup
+		actionSheet.popoverPresentationController?.sourceView = displayButton
+		actionSheet.popoverPresentationController?.sourceRect = displayButton.bounds
+	}
+
+	// MARK: Other stuff
+
+	@IBAction func openHelp() {
+		let urlAsString = "https://wiki.openstreetmap.org/w/index.php?title=Go_Map!!&mobileaction=toggle_view_mobile"
+		guard let url = URL(string: urlAsString) else { return }
+
+		let safariViewController = SFSafariViewController(url: url)
+		safariViewController.modalPresentationStyle = .pageSheet
+		safariViewController.popoverPresentationController?.sourceView = view
+		present(safariViewController, animated: true)
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -667,34 +687,26 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		}
 	}
 
-	// disable gestures inside toolbar buttons
-	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-		// http://stackoverflow.com/questions/3344341/uibutton-inside-a-view-that-has-a-uitapgesturerecognizer
-
-		if (touch.view is UIControl) || (touch.view is UIToolbar) {
-			// we touched a button, slider, or other UIControl
-			return false // ignore the touch
-		}
-		return true // handle the touch
-	}
-
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		// This is necessary so we can be notified if the user drags down
+		// to dismiss a view that we presented.
+		if let nav = segue.destination as? UINavigationController {
+			nav.presentationController?.delegate = self
+		}
+
 		if sender is OsmNoteMarker {
 			let vc: NotesTableViewController
 			if let dest = segue.destination as? NotesTableViewController {
 				/// The `NotesTableViewController` is presented directly.
 				vc = dest
-			} else if let navigationController = segue.destination as? UINavigationController {
-				if let dest = navigationController.viewControllers.first as? NotesTableViewController {
-					/// The `NotesTableViewController` is wrapped in an `UINavigationController´.
-					vc = dest
-				} else {
-					return
-				}
+			} else if let navigationController = segue.destination as? UINavigationController,
+			          let dest = navigationController.viewControllers.first as? NotesTableViewController
+			{
+				/// The `NotesTableViewController` is wrapped in an `UINavigationController´.
+				vc = dest
 			} else {
 				return
 			}
-
 			vc.note = sender as? OsmNoteMarker
 			vc.mapView = mapView
 		}

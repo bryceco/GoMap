@@ -34,14 +34,14 @@ class DisplayViewController: UITableViewController {
 			title: NSLocalizedString("Left side", comment: "Left-hand side of screen"),
 			style: .default,
 			handler: { _ in
-				AppDelegate.shared.mapView.mainViewController.buttonLayout = BUTTON_LAYOUT._ADD_ON_LEFT
+				AppDelegate.shared.mapView.mainViewController.buttonLayout = .buttonsOnLeft
 				self.setButtonLayoutTitle()
 			}))
 		alert.addAction(UIAlertAction(
 			title: NSLocalizedString("Right side", comment: "Right-hand side of screen"),
 			style: .default,
 			handler: { _ in
-				AppDelegate.shared.mapView.mainViewController.buttonLayout = BUTTON_LAYOUT._ADD_ON_RIGHT
+				AppDelegate.shared.mapView.mainViewController.buttonLayout = .buttonsOnRight
 				self.setButtonLayoutTitle()
 			}))
 		present(alert, animated: true)
@@ -88,8 +88,8 @@ class DisplayViewController: UITableViewController {
 	}
 
 	func setButtonLayoutTitle() {
-		let title = AppDelegate.shared.mapView.mainViewController.buttonLayout == BUTTON_LAYOUT
-			._ADD_ON_LEFT ? NSLocalizedString(
+		let title = AppDelegate.shared.mapView.mainViewController.buttonLayout == MainViewButtonLayout
+			.buttonsOnLeft ? NSLocalizedString(
 				"Left",
 				comment: "") : NSLocalizedString("Right", comment: "")
 		addButtonPosition.setTitle(title, for: .normal)
