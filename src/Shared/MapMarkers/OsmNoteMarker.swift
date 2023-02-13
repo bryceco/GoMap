@@ -37,7 +37,7 @@ class OsmNoteMarker: MapMarker {
 		return "note-\(noteId)"
 	}
 
-	override func shouldHide() -> Bool {
+	func shouldHide() -> Bool {
 		return status == "closed"
 	}
 

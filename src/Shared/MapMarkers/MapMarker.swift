@@ -42,10 +42,6 @@ class MapMarker {
 		self.lon = lon
 	}
 
-	func shouldHide() -> Bool {
-		return false
-	}
-
 	var buttonLabel: String { fatalError() }
 	var buttonIcon: UIImage? { nil }
 

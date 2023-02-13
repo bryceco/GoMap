@@ -25,7 +25,7 @@ final class MapMarkerDatabase {
 		markerForIdentifier.removeAll()
 	}
 
-	func refresh(object: OsmBaseObject) -> [MapMarker] {
+	func refreshMarkersFor(object: OsmBaseObject) -> [MapMarker] {
 		let remove = markerForIdentifier.compactMap { k, v in v.object === object ? k : nil }
 		for k in remove {
 			markerForIdentifier.removeValue(forKey: k)
@@ -47,6 +47,8 @@ final class MapMarkerDatabase {
 		return list
 	}
 
+	// MARK: marker type-specific update functions
+
 	/// This is called when we get a new marker. If it is an update to an existing marker then
 	/// we need to delete the reference to the previous tag, so the button can be replaced.
 	func addOrUpdate(marker newMarker: MapMarker) {
@@ -57,7 +59,7 @@ final class MapMarkerDatabase {
 		markerForIdentifier[newMarker.markerIdentifier] = newMarker
 	}
 
-	func updateFixmeMarkers(forRegion box: OSMRect, mapData: OsmMapData) {
+	func addFixmeMarkers(forRegion box: OSMRect, mapData: OsmMapData) {
 		mapData.enumerateObjects(inRegion: box, block: { [self] obj in
 			if let fixme = FixmeMarker.fixmeTag(obj) {
 				let marker = FixmeMarker(object: obj, text: fixme)
@@ -66,7 +68,7 @@ final class MapMarkerDatabase {
 		})
 	}
 
-	func updateQuestMarkers(forRegion box: OSMRect, mapData: OsmMapData) {
+	func addQuestMarkers(forRegion box: OSMRect, mapData: OsmMapData) {
 		mapData.enumerateObjects(inRegion: box, block: { obj in
 			for quest in QuestList.shared.questsForObject(obj) {
 				let marker = QuestMarker(object: obj, quest: quest)
@@ -75,7 +77,7 @@ final class MapMarkerDatabase {
 		})
 	}
 
-	func updateGpxWaypoints() {
+	func addGpxWaypoints() {
 		DispatchQueue.main.async(execute: { [self] in
 			for track in AppDelegate.shared.mapView.gpxLayer.allTracks() {
 				for point in track.wayPoints {
@@ -86,7 +88,7 @@ final class MapMarkerDatabase {
 		})
 	}
 
-	func updateKeepRight(forRegion box: OSMRect, mapData: OsmMapData, completion: @escaping () -> Void) {
+	func addRight(forRegion box: OSMRect, mapData: OsmMapData, completion: @escaping () -> Void) {
 		let template =
 			"https://keepright.at/export.php?format=gpx&ch=0,30,40,70,90,100,110,120,130,150,160,180,191,192,193,194,195,196,197,198,201,202,203,204,205,206,207,208,210,220,231,232,270,281,282,283,284,285,291,292,293,294,295,296,297,298,311,312,313,320,350,370,380,401,402,411,412,413&left=%f&bottom=%f&right=%f&top=%f"
 		let url = String(
@@ -112,6 +114,8 @@ final class MapMarkerDatabase {
 		})
 	}
 
+	// MARK: update markers
+
 	struct MapMarkerSet: OptionSet {
 		let rawValue: Int
 		static let notes = MapMarkerSet(rawValue: 1 << 0)
@@ -120,39 +124,41 @@ final class MapMarkerDatabase {
 		static let gpx = MapMarkerSet(rawValue: 1 << 3)
 	}
 
+	func removeMarkers(where predicate: (MapMarker) -> Bool) {
+		let remove = markerForIdentifier.compactMap { key, marker in predicate(marker) ? key : nil }
+		for key in remove {
+			markerForIdentifier.removeValue(forKey: key)
+		}
+	}
+
 	func updateMarkers(
 		forRegion box: OSMRect,
 		mapData: OsmMapData,
 		including: MapMarkerSet,
 		completion: @escaping () -> Void)
 	{
-		var remove = [String]()
 		if including.contains(.fixme) {
-			updateFixmeMarkers(forRegion: box, mapData: mapData)
+			removeMarkers(where: { ($0 as? FixmeMarker)?.shouldHide() ?? false })
+			addFixmeMarkers(forRegion: box, mapData: mapData)
 		} else {
-			remove += markerForIdentifier.compactMap { k, v in v is FixmeMarker ? k : nil }
+			removeMarkers(where: { $0 is FixmeMarker })
 		}
 		if including.contains(.quest) {
-			updateQuestMarkers(forRegion: box, mapData: mapData)
+			addQuestMarkers(forRegion: box, mapData: mapData)
 		} else {
-			remove += markerForIdentifier.compactMap { k, v in v is QuestMarker ? k : nil }
+			removeMarkers(where: { $0 is QuestMarker })
 		}
 		if including.contains(.gpx) {
-			updateGpxWaypoints()
+			addGpxWaypoints()
 		} else {
-			remove += markerForIdentifier.compactMap { k, v in v is WayPointMarker ? k : nil }
+			removeMarkers(where: { $0 is WayPointMarker })
 		}
 		if including.contains(.notes) {
-			updateNoteMarkers(forRegion: box, completion: completion)
+			removeMarkers(where: { ($0 as? OsmNoteMarker)?.shouldHide() ?? false })
+			addNoteMarkers(forRegion: box, completion: completion)
 		} else {
-			remove += markerForIdentifier.compactMap { k, v in v is OsmNoteMarker ? k : nil }
-			DispatchQueue.main.async {
-				// call this after we've removed items
-				completion()
-			}
-		}
-		for key in remove {
-			markerForIdentifier.removeValue(forKey: key)
+			removeMarkers(where: { $0 is OsmNoteMarker })
+			completion()
 		}
 	}
 
@@ -183,7 +189,7 @@ final class MapMarkerDatabase {
 
 // Notes functions
 extension MapMarkerDatabase {
-	func updateNoteMarkers(forRegion box: OSMRect, completion: @escaping () -> Void) {
+	func addNoteMarkers(forRegion box: OSMRect, completion: @escaping () -> Void) {
 		let url = OSM_API_URL +
 			"api/0.6/notes?closed=0&bbox=\(box.origin.x),\(box.origin.y),\(box.origin.x + box.size.width),\(box.origin.y + box.size.height)"
 		if let url1 = URL(string: url) {

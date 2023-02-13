@@ -15,7 +15,17 @@ class QuestChooserTableCell: UITableViewCell {
 
 	@IBAction func didSwitch(_ sender: Any) {
 		guard let quest = quest else { return }
-		QuestList.shared.setEnabled(quest, (sender as! UISwitch).isOn)
+		let enabled = (sender as! UISwitch).isOn
+
+		// update quest list database
+		QuestList.shared.setEnabled(quest, enabled)
+
+		// also update markers database
+		if !enabled {
+			AppDelegate.shared.mapView.mapMarkerDatabase.removeMarkers(where: {
+				marker in (marker as? QuestMarker)?.quest.ident == quest.ident
+			})
+		}
 	}
 }
 
@@ -35,21 +45,13 @@ class QuestChooserController: UITableViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		// Need to reload here in case the user created a new quest type
 		tableView.reloadData()
 	}
 
-	@IBAction func Cancel(with sender: Any) {
-		dismiss(animated: true, completion: nil)
-		if let mapView = AppDelegate.shared.mapView {
-			mapView.editorLayer.selectedNode = nil
-			mapView.editorLayer.selectedWay = nil
-			mapView.editorLayer.selectedRelation = nil
-			mapView.placePushpinForSelection()
-		}
-	}
-
-	@IBAction func Accept(with sender: Any) {
-		dismiss(animated: true, completion: nil)
+	override func viewWillDisappear(_ animated: Bool) {
+		// Update markers for newly added quests
+		AppDelegate.shared.mapView.updateMapMarkersFromServer(withDelay: 0.0, including: .quest)
 	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {

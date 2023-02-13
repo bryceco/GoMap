@@ -18,11 +18,6 @@ class QuestMarker: MapMarker {
 		return ident
 	}
 
-	override func shouldHide() -> Bool {
-		guard let object = object else { return true }
-		return !quest.appliesTo(object)
-	}
-
 	override var buttonLabel: String { "Q" }
 	override var buttonIcon: UIImage? { quest.icon }
 

@@ -86,7 +86,7 @@ class KeepRightMarker: MapMarker {
 		button = nil
 	}
 
-	override func shouldHide() -> Bool {
+	func shouldHide() -> Bool {
 		return Self.ignoreList.contains(keepRightID)
 	}
 

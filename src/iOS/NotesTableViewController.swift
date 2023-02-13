@@ -155,7 +155,9 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 				note = newNote
 				DispatchQueue.main.async(execute: { [self] in
 					done(nil)
-					mapView.refreshMapMarkerButtonsFromDatabase()
+					// remove note markers that are now resolved
+					mapView.mapMarkerDatabase.removeMarkers(where: { ($0 as? OsmNoteMarker)?.shouldHide() ?? false })
+					mapView.updateMapMarkerButtonPositions()
 				})
 			case let .failure(error):
 				let alert2 = UIAlertController(

@@ -185,7 +185,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 	}
 
 	func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-		print("\(presentationController)")
+		// We were just displayed so update map
 	}
 
 	@objc func rightClick(_ recognizer: UIGestureRecognizer) {

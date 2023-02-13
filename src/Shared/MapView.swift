@@ -292,7 +292,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			}
 
 			// We moved to a new location so update markers
-			refreshMapMarkerButtonsFromDatabase()
+			updateMapMarkerButtonPositions()
 		}
 	}
 
@@ -2310,6 +2310,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	// This performs an expensive update with a time delay, coalescing multiple calls
 	// into a single update.
 	func updateMapMarkersFromServer(withDelay delay: CGFloat, including: MapMarkerDatabase.MapMarkerSet) {
+		let delay = max(delay, 0.01)
 		var including = including
 		if including.isEmpty {
 			// compute the list
@@ -2328,32 +2329,26 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		mapMarkerDatabase.updateRegion(screenLatLonRect(),
 		                               withDelay: delay,
 		                               mapData: editorLayer.mapData,
-		                               including: including)
-		{
-			self.refreshMapMarkerButtonsFromDatabase()
-		}
+		                               including: including,
+		                               completion: {
+		                               	self.updateMapMarkerButtonPositions()
+		                               })
 	}
 
 	// This performs an inexpensive update using only data we've already downloaded
-	func refreshMapMarkerButtonsFromDatabase() {
+	func updateMapMarkerButtonPositions() {
 		// need this to disable implicit animation
 		UIView.performWithoutAnimation({
 			// update new and existing buttons
 			for marker in self.mapMarkerDatabase.allMapMarkers {
-				// Don't update unwanted buttons
-				if marker.shouldHide() {
-					marker.button = nil
-					continue
-				}
-
 				// Update the location of the button
-				updateButtonForMapMarker(marker: marker)
+				updateButtonPositionForMapMarker(marker: marker)
 			}
 		})
 	}
 
 	// Update the location of the button
-	private func updateButtonForMapMarker(marker: MapMarker) {
+	private func updateButtonPositionForMapMarker(marker: MapMarker) {
 		// create buttons that haven't been created
 		if marker.button == nil {
 			let button = marker.makeButton()
@@ -2366,14 +2361,15 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				// If marker is associated with an object then the marker needs to be
 				// updated when the object changes:
 				object.observer = { obj in
-					let markers = self.mapMarkerDatabase.refresh(object: obj)
+					let markers = self.mapMarkerDatabase.refreshMarkersFor(object: obj)
 					for marker in markers {
-						self.updateButtonForMapMarker(marker: marker)
+						self.updateButtonPositionForMapMarker(marker: marker)
 					}
 				}
 			}
 		}
 
+		// Set position of button
 		let button = marker.button!
 		let offsetX = (marker is KeepRightMarker) || (marker is FixmeMarker) ? 0.00001 : 0.0
 		let pos = mapTransform.screenPoint(
@@ -2755,7 +2751,7 @@ extension MapView: EditorMapLayerOwner {
 
 	func didUpdateObject() {
 		refreshPushpinText()
-		refreshMapMarkerButtonsFromDatabase()
+		updateMapMarkerButtonPositions()
 	}
 
 	func selectionDidChange() {

@@ -24,7 +24,7 @@ class FixmeMarker: MapMarker {
 		return nil
 	}
 
-	override func shouldHide() -> Bool {
+	func shouldHide() -> Bool {
 		guard let object = object else { return true }
 		return FixmeMarker.fixmeTag(object) == nil
 	}
