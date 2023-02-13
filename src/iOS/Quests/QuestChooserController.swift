@@ -101,4 +101,22 @@ class QuestChooserController: UITableViewController {
 			navigationController?.pushViewController(vc, animated: true)
 		}
 	}
+
+	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+		guard let cell = tableView.cellForRow(at: indexPath)
+		else { return false }
+		// Only user-defined cells have an accessoryType
+		return cell.accessoryType == .disclosureIndicator
+	}
+
+	override func tableView(_ tableView: UITableView,
+							commit editingStyle: UITableViewCell.EditingStyle,
+							forRowAt indexPath: IndexPath)
+	{
+		if editingStyle == .delete {
+			// Delete the row from the data source
+			QuestList.shared.remove(at: indexPath.row)
+			tableView.deleteRows(at: [indexPath], with: .fade)
+		}
+	}
 }

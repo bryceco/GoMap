@@ -87,6 +87,12 @@ class QuestList {
 		savePrefs()
 	}
 
+	func remove(at index: Int) {
+		let item = list.remove(at: index)
+		userQuests.removeAll(where: { $0.title == item.title })
+		savePrefs()
+	}
+
 	func questsForObject(_ object: OsmBaseObject) -> [QuestProtocol] {
 		return list.compactMap({ isEnabled($0) && $0.appliesTo(object) ? $0 : nil })
 	}
