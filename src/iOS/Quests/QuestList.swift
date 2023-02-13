@@ -13,7 +13,7 @@ class QuestList {
 
 	private(set) var list: [QuestProtocol]
 	private(set) var userQuests: [QuestUserDefition] = []
-	var enabled: [String: Bool] = [:]
+	private var enabled: [String: Bool] = [:]
 
 	init() {
 		do {
@@ -35,7 +35,7 @@ class QuestList {
 				includeFeatures: ["highway/footway/sidewalk"],
 				excludeFeatures: [])
 
-			let addPhoneNumber = QuestDefinition(
+			let addPhoneNumber = try QuestDefinition(
 				ident: "TelephoneNumber",
 				title: "Add Telephone Number",
 				icon: UIImage(named: "ic_quest_check_shop")!,
@@ -45,13 +45,15 @@ class QuestList {
 				accepts: { text in
 					text.unicodeScalars.compactMap { CharacterSet.decimalDigits.contains($0) ? true : nil }.count > 5
 				})
+
 			let addOpeningHours = try QuestDefinition(
 				ident: "OpeningHours",
 				title: "Add Opening Hours",
 				icon: UIImage(named: "ic_quest_check_shop")!,
 				presetKey: "opening_hours",
-				includeFeatures: [],
+				includeFeatures: [String](),
 				excludeFeatures: [])
+
 			list = [
 				addBuildingType,
 				addSidewalkSurface,

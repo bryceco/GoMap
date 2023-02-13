@@ -81,14 +81,14 @@ class QuestDefinition: QuestProtocol {
 	                 icon: UIImage,
 	                 presetKey: String, // The value the user is being asked to set
 	                 // The set of features the user is interested in (everything if empty)
-	                 includeFeatures: [PresetFeature],
-	                 excludeFeatures: [PresetFeature], // The set of features to exclude
+	                 includeFeaturePresets: [PresetFeature],
+	                 excludeFeaturePresets: [PresetFeature], // The set of features to exclude
 	                 accepts: @escaping ((String) -> Bool)) // This is acceptance criteria for a value the user typed in
 	{
 		typealias Validator = (OsmBaseObject) -> Bool
 
-		let includeFunc = Self.getMatchFunc(includeFeatures.map { $0.tags })
-		let excludeFunc = Self.getMatchFunc(excludeFeatures.map { $0.tags })
+		let includeFunc = Self.getMatchFunc(includeFeaturePresets.map { $0.tags })
+		let excludeFunc = Self.getMatchFunc(excludeFeaturePresets.map { $0.tags })
 		let applies: Validator = { obj in
 			obj.tags[presetKey] == nil && includeFunc(obj.tags) && !excludeFunc(obj.tags)
 		}
@@ -128,8 +128,8 @@ class QuestDefinition: QuestProtocol {
 		          title: title,
 		          icon: icon,
 		          presetKey: presetKey,
-		          includeFeatures: include,
-		          excludeFeatures: exclude,
+		          includeFeaturePresets: include,
+		          excludeFeaturePresets: exclude,
 		          accepts: accepts ?? { !$0.isEmpty })
 	}
 
