@@ -116,11 +116,11 @@ class QuestDefinition: QuestProtocol {
 		}
 
 		let include = try includeFeatures.map {
-			guard let feature = PresetsDatabase.shared.stdPresets[$0] else { throw QuestError.unknownFeature($0) }
+			guard let feature = PresetsDatabase.shared.stdFeatures[$0] else { throw QuestError.unknownFeature($0) }
 			return feature
 		}
 		let exclude = try excludeFeatures.map {
-			guard let feature = PresetsDatabase.shared.stdPresets[$0] else { throw QuestError.unknownFeature($0) }
+			guard let feature = PresetsDatabase.shared.stdFeatures[$0] else { throw QuestError.unknownFeature($0) }
 			return feature
 		}
 
@@ -188,7 +188,7 @@ class QuestDefinition: QuestProtocol {
 	static func featuresContaining(presetKey: String) throws -> [String] {
 		// find all features containing the desired field
 		var featureNames = Set<String>()
-		for feature in PresetsDatabase.shared.stdPresets.values {
+		for feature in PresetsDatabase.shared.stdFeatures.values {
 			for fieldName in feature.fields ?? [] {
 				if let field = PresetsDatabase.shared.presetFields[fieldName],
 				   field.key == presetKey

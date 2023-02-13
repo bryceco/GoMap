@@ -9,7 +9,7 @@
 import Foundation
 
 class PresetArea {
-	static let shared = PresetArea(withPresets: PresetsDatabase.shared.stdPresets)
+	static let shared = PresetArea(withPresets: PresetsDatabase.shared.stdFeatures)
 
 	private static let osmAreaKeysExceptions = [
 		"highway": [

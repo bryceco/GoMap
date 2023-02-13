@@ -16,11 +16,11 @@ final class PresetsDatabase {
 	}
 
 	// these map a FeatureID to a feature
-	let stdPresets: [String: PresetFeature] // only generic presets
-	var nsiPresets: [String: PresetFeature] // only NSI presets
+	let stdFeatures: [String: PresetFeature] // only generic presets
+	var nsiFeatures: [String: PresetFeature] // only NSI presets
 	// these map a tag key to a list of features that require that key
-	let stdIndex: [String: [PresetFeature]] // generic preset index
-	var nsiIndex: [String: [PresetFeature]] // generic+NSI index
+	let stdFeatureIndex: [String: [PresetFeature]] // generic preset index
+	var nsiFeatureIndex: [String: [PresetFeature]] // generic+NSI index
 	var nsiGeoJson: [String: GeoJSON] // geojson regions for NSI
 
 	private class func dataForFile(_ file: String) -> Data? {
@@ -104,16 +104,16 @@ final class PresetsDatabase {
 			.compactMapValuesWithKeys({ k, v in
 				PresetFeature(withID: k, jsonDict: v as! [String: Any], isNSI: false)
 			})
-		stdPresets = presets
-		stdIndex = Self.buildTagIndex([stdPresets], basePresets: stdPresets)
+		stdFeatures = presets
+		stdFeatureIndex = Self.buildTagIndex([stdFeatures], basePresets: stdFeatures)
 
 		presetCategories = (Self.Translate(Self.jsonForFile("preset_categories.json")!,
 		                                   jsonTranslation["categories"]) as! [String: Any])
 			.mapValuesWithKeys({ k, v in PresetCategory(withID: k, json: v, presets: presets) })
 
 		// name suggestion index
-		nsiPresets = [String: PresetFeature]()
-		nsiIndex = stdIndex
+		nsiFeatures = [String: PresetFeature]()
+		nsiFeatureIndex = stdFeatureIndex
 		nsiGeoJson = [String: GeoJSON]()
 
 		DispatchQueue.global(qos: .userInitiated).async {
@@ -122,11 +122,11 @@ final class PresetsDatabase {
 				.mapValuesWithKeys({ k, v in
 					PresetFeature(withID: k, jsonDict: v as! [String: Any], isNSI: true)!
 				})
-			let nsiIndex = Self.buildTagIndex([self.stdPresets, nsiPresets],
-			                                  basePresets: self.stdPresets)
+			let nsiIndex = Self.buildTagIndex([self.stdFeatures, nsiPresets],
+			                                  basePresets: self.stdFeatures)
 			DispatchQueue.main.async {
-				self.nsiPresets = nsiPresets
-				self.nsiIndex = nsiIndex
+				self.nsiFeatures = nsiPresets
+				self.nsiFeatureIndex = nsiIndex
 #if DEBUG
 				if debug, isUnderDebugger() {
 					self.testAllPresetFields()
@@ -200,16 +200,16 @@ final class PresetsDatabase {
 
 	// enumerate contents of database
 	func enumeratePresetsUsingBlock(_ block: (_ feature: PresetFeature) -> Void) {
-		for (_, v) in stdPresets {
+		for (_, v) in stdFeatures {
 			block(v)
 		}
 	}
 
 	func enumeratePresetsAndNsiUsingBlock(_ block: (_ feature: PresetFeature) -> Void) {
-		for v in stdPresets.values {
+		for v in stdFeatures.values {
 			block(v)
 		}
-		for v in nsiPresets.values {
+		for v in nsiFeatures.values {
 			block(v)
 		}
 	}
@@ -236,11 +236,11 @@ final class PresetsDatabase {
 	                             fieldGetter: @escaping (_ feature: PresetFeature) -> Any?) -> Any?
 	{
 		// This is currently never used for NSI entries, so we can ignore nsiPresets
-		return PresetsDatabase.inheritedFieldForPresetsDict(stdPresets, featureID: featureID, field: fieldGetter)
+		return PresetsDatabase.inheritedFieldForPresetsDict(stdFeatures, featureID: featureID, field: fieldGetter)
 	}
 
 	func presetFeatureForFeatureID(_ featureID: String) -> PresetFeature? {
-		return stdPresets[featureID] ?? nsiPresets[featureID]
+		return stdFeatures[featureID] ?? nsiFeatures[featureID]
 	}
 
 	func presetFeatureMatching(tags objectTags: [String: String]?,
@@ -253,7 +253,7 @@ final class PresetsDatabase {
 		var bestFeature: PresetFeature?
 		var bestScore = 0.0
 
-		let index = includeNSI ? nsiIndex : stdIndex
+		let index = includeNSI ? nsiFeatureIndex : stdFeatureIndex
 		let keys = objectTags.keys + [""]
 		for key in keys {
 			if let list = index[key] {

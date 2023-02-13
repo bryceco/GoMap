@@ -129,7 +129,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 
 		// if we're editing an existing quest then fill in the fields
 		if let quest = quest {
-			let features = PresetsDatabase.shared.stdPresets
+			let features = PresetsDatabase.shared.stdFeatures
 			includeFeatures = quest.includeFeatures.map { (features[$0]?.name ?? $0, $0) }
 			excludeFeatures = quest.excludeFeatures.map { (features[$0]?.name ?? $0, $0) }
 			nameField?.text = quest.title
@@ -221,7 +221,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 	}
 
 	func allFeaturesWithKey(_ key: String, more: Bool) -> [PresetFeature] {
-		let presets = PresetsDatabase.shared.stdPresets.values.compactMap { feature in
+		let presets = PresetsDatabase.shared.stdFeatures.values.compactMap { feature in
 			let more = more ? feature.moreFields ?? [] : []
 			let fields = (feature.fields ?? []) + more
 			for fieldName in fields {
