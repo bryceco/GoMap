@@ -33,8 +33,9 @@ class QuestChooserController: UITableViewController {
 		navigationItem.rightBarButtonItem?.isEnabled = false
 	}
 
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		tableView.reloadData()
 	}
 
 	@IBAction func Cancel(with sender: Any) {
