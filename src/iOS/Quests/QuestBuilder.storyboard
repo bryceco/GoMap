@@ -159,6 +159,14 @@
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="plain" title="+"/>
                                                             </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="teu-nd-QQt" userLabel="Add More">
+                                                                <rect key="frame" x="254.66666666666671" y="6.6666666666667425" width="98.333333333333343" height="35"/>
+                                                                <state key="normal" title="Button"/>
+                                                                <buttonConfiguration key="configuration" style="plain" title="Add More"/>
+                                                                <connections>
+                                                                    <action selector="didAddMoreInclude:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="QRZ-g2-elw"/>
+                                                                </connections>
+                                                            </button>
                                                         </subviews>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
@@ -166,6 +174,7 @@
                                                             <constraint firstItem="825-Fk-hG1" firstAttribute="centerY" secondItem="wEP-eg-Wbf" secondAttribute="centerY" id="YOK-iz-Ih3"/>
                                                             <constraint firstItem="825-Fk-hG1" firstAttribute="centerY" secondItem="FRf-jj-b4b" secondAttribute="centerY" id="ZMz-FT-aEB"/>
                                                             <constraint firstItem="825-Fk-hG1" firstAttribute="top" secondItem="t6c-fn-eZi" secondAttribute="top" id="c7e-C5-dJQ"/>
+                                                            <constraint firstAttribute="trailing" secondItem="teu-nd-QQt" secondAttribute="trailing" id="i2X-Ob-Ksa"/>
                                                             <constraint firstAttribute="bottom" secondItem="825-Fk-hG1" secondAttribute="bottom" id="toe-Xj-Hu3"/>
                                                             <constraint firstItem="825-Fk-hG1" firstAttribute="trailing" secondItem="wEP-eg-Wbf" secondAttribute="leading" constant="10" id="vEe-Pw-pkf"/>
                                                             <constraint firstItem="wEP-eg-Wbf" firstAttribute="trailing" secondItem="FRf-jj-b4b" secondAttribute="leading" constant="10" id="zaA-N8-e6h"/>

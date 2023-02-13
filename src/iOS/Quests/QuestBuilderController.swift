@@ -112,7 +112,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 					guard
 						let key = field.key,
 						!key.hasSuffix(":"), // multiCombo isn't supported
-						!allFeaturesWithKey(key).isEmpty
+						!allFeaturesWithKey(key, more: false).isEmpty
 					else {
 						return nil
 					}
@@ -142,10 +142,11 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 					action.state = .on
 				}
 			}
-			allFeatures = allFeaturesWithKey(quest.presetKey)
+			allFeatures = allFeaturesWithKey(quest.presetKey, more: false)
 		} else {
 			if #available(iOS 15.0, *) {
-				allFeatures = allFeaturesWithKey(presetField?.menu?.selectedElements.first?.title ?? "")
+				let key = presetField?.menu?.selectedElements.first?.title ?? ""
+				allFeatures = allFeaturesWithKey(key,									 more: false)
 			}
 		}
 
@@ -187,11 +188,16 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 	}
 
 	func presetKeyChanged() {
-		if let key = presetField?.title(for: .normal) {
-			allFeatures = allFeaturesWithKey(key)
-		}
+		let key = presetField!.title(for: .normal)!
+		allFeatures = allFeaturesWithKey(key, more: false)
 		self.didAddAllInclude(nil)
 		self.didRemoveAllExclude(nil)
+	}
+
+	@IBAction func didAddMoreInclude(_ sender: Any?) {
+		let key = presetField!.title(for: .normal)!
+		allFeatures = allFeaturesWithKey(key, more: true)
+		didAddAllInclude(sender)
 	}
 
 	@IBAction func didAddAllInclude(_ sender: Any?) {
@@ -214,9 +220,11 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		excludeFeaturesView?.reloadData()
 	}
 
-	func allFeaturesWithKey(_ key: String) -> [PresetFeature] {
+	func allFeaturesWithKey(_ key: String, more: Bool) -> [PresetFeature] {
 		let presets = PresetsDatabase.shared.stdPresets.values.compactMap { feature in
-			for fieldName in feature.fields ?? [] {
+			let more = more ? feature.moreFields ?? [] : []
+			let fields = (feature.fields ?? []) + more
+			for fieldName in fields {
 				guard let field = PresetsDatabase.shared.presetFields[fieldName] else { continue }
 				if field.key == key {
 					return feature
