@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" ambiguous="YES" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="XNI-xS-8yh">
-                                        <rect key="frame" x="20" y="0.0" width="353" height="631.33333333333337"/>
+                                        <rect key="frame" x="20" y="0.0" width="353" height="784.33333333333337"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Build Your Own Quest" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44G-za-6lM">
                                                 <rect key="frame" x="0.0" y="0.0" width="353" height="33.666666666666664"/>
@@ -321,14 +321,14 @@
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tpG-3J-HeH" userLabel="Name View">
                                                 <rect key="frame" x="0.0" y="503.33333333333337" width="353" height="128"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Provide a name for your quest:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xpT-OT-hKN" userLabel="Provide a unique name for your quest:">
-                                                        <rect key="frame" x="0.0" y="0.0" width="353" height="20.333333333333332"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Provide a title for your quest: This is best written as an action to perform like &quot;Add Surface&quot; " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xpT-OT-hKN" userLabel="Provide a unique name for your quest:">
+                                                        <rect key="frame" x="0.0" y="0.0" width="353" height="64.333333333333329"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zSF-SH-Kt7">
-                                                        <rect key="frame" x="0.0" y="20.333333333333265" width="353" height="107.66666666666669"/>
+                                                        <rect key="frame" x="0.0" y="64.333333333333258" width="353" height="63.666666666666657"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                         <connections>
@@ -345,6 +345,36 @@
                                                     <constraint firstAttribute="trailing" secondItem="xpT-OT-hKN" secondAttribute="trailing" id="p7h-cc-3wA"/>
                                                     <constraint firstAttribute="trailing" secondItem="zSF-SH-Kt7" secondAttribute="trailing" id="pQc-Wk-pFV"/>
                                                     <constraint firstItem="zSF-SH-Kt7" firstAttribute="leading" secondItem="tpG-3J-HeH" secondAttribute="leading" id="v47-RA-3mn"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vjj-ZN-rnq" userLabel="Label View">
+                                                <rect key="frame" x="0.0" y="656.33333333333337" width="353" height="128"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CSL-4N-Z6D" userLabel="Provide a unique name for your quest:">
+                                                        <rect key="frame" x="0.0" y="0.0" width="353" height="86.333333333333329"/>
+                                                        <string key="text">Provide a single character that will appear on quest markers on the map. This can be a letter, an emoji, or a Unicode character that represents your quest.</string>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3ly-JH-kKn">
+                                                        <rect key="frame" x="0.0" y="86.333333333333258" width="353" height="41.666666666666657"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="Y6W-OH-hqX" id="r2T-zX-IjD"/>
+                                                        </connections>
+                                                    </textField>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstItem="3ly-JH-kKn" firstAttribute="leading" secondItem="vjj-ZN-rnq" secondAttribute="leading" id="0qw-77-2tv"/>
+                                                    <constraint firstItem="CSL-4N-Z6D" firstAttribute="top" secondItem="vjj-ZN-rnq" secondAttribute="top" id="OZS-bi-nHd"/>
+                                                    <constraint firstItem="3ly-JH-kKn" firstAttribute="top" secondItem="CSL-4N-Z6D" secondAttribute="bottom" id="QRj-58-6yZ"/>
+                                                    <constraint firstAttribute="bottom" secondItem="3ly-JH-kKn" secondAttribute="bottom" id="Vug-xo-RpC"/>
+                                                    <constraint firstAttribute="trailing" secondItem="3ly-JH-kKn" secondAttribute="trailing" id="m9f-cd-GOx"/>
+                                                    <constraint firstItem="CSL-4N-Z6D" firstAttribute="leading" secondItem="vjj-ZN-rnq" secondAttribute="leading" id="on1-li-fQX"/>
+                                                    <constraint firstAttribute="trailing" secondItem="CSL-4N-Z6D" secondAttribute="trailing" id="w6t-6k-M2p"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -396,6 +426,7 @@
                         <outlet property="excludeFeaturesView" destination="MPZ-Nh-kjH" id="Biu-Py-Ic1"/>
                         <outlet property="includeFeaturesHeightConstraint" destination="esc-NC-I4p" id="0Uk-t4-iRe"/>
                         <outlet property="includeFeaturesView" destination="rWl-dF-SoK" id="rck-TH-KhF"/>
+                        <outlet property="labelField" destination="3ly-JH-kKn" id="Dzc-Zq-b9f"/>
                         <outlet property="nameField" destination="zSF-SH-Kt7" id="Aqr-2Q-rYb"/>
                         <outlet property="presetField" destination="Zky-iv-Ndr" id="kPs-g3-iXH"/>
                         <outlet property="saveButton" destination="tqn-OS-YEv" id="N2V-JO-tH9"/>

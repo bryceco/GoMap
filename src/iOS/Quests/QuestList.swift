@@ -20,7 +20,7 @@ class QuestList {
 			let addBuildingType = QuestDefinition(
 				ident: "BuildingType",
 				title: "Add Building Type",
-				icon: UIImage(named: "ic_quest_building")!,
+				label: .image(UIImage(named: "ic_quest_building")!),
 				presetKey: "building",
 				appliesToObject: { obj in
 					obj.tags["building"] == "yes"
@@ -30,7 +30,7 @@ class QuestList {
 			let addSidewalkSurface = try QuestDefinition(
 				ident: "SidewalkSurface",
 				title: "Add Sidewalk Surface",
-				icon: UIImage(named: "ic_quest_sidewalk")!,
+				label: .image(UIImage(named: "ic_quest_sidewalk")!),
 				presetKey: "surface",
 				includeFeatures: ["highway/footway/sidewalk"],
 				excludeFeatures: [])
@@ -38,7 +38,7 @@ class QuestList {
 			let addPhoneNumber = try QuestDefinition(
 				ident: "TelephoneNumber",
 				title: "Add Telephone Number",
-				icon: UIImage(named: "ic_quest_check_shop")!,
+				label: .image(UIImage(named: "ic_quest_check_shop")!),
 				presetKey: "phone",
 				includeFeatures: [],
 				excludeFeatures: [],
@@ -49,7 +49,7 @@ class QuestList {
 			let addOpeningHours = try QuestDefinition(
 				ident: "OpeningHours",
 				title: "Add Opening Hours",
-				icon: UIImage(named: "ic_quest_check_shop")!,
+				label: .image(UIImage(named: "ic_quest_check_shop")!),
 				presetKey: "opening_hours",
 				includeFeatures: [String](),
 				excludeFeatures: [])
@@ -71,7 +71,7 @@ class QuestList {
 	func loadPrefs() {
 		enabled = UserDefaults.standard.object(forKey: "QuestTypeEnabledDict") as? [String: Bool] ?? [:]
 		if let data = UserDefaults.standard.object(forKey: "QuestUserDefinedList") as! Data? {
-			userQuests = try! JSONDecoder().decode([QuestUserDefition].self, from: data)
+			userQuests = (try? JSONDecoder().decode([QuestUserDefition].self, from: data)) ?? []
 		}
 	}
 

@@ -88,7 +88,7 @@ final class MapMarkerDatabase {
 		})
 	}
 
-	func addRight(forRegion box: OSMRect, mapData: OsmMapData, completion: @escaping () -> Void) {
+	func addKeepRight(forRegion box: OSMRect, mapData: OsmMapData, completion: @escaping () -> Void) {
 		let template =
 			"https://keepright.at/export.php?format=gpx&ch=0,30,40,70,90,100,110,120,130,150,160,180,191,192,193,194,195,196,197,198,201,202,203,204,205,206,207,208,210,220,231,232,270,281,282,283,284,285,291,292,293,294,295,296,297,298,311,312,313,320,350,370,380,401,402,411,412,413&left=%f&bottom=%f&right=%f&top=%f"
 		let url = String(
@@ -156,10 +156,11 @@ final class MapMarkerDatabase {
 		if including.contains(.notes) {
 			removeMarkers(where: { ($0 as? OsmNoteMarker)?.shouldHide() ?? false })
 			addNoteMarkers(forRegion: box, completion: completion)
+			return // don't call completion until async finishes
 		} else {
 			removeMarkers(where: { $0 is OsmNoteMarker })
-			completion()
 		}
+		completion()
 	}
 
 	func updateRegion(

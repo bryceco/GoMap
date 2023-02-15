@@ -10,11 +10,18 @@ import UIKit
 
 @IBDesignable
 final class MapMarkerButton: MapView.MapViewButton {
+	enum TextOrImage {
+		case text(String)
+		case image(UIImage)
+	}
+
 	let radius: CGFloat // radius of ciruclar part
 	let height: CGFloat // distance from center of circle to bottom vertex
 	let isCurvy: Bool
 
-	init(radius: CGFloat = 12.0, height: CGFloat = 24.0, isCurvy: Bool = true, icon: UIImage) {
+	static let PreferredRadius = 18.0
+
+	init(radius: CGFloat = PreferredRadius, height: CGFloat = 15.0 + 18.0, isCurvy: Bool = true, label: TextOrImage) {
 		arrowPoint = CGPoint.zero
 		self.radius = radius
 		self.height = height
@@ -60,16 +67,64 @@ final class MapMarkerButton: MapView.MapViewButton {
 		shapeLayer.borderWidth = 2.0
 		shapeLayer.path = path.cgPath
 
-		let iconLayer = CALayer()
-		iconLayer.contents = icon.cgImage
-		shapeLayer.addSublayer(iconLayer)
-		iconLayer.frame = CGRect(x: 1, y: 1, width: 2 * radius - 2, height: 2 * radius - 2)
+		let labelLayer: CALayer
+		switch label {
+		case let .image(image):
+			labelLayer = CALayer()
+			labelLayer.contents = image.cgImage
+			labelLayer.frame = CGRect(x: 1, y: 1, width: 2 * radius - 2, height: 2 * radius - 2)
+		case let .text(text):
+			let textLayer = CATextLayer()
+			textLayer.string = text
+			textLayer.font = UIFont.preferredFont(forTextStyle: .caption1)
+			textLayer.fontSize = 20
+			textLayer.foregroundColor = UIColor.black.cgColor
+			textLayer.alignmentMode = .center
+			textLayer.contentsScale = UIScreen.main.scale
+			labelLayer = textLayer
+			// FIXME: This doesn't reliably center the text in the button
+			let font = UIFont(name: (textLayer.font as! UIFont).fontName,
+							  size: textLayer.fontSize)!
+			let size = (text as NSString).size(withAttributes: [ NSAttributedString.Key.font: font ])
+			labelLayer.frame = CGRect(x: 0, y: (2*radius - size.height)/2, width: 2 * radius, height: 2 * radius)
+		}
+		shapeLayer.addSublayer(labelLayer)
 
 		layer.addSublayer(shapeLayer)
 	}
 
-	convenience init(withIcon icon: UIImage) {
-		self.init(icon: icon)
+	convenience init(withLabel label: TextOrImage) {
+		self.init(label: label)
+	}
+
+	override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+		let rect = CGRect(x: 0, y: 0, width: 2*radius, height: 2*radius)
+		if rect.contains(point) {
+			return self
+		}
+		return nil
+	}
+
+	static func imageFrom(string: String) -> UIImage {
+		let size = 2 * (Self.PreferredRadius - 2)
+		let image = Self.imageFrom(string: string,
+		                           withAttributes: [
+		                           	.foregroundColor: UIColor.white,
+		                           	.font: UIFont.systemFont(ofSize: 30.0)
+		                           ],
+		                           size: CGSize(width: size, height: size))
+		return image!
+	}
+
+	private static func imageFrom(string: String,
+	                              withAttributes attributes: [NSAttributedString.Key: Any],
+	                              size: CGSize?) -> UIImage?
+	{
+		let size = size ?? (string as NSString).size(withAttributes: attributes)
+		return UIGraphicsImageRenderer(size: size).image { _ in
+			(string as NSString).draw(in: CGRect(origin: .zero, size: size),
+			                          withAttributes: attributes)
+		}
 	}
 
 	var arrowPoint: CGPoint {

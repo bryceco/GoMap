@@ -18,7 +18,7 @@ class KeepRightMarker: MapMarker {
 		return "keepright-\(keepRightID)"
 	}
 
-	override var buttonLabel: String { "R" }
+	override var buttonLabel: MapMarkerButton.TextOrImage { .text("R") }
 
 	private static var ignoreList: Set<Int> = Set(KeepRightMarker.readIgnoreList())
 

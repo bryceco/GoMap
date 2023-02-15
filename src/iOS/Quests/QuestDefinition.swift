@@ -11,7 +11,7 @@ import UIKit
 protocol QuestProtocol {
 	var ident: String { get }
 	var title: String { get }
-	var icon: UIImage? { get }
+	var label: MapMarkerButton.TextOrImage { get }
 	var presetKey: String { get }
 	func appliesTo(_ object: OsmBaseObject) -> Bool
 	func accepts(tagValue: String) -> Bool
@@ -26,7 +26,7 @@ struct QuestHighwaySurface: QuestProtocol {
 	var ident: String { "QuestHighwaySurface" }
 	var title: String { "Highway surface" }
 	var presetKey: String { "surface" }
-	var icon: UIImage? { nil }
+	var label: MapMarkerButton.TextOrImage { .text("Q") }
 	var presetField: PresetField
 
 	func appliesTo(_ object: OsmBaseObject) -> Bool {
@@ -48,7 +48,7 @@ class QuestDefinition: QuestProtocol {
 	// These items define the quest
 	let ident: String // Uniquely identify the quest
 	let title: String // Localized instructions on what action to take
-	let icon: UIImage?
+	let label: MapMarkerButton.TextOrImage
 	let presetKey: String // The value the user is being asked to set
 	let appliesToObject: (OsmBaseObject) -> Bool
 	let acceptsValue: (String) -> Bool
@@ -63,14 +63,14 @@ class QuestDefinition: QuestProtocol {
 
 	init(ident: String,
 	     title: String,
-	     icon: UIImage?,
+	     label: MapMarkerButton.TextOrImage,
 	     presetKey: String,
 	     appliesToObject: @escaping (OsmBaseObject) -> Bool,
 	     acceptsValue: @escaping (String) -> Bool)
 	{
 		self.ident = ident
 		self.title = title
-		self.icon = icon
+		self.label = label
 		self.presetKey = presetKey
 		self.appliesToObject = appliesToObject
 		self.acceptsValue = acceptsValue
@@ -78,23 +78,25 @@ class QuestDefinition: QuestProtocol {
 
 	convenience init(ident: String,
 	                 title: String,
-	                 icon: UIImage,
+	                 label: MapMarkerButton.TextOrImage,
 	                 presetKey: String, // The value the user is being asked to set
 	                 // The set of features the user is interested in (everything if empty)
 	                 includeFeaturePresets: [PresetFeature],
 	                 excludeFeaturePresets: [PresetFeature], // The set of features to exclude
 	                 accepts: @escaping ((String) -> Bool)) // This is acceptance criteria for a value the user typed in
 	{
-		typealias Validator = (OsmBaseObject) -> Bool
+		guard !includeFeaturePresets.isEmpty else { fatalError() }
 
 		let includeFunc = Self.getMatchFunc(includeFeaturePresets.map { $0.tags })
 		let excludeFunc = Self.getMatchFunc(excludeFeaturePresets.map { $0.tags })
-		let applies: Validator = { obj in
-			obj.tags[presetKey] == nil && includeFunc(obj.tags) && !excludeFunc(obj.tags)
+		let applies: (OsmBaseObject) -> Bool = { obj in
+			// we ignore geometry currently, but probably will need to handle it in the future
+			let tags = obj.tags
+			return tags[presetKey] == nil && includeFunc(tags) && !excludeFunc(tags)
 		}
 		self.init(ident: ident,
 		          title: title,
-		          icon: icon,
+		          label: label,
 		          presetKey: presetKey,
 		          appliesToObject: applies,
 		          acceptsValue: accepts)
@@ -103,7 +105,7 @@ class QuestDefinition: QuestProtocol {
 	convenience
 	init(ident: String,
 	     title: String,
-	     icon: UIImage,
+	     label: MapMarkerButton.TextOrImage,
 	     presetKey: String, // The value the user is being asked to set
 	     includeFeatures: [String], // The set of features the user is interested in (everything if empty)
 	     excludeFeatures: [String], // The set of features to exclude
@@ -126,7 +128,7 @@ class QuestDefinition: QuestProtocol {
 
 		self.init(ident: ident,
 		          title: title,
-		          icon: icon,
+		          label: label,
 		          presetKey: presetKey,
 		          includeFeaturePresets: include,
 		          excludeFeaturePresets: exclude,
@@ -136,7 +138,7 @@ class QuestDefinition: QuestProtocol {
 	convenience init(userQuest quest: QuestUserDefition) throws {
 		try self.init(ident: quest.title,
 		              title: quest.title,
-		              icon: UIImage(),
+		              label: .text(quest.label),
 		              presetKey: quest.presetKey,
 		              includeFeatures: quest.includeFeatures,
 		              excludeFeatures: quest.excludeFeatures)
@@ -207,6 +209,7 @@ class QuestDefinition: QuestProtocol {
 
 struct QuestUserDefition: Codable {
 	var title: String
+	var label: String // single character displayed in MapMarkerButton
 	var presetKey: String
 	var includeFeatures: [String] // list of featureID
 	var excludeFeatures: [String] // list of featureID

@@ -33,7 +33,8 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 	@IBOutlet var excludeFeaturesHeightConstraint: NSLayoutConstraint?
 	@IBOutlet var scrollView: UIScrollView?
 	@IBOutlet var saveButton: UIBarButtonItem?
-	@IBOutlet var nameField: UITextField?
+	@IBOutlet var nameField: UITextField?	// Long name, like "Add Surface"
+	@IBOutlet var labelField: UITextField?	// Short name for a quest button, like "S"
 	@IBOutlet var addOneIncludeButton: UIButton?
 	@IBOutlet var addOneExcludeButton: UIButton?
 	var quest: QuestUserDefition?
@@ -58,7 +59,9 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 	@IBAction func onSave(_ sender: Any?) {
 		do {
 			let name = nameField!.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+			let label = labelField!.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 			let quest = QuestUserDefition(title: name,
+			                              label: label,
 			                              presetKey: presetField!.title(for: .normal)!,
 			                              includeFeatures: includeFeatures.map { $0.ident },
 			                              excludeFeatures: excludeFeatures.map { $0.ident })
@@ -92,6 +95,8 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		// monitor changes to nameField
 		nameField?.delegate = self
 		nameField?.addTarget(self, action: #selector(nameFieldDidChange(_:)), for: .editingChanged)
+		labelField?.delegate = self
+		labelField?.addTarget(self, action: #selector(labelFieldDidChange(_:)), for: .editingChanged)
 		saveButton?.isEnabled = false
 
 		// monitor when keyboard is visible
@@ -287,8 +292,13 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 	}
 
 	@objc func nameFieldDidChange(_ sender: Any?) {
-		saveButton?
-			.isEnabled = (nameField?.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count ?? 0) > 0
+		let text = nameField?.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
+		saveButton?.isEnabled = text.count > 0
+	}
+
+	@objc func labelFieldDidChange(_ sender: Any?) {
+		let text = labelField?.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
+		saveButton?.isEnabled = text.count == 1
 	}
 
 	// MARK: keyboard

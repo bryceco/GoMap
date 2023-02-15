@@ -23,7 +23,7 @@ class QuestChooserTableCell: UITableViewCell {
 		// also update markers database
 		if !enabled {
 			AppDelegate.shared.mapView.mapMarkerDatabase.removeMarkers(where: {
-				marker in (marker as? QuestMarker)?.quest.ident == quest.ident
+				($0 as? QuestMarker)?.quest.ident == quest.ident
 			})
 		}
 	}

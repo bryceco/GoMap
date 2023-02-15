@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 // An OSM object for a quest
-class QuestMarker: MapMarker {
+final class QuestMarker: MapMarker {
 	let ident: String
 	let quest: QuestProtocol
 
@@ -18,8 +18,7 @@ class QuestMarker: MapMarker {
 		return ident
 	}
 
-	override var buttonLabel: String { "Q" }
-	override var buttonIcon: UIImage? { quest.icon }
+	override var buttonLabel: MapMarkerButton.TextOrImage { quest.label }
 
 	init(object: OsmBaseObject, quest: QuestProtocol) {
 		let center = object.selectionPoint()

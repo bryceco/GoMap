@@ -33,5 +33,5 @@ class WayPointMarker: MapMarker {
 		return "waypoint-\(lat),\(lon)"
 	}
 
-	override var buttonLabel: String { "W" }
+	override var buttonLabel: MapMarkerButton.TextOrImage { .text("W") }
 }
