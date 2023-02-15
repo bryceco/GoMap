@@ -68,6 +68,7 @@
 		028F504719BA2F460093C423 /* presets in Resources */ = {isa = PBXBuildFile; fileRef = 028F504619BA2F460093C423 /* presets */; };
 		0291D83724427AFA00F793BE /* Display.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0291D83524427AFA00F793BE /* Display.storyboard */; };
 		02930750268BFB6700B2A326 /* QuadDownloadLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */; };
+		0293FEB1299D5C78002EED90 /* MapMarkerIgnoreList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0293FEB0299D5C78002EED90 /* MapMarkerIgnoreList.swift */; };
 		029A17C8257AB8A70035C6ED /* POI-Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */; };
 		02A123E9264C8B60005638C1 /* GpxLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925626416BF5000A2A99 /* GpxLayer.swift */; };
 		02A123EA264C8BA3005638C1 /* TileServerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA924F2640329B000A2A99 /* TileServerList.swift */; };
@@ -425,6 +426,7 @@
 		028F504619BA2F460093C423 /* presets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = presets; path = ../presets; sourceTree = "<group>"; };
 		0290E76A279D15B6000810B9 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadDownloadLayer.swift; sourceTree = "<group>"; };
+		0293FEB0299D5C78002EED90 /* MapMarkerIgnoreList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerIgnoreList.swift; sourceTree = "<group>"; };
 		029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "POI-Icons.xcassets"; path = "../POI-Icons/POI-Icons.xcassets"; sourceTree = "<group>"; };
 		029F8C1826F004FF0073A813 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		029F8C1926F004FF0073A813 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainInterface.strings; sourceTree = "<group>"; };
@@ -990,8 +992,9 @@
 				02C8C56826F44759003B0122 /* FixmeMarker.swift */,
 				02C8C56E26F447C3003B0122 /* KeepRightMarker.swift */,
 				02C8C56426F446FD003B0122 /* MapMarker.swift */,
-				02C8C56626F44728003B0122 /* OsmNoteMarker.swift */,
 				02034742266C2CB9000A7C3D /* MapMarkerDatabase.swift */,
+				0293FEB0299D5C78002EED90 /* MapMarkerIgnoreList.swift */,
+				02C8C56626F44728003B0122 /* OsmNoteMarker.swift */,
 				02CB523329907832007F758D /* QuestMarker.swift */,
 				02C8C56C26F4479A003B0122 /* WayPointMarker.swift */,
 			);
@@ -1557,6 +1560,7 @@
 				C31315232644292700C0AD86 /* LocationBallLayer.swift in Sources */,
 				ED964A012601D6A900EC0A60 /* POIFeaturePresetsViewController.swift in Sources */,
 				0200FECD2908B0EB002C3F94 /* GeoJSON.swift in Sources */,
+				0293FEB1299D5C78002EED90 /* MapMarkerIgnoreList.swift in Sources */,
 				020EBA7926506156001D56F4 /* MercatorTileLayer.swift in Sources */,
 				02354F7A246349E100878A04 /* CurvedGlyphLayer.swift in Sources */,
 				0226B771268300C9005DB9E2 /* Data+Wrapper.swift in Sources */,

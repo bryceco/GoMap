@@ -26,10 +26,10 @@ class QuestSolverTextEntryCell: UITableViewCell {
 }
 
 private let NUMBER_OF_HEADERS = 2 // feature name + quest name
-private let NUMBER_OF_FOOTERS = 1 // open tag editor
+private let NUMBER_OF_FOOTERS = 2 // ignore + open tag editor
 
 class QuestSolverController: UITableViewController {
-	var quest: QuestProtocol!
+	var questMarker: QuestMarker!
 	var object: OsmBaseObject!
 	var presetFeature: PresetFeature?
 	var presetKey: PresetKey?
@@ -85,7 +85,7 @@ class QuestSolverController: UITableViewController {
 			for g in section.presetKeys {
 				let list = Self.presetsForGroup(g)
 				for preset in list {
-					if preset.tagKey == quest.presetKey {
+					if preset.tagKey == questMarker.quest.presetKey {
 						if presetKey == preset {
 							return false // no change
 						} else {
@@ -100,7 +100,7 @@ class QuestSolverController: UITableViewController {
 		return false
 	}
 
-	public class func instantiate(quest: QuestProtocol, object: OsmBaseObject,
+	public class func instantiate(marker: QuestMarker, object: OsmBaseObject,
 	                              onClose: @escaping () -> Void) -> UINavigationController
 	{
 		let sb = UIStoryboard(name: "QuestSolver", bundle: nil)
@@ -108,7 +108,7 @@ class QuestSolverController: UITableViewController {
 		let vc = vc2.viewControllers.first as! QuestSolverController
 
 		vc.object = object
-		vc.quest = quest
+		vc.questMarker = marker
 		vc.title = NSLocalizedString("Your Quest", comment: "The current Quest the user is answering")
 		vc.onClose = onClose
 		vc.presetFeature = PresetsDatabase.shared.presetFeatureMatching(
@@ -120,7 +120,7 @@ class QuestSolverController: UITableViewController {
 		return vc2
 	}
 
-	@IBAction func Cancel(with sender: Any) {
+	@IBAction func Cancel(with sender: Any?) {
 		dismiss(animated: true, completion: nil)
 		if let mapView = AppDelegate.shared.mapView {
 			mapView.editorLayer.selectedNode = nil
@@ -130,20 +130,20 @@ class QuestSolverController: UITableViewController {
 		}
 	}
 
-	@IBAction func Accept(with sender: Any) {
+	@IBAction func Accept(with sender: Any?) {
 		let editor = AppDelegate.shared.mapView.editorLayer
 		guard var tags = editor.selectedPrimary?.tags else { return }
 		if let index = tableView.indexPathForSelectedRow,
 		   let text = presetKey?.presetList?[index.row - NUMBER_OF_HEADERS].tagValue
 		{
 			// user selected a preset
-			tags[quest.presetKey] = text
+			tags[questMarker.quest.presetKey] = text
 			editor.setTagsForCurrentObject(tags)
-		} else if let cell = tableView
-			.cellForRow(at: IndexPath(row: NUMBER_OF_HEADERS, section: 0)) as? QuestSolverTextEntryCell,
+		} else if let cell = tableView.cellForRow(at: IndexPath(row: NUMBER_OF_HEADERS, section: 0))
+			as? QuestSolverTextEntryCell,
 			let text = cell.textField?.text
 		{
-			tags[quest.presetKey] = text
+			tags[questMarker.quest.presetKey] = text
 			editor.setTagsForCurrentObject(tags)
 		} else {
 			return
@@ -151,9 +151,22 @@ class QuestSolverController: UITableViewController {
 		dismiss(animated: true, completion: nil)
 	}
 
+	@IBAction func ignoreAlways(_ sender: Any?) {
+		questMarker.ignorable!.ignore(marker: questMarker, reason: .userRequest)
+		Cancel(with: sender)
+	}
+
+	@IBAction func ignoreThisSession(_ sender: Any?) {
+		let until = Date().addingTimeInterval(60 * 60)
+		questMarker.ignorable!.ignore(marker: questMarker, reason: .userRequestUntil(until))
+		Cancel(with: sender)
+	}
+
+	// MARK: TableView delegate
+
 	override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
 		guard
-			indexPath.row >= 2
+			indexPath.row >= NUMBER_OF_HEADERS
 		else {
 			return nil
 		}
@@ -184,7 +197,7 @@ class QuestSolverController: UITableViewController {
 			// title + object + answer list + open editor
 			return NUMBER_OF_HEADERS + answerCount + NUMBER_OF_FOOTERS
 		} else {
-			// title + object + text field + open editor
+			// title + object + text field + ignore + open editor
 			return NUMBER_OF_HEADERS + 1 + NUMBER_OF_FOOTERS
 		}
 	}
@@ -192,33 +205,37 @@ class QuestSolverController: UITableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.row == 0 {
 			// The name of the object being edited
-			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestTitle", for: indexPath)
+			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCellTitle", for: indexPath)
 			cell.textLabel?.text = object.friendlyDescription()
 			cell.textLabel?.textAlignment = .center
 			cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .title2)
 			return cell
 		} else if indexPath.row == 1 {
 			// The name of the quest
-			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestTitle", for: indexPath)
-			cell.textLabel?.text = quest.title
+			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCellTitle", for: indexPath)
+			cell.textLabel?.text = questMarker.quest.title
 			cell.textLabel?.textAlignment = .natural
 			cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
 			return cell
+		} else if indexPath.row == self.tableView(tableView, numberOfRowsInSection: 0) - 2 {
+			// A button to open the regular tag editor
+			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCellIgnore", for: indexPath)
+			return cell
 		} else if indexPath.row == self.tableView(tableView, numberOfRowsInSection: 0) - 1 {
 			// A button to open the regular tag editor
-			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestOpenEditor", for: indexPath)
+			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCellOpenEditor", for: indexPath)
 			return cell
 		} else if let presetKey = presetKey,
 		          presetKey.presetList?.count != nil,
 		          !isOpeningHours(key: presetKey)
 		{
 			// A selection among a combo of possible values
-			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestTagValue", for: indexPath)
+			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCellTagValue", for: indexPath)
 			cell.textLabel?.text = presetKey.presetList?[indexPath.row - NUMBER_OF_HEADERS].name ?? ""
 			return cell
 		} else {
 			// A text box to type something in
-			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestTextEntry",
+			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCellTextEntry",
 			                                         for: indexPath) as! QuestSolverTextEntryCell
 			cell.textField?.autocorrectionType = (presetKey?.autocorrectType) ?? .no
 			cell.textField?.autocapitalizationType = presetKey?.autocapitalizationType ?? .none
@@ -232,7 +249,7 @@ class QuestSolverController: UITableViewController {
 			}
 
 			cell.didChange = { text in
-				let okay = self.quest.accepts(tagValue: text)
+				let okay = self.questMarker.quest.accepts(tagValue: text)
 				self.navigationItem.rightBarButtonItem?.isEnabled = okay
 			}
 			if let presetKey = presetKey,
@@ -249,6 +266,8 @@ class QuestSolverController: UITableViewController {
 		}
 	}
 }
+
+// MARK: Special code for handling opening_hours using the camera
 
 extension QuestSolverController {
 	func isOpeningHours(key: PresetKey) -> Bool {

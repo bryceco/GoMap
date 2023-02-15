@@ -2373,7 +2373,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		let button = marker.button!
 		let offsetX = (marker is KeepRightMarker) || (marker is FixmeMarker) ? 0.00001 : 0.0
 		let pos = mapTransform.screenPoint(forLatLon: LatLon(latitude: marker.lat, longitude: marker.lon + offsetX),
-										   birdsEye: true)
+		                                   birdsEye: true)
 		if pos.x.isInfinite || pos.y.isInfinite {
 			return
 		}
@@ -2444,7 +2444,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 						// Need to update the QuestMarker icon
 						self.updateMapMarkersFromServer(withDelay: 0.0, including: [.quest])
 					}
-					let vc = QuestSolverController.instantiate(quest: marker.quest,
+					let vc = QuestSolverController.instantiate(marker: marker,
 					                                           object: object,
 					                                           onClose: onClose)
 					mainViewController.present(vc, animated: true)

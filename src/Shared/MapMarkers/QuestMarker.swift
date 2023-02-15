@@ -20,11 +20,16 @@ final class QuestMarker: MapMarker {
 
 	override var buttonLabel: MapMarkerButton.TextOrImage { quest.label }
 
-	init(object: OsmBaseObject, quest: QuestProtocol) {
+	init?(object: OsmBaseObject, quest: QuestProtocol, ignorable: MapMarkerIgnoreListProtocol) {
+		let ident = "quest-\(quest.ident)-\(object is OsmNode ? "n" : object is OsmWay ? "w" : "r")\(object.ident)"
+		if ignorable.shouldIgnore(ident: ident) {
+			return nil
+		}
 		let center = object.selectionPoint()
 		self.quest = quest
-		ident = "quest-\(quest.ident)-\(object is OsmNode ? "n" : object is OsmWay ? "w" : "r")\(object.ident)"
+		self.ident = ident
 		super.init(lat: center.lat, lon: center.lon)
 		self.object = object
+		self.ignorable = ignorable
 	}
 }

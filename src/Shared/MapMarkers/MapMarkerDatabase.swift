@@ -9,13 +9,15 @@
 import CoreGraphics
 import Foundation
 
-final class MapMarkerDatabase {
+final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 	private let workQueue = OperationQueue()
 	private var markerForIdentifier: [String: MapMarker] = [:] // map the marker key (unique string) to a marker
+	private var ignoreList: MapMarkerIgnoreList
 	weak var mapData: OsmMapData!
 
 	init() {
 		workQueue.maxConcurrentOperationCount = 1
+		ignoreList = MapMarkerIgnoreList()
 	}
 
 	var allMapMarkers: AnySequence<MapMarker> { AnySequence(markerForIdentifier.values) }
@@ -35,9 +37,10 @@ final class MapMarkerDatabase {
 		}
 		var list = [MapMarker]()
 		for quest in QuestList.shared.questsForObject(object) {
-			let marker = QuestMarker(object: object, quest: quest)
-			addOrUpdate(marker: marker)
-			list.append(marker)
+			if let marker = QuestMarker(object: object, quest: quest, ignorable: self) {
+				addOrUpdate(marker: marker)
+				list.append(marker)
+			}
 		}
 		if let fixme = FixmeMarker.fixmeTag(object) {
 			let marker = FixmeMarker(object: object, text: fixme)
@@ -45,6 +48,21 @@ final class MapMarkerDatabase {
 			list.append(marker)
 		}
 		return list
+	}
+
+	// MARK: Ignorable
+
+	func shouldIgnore(ident: String) -> Bool {
+		return ignoreList.shouldIgnore(ident: ident)
+	}
+
+	func shouldIgnore(marker: MapMarker) -> Bool {
+		return ignoreList.shouldIgnore(marker: marker)
+	}
+
+	func ignore(marker: MapMarker, reason: IgnoreReason) {
+		markerForIdentifier.removeValue(forKey: marker.markerIdentifier)
+		ignoreList.ignore(marker: marker, reason: reason)
 	}
 
 	// MARK: marker type-specific update functions
@@ -71,8 +89,9 @@ final class MapMarkerDatabase {
 	func addQuestMarkers(forRegion box: OSMRect, mapData: OsmMapData) {
 		mapData.enumerateObjects(inRegion: box, block: { obj in
 			for quest in QuestList.shared.questsForObject(obj) {
-				let marker = QuestMarker(object: obj, quest: quest)
-				self.addOrUpdate(marker: marker)
+				if let marker = QuestMarker(object: obj, quest: quest, ignorable: self) {
+					self.addOrUpdate(marker: marker)
+				}
 			}
 		})
 	}
@@ -104,7 +123,7 @@ final class MapMarkerDatabase {
 			{
 				DispatchQueue.main.async(execute: { [self] in
 					for point in gpxTrack.wayPoints {
-						if let note = KeepRightMarker(gpxWaypoint: point, mapData: mapData) {
+						if let note = KeepRightMarker(gpxWaypoint: point, mapData: mapData, ignorable: self) {
 							addOrUpdate(marker: note)
 						}
 					}

@@ -84,9 +84,9 @@ final class MapMarkerButton: MapView.MapViewButton {
 			labelLayer = textLayer
 			// FIXME: This doesn't reliably center the text in the button
 			let font = UIFont(name: (textLayer.font as! UIFont).fontName,
-							  size: textLayer.fontSize)!
-			let size = (text as NSString).size(withAttributes: [ NSAttributedString.Key.font: font ])
-			labelLayer.frame = CGRect(x: 0, y: (2*radius - size.height)/2, width: 2 * radius, height: 2 * radius)
+			                  size: textLayer.fontSize)!
+			let size = (text as NSString).size(withAttributes: [NSAttributedString.Key.font: font])
+			labelLayer.frame = CGRect(x: 0, y: (2 * radius - size.height) / 2, width: 2 * radius, height: 2 * radius)
 		}
 		shapeLayer.addSublayer(labelLayer)
 
@@ -98,7 +98,7 @@ final class MapMarkerButton: MapView.MapViewButton {
 	}
 
 	override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-		let rect = CGRect(x: 0, y: 0, width: 2*radius, height: 2*radius)
+		let rect = CGRect(x: 0, y: 0, width: 2 * radius, height: 2 * radius)
 		if rect.contains(point) {
 			return self
 		}

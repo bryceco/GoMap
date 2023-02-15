@@ -43,7 +43,7 @@ class QuestList {
 				includeFeatures: [],
 				excludeFeatures: [],
 				accepts: { text in
-					text.unicodeScalars.compactMap { CharacterSet.decimalDigits.contains($0) ? true : nil }.count > 5
+					text.unicodeScalars.filter({ CharacterSet.decimalDigits.contains($0) }).count > 5
 				})
 
 			let addOpeningHours = try QuestDefinition(

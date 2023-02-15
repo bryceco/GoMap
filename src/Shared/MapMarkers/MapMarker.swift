@@ -13,6 +13,8 @@ class MapMarker {
 	let lat: Double
 	let lon: Double
 	weak var object: OsmBaseObject?
+	weak var ignorable: MapMarkerIgnoreListProtocol?
+
 	var button: UIButton? {
 		willSet {
 			if newValue == nil,

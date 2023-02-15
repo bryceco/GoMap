@@ -9,7 +9,7 @@
 import Foundation
 
 // A keep-right entry. These use XML just like a GPS waypoint, but with an extension to define OSM data.
-class KeepRightMarker: MapMarker {
+final class KeepRightMarker: MapMarker {
 	let description: String
 	let keepRightID: Int
 	private let objectId: OsmExtendedIdentifier
@@ -20,14 +20,12 @@ class KeepRightMarker: MapMarker {
 
 	override var buttonLabel: MapMarkerButton.TextOrImage { .text("R") }
 
-	private static var ignoreList: Set<Int> = Set(KeepRightMarker.readIgnoreList())
-
 	func object(from mapData: OsmMapData) -> OsmBaseObject? {
 		return mapData.object(withExtendedIdentifier: objectId)
 	}
 
 	/// Initialize based on KeepRight query
-	init?(gpxWaypoint gpx: GpxPoint, mapData: OsmMapData) {
+	init?(gpxWaypoint gpx: GpxPoint, mapData: OsmMapData, ignorable: MapMarkerIgnoreListProtocol) {
 		//		<wpt lon="-122.2009985" lat="47.6753189">
 		//		<name><![CDATA[website, http error]]></name>
 		//		<desc><![CDATA[The URL (<a target="_blank" href="http://www.stjamesespresso.com/">http://www.stjamesespresso.com/</a>) cannot be opened (HTTP status code 301)]]></desc>
@@ -78,38 +76,15 @@ class KeepRightMarker: MapMarker {
 		self.objectId = objectId
 		super.init(lat: gpx.latLon.lat,
 		           lon: gpx.latLon.lon)
+		self.ignorable = ignorable
 	}
 
 	func ignore() {
-		Self.ignoreList.insert(keepRightID)
-		Self.writeIgnoreList()
+		ignorable!.ignore(marker: self, reason: .userRequest)
 		button = nil
 	}
 
 	func shouldHide() -> Bool {
-		return Self.ignoreList.contains(keepRightID)
-	}
-
-	static func readIgnoreList() -> [Int] {
-		if let path = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first?
-			.appendingPathComponent("keepRightIgnoreList"),
-			let data = try? Data(contentsOf: path),
-			let unarchiver = try? NSKeyedUnarchiver(forReadingFrom: data),
-			let list = unarchiver.decodeDecodable([Int].self, forKey: NSKeyedArchiveRootObjectKey)
-		{
-			return list
-		} else {
-			return []
-		}
-	}
-
-	static func writeIgnoreList() {
-		let archiver = NSKeyedArchiver(requiringSecureCoding: true)
-		if let path = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first?
-			.appendingPathComponent("keepRightIgnoreList"),
-			(try? archiver.encodeEncodable(Array(ignoreList), forKey: NSKeyedArchiveRootObjectKey)) != nil
-		{
-			try? archiver.encodedData.write(to: path)
-		}
+		return ignorable!.shouldIgnore(marker: self)
 	}
 }

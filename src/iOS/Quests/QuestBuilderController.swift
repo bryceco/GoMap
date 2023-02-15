@@ -33,8 +33,8 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 	@IBOutlet var excludeFeaturesHeightConstraint: NSLayoutConstraint?
 	@IBOutlet var scrollView: UIScrollView?
 	@IBOutlet var saveButton: UIBarButtonItem?
-	@IBOutlet var nameField: UITextField?	// Long name, like "Add Surface"
-	@IBOutlet var labelField: UITextField?	// Short name for a quest button, like "S"
+	@IBOutlet var nameField: UITextField? // Long name, like "Add Surface"
+	@IBOutlet var labelField: UITextField? // Short name for a quest button, like "S"
 	@IBOutlet var addOneIncludeButton: UIButton?
 	@IBOutlet var addOneExcludeButton: UIButton?
 	var quest: QuestUserDefition?
