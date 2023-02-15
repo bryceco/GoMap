@@ -185,12 +185,10 @@ final class TileServer: Equatable {
 		attribUrl: "")
 
 	static let maxarPremiumAerial: TileServer = {
-		let url =
-			"eZ5AGZGcRQyKahl/+UTyIm+vENuJECB4Hvu4ytCzjBoCBDeRMbsOkaQ7zD5rUAYfRDaQwnQRiqE4lj0KYTenPe1d1spljlcYgvYRsqjEtYp6AhCoBPO4Rz6d0Z9enlPqPj7KCvxyOcB8A/+3HkYjpMGMEcvA6oeSX9I0RH/PS9lQzmJACnINv3lFIonIZ1gY/yFVqi2FWnWCbTyFdy2+FlyrWqTfyeG8tstR+5wQsC+xmsaCmW8e41jROh1O0z+U"
 		let service = TileServer(
 			withName: "Maxar Premium Aerial",
 			identifier: MAXAR_PREMIUM_IDENTIFIER,
-			url: aes.decryptString(url),
+			url: MaxarPremiumUrl,
 			best: false,
 			apiKey: "",
 			maxZoom: 21,

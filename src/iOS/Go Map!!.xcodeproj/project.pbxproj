@@ -69,6 +69,7 @@
 		0291D83724427AFA00F793BE /* Display.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0291D83524427AFA00F793BE /* Display.storyboard */; };
 		02930750268BFB6700B2A326 /* QuadDownloadLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */; };
 		0293FEB1299D5C78002EED90 /* MapMarkerIgnoreList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0293FEB0299D5C78002EED90 /* MapMarkerIgnoreList.swift */; };
+		0293FEB3299D84F7002EED90 /* MaxarAerial.secret in Sources */ = {isa = PBXBuildFile; fileRef = 0293FEB2299D84F7002EED90 /* MaxarAerial.secret */; };
 		029A17C8257AB8A70035C6ED /* POI-Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */; };
 		02A123E9264C8B60005638C1 /* GpxLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925626416BF5000A2A99 /* GpxLayer.swift */; };
 		02A123EA264C8BA3005638C1 /* TileServerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA924F2640329B000A2A99 /* TileServerList.swift */; };
@@ -427,6 +428,7 @@
 		0290E76A279D15B6000810B9 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadDownloadLayer.swift; sourceTree = "<group>"; };
 		0293FEB0299D5C78002EED90 /* MapMarkerIgnoreList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerIgnoreList.swift; sourceTree = "<group>"; };
+		0293FEB2299D84F7002EED90 /* MaxarAerial.secret */ = {isa = PBXFileReference; lastKnownFileType = text; path = MaxarAerial.secret; sourceTree = "<group>"; };
 		029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "POI-Icons.xcassets"; path = "../POI-Icons/POI-Icons.xcassets"; sourceTree = "<group>"; };
 		029F8C1826F004FF0073A813 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		029F8C1926F004FF0073A813 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainInterface.strings; sourceTree = "<group>"; };
@@ -891,6 +893,7 @@
 				C3D096DA263EB73E00E3B129 /* main.swift */,
 				C3004F51263A6CA5006BF313 /* MainViewController.swift */,
 				022B2FDA2718CCAC00AB4C28 /* MapboxLocator.secret */,
+				0293FEB2299D84F7002EED90 /* MaxarAerial.secret */,
 				C3D096D7263EAE1E00E3B129 /* MyApplication.swift */,
 				C341E15B2639DF440022E983 /* NearbyMappersViewController.swift */,
 				C3004F4C263A6306006BF313 /* NominatimViewController.swift */,
@@ -1477,6 +1480,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				020798012994706000D3C654 /* QuestBuilderController.swift in Sources */,
+				0293FEB3299D84F7002EED90 /* MaxarAerial.secret in Sources */,
 				02CE3CE229909D1D00DDACE0 /* QuestSolverController.swift in Sources */,
 				02AEBEAF294ABE0700009163 /* KeyValueTableCell.swift in Sources */,
 				EDB2C3A62609E6E100C08293 /* LoginViewController.swift in Sources */,
