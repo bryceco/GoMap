@@ -38,7 +38,7 @@ class QuestList {
 			let addPhoneNumber = try QuestDefinition(
 				ident: "TelephoneNumber",
 				title: "Add Telephone Number",
-				label: .image(UIImage(named: "ic_quest_check_shop")!),
+				label: .image(UIImage(named: "ic_quest_phone")!),
 				presetKey: "phone",
 				includeFeatures: [],
 				excludeFeatures: [],
@@ -49,7 +49,7 @@ class QuestList {
 			let addOpeningHours = try QuestDefinition(
 				ident: "OpeningHours",
 				title: "Add Opening Hours",
-				label: .image(UIImage(named: "ic_quest_check_shop")!),
+				label: .image(UIImage(named: "ic_quest_opening_hours")!),
 				presetKey: "opening_hours",
 				includeFeatures: [String](),
 				excludeFeatures: [])
