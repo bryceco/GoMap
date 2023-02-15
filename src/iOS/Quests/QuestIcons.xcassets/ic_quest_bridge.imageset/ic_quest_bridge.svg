@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<svg xmlns="http://www.w3.org/2000/svg" width="128.0" height="128.0" viewBox="0 0 128.0 128.0">
+  <path d="M64,64m-64,0a64,64 0,1 1,128 0a64,64 0,1 1,-128 0" fill="#aaa"/>
+  <path d="m11.19,51.97h104.82" fill="none" stroke-linecap="square" stroke-width="8" stroke="#000"/>
+  <path d="m19.2,91.17c0,0 12.8,-27.2 44.8,-27.2 32,0 44.8,27.2 44.8,27.2" fill="none" stroke-linecap="square" stroke-width="8" stroke="#000"/>
+  <path d="m64,47.97c0,12 0,12 0,12" fill="#fff" stroke-width="4" stroke="#fff"/>
+  <path d="m11.19,47.97h104.82" fill="none" stroke-linecap="square" stroke-width="8" stroke="#fff"/>
+  <path d="m19.2,87.17c0,0 12.8,-27.2 44.8,-27.2 32,0 44.8,27.2 44.8,27.2" fill="none" stroke-linecap="square" stroke-width="8" stroke="#fff"/>
+  <path d="m80,63.97v-16" fill="none" stroke-width="4" stroke="#fff"/>
+  <path d="m48,63.97v-16" fill="none" stroke-width="4" stroke="#fff"/>
+  <path d="m96,71.97v-24" fill="none" stroke-width="4" stroke="#fff"/>
+  <path d="M32,73.13L32,47.97" fill="none" stroke-width="4" stroke="#fff"/>
+  <path d="m112,87.97v-40" fill="none" stroke-width="4" stroke="#fff"/>
+  <path d="m16,87.97v-40" fill="none" stroke-width="4" stroke="#fff"/>
+</svg>
