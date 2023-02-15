@@ -215,7 +215,7 @@ class QuestSolverController: UITableViewController {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCellTitle", for: indexPath)
 			cell.textLabel?.text = questMarker.quest.title
 			cell.textLabel?.textAlignment = .natural
-			cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
+			cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
 			return cell
 		} else if indexPath.row == self.tableView(tableView, numberOfRowsInSection: 0) - 2 {
 			// A button to open the regular tag editor

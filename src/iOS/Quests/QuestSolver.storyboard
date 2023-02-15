@@ -87,28 +87,36 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IFG-Ak-kOo">
-                                            <rect key="frame" x="20" y="4.5" width="73" height="35"/>
-                                            <state key="normal" title="Button"/>
-                                            <buttonConfiguration key="configuration" style="plain" title="Ignore"/>
-                                            <connections>
-                                                <action selector="ignoreAlways:" destination="rRu-gY-Gv4" eventType="touchUpInside" id="c9b-Md-qPX"/>
-                                            </connections>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Wj-nB-ieT">
-                                            <rect key="frame" x="101" y="4.5" width="166" height="35"/>
-                                            <state key="normal" title="Button"/>
-                                            <buttonConfiguration key="configuration" style="plain" title="Ignore this session"/>
-                                            <connections>
-                                                <action selector="ignoreThisSession:" destination="rRu-gY-Gv4" eventType="touchUpInside" id="NIh-UT-Jy1"/>
-                                            </connections>
-                                        </button>
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8d4-oo-Jk1">
+                                            <rect key="frame" x="84" y="4.5" width="246.5" height="34.5"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IFG-Ak-kOo">
+                                                    <rect key="frame" x="0.0" y="0.0" width="72.5" height="34.5"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" title="Ignore"/>
+                                                    <connections>
+                                                        <action selector="ignoreAlways:" destination="rRu-gY-Gv4" eventType="touchUpInside" id="c9b-Md-qPX"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Wj-nB-ieT">
+                                                    <rect key="frame" x="80.5" y="0.0" width="166" height="34.5"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" title="Ignore this session"/>
+                                                    <connections>
+                                                        <action selector="ignoreThisSession:" destination="rRu-gY-Gv4" eventType="touchUpInside" id="NIh-UT-Jy1"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="0Wj-nB-ieT" secondAttribute="trailing" id="YXS-hH-Zrd"/>
+                                                <constraint firstItem="IFG-Ak-kOo" firstAttribute="leading" secondItem="8d4-oo-Jk1" secondAttribute="leading" id="txy-dt-gfQ"/>
+                                                <constraint firstItem="0Wj-nB-ieT" firstAttribute="leading" secondItem="IFG-Ak-kOo" secondAttribute="trailing" constant="8" symbolic="YES" id="xKJ-64-jMF"/>
+                                            </constraints>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="IFG-Ak-kOo" firstAttribute="leading" secondItem="IjF-C8-1Uv" secondAttribute="leading" constant="20" symbolic="YES" id="4oM-m3-Rg5"/>
-                                        <constraint firstItem="0Wj-nB-ieT" firstAttribute="leading" secondItem="IFG-Ak-kOo" secondAttribute="trailing" constant="8" symbolic="YES" id="5X8-uQ-Dnj"/>
-                                        <constraint firstItem="IFG-Ak-kOo" firstAttribute="centerY" secondItem="IjF-C8-1Uv" secondAttribute="centerY" id="caG-8i-yYK"/>
-                                        <constraint firstItem="0Wj-nB-ieT" firstAttribute="centerY" secondItem="IjF-C8-1Uv" secondAttribute="centerY" id="rkC-uR-Rs4"/>
+                                        <constraint firstItem="8d4-oo-Jk1" firstAttribute="centerX" secondItem="IjF-C8-1Uv" secondAttribute="centerX" id="4IC-aC-MJ5"/>
+                                        <constraint firstItem="8d4-oo-Jk1" firstAttribute="centerY" secondItem="IjF-C8-1Uv" secondAttribute="centerY" id="5Ij-Bs-1kf"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
