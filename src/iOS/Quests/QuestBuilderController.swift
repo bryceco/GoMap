@@ -123,9 +123,8 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 			// get all possible keys
 			(featuresForKey, moreFeaturesForKey) = buildFeaturesForKey()
 			let keys = Array(featuresForKey.keys) + Array(moreFeaturesForKey.keys)
-			let handler: (_: Any?) -> Void = { _ in self.presetKeyChanged() }
-			let presetItems: [UIAction] = keys
-				.sorted()
+			let handler: (_: Any?) -> Void = { [weak self] _ in self?.presetKeyChanged() }
+			let presetItems: [UIAction] = keys.sorted()
 				.map { UIAction(title: "\($0)", handler: handler) }
 			presetField?.menu = UIMenu(title: NSLocalizedString("Tag Key", comment: ""),
 			                           children: presetItems)
@@ -156,13 +155,13 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		}
 
 		setupAddOneMenu(button: addOneIncludeButton!,
-		                featureList: { self.includeFeatures },
+						featureList: { [weak self] in self?.includeFeatures ?? [] },
 		                featureView: includeFeaturesView!,
-		                addFeature: { self.includeFeatures.append($0) })
+						addFeature: { [weak self] in self?.includeFeatures.append($0) })
 		setupAddOneMenu(button: addOneExcludeButton!,
-		                featureList: { self.excludeFeatures },
+		                featureList: { [weak self] in self?.excludeFeatures ?? [] },
 		                featureView: excludeFeaturesView!,
-		                addFeature: { self.excludeFeatures.append($0) })
+						addFeature: { [weak self] in self?.excludeFeatures.append($0) })
 	}
 
 	private func setupAddOneMenu(button: UIButton,
@@ -171,9 +170,9 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 	                             addFeature: @escaping ((name: String, ident: String)) -> Void)
 	{
 		if #available(iOS 15.0, *) {
-			let deferred = UIDeferredMenuElement.uncached { completion in
+			let deferred = UIDeferredMenuElement.uncached { [weak self] completion in
 				let featureList = featureList()
-				let items: [UIAction] = self.allFeatures
+				let items: [UIAction] = (self?.allFeatures ?? [])
 					.map { feature in UIAction(title: "\(feature.name)", handler: { _ in
 						let newFeature = (feature.name, feature.featureID)
 						if !featureList.contains(where: { $0.ident == newFeature.1 }) {
@@ -303,8 +302,10 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		} else {
 			cell.label?.text = excludeFeatures[indexPath.row].name
 		}
-		cell.onDelete = { cell in
-			if let indexPath = collectionView.indexPath(for: cell) {
+		cell.onDelete = { [weak self] cell in
+			if let self = self,
+			   let indexPath = collectionView.indexPath(for: cell)
+			{
 				if collectionView === self.includeFeaturesView {
 					self.includeFeatures.remove(at: indexPath.row)
 				} else {
