@@ -16,8 +16,8 @@ class QuestBuilderFeatureCell: UICollectionViewCell {
 
 	var onDelete: ((QuestBuilderFeatureCell) -> Void)?
 
-	required init?(coder: NSCoder) {
-		super.init(coder: coder)
+	override func awakeFromNib() {
+		super.awakeFromNib()
 		contentView.layer.cornerRadius = 5
 		contentView.layer.masksToBounds = true
 	}
@@ -48,14 +48,14 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 	var includeFeatures: [(name: String, ident: String)] = []
 	var excludeFeatures: [(name: String, ident: String)] = []
 
-	@available (iOS 15, *)
+	@available(iOS 15, *)
 	public class func instantiateNew() -> UINavigationController {
 		let sb = UIStoryboard(name: "QuestBuilder", bundle: nil)
 		let vc = sb.instantiateViewController(withIdentifier: "QuestBuilderNavigation") as! UINavigationController
 		return vc
 	}
 
-	@available (iOS 15, *)
+	@available(iOS 15, *)
 	public class func instantiateWith(quest: QuestUserDefition) -> UIViewController {
 		let sb = UIStoryboard(name: "QuestBuilder", bundle: nil)
 		let vc = sb.instantiateViewController(withIdentifier: "QuestBuilder") as! QuestBuilderController
@@ -98,6 +98,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 			featureView?.layer.borderWidth = 1.0
 			featureView?.layer.borderColor = UIColor.gray.cgColor
 			featureView?.layer.cornerRadius = 5.0
+			featureView?.isPrefetchingEnabled = false
 		}
 
 		// monitor changes to nameField
@@ -155,13 +156,13 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		}
 
 		setupAddOneMenu(button: addOneIncludeButton!,
-						featureList: { [weak self] in self?.includeFeatures ?? [] },
+		                featureList: { [weak self] in self?.includeFeatures ?? [] },
 		                featureView: includeFeaturesView!,
-						addFeature: { [weak self] in self?.includeFeatures.append($0) })
+		                addFeature: { [weak self] in self?.includeFeatures.append($0) })
 		setupAddOneMenu(button: addOneExcludeButton!,
 		                featureList: { [weak self] in self?.excludeFeatures ?? [] },
 		                featureView: excludeFeaturesView!,
-						addFeature: { [weak self] in self?.excludeFeatures.append($0) })
+		                addFeature: { [weak self] in self?.excludeFeatures.append($0) })
 	}
 
 	private func setupAddOneMenu(button: UIButton,
@@ -270,15 +271,14 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		vc.present(alert, animated: true)
 	}
 
-	override func viewDidLayoutSubviews() {
-		super.viewDidLayoutSubviews()
+	override func viewWillLayoutSubviews() {
+		super.viewWillLayoutSubviews()
+
 		let heightInclude = includeFeaturesView?.collectionViewLayout.collectionViewContentSize.height ?? 0.0
 		includeFeaturesHeightConstraint?.constant = max(heightInclude, 25.0)
 
 		let heightExclude = excludeFeaturesView?.collectionViewLayout.collectionViewContentSize.height ?? 0.0
 		excludeFeaturesHeightConstraint?.constant = max(heightExclude, 25.0)
-
-		view.layoutIfNeeded()
 	}
 
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -317,6 +317,8 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		}
 		return cell
 	}
+
+	// MARK: Name and label
 
 	@objc func nameFieldDidChange(_ sender: Any?) {
 		let text = nameField?.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
