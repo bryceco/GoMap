@@ -32,8 +32,12 @@ class QuestChooserTableCell: UITableViewCell {
 class BuildYourOwnQuestTableCell: UITableViewCell {
 	var vc: UIViewController?
 	@IBAction func didPress(_ sender: Any) {
-		let vc2 = QuestBuilderController.instantiateNew()
-		vc?.present(vc2, animated: true)
+		if #available(iOS 15, *) {
+			let vc2 = QuestBuilderController.instantiateNew()
+			vc?.present(vc2, animated: true)
+		} else {
+			QuestBuilderController.presentVersionAlert(vc!)
+		}
 	}
 }
 
@@ -78,7 +82,11 @@ class QuestChooserController: UITableViewController {
 			cell.quest = quest
 			cell.title?.text = quest.title
 			cell.uiSwitch?.isOn = QuestList.shared.isEnabled(quest)
-			cell.accessoryType = QuestList.shared.isUserQuest(quest) ? .disclosureIndicator : .none
+			if #available(iOS 15, *) {
+				cell.accessoryType = QuestList.shared.isUserQuest(quest) ? .disclosureIndicator : .none
+			} else {
+				cell.accessoryType = .none
+			}
 			return cell
 		} else if #available(iOS 15.0, *) {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "BuildYourOwnQuestTableCell", for: indexPath)
@@ -100,8 +108,12 @@ class QuestChooserController: UITableViewController {
 		   let title = cell.title?.text,
 		   let quest = QuestList.shared.userQuests.first(where: { $0.title == title })
 		{
-			let vc = QuestBuilderController.instantiateWith(quest: quest)
-			navigationController?.pushViewController(vc, animated: true)
+			if #available(iOS 15, *) {
+				let vc = QuestBuilderController.instantiateWith(quest: quest)
+				navigationController?.pushViewController(vc, animated: true)
+			} else {
+				QuestBuilderController.presentVersionAlert(self)
+			}
 		}
 	}
 

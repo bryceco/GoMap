@@ -48,12 +48,14 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 	var includeFeatures: [(name: String, ident: String)] = []
 	var excludeFeatures: [(name: String, ident: String)] = []
 
+	@available (iOS 15, *)
 	public class func instantiateNew() -> UINavigationController {
 		let sb = UIStoryboard(name: "QuestBuilder", bundle: nil)
 		let vc = sb.instantiateViewController(withIdentifier: "QuestBuilderNavigation") as! UINavigationController
 		return vc
 	}
 
+	@available (iOS 15, *)
 	public class func instantiateWith(quest: QuestUserDefition) -> UIViewController {
 		let sb = UIStoryboard(name: "QuestBuilder", bundle: nil)
 		let vc = sb.instantiateViewController(withIdentifier: "QuestBuilder") as! QuestBuilderController
@@ -258,6 +260,15 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 			addFields(to: &more, forFeature: feature, fieldNameList: feature.moreFields ?? [])
 		}
 		return (dict, more)
+	}
+
+	static func presentVersionAlert(_ vc: UIViewController) {
+		let alert = UIAlertController(
+			title: NSLocalizedString("Error", comment: ""),
+			message: NSLocalizedString("This feature is only available on iOS 15 or later", comment: ""),
+			preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+		vc.present(alert, animated: true)
 	}
 
 	override func viewDidLayoutSubviews() {
