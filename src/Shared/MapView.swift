@@ -2846,7 +2846,7 @@ extension MapView {
 		@objc func touchUpInside() {
 			let pos1 = tapPos
 			let pos2 = frame.origin
-			if hypot(pos1.x - pos2.x, pos1.y - pos2.y) > frame.size.width {
+			if hypot(pos1.x - pos2.x, pos1.y - pos2.y) > frame.size.width / 2 {
 				// we moved, so ignore event
 			} else {
 				// good to go: invoke the original action

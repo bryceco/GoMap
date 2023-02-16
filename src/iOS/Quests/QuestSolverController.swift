@@ -74,7 +74,8 @@ class QuestSolverController: UITableViewController {
 			withFeature: presetFeature,
 			objectTags: object.tags,
 			geometry: object.geometry(),
-			update: {
+			update: { [weak self] in
+				guard let self = self else { return }
 				if self.refreshPresetKey() {
 					self.tableView.reloadData()
 					self.setFirstResponder()
@@ -248,7 +249,8 @@ class QuestSolverController: UITableViewController {
 				                                                frame: view.frame)
 			}
 
-			cell.didChange = { text in
+			cell.didChange = { [weak self] text in
+				guard let self = self else { return }
 				let okay = self.questMarker.quest.accepts(tagValue: text)
 				self.navigationItem.rightBarButtonItem?.isEnabled = okay
 			}
