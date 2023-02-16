@@ -26,6 +26,8 @@ class QuestBuilderFeatureCell: UICollectionViewCell {
 class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
 	UITextFieldDelegate
 {
+	typealias PresetsForKey = [String: ContiguousArray<PresetFeature>]
+
 	@IBOutlet var presetField: UIButton?
 	@IBOutlet var includeFeaturesView: UICollectionView?
 	@IBOutlet var excludeFeaturesView: UICollectionView?
@@ -38,6 +40,9 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 	@IBOutlet var addOneIncludeButton: UIButton?
 	@IBOutlet var addOneExcludeButton: UIButton?
 	var quest: QuestUserDefition?
+
+	var featuresForKey: PresetsForKey = [:]
+	var moreFeaturesForKey: PresetsForKey = [:]
 
 	var allFeatures: [PresetFeature] = [] // all features for current presetField
 	var includeFeatures: [(name: String, ident: String)] = []
@@ -69,9 +74,10 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 			onCancel(sender)
 		} catch {
 			let alertView = UIAlertController(title: NSLocalizedString("Quest Definition Error", comment: ""),
-			                                  message: "",
+			                                  message: error.localizedDescription,
 			                                  preferredStyle: .actionSheet)
-			alertView.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel))
+			alertView.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+			                                  style: .cancel))
 			present(alertView, animated: true)
 			return
 		}
@@ -112,20 +118,11 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		}
 
 		if #available(iOS 14.0, *) {
-			// get all possible fields
-			let keys: [String] = PresetsDatabase.shared.presetFields.values
-				.compactMap({ field in
-					guard
-						let key = field.key,
-						!key.hasSuffix(":"), // multiCombo isn't supported
-						!allFeaturesWithKey(key, more: false).isEmpty
-					else {
-						return nil
-					}
-					return key
-				})
+			// get all possible keys
+			(featuresForKey, moreFeaturesForKey) = buildFeaturesForKey()
+			let keys = Array(featuresForKey.keys) + Array(moreFeaturesForKey.keys)
 			let handler: (_: Any?) -> Void = { _ in self.presetKeyChanged() }
-			let presetItems: [UIAction] = Array(Set(keys))
+			let presetItems: [UIAction] = keys
 				.sorted()
 				.map { UIAction(title: "\($0)", handler: handler) }
 			presetField?.menu = UIMenu(title: NSLocalizedString("Tag Key", comment: ""),
@@ -148,11 +145,11 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 					action.state = .on
 				}
 			}
-			allFeatures = allFeaturesWithKey(quest.presetKey, more: false)
+			allFeatures = featuresForKey[quest.presetKey]?.sorted(by: { a, b in a.name < b.name }) ?? []
 		} else {
 			if #available(iOS 15.0, *) {
 				let key = presetField?.menu?.selectedElements.first?.title ?? ""
-				allFeatures = allFeaturesWithKey(key, more: false)
+				allFeatures = featuresForKey[key]?.sorted(by: { a, b in a.name < b.name }) ?? []
 			}
 		}
 
@@ -195,14 +192,20 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 
 	func presetKeyChanged() {
 		let key = presetField!.title(for: .normal)!
-		allFeatures = allFeaturesWithKey(key, more: false)
+
+		var features = featuresForKey[key] ?? []
+		if features.count < 5 {
+			features = (featuresForKey[key] ?? []) + (moreFeaturesForKey[key] ?? [])
+		}
+		allFeatures = features.sorted(by: { a, b in a.name < b.name })
 		didAddAllInclude(nil)
 		didRemoveAllExclude(nil)
 	}
 
 	@IBAction func didAddMoreInclude(_ sender: Any?) {
 		let key = presetField!.title(for: .normal)!
-		allFeatures = allFeaturesWithKey(key, more: true)
+		allFeatures = ((featuresForKey[key] ?? []) + (moreFeaturesForKey[key] ?? []))
+			.sorted(by: { a, b in a.name < b.name })
 		didAddAllInclude(sender)
 	}
 
@@ -226,23 +229,35 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		excludeFeaturesView?.reloadData()
 	}
 
-	func allFeaturesWithKey(_ key: String, more: Bool) -> [PresetFeature] {
-		let presets = PresetsDatabase.shared.stdFeatures.values.compactMap { feature in
-			let more = more ? feature.moreFields ?? [] : []
-			let fields = (feature.fields ?? []) + more
-			for fieldName in fields {
+	private func buildFeaturesForKey() -> (PresetsForKey, PresetsForKey) {
+		func addFields(to dict: inout PresetsForKey, forFeature feature: PresetFeature, fieldNameList: [String]) {
+			for fieldName in fieldNameList {
 				guard let field = PresetsDatabase.shared.presetFields[fieldName] else { continue }
-				if field.key == key {
-					// ignore if this field was included because it's a reference
-					if field.reference?["key"] == key {
-						continue
+				if let key = field.key {
+					/*
+					 if field.reference?["key"] == key {
+					 	continue
+					 }
+					  */
+					if dict[key]?.append(feature) == nil {
+						dict[key] = [feature]
 					}
-					return feature
+				}
+				for key in field.keys ?? [] {
+					if dict[key]?.append(feature) == nil {
+						dict[key] = [feature]
+					}
 				}
 			}
-			return nil
 		}
-		return presets.sorted(by: { a, b in a.name < b.name })
+
+		var dict = PresetsForKey()
+		var more = PresetsForKey()
+		for feature in PresetsDatabase.shared.stdFeatures.values {
+			addFields(to: &dict, forFeature: feature, fieldNameList: feature.fields ?? [])
+			addFields(to: &more, forFeature: feature, fieldNameList: feature.moreFields ?? [])
+		}
+		return (dict, more)
 	}
 
 	override func viewDidLayoutSubviews() {
