@@ -30,15 +30,6 @@ class QuestChooserTableCell: UITableViewCell {
 }
 
 class BuildYourOwnQuestTableCell: UITableViewCell {
-	var vc: UIViewController?
-	@IBAction func didPress(_ sender: Any) {
-		if #available(iOS 15, *) {
-			let vc2 = QuestBuilderController.instantiateNew()
-			vc?.present(vc2, animated: true)
-		} else {
-			QuestBuilderController.presentVersionAlert(vc!)
-		}
-	}
 }
 
 class QuestChooserController: UITableViewController {
@@ -56,6 +47,16 @@ class QuestChooserController: UITableViewController {
 	override func viewWillDisappear(_ animated: Bool) {
 		// Update markers for newly added quests
 		AppDelegate.shared.mapView.updateMapMarkersFromServer(withDelay: 0.0, including: .quest)
+	}
+
+	var vc: UIViewController?
+	@IBAction func didPress(_ sender: Any) {
+		if #available(iOS 15, *) {
+			let vc2 = QuestBuilderController.instantiateNew()
+			vc?.present(vc2, animated: true)
+		} else {
+			QuestBuilderController.presentVersionAlert(vc!)
+		}
 	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
@@ -90,9 +91,7 @@ class QuestChooserController: UITableViewController {
 			return cell
 		} else if #available(iOS 15.0, *) {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "BuildYourOwnQuestTableCell", for: indexPath)
-			let cell2 = cell as! BuildYourOwnQuestTableCell
-			cell2.vc = self
-			return cell2
+			return cell
 		} else {
 			fatalError()
 		}

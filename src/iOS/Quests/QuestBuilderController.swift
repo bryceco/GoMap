@@ -51,11 +51,8 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		didSet {
 			removeAllIncludeButton?.isEnabled = chosenFeatures.count > 0
 			addOneIncludeButton?.isEnabled = chosenFeatures.count < availableFeatures.count
+			updateSaveButtonStatus()
 		}
-	}
-
-	var excludeFeatures: [(name: String, ident: String)] = [] {
-		didSet {}
 	}
 
 	@available(iOS 15, *)
@@ -81,7 +78,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 			                              label: label,
 			                              presetKey: presetField!.title(for: .normal)!,
 			                              includeFeatures: chosenFeatures.map { $0.ident },
-			                              excludeFeatures: excludeFeatures.map { $0.ident })
+			                              excludeFeatures: [])
 			try QuestList.shared.addQuest(quest)
 			onCancel(sender)
 		} catch {
@@ -145,7 +142,6 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 			// if we're editing an existing quest then fill in the fields
 			let features = PresetsDatabase.shared.stdFeatures
 			chosenFeatures = quest.includeFeatures.map { (features[$0]?.name ?? $0, $0) }
-			excludeFeatures = quest.excludeFeatures.map { (features[$0]?.name ?? $0, $0) }
 			nameField?.text = quest.title
 			presetField?.setTitle(quest.presetKey, for: .normal)
 			if #available(iOS 14.0, *) {
@@ -307,20 +303,12 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 	{
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FeatureCell",
 		                                              for: indexPath) as! QuestBuilderFeatureCell
-		if collectionView === includeFeaturesView {
-			cell.label?.text = chosenFeatures[indexPath.row].name
-		} else {
-			cell.label?.text = excludeFeatures[indexPath.row].name
-		}
+		cell.label?.text = chosenFeatures[indexPath.row].name
 		cell.onDelete = { [weak self] cell in
 			if let self = self,
 			   let indexPath = collectionView.indexPath(for: cell)
 			{
-				if collectionView === self.includeFeaturesView {
-					self.chosenFeatures.remove(at: indexPath.row)
-				} else {
-					self.excludeFeatures.remove(at: indexPath.row)
-				}
+				self.chosenFeatures.remove(at: indexPath.row)
 				collectionView.deleteItems(at: [indexPath])
 				self.view.setNeedsLayout()
 			}
@@ -330,14 +318,18 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 
 	// MARK: Name and label
 
+	func updateSaveButtonStatus() {
+		let name = nameField?.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
+		let label = labelField?.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
+		saveButton?.isEnabled = name != "" && label.count == 1
+	}
+
 	@objc func nameFieldDidChange(_ sender: Any?) {
-		let text = nameField?.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
-		saveButton?.isEnabled = text.count > 0
+		updateSaveButtonStatus()
 	}
 
 	@objc func labelFieldDidChange(_ sender: Any?) {
-		let text = labelField?.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
-		saveButton?.isEnabled = text.count == 1
+		updateSaveButtonStatus()
 	}
 
 	// MARK: keyboard

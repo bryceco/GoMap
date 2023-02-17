@@ -75,18 +75,18 @@ final class MapMarkerButton: MapView.MapViewButton {
 			labelLayer.frame = CGRect(x: 1, y: 1, width: 2 * radius - 2, height: 2 * radius - 2)
 		case let .text(text):
 			let textLayer = CATextLayer()
+			let ourRadius = radius - 1
 			textLayer.string = text
 			textLayer.font = UIFont.preferredFont(forTextStyle: .caption1)
 			textLayer.fontSize = 20
 			textLayer.foregroundColor = UIColor.black.cgColor
+			textLayer.backgroundColor = UIColor(red: 0xFD/255.0, green: 0xFF/255.0, blue: 0xDE/255.0, alpha: 1.0).cgColor
 			textLayer.alignmentMode = .center
 			textLayer.contentsScale = UIScreen.main.scale
+			textLayer.cornerRadius = ourRadius
+			textLayer.frame = CGRect(x: radius - ourRadius, y: radius - ourRadius,
+									  width: 2 * ourRadius, height: 2 * ourRadius)
 			labelLayer = textLayer
-			// FIXME: This doesn't reliably center the text in the button
-			let font = UIFont(name: (textLayer.font as! UIFont).fontName,
-			                  size: textLayer.fontSize)!
-			let size = (text as NSString).size(withAttributes: [NSAttributedString.Key.font: font])
-			labelLayer.frame = CGRect(x: 0, y: (2 * radius - size.height) / 2, width: 2 * radius, height: 2 * radius)
 		}
 		shapeLayer.addSublayer(labelLayer)
 

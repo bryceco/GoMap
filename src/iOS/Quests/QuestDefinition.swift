@@ -20,6 +20,7 @@ protocol QuestProtocol {
 enum QuestError: Error {
 	case unknownKey(String)
 	case unknownFeature(String)
+	case noFeatures
 }
 
 struct QuestHighwaySurface: QuestProtocol {

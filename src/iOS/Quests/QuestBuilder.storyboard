@@ -65,9 +65,8 @@
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eKj-3l-pdY" userLabel="Include Features View">
                                                 <rect key="frame" x="0.0" y="196" width="353" height="150.33333333333337"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ky4-Gk-al2">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Which features (objects) should this quest apply to? If this is empty then the quest will be used for every applicable feature:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ky4-Gk-al2">
                                                         <rect key="frame" x="0.0" y="5" width="353" height="64.333333333333329"/>
-                                                        <string key="text">Which features (objects) should this quest apply to? Leave this empty to use all features applicable to the value selected above.</string>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -190,7 +189,7 @@
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tpG-3J-HeH" userLabel="Name View">
                                                 <rect key="frame" x="0.0" y="371.33333333333331" width="353" height="108"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Provide a title for your quest: This is best written as an action to perform like &quot;Add Surface&quot; " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xpT-OT-hKN" userLabel="Provide a unique name for your quest:">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Provide a title for your quest: This is best written as an action to perform like &quot;Add Surface&quot;:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xpT-OT-hKN" userLabel="Provide a unique name for your quest:">
                                                         <rect key="frame" x="0.0" y="0.0" width="353" height="64.333333333333329"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <nil key="textColor"/>
@@ -221,13 +220,16 @@
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CSL-4N-Z6D" userLabel="Provide a unique name for your quest:">
                                                         <rect key="frame" x="0.0" y="0.0" width="353" height="86.333333333333329"/>
-                                                        <string key="text">Provide a single character that will appear on quest markers on the map. This can be a letter, an emoji, or a Unicode character that represents your quest.</string>
+                                                        <string key="text">Provide a single character that will appear on quest markers on the map. This can be a letter, an emoji, or a Unicode character that represents your quest:</string>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3ly-JH-kKn">
-                                                        <rect key="frame" x="0.0" y="86.333333333333258" width="353" height="41.666666666666657"/>
+                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3ly-JH-kKn">
+                                                        <rect key="frame" x="151.66666666666666" y="86.333333333333258" width="50" height="41.666666666666657"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="50" id="zxB-GE-BlK"/>
+                                                        </constraints>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                         <connections>
@@ -237,12 +239,11 @@
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
-                                                    <constraint firstItem="3ly-JH-kKn" firstAttribute="leading" secondItem="vjj-ZN-rnq" secondAttribute="leading" id="0qw-77-2tv"/>
                                                     <constraint firstItem="CSL-4N-Z6D" firstAttribute="top" secondItem="vjj-ZN-rnq" secondAttribute="top" id="OZS-bi-nHd"/>
                                                     <constraint firstItem="3ly-JH-kKn" firstAttribute="top" secondItem="CSL-4N-Z6D" secondAttribute="bottom" id="QRj-58-6yZ"/>
                                                     <constraint firstAttribute="bottom" secondItem="3ly-JH-kKn" secondAttribute="bottom" id="Vug-xo-RpC"/>
-                                                    <constraint firstAttribute="trailing" secondItem="3ly-JH-kKn" secondAttribute="trailing" id="m9f-cd-GOx"/>
                                                     <constraint firstItem="CSL-4N-Z6D" firstAttribute="leading" secondItem="vjj-ZN-rnq" secondAttribute="leading" id="on1-li-fQX"/>
+                                                    <constraint firstItem="3ly-JH-kKn" firstAttribute="centerX" secondItem="vjj-ZN-rnq" secondAttribute="centerX" id="rwx-Wf-rXo"/>
                                                     <constraint firstAttribute="trailing" secondItem="CSL-4N-Z6D" secondAttribute="trailing" id="w6t-6k-M2p"/>
                                                 </constraints>
                                             </view>
