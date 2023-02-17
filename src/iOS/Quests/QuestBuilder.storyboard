@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" ambiguous="YES" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="XNI-xS-8yh">
-                                        <rect key="frame" x="20" y="0.0" width="353" height="657.33333333333337"/>
+                                        <rect key="frame" x="20" y="0.0" width="353" height="668.66666666666663"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Build Your Own Quest" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44G-za-6lM">
                                                 <rect key="frame" x="0.0" y="0.0" width="353" height="33.666666666666664"/>
@@ -35,18 +35,24 @@
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
+                                                <attributedString key="userComments">
+                                                    <fragment content="Wait to translate - will likely change soon"/>
+                                                </attributedString>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3bH-HQ-yyA" userLabel="Key selection">
-                                                <rect key="frame" x="0.0" y="114" width="353" height="67"/>
+                                                <rect key="frame" x="0.0" y="114" width="353" height="78.333333333333314"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What key will you be setting with this quest? This is a tag key such as &quot;surface&quot;." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UtJ-Wh-nDa">
-                                                        <rect key="frame" x="0.0" y="0.0" width="353" height="42.333333333333336"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What key will you be setting with this quest? This is a tag key such as &quot;surface&quot; or &quot;cuisine&quot;:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UtJ-Wh-nDa">
+                                                        <rect key="frame" x="0.0" y="0.0" width="353" height="64.333333333333329"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
+                                                        <attributedString key="userComments">
+                                                            <fragment content="Wait to translate - will likely change soon"/>
+                                                        </attributedString>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zky-iv-Ndr">
-                                                        <rect key="frame" x="0.0" y="42.333333333333343" width="353" height="24.666666666666671"/>
+                                                        <rect key="frame" x="0.0" y="64.333333333333343" width="353" height="14"/>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="filled"/>
                                                     </button>
@@ -63,7 +69,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eKj-3l-pdY" userLabel="Include Features View">
-                                                <rect key="frame" x="0.0" y="211" width="353" height="150.33333333333337"/>
+                                                <rect key="frame" x="0.0" y="222.33333333333331" width="353" height="150.33333333333331"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ky4-Gk-al2">
                                                         <rect key="frame" x="0.0" y="5" width="353" height="64.333333333333329"/>
@@ -71,9 +77,12 @@
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
+                                                        <attributedString key="userComments">
+                                                            <fragment content="Wait to translate - will likely change soon"/>
+                                                        </attributedString>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t6c-fn-eZi" userLabel="Add Remove Buttons">
-                                                        <rect key="frame" x="0.0" y="69.333333333333314" width="353" height="31"/>
+                                                        <rect key="frame" x="0.0" y="69.333333333333371" width="353" height="31"/>
                                                         <subviews>
                                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="leb-7e-tKO">
                                                                 <rect key="frame" x="0.0" y="0.0" width="102" height="32"/>
@@ -86,12 +95,12 @@
                                                                 </connections>
                                                             </segmentedControl>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FRf-jj-b4b">
-                                                                <rect key="frame" x="110" y="-1.6666666666666288" width="34.333333333333343" height="34.333333333333336"/>
+                                                                <rect key="frame" x="110" y="-1.6666666666666856" width="34.333333333333343" height="34.333333333333336"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="plain" title="+"/>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wEP-eg-Wbf">
-                                                                <rect key="frame" x="244.66666666666671" y="-1.6666666666666288" width="108.33333333333334" height="34.333333333333336"/>
+                                                                <rect key="frame" x="244.66666666666671" y="-1.6666666666666856" width="108.33333333333334" height="34.333333333333336"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="plain" title="Remove All"/>
                                                                 <connections>
@@ -188,13 +197,16 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tpG-3J-HeH" userLabel="Name View">
-                                                <rect key="frame" x="0.0" y="391.33333333333331" width="353" height="108"/>
+                                                <rect key="frame" x="0.0" y="402.66666666666669" width="353" height="108"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Provide a title for your quest: This is best written as an action to perform like &quot;Add Surface&quot;:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xpT-OT-hKN" userLabel="Provide a unique name for your quest:">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Provide a title for your quest: This is best written as an action to perform like &quot;Add Cuisine&quot;:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xpT-OT-hKN" userLabel="Provide a unique name for your quest:">
                                                         <rect key="frame" x="0.0" y="0.0" width="353" height="64.333333333333329"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
+                                                        <attributedString key="userComments">
+                                                            <fragment content="Wait to translate - will likely change soon"/>
+                                                        </attributedString>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zSF-SH-Kt7">
                                                         <rect key="frame" x="0.0" y="64.333333333333314" width="353" height="43.666666666666657"/>
@@ -217,17 +229,20 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vjj-ZN-rnq" userLabel="Label View">
-                                                <rect key="frame" x="0.0" y="529.33333333333337" width="353" height="128"/>
+                                                <rect key="frame" x="0.0" y="540.66666666666663" width="353" height="128"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CSL-4N-Z6D" userLabel="Provide a unique name for your quest:">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CSL-4N-Z6D" userLabel="Label character">
                                                         <rect key="frame" x="0.0" y="0.0" width="353" height="86.333333333333329"/>
-                                                        <string key="text">Provide a single character that will appear on quest markers on the map. This can be a letter, an emoji, or a Unicode character that represents your quest:</string>
+                                                        <string key="text">Provide a single character that will appear on quest markers on the map. This can be a letter, an emoji, or any other Unicode character that represents your quest:</string>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
+                                                        <attributedString key="userComments">
+                                                            <fragment content="Wait to translate - will likely change soon"/>
+                                                        </attributedString>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3ly-JH-kKn">
-                                                        <rect key="frame" x="151.66666666666666" y="86.333333333333258" width="50" height="41.666666666666657"/>
+                                                        <rect key="frame" x="151.66666666666666" y="86.333333333333371" width="50" height="41.666666666666657"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="50" id="zxB-GE-BlK"/>
                                                         </constraints>

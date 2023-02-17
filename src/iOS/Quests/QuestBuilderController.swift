@@ -140,7 +140,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 			labelField?.text = quest.label
 			presetKey = quest.presetKey
 		} else {
-			presetKey = "surface"
+			presetKey = "cuisine"
 		}
 
 		// mark the current key selection
@@ -157,7 +157,10 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		setupAddOneMenu(button: includeOneFeatureButton!,
 		                featureList: { [weak self] in self?.chosenFeatures ?? [] },
 		                featureView: includeFeaturesView!,
-		                addFeature: { [weak self] in self?.chosenFeatures.append($0) })
+		                addFeature: { [weak self] in
+		                	self?.chosenFeatures.append($0)
+		                	self?.chosenFeatures.sort(by: { $0.name < $1.name })
+		                })
 	}
 
 	private func setupAddOneMenu(button: UIButton,
