@@ -30,23 +30,33 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 
 	@IBOutlet var presetField: UIButton?
 	@IBOutlet var includeFeaturesView: UICollectionView?
-	@IBOutlet var excludeFeaturesView: UICollectionView?
 	@IBOutlet var includeFeaturesHeightConstraint: NSLayoutConstraint?
-	@IBOutlet var excludeFeaturesHeightConstraint: NSLayoutConstraint?
 	@IBOutlet var scrollView: UIScrollView?
 	@IBOutlet var saveButton: UIBarButtonItem?
 	@IBOutlet var nameField: UITextField? // Long name, like "Add Surface"
 	@IBOutlet var labelField: UITextField? // Short name for a quest button, like "S"
+
+	@IBOutlet var featuresSelectionButton: UISegmentedControl?
+	@IBOutlet var includeOneFeatureButton: UIButton?
+	@IBOutlet var removeAllIncludeButton: UIButton?
 	@IBOutlet var addOneIncludeButton: UIButton?
-	@IBOutlet var addOneExcludeButton: UIButton?
+
 	var quest: QuestUserDefition?
 
-	var featuresForKey: PresetsForKey = [:]
-	var moreFeaturesForKey: PresetsForKey = [:]
+	var primaryFeaturesForKey: PresetsForKey = [:]
+	var allFeaturesForKey: PresetsForKey = [:]
 
-	var allFeatures: [PresetFeature] = [] // all features for current presetField
-	var includeFeatures: [(name: String, ident: String)] = []
-	var excludeFeatures: [(name: String, ident: String)] = []
+	var availableFeatures: [PresetFeature] = [] // all features for current presetField
+	var chosenFeatures: [(name: String, ident: String)] = [] {
+		didSet {
+			removeAllIncludeButton?.isEnabled = chosenFeatures.count > 0
+			addOneIncludeButton?.isEnabled = chosenFeatures.count < availableFeatures.count
+		}
+	}
+
+	var excludeFeatures: [(name: String, ident: String)] = [] {
+		didSet {}
+	}
 
 	@available(iOS 15, *)
 	public class func instantiateNew() -> UINavigationController {
@@ -70,7 +80,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 			let quest = QuestUserDefition(title: name,
 			                              label: label,
 			                              presetKey: presetField!.title(for: .normal)!,
-			                              includeFeatures: includeFeatures.map { $0.ident },
+			                              includeFeatures: chosenFeatures.map { $0.ident },
 			                              excludeFeatures: excludeFeatures.map { $0.ident })
 			try QuestList.shared.addQuest(quest)
 			onCancel(sender)
@@ -94,7 +104,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		for featureView in [includeFeaturesView, excludeFeaturesView] {
+		for featureView in [includeFeaturesView] {
 			featureView?.layer.borderWidth = 1.0
 			featureView?.layer.borderColor = UIColor.gray.cgColor
 			featureView?.layer.cornerRadius = 5.0
@@ -122,20 +132,19 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 
 		if #available(iOS 14.0, *) {
 			// get all possible keys
-			(featuresForKey, moreFeaturesForKey) = buildFeaturesForKey()
-			let keys = Array(featuresForKey.keys) + Array(moreFeaturesForKey.keys)
+			(primaryFeaturesForKey, allFeaturesForKey) = buildFeaturesForKeys()
 			let handler: (_: Any?) -> Void = { [weak self] _ in self?.presetKeyChanged() }
-			let presetItems: [UIAction] = keys.sorted()
+			let presetItems: [UIAction] = allFeaturesForKey.keys.sorted()
 				.map { UIAction(title: "\($0)", handler: handler) }
 			presetField?.menu = UIMenu(title: NSLocalizedString("Tag Key", comment: ""),
 			                           children: presetItems)
 			presetField?.showsMenuAsPrimaryAction = true
 		}
 
-		// if we're editing an existing quest then fill in the fields
 		if let quest = quest {
+			// if we're editing an existing quest then fill in the fields
 			let features = PresetsDatabase.shared.stdFeatures
-			includeFeatures = quest.includeFeatures.map { (features[$0]?.name ?? $0, $0) }
+			chosenFeatures = quest.includeFeatures.map { (features[$0]?.name ?? $0, $0) }
 			excludeFeatures = quest.excludeFeatures.map { (features[$0]?.name ?? $0, $0) }
 			nameField?.text = quest.title
 			presetField?.setTitle(quest.presetKey, for: .normal)
@@ -147,22 +156,15 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 					action.state = .on
 				}
 			}
-			allFeatures = featuresForKey[quest.presetKey]?.sorted(by: { a, b in a.name < b.name }) ?? []
+			availableFeatures = primaryFeaturesForKey[quest.presetKey]?.sorted(by: { a, b in a.name < b.name }) ?? []
 		} else {
-			if #available(iOS 15.0, *) {
-				let key = presetField?.menu?.selectedElements.first?.title ?? ""
-				allFeatures = featuresForKey[key]?.sorted(by: { a, b in a.name < b.name }) ?? []
-			}
+			presetKeyChanged()
 		}
 
-		setupAddOneMenu(button: addOneIncludeButton!,
-		                featureList: { [weak self] in self?.includeFeatures ?? [] },
+		setupAddOneMenu(button: includeOneFeatureButton!,
+		                featureList: { [weak self] in self?.chosenFeatures ?? [] },
 		                featureView: includeFeaturesView!,
-		                addFeature: { [weak self] in self?.includeFeatures.append($0) })
-		setupAddOneMenu(button: addOneExcludeButton!,
-		                featureList: { [weak self] in self?.excludeFeatures ?? [] },
-		                featureView: excludeFeaturesView!,
-		                addFeature: { [weak self] in self?.excludeFeatures.append($0) })
+		                addFeature: { [weak self] in self?.chosenFeatures.append($0) })
 	}
 
 	private func setupAddOneMenu(button: UIButton,
@@ -172,19 +174,22 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 	{
 		if #available(iOS 15.0, *) {
 			let deferred = UIDeferredMenuElement.uncached { [weak self] completion in
+				guard let self = self else { return }
 				let featureList = featureList()
-				let items: [UIAction] = (self?.allFeatures ?? [])
-					.map { feature in UIAction(title: "\(feature.name)", handler: { _ in
-						let newFeature = (feature.name, feature.featureID)
-						if !featureList.contains(where: { $0.ident == newFeature.1 }) {
-							addFeature(newFeature)
-						}
-						featureView.reloadData()
-					}) }
+				let items: [UIAction] = self.availableFeatures
+					.map {
+						feature in UIAction(title: "\(feature.name)", handler: { _ in
+							let newFeature = (feature.name, feature.featureID)
+							if !featureList.contains(where: { $0.ident == newFeature.1 }) {
+								addFeature(newFeature)
+							}
+							featureView.reloadData()
+						})
+					}
 				completion(items)
 			}
 			button.menu = UIMenu(children: [
-				UIAction(title: "", handler: { _ in }),
+				UIAction(title: "", handler: { _ in }), // requires at least one non-deferred item
 				deferred
 			])
 			button.showsMenuAsPrimaryAction = true
@@ -194,48 +199,57 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 
 	func presetKeyChanged() {
 		let key = presetField!.title(for: .normal)!
-
-		var features = featuresForKey[key] ?? []
-		if features.count < 5 {
-			features = (featuresForKey[key] ?? []) + (moreFeaturesForKey[key] ?? [])
+		let primaryCount = primaryFeaturesForKey[key]?.count ?? 0
+		let allCount = allFeaturesForKey[key]?.count ?? 0
+		if primaryCount < 5, allCount > primaryCount {
+			useAllFeatures()
+		} else {
+			usePrimaryFeatures()
 		}
-		allFeatures = features.sorted(by: { a, b in a.name < b.name })
-		didAddAllInclude(nil)
-		didRemoveAllExclude(nil)
 	}
 
-	@IBAction func didAddMoreInclude(_ sender: Any?) {
+	@IBAction func PrimaryAllSelectorChanged(_ sender: Any?) {
+		if let seg = sender as? UISegmentedControl {
+			if seg.selectedSegmentIndex == 0 {
+				usePrimaryFeatures()
+			} else {
+				useAllFeatures()
+			}
+		}
+	}
+
+	func usePrimaryFeatures() {
 		let key = presetField!.title(for: .normal)!
-		allFeatures = ((featuresForKey[key] ?? []) + (moreFeaturesForKey[key] ?? []))
-			.sorted(by: { a, b in a.name < b.name })
-		didAddAllInclude(sender)
+		availableFeatures = (primaryFeaturesForKey[key] ?? []).sorted(by: { a, b in a.name < b.name })
+		chosenFeatures = availableFeatures.map { ($0.name, $0.featureID) }
+		featuresSelectionButton?.selectedSegmentIndex = 0
+		includeFeaturesView?.reloadData()
+		includeFeaturesView?.layoutIfNeeded()
 	}
 
-	@IBAction func didAddAllInclude(_ sender: Any?) {
-		includeFeatures = allFeatures.map { ($0.name, $0.featureID) }
+	func useAllFeatures() {
+		let key = presetField!.title(for: .normal)!
+		availableFeatures = (allFeaturesForKey[key] ?? []).sorted(by: { a, b in a.name < b.name })
+		chosenFeatures = availableFeatures.map { ($0.name, $0.featureID) }
+		featuresSelectionButton?.selectedSegmentIndex = 1
+		includeFeaturesView?.reloadData()
+		includeFeaturesView?.layoutIfNeeded()
+	}
+
+	@IBAction func removeAllIncludeFeatures(_ sender: Any?) {
+		chosenFeatures = []
 		includeFeaturesView?.reloadData()
 	}
 
-	@IBAction func didAddAllExclude(_ sender: Any?) {
-		excludeFeatures = allFeatures.map { ($0.name, $0.featureID) }
-		excludeFeaturesView?.reloadData()
-	}
-
-	@IBAction func didRemoveAllInclude(_ sender: Any?) {
-		includeFeatures = []
-		includeFeaturesView?.reloadData()
-	}
-
-	@IBAction func didRemoveAllExclude(_ sender: Any?) {
-		excludeFeatures = []
-		excludeFeaturesView?.reloadData()
-	}
-
-	private func buildFeaturesForKey() -> (PresetsForKey, PresetsForKey) {
+	private func buildFeaturesForKeys() -> (PresetsForKey, PresetsForKey) {
 		func addFields(to dict: inout PresetsForKey, forFeature feature: PresetFeature, fieldNameList: [String]) {
 			for fieldName in fieldNameList {
 				guard let field = PresetsDatabase.shared.presetFields[fieldName] else { continue }
+				var allKeys = field.keys ?? []
 				if let key = field.key {
+					allKeys.append(key)
+				}
+				for key in allKeys {
 					/*
 					 if field.reference?["key"] == key {
 					 	continue
@@ -245,21 +259,19 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 						dict[key] = [feature]
 					}
 				}
-				for key in field.keys ?? [] {
-					if dict[key]?.append(feature) == nil {
-						dict[key] = [feature]
-					}
-				}
 			}
 		}
 
-		var dict = PresetsForKey()
-		var more = PresetsForKey()
+		var primaryFeatures = PresetsForKey()
 		for feature in PresetsDatabase.shared.stdFeatures.values {
-			addFields(to: &dict, forFeature: feature, fieldNameList: feature.fields ?? [])
-			addFields(to: &more, forFeature: feature, fieldNameList: feature.moreFields ?? [])
+			addFields(to: &primaryFeatures, forFeature: feature, fieldNameList: feature.fields ?? [])
 		}
-		return (dict, more)
+		var allFeatures = primaryFeatures
+		for feature in PresetsDatabase.shared.stdFeatures.values {
+			addFields(to: &allFeatures, forFeature: feature, fieldNameList: feature.moreFields ?? [])
+		}
+
+		return (primaryFeatures, allFeatures)
 	}
 
 	static func presentVersionAlert(_ vc: UIViewController) {
@@ -271,23 +283,21 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		vc.present(alert, animated: true)
 	}
 
-	override func viewWillLayoutSubviews() {
-		super.viewWillLayoutSubviews()
+	// MARK: Collection View
 
+	override func viewWillLayoutSubviews() {
 		let heightInclude = includeFeaturesView?.collectionViewLayout.collectionViewContentSize.height ?? 0.0
 		includeFeaturesHeightConstraint?.constant = max(heightInclude, 25.0)
+		print("height = \(heightInclude), \(chosenFeatures.count) features")
 
-		let heightExclude = excludeFeaturesView?.collectionViewLayout.collectionViewContentSize.height ?? 0.0
-		excludeFeaturesHeightConstraint?.constant = max(heightExclude, 25.0)
+		super.viewWillLayoutSubviews()
 	}
 
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		guard section == 0 else { return 0 }
 		if collectionView === includeFeaturesView {
-			return includeFeatures.count
-		}
-		if collectionView === excludeFeaturesView {
-			return excludeFeatures.count
+			print("rows = \(chosenFeatures.count)")
+			return chosenFeatures.count
 		}
 		return 0
 	}
@@ -298,7 +308,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FeatureCell",
 		                                              for: indexPath) as! QuestBuilderFeatureCell
 		if collectionView === includeFeaturesView {
-			cell.label?.text = includeFeatures[indexPath.row].name
+			cell.label?.text = chosenFeatures[indexPath.row].name
 		} else {
 			cell.label?.text = excludeFeatures[indexPath.row].name
 		}
@@ -307,12 +317,12 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 			   let indexPath = collectionView.indexPath(for: cell)
 			{
 				if collectionView === self.includeFeaturesView {
-					self.includeFeatures.remove(at: indexPath.row)
+					self.chosenFeatures.remove(at: indexPath.row)
 				} else {
 					self.excludeFeatures.remove(at: indexPath.row)
 				}
 				collectionView.deleteItems(at: [indexPath])
-				self.viewDidLayoutSubviews()
+				self.view.setNeedsLayout()
 			}
 		}
 		return cell
