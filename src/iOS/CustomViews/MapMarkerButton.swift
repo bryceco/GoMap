@@ -80,12 +80,15 @@ final class MapMarkerButton: MapView.MapViewButton {
 			textLayer.font = UIFont.preferredFont(forTextStyle: .caption1)
 			textLayer.fontSize = 20
 			textLayer.foregroundColor = UIColor.black.cgColor
-			textLayer.backgroundColor = UIColor(red: 0xFD/255.0, green: 0xFF/255.0, blue: 0xDE/255.0, alpha: 1.0).cgColor
+			textLayer.backgroundColor = UIColor(red: 0xFD / 255.0,
+												green: 0xFF / 255.0,
+												blue: 0xDE / 255.0,
+												alpha: 1.0).cgColor
 			textLayer.alignmentMode = .center
 			textLayer.contentsScale = UIScreen.main.scale
 			textLayer.cornerRadius = ourRadius
 			textLayer.frame = CGRect(x: radius - ourRadius, y: radius - ourRadius,
-									  width: 2 * ourRadius, height: 2 * ourRadius)
+			                         width: 2 * ourRadius, height: 2 * ourRadius)
 			labelLayer = textLayer
 		}
 		shapeLayer.addSublayer(labelLayer)

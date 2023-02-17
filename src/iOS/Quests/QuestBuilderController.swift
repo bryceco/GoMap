@@ -56,14 +56,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 	}
 
 	@available(iOS 15, *)
-	public class func instantiateNew() -> UINavigationController {
-		let sb = UIStoryboard(name: "QuestBuilder", bundle: nil)
-		let vc = sb.instantiateViewController(withIdentifier: "QuestBuilderNavigation") as! UINavigationController
-		return vc
-	}
-
-	@available(iOS 15, *)
-	public class func instantiateWith(quest: QuestUserDefition) -> UIViewController {
+	public class func instantiateWith(quest: QuestUserDefition?) -> UIViewController {
 		let sb = UIStoryboard(name: "QuestBuilder", bundle: nil)
 		let vc = sb.instantiateViewController(withIdentifier: "QuestBuilder") as! QuestBuilderController
 		vc.quest = quest
@@ -138,24 +131,28 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 			presetField?.showsMenuAsPrimaryAction = true
 		}
 
+		let presetKey: String
 		if let quest = quest {
 			// if we're editing an existing quest then fill in the fields
 			let features = PresetsDatabase.shared.stdFeatures
 			chosenFeatures = quest.includeFeatures.map { (features[$0]?.name ?? $0, $0) }
 			nameField?.text = quest.title
-			presetField?.setTitle(quest.presetKey, for: .normal)
-			if #available(iOS 14.0, *) {
-				// select the current presetKey
-				if let item = presetField?.menu?.children.first(where: { $0.title == quest.presetKey }),
-				   let action = item as? UIAction
-				{
-					action.state = .on
-				}
-			}
-			availableFeatures = primaryFeaturesForKey[quest.presetKey]?.sorted(by: { a, b in a.name < b.name }) ?? []
+			labelField?.text = quest.label
+			presetKey = quest.presetKey
 		} else {
-			presetKeyChanged()
+			presetKey = "surface"
 		}
+
+		// mark the current key selection
+		if #available(iOS 14.0, *) {
+			// select the current presetKey
+			if let item = presetField?.menu?.children.first(where: { $0.title == presetKey }),
+			   let action = item as? UIAction
+			{
+				action.state = .on
+			}
+		}
+		presetKeyChanged()
 
 		setupAddOneMenu(button: includeOneFeatureButton!,
 		                featureList: { [weak self] in self?.chosenFeatures ?? [] },
@@ -284,15 +281,12 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 	override func viewWillLayoutSubviews() {
 		let heightInclude = includeFeaturesView?.collectionViewLayout.collectionViewContentSize.height ?? 0.0
 		includeFeaturesHeightConstraint?.constant = max(heightInclude, 25.0)
-		print("height = \(heightInclude), \(chosenFeatures.count) features")
-
 		super.viewWillLayoutSubviews()
 	}
 
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		guard section == 0 else { return 0 }
 		if collectionView === includeFeaturesView {
-			print("rows = \(chosenFeatures.count)")
 			return chosenFeatures.count
 		}
 		return 0

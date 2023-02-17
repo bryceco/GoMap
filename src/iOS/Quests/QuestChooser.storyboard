@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -61,18 +62,16 @@
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fBZ-xs-ZeA">
-                                            <rect key="frame" x="101.66666666666669" y="4.3333333333333321" width="190" height="35"/>
-                                            <state key="normal" title="Button"/>
-                                            <buttonConfiguration key="configuration" style="plain" title="Build Your Own Quest"/>
-                                            <connections>
-                                                <action selector="didBuildQuestButton:" destination="REI-FR-Yb0" eventType="touchUpInside" id="6lz-vS-f0D"/>
-                                            </connections>
-                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Build a New Quest" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obG-9F-y5J">
+                                            <rect key="frame" x="126.66666666666667" y="11.333333333333336" width="139.66666666666657" height="21"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                            <color key="textColor" systemColor="linkColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="fBZ-xs-ZeA" firstAttribute="centerX" secondItem="1a8-5E-lPA" secondAttribute="centerX" id="1jB-oY-aMW"/>
-                                        <constraint firstItem="fBZ-xs-ZeA" firstAttribute="centerY" secondItem="1a8-5E-lPA" secondAttribute="centerY" id="4Ij-2o-bRW"/>
+                                        <constraint firstItem="obG-9F-y5J" firstAttribute="centerX" secondItem="1a8-5E-lPA" secondAttribute="centerX" id="mai-qo-sAU"/>
+                                        <constraint firstItem="obG-9F-y5J" firstAttribute="centerY" secondItem="1a8-5E-lPA" secondAttribute="centerY" id="sug-cK-z3h"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -90,4 +89,9 @@
             <point key="canvasLocation" x="-742" y="1685"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

@@ -29,8 +29,7 @@ class QuestChooserTableCell: UITableViewCell {
 	}
 }
 
-class BuildYourOwnQuestTableCell: UITableViewCell {
-}
+class BuildYourOwnQuestTableCell: UITableViewCell {}
 
 class QuestChooserController: UITableViewController {
 	override func viewDidLoad() {
@@ -47,16 +46,6 @@ class QuestChooserController: UITableViewController {
 	override func viewWillDisappear(_ animated: Bool) {
 		// Update markers for newly added quests
 		AppDelegate.shared.mapView.updateMapMarkersFromServer(withDelay: 0.0, including: .quest)
-	}
-
-	var vc: UIViewController?
-	@IBAction func didPress(_ sender: Any) {
-		if #available(iOS 15, *) {
-			let vc2 = QuestBuilderController.instantiateNew()
-			vc?.present(vc2, animated: true)
-		} else {
-			QuestBuilderController.presentVersionAlert(vc!)
-		}
 	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
@@ -91,6 +80,7 @@ class QuestChooserController: UITableViewController {
 			return cell
 		} else if #available(iOS 15.0, *) {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "BuildYourOwnQuestTableCell", for: indexPath)
+			cell.accessoryType = .disclosureIndicator
 			return cell
 		} else {
 			fatalError()
@@ -102,22 +92,28 @@ class QuestChooserController: UITableViewController {
 		      cell.accessoryType == .disclosureIndicator
 		else { return }
 
-		// transition to quest builder for item
-		if let cell = cell as? QuestChooserTableCell,
-		   let title = cell.title?.text,
-		   let quest = QuestList.shared.userQuests.first(where: { $0.title == title })
-		{
-			if #available(iOS 15, *) {
+		if #available(iOS 15, *) {
+			// transition to quest builder for item
+			if let cell = cell as? QuestChooserTableCell,
+			   let title = cell.title?.text,
+			   let quest = QuestList.shared.userQuests.first(where: { $0.title == title })
+			{
 				let vc = QuestBuilderController.instantiateWith(quest: quest)
 				navigationController?.pushViewController(vc, animated: true)
 			} else {
-				QuestBuilderController.presentVersionAlert(self)
+				// build your own
+				let vc = QuestBuilderController.instantiateWith(quest: nil)
+				navigationController?.pushViewController(vc, animated: true)
 			}
+		} else {
+			QuestBuilderController.presentVersionAlert(self)
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		guard let cell = tableView.cellForRow(at: indexPath)
+		guard
+			indexPath.row != QuestList.shared.list.count,
+			let cell = tableView.cellForRow(at: indexPath)
 		else { return false }
 		// Only user-defined cells have an accessoryType
 		return cell.accessoryType == .disclosureIndicator

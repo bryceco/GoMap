@@ -21,8 +21,8 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JI9-1A-mDD">
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" ambiguous="YES" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="XNI-xS-8yh">
-                                        <rect key="frame" x="20" y="0.0" width="353" height="632.33333333333337"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" ambiguous="YES" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="XNI-xS-8yh">
+                                        <rect key="frame" x="20" y="0.0" width="353" height="657.33333333333337"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Build Your Own Quest" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44G-za-6lM">
                                                 <rect key="frame" x="0.0" y="0.0" width="353" height="33.666666666666664"/>
@@ -31,13 +31,13 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use this page to design your own quest." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qwN-yr-c8Y">
-                                                <rect key="frame" x="0.0" y="58.666666666666664" width="353" height="20.333333333333336"/>
+                                                <rect key="frame" x="0.0" y="63.666666666666679" width="353" height="20.333333333333336"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3bH-HQ-yyA" userLabel="Key selection">
-                                                <rect key="frame" x="0.0" y="104" width="353" height="67"/>
+                                                <rect key="frame" x="0.0" y="114" width="353" height="67"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What key will you be setting with this quest? This is a tag key such as &quot;surface&quot;." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UtJ-Wh-nDa">
                                                         <rect key="frame" x="0.0" y="0.0" width="353" height="42.333333333333336"/>
@@ -63,10 +63,11 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eKj-3l-pdY" userLabel="Include Features View">
-                                                <rect key="frame" x="0.0" y="196" width="353" height="150.33333333333337"/>
+                                                <rect key="frame" x="0.0" y="211" width="353" height="150.33333333333337"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Which features (objects) should this quest apply to? If this is empty then the quest will be used for every applicable feature:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ky4-Gk-al2">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ky4-Gk-al2">
                                                         <rect key="frame" x="0.0" y="5" width="353" height="64.333333333333329"/>
+                                                        <string key="text">Which features (objects) should this quest apply to? If this is empty then the quest will be used for every applicable (primary) feature:</string>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -187,7 +188,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tpG-3J-HeH" userLabel="Name View">
-                                                <rect key="frame" x="0.0" y="371.33333333333331" width="353" height="108"/>
+                                                <rect key="frame" x="0.0" y="391.33333333333331" width="353" height="108"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Provide a title for your quest: This is best written as an action to perform like &quot;Add Surface&quot;:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xpT-OT-hKN" userLabel="Provide a unique name for your quest:">
                                                         <rect key="frame" x="0.0" y="0.0" width="353" height="64.333333333333329"/>
@@ -216,7 +217,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vjj-ZN-rnq" userLabel="Label View">
-                                                <rect key="frame" x="0.0" y="504.33333333333337" width="353" height="128"/>
+                                                <rect key="frame" x="0.0" y="529.33333333333337" width="353" height="128"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CSL-4N-Z6D" userLabel="Provide a unique name for your quest:">
                                                         <rect key="frame" x="0.0" y="0.0" width="353" height="86.333333333333329"/>
@@ -306,24 +307,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1046.5648854961833" y="-28.169014084507044"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="jhz-9I-Nk9">
-            <objects>
-                <navigationController storyboardIdentifier="QuestBuilderNavigation" automaticallyAdjustsScrollViewInsets="NO" id="KHg-g5-0SQ" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="rQJ-vU-aqZ">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="vG8-jD-GOM"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nKT-T4-rGt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="119.84732824427481" y="-28.169014084507044"/>
         </scene>
     </scenes>
     <resources>

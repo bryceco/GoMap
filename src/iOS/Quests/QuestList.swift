@@ -66,6 +66,18 @@ class QuestList {
 		}
 		loadPrefs()
 		list += userQuests.compactMap { try? QuestDefinition(userQuest: $0) }
+		sortList()
+	}
+
+	func sortList() {
+		list.sort(by: { a, b in
+			let aUser = isUserQuest(a)
+			let bUser = isUserQuest(b)
+			if aUser != bUser {
+				return bUser ? true : false
+			}
+			return a.title.compare(b.title, options: .caseInsensitive) == .orderedAscending
+		})
 	}
 
 	func loadPrefs() {
@@ -86,6 +98,7 @@ class QuestList {
 		userQuests.append(quest)
 		userQuests.sort(by: { a, b in a.title < b.title })
 		list.append(questDef)
+		sortList()
 		savePrefs()
 	}
 
