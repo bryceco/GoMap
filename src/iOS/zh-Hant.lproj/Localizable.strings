@@ -62,6 +62,9 @@
 /* length of a gpx track */
 "%ld meters, %ld points" = "%1$ld 公尺, %2$ld 點";
 
+/* length of a gpx track */
+"%ld meters, %ld points, %ld waypoints" = "%1$ld 公尺， %2$ld 點， %3$ld 航點";
+
 /* Number of tiles/objects in cache */
 "%ld objects" = "%ld 個物件";
 
@@ -819,6 +822,9 @@
 
 /* No comment provided by engineer. */
 "Undo" = "上一步";
+
+/* No comment provided by engineer. */
+"Unknown" = "不明的";
 
 /* relation role=* tag */
 "Unknown role" = "不明的角色";

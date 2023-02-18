@@ -198,6 +198,10 @@
         <source>A GPX Track records your path as you travel along a road or trail</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." xml:space="preserve">
+        <source>A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else.</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="A relation the node belongs to is not fully downloaded" xml:space="preserve">
         <source>A relation the node belongs to is not fully downloaded</source>
         <note>No comment provided by engineer.</note>
@@ -242,6 +246,14 @@
       <trans-unit id="All choices" xml:space="preserve">
         <source>All choices</source>
         <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="An error occured while exporting: %@" xml:space="preserve">
+        <source>An error occured while exporting: %@</source>
+        <note>Show an error message</note>
+      </trans-unit>
+      <trans-unit id="An error occured while importing: %@" xml:space="preserve">
+        <source>An error occured while importing: %@</source>
+        <note>Show an error message</note>
       </trans-unit>
       <trans-unit id="An unknown error occurred fetching metadata" xml:space="preserve">
         <source>An unknown error occurred fetching metadata</source>
@@ -390,6 +402,10 @@
       <trans-unit id="Connecting the nodes would damage a relation" xml:space="preserve">
         <source>Connecting the nodes would damage a relation</source>
         <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Copied" xml:space="preserve">
+        <source>Copied</source>
+        <note>text was copied to the system clipboard</note>
       </trans-unit>
       <trans-unit id="Copy Tags" xml:space="preserve">
         <source>Copy Tags</source>
@@ -541,6 +557,18 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Ignore" xml:space="preserve">
         <source>Ignore</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Import" xml:space="preserve">
+        <source>Import</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Import Error" xml:space="preserve">
+        <source>Import Error</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Import Quests" xml:space="preserve">
+        <source>Import Quests</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="In order to measure height, please enable camera access in the app's settings." xml:space="preserve">
@@ -803,6 +831,10 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <source>Paste</source>
         <note>Edit action</note>
       </trans-unit>
+      <trans-unit id="Paste the JSON for your quests into the field below" xml:space="preserve">
+        <source>Paste the JSON for your quests into the field below</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Pasting %@ characters, maximum tag length is 255" xml:space="preserve">
         <source>Pasting %@ characters, maximum tag length is 255</source>
         <note>No comment provided by engineer.</note>
@@ -830,6 +862,18 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       <trans-unit id="Purge" xml:space="preserve">
         <source>Purge</source>
         <note>Discard editing changes when resetting OSM data cache</note>
+      </trans-unit>
+      <trans-unit id="Quest" xml:space="preserve">
+        <source>Quest</source>
+        <note>The current Quest the user is answering</note>
+      </trans-unit>
+      <trans-unit id="Quest Definition Error" xml:space="preserve">
+        <source>Quest Definition Error</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Quests were imported successfully." xml:space="preserve">
+        <source>Quests were imported successfully.</source>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." xml:space="preserve">
         <source>Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap.</source>
@@ -968,6 +1012,14 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <source>Straighten</source>
         <note>Edit action</note>
       </trans-unit>
+      <trans-unit id="Success" xml:space="preserve">
+        <source>Success</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Tag Key" xml:space="preserve">
+        <source>Tag Key</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Tags" xml:space="preserve">
         <source>Tags</source>
         <note>Edit action</note>
@@ -1034,6 +1086,10 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="This device is not able to provide heading data." xml:space="preserve">
         <source>This device is not able to provide heading data.</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="This feature is only available on iOS 15 or later" xml:space="preserve">
+        <source>This feature is only available on iOS 15 or later</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
@@ -1534,7 +1590,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="Wcg-RB-I2a.text" xml:space="preserve">
         <source>Inscription</source>
-        <note>Class = "UILabel"; text = "Inscription"; ObjectID = "Wcg-RB-I2a";</note>
+        <note>Class = "UILabel"; text = "Inscription"; ObjectID = "Wcg-RB-I2a"; Note = "Placeholder - Don't translate";</note>
       </trans-unit>
       <trans-unit id="Wim-Qa-dYQ.text" xml:space="preserve">
         <source>Value 10</source>
@@ -1610,7 +1666,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="hAy-aU-g8L.text" xml:space="preserve">
         <source>Lorem ipsum dolor </source>
-        <note>Class = "UITextView"; text = "Lorem ipsum dolor "; ObjectID = "hAy-aU-g8L";</note>
+        <note>Class = "UITextView"; text = "Lorem ipsum dolor "; ObjectID = "hAy-aU-g8L"; Note = "Placeholder - Don't translate";</note>
       </trans-unit>
       <trans-unit id="hKU-EH-qxp.title" xml:space="preserve">
         <source>Attributes</source>
@@ -1828,8 +1884,8 @@ You may want to clear the cache (under Display settings) to improve performance.
         <note>Class = "UILabel"; text = "GPX Tracks you record or download will be automatically deleted after:"; ObjectID = "MeQ-4N-FqC";</note>
       </trans-unit>
       <trans-unit id="O0U-6M-7AT.text" xml:space="preserve">
-        <source>Notes and Fixmes</source>
-        <note>Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "O0U-6M-7AT";</note>
+        <source>Quests</source>
+        <note>Class = "UILabel"; text = "Quests"; ObjectID = "O0U-6M-7AT";</note>
       </trans-unit>
       <trans-unit id="OiJ-GU-gZ3.title" xml:space="preserve">
         <source>Cancel</source>
@@ -1838,6 +1894,10 @@ You may want to clear the cache (under Display settings) to improve performance.
       <trans-unit id="Okg-2D-O6U.text" xml:space="preserve">
         <source>Landuse</source>
         <note>Class = "UILabel"; text = "Landuse"; ObjectID = "Okg-2D-O6U";</note>
+      </trans-unit>
+      <trans-unit id="PSE-3C-cDx.text" xml:space="preserve">
+        <source>Notes and Fixmes</source>
+        <note>Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "PSE-3C-cDx";</note>
       </trans-unit>
       <trans-unit id="RJU-Z2-QFh.headerTitle" xml:space="preserve">
         <source>Interactions</source>

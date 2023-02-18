@@ -112,9 +112,6 @@
 /* Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ"; */
 "lwG-AE-nIZ.headerTitle" = "Latar belakang";
 
-/* Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "O0U-6M-7AT"; */
-"O0U-6M-7AT.text" = "Catatan-catatan dan Fixme";
-
 /* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "OiJ-GU-gZ3"; */
 "OiJ-GU-gZ3.title" = "Batal";
 

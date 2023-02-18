@@ -148,9 +148,6 @@
 /* Class = "UINavigationItem"; title = "Aerial Provider"; ObjectID = "MZF-am-tCM"; */
 "MZF-am-tCM.title" = "Fournisseur d'imagerie aérienne";
 
-/* Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "O0U-6M-7AT"; */
-"O0U-6M-7AT.text" = "Notes et attributs 'fixme'";
-
 /* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "OiJ-GU-gZ3"; */
 "OiJ-GU-gZ3.title" = "Annuler";
 

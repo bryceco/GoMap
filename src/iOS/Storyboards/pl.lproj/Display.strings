@@ -40,9 +40,6 @@
 /* Class = "UILabel"; text = "Enable Filters"; ObjectID = "LxX-tl-ZLH"; */
 "LxX-tl-ZLH.text" = "Włącz filtry";
 
-/* Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "O0U-6M-7AT"; */
-"O0U-6M-7AT.text" = "Uwagi i poprawki";
-
 /* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "OiJ-GU-gZ3"; */
 "OiJ-GU-gZ3.title" = "Anuluj";
 

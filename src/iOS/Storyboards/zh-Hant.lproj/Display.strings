@@ -148,9 +148,6 @@
 /* Class = "UINavigationItem"; title = "Aerial Provider"; ObjectID = "MZF-am-tCM"; */
 "MZF-am-tCM.title" = "空拍影像釋出來源";
 
-/* Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "O0U-6M-7AT"; */
-"O0U-6M-7AT.text" = "註記與需要修正";
-
 /* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "OiJ-GU-gZ3"; */
 "OiJ-GU-gZ3.title" = "取消";
 

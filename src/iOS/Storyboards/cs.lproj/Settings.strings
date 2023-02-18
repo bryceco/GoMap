@@ -61,6 +61,9 @@
 /* Class = "UITableViewSection"; headerTitle = "Bug Reports & Suggestions"; ObjectID = "dbi-X6-Day"; */
 "dbi-X6-Day.headerTitle" = "Hlášení chyb a náměty";
 
+/* Class = "UIButton"; normalTitle = "Sign In"; ObjectID = "dIM-oE-zAg"; */
+"dIM-oE-zAg.normalTitle" = "Přihlásit se";
+
 /* Class = "UIButton"; normalTitle = "Register new account"; ObjectID = "DY5-Ls-XZ1"; */
 "DY5-Ls-XZ1.normalTitle" = "Registrovat nový účet";
 

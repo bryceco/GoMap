@@ -91,7 +91,7 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw"; Note = "Do not translate"; */
 "gv7-b8-wUw.text" = "ラベル";
 
-/* Class = "UITextView"; text = "Lorem ipsum dolor "; ObjectID = "hAy-aU-g8L"; */
+/* Class = "UITextView"; text = "Lorem ipsum dolor "; ObjectID = "hAy-aU-g8L"; Note = "Placeholder - Don't translate"; */
 "hAy-aU-g8L.text" = "Lorem ipsum dolor ";
 
 /* Class = "UITextField"; text = "value"; ObjectID = "hfr-Mf-ZHv"; */
@@ -205,7 +205,7 @@
 /* Class = "UITextField"; placeholder = "yes"; ObjectID = "vpk-jC-yxl"; Note = "Do not translate"; */
 "vpk-jC-yxl.placeholder" = "yes";
 
-/* Class = "UILabel"; text = "Inscription"; ObjectID = "Wcg-RB-I2a"; */
+/* Class = "UILabel"; text = "Inscription"; ObjectID = "Wcg-RB-I2a"; Note = "Placeholder - Don't translate"; */
 "Wcg-RB-I2a.text" = "銘";
 
 /* Class = "UILabel"; text = "Value 12"; ObjectID = "wFE-f1-sQa"; */

@@ -129,6 +129,9 @@
 "Bad login" = "Неправильний логін";
 
 /* No comment provided by engineer. */
+"Better background imagery is available for your location. Would you like to change to it?" = "Для вашого місцезнаходження доступне краще фонове зображення. Бажаєте перейти на нього?";
+
+/* No comment provided by engineer. */
 "Cache size warning" = "Заувага про обсяг кешу";
 
 /* No comment provided by engineer. */
@@ -172,6 +175,9 @@
 
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "Не вдалося зʼєднати лінію «inner» з лінією «outer»";
+
+/* No comment provided by engineer. */
+"Change" = "Зміна";
 
 /* OSM changeset identifier */
 "Changeset" = "Набір змін";
@@ -703,8 +709,32 @@
 /* Edit action */
 "Turn Restrictions" = "Обмеження маневру";
 
+/* The 'Type' header in Common Tags */
+"Type" = "Тип";
+
+/* No comment provided by engineer. */
+"Unable to upload changes" = "Не вдається завантажити зміни";
+
 /* No comment provided by engineer. */
 "Undo" = "Скасувати";
+
+/* relation role=* tag */
+"Unknown role" = "Невідома роль";
+
+/* No comment provided by engineer. */
+"Unsupported turn restriction type" = "Непідтримуваний тип обмеження повороту";
+
+/* update an osm note */
+"Update" = "Оновлення";
+
+/* No comment provided by engineer. */
+"Upload complete!" = "Завантаження завершено!";
+
+/* No comment provided by engineer. */
+"Upload to OSM" = "Завантажити в OSM";
+
+/* No comment provided by engineer. */
+"Upload your changes" = "Завантажте свої зміни";
 
 /* No comment provided by engineer. */
 "Way Tags" = "Теґи лінії";

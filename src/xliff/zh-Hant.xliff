@@ -182,7 +182,7 @@
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints" xml:space="preserve">
         <source>%1$ld meters, %2$ld points, %3$ld waypoints</source>
-        <target state="translated">%1$ld 公尺， %2$ld 點， %3$ld 航點</target>
+        <target>%1$ld 公尺， %2$ld 點， %3$ld 航點</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld objects" xml:space="preserve">
@@ -240,6 +240,10 @@
         <target>當您沿著道路或小徑移動時， GPX 軌跡記錄了您的移動路徑</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." xml:space="preserve">
+        <source>A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else.</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="A relation the node belongs to is not fully downloaded" xml:space="preserve">
         <source>A relation the node belongs to is not fully downloaded</source>
         <target>節點所屬的關係沒有全部下載完畢</target>
@@ -294,6 +298,14 @@
         <source>All choices</source>
         <target>全部選擇</target>
         <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="An error occured while exporting: %@" xml:space="preserve">
+        <source>An error occured while exporting: %@</source>
+        <note>Show an error message</note>
+      </trans-unit>
+      <trans-unit id="An error occured while importing: %@" xml:space="preserve">
+        <source>An error occured while importing: %@</source>
+        <note>Show an error message</note>
       </trans-unit>
       <trans-unit id="An unknown error occurred fetching metadata" xml:space="preserve">
         <source>An unknown error occurred fetching metadata</source>
@@ -479,6 +491,10 @@
         <source>Connecting the nodes would damage a relation</source>
         <target>連接該節點將會破壞某個關係</target>
         <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Copied" xml:space="preserve">
+        <source>Copied</source>
+        <note>text was copied to the system clipboard</note>
       </trans-unit>
       <trans-unit id="Copy Tags" xml:space="preserve">
         <source>Copy Tags</source>
@@ -671,6 +687,18 @@ Error: %@</source>
       <trans-unit id="Ignore" xml:space="preserve">
         <source>Ignore</source>
         <target>忽略</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Import" xml:space="preserve">
+        <source>Import</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Import Error" xml:space="preserve">
+        <source>Import Error</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Import Quests" xml:space="preserve">
+        <source>Import Quests</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="In order to measure height, please enable camera access in the app's settings." xml:space="preserve">
@@ -999,6 +1027,10 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>貼上</target>
         <note>Edit action</note>
       </trans-unit>
+      <trans-unit id="Paste the JSON for your quests into the field below" xml:space="preserve">
+        <source>Paste the JSON for your quests into the field below</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Pasting %@ characters, maximum tag length is 255" xml:space="preserve">
         <source>Pasting %@ characters, maximum tag length is 255</source>
         <target>貼上 %@ 字元，最大標籤長度是 255</target>
@@ -1033,6 +1065,18 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <source>Purge</source>
         <target>清除</target>
         <note>Discard editing changes when resetting OSM data cache</note>
+      </trans-unit>
+      <trans-unit id="Quest" xml:space="preserve">
+        <source>Quest</source>
+        <note>The current Quest the user is answering</note>
+      </trans-unit>
+      <trans-unit id="Quest Definition Error" xml:space="preserve">
+        <source>Quest Definition Error</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Quests were imported successfully." xml:space="preserve">
+        <source>Quests were imported successfully.</source>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." xml:space="preserve">
         <source>Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap.</source>
@@ -1205,6 +1249,14 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>截彎取直</target>
         <note>Edit action</note>
       </trans-unit>
+      <trans-unit id="Success" xml:space="preserve">
+        <source>Success</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Tag Key" xml:space="preserve">
+        <source>Tag Key</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Tags" xml:space="preserve">
         <source>Tags</source>
         <target>標籤</target>
@@ -1290,6 +1342,10 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>這個裝置無法提供方向資料。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="This feature is only available on iOS 15 or later" xml:space="preserve">
+        <source>This feature is only available on iOS 15 or later</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
         <source>To add another member to the relation 'long press' on the way to be added</source>
         <target>把另一個成員加入到關係中的做法是在線段上長按就可以新增</target>
@@ -1366,7 +1422,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Unknown" xml:space="preserve">
         <source>Unknown</source>
-        <target state="translated">不明的</target>
+        <target>不明的</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Unknown role" xml:space="preserve">
@@ -1908,7 +1964,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="Wcg-RB-I2a.text" xml:space="preserve">
         <source>Inscription</source>
-        <note>Class = "UILabel"; text = "Inscription"; ObjectID = "Wcg-RB-I2a";</note>
+        <note>Class = "UILabel"; text = "Inscription"; ObjectID = "Wcg-RB-I2a"; Note = "Placeholder - Don't translate";</note>
       </trans-unit>
       <trans-unit id="Wim-Qa-dYQ.text" xml:space="preserve">
         <source>Value 10</source>
@@ -1932,7 +1988,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="XCc-6y-qYt.placeholder" xml:space="preserve">
         <source>key</source>
-        <target state="translated">key</target>
+        <target>key</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "XCc-6y-qYt"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="XJZ-vI-jat.text" xml:space="preserve">
@@ -2002,8 +2058,8 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="hAy-aU-g8L.text" xml:space="preserve">
         <source>Lorem ipsum dolor </source>
-        <target state="translated">Lorem ipsum dolor </target>
-        <note>Class = "UITextView"; text = "Lorem ipsum dolor "; ObjectID = "hAy-aU-g8L";</note>
+        <target>Lorem ipsum dolor </target>
+        <note>Class = "UITextView"; text = "Lorem ipsum dolor "; ObjectID = "hAy-aU-g8L"; Note = "Placeholder - Don't translate";</note>
       </trans-unit>
       <trans-unit id="hKU-EH-qxp.title" xml:space="preserve">
         <source>Attributes</source>
@@ -2067,7 +2123,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="nil-45-Wvp.normalTitle" xml:space="preserve">
         <source>ⓘ</source>
-        <target state="translated">ⓘ</target>
+        <target>ⓘ</target>
         <note>Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "nil-45-Wvp";</note>
       </trans-unit>
       <trans-unit id="o63-qY-4vl.text" xml:space="preserve">
@@ -2102,7 +2158,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="sHA-cr-GLb.placeholder" xml:space="preserve">
         <source>value</source>
-        <target state="translated">value</target>
+        <target>value</target>
         <note>Class = "UITextField"; placeholder = "value"; ObjectID = "sHA-cr-GLb"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="sVp-1S-TjJ.placeholder" xml:space="preserve">
@@ -2272,9 +2328,8 @@ You may want to clear the cache (under Display settings) to improve performance.
         <note>Class = "UILabel"; text = "GPX Tracks you record or download will be automatically deleted after:"; ObjectID = "MeQ-4N-FqC";</note>
       </trans-unit>
       <trans-unit id="O0U-6M-7AT.text" xml:space="preserve">
-        <source>Notes and Fixmes</source>
-        <target>註記與需要修正</target>
-        <note>Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "O0U-6M-7AT";</note>
+        <source>Quests</source>
+        <note>Class = "UILabel"; text = "Quests"; ObjectID = "O0U-6M-7AT";</note>
       </trans-unit>
       <trans-unit id="OiJ-GU-gZ3.title" xml:space="preserve">
         <source>Cancel</source>
@@ -2285,6 +2340,10 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>Landuse</source>
         <target>土地利用</target>
         <note>Class = "UILabel"; text = "Landuse"; ObjectID = "Okg-2D-O6U";</note>
+      </trans-unit>
+      <trans-unit id="PSE-3C-cDx.text" xml:space="preserve">
+        <source>Notes and Fixmes</source>
+        <note>Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "PSE-3C-cDx";</note>
       </trans-unit>
       <trans-unit id="RJU-Z2-QFh.headerTitle" xml:space="preserve">
         <source>Interactions</source>
@@ -3005,7 +3064,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="dIM-oE-zAg.normalTitle" xml:space="preserve">
         <source>Sign In</source>
-        <target state="translated">登入</target>
+        <target>登入</target>
         <note>Class = "UIButton"; normalTitle = "Sign In"; ObjectID = "dIM-oE-zAg";</note>
       </trans-unit>
       <trans-unit id="dbi-X6-Day.headerTitle" xml:space="preserve">
@@ -3122,7 +3181,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Idd-0q-a3f.normalTitle" xml:space="preserve">
         <source>🔽</source>
-        <target state="translated">🔽</target>
+        <target>🔽</target>
         <note>Class = "UIButton"; normalTitle = "🔽"; ObjectID = "Idd-0q-a3f";</note>
       </trans-unit>
       <trans-unit id="Mdj-M0-0mZ.title" xml:space="preserve">

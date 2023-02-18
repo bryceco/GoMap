@@ -62,6 +62,9 @@
 /* length of a gpx track */
 "%ld meters, %ld points" = "%1$ld metros, %2$ld pontos";
 
+/* length of a gpx track */
+"%ld meters, %ld points, %ld waypoints" = "%1$ld metros, %2$ld pontos, %3$ld pontos de passagem";
+
 /* Number of tiles/objects in cache */
 "%ld objects" = "%ld objetos";
 
@@ -816,6 +819,9 @@
 
 /* No comment provided by engineer. */
 "Undo" = "Desfazer";
+
+/* No comment provided by engineer. */
+"Unknown" = "Desconhecido";
 
 /* relation role=* tag */
 "Unknown role" = "Função desconhecida";

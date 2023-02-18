@@ -62,6 +62,9 @@
 /* length of a gpx track */
 "%ld meters, %ld points" = "%1$ld metrů, %2$ld bodů";
 
+/* length of a gpx track */
+"%ld meters, %ld points, %ld waypoints" = "%1$ld metrů, %2$ld bodů, %3$ld bodů trasy";
+
 /* Number of tiles/objects in cache */
 "%ld objects" = "%ld objektů";
 
@@ -819,6 +822,9 @@
 
 /* No comment provided by engineer. */
 "Undo" = "Vrátit";
+
+/* No comment provided by engineer. */
+"Unknown" = "Neznámé";
 
 /* relation role=* tag */
 "Unknown role" = "Neznámá role";
