@@ -10,7 +10,7 @@ import UIKit
 
 class QuestList {
 	static let shared = QuestList()
-
+	private let builtinList: [QuestProtocol]
 	private(set) var list: [QuestProtocol]
 	private(set) var userQuests: [QuestUserDefition] = []
 	private var enabled: [String: Bool] = [:]
@@ -54,7 +54,7 @@ class QuestList {
 				includeFeatures: [String](),
 				excludeFeatures: [])
 
-			list = [
+			builtinList = [
 				addBuildingType,
 				addSidewalkSurface,
 				addPhoneNumber,
@@ -62,8 +62,9 @@ class QuestList {
 			]
 		} catch {
 			print("Quest initialization error: \(error)")
-			list = []
+			builtinList = []
 		}
+		list = builtinList
 		loadPrefs()
 		list += userQuests.compactMap { try? QuestDefinition(userQuest: $0) }
 		sortList()
@@ -93,11 +94,23 @@ class QuestList {
 		UserDefaults.standard.set(encoded, forKey: "QuestUserDefinedList")
 	}
 
-	func addQuest(_ quest: QuestUserDefition) throws {
+	func addUserQuest(_ quest: QuestUserDefition, replacing previous: QuestUserDefition?) throws {
 		let questDef = try QuestDefinition(userQuest: quest)
+
+		// If they renamed a quest then remove the old version
+		if let previous = previous {
+			userQuests.removeAll(where: { $0.title == previous.title })
+			list.removeAll(where: { $0.title == previous.title })
+		}
+
+		// If they gave a new quest the same name as an existing quest then replace the other quest
+		userQuests.removeAll(where: { $0.title == quest.title })
+		list.removeAll(where: { $0.title == quest.title })
+
 		userQuests.append(quest)
-		userQuests.sort(by: { a, b in a.title < b.title })
 		list.append(questDef)
+
+		userQuests.sort(by: { a, b in a.title < b.title })
 		sortList()
 		savePrefs()
 	}

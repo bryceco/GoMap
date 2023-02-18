@@ -26,7 +26,7 @@ class QuestBuilderFeatureCell: UICollectionViewCell {
 class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,
 	UITextFieldDelegate
 {
-	typealias PresetsForKey = [String: ContiguousArray<PresetFeature>]
+	private typealias PresetsForKey = [String: ContiguousArray<PresetFeature>]
 
 	@IBOutlet var presetField: UIButton?
 	@IBOutlet var includeFeaturesView: UICollectionView?
@@ -43,11 +43,11 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 
 	var quest: QuestUserDefition?
 
-	var primaryFeaturesForKey: PresetsForKey = [:]
-	var allFeaturesForKey: PresetsForKey = [:]
+	private var primaryFeaturesForKey: PresetsForKey = [:]
+	private var allFeaturesForKey: PresetsForKey = [:]
 
-	var availableFeatures: [PresetFeature] = [] // all features for current presetField
-	var chosenFeatures: [(name: String, ident: String)] = [] {
+	private var availableFeatures: [PresetFeature] = [] // all features for current presetField
+	private var chosenFeatures: [(name: String, ident: String)] = [] {
 		didSet {
 			removeAllIncludeButton?.isEnabled = chosenFeatures.count > 0
 			addOneIncludeButton?.isEnabled = chosenFeatures.count < availableFeatures.count
@@ -72,7 +72,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 			                              presetKey: presetField!.title(for: .normal)!,
 			                              includeFeatures: chosenFeatures.map { $0.ident },
 			                              excludeFeatures: [])
-			try QuestList.shared.addQuest(quest)
+			try QuestList.shared.addUserQuest(quest, replacing: self.quest)
 			onCancel(sender)
 		} catch {
 			let alertView = UIAlertController(title: NSLocalizedString("Quest Definition Error", comment: ""),
@@ -193,7 +193,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		}
 	}
 
-	func presetKeyChanged() {
+	private func presetKeyChanged() {
 		let key = presetField!.title(for: .normal)!
 		let primaryCount = primaryFeaturesForKey[key]?.count ?? 0
 		let allCount = allFeaturesForKey[key]?.count ?? 0
@@ -214,7 +214,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		}
 	}
 
-	func usePrimaryFeatures() {
+	private func usePrimaryFeatures() {
 		let key = presetField!.title(for: .normal)!
 		availableFeatures = (primaryFeaturesForKey[key] ?? []).sorted(by: { a, b in a.name < b.name })
 		chosenFeatures = availableFeatures.map { ($0.name, $0.featureID) }
@@ -223,7 +223,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		includeFeaturesView?.layoutIfNeeded()
 	}
 
-	func useAllFeatures() {
+	private func useAllFeatures() {
 		let key = presetField!.title(for: .normal)!
 		availableFeatures = (allFeaturesForKey[key] ?? []).sorted(by: { a, b in a.name < b.name })
 		chosenFeatures = availableFeatures.map { ($0.name, $0.featureID) }
@@ -315,7 +315,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 
 	// MARK: Name and label
 
-	func updateSaveButtonStatus() {
+	private func updateSaveButtonStatus() {
 		let name = nameField?.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
 		let label = labelField?.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
 		saveButton?.isEnabled = name != "" && label.count == 1
@@ -336,7 +336,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		return false
 	}
 
-	func registerKeyboardNotifications() {
+	private func registerKeyboardNotifications() {
 		NotificationCenter.default.addObserver(self,
 		                                       selector: #selector(keyboardWillShow(notification:)),
 		                                       name: UIResponder.keyboardWillShowNotification,
