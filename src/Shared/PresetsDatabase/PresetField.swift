@@ -33,7 +33,7 @@ struct LocationSet {
 	}
 }
 
-final class PresetField {
+final class PresetField: CustomDebugStringConvertible {
 	let jsonDict: [String: Any]
 
 	init?(withJson json: [String: Any]) {
@@ -79,5 +79,9 @@ final class PresetField {
 			}
 		}
 		return value as? T
+	}
+
+	var debugDescription: String {
+		return self.key ?? self.keys!.joined(separator: ",")
 	}
 }

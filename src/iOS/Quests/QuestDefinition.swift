@@ -115,7 +115,7 @@ class QuestDefinition: QuestProtocol {
 		// If the user didn't define any features then infer them
 		var includeFeatures = includeFeatures
 		if includeFeatures.isEmpty {
-			includeFeatures = try Self.featuresContaining(presetKey: presetKey)
+			includeFeatures = try Self.featuresContaining(presetKey: presetKey, more: false)
 		}
 
 		let include = try includeFeatures.map {
@@ -188,30 +188,22 @@ class QuestDefinition: QuestProtocol {
 		}
 	}
 
-	static func featuresContaining(presetKey: String) throws -> [String] {
+	static func featuresContaining(presetKey: String, more: Bool) throws -> [String] {
 		// find all features containing the desired field
-		var featureNames = Set<String>()
-		for feature in PresetsDatabase.shared.stdFeatures.values {
-			for fieldName in feature.fields ?? [] {
-				if let field = PresetsDatabase.shared.presetFields[fieldName],
-				   field.key == presetKey
-				{
-					featureNames.insert(feature.featureID)
-					break
-				}
-			}
+		let featureNames = PresetsDatabase.shared.stdFeatures.values.compactMap {
+			$0.fieldContainingTagKey(presetKey, more: more) != nil ? $0.featureID : nil
 		}
 		if featureNames.isEmpty {
 			throw QuestError.unknownKey(presetKey)
 		}
-		return Array(featureNames)
+		return featureNames
 	}
 }
 
 struct QuestUserDefition: Codable {
-	var title: String
+	var title: String // "Add Surface" or similar
 	var label: String // single character displayed in MapMarkerButton
-	var presetKey: String
+	var presetKey: String // "surface"
 	var includeFeatures: [String] // list of featureID
 	var excludeFeatures: [String] // list of featureID
 }

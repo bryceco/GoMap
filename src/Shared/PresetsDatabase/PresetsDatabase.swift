@@ -244,9 +244,10 @@ final class PresetsDatabase {
 	}
 
 	func presetFeatureMatching(tags objectTags: [String: String]?,
-	                           geometry: GEOMETRY,
+	                           geometry: GEOMETRY?,
 	                           location: MapView.CurrentRegion,
-	                           includeNSI: Bool) -> PresetFeature?
+	                           includeNSI: Bool,
+	                           withPresetKey: String? = nil) -> PresetFeature?
 	{
 		guard let objectTags = objectTags else { return nil }
 
@@ -263,6 +264,13 @@ final class PresetsDatabase {
 						score *= 0.999
 					}
 					if score > bestScore {
+						// special case for quests where we want to ensure we pick
+						// a feature containing presetKey
+						if let withPresetKey = withPresetKey,
+						   feature.fieldContainingTagKey(withPresetKey, more: true) == nil
+						{
+							continue
+						}
 						bestScore = score
 						bestFeature = feature
 					}

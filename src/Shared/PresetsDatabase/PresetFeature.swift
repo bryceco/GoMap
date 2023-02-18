@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 // A feature-defining tag such as amenity=shop
-final class PresetFeature {
+final class PresetFeature: CustomDebugStringConvertible {
 	static let uninitializedImage = UIImage()
 
 	let featureID: String
@@ -70,6 +70,10 @@ final class PresetFeature {
 
 	var description: String {
 		return featureID
+	}
+
+	var debugDescription: String {
+		return description
 	}
 
 	var name: String {
@@ -169,9 +173,30 @@ final class PresetFeature {
 		return tags
 	}
 
+	/// Returns the parent feature of a feature. For example "highway/residential" returns "highway".
+	/// - Parameter featureID: The featureID of interest.
+	/// - Returns: The featureID with the last component removed, or nil if none.
 	class func parentIDofID(_ featureID: String) -> String? {
 		if let range = featureID.range(of: "/", options: .backwards, range: nil, locale: nil) {
 			return String(featureID.prefix(upTo: range.lowerBound))
+		}
+		return nil
+	}
+
+	/// Return the ``PresetField`` that references the provided tag key.
+	/// This is used for recognizing quests.
+	///
+	/// - Parameters:
+	///  - key: The tag key we're looking for, such as "surface"
+	///  - more: Boolean indicating whether to search moreFields as well as regular fields.
+	func fieldContainingTagKey(_ key: String, more: Bool) -> PresetField? {
+		let allFields = (fields ?? []) + (more ? (moreFields ?? []) : [])
+		for fieldName in allFields {
+			if let field = PresetsDatabase.shared.presetFields[fieldName],
+			   field.key == key || (field.keys?.contains(key) ?? false)
+			{
+				return field
+			}
 		}
 		return nil
 	}
@@ -218,12 +243,13 @@ final class PresetFeature {
 		return nil
 	}
 
-	func matchObjectTagsScore(_ objectTags: [String: String], geometry: GEOMETRY,
+	func matchObjectTagsScore(_ objectTags: [String: String], geometry: GEOMETRY?,
 	                          location: MapView.CurrentRegion) -> Double
 	{
-		guard self.geometry.contains(geometry.rawValue),
-		      locationSetIncludes(location)
-		else {
+		if let geometry = geometry,
+		   !self.geometry.contains(geometry.rawValue) ||
+		   !locationSetIncludes(location)
+		{
 			return 0.0
 		}
 

@@ -110,13 +110,16 @@ class QuestSolverController: UITableViewController {
 
 		vc.object = object
 		vc.questMarker = marker
-		vc.title = NSLocalizedString("Your Quest", comment: "The current Quest the user is answering")
+		vc.title = NSLocalizedString("Quest", comment: "The current Quest the user is answering")
 		vc.onClose = onClose
 		vc.presetFeature = PresetsDatabase.shared.presetFeatureMatching(
 			tags: object.tags,
-			geometry: object.geometry(),
+			// We don't use the object geometry here in case the object has tags that match against
+			// multiple features and the isArea() function chooses the wrong one.
+			geometry: nil, // object.geometry(),
 			location: AppDelegate.shared.mapView.currentRegion,
-			includeNSI: false)
+			includeNSI: false,
+			withPresetKey: marker.quest.presetKey)
 		_ = vc.refreshPresetKey()
 		return vc2
 	}
