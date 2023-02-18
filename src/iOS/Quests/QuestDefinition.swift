@@ -17,10 +17,21 @@ protocol QuestProtocol {
 	func accepts(tagValue: String) -> Bool
 }
 
-enum QuestError: Error {
+enum QuestError: LocalizedError {
 	case unknownKey(String)
 	case unknownFeature(String)
-	case noFeatures
+	case noStringEquivalent
+	case illegalLabel(String)
+
+	public var errorDescription: String? {
+		switch self {
+		case .unknownKey(let text): return "The tag key '\(text)' is not referenced by any features"
+		case .unknownFeature(let text): return "The feature '\(text)' does not exist"
+		case .noStringEquivalent: return "Unable to convert the data to string"
+		case .illegalLabel(let text):return "The quest label '\(text)' must be a single character"
+		}
+	}
+
 }
 
 struct QuestHighwaySurface: QuestProtocol {
@@ -112,6 +123,12 @@ class QuestDefinition: QuestProtocol {
 	     excludeFeatures: [String], // The set of features to exclude
 	     accepts: ((String) -> Bool)? = nil // This is acceptance criteria for a value the user typed in
 	) throws {
+		if case let .text(text) = label,
+		   text.count != 1
+		{
+			throw QuestError.illegalLabel(text)
+		}
+
 		// If the user didn't define any features then infer them
 		var includeFeatures = includeFeatures
 		if includeFeatures.isEmpty {

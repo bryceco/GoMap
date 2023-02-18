@@ -82,6 +82,6 @@ final class PresetField: CustomDebugStringConvertible {
 	}
 
 	var debugDescription: String {
-		return self.key ?? self.keys!.joined(separator: ",")
+		return key ?? keys!.joined(separator: ",")
 	}
 }

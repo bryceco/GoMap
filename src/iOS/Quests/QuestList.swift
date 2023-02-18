@@ -135,6 +135,39 @@ class QuestList {
 	}
 
 	func isUserQuest(_ quest: QuestProtocol) -> Bool {
-		return userQuests.contains(where: { $0.title == quest.title })
+		return !builtinList.contains(where: { $0.ident == quest.ident })
+	}
+
+	// MARK: Import/export
+
+	func importQuests(fromText text: String) throws {
+		do {
+			let decoder = JSONDecoder()
+			let data = Data(text.utf8)
+			let decoded = try decoder.decode([QuestUserDefition].self, from: data)
+			for quest in decoded {
+				try self.addUserQuest(quest, replacing: nil)
+			}
+		} catch {
+			throw error
+		}
+	}
+
+	func exportQuests() throws -> String {
+		do {
+			let encoder = JSONEncoder()
+			if #available(iOS 13.0, *) {
+				encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
+			} else {
+				encoder.outputFormatting = [.prettyPrinted]
+			}
+			let data = try encoder.encode(QuestList.shared.userQuests)
+			guard let text = String(data: data, encoding: .utf8) else {
+				throw QuestError.noStringEquivalent
+			}
+			return text
+		} catch {
+			throw error
+		}
 	}
 }
