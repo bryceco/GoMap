@@ -32,8 +32,7 @@ class QuestList {
 				title: "Add Sidewalk Surface",
 				label: .image(UIImage(named: "ic_quest_sidewalk")!),
 				presetKey: "surface",
-				includeFeatures: ["highway/footway/sidewalk"],
-				excludeFeatures: [])
+				includeFeatures: ["highway/footway/sidewalk"])
 
 			let addPhoneNumber = try QuestDefinition(
 				ident: "TelephoneNumber",
@@ -41,7 +40,6 @@ class QuestList {
 				label: .image(UIImage(named: "ic_quest_phone")!),
 				presetKey: "phone",
 				includeFeatures: [],
-				excludeFeatures: [],
 				accepts: { text in
 					text.unicodeScalars.filter({ CharacterSet.decimalDigits.contains($0) }).count > 5
 				})
@@ -51,8 +49,7 @@ class QuestList {
 				title: "Add Opening Hours",
 				label: .image(UIImage(named: "ic_quest_opening_hours")!),
 				presetKey: "opening_hours",
-				includeFeatures: [String](),
-				excludeFeatures: [])
+				includeFeatures: [String]())
 
 			builtinList = [
 				addBuildingType,

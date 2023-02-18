@@ -94,17 +94,15 @@ class QuestDefinition: QuestProtocol {
 	                 presetKey: String, // The value the user is being asked to set
 	                 // The set of features the user is interested in (everything if empty)
 	                 includeFeaturePresets: [PresetFeature],
-	                 excludeFeaturePresets: [PresetFeature], // The set of features to exclude
 	                 accepts: @escaping ((String) -> Bool)) // This is acceptance criteria for a value the user typed in
 	{
 		guard !includeFeaturePresets.isEmpty else { fatalError() }
 
 		let includeFunc = Self.getMatchFunc(includeFeaturePresets.map { $0.tags })
-		let excludeFunc = Self.getMatchFunc(excludeFeaturePresets.map { $0.tags })
 		let applies: (OsmBaseObject) -> Bool = { obj in
 			// we ignore geometry currently, but probably will need to handle it in the future
 			let tags = obj.tags
-			return tags[presetKey] == nil && includeFunc(tags) && !excludeFunc(tags)
+			return tags[presetKey] == nil && includeFunc(tags)
 		}
 		self.init(ident: ident,
 		          title: title,
@@ -120,7 +118,6 @@ class QuestDefinition: QuestProtocol {
 	     label: MapMarkerButton.TextOrImage,
 	     presetKey: String, // The value the user is being asked to set
 	     includeFeatures: [String], // The set of features the user is interested in (everything if empty)
-	     excludeFeatures: [String], // The set of features to exclude
 	     accepts: ((String) -> Bool)? = nil // This is acceptance criteria for a value the user typed in
 	) throws {
 		if case let .text(text) = label,
@@ -139,17 +136,12 @@ class QuestDefinition: QuestProtocol {
 			guard let feature = PresetsDatabase.shared.stdFeatures[$0] else { throw QuestError.unknownFeature($0) }
 			return feature
 		}
-		let exclude = try excludeFeatures.map {
-			guard let feature = PresetsDatabase.shared.stdFeatures[$0] else { throw QuestError.unknownFeature($0) }
-			return feature
-		}
 
 		self.init(ident: ident,
 		          title: title,
 		          label: label,
 		          presetKey: presetKey,
 		          includeFeaturePresets: include,
-		          excludeFeaturePresets: exclude,
 		          accepts: accepts ?? { !$0.isEmpty })
 	}
 
@@ -158,8 +150,7 @@ class QuestDefinition: QuestProtocol {
 		              title: quest.title,
 		              label: .text(quest.label),
 		              presetKey: quest.presetKey,
-		              includeFeatures: quest.includeFeatures,
-		              excludeFeatures: quest.excludeFeatures)
+		              includeFeatures: quest.includeFeatures)
 	}
 
 	// Compute a function that determines whether a given tag dictionary matches the feature(s) of the quest
@@ -222,5 +213,4 @@ struct QuestUserDefition: Codable {
 	var label: String // single character displayed in MapMarkerButton
 	var presetKey: String // "surface"
 	var includeFeatures: [String] // list of featureID
-	var excludeFeatures: [String] // list of featureID
 }

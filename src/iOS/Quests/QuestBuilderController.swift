@@ -70,8 +70,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 			let quest = QuestUserDefition(title: name,
 			                              label: label,
 			                              presetKey: presetField!.title(for: .normal)!,
-			                              includeFeatures: chosenFeatures.map { $0.ident },
-			                              excludeFeatures: [])
+			                              includeFeatures: chosenFeatures.map { $0.ident })
 			try QuestList.shared.addUserQuest(quest, replacing: self.quest)
 			onCancel(sender)
 		} catch {
