@@ -240,11 +240,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		func addFields(to dict: inout PresetsForKey, forFeature feature: PresetFeature, fieldNameList: [String]) {
 			for fieldName in fieldNameList {
 				guard let field = PresetsDatabase.shared.presetFields[fieldName] else { continue }
-				var allKeys = field.keys ?? []
-				if let key = field.key {
-					allKeys.append(key)
-				}
-				for key in allKeys {
+				for key in field.allKeys {
 					/*
 					 if field.reference?["key"] == key {
 					 	continue

@@ -25,13 +25,12 @@ enum QuestError: LocalizedError {
 
 	public var errorDescription: String? {
 		switch self {
-		case .unknownKey(let text): return "The tag key '\(text)' is not referenced by any features"
-		case .unknownFeature(let text): return "The feature '\(text)' does not exist"
+		case let .unknownKey(text): return "The tag key '\(text)' is not referenced by any features"
+		case let .unknownFeature(text): return "The feature '\(text)' does not exist"
 		case .noStringEquivalent: return "Unable to convert the data to string"
-		case .illegalLabel(let text):return "The quest label '\(text)' must be a single character"
+		case let .illegalLabel(text): return "The quest label '\(text)' must be a single character"
 		}
 	}
-
 }
 
 struct QuestHighwaySurface: QuestProtocol {

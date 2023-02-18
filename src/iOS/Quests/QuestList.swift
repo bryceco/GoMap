@@ -143,7 +143,7 @@ class QuestList {
 			let data = Data(text.utf8)
 			let decoded = try decoder.decode([QuestUserDefition].self, from: data)
 			for quest in decoded {
-				try self.addUserQuest(quest, replacing: nil)
+				try addUserQuest(quest, replacing: nil)
 			}
 		} catch {
 			throw error

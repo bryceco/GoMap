@@ -63,20 +63,11 @@ extension PresetsDatabase {
 
 	func allTagKeys() -> Set<String> {
 		var set = Set<String>()
-		for (_, field) in presetFields {
-			if let key = field.key {
-				set.insert(key)
-			}
-			if let keys = field.keys {
-				for key in keys {
-					set.insert(key)
-				}
-			}
+		for field in presetFields.values {
+			set.formUnion(field.allKeys)
 		}
 		PresetsDatabase.shared.enumeratePresetsUsingBlock({ feature in
-			for (key, _) in feature.tags {
-				set.insert(key)
-			}
+			set.formUnion(feature.tags.keys)
 		})
 		// these are additionl tags that people might want (e.g. for autocomplete)
 		set.formUnion(Set([
@@ -471,10 +462,9 @@ extension PresetsDatabase {
 			let group = PresetGroup(name: nil, tags: [.key(tag)])
 			return group
 
-		case "access", "cycleway":
+		case "access", "directionalCombo": // "cycleway" is no longer used
 
 			var tagList: [PresetKeyOrGroup] = []
-
 			let types = field.types ?? [:]
 			let strings = field.strings ?? [:]
 			let options = field.options!
@@ -548,14 +538,14 @@ extension PresetsDatabase {
 			return group
 
 		case "text", "number", "email", "identifier", "maxweight_bridge", "textarea",
-		     "tel", "url", "roadheight", "roadspeed", "wikipedia", "wikidata":
+		     "tel", "url", "roadheight", "roadspeed", "wikipedia", "wikidata", "date":
 
 			// no presets, but we customize keyboard input
 			var keyboard = UIKeyboardType.default
 			var capitalize = UITextAutocapitalizationType.none
 			var autocorrect = UITextAutocorrectionType.default
 			switch field.type {
-			case "number", "roadheight", "roadspeed":
+			case "number", "roadheight", "roadspeed", "date":
 				keyboard = .numbersAndPunctuation // UIKeyboardTypeDecimalPad doesn't have Done button
 			case "tel":
 				keyboard = .phonePad
@@ -568,7 +558,7 @@ extension PresetsDatabase {
 				autocorrect = .yes
 			case "text":
 				switch field.key {
-				case "architect", "artist_name", "branch", "brand",
+				case "architect", "artist_name", "branch", "brand", "comment",
 				     "destination", "flag:name", "network", "operator", "subject":
 					capitalize = .words
 				default:

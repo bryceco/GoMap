@@ -81,6 +81,22 @@ final class PresetField: CustomDebugStringConvertible {
 		return value as? T
 	}
 
+	var allKeys: [String] {
+		if let keys = keys {
+			if let key = key {
+				var all = keys
+				all.append(key)
+				return all
+			} else {
+				return keys
+			}
+		} else if let key = key {
+			return [key]
+		} else {
+			return []
+		}
+	}
+
 	var debugDescription: String {
 		return key ?? keys!.joined(separator: ",")
 	}
