@@ -32,8 +32,8 @@ final class PresetLanguages {
 		if let code = UserDefaults.standard.object(forKey: "preferredLanguage") as? String {
 			return code
 		}
-		let userPrefs = NSLocale.preferredLanguages
-		let matches = Bundle.preferredLocalizations(from: PresetLanguages.languageCodeList, forPreferences: userPrefs)
+		let matches = Bundle.preferredLocalizations(from: PresetLanguages.languageCodeList,
+		                                            forPreferences: NSLocale.preferredLanguages)
 		return matches.first ?? "en"
 	}
 

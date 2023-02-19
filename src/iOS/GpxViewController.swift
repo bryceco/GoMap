@@ -46,7 +46,7 @@ class GpxTrackTableCell: UITableViewCell, UIActionSheetDelegate {
 
 				// Create the share activity
 				let controller = UIActivityViewController(activityItems: [fileName, fileUrl] as [Any],
-														  applicationActivities: nil)
+				                                          applicationActivities: nil)
 				controller.completionWithItemsHandler = { _, completed, _, _ in
 					if completed {
 						let gpxLayer = AppDelegate.shared.mapView.gpxLayer
