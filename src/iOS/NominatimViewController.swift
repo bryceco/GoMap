@@ -217,8 +217,10 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			return
 		}
 
+		let lang = PresetLanguages.preferredLanguageCode()
 		if let text = string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed),
-		   let url = URL(string: "https://nominatim.openstreetmap.org/search?q=\(text)&format=json&limit=50")
+		   let url = URL(string:
+		   	"https://nominatim.openstreetmap.org/search?q=\(text)&format=json&limit=50&accept-language=\(lang)")
 		{
 			activityIndicator.startAnimating()
 
