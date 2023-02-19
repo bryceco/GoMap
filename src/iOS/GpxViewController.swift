@@ -34,24 +34,29 @@ class GpxTrackTableCell: UITableViewCell, UIActionSheetDelegate {
 				let appName = AppDelegate.shared.appName()
 				let fileName = "\(appName) \(creationDate).gpx"
 
+				// get a copy of GPX as a string
 				guard let gpx = self.gpxTrack.gpxXmlString() else { return }
 
-				let url = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
-				try? FileManager.default.removeItem(at: url)
-
-				if (try? gpx.write(to: url, atomically: true, encoding: .utf8)) != nil {
-					let controller = UIActivityViewController(
-						activityItems: [fileName, url].compactMap { $0 },
-						applicationActivities: nil)
-					controller.completionWithItemsHandler = { _, completed, _, _ in
-						if completed {
-							let gpxLayer = AppDelegate.shared.mapView.gpxLayer
-							gpxLayer.markTrackUploaded(self.gpxTrack)
-							self.tableView?.tableView.reloadData()
-						}
-					}
-					self.tableView?.present(controller, animated: true)
+				// create a temporary file and write the gpx to it
+				let fileUrl = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
+				try? FileManager.default.removeItem(at: fileUrl)
+				guard (try? gpx.write(to: fileUrl, atomically: true, encoding: .utf8)) != nil else {
+					return
 				}
+
+				// Create the share activity
+				let controller = UIActivityViewController(activityItems: [fileName, fileUrl] as [Any],
+														  applicationActivities: nil)
+				controller.completionWithItemsHandler = { _, completed, _, _ in
+					if completed {
+						let gpxLayer = AppDelegate.shared.mapView.gpxLayer
+						gpxLayer.markTrackUploaded(self.gpxTrack)
+						self.tableView?.tableView.reloadData()
+					}
+				}
+
+				// Preset the share sheet to the user
+				self.tableView?.present(controller, animated: true)
 			}))
 
 		tableView?.present(alert, animated: true)
