@@ -166,6 +166,6 @@ class PresetKey: NSObject, NSSecureCoding {
 	}
 
 	override var description: String {
-		return name
+		return "\(tagKey): \(name)"
 	}
 }

@@ -35,19 +35,6 @@ class QuestSolverController: UITableViewController {
 	var presetKey: PresetKey?
 	var onClose: (() -> Void)?
 
-	class func presetsForGroup(_ group: PresetKeyOrGroup) -> [PresetKey] {
-		var list: [PresetKey] = []
-		switch group {
-		case let .group(subgroup):
-			for g in subgroup.presetKeys {
-				list += Self.presetsForGroup(g)
-			}
-		case let .key(key):
-			list.append(key)
-		}
-		return list
-	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		navigationItem.rightBarButtonItem?.isEnabled = false
@@ -82,19 +69,14 @@ class QuestSolverController: UITableViewController {
 				}
 			})
 
-		for section in presets.sectionList {
-			for g in section.presetKeys {
-				let list = Self.presetsForGroup(g)
-				for preset in list {
-					if preset.tagKey == questMarker.quest.presetKey {
-						if presetKey == preset {
-							return false // no change
-						} else {
-							presetKey = preset
-							tableView.separatorColor = presetKey?.presetList?.count == nil ? .clear : nil
-							return true
-						}
-					}
+		for preset in presets.allPresetKeys() {
+			if preset.tagKey == questMarker.quest.presetKey {
+				if presetKey == preset {
+					return false // no change
+				} else {
+					presetKey = preset
+					tableView.separatorColor = presetKey?.presetList?.count == nil ? .clear : nil
+					return true
 				}
 			}
 		}
