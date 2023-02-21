@@ -20,7 +20,7 @@ class QuestSolverTextEntryCell: UITableViewCell {
 		textField!.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
 	}
 
-	@objc func textFieldChanged(_ sender: Any?) {
+	@IBAction func textFieldChanged(_ sender: Any?) {
 		didChange?(textField?.text ?? "")
 	}
 }

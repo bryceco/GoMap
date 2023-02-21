@@ -6,6 +6,7 @@
 //  Copyright © 2023 Bryce Cogswell. All rights reserved.
 //
 
+import SwiftUI
 import UIKit
 
 class QuestChooserTableCell: UITableViewCell {
@@ -29,7 +30,9 @@ class QuestChooserTableCell: UITableViewCell {
 	}
 }
 
-class BuildYourOwnQuestTableCell: UITableViewCell {}
+class BuildYourOwnQuestTableCell: UITableViewCell {
+	@IBOutlet var label: UILabel?
+}
 
 class QuestChooserController: UITableViewController {
 	override func viewDidLoad() {
@@ -57,8 +60,8 @@ class QuestChooserController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if #available(iOS 15.0, *) {
-			return QuestList.shared.list.count + 1
+		if #available(iOS 15.0.0, *) {
+			return QuestList.shared.list.count + 2
 		} else {
 			return QuestList.shared.list.count
 		}
@@ -79,8 +82,15 @@ class QuestChooserController: UITableViewController {
 			}
 			return cell
 		} else if #available(iOS 15.0, *) {
-			let cell = tableView.dequeueReusableCell(withIdentifier: "BuildYourOwnQuestTableCell", for: indexPath)
+			let cell = tableView.dequeueReusableCell(
+				withIdentifier: "BuildYourOwnQuestTableCell",
+				for: indexPath) as! BuildYourOwnQuestTableCell
 			cell.accessoryType = .disclosureIndicator
+			if indexPath.row == QuestList.shared.list.count {
+				cell.label?.text = NSLocalizedString("Build a New Quest", comment: "")
+			} else {
+				cell.label?.text = NSLocalizedString("Advanced Quest Builder", comment: "")
+			}
 			return cell
 		} else {
 			fatalError()
@@ -96,18 +106,50 @@ class QuestChooserController: UITableViewController {
 			// transition to quest builder for item
 			if let cell = cell as? QuestChooserTableCell,
 			   let title = cell.title?.text,
-			   let quest = QuestList.shared.userQuests.first(where: { $0.title == title })
+			   let quest = QuestList.shared.userQuests.list.first(where: { $0.title == title })
 			{
-				let vc = QuestBuilderController.instantiateWith(quest: quest)
-				navigationController?.pushViewController(vc, animated: true)
+				// existing quest
+				if let quest = quest as? QuestDefinedWithPresetFeatures {
+					openSimpleQuestBuilder(quest: quest)
+					return
+				}
+				if let quest = quest as? QuestDefinedFromFilters {
+					openAdvancedQuestBuilder(quest: quest)
+					return
+				}
+			}
+			// build a new quest
+			if indexPath.row == QuestList.shared.list.count {
+				openSimpleQuestBuilder(quest: nil)
 			} else {
-				// build your own
-				let vc = QuestBuilderController.instantiateWith(quest: nil)
-				navigationController?.pushViewController(vc, animated: true)
+				openAdvancedQuestBuilder(quest: nil)
 			}
 		} else {
 			QuestBuilderController.presentVersionAlert(self)
 		}
+	}
+
+	@available(iOS 15, *)
+	func openSimpleQuestBuilder(quest: QuestDefinedWithPresetFeatures?) {
+		let vc = QuestBuilderController.instantiateWith(quest: quest)
+		navigationController?.pushViewController(vc, animated: true)
+	}
+
+	@available(iOS 15.0.0, *)
+	func openAdvancedQuestBuilder(quest: QuestDefinedFromFilters?) {
+		var view = AdvancedQuestBuilder(quest: quest)
+		view.onSave = { [weak self] newQuest in
+			do {
+				try QuestList.shared.addUserQuest(newQuest, replacing: quest)
+				self?.tableView.reloadData()
+				return true
+			} catch {
+				print("\(error)")
+				return false
+			}
+		}
+		let vc = UIHostingController(rootView: view)
+		navigationController?.pushViewController(vc, animated: true)
 	}
 
 	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

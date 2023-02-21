@@ -8,16 +8,89 @@
 
 import UIKit
 
+final class QuestUserList: Codable {
+	var list: [QuestDefinition]
+
+	// MARK: Initialize
+
+	init() {
+		list = []
+	}
+
+	convenience init(fromJsonData data: Data) throws {
+		self.init()
+		let decoder = JSONDecoder()
+		// First try the old-fashioned way we did it
+		if let list = try? decoder.decode([QuestDefinedWithPresetFeatures].self, from: data) {
+			self.list = list
+			return
+		}
+		// FIXME: Silly to make a temporary version of the object then copy it
+		let listCopy = try decoder.decode(QuestUserList.self, from: data)
+		list = listCopy.list
+	}
+
+	convenience init(fromUserDefaults defaults: UserDefaults, key: String) {
+		do {
+			if let data = defaults.object(forKey: key) as! Data? {
+				try self.init(fromJsonData: data)
+				return
+			}
+		} catch {}
+		self.init()
+	}
+
+	func save(toUserDefaults defaults: UserDefaults, key: String) {
+		let data = asJsonData()
+		UserDefaults.standard.set(data, forKey: key)
+	}
+
+	func asJsonData() -> Data {
+		return try! JSONEncoder().encode(self)
+	}
+
+	func asJsonString() -> String {
+		return String(decoding: asJsonData(), as: UTF8.self)
+	}
+
+	// MARK: Codable
+
+	enum CodingKeys: String, CodingKey {
+		case simpleQuestList
+		case advancedQuestList
+	}
+
+	init(from decoder: Decoder) throws {
+		do {
+			let values = try decoder.container(keyedBy: CodingKeys.self)
+			let simple = try values.decode([QuestDefinedWithPresetFeatures].self, forKey: .simpleQuestList)
+			let advanced = try values.decode([QuestDefinedFromFilters].self, forKey: .advancedQuestList)
+			list = simple + advanced
+		} catch {
+			print("\(error)")
+			throw error
+		}
+	}
+
+	func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		let simple = list.compactMap { $0 as? QuestDefinedWithPresetFeatures }
+		let advanced = list.compactMap { $0 as? QuestDefinedFromFilters }
+		try container.encode(simple, forKey: .simpleQuestList)
+		try container.encode(advanced, forKey: .advancedQuestList)
+	}
+}
+
 class QuestList {
 	static let shared = QuestList()
 	private let builtinList: [QuestProtocol]
+	private(set) var userQuests: QuestUserList
 	private(set) var list: [QuestProtocol]
-	private(set) var userQuests: [QuestUserDefition] = []
 	private var enabled: [String: Bool] = [:]
 
 	init() {
 		do {
-			let addBuildingType = QuestDefinition(
+			let addBuildingType = QuestInstance(
 				ident: "BuildingType",
 				title: "Add Building Type",
 				label: .image(UIImage(named: "ic_quest_building")!),
@@ -27,14 +100,14 @@ class QuestList {
 				},
 				acceptsValue: { _ in true })
 
-			let addSidewalkSurface = try QuestDefinition(
+			let addSidewalkSurface = try QuestInstanceWithFeatures(
 				ident: "SidewalkSurface",
 				title: "Add Sidewalk Surface",
 				label: .image(UIImage(named: "ic_quest_sidewalk")!),
 				presetKey: "surface",
 				includeFeatures: ["highway/footway/sidewalk"])
 
-			let addPhoneNumber = try QuestDefinition(
+			let addPhoneNumber = try QuestInstanceWithFeatures(
 				ident: "TelephoneNumber",
 				title: "Add Telephone Number",
 				label: .image(UIImage(named: "ic_quest_phone")!),
@@ -44,7 +117,7 @@ class QuestList {
 					text.unicodeScalars.filter({ CharacterSet.decimalDigits.contains($0) }).count > 5
 				})
 
-			let addOpeningHours = try QuestDefinition(
+			let addOpeningHours = try QuestInstanceWithFeatures(
 				ident: "OpeningHours",
 				title: "Add Opening Hours",
 				label: .image(UIImage(named: "ic_quest_opening_hours")!),
@@ -62,8 +135,9 @@ class QuestList {
 			builtinList = []
 		}
 		list = builtinList
+		userQuests = QuestUserList()
 		loadPrefs()
-		list += userQuests.compactMap { try? QuestDefinition(userQuest: $0) }
+		list += userQuests.list.compactMap { try? $0.makeQuestInstance() }
 		sortList()
 	}
 
@@ -80,41 +154,40 @@ class QuestList {
 
 	func loadPrefs() {
 		enabled = UserDefaults.standard.object(forKey: "QuestTypeEnabledDict") as? [String: Bool] ?? [:]
-		if let data = UserDefaults.standard.object(forKey: "QuestUserDefinedList") as! Data? {
-			userQuests = (try? JSONDecoder().decode([QuestUserDefition].self, from: data)) ?? []
-		}
+		userQuests = QuestUserList(fromUserDefaults: UserDefaults.standard, key: "QuestUserDefinedList")
 	}
 
 	func savePrefs() {
 		UserDefaults.standard.set(enabled, forKey: "QuestTypeEnabledDict")
-		let encoded = try! JSONEncoder().encode(userQuests)
-		UserDefaults.standard.set(encoded, forKey: "QuestUserDefinedList")
+		userQuests.save(toUserDefaults: UserDefaults.standard, key: "QuestUserDefinedList")
 	}
 
-	func addUserQuest(_ quest: QuestUserDefition, replacing previous: QuestUserDefition?) throws {
-		let questDef = try QuestDefinition(userQuest: quest)
+	func addUserQuest(_ quest: QuestDefinition,
+	                  replacing previous: QuestDefinition?) throws
+	{
+		let questDef = try quest.makeQuestInstance()
 
 		// If they renamed a quest then remove the old version
 		if let previous = previous {
-			userQuests.removeAll(where: { $0.title == previous.title })
+			userQuests.list.removeAll(where: { $0.title == previous.title })
 			list.removeAll(where: { $0.title == previous.title })
 		}
 
 		// If they gave a new quest the same name as an existing quest then replace the other quest
-		userQuests.removeAll(where: { $0.title == quest.title })
+		userQuests.list.removeAll(where: { $0.title == quest.title })
 		list.removeAll(where: { $0.title == quest.title })
 
-		userQuests.append(quest)
+		userQuests.list.append(quest)
 		list.append(questDef)
 
-		userQuests.sort(by: { a, b in a.title < b.title })
+		userQuests.list.sort(by: { a, b in a.title < b.title })
 		sortList()
 		savePrefs()
 	}
 
 	func remove(at index: Int) {
 		let item = list.remove(at: index)
-		userQuests.removeAll(where: { $0.title == item.title })
+		userQuests.list.removeAll(where: { $0.title == item.title })
 		savePrefs()
 	}
 
@@ -139,10 +212,9 @@ class QuestList {
 
 	func importQuests(fromText text: String) throws {
 		do {
-			let decoder = JSONDecoder()
 			let data = Data(text.utf8)
-			let decoded = try decoder.decode([QuestUserDefition].self, from: data)
-			for quest in decoded {
+			let list = try QuestUserList(fromJsonData: data)
+			for quest in list.list {
 				try addUserQuest(quest, replacing: nil)
 			}
 		} catch {

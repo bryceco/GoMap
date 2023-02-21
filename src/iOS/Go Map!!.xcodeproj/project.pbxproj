@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,7 +15,7 @@
 		02034743266C2CB9000A7C3D /* MapMarkerDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02034742266C2CB9000A7C3D /* MapMarkerDatabase.swift */; };
 		02034744266D83DB000A7C3D /* DLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C381C308263FD294003142BA /* DLog.swift */; };
 		020685D826D3253F00A447F9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 020685D626D3253F00A447F9 /* InfoPlist.strings */; };
-		020797FD299454D800D3C654 /* QuestDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020797FC299454D800D3C654 /* QuestDefinition.swift */; };
+		020797FD299454D800D3C654 /* QuestInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020797FC299454D800D3C654 /* QuestInstance.swift */; };
 		020798012994706000D3C654 /* QuestBuilderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020798002994706000D3C654 /* QuestBuilderController.swift */; };
 		02079803299470FB00D3C654 /* QuestBuilder.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02079802299470FB00D3C654 /* QuestBuilder.storyboard */; };
 		020E160B267A82050037DE49 /* TileServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020E160A267A82050037DE49 /* TileServer.swift */; };
@@ -45,6 +45,9 @@
 		024909C9267BF9F70027E531 /* MapTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024909C8267BF9F70027E531 /* MapTransform.swift */; };
 		024909CB267D99190027E531 /* OsmDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024909CA267D99190027E531 /* OsmDownloader.swift */; };
 		024909CF267EADC70027E531 /* OsmXmlGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024909CE267EADC70027E531 /* OsmXmlGenerator.swift */; };
+		02505C5329A2EAD60078D60D /* AdvancedQuestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02505C5229A2EAD60078D60D /* AdvancedQuestBuilder.swift */; };
+		02505C5529A2ECA50078D60D /* AdvancedQuestBuilderFilterRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02505C5429A2ECA50078D60D /* AdvancedQuestBuilderFilterRow.swift */; };
+		02505C5729A458A30078D60D /* QuestDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02505C5629A458A30078D60D /* QuestDefinition.swift */; };
 		025CCA12271244B800074726 /* KissXML in Frameworks */ = {isa = PBXBuildFile; productRef = 025CCA11271244B800074726 /* KissXML */; };
 		0266DE862655A21F007A502E /* Superview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0266DE852655A21F007A502E /* Superview.swift */; };
 		026FC76726509D6E005DDAFF /* SpeechBalloonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */; };
@@ -299,7 +302,7 @@
 		020685DD26D3253F00A447F9 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Settings.strings; sourceTree = "<group>"; };
 		020685DE26D3253F00A447F9 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Changeset.strings; sourceTree = "<group>"; };
 		02072AD51BD46B1700F1CAB4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		020797FC299454D800D3C654 /* QuestDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestDefinition.swift; sourceTree = "<group>"; };
+		020797FC299454D800D3C654 /* QuestInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestInstance.swift; sourceTree = "<group>"; };
 		020798002994706000D3C654 /* QuestBuilderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestBuilderController.swift; sourceTree = "<group>"; };
 		02079802299470FB00D3C654 /* QuestBuilder.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QuestBuilder.storyboard; sourceTree = "<group>"; };
 		0208898126BB1539003AF6BF /* ars */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ars; path = ars.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
@@ -368,6 +371,9 @@
 		024909CA267D99190027E531 /* OsmDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmDownloader.swift; sourceTree = "<group>"; };
 		024909CE267EADC70027E531 /* OsmXmlGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmXmlGenerator.swift; sourceTree = "<group>"; };
 		024E6D2E24CBBCE500E1E2A3 /* apple-app-site-association */ = {isa = PBXFileReference; lastKnownFileType = text; name = "apple-app-site-association"; path = "../apple-app-site-association"; sourceTree = "<group>"; };
+		02505C5229A2EAD60078D60D /* AdvancedQuestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedQuestBuilder.swift; sourceTree = "<group>"; };
+		02505C5429A2ECA50078D60D /* AdvancedQuestBuilderFilterRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedQuestBuilderFilterRow.swift; sourceTree = "<group>"; };
+		02505C5629A458A30078D60D /* QuestDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestDefinition.swift; sourceTree = "<group>"; };
 		025465192947F60200C7C2F8 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		0254651A2947F60200C7C2F8 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0254651B2947F60200C7C2F8 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1019,12 +1025,15 @@
 		02CB523C299097C3007F758D /* Quests */ = {
 			isa = PBXGroup;
 			children = (
+				02505C5229A2EAD60078D60D /* AdvancedQuestBuilder.swift */,
+				02505C5429A2ECA50078D60D /* AdvancedQuestBuilderFilterRow.swift */,
 				02079802299470FB00D3C654 /* QuestBuilder.storyboard */,
 				020798002994706000D3C654 /* QuestBuilderController.swift */,
 				0287D25129947B2900BEAD9E /* QuestChooser.storyboard */,
 				02CE3CE42990A8CE00DDACE0 /* QuestChooserController.swift */,
-				020797FC299454D800D3C654 /* QuestDefinition.swift */,
+				02505C5629A458A30078D60D /* QuestDefinition.swift */,
 				02CE3CEA2991B5FA00DDACE0 /* QuestIcons.xcassets */,
+				020797FC299454D800D3C654 /* QuestInstance.swift */,
 				02CB52352990801E007F758D /* QuestList.swift */,
 				02CB523D299097C3007F758D /* QuestSolver.storyboard */,
 				02CB523E299097C3007F758D /* QuestSolverController.swift */,
@@ -1338,8 +1347,9 @@
 		02ACBA2616713CCB00BB4414 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1250;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = "Bryce Cogswell";
 				TargetAttributes = {
 					02ACBA2E16713CCB00BB4414 = {
@@ -1560,11 +1570,13 @@
 				C3004F52263A6CA5006BF313 /* MainViewController.swift in Sources */,
 				64348D01225E8D3F00ADE7FB /* OsmNode+Direction.swift in Sources */,
 				02CC01D12584195E004444EF /* PresetFeature.swift in Sources */,
+				02505C5529A2ECA50078D60D /* AdvancedQuestBuilderFilterRow.swift in Sources */,
 				02A59EDD297E444500B0A676 /* PresetAddressFormat.swift in Sources */,
 				C31315232644292700C0AD86 /* LocationBallLayer.swift in Sources */,
 				ED964A012601D6A900EC0A60 /* POIFeaturePresetsViewController.swift in Sources */,
 				0200FECD2908B0EB002C3F94 /* GeoJSON.swift in Sources */,
 				0293FEB1299D5C78002EED90 /* MapMarkerIgnoreList.swift in Sources */,
+				02505C5329A2EAD60078D60D /* AdvancedQuestBuilder.swift in Sources */,
 				020EBA7926506156001D56F4 /* MercatorTileLayer.swift in Sources */,
 				02354F7A246349E100878A04 /* CurvedGlyphLayer.swift in Sources */,
 				0226B771268300C9005DB9E2 /* Data+Wrapper.swift in Sources */,
@@ -1599,7 +1611,7 @@
 				02CC01DC25843F2F004444EF /* PresetLanguages.swift in Sources */,
 				0282C4C926617E7400F2D282 /* MapView.swift in Sources */,
 				02EDBF6826535B9D00B7072E /* OsmNode.swift in Sources */,
-				020797FD299454D800D3C654 /* QuestDefinition.swift in Sources */,
+				020797FD299454D800D3C654 /* QuestInstance.swift in Sources */,
 				ED56E5C626027A50000B368C /* ContactUsViewController.swift in Sources */,
 				02A123E9264C8B60005638C1 /* GpxLayer.swift in Sources */,
 				ED56E5AB26024DA5000B368C /* AutocompleteTextField.swift in Sources */,
@@ -1608,6 +1620,7 @@
 				02CB2408265DB7CB00835F32 /* HoursRecognizer.swift in Sources */,
 				02D5B5F3248F154D00FEE448 /* Colors.swift in Sources */,
 				021FADCD25873C8200F6E1C0 /* PresetsDatabase+TableView.swift in Sources */,
+				02505C5729A458A30078D60D /* QuestDefinition.swift in Sources */,
 				02F6A457268A934900F2ACE7 /* NSAttributedString+Ext.swift in Sources */,
 				02CB2406265DB7CB00835F32 /* CameraView.swift in Sources */,
 				02A123EF264EE7BC005638C1 /* aes.swift in Sources */,
