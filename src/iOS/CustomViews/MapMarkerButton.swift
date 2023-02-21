@@ -10,18 +10,13 @@ import UIKit
 
 @IBDesignable
 final class MapMarkerButton: MapView.MapViewButton {
-	enum TextOrImage {
-		case text(String)
-		case image(UIImage)
-	}
-
 	let radius: CGFloat // radius of ciruclar part
 	let height: CGFloat // distance from center of circle to bottom vertex
 	let isCurvy: Bool
 
 	static let PreferredRadius = 18.0
 
-	init(radius: CGFloat = PreferredRadius, height: CGFloat = 15.0 + 18.0, isCurvy: Bool = true, label: TextOrImage) {
+	init(radius: CGFloat = PreferredRadius, height: CGFloat = 15.0 + 18.0, isCurvy: Bool = true, label: String) {
 		arrowPoint = CGPoint.zero
 		self.radius = radius
 		self.height = height
@@ -68,15 +63,14 @@ final class MapMarkerButton: MapView.MapViewButton {
 		shapeLayer.path = path.cgPath
 
 		let labelLayer: CALayer
-		switch label {
-		case let .image(image):
+		if label.count > 1 {
 			labelLayer = CALayer()
-			labelLayer.contents = image.cgImage
+			labelLayer.contents = UIImage(named: label)?.cgImage
 			labelLayer.frame = CGRect(x: 1, y: 1, width: 2 * radius - 2, height: 2 * radius - 2)
-		case let .text(text):
+		} else {
 			let textLayer = CATextLayer()
 			let ourRadius = radius - 1
-			textLayer.string = text
+			textLayer.string = label
 			textLayer.font = UIFont.preferredFont(forTextStyle: .caption1)
 			textLayer.fontSize = 20
 			textLayer.foregroundColor = UIColor.black.cgColor
@@ -96,7 +90,7 @@ final class MapMarkerButton: MapView.MapViewButton {
 		layer.addSublayer(shapeLayer)
 	}
 
-	convenience init(withLabel label: TextOrImage) {
+	convenience init(withLabel label: String) {
 		self.init(label: label)
 	}
 

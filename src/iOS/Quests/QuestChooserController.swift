@@ -169,6 +169,22 @@ class QuestChooserController: UITableViewController {
 
 	@available(iOS 15.0.0, *)
 	func openAdvancedQuestBuilder(quest: QuestDefinitionWithFilters?) {
+		let quest = quest ??
+			QuestDefinitionWithFilters(title: "Add Cuisine",
+			                           label: "🍽️",
+			                           tagKey: "cuisine",
+			                           filters: [
+			                           	QuestDefinitionFilter(
+			                           		tagKey: "amenity",
+			                           		tagValue: "restaurant",
+			                           		relation: .equal,
+			                           		included: .include),
+			                           	QuestDefinitionFilter(
+			                           		tagKey: "cuisine",
+			                           		tagValue: "",
+			                           		relation: .equal,
+			                           		included: .include)
+			                           ])
 		var view = AdvancedQuestBuilder(quest: quest)
 		view.onSave = { [weak self] newQuest in
 			do {
@@ -178,10 +194,10 @@ class QuestChooserController: UITableViewController {
 			} catch {
 				print("\(error)")
 				let alertView = UIAlertController(title: NSLocalizedString("Quest Definition Error", comment: ""),
-												  message: error.localizedDescription,
-												  preferredStyle: .actionSheet)
+				                                  message: error.localizedDescription,
+				                                  preferredStyle: .actionSheet)
 				alertView.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
-												  style: .cancel))
+				                                  style: .cancel))
 				self?.present(alertView, animated: true)
 				return false
 			}
@@ -189,5 +205,4 @@ class QuestChooserController: UITableViewController {
 		let vc = UIHostingController(rootView: view)
 		navigationController?.pushViewController(vc, animated: true)
 	}
-
 }

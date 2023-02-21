@@ -56,15 +56,15 @@ final class QuestUserList: Codable {
 	// MARK: Codable
 
 	enum CodingKeys: String, CodingKey {
-		case simpleQuestList
-		case advancedQuestList
+		case featureQuestList
+		case filterQuestList
 	}
 
 	init(from decoder: Decoder) throws {
 		do {
 			let values = try decoder.container(keyedBy: CodingKeys.self)
-			let simple = try values.decode([QuestDefinitionWithFeatures].self, forKey: .simpleQuestList)
-			let advanced = try values.decode([QuestDefinitionWithFilters].self, forKey: .advancedQuestList)
+			let simple = try values.decode([QuestDefinitionWithFeatures].self, forKey: .featureQuestList)
+			let advanced = try values.decode([QuestDefinitionWithFilters].self, forKey: .filterQuestList)
 			list = simple + advanced
 		} catch {
 			print("\(error)")
@@ -76,8 +76,8 @@ final class QuestUserList: Codable {
 		var container = encoder.container(keyedBy: CodingKeys.self)
 		let simple = list.compactMap { $0 as? QuestDefinitionWithFeatures }
 		let advanced = list.compactMap { $0 as? QuestDefinitionWithFilters }
-		try container.encode(simple, forKey: .simpleQuestList)
-		try container.encode(advanced, forKey: .advancedQuestList)
+		try container.encode(simple, forKey: .featureQuestList)
+		try container.encode(advanced, forKey: .filterQuestList)
 	}
 }
 
@@ -93,36 +93,36 @@ class QuestList {
 			let addBuildingType = QuestInstance(
 				ident: "BuildingType",
 				title: "Add Building Type",
-				label: .image(UIImage(named: "ic_quest_building")!),
+				label: "ic_quest_building",
 				presetKey: "building",
 				appliesToObject: { obj in
 					obj.tags["building"] == "yes"
 				},
 				acceptsValue: { _ in true })
 
-			let addSidewalkSurface = try QuestInstanceWithFeatures(
+			let addSidewalkSurface = try QuestDefinitionWithFeatures(
 				ident: "SidewalkSurface",
 				title: "Add Sidewalk Surface",
-				label: .image(UIImage(named: "ic_quest_sidewalk")!),
+				label: "ic_quest_sidewalk",
 				presetKey: "surface",
-				includeFeatures: ["highway/footway/sidewalk"])
+				includeFeatures: ["highway/footway/sidewalk"]).makeQuestInstance()
 
-			let addPhoneNumber = try QuestInstanceWithFeatures(
+			let addPhoneNumber = try QuestDefinitionWithFeatures(
 				ident: "TelephoneNumber",
 				title: "Add Telephone Number",
-				label: .image(UIImage(named: "ic_quest_phone")!),
+				label: "ic_quest_phone",
 				presetKey: "phone",
 				includeFeatures: [],
 				accepts: { text in
 					text.unicodeScalars.filter({ CharacterSet.decimalDigits.contains($0) }).count > 5
-				})
+				}).makeQuestInstance()
 
-			let addOpeningHours = try QuestInstanceWithFeatures(
+			let addOpeningHours = try QuestDefinitionWithFeatures(
 				ident: "OpeningHours",
 				title: "Add Opening Hours",
-				label: .image(UIImage(named: "ic_quest_opening_hours")!),
+				label: "ic_quest_opening_hours",
 				presetKey: "opening_hours",
-				includeFeatures: [String]())
+				includeFeatures: [String]()).makeQuestInstance()
 
 			builtinList = [
 				addBuildingType,
@@ -219,6 +219,7 @@ class QuestList {
 				try addUserQuest(quest, replacing: nil)
 			}
 		} catch {
+			print("\(error)")
 			throw error
 		}
 	}

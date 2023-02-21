@@ -18,7 +18,7 @@ final class QuestMarker: MapMarker {
 		return ident
 	}
 
-	override var buttonLabel: MapMarkerButton.TextOrImage { quest.label }
+	override var buttonLabel: String { quest.label }
 
 	init?(object: OsmBaseObject, quest: QuestProtocol, ignorable: MapMarkerIgnoreListProtocol) {
 		let ident = "quest-\(quest.ident)-\(object is OsmNode ? "n" : object is OsmWay ? "w" : "r")\(object.ident)"

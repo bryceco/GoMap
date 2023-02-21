@@ -44,7 +44,7 @@ class MapMarker {
 		self.lon = lon
 	}
 
-	var buttonLabel: MapMarkerButton.TextOrImage { .text("?") }
+	var buttonLabel: String { "?" }
 
 	func makeButton() -> UIButton {
 		let button: MapView.MapViewButton
@@ -54,22 +54,21 @@ class MapMarker {
 			button = MapView.MapViewButton(type: .custom)
 			button.layer.backgroundColor = UIColor.blue.cgColor
 			button.layer.borderColor = UIColor.white.cgColor
-			switch buttonLabel {
-			case let .image(icon):
+			if buttonLabel.count > 1 {
 				// icon button
 				button.bounds = CGRect(x: 0, y: 0, width: 34, height: 34)
 				button.layer.cornerRadius = button.bounds.width / 2
-				button.setImage(icon, for: .normal)
+				button.setImage(UIImage(named: buttonLabel), for: .normal)
 				button.layer.borderColor = UIColor.white.cgColor
 				button.layer.borderWidth = 2.0
-			case let .text(text):
+			} else {
 				// text button
 				button.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
 				button.layer.cornerRadius = 5
 				button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
 				button.titleLabel?.textColor = UIColor.white
 				button.titleLabel?.textAlignment = .center
-				button.setTitle(text, for: .normal)
+				button.setTitle(buttonLabel, for: .normal)
 			}
 		}
 		self.button = button

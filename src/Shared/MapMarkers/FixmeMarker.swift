@@ -29,7 +29,7 @@ class FixmeMarker: MapMarker {
 		return FixmeMarker.fixmeTag(object) == nil
 	}
 
-	override var buttonLabel: MapMarkerButton.TextOrImage { MapMarkerButton.TextOrImage.text("F") }
+	override var buttonLabel: String { "F" }
 
 	/// Initialize from FIXME data
 	init(object: OsmBaseObject, text: String) {

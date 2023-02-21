@@ -41,7 +41,7 @@ class OsmNoteMarker: MapMarker {
 		return status == "closed"
 	}
 
-	override var buttonLabel: MapMarkerButton.TextOrImage { .text("N") }
+	override var buttonLabel: String { "N" }
 
 	/// A note newly created by user
 	override init(lat: Double, lon: Double) {

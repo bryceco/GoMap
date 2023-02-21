@@ -133,10 +133,10 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 	func makeQuestInstance() throws -> QuestProtocol {
 		let pred = try Self.makePredicate(filters: filters)
 		return QuestInstance(ident: title,
-							 title: title,
-							 label: .text(label),
-							 presetKey: tagKey,
-							 appliesToObject: { pred($0.tags) },
-							 acceptsValue: { _ in true })
+		                     title: title,
+		                     label: label,
+		                     presetKey: tagKey,
+		                     appliesToObject: { pred($0.tags) },
+		                     acceptsValue: { _ in true })
 	}
 }

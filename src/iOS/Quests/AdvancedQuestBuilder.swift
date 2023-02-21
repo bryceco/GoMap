@@ -14,23 +14,7 @@ struct AdvancedQuestBuilder: View {
 	var onSave: ((QuestDefinitionWithFilters) -> Bool)?
 	@State var quest: QuestDefinitionWithFilters
 
-	init(quest: QuestDefinitionWithFilters?) {
-		let quest = quest ??
-			QuestDefinitionWithFilters(title: "Add Cuisine",
-			                        label: "🍽️",
-			                        tagKey: "cuisine",
-			                        filters: [
-			                        	QuestDefinitionFilter(
-			                        		tagKey: "amenity",
-			                        		tagValue: "restaurant",
-			                        		relation: .equal,
-			                        		included: .include),
-			                        	QuestDefinitionFilter(
-			                        		tagKey: "cuisine",
-			                        		tagValue: "",
-			                        		relation: .equal,
-			                        		included: .include)
-			                        ])
+	init(quest: QuestDefinitionWithFilters) {
 		_quest = State(initialValue: quest)
 	}
 
@@ -129,10 +113,11 @@ struct AdvancedQuestBuilder: View {
 			trailing: Button(action: {
 				// Do some cleanup before saving
 				quest.filters = quest.filters.map({ item in
-					QuestDefinitionFilter(tagKey: item.tagKey.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),
-					               tagValue: item.tagValue.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),
-					               relation: item.relation,
-					               included: item.included)
+					QuestDefinitionFilter(
+						tagKey: item.tagKey.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),
+						tagValue: item.tagValue.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),
+						relation: item.relation,
+						included: item.included)
 				})
 				quest.title = quest.title.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 				quest.label = quest.label.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
@@ -160,7 +145,23 @@ struct AdvancedQuestBuilder: View {
 
 @available(iOS 15.0.0, *)
 struct AdvancedQuestBuilder_Previews: PreviewProvider {
+	static let quest = QuestDefinitionWithFilters(title: "Add Cuisine",
+	                                              label: "🍽️",
+	                                              tagKey: "cuisine",
+	                                              filters: [
+	                                              	QuestDefinitionFilter(
+	                                              		tagKey: "amenity",
+	                                              		tagValue: "restaurant",
+	                                              		relation: .equal,
+	                                              		included: .include),
+	                                              	QuestDefinitionFilter(
+	                                              		tagKey: "cuisine",
+	                                              		tagValue: "",
+	                                              		relation: .equal,
+	                                              		included: .include)
+	                                              ])
+
 	static var previews: some View {
-		AdvancedQuestBuilder(quest: nil)
+		AdvancedQuestBuilder(quest: quest)
 	}
 }

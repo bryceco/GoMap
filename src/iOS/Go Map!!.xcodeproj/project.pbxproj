@@ -15,7 +15,6 @@
 		02034743266C2CB9000A7C3D /* MapMarkerDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02034742266C2CB9000A7C3D /* MapMarkerDatabase.swift */; };
 		02034744266D83DB000A7C3D /* DLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C381C308263FD294003142BA /* DLog.swift */; };
 		020685D826D3253F00A447F9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 020685D626D3253F00A447F9 /* InfoPlist.strings */; };
-		020797FD299454D800D3C654 /* QuestInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020797FC299454D800D3C654 /* QuestInstance.swift */; };
 		020798012994706000D3C654 /* QuestBuilderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020798002994706000D3C654 /* QuestBuilderController.swift */; };
 		02079803299470FB00D3C654 /* QuestBuilder.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02079802299470FB00D3C654 /* QuestBuilder.storyboard */; };
 		020E160B267A82050037DE49 /* TileServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020E160A267A82050037DE49 /* TileServer.swift */; };
@@ -304,7 +303,6 @@
 		020685DD26D3253F00A447F9 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Settings.strings; sourceTree = "<group>"; };
 		020685DE26D3253F00A447F9 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Changeset.strings; sourceTree = "<group>"; };
 		02072AD51BD46B1700F1CAB4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		020797FC299454D800D3C654 /* QuestInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestInstance.swift; sourceTree = "<group>"; };
 		020798002994706000D3C654 /* QuestBuilderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestBuilderController.swift; sourceTree = "<group>"; };
 		02079802299470FB00D3C654 /* QuestBuilder.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QuestBuilder.storyboard; sourceTree = "<group>"; };
 		0208898126BB1539003AF6BF /* ars */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ars; path = ars.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
@@ -1039,7 +1037,6 @@
 				02505C5629A458A30078D60D /* QuestDefinition.swift */,
 				02505C5A29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift */,
 				02505C5829A52EA80078D60D /* QuestDefinitionWithFilters.swift */,
-				020797FC299454D800D3C654 /* QuestInstance.swift */,
 				02CB52352990801E007F758D /* QuestList.swift */,
 				02CB523E299097C3007F758D /* QuestSolverController.swift */,
 				02CE3CEA2991B5FA00DDACE0 /* QuestIcons.xcassets */,
@@ -1618,7 +1615,6 @@
 				02CC01DC25843F2F004444EF /* PresetLanguages.swift in Sources */,
 				0282C4C926617E7400F2D282 /* MapView.swift in Sources */,
 				02EDBF6826535B9D00B7072E /* OsmNode.swift in Sources */,
-				020797FD299454D800D3C654 /* QuestInstance.swift in Sources */,
 				ED56E5C626027A50000B368C /* ContactUsViewController.swift in Sources */,
 				02A123E9264C8B60005638C1 /* GpxLayer.swift in Sources */,
 				ED56E5AB26024DA5000B368C /* AutocompleteTextField.swift in Sources */,

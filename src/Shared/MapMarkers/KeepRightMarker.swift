@@ -18,7 +18,7 @@ final class KeepRightMarker: MapMarker {
 		return "keepright-\(keepRightID)"
 	}
 
-	override var buttonLabel: MapMarkerButton.TextOrImage { .text("R") }
+	override var buttonLabel: String { "R" }
 
 	func object(from mapData: OsmMapData) -> OsmBaseObject? {
 		return mapData.object(withExtendedIdentifier: objectId)
