@@ -41,26 +41,23 @@ struct QuestDefinitionFilter: Codable, Identifiable, CustomStringConvertible, Cu
 	}
 
 	func makePredicate() -> (([String: String]) -> Bool) {
-		if tagValue.isEmpty {
-			switch relation {
-			case .equal:
+		switch relation {
+		case .equal:
+			switch tagValue {
+			case "":
 				return { $0[tagKey] == nil }
-			case .notEqual:
+			case "*":
 				return { $0[tagKey] != nil }
-			}
-		} else if tagValue == "*" {
-			switch relation {
-			case .equal:
-				return { $0[tagKey] != nil }
-			case .notEqual:
-				return { $0[tagKey] == nil }
-			}
-
-		} else {
-			switch relation {
-			case .equal:
+			default:
 				return { $0[tagKey] == tagValue }
-			case .notEqual:
+			}
+		case .notEqual:
+			switch tagValue {
+			case "":
+				return { $0[tagKey] != nil }
+			case "*":
+				return { $0[tagKey] == nil }
+			default:
 				return { $0[tagKey] != tagValue }
 			}
 		}
