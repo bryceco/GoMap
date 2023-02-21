@@ -70,14 +70,14 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 	var tagKey: String
 	var filters: [QuestDefinitionFilter]
 
-	private static func makeOrSets(list: [QuestDefinitionFilter]) throws -> [([String: String]) -> Bool] {
+	private static func makeOrSets(list: [QuestDefinitionFilter]) -> [([String: String]) -> Bool] {
 		var list = list
 		var orSets: [([String: String]) -> Bool] = []
 		while let rule = list.popLast() {
 			// collect all items that match first item
 			var pred = rule.makePredicate()
 			while let otherIndex = list.indices.first(where: {
-				list[$0].tagKey == rule.tagKey && list[$0].included == rule.included
+				list[$0].tagKey == rule.tagKey && list[$0].relation == rule.relation
 			}) {
 				let rhs = list[otherIndex].makePredicate()
 				list.remove(at: otherIndex)
@@ -90,7 +90,7 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 	}
 
 	private static func makeIncludePredicate(include: [QuestDefinitionFilter]) throws -> (([String: String]) -> Bool) {
-		var orSets = try Self.makeOrSets(list: include)
+		var orSets = Self.makeOrSets(list: include)
 		guard !orSets.isEmpty else {
 			throw QuestError.noFiltersDefined
 		}
@@ -104,7 +104,7 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 	}
 
 	private static func makeExcludePredicate(exclude: [QuestDefinitionFilter]) throws -> (([String: String]) -> Bool)? {
-		var orSets = try Self.makeOrSets(list: exclude)
+		var orSets = Self.makeOrSets(list: exclude)
 		guard !orSets.isEmpty else {
 			return nil
 		}
