@@ -63,16 +63,16 @@ class QuestChooserController: UITableViewController {
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if #available(iOS 15.0.0, *) {
-			return QuestList.shared.list.count + 2
+			return QuestList.shared.list.count + 2 + 1	// 2 builders + import/export
 		} else {
-			return QuestList.shared.list.count
+			return QuestList.shared.list.count + 1	// import/export
 		}
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.row < QuestList.shared.list.count {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "QuestChooserTableCell", for: indexPath)
-				as! QuestChooserTableCell
+			as! QuestChooserTableCell
 			let quest = QuestList.shared.list[indexPath.row]
 			cell.quest = quest
 			cell.title?.text = quest.title
@@ -82,6 +82,9 @@ class QuestChooserController: UITableViewController {
 			} else {
 				cell.accessoryType = .none
 			}
+			return cell
+		} else if indexPath.row == self.tableView(tableView, numberOfRowsInSection: 0)-1 {
+			let cell = tableView.dequeueReusableCell(withIdentifier: "ImportExportCell", for: indexPath)
 			return cell
 		} else if #available(iOS 15.0, *) {
 			let cell = tableView.dequeueReusableCell(
@@ -205,4 +208,73 @@ class QuestChooserController: UITableViewController {
 		let vc = UIHostingController(rootView: view)
 		navigationController?.pushViewController(vc, animated: true)
 	}
-}
+
+	// MARK: Import/Export
+
+	func doImport(fromText text: String) {
+		do {
+			try QuestList.shared.importQuests(fromText: text)
+
+			let alert = UIAlertController(
+				title: NSLocalizedString("Success", comment: ""),
+				message: NSLocalizedString("Quests were imported successfully.",
+										   comment: ""),
+				preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+										  style: .default, handler: nil))
+			present(alert, animated: true)
+		} catch {
+			let format = NSLocalizedString("An error occured while importing: %@",
+										   comment: "Show an error message")
+			let message = String(format: format, error.localizedDescription)
+			let alert = UIAlertController(
+				title: NSLocalizedString("Import Error", comment: ""),
+				message: message,
+				preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+										  style: .default, handler: nil))
+			present(alert, animated: true)
+		}
+	}
+
+	@IBAction func importQuests(_ sender: Any?) {
+		let alert = UIAlertController(
+			title: NSLocalizedString("Import Quests", comment: ""),
+			message: NSLocalizedString("Paste the JSON for your quests into the field below", comment: ""),
+			preferredStyle: .alert)
+		alert.addTextField(configurationHandler: { _ in })
+		alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+									  style: .default, handler: nil))
+		alert.addAction(UIAlertAction(title: NSLocalizedString("Import", comment: ""),
+									  style: .default, handler: { [weak self] _ in
+										self?.doImport(fromText: alert.textFields?.first?.text ?? "")
+									  }))
+		present(alert, animated: true)
+	}
+
+	@IBAction func exportQuests(_ sender: Any?) {
+		do {
+			let text = try QuestList.shared.exportQuests()
+			UIPasteboard.general.string = text
+			let alert = UIAlertController(
+				title: NSLocalizedString("Copied", comment: "text was copied to the system clipboard"),
+				message: NSLocalizedString(
+					"A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else.",
+					comment: ""),
+				preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+										  style: .default, handler: nil))
+			present(alert, animated: true)
+		} catch {
+			let format = NSLocalizedString("An error occured while exporting: %@",
+										   comment: "Show an error message")
+			let message = String(format: format, error.localizedDescription)
+			let alert = UIAlertController(
+				title: NSLocalizedString("Error", comment: ""),
+				message: message,
+				preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+										  style: .default, handler: nil))
+			present(alert, animated: true)
+		}
+	}}

@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" ambiguous="YES" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="XNI-xS-8yh">
-                                        <rect key="frame" x="20" y="0.0" width="353" height="783.66666666666663"/>
+                                        <rect key="frame" x="20" y="0.0" width="353" height="668.66666666666663"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Build Your Own Quest" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44G-za-6lM">
                                                 <rect key="frame" x="0.0" y="0.0" width="353" height="33.666666666666664"/>
@@ -261,35 +261,6 @@
                                                     <constraint firstItem="CSL-4N-Z6D" firstAttribute="leading" secondItem="vjj-ZN-rnq" secondAttribute="leading" id="on1-li-fQX"/>
                                                     <constraint firstItem="3ly-JH-kKn" firstAttribute="centerX" secondItem="vjj-ZN-rnq" secondAttribute="centerX" id="rwx-Wf-rXo"/>
                                                     <constraint firstAttribute="trailing" secondItem="CSL-4N-Z6D" secondAttribute="trailing" id="w6t-6k-M2p"/>
-                                                </constraints>
-                                            </view>
-                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pih-Kv-hym" userLabel="Import/Export View">
-                                                <rect key="frame" x="0.0" y="698.66666666666663" width="353" height="85"/>
-                                                <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s0k-Rx-R0z">
-                                                        <rect key="frame" x="0.0" y="50" width="74" height="35"/>
-                                                        <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="plain" title="Import"/>
-                                                        <connections>
-                                                            <action selector="importQuests:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Rjl-i1-yC0"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hep-Lb-To5">
-                                                        <rect key="frame" x="279" y="50" width="74" height="34.333333333333343"/>
-                                                        <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="plain" title="Export"/>
-                                                        <connections>
-                                                            <action selector="exportQuests:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Sg2-MI-6U0"/>
-                                                        </connections>
-                                                    </button>
-                                                </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                <constraints>
-                                                    <constraint firstItem="s0k-Rx-R0z" firstAttribute="top" secondItem="Pih-Kv-hym" secondAttribute="top" constant="50" id="Jgh-yd-dbf"/>
-                                                    <constraint firstAttribute="bottom" secondItem="s0k-Rx-R0z" secondAttribute="bottom" id="dzX-BT-fWo"/>
-                                                    <constraint firstAttribute="trailing" secondItem="Hep-Lb-To5" secondAttribute="trailing" id="hG9-Tm-h69"/>
-                                                    <constraint firstItem="s0k-Rx-R0z" firstAttribute="leading" secondItem="Pih-Kv-hym" secondAttribute="leading" id="sXo-Rd-4DT"/>
-                                                    <constraint firstItem="Hep-Lb-To5" firstAttribute="top" secondItem="s0k-Rx-R0z" secondAttribute="top" id="wnf-Wm-sKJ"/>
                                                 </constraints>
                                             </view>
                                         </subviews>

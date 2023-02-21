@@ -1027,19 +1027,19 @@
 		02CB523C299097C3007F758D /* Quests */ = {
 			isa = PBXGroup;
 			children = (
-				02079802299470FB00D3C654 /* QuestBuilder.storyboard */,
-				0287D25129947B2900BEAD9E /* QuestChooser.storyboard */,
-				02CB523D299097C3007F758D /* QuestSolver.storyboard */,
 				02505C5229A2EAD60078D60D /* AdvancedQuestBuilder.swift */,
 				02505C5429A2ECA50078D60D /* AdvancedQuestBuilderFilterRow.swift */,
+				02079802299470FB00D3C654 /* QuestBuilder.storyboard */,
 				020798002994706000D3C654 /* QuestBuilderController.swift */,
+				0287D25129947B2900BEAD9E /* QuestChooser.storyboard */,
 				02CE3CE42990A8CE00DDACE0 /* QuestChooserController.swift */,
 				02505C5629A458A30078D60D /* QuestDefinition.swift */,
 				02505C5A29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift */,
 				02505C5829A52EA80078D60D /* QuestDefinitionWithFilters.swift */,
-				02CB52352990801E007F758D /* QuestList.swift */,
-				02CB523E299097C3007F758D /* QuestSolverController.swift */,
 				02CE3CEA2991B5FA00DDACE0 /* QuestIcons.xcassets */,
+				02CB52352990801E007F758D /* QuestList.swift */,
+				02CB523D299097C3007F758D /* QuestSolver.storyboard */,
+				02CB523E299097C3007F758D /* QuestSolverController.swift */,
 			);
 			path = Quests;
 			sourceTree = "<group>";
