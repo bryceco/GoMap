@@ -11,21 +11,21 @@ import SwiftUI
 @available(iOS 15.0.0, *)
 struct AdvancedQuestBuilder: View {
 	@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-	var onSave: ((QuestDefinedFromFilters) -> Bool)?
-	@State var quest: QuestDefinedFromFilters
+	var onSave: ((QuestDefinitionWithFilters) -> Bool)?
+	@State var quest: QuestDefinitionWithFilters
 
-	init(quest: QuestDefinedFromFilters?) {
+	init(quest: QuestDefinitionWithFilters?) {
 		let quest = quest ??
-			QuestDefinedFromFilters(title: "Add Cuisine",
+			QuestDefinitionWithFilters(title: "Add Cuisine",
 			                        label: "🍽️",
 			                        tagKey: "cuisine",
 			                        filters: [
-			                        	QuestTagFilter(
+			                        	QuestDefinitionFilter(
 			                        		tagKey: "amenity",
 			                        		tagValue: "restaurant",
 			                        		relation: .equal,
 			                        		included: .include),
-			                        	QuestTagFilter(
+			                        	QuestDefinitionFilter(
 			                        		tagKey: "cuisine",
 			                        		tagValue: "",
 			                        		relation: .equal,
@@ -129,7 +129,7 @@ struct AdvancedQuestBuilder: View {
 			trailing: Button(action: {
 				// Do some cleanup before saving
 				quest.filters = quest.filters.map({ item in
-					QuestTagFilter(tagKey: item.tagKey.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),
+					QuestDefinitionFilter(tagKey: item.tagKey.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),
 					               tagValue: item.tagValue.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),
 					               relation: item.relation,
 					               included: item.included)
@@ -149,7 +149,7 @@ struct AdvancedQuestBuilder: View {
 	}
 
 	func addItem() {
-		quest.filters.append(QuestTagFilter(tagKey: "", tagValue: "", relation: .equal, included: .include))
+		quest.filters.append(QuestDefinitionFilter(tagKey: "", tagValue: "", relation: .equal, included: .include))
 	}
 
 	func clearAll() {

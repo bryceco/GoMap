@@ -51,6 +51,8 @@ class QuestChooserController: UITableViewController {
 		AppDelegate.shared.mapView.updateMapMarkersFromServer(withDelay: 0.0, including: .quest)
 	}
 
+	// MARK: Table view delegate
+
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
 	}
@@ -109,11 +111,11 @@ class QuestChooserController: UITableViewController {
 			   let quest = QuestList.shared.userQuests.list.first(where: { $0.title == title })
 			{
 				// existing quest
-				if let quest = quest as? QuestDefinedWithPresetFeatures {
+				if let quest = quest as? QuestDefinitionWithFeatures {
 					openSimpleQuestBuilder(quest: quest)
 					return
 				}
-				if let quest = quest as? QuestDefinedFromFilters {
+				if let quest = quest as? QuestDefinitionWithFilters {
 					openAdvancedQuestBuilder(quest: quest)
 					return
 				}
@@ -127,29 +129,6 @@ class QuestChooserController: UITableViewController {
 		} else {
 			QuestBuilderController.presentVersionAlert(self)
 		}
-	}
-
-	@available(iOS 15, *)
-	func openSimpleQuestBuilder(quest: QuestDefinedWithPresetFeatures?) {
-		let vc = QuestBuilderController.instantiateWith(quest: quest)
-		navigationController?.pushViewController(vc, animated: true)
-	}
-
-	@available(iOS 15.0.0, *)
-	func openAdvancedQuestBuilder(quest: QuestDefinedFromFilters?) {
-		var view = AdvancedQuestBuilder(quest: quest)
-		view.onSave = { [weak self] newQuest in
-			do {
-				try QuestList.shared.addUserQuest(newQuest, replacing: quest)
-				self?.tableView.reloadData()
-				return true
-			} catch {
-				print("\(error)")
-				return false
-			}
-		}
-		let vc = UIHostingController(rootView: view)
-		navigationController?.pushViewController(vc, animated: true)
 	}
 
 	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -166,9 +145,49 @@ class QuestChooserController: UITableViewController {
 	                        forRowAt indexPath: IndexPath)
 	{
 		if editingStyle == .delete {
+			// Get the quest being deleted
+			let quest = QuestList.shared.list[indexPath.row]
+
 			// Delete the row from the data source
 			QuestList.shared.remove(at: indexPath.row)
 			tableView.deleteRows(at: [indexPath], with: .fade)
+
+			// Remove associated markers
+			AppDelegate.shared.mapView.mapMarkerDatabase.removeMarkers(where: {
+				($0 as? QuestMarker)?.quest.ident == quest.ident
+			})
 		}
 	}
+
+	// MARK: Open quest builders
+
+	@available(iOS 15, *)
+	func openSimpleQuestBuilder(quest: QuestDefinitionWithFeatures?) {
+		let vc = QuestBuilderController.instantiateWith(quest: quest)
+		navigationController?.pushViewController(vc, animated: true)
+	}
+
+	@available(iOS 15.0.0, *)
+	func openAdvancedQuestBuilder(quest: QuestDefinitionWithFilters?) {
+		var view = AdvancedQuestBuilder(quest: quest)
+		view.onSave = { [weak self] newQuest in
+			do {
+				try QuestList.shared.addUserQuest(newQuest, replacing: quest)
+				self?.tableView.reloadData()
+				return true
+			} catch {
+				print("\(error)")
+				let alertView = UIAlertController(title: NSLocalizedString("Quest Definition Error", comment: ""),
+												  message: error.localizedDescription,
+												  preferredStyle: .actionSheet)
+				alertView.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+												  style: .cancel))
+				self?.present(alertView, animated: true)
+				return false
+			}
+		}
+		let vc = UIHostingController(rootView: view)
+		navigationController?.pushViewController(vc, animated: true)
+	}
+
 }

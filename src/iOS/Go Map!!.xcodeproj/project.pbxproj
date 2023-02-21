@@ -48,6 +48,8 @@
 		02505C5329A2EAD60078D60D /* AdvancedQuestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02505C5229A2EAD60078D60D /* AdvancedQuestBuilder.swift */; };
 		02505C5529A2ECA50078D60D /* AdvancedQuestBuilderFilterRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02505C5429A2ECA50078D60D /* AdvancedQuestBuilderFilterRow.swift */; };
 		02505C5729A458A30078D60D /* QuestDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02505C5629A458A30078D60D /* QuestDefinition.swift */; };
+		02505C5929A52EA80078D60D /* QuestDefinitionWithFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02505C5829A52EA80078D60D /* QuestDefinitionWithFilters.swift */; };
+		02505C5B29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02505C5A29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift */; };
 		025CCA12271244B800074726 /* KissXML in Frameworks */ = {isa = PBXBuildFile; productRef = 025CCA11271244B800074726 /* KissXML */; };
 		0266DE862655A21F007A502E /* Superview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0266DE852655A21F007A502E /* Superview.swift */; };
 		026FC76726509D6E005DDAFF /* SpeechBalloonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */; };
@@ -374,6 +376,8 @@
 		02505C5229A2EAD60078D60D /* AdvancedQuestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedQuestBuilder.swift; sourceTree = "<group>"; };
 		02505C5429A2ECA50078D60D /* AdvancedQuestBuilderFilterRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedQuestBuilderFilterRow.swift; sourceTree = "<group>"; };
 		02505C5629A458A30078D60D /* QuestDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestDefinition.swift; sourceTree = "<group>"; };
+		02505C5829A52EA80078D60D /* QuestDefinitionWithFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestDefinitionWithFilters.swift; sourceTree = "<group>"; };
+		02505C5A29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestDefinitionWithFeatures.swift; sourceTree = "<group>"; };
 		025465192947F60200C7C2F8 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		0254651A2947F60200C7C2F8 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0254651B2947F60200C7C2F8 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1025,18 +1029,20 @@
 		02CB523C299097C3007F758D /* Quests */ = {
 			isa = PBXGroup;
 			children = (
+				02079802299470FB00D3C654 /* QuestBuilder.storyboard */,
+				0287D25129947B2900BEAD9E /* QuestChooser.storyboard */,
+				02CB523D299097C3007F758D /* QuestSolver.storyboard */,
 				02505C5229A2EAD60078D60D /* AdvancedQuestBuilder.swift */,
 				02505C5429A2ECA50078D60D /* AdvancedQuestBuilderFilterRow.swift */,
-				02079802299470FB00D3C654 /* QuestBuilder.storyboard */,
 				020798002994706000D3C654 /* QuestBuilderController.swift */,
-				0287D25129947B2900BEAD9E /* QuestChooser.storyboard */,
 				02CE3CE42990A8CE00DDACE0 /* QuestChooserController.swift */,
 				02505C5629A458A30078D60D /* QuestDefinition.swift */,
-				02CE3CEA2991B5FA00DDACE0 /* QuestIcons.xcassets */,
+				02505C5A29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift */,
+				02505C5829A52EA80078D60D /* QuestDefinitionWithFilters.swift */,
 				020797FC299454D800D3C654 /* QuestInstance.swift */,
 				02CB52352990801E007F758D /* QuestList.swift */,
-				02CB523D299097C3007F758D /* QuestSolver.storyboard */,
 				02CB523E299097C3007F758D /* QuestSolverController.swift */,
+				02CE3CEA2991B5FA00DDACE0 /* QuestIcons.xcassets */,
 			);
 			path = Quests;
 			sourceTree = "<group>";
@@ -1515,6 +1521,7 @@
 				C365A569263FCC9C007DEC94 /* TapAndDragGesture.swift in Sources */,
 				02A59EDB297DE4E100B0A676 /* PresetField.swift in Sources */,
 				02A59EE92981D75700B0A676 /* OAuth2.swift in Sources */,
+				02505C5929A52EA80078D60D /* QuestDefinitionWithFilters.swift in Sources */,
 				ED91352526020945006A637A /* OfflineViewController.swift in Sources */,
 				ED9649DB2601CB7A00EC0A60 /* SettingsViewController.swift in Sources */,
 				0235349B294A9BDD00ED5BBE /* MostRecentlyUsed.swift in Sources */,
@@ -1626,6 +1633,7 @@
 				02A123EF264EE7BC005638C1 /* aes.swift in Sources */,
 				6442666722540EDF00C0D545 /* Lock.swift in Sources */,
 				02C8C56726F44728003B0122 /* OsmNoteMarker.swift in Sources */,
+				02505C5B29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift in Sources */,
 				028816A12659B4A600C30EA2 /* GZip.swift in Sources */,
 				C3D096D0263EA76500E3B129 /* Geekbench.swift in Sources */,
 				02CE3CE52990A8CE00DDACE0 /* QuestChooserController.swift in Sources */,

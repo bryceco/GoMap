@@ -21,8 +21,7 @@ struct QuestHighwaySurface: QuestProtocol {
 	var ident: String { "QuestHighwaySurface" }
 	var title: String { "Highway surface" }
 	var presetKey: String { "surface" }
-	var label: MapMarkerButton.TextOrImage { .text("Q") }
-	var presetField: PresetField
+	var label: MapMarkerButton.TextOrImage { .text("S") }
 
 	func appliesTo(_ object: OsmBaseObject) -> Bool {
 		if let way = object as? OsmWay,
@@ -91,6 +90,7 @@ class QuestInstanceWithFeatures: QuestInstance {
 			let tags = obj.tags
 			return tags[presetKey] == nil && includeFunc(tags)
 		}
+		
 		super.init(ident: ident,
 		           title: title,
 		           label: label,
@@ -132,7 +132,7 @@ class QuestInstanceWithFeatures: QuestInstance {
 		          accepts: accepts ?? { !$0.isEmpty })
 	}
 
-	convenience init(presetFeatures quest: QuestDefinedWithPresetFeatures) throws {
+	convenience init(presetFeatures quest: QuestDefinitionWithFeatures) throws {
 		try self.init(ident: quest.title,
 		              title: quest.title,
 		              label: .text(quest.label),

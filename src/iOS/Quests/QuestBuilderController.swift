@@ -41,7 +41,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 	@IBOutlet var removeAllIncludeButton: UIButton?
 	@IBOutlet var addOneIncludeButton: UIButton?
 
-	var quest: QuestDefinedWithPresetFeatures?
+	var quest: QuestDefinitionWithFeatures?
 
 	private var primaryFeaturesForKey: PresetsForKey = [:]
 	private var allFeaturesForKey: PresetsForKey = [:]
@@ -56,7 +56,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 	}
 
 	@available(iOS 15, *)
-	public class func instantiateWith(quest: QuestDefinedWithPresetFeatures?) -> UIViewController {
+	public class func instantiateWith(quest: QuestDefinitionWithFeatures?) -> UIViewController {
 		let sb = UIStoryboard(name: "QuestBuilder", bundle: nil)
 		let vc = sb.instantiateViewController(withIdentifier: "QuestBuilder") as! QuestBuilderController
 		vc.quest = quest
@@ -67,7 +67,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		do {
 			let name = nameField!.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 			let label = labelField!.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-			let quest = QuestDefinedWithPresetFeatures(title: name,
+			let quest = QuestDefinitionWithFeatures(title: name,
 			                                           label: label,
 			                                           presetKey: presetField!.title(for: .normal)!,
 			                                           includeFeatures: chosenFeatures.map { $0.ident })

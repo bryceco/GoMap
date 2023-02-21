@@ -10,7 +10,7 @@ import SwiftUI
 
 @available(iOS 15.0.0, *)
 struct AdvancedQuestFilterRowView: View {
-	@Binding var data: QuestTagFilter
+	@Binding var data: QuestDefinitionFilter
 
 	var body: some View {
 		HStack {
@@ -19,8 +19,8 @@ struct AdvancedQuestFilterRowView: View {
 				.autocapitalization(.none)
 
 			Menu {
-				Button(QuestTagFilter.Relation.equal.rawValue, action: { data.relation = .equal })
-				Button(QuestTagFilter.Relation.notEqual.rawValue, action: { data.relation = .notEqual })
+				Button(QuestDefinitionFilter.Relation.equal.rawValue, action: { data.relation = .equal })
+				Button(QuestDefinitionFilter.Relation.notEqual.rawValue, action: { data.relation = .notEqual })
 			} label: {
 				Label(data.relation.rawValue, systemImage: "book.fill").labelStyle(TitleOnlyLabelStyle())
 			}
@@ -30,8 +30,8 @@ struct AdvancedQuestFilterRowView: View {
 				.autocapitalization(.none)
 
 			Menu {
-				Button(QuestTagFilter.Included.include.rawValue, action: { data.included = .include })
-				Button(QuestTagFilter.Included.exclude.rawValue, action: { data.included = .exclude })
+				Button(QuestDefinitionFilter.Included.include.rawValue, action: { data.included = .include })
+				Button(QuestDefinitionFilter.Included.exclude.rawValue, action: { data.included = .exclude })
 			} label: {
 				Label(data.included.rawValue, systemImage: "book.fill").labelStyle(TitleOnlyLabelStyle())
 			}
@@ -41,7 +41,7 @@ struct AdvancedQuestFilterRowView: View {
 
 @available(iOS 15.0, *)
 struct AdvancedQuestBuilderFilterRow_Previews: PreviewProvider {
-	@State static var data = QuestTagFilter(tagKey: "", tagValue: "", relation: .equal, included: .include)
+	@State static var data = QuestDefinitionFilter(tagKey: "", tagValue: "", relation: .equal, included: .include)
 	static var previews: some View {
 		AdvancedQuestFilterRowView(data: $data)
 	}

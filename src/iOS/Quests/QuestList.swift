@@ -21,7 +21,7 @@ final class QuestUserList: Codable {
 		self.init()
 		let decoder = JSONDecoder()
 		// First try the old-fashioned way we did it
-		if let list = try? decoder.decode([QuestDefinedWithPresetFeatures].self, from: data) {
+		if let list = try? decoder.decode([QuestDefinitionWithFeatures].self, from: data) {
 			self.list = list
 			return
 		}
@@ -63,8 +63,8 @@ final class QuestUserList: Codable {
 	init(from decoder: Decoder) throws {
 		do {
 			let values = try decoder.container(keyedBy: CodingKeys.self)
-			let simple = try values.decode([QuestDefinedWithPresetFeatures].self, forKey: .simpleQuestList)
-			let advanced = try values.decode([QuestDefinedFromFilters].self, forKey: .advancedQuestList)
+			let simple = try values.decode([QuestDefinitionWithFeatures].self, forKey: .simpleQuestList)
+			let advanced = try values.decode([QuestDefinitionWithFilters].self, forKey: .advancedQuestList)
 			list = simple + advanced
 		} catch {
 			print("\(error)")
@@ -74,8 +74,8 @@ final class QuestUserList: Codable {
 
 	func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
-		let simple = list.compactMap { $0 as? QuestDefinedWithPresetFeatures }
-		let advanced = list.compactMap { $0 as? QuestDefinedFromFilters }
+		let simple = list.compactMap { $0 as? QuestDefinitionWithFeatures }
+		let advanced = list.compactMap { $0 as? QuestDefinitionWithFilters }
 		try container.encode(simple, forKey: .simpleQuestList)
 		try container.encode(advanced, forKey: .advancedQuestList)
 	}
@@ -188,6 +188,7 @@ class QuestList {
 	func remove(at index: Int) {
 		let item = list.remove(at: index)
 		userQuests.list.removeAll(where: { $0.title == item.title })
+		enabled.removeValue(forKey: item.ident)
 		savePrefs()
 	}
 
