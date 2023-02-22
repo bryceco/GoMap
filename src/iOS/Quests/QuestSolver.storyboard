@@ -8,6 +8,47 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--QuestMultiKeySolver-->
+        <scene sceneID="K63-7L-R48">
+            <objects>
+                <tableViewController storyboardIdentifier="QuestMultiKeySolver" id="Dbf-7W-JcR" userLabel="QuestMultiKeySolver" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="qeY-OR-j5D">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="886"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="BjQ-Aw-4mH" style="IBUITableViewCellStyleDefault" id="m5g-50-5Xd">
+                                <rect key="frame" x="0.0" y="50" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="m5g-50-5Xd" id="ofI-gp-Wqe">
+                                    <rect key="frame" x="0.0" y="0.0" width="383.5" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BjQ-Aw-4mH">
+                                            <rect key="frame" x="20" y="0.0" width="355.5" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="rRu-gY-Gv4" kind="show" trigger="accessoryAction" id="euG-LK-Hnc"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Dbf-7W-JcR" id="MVf-cD-7GM"/>
+                            <outlet property="delegate" destination="Dbf-7W-JcR" id="ibj-Ky-Ya6"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="q30-TK-KWi"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eDO-9a-t5t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="522" y="389"/>
+        </scene>
         <!--Quest Solver-->
         <scene sceneID="9kR-eE-Swa">
             <objects>
@@ -152,19 +193,19 @@
                     <navigationItem key="navigationItem" title="Quest" id="FM8-GC-9Kg">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="3nj-QR-7tl">
                             <connections>
-                                <action selector="CancelWith:" destination="rRu-gY-Gv4" id="gUM-Vk-uGR"/>
+                                <action selector="onCancel:" destination="rRu-gY-Gv4" id="gUM-Vk-uGR"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="8ZX-yB-h8w">
                             <connections>
-                                <action selector="AcceptWith:" destination="rRu-gY-Gv4" id="hab-pr-Ixj"/>
+                                <action selector="onSave:" destination="rRu-gY-Gv4" id="hab-pr-Ixj"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v1g-Cz-lmk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="566.66666666666674" y="-45.535714285714285"/>
+            <point key="canvasLocation" x="1438" y="-46"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="aTw-w4-uMs">
@@ -175,7 +216,8 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="rRu-gY-Gv4" kind="relationship" relationship="rootViewController" id="hRK-AG-PHu"/>
+                        <segue destination="Dbf-7W-JcR" kind="show" id="xPf-2R-cCp"/>
+                        <segue destination="rRu-gY-Gv4" kind="relationship" relationship="rootViewController" id="ezR-av-z3r"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JKs-lZ-JwR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -183,6 +225,9 @@
             <point key="canvasLocation" x="-323" y="-45"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="ezR-av-z3r"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
