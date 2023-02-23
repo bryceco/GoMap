@@ -10,6 +10,8 @@ import CoreGraphics.CGPath
 import Foundation
 import UIKit.UIBezierPath
 
+// Sometimes the geojson points use double, and other times NSNumber, so
+// this allows us to treat both identically:
 protocol DoubleValue {
 	var doubleValue: Double { get }
 }
