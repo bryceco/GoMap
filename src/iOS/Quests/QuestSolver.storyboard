@@ -8,47 +8,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--QuestMultiKeySolver-->
-        <scene sceneID="K63-7L-R48">
-            <objects>
-                <tableViewController storyboardIdentifier="QuestMultiKeySolver" id="Dbf-7W-JcR" userLabel="QuestMultiKeySolver" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="qeY-OR-j5D">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="886"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="BjQ-Aw-4mH" style="IBUITableViewCellStyleDefault" id="m5g-50-5Xd">
-                                <rect key="frame" x="0.0" y="50" width="414" height="43.5"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="m5g-50-5Xd" id="ofI-gp-Wqe">
-                                    <rect key="frame" x="0.0" y="0.0" width="383.5" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BjQ-Aw-4mH">
-                                            <rect key="frame" x="20" y="0.0" width="355.5" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="rRu-gY-Gv4" kind="show" trigger="accessoryAction" id="euG-LK-Hnc"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="Dbf-7W-JcR" id="MVf-cD-7GM"/>
-                            <outlet property="delegate" destination="Dbf-7W-JcR" id="ibj-Ky-Ya6"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="q30-TK-KWi"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eDO-9a-t5t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="522" y="389"/>
-        </scene>
         <!--Quest Solver-->
         <scene sceneID="9kR-eE-Swa">
             <objects>
@@ -164,24 +123,26 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="QuestCellOpenEditor" textLabel="DRa-lA-2TH" style="IBUITableViewCellStyleDefault" id="VNe-Yx-zOQ">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="QuestCellOpenEditor" id="N24-xv-FNx">
                                 <rect key="frame" x="0.0" y="224" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VNe-Yx-zOQ" id="5W7-hI-jlz">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="N24-xv-FNx" id="LeH-zY-p5d">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Open Tag Editor" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DRa-lA-2TH">
-                                            <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                            <color key="textColor" systemColor="systemBlueColor"/>
-                                            <nil key="highlightedColor"/>
-                                            <attributedString key="userComments">
-                                                <fragment content="Button that opens the Tags screen"/>
-                                            </attributedString>
-                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="evO-fJ-hhD" userLabel="Open Tag Editor">
+                                            <rect key="frame" x="134" y="4.5" width="146.5" height="34.5"/>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" title="Open Tag Editor"/>
+                                            <connections>
+                                                <action selector="openTagEditor:" destination="rRu-gY-Gv4" eventType="touchUpInside" id="UYm-Wt-ghy"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="evO-fJ-hhD" firstAttribute="centerX" secondItem="LeH-zY-p5d" secondAttribute="centerX" id="Kd9-1c-Jzx"/>
+                                        <constraint firstItem="evO-fJ-hhD" firstAttribute="centerY" secondItem="LeH-zY-p5d" secondAttribute="centerY" id="ihB-1V-JT9"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -216,7 +177,6 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="Dbf-7W-JcR" kind="show" id="xPf-2R-cCp"/>
                         <segue destination="rRu-gY-Gv4" kind="relationship" relationship="rootViewController" id="ezR-av-z3r"/>
                     </connections>
                 </navigationController>
@@ -225,15 +185,9 @@
             <point key="canvasLocation" x="-323" y="-45"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="ezR-av-z3r"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -72,18 +72,18 @@ class QuestSolverController: UITableViewController {
 				}
 			})
 
+		var didChange = false
 		for preset in presets.allPresetKeys() {
 			if let index = tagKeys.firstIndex(where: { $0 == preset.tagKey }) {
 				if presetKeys[index] == preset {
-					return false // no change
+					continue // no change
 				} else {
 					presetKeys[index] = preset
-					tableView.separatorColor = presetKeys[index]?.presetList?.count == nil ? .clear : nil
-					return true
+					didChange = true
 				}
 			}
 		}
-		return false
+		return didChange
 	}
 
 	// MARK: Actions
@@ -158,23 +158,38 @@ class QuestSolverController: UITableViewController {
 		onCancel(sender)
 	}
 
+	@IBAction func openTagEditor(_ sender: Any?) {
+		dismiss(animated: false, completion: nil)
+		AppDelegate.shared.mapView?.presentTagEditor(nil)
+	}
+
 	// MARK: TableView delegate
 
 	override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
 		guard
-			indexPath.section > 0, indexPath.section < tagKeys.count + 1
+			indexPath.section > 0 && indexPath.section < 1+tagKeys.count
 		else {
 			return nil
+		}
+		// deselect other items in the same section
+		for row in 0..<self.tableView(tableView, numberOfRowsInSection: indexPath.section) {
+			self.tableView.deselectRow(at: IndexPath(row: row, section: indexPath.section),
+									   animated: false)
 		}
 		return indexPath
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		if indexPath.row == self.tableView(tableView, numberOfRowsInSection: 0) - 1 {
-			dismiss(animated: false, completion: nil)
-			AppDelegate.shared.mapView?.presentTagEditor(nil)
+		switch indexPath.section {
+		case 0:
+			// heaader
+			break
+		case 1+tagKeys.count:
+			// footer
+			break
+		default:
+			navigationItem.rightBarButtonItem?.isEnabled = true
 		}
-		navigationItem.rightBarButtonItem?.isEnabled = true
 	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
@@ -201,6 +216,7 @@ class QuestSolverController: UITableViewController {
 		default:
 			if let presetKey = presetKeys[section-1],
 			   let answerCount = presetKey.presetList?.count,
+			   answerCount >= 2,
 			   !isOpeningHours(key: presetKey)
 			{
 				return answerCount
@@ -249,7 +265,8 @@ class QuestSolverController: UITableViewController {
 		default:
 			// Preset cell
 			if let presetKey = presetKeys[indexPath.section-1],
-			   presetKey.presetList?.count != nil,
+			   let count = presetKey.presetList?.count,
+			   count >= 2,
 			   !isOpeningHours(key: presetKey)
 			{
 				// A selection among a combo of possible values
