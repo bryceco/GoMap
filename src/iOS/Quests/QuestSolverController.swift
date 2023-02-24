@@ -159,6 +159,30 @@ class QuestSolverController: UITableViewController {
 	}
 
 	@IBAction func openTagEditor(_ sender: Any?) {
+		if navigationItem.rightBarButtonItem?.isEnabled ?? false {
+			let actionSheet = UIAlertController(title: NSLocalizedString("Save or discard your changes", comment: ""),
+				message: nil,
+				preferredStyle: .actionSheet)
+			actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Save", comment: "Save changes"),
+												style: .default,
+												handler: { _ in
+				self.onSave(sender)
+				AppDelegate.shared.mapView?.presentTagEditor(nil)
+				}))
+			actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Discard", comment: "Discard changes"),
+												style: .default,
+												handler: { _ in
+				self.dismiss(animated: true, completion: nil)
+				AppDelegate.shared.mapView?.presentTagEditor(nil)
+				}))
+			actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+												style: .cancel,
+												handler: nil))
+			present(actionSheet, animated: true)
+			actionSheet.popoverPresentationController?.sourceView = (sender as? UIView)
+			actionSheet.popoverPresentationController?.sourceRect = (sender as? UIView)?.bounds ?? CGRect.zero
+			return
+		}
 		dismiss(animated: false, completion: nil)
 		AppDelegate.shared.mapView?.presentTagEditor(nil)
 	}
@@ -211,7 +235,7 @@ class QuestSolverController: UITableViewController {
 		switch section {
 		case 0:
 			return NUMBER_OF_HEADERS
-		case tagKeys.count + 1:
+		case 1 + tagKeys.count:	// header section + tagKeys
 			return NUMBER_OF_FOOTERS
 		default:
 			if let presetKey = presetKeys[section-1],
