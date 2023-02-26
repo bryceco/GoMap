@@ -133,6 +133,8 @@ class ClearCacheViewController: UITableViewController {
 					handler: { _ in
 						appDelegate.mapView.editorLayer.purgeCachedData(.hard)
 						appDelegate.mapView.placePushpinForSelection()
+						appDelegate.mapView.mapMarkerDatabase.removeAll()
+						appDelegate.mapView.updateMapMarkersFromServer(withDelay: 0.0, including: [])
 						self.navigationController?.popViewController(animated: true)
 					}))
 			}
@@ -172,6 +174,8 @@ class ClearCacheViewController: UITableViewController {
 			}
 			appDelegate.mapView.editorLayer.purgeCachedData(.hard)
 			appDelegate.mapView.removePin()
+			appDelegate.mapView.mapMarkerDatabase.removeAll()
+			appDelegate.mapView.updateMapMarkersFromServer(withDelay: 0.0, including: [])
 		case .mapnik /* Mapnik */:
 			appDelegate.mapView.mapnikLayer.purgeTileCache()
 		case .userGPX /* Breadcrumb */:

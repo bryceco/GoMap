@@ -28,6 +28,7 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 	}
 
 	func refreshMarkersFor(object: OsmBaseObject) -> [MapMarker] {
+		// Remove all markers that reference the object
 		let remove = markerForIdentifier.compactMap { k, v in v.object === object ? k : nil }
 		for k in remove {
 			markerForIdentifier.removeValue(forKey: k)
@@ -35,6 +36,7 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 		if object.deleted {
 			return []
 		}
+		// Build a new list of markers that reference the object
 		var list = [MapMarker]()
 		for quest in QuestList.shared.questsForObject(object) {
 			if let marker = QuestMarker(object: object, quest: quest, ignorable: self) {
