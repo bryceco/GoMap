@@ -678,15 +678,6 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		}
 	}
 
-	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-		coordinator.animate(alongsideTransition: { [self] _ in
-			var rc = mapView.frame
-			rc.size = size
-			mapView.frame = rc
-		}) { _ in
-		}
-	}
-
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		// This is necessary so we can be notified if the user drags down
 		// to dismiss a view that we presented.
