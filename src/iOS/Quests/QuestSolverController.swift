@@ -302,7 +302,7 @@ class QuestSolverController: UITableViewController {
 				let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCellTextEntry",
 				                                         for: indexPath) as! QuestSolverTextEntryCell
 				cell.textField?.autocorrectionType = .no
-				cell.textField?.autocapitalizationType =  .none
+				cell.textField?.autocapitalizationType = .none
 				cell.textField?.keyboardType = .default
 				cell.textField?.inputAccessoryView = nil
 				cell.textField?.rightView = nil
@@ -314,7 +314,7 @@ class QuestSolverController: UITableViewController {
 					{
 						textField.keyboardType = .phonePad
 						textField.inputAccessoryView = TelephoneToolbar(forTextField: textField,
-																		frame: view.frame)
+						                                                frame: view.frame)
 					}
 					if isOpeningHours(key: presetKey) {
 						let button = UIButton(type: .custom)

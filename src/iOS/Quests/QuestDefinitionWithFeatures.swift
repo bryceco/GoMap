@@ -38,7 +38,7 @@ struct QuestDefinitionWithFeatures: QuestDefinition {
 	{
 		guard !includeFeaturePresets.isEmpty else { fatalError() }
 
-		let includeFunc = Self.getMatchFunc(includeFeaturePresets.map { $0.tags })
+		let includeFunc = Self.predicateFor(features: includeFeaturePresets)
 		let applies: (OsmBaseObject) -> Bool = { obj in
 			// we ignore geometry currently, but probably will need to handle it in the future
 			let tags = obj.tags
@@ -93,6 +93,11 @@ struct QuestDefinitionWithFeatures: QuestDefinition {
 		                            label: quest.label,
 		                            presetKey: quest.presetKey,
 		                            includeFeatures: quest.includeFeatures)
+	}
+
+	// Use a set of features to build a function that filters for those features
+	static func predicateFor(features: [PresetFeature]) -> (([String: String]) -> Bool) {
+		return Self.getMatchFunc(features.map { $0.tags })
 	}
 
 	// Compute a function that determines whether a given tag dictionary matches the feature(s) of the quest

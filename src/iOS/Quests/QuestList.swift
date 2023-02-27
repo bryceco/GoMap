@@ -120,6 +120,13 @@ class QuestList {
 
 	init() {
 		do {
+			// Build a predicate that matches features with phone numbers, which
+			// we can use as a proxy for shops and amenities.
+			let phoneFeatureStrings = try QuestDefinitionWithFeatures.featuresContaining(presetKey: "phone",
+			                                                                             more: false)
+			let phoneFeatures = phoneFeatureStrings.compactMap { PresetsDatabase.shared.stdFeatures[$0] }
+			let phoneFeaturesPredicate = QuestDefinitionWithFeatures.predicateFor(features: phoneFeatures)
+
 			let addBuildingType = QuestInstance(
 				ident: "BuildingType",
 				title: "Add Building Type",
@@ -137,15 +144,20 @@ class QuestList {
 				presetKey: "surface",
 				includeFeatures: ["highway/footway/sidewalk"]).makeQuestInstance()
 
-			let addPhoneNumber = try QuestDefinitionWithFeatures(
+			let addPhoneNumber = QuestInstance(
 				ident: "TelephoneNumber",
 				title: "Add Telephone Number",
 				label: "ic_quest_phone",
 				presetKey: "phone",
-				includeFeatures: [],
-				accepts: { text in
+				appliesToObject: { (obj: OsmBaseObject) in
+					let tags = obj.tags
+					return phoneFeaturesPredicate(tags) &&
+						tags["phone"] == nil &&
+						tags["contact:phone"] == nil
+				},
+				acceptsValue: { text in
 					text.unicodeScalars.filter({ CharacterSet.decimalDigits.contains($0) }).count > 5
-				}).makeQuestInstance()
+				})
 
 			let addOpeningHours = try QuestDefinitionWithFeatures(
 				ident: "OpeningHours",
@@ -158,7 +170,7 @@ class QuestList {
 				addBuildingType,
 				addSidewalkSurface,
 				addPhoneNumber,
-				addOpeningHours,
+				addOpeningHours
 //				ResurveyQuest(ageInYears: 2.0)
 			]
 		} catch {
