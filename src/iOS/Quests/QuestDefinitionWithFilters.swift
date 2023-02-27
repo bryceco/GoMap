@@ -111,8 +111,7 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 		var andPred = orSets.popLast()!
 		while let rhs = orSets.popLast() {
 			let lhs = andPred
-			// FIXME: Need to decide if we want to AND or OR here.
-			andPred = { tags in lhs(tags) || rhs(tags) }
+			andPred = { tags in lhs(tags) && rhs(tags) }
 		}
 		return andPred
 	}
