@@ -81,6 +81,36 @@ final class QuestUserList: Codable {
 	}
 }
 
+class ResurveyQuest: QuestInstance {
+	init(ageInYears: Double) {
+		let ageInSeconds = ageInYears * 365.25 * 60 * 60
+		let age = Date().addingTimeInterval(-ageInSeconds)
+		let dateString = OsmBaseObject.rfc3339DateFormatter().string(from: age)
+
+		// build a quest for phone numbers and grab it's predicate
+		let appliesTo = try! QuestDefinitionWithFeatures(
+			ident: "temp",
+			title: "temp",
+			label: "t",
+			presetKey: "phone",
+			includeFeatures: [],
+			accepts: { _ in
+				true
+			}).makeQuestInstance().appliesTo
+		super.init(ident: "needsSurvey",
+		           title: "Needs Survey",
+		           label: "ic_quest_check",
+		           presetKey: "",
+		           appliesToObject: { obj in
+		           	guard obj.timestamp < dateString else {
+		           		return false
+		           	}
+		           	return appliesTo(obj)
+		           },
+		           acceptsValue: { _ in true })
+	}
+}
+
 class QuestList {
 	static let shared = QuestList()
 	private let builtinList: [QuestProtocol]
@@ -128,7 +158,8 @@ class QuestList {
 				addBuildingType,
 				addSidewalkSurface,
 				addPhoneNumber,
-				addOpeningHours
+				addOpeningHours,
+//				ResurveyQuest(ageInYears: 2.0)
 			]
 		} catch {
 			print("Quest initialization error: \(error)")

@@ -109,7 +109,7 @@ class QuestSolverController: UITableViewController {
 			geometry: nil, // object.geometry(),
 			location: AppDelegate.shared.mapView.currentRegion,
 			includeNSI: false,
-			withPresetKey: vc.tagKeys[0])
+			withPresetKey: vc.tagKeys.first)
 		_ = vc.refreshPresetKey()
 		return vc2
 	}
@@ -161,23 +161,23 @@ class QuestSolverController: UITableViewController {
 	@IBAction func openTagEditor(_ sender: Any?) {
 		if navigationItem.rightBarButtonItem?.isEnabled ?? false {
 			let actionSheet = UIAlertController(title: NSLocalizedString("Save or discard your changes", comment: ""),
-				message: nil,
-				preferredStyle: .actionSheet)
+			                                    message: nil,
+			                                    preferredStyle: .actionSheet)
 			actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Save", comment: "Save changes"),
-												style: .default,
-												handler: { _ in
-				self.onSave(sender)
-				AppDelegate.shared.mapView?.presentTagEditor(nil)
-				}))
+			                                    style: .default,
+			                                    handler: { _ in
+			                                    	self.onSave(sender)
+			                                    	AppDelegate.shared.mapView?.presentTagEditor(nil)
+			                                    }))
 			actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Discard", comment: "Discard changes"),
-												style: .default,
-												handler: { _ in
-				self.dismiss(animated: true, completion: nil)
-				AppDelegate.shared.mapView?.presentTagEditor(nil)
-				}))
+			                                    style: .default,
+			                                    handler: { _ in
+			                                    	self.dismiss(animated: true, completion: nil)
+			                                    	AppDelegate.shared.mapView?.presentTagEditor(nil)
+			                                    }))
 			actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
-												style: .cancel,
-												handler: nil))
+			                                    style: .cancel,
+			                                    handler: nil))
 			present(actionSheet, animated: true)
 			actionSheet.popoverPresentationController?.sourceView = (sender as? UIView)
 			actionSheet.popoverPresentationController?.sourceRect = (sender as? UIView)?.bounds ?? CGRect.zero
@@ -191,14 +191,14 @@ class QuestSolverController: UITableViewController {
 
 	override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
 		guard
-			indexPath.section > 0 && indexPath.section < 1+tagKeys.count
+			indexPath.section > 0, indexPath.section < 1 + tagKeys.count
 		else {
 			return nil
 		}
 		// deselect other items in the same section
 		for row in 0..<self.tableView(tableView, numberOfRowsInSection: indexPath.section) {
 			self.tableView.deselectRow(at: IndexPath(row: row, section: indexPath.section),
-									   animated: false)
+			                           animated: false)
 		}
 		return indexPath
 	}
@@ -208,7 +208,7 @@ class QuestSolverController: UITableViewController {
 		case 0:
 			// heaader
 			break
-		case 1+tagKeys.count:
+		case 1 + tagKeys.count:
 			// footer
 			break
 		default:
@@ -227,7 +227,7 @@ class QuestSolverController: UITableViewController {
 		case tagKeys.count + 1:
 			return nil
 		default:
-			return tagKeys[section-1]
+			return tagKeys[section - 1]
 		}
 	}
 
@@ -235,10 +235,10 @@ class QuestSolverController: UITableViewController {
 		switch section {
 		case 0:
 			return NUMBER_OF_HEADERS
-		case 1 + tagKeys.count:	// header section + tagKeys
+		case 1 + tagKeys.count: // header section + tagKeys
 			return NUMBER_OF_FOOTERS
 		default:
-			if let presetKey = presetKeys[section-1],
+			if let presetKey = presetKeys[section - 1],
 			   let answerCount = presetKey.presetList?.count,
 			   answerCount >= 2,
 			   !isOpeningHours(key: presetKey)
@@ -288,7 +288,7 @@ class QuestSolverController: UITableViewController {
 			}
 		default:
 			// Preset cell
-			if let presetKey = presetKeys[indexPath.section-1],
+			if let presetKey = presetKeys[indexPath.section - 1],
 			   let count = presetKey.presetList?.count,
 			   count >= 2,
 			   !isOpeningHours(key: presetKey)
@@ -301,30 +301,34 @@ class QuestSolverController: UITableViewController {
 				// A text box to type something in
 				let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCellTextEntry",
 				                                         for: indexPath) as! QuestSolverTextEntryCell
-				cell.textField?.autocorrectionType = (presetKeys[indexPath.section-1]?.autocorrectType) ?? .no
-				cell.textField?.autocapitalizationType = presetKeys[indexPath.section-1]?.autocapitalizationType ?? .none
-
-				if presetKeys[indexPath.section-1]?.keyboardType == .phonePad,
-				   let textField = cell.textField
-				{
-					textField.keyboardType = .phonePad
-					textField.inputAccessoryView = TelephoneToolbar(forTextField: textField,
-					                                                frame: view.frame)
+				cell.textField?.autocorrectionType = .no
+				cell.textField?.autocapitalizationType =  .none
+				cell.textField?.keyboardType = .default
+				cell.textField?.inputAccessoryView = nil
+				cell.textField?.rightView = nil
+				if let presetKey = presetKeys[indexPath.section - 1] {
+					cell.textField?.autocorrectionType = presetKey.autocorrectType
+					cell.textField?.autocapitalizationType = presetKey.autocapitalizationType
+					if presetKey.keyboardType == .phonePad,
+					   let textField = cell.textField
+					{
+						textField.keyboardType = .phonePad
+						textField.inputAccessoryView = TelephoneToolbar(forTextField: textField,
+																		frame: view.frame)
+					}
+					if isOpeningHours(key: presetKey) {
+						let button = UIButton(type: .custom)
+						button.setTitle("📷", for: .normal)
+						button.addTarget(self, action: #selector(recognizeOpeningHours), for: .touchUpInside)
+						cell.textField?.rightView = button
+						cell.textField?.rightViewMode = .always
+					}
 				}
 
 				cell.didChange = { [weak self] text in
 					guard let self = self else { return }
 					let okay = self.questMarker.quest.accepts(tagValue: text)
 					self.navigationItem.rightBarButtonItem?.isEnabled = okay
-				}
-				if let presetKey = presetKeys[indexPath.section-1],
-				   isOpeningHours(key: presetKey)
-				{
-					let button = UIButton(type: .custom)
-					button.setTitle("📷", for: .normal)
-					button.addTarget(self, action: #selector(recognizeOpeningHours), for: .touchUpInside)
-					cell.textField?.rightView = button
-					cell.textField?.rightViewMode = .always
 				}
 				return cell
 			}

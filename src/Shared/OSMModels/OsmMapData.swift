@@ -542,7 +542,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		if let undoCommentCallback = undoCommentCallback {
 			undoCommentCallback(true, comment ?? [:])
 		}
-		consistencyCheck()
 		return comment
 	}
 
