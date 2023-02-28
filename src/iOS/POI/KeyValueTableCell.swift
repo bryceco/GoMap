@@ -160,6 +160,8 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 
 			if preset.keyboardType == .phonePad {
 				text2.inputAccessoryView = TelephoneToolbar(forTextField: text2, frame: frame)
+			} else {
+				text2.inputAccessoryView = nil
 			}
 
 			if preset.type == "textarea" {
