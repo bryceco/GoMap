@@ -82,6 +82,7 @@ class OAuth2 {
 	}
 
 	private var authCallback: ((Result<Void, Error>) -> Void)?
+
 	func doCallback(_ result: Result<Void, Error>) {
 		DispatchQueue.main.async {
 			if case .failure = result {
@@ -202,27 +203,6 @@ class OAuth2 {
 					   let user = dict["user"] as? [String: Any]
 					{
 						callback(user)
-					} else {
-						callback(nil)
-					}
-				}
-			})
-		} else {
-			callback(nil)
-		}
-	}
-
-	func getUserPermissions(callback: @escaping ([String]?) -> Void) {
-		let url = serverURL + "api/0.6/permissions.json"
-		if let request = urlRequest(string: url) {
-			URLSession.shared.data(with: request, completionHandler: { result in
-				DispatchQueue.main.async {
-					if let data = try? result.get(),
-					   let json = try? JSONSerialization.jsonObject(with: data),
-					   let dict = json as? [String: Any],
-					   let perms = dict["permissions"] as? [String]
-					{
-						callback(perms)
 					} else {
 						callback(nil)
 					}
