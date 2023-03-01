@@ -185,6 +185,9 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 			case "website", "contact:website":
 				text2.keyboardType = .URL
 				useTextField()
+			case "maxspeed":
+				text2.keyboardType = .numbersAndPunctuation
+				useTextField()
 			default:
 				useTextField()
 			}
