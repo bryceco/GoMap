@@ -17,13 +17,13 @@ final class PresetFeature: CustomDebugStringConvertible {
 
 	// from json dictionary:
 	let _addTags: [String: String]?
-	let fields: [String]?
+	let fieldsWithRedirect: [String]?
 	let geometry: [String]
 	let icon: String? // icon on the map
 	let logoURL: String? // NSI brand image
 	let locationSet: [String: [Any]]?
 	let matchScore: Float
-	let moreFields: [String]?
+	let moreFieldsWithRedirect: [String]?
 	let nameWithRedirect: String
 	let reference: [String: String]?
 	let _removeTags: [String: String]?
@@ -41,13 +41,13 @@ final class PresetFeature: CustomDebugStringConvertible {
 		self.featureID = featureID
 
 		_addTags = jsonDict["addTags"] as! [String: String]?
-		fields = jsonDict["fields"] as! [String]?
+		fieldsWithRedirect = jsonDict["fields"] as! [String]?
 		geometry = jsonDict["geometry"] as! [String]? ?? []
 		icon = jsonDict["icon"] as! String?
 		logoURL = jsonDict["imageURL"] as! String?
 		locationSet = jsonDict["locationSet"] as! [String: [Any]]?
 		matchScore = Float(jsonDict["matchScore"] as! Double? ?? 1.0)
-		moreFields = jsonDict["moreFields"] as! [String]?
+		moreFieldsWithRedirect = jsonDict["moreFields"] as! [String]?
 		nameWithRedirect = jsonDict["name"] as! String? ?? featureID
 		reference = jsonDict["reference"] as! [String: String]?
 		_removeTags = jsonDict["removeTags"] as! [String: String]?
@@ -85,6 +85,32 @@ final class PresetFeature: CustomDebugStringConvertible {
 			}
 		}
 		return nameWithRedirect
+	}
+
+	var fields: [String] {
+		// This has to be done in a lazy manner because the redirect may not exist yet when we are instantiated
+		return (fieldsWithRedirect ?? []).flatMap {
+			if $0.hasPrefix("{"), $0.hasSuffix("}") {
+				let redirect = String($0.dropFirst().dropLast())
+				if let preset = PresetsDatabase.shared.presetFeatureForFeatureID(redirect) {
+					return preset.fields
+				}
+			}
+			return [$0]
+		}
+	}
+
+	var moreFields: [String] {
+		// This has to be done in a lazy manner because the redirect may not exist yet when we are instantiated
+		return (moreFieldsWithRedirect ?? []).flatMap {
+			if $0.hasPrefix("{"), $0.hasSuffix("}") {
+				let redirect = String($0.dropFirst().dropLast())
+				if let preset = PresetsDatabase.shared.presetFeatureForFeatureID(redirect) {
+					return preset.fields
+				}
+			}
+			return [$0]
+		}
 	}
 
 	func isGeneric() -> Bool {
@@ -190,7 +216,7 @@ final class PresetFeature: CustomDebugStringConvertible {
 	///  - key: The tag key we're looking for, such as "surface"
 	///  - more: Boolean indicating whether to search moreFields as well as regular fields.
 	func fieldContainingTagKey(_ key: String, more: Bool) -> PresetField? {
-		let allFields = (fields ?? []) + (more ? (moreFields ?? []) : [])
+		let allFields = fields  + (more ? moreFields : [])
 		for fieldName in allFields {
 			if let field = PresetsDatabase.shared.presetFields[fieldName],
 			   field.key == key || (field.keys?.contains(key) ?? false)

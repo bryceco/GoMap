@@ -118,14 +118,19 @@ class QuestList {
 	private(set) var list: [QuestProtocol]
 	private var enabled: [String: Bool] = [:]
 
+	static func predicateForKey(_ key: String, more: Bool) throws -> ([String: String]) -> Bool {
+		let featureStrings = try QuestDefinitionWithFeatures.featuresContaining(presetKey: key,
+		                                                                        more: more)
+		let features = featureStrings.compactMap { PresetsDatabase.shared.stdFeatures[$0] }
+		let predicate = QuestDefinitionWithFeatures.predicateFor(features: features)
+		return predicate
+	}
+
 	init() {
 		do {
 			// Build a predicate that matches features with phone numbers, which
 			// we can use as a proxy for shops and amenities.
-			let phoneFeatureStrings = try QuestDefinitionWithFeatures.featuresContaining(presetKey: "phone",
-			                                                                             more: false)
-			let phoneFeatures = phoneFeatureStrings.compactMap { PresetsDatabase.shared.stdFeatures[$0] }
-			let phoneFeaturesPredicate = QuestDefinitionWithFeatures.predicateFor(features: phoneFeatures)
+			let phoneFeaturesPredicate = try Self.predicateForKey("phone", more: false)
 
 			let addBuildingType = QuestInstance(
 				ident: "BuildingType",
@@ -137,12 +142,79 @@ class QuestList {
 				},
 				acceptsValue: { _ in true })
 
-			let addSidewalkSurface = try QuestDefinitionWithFeatures(
+			let addSidewalkSurface = QuestInstance(
 				ident: "SidewalkSurface",
 				title: "Add Sidewalk Surface",
 				label: "ic_quest_sidewalk",
 				presetKey: "surface",
-				includeFeatures: ["highway/footway/sidewalk"]).makeQuestInstance()
+				appliesToObject: { obj in
+					guard
+						let way = obj as? OsmWay,
+						way.tags["surface"] == nil
+					else {
+						return false
+					}
+					switch way.tags["highway"] {
+					case "footway",
+					     "path",
+					     "pedestrian":
+						return true
+					default:
+						return false
+					}
+				},
+				acceptsValue: { _ in true })
+
+			let addHighwaySurface = QuestInstance(
+				ident: "HighwaySurface",
+				title: "Add Highway Surface",
+				label: "ic_quest_way_surface",
+				presetKey: "surface",
+				appliesToObject: { obj in
+					guard let way = obj as? OsmWay,
+					      way.tags["surface"] == nil else { return false }
+					switch way.tags["highway"] {
+					case "primary",
+					     "secondary",
+					     "tertiary",
+					     "unclassified",
+					     "residential",
+					     "living_street",
+					     "service",
+					     "track":
+						return true
+					default:
+						return false
+					}
+				},
+				acceptsValue: { _ in true })
+
+			let addSpeedLimit = QuestInstance(
+				ident: "SpeedLimit",
+				title: "Add Speed Limit",
+				label: "ic_quest_max_speed",
+				presetKey: "maxspeed",
+				appliesToObject: { obj in
+					guard let way = obj as? OsmWay,
+					      way.tags["maxspeed"] == nil else { return false }
+					switch way.tags["highway"] {
+					case "motorway",
+					     "trunk",
+					     "primary",
+					     "secondary",
+					     "tertiary",
+					     "unclassified",
+					     "residential",
+					     "living_street":
+						return true
+					default:
+						return false
+					}
+				},
+				acceptsValue: {
+					let scanner = Scanner(string: $0)
+					return scanner.scanInt(nil) || scanner.scanString("none", into: nil)
+				})
 
 			let addPhoneNumber = QuestInstance(
 				ident: "TelephoneNumber",
@@ -159,6 +231,22 @@ class QuestList {
 					text.unicodeScalars.filter({ CharacterSet.decimalDigits.contains($0) }).count > 5
 				})
 
+			let websitePredicate = try Self.predicateForKey("website", more: false)
+			let addWebsite = QuestInstance(
+				ident: "Website",
+				title: "Add Website",
+				label: "🌐",
+				presetKey: "website",
+				appliesToObject: { (obj: OsmBaseObject) in
+					let tags = obj.tags
+					return websitePredicate(tags) &&
+						tags["website"] == nil &&
+						tags["contact:website"] == nil
+				},
+				acceptsValue: { text in
+					URL(string: text) != nil
+				})
+
 			let addOpeningHours = try QuestDefinitionWithFeatures(
 				ident: "OpeningHours",
 				title: "Add Opening Hours",
@@ -169,8 +257,11 @@ class QuestList {
 			builtinList = [
 				addBuildingType,
 				addSidewalkSurface,
+				addHighwaySurface,
 				addPhoneNumber,
-				addOpeningHours
+				addOpeningHours,
+				addSpeedLimit,
+				addWebsite
 //				ResurveyQuest(ageInYears: 2.0)
 			]
 		} catch {

@@ -152,7 +152,7 @@ final class OsmTags {
 	}
 
 	static func convertWebsiteValueToHttps(withKey key: String, value url: String) -> String? {
-		guard key == "website" else {
+		guard key == "website" || key == "contact:website" else {
 			// not a website value
 			return nil
 		}
