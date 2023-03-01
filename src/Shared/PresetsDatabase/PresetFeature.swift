@@ -87,26 +87,32 @@ final class PresetFeature: CustomDebugStringConvertible {
 		return nameWithRedirect
 	}
 
-	var fields: [String] {
+	var fields: [String]? {
 		// This has to be done in a lazy manner because the redirect may not exist yet when we are instantiated
-		return (fieldsWithRedirect ?? []).flatMap {
+		guard let fieldsWithRedirect = fieldsWithRedirect else { return nil }
+		return fieldsWithRedirect.flatMap {
 			if $0.hasPrefix("{"), $0.hasSuffix("}") {
 				let redirect = String($0.dropFirst().dropLast())
-				if let preset = PresetsDatabase.shared.presetFeatureForFeatureID(redirect) {
-					return preset.fields
+				if let preset = PresetsDatabase.shared.presetFeatureForFeatureID(redirect),
+				   let fields = preset.fields
+				{
+					return fields
 				}
 			}
 			return [$0]
 		}
 	}
 
-	var moreFields: [String] {
+	var moreFields: [String]? {
 		// This has to be done in a lazy manner because the redirect may not exist yet when we are instantiated
-		return (moreFieldsWithRedirect ?? []).flatMap {
+		guard let moreFieldsWithRedirect = moreFieldsWithRedirect else { return nil }
+		return moreFieldsWithRedirect.flatMap {
 			if $0.hasPrefix("{"), $0.hasSuffix("}") {
 				let redirect = String($0.dropFirst().dropLast())
-				if let preset = PresetsDatabase.shared.presetFeatureForFeatureID(redirect) {
-					return preset.fields
+				if let preset = PresetsDatabase.shared.presetFeatureForFeatureID(redirect),
+				   let moreFields = preset.moreFields
+				{
+					return moreFields
 				}
 			}
 			return [$0]
@@ -216,7 +222,7 @@ final class PresetFeature: CustomDebugStringConvertible {
 	///  - key: The tag key we're looking for, such as "surface"
 	///  - more: Boolean indicating whether to search moreFields as well as regular fields.
 	func fieldContainingTagKey(_ key: String, more: Bool) -> PresetField? {
-		let allFields = fields  + (more ? moreFields : [])
+		let allFields = (fields ?? [])  + (more ? (moreFields ?? []) : [])
 		for fieldName in allFields {
 			if let field = PresetsDatabase.shared.presetFields[fieldName],
 			   field.key == key || (field.keys?.contains(key) ?? false)

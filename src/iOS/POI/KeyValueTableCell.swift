@@ -153,6 +153,11 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 
 	func setTextAttributesForKey(key: String) {
 		// set text formatting options for text field
+		text2.inputAccessoryView = nil
+		text2.keyboardType = .default
+		text2.autocorrectionType = .no
+		text2.autocapitalizationType = .none
+
 		if let preset = owner.allPresetKeys.first(where: { key == $0.tagKey }) {
 			text2.autocapitalizationType = preset.autocapitalizationType
 			text2.autocorrectionType = preset.autocorrectType
@@ -160,8 +165,6 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 
 			if preset.keyboardType == .phonePad {
 				text2.inputAccessoryView = TelephoneToolbar(forTextField: text2, frame: frame)
-			} else {
-				text2.inputAccessoryView = nil
 			}
 
 			if preset.type == "textarea" {
@@ -178,12 +181,11 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 			case "phone", "contact:phone", "fax", "contact:fax":
 				text2.keyboardType = .phonePad
 				text2.inputAccessoryView = TelephoneToolbar(forTextField: text2, frame: frame)
-				text2.autocapitalizationType = .none
-				text2.autocorrectionType = .no
+				useTextField()
+			case "website", "contact:website":
+				text2.keyboardType = .URL
 				useTextField()
 			default:
-				text2.autocapitalizationType = .none
-				text2.autocorrectionType = .no
 				useTextField()
 			}
 		}
