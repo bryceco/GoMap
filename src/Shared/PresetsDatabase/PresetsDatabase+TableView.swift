@@ -269,6 +269,7 @@ extension PresetsDatabase {
 		key: String,
 		options: [String],
 		strings: [String: Any]?,
+		icons: [String: String]?,
 		defaultValue: String?,
 		placeholder: String?,
 		keyboard: UIKeyboardType,
@@ -279,16 +280,16 @@ extension PresetsDatabase {
 		for value in options {
 			if let strings = strings as? [String: String] {
 				let name = strings[value] ?? OsmTags.PrettyTag(value)
-				presets.append(PresetValue(name: name, details: nil, tagValue: value))
+				presets.append(PresetValue(name: name, details: nil, icon: icons?[value], tagValue: value))
 			} else if let strings = strings as? [String: [String: String]] {
 				let info = strings[value]
 				let name = info?["title"] ?? OsmTags.PrettyTag(value)
 				let desc = info?["description"] ?? ""
-				presets.append(PresetValue(name: name, details: desc, tagValue: value))
+				presets.append(PresetValue(name: name, details: desc, icon: icons?[value], tagValue: value))
 			} else {
 				// print("missing strings definition: \(key)")
 				let name = OsmTags.PrettyTag(value)
-				presets.append(PresetValue(name: name, details: nil, tagValue: value))
+				presets.append(PresetValue(name: name, details: nil, icon: icons?[value], tagValue: value))
 			}
 		}
 		let tag = PresetKey(
@@ -315,8 +316,8 @@ extension PresetsDatabase {
 		autocorrect: UITextAutocorrectionType) -> PresetKey
 	{
 		let presets = [
-			PresetValue(name: Self.shared.yesForLocale, details: nil, tagValue: "yes"),
-			PresetValue(name: Self.shared.noForLocale, details: nil, tagValue: "no")
+			PresetValue(name: Self.shared.yesForLocale, details: nil, icon: nil, tagValue: "yes"),
+			PresetValue(name: Self.shared.noForLocale, details: nil, icon: nil, tagValue: "no")
 		]
 		let tag = PresetKey(
 			name: label,
@@ -432,6 +433,7 @@ extension PresetsDatabase {
 					key: key,
 					options: options!,
 					strings: field.strings,
+					icons: field.icons,
 					defaultValue: field.defaultValue,
 					placeholder: field.placeholder,
 					keyboard: .default,
@@ -454,6 +456,7 @@ extension PresetsDatabase {
 				key: key,
 				options: options,
 				strings: field.strings,
+				icons: field.icons,
 				defaultValue: field.defaultValue,
 				placeholder: field.placeholder,
 				keyboard: .default,
@@ -475,6 +478,7 @@ extension PresetsDatabase {
 					key: key,
 					options: options,
 					strings: strings,
+					icons: field.icons,
 					defaultValue: field.defaultValue,
 					placeholder: field.placeholder,
 					keyboard: .default,

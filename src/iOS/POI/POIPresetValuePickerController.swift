@@ -25,7 +25,7 @@ class POIPresetValuePickerController: UITableViewController {
 		return image
 	}()
 
-	func displayImagesAndDescriptions() {
+	func fetchWikiImagesAndDescriptions() {
 		let languageCode = PresetLanguages.preferredLanguageCode()
 		for preset in presetValueList {
 			if let meta = WikiPage.shared.wikiDataFor(
@@ -48,7 +48,18 @@ class POIPresetValuePickerController: UITableViewController {
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
-		// displayImagesAndDescriptions()
+#if false
+		// We have the ability to display relevant OSM Wiki information and images along with
+		// the preset, but currently the Wiki doesn't have enough entries to make it worthwhile.
+		fetchWikiImagesAndDescriptions()
+#endif
+		// Set images for icons associated with the presets
+		for preset in presetValueList {
+			if let iconName = preset.icon {
+				let tag = key + "=" + preset.tagValue
+				images[tag] = UIImage(named: iconName)
+			}
+		}
 	}
 
 	override func viewDidLoad() {

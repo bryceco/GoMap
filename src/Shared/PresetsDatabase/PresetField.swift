@@ -49,6 +49,7 @@ final class PresetField: CustomDebugStringConvertible {
 	var autoSuggestions: Bool { (jsonDict["autoSuggestions"] as! Bool?) ?? true }
 	var replacement: String? { jsonDict["replacement"] as! String? }
 	var reference: [String: String]? { jsonDict["reference"] as! [String: String]? }
+	var icons: [String: String]? { jsonDict["icons"] as! [String: String]? }
 
 	// preconditions
 	var geometry: [String]? { jsonDict["geometry"] as! [String]? }

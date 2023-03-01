@@ -15,10 +15,12 @@ final class PresetValue: NSObject, NSSecureCoding {
 	let name: String
 	let details: String?
 	let tagValue: String
+	let icon: String?
 
-	init(name: String?, details: String?, tagValue value: String) {
+	init(name: String?, details: String?, icon: String?, tagValue value: String) {
 		self.name = name ?? OsmTags.PrettyTag(value)
 		self.details = details
+		self.icon = icon
 		tagValue = value
 	}
 
@@ -35,6 +37,7 @@ final class PresetValue: NSObject, NSSecureCoding {
 		{
 			self.name = name
 			self.tagValue = tagValue
+			icon = nil
 		} else {
 			return nil
 		}
