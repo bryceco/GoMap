@@ -2,7 +2,7 @@
 
 SC='/tmp/StreetComplete'
 
-# (cd /tmp/ && rm -rf StreetComplete && git clone --depth 1 https://github.com/streetcomplete/StreetComplete)
+(cd /tmp/ && rm -rf StreetComplete && git clone --depth 1 https://github.com/streetcomplete/StreetComplete)
 
 # Get icons
 
@@ -30,9 +30,8 @@ cat > "QuestIcons.xcassets/$name.imageset/Contents.json" <<__EOL__
 	  "scale" : "3x"
 	}
   ],
-  "info" : {
-	"author" : "xcode",
-	"version" : 1
+  "properties" : {
+    "preserves-vector-representation" : true
   }
 }
 __EOL__

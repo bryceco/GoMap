@@ -53,6 +53,11 @@ for f in "${presetIcons[@]}"; do
 		echo $f2
 		curl -fLsS --output ./$f "https://raw.githubusercontent.com/openstreetmap/iD/develop/svg/iD-sprite/presets/$f2"
 	fi
+	if [[ $f = "roentgen-"* ]]; then
+		f2=${f:9}
+		echo $f2
+		curl -fLsS --output ./$f "https://raw.githubusercontent.com/openstreetmap/iD/develop/svg/roentgen/$f2"
+	fi
 done
 
 for f in "${presetIcons[@]}"; do
@@ -61,17 +66,11 @@ for f in "${presetIcons[@]}"; do
 	fi
 done
 
-# convert from svg to pdf
-rm -f *.pdf
-export SOURCE_DATE_EPOCH=1521324801 # set CreationDate within PDF so files don't change unnecessarily
-/Applications/Inkscape.app/Contents/MacOS/inkscape --export-type=pdf *.svg
-rm *.svg
-
 # build asset catalog
 echo "Building asset catalog"
 rm -rf ./POI-Icons.xcassets
 mkdir POI-Icons.xcassets
-for f in *.pdf; do
+for f in *.svg; do
 	f2=${f%.*}
 	mkdir ./POI-Icons.xcassets/$f2.imageset
 	mv $f ./POI-Icons.xcassets/$f2.imageset/$f
