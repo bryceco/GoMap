@@ -57,7 +57,10 @@ class POIPresetValuePickerController: UITableViewController {
 		for preset in presetValueList {
 			if let iconName = preset.icon {
 				let tag = key + "=" + preset.tagValue
-				images[tag] = UIImage(named: iconName)
+				if let image = UIImage(named: iconName) {
+					let scaled = EditorMapLayer.ImageScaledToSize(image, CGFloat(Self.ImageWidth))
+					images[tag] = scaled
+				}
 			}
 		}
 	}
