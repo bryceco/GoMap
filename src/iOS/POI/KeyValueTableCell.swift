@@ -13,7 +13,7 @@ import UIKit
 class TextPairTableCell: UITableViewCell {
 	@IBOutlet var isSet: UIView!
 	@IBOutlet var text1: AutocompleteTextField!
-	@IBOutlet var text2: AutocompleteTextField!
+	@IBOutlet var text2: PresetValueTextField!
 	@IBOutlet var infoButton: UIButton!
 
 	// don't allow editing text while deleting
@@ -40,7 +40,7 @@ protocol KeyValueTableCellOwner: UITableViewController {
 	func keyValueChanged(for kv: KeyValueTableCell)
 }
 
-class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDelegate {
+class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFieldDelegate, UITextViewDelegate {
 	var textView: UITextView?
 	weak var owner: KeyValueTableCellOwner!
 	var key: String { return text1.text ?? "" }
@@ -60,6 +60,15 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 		text2.didSelectAutocomplete = {
 			weakSelf?.text2.becomeFirstResponder()
 		}
+		text2.owner = self
+
+		text1.addTarget(self, action: #selector(textFieldReturn(_:)), for: .editingDidEndOnExit)
+		text1.addTarget(self, action: #selector(textFieldEditingDidBegin(_:)), for: .editingDidBegin)
+		text1.addTarget(self, action: #selector(textFieldEditingDidEnd(_:)), for: .editingDidEnd)
+
+		text2.addTarget(self, action: #selector(textFieldReturn(_:)), for: .editingDidEndOnExit)
+		text2.addTarget(self, action: #selector(textFieldEditingDidBegin(_:)), for: .editingDidBegin)
+		text2.addTarget(self, action: #selector(textFieldEditingDidEnd(_:)), for: .editingDidEnd)
 	}
 
 	override func prepareForReuse() {
@@ -74,6 +83,8 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 			super.willTransition(to: state)
 		}
 	}
+
+	// MARK: TextView (for large text blocks)
 
 	func updateTextViewSize() {
 		// This resizes the cell to be appropriate for the content
@@ -143,55 +154,12 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 
 	// MARK: textField delegate functions
 
-	@IBAction func textFieldReturn(_ sender: UIView) {
-		sender.resignFirstResponder()
-	}
-
 	func notifyKeyValueChange() {
 		owner.keyValueChanged(for: self)
 	}
 
-	func setTextAttributesForKey(key: String) {
-		// set text formatting options for text field
-		text2.inputAccessoryView = nil
-		text2.keyboardType = .default
-		text2.autocorrectionType = .no
-		text2.autocapitalizationType = .none
-
-		if let preset = owner.allPresetKeys.first(where: { key == $0.tagKey }) {
-			text2.autocapitalizationType = preset.autocapitalizationType
-			text2.autocorrectionType = preset.autocorrectType
-			text2.keyboardType = preset.keyboardType
-
-			if preset.keyboardType == .phonePad {
-				text2.inputAccessoryView = TelephoneToolbar(forTextField: text2, frame: frame)
-			}
-
-			if preset.type == "textarea" {
-				useTextView()
-			} else {
-				useTextField()
-			}
-		} else {
-			switch key {
-			case "note", "comment", "description", "fixme", "inscription", "source":
-				text2.autocapitalizationType = .sentences
-				text2.autocorrectionType = .yes
-				useTextView()
-			case "phone", "contact:phone", "fax", "contact:fax":
-				text2.keyboardType = .phonePad
-				text2.inputAccessoryView = TelephoneToolbar(forTextField: text2, frame: frame)
-				useTextField()
-			case "website", "contact:website":
-				text2.keyboardType = .URL
-				useTextField()
-			case "maxspeed":
-				text2.keyboardType = .numbersAndPunctuation
-				useTextField()
-			default:
-				useTextField()
-			}
-		}
+	@objc func textFieldReturn(_ sender: UIView) {
+		sender.resignFirstResponder()
 	}
 
 	// This function is shared between All Tags and Common Tags
@@ -231,38 +199,10 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 		                            warningVC: owner)
 	}
 
-	func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-		if textField === text2 {
-			// set up capitalization and autocorrect
-			setTextAttributesForKey(key: text1?.text ?? "")
-
-			// if we enabled the textView then we don't want to edit the textField
-			if textView != nil {
-				return false
-			}
-		}
-		return true
-	}
-
-	@IBAction func textFieldEditingDidBegin(_ textField: AutocompleteTextField) {
+	@objc func textFieldEditingDidBegin(_ textField: AutocompleteTextField) {
 		owner.currentTextField = textField
 
-		let isValue = textField == text2
-
-		if isValue {
-			// get list of values for current key
-			if let key = text1?.text,
-			   key != "",
-			   PresetsDatabase.shared.eligibleForAutocomplete(key)
-			{
-				var set: Set<String> = PresetsDatabase.shared.allTagValuesForKey(key)
-				let appDelegate = AppDelegate.shared
-				let values = appDelegate.mapView.editorLayer.mapData.tagValues(forKey: key)
-				set = set.union(values)
-				let list: [String] = Array(set)
-				textField.autocompleteStrings = list
-			}
-		} else {
+		if textField === text1 {
 			// get list of keys
 			let set = PresetsDatabase.shared.allTagKeys()
 			let list = Array(set)
@@ -270,19 +210,9 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 		}
 	}
 
-	@IBAction func textFieldEditingDidEnd(_ textField: UITextField) {
-		textField.text = textField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
-
-		updateAssociatedContent()
-
-		if key != "", value != "" {
-			// do automatic value updates for special keys
-			// for example add https:// prefix to website=
-			if let newValue = OsmTags.convertWikiUrlToReference(withKey: key, value: value)
-				?? OsmTags.convertWebsiteValueToHttps(withKey: key, value: value)
-			{
-				text2.text = newValue
-			}
+	@objc func textFieldEditingDidEnd(_ textField: UITextField) {
+		if textField === text1 {
+			text2.key = text1.text ?? ""
 		}
 		notifyKeyValueChange()
 	}
@@ -311,181 +241,7 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 		return true
 	}
 
-	// MARK: Accessory buttons
-
-	private func getAssociatedColor(for cell: TextPairTableCell) -> UIView? {
-		if let key = cell.text1.text,
-		   let value = cell.text2.text,
-		   key == "colour" || key == "color" || key.hasSuffix(":colour") || key.hasSuffix(":color")
-		{
-			let color = Colors.cssColorForColorName(value)
-			if let color = color {
-				var size = cell.text2.bounds.size.height
-				size = CGFloat(round(Double(size * 0.5)))
-				let square = UIView(frame: CGRect(x: 0, y: 0, width: size, height: size))
-				square.backgroundColor = color
-				square.layer.borderColor = UIColor.black.cgColor
-				square.layer.borderWidth = 1.0
-				let view = UIView(frame: CGRect(x: 0, y: 0, width: size + 6, height: size))
-				view.backgroundColor = UIColor.clear
-				view.addSubview(square)
-				return view
-			}
-		}
-		return nil
-	}
-
-	@IBAction func openWebsite(_ sender: UIView?) {
-		guard let pair: TextPairTableCell = sender?.superviewOfType(),
-		      let key = pair.text1.text,
-		      let value = pair.text2.text
-		else { return }
-		let string: String
-		if key == "wikipedia" || key.hasSuffix(":wikipedia") {
-			let a = value.components(separatedBy: ":")
-			guard a.count >= 2,
-			      let lang = a[0].addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed),
-			      let page = a[1].addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)
-			else { return }
-			string = "https://\(lang).wikipedia.org/wiki/\(page)"
-		} else if key == "wikidata" || key.hasSuffix(":wikidata") {
-			guard let page = value.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)
-			else { return }
-			string = "https://www.wikidata.org/wiki/\(page)"
-		} else if value.hasPrefix("http://") || value.hasPrefix("https://") {
-			// percent-encode non-ASCII characters
-			string = value.addingPercentEncodingForNonASCII()
-		} else {
-			return
-		}
-
-		let url = URL(string: string)
-		if let url = url {
-			let viewController = SFSafariViewController(url: url)
-			owner.present(viewController, animated: true)
-		} else {
-			let alert = UIAlertController(
-				title: NSLocalizedString("Invalid URL", comment: ""),
-				message: nil,
-				preferredStyle: .alert)
-			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
-			owner.present(alert, animated: true)
-		}
-	}
-
-	private func getWebsiteButton(for cell: TextPairTableCell) -> UIView? {
-		if let key = cell.text1.text,
-		   let value = cell.text2.text,
-		   key == "wikipedia"
-		   || key == "wikidata"
-		   || key.hasSuffix(":wikipedia")
-		   || key.hasSuffix(":wikidata")
-		   || value.hasPrefix("http://")
-		   || value.hasPrefix("https://")
-		{
-			let button = UIButton(type: .system)
-			button.layer.borderWidth = 2.0
-			button.layer.borderColor = UIColor.systemBlue.cgColor
-			button.layer.cornerRadius = 15.0
-			button.setTitle("🔗", for: .normal)
-
-			button.addTarget(self, action: #selector(openWebsite(_:)), for: .touchUpInside)
-			return button
-		}
-		return nil
-	}
-
-	@IBAction func setSurveyDate(_ sender: UIView?) {
-		let now = Date()
-		let dateFormatter = ISO8601DateFormatter()
-		dateFormatter.formatOptions = [.withYear, .withMonth, .withDay, .withDashSeparatorInDate]
-		dateFormatter.timeZone = NSTimeZone.local
-		let text = dateFormatter.string(from: now)
-		text2.text = text
-		notifyKeyValueChange()
-	}
-
-	private func getSurveyDateButton(for cell: TextPairTableCell) -> UIView? {
-		let synonyms = [
-			"check_date",
-			"survey_date",
-			"survey:date",
-			"survey",
-			"lastcheck",
-			"last_checked",
-			"updated",
-			"checked_exists:date"
-		]
-		if let text = cell.text1.text,
-		   synonyms.contains(text)
-		{
-			let button = UIButton(type: .contactAdd)
-			button.addTarget(self, action: #selector(setSurveyDate(_:)), for: .touchUpInside)
-			return button
-		}
-		return nil
-	}
-
-	@IBAction func setDirection(_ sender: Any) {
-		let directionViewController = DirectionViewController(
-			key: text1.text ?? "",
-			value: text2.text,
-			setValue: { [self] newValue in
-				text2.text = newValue
-				notifyKeyValueChange()
-			})
-		owner.childViewPresented = true
-		owner.present(directionViewController, animated: true)
-	}
-
-	private func getDirectionButton(for cell: TextPairTableCell) -> UIView? {
-		let synonyms = [
-			"direction",
-			"camera:direction"
-		]
-		if let text = cell.text1.text,
-		   synonyms.contains(text)
-		{
-			let button = UIButton(type: .contactAdd)
-			button.addTarget(self, action: #selector(setDirection(_:)), for: .touchUpInside)
-			return button
-		}
-		return nil
-	}
-
-	@IBAction func setHeight(_ sender: UIView?) {
-		if HeightViewController.unableToInstantiate(withUserWarning: owner) {
-			return
-		}
-
-		let vc = HeightViewController.instantiate()
-		vc.callback = { newValue in
-			self.text2.text = newValue
-			self.notifyKeyValueChange()
-		}
-		owner.present(vc, animated: true)
-		owner.childViewPresented = true
-	}
-
-	private func getHeightButton(for cell: TextPairTableCell) -> UIView? {
-		if cell.text1.text == "height" {
-			let button = UIButton(type: .contactAdd)
-			button.addTarget(self, action: #selector(setHeight(_:)), for: .touchUpInside)
-			return button
-		}
-		return nil
-	}
-
-	func updateAssociatedContent() {
-		let associatedView = getAssociatedColor(for: self)
-			?? getWebsiteButton(for: self)
-			?? getSurveyDateButton(for: self)
-			?? getDirectionButton(for: self)
-			?? getHeightButton(for: self)
-
-		text2.rightView = associatedView
-		text2.rightViewMode = associatedView != nil ? .always : .never
-	}
+	// MARK: Info button
 
 	@IBAction func infoButtonPressed(_ sender: Any?) {
 		// show OSM wiki page
@@ -512,5 +268,18 @@ class KeyValueTableCell: TextPairTableCell, UITextFieldDelegate, UITextViewDeleg
 				owner.present(viewController, animated: true)
 			}
 		}
+	}
+
+	// MARK: PresetValueTextFieldOwner
+
+	var allPresetKeys: [PresetKey] { return owner.allPresetKeys }
+	var childViewPresented: Bool {
+		set { owner.childViewPresented = newValue }
+		get { owner.childViewPresented }
+	}
+
+	var viewController: UIViewController { return owner }
+	func valueChanged(for textField: PresetValueTextField) {
+		notifyKeyValueChange()
 	}
 }

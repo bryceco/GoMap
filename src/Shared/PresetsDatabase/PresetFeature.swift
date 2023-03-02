@@ -222,7 +222,7 @@ final class PresetFeature: CustomDebugStringConvertible {
 	///  - key: The tag key we're looking for, such as "surface"
 	///  - more: Boolean indicating whether to search moreFields as well as regular fields.
 	func fieldContainingTagKey(_ key: String, more: Bool) -> PresetField? {
-		let allFields = (fields ?? [])  + (more ? (moreFields ?? []) : [])
+		let allFields = (fields ?? []) + (more ? (moreFields ?? []) : [])
 		for fieldName in allFields {
 			if let field = PresetsDatabase.shared.presetFields[fieldName],
 			   field.key == key || (field.keys?.contains(key) ?? false)

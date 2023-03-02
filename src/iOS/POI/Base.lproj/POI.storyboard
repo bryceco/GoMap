@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21699.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CommonTagType" id="l7g-Wi-ks5" customClass="FeaturePresetCell" customModule="Go_Map__" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CommonTagType" id="l7g-Wi-ks5" customClass="FeatureTypeCell" customModule="Go_Map__" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l7g-Wi-ks5" id="5MU-Jz-yPQ">
@@ -40,7 +40,7 @@
                                             <nil key="textColor"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
-                                        <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="240" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Restaurant" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="pxY-di-zg7" customClass="AutocompleteTextField" customModule="Go_Map__" customModuleProvider="target">
+                                        <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="240" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Restaurant" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="pxY-di-zg7">
                                             <rect key="frame" x="120" y="9.5" width="260" height="25"/>
                                             <color key="textColor" systemColor="systemBlueColor"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
@@ -139,7 +139,7 @@
                                             <nil key="textColor"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
-                                        <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Yes" textAlignment="natural" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="9Nw-ha-JK5" customClass="AutocompleteTextField" customModule="Go_Map__" customModuleProvider="target">
+                                        <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Yes" textAlignment="natural" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="9Nw-ha-JK5" customClass="PresetValueTextField" customModule="Go_Map__" customModuleProvider="target">
                                             <rect key="frame" x="176" y="11" width="202.5" height="22"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="0AG-Dr-av1"/>
@@ -277,13 +277,10 @@
                                                 <fragment content="Do not translate"/>
                                             </attributedString>
                                             <connections>
-                                                <action selector="textFieldEditingDidBegin:" destination="YDF-cY-7Ck" eventType="editingDidBegin" id="fK0-iy-M8A"/>
-                                                <action selector="textFieldEditingDidEnd:" destination="YDF-cY-7Ck" eventType="editingDidEnd" id="kee-gI-R1O"/>
-                                                <action selector="textFieldReturn:" destination="YDF-cY-7Ck" eventType="editingDidEndOnExit" id="lZK-k6-tew"/>
                                                 <outlet property="delegate" destination="YDF-cY-7Ck" id="aIy-tS-Fxb"/>
                                             </connections>
                                         </textField>
-                                        <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="value" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="sHA-cr-GLb" customClass="AutocompleteTextField" customModule="Go_Map__" customModuleProvider="target">
+                                        <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="value" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="sHA-cr-GLb" customClass="PresetValueTextField" customModule="Go_Map__" customModuleProvider="target">
                                             <rect key="frame" x="154" y="5" width="220" height="34"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
@@ -291,9 +288,6 @@
                                                 <fragment content="Do not translate"/>
                                             </attributedString>
                                             <connections>
-                                                <action selector="textFieldEditingDidBegin:" destination="YDF-cY-7Ck" eventType="editingDidBegin" id="lan-wf-in5"/>
-                                                <action selector="textFieldEditingDidEnd:" destination="YDF-cY-7Ck" eventType="editingDidEnd" id="j5K-Z5-Zn6"/>
-                                                <action selector="textFieldReturn:" destination="YDF-cY-7Ck" eventType="editingDidEndOnExit" id="6sA-9a-Xxu"/>
                                                 <outlet property="delegate" destination="YDF-cY-7Ck" id="Cyq-sJ-DeZ"/>
                                             </connections>
                                         </textField>
@@ -579,13 +573,10 @@
                                                 <fragment content="Do not translate"/>
                                             </attributedString>
                                             <connections>
-                                                <action selector="textFieldEditingDidBegin:" destination="V3V-d0-DLx" eventType="editingDidBegin" id="Jn3-9W-MGV"/>
-                                                <action selector="textFieldEditingDidEnd:" destination="V3V-d0-DLx" eventType="editingDidEnd" id="eOg-IM-AOl"/>
-                                                <action selector="textFieldReturn:" destination="V3V-d0-DLx" eventType="editingDidEndOnExit" id="Sdw-AX-V9P"/>
                                                 <outlet property="delegate" destination="V3V-d0-DLx" id="B9c-dh-59V"/>
                                             </connections>
                                         </textField>
-                                        <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="value" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="cP3-lR-lzM" customClass="AutocompleteTextField" customModule="Go_Map__" customModuleProvider="target">
+                                        <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="value" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="cP3-lR-lzM" customClass="PresetValueTextField" customModule="Go_Map__" customModuleProvider="target">
                                             <rect key="frame" x="154" y="5" width="220" height="34"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
@@ -593,9 +584,6 @@
                                                 <fragment content="Do not translate"/>
                                             </attributedString>
                                             <connections>
-                                                <action selector="textFieldEditingDidBegin:" destination="V3V-d0-DLx" eventType="editingDidBegin" id="qno-bl-8Mh"/>
-                                                <action selector="textFieldEditingDidEnd:" destination="V3V-d0-DLx" eventType="editingDidEnd" id="7Fc-0e-zdx"/>
-                                                <action selector="textFieldReturn:" destination="V3V-d0-DLx" eventType="editingDidEndOnExit" id="Rtd-Kd-Uhp"/>
                                                 <outlet property="delegate" destination="V3V-d0-DLx" id="iGt-rd-wEw"/>
                                             </connections>
                                         </textField>
@@ -650,9 +638,6 @@
                                                 <fragment content="Do not translate"/>
                                             </attributedString>
                                             <connections>
-                                                <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="ZB2-P2-lYD"/>
-                                                <action selector="textFieldEditingDidBegin:" destination="G5R-oP-lp3" eventType="editingDidBegin" id="RR5-Po-rum"/>
-                                                <action selector="textFieldReturn:" destination="G5R-oP-lp3" eventType="editingDidEndOnExit" id="gjR-WX-AId"/>
                                                 <outlet property="delegate" destination="G5R-oP-lp3" id="gc7-5Z-YFM"/>
                                             </connections>
                                         </textField>
@@ -664,9 +649,6 @@
                                                 <fragment content="Do not translate"/>
                                             </attributedString>
                                             <connections>
-                                                <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="enw-Un-WMB"/>
-                                                <action selector="textFieldEditingDidBegin:" destination="G5R-oP-lp3" eventType="editingDidBegin" id="xd6-gT-IO9"/>
-                                                <action selector="textFieldReturn:" destination="G5R-oP-lp3" eventType="editingDidEndOnExit" id="caF-Gi-LNg"/>
                                                 <outlet property="delegate" destination="G5R-oP-lp3" id="V7P-RP-s2w"/>
                                             </connections>
                                         </textField>
@@ -1669,7 +1651,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="ZKT-be-rhK"/>
         <segue reference="g2g-Jn-Tdv"/>
-        <segue reference="N2O-bF-plb"/>
+        <segue reference="0gB-9H-f1m"/>
         <segue reference="MpY-p5-COc"/>
     </inferredMetricsTieBreakers>
     <resources>

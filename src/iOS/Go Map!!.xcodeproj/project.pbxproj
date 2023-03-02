@@ -126,6 +126,7 @@
 		02CE3CE7299187C100DDACE0 /* TelephoneToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE3CE6299187C100DDACE0 /* TelephoneToolbar.swift */; };
 		02CE3CE929919FC400DDACE0 /* MapMarkerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE3CE829919FC400DDACE0 /* MapMarkerButton.swift */; };
 		02CE3CEB2991B5FA00DDACE0 /* QuestIcons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02CE3CEA2991B5FA00DDACE0 /* QuestIcons.xcassets */; };
+		02D2FD4F29B016BC00483F4D /* PresetValueTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D2FD4E29B016BC00483F4D /* PresetValueTextField.swift */; };
 		02D5B5F3248F154D00FEE448 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D5B5F2248F154D00FEE448 /* Colors.swift */; };
 		02D6238226A6628300A4F147 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D6238126A6628300A4F147 /* ShareViewController.swift */; };
 		02D6238526A6628300A4F147 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02D6238326A6628300A4F147 /* MainInterface.storyboard */; };
@@ -557,6 +558,7 @@
 		02D2D11B2724B20F003654A8 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/MainStoryboard.strings"; sourceTree = "<group>"; };
 		02D2D11C2724B20F003654A8 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Settings.strings"; sourceTree = "<group>"; };
 		02D2D11D2724B20F003654A8 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Changeset.strings"; sourceTree = "<group>"; };
+		02D2FD4E29B016BC00483F4D /* PresetValueTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetValueTextField.swift; sourceTree = "<group>"; };
 		02D5B5F2248F154D00FEE448 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		02D6237F26A6628300A4F147 /* PhotoShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PhotoShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		02D6238126A6628300A4F147 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -822,6 +824,7 @@
 				ED964A002601D6A900EC0A60 /* POIFeaturePresetsViewController.swift */,
 				ED9649F82601D58900EC0A60 /* POIPresetValuePickerController.swift */,
 				ED9649F02601CEC800EC0A60 /* POITabBarController.swift */,
+				02D2FD4E29B016BC00483F4D /* PresetValueTextField.swift */,
 			);
 			path = POI;
 			sourceTree = "<group>";
@@ -1526,6 +1529,7 @@
 				C365A563263FC53F007DEC94 /* TurnRestrictHwyView.swift in Sources */,
 				C3D096B3263D618E00E3B129 /* HeightViewController.swift in Sources */,
 				02E049BB2651BAB90028B57F /* UndoManager.swift in Sources */,
+				02D2FD4F29B016BC00483F4D /* PresetValueTextField.swift in Sources */,
 				028C51E625CB7A23004A88F7 /* TristateButton.swift in Sources */,
 				C3D096DC263EB7DE00E3B129 /* MyApplication.swift in Sources */,
 				02B5669F294FDCF200710632 /* CrossHairsLayer.swift in Sources */,

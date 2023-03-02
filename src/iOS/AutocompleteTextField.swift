@@ -189,7 +189,7 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 					self.gradientLayer?.colors = [
 						UIColor(white: 0.0, alpha: 0.6).cgColor,
 						UIColor(white: 0.0, alpha: 0.0).cgColor
-					].compactMap { $0 }
+					]
 					var rcGradient = rect
 					rcGradient.size.height = AutocompleteTextField.GradientHeight
 					self.gradientLayer?.frame = rcGradient

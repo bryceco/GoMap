@@ -9,7 +9,14 @@ import UIKit
 
 class FeaturePresetCell: UITableViewCell {
 	@IBOutlet var nameLabel: UILabel!
-	@IBOutlet var valueField: AutocompleteTextField!
+	@IBOutlet var valueField: PresetValueTextField!
+	@IBOutlet var isSet: UIView!
+	var presetKey: PresetKeyOrGroup?
+}
+
+class FeatureTypeCell: UITableViewCell {
+	@IBOutlet var nameLabel: UILabel!
+	@IBOutlet var valueField: UITextField!
 	@IBOutlet var isSet: UIView!
 	var presetKey: PresetKeyOrGroup?
 }
@@ -53,7 +60,7 @@ class FeaturePresetAreaCell: UITableViewCell {
 }
 
 class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegate, UITextViewDelegate,
-	POIFeaturePickerViewControllerDelegate, KeyValueTableCellOwner
+	POIFeaturePickerViewControllerDelegate, KeyValueTableCellOwner, PresetValueTextFieldOwner
 {
 	@IBOutlet var saveButton: UIBarButtonItem!
 	private var allPresets: PresetsForFeature? {
@@ -69,20 +76,6 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 
 	static let isSetHighlight = UIColor.systemBlue
 
-	// These are needed to satisfy requirements as KeyValueTableCell owner
-	var allPresetKeys: [PresetKey] { allPresets?.allPresetKeys() ?? [] }
-	var childViewPresented = false
-	var currentTextField: UITextField?
-	func keyValueChanged(for kv: KeyValueTableCell) {
-		updateTagDict(withValue: kv.value, forKey: kv.key)
-		if kv.key != "", kv.value != "" {
-			selectedFeature = nil
-			updatePresets()
-		} else {
-			kv.isSet.backgroundColor = nil
-		}
-	}
-
 	override func viewDidLoad() {
 		// have to update presets before call super because super asks for the number of sections
 		updatePresets()
@@ -92,10 +85,10 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		tableView.estimatedRowHeight = 44.0 // or could use UITableViewAutomaticDimension;
 		tableView.rowHeight = UITableView.automaticDimension
 
-		if drillDownGroup != nil {
+		if let drillDownGroup = drillDownGroup {
 			navigationItem.leftItemsSupplementBackButton = true
 			navigationItem.leftBarButtonItem = nil
-			navigationItem.title = drillDownGroup?.name ?? ""
+			navigationItem.title = drillDownGroup.name
 		}
 	}
 
@@ -329,19 +322,19 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			// special case the key/value cells and the customize button
 			if indexPath.section == allPresets?.sectionCount() {
 				// extra tags
-				let cell = tableView.dequeueReusableCell(
-					withIdentifier: "KeyValueCell",
-					for: indexPath) as! KeyValueTableCell
+				let cell = tableView.dequeueReusableCell(withIdentifier: "KeyValueCell",
+				                                         for: indexPath) as! KeyValueTableCell
 				cell.owner = self
 				if indexPath.row < extraTags.count {
 					cell.text1?.text = extraTags[indexPath.row].k
 					cell.text2?.text = extraTags[indexPath.row].v
+					cell.text2.key = cell.text1?.text ?? ""
 				} else {
 					cell.text1?.text = ""
 					cell.text2?.text = ""
+					cell.text2.key = ""
 				}
 				cell.isSet.backgroundColor = cell.value == "" ? nil : Self.isSetHighlight
-				cell.updateAssociatedContent()
 				return cell
 			}
 			if indexPath.section > (allPresets?.sectionCount() ?? 0) {
@@ -363,9 +356,8 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 
 			if presetKey.type == "textarea" {
 				// special case for keys that contain large amounts of text
-				let cell = tableView.dequeueReusableCell(
-					withIdentifier: "CommonTagArea",
-					for: indexPath) as! FeaturePresetAreaCell
+				let cell = tableView.dequeueReusableCell(withIdentifier: "CommonTagArea",
+				                                         for: indexPath) as! FeaturePresetAreaCell
 				cell.valueField.delegate = self
 				let value = keyValueDict[presetKey.tagKey] ?? ""
 				cell.isSet.backgroundColor = value == "" ? nil : Self.isSetHighlight
@@ -386,121 +378,66 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 				return cell
 			}
 
-			let cellName = key == "" ? "CommonTagType"
-				: key == "name" ? "CommonTagName"
-				: "CommonTagSingle"
-
-			let cell = tableView.dequeueReusableCell(withIdentifier: cellName, for: indexPath) as! FeaturePresetCell
-			if key != "" {
-				cell.nameLabel.text = presetKey.name
-				cell.valueField.placeholder = presetKey.placeholder
-			}
-			cell.valueField.delegate = self
-			cell.presetKey = .key(presetKey)
-
-			cell.valueField.keyboardType = presetKey.keyboardType
-			cell.valueField.autocapitalizationType = presetKey.autocapitalizationType
-
-			cell.valueField.removeTarget(self, action: nil, for: .allEvents)
-			cell.valueField.addTarget(self, action: #selector(textFieldReturn(_:)), for: .editingDidEndOnExit)
-			cell.valueField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
-			cell.valueField.addTarget(self, action: #selector(textFieldEditingDidBegin(_:)), for: .editingDidBegin)
-			cell.valueField.addTarget(
-				self,
-				action: #selector(UITextFieldDelegate.textFieldDidEndEditing(_:)),
-				for: .editingDidEnd)
-
-			cell.isSet.backgroundColor = keyValueDict[presetKey.tagKey] == nil ? nil : Self.isSetHighlight
-
-			cell.valueField.rightView = nil
-
-			if presetKey.isYesNo() {
-				cell.accessoryType = UITableViewCell.AccessoryType.none
-			} else if (presetKey.presetList?.count ?? 0) > 0 || key.count == 0 {
-				// The user can select from a list of presets.
-				cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-			} else if canMeasureDirection(for: presetKey) {
-				cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-			} else if canMeasureHeight(for: presetKey) {
-				cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-			} else {
-				cell.accessoryType = UITableViewCell.AccessoryType.none
-			}
-
-			if drillDownGroup == nil, indexPath.section == 0, indexPath.row == 0 {
+			switch key {
+			case "":
 				// Feature type cell
+				let cell = tableView.dequeueReusableCell(withIdentifier: "CommonTagType",
+				                                         for: indexPath) as! FeatureTypeCell
 				let text = allPresets?.featureName ?? ""
 				cell.valueField.text = text
 				cell.valueField.isEnabled = false
 				cell.isSet.backgroundColor = (selectedFeature?.addTags.count ?? 0) > 0 ? Self.isSetHighlight : nil
-			} else if presetKey.isYesNo() {
-				// special case for yes/no tristate
-				let button = TristateYesNoButton()
-				var value = keyValueDict[presetKey.tagKey] ?? ""
-				if presetKey.tagKey == "tunnel", keyValueDict["waterway"] != nil, value == "culvert" {
-					// Special hack for tunnel=culvert when used with waterways:
-					value = "yes"
+				return cell
+
+			case "name":
+				let cell = tableView.dequeueReusableCell(withIdentifier: "CommonTagName",
+				                                         for: indexPath) as! FeaturePresetCell
+				cell.nameLabel.text = presetKey.name
+				cell.valueField.placeholder = presetKey.placeholder
+				return cell
+
+			default:
+				let cell = tableView.dequeueReusableCell(withIdentifier: "CommonTagSingle",
+				                                         for: indexPath) as! FeaturePresetCell
+				cell.accessoryType = .none
+				cell.nameLabel.text = presetKey.name
+				cell.valueField.owner = self
+				cell.valueField.placeholder = presetKey.placeholder
+				cell.valueField.delegate = self
+				cell.valueField.presetKey = presetKey
+				cell.presetKey = .key(presetKey)
+				cell.valueField.keyboardType = presetKey.keyboardType
+				cell.valueField.autocapitalizationType = presetKey.autocapitalizationType
+
+				cell.valueField.removeTarget(self, action: nil, for: .allEvents)
+				cell.valueField.addTarget(self, action: #selector(textFieldReturn(_:)), for: .editingDidEndOnExit)
+				cell.valueField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
+				cell.valueField.addTarget(self, action: #selector(textFieldEditingDidBegin(_:)), for: .editingDidBegin)
+				cell.valueField.addTarget(self, action: #selector(textFieldDidEndEditing(_:)), for: .editingDidEnd)
+
+				cell.isSet.backgroundColor = keyValueDict[presetKey.tagKey] == nil ? nil : Self.isSetHighlight
+
+				cell.valueField.updateAssociatedContent()
+				if !presetKey.isYesNo(),
+				   let presets = presetKey.presetList,
+				   presets.count > 0
+				{
+					// The user can select from a list of presets.
+					cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
 				}
-				button.setSelection(forString: value)
-				if button.stringForSelection() == nil {
-					// display the string iff we don't recognize it (or it's nil)
-					cell.valueField.text = presetKey.prettyNameForTagValue(value)
-				} else {
-					cell.valueField.text = nil
-				}
-				cell.valueField.isEnabled = true
-				cell.valueField.rightView = button
-				cell.valueField.rightViewMode = .always
-				cell.valueField.placeholder = nil
-				button.onSelect = { newValue in
-					var newValue = newValue
-					if presetKey.tagKey == "tunnel", keyValueDict["waterway"] != nil {
-						// Special hack for tunnel=culvert when used with waterways:
-						// See https://github.com/openstreetmap/iD/blob/1ee45ee1f03f0fe4d452012c65ac6ff7649e229f/modules/ui/fields/radio.js#L307
-						if newValue == "yes" {
-							newValue = "culvert"
-						} else {
-							newValue = nil // "no" isn't allowed
-						}
-					}
-					self.updateTagDict(withValue: newValue ?? "", forKey: presetKey.tagKey)
-					cell.valueField.text = nil
-					cell.valueField.resignFirstResponder()
-					cell.isSet.backgroundColor = newValue == nil ? nil : Self.isSetHighlight
-				}
-			} else {
+
 				// Regular cell
 				let value = presetKey.prettyNameForTagValue(keyValueDict[presetKey.tagKey] ?? "")
 				cell.valueField.text = value
 				cell.valueField.isEnabled = true
-
-				if presetKey.type == "roadspeed" {
-					let button = KmhMphToggle()
-					cell.valueField.rightView = button
-					cell.valueField.rightViewMode = .always
-					button.onSelect = { newValue in
-						// update units on existing value
-						if let number = cell.valueField.text?.prefix(while: { $0.isNumber || $0 == "." }),
-						   number != ""
-						{
-							let v = newValue == nil ? String(number) : number + " " + newValue!
-							self.updateTagDict(withValue: v, forKey: presetKey.tagKey)
-							cell.valueField.text = v
-						} else {
-							button.setSelection(forString: "")
-						}
-					}
-					button.setSelection(forString: value)
-				}
+				return cell
 			}
-			return cell
 
 		case let PresetKeyOrGroup.group(drillDownGroup):
 
 			// drill down cell
-			let cell = tableView.dequeueReusableCell(
-				withIdentifier: "CommonTagSingle",
-				for: indexPath) as! FeaturePresetCell
+			let cell = tableView.dequeueReusableCell(withIdentifier: "CommonTagSingle",
+			                                         for: indexPath) as! FeaturePresetCell
 			cell.nameLabel.text = drillDownGroup.name
 			cell.valueField.text = drillDownGroup.multiComboSummary(ofDict: keyValueDict, isPlaceholder: false)
 			cell.valueField.placeholder = drillDownGroup.multiComboSummary(ofDict: nil, isPlaceholder: true)
@@ -523,24 +460,10 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			performSegue(withIdentifier: "POITypeSegue", sender: cell)
 		} else if case let .group(group) = cell.presetKey {
 			// special case for drill down
-			let sub = storyboard?
-				.instantiateViewController(
-					withIdentifier: "PoiCommonTagsViewController") as! POIFeaturePresetsViewController
+			let sub = storyboard?.instantiateViewController(
+				withIdentifier: "PoiCommonTagsViewController") as! POIFeaturePresetsViewController
 			sub.drillDownGroup = group
 			navigationController?.pushViewController(sub, animated: true)
-		} else if case let .key(presetKey) = cell.presetKey,
-		          canMeasureDirection(for: presetKey)
-		{
-			self.measureDirection(forKey: presetKey.tagKey,
-			                      value: cell.valueField.text ?? "")
-		} else if case let .key(presetKey) = cell.presetKey,
-		          canMeasureHeight(for: presetKey)
-		{
-			measureHeight(forKey: presetKey.tagKey)
-		} else if case let .key(presetKey) = cell.presetKey,
-		          canRecognizeOpeningHours(for: presetKey)
-		{
-			recognizeOpeningHours(forKey: presetKey.tagKey)
 		} else {
 			performSegue(withIdentifier: "POIPresetSegue", sender: cell)
 		}
@@ -777,75 +700,56 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		                                         warningVC: self)
 	}
 
-	// MARK: utility functions
+	// MARK: PresetValueTextFieldOwner
 
-	/**
-	 Determines whether the `DirectionViewController` can be used to measure the value for the tag with the given key.
+	var viewController: UIViewController { self }
 
-	 @param key The key of the tag that should be measured.
-	 @return YES if the key can be measured using the `DirectionViewController`, NO if not.
-	 */
-	func canMeasureDirection(for key: PresetKey) -> Bool {
-		if (key.presetList?.count ?? 0) > 0 {
-			return false
-		}
-		let keys = ["direction", "camera:direction"]
-		if keys.contains(key.tagKey) {
-			return true
-		}
-		return false
-	}
-
-	func measureDirection(forKey key: String, value: String) {
-		let directionViewController = DirectionViewController(
-			key: key,
-			value: value,
-			setValue: { newValue in
-				self.updateTagDict(withValue: newValue, forKey: key)
-			})
-		navigationController?.pushViewController(directionViewController, animated: true)
-	}
-
-	func canMeasureHeight(for key: PresetKey) -> Bool {
-		return key.presetList?.count == 0 && (key.tagKey == "height")
-	}
-
-	func measureHeight(forKey key: String) {
-		if HeightViewController.unableToInstantiate(withUserWarning: self) {
+	func valueChanged(for textField: PresetValueTextField) {
+		guard let cell: FeaturePresetCell = textField.superviewOfType()
+		else {
 			return
 		}
-		let vc = HeightViewController.instantiate()
-		vc.callback = { newValue in
-			self.updateTagDict(withValue: newValue, forKey: key)
+		let value = cell.valueField.text ?? ""
+
+		if case let .key(presetKey) = cell.presetKey {
+			// For PresetValueTextField cells this should always be true
+			updateTagDict(withValue: value, forKey: presetKey.tagKey)
 		}
-		navigationController?.pushViewController(vc, animated: true)
+
+		if value != "" {
+			cell.isSet.backgroundColor = Self.isSetHighlight
+		} else {
+			cell.isSet.backgroundColor = nil
+		}
 	}
 
-	func canRecognizeOpeningHours(for key: PresetKey) -> Bool {
-#if !targetEnvironment(macCatalyst)
-#if arch(arm64) || arch(x86_64) // old architectures don't support SwiftUI
-		if #available(iOS 14.0, *) {
-			return key.tagKey == "opening_hours" || key.tagKey.hasSuffix(":opening_hours")
-		}
-#endif
-#endif
-		return false
-	}
+	// MARK: KeyValueTableCellOwner fields
 
-	func recognizeOpeningHours(forKey key: String) {
-#if !targetEnvironment(macCatalyst)
-#if arch(arm64) || arch(x86_64) // old architectures don't support SwiftUI
-		if #available(iOS 14.0, *) {
-			let vc = OpeningHoursRecognizerController.with(onAccept: { newValue in
-				self.updateTagDict(withValue: newValue, forKey: key)
-				self.navigationController?.popViewController(animated: true)
-			}, onCancel: {
-				self.navigationController?.popViewController(animated: true)
-			}, onRecognize: { _ in
-			})
-			self.navigationController?.pushViewController(vc, animated: true)
+	// These are needed to satisfy requirements as KeyValueTableCell owner
+	var allPresetKeys: [PresetKey] { allPresets?.allPresetKeys() ?? [] }
+	var childViewPresented = false
+	var currentTextField: UITextField?
+
+	func keyValueChanged(for kv: KeyValueTableCell) {
+		if let indexPath = tableView.indexPath(for: kv) {
+			let row = indexPath.row
+			if row < extraTags.count {
+				// they edited an existing value, so delete it before updating in case key changed
+				let oldKey = extraTags[row].k
+				updateTagDict(withValue: "", forKey: oldKey)
+			} else {
+				// new value
+				extraTags.append(("", ""))
+			}
+			extraTags[row] = (kv.key, kv.value)
+			updateTagDict(withValue: kv.value, forKey: kv.key)
 		}
-#endif
-#endif
+
+		if kv.key != "", kv.value != "" {
+			selectedFeature = nil
+			updatePresets()
+		} else {
+			kv.isSet.backgroundColor = nil
+		}
 	}
 }

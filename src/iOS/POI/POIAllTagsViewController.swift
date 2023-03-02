@@ -269,9 +269,8 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerViewContr
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.section == 0 {
 			// Tags
-			let cell = tableView.dequeueReusableCell(
-				withIdentifier: "KeyValueCell",
-				for: indexPath) as! KeyValueTableCell
+			let cell = tableView.dequeueReusableCell(withIdentifier: "KeyValueCell",
+			                                         for: indexPath) as! KeyValueTableCell
 			cell.owner = self
 			// assign text contents of fields
 			let kv = tags[indexPath.row]
@@ -279,11 +278,9 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerViewContr
 			cell.text2.isEnabled = true
 			cell.text1.text = kv.k
 			cell.text2.text = kv.v
+			cell.text2.key = kv.k
 			cell.text1.inputAccessoryView = prevNextToolbar
-			cell.text2.inputAccessoryView = prevNextToolbar
-
-			cell.updateAssociatedContent()
-
+			cell.text2.defaultInputAccessoryView = prevNextToolbar
 			return cell
 		} else if indexPath.section == 1 {
 			// Relations
