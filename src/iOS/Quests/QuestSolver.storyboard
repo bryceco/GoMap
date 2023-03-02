@@ -64,13 +64,10 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6jK-Gz-RhS">
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6jK-Gz-RhS" customClass="PresetValueTextField" customModule="Go_Map__" customModuleProvider="target">
                                             <rect key="frame" x="40" y="7" width="354" height="30"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <textInputTraits key="textInputTraits"/>
-                                            <connections>
-                                                <action selector="textFieldChanged:" destination="GNG-rr-CUE" eventType="editingChanged" id="5R7-0M-KD3"/>
-                                            </connections>
                                         </textField>
                                     </subviews>
                                     <constraints>

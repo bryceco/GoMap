@@ -9,26 +9,13 @@
 import UIKit
 
 class QuestSolverTextEntryCell: UITableViewCell {
-	@IBOutlet var textField: UITextField?
-	var didChange: ((String) -> Void)?
-
-	required init?(coder: NSCoder) {
-		super.init(coder: coder)
-	}
-
-	override func prepareForReuse() {
-		textField!.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
-	}
-
-	@IBAction func textFieldChanged(_ sender: Any?) {
-		didChange?(textField?.text ?? "")
-	}
+	@IBOutlet var textField: PresetValueTextField?
 }
 
 private let NUMBER_OF_HEADERS = 2 // feature name + quest name
 private let NUMBER_OF_FOOTERS = 2 // ignore + open tag editor
 
-class QuestSolverController: UITableViewController {
+class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 	var questMarker: QuestMarker!
 	var object: OsmBaseObject!
 	var presetFeature: PresetFeature?
@@ -301,38 +288,25 @@ class QuestSolverController: UITableViewController {
 				// A text box to type something in
 				let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCellTextEntry",
 				                                         for: indexPath) as! QuestSolverTextEntryCell
-				cell.textField?.autocorrectionType = .no
-				cell.textField?.autocapitalizationType = .none
-				cell.textField?.keyboardType = .default
-				cell.textField?.inputAccessoryView = nil
-				cell.textField?.rightView = nil
+				cell.textField?.owner = self
 				if let presetKey = presetKeys[indexPath.section - 1] {
-					cell.textField?.autocorrectionType = presetKey.autocorrectType
-					cell.textField?.autocapitalizationType = presetKey.autocapitalizationType
-					if presetKey.keyboardType == .phonePad,
-					   let textField = cell.textField
-					{
-						textField.keyboardType = .phonePad
-						textField.inputAccessoryView = TelephoneToolbar(forTextField: textField,
-						                                                frame: view.frame)
-					}
-					if isOpeningHours(key: presetKey) {
-						let button = UIButton(type: .custom)
-						button.setTitle("📷", for: .normal)
-						button.addTarget(self, action: #selector(recognizeOpeningHours), for: .touchUpInside)
-						cell.textField?.rightView = button
-						cell.textField?.rightViewMode = .always
-					}
-				}
-
-				cell.didChange = { [weak self] text in
-					guard let self = self else { return }
-					let okay = self.questMarker.quest.accepts(tagValue: text)
-					self.navigationItem.rightBarButtonItem?.isEnabled = okay
+					cell.textField?.presetKey = presetKey
+				} else {
+					cell.textField?.key = tagKeys[indexPath.section - 1]
 				}
 				return cell
 			}
 		}
+	}
+
+	// MARK: PresetValueTextFieldOwner
+
+	var allPresetKeys: [PresetKey] { [] }
+	var childViewPresented = false
+	var viewController: UIViewController { self }
+	func valueChanged(for textField: PresetValueTextField) {
+		let okay = questMarker.quest.accepts(tagValue: textField.text ?? "")
+		navigationItem.rightBarButtonItem?.isEnabled = okay
 	}
 }
 

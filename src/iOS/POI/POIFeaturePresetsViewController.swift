@@ -417,7 +417,6 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 
 				cell.isSet.backgroundColor = keyValueDict[presetKey.tagKey] == nil ? nil : Self.isSetHighlight
 
-				cell.valueField.updateAssociatedContent()
 				if !presetKey.isYesNo(),
 				   let presets = presetKey.presetList,
 				   presets.count > 0

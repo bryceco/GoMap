@@ -37,7 +37,7 @@ class PresetValueTextField: AutocompleteTextField {
 	}
 
 	// UITextField will modify the value without telling us, so we can't trust oldValue here
-	var oldText: String?
+	private var oldText: String?
 	override var text: String? {
 		didSet {
 			if text != oldText {
@@ -59,11 +59,11 @@ class PresetValueTextField: AutocompleteTextField {
 		setEventNotifications()
 	}
 
-	func notifyValueChange() {
+	private func notifyValueChange() {
 		owner.valueChanged(for: self)
 	}
 
-	func updateTextAttributesForKey(_ key: String) {
+	private func updateTextAttributesForKey(_ key: String) {
 		// set text formatting options for text field
 		inputAccessoryView = defaultInputAccessoryView
 		keyboardType = .default
@@ -136,7 +136,7 @@ class PresetValueTextField: AutocompleteTextField {
 
 	// MARK: Accessory buttons
 
-	func updateAssociatedContent() {
+	private func updateAssociatedContent() {
 		// Swift doesn't like too many ??'s so we break it into pieces 🤷‍♂️
 		let associatedView1 = getAssociatedColor()
 			?? getOpeningHoursButton()
@@ -388,7 +388,7 @@ class PresetValueTextField: AutocompleteTextField {
 
 	// MARK: Opening Hours button
 
-	func getOpeningHoursButton() -> UIView? {
+	private func getOpeningHoursButton() -> UIView? {
 #if !targetEnvironment(macCatalyst)
 #if arch(arm64) || arch(x86_64) // old architectures don't support SwiftUI
 		if #available(iOS 14.0, *) {
