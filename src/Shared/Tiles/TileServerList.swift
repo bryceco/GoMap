@@ -87,7 +87,7 @@ private struct Properties {
 private struct Attribution {
 	private let json: [String: Any]
 	var attributionRequired: Bool? { get throws { try json["attributionRequired"] --> Bool?.self } }
-	var text: String { get throws { try json["text"] --> String.self } }
+	var text: String? { get throws { try json["text"] --> String?.self } }
 	var url: String? { get throws { try json["url"] --> String?.self }}
 	init?(_ json: Any?) throws {
 		guard let json = json else { return nil }
