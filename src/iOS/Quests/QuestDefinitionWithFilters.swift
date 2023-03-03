@@ -67,8 +67,52 @@ struct QuestDefinitionFilter: Codable, Identifiable, CustomStringConvertible, Cu
 struct QuestDefinitionWithFilters: QuestDefinition {
 	var title: String
 	var label: String
-	var tagKey: String
+	var tagKeys: [String]
 	var filters: [QuestDefinitionFilter]
+
+	init(title: String, label: String, tagKeys: [String], filters: [QuestDefinitionFilter]) {
+		self.title = title
+		self.label = label
+		self.tagKeys = tagKeys
+		self.filters = filters
+	}
+
+	// MARK: Codable
+
+	enum CodingKeys: String, CodingKey {
+		case title
+		case label
+		case tagKeys
+		case tagKey // old alias for tagKeys
+		case filters
+	}
+
+	init(from decoder: Decoder) throws {
+		do {
+			let container = try decoder.container(keyedBy: CodingKeys.self)
+			title = try container.decode(String.self, forKey: .title)
+			label = try container.decode(String.self, forKey: .label)
+			if let string = try? container.decode(String.self, forKey: .tagKey) {
+				tagKeys = string.split(separator: ",").map { String($0) }
+			} else {
+				tagKeys = try container.decode([String].self, forKey: .tagKeys)
+			}
+			filters = try container.decode([QuestDefinitionFilter].self, forKey: .filters)
+		} catch {
+			print("\(error)")
+			throw error
+		}
+	}
+
+	func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(title, forKey: .title)
+		try container.encode(label, forKey: .label)
+		try container.encode(tagKeys, forKey: .tagKeys)
+		try container.encode(filters, forKey: .filters)
+	}
+
+	// MARK: makeQuestInstance
 
 	private static func makeOrSets(list: [QuestDefinitionFilter]) -> [([String: String]) -> Bool] {
 		var list = list
@@ -139,7 +183,7 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 		return QuestInstance(ident: title,
 		                     title: title,
 		                     label: label,
-		                     presetKey: tagKey,
+		                     tagKeys: tagKeys,
 		                     appliesToObject: { pred($0.tags) },
 		                     acceptsValue: { _ in true })
 	}

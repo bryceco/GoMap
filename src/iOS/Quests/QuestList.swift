@@ -92,7 +92,7 @@ class ResurveyQuest: QuestInstance {
 			ident: "temp",
 			title: "temp",
 			label: "t",
-			presetKey: "phone",
+			tagKey: "phone",
 			includeFeatures: [],
 			accepts: { _ in
 				true
@@ -100,7 +100,7 @@ class ResurveyQuest: QuestInstance {
 		super.init(ident: "needsSurvey",
 		           title: "Needs Survey",
 		           label: "ic_quest_check",
-		           presetKey: "",
+		           tagKeys: [""],
 		           appliesToObject: { obj in
 		           	guard obj.timestamp < dateString else {
 		           		return false
@@ -136,7 +136,7 @@ class QuestList {
 				ident: "BuildingType",
 				title: "Add Building Type",
 				label: "ic_quest_building",
-				presetKey: "building",
+				tagKeys: ["building"],
 				appliesToObject: { obj in
 					obj.tags["building"] == "yes"
 				},
@@ -146,7 +146,7 @@ class QuestList {
 				ident: "SidewalkSurface",
 				title: "Add Sidewalk Surface",
 				label: "ic_quest_sidewalk",
-				presetKey: "surface",
+				tagKeys: ["surface"],
 				appliesToObject: { obj in
 					guard
 						let way = obj as? OsmWay,
@@ -169,7 +169,7 @@ class QuestList {
 				ident: "HighwaySurface",
 				title: "Add Highway Surface",
 				label: "ic_quest_way_surface",
-				presetKey: "surface",
+				tagKeys: ["surface"],
 				appliesToObject: { obj in
 					guard let way = obj as? OsmWay,
 					      way.tags["surface"] == nil else { return false }
@@ -193,7 +193,7 @@ class QuestList {
 				ident: "SpeedLimit",
 				title: "Add Speed Limit",
 				label: "ic_quest_max_speed",
-				presetKey: "maxspeed",
+				tagKeys: ["maxspeed"],
 				appliesToObject: { obj in
 					guard let way = obj as? OsmWay,
 					      way.tags["maxspeed"] == nil else { return false }
@@ -220,7 +220,7 @@ class QuestList {
 				ident: "TelephoneNumber",
 				title: "Add Telephone Number",
 				label: "ic_quest_phone",
-				presetKey: "phone",
+				tagKeys: ["phone"],
 				appliesToObject: { (obj: OsmBaseObject) in
 					let tags = obj.tags
 					return phoneFeaturesPredicate(tags) &&
@@ -235,7 +235,7 @@ class QuestList {
 				ident: "ParkingLotTYpe",
 				title: "Add Parking Type",
 				label: "ic_quest_parking",
-				presetKey: "parking",
+				tagKeys: ["parking"],
 				appliesToObject: { obj in
 					obj.tags["amenity"] == "parking" && obj.tags["parking"] == nil
 				},
@@ -248,7 +248,7 @@ class QuestList {
 				ident: "Website",
 				title: "Add Website",
 				label: "🌐",
-				presetKey: "website",
+				tagKeys: ["website"],
 				appliesToObject: { (obj: OsmBaseObject) in
 					let tags = obj.tags
 					return websitePredicate(tags) &&
@@ -263,8 +263,8 @@ class QuestList {
 				ident: "OpeningHours",
 				title: "Add Opening Hours",
 				label: "ic_quest_opening_hours",
-				presetKey: "opening_hours",
-				includeFeatures: [String]()).makeQuestInstance()
+				tagKey: "opening_hours",
+				includeFeatures: []).makeQuestInstance()
 
 			builtinList = [
 				addBuildingType,

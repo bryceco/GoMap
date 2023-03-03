@@ -69,7 +69,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 			let label = labelField!.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 			let quest = QuestDefinitionWithFeatures(title: name,
 			                                        label: label,
-			                                        presetKey: presetField!.title(for: .normal)!,
+			                                        tagKey: presetField!.title(for: .normal)!,
 			                                        includeFeatures: chosenFeatures.map { $0.ident })
 			try QuestList.shared.addUserQuest(quest, replacing: self.quest)
 			onCancel(sender)
@@ -130,22 +130,22 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 			presetField?.showsMenuAsPrimaryAction = true
 		}
 
-		let presetKey: String
+		let tagKey: String
 		if let quest = quest {
 			// if we're editing an existing quest then fill in the fields
 			let features = PresetsDatabase.shared.stdFeatures
 			chosenFeatures = quest.includeFeatures.map { (features[$0]?.name ?? $0, $0) }
 			nameField?.text = quest.title
 			labelField?.text = quest.label
-			presetKey = quest.presetKey
+			tagKey = quest.tagKey
 		} else {
-			presetKey = "cuisine"
+			tagKey = "cuisine"
 		}
 
 		// mark the current key selection
 		if #available(iOS 14.0, *) {
 			// select the current presetKey
-			if let item = presetField?.menu?.children.first(where: { $0.title == presetKey }),
+			if let item = presetField?.menu?.children.first(where: { $0.title == tagKey }),
 			   let action = item as? UIAction
 			{
 				action.state = .on

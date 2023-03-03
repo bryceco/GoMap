@@ -86,8 +86,7 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 		vc.questMarker = marker
 		vc.title = NSLocalizedString("Quest", comment: "The current Quest the user is answering")
 		vc.onClose = onClose
-		vc.tagKeys = marker.quest.presetKey.split(separator: ",")
-			.map { $0.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) }
+		vc.tagKeys = marker.quest.tagKeys
 		vc.presetKeys = vc.tagKeys.map { _ in nil }
 		vc.presetFeature = PresetsDatabase.shared.presetFeatureMatching(
 			tags: object.tags,

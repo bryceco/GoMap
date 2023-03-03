@@ -175,7 +175,7 @@ class QuestChooserController: UITableViewController {
 		let quest = quest ??
 			QuestDefinitionWithFilters(title: "Add Cuisine",
 			                           label: "🍽️",
-			                           tagKey: "cuisine",
+			                           tagKeys: ["cuisine"],
 			                           filters: [
 			                           	QuestDefinitionFilter(
 			                           		tagKey: "amenity",

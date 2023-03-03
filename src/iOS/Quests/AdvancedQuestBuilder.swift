@@ -48,7 +48,7 @@ struct AdvancedQuestBuilder: View {
 					Text("Filters")
 				},
 				footer: HStack {
-					Button(action: addItem) {
+					Button(action: addRule) {
 						Label("", systemImage: "plus")
 					}
 					Spacer()
@@ -69,39 +69,54 @@ struct AdvancedQuestBuilder: View {
 					.listRowSeparator(.hidden)
 				})
 
-			Section(content: {
-				VStack {
+			Section(
+				header: Text("Keys"),
+				content: {
 					Text("What tag key is modified by this quest?")
-					HStack {
-						Spacer()
-						TextField("", text: $quest.tagKey)
-							.frame(width: 200, alignment: .center)
-							.textFieldStyle(.roundedBorder)
-							.autocapitalization(.none)
-						Spacer()
+					ForEach(quest.tagKeys.indices, id: \.self) { index in
+						HStack {
+							Spacer()
+							TextField("", text: $quest.tagKeys[index])
+								.frame(width: 200, alignment: .center)
+								.textFieldStyle(.roundedBorder)
+								.autocapitalization(.none)
+							let showPlus = index == quest.tagKeys.count - 1
+							Button(action: addKey) {
+								Label("", systemImage: "plus")
+							}
+							.opacity(showPlus ? 1 : 0)
+							.disabled(!showPlus)
+							Spacer()
+						}
 					}
-				}
-			})
+					.onDelete { indexSet in
+						quest.tagKeys.remove(atOffsets: indexSet)
+					}
+					.onMove { indexSet, index in
+						quest.tagKeys.move(fromOffsets: indexSet, toOffset: index)
+					}
+					.listRowSeparator(.hidden)
+				})
 
-			Section(content: {
-				VStack {
+			Section(
+				header: Text("Name"),
+				content: {
 					Text(
 						"What is the name of this quest? This is best written in the form of an action like 'Add Surface':")
 					TextField("", text: $quest.title)
 						.textInputAutocapitalization(.words)
 						.frame(alignment: .center)
 						.textFieldStyle(.roundedBorder)
-				}
-			})
+				})
 
-			Section(content: {
-				VStack {
+			Section(
+				header: Text("Icon"),
+				content: {
 					Text("Provide a single-character symbol to identify this quest:")
 					TextField("", text: $quest.label)
 						.frame(width: 60, alignment: .center)
 						.textFieldStyle(.roundedBorder)
-				}
-			})
+				})
 		}
 		.navigationBarBackButtonHidden()
 		.navigationBarItems(
@@ -121,7 +136,10 @@ struct AdvancedQuestBuilder: View {
 				})
 				quest.title = quest.title.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 				quest.label = quest.label.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-				quest.tagKey = quest.tagKey.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+				quest.tagKeys = quest.tagKeys.compactMap {
+					let s = $0.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+					return s.isEmpty ? nil : s
+				}
 
 				if let onSave = onSave,
 				   onSave(quest)
@@ -133,13 +151,17 @@ struct AdvancedQuestBuilder: View {
 			})
 	}
 
-	func addItem() {
+	func addRule() {
 		quest.filters.append(QuestDefinitionFilter(tagKey: "", tagValue: "", relation: .equal, included: .include))
 	}
 
 	func clearAll() {
 		quest.filters.removeAll()
-		addItem()
+		addRule()
+	}
+
+	func addKey() {
+		quest.tagKeys.append("")
 	}
 }
 
@@ -147,7 +169,7 @@ struct AdvancedQuestBuilder: View {
 struct AdvancedQuestBuilder_Previews: PreviewProvider {
 	static let quest = QuestDefinitionWithFilters(title: "Add Cuisine",
 	                                              label: "🍽️",
-	                                              tagKey: "cuisine",
+	                                              tagKeys: ["cuisine"],
 	                                              filters: [
 	                                              	QuestDefinitionFilter(
 	                                              		tagKey: "amenity",

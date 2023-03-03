@@ -844,7 +844,7 @@ extension EditorMapLayer {
 						self.setNeedsLayout()
 					} catch {
 						owner.showAlert(NSLocalizedString("Error", comment: ""),
-										message: error.localizedDescription)
+						                message: error.localizedDescription)
 					}
 				}
 				confirm.addAction(UIAlertAction(
@@ -904,8 +904,8 @@ extension EditorMapLayer {
 			}))
 		}
 		multiSelectSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
-												 style: .cancel,
-												 handler: nil))
+		                                         style: .cancel,
+		                                         handler: nil))
 		let rc = CGRect(x: point.x, y: point.y, width: 0.0, height: 0.0)
 		owner.presentAlert(alert: multiSelectSheet, location: .rect(rc))
 	}

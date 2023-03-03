@@ -21,7 +21,7 @@ protocol QuestProtocol {
 	var ident: String { get }
 	var title: String { get }
 	var label: String { get }
-	var presetKey: String { get }
+	var tagKeys: [String] { get }
 	func appliesTo(_ object: OsmBaseObject) -> Bool
 	func accepts(tagValue: String) -> Bool
 }
@@ -33,7 +33,7 @@ class QuestInstance: QuestProtocol {
 	let ident: String // Uniquely identify the quest
 	let title: String // Localized instructions on what action to take
 	let label: String
-	let presetKey: String // The value the user is being asked to set
+	let tagKeys: [String] // The value the user is being asked to set
 	let appliesToObject: (OsmBaseObject) -> Bool
 	let acceptsValue: (String) -> Bool
 
@@ -48,14 +48,14 @@ class QuestInstance: QuestProtocol {
 	init(ident: String,
 	     title: String,
 	     label: String,
-	     presetKey: String,
+	     tagKeys: [String],
 	     appliesToObject: @escaping (OsmBaseObject) -> Bool,
 	     acceptsValue: @escaping (String) -> Bool)
 	{
 		self.ident = ident
 		self.title = title
 		self.label = label
-		self.presetKey = presetKey
+		self.tagKeys = tagKeys
 		self.appliesToObject = appliesToObject
 		self.acceptsValue = acceptsValue
 	}
