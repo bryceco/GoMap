@@ -69,18 +69,18 @@ extension EditorMapLayer {
 				title: NSLocalizedString("Paste", comment: ""),
 				message: question,
 				preferredStyle: .alert)
-			alertPaste
-				.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
-			alertPaste
-				.addAction(UIAlertAction(title: NSLocalizedString("Merge Tags", comment: ""),
-				                         style: .default, handler: { [self] _ in
-				                         	self.pasteTagsMerge(selectedPrimary)
-				                         }))
-			alertPaste
-				.addAction(UIAlertAction(title: NSLocalizedString("Replace Tags", comment: ""), style: .default,
-				                         handler: { [self] _ in
-				                         	self.pasteTagsReplace(selectedPrimary)
-				                         }))
+			alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+			                                   style: .cancel,
+			                                   handler: nil))
+			alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Merge Tags", comment: ""),
+			                                   style: .default, handler: { [self] _ in
+			                                   	self.pasteTagsMerge(selectedPrimary)
+			                                   }))
+			alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Replace Tags", comment: ""),
+			                                   style: .default,
+			                                   handler: { [self] _ in
+			                                   	self.pasteTagsReplace(selectedPrimary)
+			                                   }))
 			owner.presentAlert(alert: alertPaste, location: .none)
 		} else {
 			pasteTagsReplace(selectedPrimary)
@@ -339,21 +339,24 @@ extension EditorMapLayer {
 				title: NSLocalizedString("Confirm move", comment: ""),
 				message: NSLocalizedString("Move selected object?", comment: ""),
 				preferredStyle: .alert)
+			alertMove.addAction(UIAlertAction(title: NSLocalizedString("Undo", comment: ""),
+			                                  style: .cancel,
+			                                  handler: { _ in
+			                                  	// cancel move
+			                                  	self.mapData.undo()
+			                                  	self.mapData.removeMostRecentRedo()
+			                                  	self.selectedNode = nil
+			                                  	self.selectedWay = nil
+			                                  	self.selectedRelation = nil
+			                                  	self.owner.removePin()
+			                                  	self.setNeedsLayout()
+			                                  }))
 			alertMove
-				.addAction(UIAlertAction(title: NSLocalizedString("Undo", comment: ""), style: .cancel, handler: { _ in
-					// cancel move
-					self.mapData.undo()
-					self.mapData.removeMostRecentRedo()
-					self.selectedNode = nil
-					self.selectedWay = nil
-					self.selectedRelation = nil
-					self.owner.removePin()
-					self.setNeedsLayout()
-				}))
-			alertMove
-				.addAction(UIAlertAction(title: NSLocalizedString("Move", comment: ""), style: .default, handler: { _ in
-					// okay
-				}))
+				.addAction(UIAlertAction(title: NSLocalizedString("Move", comment: ""),
+				                         style: .default,
+				                         handler: { _ in
+				                         	// okay
+				                         }))
 			owner.presentAlert(alert: alertMove, location: .none)
 		}
 	}
@@ -548,32 +551,29 @@ extension EditorMapLayer {
 				title: NSLocalizedString("Delete", comment: ""),
 				message: NSLocalizedString("Member of multipolygon relation", comment: ""),
 				preferredStyle: .actionSheet)
-			alertDelete
-				.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
-				                         style: .cancel,
-				                         handler: { _ in
-				                         }))
-			alertDelete
-				.addAction(UIAlertAction(title: NSLocalizedString("Delete completely", comment: ""),
-				                         style: .default,
-				                         handler: deleteHandler))
-			alertDelete
-				.addAction(UIAlertAction(title: NSLocalizedString("Detach from relation", comment: ""),
-				                         style: .default,
-				                         handler: { [self] _ in
-				                         	do {
-				                         		let canRemove = try self.mapData.canRemove(selectedPrimary,
-				                         		                                           from: self
-				                         		                                           	.selectedRelation!)
-				                         		canRemove()
-				                         		self.selectedRelation = nil
-				                         		owner.didUpdateObject()
-				                         	} catch {
-				                         		owner.showAlert(
-				                         			NSLocalizedString("Delete failed", comment: ""),
-				                         			message: error.localizedDescription)
-				                         	}
-				                         }))
+			alertDelete.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+			                                    style: .cancel,
+			                                    handler: { _ in
+			                                    }))
+			alertDelete.addAction(UIAlertAction(title: NSLocalizedString("Delete completely", comment: ""),
+			                                    style: .default,
+			                                    handler: deleteHandler))
+			alertDelete.addAction(UIAlertAction(
+				title: NSLocalizedString("Detach from relation", comment: ""),
+				style: .default,
+				handler: { [self] _ in
+					do {
+						let canRemove = try self.mapData.canRemove(selectedPrimary,
+						                                           from: self.selectedRelation!)
+						canRemove()
+						self.selectedRelation = nil
+						owner.didUpdateObject()
+					} catch {
+						owner.showAlert(
+							NSLocalizedString("Delete failed", comment: ""),
+							message: error.localizedDescription)
+					}
+				}))
 			owner.presentAlert(alert: alertDelete, location: .editBar)
 
 		} else {
@@ -843,7 +843,8 @@ extension EditorMapLayer {
 						owner.flashMessage(NSLocalizedString("added to multipolygon relation", comment: ""))
 						self.setNeedsLayout()
 					} catch {
-						owner.showAlert(NSLocalizedString("Error", comment: ""), message: error.localizedDescription)
+						owner.showAlert(NSLocalizedString("Error", comment: ""),
+										message: error.localizedDescription)
 					}
 				}
 				confirm.addAction(UIAlertAction(
@@ -902,8 +903,9 @@ extension EditorMapLayer {
 				owner.placePushpin(at: pos, object: object)
 			}))
 		}
-		multiSelectSheet
-			.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
+		multiSelectSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+												 style: .cancel,
+												 handler: nil))
 		let rc = CGRect(x: point.x, y: point.y, width: 0.0, height: 0.0)
 		owner.presentAlert(alert: multiSelectSheet, location: .rect(rc))
 	}

@@ -198,7 +198,7 @@ class QuestChooserController: UITableViewController {
 				print("\(error)")
 				let alertView = UIAlertController(title: NSLocalizedString("Quest Definition Error", comment: ""),
 				                                  message: error.localizedDescription,
-				                                  preferredStyle: .actionSheet)
+				                                  preferredStyle: .alert)
 				alertView.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
 				                                  style: .cancel))
 				self?.present(alertView, animated: true)

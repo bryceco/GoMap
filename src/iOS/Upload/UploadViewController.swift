@@ -133,9 +133,9 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 		actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
 		                                    style: .cancel,
 		                                    handler: nil))
-		present(actionSheet, animated: true)
 		actionSheet.popoverPresentationController?.sourceView = button
 		actionSheet.popoverPresentationController?.sourceRect = button.bounds
+		present(actionSheet, animated: true)
 	}
 
 	@IBAction func showCommitMessageHistory(_ sender: Any) {

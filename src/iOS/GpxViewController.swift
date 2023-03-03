@@ -59,11 +59,12 @@ class GpxTrackTableCell: UITableViewCell, UIActionSheetDelegate {
 				self.tableView?.present(controller, animated: true)
 			}))
 
-		tableView?.present(alert, animated: true)
 		// set location of popup
 		let button = sender as? UIButton
 		alert.popoverPresentationController?.sourceView = button
 		alert.popoverPresentationController?.sourceRect = button?.bounds ?? CGRect.zero
+
+		tableView?.present(alert, animated: true)
 	}
 }
 

@@ -76,7 +76,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		} catch {
 			let alertView = UIAlertController(title: NSLocalizedString("Quest Definition Error", comment: ""),
 			                                  message: error.localizedDescription,
-			                                  preferredStyle: .actionSheet)
+			                                  preferredStyle: .alert)
 			alertView.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
 			                                  style: .cancel))
 			present(alertView, animated: true)

@@ -613,10 +613,11 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
 		                                    style: .cancel,
 		                                    handler: nil))
-		present(actionSheet, animated: true)
 		// set location of popup
 		actionSheet.popoverPresentationController?.sourceView = displayButton
 		actionSheet.popoverPresentationController?.sourceRect = displayButton.bounds
+
+		present(actionSheet, animated: true)
 	}
 
 	// MARK: Other stuff

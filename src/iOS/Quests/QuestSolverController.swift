@@ -147,27 +147,25 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 
 	@IBAction func openTagEditor(_ sender: Any?) {
 		if navigationItem.rightBarButtonItem?.isEnabled ?? false {
-			let actionSheet = UIAlertController(title: NSLocalizedString("Save or discard your changes", comment: ""),
-			                                    message: nil,
-			                                    preferredStyle: .actionSheet)
-			actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Save", comment: "Save changes"),
-			                                    style: .default,
-			                                    handler: { _ in
-			                                    	self.onSave(sender)
-			                                    	AppDelegate.shared.mapView?.presentTagEditor(nil)
-			                                    }))
-			actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Discard", comment: "Discard changes"),
-			                                    style: .default,
-			                                    handler: { _ in
-			                                    	self.dismiss(animated: true, completion: nil)
-			                                    	AppDelegate.shared.mapView?.presentTagEditor(nil)
-			                                    }))
-			actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
-			                                    style: .cancel,
-			                                    handler: nil))
-			present(actionSheet, animated: true)
-			actionSheet.popoverPresentationController?.sourceView = (sender as? UIView)
-			actionSheet.popoverPresentationController?.sourceRect = (sender as? UIView)?.bounds ?? CGRect.zero
+			let alertSheet = UIAlertController(title: NSLocalizedString("Save or discard your changes", comment: ""),
+			                                   message: nil,
+			                                   preferredStyle: .alert)
+			alertSheet.addAction(UIAlertAction(title: NSLocalizedString("Save", comment: "Save changes"),
+			                                   style: .default,
+			                                   handler: { _ in
+			                                   	self.onSave(sender)
+			                                   	AppDelegate.shared.mapView?.presentTagEditor(nil)
+			                                   }))
+			alertSheet.addAction(UIAlertAction(title: NSLocalizedString("Discard", comment: "Discard changes"),
+			                                   style: .default,
+			                                   handler: { _ in
+			                                   	self.dismiss(animated: true, completion: nil)
+			                                   	AppDelegate.shared.mapView?.presentTagEditor(nil)
+			                                   }))
+			alertSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+			                                   style: .cancel,
+			                                   handler: nil))
+			present(alertSheet, animated: true)
 			return
 		}
 		dismiss(animated: false, completion: nil)
@@ -301,7 +299,7 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 
 	// MARK: PresetValueTextFieldOwner
 
-	var allPresetKeys: [PresetKey] { [] }
+	var allPresetKeys: [PresetKey] { presetKeys.compactMap { $0 } }
 	var childViewPresented = false
 	var viewController: UIViewController { self }
 	func valueChanged(for textField: PresetValueTextField) {
