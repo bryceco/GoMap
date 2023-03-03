@@ -18,20 +18,20 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="QuestChooserTableCell" id="Jqx-2E-Fvw" customClass="QuestChooserTableCell" customModule="Go_Map__" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="50" width="393" height="43.333332061767578"/>
+                                <rect key="frame" x="0.0" y="50" width="393" height="42.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Jqx-2E-Fvw" id="hdy-yO-LLj">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="43.333332061767578"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="42.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lOo-Bh-qGh" userLabel="Enable Quest">
-                                            <rect key="frame" x="324" y="6.3333333333333321" width="51" height="30.999999999999996"/>
+                                            <rect key="frame" x="324" y="6" width="51" height="31"/>
                                             <connections>
                                                 <action selector="didSwitch:" destination="Jqx-2E-Fvw" eventType="valueChanged" id="pou-ag-Gsv"/>
                                             </connections>
                                         </switch>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="500" text="Add Sidewalk Surface" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cjq-BK-3eN">
-                                            <rect key="frame" x="20" y="10.999999999999998" width="174" height="21.333333333333329"/>
+                                            <rect key="frame" x="20" y="11.000000000000002" width="173.66666666666666" height="20.666666666666671"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -56,14 +56,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BuildYourOwnQuestTableCell" id="wFx-Nm-hoF" customClass="BuildYourOwnQuestTableCell" customModule="Go_Map__" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="93.333332061767578" width="393" height="43.666667938232422"/>
+                                <rect key="frame" x="0.0" y="92.666667938232422" width="393" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wFx-Nm-hoF" id="1a8-5E-lPA">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Build a New Quest" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obG-9F-y5J">
-                                            <rect key="frame" x="126.66666666666667" y="11.333333333333336" width="139.66666666666663" height="21"/>
+                                            <rect key="frame" x="126.66666666666667" y="11.666666666666666" width="139.66666666666663" height="20.333333333333336"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <color key="textColor" systemColor="linkColor"/>
                                             <nil key="highlightedColor"/>
@@ -82,35 +82,39 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImportExportCell" id="3ab-Rh-KkC">
-                                <rect key="frame" x="0.0" y="137" width="393" height="35.333332061767578"/>
+                                <rect key="frame" x="0.0" y="136.33333587646484" width="393" height="34.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3ab-Rh-KkC" id="m5O-Bn-J32">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="35.333332061767578"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="34.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i3O-Tv-sbS">
-                                            <rect key="frame" x="0.0" y="0.0" width="74" height="35.333333333333336"/>
-                                            <state key="normal" title="Button"/>
-                                            <buttonConfiguration key="configuration" style="plain" title="Import"/>
-                                            <connections>
-                                                <action selector="importQuests:" destination="REI-FR-Yb0" eventType="touchUpInside" id="Arc-4p-fJH"/>
-                                            </connections>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4dk-L8-PaX">
-                                            <rect key="frame" x="319" y="0.66666666666666785" width="74" height="34.333333333333329"/>
-                                            <state key="normal" title="Button"/>
-                                            <buttonConfiguration key="configuration" style="plain" title="Export"/>
-                                            <connections>
-                                                <action selector="exportQuests:" destination="REI-FR-Yb0" eventType="touchUpInside" id="vaM-6L-pU6"/>
-                                            </connections>
-                                        </button>
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="teO-II-BDV">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="34.666666666666664"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i3O-Tv-sbS">
+                                                    <rect key="frame" x="0.0" y="0.0" width="196.66666666666666" height="34.666666666666664"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" title="Import"/>
+                                                    <connections>
+                                                        <action selector="importQuests:" destination="REI-FR-Yb0" eventType="touchUpInside" id="Arc-4p-fJH"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4dk-L8-PaX">
+                                                    <rect key="frame" x="196.66666666666663" y="0.0" width="196.33333333333337" height="34.666666666666664"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" title="Export"/>
+                                                    <connections>
+                                                        <action selector="exportQuests:" destination="REI-FR-Yb0" eventType="touchUpInside" id="vaM-6L-pU6"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="i3O-Tv-sbS" firstAttribute="top" secondItem="m5O-Bn-J32" secondAttribute="top" id="106-al-ZX5"/>
-                                        <constraint firstItem="i3O-Tv-sbS" firstAttribute="leading" secondItem="m5O-Bn-J32" secondAttribute="leading" id="79l-rX-cSm"/>
-                                        <constraint firstItem="i3O-Tv-sbS" firstAttribute="centerY" secondItem="4dk-L8-PaX" secondAttribute="centerY" id="L75-Uq-bT2"/>
-                                        <constraint firstAttribute="trailing" secondItem="4dk-L8-PaX" secondAttribute="trailing" id="M5J-Kz-cV3"/>
-                                        <constraint firstAttribute="bottom" secondItem="i3O-Tv-sbS" secondAttribute="bottom" id="nnf-bM-5nF"/>
+                                        <constraint firstItem="teO-II-BDV" firstAttribute="leading" secondItem="m5O-Bn-J32" secondAttribute="leading" id="22p-Nf-EoT"/>
+                                        <constraint firstAttribute="trailing" secondItem="teO-II-BDV" secondAttribute="trailing" id="B8g-dg-cAF"/>
+                                        <constraint firstAttribute="bottom" secondItem="teO-II-BDV" secondAttribute="bottom" id="Za8-0q-07n"/>
+                                        <constraint firstItem="teO-II-BDV" firstAttribute="top" secondItem="m5O-Bn-J32" secondAttribute="top" id="gao-j3-78z"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -121,7 +125,9 @@
                             <outlet property="delegate" destination="REI-FR-Yb0" id="mGJ-0X-CfJ"/>
                         </connections>
                     </tableView>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="Select Quests" id="mNN-LL-gG7"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mfl-Yl-jcK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
