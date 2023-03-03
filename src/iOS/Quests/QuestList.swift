@@ -231,6 +231,18 @@ class QuestList {
 					text.unicodeScalars.filter({ CharacterSet.decimalDigits.contains($0) }).count > 5
 				})
 
+			let addParkingLotType = QuestInstance(
+				ident: "ParkingLotTYpe",
+				title: "Add Parking Type",
+				label: "ic_quest_parking",
+				presetKey: "parking",
+				appliesToObject: { obj in
+					obj.tags["amenity"] == "parking" && obj.tags["parking"] == nil
+				},
+				acceptsValue: { _ in
+					true
+				})
+
 			let websitePredicate = try Self.predicateForKey("website", more: false)
 			let addWebsite = QuestInstance(
 				ident: "Website",
@@ -261,7 +273,8 @@ class QuestList {
 				addPhoneNumber,
 				addOpeningHours,
 				addSpeedLimit,
-				addWebsite
+				addWebsite,
+				addParkingLotType
 //				ResurveyQuest(ageInYears: 2.0)
 			]
 		} catch {

@@ -1922,7 +1922,7 @@ class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 		                                                MyUndoManager.self,
 		                                                UndoAction.self,
 		                                                NSDictionary.self,
-														NSMutableData.self,
+		                                                NSMutableData.self,
 		                                                NSArray.self],
 		                                           forKey: "OsmMapData") as? OsmMapData
 		else {
