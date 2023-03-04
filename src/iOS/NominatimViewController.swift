@@ -126,59 +126,66 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		}
 	}
 
+	/// try parsing as an OSM object reference
+	/// https://www.openstreetmap.org/relation/12894314#map=
+	func parsedAsOsmObjectRef(_ string: String) -> Bool {
+		guard let (objType, objIdent) = LocationParser.osmObjectReference(string: string) else {
+			return false
+		}
+
+		activityIndicator.startAnimating()
+		var url = OSM_API_URL + "api/0.6/\(objType.string)/\(objIdent)"
+		if objType != .NODE {
+			url += "/full"
+		}
+		OsmDownloader.osmData(forUrl: url, completion: { result in
+			DispatchQueue.main.async {
+				self.activityIndicator.stopAnimating()
+				switch result {
+				case let .success(data):
+					if let node = data.nodes.first {
+						self.updateHistory(with: "\(objType.string) \(objIdent)")
+						self.jumpTo(lat: node.latLon.lat, lon: node.latLon.lon, zoom: nil)
+					} else {
+						self.presentErrorMessage()
+					}
+				case let .failure(error):
+					self.presentErrorMessage(error)
+				}
+			}
+		})
+		return true
+	}
+
+	/// try parsing as GOO.GL redirect
+	/// https://goo.gl/maps/yGZxAN37wcmERVD6A
+	func parsedAsGoogleDynamicLink(_ string: String) -> Bool {
+		guard let url = URL(string: string),
+		      LocationParser.isGoogleMapsRedirect(url: url, callback: { mapLocation in
+		      	DispatchQueue.main.async {
+		      		self.activityIndicator.stopAnimating()
+		      		if let mapLocation = mapLocation {
+		      			self.updateHistory(with: "\(mapLocation.latitude),\(mapLocation.longitude)")
+		      			self.jumpTo(lat: mapLocation.latitude,
+		      			            lon: mapLocation.longitude,
+		      			            zoom: mapLocation.zoom)
+		      		}
+		      	}
+		      })
+		else {
+			return false
+		}
+		activityIndicator.startAnimating()
+		return true
+	}
+
 	/// Looks for a pair of non-integer numbers in the string, and jump to it if found
-	func containsLatLon(_ text: String) -> Bool {
-		if let loc = LocationParser.mapLocationFrom(text: text) {
+	func parsedAsLatLon(_ string: String) -> Bool {
+		if let loc = LocationParser.mapLocationFrom(string: string) {
 			updateHistory(with: "\(loc.latitude),\(loc.longitude)")
 			jumpTo(lat: loc.latitude,
 			       lon: loc.longitude,
 			       zoom: loc.zoom > 0.0 ? loc.zoom : nil)
-			return true
-		}
-		return false
-	}
-
-	/// try parsing as an OSM URL
-	/// https://www.openstreetmap.org/relation/12894314#map=
-	func containsOsmObjectID(string: String) -> Bool {
-		var string = string.lowercased()
-		if let hash = string.firstIndex(of: "#") {
-			string = String(string[..<hash])
-		}
-		var objIdent: NSString?
-		var objType: NSString?
-		let delim = CharacterSet(charactersIn: "/,. -")
-		let scanner = Scanner(string: String(string.reversed()))
-		scanner.charactersToBeSkipped = nil
-		if scanner.scanCharacters(from: CharacterSet.alphanumerics, into: &objIdent),
-		   let objIdent = objIdent,
-		   let objIdent2 = Int64(String((objIdent as String).reversed())),
-		   scanner.scanCharacters(from: delim, into: nil),
-		   scanner.scanCharacters(from: CharacterSet.alphanumerics, into: &objType),
-		   let objType = objType,
-		   let objType2 = try? OSM_TYPE(string: String((objType as String).reversed()))
-		{
-			activityIndicator.startAnimating()
-			var url = OSM_API_URL + "api/0.6/\(objType2.string)/\(objIdent2)"
-			if objType2 != .NODE {
-				url += "/full"
-			}
-			OsmDownloader.osmData(forUrl: url, completion: { result in
-				DispatchQueue.main.async {
-					self.activityIndicator.stopAnimating()
-					switch result {
-					case let .success(data):
-						if let node = data.nodes.first {
-							self.updateHistory(with: "\(objType2.string) \(objIdent2)")
-							self.jumpTo(lat: node.latLon.lat, lon: node.latLon.lon, zoom: nil)
-						} else {
-							self.presentErrorMessage()
-						}
-					case let .failure(error):
-						self.presentErrorMessage(error)
-					}
-				}
-			})
 			return true
 		}
 		return false
@@ -206,14 +213,11 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			return
 		}
 
-		// try parsing as an OSM URL
-		// https://www.openstreetmap.org/relation/12894314#map=
-		if containsOsmObjectID(string: string) {
-			return
-		}
-
-		// Do this after checking for an OSM object URL since those can contain lat/lon as well
-		if containsLatLon(string) {
+		// try parsing it as a special case before doing Nominatim lookup
+		if parsedAsOsmObjectRef(string) ||
+			parsedAsGoogleDynamicLink(string) ||
+			parsedAsLatLon(string)
+		{
 			return
 		}
 

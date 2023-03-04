@@ -113,23 +113,25 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 					// An MKMapItem. There should also be a URL we can use instead.
 				} else if provider.hasItemConformingToTypeIdentifier("public.url") {
 					found = true
-					provider.loadItem(forTypeIdentifier: "public.url", options: nil) { url, _ in
+					provider.loadItem(forTypeIdentifier: "public.url", options: nil) { urlData, _ in
 
 						// sometimes its a url, other times data containing a url
-						var urlValue: URL?
-						if let url = url as? URL {
-							urlValue = url
-						} else if let data = url as? Data,
+						let url: URL
+						if let url2 = urlData as? URL {
+							url = url2
+						} else if let data = urlData as? Data,
 						          let string = String(data: data, encoding: .utf8),
-						          let url = URL(string: string)
+						          let url2 = URL(string: string)
 						{
-							urlValue = url
+							url = url2
+						} else {
+							// error
+							self.setUnrecognizedText()
+							return
 						}
 
 						// decode as a location URL
-						if let url = urlValue,
-						   let loc = LocationParser.mapLocationFrom(url: url)
-						{
+						if let loc = LocationParser.mapLocationFrom(url: url) {
 							DispatchQueue.main.async {
 								self.location = CLLocationCoordinate2D(latitude: loc.latitude,
 								                                       longitude: loc.longitude)
@@ -140,8 +142,24 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 							return
 						}
 
+						if LocationParser.isGoogleMapsRedirect(url: url, callback: { loc in
+							DispatchQueue.main.async {
+								guard let loc = loc else {
+									self.setUnrecognizedText()
+									return
+								}
+								self.location = CLLocationCoordinate2D(latitude: loc.latitude,
+																	   longitude: loc.longitude)
+								self.zoom = loc.zoom
+								self.buttonOK.isEnabled = true
+								self.buttonPressOK()
+							}
+						}) {
+							return
+						}
+
 						// decode as a GPX file
-						if let url = urlValue {
+						if true {
 							// try downloading the headers for the URL to see if it's "application/gpx+xml"
 							let request = NSMutableURLRequest(url: url)
 							request.httpMethod = "HEAD"
@@ -166,25 +184,6 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 							task.resume()
 							return
 						}
-
-#if false
-						// decode as google maps
-						if let url = url as? URL,
-						   let comps = URLComponents(url: url, resolvingAgainstBaseURL: true),
-						   comps.host == "goo.gl"
-						{
-							// need to get the redirect to find the actual location
-							let configuration = URLSessionConfiguration.default
-							let session = URLSession(configuration: configuration,
-							                         delegate: self,
-							                         delegateQueue: nil)
-							let task = session.dataTask(with: url)
-							task.resume()
-						}
-#endif
-
-						// error
-						self.setUnrecognizedText()
 					}
 				}
 			}

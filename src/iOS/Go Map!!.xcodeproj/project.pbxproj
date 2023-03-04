@@ -14,6 +14,8 @@
 		0203473F266C1EDD000A7C3D /* ExternalGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0203473E266C1EDD000A7C3D /* ExternalGPS.swift */; };
 		02034743266C2CB9000A7C3D /* MapMarkerDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02034742266C2CB9000A7C3D /* MapMarkerDatabase.swift */; };
 		02034744266D83DB000A7C3D /* DLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C381C308263FD294003142BA /* DLog.swift */; };
+		0203B06429B3D62900B020DF /* OsmType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0203B06329B3D62900B020DF /* OsmType.swift */; };
+		0203B06529B3D62900B020DF /* OsmType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0203B06329B3D62900B020DF /* OsmType.swift */; };
 		020685D826D3253F00A447F9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 020685D626D3253F00A447F9 /* InfoPlist.strings */; };
 		020798012994706000D3C654 /* QuestBuilderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020798002994706000D3C654 /* QuestBuilderController.swift */; };
 		02079803299470FB00D3C654 /* QuestBuilder.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02079802299470FB00D3C654 /* QuestBuilder.storyboard */; };
@@ -286,6 +288,7 @@
 		0203473C26695B2A000A7C3D /* EditorMapLayer+Edit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorMapLayer+Edit.swift"; sourceTree = "<group>"; };
 		0203473E266C1EDD000A7C3D /* ExternalGPS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExternalGPS.swift; path = ../Shared/ExternalGPS.swift; sourceTree = "<group>"; };
 		02034742266C2CB9000A7C3D /* MapMarkerDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapMarkerDatabase.swift; sourceTree = "<group>"; };
+		0203B06329B3D62900B020DF /* OsmType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmType.swift; sourceTree = "<group>"; };
 		02062A24279D15D400B70551 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Height.strings"; sourceTree = "<group>"; };
 		02062A25279D15D400B70551 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/MainInterface.strings"; sourceTree = "<group>"; };
 		02062A26279D15D400B70551 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -1219,6 +1222,7 @@
 				C3D096EF263EBE5D00E3B129 /* OsmNode.swift */,
 				C3D096F2263EBE5E00E3B129 /* OsmRelation.swift */,
 				021FADEE25884BB900F6E1C0 /* OsmTags.swift */,
+				0203B06329B3D62900B020DF /* OsmType.swift */,
 				C3D096F0263EBE5D00E3B129 /* OsmWay.swift */,
 				024909CE267EADC70027E531 /* OsmXmlGenerator.swift */,
 				02263CDE2677F93A002BA72F /* QuadBox.swift */,
@@ -1628,6 +1632,7 @@
 				02D5B5F3248F154D00FEE448 /* Colors.swift in Sources */,
 				021FADCD25873C8200F6E1C0 /* PresetsDatabase+TableView.swift in Sources */,
 				02505C5729A458A30078D60D /* QuestDefinition.swift in Sources */,
+				0203B06429B3D62900B020DF /* OsmType.swift in Sources */,
 				02F6A457268A934900F2ACE7 /* NSAttributedString+Ext.swift in Sources */,
 				02CB2406265DB7CB00835F32 /* CameraView.swift in Sources */,
 				02A123EF264EE7BC005638C1 /* aes.swift in Sources */,
@@ -1655,6 +1660,7 @@
 				02D6238226A6628300A4F147 /* ShareViewController.swift in Sources */,
 				0200C1C22703B42600A79804 /* LocationParser.swift in Sources */,
 				02D623B626A8AFFC00A4F147 /* exif.cpp in Sources */,
+				0203B06529B3D62900B020DF /* OsmType.swift in Sources */,
 				027C7FDC296CCF28005C53A8 /* String+Ext.swift in Sources */,
 				02D623D626A8B16900A4F147 /* ExifGeolocation.mm in Sources */,
 			);

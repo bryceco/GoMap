@@ -10,7 +10,7 @@ import Foundation
 
 /// An object that parses URLs and text for coordinates
 class LocationParser {
-	static func scanDegreesMinutesSeconds(scanner: Scanner) -> Double? {
+	private static func scanDegreesMinutesSeconds(scanner: Scanner) -> Double? {
 		var sign: Double
 		if scanner.scanCharacters(from: CharacterSet(charactersIn: "+NE"), into: nil) {
 			sign = 1.0
@@ -45,7 +45,7 @@ class LocationParser {
 	}
 
 	// parse a string like 19°33'51.6"N+155°56'07.7"W
-	static func scanDegreesMinutesSecondsPair(string: String) -> (Double, Double)? {
+	private static func scanDegreesMinutesSecondsPair(string: String) -> (Double, Double)? {
 		let scanner = Scanner(string: string)
 		scanner.charactersToBeSkipped = nil
 		if let lat = scanDegreesMinutesSeconds(scanner: scanner),
@@ -57,7 +57,7 @@ class LocationParser {
 		return nil
 	}
 
-	class func urlFor(string: String) -> URL? {
+	private class func urlFor(string: String) -> URL? {
 		var urlText = string.addingPercentEncodingForNonASCII()
 		var c = CharacterSet()
 		c.insert(charactersIn: "'")
@@ -66,9 +66,9 @@ class LocationParser {
 		return URL(string: urlText)
 	}
 
-	class func mapLocationFrom(text: String) -> MapLocation? {
+	class func mapLocationFrom(string: String) -> MapLocation? {
 		// first try parsing as a URL
-		let text = text.trimmingCharacters(in: .whitespacesAndNewlines)
+		let text = string.trimmingCharacters(in: .whitespacesAndNewlines)
 		if let url = Self.urlFor(string: text),
 		   let loc = Self.mapLocationFrom(url: url)
 		{
@@ -358,5 +358,61 @@ class LocationParser {
 		}
 
 		return nil
+	}
+
+	/// try parsing as an OSM object or URL
+	/// Node 4137621426
+	/// https://www.openstreetmap.org/node/4137621426
+	/// https://www.openstreetmap.org/node/4137621426#map=
+	class func osmObjectReference(string: String) -> (OSM_TYPE, Int64)? {
+		var string = string.lowercased()
+		if let hash = string.firstIndex(of: "#") {
+			string = String(string[..<hash])
+		}
+		var objIdent: NSString?
+		var objType: NSString?
+		let delim = CharacterSet(charactersIn: ":/,. -")
+		let scanner = Scanner(string: String(string.reversed()))
+		scanner.charactersToBeSkipped = nil
+		if scanner.scanCharacters(from: CharacterSet.alphanumerics, into: &objIdent),
+		   let objIdent = objIdent,
+		   let objIdent2 = Int64(String((objIdent as String).reversed())),
+		   scanner.scanCharacters(from: delim, into: nil),
+		   scanner.scanCharacters(from: CharacterSet.alphanumerics, into: &objType),
+		   let objType = objType,
+		   let objType2 = try? OSM_TYPE(string: String((objType as String).reversed()))
+		{
+			return (objType2, objIdent2)
+		}
+		return nil
+	}
+
+	/// decode as google maps
+	/// https://goo.gl/maps/yGZxAN37wcmERVD6A
+	static func isGoogleMapsRedirect(url: URL, callback: @escaping ((MapLocation?) -> Void)) -> Bool {
+		guard let comps = URLComponents(url: url, resolvingAgainstBaseURL: true),
+		      comps.host == "goo.gl"
+		else {
+			return false
+		}
+		// fetch the redirected URL
+		var request = URLRequest(url: url)
+		request.httpMethod = "HEAD"
+		request.cachePolicy = .returnCacheDataElseLoad
+		let task = URLSession.shared.downloadTask(
+			with: request,
+			completionHandler: { _, response, _ in
+				if let code = (response as? HTTPURLResponse)?.statusCode,
+				   code == 200 || code == 301 || code == 302,
+				   let url = response?.url,
+				   let loc = Self.mapLocationFrom(url: url)
+				{
+					callback(loc)
+				} else {
+					callback(nil)
+				}
+			})
+		task.resume()
+		return true
 	}
 }
