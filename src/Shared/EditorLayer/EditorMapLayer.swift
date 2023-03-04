@@ -152,8 +152,9 @@ final class EditorMapLayer: CALayer {
 				                          	"Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.",
 				                          	comment: ""),
 				                          preferredStyle: .alert)
-				alert!
-					.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+				alert!.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+											   style: .cancel,
+											   handler: nil))
 			}
 		}
 

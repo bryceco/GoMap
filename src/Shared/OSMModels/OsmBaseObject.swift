@@ -171,9 +171,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 	// attributes
 
-	// FIXME: This needed to be an NSMutableDictionary because of how Database treated it,
-	// but I think we can remove that now that everything is swift
-	private(set) var tags: [String: String] = NSMutableDictionary() as! [String: String]
+	private(set) var tags: [String: String] = [:]
 
 	public var _boundingBox: OSMRect? // public only so subclasses can set it
 	var boundingBox: OSMRect {
