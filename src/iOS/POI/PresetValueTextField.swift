@@ -106,6 +106,8 @@ class PresetValueTextField: AutocompleteTextField {
 	@objc func textFieldEditingDidBegin(_ textField: AutocompleteTextField) {
 		updateTextAttributesForKey(key)
 
+		textColor = nil
+
 		if key != "",
 		   PresetsDatabase.shared.eligibleForAutocomplete(key)
 		{
@@ -319,6 +321,7 @@ class PresetValueTextField: AutocompleteTextField {
 		guard let presetKey = presetKey,
 		      presetKey.isYesNo()
 		else {
+			textColor = nil
 			return nil
 		}
 		let button = TristateYesNoButton()
