@@ -27,8 +27,8 @@ class FeaturePresetAreaCell: UITableViewCell {
 	@IBOutlet var isSet: UIView!
 	var presetKey: PresetKey!
 
-	static let placeholderText = NSLocalizedString("Unknown", comment: "")
-	static let placeholderColor: UIColor = {
+	private static let placeholderText = NSLocalizedString("Unknown", comment: "")
+	private static let placeholderColor: UIColor = {
 		if #available(iOS 13.0, *) {
 			return UIColor.placeholderText
 		} else {
@@ -36,7 +36,7 @@ class FeaturePresetAreaCell: UITableViewCell {
 		}
 	}()
 
-	static let regularColor: UIColor = {
+	private static let regularColor: UIColor = {
 		if #available(iOS 13.0, *) {
 			return UIColor.label
 		} else {
@@ -573,10 +573,6 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		sender.resignFirstResponder()
 	}
 
-	func addTelephoneToolbarToKeyboard(for textField: UITextField) {
-		textField.inputAccessoryView = TelephoneToolbar(forTextField: textField, frame: view.frame)
-	}
-
 	@IBAction func textFieldEditingDidBegin(_ textField: AutocompleteTextField?) {
 		if let textField = textField {
 			// get list of values for current key
@@ -589,9 +585,6 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 					values = values.union(values2)
 					let list = [String](values)
 					textField.autocompleteStrings = list
-				}
-				if presetKey.keyboardType == .phonePad {
-					addTelephoneToolbarToKeyboard(for: textField)
 				}
 				firstResponderTextField = textField
 			}
