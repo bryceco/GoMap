@@ -119,15 +119,18 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 		guard var tags = editor.selectedPrimary?.tags else { return }
 		for keyIndex in presetKeys.indices {
 			let section = keyIndex + 1
-			if let index = tableView.indexPathsForSelectedRows?.first(where: { $0.section == section }),
-			   let text = presetKeys[keyIndex]?.presetList?[index.row].tagValue
+			if let cell = tableView.cellForRow(at: IndexPath(row: tableView.numberOfRows(inSection: section) - 1,
+			                                                 section: section))
+				as? QuestSolverTextEntryCell,
+				let text = cell.textField?.text,
+				text.count > 0
+			{
+				// free-form text field
+				tags[tagKeys[keyIndex]] = text
+			} else if let index = tableView.indexPathsForSelectedRows?.first(where: { $0.section == section }),
+			          let text = presetKeys[keyIndex]?.presetList?[index.row].tagValue
 			{
 				// user selected a preset
-				tags[tagKeys[keyIndex]] = text
-			} else if let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section))
-				as? QuestSolverTextEntryCell,
-				let text = cell.textField?.text
-			{
 				tags[tagKeys[keyIndex]] = text
 			} else {
 				// No value set
@@ -230,9 +233,10 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 			if let presetKey = presetKeys[section - 1],
 			   let answerCount = presetKey.presetList?.count,
 			   answerCount >= 2,
+			   !presetKey.isYesNo(),
 			   !isOpeningHours(key: presetKey)
 			{
-				return answerCount
+				return answerCount + 1
 			} else {
 				return 1
 			}
@@ -277,14 +281,11 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 			}
 		default:
 			// Preset cell
-			if let presetKey = presetKeys[indexPath.section - 1],
-			   let count = presetKey.presetList?.count,
-			   count >= 2,
-			   !isOpeningHours(key: presetKey)
-			{
+			if indexPath.row < tableView.numberOfRows(inSection: indexPath.section)-1 {
 				// A selection among a combo of possible values
+				let presetKey = presetKeys[indexPath.section-1]
 				let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCellTagValue", for: indexPath)
-				cell.textLabel?.text = presetKey.presetList?[indexPath.row].name ?? ""
+				cell.textLabel?.text = presetKey?.presetList?[indexPath.row].name ?? ""
 				return cell
 			} else {
 				// A text box to type something in
