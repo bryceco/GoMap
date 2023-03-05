@@ -13,7 +13,7 @@ protocol PresetValueTextFieldOwner: AnyObject {
 	var allPresetKeys: [PresetKey] { get }
 	var childViewPresented: Bool { get set }
 	var viewController: UIViewController { get }
-	func valueChanged(for textField: PresetValueTextField)
+	func valueChanged(for textField: PresetValueTextField, ended: Bool)
 }
 
 class PresetValueTextField: AutocompleteTextField {
@@ -59,8 +59,8 @@ class PresetValueTextField: AutocompleteTextField {
 		setEventNotifications()
 	}
 
-	private func notifyValueChange() {
-		owner.valueChanged(for: self)
+	private func notifyValueChange(ended: Bool) {
+		owner.valueChanged(for: self, ended: ended)
 	}
 
 	private func updateTextAttributesForKey(_ key: String) {
@@ -69,6 +69,7 @@ class PresetValueTextField: AutocompleteTextField {
 		keyboardType = .default
 		autocorrectionType = .no
 		autocapitalizationType = .none
+		returnKeyType = .done
 
 		if let preset = presetKey ?? owner.allPresetKeys.first(where: { key == $0.tagKey }) {
 			autocapitalizationType = preset.autocapitalizationType
@@ -82,7 +83,6 @@ class PresetValueTextField: AutocompleteTextField {
 			switch key {
 			case "note", "comment", "description", "fixme", "inscription", "source":
 				autocapitalizationType = .sentences
-				autocorrectionType = .yes
 			case "phone", "contact:phone", "fax", "contact:fax":
 				keyboardType = .phonePad
 				inputAccessoryView = TelephoneToolbar(forTextField: self, frame: frame)
@@ -94,6 +94,7 @@ class PresetValueTextField: AutocompleteTextField {
 				break
 			}
 		}
+		spellCheckingType = autocorrectionType == .no ? .no : .default
 	}
 
 	// MARK: UITextField delegate
@@ -102,6 +103,7 @@ class PresetValueTextField: AutocompleteTextField {
 		addTarget(self, action: #selector(textFieldEditingDidBegin(_:)), for: .editingDidBegin)
 		addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
 		addTarget(self, action: #selector(textFieldEditingDidEnd(_:)), for: .editingDidEnd)
+		addTarget(self, action: #selector(textFieldEditingDidEndOnExit(_:)), for: .editingDidEndOnExit)
 	}
 
 	@objc func textFieldEditingDidBegin(_ textField: AutocompleteTextField) {
@@ -122,8 +124,11 @@ class PresetValueTextField: AutocompleteTextField {
 	}
 
 	@objc func textFieldEditingChanged(_ textField: AutocompleteTextField) {
-		updateAssociatedContent()
-		notifyValueChange()
+		notifyValueChange(ended: false)
+	}
+
+	@objc func textFieldEditingDidEndOnExit(_ textField: UITextField) {
+		textField.resignFirstResponder()
 	}
 
 	@objc func textFieldEditingDidEnd(_ textField: UITextField) {
@@ -139,7 +144,7 @@ class PresetValueTextField: AutocompleteTextField {
 			}
 		}
 		updateAssociatedContent()
-		notifyValueChange()
+		notifyValueChange(ended: true)
 	}
 
 	// MARK: Accessory buttons
@@ -244,7 +249,7 @@ class PresetValueTextField: AutocompleteTextField {
 		dateFormatter.formatOptions = [.withYear, .withMonth, .withDay, .withDashSeparatorInDate]
 		dateFormatter.timeZone = NSTimeZone.local
 		text = dateFormatter.string(from: now)
-		notifyValueChange()
+		notifyValueChange(ended: true)
 	}
 
 	private func getSurveyDateButton() -> UIView? {
@@ -274,7 +279,7 @@ class PresetValueTextField: AutocompleteTextField {
 			value: text,
 			setValue: { [weak self] newValue in
 				self?.text = newValue
-				self?.notifyValueChange()
+				self?.notifyValueChange(ended: true)
 			})
 		owner.childViewPresented = true
 		owner.viewController.present(directionViewController, animated: true)
@@ -303,7 +308,7 @@ class PresetValueTextField: AutocompleteTextField {
 		let vc = HeightViewController.instantiate()
 		vc.callback = { newValue in
 			self.text = newValue
-			self.notifyValueChange()
+			self.notifyValueChange(ended: true)
 		}
 		owner.viewController.present(vc, animated: true)
 		owner.childViewPresented = true
@@ -366,7 +371,7 @@ class PresetValueTextField: AutocompleteTextField {
 			self.textColor = (newValue == "yes" || newValue == "no") ? .clear : nil
 			self.text = newValue
 			self.resignFirstResponder()
-			self.notifyValueChange()
+			self.notifyValueChange(ended: true)
 		}
 		return button
 	}
@@ -386,7 +391,7 @@ class PresetValueTextField: AutocompleteTextField {
 			{
 				let v = newValue == nil ? String(number) : number + " " + newValue!
 				self.text = v
-				self.notifyValueChange()
+				self.notifyValueChange(ended: false)
 			} else {
 				button.setSelection(forString: "")
 			}

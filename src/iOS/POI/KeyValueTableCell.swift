@@ -42,7 +42,7 @@ protocol KeyValueTableCellOwner: UITableViewController {
 
 class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFieldDelegate, UITextViewDelegate {
 	var textView: UITextView?
-	weak var owner: KeyValueTableCellOwner!
+	weak var keyValueCellOwner: KeyValueTableCellOwner!
 	var key: String { return text1.text ?? "" }
 	var value: String { return textView?.text ?? text2.text! }
 
@@ -90,8 +90,8 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		// This resizes the cell to be appropriate for the content
 		UIView.setAnimationsEnabled(false)
 		textView?.sizeToFit()
-		owner.tableView.beginUpdates()
-		owner.tableView.endUpdates()
+		keyValueCellOwner.tableView.beginUpdates()
+		keyValueCellOwner.tableView.endUpdates()
 		UIView.setAnimationsEnabled(true)
 	}
 
@@ -154,8 +154,10 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 
 	// MARK: textField delegate functions
 
-	func notifyKeyValueChange() {
-		owner.keyValueChanged(for: self)
+	func notifyKeyValueChange(ended: Bool) {
+		if ended {
+			keyValueCellOwner.keyValueChanged(for: self)
+		}
 	}
 
 	@objc func textFieldReturn(_ sender: UIView) {
@@ -196,11 +198,11 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		return Self.shouldChangeTag(origText: origText,
 		                            charactersIn: remove,
 		                            replacementString: insert,
-		                            warningVC: owner)
+		                            warningVC: keyValueCellOwner)
 	}
 
 	@objc func textFieldEditingDidBegin(_ textField: AutocompleteTextField) {
-		owner.currentTextField = textField
+		keyValueCellOwner.currentTextField = textField
 
 		if textField === text1 {
 			// get list of keys
@@ -214,14 +216,14 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		if textField === text1 {
 			text2.key = text1.text ?? ""
 		}
-		notifyKeyValueChange()
+		notifyKeyValueChange(ended: true)
 	}
 
 	// MARK: textView delegate functions
 
 	func textViewDidBeginEditing(_ textView: UITextView) {
 		// set the current textField to the underlying textField
-		owner.currentTextField = text2
+		keyValueCellOwner.currentTextField = text2
 	}
 
 	func textViewDidChange(_ textView: UITextView) {
@@ -229,7 +231,7 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 	}
 
 	func textViewDidEndEditing(_ textView: UITextView) {
-		notifyKeyValueChange()
+		notifyKeyValueChange(ended: true)
 		useTextField()
 	}
 
@@ -261,25 +263,25 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 			infoButton.isEnabled = true
 			infoButton.titleLabel?.layer.opacity = 1.0
 			if let url = url,
-			   owner.view.window != nil
+			   keyValueCellOwner.view.window != nil
 			{
 				let viewController = SFSafariViewController(url: url)
-				owner.childViewPresented = true
-				owner.present(viewController, animated: true)
+				keyValueCellOwner.childViewPresented = true
+				keyValueCellOwner.present(viewController, animated: true)
 			}
 		}
 	}
 
 	// MARK: PresetValueTextFieldOwner
 
-	var allPresetKeys: [PresetKey] { return owner.allPresetKeys }
+	var allPresetKeys: [PresetKey] { return keyValueCellOwner.allPresetKeys }
 	var childViewPresented: Bool {
-		set { owner.childViewPresented = newValue }
-		get { owner.childViewPresented }
+		set { keyValueCellOwner.childViewPresented = newValue }
+		get { keyValueCellOwner.childViewPresented }
 	}
 
-	var viewController: UIViewController { return owner }
-	func valueChanged(for textField: PresetValueTextField) {
-		notifyKeyValueChange()
+	var viewController: UIViewController { return keyValueCellOwner }
+	func valueChanged(for textField: PresetValueTextField, ended: Bool) {
+		notifyKeyValueChange(ended: ended)
 	}
 }

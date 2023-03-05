@@ -545,9 +545,9 @@ extension PresetsDatabase {
 		     "tel", "url", "roadheight", "roadspeed", "wikipedia", "wikidata", "date":
 
 			// no presets, but we customize keyboard input
-			var keyboard = UIKeyboardType.default
-			var capitalize = UITextAutocapitalizationType.none
-			var autocorrect = UITextAutocorrectionType.default
+			var keyboard: UIKeyboardType = .default
+			var capitalize: UITextAutocapitalizationType = .none
+			var autocorrect: UITextAutocorrectionType = .no
 			switch field.type {
 			case "number", "roadheight", "roadspeed", "date":
 				keyboard = .numbersAndPunctuation // UIKeyboardTypeDecimalPad doesn't have Done button
@@ -565,6 +565,7 @@ extension PresetsDatabase {
 				case "architect", "artist_name", "branch", "brand", "comment",
 				     "destination", "flag:name", "network", "operator", "subject":
 					capitalize = .words
+					autocorrect = .default
 				default:
 					break
 				}

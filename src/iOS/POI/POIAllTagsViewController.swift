@@ -271,7 +271,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerViewContr
 			// Tags
 			let cell = tableView.dequeueReusableCell(withIdentifier: "KeyValueCell",
 			                                         for: indexPath) as! KeyValueTableCell
-			cell.owner = self
+			cell.keyValueCellOwner = self
 			// assign text contents of fields
 			let kv = tags[indexPath.row]
 			cell.text1.isEnabled = true
@@ -280,6 +280,9 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerViewContr
 			cell.text2.text = kv.v
 			cell.text2.key = kv.k
 			cell.text1.inputAccessoryView = prevNextToolbar
+			cell.text1.autocorrectionType = .no
+			cell.text1.autocapitalizationType = .none
+			cell.text1.spellCheckingType = .no
 			cell.text2.defaultInputAccessoryView = prevNextToolbar
 			return cell
 		} else if indexPath.section == 1 {

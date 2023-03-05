@@ -324,7 +324,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 				// extra tags
 				let cell = tableView.dequeueReusableCell(withIdentifier: "KeyValueCell",
 				                                         for: indexPath) as! KeyValueTableCell
-				cell.owner = self
+				cell.keyValueCellOwner = self
 				if indexPath.row < extraTags.count {
 					cell.text1?.text = extraTags[indexPath.row].k
 					cell.text2?.text = extraTags[indexPath.row].v
@@ -394,6 +394,14 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 				                                         for: indexPath) as! FeaturePresetCell
 				cell.nameLabel.text = presetKey.name
 				cell.valueField.placeholder = presetKey.placeholder
+				cell.accessoryType = .none
+
+				cell.valueField.removeTarget(self, action: nil, for: .allEvents)
+				cell.valueField.addTarget(self, action: #selector(textFieldReturn(_:)), for: .editingDidEndOnExit)
+				cell.valueField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
+				cell.valueField.addTarget(self, action: #selector(textFieldEditingDidBegin(_:)), for: .editingDidBegin)
+				cell.valueField.addTarget(self, action: #selector(textFieldDidEndEditing(_:)), for: .editingDidEnd)
+
 				return cell
 
 			default:
@@ -422,7 +430,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 				   presets.count > 0
 				{
 					// The user can select from a list of presets.
-					cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+					cell.accessoryType = .disclosureIndicator
 				}
 
 				// Regular cell
@@ -443,7 +451,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 			cell.valueField.isEnabled = false
 			cell.valueField.rightView = nil
 			cell.presetKey = .group(drillDownGroup)
-			cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+			cell.accessoryType = .disclosureIndicator
 			cell.isSet.backgroundColor = cell.valueField.text == "" ? nil : Self.isSetHighlight
 
 			return cell
@@ -696,7 +704,8 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 
 	var viewController: UIViewController { self }
 
-	func valueChanged(for textField: PresetValueTextField) {
+	func valueChanged(for textField: PresetValueTextField, ended: Bool) {
+		guard ended else { return }
 		guard let cell: FeaturePresetCell = textField.superviewOfType()
 		else {
 			return

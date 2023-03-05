@@ -36,12 +36,16 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 	}
 
 	func setFirstResponder() {
-		if presetKeys.first??.presetList?.count == nil {
-			// set text cell to first responder
-			if let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 1)),
-			   let cell2 = cell as? QuestSolverTextEntryCell
-			{
-				cell2.textField?.becomeFirstResponder()
+		if presetKeys.count == 1,
+		   let presetKey = presetKeys[0]
+		{
+			if (presetKey.presetList?.count ?? 0) < 2 || isOpeningHours(presetKey.tagKey) {
+				// set text cell to first responder
+				if let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 1)),
+				   let cell2 = cell as? QuestSolverTextEntryCell
+				{
+					cell2.textField?.becomeFirstResponder()
+				}
 			}
 		}
 	}
@@ -301,7 +305,7 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 	var allPresetKeys: [PresetKey] { presetKeys.compactMap { $0 } }
 	var childViewPresented = false
 	var viewController: UIViewController { self }
-	func valueChanged(for textField: PresetValueTextField) {
+	func valueChanged(for textField: PresetValueTextField, ended: Bool) {
 		let okay = questMarker.quest.accepts(tagValue: textField.text ?? "")
 		navigationItem.rightBarButtonItem?.isEnabled = okay
 	}
@@ -310,11 +314,15 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 // MARK: Special code for handling opening_hours using the camera
 
 extension QuestSolverController {
+	func isOpeningHours(_ key: String) -> Bool {
+		return key == "opening_hours" || key.hasSuffix(":opening_hours") || key.hasPrefix("opening_hours:")
+	}
+
 	func isOpeningHours(key: PresetKey) -> Bool {
 #if !targetEnvironment(macCatalyst)
 #if arch(arm64) || arch(x86_64) // old architectures don't support SwiftUI
 		if #available(iOS 14.0, *) {
-			return key.tagKey == "opening_hours" || key.tagKey.hasSuffix(":opening_hours")
+			return isOpeningHours(key.tagKey)
 		}
 #endif
 #endif
