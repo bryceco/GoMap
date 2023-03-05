@@ -152,6 +152,27 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		updateTextViewSize()
 	}
 
+	func selectTextViewFor(key: String) {
+		// set text formatting options for text field
+		if let preset = keyValueCellOwner.allPresetKeys.first(where: { key == $0.tagKey }) {
+			if preset.type == "textarea" {
+				useTextView()
+			} else {
+				useTextField()
+			}
+		} else {
+			switch key {
+			case "note", "comment", "description", "fixme", "inscription", "source":
+				useTextView()
+				textView?.autocapitalizationType = .sentences
+				textView?.autocorrectionType = .default
+				textView?.spellCheckingType = .default
+			default:
+				useTextField()
+			}
+		}
+	}
+
 	// MARK: textField delegate functions
 
 	func notifyKeyValueChange(ended: Bool) {
@@ -199,6 +220,19 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		                            charactersIn: remove,
 		                            replacementString: insert,
 		                            warningVC: keyValueCellOwner)
+	}
+
+	func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+		if textField === text2 {
+			// set up textView if necessary
+			selectTextViewFor(key: text1?.text ?? "")
+
+			// if we enabled the textView then we don't want to edit the textField
+			if textView != nil {
+				return false
+			}
+		}
+		return true
 	}
 
 	@objc func textFieldEditingDidBegin(_ textField: AutocompleteTextField) {
