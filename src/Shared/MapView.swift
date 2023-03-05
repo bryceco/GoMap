@@ -2755,6 +2755,7 @@ extension MapView: EditorMapLayerOwner {
 
 	func selectionDidChange() {
 		updateEditControl()
+		mapMarkerDatabase.selectedObject(editorLayer.selectedPrimary)
 	}
 
 	func centerPoint() -> CGPoint {

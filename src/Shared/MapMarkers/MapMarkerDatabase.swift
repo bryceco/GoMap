@@ -207,9 +207,20 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 	func mapMarker(forTag tag: Int) -> MapMarker? {
 		return markerForIdentifier.values.first(where: { $0.buttonId == tag })
 	}
+
+	// MARK: object selection
+
+	func selectedObject(_ object: OsmBaseObject?) {
+		for marker in markerForIdentifier.values {
+			if let button = marker.button {
+				button.isHighlighted = object == marker.object
+			}
+		}
+	}
 }
 
-// Notes functions
+// MARK: Notes functions
+
 extension MapMarkerDatabase {
 	func addNoteMarkers(forRegion box: OSMRect, completion: @escaping () -> Void) {
 		let url = OSM_API_URL +
