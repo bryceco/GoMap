@@ -14,10 +14,14 @@ struct AdvancedQuestFilterRowView: View {
 
 	var body: some View {
 		HStack {
+			// Key textfield
 			TextField("", text: $data.tagKey)
 				.textFieldStyle(.roundedBorder)
 				.autocapitalization(.none)
+				.autocorrectionDisabled()
+				.keyboardType(.asciiCapable)
 
+			// relation button
 			Menu {
 				Button(QuestDefinitionFilter.Relation.equal.rawValue, action: { data.relation = .equal })
 				Button(QuestDefinitionFilter.Relation.notEqual.rawValue, action: { data.relation = .notEqual })
@@ -25,10 +29,14 @@ struct AdvancedQuestFilterRowView: View {
 				Label(data.relation.rawValue, systemImage: "book.fill").labelStyle(TitleOnlyLabelStyle())
 			}
 
+			// value textfield
 			TextField("", text: $data.tagValue)
 				.textFieldStyle(RoundedBorderTextFieldStyle())
 				.autocapitalization(.none)
-
+				.autocorrectionDisabled()
+				.keyboardType(.asciiCapable)
+			
+			// include/exclude button
 			Menu {
 				Button(QuestDefinitionFilter.Included.include.rawValue, action: { data.included = .include })
 				Button(QuestDefinitionFilter.Included.exclude.rawValue, action: { data.included = .exclude })

@@ -80,6 +80,9 @@ struct AdvancedQuestBuilder: View {
 								.frame(width: 200, alignment: .center)
 								.textFieldStyle(.roundedBorder)
 								.autocapitalization(.none)
+								.autocorrectionDisabled()
+								.keyboardType(.asciiCapable)
+							
 							let showPlus = index == quest.tagKeys.count - 1
 							Button(action: addKey) {
 								Label("", systemImage: "plus")
@@ -112,7 +115,7 @@ struct AdvancedQuestBuilder: View {
 			Section(
 				header: Text("Icon"),
 				content: {
-					Text("Provide a single-character symbol to identify this quest:")
+					Text("Provide a single-character symbol (emoji or unicode character) to identify this quest:")
 					TextField("", text: $quest.label)
 						.frame(width: 60, alignment: .center)
 						.textFieldStyle(.roundedBorder)
