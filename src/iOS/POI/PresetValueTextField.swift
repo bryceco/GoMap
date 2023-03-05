@@ -100,6 +100,7 @@ class PresetValueTextField: AutocompleteTextField {
 
 	private func setEventNotifications() {
 		addTarget(self, action: #selector(textFieldEditingDidBegin(_:)), for: .editingDidBegin)
+		addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
 		addTarget(self, action: #selector(textFieldEditingDidEnd(_:)), for: .editingDidEnd)
 	}
 
@@ -118,6 +119,11 @@ class PresetValueTextField: AutocompleteTextField {
 			let list: [String] = Array(set)
 			autocompleteStrings = list
 		}
+	}
+
+	@objc func textFieldEditingChanged(_ textField: AutocompleteTextField) {
+		updateAssociatedContent()
+		notifyValueChange()
 	}
 
 	@objc func textFieldEditingDidEnd(_ textField: UITextField) {
