@@ -127,13 +127,12 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 		var list = list
 		var groups: [(predicate, Bool)] = []
 		while let rule = list.popLast() {
-
 			// collect all items that match first item for key and relation
 			var pred = rule.makePredicate()
 			while let otherIndex = list.indices.first(where: {
 				list[$0].tagKey == rule.tagKey &&
-				list[$0].relation == rule.relation &&
-				list[$0].included == rule.included
+					list[$0].relation == rule.relation &&
+					list[$0].included == rule.included
 			}) {
 				let rhs = list[otherIndex].makePredicate()
 				list.remove(at: otherIndex)

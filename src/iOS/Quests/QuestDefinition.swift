@@ -26,6 +26,16 @@ protocol QuestProtocol {
 	func accepts(tagValue: String) -> Bool
 }
 
+extension QuestProtocol {
+	static func isImage(label: String) -> Bool {
+		return label.hasPrefix("ic_quest_")
+	}
+
+	static func isCharacter(label: String) -> Bool {
+		return label.count == 1
+	}
+}
+
 // A quest instance is a concrete QuestProtocol
 
 class QuestInstance: QuestProtocol {

@@ -104,9 +104,7 @@ struct QuestDefinitionWithFeatures: QuestDefinition {
 	                                     accepts: ((String) -> Bool)? =
 	                                     	nil // This is acceptance criteria for a value the user typed in
 	) throws -> QuestInstance {
-		if label.count != 1,
-		   !label.hasPrefix("ic_quest_")
-		{
+		guard QuestInstance.isCharacter(label: label) || QuestInstance.isImage(label: label) else {
 			throw QuestError.illegalLabel(label)
 		}
 

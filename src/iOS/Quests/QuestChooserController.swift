@@ -11,6 +11,8 @@ import UIKit
 
 class QuestChooserTableCell: UITableViewCell {
 	@IBOutlet var title: UILabel?
+	@IBOutlet var icon: UIImageView?
+	@IBOutlet var label: UILabel?
 	@IBOutlet var uiSwitch: UISwitch?
 	var quest: QuestProtocol?
 
@@ -76,6 +78,15 @@ class QuestChooserController: UITableViewController {
 			let quest = QuestList.shared.list[indexPath.row]
 			cell.quest = quest
 			cell.title?.text = quest.title
+			cell.icon?.isHidden = true
+			cell.label?.isHidden = true
+			if QuestInstance.isCharacter(label: quest.label) {
+				cell.label?.text = quest.label
+				cell.label?.isHidden = false
+			} else {
+				cell.icon?.image = UIImage(named: quest.label)
+				cell.icon?.isHidden = false
+			}
 			cell.uiSwitch?.isOn = QuestList.shared.isEnabled(quest)
 			if #available(iOS 15, *) {
 				cell.accessoryType = QuestList.shared.isUserQuest(quest) ? .disclosureIndicator : .none

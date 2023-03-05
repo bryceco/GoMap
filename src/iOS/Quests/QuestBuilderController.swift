@@ -313,7 +313,8 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 	private func updateSaveButtonStatus() {
 		let name = nameField?.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
 		let label = labelField?.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
-		saveButton?.isEnabled = name != "" && label.count == 1
+		saveButton?.isEnabled = name != "" &&
+			(QuestInstance.isCharacter(label: label) || QuestInstance.isImage(label: label))
 	}
 
 	@objc func nameFieldDidChange(_ sender: Any?) {

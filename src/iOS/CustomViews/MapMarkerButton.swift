@@ -63,7 +63,7 @@ final class MapMarkerButton: MapView.MapViewButton {
 		shapeLayer.path = path.cgPath
 
 		let labelLayer: CALayer
-		if label.count > 1 {
+		if QuestInstance.isImage(label: label) {
 			labelLayer = CALayer()
 			labelLayer.contents = UIImage(named: label)?.cgImage
 			labelLayer.frame = CGRect(x: 1, y: 1, width: 2 * radius - 2, height: 2 * radius - 2)
