@@ -281,9 +281,9 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 			}
 		default:
 			// Preset cell
-			if indexPath.row < tableView.numberOfRows(inSection: indexPath.section)-1 {
+			if indexPath.row < tableView.numberOfRows(inSection: indexPath.section) - 1 {
 				// A selection among a combo of possible values
-				let presetKey = presetKeys[indexPath.section-1]
+				let presetKey = presetKeys[indexPath.section - 1]
 				let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCellTagValue", for: indexPath)
 				cell.textLabel?.text = presetKey?.presetList?[indexPath.row].name ?? ""
 				return cell

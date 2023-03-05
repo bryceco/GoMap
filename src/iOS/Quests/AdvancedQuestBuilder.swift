@@ -82,7 +82,7 @@ struct AdvancedQuestBuilder: View {
 								.autocapitalization(.none)
 								.autocorrectionDisabled()
 								.keyboardType(.asciiCapable)
-							
+
 							let showPlus = index == quest.tagKeys.count - 1
 							Button(action: addKey) {
 								Label("", systemImage: "plus")

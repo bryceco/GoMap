@@ -35,7 +35,7 @@ struct AdvancedQuestFilterRowView: View {
 				.autocapitalization(.none)
 				.autocorrectionDisabled()
 				.keyboardType(.asciiCapable)
-			
+
 			// include/exclude button
 			Menu {
 				Button(QuestDefinitionFilter.Included.include.rawValue, action: { data.included = .include })
