@@ -114,68 +114,66 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 
 	// MARK: makeQuestInstance
 
-	private static func makeOrSets(list: [QuestDefinitionFilter]) -> [([String: String]) -> Bool] {
+	/*
+	 highway = primary
+	 highway = secondary // gets ORed with previous
+	 highway != lamp
+	 highway != path		// gets ANDed with previous
+	 */
+	private typealias predicate = ([String: String]) -> Bool
+	private static func makeGroups(list: [QuestDefinitionFilter])
+		-> [(predicate: predicate, included: Bool)]
+	{
 		var list = list
-		var orSets: [([String: String]) -> Bool] = []
+		var groups: [(predicate, Bool)] = []
 		while let rule = list.popLast() {
-			// collect all items that match first item
+
+			// collect all items that match first item for key and relation
 			var pred = rule.makePredicate()
 			while let otherIndex = list.indices.first(where: {
-				list[$0].tagKey == rule.tagKey && list[$0].relation == rule.relation
+				list[$0].tagKey == rule.tagKey &&
+				list[$0].relation == rule.relation &&
+				list[$0].included == rule.included
 			}) {
 				let rhs = list[otherIndex].makePredicate()
 				list.remove(at: otherIndex)
 				let lhs = pred
-				pred = { tags in lhs(tags) || rhs(tags) }
+				switch rule.relation {
+				case .equal:
+					pred = { tags in lhs(tags) || rhs(tags) }
+				case .notEqual:
+					pred = { tags in lhs(tags) && rhs(tags) }
+				}
 			}
-			orSets.append(pred)
+			groups.append((pred, rule.included == .include))
 		}
-		return orSets
-	}
-
-	private static func makeIncludePredicate(include: [QuestDefinitionFilter]) throws -> (([String: String]) -> Bool) {
-		var orSets = Self.makeOrSets(list: include)
-		guard !orSets.isEmpty else {
-			throw QuestError.noFiltersDefined
-		}
-		// combine all OR sets with ANDS
-		var andPred = orSets.popLast()!
-		while let rhs = orSets.popLast() {
-			let lhs = andPred
-			andPred = { tags in lhs(tags) && rhs(tags) }
-		}
-		return andPred
-	}
-
-	private static func makeExcludePredicate(exclude: [QuestDefinitionFilter]) throws -> (([String: String]) -> Bool)? {
-		var orSets = Self.makeOrSets(list: exclude)
-		guard !orSets.isEmpty else {
-			return nil
-		}
-		var andPred = orSets.popLast()!
-		while let rhs = orSets.popLast() {
-			let lhs = andPred
-			andPred = { tags in lhs(tags) && rhs(tags) }
-		}
-		return andPred
+		return groups
 	}
 
 	private static func makePredicate(filters: [QuestDefinitionFilter]) throws -> (([String: String]) -> Bool) {
 		if filters.contains(where: { $0.tagKey == "" }) {
 			throw QuestError.emptyKeyString
 		}
-
-		let include = filters.filter({ $0.included == .include })
-		let exclude = filters.filter({ $0.included == .exclude })
-
-		let includePred = try Self.makeIncludePredicate(include: include)
-		let excludePred = try Self.makeExcludePredicate(exclude: exclude)
-
-		if let excludePred = excludePred {
-			return { includePred($0) && !excludePred($0) }
-		} else {
-			return includePred
+		if filters.first(where: { $0.included == .include }) == nil {
+			throw QuestError.noFiltersDefined
 		}
+
+		var groups = makeGroups(list: filters)
+
+		let group = groups.popLast()!
+		let p = group.predicate
+		var pred = group.included ? p : { !p($0) }
+
+		while let rhsGroup = groups.popLast() {
+			let lhs = pred
+			let rhs = rhsGroup.predicate
+			if rhsGroup.included {
+				pred = { lhs($0) && rhs($0) }
+			} else {
+				pred = { lhs($0) && !rhs($0) }
+			}
+		}
+		return pred
 	}
 
 	func makeQuestInstance() throws -> QuestProtocol {
