@@ -84,6 +84,25 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		modifyCount = 0
 	}
 
+	override var hash: Int {
+		var hasher = Hasher()
+		hasher.combine(ident)
+		return hasher.finalize()
+	}
+
+	override func isEqual(_ other: Any?) -> Bool {
+		guard let other = other as? OsmBaseObject
+		else {
+			DbgAssert(false)
+			return false
+		}
+		if self === other {
+			return true
+		}
+		DbgAssert(ident != other.ident)
+		return false
+	}
+
 	func encode(with coder: NSCoder) {
 		coder.encode(NSNumber(value: ident), forKey: "ident")
 		coder.encode(user, forKey: "user")

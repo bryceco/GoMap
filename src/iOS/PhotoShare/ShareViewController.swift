@@ -149,7 +149,7 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 									return
 								}
 								self.location = CLLocationCoordinate2D(latitude: loc.latitude,
-																	   longitude: loc.longitude)
+								                                       longitude: loc.longitude)
 								self.zoom = loc.zoom
 								self.buttonOK.isEnabled = true
 								self.buttonPressOK()

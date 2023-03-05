@@ -153,8 +153,8 @@ final class EditorMapLayer: CALayer {
 				                          	comment: ""),
 				                          preferredStyle: .alert)
 				alert!.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
-											   style: .cancel,
-											   handler: nil))
+				                               style: .cancel,
+				                               handler: nil))
 			}
 		}
 

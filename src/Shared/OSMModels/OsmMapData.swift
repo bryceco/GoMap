@@ -1306,10 +1306,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		assert(r.isSubset(of: modRelations))
 #endif
 
-		var modified = OsmDownloadData()
-		modified.nodes = modNodes
-		modified.ways = modWays
-		modified.relations = modRelations
+		let modified = OsmDownloadData(nodes: modNodes,
+		                               ways: modWays,
+		                               relations: modRelations)
 		return modified
 	}
 
@@ -1716,6 +1715,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		// update self with minimized versions appropriate for saving
 		let modified = modifiedObjects()
+		// FIXME: if an object gets duplicated in the undo manager somehow then
+		// this code will crash because the ident key is duplicated. This requires
+		// tracking down the cause of the duplication, not fixing it here.
 		nodes = Dictionary(uniqueKeysWithValues: modified.nodes.map({ ($0.ident, $0) }))
 		ways = Dictionary(uniqueKeysWithValues: modified.ways.map({ ($0.ident, $0) }))
 		relations = Dictionary(uniqueKeysWithValues: modified.relations.map({ ($0.ident, $0) }))
