@@ -179,7 +179,8 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 
 	override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
 		guard
-			indexPath.section > 0, indexPath.section < 1 + tagKeys.count
+			indexPath.section > 0, indexPath.section < 1 + tagKeys.count,
+			!(tableView.cellForRow(at: indexPath) is QuestSolverTextEntryCell)
 		else {
 			return nil
 		}
