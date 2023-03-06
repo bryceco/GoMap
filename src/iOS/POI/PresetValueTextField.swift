@@ -166,7 +166,7 @@ class PresetValueTextField: AutocompleteTextField {
 	// MARK: Color preview
 
 	private func getAssociatedColor() -> UIView? {
-		if key == "colour" || key == "color" || key.hasSuffix(":colour") || key.hasSuffix(":color"),
+		if OsmTags.isKey(key, variantOf: "colour") || OsmTags.isKey(key, variantOf: "color"),
 		   let value = text,
 		   let color = Colors.cssColorForColorName(value.lowercased())
 		{
@@ -396,7 +396,7 @@ class PresetValueTextField: AutocompleteTextField {
 #if !targetEnvironment(macCatalyst)
 #if arch(arm64) || arch(x86_64) // old architectures don't support SwiftUI
 		if #available(iOS 14.0, *) {
-			guard key == "opening_hours" || key.hasSuffix(":opening_hours") else {
+			guard OsmTags.isKey(key, variantOf: "opening_hours") else {
 				return nil
 			}
 			let button = UIButton(type: .contactAdd)

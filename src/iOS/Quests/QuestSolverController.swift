@@ -328,7 +328,7 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 
 extension QuestSolverController {
 	func isOpeningHours(_ key: String) -> Bool {
-		return key == "opening_hours" || key.hasSuffix(":opening_hours") || key.hasPrefix("opening_hours:")
+		return OsmTags.isKey(key, variantOf: "opening_hours")
 	}
 
 	func isOpeningHours(key: PresetKey) -> Bool {

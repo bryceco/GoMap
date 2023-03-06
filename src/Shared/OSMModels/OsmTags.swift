@@ -20,7 +20,7 @@ final class OsmTags {
 		return tag
 	}
 
-	@objc class func isOsmBooleanTrue(_ value: String?) -> Bool {
+	class func isOsmBooleanTrue(_ value: String?) -> Bool {
 		switch value {
 		case "true", "yes", "1":
 			return true
@@ -29,13 +29,17 @@ final class OsmTags {
 		}
 	}
 
-	@objc class func isOsmBooleanFalse(_ value: String?) -> Bool {
+	class func isOsmBooleanFalse(_ value: String?) -> Bool {
 		switch value {
 		case "false", "no", "0":
 			return true
 		default:
 			return false
 		}
+	}
+
+	class func isKey(_ key: String, variantOf baseKey: String) -> Bool {
+		return key == baseKey || key.hasSuffix(":"+baseKey) || key.hasPrefix(baseKey+":")
 	}
 
 	static let surveyDateSynonyms: Set<String> = [
@@ -67,7 +71,6 @@ final class OsmTags {
 		 "yh:TYPE",
 		 "yh:WIDTH_RANK"]
 
-	@objc
 	static func IsInterestingKey(_ key: String) -> Bool {
 		if key == "attribution" ||
 			key == "created_by" ||
