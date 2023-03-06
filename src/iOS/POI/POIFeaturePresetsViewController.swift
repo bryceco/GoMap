@@ -152,7 +152,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		if drillDownGroup == nil {
 			let dict = tabController.keyValueDict
 			let object = tabController.selection
-			let geometry = object?.geometry() ?? GEOMETRY.NODE
+			let geometry = object?.geometry() ?? GEOMETRY.POINT
 
 			// update most recent feature
 			selectedFeature = selectedFeature ?? PresetsDatabase.shared.presetFeatureMatching(
@@ -269,7 +269,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 	{
 		selectedFeature = newFeature
 		let tabController = tabBarController as! POITabBarController
-		let geometry = tabController.selection?.geometry() ?? GEOMETRY.NODE
+		let geometry = tabController.selection?.geometry() ?? GEOMETRY.POINT
 		let location = AppDelegate.shared.mapView.currentRegion
 		tabController.keyValueDict = newFeature.objectTagsUpdatedForFeature(tabController.keyValueDict,
 		                                                                    geometry: geometry,

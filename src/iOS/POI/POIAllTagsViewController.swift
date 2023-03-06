@@ -73,7 +73,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerViewContr
 	// return -1 if unchanged, else row to set focus
 	func updateWithRecomendations(forFeature forceReload: Bool) -> Int {
 		let tabController = tabBarController as? POITabBarController
-		let geometry = tabController?.selection?.geometry() ?? GEOMETRY.NODE
+		let geometry = tabController?.selection?.geometry() ?? GEOMETRY.POINT
 		let dict = keyValueDictionary()
 		let newFeature = PresetsDatabase.shared.presetFeatureMatching(
 			tags: dict,
@@ -202,7 +202,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerViewContr
 	                        didChangeFeatureTo newFeature: PresetFeature)
 	{
 		let tabController = tabBarController as! POITabBarController
-		let geometry = tabController.selection?.geometry() ?? GEOMETRY.NODE
+		let geometry = tabController.selection?.geometry() ?? GEOMETRY.POINT
 		let location = AppDelegate.shared.mapView.currentRegion
 		tabController.keyValueDict = newFeature.objectTagsUpdatedForFeature(tabController.keyValueDict,
 		                                                                    geometry: geometry,

@@ -48,7 +48,7 @@ struct OsmExtendedIdentifier: Equatable, Hashable {
 }
 
 enum GEOMETRY: String, Codable {
-	case NODE = "point"
+	case POINT = "point"
 	case LINE = "line"
 	case AREA = "area"
 	case VERTEX = "vertex"
@@ -707,7 +707,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 			if node.wayCount > 0 {
 				return GEOMETRY.VERTEX
 			} else {
-				return GEOMETRY.NODE
+				return GEOMETRY.POINT
 			}
 		} else if let relation = isRelation() {
 			if relation.isMultipolygon() {

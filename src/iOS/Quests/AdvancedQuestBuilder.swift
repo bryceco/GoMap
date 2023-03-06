@@ -92,7 +92,7 @@ struct AdvancedQuestBuilder: View {
 						.toggleButtonStyle(enabled: quest.geometry.point)
 
 						Button(action: { quest.geometry.line.toggle() }) {
-							Text("Way")
+							Text("Line")
 						}
 						.toggleButtonStyle(enabled: quest.geometry.line)
 

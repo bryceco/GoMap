@@ -207,7 +207,7 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 			return nil
 		}
 		var list: [GEOMETRY] = []
-		if geometry.point { list.append(.NODE) }
+		if geometry.point { list.append(.POINT) }
 		if geometry.line { list.append(.LINE) }
 		if geometry.area { list.append(.AREA) }
 		if geometry.vertex { list.append(.VERTEX) }

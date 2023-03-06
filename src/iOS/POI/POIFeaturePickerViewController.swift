@@ -54,7 +54,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 
 	func currentSelectionGeometry() -> GEOMETRY {
 		let tabController = tabBarController as? POITabBarController
-		let geometry = tabController?.selection?.geometry() ?? GEOMETRY.NODE // a brand new node
+		let geometry = tabController?.selection?.geometry() ?? GEOMETRY.POINT // a brand new node
 		return geometry
 	}
 
