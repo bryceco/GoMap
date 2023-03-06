@@ -25,13 +25,6 @@ let UITextAutocapitalizationTypeWords = 2
 
 #endif
 
-enum GEOMETRY: String {
-	case NODE = "point"
-	case LINE = "line"
-	case AREA = "area"
-	case VERTEX = "vertex"
-}
-
 // A key along with information about possible values
 class PresetKey: NSObject, NSSecureCoding {
 	public class var supportsSecureCoding: Bool { return true }

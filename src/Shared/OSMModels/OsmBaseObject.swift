@@ -47,6 +47,13 @@ struct OsmExtendedIdentifier: Equatable, Hashable {
 	}
 }
 
+enum GEOMETRY: String, Codable {
+	case NODE = "point"
+	case LINE = "line"
+	case AREA = "area"
+	case VERTEX = "vertex"
+}
+
 @objcMembers
 class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	private(set) final var ident: OsmIdentifier
@@ -403,6 +410,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		renderPriorityCached = 0
 		isShown = .UNKNOWN
 		_boundingBox = nil
+		_geometry = nil
 
 		for layer in shapeLayers ?? [] {
 			layer.removeFromSuperlayer()
@@ -688,7 +696,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		parentRelations.remove(at: index)
 	}
 
-	func geometry() -> GEOMETRY {
+	private func computeGeometry() -> GEOMETRY {
 		if let way = isWay() {
 			if way.isArea() {
 				return GEOMETRY.AREA
@@ -709,6 +717,14 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 			}
 		}
 		fatalError()
+	}
+
+	var _geometry: GEOMETRY?
+	func geometry() -> GEOMETRY {
+		if _geometry == nil {
+			_geometry = computeGeometry()
+		}
+		return _geometry!
 	}
 
 	func geometryName() -> String {
