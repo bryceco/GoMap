@@ -22,8 +22,8 @@ enum SqliteError: LocalizedError {
 		switch self {
 		case let .open(rc): return "SqliteError.open() -> \(rc)"
 		case let .close(rc): return "SqliteError.close() -> \(rc)"
-		case let .exec(stmt, rc): return "SqliteError.exec(\(stmt)) -> \(rc)"
-		case let .prepare(stmt, rc): return "SqliteError.prepare(\(stmt)) -> \(rc)"
+		case let .exec(stmt, rc): return "SqliteError.exec('\(stmt)') -> \(rc)"
+		case let .prepare(stmt, rc): return "SqliteError.prepare('\(stmt)') -> \(rc)"
 		case let .clearBindings(rc): return "SqliteError.clearBindings() -> \(rc)"
 		case let .bind(rc): return "SqliteError.bind() -> \(rc)"
 		case let .step(rc): return "SqliteError.step() -> \(rc)"
