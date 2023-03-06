@@ -97,6 +97,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		return hasher.finalize()
 	}
 
+	// The default NSObject isEqual checks for object equivalence which is incorrect for us
 	override func isEqual(_ other: Any?) -> Bool {
 		guard let other = other as? OsmBaseObject
 		else {
@@ -106,8 +107,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		if self === other {
 			return true
 		}
-		DbgAssert(ident != other.ident)
-		return false
+		return ident == other.ident && type(of: self) === type(of: other)
 	}
 
 	func encode(with coder: NSCoder) {
