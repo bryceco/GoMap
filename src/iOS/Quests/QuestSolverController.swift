@@ -284,8 +284,15 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 			if indexPath.row < tableView.numberOfRows(inSection: indexPath.section) - 1 {
 				// A selection among a combo of possible values
 				let presetKey = presetKeys[indexPath.section - 1]
+				let presetValue = presetKey?.presetList?[indexPath.row]
 				let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCellTagValue", for: indexPath)
-				cell.textLabel?.text = presetKey?.presetList?[indexPath.row].name ?? ""
+				cell.textLabel?.text = presetValue?.name ?? ""
+				if let value = object.tags[tagKeys[indexPath.section - 1]],
+				   value == presetValue?.tagValue
+				{
+					// The value is already set
+					tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+				}
 				return cell
 			} else {
 				// A text box to type something in
@@ -296,6 +303,10 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 					cell.textField?.presetKey = presetKey
 				} else {
 					cell.textField?.key = tagKeys[indexPath.section - 1]
+				}
+				if let value = object.tags[tagKeys[indexPath.section - 1]] {
+					// The value is already set
+					cell.textField?.text = value
 				}
 				return cell
 			}

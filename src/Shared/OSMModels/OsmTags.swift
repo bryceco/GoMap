@@ -38,6 +38,17 @@ final class OsmTags {
 		}
 	}
 
+	static let surveyDateSynonyms: Set<String> = [
+		"check_date",
+		"survey_date",
+		"survey:date",
+		"survey",
+		"lastcheck",
+		"last_checked",
+		"updated",
+		"checked_exists:date"
+	]
+
 	// editing
 	static let tagsToAutomaticallyStrip: Set<String> =
 		["tiger:upload_uuid",

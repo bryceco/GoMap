@@ -253,17 +253,7 @@ class PresetValueTextField: AutocompleteTextField {
 	}
 
 	private func getSurveyDateButton() -> UIView? {
-		let synonyms = [
-			"check_date",
-			"survey_date",
-			"survey:date",
-			"survey",
-			"lastcheck",
-			"last_checked",
-			"updated",
-			"checked_exists:date"
-		]
-		if synonyms.contains(key) {
+		if OsmTags.surveyDateSynonyms.contains(key) {
 			let button = UIButton(type: .contactAdd)
 			button.addTarget(self, action: #selector(setSurveyDate(_:)), for: .touchUpInside)
 			return button

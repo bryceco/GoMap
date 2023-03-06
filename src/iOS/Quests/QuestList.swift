@@ -83,30 +83,35 @@ final class QuestUserList: Codable {
 
 class ResurveyQuest: QuestInstance {
 	init(ageInYears: Double) {
-		let ageInSeconds = ageInYears * 365.25 * 60 * 60
+		let ageInSeconds = ageInYears * 365.25 * 24 * 60 * 60
 		let age = Date().addingTimeInterval(-ageInSeconds)
 		let dateString = OsmBaseObject.rfc3339DateFormatter().string(from: age)
 
-		// build a quest for phone numbers and grab it's predicate
-		let appliesTo = try! QuestDefinitionWithFeatures(
-			ident: "temp",
-			title: "temp",
-			label: "t",
-			tagKey: "phone",
-			includeFeatures: [],
-			accepts: { _ in
-				true
-			}).makeQuestInstance().appliesTo
+		guard let shopPredicate = try? QuestList.predicateForKey("phone", more: true)
+		else {
+			fatalError()
+		}
+
+		let predicate: (OsmBaseObject) -> Bool = { obj in
+			if obj.timestamp >= dateString {
+				return false
+			}
+
+			// If any checkdate is recent then skip it
+			let tags = obj.tags
+			let keys = OsmTags.surveyDateSynonyms.intersection(tags.keys)
+			if keys.contains(where: { tags[$0]! >= dateString }) {
+				return false
+			}
+
+			return shopPredicate(obj.tags)
+		}
+
 		super.init(ident: "needsSurvey",
 		           title: "Needs Survey",
 		           label: "ic_quest_check",
-		           tagKeys: [""],
-		           appliesToObject: { obj in
-		           	guard obj.timestamp < dateString else {
-		           		return false
-		           	}
-		           	return appliesTo(obj)
-		           },
+		           tagKeys: ["check_date", "name", "phone", "opening_hours"],
+		           appliesToObject: predicate,
 		           acceptsValue: { _ in true })
 	}
 }
@@ -274,8 +279,8 @@ class QuestList {
 				addOpeningHours,
 				addSpeedLimit,
 				addWebsite,
-				addParkingLotType
-//				ResurveyQuest(ageInYears: 2.0)
+				addParkingLotType,
+				ResurveyQuest(ageInYears: 2.0)
 			]
 		} catch {
 			print("Quest initialization error: \(error)")
