@@ -1890,10 +1890,10 @@ enum MapDataError: LocalizedError {
 class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 	func saveArchive(mapData: OsmMapData) -> Bool {
 		let path = OsmMapData.pathToArchiveFile()
-		let data = NSMutableData()
-		let archiver = NSKeyedArchiver(forWritingWith: data)
+		let archiver = NSKeyedArchiver(requiringSecureCoding: true)
 		archiver.encode(mapData, forKey: "OsmMapData")
 		archiver.finishEncoding()
+		let data = archiver.encodedData as NSData
 		let ok = data.write(toFile: path, atomically: true)
 		return ok
 	}
