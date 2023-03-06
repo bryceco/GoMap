@@ -81,6 +81,9 @@
 "1 Day" = "1 天";
 
 /* No comment provided by engineer. */
+"A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." = "您所自定義的任務，全部都以 JSON 格式複製到剪貼簿了。您可以貼上到任何地方保存或是轉送給其他人。";
+
+/* No comment provided by engineer. */
 "A GPX Track records your path as you travel along a road or trail" = "當您沿著道路或小徑移動時， GPX 軌跡記錄了您的移動路徑";
 
 /* No comment provided by engineer. */
@@ -124,6 +127,12 @@
 
 /* No comment provided by engineer. */
 "All Tags" = "全部標籤";
+
+/* Show an error message */
+"An error occured while exporting: %@" = "輸出的時候發生了錯誤： %@";
+
+/* Show an error message */
+"An error occured while importing: %@" = "匯入的過程發生錯誤： %@";
 
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "更新詮釋資料時發生未知錯誤";
@@ -238,6 +247,9 @@
 
 /* No comment provided by engineer. */
 "Connecting the nodes would damage a relation" = "連接該節點將會破壞某個關係";
+
+/* text was copied to the system clipboard */
+"Copied" = "已複製";
 
 /* Edit action */
 "Copy Tags" = "複製標籤";
@@ -388,6 +400,15 @@
 
 /* No comment provided by engineer. */
 "Ignore" = "忽略";
+
+/* No comment provided by engineer. */
+"Import" = "匯入";
+
+/* No comment provided by engineer. */
+"Import Error" = "匯入錯誤";
+
+/* No comment provided by engineer. */
+"Import Quests" = "匯入任務";
 
 /* No comment provided by engineer. */
 "In order to measure height, please enable camera access in the app's settings." = "為了要測量高度，請在 iOS 的設定中開啟 Go Map 的相機使用權限。";
@@ -601,6 +622,9 @@
 "Paste" = "貼上";
 
 /* No comment provided by engineer. */
+"Paste the JSON for your quests into the field below" = "請將 JSON 貼到下方的輸入框中";
+
+/* No comment provided by engineer. */
 "Pasting %@ characters, maximum tag length is 255" = "貼上 %@ 字元，最大標籤長度是 255";
 
 /* No comment provided by engineer. */
@@ -620,6 +644,15 @@
 
 /* Discard editing changes when resetting OSM data cache */
 "Purge" = "清除";
+
+/* The current Quest the user is answering */
+"Quest" = "任務";
+
+/* No comment provided by engineer. */
+"Quest Definition Error" = "任務定義錯誤";
+
+/* No comment provided by engineer. */
+"Quests were imported successfully." = "任務已經成功地匯入。";
 
 /* No comment provided by engineer. */
 "Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "給這個 app 評分，可以讓圖客們更容易找到之外，同時提升了開放街圖的能見度。";
@@ -730,6 +763,12 @@
 /* Edit action */
 "Straighten" = "截彎取直";
 
+/* No comment provided by engineer. */
+"Success" = "成功";
+
+/* No comment provided by engineer. */
+"Tag Key" = "標籤的鍵";
+
 /* Edit action */
 "Tags" = "標籤";
 
@@ -780,6 +819,9 @@
 
 /* No comment provided by engineer. */
 "This device is not able to provide heading data." = "這個裝置無法提供方向資料。";
+
+/* No comment provided by engineer. */
+"This feature is only available on iOS 15 or later" = "這個功能只能在 iOS 15 或之後的版本中使用";
 
 /* No comment provided by engineer. */
 "To add another member to the relation 'long press' on the way to be added" = "把另一個成員加入到關係中的做法是在線段上長按就可以新增";

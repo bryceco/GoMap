@@ -81,6 +81,9 @@
 "1 Day" = "1 日";
 
 /* No comment provided by engineer. */
+"A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." = "すべてのユーザー定義のクエストのコピーがJSON形式でクリップボードにコピーされました。コピーを保持するためにどこかに貼り付けたり、他のユーザーに送信したりできます。";
+
+/* No comment provided by engineer. */
 "A GPX Track records your path as you travel along a road or trail" = "GPXトラックはあなたの道路や山道の経路を記録します";
 
 /* No comment provided by engineer. */
@@ -124,6 +127,12 @@
 
 /* No comment provided by engineer. */
 "All Tags" = "全てのタグ";
+
+/* Show an error message */
+"An error occured while exporting: %@" = "エクスポート中にエラー発生: %@";
+
+/* Show an error message */
+"An error occured while importing: %@" = "インポート中にエラー発生: %@";
 
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "メタデータ取得時に不明なエラーが発生しました";
@@ -238,6 +247,9 @@
 
 /* No comment provided by engineer. */
 "Connecting the nodes would damage a relation" = "このノードを接続するとリレーションを壊す可能性があります";
+
+/* text was copied to the system clipboard */
+"Copied" = "コピー済";
 
 /* Edit action */
 "Copy Tags" = "タグをコピー";
@@ -388,6 +400,15 @@
 
 /* No comment provided by engineer. */
 "Ignore" = "無視";
+
+/* No comment provided by engineer. */
+"Import" = "インポート";
+
+/* No comment provided by engineer. */
+"Import Error" = "インポートエラー";
+
+/* No comment provided by engineer. */
+"Import Quests" = "クエストをインポート";
 
 /* No comment provided by engineer. */
 "In order to measure height, please enable camera access in the app's settings." = "高さを測る場合は、アプリ設定のカメラへのアクセスを許可してください。";
@@ -601,6 +622,9 @@
 "Paste" = "貼付";
 
 /* No comment provided by engineer. */
+"Paste the JSON for your quests into the field below" = "あなたのクエストのJSONを下記フィールドに貼り付け";
+
+/* No comment provided by engineer. */
 "Pasting %@ characters, maximum tag length is 255" = "%@ 文字をペースト中、最大タグ長は255";
 
 /* No comment provided by engineer. */
@@ -620,6 +644,15 @@
 
 /* Discard editing changes when resetting OSM data cache */
 "Purge" = "消去";
+
+/* The current Quest the user is answering */
+"Quest" = "クエスト";
+
+/* No comment provided by engineer. */
+"Quest Definition Error" = "クエスト定義エラー";
+
+/* No comment provided by engineer. */
+"Quests were imported successfully." = "クエストは正しくインポートされました。";
 
 /* No comment provided by engineer. */
 "Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "このアプリを評価すると他のマッパーが見つけやすくなり、OpenStreetMap自体も閲覧されやすくなります。";
@@ -730,6 +763,12 @@
 /* Edit action */
 "Straighten" = "直線化";
 
+/* No comment provided by engineer. */
+"Success" = "成功";
+
+/* No comment provided by engineer. */
+"Tag Key" = "タグキー";
+
 /* Edit action */
 "Tags" = "タグ";
 
@@ -780,6 +819,9 @@
 
 /* No comment provided by engineer. */
 "This device is not able to provide heading data." = "この装置は進行方向データを提供できません。";
+
+/* No comment provided by engineer. */
+"This feature is only available on iOS 15 or later" = "この機能が使えるのはIOS15以降です";
 
 /* No comment provided by engineer. */
 "To add another member to the relation 'long press' on the way to be added" = "このリレーションに別のメンバーを追加する際には対象のウェイ上で'長押し'ボタンを押してください";

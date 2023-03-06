@@ -280,6 +280,10 @@
         <target>Aanvullende beelden</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Advanced Quest Builder" xml:space="preserve">
+        <source>Advanced Quest Builder</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
         <source>Aerial only</source>
         <target>Alleen luchtfoto's</target>
@@ -348,6 +352,10 @@
       </trans-unit>
       <trans-unit id="Better imagery available" xml:space="preserve">
         <source>Better imagery available</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Build a New Quest" xml:space="preserve">
+        <source>Build a New Quest</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
@@ -515,6 +523,10 @@
         <target>Relatietype aanmaken</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." xml:space="preserve">
+        <source>Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value.</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
         <source>Current Track</source>
         <target>Huidige track</target>
@@ -556,6 +568,10 @@
         <source>Detach from relation</source>
         <target>Van relatie loskoppelen</target>
         <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Discard" xml:space="preserve">
+        <source>Discard</source>
+        <note>Discard changes</note>
       </trans-unit>
       <trans-unit id="Disconnect" xml:space="preserve">
         <source>Disconnect</source>
@@ -651,6 +667,10 @@ Fout: %@</target>
         <target>Een weg uitbreiden die bij een Route of vergelijkbare relatie hoort kan de relatie beschadigen</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Filters" xml:space="preserve">
+        <source>Filters</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="GPX Upload Complete" xml:space="preserve">
         <source>GPX Upload Complete</source>
         <target>GPX-upload beëindigd</target>
@@ -659,6 +679,10 @@ Fout: %@</target>
       <trans-unit id="GPX Upload Failed" xml:space="preserve">
         <source>GPX Upload Failed</source>
         <target>GPX-upload mislukt</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Geometry" xml:space="preserve">
+        <source>Geometry</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
@@ -670,6 +694,10 @@ Fout: %@</target>
         <source>I'll do it!</source>
         <target>Dat zal ik doen!</target>
         <note>rate the app now</note>
+      </trans-unit>
+      <trans-unit id="Icon" xml:space="preserve">
+        <source>Icon</source>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Identifier" xml:space="preserve">
         <source>Identifier</source>
@@ -713,6 +741,10 @@ Fout: %@</target>
         <target>Samenvoegen zou een afslagbeperking waarbij de weg hoort ongeldig maken</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Keys" xml:space="preserve">
+        <source>Keys</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." xml:space="preserve">
         <source>Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English.</source>
         <target>Taalkeuze beïnvloed alleen presets en alleen die presets die voor iD vertaald zijn. De interface is verder in het Engels.</target>
@@ -741,6 +773,10 @@ Fout: %@</target>
       <trans-unit id="Length" xml:space="preserve">
         <source>Length</source>
         <target>Lengte</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Line" xml:space="preserve">
+        <source>Line</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
@@ -862,6 +898,10 @@ Dit is een geavanceerde actie die alleen gedaan zou moeten worden als je diepgaa
       <trans-unit id="Multipolygon" xml:space="preserve">
         <source>Multipolygon</source>
         <target>Multipolygoon</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Name" xml:space="preserve">
+        <source>Name</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Network error" xml:space="preserve">
@@ -1043,6 +1083,10 @@ Dit is een geavanceerde actie die alleen gedaan zou moeten worden als je diepgaa
         <target>Wacht a.u.b.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Point" xml:space="preserve">
+        <source>Point</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
         <source>Previous</source>
         <target>Vorige</target>
@@ -1052,6 +1096,10 @@ Dit is een geavanceerde actie die alleen gedaan zou moeten worden als je diepgaa
         <source>Previous Tracks</source>
         <target>Vorige tracks</target>
         <note>previous GPX track</note>
+      </trans-unit>
+      <trans-unit id="Provide a single-character symbol (emoji or unicode character) to identify this quest:" xml:space="preserve">
+        <source>Provide a single-character symbol (emoji or unicode character) to identify this quest:</source>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Purge" xml:space="preserve">
         <source>Purge</source>
@@ -1159,6 +1207,14 @@ Dit is een geavanceerde actie die alleen gedaan zou moeten worden als je diepgaa
         <source>Rotate</source>
         <target>Draaien</target>
         <note>Edit action</note>
+      </trans-unit>
+      <trans-unit id="Save" xml:space="preserve">
+        <source>Save</source>
+        <note>Save changes</note>
+      </trans-unit>
+      <trans-unit id="Save or discard your changes" xml:space="preserve">
+        <source>Save or discard your changes</source>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Select Object" xml:space="preserve">
         <source>Select Object</source>
@@ -1337,6 +1393,10 @@ Dit is een geavanceerde actie die alleen gedaan zou moeten worden als je diepgaa
         <source>This feature is only available on iOS 15 or later</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="This page allows you to design quests with more specific criteria than the regular Quest Builder page." xml:space="preserve">
+        <source>This page allows you to design quests with more specific criteria than the regular Quest Builder page.</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
         <source>To add another member to the relation 'long press' on the way to be added</source>
         <target>Hou om een ander lid aan de relatie toe te voegen de weg die toegevoegd moet worden ingedrukt</target>
@@ -1475,6 +1535,10 @@ Selecteer de weg vanaf waar je op de kruising komt en druk vervolgens op een pij
         <target>Versie</target>
         <note>OSM object versioh</note>
       </trans-unit>
+      <trans-unit id="Vertex" xml:space="preserve">
+        <source>Vertex</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Warning" xml:space="preserve">
         <source>Warning</source>
         <target>Waarschuwing</target>
@@ -1488,6 +1552,18 @@ Selecteer de weg vanaf waar je op de kruising komt en druk vervolgens op een pij
       <trans-unit id="Way Tags" xml:space="preserve">
         <source>Way Tags</source>
         <target>Weg-tags</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="What is the name of this quest? This is best written in the form of an action like 'Add Surface':" xml:space="preserve">
+        <source>What is the name of this quest? This is best written in the form of an action like 'Add Surface':</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="What tag key is modified by this quest?" xml:space="preserve">
+        <source>What tag key is modified by this quest?</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="What types of objects does this quest apply to?" xml:space="preserve">
+        <source>What types of objects does this quest apply to?</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.&#10;&#10;To continue press Commit once again, otherwise press Cancel." xml:space="preserve">

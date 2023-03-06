@@ -289,6 +289,11 @@
         <target>Additional imagery</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Advanced Quest Builder" xml:space="preserve">
+        <source>Advanced Quest Builder</source>
+        <target>Advanced Quest Builder</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
         <source>Aerial only</source>
         <target>Aerial only</target>
@@ -362,6 +367,11 @@
       <trans-unit id="Better imagery available" xml:space="preserve">
         <source>Better imagery available</source>
         <target>Better imagery available</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Build a New Quest" xml:space="preserve">
+        <source>Build a New Quest</source>
+        <target>Build a New Quest</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
@@ -531,6 +541,11 @@
         <target>Create Relation Type</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." xml:space="preserve">
+        <source>Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value.</source>
+        <target>Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
         <source>Current Track</source>
         <target>Current Track</target>
@@ -572,6 +587,11 @@
         <source>Detach from relation</source>
         <target>Detach from relation</target>
         <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Discard" xml:space="preserve">
+        <source>Discard</source>
+        <target>Discard</target>
+        <note>Discard changes</note>
       </trans-unit>
       <trans-unit id="Disconnect" xml:space="preserve">
         <source>Disconnect</source>
@@ -667,6 +687,11 @@ Error: %@</target>
         <target>Extending a way which belongs to a Route or similar relation may damage the relation</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Filters" xml:space="preserve">
+        <source>Filters</source>
+        <target>Filters</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="GPX Upload Complete" xml:space="preserve">
         <source>GPX Upload Complete</source>
         <target>GPX Upload Complete</target>
@@ -675,6 +700,11 @@ Error: %@</target>
       <trans-unit id="GPX Upload Failed" xml:space="preserve">
         <source>GPX Upload Failed</source>
         <target>GPX Upload Failed</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Geometry" xml:space="preserve">
+        <source>Geometry</source>
+        <target>Geometry</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
@@ -686,6 +716,11 @@ Error: %@</target>
         <source>I'll do it!</source>
         <target>I'll do it!</target>
         <note>rate the app now</note>
+      </trans-unit>
+      <trans-unit id="Icon" xml:space="preserve">
+        <source>Icon</source>
+        <target>Icon</target>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Identifier" xml:space="preserve">
         <source>Identifier</source>
@@ -732,6 +767,11 @@ Error: %@</target>
         <target>Joining would invalidate a Turn Restriction the way belongs to</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Keys" xml:space="preserve">
+        <source>Keys</source>
+        <target>Keys</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." xml:space="preserve">
         <source>Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English.</source>
         <target>Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English.</target>
@@ -760,6 +800,11 @@ Error: %@</target>
       <trans-unit id="Length" xml:space="preserve">
         <source>Length</source>
         <target>Length</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Line" xml:space="preserve">
+        <source>Line</source>
+        <target>Line</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
@@ -881,6 +926,11 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       <trans-unit id="Multipolygon" xml:space="preserve">
         <source>Multipolygon</source>
         <target>Multipolygon</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Name" xml:space="preserve">
+        <source>Name</source>
+        <target>Name</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Network error" xml:space="preserve">
@@ -1064,6 +1114,11 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>Please wait</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Point" xml:space="preserve">
+        <source>Point</source>
+        <target>Point</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
         <source>Previous</source>
         <target>Previous</target>
@@ -1073,6 +1128,11 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <source>Previous Tracks</source>
         <target>Previous Tracks</target>
         <note>previous GPX track</note>
+      </trans-unit>
+      <trans-unit id="Provide a single-character symbol (emoji or unicode character) to identify this quest:" xml:space="preserve">
+        <source>Provide a single-character symbol (emoji or unicode character) to identify this quest:</source>
+        <target>Provide a single-character symbol (emoji or unicode character) to identify this quest:</target>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Purge" xml:space="preserve">
         <source>Purge</source>
@@ -1183,6 +1243,16 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <source>Rotate</source>
         <target>Rotate</target>
         <note>Edit action</note>
+      </trans-unit>
+      <trans-unit id="Save" xml:space="preserve">
+        <source>Save</source>
+        <target>Save</target>
+        <note>Save changes</note>
+      </trans-unit>
+      <trans-unit id="Save or discard your changes" xml:space="preserve">
+        <source>Save or discard your changes</source>
+        <target>Save or discard your changes</target>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Select Object" xml:space="preserve">
         <source>Select Object</source>
@@ -1365,6 +1435,11 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>This feature is only available on iOS 15 or later</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="This page allows you to design quests with more specific criteria than the regular Quest Builder page." xml:space="preserve">
+        <source>This page allows you to design quests with more specific criteria than the regular Quest Builder page.</source>
+        <target>This page allows you to design quests with more specific criteria than the regular Quest Builder page.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
         <source>To add another member to the relation 'long press' on the way to be added</source>
         <target>To add another member to the relation 'long press' on the way to be added</target>
@@ -1504,6 +1579,11 @@ Select the highway from which you are approaching the intersection, then tap an 
         <target>Version</target>
         <note>OSM object versioh</note>
       </trans-unit>
+      <trans-unit id="Vertex" xml:space="preserve">
+        <source>Vertex</source>
+        <target>Vertex</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Warning" xml:space="preserve">
         <source>Warning</source>
         <target>Warning</target>
@@ -1517,6 +1597,21 @@ Select the highway from which you are approaching the intersection, then tap an 
       <trans-unit id="Way Tags" xml:space="preserve">
         <source>Way Tags</source>
         <target>Way Tags</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="What is the name of this quest? This is best written in the form of an action like 'Add Surface':" xml:space="preserve">
+        <source>What is the name of this quest? This is best written in the form of an action like 'Add Surface':</source>
+        <target>What is the name of this quest? This is best written in the form of an action like 'Add Surface':</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="What tag key is modified by this quest?" xml:space="preserve">
+        <source>What tag key is modified by this quest?</source>
+        <target>What tag key is modified by this quest?</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="What types of objects does this quest apply to?" xml:space="preserve">
+        <source>What types of objects does this quest apply to?</source>
+        <target>What types of objects does this quest apply to?</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.&#10;&#10;To continue press Commit once again, otherwise press Cancel." xml:space="preserve">

@@ -281,6 +281,10 @@
         <target>Lisapildid</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Advanced Quest Builder" xml:space="preserve">
+        <source>Advanced Quest Builder</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
         <source>Aerial only</source>
         <target>Ainult aerofotod</target>
@@ -349,6 +353,10 @@
       </trans-unit>
       <trans-unit id="Better imagery available" xml:space="preserve">
         <source>Better imagery available</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Build a New Quest" xml:space="preserve">
+        <source>Build a New Quest</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
@@ -516,6 +524,10 @@
         <target>Loo seose liik</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." xml:space="preserve">
+        <source>Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value.</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
         <source>Current Track</source>
         <target>Praegune rada</target>
@@ -557,6 +569,10 @@
         <source>Detach from relation</source>
         <target>Lahuta seosest</target>
         <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Discard" xml:space="preserve">
+        <source>Discard</source>
+        <note>Discard changes</note>
       </trans-unit>
       <trans-unit id="Disconnect" xml:space="preserve">
         <source>Disconnect</source>
@@ -652,6 +668,10 @@ Viga: %@</target>
         <target>Marsruudi või samalaadse seose juurde kuuluva tee laiendamine võib kahjustada seost</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Filters" xml:space="preserve">
+        <source>Filters</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="GPX Upload Complete" xml:space="preserve">
         <source>GPX Upload Complete</source>
         <target>GPX üleslaadimine lõpetatud</target>
@@ -660,6 +680,10 @@ Viga: %@</target>
       <trans-unit id="GPX Upload Failed" xml:space="preserve">
         <source>GPX Upload Failed</source>
         <target>GPX üleslaadimine ebaõnnestus</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Geometry" xml:space="preserve">
+        <source>Geometry</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
@@ -671,6 +695,10 @@ Viga: %@</target>
         <source>I'll do it!</source>
         <target>Teen ära!</target>
         <note>rate the app now</note>
+      </trans-unit>
+      <trans-unit id="Icon" xml:space="preserve">
+        <source>Icon</source>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Identifier" xml:space="preserve">
         <source>Identifier</source>
@@ -714,6 +742,10 @@ Viga: %@</target>
         <target>Ühendamine muudaks kehtetuks pöördepiirangu, millele tee kuulub</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Keys" xml:space="preserve">
+        <source>Keys</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." xml:space="preserve">
         <source>Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English.</source>
         <target>Keele valik mõjutab ainult ja neid eelseadeid, mis on iD jaoks tõlgitud. Peamine kasutajaliides on endiselt inglise keeles.</target>
@@ -742,6 +774,10 @@ Viga: %@</target>
       <trans-unit id="Length" xml:space="preserve">
         <source>Length</source>
         <target>Pikkus</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Line" xml:space="preserve">
+        <source>Line</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
@@ -863,6 +899,10 @@ Tegemist on edasijõudnute operatsiooniga, mida tuleks kasutada ainult koos põh
       <trans-unit id="Multipolygon" xml:space="preserve">
         <source>Multipolygon</source>
         <target>Hulknurk</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Name" xml:space="preserve">
+        <source>Name</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Network error" xml:space="preserve">
@@ -1044,6 +1084,10 @@ Tegemist on edasijõudnute operatsiooniga, mida tuleks kasutada ainult koos põh
         <target>Palun oota</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Point" xml:space="preserve">
+        <source>Point</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
         <source>Previous</source>
         <target>Eelmine</target>
@@ -1053,6 +1097,10 @@ Tegemist on edasijõudnute operatsiooniga, mida tuleks kasutada ainult koos põh
         <source>Previous Tracks</source>
         <target>Eelmised rajad</target>
         <note>previous GPX track</note>
+      </trans-unit>
+      <trans-unit id="Provide a single-character symbol (emoji or unicode character) to identify this quest:" xml:space="preserve">
+        <source>Provide a single-character symbol (emoji or unicode character) to identify this quest:</source>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Purge" xml:space="preserve">
         <source>Purge</source>
@@ -1160,6 +1208,14 @@ Tegemist on edasijõudnute operatsiooniga, mida tuleks kasutada ainult koos põh
         <source>Rotate</source>
         <target>Pööra</target>
         <note>Edit action</note>
+      </trans-unit>
+      <trans-unit id="Save" xml:space="preserve">
+        <source>Save</source>
+        <note>Save changes</note>
+      </trans-unit>
+      <trans-unit id="Save or discard your changes" xml:space="preserve">
+        <source>Save or discard your changes</source>
+        <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Select Object" xml:space="preserve">
         <source>Select Object</source>
@@ -1338,6 +1394,10 @@ Tegemist on edasijõudnute operatsiooniga, mida tuleks kasutada ainult koos põh
         <source>This feature is only available on iOS 15 or later</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="This page allows you to design quests with more specific criteria than the regular Quest Builder page." xml:space="preserve">
+        <source>This page allows you to design quests with more specific criteria than the regular Quest Builder page.</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
         <source>To add another member to the relation 'long press' on the way to be added</source>
         <target>Seosesse teise liikme lisamiseks 'vajuta pikalt' lisataval teel</target>
@@ -1476,6 +1536,10 @@ Vali maantee, millelt ristmikule lähened, seejärel koputa noolt, et lülitada 
         <target>Versioon</target>
         <note>OSM object versioh</note>
       </trans-unit>
+      <trans-unit id="Vertex" xml:space="preserve">
+        <source>Vertex</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Warning" xml:space="preserve">
         <source>Warning</source>
         <target>Hoiatus</target>
@@ -1489,6 +1553,18 @@ Vali maantee, millelt ristmikule lähened, seejärel koputa noolt, et lülitada 
       <trans-unit id="Way Tags" xml:space="preserve">
         <source>Way Tags</source>
         <target>Tee sildid</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="What is the name of this quest? This is best written in the form of an action like 'Add Surface':" xml:space="preserve">
+        <source>What is the name of this quest? This is best written in the form of an action like 'Add Surface':</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="What tag key is modified by this quest?" xml:space="preserve">
+        <source>What tag key is modified by this quest?</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="What types of objects does this quest apply to?" xml:space="preserve">
+        <source>What types of objects does this quest apply to?</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.&#10;&#10;To continue press Commit once again, otherwise press Cancel." xml:space="preserve">

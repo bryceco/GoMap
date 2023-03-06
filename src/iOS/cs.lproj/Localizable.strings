@@ -81,6 +81,9 @@
 "1 Day" = "1 den";
 
 /* No comment provided by engineer. */
+"A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." = "Všechny uživatelsky definované úkoly byly zkopírovány do schránky v JSON formátu. Můžete si je někam vložit a uschovat nebo je někomu poslat.";
+
+/* No comment provided by engineer. */
 "A GPX Track records your path as you travel along a road or trail" = "GPX trasa zachycuje vaši cestu po silnici nebo pěšině";
 
 /* No comment provided by engineer. */
@@ -124,6 +127,12 @@
 
 /* No comment provided by engineer. */
 "All Tags" = "Všechny značky";
+
+/* Show an error message */
+"An error occured while exporting: %@" = "Při exportu došlo k chybě: %@";
+
+/* Show an error message */
+"An error occured while importing: %@" = "Při importu došlo k chybě: %@";
 
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "Při stahování metadat došlo k neznámé chybě";
@@ -238,6 +247,9 @@
 
 /* No comment provided by engineer. */
 "Connecting the nodes would damage a relation" = "Spojením bodů dojde k poškození relace";
+
+/* text was copied to the system clipboard */
+"Copied" = "Zkopírováno";
 
 /* Edit action */
 "Copy Tags" = "Kopírovat značky";
@@ -388,6 +400,15 @@
 
 /* No comment provided by engineer. */
 "Ignore" = "Ignorovat";
+
+/* No comment provided by engineer. */
+"Import" = "Importovat";
+
+/* No comment provided by engineer. */
+"Import Error" = "Chyba importu";
+
+/* No comment provided by engineer. */
+"Import Quests" = "Importovat úkoly";
 
 /* No comment provided by engineer. */
 "In order to measure height, please enable camera access in the app's settings." = "Pro možnost měření výšky povolte přístup ke kameře v nastavení aplikace.";
@@ -601,6 +622,9 @@
 "Paste" = "Vložit";
 
 /* No comment provided by engineer. */
+"Paste the JSON for your quests into the field below" = "Níže vložte své úkoly v JSON formátu";
+
+/* No comment provided by engineer. */
 "Pasting %@ characters, maximum tag length is 255" = "Vkládáte %@ znaků, maximální limit značky je 255 znaků.";
 
 /* No comment provided by engineer. */
@@ -620,6 +644,15 @@
 
 /* Discard editing changes when resetting OSM data cache */
 "Purge" = "Pročistit";
+
+/* The current Quest the user is answering */
+"Quest" = "Úkol";
+
+/* No comment provided by engineer. */
+"Quest Definition Error" = "Chyba definice úkolu";
+
+/* No comment provided by engineer. */
+"Quests were imported successfully." = "Úkoly byly úspěšně importovány.";
 
 /* No comment provided by engineer. */
 "Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "Hodnocení aplikace umožňuje dalším maperům její nalezení a zviditelňuje OpenStreetMap.";
@@ -730,6 +763,12 @@
 /* Edit action */
 "Straighten" = "Narovnat";
 
+/* No comment provided by engineer. */
+"Success" = "Úspěch";
+
+/* No comment provided by engineer. */
+"Tag Key" = "Klíč značky";
+
 /* Edit action */
 "Tags" = "Značky";
 
@@ -780,6 +819,9 @@
 
 /* No comment provided by engineer. */
 "This device is not able to provide heading data." = "Toto zařízení neumožňuje určovat směr.";
+
+/* No comment provided by engineer. */
+"This feature is only available on iOS 15 or later" = "Tato funkce je dostupná jen na iOS 15 a vyšší";
 
 /* No comment provided by engineer. */
 "To add another member to the relation 'long press' on the way to be added" = "Pro přidání dalšího člena do relace dlouze přidržte linii, kterou chcete přidat";
