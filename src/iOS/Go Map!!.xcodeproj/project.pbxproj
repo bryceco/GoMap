@@ -105,6 +105,7 @@
 		02B52E7728C9788200CB55F3 /* libswiftCoreGraphics.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 02B52E7628C9784700CB55F3 /* libswiftCoreGraphics.tbd */; };
 		02B5669D294F9D7E00710632 /* MagnifyingGlass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B5669C294F9D7E00710632 /* MagnifyingGlass.swift */; };
 		02B5669F294FDCF200710632 /* CrossHairsLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B5669E294FDCF200710632 /* CrossHairsLayer.swift */; };
+		02BB355B29B6757C00FB52E5 /* NsiLogoDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BB355A29B6757C00FB52E5 /* NsiLogoDatabase.swift */; };
 		02BE6190245D1F9D00E92662 /* EsriPlaceholderImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */; };
 		02C3194E250EAED500C5D200 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02C3194C250EAED500C5D200 /* Localizable.strings */; };
 		02C8C56526F446FD003B0122 /* MapMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56426F446FD003B0122 /* MapMarker.swift */; };
@@ -486,6 +487,7 @@
 		02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = EsriPlaceholderImage.jpg; path = ../Shared/EsriPlaceholderImage.jpg; sourceTree = "<group>"; };
 		02B6F71519ACE878002FAEE6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		02BACD22205A1DDB00C74A49 /* Go Map!!.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Go Map!!.entitlements"; path = "Go Map!!/Go Map!!.entitlements"; sourceTree = "<group>"; };
+		02BB355A29B6757C00FB52E5 /* NsiLogoDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NsiLogoDatabase.swift; sourceTree = "<group>"; };
 		02C3194F250EB05900C5D200 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Height.strings; sourceTree = "<group>"; };
 		02C31950250EB05900C5D200 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Display.strings; sourceTree = "<group>"; };
 		02C31951250EB08600C5D200 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
@@ -1054,6 +1056,7 @@
 			isa = PBXGroup;
 			children = (
 				0220526329283498003C6AE1 /* CountryCoder.swift */,
+				02BB355A29B6757C00FB52E5 /* NsiLogoDatabase.swift */,
 				02A59EDC297E444500B0A676 /* PresetAddressFormat.swift */,
 				02A59EDE297F358900B0A676 /* PresetArea.swift */,
 				021FADE12588474300F6E1C0 /* PresetCategory.swift */,
@@ -1579,6 +1582,7 @@
 				02EA1C6B26631D0D00A0F827 /* VectorMath.swift in Sources */,
 				021FADE22588474300F6E1C0 /* PresetCategory.swift in Sources */,
 				02A59EDF297F358900B0A676 /* PresetArea.swift in Sources */,
+				02BB355B29B6757C00FB52E5 /* NsiLogoDatabase.swift in Sources */,
 				C3004F52263A6CA5006BF313 /* MainViewController.swift in Sources */,
 				64348D01225E8D3F00ADE7FB /* OsmNode+Direction.swift in Sources */,
 				02CC01D12584195E004444EF /* PresetFeature.swift in Sources */,

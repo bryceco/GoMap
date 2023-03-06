@@ -885,7 +885,7 @@ final class EditorMapLayer: CALayer {
 		                                                           geometry: node.geometry(),
 		                                                           location: location,
 		                                                           includeNSI: false)
-		var icon = feature?.iconScaled24()
+		var icon = feature?.iconScaled24
 		if icon == nil {
 			if node.tags["amenity"] != nil || node.tags["name"] != nil {
 				icon = Self.genericMarkerIcon

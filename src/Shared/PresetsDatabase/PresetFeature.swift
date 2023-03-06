@@ -135,16 +135,16 @@ final class PresetFeature: CustomDebugStringConvertible {
 		return result as? String
 	}
 
-	func iconUnscaled() -> UIImage? {
-		if _iconUnscaled == PresetFeature.uninitializedImage {
+	var iconUnscaled: UIImage? {
+		if _iconUnscaled === PresetFeature.uninitializedImage {
 			_iconUnscaled = icon != nil ? UIImage(named: icon!) : nil
 		}
 		return _iconUnscaled
 	}
 
-	func iconScaled24() -> UIImage? {
-		if _iconScaled24 == PresetFeature.uninitializedImage {
-			if let image = iconUnscaled() {
+	var iconScaled24: UIImage? {
+		if _iconScaled24 === PresetFeature.uninitializedImage {
+			if let image = iconUnscaled {
 				_iconScaled24 = EditorMapLayer.IconScaledForDisplay(image)
 			} else {
 				_iconScaled24 = nil

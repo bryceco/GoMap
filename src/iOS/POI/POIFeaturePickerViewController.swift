@@ -26,9 +26,6 @@ class FeaturePickerCell: UITableViewCell {
 private var mostRecentArray: [PresetFeature] = []
 private var mostRecentMaximum = 0
 
-// static so memory cache persists each time we appear
-private var logoCache = PersistentWebCache<UIImage>(name: "presetLogoCache", memorySize: 5 * 1_000000)
-
 class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate {
 	private var featureList: [PresetFeatureOrCategory] = []
 	private var searchArrayRecent: [PresetFeature] = []
@@ -149,7 +146,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		}
 		// If its an NSI feature then retrieve the logo icon
 		if feature.nsiSuggestion, feature.nsiLogo == nil, feature.logoURL != nil {
-			retrieveLogoForNsiItem(feature, whenFinished: {
+			NsiLogoDatabase.shared.retrieveLogoForNsiItem(feature, whenFinished: {
 				// If it completes later then update any cells using it
 				for cell in self.tableView.visibleCells {
 					if let cell = cell as? FeaturePickerCell,
@@ -171,9 +168,9 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 			includeNSI: true)
 		let cell = tableView.dequeueReusableCell(withIdentifier: "FinalCell", for: indexPath) as! FeaturePickerCell
 		cell.title.text = feature.nsiSuggestion ? (brand + feature.friendlyName()) : feature.friendlyName()
-		cell.pickerImage.image = (feature.nsiLogo != nil) && (feature.nsiLogo != feature.iconUnscaled())
+		cell.pickerImage.image = (feature.nsiLogo != nil) && (feature.nsiLogo != feature.iconUnscaled)
 			? feature.nsiLogo
-			: feature.iconUnscaled()?.withRenderingMode(.alwaysTemplate)
+			: feature.iconUnscaled?.withRenderingMode(.alwaysTemplate)
 		if #available(iOS 13.0, *) {
 			cell.pickerImage.tintColor = UIColor.label
 		} else {
@@ -283,62 +280,5 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 
 	@IBAction func back(_ sender: Any) {
 		dismiss(animated: true)
-	}
-
-	// MARK: NSI Logo icon retrieval
-
-	private func retrieveLogoFromBundle(_ feature: PresetFeature, whenFinished: @escaping () -> Void) {
-		// use built-in logo files
-		if feature.nsiLogo == nil {
-			feature.nsiLogo = feature.iconUnscaled()
-			DispatchQueue.global(qos: .default).async(execute: {
-				var name = feature.featureID.replacingOccurrences(of: "/", with: "_")
-				name = "presets/brandIcons/" + name
-				let path = Bundle.main.path(forResource: name, ofType: "jpg") ?? Bundle.main
-					.path(forResource: name, ofType: "png") ?? Bundle.main
-					.path(forResource: name, ofType: "gif") ?? Bundle.main
-					.path(forResource: name, ofType: "bmp") ?? nil
-				if let image = UIImage(contentsOfFile: path ?? "") {
-					DispatchQueue.main.async(execute: {
-						feature.nsiLogo = image
-						whenFinished()
-					})
-				}
-			})
-		}
-	}
-
-	private func retrieveLogoFromServer(_ feature: PresetFeature, whenFinished: @escaping () -> Void) {
-		feature.nsiLogo = feature.iconUnscaled()
-		let logo = logoCache.object(withKey: feature.featureID, fallbackURL: {
-			// fetch icons from our private server
-			let name: String = feature.featureID.replacingOccurrences(of: "/", with: "_")
-			let url = "http://gomaposm.com/brandIcons/" + name
-			return URL(string: url)
-		}, objectForData: { data in
-			if let image = UIImage(data: data) {
-				return EditorMapLayer.ImageScaledToSize(image, 60.0)
-			} else {
-				return UIImage()
-			}
-		}, completion: { result in
-			DispatchQueue.main.async(execute: {
-				if let image = try? result.get() {
-					feature.nsiLogo = image
-					whenFinished()
-				}
-			})
-		})
-		if logo != nil {
-			feature.nsiLogo = logo
-		}
-	}
-
-	private func retrieveLogoForNsiItem(_ feature: PresetFeature, whenFinished: @escaping () -> Void) {
-#if true
-		retrieveLogoFromServer(feature, whenFinished: whenFinished)
-#else
-		retrieveLogoFromBundle(feature, whenFinished: onFinished)
-#endif
 	}
 }
