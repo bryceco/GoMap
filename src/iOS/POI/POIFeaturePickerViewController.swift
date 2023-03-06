@@ -144,19 +144,18 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 				feature = f
 			}
 		}
+
 		// If its an NSI feature then retrieve the logo icon
-		if feature.nsiSuggestion, feature.nsiLogo == nil, feature.logoURL != nil {
-			NsiLogoDatabase.shared.retrieveLogoForNsiItem(feature, whenFinished: {
-				// If it completes later then update any cells using it
-				for cell in self.tableView.visibleCells {
-					if let cell = cell as? FeaturePickerCell,
-					   cell.featureID == feature.featureID
-					{
-						cell.pickerImage.image = feature.nsiLogo
-					}
+		let icon = feature.nsiLogo({ img in
+			// If it completes later then update any cells using it
+			for cell in self.tableView.visibleCells {
+				if let cell = cell as? FeaturePickerCell,
+				   cell.featureID == feature.featureID
+				{
+					cell.pickerImage.image = img
 				}
-			})
-		}
+			}
+		})
 		let brand = "☆ "
 		let tabController = tabBarController as? POITabBarController
 		let geometry = currentSelectionGeometry()
@@ -168,9 +167,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 			includeNSI: true)
 		let cell = tableView.dequeueReusableCell(withIdentifier: "FinalCell", for: indexPath) as! FeaturePickerCell
 		cell.title.text = feature.nsiSuggestion ? (brand + feature.friendlyName()) : feature.friendlyName()
-		cell.pickerImage.image = (feature.nsiLogo != nil) && (feature.nsiLogo != feature.iconUnscaled)
-			? feature.nsiLogo
-			: feature.iconUnscaled?.withRenderingMode(.alwaysTemplate)
+		cell.pickerImage.image = icon
 		if #available(iOS 13.0, *) {
 			cell.pickerImage.tintColor = UIColor.label
 		} else {

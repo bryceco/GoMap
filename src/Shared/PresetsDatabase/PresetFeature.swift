@@ -63,10 +63,9 @@ final class PresetFeature: CustomDebugStringConvertible {
 	}
 
 	let nsiSuggestion: Bool // is from NSI
-	var nsiLogo: UIImage? // from NSI imageURL
-
-	var _iconUnscaled: UIImage? = PresetFeature.uninitializedImage
-	var _iconScaled24: UIImage? = PresetFeature.uninitializedImage
+	private var _nsiLogo: UIImage? // from NSI imageURL
+	private var _iconUnscaled: UIImage? = PresetFeature.uninitializedImage
+	private var _iconScaled24: UIImage? = PresetFeature.uninitializedImage
 
 	var description: String {
 		return featureID
@@ -140,6 +139,28 @@ final class PresetFeature: CustomDebugStringConvertible {
 			_iconUnscaled = icon != nil ? UIImage(named: icon!) : nil
 		}
 		return _iconUnscaled
+	}
+
+	func nsiLogo(_ callback: ((UIImage) -> Void)?) -> UIImage? {
+		guard nsiSuggestion else {
+			return iconUnscaled?.withRenderingMode(.alwaysTemplate)
+		}
+
+		if let icon = _nsiLogo {
+			return icon
+		}
+		if let callback = callback {
+			if let icon = NsiLogoDatabase.shared.retrieveLogoForNsiItem(featureID: featureID,
+			                                                            whenFinished: { img in
+			                                                            	self._nsiLogo = img
+			                                                            	callback(img)
+			                                                            })
+			{
+				_nsiLogo = icon
+				return icon
+			}
+		}
+		return iconUnscaled?.withRenderingMode(.alwaysTemplate)
 	}
 
 	var iconScaled24: UIImage? {

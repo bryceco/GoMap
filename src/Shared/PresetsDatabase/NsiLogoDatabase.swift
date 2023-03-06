@@ -9,65 +9,56 @@
 import UIKit
 
 class NsiLogoDatabase {
-
 	static let shared = NsiLogoDatabase()
 
 	var logoCache = PersistentWebCache<UIImage>(name: "presetLogoCache", memorySize: 5 * 1_000000)
 
 	// MARK: NSI Logo icon retrieval
 
-	private func retrieveLogoFromBundle(_ feature: PresetFeature, whenFinished: @escaping () -> Void) {
+	private func retrieveLogoFromBundle(featureID: String, whenFinished: @escaping (UIImage) -> Void) {
 		// use built-in logo files
-		if feature.nsiLogo == nil {
-			feature.nsiLogo = feature.iconUnscaled
-			DispatchQueue.global(qos: .default).async(execute: {
-				var name = feature.featureID.replacingOccurrences(of: "/", with: "_")
-				name = "presets/brandIcons/" + name
-				let path = Bundle.main.path(forResource: name, ofType: "jpg") ?? Bundle.main
-					.path(forResource: name, ofType: "png") ?? Bundle.main
-					.path(forResource: name, ofType: "gif") ?? Bundle.main
-					.path(forResource: name, ofType: "bmp") ?? nil
-				if let image = UIImage(contentsOfFile: path ?? "") {
-					DispatchQueue.main.async(execute: {
-						feature.nsiLogo = image
-						whenFinished()
-					})
-				}
-			})
-		}
+		DispatchQueue.global(qos: .default).async(execute: {
+			var name = featureID.replacingOccurrences(of: "/", with: "_")
+			name = "presets/brandIcons/" + name
+			let path = Bundle.main.path(forResource: name, ofType: "jpg") ?? Bundle.main
+				.path(forResource: name, ofType: "png") ?? Bundle.main
+				.path(forResource: name, ofType: "gif") ?? Bundle.main
+				.path(forResource: name, ofType: "bmp") ?? nil
+			if let image = UIImage(contentsOfFile: path ?? "") {
+				DispatchQueue.main.async(execute: {
+					whenFinished(image)
+				})
+			}
+		})
 	}
 
-	private func retrieveLogoFromServer(_ feature: PresetFeature, whenFinished: @escaping () -> Void) {
-		feature.nsiLogo = feature.iconUnscaled
-		let logo = logoCache.object(withKey: feature.featureID, fallbackURL: {
+	private func retrieveLogoFromServer(featureID: String, whenFinished: @escaping (UIImage) -> Void) -> UIImage? {
+		let logo = logoCache.object(withKey: featureID, fallbackURL: {
 			// fetch icons from our private server
-			let name: String = feature.featureID.replacingOccurrences(of: "/", with: "_")
+			let name: String = featureID.replacingOccurrences(of: "/", with: "_")
 			let url = "http://gomaposm.com/brandIcons/" + name
 			return URL(string: url)
 		}, objectForData: { data in
 			if let image = UIImage(data: data) {
-				return EditorMapLayer.ImageScaledToSize(image, 60.0)
+				return image
 			} else {
 				return UIImage()
 			}
 		}, completion: { result in
 			if let image = try? result.get() {
 				DispatchQueue.main.async(execute: {
-					feature.nsiLogo = image
-					whenFinished()
+					whenFinished(image)
 				})
 			}
 		})
-		if logo != nil {
-			feature.nsiLogo = logo
-		}
+		return logo
 	}
 
-	func retrieveLogoForNsiItem(_ feature: PresetFeature, whenFinished: @escaping () -> Void) {
+	func retrieveLogoForNsiItem(featureID: String, whenFinished: @escaping (UIImage) -> Void) -> UIImage? {
 #if true
-		retrieveLogoFromServer(feature, whenFinished: whenFinished)
+		return retrieveLogoFromServer(featureID: featureID, whenFinished: whenFinished)
 #else
-		retrieveLogoFromBundle(feature, whenFinished: whenFinished)
+		retrieveLogoFromBundle(featureID: featureID, whenFinished: whenFinished)
 #endif
 	}
 }
