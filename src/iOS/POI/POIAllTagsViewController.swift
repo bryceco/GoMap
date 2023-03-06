@@ -14,7 +14,7 @@ class SectionHeaderCell: UITableViewCell {
 	@IBOutlet var label: UILabel!
 }
 
-class POIAllTagsViewController: UITableViewController, POIFeaturePickerViewControllerDelegate, KeyValueTableCellOwner {
+class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate, KeyValueTableCellOwner {
 	private var tags: [(k: String, v: String)] = []
 	private var relations: [OsmRelation] = []
 	private var members: [OsmMember] = []
@@ -198,8 +198,8 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerViewContr
 		}
 	}
 
-	func typeViewController(_ typeViewController: POIFeaturePickerViewController,
-	                        didChangeFeatureTo newFeature: PresetFeature)
+	func featurePicker(_ typeViewController: POIFeaturePickerViewController,
+	                   didChangeFeatureTo newFeature: PresetFeature)
 	{
 		let tabController = tabBarController as! POITabBarController
 		let geometry = tabController.selection?.geometry() ?? GEOMETRY.POINT

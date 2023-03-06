@@ -211,7 +211,7 @@
 		ED9649DB2601CB7A00EC0A60 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649DA2601CB7A00EC0A60 /* SettingsViewController.swift */; };
 		ED9649F12601CEC800EC0A60 /* POITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649F02601CEC800EC0A60 /* POITabBarController.swift */; };
 		ED9649F92601D58900EC0A60 /* POIPresetValuePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649F82601D58900EC0A60 /* POIPresetValuePickerController.swift */; };
-		ED964A012601D6A900EC0A60 /* POIFeaturePresetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED964A002601D6A900EC0A60 /* POIFeaturePresetsViewController.swift */; };
+		ED964A012601D6A900EC0A60 /* POICommonTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED964A002601D6A900EC0A60 /* POICommonTagsViewController.swift */; };
 		EDB2C3A12609E2A000C08293 /* LanguageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB2C3A02609E29F00C08293 /* LanguageTableViewController.swift */; };
 		EDB2C3A62609E6E100C08293 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB2C3A52609E6E100C08293 /* LoginViewController.swift */; };
 		EDDBA55326130287001E7D5C /* GpxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5EA26028B5F000B368C /* GpxViewController.swift */; };
@@ -753,7 +753,7 @@
 		ED9649DA2601CB7A00EC0A60 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		ED9649F02601CEC800EC0A60 /* POITabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POITabBarController.swift; sourceTree = "<group>"; };
 		ED9649F82601D58900EC0A60 /* POIPresetValuePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIPresetValuePickerController.swift; sourceTree = "<group>"; };
-		ED964A002601D6A900EC0A60 /* POIFeaturePresetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIFeaturePresetsViewController.swift; sourceTree = "<group>"; };
+		ED964A002601D6A900EC0A60 /* POICommonTagsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POICommonTagsViewController.swift; sourceTree = "<group>"; };
 		EDB2C3A02609E29F00C08293 /* LanguageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageTableViewController.swift; sourceTree = "<group>"; };
 		EDB2C3A52609E6E100C08293 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -823,8 +823,8 @@
 				027AB4FF250E9C8A00C404CD /* POI.storyboard */,
 				C3004F61263B2524006BF313 /* POIAllTagsViewController.swift */,
 				C3004F53263A99DC006BF313 /* POIAttributesViewController.swift */,
+				ED964A002601D6A900EC0A60 /* POICommonTagsViewController.swift */,
 				C3D0969B263CBC1100E3B129 /* POIFeaturePickerViewController.swift */,
-				ED964A002601D6A900EC0A60 /* POIFeaturePresetsViewController.swift */,
 				ED9649F82601D58900EC0A60 /* POIPresetValuePickerController.swift */,
 				ED9649F02601CEC800EC0A60 /* POITabBarController.swift */,
 				02D2FD4E29B016BC00483F4D /* PresetValueTextField.swift */,
@@ -1585,7 +1585,7 @@
 				02505C5529A2ECA50078D60D /* AdvancedQuestBuilderFilterRow.swift in Sources */,
 				02A59EDD297E444500B0A676 /* PresetAddressFormat.swift in Sources */,
 				C31315232644292700C0AD86 /* LocationBallLayer.swift in Sources */,
-				ED964A012601D6A900EC0A60 /* POIFeaturePresetsViewController.swift in Sources */,
+				ED964A012601D6A900EC0A60 /* POICommonTagsViewController.swift in Sources */,
 				0200FECD2908B0EB002C3F94 /* GeoJSON.swift in Sources */,
 				0293FEB1299D5C78002EED90 /* MapMarkerIgnoreList.swift in Sources */,
 				02505C5329A2EAD60078D60D /* AdvancedQuestBuilder.swift in Sources */,

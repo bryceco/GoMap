@@ -59,8 +59,8 @@ class FeaturePresetAreaCell: UITableViewCell {
 	}
 }
 
-class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegate, UITextViewDelegate,
-	POIFeaturePickerViewControllerDelegate, KeyValueTableCellOwner, PresetValueTextFieldOwner
+class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, UITextViewDelegate,
+	POIFeaturePickerDelegate, KeyValueTableCellOwner, PresetValueTextFieldOwner
 {
 	@IBOutlet var saveButton: UIBarButtonItem!
 	private var allPresets: PresetsForFeature? {
@@ -264,8 +264,8 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		}
 	}
 
-	func typeViewController(_ typeViewController: POIFeaturePickerViewController,
-	                        didChangeFeatureTo newFeature: PresetFeature)
+	func featurePicker(_ typeViewController: POIFeaturePickerViewController,
+	                   didChangeFeatureTo newFeature: PresetFeature)
 	{
 		selectedFeature = newFeature
 		let tabController = tabBarController as! POITabBarController
@@ -468,7 +468,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 		} else if case let .group(group) = cell.presetKey {
 			// special case for drill down
 			let sub = storyboard?.instantiateViewController(
-				withIdentifier: "PoiCommonTagsViewController") as! POIFeaturePresetsViewController
+				withIdentifier: "PoiCommonTagsViewController") as! POICommonTagsViewController
 			sub.drillDownGroup = group
 			navigationController?.pushViewController(sub, animated: true)
 		} else {

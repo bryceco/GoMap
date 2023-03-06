@@ -8,9 +8,9 @@
 
 import UIKit
 
-protocol POIFeaturePickerViewControllerDelegate: NSObjectProtocol {
-	func typeViewController(_ typeViewController: POIFeaturePickerViewController,
-	                        didChangeFeatureTo feature: PresetFeature)
+protocol POIFeaturePickerDelegate: AnyObject {
+	func featurePicker(_ typeViewController: POIFeaturePickerViewController,
+	                   didChangeFeatureTo feature: PresetFeature)
 }
 
 private let MOST_RECENT_DEFAULT_COUNT = 5
@@ -37,7 +37,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	private var isTopLevel = false
 
 	var parentCategory: PresetCategory?
-	weak var delegate: POIFeaturePickerViewControllerDelegate?
+	weak var delegate: POIFeaturePickerDelegate?
 
 	class func loadMostRecent(forGeometry geometry: GEOMETRY) {
 		if let max = UserDefaults.standard.object(forKey: "mostRecentTypesMaximum") as? NSNumber,
@@ -201,7 +201,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 
 	func updateTags(with feature: PresetFeature) {
 		let geometry = currentSelectionGeometry()
-		delegate?.typeViewController(self, didChangeFeatureTo: feature)
+		delegate?.featurePicker(self, didChangeFeatureTo: feature)
 		POIFeaturePickerViewController.updateMostRecentArray(withSelection: feature, geometry: geometry)
 	}
 
