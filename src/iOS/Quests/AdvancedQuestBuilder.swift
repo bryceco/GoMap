@@ -9,6 +9,18 @@
 import SwiftUI
 
 @available(iOS 15.0.0, *)
+extension Button {
+	@ViewBuilder
+	func toggleButtonStyle(enabled: Bool) -> some View {
+		if enabled {
+			buttonStyle(BorderedProminentButtonStyle())
+		} else {
+			buttonStyle(BorderedButtonStyle())
+		}
+	}
+}
+
+@available(iOS 15.0.0, *)
 struct AdvancedQuestBuilder: View {
 	@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 	var onSave: ((QuestDefinitionWithFilters) -> Bool)?
@@ -70,6 +82,37 @@ struct AdvancedQuestBuilder: View {
 				})
 
 			Section(
+				header: Text("Geometry"),
+				content: {
+					Text("What types of objects does this quest apply to?")
+					HStack {
+						Button(action: { quest.geometry.point.toggle() }) {
+							Text("Point")
+						}
+						.toggleButtonStyle(enabled: quest.geometry.point)
+
+						Button(action: { quest.geometry.line.toggle() }) {
+							Text("Way")
+						}
+						.toggleButtonStyle(enabled: quest.geometry.line)
+
+						Button(action: {
+							quest.geometry.area.toggle()
+						}) {
+							Text("Area")
+						}
+						.toggleButtonStyle(enabled: quest.geometry.area)
+
+						Button(action: {
+							quest.geometry.vertex.toggle()
+						}) {
+							Text("Vertex")
+						}
+						.toggleButtonStyle(enabled: quest.geometry.vertex)
+					}
+					.listRowSeparator(.hidden)
+				})
+			Section(
 				header: Text("Keys"),
 				content: {
 					Text("What tag key is modified by this quest?")
@@ -116,9 +159,14 @@ struct AdvancedQuestBuilder: View {
 				header: Text("Icon"),
 				content: {
 					Text("Provide a single-character symbol (emoji or unicode character) to identify this quest:")
-					TextField("", text: $quest.label)
-						.frame(width: 60, alignment: .center)
-						.textFieldStyle(.roundedBorder)
+					HStack {
+						Spacer()
+						TextField("", text: $quest.label)
+							.multilineTextAlignment(.center)
+							.frame(width: 60, alignment: .center)
+							.textFieldStyle(.roundedBorder)
+						Spacer()
+					}
 				})
 		}
 		.navigationBarBackButtonHidden()
@@ -184,7 +232,8 @@ struct AdvancedQuestBuilder_Previews: PreviewProvider {
 	                                              		tagValue: "",
 	                                              		relation: .equal,
 	                                              		included: .include)
-	                                              ])
+	                                              ],
+	                                              geometry: QuestDefinitionWithFilters.Geometries())
 
 	static var previews: some View {
 		AdvancedQuestBuilder(quest: quest)

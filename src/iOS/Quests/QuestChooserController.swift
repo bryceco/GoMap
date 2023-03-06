@@ -198,12 +198,18 @@ class QuestChooserController: UITableViewController {
 			                           		tagValue: "",
 			                           		relation: .equal,
 			                           		included: .include)
-			                           ])
+			                           ],
+			                           geometry: QuestDefinitionWithFilters.Geometries())
 		var view = AdvancedQuestBuilder(quest: quest)
 		view.onSave = { [weak self] newQuest in
 			do {
 				try QuestList.shared.addUserQuest(newQuest, replacing: quest)
 				self?.tableView.reloadData()
+				if let mapView = AppDelegate.shared.mapView {
+					// Quest definition changed, so refresh everything
+					mapView.mapMarkerDatabase.removeAll()
+					mapView.updateMapMarkersFromServer(withDelay: 0.0, including: [])
+				}
 				return true
 			} catch {
 				print("\(error)")
