@@ -26,7 +26,7 @@ struct AdvancedQuestFilterRowView: View {
 				Button(QuestDefinitionFilter.Relation.equal.rawValue, action: { data.relation = .equal })
 				Button(QuestDefinitionFilter.Relation.notEqual.rawValue, action: { data.relation = .notEqual })
 			} label: {
-				Label(data.relation.rawValue, systemImage: "book.fill").labelStyle(TitleOnlyLabelStyle())
+				Label(data.relation.rawValue, systemImage: "").labelStyle(TitleOnlyLabelStyle())
 			}
 
 			// value textfield
@@ -41,7 +41,7 @@ struct AdvancedQuestFilterRowView: View {
 				Button(QuestDefinitionFilter.Included.include.rawValue, action: { data.included = .include })
 				Button(QuestDefinitionFilter.Included.exclude.rawValue, action: { data.included = .exclude })
 			} label: {
-				Label(data.included.rawValue, systemImage: "book.fill").labelStyle(TitleOnlyLabelStyle())
+				Label(data.included.rawValue, systemImage: "").labelStyle(TitleOnlyLabelStyle())
 			}
 		}
 	}

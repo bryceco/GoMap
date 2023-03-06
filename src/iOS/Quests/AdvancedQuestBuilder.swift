@@ -57,7 +57,7 @@ struct AdvancedQuestBuilder: View {
 
 			Section(
 				header: HStack {
-					Text("Filters")
+					Text("Filters", comment: "Header for quest filters section")
 				},
 				footer: HStack {
 					Button(action: addRule) {
@@ -87,33 +87,33 @@ struct AdvancedQuestBuilder: View {
 					Text("What types of objects does this quest apply to?")
 					HStack {
 						Button(action: { quest.geometry.point.toggle() }) {
-							Text("Point")
+							Text("Point", comment: "Object geometry: a node")
 						}
 						.toggleButtonStyle(enabled: quest.geometry.point)
 
 						Button(action: { quest.geometry.line.toggle() }) {
-							Text("Line")
+							Text("Line", comment: "Object geometry: a way (but not an area)")
 						}
 						.toggleButtonStyle(enabled: quest.geometry.line)
 
 						Button(action: {
 							quest.geometry.area.toggle()
 						}) {
-							Text("Area")
+							Text("Area", comment: "Object geometry: a closed way or multipolygon)")
 						}
 						.toggleButtonStyle(enabled: quest.geometry.area)
 
 						Button(action: {
 							quest.geometry.vertex.toggle()
 						}) {
-							Text("Vertex")
+							Text("Vertex", comment: "Object geometry: a node that is part of a way")
 						}
 						.toggleButtonStyle(enabled: quest.geometry.vertex)
 					}
 					.listRowSeparator(.hidden)
 				})
 			Section(
-				header: Text("Keys"),
+				header: Text("Keys", comment: "The tag keys section of a quest definition"),
 				content: {
 					Text("What tag key is modified by this quest?")
 					ForEach(quest.tagKeys.indices, id: \.self) { index in

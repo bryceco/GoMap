@@ -108,7 +108,7 @@ class ResurveyQuest: QuestInstance {
 		}
 
 		super.init(ident: "needsSurvey",
-		           title: "Needs Survey",
+		           title: NSLocalizedString("Needs Survey", comment: "Quest for objects that aren't recently updated"),
 		           label: "ic_quest_check",
 		           tagKeys: ["check_date", "name", "phone", "opening_hours"],
 		           appliesToObject: predicate,
@@ -139,7 +139,7 @@ class QuestList {
 
 			let addBuildingType = QuestInstance(
 				ident: "BuildingType",
-				title: "Add Building Type",
+				title: NSLocalizedString("Add Building Type", comment: "A type of quest"),
 				label: "ic_quest_building",
 				tagKeys: ["building"],
 				appliesToObject: { obj in
@@ -149,7 +149,7 @@ class QuestList {
 
 			let addSidewalkSurface = QuestInstance(
 				ident: "SidewalkSurface",
-				title: "Add Sidewalk Surface",
+				title: NSLocalizedString("Add Sidewalk Surface", comment: "A type of quest"),
 				label: "ic_quest_sidewalk",
 				tagKeys: ["surface"],
 				appliesToObject: { obj in
@@ -172,7 +172,7 @@ class QuestList {
 
 			let addHighwaySurface = QuestInstance(
 				ident: "HighwaySurface",
-				title: "Add Highway Surface",
+				title: NSLocalizedString("Add Highway Surface", comment: "A type of quest"),
 				label: "ic_quest_way_surface",
 				tagKeys: ["surface"],
 				appliesToObject: { obj in
@@ -196,7 +196,7 @@ class QuestList {
 
 			let addSpeedLimit = QuestInstance(
 				ident: "SpeedLimit",
-				title: "Add Speed Limit",
+				title: NSLocalizedString("Add Speed Limit", comment: "A type of quest"),
 				label: "ic_quest_max_speed",
 				tagKeys: ["maxspeed"],
 				appliesToObject: { obj in
@@ -223,7 +223,7 @@ class QuestList {
 
 			let addPhoneNumber = QuestInstance(
 				ident: "TelephoneNumber",
-				title: "Add Telephone Number",
+				title: NSLocalizedString("Add Telephone Number", comment: "A type of quest"),
 				label: "ic_quest_phone",
 				tagKeys: ["phone"],
 				appliesToObject: { (obj: OsmBaseObject) in
@@ -238,7 +238,7 @@ class QuestList {
 
 			let addParkingLotType = QuestInstance(
 				ident: "ParkingLotTYpe",
-				title: "Add Parking Type",
+				title: NSLocalizedString("Add Parking Type", comment: "A type of quest"),
 				label: "ic_quest_parking",
 				tagKeys: ["parking"],
 				appliesToObject: { obj in
@@ -251,7 +251,7 @@ class QuestList {
 			let websitePredicate = try Self.predicateForKey("website", more: false)
 			let addWebsite = QuestInstance(
 				ident: "Website",
-				title: "Add Website",
+				title: NSLocalizedString("Add Website", comment: "A type of quest"),
 				label: "🌐",
 				tagKeys: ["website"],
 				appliesToObject: { (obj: OsmBaseObject) in
@@ -266,7 +266,7 @@ class QuestList {
 
 			let addOpeningHours = try QuestDefinitionWithFeatures(
 				ident: "OpeningHours",
-				title: "Add Opening Hours",
+				title: NSLocalizedString("Add Opening Hours", comment: "A type of quest"),
 				label: "ic_quest_opening_hours",
 				tagKey: "opening_hours",
 				includeFeatures: []).makeQuestInstance()
