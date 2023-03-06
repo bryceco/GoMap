@@ -70,8 +70,8 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		]
 	}
 
-	// return -1 if unchanged, else row to set focus
-	func updateWithRecomendations(forFeature forceReload: Bool) -> Int {
+	// return nil if unchanged, else row to set focus
+	func updateWithRecomendations(forFeature forceReload: Bool) -> Int? {
 		let tabController = tabBarController as? POITabBarController
 		let geometry = tabController?.selection?.geometry() ?? GEOMETRY.POINT
 		let dict = keyValueDictionary()
@@ -385,8 +385,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 			}
 
 			// update recommended tags
-			let nextRow = updateWithRecomendations(forFeature: false)
-			if nextRow >= 0 {
+			if let nextRow = updateWithRecomendations(forFeature: false) {
 				// a new feature was defined
 				let newPath = IndexPath(row: nextRow, section: 0)
 				tableView.scrollToRow(at: newPath, at: .middle, animated: false)

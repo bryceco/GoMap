@@ -387,6 +387,17 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 				cell.valueField.text = text
 				cell.valueField.isEnabled = false
 				cell.isSet.backgroundColor = (selectedFeature?.addTags.count ?? 0) > 0 ? Self.isSetHighlight : nil
+				if let icon = currentFeature?.nsiLogo ?? currentFeature?.iconUnscaled {
+					let view = UIImageView(image: icon)
+					view.contentMode = .scaleAspectFit
+					view.widthAnchor.constraint(equalToConstant: 40).isActive = true
+					view.heightAnchor.constraint(equalToConstant: 40).isActive = true
+					cell.valueField.rightView = view
+					cell.valueField.rightViewMode = .always
+				} else {
+					cell.valueField.rightView = nil
+					cell.valueField.rightViewMode = .never
+				}
 				return cell
 
 			case "name":
