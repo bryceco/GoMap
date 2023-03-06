@@ -394,6 +394,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 				                                         for: indexPath) as! FeaturePresetCell
 				cell.nameLabel.text = presetKey.name
 				cell.valueField.placeholder = presetKey.placeholder
+				cell.valueField.text = keyValueDict[presetKey.tagKey]
 				cell.accessoryType = .none
 
 				cell.valueField.removeTarget(self, action: nil, for: .allEvents)
@@ -401,7 +402,6 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 				cell.valueField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
 				cell.valueField.addTarget(self, action: #selector(textFieldEditingDidBegin(_:)), for: .editingDidBegin)
 				cell.valueField.addTarget(self, action: #selector(textFieldDidEndEditing(_:)), for: .editingDidEnd)
-
 				return cell
 
 			default:
