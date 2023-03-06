@@ -459,13 +459,15 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		guard let cell = tableView.cellForRow(at: indexPath) as? FeaturePresetCell,
+		guard let cell = tableView.cellForRow(at: indexPath),
 		      cell.accessoryType != .none
 		else { return }
 
 		if drillDownGroup == nil, indexPath.section == 0, indexPath.row == 0 {
 			performSegue(withIdentifier: "POITypeSegue", sender: cell)
-		} else if case let .group(group) = cell.presetKey {
+		} else if let cell = cell as? FeaturePresetCell,
+				  case let .group(group) = cell.presetKey
+		{
 			// special case for drill down
 			let sub = storyboard?.instantiateViewController(
 				withIdentifier: "PoiCommonTagsViewController") as! POICommonTagsViewController
