@@ -110,7 +110,8 @@
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "Se produjo un error desconocido al recuperar los metadatos";
 
-/* Area of an object in m^2 */
+/* Area of an object in m^2
+   Object geometry: a closed way or multipolygon) */
 "Area" = "Área";
 
 /* No comment provided by engineer. */

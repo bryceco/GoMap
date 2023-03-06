@@ -137,7 +137,8 @@
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "メタデータ取得時に不明なエラーが発生しました";
 
-/* Area of an object in m^2 */
+/* Area of an object in m^2
+   Object geometry: a closed way or multipolygon) */
 "Area" = "エリア";
 
 /* No comment provided by engineer. */

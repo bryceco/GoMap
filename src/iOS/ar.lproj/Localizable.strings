@@ -122,7 +122,8 @@
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "حدث خطأ غير معروف أثناء جلب البيانات الوصفية";
 
-/* Area of an object in m^2 */
+/* Area of an object in m^2
+   Object geometry: a closed way or multipolygon) */
 "Area" = "مساحة";
 
 /* No comment provided by engineer. */

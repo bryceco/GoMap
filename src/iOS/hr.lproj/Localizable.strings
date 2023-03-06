@@ -125,7 +125,8 @@
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "Dogodila se nepoznata greška pri dohvaćanju metapodataka";
 
-/* Area of an object in m^2 */
+/* Area of an object in m^2
+   Object geometry: a closed way or multipolygon) */
 "Area" = "Područje";
 
 /* No comment provided by engineer. */

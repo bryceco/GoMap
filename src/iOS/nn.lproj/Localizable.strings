@@ -31,7 +31,8 @@
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "Det oppstod ein ukjent feil under innhenting av metadata";
 
-/* Area of an object in m^2 */
+/* Area of an object in m^2
+   Object geometry: a closed way or multipolygon) */
 "Area" = "Område";
 
 /* Automatic selection of presets languages */

@@ -137,7 +137,8 @@
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "Při stahování metadat došlo k neznámé chybě";
 
-/* Area of an object in m^2 */
+/* Area of an object in m^2
+   Object geometry: a closed way or multipolygon) */
 "Area" = "Plocha";
 
 /* No comment provided by engineer. */

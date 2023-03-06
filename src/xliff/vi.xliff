@@ -244,10 +244,42 @@
         <source>Accept</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Add Building Type" xml:space="preserve">
+        <source>Add Building Type</source>
+        <note>A type of quest</note>
+      </trans-unit>
+      <trans-unit id="Add Highway Surface" xml:space="preserve">
+        <source>Add Highway Surface</source>
+        <note>A type of quest</note>
+      </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
         <source>Add Note</source>
         <target>Thêm Ghi chú</target>
         <note>Edit action</note>
+      </trans-unit>
+      <trans-unit id="Add Opening Hours" xml:space="preserve">
+        <source>Add Opening Hours</source>
+        <note>A type of quest</note>
+      </trans-unit>
+      <trans-unit id="Add Parking Type" xml:space="preserve">
+        <source>Add Parking Type</source>
+        <note>A type of quest</note>
+      </trans-unit>
+      <trans-unit id="Add Sidewalk Surface" xml:space="preserve">
+        <source>Add Sidewalk Surface</source>
+        <note>A type of quest</note>
+      </trans-unit>
+      <trans-unit id="Add Speed Limit" xml:space="preserve">
+        <source>Add Speed Limit</source>
+        <note>A type of quest</note>
+      </trans-unit>
+      <trans-unit id="Add Telephone Number" xml:space="preserve">
+        <source>Add Telephone Number</source>
+        <note>A type of quest</note>
+      </trans-unit>
+      <trans-unit id="Add Website" xml:space="preserve">
+        <source>Add Website</source>
+        <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add inner member" xml:space="preserve">
         <source>Add inner member</source>
@@ -307,7 +339,8 @@
       </trans-unit>
       <trans-unit id="Area" xml:space="preserve">
         <source>Area</source>
-        <note>Area of an object in m^2</note>
+        <note>Area of an object in m^2
+   Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Attention" xml:space="preserve">
         <source>Attention</source>
@@ -631,7 +664,7 @@ Lỗi: %@</target>
       </trans-unit>
       <trans-unit id="Filters" xml:space="preserve">
         <source>Filters</source>
-        <note>No comment provided by engineer.</note>
+        <note>Header for quest filters section</note>
       </trans-unit>
       <trans-unit id="GPX Upload Complete" xml:space="preserve">
         <source>GPX Upload Complete</source>
@@ -699,7 +732,7 @@ Lỗi: %@</target>
       </trans-unit>
       <trans-unit id="Keys" xml:space="preserve">
         <source>Keys</source>
-        <note>No comment provided by engineer.</note>
+        <note>The tag keys section of a quest definition</note>
       </trans-unit>
       <trans-unit id="Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." xml:space="preserve">
         <source>Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English.</source>
@@ -730,7 +763,7 @@ Lỗi: %@</target>
       </trans-unit>
       <trans-unit id="Line" xml:space="preserve">
         <source>Line</source>
-        <note>No comment provided by engineer.</note>
+        <note>Object geometry: a way (but not an area)</note>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
         <source>Location unavailable</source>
@@ -850,6 +883,10 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       <trans-unit id="Name" xml:space="preserve">
         <source>Name</source>
         <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Needs Survey" xml:space="preserve">
+        <source>Needs Survey</source>
+        <note>Quest for objects that aren't recently updated</note>
       </trans-unit>
       <trans-unit id="Network error" xml:space="preserve">
         <source>Network error</source>
@@ -1024,7 +1061,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Point" xml:space="preserve">
         <source>Point</source>
-        <note>No comment provided by engineer.</note>
+        <note>Object geometry: a node</note>
       </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
         <source>Previous</source>
@@ -1451,7 +1488,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Vertex" xml:space="preserve">
         <source>Vertex</source>
-        <note>No comment provided by engineer.</note>
+        <note>Object geometry: a node that is part of a way</note>
       </trans-unit>
       <trans-unit id="Warning" xml:space="preserve">
         <source>Warning</source>

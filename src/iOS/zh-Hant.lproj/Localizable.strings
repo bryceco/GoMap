@@ -137,7 +137,8 @@
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "更新詮釋資料時發生未知錯誤";
 
-/* Area of an object in m^2 */
+/* Area of an object in m^2
+   Object geometry: a closed way or multipolygon) */
 "Area" = "面積";
 
 /* No comment provided by engineer. */
