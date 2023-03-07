@@ -39,7 +39,7 @@ final class OsmTags {
 	}
 
 	class func isKey(_ key: String, variantOf baseKey: String) -> Bool {
-		return key == baseKey || key.hasSuffix(":"+baseKey) || key.hasPrefix(baseKey+":")
+		return key == baseKey || key.hasSuffix(":" + baseKey) || key.hasPrefix(baseKey + ":")
 	}
 
 	static let surveyDateSynonyms: Set<String> = [
