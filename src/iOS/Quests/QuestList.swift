@@ -93,17 +93,9 @@ class ResurveyQuest: QuestInstance {
 		}
 
 		let predicate: (OsmBaseObject) -> Bool = { obj in
-			if obj.timestamp >= dateString {
+			if obj.timestamp >= dateString || obj.isModified() {
 				return false
 			}
-
-			// If any checkdate is recent then skip it
-			let tags = obj.tags
-			let keys = OsmTags.surveyDateSynonyms.intersection(tags.keys)
-			if keys.contains(where: { tags[$0]! >= dateString }) {
-				return false
-			}
-
 			return shopPredicate(obj.tags)
 		}
 
