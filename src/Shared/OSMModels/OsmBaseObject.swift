@@ -108,7 +108,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 			return true
 		}
 		let equal = ident == other.ident && type(of: self) === type(of: other)
-		DbgAssert(!equal)	// There should never be more than one copy of an object
+		DbgAssert(!equal) // There should never be more than one copy of an object
 		return equal
 	}
 

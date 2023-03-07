@@ -26,7 +26,7 @@ let UITextAutocapitalizationTypeWords = 2
 #endif
 
 // A key along with information about possible values
-class PresetKey: NSObject, NSSecureCoding {
+class PresetKey: NSObject, NSSecureCoding, Codable {
 	public class var supportsSecureCoding: Bool { return true }
 
 	let name: String // name of the preset, e.g. Hours
@@ -96,6 +96,33 @@ class PresetKey: NSObject, NSSecureCoding {
 		coder.encode(keyboardType.rawValue, forKey: "keyboardType")
 		coder.encode(autocapitalizationType.rawValue, forKey: "capitalize")
 		// coder.encode(autocorrectType.rawValue, forKey: "autocorrect")
+	}
+
+	enum CodingKeys: String, CodingKey {
+		case name
+		case tagKey
+		case presetList
+	}
+
+	required init(from decoder: Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		name = try container.decode(String.self, forKey: .name)
+		tagKey = try container.decode(String.self, forKey: .tagKey)
+		presetList = try container.decode([PresetValue].self, forKey: .presetList)
+		type = ""
+		defaultValue = nil
+		placeholder = ""
+		keyboardType = .default
+		autocapitalizationType = .none
+		autocorrectType = .no
+		super.init()
+	}
+
+	func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(name, forKey: .name)
+		try container.encode(tagKey, forKey: .tagKey)
+		try container.encode(presetList, forKey: .presetList)
 	}
 
 	func prettyNameForTagValue(_ value: String) -> String {

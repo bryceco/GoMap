@@ -9,7 +9,7 @@
 import Foundation
 
 // A possible value for a preset key
-final class PresetValue: NSObject, NSSecureCoding {
+final class PresetValue: NSObject, NSSecureCoding, Codable {
 	static let supportsSecureCoding = true
 
 	let name: String
@@ -41,6 +41,26 @@ final class PresetValue: NSObject, NSSecureCoding {
 		} else {
 			return nil
 		}
+	}
+
+	enum CodingKeys: String, CodingKey {
+		case name
+		case tagValue
+	}
+
+	required init(from decoder: Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		name = try container.decode(String.self, forKey: .name)
+		tagValue = try container.decode(String.self, forKey: .tagValue)
+		details = nil
+		icon = nil
+		super.init()
+	}
+
+	func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(name, forKey: .name)
+		try container.encode(tagValue, forKey: .tagValue)
 	}
 
 	override var description: String {

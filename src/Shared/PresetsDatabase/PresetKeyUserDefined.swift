@@ -56,43 +56,74 @@ final class PresetKeyUserDefined: PresetKey {
 		coder.encode(appliesToKey, forKey: "appliesToKey")
 		coder.encode(appliesToValue, forKey: "appliesToValue")
 	}
+
+	// MARK: Codable
+
+	enum CodingKeys: String, CodingKey {
+		case appliesToKey
+		case appliesToValue
+	}
+
+	required init(from decoder: Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		appliesToKey = try container.decode(String.self, forKey: .appliesToKey)
+		appliesToValue = try container.decode(String.self, forKey: .appliesToValue)
+		try super.init(from: decoder)
+	}
+
+	override func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(appliesToKey, forKey: .appliesToKey)
+		try container.encode(appliesToValue, forKey: .appliesToValue)
+		try super.encode(to: encoder)
+	}
 }
 
-class PresetKeyUserDefinedList {
+class PresetKeyUserDefinedList: Codable {
+	let key = "userDefinedPresetKeys"
 	private(set) var list: [PresetKeyUserDefined] = []
+	private let userPrefs: OsmUserPrefs
 
 	public static let shared = PresetKeyUserDefinedList()
 
 	init() {
 		do {
-			// some people experience a crash during loading...
 			let path = PresetKeyUserDefinedList.archivePath()
-			// decode
-			if #available(iOS 11.0, *) {
-				let data = try Data(contentsOf: URL(fileURLWithPath: path))
-				let classList = [NSArray.self,
-				                 NSMutableString.self,
-				                 PresetKeyUserDefined.self,
-				                 PresetValue.self]
-
-				list = try NSKeyedUnarchiver
-					.unarchivedObject(ofClasses: classList, from: data) as? [PresetKeyUserDefined] ?? []
-			} else {
-				let oldList = NSKeyedUnarchiver.unarchiveObject(withFile: path)
-				list = oldList as? [PresetKeyUserDefined] ?? []
-			}
+			let data = try Data(contentsOf: URL(fileURLWithPath: path))
+			let classList = [NSArray.self,
+			                 NSMutableString.self,
+			                 PresetKeyUserDefined.self,
+			                 PresetValue.self]
+			list = try NSKeyedUnarchiver.unarchivedObject(ofClasses: classList, from: data)
+				as? [PresetKeyUserDefined] ?? []
 		} catch {
 			list = []
 		}
+
+		userPrefs = OsmUserPrefs()
+		userPrefs.download({ success in
+			guard success,
+			      let prefString = self.userPrefs.get(key: self.key)
+			else {
+				return
+			}
+			let data = Data(prefString.utf8)
+			if let list = try? JSONDecoder().decode([PresetKeyUserDefined].self, from: data) {
+				self.list = list
+			}
+		})
 	}
 
 	func save() {
 		let path = PresetKeyUserDefinedList.archivePath()
-		if #available(iOS 11.0, *) {
-			let data = try? NSKeyedArchiver.archivedData(withRootObject: list as NSArray, requiringSecureCoding: true)
-			try? data?.write(to: URL(fileURLWithPath: path))
-		} else {
-			NSKeyedArchiver.archiveRootObject(list as NSArray, toFile: path)
+		let data = try? NSKeyedArchiver.archivedData(withRootObject: list as NSArray, requiringSecureCoding: true)
+		try? data?.write(to: URL(fileURLWithPath: path))
+
+		if let encodeData = try? JSONEncoder().encode(list),
+		   let encodeString = String(data: encodeData, encoding: .utf8)
+		{
+			userPrefs.set(key: key, value: encodeString)
+			userPrefs.upload({ _ in })
 		}
 	}
 
@@ -109,5 +140,22 @@ class PresetKeyUserDefinedList {
 		let cacheDirectory = paths[0]
 		let fullPath = URL(fileURLWithPath: cacheDirectory).appendingPathComponent("CustomPresetList.data").path
 		return fullPath
+	}
+
+	// MARK: Codable
+
+	enum CodingKeys: String, CodingKey {
+		case list
+	}
+
+	required init(from decoder: Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		list = try container.decode([PresetKeyUserDefined].self, forKey: .list)
+		userPrefs = OsmUserPrefs()
+	}
+
+	func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(list, forKey: .list)
 	}
 }

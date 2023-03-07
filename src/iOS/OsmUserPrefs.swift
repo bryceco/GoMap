@@ -152,7 +152,9 @@ class OsmUserPrefs: CustomStringConvertible, CustomDebugStringConvertible {
 				request.httpMethod = "PUT"
 				request.httpBody = value.data(using: .utf8)
 			}
-			URLSession.shared.data(with: request, completionHandler: { _ in })
+			URLSession.shared.data(with: request, completionHandler: { result in
+				print("\(result)")
+			})
 		}
 		oldPreferenceKeys = dict.compactMap { $0.key.hasPrefix(self.PREFIX) ? $0.key : nil }
 
