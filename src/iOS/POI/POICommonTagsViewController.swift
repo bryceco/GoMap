@@ -405,23 +405,9 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 				}
 				return cell
 
-			case "name":
-				let cell = tableView.dequeueReusableCell(withIdentifier: "CommonTagName",
-				                                         for: indexPath) as! FeaturePresetCell
-				cell.nameLabel.text = presetKey.name
-				cell.valueField.placeholder = presetKey.placeholder
-				cell.valueField.text = keyValueDict[presetKey.tagKey]
-				cell.accessoryType = .none
-
-				cell.valueField.removeTarget(self, action: nil, for: .allEvents)
-				cell.valueField.addTarget(self, action: #selector(textFieldReturn(_:)), for: .editingDidEndOnExit)
-				cell.valueField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
-				cell.valueField.addTarget(self, action: #selector(textFieldEditingDidBegin(_:)), for: .editingDidBegin)
-				cell.valueField.addTarget(self, action: #selector(textFieldDidEndEditing(_:)), for: .editingDidEnd)
-				return cell
-
 			default:
-				let cell = tableView.dequeueReusableCell(withIdentifier: "CommonTagSingle",
+				let cellName = key == "name" ? "CommonTagName" : "CommonTagSingle"
+				let cell = tableView.dequeueReusableCell(withIdentifier: cellName,
 				                                         for: indexPath) as! FeaturePresetCell
 				cell.accessoryType = .none
 				cell.nameLabel.text = presetKey.name

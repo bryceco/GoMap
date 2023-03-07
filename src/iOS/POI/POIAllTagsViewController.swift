@@ -82,7 +82,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 			includeNSI: true)
 
 		if !forceReload, newFeature?.featureID == currentFeature?.featureID {
-			return -1
+			return nil
 		}
 		currentFeature = newFeature
 
@@ -381,7 +381,9 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 			while let i = tags.indices.first(where: { $0 != index && tags[$0].k == kv.k }) {
 				tags.remove(at: i)
 				tableView.deleteRows(at: [IndexPath(row: i, section: 0)], with: .none)
-				if i < index { index -= 1 }
+				if i < index {
+					index -= 1
+				}
 			}
 
 			// update recommended tags
