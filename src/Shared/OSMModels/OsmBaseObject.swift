@@ -107,7 +107,9 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		if self === other {
 			return true
 		}
-		return ident == other.ident && type(of: self) === type(of: other)
+		let equal = ident == other.ident && type(of: self) === type(of: other)
+		DbgAssert(!equal)	// There should never be more than one copy of an object
+		return equal
 	}
 
 	func encode(with coder: NSCoder) {

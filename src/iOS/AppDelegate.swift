@@ -91,16 +91,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		return true
 	}
 
-	func application(
-		_ application: UIApplication,
-		continue userActivity: NSUserActivity,
-		restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool
+	func application(_ application: UIApplication,
+	                 continue userActivity: NSUserActivity,
+	                 restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool
 	{
-		if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
-			let url = userActivity.webpageURL
-			if let url = url {
-				return self.application(application, open: url, options: [:])
-			}
+		if userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+		   let url = userActivity.webpageURL
+		{
+			return self.application(application, open: url, options: [:])
 		}
 		return false
 	}
