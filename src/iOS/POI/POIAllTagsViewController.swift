@@ -277,8 +277,8 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 			cell.text1.isEnabled = true
 			cell.text2.isEnabled = true
 			cell.text1.text = kv.k
-			cell.text2.text = kv.v
 			cell.text2.key = kv.k
+			cell.text2.text = kv.v
 			cell.text1.inputAccessoryView = prevNextToolbar
 			cell.text1.autocorrectionType = .no
 			cell.text1.autocapitalizationType = .none

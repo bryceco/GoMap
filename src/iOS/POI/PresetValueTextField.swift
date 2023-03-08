@@ -17,7 +17,7 @@ protocol PresetValueTextFieldOwner: AnyObject {
 }
 
 class PresetValueTextField: AutocompleteTextField {
-	weak var owner: PresetValueTextFieldOwner!
+	weak var owner: PresetValueTextFieldOwner?
 	var defaultInputAccessoryView: UIView?
 
 	var key: String {
@@ -60,7 +60,7 @@ class PresetValueTextField: AutocompleteTextField {
 	}
 
 	private func notifyValueChange(ended: Bool) {
-		owner.valueChanged(for: self, ended: ended)
+		owner?.valueChanged(for: self, ended: ended)
 	}
 
 	private func updateTextAttributesForKey(_ key: String) {
@@ -71,7 +71,7 @@ class PresetValueTextField: AutocompleteTextField {
 		autocapitalizationType = .none
 		returnKeyType = .done
 
-		if let preset = presetKey ?? owner.allPresetKeys.first(where: { key == $0.tagKey }) {
+		if let preset = presetKey ?? owner?.allPresetKeys.first(where: { key == $0.tagKey }) {
 			autocapitalizationType = preset.autocapitalizationType
 			autocorrectionType = preset.autocorrectType
 			keyboardType = preset.keyboardType
@@ -86,12 +86,12 @@ class PresetValueTextField: AutocompleteTextField {
 			case "phone", "contact:phone", "fax", "contact:fax":
 				keyboardType = .phonePad
 				inputAccessoryView = TelephoneToolbar(forTextField: self, frame: frame)
-			case "website", "contact:website":
-				keyboardType = .URL
 			case "maxspeed":
 				keyboardType = .numbersAndPunctuation
 			default:
-				break
+				if OsmTags.isKey(key, variantOf: "website") {
+					keyboardType = .URL
+				}
 			}
 		}
 		spellCheckingType = autocorrectionType == .no ? .no : .default
@@ -161,6 +161,11 @@ class PresetValueTextField: AutocompleteTextField {
 			?? getSpeedButton(keyValueDict: [:])
 		rightView = associatedView1 ?? associatedView2
 		rightViewMode = rightView != nil ? .always : .never
+		if #available(iOS 13.0, *) {
+			// great
+		} else {
+			rightView?.frame = CGRect(x: 0, y: 0, width: 28, height: 28)
+		}
 	}
 
 	// MARK: Color preview
@@ -189,14 +194,14 @@ class PresetValueTextField: AutocompleteTextField {
 	@IBAction func openWebsite(_ sender: UIView?) {
 		guard let value = text else { return }
 		let string: String
-		if key == "wikipedia" || key.hasSuffix(":wikipedia") {
+		if OsmTags.isKey(key, variantOf: "wikipedia") {
 			let a = value.components(separatedBy: ":")
 			guard a.count >= 2,
 			      let lang = a[0].addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed),
 			      let page = a[1].addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)
 			else { return }
 			string = "https://\(lang).wikipedia.org/wiki/\(page)"
-		} else if key == "wikidata" || key.hasSuffix(":wikidata") {
+		} else if OsmTags.isKey(key, variantOf: "wikidata") {
 			guard let page = value.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)
 			else { return }
 			string = "https://www.wikidata.org/wiki/\(page)"
@@ -209,25 +214,27 @@ class PresetValueTextField: AutocompleteTextField {
 
 		if let url = URL(string: string) {
 			let viewController = SFSafariViewController(url: url)
-			owner.viewController.present(viewController, animated: true)
+			owner?.viewController.present(viewController, animated: true)
 		} else {
 			let alert = UIAlertController(
 				title: NSLocalizedString("Invalid URL", comment: ""),
 				message: nil,
 				preferredStyle: .alert)
 			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
-			owner.viewController.present(alert, animated: true)
+			owner?.viewController.present(alert, animated: true)
 		}
 	}
 
 	private func getWebsiteButton() -> UIView? {
-		if let value = text,
-		   key == "wikipedia"
-		   || key == "wikidata"
-		   || key.hasSuffix(":wikipedia")
-		   || key.hasSuffix(":wikidata")
-		   || value.hasPrefix("http://")
-		   || value.hasPrefix("https://")
+		guard key != "",
+			  let value = text,
+			  value != ""
+		else { return nil }
+		if OsmTags.isKey(key, variantOf: "website") ||
+		   OsmTags.isKey(key, variantOf: "wikipedia") ||
+		   OsmTags.isKey(key, variantOf: "wikidata") ||
+		   value.hasPrefix("http://") ||
+		   value.hasPrefix("https://")
 		{
 			let button = UIButton(type: .system)
 			button.layer.borderWidth = 2.0
@@ -271,8 +278,8 @@ class PresetValueTextField: AutocompleteTextField {
 				self?.text = newValue
 				self?.notifyValueChange(ended: true)
 			})
-		owner.childViewPresented = true
-		owner.viewController.present(directionViewController, animated: true)
+		owner?.childViewPresented = true
+		owner?.viewController.present(directionViewController, animated: true)
 	}
 
 	private func getDirectionButton() -> UIView? {
@@ -291,7 +298,9 @@ class PresetValueTextField: AutocompleteTextField {
 	// MARK: Set height button
 
 	@IBAction func setHeight(_ sender: UIView?) {
-		if HeightViewController.unableToInstantiate(withUserWarning: owner.viewController) {
+		if let owner = owner,
+		   HeightViewController.unableToInstantiate(withUserWarning: owner.viewController)
+		{
 			return
 		}
 
@@ -300,8 +309,8 @@ class PresetValueTextField: AutocompleteTextField {
 			self.text = newValue
 			self.notifyValueChange(ended: true)
 		}
-		owner.viewController.present(vc, animated: true)
-		owner.childViewPresented = true
+		owner?.viewController.present(vc, animated: true)
+		owner?.childViewPresented = true
 	}
 
 	private func getHeightButton() -> UIView? {
@@ -412,11 +421,11 @@ class PresetValueTextField: AutocompleteTextField {
 	@objc func openingHours(_ sender: Any?) {
 		let vc = OpeningHoursRecognizerController.with(onAccept: { newValue in
 			self.text = newValue
-			self.owner.viewController.navigationController?.popViewController(animated: true)
+			self.owner?.viewController.navigationController?.popViewController(animated: true)
 		}, onCancel: {
-			self.owner.viewController.navigationController?.popViewController(animated: true)
+			self.owner?.viewController.navigationController?.popViewController(animated: true)
 		}, onRecognize: { _ in
 		})
-		owner.viewController.navigationController?.pushViewController(vc, animated: true)
+		owner?.viewController.navigationController?.pushViewController(vc, animated: true)
 	}
 }
