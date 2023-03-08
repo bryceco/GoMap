@@ -17,7 +17,7 @@ protocol PresetValueTextFieldOwner: AnyObject {
 }
 
 class PresetValueTextField: AutocompleteTextField {
-	weak var owner: PresetValueTextFieldOwner?
+	weak var owner: PresetValueTextFieldOwner!
 	var defaultInputAccessoryView: UIView?
 
 	var key: String {
@@ -71,7 +71,7 @@ class PresetValueTextField: AutocompleteTextField {
 		autocapitalizationType = .none
 		returnKeyType = .done
 
-		if let preset = presetKey ?? owner?.allPresetKeys.first(where: { key == $0.tagKey }) {
+		if let preset = presetKey ?? owner.allPresetKeys.first(where: { key == $0.tagKey }) {
 			autocapitalizationType = preset.autocapitalizationType
 			autocorrectionType = preset.autocorrectType
 			keyboardType = preset.keyboardType
@@ -215,14 +215,14 @@ class PresetValueTextField: AutocompleteTextField {
 
 		if let url = URL(string: string) {
 			let viewController = SFSafariViewController(url: url)
-			owner?.viewController.present(viewController, animated: true)
+			owner.viewController.present(viewController, animated: true)
 		} else {
 			let alert = UIAlertController(
 				title: NSLocalizedString("Invalid URL", comment: ""),
 				message: nil,
 				preferredStyle: .alert)
 			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
-			owner?.viewController.present(alert, animated: true)
+			owner.viewController.present(alert, animated: true)
 		}
 	}
 
@@ -280,8 +280,8 @@ class PresetValueTextField: AutocompleteTextField {
 				self?.notifyValueChange(ended: true)
 			})
 		resignFirstResponder()
-		owner?.childViewPresented = true
-		owner?.viewController.present(directionViewController, animated: true)
+		owner.childViewPresented = true
+		owner.viewController.present(directionViewController, animated: true)
 	}
 
 	private func getDirectionButton() -> UIView? {
@@ -300,8 +300,7 @@ class PresetValueTextField: AutocompleteTextField {
 	// MARK: Set height button
 
 	@IBAction func setHeight(_ sender: UIView?) {
-		if let owner = owner,
-		   HeightViewController.unableToInstantiate(withUserWarning: owner.viewController)
+		if HeightViewController.unableToInstantiate(withUserWarning: owner.viewController)
 		{
 			return
 		}
@@ -312,8 +311,8 @@ class PresetValueTextField: AutocompleteTextField {
 			self.notifyValueChange(ended: true)
 		}
 		resignFirstResponder()
-		owner?.viewController.present(vc, animated: true)
-		owner?.childViewPresented = true
+		owner.viewController.present(vc, animated: true)
+		owner.childViewPresented = true
 	}
 
 	private func getHeightButton() -> UIView? {
@@ -425,12 +424,12 @@ class PresetValueTextField: AutocompleteTextField {
 		resignFirstResponder()
 		let vc = OpeningHoursRecognizerController.with(onAccept: { newValue in
 			self.text = newValue
-			self.owner?.viewController.navigationController?.popViewController(animated: true)
+			self.owner.viewController.navigationController?.popViewController(animated: true)
 			self.notifyValueChange(ended: true)
 		}, onCancel: {
-			self.owner?.viewController.navigationController?.popViewController(animated: true)
+			self.owner.viewController.navigationController?.popViewController(animated: true)
 		}, onRecognize: { _ in
 		})
-		owner?.viewController.navigationController?.pushViewController(vc, animated: true)
+		owner.viewController.navigationController?.pushViewController(vc, animated: true)
 	}
 }
