@@ -136,9 +136,10 @@ class PresetValueTextField: AutocompleteTextField {
 		text = value
 		if key != "", value != "" {
 			// do automatic value updates for special keys
-			// for example add https:// prefix to website=
+			// add https:// prefix to website=
 			if let newValue = OsmTags.convertWikiUrlToReference(withKey: key, value: value)
 				?? OsmTags.convertWebsiteValueToHttps(withKey: key, value: value)
+				?? OsmTags.fixUpOpeningHours(withKey: key, value: value)
 			{
 				text = newValue
 			}
@@ -227,14 +228,14 @@ class PresetValueTextField: AutocompleteTextField {
 
 	private func getWebsiteButton() -> UIView? {
 		guard key != "",
-			  let value = text,
-			  value != ""
+		      let value = text,
+		      value != ""
 		else { return nil }
 		if OsmTags.isKey(key, variantOf: "website") ||
-		   OsmTags.isKey(key, variantOf: "wikipedia") ||
-		   OsmTags.isKey(key, variantOf: "wikidata") ||
-		   value.hasPrefix("http://") ||
-		   value.hasPrefix("https://")
+			OsmTags.isKey(key, variantOf: "wikipedia") ||
+			OsmTags.isKey(key, variantOf: "wikidata") ||
+			value.hasPrefix("http://") ||
+			value.hasPrefix("https://")
 		{
 			let button = UIButton(type: .system)
 			button.layer.borderWidth = 2.0
@@ -278,7 +279,7 @@ class PresetValueTextField: AutocompleteTextField {
 				self?.text = newValue
 				self?.notifyValueChange(ended: true)
 			})
-		self.resignFirstResponder()
+		resignFirstResponder()
 		owner?.childViewPresented = true
 		owner?.viewController.present(directionViewController, animated: true)
 	}
@@ -310,7 +311,7 @@ class PresetValueTextField: AutocompleteTextField {
 			self.text = newValue
 			self.notifyValueChange(ended: true)
 		}
-		self.resignFirstResponder()
+		resignFirstResponder()
 		owner?.viewController.present(vc, animated: true)
 		owner?.childViewPresented = true
 	}
@@ -421,7 +422,7 @@ class PresetValueTextField: AutocompleteTextField {
 
 	@available(iOS 14.0, *)
 	@objc func openingHours(_ sender: Any?) {
-		self.resignFirstResponder()
+		resignFirstResponder()
 		let vc = OpeningHoursRecognizerController.with(onAccept: { newValue in
 			self.text = newValue
 			self.owner?.viewController.navigationController?.popViewController(animated: true)

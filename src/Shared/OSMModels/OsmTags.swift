@@ -180,4 +180,82 @@ final class OsmTags {
 		}
 		return "https://" + url
 	}
+
+	static func fixUpOpeningHours(withKey key: String, value: String) -> String? {
+		guard Self.isKey(key, variantOf: "opening_hours") else {
+			return nil
+		}
+		var value = value
+		// Replace days of week with correct capitalizations and normalize times
+		let scanner = Scanner(string: value)
+		scanner.charactersToBeSkipped = nil
+		value = ""
+		var timeSet = CharacterSet.decimalDigits
+		timeSet.insert(":")
+		while !scanner.isAtEnd {
+			func fixTime(_ t: String) -> String? {
+				let a = t.components(separatedBy: ":")
+				if a.count == 1,
+				   let hour = Int(a[0]),
+				   hour >= 0,
+				   hour <= 24
+				{
+					return String(format: "%02d:00", hour)
+				} else if a.count == 2,
+				          let hour = Int(a[0]),
+				          let min = Int(a[1]),
+				          hour >= 0,
+				          hour <= 24,
+				          min >= 0,
+				          min < 60
+				{
+					return String(format: "%02d:%02d", hour, min)
+				} else {
+					return nil
+				}
+			}
+
+			// check for time range
+			let start = scanner.scanLocation
+			var t1, t2: NSString?
+			if scanner.scanCharacters(from: timeSet, into: &t1),
+			   let t1 = t1 as? String,
+			   scanner.scanString("-", into: nil),
+			   scanner.scanCharacters(from: timeSet, into: &t2),
+			   let t2 = t2 as? String,
+			   let f1 = fixTime(t1),
+			   let f2 = fixTime(t2)
+			{
+				value += f1 + "-" + f2
+				continue
+			}
+			scanner.scanLocation = start
+
+			// check for a day
+			var str: NSString?
+			if scanner.scanCharacters(from: CharacterSet.letters, into: &str),
+			   let str = str as String?
+			{
+				let days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
+				if let index = days.firstIndex(where: { $0.lowercased() == str.lowercased() }) {
+					value += days[index]
+				} else {
+					value += str
+				}
+				continue
+			}
+
+			// consume anything else
+			if scanner.scanUpToCharacters(from: CharacterSet.letters.union(timeSet), into: &str) {
+				value += (str as String?) ?? ""
+			}
+		}
+		// remove any repeating spaces
+		value = value.description.replacingOccurrences(of: "  ", with: " ")
+
+		// remove spaces following commas
+		value = value.description.replacingOccurrences(of: ", ", with: ",")
+
+		return value
+	}
 }
