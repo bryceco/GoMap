@@ -278,6 +278,7 @@ class PresetValueTextField: AutocompleteTextField {
 				self?.text = newValue
 				self?.notifyValueChange(ended: true)
 			})
+		self.resignFirstResponder()
 		owner?.childViewPresented = true
 		owner?.viewController.present(directionViewController, animated: true)
 	}
@@ -309,6 +310,7 @@ class PresetValueTextField: AutocompleteTextField {
 			self.text = newValue
 			self.notifyValueChange(ended: true)
 		}
+		self.resignFirstResponder()
 		owner?.viewController.present(vc, animated: true)
 		owner?.childViewPresented = true
 	}
@@ -419,9 +421,11 @@ class PresetValueTextField: AutocompleteTextField {
 
 	@available(iOS 14.0, *)
 	@objc func openingHours(_ sender: Any?) {
+		self.resignFirstResponder()
 		let vc = OpeningHoursRecognizerController.with(onAccept: { newValue in
 			self.text = newValue
 			self.owner?.viewController.navigationController?.popViewController(animated: true)
+			self.notifyValueChange(ended: true)
 		}, onCancel: {
 			self.owner?.viewController.navigationController?.popViewController(animated: true)
 		}, onRecognize: { _ in
