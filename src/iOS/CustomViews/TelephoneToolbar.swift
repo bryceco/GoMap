@@ -10,13 +10,14 @@ import UIKit
 
 class TelephoneToolbar: UIToolbar {
 	weak var textField: UITextField!
+	let codes = AppDelegate.shared.mapView.currentRegion.callingCodes()
 
 	init(forTextField textfield: UITextField, frame: CGRect) {
 		textField = textfield
 		super.init(frame: CGRect(x: 0, y: 0, width: textField.frame.size.width, height: 44))
 		items = [
 			UIBarButtonItem(
-				title: "+1",
+				title: "+\(codes.first ?? "1")",
 				style: .plain,
 				target: self,
 				action: #selector(setCallingCodeText(_:))),
@@ -50,7 +51,7 @@ class TelephoneToolbar: UIToolbar {
 		if let text = textField.text,
 		   !text.hasPrefix("+")
 		{
-			let code = AppDelegate.shared.mapView.currentRegion.callingCode() ?? ""
+			let code = codes.first ?? "1"
 			textField.text = "+" + code + " " + text
 		}
 	}
