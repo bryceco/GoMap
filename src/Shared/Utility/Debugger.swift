@@ -20,3 +20,39 @@ func isUnderDebugger() -> Bool {
 	return false
 #endif
 }
+
+func DLog(_ args: String...) {
+#if DEBUG
+	print(args)
+#endif
+}
+
+func DbgAssert(_ x: Bool) {
+#if DEBUG
+	assert(x, "unspecified")
+#endif
+}
+
+func mach_task_self() -> task_t {
+	return mach_task_self_
+}
+
+func MemoryUsed() -> Double {
+	var info = mach_task_basic_info()
+	var count = mach_msg_type_number_t(MemoryLayout.size(ofValue: info) / MemoryLayout<integer_t>.size)
+	let kerr = withUnsafeMutablePointer(to: &info) { infoPtr in
+		infoPtr.withMemoryRebound(to: integer_t.self,
+		                          capacity: Int(count),
+		                          { (machPtr: UnsafeMutablePointer<integer_t>) in
+		                          	task_info(
+		                          		mach_task_self(),
+		                          		task_flavor_t(MACH_TASK_BASIC_INFO),
+		                          		machPtr,
+		                          		&count)
+		                          })
+	}
+	guard kerr == KERN_SUCCESS else {
+		return 0.0
+	}
+	return Double(info.resident_size)
+}
