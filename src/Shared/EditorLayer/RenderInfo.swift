@@ -169,7 +169,7 @@ final class RenderInfo {
 				}
 			}
 		}
-		let tmp = OsmNode(asUserCreated: "")
+		guard let tmp = list.first else { return [] }
 		var output = ContiguousArray<OsmBaseObject>(repeating: tmp, count: max)
 		for obj in list {
 			let index = (RenderInfoMaxPriority - 1) - obj.renderPriorityCached
