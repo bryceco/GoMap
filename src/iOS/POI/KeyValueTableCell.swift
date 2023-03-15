@@ -103,9 +103,9 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		textView.layer.borderWidth = 0.5
 		textView.layer.cornerRadius = 5.0
 		textView.font = text1.font // Don't copy text2 here because it might have been resized smaller
-		textView.autocapitalizationType = textField.autocapitalizationType
-		textView.autocorrectionType = textField.autocorrectionType
-		textView.keyboardType = textField.keyboardType
+		textView.autocapitalizationType = .sentences
+		textView.autocorrectionType = .yes
+		textView.keyboardType = .default
 		textView.inputAccessoryView = textField.inputAccessoryView
 		textView.returnKeyType = .done
 		textView.delegate = self

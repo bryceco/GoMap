@@ -368,8 +368,9 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 			}
 
 			// move the edited row up
-			var index = (0..<indexPath.row)
-				.first(where: { tags[$0].k.count == 0 || tags[$0].v.count == 0 }) ?? indexPath.row
+			var index = (0..<indexPath.row).first(where: {
+				tags[$0].k == "" || tags[$0].v == ""
+			}) ?? indexPath.row
 			if index < indexPath.row {
 				tags.remove(at: indexPath.row)
 				tags.insert(kv, at: index)
