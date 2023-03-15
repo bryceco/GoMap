@@ -20,6 +20,8 @@ Do you want to help testing pre-releases of Go Map!!?
 * presets - The presets database copied from the iD editor
 * xliff - Translation files
 
+![Architecture diagram](./Architecture.png)
+
 ## External assets
 
 A number of assets used in the app come from other repositories, and should be periodically updated. Because updating these items can be a lengthy process it is performed manually rather than at build time:
