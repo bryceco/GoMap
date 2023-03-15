@@ -48,7 +48,18 @@ final class MapMarkerIgnoreList: MapMarkerIgnoreListProtocol, Codable {
 			let path = dir.appendingPathComponent("mapMarkerIgnoreList")
 			let data = try Data(contentsOf: path)
 			let unarchiver = try NSKeyedUnarchiver(forReadingFrom: data)
-			let list = unarchiver.decodeDecodable(IgnoreDict.self, forKey: NSKeyedArchiveRootObjectKey) ?? [:]
+			var list = unarchiver.decodeDecodable(IgnoreDict.self, forKey: NSKeyedArchiveRootObjectKey) ?? [:]
+
+			// filter out ignored items that expired
+			let now = Date()
+			list = list.filter({
+				switch $0.value {
+				case .userRequest:
+					return true
+				case .userRequestUntil(let date):
+					return date > now
+				}
+			})
 			return list
 		} catch {
 			if (error as NSError).code != NSFileReadNoSuchFileError {
