@@ -74,6 +74,7 @@ protocol EditorMapLayerOwner: UIView, MapViewProgress {
 	// notify owner that tags changed so it can refresh e.g. fixme= buttons
 	func didUpdateObject()
 	func selectionDidChange()
+	func didDownloadData()
 }
 
 // MARK: EditorMapLayer
@@ -353,6 +354,7 @@ final class EditorMapLayer: CALayer {
 				return
 			}
 			setNeedsLayout()
+			owner.didDownloadData()
 		})
 		setNeedsLayout()
 	}

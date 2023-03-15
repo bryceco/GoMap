@@ -2753,6 +2753,10 @@ extension MapView: EditorMapLayerOwner {
 		updateMapMarkerButtonPositions()
 	}
 
+	func didDownloadData() {
+		self.updateMapMarkersFromServer(withDelay: 0.5, including: [])
+	}
+
 	func selectionDidChange() {
 		updateEditControl()
 		mapMarkerDatabase.didSelectObject(editorLayer.selectedPrimary)

@@ -126,15 +126,17 @@ class ClearCacheViewController: UITableViewController {
 			                              handler: { _ in
 			                              	self.navigationController?.popViewController(animated: true)
 			                              }))
+			func refreshAfterPurge() {
+				appDelegate.mapView.placePushpinForSelection()
+				appDelegate.mapView.mapMarkerDatabase.removeAll()
+				appDelegate.mapView.updateMapMarkersFromServer(withDelay: 0.0, including: [])
+			}
 			if appDelegate.mapView.editorLayer.mapData.changesetAsXml() != nil {
 				alert.addAction(UIAlertAction(
 					title: NSLocalizedString("Purge", comment: "Discard editing changes when resetting OSM data cache"),
 					style: .default,
 					handler: { _ in
 						appDelegate.mapView.editorLayer.purgeCachedData(.hard)
-						appDelegate.mapView.placePushpinForSelection()
-						appDelegate.mapView.mapMarkerDatabase.removeAll()
-						appDelegate.mapView.updateMapMarkersFromServer(withDelay: 0.0, including: [])
 						self.navigationController?.popViewController(animated: true)
 					}))
 			}
@@ -146,7 +148,7 @@ class ClearCacheViewController: UITableViewController {
 					style: .destructive,
 					handler: { _ in
 						appDelegate.mapView.editorLayer.purgeCachedData(.soft)
-						appDelegate.mapView.placePushpinForSelection()
+						refreshAfterPurge()
 						self.navigationController?.popViewController(animated: true)
 					}))
 				// Discard stale is used to simulate automatic cache management
@@ -155,7 +157,7 @@ class ClearCacheViewController: UITableViewController {
 					style: .destructive,
 					handler: { _ in
 						_ = appDelegate.mapView.editorLayer.mapData.discardStaleData(maxObjects: 1000)
-						appDelegate.mapView.placePushpinForSelection()
+						refreshAfterPurge()
 						self.navigationController?.popViewController(animated: true)
 					}))
 				// Regular purge
@@ -164,7 +166,7 @@ class ClearCacheViewController: UITableViewController {
 					style: .destructive,
 					handler: { _ in
 						appDelegate.mapView.editorLayer.purgeCachedData(.hard)
-						appDelegate.mapView.removePin()
+						refreshAfterPurge()
 						self.navigationController?.popViewController(animated: true)
 					}))
 			}
@@ -173,9 +175,7 @@ class ClearCacheViewController: UITableViewController {
 				return
 			}
 			appDelegate.mapView.editorLayer.purgeCachedData(.hard)
-			appDelegate.mapView.removePin()
-			appDelegate.mapView.mapMarkerDatabase.removeAll()
-			appDelegate.mapView.updateMapMarkersFromServer(withDelay: 0.0, including: [])
+			refreshAfterPurge()
 		case .mapnik /* Mapnik */:
 			appDelegate.mapView.mapnikLayer.purgeTileCache()
 		case .userGPX /* Breadcrumb */:
