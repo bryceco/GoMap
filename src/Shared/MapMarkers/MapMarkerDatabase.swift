@@ -210,10 +210,10 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 
 	// MARK: object selection
 
-	func selectedObject(_ object: OsmBaseObject?) {
+	func didSelectObject(_ object: OsmBaseObject?) {
 		for marker in markerForIdentifier.values {
 			if let button = marker.button {
-				button.isHighlighted = object == marker.object
+				button.isHighlighted = object != nil && object == marker.object
 			}
 		}
 	}
