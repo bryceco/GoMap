@@ -65,7 +65,7 @@ extension EditorMapLayer {
 		objects: ContiguousArray<OsmBaseObject>,
 		testNodes: Bool,
 		ignoreList: [OsmBaseObject],
-		block: @escaping (_ obj: OsmBaseObject, _ dist: CGFloat, _ segment: Int) -> Void)
+		block: (_ obj: OsmBaseObject, _ dist: CGFloat, _ segment: Int) -> Void)
 	{
 		let location = owner.mapTransform.latLon(forScreenPoint: point)
 		let viewCoord = owner.screenLatLonRect()
