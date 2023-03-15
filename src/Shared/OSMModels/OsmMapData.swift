@@ -1313,6 +1313,11 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	}
 
 	func purgeExceptUndo() {
+		// deresolve relations to get rid of retain cycles via parentRelations property
+		for rel in relations.values {
+			rel.deresolveRefs()
+		}
+
 		nodes.removeAll()
 		ways.removeAll()
 		relations.removeAll()
@@ -1342,14 +1347,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		// add nodes in ways to dirty set, because we must preserve them to maintain consistency
 		dirty.formUnion(dirty.flatMap({ ($0 as? OsmWay)?.nodes ?? [] }))
-
-		// deresolve relations
-		for rel in dirty {
-			guard let rel = rel as? OsmRelation else {
-				continue
-			}
-			rel.deresolveRefs()
-		}
 
 		// purge everything
 		purgeExceptUndo()
