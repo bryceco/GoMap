@@ -843,6 +843,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		consistencyCheck()
 	}
 
+	// MARK: Upload
+
 	/// Adds a changeset=* value to each node/way/relation in the XML
 	class func addChangesetId(_ changesetID: Int64, toXML xmlDoc: DDXMLDocument) {
 		for changeType in xmlDoc.rootElement()?.children ?? [] {
@@ -1015,8 +1017,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		OsmMapData.addChangesetId(changesetID, toXML: xmlChanges)
 		uploadChangeset(xml: xmlChanges, changesetID: changesetID, retries: retries, completion: completion)
 	}
-
-	// MARK: Upload
 
 	static func updateObjectDictionary<T: OsmBaseObject>(
 		_ dictionary: inout [OsmIdentifier: T],
