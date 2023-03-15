@@ -69,12 +69,11 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 
 	// MARK: marker type-specific update functions
 
-	/// This is called when we get a new marker. If it is an update to an existing marker then
-	/// we need to delete the reference to the previous tag, so the button can be replaced.
+	/// This is called when we get a new marker.
 	func addOrUpdate(marker newMarker: MapMarker) {
-		guard markerForIdentifier[newMarker.markerIdentifier] == nil else {
-			// This marker is already in our database
-			return
+		if let oldMarker = markerForIdentifier[newMarker.markerIdentifier] {
+			// This marker is already in our database, so reuse it's button
+			newMarker.reuseButtonFrom(oldMarker)
 		}
 		markerForIdentifier[newMarker.markerIdentifier] = newMarker
 	}
@@ -204,8 +203,8 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 		})
 	}
 
-	func mapMarker(forTag tag: Int) -> MapMarker? {
-		return markerForIdentifier.values.first(where: { $0.buttonId == tag })
+	func mapMarker(forButtonId buttonId: Int) -> MapMarker? {
+		return markerForIdentifier.values.first(where: { $0.buttonId == buttonId })
 	}
 
 	// MARK: object selection

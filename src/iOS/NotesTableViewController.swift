@@ -125,7 +125,7 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 		if note?.comments != nil, indexPath.section == 0 {
 			// ignore
 		} else if indexPath.row == 1 {
-			// get directions
+			// open note location using Apple Maps and get directions there
 			let coordinate = CLLocationCoordinate2DMake(self.note.lat, self.note.lon)
 			let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
 			let note = MKMapItem(placemark: placemark)

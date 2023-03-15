@@ -9,21 +9,12 @@
 import UIKit
 
 class MapMarker {
-	let buttonId: Int // a unique value we assign to track marker buttons.
+	private (set) var buttonId: Int // a unique value we assign to track marker buttons.
 	let lat: Double
 	let lon: Double
 	weak var object: OsmBaseObject?
 	weak var ignorable: MapMarkerIgnoreListProtocol?
-
-	var button: UIButton? {
-		willSet {
-			if newValue == nil,
-			   let button = button
-			{
-				button.removeFromSuperview()
-			}
-		}
-	}
+	var button: UIButton?
 
 	// a unique identifier for a marker across multiple downloads
 	var markerIdentifier: String {
@@ -32,6 +23,12 @@ class MapMarker {
 
 	deinit {
 		button?.removeFromSuperview()
+	}
+
+	func reuseButtonFrom(_ other: MapMarker) {
+		button = other.button
+		buttonId = other.buttonId
+		other.button = nil	// nullify it so it doesn't get removed on deinit
 	}
 
 	private static var nextButtonID = (1...).makeIterator()

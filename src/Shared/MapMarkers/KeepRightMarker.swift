@@ -81,7 +81,6 @@ final class KeepRightMarker: MapMarker {
 
 	func ignore() {
 		ignorable!.ignore(marker: self, reason: .userRequest)
-		button = nil
 	}
 
 	func shouldHide() -> Bool {

@@ -2389,7 +2389,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	@objc func mapMarkerButtonPress(_ sender: Any?) {
 		guard let button = sender as? UIButton,
-		      let marker = mapMarkerDatabase.mapMarker(forTag: button.tag)
+		      let marker = mapMarkerDatabase.mapMarker(forButtonId: button.tag)
 		else { return }
 
 		var object: OsmBaseObject?

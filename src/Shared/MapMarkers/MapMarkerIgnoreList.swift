@@ -39,6 +39,7 @@ final class MapMarkerIgnoreList: MapMarkerIgnoreListProtocol, Codable {
 	func ignore(marker: MapMarker, reason: IgnoreReason) {
 		ignoreList[marker.markerIdentifier] = reason
 		writeIgnoreList()
+		marker.button?.removeFromSuperview()
 		marker.button = nil
 	}
 
