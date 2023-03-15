@@ -287,6 +287,18 @@ final class EditorMapLayer: CALayer {
 	}
 
 	func purgeCachedData(_ style: MapDataPurgeStyle) {
+#if DEBUG
+		// Get a weak reference to every object. Once we've purged everything then all
+		// references should be zeroed. If not then there is a retain cycle somewhere.
+		struct Weakly {
+			weak var obj: OsmBaseObject?
+		}
+		var weakly: [Weakly] = []
+		weakly += mapData.nodes.values.map { Weakly(obj: $0) }
+		weakly += mapData.ways.values.map { Weakly(obj: $0) }
+		weakly += mapData.relations.values.map { Weakly(obj: $0) }
+#endif
+
 		owner.removePin()
 		selectedNode = nil
 		selectedWay = nil
@@ -297,6 +309,18 @@ final class EditorMapLayer: CALayer {
 		case .soft:
 			mapData.purgeSoft()
 		}
+		for object in shownObjects + fadingOutSet {
+			for layer in object.shapeLayers ?? [] {
+				layer.removeFromSuperlayer()
+			}
+		}
+		shownObjects = []
+		fadingOutSet = []
+
+#if DEBUG
+		weakly.removeAll(where: { $0.obj == nil })
+		assert(weakly.count == 0)
+#endif
 
 		setNeedsLayout()
 		updateMapLocation()
