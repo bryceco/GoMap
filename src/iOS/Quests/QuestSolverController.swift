@@ -106,12 +106,11 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 
 	@IBAction func onCancel(_ sender: Any?) {
 		dismiss(animated: true, completion: nil)
-		if let mapView = AppDelegate.shared.mapView {
-			mapView.editorLayer.selectedNode = nil
-			mapView.editorLayer.selectedWay = nil
-			mapView.editorLayer.selectedRelation = nil
-			mapView.placePushpinForSelection()
-		}
+		guard let mapView = AppDelegate.shared.mapView else { return }
+		mapView.editorLayer.selectedNode = nil
+		mapView.editorLayer.selectedWay = nil
+		mapView.editorLayer.selectedRelation = nil
+		mapView.placePushpinForSelection()
 	}
 
 	@IBAction func onSave(_ sender: Any?) {
