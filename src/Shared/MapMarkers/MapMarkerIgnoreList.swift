@@ -56,7 +56,7 @@ final class MapMarkerIgnoreList: MapMarkerIgnoreListProtocol, Codable {
 				switch $0.value {
 				case .userRequest:
 					return true
-				case .userRequestUntil(let date):
+				case let .userRequestUntil(date):
 					return date > now
 				}
 			})

@@ -2754,7 +2754,7 @@ extension MapView: EditorMapLayerOwner {
 	}
 
 	func didDownloadData() {
-		self.updateMapMarkersFromServer(withDelay: 0.5, including: [])
+		updateMapMarkersFromServer(withDelay: 0.5, including: [])
 	}
 
 	func selectionDidChange() {
