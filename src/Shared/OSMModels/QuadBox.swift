@@ -27,7 +27,7 @@ final class QuadBox: NSObject, NSSecureCoding {
 	static let emptyChildren: [QuadBox?] = [nil, nil, nil, nil]
 
 	let rect: OSMRect
-	var parent: QuadBox?
+	weak var parent: QuadBox?
 
 	var children: [QuadBox?] = QuadBox.emptyChildren
 	// this quad successfully downloaded all of its data, so we don't need to track children anymore
