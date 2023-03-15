@@ -24,12 +24,12 @@ enum QUAD_ENUM: Int, CaseIterable {
 final class QuadBox: NSObject, NSSecureCoding {
 	static let supportsSecureCoding = true
 
-	static let emptyChildren: [QuadBox?] = [nil, nil, nil, nil]
+	static let emptyChildren: ContiguousArray<QuadBox?> = [nil, nil, nil, nil]
 
 	let rect: OSMRect
 	weak var parent: QuadBox?
 
-	var children: [QuadBox?] = QuadBox.emptyChildren
+	var children: ContiguousArray<QuadBox?> = QuadBox.emptyChildren
 	// this quad successfully downloaded all of its data, so we don't need to track children anymore
 	var isDownloaded = false
 	var downloadDate = 0.0
@@ -38,7 +38,7 @@ final class QuadBox: NSObject, NSSecureCoding {
 	var isSplit = false
 
 	// member is used only for spatial
-	var members: [OsmBaseObject] = []
+	var members: ContiguousArray<OsmBaseObject> = []
 
 	private init(rect: OSMRect, parent: QuadBox?) {
 		self.rect = rect
