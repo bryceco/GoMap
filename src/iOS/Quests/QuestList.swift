@@ -145,20 +145,22 @@ class QuestList {
 				label: "ic_quest_sidewalk",
 				tagKeys: ["surface"],
 				appliesToObject: { obj in
-					guard
-						let way = obj as? OsmWay,
-						way.tags["surface"] == nil
-					else {
-						return false
-					}
+					guard let way = obj as? OsmWay else { return false }
 					switch way.tags["highway"] {
 					case "footway",
 					     "path",
 					     "pedestrian":
-						return true
+						break
 					default:
 						return false
 					}
+					switch obj.tags["surface"] {
+					case nil, "paved", "unpaved":
+						break
+					default:
+						return false
+					}
+					return true
 				},
 				acceptsValue: { _ in true })
 
@@ -168,8 +170,7 @@ class QuestList {
 				label: "ic_quest_way_surface",
 				tagKeys: ["surface"],
 				appliesToObject: { obj in
-					guard let way = obj as? OsmWay,
-					      way.tags["surface"] == nil else { return false }
+					guard let way = obj as? OsmWay else { return false }
 					switch way.tags["highway"] {
 					case "primary",
 					     "secondary",
@@ -179,10 +180,17 @@ class QuestList {
 					     "living_street",
 					     "service",
 					     "track":
-						return true
+						break
 					default:
 						return false
 					}
+					switch obj.tags["surface"] {
+					case nil, "paved", "unpaved":
+						break
+					default:
+						return false
+					}
+					return true
 				},
 				acceptsValue: { _ in true })
 

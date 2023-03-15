@@ -9,7 +9,7 @@
 import UIKit
 
 class MapMarker {
-	private (set) var buttonId: Int // a unique value we assign to track marker buttons.
+	private(set) var buttonId: Int // a unique value we assign to track marker buttons.
 	let lat: Double
 	let lon: Double
 	weak var object: OsmBaseObject?
@@ -28,7 +28,7 @@ class MapMarker {
 	func reuseButtonFrom(_ other: MapMarker) {
 		button = other.button
 		buttonId = other.buttonId
-		other.button = nil	// nullify it so it doesn't get removed on deinit
+		other.button = nil // nullify it so it doesn't get removed on deinit
 	}
 
 	private static var nextButtonID = (1...).makeIterator()
