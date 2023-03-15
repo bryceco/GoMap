@@ -300,8 +300,7 @@ class PresetValueTextField: AutocompleteTextField {
 	// MARK: Set height button
 
 	@IBAction func setHeight(_ sender: UIView?) {
-		if HeightViewController.unableToInstantiate(withUserWarning: owner.viewController)
-		{
+		if HeightViewController.unableToInstantiate(withUserWarning: owner.viewController) {
 			return
 		}
 
