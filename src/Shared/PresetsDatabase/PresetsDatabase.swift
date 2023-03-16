@@ -160,7 +160,7 @@ final class PresetsDatabase {
 	}
 
 	// OSM TagInfo database in the cloud: contains either a group or an array of values
-	var taginfoCache = [String: [String]]()
+	var taginfoCache: [String: [String]] = [:]
 
 	/// basePresets is always the regular presets
 	/// inputList is either regular presets, or both presets and NSI
@@ -169,7 +169,7 @@ final class PresetsDatabase {
 	{
 		// keys contains all tag keys that have an associated preset
 		var keys: [String: Int] = [:]
-		for (featureID, _) in basePresets {
+		for featureID in basePresets.keys {
 			var key = featureID
 			if let range = key.range(of: "/") {
 				key = String(key.prefix(upTo: range.lowerBound))
@@ -178,7 +178,7 @@ final class PresetsDatabase {
 		}
 		var tagIndex: [String: [PresetFeature]] = [:]
 		for list in inputList {
-			for (_, feature) in list {
+			for feature in list.values {
 				var added = false
 				for key in feature.tags.keys {
 					if keys[key] != nil {
@@ -200,16 +200,25 @@ final class PresetsDatabase {
 
 	// enumerate contents of database
 	func enumeratePresetsUsingBlock(_ block: (_ feature: PresetFeature) -> Void) {
-		for (_, v) in stdFeatures {
+		for v in stdFeatures.values {
 			block(v)
 		}
 	}
 
-	func enumeratePresetsAndNsiUsingBlock(_ block: (_ feature: PresetFeature) -> Void) {
-		for v in stdFeatures.values {
+	// Cache features in the local region to speed up searches
+	var localRegion = MapView.CurrentRegion.none
+	var stdLocal: [PresetFeature] = []
+	var nsiLocal: [PresetFeature] = []
+	func enumeratePresetsAndNsiIn(region: MapView.CurrentRegion, using block: (_ feature: PresetFeature) -> Void) {
+		if region != localRegion {
+			localRegion = region
+			stdLocal = stdFeatures.values.filter({ $0.searchable && $0.locationSetIncludes(region) })
+			nsiLocal = nsiFeatures.values.filter({ $0.searchable && $0.locationSetIncludes(region) })
+		}
+		for v in stdLocal {
 			block(v)
 		}
-		for v in nsiFeatures.values {
+		for v in nsiLocal {
 			block(v)
 		}
 	}
@@ -285,15 +294,14 @@ final class PresetsDatabase {
 	                                location: MapView.CurrentRegion) -> [(PresetFeature, Int)]
 	{
 		var list = [(PresetFeature, Int)]()
-		enumeratePresetsAndNsiUsingBlock { feature in
-			guard feature.searchable,
-			      feature.locationSetIncludes(location),
-			      let score = feature.matchesSearchText(searchText, geometry: geometry)
+		enumeratePresetsAndNsiIn(region: location, using: { feature in
+			guard
+				let score = feature.matchesSearchText(searchText, geometry: geometry)
 			else {
 				return
 			}
 			list.append((feature, score))
-		}
+		})
 		return list
 	}
 

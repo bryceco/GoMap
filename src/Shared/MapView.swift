@@ -463,10 +463,14 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	private(set) var crossHairs: CAShapeLayer!
 
-	struct CurrentRegion: Codable {
+	struct CurrentRegion: Codable, Equatable {
 		let latLon: LatLon
 		let country: String
 		let regions: [String]
+
+		static let none = CurrentRegion(latLon: LatLon(x: 0, y: 0),
+		                                country: "",
+		                                regions: [])
 
 		func saveToUserDefaults() {
 			UserDefaults.standard.set(try? PropertyListEncoder().encode(self), forKey: "CurrentRegion")
@@ -533,9 +537,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		tileServerList = TileServerList()
 		locationBallLayer = LocationBallLayer()
 		locating = false
-		currentRegion = CurrentRegion(latLon: LatLon(x: 0, y: 0),
-		                              country: "",
-		                              regions: [])
+		currentRegion = CurrentRegion.none
 
 		super.init(coder: coder)
 
