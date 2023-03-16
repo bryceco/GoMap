@@ -20,7 +20,7 @@ Do you want to help testing pre-releases of Go Map!!?
 * presets - The presets database copied from the iD editor
 * xliff - Translation files
 
-![Architecture diagram](./Architecture.pdf)
+![Architecture diagram](./Architecture.png)
 
 ## External assets
 
