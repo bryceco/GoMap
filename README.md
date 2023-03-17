@@ -12,13 +12,28 @@ Do you want to help testing pre-releases of Go Map!!?
 
 ## Source code structure
 
-* iOS - Code specific to the iOS app
-* Mac - Code specific to the Mac app (old, doesn't build anymore)
-* Shared - Shared code (drawing code, OSM data structures, etc)
+* iOS - App-specific UI code
+	* CustomViews - A collection of UIViews and CALayers primarily used by MapView
+	* Direction - The view controller for measuring direction
+	* Height - The view controller for measuring height
+	* OpeningHours - Support for recognizing hours via camera 
+	* PhotoShare - App extension so we appear in the system Share menu
+	* POI - View Controllers for tagging objects
+	* Quests - Quest VCs and related code
+	* Upload - View controller for uploading changesets
+* Shared - General purpose code (drawing code, OSM data structures, etc)
+	* Database - A SQLite3 database storing downloaded OSM data
+	* EditorLayer - The low-level graphical display for drawing nodes/ways
+	* MapMarkers - Markers for Quests, Notes, etc.
+	* OSMModels - Code for managing and storing OSM objects (nodes, ways, etc.)
+	* PresetsDatabase - Code for processing iD presets
+	* Tiles - Aerial imagery processing and display
 * Images - Images used for application elements (buttons, etc)
 * POI-Icons - Icons used for map elements (POIs, etc)
 * presets - The presets database copied from the iD editor
 * xliff - Translation files
+
+## Application architecture
 
 ![Architecture diagram](./Architecture.png)
 
