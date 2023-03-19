@@ -413,19 +413,19 @@ final class EditorMapLayer: CALayer {
 
 	func defaultColor(for object: OsmBaseObject) -> UIColor? {
 		if object.tags["shop"] != nil {
-			return EditorMapLayer.shopColor
+			return Self.shopColor
 		} else if object.tags["amenity"] != nil || object.tags["building"] != nil || object.tags["leisure"] != nil {
-			return EditorMapLayer.amenityColor
+			return Self.amenityColor
 		} else if object.tags["tourism"] != nil || object.tags["transport"] != nil {
-			return EditorMapLayer.tourismColor
+			return Self.tourismColor
 		} else if object.tags["medical"] != nil {
-			return EditorMapLayer.medicalColor
+			return Self.medicalColor
 		} else if object.tags["name"] != nil {
-			return EditorMapLayer.poiColor
+			return Self.poiColor
 		} else if object.tags["natural"] == "tree" {
-			return EditorMapLayer.treeColor
+			return Self.treeColor
 		} else if object.isNode() != nil, object.tags["highway"] == "stop" {
-			return EditorMapLayer.stopColor
+			return Self.stopColor
 		}
 		return nil
 	}
