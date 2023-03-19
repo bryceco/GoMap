@@ -34,6 +34,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 
 		tableView.estimatedRowHeight = 44.0
 		tableView.rowHeight = UITableView.automaticDimension
+		tableView.keyboardDismissMode = .none
 
 		let tabController = tabBarController as! POITabBarController
 

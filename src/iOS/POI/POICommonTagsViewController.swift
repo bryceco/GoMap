@@ -84,6 +84,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 
 		tableView.estimatedRowHeight = 44.0 // or could use UITableViewAutomaticDimension;
 		tableView.rowHeight = UITableView.automaticDimension
+		tableView.keyboardDismissMode = .none
 
 		if let drillDownGroup = drillDownGroup {
 			navigationItem.leftItemsSupplementBackButton = true
