@@ -2071,7 +2071,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	private func pushpinDragCallbackFor(object: OsmBaseObject) -> PushPinViewDragCallback {
-		return { [self] state, dx, dy in
+		weak var object = object
+		return { [weak self] state, dx, dy in
+			guard let self = self else { return }
 			switch state {
 			case .ended, .cancelled, .failed:
 				DisplayLink.shared.removeName("dragScroll")
@@ -2080,7 +2082,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					self.endObjectRotation()
 				}
 				self.unblinkObject()
-				editorLayer.dragFinish(object: object, isRotate: isRotate)
+				if let object = object {
+					editorLayer.dragFinish(object: object, isRotate: isRotate)
+				}
 
 			case .began:
 				if let pos = self.pushPin?.arrowPoint {
@@ -2089,8 +2093,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				fallthrough // begin state can have movement
 			case .changed:
 				// define the drag function
-				let dragObjectToPushpin: (() -> Void) = {
-					if let pos = self.pushPin?.arrowPoint {
+				let dragObjectToPushpin: (() -> Void) = { [weak object] in
+					if let object = object,
+					   let pos = self.pushPin?.arrowPoint
+					{
 						self.editorLayer.dragContinue(object: object,
 						                              toPoint: pos,
 						                              isRotateObjectMode: self.isRotateObjectMode)
@@ -2131,12 +2137,12 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 						let now = TimeInterval(CACurrentMediaTime())
 						let duration = now - prevTime
 						prevTime = now
-						let sx = scrollx * CGFloat(duration) *
-							60.0 // scale to 60 FPS assumption, need to move farther if framerate is slow
+						// scale to 60 FPS assumption, need to move farther if framerate is slow
+						let sx = scrollx * CGFloat(duration) * 60.0
 						let sy = scrolly * CGFloat(duration) * 60.0
 						self.adjustOrigin(by: CGPoint(x: -sx, y: -sy))
 						// update position of blink layer
-						if let pt = blinkLayer?.position.withOffset(-sx, -sy) {
+						if let pt = self.blinkLayer?.position.withOffset(-sx, -sy) {
 							self.blinkLayer?.position = pt
 						}
 						dragObjectToPushpin()
