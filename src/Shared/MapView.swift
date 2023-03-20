@@ -2083,12 +2083,12 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				}
 				self.unblinkObject()
 				if let object = object {
-					editorLayer.dragFinish(object: object, isRotate: isRotate)
+					self.editorLayer.dragFinish(object: object, isRotate: isRotate)
 				}
 
 			case .began:
 				if let pos = self.pushPin?.arrowPoint {
-					editorLayer.dragBegin(from: pos.minus(CGPoint(x: dx, y: dy)))
+					self.editorLayer.dragBegin(from: pos.minus(CGPoint(x: dx, y: dy)))
 				}
 				fallthrough // begin state can have movement
 			case .changed:
@@ -2154,7 +2154,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				// move the object
 				dragObjectToPushpin()
 
-				magnifyingGlass.setSourceCenter(arrow, in: self, visible: !self.aerialLayer.isHidden)
+				self.magnifyingGlass.setSourceCenter(arrow, in: self, visible: !self.aerialLayer.isHidden)
 			default:
 				break
 			}
