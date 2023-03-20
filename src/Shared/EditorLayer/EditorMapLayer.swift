@@ -320,7 +320,8 @@ final class EditorMapLayer: CALayer {
 
 #if DEBUG
 		weakly.removeAll(where: { $0.obj == nil })
-		assert(weakly.count == 0)
+		// if there were dirty objects then they'll still be in mapData
+		assert(weakly.count == mapData.nodeCount() + mapData.wayCount() + mapData.relationCount())
 #endif
 
 		setNeedsLayout()

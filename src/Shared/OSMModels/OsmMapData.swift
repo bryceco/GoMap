@@ -1353,11 +1353,11 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		// put dirty stuff back in
 		for object in dirty {
-			if let obj = object.isNode() {
+			if let obj = object as? OsmNode {
 				nodes[object.ident] = obj
-			} else if let obj = object.isWay() {
+			} else if let obj = object as? OsmWay {
 				ways[object.ident] = obj
-			} else if let obj = object.isRelation() {
+			} else if let obj = object as? OsmRelation {
 				relations[object.ident] = obj
 			} else {
 				assertionFailure()
