@@ -353,6 +353,10 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 
 	// MARK: TextField delegate
 
+	var keyValueDict: [String : String] {
+		return keyValueDictionary()
+	}
+
 	func keyValueChanged(for pair: KeyValueTableCell) {
 		guard let indexPath = tableView.indexPath(for: pair)
 		else { return }

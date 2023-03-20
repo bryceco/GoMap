@@ -38,6 +38,7 @@ protocol KeyValueTableCellOwner: UITableViewController {
 	var childViewPresented: Bool { get set }
 	var currentTextField: UITextField? { get set }
 	func keyValueChanged(for kv: KeyValueTableCell)
+	var keyValueDict: [String: String] { get }
 }
 
 class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFieldDelegate, UITextViewDelegate {
@@ -317,5 +318,9 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 	var viewController: UIViewController { return keyValueCellOwner }
 	func valueChanged(for textField: PresetValueTextField, ended: Bool) {
 		notifyKeyValueChange(ended: ended)
+	}
+
+	var keyValueDict: [String : String] {
+		return keyValueCellOwner.keyValueDict
 	}
 }

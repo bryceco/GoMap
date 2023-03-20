@@ -13,6 +13,7 @@ protocol PresetValueTextFieldOwner: AnyObject {
 	var allPresetKeys: [PresetKey] { get }
 	var childViewPresented: Bool { get set }
 	var viewController: UIViewController { get }
+	var keyValueDict: [String: String] { get }
 	func valueChanged(for textField: PresetValueTextField, ended: Bool)
 }
 
@@ -158,8 +159,8 @@ class PresetValueTextField: AutocompleteTextField {
 			?? getSurveyDateButton()
 			?? getDirectionButton()
 		let associatedView2 = getHeightButton()
-			?? getYesNoButton(keyValueDict: [:])
-			?? getSpeedButton(keyValueDict: [:])
+		?? getYesNoButton(keyValueDict: owner.keyValueDict)
+			?? getSpeedButton()
 		rightView = associatedView1 ?? associatedView2
 		rightViewMode = rightView != nil ? .always : .never
 		if #available(iOS 13.0, *) {
@@ -336,19 +337,16 @@ class PresetValueTextField: AutocompleteTextField {
 			return nil
 		}
 		let button = TristateYesNoButton()
-#if false // FIXME: we don't have access to the required values here to do this
-		var value = keyValueDict[presetKey.tagKey] ?? ""
-		if presetKey.tagKey == "tunnel", keyValueDict["waterway"] != nil, value == "culvert" {
+		var value = text ?? ""
+		let isCulvert = presetKey.tagKey == "tunnel" && keyValueDict["waterway"] != nil && value == "culvert"
+		if isCulvert {
 			// Special hack for tunnel=culvert when used with waterways:
 			value = "yes"
 		}
-#else
-		let value = text ?? ""
-#endif
 		button.setSelection(forString: value.lowercased())
 		if let string = button.stringForSelection() {
 			// the string is "yes"/"no"
-			text = string
+			text = isCulvert ? "culvert" : string
 			textColor = .clear
 		} else {
 			// display the string iff we don't recognize it (or it's nil)
@@ -356,7 +354,6 @@ class PresetValueTextField: AutocompleteTextField {
 			text = presetKey.prettyNameForTagValue(value)
 		}
 		button.onSelect = { newValue in
-#if false // FIXME: as above
 			var newValue = newValue
 			if presetKey.tagKey == "tunnel", keyValueDict["waterway"] != nil {
 				// Special hack for tunnel=culvert when used with waterways:
@@ -367,8 +364,7 @@ class PresetValueTextField: AutocompleteTextField {
 					newValue = nil // "no" isn't allowed
 				}
 			}
-#endif
-			self.textColor = (newValue == "yes" || newValue == "no") ? .clear : nil
+			self.textColor = button.selectedSegmentIndex == 1 ? nil : .clear
 			self.text = newValue
 			self.resignFirstResponder()
 			self.notifyValueChange(ended: true)
@@ -378,7 +374,7 @@ class PresetValueTextField: AutocompleteTextField {
 
 	// MARK: MPH/KPH tristate button
 
-	private func getSpeedButton(keyValueDict: [String: String]) -> UIView? {
+	private func getSpeedButton() -> UIView? {
 		guard let presetKey = presetKey,
 		      presetKey.type == "roadspeed"
 		else { return nil }

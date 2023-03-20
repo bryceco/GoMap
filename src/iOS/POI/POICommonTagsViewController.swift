@@ -758,4 +758,8 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 			kv.isSet.backgroundColor = nil
 		}
 	}
+
+	var keyValueDict: [String : String] {
+		return (tabBarController as! POITabBarController).keyValueDict
+	}
 }
