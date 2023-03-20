@@ -436,7 +436,6 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 					cell.accessoryType = .disclosureIndicator
 				}
 
-				// Regular cell
 				let value = presetKey.prettyNameForTagValue(keyValueDict[presetKey.tagKey] ?? "")
 				cell.valueField.text = value
 				cell.valueField.isEnabled = true
@@ -449,6 +448,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 			let cell = tableView.dequeueReusableCell(withIdentifier: "CommonTagSingle",
 			                                         for: indexPath) as! FeaturePresetCell
 			cell.nameLabel.text = drillDownGroup.name
+			cell.valueField.owner = self
 			cell.valueField.text = drillDownGroup.multiComboSummary(ofDict: keyValueDict, isPlaceholder: false)
 			cell.valueField.placeholder = drillDownGroup.multiComboSummary(ofDict: nil, isPlaceholder: true)
 			cell.valueField.isEnabled = false
@@ -759,7 +759,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		}
 	}
 
-	var keyValueDict: [String : String] {
+	var keyValueDict: [String: String] {
 		return (tabBarController as! POITabBarController).keyValueDict
 	}
 }
