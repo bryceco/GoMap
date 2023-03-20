@@ -756,7 +756,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 				if current.version < node.version {
 					// already exists, so do an in-place update
 					let bbox = current.boundingBox
-					current.serverUpdate(inPlace: node)
+					current.serverUpdate(with: node)
 					spatial.updateMember(current, fromBox: bbox, undo: nil)
 					newNodes.append(current)
 				}
@@ -771,7 +771,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			if let current = ways[way.ident] {
 				if current.version < way.version {
 					let bbox = current.boundingBox
-					current.serverUpdate(inPlace: way)
+					current.serverUpdate(with: way)
 					try current.resolveToMapData(self)
 					spatial.updateMember(current, fromBox: bbox, undo: nil)
 					newWays.append(current)
@@ -788,7 +788,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			if let current = relations[relation.ident] {
 				if current.version < relation.version {
 					let bbox = current.boundingBox
-					current.serverUpdate(inPlace: relation)
+					current.serverUpdate(with: relation)
 					spatial.updateMember(current, fromBox: bbox, undo: nil)
 					newRelations.append(current)
 				}
@@ -1039,15 +1039,15 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		}
 
 		assert(newVersion > 0)
-		object.serverUpdateVersion(newVersion)
-		object.serverUpdateChangeset(changeset)
+		object.serverUpdate(version: newVersion)
+		object.serverUpdate(changeset: changeset)
 		sqlUpdate[object] = true // mark for insertion
 
 		if oldId != newId {
 			// replace placeholder object with new server provided identity
 			assert(oldId < 0 && newId > 0)
 			dictionary.removeValue(forKey: object.ident)
-			object.serverUpdateIdent(newId)
+			object.serverUpdate(ident: newId)
 			dictionary[object.ident] = object
 		} else {
 			assert(oldId > 0)

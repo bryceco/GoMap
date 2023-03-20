@@ -80,8 +80,8 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 		computeBoundingBox()
 	}
 
-	override func serverUpdate(inPlace newerVersion: OsmBaseObject) {
-		super.serverUpdate(inPlace: newerVersion)
+	override func serverUpdate(with newerVersion: OsmBaseObject) {
+		super.serverUpdate(with: newerVersion)
 		nodeRefs = (newerVersion as! OsmWay).nodeRefs
 		nodes = (newerVersion as! OsmWay).nodes
 	}

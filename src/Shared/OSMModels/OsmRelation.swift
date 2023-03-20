@@ -167,9 +167,9 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 		}
 	}
 
-	override func serverUpdate(inPlace newerVersion: OsmBaseObject) {
+	override func serverUpdate(with newerVersion: OsmBaseObject) {
 		let newerVersion = newerVersion as! OsmRelation
-		super.serverUpdate(inPlace: newerVersion)
+		super.serverUpdate(with: newerVersion)
 		members = newerVersion.members
 	}
 

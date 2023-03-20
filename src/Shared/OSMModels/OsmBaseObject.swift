@@ -453,20 +453,22 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		clearCachedProperties()
 	}
 
-	func serverUpdateVersion(_ version: Int) {
+	// MARK: Update properties with refreshed data from server
+
+	func serverUpdate(version: Int) {
 		self.version = version
 	}
 
-	func serverUpdateChangeset(_ changeset: OsmIdentifier) {
+	func serverUpdate(changeset: OsmIdentifier) {
 		self.changeset = changeset
 	}
 
-	func serverUpdateIdent(_ ident: OsmIdentifier) {
+	func serverUpdate(ident: OsmIdentifier) {
 		assert(self.ident < 0 && ident > 0)
 		self.ident = ident
 	}
 
-	func serverUpdate(inPlace newerVersion: OsmBaseObject) {
+	func serverUpdate(with newerVersion: OsmBaseObject) {
 		assert(ident == newerVersion.ident)
 		assert(version < newerVersion.version)
 		tags = newerVersion.tags

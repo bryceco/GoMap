@@ -79,9 +79,9 @@ final class OsmNode: OsmBaseObject, NSSecureCoding {
 		latLon = LatLon(latitude: latitude, longitude: longitude)
 	}
 
-	override func serverUpdate(inPlace newerVersion: OsmBaseObject) {
+	override func serverUpdate(with newerVersion: OsmBaseObject) {
 		let newerVersion = newerVersion as! OsmNode
-		super.serverUpdate(inPlace: newerVersion)
+		super.serverUpdate(with: newerVersion)
 		latLon = newerVersion.latLon
 	}
 
