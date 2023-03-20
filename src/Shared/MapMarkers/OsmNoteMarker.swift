@@ -44,14 +44,13 @@ class OsmNoteMarker: MapMarker {
 	override var buttonLabel: String { "N" }
 
 	/// A note newly created by user
-	override init(lat: Double, lon: Double) {
+	override init(latLon: LatLon) {
 		noteId = 0
 		status = ""
 		dateCreated = ""
 		comments = []
 
-		super.init(lat: lat,
-		           lon: lon)
+		super.init(latLon: latLon)
 	}
 
 	/// Initialize based on OSM Notes query
@@ -115,7 +114,6 @@ class OsmNoteMarker: MapMarker {
 		self.status = status
 		self.dateCreated = dateCreated
 		self.comments = comments
-		super.init(lat: lat,
-		           lon: lon)
+		super.init(latLon: LatLon(latitude: lat, longitude: lon))
 	}
 }

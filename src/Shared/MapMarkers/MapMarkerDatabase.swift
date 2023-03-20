@@ -267,7 +267,7 @@ extension MapMarkerDatabase {
 
 		if note.comments.count == 0 {
 			// brand new note
-			url += "?lat=\(note.lat)&lon=\(note.lon)&text=\(comment)"
+			url += "?lat=\(note.latLon.lat)&lon=\(note.latLon.lon)&text=\(comment)"
 		} else {
 			// existing note
 			if close {

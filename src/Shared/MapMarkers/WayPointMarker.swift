@@ -14,7 +14,7 @@ class WayPointMarker: MapMarker {
 
 	init(with latLon: LatLon, description: String) {
 		self.description = description
-		super.init(lat: latLon.lat, lon: latLon.lon)
+		super.init(latLon: latLon)
 	}
 
 	convenience init(with gpxPoint: GpxPoint) {
@@ -30,7 +30,7 @@ class WayPointMarker: MapMarker {
 	}
 
 	override var markerIdentifier: String {
-		return "waypoint-\(lat),\(lon)"
+		return "waypoint-\(latLon.lat),\(latLon.lon)"
 	}
 
 	override var buttonLabel: String { "W" }

@@ -35,8 +35,7 @@ class FixmeMarker: MapMarker {
 	init(object: OsmBaseObject, text: String) {
 		let center = object.selectionPoint()
 		fixmeID = object.extendedIdentifier
-		super.init(lat: center.lat,
-		           lon: center.lon)
+		super.init(latLon: center)
 		self.object = object
 	}
 }

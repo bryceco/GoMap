@@ -2380,7 +2380,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		// Set position of button
 		let button = marker.button!
 		let offsetX = (marker is KeepRightMarker) || (marker is FixmeMarker) ? 0.00001 : 0.0
-		let pos = mapTransform.screenPoint(forLatLon: LatLon(latitude: marker.lat, longitude: marker.lon + offsetX),
+		let pos = mapTransform.screenPoint(forLatLon: LatLon(latitude: marker.latLon.lat,
+															 longitude: marker.latLon.lon + offsetX),
 		                                   birdsEye: true)
 		if pos.x.isInfinite || pos.y.isInfinite {
 			return
@@ -2414,7 +2415,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			editorLayer.selectedWay = object.isWay()
 			editorLayer.selectedRelation = object.isRelation()
 
-			let pt = object.latLonOnObject(forLatLon: LatLon(x: marker.lon, y: marker.lat))
+			let pt = object.latLonOnObject(forLatLon: marker.latLon)
 			let point = mapTransform.screenPoint(forLatLon: pt, birdsEye: true)
 			placePushpin(at: point, object: object)
 		}
@@ -2812,7 +2813,7 @@ extension MapView: EditorMapLayerOwner {
 	func addNote() {
 		if let pushpinView = pushPin {
 			let pos = mapTransform.latLon(forScreenPoint: pushpinView.arrowPoint)
-			let note = OsmNoteMarker(lat: pos.lat, lon: pos.lon)
+			let note = OsmNoteMarker(latLon: pos)
 			mainViewController.performSegue(withIdentifier: "NotesSegue", sender: note)
 			removePin()
 		}

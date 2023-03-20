@@ -28,7 +28,7 @@ final class QuestMarker: MapMarker {
 		let center = object.selectionPoint()
 		self.quest = quest
 		self.ident = ident
-		super.init(lat: center.lat, lon: center.lon)
+		super.init(latLon: center)
 		self.object = object
 		self.ignorable = ignorable
 	}

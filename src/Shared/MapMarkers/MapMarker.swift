@@ -10,8 +10,7 @@ import UIKit
 
 class MapMarker {
 	private(set) var buttonId: Int // a unique value we assign to track marker buttons.
-	let lat: Double
-	let lon: Double
+	let latLon: LatLon
 	weak var object: OsmBaseObject?
 	weak var ignorable: MapMarkerIgnoreListProtocol?
 	var button: UIButton?
@@ -33,12 +32,9 @@ class MapMarker {
 
 	private static var nextButtonID = (1...).makeIterator()
 
-	init(lat: Double,
-	     lon: Double)
-	{
+	init(latLon: LatLon) {
 		buttonId = Self.nextButtonID.next()!
-		self.lat = lat
-		self.lon = lon
+		self.latLon = latLon
 	}
 
 	var buttonLabel: String { "?" }

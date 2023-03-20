@@ -74,8 +74,7 @@ final class KeepRightMarker: MapMarker {
 		description = "\(objectName): \(gpx.desc)"
 		self.keepRightID = keepRightID
 		self.objectId = objectId
-		super.init(lat: gpx.latLon.lat,
-		           lon: gpx.latLon.lon)
+		super.init(latLon: gpx.latLon)
 		self.ignorable = ignorable
 	}
 
