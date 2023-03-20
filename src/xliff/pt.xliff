@@ -1771,6 +1771,10 @@ Pode limpar os ficheiros temporários (nas configurações, em Visualização) p
         <target>mph</target>
         <note>miles per hour speed</note>
       </trans-unit>
+      <trans-unit id="no" xml:space="preserve">
+        <source>no</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">
         <source>node %@</source>
         <target>nó %@</target>
@@ -1814,6 +1818,10 @@ Pode limpar os ficheiros temporários (nas configurações, em Visualização) p
       <trans-unit id="way %@" xml:space="preserve">
         <source>way %@</source>
         <target>linha %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="yes" xml:space="preserve">
+        <source>yes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>

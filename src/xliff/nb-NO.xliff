@@ -1729,6 +1729,10 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
         <target>mp/t</target>
         <note>miles per hour speed</note>
       </trans-unit>
+      <trans-unit id="no" xml:space="preserve">
+        <source>no</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">
         <source>node %@</source>
         <target>node %@</target>
@@ -1770,6 +1774,10 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
       <trans-unit id="way %@" xml:space="preserve">
         <source>way %@</source>
         <target>vei %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="yes" xml:space="preserve">
+        <source>yes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>

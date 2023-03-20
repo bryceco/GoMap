@@ -92,6 +92,12 @@
 /* No comment provided by engineer. */
 "Accept" = "承諾";
 
+/* A type of quest */
+"Add Building Type" = "建物の種類を追加";
+
+/* A type of quest */
+"Add Highway Surface" = "道路の路面を追加";
+
 /* Add to relation */
 "Add inner member" = "innerメンバーを追加";
 
@@ -104,11 +110,29 @@
 /* No comment provided by engineer. */
 "add object to relation" = "オブジェクトをリレーションに追加";
 
+/* A type of quest */
+"Add Opening Hours" = "営業時間を追加";
+
 /* Add to relation */
 "Add outer member" = "outerメンバーを追加";
 
+/* A type of quest */
+"Add Parking Type" = "駐車場の種類を追加";
+
+/* A type of quest */
+"Add Sidewalk Surface" = "歩道の路面を追加";
+
+/* A type of quest */
+"Add Speed Limit" = "速度制限を追加";
+
+/* A type of quest */
+"Add Telephone Number" = "電話番号を追加";
+
 /* No comment provided by engineer. */
 "Add way to multipolygon?" = "マルチポリゴンにウェイを追加しますか？";
+
+/* A type of quest */
+"Add Website" = "ウェブサイトを追加";
 
 /* No comment provided by engineer. */
 "added to multipolygon relation" = "マルチポリゴンのリレーションに追加";
@@ -118,6 +142,9 @@
 
 /* No comment provided by engineer. */
 "Additional imagery" = "追加の画像";
+
+/* No comment provided by engineer. */
+"Advanced Quest Builder" = "高度なクエストビルダー";
 
 /* No comment provided by engineer. */
 "Aerial only" = "衛星画像のみ";
@@ -164,6 +191,9 @@
 
 /* No comment provided by engineer. */
 "Better imagery available" = "良質画像あり";
+
+/* No comment provided by engineer. */
+"Build a New Quest" = "新規クエストを作成";
 
 /* No comment provided by engineer. */
 "Cache size warning" = "キャッシュサイズの警告";
@@ -262,6 +292,9 @@
 "Create\n" = "新規作成\n";
 
 /* No comment provided by engineer. */
+"Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." = "各キー/値ペアのために、そして一致したオブジェクトを含めるか除外するかを示すために表内に行を作成します。キーが無いことを示すには値を空にします。任意の値に一致させる場合は key=* を使います。";
+
+/* No comment provided by engineer. */
 "create node" = "ノードを新規作成";
 
 /* No comment provided by engineer. */
@@ -327,6 +360,9 @@
 /* No comment provided by engineer. */
 "Detach from relation" = "リレーションから切り離す";
 
+/* Discard changes */
+"Discard" = "破棄";
+
 /* Edit action */
 "Disconnect" = "接続解除";
 
@@ -384,6 +420,12 @@
 /* No comment provided by engineer. */
 "Extending a way which belongs to a Route or similar relation may damage the relation" = "ルートやそれに類するリレーションに属するウェイの延長はリレーションを壊す可能性があります";
 
+/* Header for quest filters section */
+"Filters" = "フィルター";
+
+/* No comment provided by engineer. */
+"Geometry" = "ジオメトリ";
+
 /* No comment provided by engineer. */
 "GPX Upload Complete" = "GPXアップロード完了";
 
@@ -395,6 +437,9 @@
 
 /* rate the app now */
 "I'll do it!" = "実行します！";
+
+/* No comment provided by engineer. */
+"Icon" = "アイコン";
 
 /* OSM node/way/relation identifier */
 "Identifier" = "識別子";
@@ -423,6 +468,9 @@
 /* No comment provided by engineer. */
 "Joining would invalidate a Turn Restriction the way belongs to" = "ジョインするとこのウェイが属する進行方向制限を無効にする可能性があります";
 
+/* The tag keys section of a quest definition */
+"Keys" = "キー";
+
 /* kilometers per hour speed */
 "km/h" = "km/時";
 
@@ -443,6 +491,9 @@
 
 /* No comment provided by engineer. */
 "Length" = "長さ";
+
+/* Object geometry: a way (but not an area) */
+"Line" = "ライン";
 
 /* No comment provided by engineer. */
 "Location unavailable" = "位置を取得できません";
@@ -521,6 +572,12 @@
 
 /* No comment provided by engineer. */
 "Multipolygon" = "マルチポリゴン";
+
+/* No comment provided by engineer. */
+"Name" = "名前";
+
+/* Quest for objects that aren't recently updated */
+"Needs Survey" = "現地調査が必要";
 
 /* No comment provided by engineer. */
 "Network error" = "ネットワークのエラー";
@@ -637,11 +694,17 @@
 /* No comment provided by engineer. */
 "Please wait" = "お待ち下さい";
 
+/* Object geometry: a node */
+"Point" = "ポイント";
+
 /* No comment provided by engineer. */
 "Previous" = "前へ";
 
 /* previous GPX track */
 "Previous Tracks" = "以前のトラック";
+
+/* No comment provided by engineer. */
+"Provide a single-character symbol (emoji or unicode character) to identify this quest:" = "このクエストを識別するために1文字のシンボル（絵文字またはユニコード文字）を入力します:";
 
 /* Discard editing changes when resetting OSM data cache */
 "Purge" = "消去";
@@ -711,6 +774,12 @@
 
 /* Edit action */
 "Rotate" = "回転";
+
+/* Save changes */
+"Save" = "保存";
+
+/* No comment provided by engineer. */
+"Save or discard your changes" = "変更を保存または破棄";
 
 /* No comment provided by engineer. */
 "Select a highway approaching the intersection" = "交差点に向かう道路を選択";
@@ -825,6 +894,9 @@
 "This feature is only available on iOS 15 or later" = "この機能が使えるのはIOS15以降です";
 
 /* No comment provided by engineer. */
+"This page allows you to design quests with more specific criteria than the regular Quest Builder page." = "このページでは通常のクエストビルダーページよりもより詳細な基準を使ってクエストをデザインできます。";
+
+/* No comment provided by engineer. */
 "To add another member to the relation 'long press' on the way to be added" = "このリレーションに別のメンバーを追加する際には対象のウェイ上で'長押し'ボタンを押してください";
 
 /* No comment provided by engineer. */
@@ -908,6 +980,9 @@
 /* OSM object versioh */
 "Version" = "バージョン";
 
+/* Object geometry: a node that is part of a way */
+"Vertex" = "頂点ノード";
+
 /* Year aerial imagery was created */
 "vintage %@" = "年代 %@";
 
@@ -925,6 +1000,15 @@
 
 /* No comment provided by engineer. */
 "Way Tags" = "ウェイのタグ";
+
+/* No comment provided by engineer. */
+"What is the name of this quest? This is best written in the form of an action like 'Add Surface':" = "このクエストの名前は？「道路の路面を追加」のようにアクションを示す書き方がベストです:";
+
+/* No comment provided by engineer. */
+"What tag key is modified by this quest?" = "このクエストではどのタグキーが変更されますか？";
+
+/* No comment provided by engineer. */
+"What types of objects does this quest apply to?" = "このクエストはどの種類のオブジェクトに適用されますか？";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "あなたはOpenStreetMapデータベースの本番環境に変更を加えようとしています。この変更は世界中で閲覧されます。\n\n続ける場合はコミットを再度押してください。やめる場合は中止を押してください。";

@@ -139,6 +139,9 @@
 /* Class = "UILabel"; text = "Value 4"; ObjectID = "ng7-T9-SJ6"; */
 "ng7-T9-SJ6.text" = "Valor 4";
 
+/* Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "nil-45-Wvp"; */
+"nil-45-Wvp.normalTitle" = "ⓘ";
+
 /* Class = "UILabel"; text = "Value 2"; ObjectID = "nKt-LG-cSw"; */
 "nKt-LG-cSw.text" = "Valor 2";
 
@@ -210,6 +213,9 @@
 
 /* Class = "UILabel"; text = "Food & Drink"; ObjectID = "XBV-Ie-LDT"; Note = "Do not translate"; */
 "XBV-Ie-LDT.text" = "Food & Drink";
+
+/* Class = "UITextField"; placeholder = "key"; ObjectID = "XCc-6y-qYt"; Note = "Do not translate"; */
+"XCc-6y-qYt.placeholder" = "key";
 
 /* Class = "UILabel"; text = "PROTOTYPE CELLS"; ObjectID = "XJZ-vI-jat"; */
 "XJZ-vI-jat.text" = "CÉLULAS PROTÓTIPOS";

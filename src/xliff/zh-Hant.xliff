@@ -257,12 +257,12 @@
       </trans-unit>
       <trans-unit id="Add Building Type" xml:space="preserve">
         <source>Add Building Type</source>
-        <target state="translated">添加建築物類型</target>
+        <target>添加建築物類型</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Highway Surface" xml:space="preserve">
         <source>Add Highway Surface</source>
-        <target state="translated">添加道路鋪面</target>
+        <target>添加道路鋪面</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
@@ -272,32 +272,32 @@
       </trans-unit>
       <trans-unit id="Add Opening Hours" xml:space="preserve">
         <source>Add Opening Hours</source>
-        <target state="translated">添加營業時間</target>
+        <target>添加營業時間</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Parking Type" xml:space="preserve">
         <source>Add Parking Type</source>
-        <target state="translated">添加停車場類型</target>
+        <target>添加停車場類型</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Sidewalk Surface" xml:space="preserve">
         <source>Add Sidewalk Surface</source>
-        <target state="translated">添加人行道鋪面</target>
+        <target>添加人行道鋪面</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Speed Limit" xml:space="preserve">
         <source>Add Speed Limit</source>
-        <target state="translated">添加速限</target>
+        <target>添加速限</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Telephone Number" xml:space="preserve">
         <source>Add Telephone Number</source>
-        <target state="translated">添加電話號碼</target>
+        <target>添加電話號碼</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Website" xml:space="preserve">
         <source>Add Website</source>
-        <target state="translated">添加網址</target>
+        <target>添加網址</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add inner member" xml:space="preserve">
@@ -327,7 +327,7 @@
       </trans-unit>
       <trans-unit id="Advanced Quest Builder" xml:space="preserve">
         <source>Advanced Quest Builder</source>
-        <target state="translated">建立進階任務</target>
+        <target>建立進階任務</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
@@ -408,7 +408,7 @@
       </trans-unit>
       <trans-unit id="Build a New Quest" xml:space="preserve">
         <source>Build a New Quest</source>
-        <target state="translated">建立新的任務</target>
+        <target>建立新的任務</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
@@ -580,7 +580,7 @@
       </trans-unit>
       <trans-unit id="Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." xml:space="preserve">
         <source>Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value.</source>
-        <target state="translated">為每一個該被包含或排除於篩選條件之中的 key=value 分別在表單中新增一列，要篩選缺少 key 的情況請將 value 留空，要篩選任意 value 請使用 key=*。</target>
+        <target>為每一個該被包含或排除於篩選條件之中的 key=value 分別在表單中新增一列，要篩選缺少 key 的情況請將 value 留空，要篩選任意 value 請使用 key=*。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
@@ -627,7 +627,7 @@
       </trans-unit>
       <trans-unit id="Discard" xml:space="preserve">
         <source>Discard</source>
-        <target state="translated">捨棄</target>
+        <target>捨棄</target>
         <note>Discard changes</note>
       </trans-unit>
       <trans-unit id="Disconnect" xml:space="preserve">
@@ -726,7 +726,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Filters" xml:space="preserve">
         <source>Filters</source>
-        <target state="translated">篩選條件</target>
+        <target>篩選條件</target>
         <note>Header for quest filters section</note>
       </trans-unit>
       <trans-unit id="GPX Upload Complete" xml:space="preserve">
@@ -741,7 +741,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Geometry" xml:space="preserve">
         <source>Geometry</source>
-        <target state="translated">幾何形狀</target>
+        <target>幾何形狀</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
@@ -756,7 +756,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Icon" xml:space="preserve">
         <source>Icon</source>
-        <target state="translated">圖示</target>
+        <target>圖示</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Identifier" xml:space="preserve">
@@ -806,7 +806,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Keys" xml:space="preserve">
         <source>Keys</source>
-        <target state="translated">標籤</target>
+        <target>標籤</target>
         <note>The tag keys section of a quest definition</note>
       </trans-unit>
       <trans-unit id="Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." xml:space="preserve">
@@ -841,7 +841,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Line" xml:space="preserve">
         <source>Line</source>
-        <target state="translated">線段</target>
+        <target>線段</target>
         <note>Object geometry: a way (but not an area)</note>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
@@ -967,12 +967,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Name" xml:space="preserve">
         <source>Name</source>
-        <target state="translated">名稱</target>
+        <target>名稱</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Needs Survey" xml:space="preserve">
         <source>Needs Survey</source>
-        <target state="translated">需要踏查</target>
+        <target>需要踏查</target>
         <note>Quest for objects that aren't recently updated</note>
       </trans-unit>
       <trans-unit id="Network error" xml:space="preserve">
@@ -1157,7 +1157,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Point" xml:space="preserve">
         <source>Point</source>
-        <target state="translated">點</target>
+        <target>點</target>
         <note>Object geometry: a node</note>
       </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
@@ -1172,7 +1172,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Provide a single-character symbol (emoji or unicode character) to identify this quest:" xml:space="preserve">
         <source>Provide a single-character symbol (emoji or unicode character) to identify this quest:</source>
-        <target state="translated">請提供一個可以辨識本任務的符號（支援 emoji）：</target>
+        <target>請提供一個可以辨識本任務的符號（支援 emoji）：</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Purge" xml:space="preserve">
@@ -1287,12 +1287,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Save" xml:space="preserve">
         <source>Save</source>
-        <target state="translated">儲存</target>
+        <target>儲存</target>
         <note>Save changes</note>
       </trans-unit>
       <trans-unit id="Save or discard your changes" xml:space="preserve">
         <source>Save or discard your changes</source>
-        <target state="translated">儲存或捨棄您的修改</target>
+        <target>儲存或捨棄您的修改</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Select Object" xml:space="preserve">
@@ -1478,7 +1478,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="This page allows you to design quests with more specific criteria than the regular Quest Builder page." xml:space="preserve">
         <source>This page allows you to design quests with more specific criteria than the regular Quest Builder page.</source>
-        <target state="translated">這裡可以讓您設計出比普通任務設定頁面更複雜的任務。</target>
+        <target>這裡可以讓您設計出比普通任務設定頁面更複雜的任務。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
@@ -1622,7 +1622,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Vertex" xml:space="preserve">
         <source>Vertex</source>
-        <target state="translated">頂點</target>
+        <target>頂點</target>
         <note>Object geometry: a node that is part of a way</note>
       </trans-unit>
       <trans-unit id="Warning" xml:space="preserve">
@@ -1642,17 +1642,17 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="What is the name of this quest? This is best written in the form of an action like 'Add Surface':" xml:space="preserve">
         <source>What is the name of this quest? This is best written in the form of an action like 'Add Surface':</source>
-        <target state="translated">這個任務的名稱是什麼？建議使用以動詞開頭的祈使句像是「添加鋪面」：</target>
+        <target>這個任務的名稱是什麼？建議使用以動詞開頭的祈使句像是「添加鋪面」：</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="What tag key is modified by this quest?" xml:space="preserve">
         <source>What tag key is modified by this quest?</source>
-        <target state="translated">哪些標籤的 key 在這個任務中被修改了？</target>
+        <target>哪些標籤的 key 在這個任務中被修改了？</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="What types of objects does this quest apply to?" xml:space="preserve">
         <source>What types of objects does this quest apply to?</source>
-        <target state="translated">這個任務會套用哪種物件類型？</target>
+        <target>這個任務會套用哪種物件類型？</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.&#10;&#10;To continue press Commit once again, otherwise press Cancel." xml:space="preserve">
@@ -1814,6 +1814,10 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target>英里/小時</target>
         <note>miles per hour speed</note>
       </trans-unit>
+      <trans-unit id="no" xml:space="preserve">
+        <source>no</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">
         <source>node %@</source>
         <target>節點 %@</target>
@@ -1857,6 +1861,10 @@ You may want to clear the cache (under Display settings) to improve performance.
       <trans-unit id="way %@" xml:space="preserve">
         <source>way %@</source>
         <target>線段 %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="yes" xml:space="preserve">
+        <source>yes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>

@@ -154,6 +154,9 @@
 /* Class = "UINavigationItem"; title = "Aerial Provider"; ObjectID = "MZF-am-tCM"; */
 "MZF-am-tCM.title" = "Luftbild-Anbieter";
 
+/* Class = "UILabel"; text = "Quests"; ObjectID = "O0U-6M-7AT"; */
+"O0U-6M-7AT.text" = "Quests";
+
 /* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "OiJ-GU-gZ3"; */
 "OiJ-GU-gZ3.title" = "Abbrechen";
 
@@ -168,6 +171,9 @@
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "pR1-M8-pXH"; */
 "pR1-M8-pXH.title" = "Zurück";
+
+/* Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "PSE-3C-cDx"; */
+"PSE-3C-cDx.text" = "Notizen und Korrekturhinweise";
 
 /* Class = "UILabel"; text = "Boundaries"; ObjectID = "qdV-Je-jXT"; */
 "qdV-Je-jXT.text" = "Grenzen";

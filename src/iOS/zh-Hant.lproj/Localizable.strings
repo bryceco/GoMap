@@ -92,6 +92,12 @@
 /* No comment provided by engineer. */
 "Accept" = "接受";
 
+/* A type of quest */
+"Add Building Type" = "添加建築物類型";
+
+/* A type of quest */
+"Add Highway Surface" = "添加道路鋪面";
+
 /* Add to relation */
 "Add inner member" = "新增內部成員";
 
@@ -104,11 +110,29 @@
 /* No comment provided by engineer. */
 "add object to relation" = "新增物件到關係中";
 
+/* A type of quest */
+"Add Opening Hours" = "添加營業時間";
+
 /* Add to relation */
 "Add outer member" = "新增外部成員";
 
+/* A type of quest */
+"Add Parking Type" = "添加停車場類型";
+
+/* A type of quest */
+"Add Sidewalk Surface" = "添加人行道鋪面";
+
+/* A type of quest */
+"Add Speed Limit" = "添加速限";
+
+/* A type of quest */
+"Add Telephone Number" = "添加電話號碼";
+
 /* No comment provided by engineer. */
 "Add way to multipolygon?" = "新增線段到複多邊形？";
+
+/* A type of quest */
+"Add Website" = "添加網址";
 
 /* No comment provided by engineer. */
 "added to multipolygon relation" = "已新增到複多邊形關係中";
@@ -118,6 +142,9 @@
 
 /* No comment provided by engineer. */
 "Additional imagery" = "其他影像";
+
+/* No comment provided by engineer. */
+"Advanced Quest Builder" = "建立進階任務";
 
 /* No comment provided by engineer. */
 "Aerial only" = "只用空照影像";
@@ -164,6 +191,9 @@
 
 /* No comment provided by engineer. */
 "Better imagery available" = "有更好的影像";
+
+/* No comment provided by engineer. */
+"Build a New Quest" = "建立新的任務";
 
 /* No comment provided by engineer. */
 "Cache size warning" = "快取總量的警告";
@@ -262,6 +292,9 @@
 "Create\n" = "新增\n";
 
 /* No comment provided by engineer. */
+"Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." = "為每一個該被包含或排除於篩選條件之中的 key=value 分別在表單中新增一列，要篩選缺少 key 的情況請將 value 留空，要篩選任意 value 請使用 key=*。";
+
+/* No comment provided by engineer. */
 "create node" = "新增節點";
 
 /* No comment provided by engineer. */
@@ -327,6 +360,9 @@
 /* No comment provided by engineer. */
 "Detach from relation" = "從關係中分離";
 
+/* Discard changes */
+"Discard" = "捨棄";
+
 /* Edit action */
 "Disconnect" = "斷開連接";
 
@@ -384,6 +420,12 @@
 /* No comment provided by engineer. */
 "Extending a way which belongs to a Route or similar relation may damage the relation" = "延伸屬於某個路線或類似關係中的線段可能會破壞該關係";
 
+/* Header for quest filters section */
+"Filters" = "篩選條件";
+
+/* No comment provided by engineer. */
+"Geometry" = "幾何形狀";
+
 /* No comment provided by engineer. */
 "GPX Upload Complete" = "GPX 上傳完畢";
 
@@ -395,6 +437,9 @@
 
 /* rate the app now */
 "I'll do it!" = "來吧！";
+
+/* No comment provided by engineer. */
+"Icon" = "圖示";
 
 /* OSM node/way/relation identifier */
 "Identifier" = "識別符號";
@@ -423,6 +468,9 @@
 /* No comment provided by engineer. */
 "Joining would invalidate a Turn Restriction the way belongs to" = "若要加入，將會使線段所屬的轉向限制關係失效";
 
+/* The tag keys section of a quest definition */
+"Keys" = "標籤";
+
 /* kilometers per hour speed */
 "km/h" = "公里/小時";
 
@@ -443,6 +491,9 @@
 
 /* No comment provided by engineer. */
 "Length" = "長度";
+
+/* Object geometry: a way (but not an area) */
+"Line" = "線段";
 
 /* No comment provided by engineer. */
 "Location unavailable" = "無法定位";
@@ -521,6 +572,12 @@
 
 /* No comment provided by engineer. */
 "Multipolygon" = "複多邊形";
+
+/* No comment provided by engineer. */
+"Name" = "名稱";
+
+/* Quest for objects that aren't recently updated */
+"Needs Survey" = "需要踏查";
 
 /* No comment provided by engineer. */
 "Network error" = "網路問題";
@@ -637,11 +694,17 @@
 /* No comment provided by engineer. */
 "Please wait" = "請稍候";
 
+/* Object geometry: a node */
+"Point" = "點";
+
 /* No comment provided by engineer. */
 "Previous" = "上一個";
 
 /* previous GPX track */
 "Previous Tracks" = "上一個航跡";
+
+/* No comment provided by engineer. */
+"Provide a single-character symbol (emoji or unicode character) to identify this quest:" = "請提供一個可以辨識本任務的符號（支援 emoji）：";
 
 /* Discard editing changes when resetting OSM data cache */
 "Purge" = "清除";
@@ -711,6 +774,12 @@
 
 /* Edit action */
 "Rotate" = "旋轉";
+
+/* Save changes */
+"Save" = "儲存";
+
+/* No comment provided by engineer. */
+"Save or discard your changes" = "儲存或捨棄您的修改";
 
 /* No comment provided by engineer. */
 "Select a highway approaching the intersection" = "選擇一條靠近路口的道路";
@@ -825,6 +894,9 @@
 "This feature is only available on iOS 15 or later" = "這個功能只能在 iOS 15 或之後的版本中使用";
 
 /* No comment provided by engineer. */
+"This page allows you to design quests with more specific criteria than the regular Quest Builder page." = "這裡可以讓您設計出比普通任務設定頁面更複雜的任務。";
+
+/* No comment provided by engineer. */
 "To add another member to the relation 'long press' on the way to be added" = "把另一個成員加入到關係中的做法是在線段上長按就可以新增";
 
 /* No comment provided by engineer. */
@@ -908,6 +980,9 @@
 /* OSM object versioh */
 "Version" = "版本";
 
+/* Object geometry: a node that is part of a way */
+"Vertex" = "頂點";
+
 /* Year aerial imagery was created */
 "vintage %@" = "年份 %@";
 
@@ -925,6 +1000,15 @@
 
 /* No comment provided by engineer. */
 "Way Tags" = "路徑標籤";
+
+/* No comment provided by engineer. */
+"What is the name of this quest? This is best written in the form of an action like 'Add Surface':" = "這個任務的名稱是什麼？建議使用以動詞開頭的祈使句像是「添加鋪面」：";
+
+/* No comment provided by engineer. */
+"What tag key is modified by this quest?" = "哪些標籤的 key 在這個任務中被修改了？";
+
+/* No comment provided by engineer. */
+"What types of objects does this quest apply to?" = "這個任務會套用哪種物件類型？";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "您即將要修改真的 OSM 資料庫，全世界所有人都會看到您的修改。\n\n如要繼續請請再次點擊提交，否則請點擊取消。";

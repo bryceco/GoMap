@@ -1768,6 +1768,10 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target>ميل في الساعة</target>
         <note>miles per hour speed</note>
       </trans-unit>
+      <trans-unit id="no" xml:space="preserve">
+        <source>no</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">
         <source>node %@</source>
         <target>العقدة %@</target>
@@ -1811,6 +1815,10 @@ You may want to clear the cache (under Display settings) to improve performance.
       <trans-unit id="way %@" xml:space="preserve">
         <source>way %@</source>
         <target>الطريق %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="yes" xml:space="preserve">
+        <source>yes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>

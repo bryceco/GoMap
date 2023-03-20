@@ -58,6 +58,9 @@
 /* Class = "UITableViewSection"; headerTitle = "Bug Reports & Suggestions"; ObjectID = "dbi-X6-Day"; */
 "dbi-X6-Day.headerTitle" = "Reportes de erros e sugestões";
 
+/* Class = "UIButton"; normalTitle = "Sign In"; ObjectID = "dIM-oE-zAg"; */
+"dIM-oE-zAg.normalTitle" = "Entrar";
+
 /* Class = "UIButton"; normalTitle = "Register new account"; ObjectID = "DY5-Ls-XZ1"; */
 "DY5-Ls-XZ1.normalTitle" = "Registrar nova conta";
 

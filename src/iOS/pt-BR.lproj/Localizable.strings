@@ -31,6 +31,9 @@
 /* No comment provided by engineer. */
 "(way)" = "(linha)";
 
+/* area in m^2 */
+"%.0f m^2" = "%.0f m^2";
+
 /* way length if > 10m */
 "%.0f meters, %ld nodes" = "%1$.0f metros, %2$ld nós";
 
@@ -59,6 +62,9 @@
 /* length of a gpx track */
 "%ld meters, %ld points" = "%1$ld metros, %2$ld pontos";
 
+/* length of a gpx track */
+"%ld meters, %ld points, %ld waypoints" = "%1$ld metros, %2$ld pontos, %3$ld waypoints";
+
 /* Number of tiles/objects in cache */
 "%ld objects" = "%ld objetos";
 
@@ -72,6 +78,9 @@
 "<unknown>" = "<desconhecido>";
 
 /* No comment provided by engineer. */
+"A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." = "Uma cópia de todas as missões definidas pelo usuário foi copiada para a área de transferência no formato JSON. Você pode colá-lo em algum lugar para mantê-lo como cópia ou enviá-lo para outra pessoa.";
+
+/* No comment provided by engineer. */
 "A GPX Track records your path as you travel along a road or trail" = "Uma trilha GPX registra seu percurso conforme você viaja ao longo de uma estrada ou caminho";
 
 /* No comment provided by engineer. */
@@ -79,6 +88,12 @@
 
 /* No comment provided by engineer. */
 "Accept" = "Aceitar";
+
+/* A type of quest */
+"Add Building Type" = "Adicionar o tipo de construção";
+
+/* A type of quest */
+"Add Highway Surface" = "Adicionar o tipo de superfície";
 
 /* Add to relation */
 "Add inner member" = "Adicionar membro de dentro";
@@ -92,11 +107,29 @@
 /* No comment provided by engineer. */
 "add object to relation" = "adicionar relação ao objeto";
 
+/* A type of quest */
+"Add Opening Hours" = "Adicionar horário de funcionamento";
+
 /* Add to relation */
 "Add outer member" = "Adicionar membro de fora";
 
+/* A type of quest */
+"Add Parking Type" = "Adicionar tipo de estacionamento";
+
+/* A type of quest */
+"Add Sidewalk Surface" = "Adicionar tipo de superfície para a calçada";
+
+/* A type of quest */
+"Add Speed Limit" = "Adicionar limite de velocidade";
+
+/* A type of quest */
+"Add Telephone Number" = "Adicionar número de telefone";
+
 /* No comment provided by engineer. */
 "Add way to multipolygon?" = "Adicionar linha ao multipolígono?";
+
+/* A type of quest */
+"Add Website" = "Adicionar página da Internet";
 
 /* No comment provided by engineer. */
 "added to multipolygon relation" = "adicionado à relação multipolígono";
@@ -108,6 +141,9 @@
 "Additional imagery" = "Imagens aéreas adicionais";
 
 /* No comment provided by engineer. */
+"Advanced Quest Builder" = "Construtor de missões avançado";
+
+/* No comment provided by engineer. */
 "Aerial only" = "Apenas imagens aéreas";
 
 /* No comment provided by engineer. */
@@ -116,8 +152,18 @@
 /* No comment provided by engineer. */
 "All Tags" = "Todas as etiquetas";
 
+/* Show an error message */
+"An error occured while exporting: %@" = "Aconteceu um erro durante a exportação de %@";
+
+/* Show an error message */
+"An error occured while importing: %@" = "Aconteceu um erro durante a importação de %@";
+
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "Ocorreu um erro desconhecido ao obter metadados";
+
+/* Area of an object in m^2
+   Object geometry: a closed way or multipolygon) */
+"Area" = "Área";
 
 /* No comment provided by engineer. */
 "Attention" = "Atenção";
@@ -136,6 +182,15 @@
 
 /* No comment provided by engineer. */
 "Bad login" = "Login mal feito";
+
+/* No comment provided by engineer. */
+"Better background imagery is available for your location. Would you like to change to it?" = "Há uma imagem de fundo melhor disponível para sua localização. Você gostaria de trocá-la?";
+
+/* No comment provided by engineer. */
+"Better imagery available" = "Disponível imagem de fundo melhor";
+
+/* No comment provided by engineer. */
+"Build a New Quest" = "Construa uma nova missão";
 
 /* No comment provided by engineer. */
 "Cache size warning" = "Aviso de tamanho de cache";
@@ -182,6 +237,9 @@
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "Não é possível conectar uma linha de dentro a uma linha de fora";
 
+/* No comment provided by engineer. */
+"Change" = "Trocar";
+
 /* OSM changeset identifier */
 "Changeset" = "Conjunto de alterações";
 
@@ -218,6 +276,9 @@
 /* No comment provided by engineer. */
 "Connecting the nodes would damage a relation" = "Conectar os nós danificaria uma relação";
 
+/* text was copied to the system clipboard */
+"Copied" = "Copiado";
+
 /* Edit action */
 "Copy Tags" = "Copiar etiquetas";
 
@@ -226,6 +287,9 @@
 
 /* No comment provided by engineer. */
 "Create\n" = "Criar\n";
+
+/* No comment provided by engineer. */
+"Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." = "Crie uma linha na tabela para cada par de chave/valor e indique se objetos correspondentes devem ser incluídos ou excluídos. Deixe o valor vazio para indicar que a chave não está presente. Use key=* para corresponder a qualquer valor.";
 
 /* No comment provided by engineer. */
 "create node" = "criar nó";
@@ -293,6 +357,9 @@
 /* No comment provided by engineer. */
 "Detach from relation" = "Separar da relação";
 
+/* Discard changes */
+"Discard" = "Descartar";
+
 /* Edit action */
 "Disconnect" = "Desconectar";
 
@@ -350,6 +417,12 @@
 /* No comment provided by engineer. */
 "Extending a way which belongs to a Route or similar relation may damage the relation" = "Estender uma linha que pertence a uma rota ou similar poderá quebrar a relação";
 
+/* Header for quest filters section */
+"Filters" = "Filtros";
+
+/* No comment provided by engineer. */
+"Geometry" = "Geometria";
+
 /* No comment provided by engineer. */
 "GPX Upload Complete" = "GPX enviado";
 
@@ -362,11 +435,23 @@
 /* rate the app now */
 "I'll do it!" = "Sim!";
 
+/* No comment provided by engineer. */
+"Icon" = "Ícone";
+
 /* OSM node/way/relation identifier */
 "Identifier" = "Identificador";
 
 /* No comment provided by engineer. */
 "Ignore" = "Ignorar";
+
+/* No comment provided by engineer. */
+"Import" = "Importar";
+
+/* No comment provided by engineer. */
+"Import Error" = "Erro na importação";
+
+/* No comment provided by engineer. */
+"Import Quests" = "Importar missões";
 
 /* No comment provided by engineer. */
 "In order to measure height, please enable camera access in the app's settings." = "Para medir a altura, por favor, habilite o acesso à câmera nas configurações do aplicativo.";
@@ -379,6 +464,12 @@
 
 /* No comment provided by engineer. */
 "Joining would invalidate a Turn Restriction the way belongs to" = "A união invalidará uma restrição de direção à qual a linha pertence";
+
+/* The tag keys section of a quest definition */
+"Keys" = "Chaves";
+
+/* kilometers per hour speed */
+"km/h" = "km/h";
 
 /* No comment provided by engineer. */
 "Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "A seleção de idioma afeta apenas os modelos de etiquetas (somente etiquetas traduzidas no editor iD). A interface principal ainda é em inglês. Futuramente será disponibilizada em outros idiomas.";
@@ -397,6 +488,9 @@
 
 /* No comment provided by engineer. */
 "Length" = "Comprimento";
+
+/* Object geometry: a way (but not an area) */
+"Line" = "Linha";
 
 /* No comment provided by engineer. */
 "Location unavailable" = "Localização indisponível";
@@ -470,8 +564,17 @@
 /* No comment provided by engineer. */
 "Move selected object?" = "Mover o objeto selecionado?";
 
+/* miles per hour speed */
+"mph" = "mph";
+
 /* No comment provided by engineer. */
 "Multipolygon" = "Multipolígono";
+
+/* No comment provided by engineer. */
+"Name" = "Nome";
+
+/* Quest for objects that aren't recently updated */
+"Needs Survey" = "Pesquisa de necessidades";
 
 /* No comment provided by engineer. */
 "Network error" = "Erro de rede";
@@ -574,6 +677,9 @@
 "Paste" = "Colar";
 
 /* No comment provided by engineer. */
+"Paste the JSON for your quests into the field below" = "Cole o JSON das suas missões no campo abaixo";
+
+/* No comment provided by engineer. */
 "Pasting %@ characters, maximum tag length is 255" = "Colando %@ caracteres, o comprimento máximo da etiqueta é 255 caracteres";
 
 /* No comment provided by engineer. */
@@ -585,14 +691,29 @@
 /* No comment provided by engineer. */
 "Please wait" = "Por favor, espere";
 
+/* Object geometry: a node */
+"Point" = "Ponto";
+
 /* No comment provided by engineer. */
 "Previous" = "Anterior";
 
 /* previous GPX track */
 "Previous Tracks" = "Trilhas anteriores";
 
+/* No comment provided by engineer. */
+"Provide a single-character symbol (emoji or unicode character) to identify this quest:" = "Forneça um símbolo de um único caractere (emoji ou caractere Unicode) para identificar esta missão:";
+
 /* Discard editing changes when resetting OSM data cache */
 "Purge" = "Limpar";
+
+/* The current Quest the user is answering */
+"Quest" = "Missão";
+
+/* No comment provided by engineer. */
+"Quest Definition Error" = "Erro na Definição da Missão";
+
+/* No comment provided by engineer. */
+"Quests were imported successfully." = "As missões foram importadas com sucesso.";
 
 /* No comment provided by engineer. */
 "Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "Avaliar este aplicativo torna mais fácil para outros mapeadores descobri-lo e aumenta a visibilidade do OpenStreetMap.";
@@ -651,6 +772,12 @@
 /* Edit action */
 "Rotate" = "Rotacionar";
 
+/* Save changes */
+"Save" = "Salvar";
+
+/* No comment provided by engineer. */
+"Save or discard your changes" = "Salvar ou descartar as modificações";
+
 /* No comment provided by engineer. */
 "Select a highway approaching the intersection" = "Selecione uma rodovia que se aproxima do cruzamento";
 
@@ -685,6 +812,9 @@
 /* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "Lamento, um erro aconteceu enquanto carregava o arquivo GPX";
 
+/* Space key on the keyboard */
+"Space" = "Espaço";
+
 /* Edit action */
 "Split" = "Dividir";
 
@@ -699,6 +829,12 @@
 
 /* Edit action */
 "Straighten" = "Endireitar";
+
+/* No comment provided by engineer. */
+"Success" = "Sucesso";
+
+/* No comment provided by engineer. */
+"Tag Key" = "Chave de etiqueta";
 
 /* Edit action */
 "Tags" = "Etiquetas";
@@ -752,6 +888,12 @@
 "This device is not able to provide heading data." = "Este dispositivo não pode fornecer dados de direção.";
 
 /* No comment provided by engineer. */
+"This feature is only available on iOS 15 or later" = "Este recurso está disponível a partir do iOS 15";
+
+/* No comment provided by engineer. */
+"This page allows you to design quests with more specific criteria than the regular Quest Builder page." = "Esta página permite que você projete missões com critérios mais específicos do que a página regular do Construtor de Missões.";
+
+/* No comment provided by engineer. */
 "To add another member to the relation 'long press' on the way to be added" = "Para adicionar outro membro à relação pressione longamente na linha a ser adicionada";
 
 /* No comment provided by engineer. */
@@ -793,6 +935,9 @@
 /* No comment provided by engineer. */
 "Undo" = "Desfazer";
 
+/* No comment provided by engineer. */
+"Unknown" = "Desconhecido";
+
 /* relation role=* tag */
 "Unknown role" = "Função desconhecida";
 
@@ -832,6 +977,9 @@
 /* OSM object versioh */
 "Version" = "Versão";
 
+/* Object geometry: a node that is part of a way */
+"Vertex" = "Vértice";
+
 /* Year aerial imagery was created */
 "vintage %@" = "criado em %@";
 
@@ -849,6 +997,15 @@
 
 /* No comment provided by engineer. */
 "Way Tags" = "Etiquetas da linha";
+
+/* No comment provided by engineer. */
+"What is the name of this quest? This is best written in the form of an action like 'Add Surface':" = "Qual é o nome desta missão? O ideal é que seja escrito na forma de uma ação, como 'Adicionar Superfície':";
+
+/* No comment provided by engineer. */
+"What tag key is modified by this quest?" = "Qual chave de etiqueta é modificada por esta missão?";
+
+/* No comment provided by engineer. */
+"What types of objects does this quest apply to?" = "A quais tipos de objetos esta missão se aplica?";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Você está prestes a fazer alterações no banco de dados OpenStreetMap ao vivo. Suas alterações ficarão visíveis para todos no mundo.\n\nPara continuar, pressione Confirmar mais uma vez, caso contrário, pressione Cancelar.";

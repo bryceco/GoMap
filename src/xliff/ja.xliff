@@ -257,12 +257,12 @@
       </trans-unit>
       <trans-unit id="Add Building Type" xml:space="preserve">
         <source>Add Building Type</source>
-        <target state="translated">建物の種類を追加</target>
+        <target>建物の種類を追加</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Highway Surface" xml:space="preserve">
         <source>Add Highway Surface</source>
-        <target state="translated">道路の路面を追加</target>
+        <target>道路の路面を追加</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
@@ -272,32 +272,32 @@
       </trans-unit>
       <trans-unit id="Add Opening Hours" xml:space="preserve">
         <source>Add Opening Hours</source>
-        <target state="translated">営業時間を追加</target>
+        <target>営業時間を追加</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Parking Type" xml:space="preserve">
         <source>Add Parking Type</source>
-        <target state="translated">駐車場の種類を追加</target>
+        <target>駐車場の種類を追加</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Sidewalk Surface" xml:space="preserve">
         <source>Add Sidewalk Surface</source>
-        <target state="translated">歩道の路面を追加</target>
+        <target>歩道の路面を追加</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Speed Limit" xml:space="preserve">
         <source>Add Speed Limit</source>
-        <target state="translated">速度制限を追加</target>
+        <target>速度制限を追加</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Telephone Number" xml:space="preserve">
         <source>Add Telephone Number</source>
-        <target state="translated">電話番号を追加</target>
+        <target>電話番号を追加</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Website" xml:space="preserve">
         <source>Add Website</source>
-        <target state="translated">ウェブサイトを追加</target>
+        <target>ウェブサイトを追加</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add inner member" xml:space="preserve">
@@ -327,7 +327,7 @@
       </trans-unit>
       <trans-unit id="Advanced Quest Builder" xml:space="preserve">
         <source>Advanced Quest Builder</source>
-        <target state="translated">高度なクエストビルダー</target>
+        <target>高度なクエストビルダー</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
@@ -408,7 +408,7 @@
       </trans-unit>
       <trans-unit id="Build a New Quest" xml:space="preserve">
         <source>Build a New Quest</source>
-        <target state="translated">新規クエストを作成</target>
+        <target>新規クエストを作成</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
@@ -580,7 +580,7 @@
       </trans-unit>
       <trans-unit id="Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." xml:space="preserve">
         <source>Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value.</source>
-        <target state="translated">各キー/値ペアのために、そして一致したオブジェクトを含めるか除外するかを示すために表内に行を作成します。キーが無いことを示すには値を空にします。任意の値に一致させる場合は key=* を使います。</target>
+        <target>各キー/値ペアのために、そして一致したオブジェクトを含めるか除外するかを示すために表内に行を作成します。キーが無いことを示すには値を空にします。任意の値に一致させる場合は key=* を使います。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
@@ -627,7 +627,7 @@
       </trans-unit>
       <trans-unit id="Discard" xml:space="preserve">
         <source>Discard</source>
-        <target state="translated">破棄</target>
+        <target>破棄</target>
         <note>Discard changes</note>
       </trans-unit>
       <trans-unit id="Disconnect" xml:space="preserve">
@@ -726,7 +726,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Filters" xml:space="preserve">
         <source>Filters</source>
-        <target state="translated">フィルター</target>
+        <target>フィルター</target>
         <note>Header for quest filters section</note>
       </trans-unit>
       <trans-unit id="GPX Upload Complete" xml:space="preserve">
@@ -741,7 +741,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Geometry" xml:space="preserve">
         <source>Geometry</source>
-        <target state="translated">ジオメトリ</target>
+        <target>ジオメトリ</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
@@ -756,7 +756,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Icon" xml:space="preserve">
         <source>Icon</source>
-        <target state="translated">アイコン</target>
+        <target>アイコン</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Identifier" xml:space="preserve">
@@ -806,7 +806,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Keys" xml:space="preserve">
         <source>Keys</source>
-        <target state="translated">キー</target>
+        <target>キー</target>
         <note>The tag keys section of a quest definition</note>
       </trans-unit>
       <trans-unit id="Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." xml:space="preserve">
@@ -841,7 +841,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Line" xml:space="preserve">
         <source>Line</source>
-        <target state="translated">ライン</target>
+        <target>ライン</target>
         <note>Object geometry: a way (but not an area)</note>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
@@ -967,12 +967,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Name" xml:space="preserve">
         <source>Name</source>
-        <target state="translated">名前</target>
+        <target>名前</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Needs Survey" xml:space="preserve">
         <source>Needs Survey</source>
-        <target state="translated">現地調査が必要</target>
+        <target>現地調査が必要</target>
         <note>Quest for objects that aren't recently updated</note>
       </trans-unit>
       <trans-unit id="Network error" xml:space="preserve">
@@ -1157,7 +1157,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Point" xml:space="preserve">
         <source>Point</source>
-        <target state="translated">ポイント</target>
+        <target>ポイント</target>
         <note>Object geometry: a node</note>
       </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
@@ -1172,7 +1172,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Provide a single-character symbol (emoji or unicode character) to identify this quest:" xml:space="preserve">
         <source>Provide a single-character symbol (emoji or unicode character) to identify this quest:</source>
-        <target state="translated">このクエストを識別するために1文字のシンボル（絵文字またはユニコード文字）を入力します:</target>
+        <target>このクエストを識別するために1文字のシンボル（絵文字またはユニコード文字）を入力します:</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Purge" xml:space="preserve">
@@ -1287,12 +1287,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Save" xml:space="preserve">
         <source>Save</source>
-        <target state="translated">保存</target>
+        <target>保存</target>
         <note>Save changes</note>
       </trans-unit>
       <trans-unit id="Save or discard your changes" xml:space="preserve">
         <source>Save or discard your changes</source>
-        <target state="translated">変更を保存または破棄</target>
+        <target>変更を保存または破棄</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Select Object" xml:space="preserve">
@@ -1478,7 +1478,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="This page allows you to design quests with more specific criteria than the regular Quest Builder page." xml:space="preserve">
         <source>This page allows you to design quests with more specific criteria than the regular Quest Builder page.</source>
-        <target state="translated">このページでは通常のクエストビルダーページよりもより詳細な基準を使ってクエストをデザインできます。</target>
+        <target>このページでは通常のクエストビルダーページよりもより詳細な基準を使ってクエストをデザインできます。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
@@ -1622,7 +1622,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Vertex" xml:space="preserve">
         <source>Vertex</source>
-        <target state="translated">頂点ノード</target>
+        <target>頂点ノード</target>
         <note>Object geometry: a node that is part of a way</note>
       </trans-unit>
       <trans-unit id="Warning" xml:space="preserve">
@@ -1642,17 +1642,17 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="What is the name of this quest? This is best written in the form of an action like 'Add Surface':" xml:space="preserve">
         <source>What is the name of this quest? This is best written in the form of an action like 'Add Surface':</source>
-        <target state="translated">このクエストの名前は？「道路の路面を追加」のようにアクションを示す書き方がベストです:</target>
+        <target>このクエストの名前は？「道路の路面を追加」のようにアクションを示す書き方がベストです:</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="What tag key is modified by this quest?" xml:space="preserve">
         <source>What tag key is modified by this quest?</source>
-        <target state="translated">このクエストではどのタグキーが変更されますか？</target>
+        <target>このクエストではどのタグキーが変更されますか？</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="What types of objects does this quest apply to?" xml:space="preserve">
         <source>What types of objects does this quest apply to?</source>
-        <target state="translated">このクエストはどの種類のオブジェクトに適用されますか？</target>
+        <target>このクエストはどの種類のオブジェクトに適用されますか？</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.&#10;&#10;To continue press Commit once again, otherwise press Cancel." xml:space="preserve">
@@ -1814,6 +1814,10 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target>mph</target>
         <note>miles per hour speed</note>
       </trans-unit>
+      <trans-unit id="no" xml:space="preserve">
+        <source>no</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">
         <source>node %@</source>
         <target>ノード %@</target>
@@ -1857,6 +1861,10 @@ You may want to clear the cache (under Display settings) to improve performance.
       <trans-unit id="way %@" xml:space="preserve">
         <source>way %@</source>
         <target>ウェイ %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="yes" xml:space="preserve">
+        <source>yes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>

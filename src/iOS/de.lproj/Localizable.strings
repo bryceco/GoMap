@@ -81,6 +81,9 @@
 "1 Day" = "1 Tag";
 
 /* No comment provided by engineer. */
+"A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." = "Eine Kopie aller benutzerdefinierten Quests wurde im JSON-Format in die Zwischenablage kopiert. Sie können sie irgendwo einfügen, um eine Kopie zu behalten, oder sie an jemand anderen senden.";
+
+/* No comment provided by engineer. */
 "A GPX Track records your path as you travel along a road or trail" = "Ein GPX-Track zeichnet deinen Weg auf, während du dich eine Straße oder einen Pfad entlang bewegst";
 
 /* No comment provided by engineer. */
@@ -88,6 +91,12 @@
 
 /* No comment provided by engineer. */
 "Accept" = "Akzeptieren";
+
+/* A type of quest */
+"Add Building Type" = "Gebäudetyp hinzufügen";
+
+/* A type of quest */
+"Add Highway Surface" = "Straßenbelag hinzufügen";
 
 /* Add to relation */
 "Add inner member" = "Inneres Mitglied hinzufügen";
@@ -101,11 +110,29 @@
 /* No comment provided by engineer. */
 "add object to relation" = "Objekt zur Relation hinzufügen";
 
+/* A type of quest */
+"Add Opening Hours" = "Öffnungszeiten hinzufügen";
+
 /* Add to relation */
 "Add outer member" = "Äußeres Mitglied hinzufügen";
 
+/* A type of quest */
+"Add Parking Type" = "Parkplatztyp hinzufügen";
+
+/* A type of quest */
+"Add Sidewalk Surface" = "Gehwegbelag hinzufügen";
+
+/* A type of quest */
+"Add Speed Limit" = "Geschwindigkeitsbegrenzung hinzufügen";
+
+/* A type of quest */
+"Add Telephone Number" = "Telefonnummer hinzufügen";
+
 /* No comment provided by engineer. */
 "Add way to multipolygon?" = "Weg zu Multipolygon hinzufügen?";
+
+/* A type of quest */
+"Add Website" = "Webseite hinzufügen";
 
 /* No comment provided by engineer. */
 "added to multipolygon relation" = "zur Multipolygon-Relation hinzugefügt";
@@ -117,6 +144,9 @@
 "Additional imagery" = "Zusätzliche Luftbilder";
 
 /* No comment provided by engineer. */
+"Advanced Quest Builder" = "Erweiterter Quest-Builder";
+
+/* No comment provided by engineer. */
 "Aerial only" = "Nur Luftbild";
 
 /* No comment provided by engineer. */
@@ -124,6 +154,12 @@
 
 /* No comment provided by engineer. */
 "All Tags" = "Alle Attribute";
+
+/* Show an error message */
+"An error occured while exporting: %@" = "Beim Exportieren ist ein Fehler aufgetreten: %@";
+
+/* Show an error message */
+"An error occured while importing: %@" = "Beim Importieren ist ein Fehler aufgetreten: %@";
 
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "Ein unbekannter Fehler beim Abrufen der Metadaten ist aufgetreten";
@@ -155,6 +191,9 @@
 
 /* No comment provided by engineer. */
 "Better imagery available" = "Besseres Bildmaterial verfügbar";
+
+/* No comment provided by engineer. */
+"Build a New Quest" = "Neuen Quest erstellen";
 
 /* No comment provided by engineer. */
 "Cache size warning" = "Cachegrößen-Warnung";
@@ -240,6 +279,9 @@
 /* No comment provided by engineer. */
 "Connecting the nodes would damage a relation" = "Diese Knoten zu verbinden würde eine Relation beschädigen";
 
+/* text was copied to the system clipboard */
+"Copied" = "Kopiert";
+
 /* Edit action */
 "Copy Tags" = "Attribute kopieren";
 
@@ -248,6 +290,9 @@
 
 /* No comment provided by engineer. */
 "Create\n" = "Erstellen\n";
+
+/* No comment provided by engineer. */
+"Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." = "Erstellen Sie in der Tabelle eine Zeile für jedes Schlüssel/Wert-Paar und geben Sie an, ob übereinstimmende Objekte einbezogen oder ausgeschlossen werden sollen. Lassen Sie den Wert leer, um anzuzeigen, dass der Schlüssel nicht vorhanden ist. Verwenden Sie key=*, um einen beliebigen Wert zu finden.";
 
 /* No comment provided by engineer. */
 "create node" = "Erstelle Knoten";
@@ -315,6 +360,9 @@
 /* No comment provided by engineer. */
 "Detach from relation" = "Von Relation trennen";
 
+/* Discard changes */
+"Discard" = "Verwerfen";
+
 /* Edit action */
 "Disconnect" = "Trennen";
 
@@ -372,6 +420,12 @@
 /* No comment provided by engineer. */
 "Extending a way which belongs to a Route or similar relation may damage the relation" = "Einen Weg zu verlängern, der zu einer Route oder ähnlichen Relation gehört, könnte die Relation beschädigen";
 
+/* Header for quest filters section */
+"Filters" = "Filter";
+
+/* No comment provided by engineer. */
+"Geometry" = "Geometrie";
+
 /* No comment provided by engineer. */
 "GPX Upload Complete" = "GPX Hochladen abgeschlossen";
 
@@ -384,11 +438,23 @@
 /* rate the app now */
 "I'll do it!" = "Ich erledige das!";
 
+/* No comment provided by engineer. */
+"Icon" = "Symbol";
+
 /* OSM node/way/relation identifier */
 "Identifier" = "Identifikator";
 
 /* No comment provided by engineer. */
 "Ignore" = "Ignorieren";
+
+/* No comment provided by engineer. */
+"Import" = "Import";
+
+/* No comment provided by engineer. */
+"Import Error" = "Importfehler";
+
+/* No comment provided by engineer. */
+"Import Quests" = "Quests importieren";
 
 /* No comment provided by engineer. */
 "In order to measure height, please enable camera access in the app's settings." = "Um Höhe zu messen, aktiviere bitte den Kamerazugriff in den App-Einstellungen.";
@@ -401,6 +467,9 @@
 
 /* No comment provided by engineer. */
 "Joining would invalidate a Turn Restriction the way belongs to" = "Verbinden würde eine Abbiegebeschränkung des Wegs ungültig machen";
+
+/* The tag keys section of a quest definition */
+"Keys" = "Schlüssel";
 
 /* kilometers per hour speed */
 "km/h" = "km/h";
@@ -422,6 +491,9 @@
 
 /* No comment provided by engineer. */
 "Length" = "Länge";
+
+/* Object geometry: a way (but not an area) */
+"Line" = "Linie";
 
 /* No comment provided by engineer. */
 "Location unavailable" = "Standort nicht verfügbar";
@@ -500,6 +572,12 @@
 
 /* No comment provided by engineer. */
 "Multipolygon" = "Multipolygon";
+
+/* No comment provided by engineer. */
+"Name" = "Name";
+
+/* Quest for objects that aren't recently updated */
+"Needs Survey" = "Prüfung erforderlich";
 
 /* No comment provided by engineer. */
 "Network error" = "Netzwerkfehler";
@@ -602,6 +680,9 @@
 "Paste" = "Einfügen";
 
 /* No comment provided by engineer. */
+"Paste the JSON for your quests into the field below" = "Fügen Sie den JSON-Code für Ihre Quests in das Feld unten ein";
+
+/* No comment provided by engineer. */
 "Pasting %@ characters, maximum tag length is 255" = "Einfügen von %@-Zeichen, maximale Tag-Länge ist 255";
 
 /* No comment provided by engineer. */
@@ -613,14 +694,29 @@
 /* No comment provided by engineer. */
 "Please wait" = "Bitte warten";
 
+/* Object geometry: a node */
+"Point" = "Punkt";
+
 /* No comment provided by engineer. */
 "Previous" = "Vorherige";
 
 /* previous GPX track */
 "Previous Tracks" = "Vorherige Tracks";
 
+/* No comment provided by engineer. */
+"Provide a single-character symbol (emoji or unicode character) to identify this quest:" = "Geben Sie ein Einzelzeichensymbol (Emoji oder Unicode-Zeichen) an, um diesen Quest zu identifizieren:";
+
 /* Discard editing changes when resetting OSM data cache */
 "Purge" = "Änderungen verwerfen";
+
+/* The current Quest the user is answering */
+"Quest" = "Quest";
+
+/* No comment provided by engineer. */
+"Quest Definition Error" = "Quest-Definitionsfehler";
+
+/* No comment provided by engineer. */
+"Quests were imported successfully." = "Die Quests wurden erfolgreich importiert.";
 
 /* No comment provided by engineer. */
 "Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "Die Bewertung der App hilft anderen Kartierern, sie zu entdecken und erhöht die Sichtbarkeit von OpenStreetMap.";
@@ -679,6 +775,12 @@
 /* Edit action */
 "Rotate" = "Drehen";
 
+/* Save changes */
+"Save" = "Speichern";
+
+/* No comment provided by engineer. */
+"Save or discard your changes" = "Speichern oder verwerfen Sie Ihre Änderungen";
+
 /* No comment provided by engineer. */
 "Select a highway approaching the intersection" = "Straße wählen, die sich der Kreuzung nähert";
 
@@ -731,6 +833,12 @@
 /* Edit action */
 "Straighten" = "Begradigen";
 
+/* No comment provided by engineer. */
+"Success" = "Erfolg";
+
+/* No comment provided by engineer. */
+"Tag Key" = "Attributschlüssel";
+
 /* Edit action */
 "Tags" = "Attribute";
 
@@ -781,6 +889,12 @@
 
 /* No comment provided by engineer. */
 "This device is not able to provide heading data." = "Dieses Gerät ist nicht in der Lage, Bewegungsdaten zu übermitteln.";
+
+/* No comment provided by engineer. */
+"This feature is only available on iOS 15 or later" = "Diese Funktion ist nur in iOS 15 oder höher verfügbar";
+
+/* No comment provided by engineer. */
+"This page allows you to design quests with more specific criteria than the regular Quest Builder page." = "Auf dieser Seite können Sie Quests mit spezifischeren Kriterien entwerfen als auf der normalen Quest-Builder Seite.";
 
 /* No comment provided by engineer. */
 "To add another member to the relation 'long press' on the way to be added" = "Um ein anderes Mitglied zur Relation hinzuzufügen, halte den Weg der hinzugefügt werden soll lange gedrückt";
@@ -866,6 +980,9 @@
 /* OSM object versioh */
 "Version" = "Version";
 
+/* Object geometry: a node that is part of a way */
+"Vertex" = "Wegpunkt";
+
 /* Year aerial imagery was created */
 "vintage %@" = "Aufnahmejahr %@";
 
@@ -883,6 +1000,15 @@
 
 /* No comment provided by engineer. */
 "Way Tags" = "Weg-Tags";
+
+/* No comment provided by engineer. */
+"What is the name of this quest? This is best written in the form of an action like 'Add Surface':" = "Wie lautet der Name dieses Quests? Am besten wird dies in Form einer Aktion wie \"Oberfläche hinzufügen\" beschrieben:";
+
+/* No comment provided by engineer. */
+"What tag key is modified by this quest?" = "Welcher Attributschlüssel wird durch diesen Quest verändert?";
+
+/* No comment provided by engineer. */
+"What types of objects does this quest apply to?" = "Auf welche Objekte bezieht sich dieser Quest?";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Du bist gerade dabei, Änderungen an der live-geschalteten OpenStreetMap Datenbank zu machen. Die Änderungen werden für jeden auf der Welt sichtbar.\n\nZum Fortfahren drücke noch einmal Hochladen, sonst drücke Abbrechen.";

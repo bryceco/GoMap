@@ -1760,6 +1760,10 @@ Je zou je cache kunnen leegmaken (onder Beeldinstellingen) om de prestaties te v
         <source>mph</source>
         <note>miles per hour speed</note>
       </trans-unit>
+      <trans-unit id="no" xml:space="preserve">
+        <source>no</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">
         <source>node %@</source>
         <target>knoop %@</target>
@@ -1803,6 +1807,10 @@ Je zou je cache kunnen leegmaken (onder Beeldinstellingen) om de prestaties te v
       <trans-unit id="way %@" xml:space="preserve">
         <source>way %@</source>
         <target>weg %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="yes" xml:space="preserve">
+        <source>yes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>
