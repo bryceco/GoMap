@@ -157,66 +157,6 @@ extension PresetsDatabase {
 		return list // list of PresetFeature or PresetCategory
 	}
 
-	// search the taginfo database, return the data immediately if its cached,
-	// and call the update function later if it isn't
-	func taginfoFor(key: String, searchKeys: Bool, update: (() -> Void)?) -> [String] {
-		let cacheKey = key + (searchKeys ? ":K" : ":V")
-		if let cached = taginfoCache[cacheKey] {
-			return cached
-		}
-		guard let update = update else {
-			// some callers don't want to wait for results
-			return []
-		}
-		taginfoCache[cacheKey] = [] // mark as in-transit
-
-		DispatchQueue.global(qos: .default).async(execute: {
-			let cleanKey = searchKeys ? key.trimmingCharacters(in: CharacterSet(charactersIn: ":")) : key
-			let abibase = "https://taginfo.openstreetmap.org/api/4"
-			let urlText = searchKeys
-				? "\(abibase)/keys/all?query=\(cleanKey)&page=1&rp=25&sortname=count_all&sortorder=desc"
-				: "\(abibase)/key/values?key=\(cleanKey)&page=1&rp=25&sortname=count_all&sortorder=desc"
-			guard let url = URL(string: urlText),
-			      let rawData = try? Data(contentsOf: url)
-			else { return }
-
-			let json = try? JSONSerialization.jsonObject(with: rawData, options: []) as? [String: Any]
-			let results = json?["data"] as? [[String: Any]] ?? []
-			var resultList: [String] = []
-			if searchKeys {
-				for v in results {
-					let inWiki = ((v["in_wiki"] as? NSNumber) ?? 0) == 1
-					if !inWiki, (v["count_all"] as? NSNumber)?.intValue ?? 0 < 1000 {
-						continue // it's a very uncommon value, so ignore it
-					}
-					if let k = v["key"] as? String,
-					   k.hasPrefix(key),
-					   k.count > key.count
-					{
-						resultList.append(k)
-					}
-				}
-			} else {
-				for v in results {
-					let inWiki = ((v["in_wiki"] as? NSNumber) ?? 0) == 1
-					if !inWiki, ((v["fraction"] as? NSNumber)?.doubleValue ?? 0.0) < 0.01 {
-						continue // it's a very uncommon value, so ignore it
-					}
-					if let val = v["value"] as? String {
-						resultList.append(val)
-					}
-				}
-			}
-			if resultList.count > 0 {
-				DispatchQueue.main.async(execute: {
-					self.taginfoCache[cacheKey] = resultList
-					update()
-				})
-			}
-		})
-		return []
-	}
-
 	private func commonPrefixOfMultiKeys(_ options: [String]) -> String {
 		guard options.count > 0,
 		      let index = options[0].lastIndex(of: ":")
@@ -399,7 +339,7 @@ extension PresetsDatabase {
 			var options = field.options
 			if options == nil {
 				// need to get options from taginfo
-				options = taginfoFor(key: key, searchKeys: isMultiCombo, update: update)
+				options = taginfoCache.taginfoFor(key: key, searchKeys: isMultiCombo, update: update)
 			} else if isMultiCombo {
 				// prepend key: to options
 				options = options!.map { k -> String in key + k }
@@ -449,7 +389,7 @@ extension PresetsDatabase {
 				return nil
 			}
 			var options = field.options ?? []
-			let options2 = taginfoFor(key: key, searchKeys: false, update: update)
+			let options2 = taginfoCache.taginfoFor(key: key, searchKeys: false, update: update)
 			options += options2.filter({ !options.contains($0) })
 			let tag = comboWith(
 				label: label,

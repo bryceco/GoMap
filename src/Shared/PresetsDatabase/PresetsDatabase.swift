@@ -74,7 +74,11 @@ final class PresetsDatabase {
 	let noForLocale: String
 	let unknownForLocale: String
 
+	lazy var taginfoCache = TagInfo()
+
 	init(withLanguageCode code: String, debug: Bool = true) {
+		// OSM TagInfo database
+
 		// get translations for current language
 		let file = "translations/" + code + ".json"
 		let trans = Self.jsonForFile(file) as! [String: [String: Any]]
@@ -158,9 +162,6 @@ final class PresetsDatabase {
 			}
 		}
 	}
-
-	// OSM TagInfo database in the cloud: contains either a group or an array of values
-	var taginfoCache: [String: [String]] = [:]
 
 	/// basePresets is always the regular presets
 	/// inputList is either regular presets, or both presets and NSI

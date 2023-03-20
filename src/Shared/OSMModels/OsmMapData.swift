@@ -1761,7 +1761,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			newData.nodes = try db.queryNodes()
 			newData.ways = try db.queryWays()
 			newData.relations = try db.queryRelations()
-
 			try decode.merge(newData, savingToDatabase: false)
 		} catch {
 			// database couldn't be read
@@ -1772,7 +1771,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			decode.region.rootQuad.reset()
 		}
 
-		decode.consistencyCheck()
 		return decode
 	}
 
