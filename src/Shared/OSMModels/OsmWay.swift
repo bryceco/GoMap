@@ -419,8 +419,8 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 			return nodes[0].latLon
 		default:
 			// midway between the first 2 nodes
-			return LatLon(latitude: (nodes[0].latLon.lat + nodes[1].latLon.lat)/2,
-						  longitude: (nodes[0].latLon.lon + nodes[1].latLon.lon)/2)
+			return LatLon(latitude: (nodes[0].latLon.lat + nodes[1].latLon.lat) / 2,
+			              longitude: (nodes[0].latLon.lon + nodes[1].latLon.lon) / 2)
 		}
 	}
 

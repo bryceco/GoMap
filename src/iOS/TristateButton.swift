@@ -84,7 +84,7 @@ class KmhMphToggle: UISegmentedControl {
 
 	init() {
 		super.init(items: [NSLocalizedString("km/h", comment: "kilometers per hour speed"),
-						   NSLocalizedString("mph", comment: "miles per hour speed")])
+		                   NSLocalizedString("mph", comment: "miles per hour speed")])
 		apportionsSegmentWidthsByContent = true
 		setEnabled(true, forSegmentAt: 0)
 		addTarget(self, action: #selector(valueChanged(_:)), for: .valueChanged)
@@ -128,53 +128,53 @@ class KmhMphToggle: UISegmentedControl {
 }
 
 class CulvertToggle: UISegmentedControl {
-	 var onSelect: ((String?) -> Void)?
+	var onSelect: ((String?) -> Void)?
 
-	 override init(frame: CGRect) {
-		 super.init(frame: frame)
-	 }
+	override init(frame: CGRect) {
+		super.init(frame: frame)
+	}
 
-	 init() {
-		 super.init(items: [NSLocalizedString("no", comment: ""),
-							NSLocalizedString("yes", comment: "")])
-		 apportionsSegmentWidthsByContent = true
-		 setEnabled(true, forSegmentAt: 0)
-		 addTarget(self, action: #selector(valueChanged(_:)), for: .valueChanged)
-	 }
+	init() {
+		super.init(items: [NSLocalizedString("no", comment: ""),
+		                   NSLocalizedString("yes", comment: "")])
+		apportionsSegmentWidthsByContent = true
+		setEnabled(true, forSegmentAt: 0)
+		addTarget(self, action: #selector(valueChanged(_:)), for: .valueChanged)
+	}
 
-	 @objc private func valueChanged(_ sender: Any?) {
-		 if let onSelect = onSelect {
-			 onSelect(stringForSelection())
-		 }
-		 // Generate haptic feedback
-		 let feedback = UIImpactFeedbackGenerator(style: .light)
-		 feedback.impactOccurred()
-	 }
+	@objc private func valueChanged(_ sender: Any?) {
+		if let onSelect = onSelect {
+			onSelect(stringForSelection())
+		}
+		// Generate haptic feedback
+		let feedback = UIImpactFeedbackGenerator(style: .light)
+		feedback.impactOccurred()
+	}
 
-	 required init?(coder: NSCoder) {
-		 super.init(coder: coder)
-	 }
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+	}
 
-	 func stringForSelection() -> String? {
-		 return [nil, "culvert"][selectedSegmentIndex]
-	 }
+	func stringForSelection() -> String? {
+		return [nil, "culvert"][selectedSegmentIndex]
+	}
 
-	 // input is a value like "55 mph"
-	 func setSelection(forString value: String) {
-		 let text: String
-		 if let index = value.firstIndex(where: { !($0.isNumber || $0 == ".") }) {
-			 text = String(value.suffix(from: index)).trimmingCharacters(in: .whitespacesAndNewlines)
-		 } else {
-			 text = ""
-		 }
+	// input is a value like "55 mph"
+	func setSelection(forString value: String) {
+		let text: String
+		if let index = value.firstIndex(where: { !($0.isNumber || $0 == ".") }) {
+			text = String(value.suffix(from: index)).trimmingCharacters(in: .whitespacesAndNewlines)
+		} else {
+			text = ""
+		}
 
-		 switch text {
-		 case "":
-			 super.selectedSegmentIndex = 0
-		 case "yes", "culvert":
-			 super.selectedSegmentIndex = 1
-		 default:
-			 break
-		 }
-	 }
+		switch text {
+		case "":
+			super.selectedSegmentIndex = 0
+		case "yes", "culvert":
+			super.selectedSegmentIndex = 1
+		default:
+			break
+		}
+	}
 }

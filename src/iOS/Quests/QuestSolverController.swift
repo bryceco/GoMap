@@ -321,7 +321,8 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 		let okay = questMarker.quest.accepts(tagValue: textField.text ?? "")
 		navigationItem.rightBarButtonItem?.isEnabled = okay
 	}
-	var keyValueDict: [String : String] {
+
+	var keyValueDict: [String: String] {
 		return questMarker.object?.tags ?? [:]
 	}
 }

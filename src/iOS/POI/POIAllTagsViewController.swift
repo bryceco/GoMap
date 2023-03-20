@@ -353,7 +353,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 
 	// MARK: TextField delegate
 
-	var keyValueDict: [String : String] {
+	var keyValueDict: [String: String] {
 		return keyValueDictionary()
 	}
 

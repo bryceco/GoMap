@@ -2381,7 +2381,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		let button = marker.button!
 		let offsetX = (marker is KeepRightMarker) || (marker is FixmeMarker) ? 0.00001 : 0.0
 		let pos = mapTransform.screenPoint(forLatLon: LatLon(latitude: marker.latLon.lat,
-															 longitude: marker.latLon.lon + offsetX),
+		                                                     longitude: marker.latLon.lon + offsetX),
 		                                   birdsEye: true)
 		if pos.x.isInfinite || pos.y.isInfinite {
 			return

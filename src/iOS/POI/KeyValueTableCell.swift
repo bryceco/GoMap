@@ -320,7 +320,7 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		notifyKeyValueChange(ended: ended)
 	}
 
-	var keyValueDict: [String : String] {
+	var keyValueDict: [String: String] {
 		return keyValueCellOwner.keyValueDict
 	}
 }
