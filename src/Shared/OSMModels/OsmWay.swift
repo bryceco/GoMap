@@ -412,23 +412,16 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 
 	// pick a point close to the center of the way
 	override func selectionPoint() -> LatLon {
-		var dist = lengthInMeters() / 2
-		var first = true
-		var prev = OSMPoint.zero
-		for node in nodes {
-			let pt = node.location()
-			if !first {
-				let segment = GreatCircleDistance(LatLon(pt), LatLon(prev))
-				if segment >= dist {
-					let pos = Add(prev, Mult(Sub(pt, prev), dist / segment))
-					return LatLon(pos)
-				}
-				dist -= segment
-			}
-			first = false
-			prev = pt
+		switch nodes.count {
+		case 0:
+			return LatLon.zero
+		case 1:
+			return nodes[0].latLon
+		default:
+			// midway between the first 2 nodes
+			return LatLon(latitude: (nodes[0].latLon.lat + nodes[1].latLon.lat)/2,
+						  longitude: (nodes[0].latLon.lon + nodes[1].latLon.lon)/2)
 		}
-		return LatLon(prev) // dummy value, shouldn't ever happen
 	}
 
 	class func isClockwiseArrayOfNodes(_ nodes: [OsmNode]) -> Bool {
