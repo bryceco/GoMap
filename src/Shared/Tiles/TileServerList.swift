@@ -72,14 +72,14 @@ final class TileServerList {
 		return ""
 	}
 
-	private func fetchOsmLabAerials(_ completion: @escaping (_ isAsync: Bool) -> Void) {
+	func fetchOsmLabAerials(_ completion: @escaping (_ isAsync: Bool) -> Void) {
 		// get cached data
 		var cachedData = NSData(contentsOfFile: pathToExternalAerialsCache()) as Data?
 		if let data = cachedData {
 			var delta = CACurrentMediaTime()
 			let externalAerials = processOsmLabAerialsData(data)
 			delta = CACurrentMediaTime() - delta
-			print("t1 = \(delta)")
+			print("TileServerList decode time = \(delta)")
 
 #if false && DEBUG
 			// serialize to bplist
@@ -99,7 +99,6 @@ final class TileServerList {
 			}
 #endif
 
-			print("TileServerList decode time = \(delta)")
 			downloadedList = externalAerials
 			completion(false)
 
