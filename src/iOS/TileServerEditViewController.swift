@@ -92,7 +92,7 @@ class TileServerEditViewController: UITableViewController {
 			startDate: nil,
 			endDate: nil,
 			wmsProjection: projection,
-			polygon: nil,
+			geoJSON: nil,
 			attribString: "",
 			attribIcon: nil,
 			attribUrl: "")

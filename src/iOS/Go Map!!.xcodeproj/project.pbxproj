@@ -109,6 +109,7 @@
 		02BE6190245D1F9D00E92662 /* EsriPlaceholderImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */; };
 		02C3194E250EAED500C5D200 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02C3194C250EAED500C5D200 /* Localizable.strings */; };
 		02C456A829C8DB410077E3FD /* TagInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C456A729C8DB410077E3FD /* TagInfo.swift */; };
+		02C456AA29C9002E0077E3FD /* TileServerList+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C456A929C9002E0077E3FD /* TileServerList+JSON.swift */; };
 		02C8C56526F446FD003B0122 /* MapMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56426F446FD003B0122 /* MapMarker.swift */; };
 		02C8C56726F44728003B0122 /* OsmNoteMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56626F44728003B0122 /* OsmNoteMarker.swift */; };
 		02C8C56926F44759003B0122 /* FixmeMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56826F44759003B0122 /* FixmeMarker.swift */; };
@@ -531,6 +532,7 @@
 		02C3199C250EBCAC00C5D200 /* nb-NO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-NO"; path = "nb-NO.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		02C3199D250EBCAC00C5D200 /* nb-NO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-NO"; path = "nb-NO.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		02C456A729C8DB410077E3FD /* TagInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagInfo.swift; sourceTree = "<group>"; };
+		02C456A929C9002E0077E3FD /* TileServerList+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TileServerList+JSON.swift"; sourceTree = "<group>"; };
 		02C702AE279D15C400F791A7 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		02C702AF279D15C400F791A7 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		02C702B0279D15C400F791A7 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1132,6 +1134,7 @@
 				C3FA925126411557000A2A99 /* TileQuadKey.swift */,
 				020E160A267A82050037DE49 /* TileServer.swift */,
 				C3FA924F2640329B000A2A99 /* TileServerList.swift */,
+				02C456A929C9002E0077E3FD /* TileServerList+JSON.swift */,
 			);
 			name = Tiles;
 			path = ../Shared/Tiles;
@@ -1553,6 +1556,7 @@
 				02EDBF6B26535BEB00B7072E /* OsmMember.swift in Sources */,
 				02C8C56D26F4479A003B0122 /* WayPointMarker.swift in Sources */,
 				0286EAA726570382007CFEE9 /* LayerProperties.swift in Sources */,
+				02C456AA29C9002E0077E3FD /* TileServerList+JSON.swift in Sources */,
 				EDB2C3A12609E2A000C08293 /* LanguageTableViewController.swift in Sources */,
 				02A59EE1297F6E6A00B0A676 /* Dictionary+Extension.swift in Sources */,
 				02EDBF6926535BB700B7072E /* OsmWay.swift in Sources */,

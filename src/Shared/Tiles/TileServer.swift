@@ -27,7 +27,7 @@ private let MAXAR_PREMIUM_IDENTIFIER = "Maxar-Premium"
 private let MAXAR_STANDARD_IDENTIFIER = "Maxar-Standard"
 
 /// A provider of tile imagery, such as Bing or Mapbox
-final class TileServer: Equatable {
+final class TileServer: Equatable, Codable {
 	private static let iconCache: PersistentWebCache<UIImage> = {
 		let cache = PersistentWebCache<UIImage>(name: "AerialServiceIconCache", memorySize: 10000)
 		cache.removeObjectsAsyncOlderThan(Date(timeIntervalSinceNow: -30.0 * (24.0 * 60.0 * 60.0)))
@@ -42,15 +42,32 @@ final class TileServer: Equatable {
 	let best: Bool
 	let apiKey: String
 	let maxZoom: Int
-
-	private let polygon: CGPath?
 	let roundZoomUp: Bool
 	let startDate: String?
 	let endDate: String?
 	let wmsProjection: String
+	let geoJSON: GeoJSON?
 	let attributionString: String
 	let attributionUrl: String
 	let placeholderImage: Data?
+
+	private let polygon: CGPath?
+
+	enum CodingKeys: String, CodingKey {
+		case name
+		case identifier
+		case url
+		case best
+		case apiKey
+		case maxZoom
+		case roundZoomUp
+		case startDate
+		case endDate
+		case wmsProjection
+		case geoJSON
+		case attributionString
+		case attributionUrl
+	}
 
 	private(set) var attributionIcon: UIImage?
 
@@ -66,6 +83,46 @@ final class TileServer: Equatable {
 		"EPSG:3785" // alias for 3857
 	]
 
+	convenience init(from decoder: Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+
+		let name = try container.decode(String.self, forKey: .name)
+		let identifier = try container.decode(String.self, forKey: .identifier)
+		let url = try container.decode(String.self, forKey: .url)
+		let best = try container.decode(Bool.self, forKey: .best)
+		let apiKey = try container.decode(String.self, forKey: .apiKey)
+		let maxZoom = try container.decode(Int.self, forKey: .maxZoom)
+		let roundZoomUp = try container.decode(Bool.self, forKey: .roundZoomUp)
+		let startDate = try container.decode(String?.self, forKey: .startDate)
+		let endDate = try container.decode(String?.self, forKey: .endDate)
+		let wmsProjection = try container.decode(String.self, forKey: .wmsProjection)
+		let geoJSON = try container.decode(GeoJSON?.self, forKey: .geoJSON)
+		let attributionString = try container.decode(String.self, forKey: .attributionString)
+		let attributionUrl = try container.decode(String.self, forKey: .attributionUrl)
+
+		self.init(withName: name, identifier: identifier, url: url, best: best,
+		          apiKey: apiKey, maxZoom: maxZoom, roundUp: roundZoomUp, startDate: startDate, endDate: endDate,
+		          wmsProjection: wmsProjection, geoJSON: geoJSON,
+		          attribString: attributionString, attribIcon: nil, attribUrl: attributionUrl)
+	}
+
+	func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(name, forKey: .name)
+		try container.encode(identifier, forKey: .identifier)
+		try container.encode(url, forKey: .url)
+		try container.encode(best, forKey: .best)
+		try container.encode(apiKey, forKey: .apiKey)
+		try container.encode(maxZoom, forKey: .maxZoom)
+		try container.encode(roundZoomUp, forKey: .roundZoomUp)
+		try container.encode(startDate, forKey: .startDate)
+		try container.encode(endDate, forKey: .endDate)
+		try container.encode(wmsProjection, forKey: .wmsProjection)
+		try container.encode(geoJSON, forKey: .geoJSON)
+		try container.encode(attributionString, forKey: .attributionString)
+		try container.encode(attributionUrl, forKey: .attributionUrl)
+	}
+
 	init(
 		withName name: String,
 		identifier: String,
@@ -77,7 +134,7 @@ final class TileServer: Equatable {
 		startDate: String?,
 		endDate: String?,
 		wmsProjection projection: String?,
-		polygon: CGPath?,
+		geoJSON: GeoJSON?,
 		attribString: String,
 		attribIcon: UIImage?,
 		attribUrl: String)
@@ -100,7 +157,8 @@ final class TileServer: Equatable {
 		roundZoomUp = roundUp
 		self.startDate = startDate
 		self.endDate = endDate
-		self.polygon = polygon?.copy()
+		self.geoJSON = geoJSON
+		polygon = geoJSON?.cgPath.copy()
 		attributionIcon = attribIcon
 
 		placeholderImage = TileServer.getPlaceholderImage(forIdentifier: identifier)
@@ -179,7 +237,7 @@ final class TileServer: Equatable {
 		startDate: nil,
 		endDate: nil,
 		wmsProjection: nil,
-		polygon: nil,
+		geoJSON: nil,
 		attribString: "",
 		attribIcon: nil,
 		attribUrl: "")
@@ -196,7 +254,7 @@ final class TileServer: Equatable {
 			startDate: nil,
 			endDate: nil,
 			wmsProjection: nil,
-			polygon: nil,
+			geoJSON: nil,
 			attribString: "Maxar Premium",
 			attribIcon: nil,
 			attribUrl: "https://wiki.openstreetmap.org/wiki/DigitalGlobe")
@@ -215,7 +273,7 @@ final class TileServer: Equatable {
 		startDate: nil,
 		endDate: nil,
 		wmsProjection: nil,
-		polygon: nil,
+		geoJSON: nil,
 		attribString: "",
 		attribIcon: nil,
 		attribUrl: "")
@@ -231,7 +289,7 @@ final class TileServer: Equatable {
 		startDate: nil,
 		endDate: nil,
 		wmsProjection: nil,
-		polygon: nil,
+		geoJSON: nil,
 		attribString: "",
 		attribIcon: nil,
 		attribUrl: "")
@@ -247,7 +305,7 @@ final class TileServer: Equatable {
 		startDate: nil,
 		endDate: nil,
 		wmsProjection: nil,
-		polygon: nil,
+		geoJSON: nil,
 		attribString: "",
 		attribIcon: nil,
 		attribUrl: "")
@@ -263,7 +321,7 @@ final class TileServer: Equatable {
 		startDate: nil,
 		endDate: nil,
 		wmsProjection: nil,
-		polygon: nil,
+		geoJSON: nil,
 		attribString: "",
 		attribIcon: nil,
 		attribUrl: "")
@@ -279,7 +337,7 @@ final class TileServer: Equatable {
 		startDate: nil,
 		endDate: nil,
 		wmsProjection: nil,
-		polygon: nil,
+		geoJSON: nil,
 		attribString: "",
 		attribIcon: UIImage(named: "bing-logo-white"),
 		attribUrl: "")
@@ -341,7 +399,7 @@ final class TileServer: Equatable {
 						                      startDate: Self.builtinBingAerial.startDate,
 						                      endDate: Self.builtinBingAerial.endDate,
 						                      wmsProjection: Self.builtinBingAerial.wmsProjection,
-						                      polygon: Self.builtinBingAerial.polygon,
+						                      geoJSON: Self.builtinBingAerial.geoJSON,
 						                      attribString: Self.builtinBingAerial.attributionString,
 						                      attribIcon: Self.builtinBingAerial.attributionIcon,
 						                      attribUrl: Self.builtinBingAerial.attributionUrl)
@@ -395,7 +453,7 @@ final class TileServer: Equatable {
 		          roundUp: (dict["roundUp"] as? NSNumber)?.boolValue ?? false,
 		          startDate: nil, endDate: nil,
 		          wmsProjection: projection,
-		          polygon: nil,
+		          geoJSON: nil,
 		          attribString: "",
 		          attribIcon: nil,
 		          attribUrl: "")

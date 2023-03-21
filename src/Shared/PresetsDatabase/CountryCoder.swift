@@ -87,7 +87,7 @@ public final class CountryCoder {
 		struct Feature: Decodable {
 			let type: String
 			let properties: Properties
-			let geometry: GeoJSON.Geometry?
+			let geometry: GeoJSON?
 		}
 		struct Geometry: Decodable {
 			let type: String
@@ -117,13 +117,7 @@ public final class CountryCoder {
 		var regions: [CountryCoderRegion] = []
 
 		for feature in jsonResult.features {
-			let bezierPath: UIBezierPath?
-
-			if let geometry = feature.geometry {
-				bezierPath = try! GeoJSON(geometry: geometry).bezierPath
-			} else {
-				bezierPath = nil
-			}
+			let bezierPath = feature.geometry?.bezierPath
 			let properties = feature.properties
 			regions.append(CountryCoderRegion(country: properties.country,
 			                                  iso1A2: properties.iso1A2,
