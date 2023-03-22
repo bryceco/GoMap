@@ -299,8 +299,33 @@ fileprivate enum Modifier {
 }
 
 @available(iOS 13.0, macCatalyst 14.0, *)
-fileprivate enum Day: Int, Strideable, CaseIterable {
+enum Day: Int, Strideable, CaseIterable {
 	case Mo, Tu, We, Th, Fr, Sa, Su
+
+	func toString() -> String {
+		switch self {
+		case .Mo: return "Mo"
+		case .Tu: return "Tu"
+		case .We: return "We"
+		case .Th: return "Th"
+		case .Fr: return "Fr"
+		case .Sa: return "Sa"
+		case .Su: return "Su"
+		}
+	}
+
+	static func fromString(_ string: String) -> Self? {
+		switch string {
+		case "Mo": return .Mo
+		case "Tu": return .Tu
+		case "We": return .We
+		case "Th": return .Th
+		case "Fr": return .Fr
+		case "Sa": return .Sa
+		case "Su": return .Su
+		default: return nil
+		}
+	}
 
 	func distance(to other: Day) -> Int {
 		return (other.rawValue - rawValue + 7) % 7
@@ -310,8 +335,8 @@ fileprivate enum Day: Int, Strideable, CaseIterable {
 		return Day(rawValue: (rawValue + n + 7) % 7)!
 	}
 
-	static func scan(scanner: MultiScanner,
-	                 language: HoursRecognizer.Language) -> (day: Self, rect: CGRect, confidence: Float)?
+	fileprivate static func scan(scanner: MultiScanner,
+	                             language: HoursRecognizer.Language) -> (day: Self, rect: CGRect, confidence: Float)?
 	{
 		var bestDistance: Float = 1.0
 		var bestDay: Day?
@@ -380,7 +405,7 @@ fileprivate struct Time: Hashable {
 		   iHour >= 0, iHour <= 24
 		{
 			let index2 = scanner.currentIndex
-			if language.minuteSeparators.first(where: { scanner.scanString($0) != nil }) != nil,
+			if language.minuteSeparators.map({ String($0) }).first(where: { scanner.scanString($0) != nil }) != nil,
 			   let minute = scanner.scanInt(),
 			   minute.string.count == 2,
 			   minute.string >= "00", minute.string < "60"
@@ -433,7 +458,11 @@ fileprivate struct Unknown {
 }
 
 @available(iOS 13.0, macCatalyst 14.0, *)
-fileprivate struct DayRange: Hashable { let start: Day; let end: Day }
+fileprivate struct DayRange: Hashable {
+	let start: Day
+	let end: Day
+}
+
 @available(iOS 13.0, macCatalyst 14.0, *)
 fileprivate struct TimeRange: Hashable {
 	let start: Time
@@ -540,18 +569,18 @@ public class HoursRecognizer: ObservableObject {
 	}
 
 	private static var lastLanguageSelected = { () -> Language in
-		if let raw = UserDefaults().value(forKey: "HoursRecognizerLanguage") as? Language.RawValue,
-		   let lang = Language(rawValue: raw)
+		if let raw = UserDefaults().value(forKey: "HoursRecognizerLanguage") as? String,
+		   let lang = languageList.first(where: { $0.isoCode == raw })
 		{
 			return lang
 		}
-		return Language.en
+		return languageList.first(where: { $0.isoCode == "en" })!
 	}()
 
 	@Published public var language: Language = lastLanguageSelected {
 		willSet {
 			HoursRecognizer.lastLanguageSelected = newValue
-			UserDefaults().setValue(newValue.rawValue, forKey: "HoursRecognizerLanguage")
+			UserDefaults().setValue(newValue.isoCode, forKey: "HoursRecognizerLanguage")
 		}
 	}
 
@@ -563,72 +592,81 @@ public class HoursRecognizer: ObservableObject {
 
 	init() {}
 
-	public enum Language: String, CaseIterable, Identifiable {
-		// these must be ISO codes
-		case en
-		case de
-		case fr
-		case it
+	public struct Language: Codable, Identifiable, Hashable {
+		let isoCode: String
+		let days: [Day: [String]]
+		let open: String
+		let closed: String
+		let through: String
+		let minuteSeparators: String
 
-		public var id: String { rawValue }
-		public var isoCode: String { "\(self)" }
-		public var name: String { Locale(identifier: rawValue).localizedString(forIdentifier: rawValue) ?? "<??>" }
+		public var id: String { isoCode }
+		var name: String { Locale(identifier: isoCode).localizedString(forIdentifier: isoCode) ?? "<??>" }
 
-		fileprivate typealias Weekdays = [Day: [String]]
-		private static let en_days = [Day.Mo: ["monday"],
-		                              Day.Tu: ["tuesday"],
-		                              Day.We: ["wednesday"],
-		                              Day.Th: ["thursday", "thur"],
-		                              Day.Fr: ["friday"],
-		                              Day.Sa: ["saturday"],
-		                              Day.Su: ["sunday"]]
-		private static let fr_days = [Day.Mo: ["lundi"],
-		                              Day.Tu: ["mardi"],
-		                              Day.We: ["mercredi", "mercr"],
-		                              Day.Th: ["jeudi"],
-		                              Day.Fr: ["vendredi", "vendr"],
-		                              Day.Sa: ["samedi"],
-		                              Day.Su: ["dimanche"]]
-		private static let de_days = [Day.Mo: ["montag"],
-		                              Day.Tu: ["dienstag"],
-		                              Day.We: ["mittwoch"],
-		                              Day.Th: ["donnerstag"],
-		                              Day.Fr: ["freitag"],
-		                              Day.Sa: ["samstag"],
-		                              Day.Su: ["sonntag"]]
-		private static let it_days = [Day.Mo: ["lunedì"],
-		                              Day.Tu: ["martedì"],
-		                              Day.We: ["mercoledì"],
-		                              Day.Th: ["giovedì"],
-		                              Day.Fr: ["venerdì"],
-		                              Day.Sa: ["sabato"],
-		                              Day.Su: ["domenica"]]
-		private typealias Words = (
+		enum CodingKeys: String, CodingKey {
+			case isoCode
+			case days
+			case open
+			case closed
+			case through
+			case minuteSeparators
+		}
+
+		init(
+			isoCode: String,
+			days: [Day: [String]],
 			open: String,
 			closed: String,
 			through: String,
-			minuteSeparators: String,
-			days: Weekdays)
-		private static let english = ("open", "closed", "to", ":. ", en_days)
-		private static let german = ("geöffnet", "geschlossen", "bis", ":. ", de_days)
-		private static let french = ("ouvert", "fermé", "à", ":. h", fr_days)
-		private static let italian = ("aperto", "chiuso", "alle", ":. ", it_days)
-
-		private var words: Words {
-			switch self {
-			case .en: return HoursRecognizer.Language.english
-			case .de: return HoursRecognizer.Language.german
-			case .fr: return HoursRecognizer.Language.french
-			case .it: return HoursRecognizer.Language.italian
-			}
+			minuteSeparators: String)
+		{
+			self.isoCode = isoCode
+			self.days = days
+			self.open = open
+			self.closed = closed
+			self.through = through
+			self.minuteSeparators = minuteSeparators
 		}
 
-		fileprivate var open: String { words.open }
-		fileprivate var closed: String { words.closed }
-		fileprivate var through: String { words.through }
-		fileprivate var minuteSeparators: [String] { words.minuteSeparators.map { String($0) }}
-		fileprivate var days: Weekdays { words.days }
+		public func encode(to encoder: Encoder) throws {
+			var container = encoder.container(keyedBy: CodingKeys.self)
+			try container.encode(isoCode, forKey: .isoCode)
+			try container.encode(open, forKey: .open)
+			try container.encode(closed, forKey: .closed)
+			try container.encode(through, forKey: .through)
+			try container.encode(minuteSeparators, forKey: .minuteSeparators)
+			// special handling for days to map keys to strings
+			let days2 = days.reduce(into: [:], { result, item in
+				result[item.key.toString()] = item.value })
+			try container.encode(days2, forKey: .days)
+		}
+
+		public init(from decoder: Decoder) throws {
+			let container: KeyedDecodingContainer<HoursRecognizer.Language.CodingKeys> = try decoder
+				.container(keyedBy: HoursRecognizer.Language.CodingKeys.self)
+			isoCode = try container.decode(String.self, forKey: .isoCode)
+			open = try container.decode(String.self, forKey: .open)
+			closed = try container.decode(String.self, forKey: .closed)
+			through = try container.decode(String.self, forKey: .through)
+			minuteSeparators = try container.decode(String.self, forKey: .minuteSeparators)
+			// special handling for days to map keys to strings
+			let days2 = try container.decode([String: [String]].self, forKey: .days)
+			days = days2.reduce(into: [:], { result, item in
+				result[Day.fromString(item.key)!] = item.value
+			})
+		}
 	}
+
+	struct HoursRecognizerJson: Decodable {
+		let languages: [Language]
+	}
+
+	static let languageList: [Language] = {
+		let path = Bundle.main.path(forResource: "HoursRecognizer", ofType: "json")!
+		let data = NSData(contentsOfFile: path)! as Data
+		let json = try! JSONDecoder().decode(HoursRecognizerJson.self, from: data)
+		return json.languages
+	}()
 
 	public func restart() {
 		text = ""

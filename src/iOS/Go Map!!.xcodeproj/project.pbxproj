@@ -42,6 +42,7 @@
 		023B892B19C148790060CDB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B892A19C148790060CDB5 /* Images.xcassets */; };
 		02401F361DE021EE00F32AF5 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */; };
 		0244398D29C9402B009FC2D0 /* TileServerList+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0244398C29C9402B009FC2D0 /* TileServerList+JSON.swift */; };
+		0244399429CA4461009FC2D0 /* HoursRecognizer.json in Resources */ = {isa = PBXBuildFile; fileRef = 0244399329CA4461009FC2D0 /* HoursRecognizer.json */; };
 		0246A78126A4AA3A00941A44 /* DirectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0246A78326A4AA3A00941A44 /* DirectionViewController.xib */; };
 		024909C9267BF9F70027E531 /* MapTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024909C8267BF9F70027E531 /* MapTransform.swift */; };
 		024909CB267D99190027E531 /* OsmDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024909CA267D99190027E531 /* OsmDownloader.swift */; };
@@ -372,6 +373,7 @@
 		02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		02401F3A1DE157B800F32AF5 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		0244398C29C9402B009FC2D0 /* TileServerList+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TileServerList+JSON.swift"; sourceTree = "<group>"; };
+		0244399329CA4461009FC2D0 /* HoursRecognizer.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = HoursRecognizer.json; sourceTree = "<group>"; };
 		0244588A26BF1D37002ECFF3 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		0244588B26BF1D37002ECFF3 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0246A78226A4AA3A00941A44 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DirectionViewController.xib; sourceTree = "<group>"; };
@@ -1030,6 +1032,7 @@
 			isa = PBXGroup;
 			children = (
 				02CB2402265DB7CB00835F32 /* CameraView.swift */,
+				0244399329CA4461009FC2D0 /* HoursRecognizer.json */,
 				02CB2404265DB7CB00835F32 /* HoursRecognizer.swift */,
 				02CB2403265DB7CB00835F32 /* LevenshteinDistance.swift */,
 				02CB2401265DB7CB00835F32 /* OpeningHoursRecognizerView.swift */,
@@ -1464,6 +1467,7 @@
 				02ACBA4D16713CCB00BB4414 /* MainStoryboard.storyboard in Resources */,
 				0291D83724427AFA00F793BE /* Display.storyboard in Resources */,
 				027AB4FA250E9C8000C404CD /* Settings.storyboard in Resources */,
+				0244399429CA4461009FC2D0 /* HoursRecognizer.json in Resources */,
 				02ED19811BBF119C00A57CF4 /* Launch Screen.storyboard in Resources */,
 				027AB503250E9CA500C404CD /* Changeset.storyboard in Resources */,
 				027AB4FD250E9C8A00C404CD /* POI.storyboard in Resources */,

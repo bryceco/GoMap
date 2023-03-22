@@ -70,8 +70,8 @@ public struct OpeningHoursRecognizerView: View {
 					Spacer()
 				}
 			}
-			Picker(recognizer.language.rawValue, selection: $recognizer.language) {
-				ForEach(HoursRecognizer.Language.allCases) { lang in
+			Picker(recognizer.language.isoCode, selection: $recognizer.language) {
+				ForEach(HoursRecognizer.languageList) { lang in
 					Text(lang.name).tag(lang)
 				}
 			}
