@@ -14,6 +14,12 @@ class OfflineTableViewCell: UITableViewCell {
 	@IBOutlet var activityView: UIActivityIndicatorView!
 	var tileList: [String] = []
 	var tileLayer: MercatorTileLayer?
+
+	override func awakeFromNib() {
+		if #available(iOS 13.0, *) {
+			activityView.style = .medium
+		}
+	}
 }
 
 class OfflineViewController: UITableViewController {

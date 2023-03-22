@@ -402,13 +402,13 @@ fileprivate struct Time: Hashable {
 
 		if let noon = scanner.scanString(language.noon) {
 			return (Time(hour: 12, minute: 0, is24: true),
-					noon.rect,
-					8.0)
+			        noon.rect,
+			        8.0)
 		}
 		if let midnight = scanner.scanString(language.midnight) {
 			return (Time(hour: 0, minute: 0, is24: true),
-					midnight.rect,
-					8.0)
+			        midnight.rect,
+			        8.0)
 		}
 
 		guard let hour = scanner.scanInt() else { return nil }
