@@ -400,6 +400,17 @@ fileprivate struct Time: Hashable {
 		let index = scanner.currentIndex
 		var minutes: StringRect?
 
+		if let noon = scanner.scanString(language.noon) {
+			return (Time(hour: 12, minute: 0, is24: true),
+					noon.rect,
+					8.0)
+		}
+		if let midnight = scanner.scanString(language.midnight) {
+			return (Time(hour: 0, minute: 0, is24: true),
+					midnight.rect,
+					8.0)
+		}
+
 		guard let hour = scanner.scanInt() else { return nil }
 		if let iHour = Int(hour.string),
 		   iHour >= 0, iHour <= 24
@@ -598,6 +609,8 @@ public class HoursRecognizer: ObservableObject {
 		let open: String
 		let closed: String
 		let through: String
+		let noon: String
+		let midnight: String
 		let minuteSeparators: String
 
 		public var id: String { isoCode }
@@ -609,6 +622,8 @@ public class HoursRecognizer: ObservableObject {
 			case open
 			case closed
 			case through
+			case noon
+			case midnight
 			case minuteSeparators
 		}
 
@@ -618,6 +633,8 @@ public class HoursRecognizer: ObservableObject {
 			open: String,
 			closed: String,
 			through: String,
+			noon: String,
+			midnight: String,
 			minuteSeparators: String)
 		{
 			self.isoCode = isoCode
@@ -625,6 +642,8 @@ public class HoursRecognizer: ObservableObject {
 			self.open = open
 			self.closed = closed
 			self.through = through
+			self.noon = noon
+			self.midnight = midnight
 			self.minuteSeparators = minuteSeparators
 		}
 
@@ -634,6 +653,8 @@ public class HoursRecognizer: ObservableObject {
 			try container.encode(open, forKey: .open)
 			try container.encode(closed, forKey: .closed)
 			try container.encode(through, forKey: .through)
+			try container.encode(noon, forKey: .noon)
+			try container.encode(midnight, forKey: .midnight)
 			try container.encode(minuteSeparators, forKey: .minuteSeparators)
 			// special handling for days to map keys to strings
 			let days2 = days.reduce(into: [:], { result, item in
@@ -648,6 +669,8 @@ public class HoursRecognizer: ObservableObject {
 			open = try container.decode(String.self, forKey: .open)
 			closed = try container.decode(String.self, forKey: .closed)
 			through = try container.decode(String.self, forKey: .through)
+			noon = try container.decode(String.self, forKey: .noon)
+			midnight = try container.decode(String.self, forKey: .midnight)
 			minuteSeparators = try container.decode(String.self, forKey: .minuteSeparators)
 			// special handling for days to map keys to strings
 			let days2 = try container.decode([String: [String]].self, forKey: .days)

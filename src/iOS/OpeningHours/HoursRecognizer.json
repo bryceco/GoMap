@@ -29,6 +29,8 @@
 	  "open": "open",
 	  "closed": "closed",
 	  "through": "to",
+	  "noon": "noon",
+	  "midnight": "midnight",
 	  "minuteSeparators": ":. "
 	},
 	{
@@ -59,6 +61,8 @@
 	  "open": "geöffnet",
 	  "closed": "geschlossen",
 	  "through": "bis",
+	  "noon": "mittag",
+	  "midnight": "mitternacht",
 	  "minuteSeparators": ":. "
 	},
 	{
@@ -91,6 +95,8 @@
 	  "open": "ouvert",
 	  "closed": "fermé",
 	  "through": "à",
+	  "noon": "midi",
+	  "midnight": "minuit",
 	  "minuteSeparators": ":. h"
 	},
 	{
@@ -121,6 +127,8 @@
 	  "open": "aperto",
 	  "closed": "chiuso",
 	  "through": "alle",
+	  "noon": "mezzogiorno",
+	  "midnight": "mezzanotte",
 	  "minuteSeparators": ":. "
 	}
   ]
