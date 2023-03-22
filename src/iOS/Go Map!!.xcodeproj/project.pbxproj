@@ -823,6 +823,7 @@
 				EDB2C3A52609E6E100C08293 /* LoginViewController.swift */,
 				C341E15B2639DF440022E983 /* NearbyMappersViewController.swift */,
 				ED91352426020945006A637A /* OfflineViewController.swift */,
+				027AB4FC250E9C8000C404CD /* Settings.storyboard */,
 				ED9649DA2601CB7A00EC0A60 /* SettingsViewController.swift */,
 			);
 			path = Settings;
@@ -832,6 +833,7 @@
 			isa = PBXGroup;
 			children = (
 				ED56E5B326026541000B368C /* ClearCacheViewController.swift */,
+				0291D83524427AFA00F793BE /* Display.storyboard */,
 				ED56E5E326028181000B368C /* DisplayViewController.swift */,
 				ED56E5E926028B5F000B368C /* FilterObjectsViewController.swift */,
 				ED56E5E826028B5F000B368C /* GpxConfigureViewController.swift */,
@@ -840,17 +842,6 @@
 				ED9649D22601C4CE00EC0A60 /* TileServerListViewController.swift */,
 			);
 			path = DisplaySettings;
-			sourceTree = "<group>";
-		};
-		0291D83A2442822300F793BE /* Storyboards */ = {
-			isa = PBXGroup;
-			children = (
-				0291D83524427AFA00F793BE /* Display.storyboard */,
-				02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */,
-				02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */,
-				027AB4FC250E9C8000C404CD /* Settings.storyboard */,
-			);
-			path = Storyboards;
 			sourceTree = "<group>";
 		};
 		02A3598F2704E51700101369 /* POI */ = {
@@ -931,7 +922,9 @@
 				64D74BF02253DF39004FFD20 /* Direction */,
 				0244399629CA9A28009FC2D0 /* DisplaySettings */,
 				02BC04E924C6767100BFA5EF /* Height */,
+				02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */,
 				C3D096DA263EB73E00E3B129 /* main.swift */,
+				02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */,
 				C3004F51263A6CA5006BF313 /* MainViewController.swift */,
 				022B2FDA2718CCAC00AB4C28 /* MapboxLocator.secret */,
 				0293FEB2299D84F7002EED90 /* MaxarAerial.secret */,
@@ -944,7 +937,6 @@
 				02CB523C299097C3007F758D /* Quests */,
 				0244399529CA9A02009FC2D0 /* Settings */,
 				02ACBCFF16713F7F00BB4414 /* Shared */,
-				0291D83A2442822300F793BE /* Storyboards */,
 				02ACBA3A16713CCB00BB4414 /* Supporting Files */,
 				C3D096AF263D4FF500E3B129 /* TurnRestrictController.swift */,
 				647C150D24268DB7008A9366 /* Upload */,
