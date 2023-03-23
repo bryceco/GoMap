@@ -229,7 +229,13 @@ final class OsmTags {
 				value += f1 + "-" + f2
 				continue
 			}
-			scanner.scanLocation = start
+			if let t1 = t1 as? String {
+				value += t1
+				if let t2 = t2 as? String {
+					value += "-"
+					value +=  t2
+				}
+			}
 
 			// check for a day
 			var str: NSString?
