@@ -216,11 +216,10 @@ final class OsmTags {
 			}
 
 			// check for time range
-			let start = scanner.scanLocation
-			var t1, t2: NSString?
+			var t1, dash, t2: NSString?
 			if scanner.scanCharacters(from: timeSet, into: &t1),
 			   let t1 = t1 as? String,
-			   scanner.scanString("-", into: nil),
+			   scanner.scanString("-", into: &dash),
 			   scanner.scanCharacters(from: timeSet, into: &t2),
 			   let t2 = t2 as? String,
 			   let f1 = fixTime(t1),
@@ -229,13 +228,9 @@ final class OsmTags {
 				value += f1 + "-" + f2
 				continue
 			}
-			if let t1 = t1 as? String {
-				value += t1
-				if let t2 = t2 as? String {
-					value += "-"
-					value +=  t2
-				}
-			}
+			value += (t1 as? String) ?? ""
+			value += (dash as? String) ?? ""
+			value += (t2 as? String) ?? ""
 
 			// check for a day
 			var str: NSString?
