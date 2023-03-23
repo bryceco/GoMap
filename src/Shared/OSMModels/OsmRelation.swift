@@ -266,6 +266,9 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 	static func buildMultipolygonFromMembers(_ memberList: [OsmMember],
 	                                         repairing: Bool) -> ([[OsmNode]], Bool)
 	{
+		// FIXME: This code has at least one out-of-bounds crash, almost certainly due to a
+		// malformed relation. Probably needs to be rewritten to be more robust. Also need
+		// to identify the relation(s) that cause crashes.
 		var loopList: [[OsmNode]] = []
 		var loop: [OsmNode] = []
 		var members = memberList.filter({ ($0.obj is OsmWay) && ($0.role == "outer" || $0.role == "inner") })
