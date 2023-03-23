@@ -203,7 +203,8 @@ class GpxViewController: UITableViewController {
 		var delta = now.timeIntervalSince(date)
 		delta = 1 - fmod(delta, 1.0)
 		let date = now.addingTimeInterval(delta)
-		timer = Timer(fire: date, interval: 1.0, repeats: true, block: { timer in
+		timer = Timer(fire: date, interval: 1.0, repeats: true, block: { [weak self] timer in
+			guard let self = self else { return }
 			if AppDelegate.shared.mapView.gpxLayer.activeTrack != nil {
 				let index = IndexPath(row: 0, section: SECTION_ACTIVE_TRACK)
 				self.tableView?.reloadRows(at: [index], with: .none)
