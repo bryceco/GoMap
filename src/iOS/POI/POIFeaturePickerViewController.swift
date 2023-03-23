@@ -62,7 +62,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		tableView.rowHeight = UITableView.automaticDimension
 
 		let geometry = currentSelectionGeometry()
-		POIFeaturePickerViewController.loadMostRecent(forGeometry: geometry)
+		Self.loadMostRecent(forGeometry: geometry)
 
 		if let parentCategory = parentCategory {
 			featureList = parentCategory.members.map({ .feature($0) })
@@ -196,7 +196,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	func updateTags(with feature: PresetFeature) {
 		let geometry = currentSelectionGeometry()
 		delegate?.featurePicker(self, didChangeFeatureTo: feature)
-		POIFeaturePickerViewController.updateMostRecentArray(withSelection: feature, geometry: geometry)
+		Self.updateMostRecentArray(withSelection: feature, geometry: geometry)
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -189,10 +189,6 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 
 	// MARK: - Feature picker
 
-	@IBAction func didRequestFeature() {
-		performSegue(withIdentifier: "POITypeSegue", sender: nil)
-	}
-
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let dest = segue.destination as? POIFeaturePickerViewController {
 			dest.delegate = self
@@ -548,6 +544,9 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 
 	override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
 		// don't allow switching to relation if current selection is modified
+		if identifier == "POITypeSegue" {
+			return true
+		}
 		let tabController = tabBarController as! POITabBarController
 		let dict = keyValueDictionary()
 		if tabController.isTagDictChanged(dict) {
