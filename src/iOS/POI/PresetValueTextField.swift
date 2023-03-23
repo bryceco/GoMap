@@ -310,9 +310,9 @@ class PresetValueTextField: AutocompleteTextField {
 		}
 
 		let vc = HeightViewController.instantiate()
-		vc.callback = { newValue in
-			self.text = newValue
-			self.notifyValueChange(ended: true)
+		vc.callback = { [weak self] newValue in
+			self?.text = newValue
+			self?.notifyValueChange(ended: true)
 		}
 		resignFirstResponder()
 		viewController.present(vc, animated: true)
