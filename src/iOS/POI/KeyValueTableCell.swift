@@ -293,16 +293,18 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		WikiPage.shared.bestWikiPage(forKey: key,
 		                             value: value,
 		                             language: languageCode)
-		{ [self] url in
+		{ [weak self] url in
+			guard let self = self else { return }
 			progress.removeFromSuperview()
 			infoButton.isEnabled = true
 			infoButton.titleLabel?.layer.opacity = 1.0
 			if let url = url,
-			   keyValueCellOwner.view.window != nil
+			   let owner = keyValueCellOwner,
+			   owner.view.window != nil
 			{
 				let viewController = SFSafariViewController(url: url)
-				keyValueCellOwner.childViewPresented = true
-				keyValueCellOwner.present(viewController, animated: true)
+				owner.childViewPresented = true
+				owner.present(viewController, animated: true)
 			}
 		}
 	}
