@@ -1816,6 +1816,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="no" xml:space="preserve">
         <source>no</source>
+        <target state="translated">nein</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">
@@ -1865,6 +1866,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="yes" xml:space="preserve">
         <source>yes</source>
+        <target state="translated">ja</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>

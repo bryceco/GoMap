@@ -1816,6 +1816,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="no" xml:space="preserve">
         <source>no</source>
+        <target state="translated">いいえ</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">
@@ -1865,6 +1866,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="yes" xml:space="preserve">
         <source>yes</source>
+        <target state="translated">はい</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>
