@@ -43,7 +43,7 @@ protocol KeyValueTableCellOwner: UITableViewController {
 
 class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFieldDelegate, UITextViewDelegate {
 	var textView: UITextView?
-	weak var keyValueCellOwner: KeyValueTableCellOwner!
+	weak var keyValueCellOwner: KeyValueTableCellOwner?
 	var key: String { return text1.text ?? "" }
 	var value: String { return textView?.text ?? text2.text! }
 
@@ -91,8 +91,8 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		// This resizes the cell to be appropriate for the content
 		UIView.setAnimationsEnabled(false)
 		textView?.sizeToFit()
-		keyValueCellOwner.tableView.beginUpdates()
-		keyValueCellOwner.tableView.endUpdates()
+		keyValueCellOwner?.tableView.beginUpdates()
+		keyValueCellOwner?.tableView.endUpdates()
 		UIView.setAnimationsEnabled(true)
 	}
 
@@ -155,7 +155,7 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 
 	func selectTextViewFor(key: String) {
 		// set text formatting options for text field
-		if let preset = keyValueCellOwner.allPresetKeys.first(where: { key == $0.tagKey }) {
+		if let preset = keyValueCellOwner?.allPresetKeys.first(where: { key == $0.tagKey }) {
 			if preset.type == "textarea" {
 				useTextView()
 			} else {
@@ -178,7 +178,7 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 
 	func notifyKeyValueChange(ended: Bool) {
 		if ended {
-			keyValueCellOwner.keyValueChanged(for: self)
+			keyValueCellOwner?.keyValueChanged(for: self)
 		}
 	}
 
@@ -237,7 +237,7 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 	}
 
 	@objc func textFieldEditingDidBegin(_ textField: AutocompleteTextField) {
-		keyValueCellOwner.currentTextField = textField
+		keyValueCellOwner?.currentTextField = textField
 
 		if textField === text1 {
 			// get list of keys
@@ -258,7 +258,7 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 
 	func textViewDidBeginEditing(_ textView: UITextView) {
 		// set the current textField to the underlying textField
-		keyValueCellOwner.currentTextField = text2
+		keyValueCellOwner?.currentTextField = text2
 	}
 
 	func textViewDidChange(_ textView: UITextView) {
@@ -311,18 +311,18 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 
 	// MARK: PresetValueTextFieldOwner
 
-	var allPresetKeys: [PresetKey] { return keyValueCellOwner.allPresetKeys }
+	var allPresetKeys: [PresetKey] { return keyValueCellOwner?.allPresetKeys ?? [] }
 	var childViewPresented: Bool {
-		set { keyValueCellOwner.childViewPresented = newValue }
-		get { keyValueCellOwner.childViewPresented }
+		set { keyValueCellOwner?.childViewPresented = newValue }
+		get { keyValueCellOwner?.childViewPresented ?? false }
 	}
 
-	var viewController: UIViewController { return keyValueCellOwner }
+	var viewController: UIViewController? { return keyValueCellOwner }
 	func valueChanged(for textField: PresetValueTextField, ended: Bool) {
 		notifyKeyValueChange(ended: ended)
 	}
 
 	var keyValueDict: [String: String] {
-		return keyValueCellOwner.keyValueDict
+		return keyValueCellOwner?.keyValueDict ?? [:]
 	}
 }

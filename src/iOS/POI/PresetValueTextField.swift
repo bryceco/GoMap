@@ -12,7 +12,7 @@ import UIKit
 protocol PresetValueTextFieldOwner: AnyObject {
 	var allPresetKeys: [PresetKey] { get }
 	var childViewPresented: Bool { get set }
-	var viewController: UIViewController { get }
+	var viewController: UIViewController? { get }
 	var keyValueDict: [String: String] { get }
 	func valueChanged(for textField: PresetValueTextField, ended: Bool)
 }
@@ -194,7 +194,9 @@ class PresetValueTextField: AutocompleteTextField {
 	// MARK: Open website button
 
 	@IBAction func openWebsite(_ sender: UIView?) {
-		guard let value = text else { return }
+		guard let value = text,
+			let viewController = owner.viewController
+		else { return }
 		let string: String
 		if OsmTags.isKey(key, variantOf: "wikipedia") {
 			let a = value.components(separatedBy: ":")
@@ -215,15 +217,15 @@ class PresetValueTextField: AutocompleteTextField {
 		}
 
 		if let url = URL(string: string) {
-			let viewController = SFSafariViewController(url: url)
-			owner.viewController.present(viewController, animated: true)
+			let safariVC = SFSafariViewController(url: url)
+			viewController.present(safariVC, animated: true)
 		} else {
 			let alert = UIAlertController(
 				title: NSLocalizedString("Invalid URL", comment: ""),
 				message: nil,
 				preferredStyle: .alert)
 			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
-			owner.viewController.present(alert, animated: true)
+			viewController.present(alert, animated: true)
 		}
 	}
 
@@ -281,8 +283,9 @@ class PresetValueTextField: AutocompleteTextField {
 				self?.notifyValueChange(ended: true)
 			})
 		resignFirstResponder()
+		guard let viewController = owner.viewController else { return }
 		owner.childViewPresented = true
-		owner.viewController.present(directionViewController, animated: true)
+		viewController.present(directionViewController, animated: true)
 	}
 
 	private func getDirectionButton() -> UIView? {
@@ -301,7 +304,8 @@ class PresetValueTextField: AutocompleteTextField {
 	// MARK: Set height button
 
 	@IBAction func setHeight(_ sender: UIView?) {
-		if HeightViewController.unableToInstantiate(withUserWarning: owner.viewController) {
+		guard let viewController = owner.viewController else { return }
+		if HeightViewController.unableToInstantiate(withUserWarning: viewController) {
 			return
 		}
 
@@ -311,7 +315,7 @@ class PresetValueTextField: AutocompleteTextField {
 			self.notifyValueChange(ended: true)
 		}
 		resignFirstResponder()
-		owner.viewController.present(vc, animated: true)
+		viewController.present(vc, animated: true)
 		owner.childViewPresented = true
 	}
 
@@ -419,12 +423,12 @@ class PresetValueTextField: AutocompleteTextField {
 		resignFirstResponder()
 		let vc = OpeningHoursRecognizerController.with(onAccept: { newValue in
 			self.text = newValue
-			self.owner.viewController.navigationController?.popViewController(animated: true)
+			self.owner.viewController?.navigationController?.popViewController(animated: true)
 			self.notifyValueChange(ended: true)
 		}, onCancel: {
-			self.owner.viewController.navigationController?.popViewController(animated: true)
+			self.owner.viewController?.navigationController?.popViewController(animated: true)
 		}, onRecognize: { _ in
 		})
-		owner.viewController.navigationController?.pushViewController(vc, animated: true)
+		owner.viewController?.navigationController?.pushViewController(vc, animated: true)
 	}
 }

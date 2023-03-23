@@ -707,7 +707,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 
 	// MARK: PresetValueTextFieldOwner
 
-	var viewController: UIViewController { self }
+	var viewController: UIViewController? { self }
 
 	func valueChanged(for textField: PresetValueTextField, ended: Bool) {
 		guard ended else { return }

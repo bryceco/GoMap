@@ -316,7 +316,7 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 
 	var allPresetKeys: [PresetKey] { presetKeys.compactMap { $0 } }
 	var childViewPresented = false
-	var viewController: UIViewController { self }
+	var viewController: UIViewController? { self }
 	func valueChanged(for textField: PresetValueTextField, ended: Bool) {
 		let okay = questMarker.quest.accepts(tagValue: textField.text ?? "")
 		navigationItem.rightBarButtonItem?.isEnabled = okay
