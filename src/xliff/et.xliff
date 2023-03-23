@@ -1,5 +1,170 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="et" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.2" build-num="14C18"/>
+    </header>
+    <body>
+      <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
+        <source>Get Directions</source>
+        <target>Hangi juhised</target>
+        <note>Class = "UILabel"; text = "Get Directions"; ObjectID = "1xx-L0-hKm";</note>
+      </trans-unit>
+      <trans-unit id="2.title" xml:space="preserve">
+        <source>First</source>
+        <target>Esimene</target>
+        <note>Class = "UIViewController"; title = "First"; ObjectID = "2";</note>
+      </trans-unit>
+      <trans-unit id="2Ka-IT-DQC.normalTitle" xml:space="preserve">
+        <source>Bing attribution</source>
+        <note>Class = "UIButton"; normalTitle = "Bing attribution"; ObjectID = "2Ka-IT-DQC";</note>
+      </trans-unit>
+      <trans-unit id="2g1-vb-Cjc.normalTitle" xml:space="preserve">
+        <source>Comment</source>
+        <target>Kommentaar</target>
+        <note>Class = "UIButton"; normalTitle = "Comment"; ObjectID = "2g1-vb-Cjc";</note>
+      </trans-unit>
+      <trans-unit id="7Ua-cx-BHI.title" xml:space="preserve">
+        <source>Upload</source>
+        <target>Saada</target>
+        <note>Class = "UINavigationItem"; title = "Upload"; ObjectID = "7Ua-cx-BHI";</note>
+      </trans-unit>
+      <trans-unit id="9G2-Gl-CeP.text" xml:space="preserve">
+        <source>username</source>
+        <note>Class = "UILabel"; text = "username"; ObjectID = "9G2-Gl-CeP"; Note = "Placeholder - ignore";</note>
+      </trans-unit>
+      <trans-unit id="9hH-Ja-fKn.text" xml:space="preserve">
+        <source>New comment:</source>
+        <target>Uus kommentaar:</target>
+        <note>Class = "UILabel"; text = "New comment:"; ObjectID = "9hH-Ja-fKn";</note>
+      </trans-unit>
+      <trans-unit id="9t5-wq-j1u.text" xml:space="preserve">
+        <source>66.6 FPS</source>
+        <note>Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u";</note>
+      </trans-unit>
+      <trans-unit id="E22-sL-sNt.accessibilityHint" xml:space="preserve">
+        <source>Reorient map north</source>
+        <target>Suuna kaart põhja</target>
+        <note>Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt";</note>
+      </trans-unit>
+      <trans-unit id="E22-sL-sNt.accessibilityLabel" xml:space="preserve">
+        <source>Compass</source>
+        <target>Kompass</target>
+        <note>Class = "UIButton"; accessibilityLabel = "Compass"; ObjectID = "E22-sL-sNt";</note>
+      </trans-unit>
+      <trans-unit id="FaM-WV-S6I.title" xml:space="preserve">
+        <source>Search for Location</source>
+        <target>Leia asukoht</target>
+        <note>Class = "UINavigationItem"; title = "Search for Location"; ObjectID = "FaM-WV-S6I";</note>
+      </trans-unit>
+      <trans-unit id="Fo4-Nq-pAz.normalTitle" xml:space="preserve">
+        <source>Center</source>
+        <target>Keskkoht</target>
+        <note>Class = "UIButton"; normalTitle = "Center"; ObjectID = "Fo4-Nq-pAz";</note>
+      </trans-unit>
+      <trans-unit id="HeZ-95-3K1.text" xml:space="preserve">
+        <source>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</source>
+        <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "HeZ-95-3K1";</note>
+      </trans-unit>
+      <trans-unit id="LSJ-rB-J2c.text" xml:space="preserve">
+        <source>-</source>
+        <note>Class = "UILabel"; text = "-"; ObjectID = "LSJ-rB-J2c"; Note = "Placeholder - ignore";</note>
+      </trans-unit>
+      <trans-unit id="MBY-TK-Wuy.title" xml:space="preserve">
+        <source>Note</source>
+        <target>Märge</target>
+        <note>Class = "UINavigationItem"; title = "Note"; ObjectID = "MBY-TK-Wuy";</note>
+      </trans-unit>
+      <trans-unit id="N5Q-nV-TPG.text" xml:space="preserve">
+        <source>Zoom to Edit</source>
+        <target>Suurenda muutmiseks</target>
+        <note>Class = "UILabel"; text = "Zoom to Edit"; ObjectID = "N5Q-nV-TPG";</note>
+      </trans-unit>
+      <trans-unit id="OJ0-aO-ri1.normalTitle" xml:space="preserve">
+        <source>Resolve</source>
+        <target>Lahenda</target>
+        <note>Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1";</note>
+      </trans-unit>
+      <trans-unit id="PHk-s9-onx.text" xml:space="preserve">
+        <source>Various comments...</source>
+        <note>Class = "UITextView"; text = "Various comments..."; ObjectID = "PHk-s9-onx"; Note = "Placeholder - ignore";</note>
+      </trans-unit>
+      <trans-unit id="Qz0-Ce-YCX.title" xml:space="preserve">
+        <source>Bing Maps</source>
+        <target>Bing kaardid</target>
+        <note>Class = "UINavigationItem"; title = "Bing Maps"; ObjectID = "Qz0-Ce-YCX";</note>
+      </trans-unit>
+      <trans-unit id="TcP-6i-B8H.text" xml:space="preserve">
+        <source>Specify a name ("New York"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object ("way 51014987"):</source>
+        <target>Määra nimi ("New York"), URL või muu tekst, mis sisaldab koordinaate laius-/pikkuskoordinaate või viidet OSM objektile ("way 51014987"):</target>
+        <note>Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H";</note>
+      </trans-unit>
+      <trans-unit id="VNE-ee-a7u.text" xml:space="preserve">
+        <source>action</source>
+        <note>Class = "UILabel"; text = "action"; ObjectID = "VNE-ee-a7u"; Note = "Placeholder - ignore";</note>
+      </trans-unit>
+      <trans-unit id="ach-1A-88x.text" xml:space="preserve">
+        <source>Changeset comment goes here</source>
+        <note>Class = "UITextView"; text = "Changeset comment goes here"; ObjectID = "ach-1A-88x";</note>
+      </trans-unit>
+      <trans-unit id="gdu-Sf-XrE.title" xml:space="preserve">
+        <source>Commit</source>
+        <target>Rakenda</target>
+        <note>Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "gdu-Sf-XrE";</note>
+      </trans-unit>
+      <trans-unit id="l7S-YL-RKK.text" xml:space="preserve">
+        <source>Subtitle</source>
+        <target>Alapealkiri</target>
+        <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "l7S-YL-RKK";</note>
+      </trans-unit>
+      <trans-unit id="nU5-T2-ADn.text" xml:space="preserve">
+        <source>A Error Message Flashing Z</source>
+        <note>Class = "UILabel"; text = "A Error Message Flashing Z"; ObjectID = "nU5-T2-ADn"; Note = "Placeholder - Don't translate";</note>
+      </trans-unit>
+      <trans-unit id="qP9-Sc-sc4.text" xml:space="preserve">
+        <source>Label</source>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "qP9-Sc-sc4";</note>
+      </trans-unit>
+      <trans-unit id="siu-I6-IEp.title" xml:space="preserve">
+        <source>Search for Location</source>
+        <target>Leia asukoht</target>
+        <note>Class = "UIViewController"; title = "Search for Location"; ObjectID = "siu-I6-IEp";</note>
+      </trans-unit>
+      <trans-unit id="stf-JU-iga.text" xml:space="preserve">
+        <source>Title</source>
+        <target>Pealkiri</target>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "stf-JU-iga";</note>
+      </trans-unit>
+      <trans-unit id="tOO-VD-MeJ.text" xml:space="preserve">
+        <source>2014-06-17 17:54 UTC</source>
+        <note>Class = "UILabel"; text = "2014-06-17 17:54 UTC"; ObjectID = "tOO-VD-MeJ";</note>
+      </trans-unit>
+      <trans-unit id="vRO-Aj-Sdr.text" xml:space="preserve">
+        <source>Title</source>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr";</note>
+      </trans-unit>
+      <trans-unit id="xw9-Ro-Fai.placeholder" xml:space="preserve">
+        <source>Niagara Falls</source>
+        <target>Niagara juga</target>
+        <note>Class = "UISearchBar"; placeholder = "Niagara Falls"; ObjectID = "xw9-Ro-Fai";</note>
+      </trans-unit>
+      <trans-unit id="zrW-uc-hfQ.segmentTitles[0]" xml:space="preserve">
+        <source>Tags</source>
+        <target>Sildid</target>
+        <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[0] = "Tags"; ObjectID = "zrW-uc-hfQ";</note>
+      </trans-unit>
+      <trans-unit id="zrW-uc-hfQ.segmentTitles[1]" xml:space="preserve">
+        <source>Delete</source>
+        <target>Kustuta</target>
+        <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[1] = "Delete"; ObjectID = "zrW-uc-hfQ";</note>
+      </trans-unit>
+      <trans-unit id="zrW-uc-hfQ.segmentTitles[2]" xml:space="preserve">
+        <source>More...</source>
+        <target>Veel…</target>
+        <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[2] = "More..."; ObjectID = "zrW-uc-hfQ";</note>
+      </trans-unit>
+    </body>
+  </file>
   <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="et" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.2" build-num="14C18"/>
@@ -26,6 +191,468 @@
       <trans-unit id="vtk-nS-Ss4.text" xml:space="preserve">
         <source>Old value: 42</source>
         <note>Class = "UILabel"; text = "Old value: 42"; ObjectID = "vtk-nS-Ss4";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="DisplaySettings/Base.lproj/Display.storyboard" source-language="en" target-language="et" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.2" build-num="14C18"/>
+    </header>
+    <body>
+      <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
+        <source>Cancel</source>
+        <target>Tühista</target>
+        <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "1SY-O5-qJR";</note>
+      </trans-unit>
+      <trans-unit id="1f0-8q-yCi.text" xml:space="preserve">
+        <source>GPX Tracks</source>
+        <target>GPX rajad</target>
+        <note>Class = "UILabel"; text = "GPX Tracks"; ObjectID = "1f0-8q-yCi";</note>
+      </trans-unit>
+      <trans-unit id="2Ku-Lb-uCf.text" xml:space="preserve">
+        <source>Details</source>
+        <target>Üksikasjad</target>
+        <note>Class = "UILabel"; text = "Details"; ObjectID = "2Ku-Lb-uCf";</note>
+      </trans-unit>
+      <trans-unit id="2ZY-zi-luF.text" xml:space="preserve">
+        <source>Clear Cache</source>
+        <target>Tühjenda puhver</target>
+        <note>Class = "UILabel"; text = "Clear Cache"; ObjectID = "2ZY-zi-luF";</note>
+      </trans-unit>
+      <trans-unit id="4s8-Bj-JOX.normalTitle" xml:space="preserve">
+        <source>99 Days</source>
+        <target>99 päeva</target>
+        <note>Class = "UIButton"; normalTitle = "99 Days"; ObjectID = "4s8-Bj-JOX";</note>
+      </trans-unit>
+      <trans-unit id="5hB-2Y-Wgl.text" xml:space="preserve">
+        <source>Projection</source>
+        <target>Projektsioon</target>
+        <note>Class = "UILabel"; text = "Projection"; ObjectID = "5hB-2Y-Wgl";</note>
+      </trans-unit>
+      <trans-unit id="7df-49-qTa.text" xml:space="preserve">
+        <source>Rail Features</source>
+        <target>Raudtee omadused</target>
+        <note>Class = "UILabel"; text = "Rail Features"; ObjectID = "7df-49-qTa";</note>
+      </trans-unit>
+      <trans-unit id="7ga-PZ-MfV.placeholder" xml:space="preserve">
+        <source>-1..3,7</source>
+        <target>-1..3,7</target>
+        <note>Class = "UITextField"; placeholder = "-1..3,7"; ObjectID = "7ga-PZ-MfV";</note>
+      </trans-unit>
+      <trans-unit id="8HT-Bc-Q2z.title" xml:space="preserve">
+        <source>Aerial Imagery</source>
+        <target>Aerofotod</target>
+        <note>Class = "UINavigationItem"; title = "Aerial Imagery"; ObjectID = "8HT-Bc-Q2z";</note>
+      </trans-unit>
+      <trans-unit id="8S7-Kw-QHF.normalTitle" xml:space="preserve">
+        <source>Details</source>
+        <target>Üksikasjad</target>
+        <note>Class = "UIButton"; normalTitle = "Details"; ObjectID = "8S7-Kw-QHF";</note>
+      </trans-unit>
+      <trans-unit id="8es-4f-sj3.headerTitle" xml:space="preserve">
+        <source>Overlays</source>
+        <target>Ülekatted</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Overlays"; ObjectID = "8es-4f-sj3";</note>
+      </trans-unit>
+      <trans-unit id="9L3-JO-Whj.text" xml:space="preserve">
+        <source>Mapnik only</source>
+        <target>Ainult Mapnik</target>
+        <note>Class = "UILabel"; text = "Mapnik only"; ObjectID = "9L3-JO-Whj";</note>
+      </trans-unit>
+      <trans-unit id="186-0W-Nrr.title" xml:space="preserve">
+        <source>Display</source>
+        <target>Ekraan</target>
+        <note>Class = "UINavigationItem"; title = "Display"; ObjectID = "186-0W-Nrr";</note>
+      </trans-unit>
+      <trans-unit id="DmO-dW-3Fh.text" xml:space="preserve">
+        <source>Collect in background:</source>
+        <target>Kogu taustal:</target>
+        <note>Class = "UILabel"; text = "Collect in background:"; ObjectID = "DmO-dW-3Fh";</note>
+      </trans-unit>
+      <trans-unit id="EHa-L5-Hcz.text" xml:space="preserve">
+        <source>12:00:00</source>
+        <note>Class = "UILabel"; text = "12:00:00"; ObjectID = "EHa-L5-Hcz";</note>
+      </trans-unit>
+      <trans-unit id="EmS-9F-1qc.text" xml:space="preserve">
+        <source>Details</source>
+        <target>Üksikasjad</target>
+        <note>Class = "UILabel"; text = "Details"; ObjectID = "EmS-9F-1qc";</note>
+      </trans-unit>
+      <trans-unit id="F9l-B0-puf.text" xml:space="preserve">
+        <source>Details</source>
+        <target>Üksikasjad</target>
+        <note>Class = "UILabel"; text = "Details"; ObjectID = "F9l-B0-puf";</note>
+      </trans-unit>
+      <trans-unit id="GNK-bZ-i9X.text" xml:space="preserve">
+        <source>Details</source>
+        <target>Üksikasjad</target>
+        <note>Class = "UILabel"; text = "Details"; ObjectID = "GNK-bZ-i9X";</note>
+      </trans-unit>
+      <trans-unit id="H3p-Ta-kIy.title" xml:space="preserve">
+        <source>QA Poole No Name Tiles</source>
+        <target>QA Poole nimetud paanid</target>
+        <note>Class = "UINavigationItem"; title = "QA Poole No Name Tiles"; ObjectID = "H3p-Ta-kIy"; Note = "Title for Simon Poole's \"No name\" (missing name) tile overlay";</note>
+      </trans-unit>
+      <trans-unit id="Idx-2G-6F7.text" xml:space="preserve">
+        <source>Power Features</source>
+        <target>Toitefunktsioonid</target>
+        <note>Class = "UILabel"; text = "Power Features"; ObjectID = "Idx-2G-6F7";</note>
+      </trans-unit>
+      <trans-unit id="Jz1-GP-Wbe.text" xml:space="preserve">
+        <source>Paths</source>
+        <target>Rajad</target>
+        <note>Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe";</note>
+      </trans-unit>
+      <trans-unit id="LxX-tl-ZLH.text" xml:space="preserve">
+        <source>Enable Filters</source>
+        <target>Luba filtrid</target>
+        <note>Class = "UILabel"; text = "Enable Filters"; ObjectID = "LxX-tl-ZLH";</note>
+      </trans-unit>
+      <trans-unit id="MPq-PX-jf0.text" xml:space="preserve">
+        <source>Editor with Aerial</source>
+        <target>Aerofotodega redaktor</target>
+        <note>Class = "UILabel"; text = "Editor with Aerial"; ObjectID = "MPq-PX-jf0";</note>
+      </trans-unit>
+      <trans-unit id="MZF-am-tCM.title" xml:space="preserve">
+        <source>Aerial Provider</source>
+        <target>Aerofotode pakkuja</target>
+        <note>Class = "UINavigationItem"; title = "Aerial Provider"; ObjectID = "MZF-am-tCM";</note>
+      </trans-unit>
+      <trans-unit id="MeQ-4N-FqC.text" xml:space="preserve">
+        <source>GPX Tracks you record or download will be automatically deleted after:</source>
+        <target>Salvestatud või alla laetud GPX-rajad kustutatakse automaatselt pärast seda:</target>
+        <note>Class = "UILabel"; text = "GPX Tracks you record or download will be automatically deleted after:"; ObjectID = "MeQ-4N-FqC";</note>
+      </trans-unit>
+      <trans-unit id="O0U-6M-7AT.text" xml:space="preserve">
+        <source>Quests</source>
+        <note>Class = "UILabel"; text = "Quests"; ObjectID = "O0U-6M-7AT";</note>
+      </trans-unit>
+      <trans-unit id="OiJ-GU-gZ3.title" xml:space="preserve">
+        <source>Cancel</source>
+        <target>Tühista</target>
+        <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "OiJ-GU-gZ3";</note>
+      </trans-unit>
+      <trans-unit id="Okg-2D-O6U.text" xml:space="preserve">
+        <source>Landuse</source>
+        <target>Maakasutus</target>
+        <note>Class = "UILabel"; text = "Landuse"; ObjectID = "Okg-2D-O6U";</note>
+      </trans-unit>
+      <trans-unit id="PSE-3C-cDx.text" xml:space="preserve">
+        <source>Notes and Fixmes</source>
+        <note>Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "PSE-3C-cDx";</note>
+      </trans-unit>
+      <trans-unit id="RJU-Z2-QFh.headerTitle" xml:space="preserve">
+        <source>Interactions</source>
+        <target>Koostoimed</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Interactions"; ObjectID = "RJU-Z2-QFh";</note>
+      </trans-unit>
+      <trans-unit id="RxO-IV-UE7.text" xml:space="preserve">
+        <source>Service Roads</source>
+        <target>Teenindusteed</target>
+        <note>Class = "UILabel"; text = "Service Roads"; ObjectID = "RxO-IV-UE7";</note>
+      </trans-unit>
+      <trans-unit id="SNa-W1-wga.footerTitle" xml:space="preserve">
+        <source>Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. 
+
+Warning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.
+
+Clear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed.</source>
+        <target>Tühjenda OSMi andmete vahemälu, kui rakenduse olek ei ole enam OSM serveriga sünkroonis. See võib juhtuda, kui keegi teine muudab andmeid, mida redigeerid, või kui üks sinu üleslaadimine ebaõnnestub poolel teel, mis takistab sul täiendavate andmete üleslaadimist.
+
+Hoiatus: OSM vahemälu tühjendamine toob kaasa kõigi veel üles laadimata muudatuste kadumise.
+
+Tühjenda Mapnik või Overlay paanide vahemälu, et laadida alla viimased paanid, mis kajastavad sinu poolt varem esitatud muudatusi. Sinu muudatuste töötlemiseks võib kuluda kuni 24 tundi.</target>
+        <note>Class = "UITableViewSection"; footerTitle = "Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. \n\nWarning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.\n\nClear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed."; ObjectID = "SNa-W1-wga";</note>
+      </trans-unit>
+      <trans-unit id="SNa-W1-wga.headerTitle" xml:space="preserve">
+        <source>Discard &amp; Refresh</source>
+        <target>Loobu &amp; värskenda</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Discard &amp; Refresh"; ObjectID = "SNa-W1-wga";</note>
+      </trans-unit>
+      <trans-unit id="Uum-Wn-9CF.text" xml:space="preserve">
+        <source>Others</source>
+        <target>Muud</target>
+        <note>Class = "UILabel"; text = "Others"; ObjectID = "Uum-Wn-9CF";</note>
+      </trans-unit>
+      <trans-unit id="VUR-wT-knn.text" xml:space="preserve">
+        <source>Enable Rotation</source>
+        <target>Luba pööramine</target>
+        <note>Class = "UILabel"; text = "Enable Rotation"; ObjectID = "VUR-wT-knn";</note>
+      </trans-unit>
+      <trans-unit id="WnI-tY-WWa.text" xml:space="preserve">
+        <source>Delete tracks after:</source>
+        <target>Kustuta rajad peale:</target>
+        <note>Class = "UILabel"; text = "Delete tracks after:"; ObjectID = "WnI-tY-WWa";</note>
+      </trans-unit>
+      <trans-unit id="Z8C-Ef-iJE.title" xml:space="preserve">
+        <source>GPX Tracks</source>
+        <target>GPX rajad</target>
+        <note>Class = "UINavigationItem"; title = "GPX Tracks"; ObjectID = "Z8C-Ef-iJE";</note>
+      </trans-unit>
+      <trans-unit id="ZP1-qY-kXe.text" xml:space="preserve">
+        <source>Unnamed Roads</source>
+        <target>Nimetud teed</target>
+        <note>Class = "UILabel"; text = "Unnamed Roads"; ObjectID = "ZP1-qY-kXe";</note>
+      </trans-unit>
+      <trans-unit id="Zn9-Sg-9fS.footerTitle" xml:space="preserve">
+        <source>If specifying a WMS URL you must also provide the projection used</source>
+        <target>WMS URL-i määramisel tuleb esitada ka kasutatud projektsioon</target>
+        <note>Class = "UITableViewSection"; footerTitle = "If specifying a WMS URL you must also provide the projection used"; ObjectID = "Zn9-Sg-9fS";</note>
+      </trans-unit>
+      <trans-unit id="Zn9-Sg-9fS.headerTitle" xml:space="preserve">
+        <source>WMS Projection</source>
+        <target>WMS projektsioon</target>
+        <note>Class = "UITableViewSection"; headerTitle = "WMS Projection"; ObjectID = "Zn9-Sg-9fS";</note>
+      </trans-unit>
+      <trans-unit id="Zzc-4t-QhT.text" xml:space="preserve">
+        <source>Aerial Tiles</source>
+        <target>Aerofotode paanid</target>
+        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT";</note>
+      </trans-unit>
+      <trans-unit id="bmY-Hw-jv6.footerTitle" xml:space="preserve">
+        <source>Go Map!! will automatically discard old data to optimize performance.</source>
+        <target>Go Map!! jätab jõudluse optimeerimiseks vanad andmed automaatselt kõrvale.</target>
+        <note>Class = "UITableViewSection"; footerTitle = "Go Map!! will automatically discard old data to optimize performance."; ObjectID = "bmY-Hw-jv6";</note>
+      </trans-unit>
+      <trans-unit id="bmY-Hw-jv6.headerTitle" xml:space="preserve">
+        <source>Cache Management</source>
+        <target>Puhvri haldus</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Cache Management"; ObjectID = "bmY-Hw-jv6";</note>
+      </trans-unit>
+      <trans-unit id="cXC-ij-AMQ.title" xml:space="preserve">
+        <source>Show Objects</source>
+        <target>Kuva objektid</target>
+        <note>Class = "UINavigationItem"; title = "Show Objects"; ObjectID = "cXC-ij-AMQ";</note>
+      </trans-unit>
+      <trans-unit id="cpC-iE-1Dm.text" xml:space="preserve">
+        <source>Title</source>
+        <target>Pealkiri</target>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "cpC-iE-1Dm";</note>
+      </trans-unit>
+      <trans-unit id="cpv-m2-oDm.headerTitle" xml:space="preserve">
+        <source>Friendly Name</source>
+        <target>Sõbralik nimi</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Friendly Name"; ObjectID = "cpv-m2-oDm";</note>
+      </trans-unit>
+      <trans-unit id="dIe-MC-t44.text" xml:space="preserve">
+        <source>Automatic</source>
+        <target>Automaatne</target>
+        <note>Class = "UILabel"; text = "Automatic"; ObjectID = "dIe-MC-t44";</note>
+      </trans-unit>
+      <trans-unit id="dci-gg-ddc.title" xml:space="preserve">
+        <source>Cancel</source>
+        <target>Tühista</target>
+        <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "dci-gg-ddc";</note>
+      </trans-unit>
+      <trans-unit id="dzT-B4-za3.placeholder" xml:space="preserve">
+        <source>http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
+ </source>
+        <note>Class = "UITextField"; placeholder = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "; ObjectID = "dzT-B4-za3";</note>
+      </trans-unit>
+      <trans-unit id="eFa-yZ-YZl.text" xml:space="preserve">
+        <source>Aerial Tiles</source>
+        <target>Aerofotode paanid</target>
+        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eFa-yZ-YZl";</note>
+      </trans-unit>
+      <trans-unit id="eLW-GB-ugG.text" xml:space="preserve">
+        <source>Position + Button on </source>
+        <target>Paiguta + nupp </target>
+        <note>Class = "UILabel"; text = "Position + Button on "; ObjectID = "eLW-GB-ugG"; Note = "The location on the screen where the user prefers the + (add node) button to appear";</note>
+      </trans-unit>
+      <trans-unit id="eN6-SZ-99I.text" xml:space="preserve">
+        <source>Editor only</source>
+        <target>Ainult redaktor</target>
+        <note>Class = "UILabel"; text = "Editor only"; ObjectID = "eN6-SZ-99I";</note>
+      </trans-unit>
+      <trans-unit id="eTY-48-gab.text" xml:space="preserve">
+        <source>Aerial Tiles</source>
+        <target>Aerofotode paanid</target>
+        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eTY-48-gab";</note>
+      </trans-unit>
+      <trans-unit id="eac-Db-EaW.normalTitle" xml:space="preserve">
+        <source>Bing</source>
+        <target>Bing</target>
+        <note>Class = "UIButton"; normalTitle = "Bing"; ObjectID = "eac-Db-EaW";</note>
+      </trans-unit>
+      <trans-unit id="el8-h8-H1F.normalTitle" xml:space="preserve">
+        <source>Button</source>
+        <target>Nupp</target>
+        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F";</note>
+      </trans-unit>
+      <trans-unit id="fFT-hv-mKl.text" xml:space="preserve">
+        <source>Aerial Tiles</source>
+        <target>Aerofotode paanid</target>
+        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fFT-hv-mKl";</note>
+      </trans-unit>
+      <trans-unit id="fHH-rC-iGa.text" xml:space="preserve">
+        <source>Aerial Tiles</source>
+        <target>Aerofotode paanid</target>
+        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fHH-rC-iGa";</note>
+      </trans-unit>
+      <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve">
+        <source>Details</source>
+        <target>Üksikasjad</target>
+        <note>Class = "UILabel"; text = "Details"; ObjectID = "g2G-5j-Y4q";</note>
+      </trans-unit>
+      <trans-unit id="g46-cV-NBw.text" xml:space="preserve">
+        <source>Aerial Tiles</source>
+        <target>Aerofotode paanid</target>
+        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "g46-cV-NBw";</note>
+      </trans-unit>
+      <trans-unit id="gdL-Os-R6R.text" xml:space="preserve">
+        <source>Points</source>
+        <target>Punktid</target>
+        <note>Class = "UILabel"; text = "Points"; ObjectID = "gdL-Os-R6R";</note>
+      </trans-unit>
+      <trans-unit id="gre-3S-iPA.text" xml:space="preserve">
+        <source>Detail</source>
+        <target>Lisateave</target>
+        <note>Class = "UILabel"; text = "Detail"; ObjectID = "gre-3S-iPA";</note>
+      </trans-unit>
+      <trans-unit id="h1O-06-ApF.text" xml:space="preserve">
+        <source>Label</source>
+        <target>Silt</target>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "h1O-06-ApF";</note>
+      </trans-unit>
+      <trans-unit id="hMJ-yP-XJe.text" xml:space="preserve">
+        <source>OpenStreetMap GPS Traces</source>
+        <target>OpenStreetMap GPS jäljed</target>
+        <note>Class = "UILabel"; text = "OpenStreetMap GPS Traces"; ObjectID = "hMJ-yP-XJe";</note>
+      </trans-unit>
+      <trans-unit id="hkr-kO-jbt.text" xml:space="preserve">
+        <source>Traffic Roads</source>
+        <target>Liiklusteed</target>
+        <note>Class = "UILabel"; text = "Traffic Roads"; ObjectID = "hkr-kO-jbt";</note>
+      </trans-unit>
+      <trans-unit id="hsp-Xj-TU6.text" xml:space="preserve">
+        <source>Simon Poole Map Data © OpenStreetMap contributors
+</source>
+        <target>Simon Poole kaardiandmed © OpenStreetMapi toetajad
+</target>
+        <note>Class = "UITextView"; text = "Simon Poole Map Data © OpenStreetMap contributors\n"; ObjectID = "hsp-Xj-TU6";</note>
+      </trans-unit>
+      <trans-unit id="iuk-Fk-3Fw.placeholder" xml:space="preserve">
+        <source>(TMS)</source>
+        <note>Class = "UITextField"; placeholder = "(TMS)"; ObjectID = "iuk-Fk-3Fw";</note>
+      </trans-unit>
+      <trans-unit id="lu0-kr-5Cc.text" xml:space="preserve">
+        <source>Past/Future</source>
+        <target>Minevik/tulevik</target>
+        <note>Class = "UILabel"; text = "Past/Future"; ObjectID = "lu0-kr-5Cc";</note>
+      </trans-unit>
+      <trans-unit id="lwG-AE-nIZ.headerTitle" xml:space="preserve">
+        <source>Background</source>
+        <target>Taust</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ";</note>
+      </trans-unit>
+      <trans-unit id="oSD-0y-Vt0.title" xml:space="preserve">
+        <source>Configure GPX Tracks</source>
+        <target>Seadista GPX Tracks</target>
+        <note>Class = "UINavigationItem"; title = "Configure GPX Tracks"; ObjectID = "oSD-0y-Vt0";</note>
+      </trans-unit>
+      <trans-unit id="pQK-9y-t4z.text" xml:space="preserve">
+        <source>Buildings</source>
+        <target>Ehitised</target>
+        <note>Class = "UILabel"; text = "Buildings"; ObjectID = "pQK-9y-t4z";</note>
+      </trans-unit>
+      <trans-unit id="pR1-M8-pXH.title" xml:space="preserve">
+        <source>Back</source>
+        <target>Tagasi</target>
+        <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "pR1-M8-pXH";</note>
+      </trans-unit>
+      <trans-unit id="qdV-Je-jXT.text" xml:space="preserve">
+        <source>Boundaries</source>
+        <target>Piirid</target>
+        <note>Class = "UILabel"; text = "Boundaries"; ObjectID = "qdV-Je-jXT";</note>
+      </trans-unit>
+      <trans-unit id="r6a-cT-Ufa.text" xml:space="preserve">
+        <source>Turn Restrictions</source>
+        <target>Pöördepiirangud</target>
+        <note>Class = "UILabel"; text = "Turn Restrictions"; ObjectID = "r6a-cT-Ufa";</note>
+      </trans-unit>
+      <trans-unit id="scg-Po-M3L.headerTitle" xml:space="preserve">
+        <source>Filter Objects</source>
+        <target>Objektide filtreerimine</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Filter Objects"; ObjectID = "scg-Po-M3L";</note>
+      </trans-unit>
+      <trans-unit id="swu-t3-p5w.text" xml:space="preserve">
+        <source>URL</source>
+        <target>URL</target>
+        <note>Class = "UILabel"; text = "URL"; ObjectID = "swu-t3-p5w";</note>
+      </trans-unit>
+      <trans-unit id="tS9-CP-pqu.title" xml:space="preserve">
+        <source>Clear Cache</source>
+        <target>Tühjenda puhver</target>
+        <note>Class = "UINavigationItem"; title = "Clear Cache"; ObjectID = "tS9-CP-pqu";</note>
+      </trans-unit>
+      <trans-unit id="tU9-Ml-4ko.title" xml:space="preserve">
+        <source>Back</source>
+        <target>Tagasi</target>
+        <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "tU9-Ml-4ko";</note>
+      </trans-unit>
+      <trans-unit id="twn-Ve-8vl.text" xml:space="preserve">
+        <source>Water Features</source>
+        <target>Vee omadused</target>
+        <note>Class = "UILabel"; text = "Water Features"; ObjectID = "twn-Ve-8vl";</note>
+      </trans-unit>
+      <trans-unit id="uOd-BB-zEq.text" xml:space="preserve">
+        <source>Aerial only</source>
+        <target>Ainult aerofotod</target>
+        <note>Class = "UILabel"; text = "Aerial only"; ObjectID = "uOd-BB-zEq";</note>
+      </trans-unit>
+      <trans-unit id="uQ3-vb-l3H.placeholder" xml:space="preserve">
+        <source>21</source>
+        <target>21</target>
+        <note>Class = "UITextField"; placeholder = "21"; ObjectID = "uQ3-vb-l3H";</note>
+      </trans-unit>
+      <trans-unit id="uZo-P0-sR7.text" xml:space="preserve">
+        <source>Building Level</source>
+        <target>Hoone tase</target>
+        <note>Class = "UILabel"; text = "Building Level"; ObjectID = "uZo-P0-sR7";</note>
+      </trans-unit>
+      <trans-unit id="v6h-g5-fka.text" xml:space="preserve">
+        <source>12/22/20, 7:55 PM</source>
+        <note>Class = "UILabel"; text = "12/22/20, 7:55 PM"; ObjectID = "v6h-g5-fka";</note>
+      </trans-unit>
+      <trans-unit id="voF-Yf-33h.text" xml:space="preserve">
+        <source>Max Zoom</source>
+        <target>Maksimaalne suurendus</target>
+        <note>Class = "UILabel"; text = "Max Zoom"; ObjectID = "voF-Yf-33h";</note>
+      </trans-unit>
+      <trans-unit id="w75-Lj-3jF.placeholder" xml:space="preserve">
+        <source>Portlandia GIS</source>
+        <target>Portlandia GIS</target>
+        <note>Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF"; Note = "A hypothetical aerial imagery provider";</note>
+      </trans-unit>
+      <trans-unit id="wev-ax-u4C.headerTitle" xml:space="preserve">
+        <source>Reset</source>
+        <target>Lähtesta</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C";</note>
+      </trans-unit>
+      <trans-unit id="xve-fW-qM7.text" xml:space="preserve">
+        <source>Details</source>
+        <target>Üksikasjad</target>
+        <note>Class = "UILabel"; text = "Details"; ObjectID = "xve-fW-qM7";</note>
+      </trans-unit>
+      <trans-unit id="yue-km-52a.text" xml:space="preserve">
+        <source>Name</source>
+        <target>Nimi</target>
+        <note>Class = "UILabel"; text = "Name"; ObjectID = "yue-km-52a";</note>
+      </trans-unit>
+      <trans-unit id="zD6-m4-1PD.footerTitle" xml:space="preserve">
+        <source>A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL</source>
+        <target>TMS URL koos {x}, {y} ja {z} paigutustega või WMS URL</target>
+        <note>Class = "UITableViewSection"; footerTitle = "A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL"; ObjectID = "zD6-m4-1PD";</note>
+      </trans-unit>
+      <trans-unit id="zD6-m4-1PD.headerTitle" xml:space="preserve">
+        <source>Template URL of the tile server</source>
+        <target>Paaniserveri URL-i mall</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Template URL of the tile server"; ObjectID = "zD6-m4-1PD";</note>
+      </trans-unit>
+      <trans-unit id="zI2-YM-qbl.normalTitle" xml:space="preserve">
+        <source>Add New</source>
+        <target>Lisa uus</target>
+        <note>Class = "UIButton"; normalTitle = "Add New"; ObjectID = "zI2-YM-qbl";</note>
       </trans-unit>
     </body>
   </file>
@@ -2304,634 +2931,7 @@ Tulemuslikkuse parandamiseks võiksid vahemälu tühjendada (ekraani seadete alt
       </trans-unit>
     </body>
   </file>
-  <file original="Storyboards/Base.lproj/Display.storyboard" source-language="en" target-language="et" datatype="plaintext">
-    <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.2" build-num="14C18"/>
-    </header>
-    <body>
-      <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
-        <source>Cancel</source>
-        <target>Tühista</target>
-        <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "1SY-O5-qJR";</note>
-      </trans-unit>
-      <trans-unit id="1f0-8q-yCi.text" xml:space="preserve">
-        <source>GPX Tracks</source>
-        <target>GPX rajad</target>
-        <note>Class = "UILabel"; text = "GPX Tracks"; ObjectID = "1f0-8q-yCi";</note>
-      </trans-unit>
-      <trans-unit id="2Ku-Lb-uCf.text" xml:space="preserve">
-        <source>Details</source>
-        <target>Üksikasjad</target>
-        <note>Class = "UILabel"; text = "Details"; ObjectID = "2Ku-Lb-uCf";</note>
-      </trans-unit>
-      <trans-unit id="2ZY-zi-luF.text" xml:space="preserve">
-        <source>Clear Cache</source>
-        <target>Tühjenda puhver</target>
-        <note>Class = "UILabel"; text = "Clear Cache"; ObjectID = "2ZY-zi-luF";</note>
-      </trans-unit>
-      <trans-unit id="4s8-Bj-JOX.normalTitle" xml:space="preserve">
-        <source>99 Days</source>
-        <target>99 päeva</target>
-        <note>Class = "UIButton"; normalTitle = "99 Days"; ObjectID = "4s8-Bj-JOX";</note>
-      </trans-unit>
-      <trans-unit id="5hB-2Y-Wgl.text" xml:space="preserve">
-        <source>Projection</source>
-        <target>Projektsioon</target>
-        <note>Class = "UILabel"; text = "Projection"; ObjectID = "5hB-2Y-Wgl";</note>
-      </trans-unit>
-      <trans-unit id="7df-49-qTa.text" xml:space="preserve">
-        <source>Rail Features</source>
-        <target>Raudtee omadused</target>
-        <note>Class = "UILabel"; text = "Rail Features"; ObjectID = "7df-49-qTa";</note>
-      </trans-unit>
-      <trans-unit id="7ga-PZ-MfV.placeholder" xml:space="preserve">
-        <source>-1..3,7</source>
-        <target>-1..3,7</target>
-        <note>Class = "UITextField"; placeholder = "-1..3,7"; ObjectID = "7ga-PZ-MfV";</note>
-      </trans-unit>
-      <trans-unit id="8HT-Bc-Q2z.title" xml:space="preserve">
-        <source>Aerial Imagery</source>
-        <target>Aerofotod</target>
-        <note>Class = "UINavigationItem"; title = "Aerial Imagery"; ObjectID = "8HT-Bc-Q2z";</note>
-      </trans-unit>
-      <trans-unit id="8S7-Kw-QHF.normalTitle" xml:space="preserve">
-        <source>Details</source>
-        <target>Üksikasjad</target>
-        <note>Class = "UIButton"; normalTitle = "Details"; ObjectID = "8S7-Kw-QHF";</note>
-      </trans-unit>
-      <trans-unit id="8es-4f-sj3.headerTitle" xml:space="preserve">
-        <source>Overlays</source>
-        <target>Ülekatted</target>
-        <note>Class = "UITableViewSection"; headerTitle = "Overlays"; ObjectID = "8es-4f-sj3";</note>
-      </trans-unit>
-      <trans-unit id="9L3-JO-Whj.text" xml:space="preserve">
-        <source>Mapnik only</source>
-        <target>Ainult Mapnik</target>
-        <note>Class = "UILabel"; text = "Mapnik only"; ObjectID = "9L3-JO-Whj";</note>
-      </trans-unit>
-      <trans-unit id="186-0W-Nrr.title" xml:space="preserve">
-        <source>Display</source>
-        <target>Ekraan</target>
-        <note>Class = "UINavigationItem"; title = "Display"; ObjectID = "186-0W-Nrr";</note>
-      </trans-unit>
-      <trans-unit id="DmO-dW-3Fh.text" xml:space="preserve">
-        <source>Collect in background:</source>
-        <target>Kogu taustal:</target>
-        <note>Class = "UILabel"; text = "Collect in background:"; ObjectID = "DmO-dW-3Fh";</note>
-      </trans-unit>
-      <trans-unit id="EHa-L5-Hcz.text" xml:space="preserve">
-        <source>12:00:00</source>
-        <note>Class = "UILabel"; text = "12:00:00"; ObjectID = "EHa-L5-Hcz";</note>
-      </trans-unit>
-      <trans-unit id="EmS-9F-1qc.text" xml:space="preserve">
-        <source>Details</source>
-        <target>Üksikasjad</target>
-        <note>Class = "UILabel"; text = "Details"; ObjectID = "EmS-9F-1qc";</note>
-      </trans-unit>
-      <trans-unit id="F9l-B0-puf.text" xml:space="preserve">
-        <source>Details</source>
-        <target>Üksikasjad</target>
-        <note>Class = "UILabel"; text = "Details"; ObjectID = "F9l-B0-puf";</note>
-      </trans-unit>
-      <trans-unit id="GNK-bZ-i9X.text" xml:space="preserve">
-        <source>Details</source>
-        <target>Üksikasjad</target>
-        <note>Class = "UILabel"; text = "Details"; ObjectID = "GNK-bZ-i9X";</note>
-      </trans-unit>
-      <trans-unit id="H3p-Ta-kIy.title" xml:space="preserve">
-        <source>QA Poole No Name Tiles</source>
-        <target>QA Poole nimetud paanid</target>
-        <note>Class = "UINavigationItem"; title = "QA Poole No Name Tiles"; ObjectID = "H3p-Ta-kIy"; Note = "Title for Simon Poole's \"No name\" (missing name) tile overlay";</note>
-      </trans-unit>
-      <trans-unit id="Idx-2G-6F7.text" xml:space="preserve">
-        <source>Power Features</source>
-        <target>Toitefunktsioonid</target>
-        <note>Class = "UILabel"; text = "Power Features"; ObjectID = "Idx-2G-6F7";</note>
-      </trans-unit>
-      <trans-unit id="Jz1-GP-Wbe.text" xml:space="preserve">
-        <source>Paths</source>
-        <target>Rajad</target>
-        <note>Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe";</note>
-      </trans-unit>
-      <trans-unit id="LxX-tl-ZLH.text" xml:space="preserve">
-        <source>Enable Filters</source>
-        <target>Luba filtrid</target>
-        <note>Class = "UILabel"; text = "Enable Filters"; ObjectID = "LxX-tl-ZLH";</note>
-      </trans-unit>
-      <trans-unit id="MPq-PX-jf0.text" xml:space="preserve">
-        <source>Editor with Aerial</source>
-        <target>Aerofotodega redaktor</target>
-        <note>Class = "UILabel"; text = "Editor with Aerial"; ObjectID = "MPq-PX-jf0";</note>
-      </trans-unit>
-      <trans-unit id="MZF-am-tCM.title" xml:space="preserve">
-        <source>Aerial Provider</source>
-        <target>Aerofotode pakkuja</target>
-        <note>Class = "UINavigationItem"; title = "Aerial Provider"; ObjectID = "MZF-am-tCM";</note>
-      </trans-unit>
-      <trans-unit id="MeQ-4N-FqC.text" xml:space="preserve">
-        <source>GPX Tracks you record or download will be automatically deleted after:</source>
-        <target>Salvestatud või alla laetud GPX-rajad kustutatakse automaatselt pärast seda:</target>
-        <note>Class = "UILabel"; text = "GPX Tracks you record or download will be automatically deleted after:"; ObjectID = "MeQ-4N-FqC";</note>
-      </trans-unit>
-      <trans-unit id="O0U-6M-7AT.text" xml:space="preserve">
-        <source>Quests</source>
-        <note>Class = "UILabel"; text = "Quests"; ObjectID = "O0U-6M-7AT";</note>
-      </trans-unit>
-      <trans-unit id="OiJ-GU-gZ3.title" xml:space="preserve">
-        <source>Cancel</source>
-        <target>Tühista</target>
-        <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "OiJ-GU-gZ3";</note>
-      </trans-unit>
-      <trans-unit id="Okg-2D-O6U.text" xml:space="preserve">
-        <source>Landuse</source>
-        <target>Maakasutus</target>
-        <note>Class = "UILabel"; text = "Landuse"; ObjectID = "Okg-2D-O6U";</note>
-      </trans-unit>
-      <trans-unit id="PSE-3C-cDx.text" xml:space="preserve">
-        <source>Notes and Fixmes</source>
-        <note>Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "PSE-3C-cDx";</note>
-      </trans-unit>
-      <trans-unit id="RJU-Z2-QFh.headerTitle" xml:space="preserve">
-        <source>Interactions</source>
-        <target>Koostoimed</target>
-        <note>Class = "UITableViewSection"; headerTitle = "Interactions"; ObjectID = "RJU-Z2-QFh";</note>
-      </trans-unit>
-      <trans-unit id="RxO-IV-UE7.text" xml:space="preserve">
-        <source>Service Roads</source>
-        <target>Teenindusteed</target>
-        <note>Class = "UILabel"; text = "Service Roads"; ObjectID = "RxO-IV-UE7";</note>
-      </trans-unit>
-      <trans-unit id="SNa-W1-wga.footerTitle" xml:space="preserve">
-        <source>Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. 
-
-Warning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.
-
-Clear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed.</source>
-        <target>Tühjenda OSMi andmete vahemälu, kui rakenduse olek ei ole enam OSM serveriga sünkroonis. See võib juhtuda, kui keegi teine muudab andmeid, mida redigeerid, või kui üks sinu üleslaadimine ebaõnnestub poolel teel, mis takistab sul täiendavate andmete üleslaadimist.
-
-Hoiatus: OSM vahemälu tühjendamine toob kaasa kõigi veel üles laadimata muudatuste kadumise.
-
-Tühjenda Mapnik või Overlay paanide vahemälu, et laadida alla viimased paanid, mis kajastavad sinu poolt varem esitatud muudatusi. Sinu muudatuste töötlemiseks võib kuluda kuni 24 tundi.</target>
-        <note>Class = "UITableViewSection"; footerTitle = "Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. \n\nWarning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.\n\nClear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed."; ObjectID = "SNa-W1-wga";</note>
-      </trans-unit>
-      <trans-unit id="SNa-W1-wga.headerTitle" xml:space="preserve">
-        <source>Discard &amp; Refresh</source>
-        <target>Loobu &amp; värskenda</target>
-        <note>Class = "UITableViewSection"; headerTitle = "Discard &amp; Refresh"; ObjectID = "SNa-W1-wga";</note>
-      </trans-unit>
-      <trans-unit id="Uum-Wn-9CF.text" xml:space="preserve">
-        <source>Others</source>
-        <target>Muud</target>
-        <note>Class = "UILabel"; text = "Others"; ObjectID = "Uum-Wn-9CF";</note>
-      </trans-unit>
-      <trans-unit id="VUR-wT-knn.text" xml:space="preserve">
-        <source>Enable Rotation</source>
-        <target>Luba pööramine</target>
-        <note>Class = "UILabel"; text = "Enable Rotation"; ObjectID = "VUR-wT-knn";</note>
-      </trans-unit>
-      <trans-unit id="WnI-tY-WWa.text" xml:space="preserve">
-        <source>Delete tracks after:</source>
-        <target>Kustuta rajad peale:</target>
-        <note>Class = "UILabel"; text = "Delete tracks after:"; ObjectID = "WnI-tY-WWa";</note>
-      </trans-unit>
-      <trans-unit id="Z8C-Ef-iJE.title" xml:space="preserve">
-        <source>GPX Tracks</source>
-        <target>GPX rajad</target>
-        <note>Class = "UINavigationItem"; title = "GPX Tracks"; ObjectID = "Z8C-Ef-iJE";</note>
-      </trans-unit>
-      <trans-unit id="ZP1-qY-kXe.text" xml:space="preserve">
-        <source>Unnamed Roads</source>
-        <target>Nimetud teed</target>
-        <note>Class = "UILabel"; text = "Unnamed Roads"; ObjectID = "ZP1-qY-kXe";</note>
-      </trans-unit>
-      <trans-unit id="Zn9-Sg-9fS.footerTitle" xml:space="preserve">
-        <source>If specifying a WMS URL you must also provide the projection used</source>
-        <target>WMS URL-i määramisel tuleb esitada ka kasutatud projektsioon</target>
-        <note>Class = "UITableViewSection"; footerTitle = "If specifying a WMS URL you must also provide the projection used"; ObjectID = "Zn9-Sg-9fS";</note>
-      </trans-unit>
-      <trans-unit id="Zn9-Sg-9fS.headerTitle" xml:space="preserve">
-        <source>WMS Projection</source>
-        <target>WMS projektsioon</target>
-        <note>Class = "UITableViewSection"; headerTitle = "WMS Projection"; ObjectID = "Zn9-Sg-9fS";</note>
-      </trans-unit>
-      <trans-unit id="Zzc-4t-QhT.text" xml:space="preserve">
-        <source>Aerial Tiles</source>
-        <target>Aerofotode paanid</target>
-        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT";</note>
-      </trans-unit>
-      <trans-unit id="bmY-Hw-jv6.footerTitle" xml:space="preserve">
-        <source>Go Map!! will automatically discard old data to optimize performance.</source>
-        <target>Go Map!! jätab jõudluse optimeerimiseks vanad andmed automaatselt kõrvale.</target>
-        <note>Class = "UITableViewSection"; footerTitle = "Go Map!! will automatically discard old data to optimize performance."; ObjectID = "bmY-Hw-jv6";</note>
-      </trans-unit>
-      <trans-unit id="bmY-Hw-jv6.headerTitle" xml:space="preserve">
-        <source>Cache Management</source>
-        <target>Puhvri haldus</target>
-        <note>Class = "UITableViewSection"; headerTitle = "Cache Management"; ObjectID = "bmY-Hw-jv6";</note>
-      </trans-unit>
-      <trans-unit id="cXC-ij-AMQ.title" xml:space="preserve">
-        <source>Show Objects</source>
-        <target>Kuva objektid</target>
-        <note>Class = "UINavigationItem"; title = "Show Objects"; ObjectID = "cXC-ij-AMQ";</note>
-      </trans-unit>
-      <trans-unit id="cpC-iE-1Dm.text" xml:space="preserve">
-        <source>Title</source>
-        <target>Pealkiri</target>
-        <note>Class = "UILabel"; text = "Title"; ObjectID = "cpC-iE-1Dm";</note>
-      </trans-unit>
-      <trans-unit id="cpv-m2-oDm.headerTitle" xml:space="preserve">
-        <source>Friendly Name</source>
-        <target>Sõbralik nimi</target>
-        <note>Class = "UITableViewSection"; headerTitle = "Friendly Name"; ObjectID = "cpv-m2-oDm";</note>
-      </trans-unit>
-      <trans-unit id="dIe-MC-t44.text" xml:space="preserve">
-        <source>Automatic</source>
-        <target>Automaatne</target>
-        <note>Class = "UILabel"; text = "Automatic"; ObjectID = "dIe-MC-t44";</note>
-      </trans-unit>
-      <trans-unit id="dci-gg-ddc.title" xml:space="preserve">
-        <source>Cancel</source>
-        <target>Tühista</target>
-        <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "dci-gg-ddc";</note>
-      </trans-unit>
-      <trans-unit id="dzT-B4-za3.placeholder" xml:space="preserve">
-        <source>http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
- </source>
-        <note>Class = "UITextField"; placeholder = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "; ObjectID = "dzT-B4-za3";</note>
-      </trans-unit>
-      <trans-unit id="eFa-yZ-YZl.text" xml:space="preserve">
-        <source>Aerial Tiles</source>
-        <target>Aerofotode paanid</target>
-        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eFa-yZ-YZl";</note>
-      </trans-unit>
-      <trans-unit id="eLW-GB-ugG.text" xml:space="preserve">
-        <source>Position + Button on </source>
-        <target>Paiguta + nupp </target>
-        <note>Class = "UILabel"; text = "Position + Button on "; ObjectID = "eLW-GB-ugG"; Note = "The location on the screen where the user prefers the + (add node) button to appear";</note>
-      </trans-unit>
-      <trans-unit id="eN6-SZ-99I.text" xml:space="preserve">
-        <source>Editor only</source>
-        <target>Ainult redaktor</target>
-        <note>Class = "UILabel"; text = "Editor only"; ObjectID = "eN6-SZ-99I";</note>
-      </trans-unit>
-      <trans-unit id="eTY-48-gab.text" xml:space="preserve">
-        <source>Aerial Tiles</source>
-        <target>Aerofotode paanid</target>
-        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eTY-48-gab";</note>
-      </trans-unit>
-      <trans-unit id="eac-Db-EaW.normalTitle" xml:space="preserve">
-        <source>Bing</source>
-        <target>Bing</target>
-        <note>Class = "UIButton"; normalTitle = "Bing"; ObjectID = "eac-Db-EaW";</note>
-      </trans-unit>
-      <trans-unit id="el8-h8-H1F.normalTitle" xml:space="preserve">
-        <source>Button</source>
-        <target>Nupp</target>
-        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F";</note>
-      </trans-unit>
-      <trans-unit id="fFT-hv-mKl.text" xml:space="preserve">
-        <source>Aerial Tiles</source>
-        <target>Aerofotode paanid</target>
-        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fFT-hv-mKl";</note>
-      </trans-unit>
-      <trans-unit id="fHH-rC-iGa.text" xml:space="preserve">
-        <source>Aerial Tiles</source>
-        <target>Aerofotode paanid</target>
-        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fHH-rC-iGa";</note>
-      </trans-unit>
-      <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve">
-        <source>Details</source>
-        <target>Üksikasjad</target>
-        <note>Class = "UILabel"; text = "Details"; ObjectID = "g2G-5j-Y4q";</note>
-      </trans-unit>
-      <trans-unit id="g46-cV-NBw.text" xml:space="preserve">
-        <source>Aerial Tiles</source>
-        <target>Aerofotode paanid</target>
-        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "g46-cV-NBw";</note>
-      </trans-unit>
-      <trans-unit id="gdL-Os-R6R.text" xml:space="preserve">
-        <source>Points</source>
-        <target>Punktid</target>
-        <note>Class = "UILabel"; text = "Points"; ObjectID = "gdL-Os-R6R";</note>
-      </trans-unit>
-      <trans-unit id="gre-3S-iPA.text" xml:space="preserve">
-        <source>Detail</source>
-        <target>Lisateave</target>
-        <note>Class = "UILabel"; text = "Detail"; ObjectID = "gre-3S-iPA";</note>
-      </trans-unit>
-      <trans-unit id="h1O-06-ApF.text" xml:space="preserve">
-        <source>Label</source>
-        <target>Silt</target>
-        <note>Class = "UILabel"; text = "Label"; ObjectID = "h1O-06-ApF";</note>
-      </trans-unit>
-      <trans-unit id="hMJ-yP-XJe.text" xml:space="preserve">
-        <source>OpenStreetMap GPS Traces</source>
-        <target>OpenStreetMap GPS jäljed</target>
-        <note>Class = "UILabel"; text = "OpenStreetMap GPS Traces"; ObjectID = "hMJ-yP-XJe";</note>
-      </trans-unit>
-      <trans-unit id="hkr-kO-jbt.text" xml:space="preserve">
-        <source>Traffic Roads</source>
-        <target>Liiklusteed</target>
-        <note>Class = "UILabel"; text = "Traffic Roads"; ObjectID = "hkr-kO-jbt";</note>
-      </trans-unit>
-      <trans-unit id="hsp-Xj-TU6.text" xml:space="preserve">
-        <source>Simon Poole Map Data © OpenStreetMap contributors
-</source>
-        <target>Simon Poole kaardiandmed © OpenStreetMapi toetajad
-</target>
-        <note>Class = "UITextView"; text = "Simon Poole Map Data © OpenStreetMap contributors\n"; ObjectID = "hsp-Xj-TU6";</note>
-      </trans-unit>
-      <trans-unit id="iuk-Fk-3Fw.placeholder" xml:space="preserve">
-        <source>(TMS)</source>
-        <note>Class = "UITextField"; placeholder = "(TMS)"; ObjectID = "iuk-Fk-3Fw";</note>
-      </trans-unit>
-      <trans-unit id="lu0-kr-5Cc.text" xml:space="preserve">
-        <source>Past/Future</source>
-        <target>Minevik/tulevik</target>
-        <note>Class = "UILabel"; text = "Past/Future"; ObjectID = "lu0-kr-5Cc";</note>
-      </trans-unit>
-      <trans-unit id="lwG-AE-nIZ.headerTitle" xml:space="preserve">
-        <source>Background</source>
-        <target>Taust</target>
-        <note>Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ";</note>
-      </trans-unit>
-      <trans-unit id="oSD-0y-Vt0.title" xml:space="preserve">
-        <source>Configure GPX Tracks</source>
-        <target>Seadista GPX Tracks</target>
-        <note>Class = "UINavigationItem"; title = "Configure GPX Tracks"; ObjectID = "oSD-0y-Vt0";</note>
-      </trans-unit>
-      <trans-unit id="pQK-9y-t4z.text" xml:space="preserve">
-        <source>Buildings</source>
-        <target>Ehitised</target>
-        <note>Class = "UILabel"; text = "Buildings"; ObjectID = "pQK-9y-t4z";</note>
-      </trans-unit>
-      <trans-unit id="pR1-M8-pXH.title" xml:space="preserve">
-        <source>Back</source>
-        <target>Tagasi</target>
-        <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "pR1-M8-pXH";</note>
-      </trans-unit>
-      <trans-unit id="qdV-Je-jXT.text" xml:space="preserve">
-        <source>Boundaries</source>
-        <target>Piirid</target>
-        <note>Class = "UILabel"; text = "Boundaries"; ObjectID = "qdV-Je-jXT";</note>
-      </trans-unit>
-      <trans-unit id="r6a-cT-Ufa.text" xml:space="preserve">
-        <source>Turn Restrictions</source>
-        <target>Pöördepiirangud</target>
-        <note>Class = "UILabel"; text = "Turn Restrictions"; ObjectID = "r6a-cT-Ufa";</note>
-      </trans-unit>
-      <trans-unit id="scg-Po-M3L.headerTitle" xml:space="preserve">
-        <source>Filter Objects</source>
-        <target>Objektide filtreerimine</target>
-        <note>Class = "UITableViewSection"; headerTitle = "Filter Objects"; ObjectID = "scg-Po-M3L";</note>
-      </trans-unit>
-      <trans-unit id="swu-t3-p5w.text" xml:space="preserve">
-        <source>URL</source>
-        <target>URL</target>
-        <note>Class = "UILabel"; text = "URL"; ObjectID = "swu-t3-p5w";</note>
-      </trans-unit>
-      <trans-unit id="tS9-CP-pqu.title" xml:space="preserve">
-        <source>Clear Cache</source>
-        <target>Tühjenda puhver</target>
-        <note>Class = "UINavigationItem"; title = "Clear Cache"; ObjectID = "tS9-CP-pqu";</note>
-      </trans-unit>
-      <trans-unit id="tU9-Ml-4ko.title" xml:space="preserve">
-        <source>Back</source>
-        <target>Tagasi</target>
-        <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "tU9-Ml-4ko";</note>
-      </trans-unit>
-      <trans-unit id="twn-Ve-8vl.text" xml:space="preserve">
-        <source>Water Features</source>
-        <target>Vee omadused</target>
-        <note>Class = "UILabel"; text = "Water Features"; ObjectID = "twn-Ve-8vl";</note>
-      </trans-unit>
-      <trans-unit id="uOd-BB-zEq.text" xml:space="preserve">
-        <source>Aerial only</source>
-        <target>Ainult aerofotod</target>
-        <note>Class = "UILabel"; text = "Aerial only"; ObjectID = "uOd-BB-zEq";</note>
-      </trans-unit>
-      <trans-unit id="uQ3-vb-l3H.placeholder" xml:space="preserve">
-        <source>21</source>
-        <target>21</target>
-        <note>Class = "UITextField"; placeholder = "21"; ObjectID = "uQ3-vb-l3H";</note>
-      </trans-unit>
-      <trans-unit id="uZo-P0-sR7.text" xml:space="preserve">
-        <source>Building Level</source>
-        <target>Hoone tase</target>
-        <note>Class = "UILabel"; text = "Building Level"; ObjectID = "uZo-P0-sR7";</note>
-      </trans-unit>
-      <trans-unit id="v6h-g5-fka.text" xml:space="preserve">
-        <source>12/22/20, 7:55 PM</source>
-        <note>Class = "UILabel"; text = "12/22/20, 7:55 PM"; ObjectID = "v6h-g5-fka";</note>
-      </trans-unit>
-      <trans-unit id="voF-Yf-33h.text" xml:space="preserve">
-        <source>Max Zoom</source>
-        <target>Maksimaalne suurendus</target>
-        <note>Class = "UILabel"; text = "Max Zoom"; ObjectID = "voF-Yf-33h";</note>
-      </trans-unit>
-      <trans-unit id="w75-Lj-3jF.placeholder" xml:space="preserve">
-        <source>Portlandia GIS</source>
-        <target>Portlandia GIS</target>
-        <note>Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF"; Note = "A hypothetical aerial imagery provider";</note>
-      </trans-unit>
-      <trans-unit id="wev-ax-u4C.headerTitle" xml:space="preserve">
-        <source>Reset</source>
-        <target>Lähtesta</target>
-        <note>Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C";</note>
-      </trans-unit>
-      <trans-unit id="xve-fW-qM7.text" xml:space="preserve">
-        <source>Details</source>
-        <target>Üksikasjad</target>
-        <note>Class = "UILabel"; text = "Details"; ObjectID = "xve-fW-qM7";</note>
-      </trans-unit>
-      <trans-unit id="yue-km-52a.text" xml:space="preserve">
-        <source>Name</source>
-        <target>Nimi</target>
-        <note>Class = "UILabel"; text = "Name"; ObjectID = "yue-km-52a";</note>
-      </trans-unit>
-      <trans-unit id="zD6-m4-1PD.footerTitle" xml:space="preserve">
-        <source>A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL</source>
-        <target>TMS URL koos {x}, {y} ja {z} paigutustega või WMS URL</target>
-        <note>Class = "UITableViewSection"; footerTitle = "A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL"; ObjectID = "zD6-m4-1PD";</note>
-      </trans-unit>
-      <trans-unit id="zD6-m4-1PD.headerTitle" xml:space="preserve">
-        <source>Template URL of the tile server</source>
-        <target>Paaniserveri URL-i mall</target>
-        <note>Class = "UITableViewSection"; headerTitle = "Template URL of the tile server"; ObjectID = "zD6-m4-1PD";</note>
-      </trans-unit>
-      <trans-unit id="zI2-YM-qbl.normalTitle" xml:space="preserve">
-        <source>Add New</source>
-        <target>Lisa uus</target>
-        <note>Class = "UIButton"; normalTitle = "Add New"; ObjectID = "zI2-YM-qbl";</note>
-      </trans-unit>
-    </body>
-  </file>
-  <file original="Storyboards/Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="et" datatype="plaintext">
-    <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.2" build-num="14C18"/>
-    </header>
-    <body>
-      <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
-        <source>Get Directions</source>
-        <target>Hangi juhised</target>
-        <note>Class = "UILabel"; text = "Get Directions"; ObjectID = "1xx-L0-hKm";</note>
-      </trans-unit>
-      <trans-unit id="2.title" xml:space="preserve">
-        <source>First</source>
-        <target>Esimene</target>
-        <note>Class = "UIViewController"; title = "First"; ObjectID = "2";</note>
-      </trans-unit>
-      <trans-unit id="2Ka-IT-DQC.normalTitle" xml:space="preserve">
-        <source>Bing attribution</source>
-        <note>Class = "UIButton"; normalTitle = "Bing attribution"; ObjectID = "2Ka-IT-DQC";</note>
-      </trans-unit>
-      <trans-unit id="2g1-vb-Cjc.normalTitle" xml:space="preserve">
-        <source>Comment</source>
-        <target>Kommentaar</target>
-        <note>Class = "UIButton"; normalTitle = "Comment"; ObjectID = "2g1-vb-Cjc";</note>
-      </trans-unit>
-      <trans-unit id="7Ua-cx-BHI.title" xml:space="preserve">
-        <source>Upload</source>
-        <target>Saada</target>
-        <note>Class = "UINavigationItem"; title = "Upload"; ObjectID = "7Ua-cx-BHI";</note>
-      </trans-unit>
-      <trans-unit id="9G2-Gl-CeP.text" xml:space="preserve">
-        <source>username</source>
-        <note>Class = "UILabel"; text = "username"; ObjectID = "9G2-Gl-CeP"; Note = "Placeholder - ignore";</note>
-      </trans-unit>
-      <trans-unit id="9hH-Ja-fKn.text" xml:space="preserve">
-        <source>New comment:</source>
-        <target>Uus kommentaar:</target>
-        <note>Class = "UILabel"; text = "New comment:"; ObjectID = "9hH-Ja-fKn";</note>
-      </trans-unit>
-      <trans-unit id="9t5-wq-j1u.text" xml:space="preserve">
-        <source>66.6 FPS</source>
-        <note>Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u";</note>
-      </trans-unit>
-      <trans-unit id="E22-sL-sNt.accessibilityHint" xml:space="preserve">
-        <source>Reorient map north</source>
-        <target>Suuna kaart põhja</target>
-        <note>Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt";</note>
-      </trans-unit>
-      <trans-unit id="E22-sL-sNt.accessibilityLabel" xml:space="preserve">
-        <source>Compass</source>
-        <target>Kompass</target>
-        <note>Class = "UIButton"; accessibilityLabel = "Compass"; ObjectID = "E22-sL-sNt";</note>
-      </trans-unit>
-      <trans-unit id="FaM-WV-S6I.title" xml:space="preserve">
-        <source>Search for Location</source>
-        <target>Leia asukoht</target>
-        <note>Class = "UINavigationItem"; title = "Search for Location"; ObjectID = "FaM-WV-S6I";</note>
-      </trans-unit>
-      <trans-unit id="Fo4-Nq-pAz.normalTitle" xml:space="preserve">
-        <source>Center</source>
-        <target>Keskkoht</target>
-        <note>Class = "UIButton"; normalTitle = "Center"; ObjectID = "Fo4-Nq-pAz";</note>
-      </trans-unit>
-      <trans-unit id="HeZ-95-3K1.text" xml:space="preserve">
-        <source>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</source>
-        <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "HeZ-95-3K1";</note>
-      </trans-unit>
-      <trans-unit id="LSJ-rB-J2c.text" xml:space="preserve">
-        <source>-</source>
-        <note>Class = "UILabel"; text = "-"; ObjectID = "LSJ-rB-J2c"; Note = "Placeholder - ignore";</note>
-      </trans-unit>
-      <trans-unit id="MBY-TK-Wuy.title" xml:space="preserve">
-        <source>Note</source>
-        <target>Märge</target>
-        <note>Class = "UINavigationItem"; title = "Note"; ObjectID = "MBY-TK-Wuy";</note>
-      </trans-unit>
-      <trans-unit id="N5Q-nV-TPG.text" xml:space="preserve">
-        <source>Zoom to Edit</source>
-        <target>Suurenda muutmiseks</target>
-        <note>Class = "UILabel"; text = "Zoom to Edit"; ObjectID = "N5Q-nV-TPG";</note>
-      </trans-unit>
-      <trans-unit id="OJ0-aO-ri1.normalTitle" xml:space="preserve">
-        <source>Resolve</source>
-        <target>Lahenda</target>
-        <note>Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1";</note>
-      </trans-unit>
-      <trans-unit id="PHk-s9-onx.text" xml:space="preserve">
-        <source>Various comments...</source>
-        <note>Class = "UITextView"; text = "Various comments..."; ObjectID = "PHk-s9-onx"; Note = "Placeholder - ignore";</note>
-      </trans-unit>
-      <trans-unit id="Qz0-Ce-YCX.title" xml:space="preserve">
-        <source>Bing Maps</source>
-        <target>Bing kaardid</target>
-        <note>Class = "UINavigationItem"; title = "Bing Maps"; ObjectID = "Qz0-Ce-YCX";</note>
-      </trans-unit>
-      <trans-unit id="TcP-6i-B8H.text" xml:space="preserve">
-        <source>Specify a name ("New York"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object ("way 51014987"):</source>
-        <target>Määra nimi ("New York"), URL või muu tekst, mis sisaldab koordinaate laius-/pikkuskoordinaate või viidet OSM objektile ("way 51014987"):</target>
-        <note>Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H";</note>
-      </trans-unit>
-      <trans-unit id="VNE-ee-a7u.text" xml:space="preserve">
-        <source>action</source>
-        <note>Class = "UILabel"; text = "action"; ObjectID = "VNE-ee-a7u"; Note = "Placeholder - ignore";</note>
-      </trans-unit>
-      <trans-unit id="ach-1A-88x.text" xml:space="preserve">
-        <source>Changeset comment goes here</source>
-        <note>Class = "UITextView"; text = "Changeset comment goes here"; ObjectID = "ach-1A-88x";</note>
-      </trans-unit>
-      <trans-unit id="gdu-Sf-XrE.title" xml:space="preserve">
-        <source>Commit</source>
-        <target>Rakenda</target>
-        <note>Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "gdu-Sf-XrE";</note>
-      </trans-unit>
-      <trans-unit id="l7S-YL-RKK.text" xml:space="preserve">
-        <source>Subtitle</source>
-        <target>Alapealkiri</target>
-        <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "l7S-YL-RKK";</note>
-      </trans-unit>
-      <trans-unit id="nU5-T2-ADn.text" xml:space="preserve">
-        <source>A Error Message Flashing Z</source>
-        <note>Class = "UILabel"; text = "A Error Message Flashing Z"; ObjectID = "nU5-T2-ADn"; Note = "Placeholder - Don't translate";</note>
-      </trans-unit>
-      <trans-unit id="qP9-Sc-sc4.text" xml:space="preserve">
-        <source>Label</source>
-        <note>Class = "UILabel"; text = "Label"; ObjectID = "qP9-Sc-sc4";</note>
-      </trans-unit>
-      <trans-unit id="siu-I6-IEp.title" xml:space="preserve">
-        <source>Search for Location</source>
-        <target>Leia asukoht</target>
-        <note>Class = "UIViewController"; title = "Search for Location"; ObjectID = "siu-I6-IEp";</note>
-      </trans-unit>
-      <trans-unit id="stf-JU-iga.text" xml:space="preserve">
-        <source>Title</source>
-        <target>Pealkiri</target>
-        <note>Class = "UILabel"; text = "Title"; ObjectID = "stf-JU-iga";</note>
-      </trans-unit>
-      <trans-unit id="tOO-VD-MeJ.text" xml:space="preserve">
-        <source>2014-06-17 17:54 UTC</source>
-        <note>Class = "UILabel"; text = "2014-06-17 17:54 UTC"; ObjectID = "tOO-VD-MeJ";</note>
-      </trans-unit>
-      <trans-unit id="vRO-Aj-Sdr.text" xml:space="preserve">
-        <source>Title</source>
-        <note>Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr";</note>
-      </trans-unit>
-      <trans-unit id="xw9-Ro-Fai.placeholder" xml:space="preserve">
-        <source>Niagara Falls</source>
-        <target>Niagara juga</target>
-        <note>Class = "UISearchBar"; placeholder = "Niagara Falls"; ObjectID = "xw9-Ro-Fai";</note>
-      </trans-unit>
-      <trans-unit id="zrW-uc-hfQ.segmentTitles[0]" xml:space="preserve">
-        <source>Tags</source>
-        <target>Sildid</target>
-        <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[0] = "Tags"; ObjectID = "zrW-uc-hfQ";</note>
-      </trans-unit>
-      <trans-unit id="zrW-uc-hfQ.segmentTitles[1]" xml:space="preserve">
-        <source>Delete</source>
-        <target>Kustuta</target>
-        <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[1] = "Delete"; ObjectID = "zrW-uc-hfQ";</note>
-      </trans-unit>
-      <trans-unit id="zrW-uc-hfQ.segmentTitles[2]" xml:space="preserve">
-        <source>More...</source>
-        <target>Veel…</target>
-        <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[2] = "More..."; ObjectID = "zrW-uc-hfQ";</note>
-      </trans-unit>
-    </body>
-  </file>
-  <file original="Storyboards/Base.lproj/Settings.storyboard" source-language="en" target-language="et" datatype="plaintext">
+  <file original="Settings/Base.lproj/Settings.storyboard" source-language="en" target-language="et" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.2" build-num="14C18"/>
     </header>

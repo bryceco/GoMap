@@ -589,6 +589,9 @@
 /* No comment provided by engineer. */
 "Next" = "次へ";
 
+/* No comment provided by engineer. */
+"no" = "いいえ";
+
 /* GPX track */
 "No active track" = "アクティブなトラックなし";
 
@@ -1009,6 +1012,9 @@
 
 /* No comment provided by engineer. */
 "What types of objects does this quest apply to?" = "このクエストはどの種類のオブジェクトに適用されますか？";
+
+/* No comment provided by engineer. */
+"yes" = "はい";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "あなたはOpenStreetMapデータベースの本番環境に変更を加えようとしています。この変更は世界中で閲覧されます。\n\n続ける場合はコミットを再度押してください。やめる場合は中止を押してください。";

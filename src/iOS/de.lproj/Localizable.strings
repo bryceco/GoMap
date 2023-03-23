@@ -589,6 +589,9 @@
 /* No comment provided by engineer. */
 "Next" = "Nächstes";
 
+/* No comment provided by engineer. */
+"no" = "nein";
+
 /* GPX track */
 "No active track" = "Kein aktiver Track";
 
@@ -1009,6 +1012,9 @@
 
 /* No comment provided by engineer. */
 "What types of objects does this quest apply to?" = "Auf welche Objekte bezieht sich dieser Quest?";
+
+/* No comment provided by engineer. */
+"yes" = "ja";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Du bist gerade dabei, Änderungen an der live-geschalteten OpenStreetMap Datenbank zu machen. Die Änderungen werden für jeden auf der Welt sichtbar.\n\nZum Fortfahren drücke noch einmal Hochladen, sonst drücke Abbrechen.";
