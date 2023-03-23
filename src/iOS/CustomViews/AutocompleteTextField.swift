@@ -218,6 +218,8 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 	}
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		guard indexPath.row < filteredCompletions.count else { return }
+
 		text = filteredCompletions[indexPath.row]
 
 		sendActions(for: .editingChanged)
