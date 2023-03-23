@@ -23,13 +23,13 @@ class TextPairTableCell: UITableViewCell {
 	}
 
 	override func willTransition(to state: UITableViewCell.StateMask) {
-		super.willTransition(to: state)
-
 		// don't allow editing text while deleting
 		if shouldResignFirstResponder(forState: state) {
 			text1.resignFirstResponder()
 			text2.resignFirstResponder()
 		}
+
+		super.willTransition(to: state)
 	}
 }
 
