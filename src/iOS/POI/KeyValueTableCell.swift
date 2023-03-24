@@ -296,10 +296,10 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		{ [weak self] url in
 			guard let self = self else { return }
 			progress.removeFromSuperview()
-			infoButton.isEnabled = true
-			infoButton.titleLabel?.layer.opacity = 1.0
+			self.infoButton.isEnabled = true
+			self.infoButton.titleLabel?.layer.opacity = 1.0
 			if let url = url,
-			   let owner = keyValueCellOwner,
+			   let owner = self.keyValueCellOwner,
 			   owner.view.window != nil
 			{
 				let viewController = SFSafariViewController(url: url)

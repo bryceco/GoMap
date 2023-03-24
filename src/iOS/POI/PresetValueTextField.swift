@@ -195,7 +195,7 @@ class PresetValueTextField: AutocompleteTextField {
 
 	@IBAction func openWebsite(_ sender: UIView?) {
 		guard let value = text,
-			let viewController = owner.viewController
+		      let viewController = owner.viewController
 		else { return }
 		let string: String
 		if OsmTags.isKey(key, variantOf: "wikipedia") {
