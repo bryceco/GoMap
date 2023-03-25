@@ -34,6 +34,9 @@
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                <attributedString key="userComments">
+                                    <fragment content="Placeholder - do not translate"/>
+                                </attributedString>
                                 <connections>
                                     <outlet property="delegate" destination="cxn-YY-uLs" id="7NR-Ly-ZJ9"/>
                                 </connections>
@@ -82,6 +85,9 @@
                                         <color key="textColor" systemColor="labelColor"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <attributedString key="userComments">
+                                            <fragment content="Placeholder - do not translate"/>
+                                        </attributedString>
                                         <connections>
                                             <outlet property="delegate" destination="cxn-YY-uLs" id="Z5P-Wo-kk5"/>
                                         </connections>
