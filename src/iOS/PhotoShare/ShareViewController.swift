@@ -88,15 +88,13 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 					found = true
 					provider.loadItem(forTypeIdentifier: "public.image", options: nil) { url, _ in
 						if let url = url as? URL,
-						   let data = try? NSData(contentsOf: url as URL) as Data,
-						   let exif = try? EXIFInfo(from: data),
-						   let lat = exif.gps.latComponents.decimal,
-						   let lon = exif.gps.lonComponents.decimal
+						   let exif = EXIFInfo(url: url)
 						{
 							DispatchQueue.main.async {
-								self.location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+								self.location = CLLocationCoordinate2D(latitude: exif.latitude,
+																	   longitude: exif.longitude)
 								self.zoom = nil
-								self.direction = exif.gps.imgDirection ?? 0.0
+								self.direction = exif.direction ?? 0.0
 								self.buttonOK.isEnabled = true
 								self.popupText.text = self.photoText
 							}
