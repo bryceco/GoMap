@@ -15,8 +15,8 @@ private enum TapDragGestureState {
 	case isDragging
 }
 
-private let DoubleTapTime: TimeInterval = 0.5
-private let DoubleTapDistance: Float = 50.0
+private let DoubleTapTime: TimeInterval = 0.25
+private let DoubleTapDistance: Float = 22.0
 
 private func TouchTranslation(_ touch: UITouch, _ view: UIView) -> CGPoint {
 	let newPoint = touch.location(in: view)
