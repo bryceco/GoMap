@@ -92,7 +92,7 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 						{
 							DispatchQueue.main.async {
 								self.location = CLLocationCoordinate2D(latitude: exif.latitude,
-																	   longitude: exif.longitude)
+								                                       longitude: exif.longitude)
 								self.zoom = nil
 								self.direction = exif.direction ?? 0.0
 								self.buttonOK.isEnabled = true

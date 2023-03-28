@@ -17,12 +17,12 @@ public struct EXIFInfo {
 
 	init?(url: URL) {
 		guard let imageSource = CGImageSourceCreateWithURL(url as CFURL, nil),
-			  let imageProperties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any],
-			  let gpsData = imageProperties[kCGImagePropertyGPSDictionary as String] as? [String: Any],
-			  let latitudeRef = gpsData[kCGImagePropertyGPSLatitudeRef as String] as? String,
-			  let latitude = gpsData[kCGImagePropertyGPSLatitude as String] as? Double,
-			  let longitudeRef = gpsData[kCGImagePropertyGPSLongitudeRef as String] as? String,
-			  let longitude = gpsData[kCGImagePropertyGPSLongitude as String] as? Double
+		      let imageProperties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any],
+		      let gpsData = imageProperties[kCGImagePropertyGPSDictionary as String] as? [String: Any],
+		      let latitudeRef = gpsData[kCGImagePropertyGPSLatitudeRef as String] as? String,
+		      let latitude = gpsData[kCGImagePropertyGPSLatitude as String] as? Double,
+		      let longitudeRef = gpsData[kCGImagePropertyGPSLongitudeRef as String] as? String,
+		      let longitude = gpsData[kCGImagePropertyGPSLongitude as String] as? Double
 		else {
 			return nil
 		}
@@ -31,10 +31,10 @@ public struct EXIFInfo {
 		{
 			self.altitude = altitudeRef == 1 ? -altitude : altitude
 		} else {
-			self.altitude = nil
+			altitude = nil
 		}
-		self.direction = gpsData[kCGImagePropertyGPSImgDirection as String] as? Double
+		direction = gpsData[kCGImagePropertyGPSImgDirection as String] as? Double
 		self.latitude = latitudeRef == "S" ? -latitude : latitude
-		self.longitude = longitudeRef == "W" ? -longitude :  longitude
+		self.longitude = longitudeRef == "W" ? -longitude : longitude
 	}
 }

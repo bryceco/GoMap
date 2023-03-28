@@ -291,6 +291,9 @@ final class EditorMapLayer: CALayer {
 #if DEBUG
 		// Get a weak reference to every object. Once we've purged everything then all
 		// references should be zeroed. If not then there is a retain cycle somewhere.
+		//
+		// Exception: If the user has an object selected and the tag editor open when
+		// this is called then POITabBarController will have a reference to it.
 		struct Weakly {
 			weak var obj: OsmBaseObject?
 		}
@@ -320,8 +323,16 @@ final class EditorMapLayer: CALayer {
 
 #if DEBUG
 		weakly.removeAll(where: { $0.obj == nil })
-		// if there were dirty objects then they'll still be in mapData
-		assert(weakly.count == mapData.nodeCount() + mapData.wayCount() + mapData.relationCount())
+
+		if let presented = UIApplication.shared.keyWindow?.rootViewController?.presentedViewController,
+		   let selection = (presented as? POITabBarController)?.selection
+		{
+			print("Holding reference to: \(selection)")
+		}
+		if isUnderDebugger() {
+			// if there were dirty objects then they'll still be in mapData
+			assert(weakly.count == mapData.nodeCount() + mapData.wayCount() + mapData.relationCount())
+		}
 #endif
 
 		setNeedsLayout()
