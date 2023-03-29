@@ -1,0 +1,9 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Go Map!!";
+
+/* Bundle name */
+"CFBundleName" = "Go Map!!";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "इमारती किंवा वस्तूंची उंची मोजण्यासाठी आणि उघडण्याच्या तासांच्या चिन्हांमध्ये मजकूर ओळखण्यासाठी कॅमेरा वापरला जातो.";
+

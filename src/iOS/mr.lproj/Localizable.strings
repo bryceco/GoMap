@@ -1,0 +1,146 @@
+/* No comment provided by engineer. */
+"(new object)" = "(नवीन वस्तू)";
+
+/* No comment provided by engineer. */
+"(node)" = "(गाठ)";
+
+/* No comment provided by engineer. */
+"(relation %@)" = "(संबंध %@)";
+
+/* No comment provided by engineer. */
+"(way)" = "(मार्ग)";
+
+/* One or more days
+   Plural number of days */
+"%ld Days" = "%ld दिवस";
+
+/* Number of tiles/objects in cache */
+"%ld objects" = "%ld वस्तू";
+
+/* unknown user name */
+"<unknown>" = "<अज्ञात>";
+
+/* No comment provided by engineer. */
+"A GPX Track records your path as you travel along a road or trail" = "तुम्ही रस्त्याने किंवा पायवाटेने प्रवास करता तेव्हा GPX ट्रॅक तुमचा मार्ग रेकॉर्ड करतो";
+
+/* Show an error message */
+"An error occured while importing: %@" = "आयात करताना एक त्रुटी उद्भवली: % @";
+
+/* No comment provided by engineer. */
+"An unknown error occurred fetching metadata" = "मेटाडेटा आणताना एक अज्ञात त्रुटी उद्भवली";
+
+/* Area of an object in m^2
+   Object geometry: a closed way or multipolygon) */
+"Area" = "क्षेत्र";
+
+/* No comment provided by engineer. */
+"Attention" = "सावधान";
+
+/* Automatic selection of presets languages */
+"Automatic" = "स्वयंचलित";
+
+/* back button */
+"Back" = "मागे";
+
+/* identifies current aerial imagery */
+"Background imagery %@" = "पार्श्वभूमी प्रतिमा %@";
+
+/* No comment provided by engineer. */
+"Cache size warning" = "कॅश आकार चेतावणी";
+
+/* No comment provided by engineer. */
+"Can only add ways to multipolygons" = "केवळ बहुभुजांमध्ये मार्ग जोडू शकता";
+
+/* No comment provided by engineer. */
+"Can't remove component of a Route or similar relation" = "मार्ग किंवा तत्सम संबंधाचा घटक काढू शकत नाही";
+
+/* No comment provided by engineer. */
+"Can't remove Turn Restriction to/from way" = "मार्गावर/पासून वळणाचे निर्बंध काढू शकत नाही";
+
+/* No comment provided by engineer. */
+"Cancel" = "रद्द करा";
+
+/* No comment provided by engineer. */
+"Cannot connect an inner way to an outer way" = "आतील मार्ग बाह्य मार्गाशी जोडू शकत नाही";
+
+/* No comment provided by engineer. */
+"Change" = "बदल";
+
+/* OSM changeset identifier */
+"Changeset" = "बदलसंच";
+
+/* Delete cached data */
+"Clear GPX Tracks" = "GPX ट्रॅक साफ करा";
+
+/* Delete cached data */
+"Clear Mapnik Tiles" = "Mapnik फरशा साफ करा";
+
+/* Delete cached data */
+"Clear OSM Data" = "OSM डेटा साफ करा";
+
+/* No comment provided by engineer. */
+"Commit" = "वचनबद्ध";
+
+/* No comment provided by engineer. */
+"Confirm move" = "हालचालीची पुष्टी करा";
+
+/* text was copied to the system clipboard */
+"Copied" = "कॉपी केले";
+
+/* Edit action */
+"Copy Tags" = "टॅग कॉपी करा";
+
+/* No comment provided by engineer. */
+"Could not duplicate object" = "वस्तूची नक्कल करता आली नाही";
+
+/* No comment provided by engineer. */
+"Create\n" = "निर्माण\n";
+
+/* Edit action */
+"Create Relation" = "संबंध निर्माण करा";
+
+/* No comment provided by engineer. */
+"Create Relation Type" = "संबंध प्रकार निर्माण करा";
+
+/* current GPX track */
+"Current Track" = "वर्तमान ट्रॅक";
+
+/* No comment provided by engineer. */
+"Database error" = "डेटाबेस त्रुटी";
+
+/* Edit action */
+"Delete" = "पुसा";
+
+/* No comment provided by engineer. */
+"Delete\n" = "पुसा\n";
+
+/* No comment provided by engineer. */
+"Delete completely" = "पूर्णपणे पुसा";
+
+/* Discard changes */
+"Discard" = "काढून टाका";
+
+/* Distance to an object with an error value */
+"Distance: %1$@ ± %2$@ meters" = "अंतर: %1$@ ± %2$@ मीटर";
+
+/* No comment provided by engineer. */
+"Done" = "झाले";
+
+/* Edit action */
+"Duplicate" = "नक्कल";
+
+/* No comment provided by engineer. */
+"Editing layer not visible" = "संपादन स्तर दृश्यमान नाही";
+
+/* No comment provided by engineer. */
+"Editor only" = "फक्त संपादक";
+
+/* No comment provided by engineer. */
+"Ensure the editor view is visible and displays objects in the local area" = "संपादक दृश्य दृश्यमान असल्याची खात्री करा आणि स्थानिक क्षेत्रातील वस्तू प्रदर्शित करा";
+
+/* Error dialog title */
+"Error" = "त्रुटी";
+
+/* No comment provided by engineer. */
+"Error fetching metadata: %@" = "मेटाडेटा आणताना त्रुटी: %@";
+

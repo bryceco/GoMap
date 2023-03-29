@@ -593,6 +593,11 @@
 		02D7DF8626790A80003EE233 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/POI.strings; sourceTree = "<group>"; };
 		02D7DF8726790A80003EE233 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Settings.strings; sourceTree = "<group>"; };
 		02D7DF8826790A80003EE233 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Changeset.strings; sourceTree = "<group>"; };
+		02DAAEB329D3B95C00BB608A /* mr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mr; path = mr.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
+		02DAAEB429D3B95C00BB608A /* mr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mr; path = mr.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
+		02DAAEB529D3B95C00BB608A /* mr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mr; path = mr.lproj/Display.strings; sourceTree = "<group>"; };
+		02DAAEB629D3B95C00BB608A /* mr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mr; path = mr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		02DAAEB729D3B95C00BB608A /* mr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mr; path = mr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		02DC59801671B79100213558 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		02DD773126F0050C00D105B2 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		02DD773226F0050C00D105B2 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Height.strings; sourceTree = "<group>"; };
@@ -1426,6 +1431,7 @@
 				es,
 				nn,
 				tzm,
+				mr,
 			);
 			mainGroup = 02ACBA2416713CCB00BB4414;
 			packageReferences = (
@@ -1780,6 +1786,7 @@
 				025465192947F60200C7C2F8 /* es */,
 				02F85A01297A45DE008F57C8 /* nn */,
 				020E765929835D2C00B862B8 /* tzm */,
+				02DAAEB429D3B95C00BB608A /* mr */,
 			);
 			name = DirectionViewController.xib;
 			sourceTree = "<group>";
@@ -1938,6 +1945,7 @@
 				02062A28279D15D400B70551 /* pt-BR */,
 				020F1E7B279D15D6004496EB /* pt */,
 				025465202947F60200C7C2F8 /* es */,
+				02DAAEB529D3B95C00BB608A /* mr */,
 			);
 			name = Display.storyboard;
 			sourceTree = "<group>";
@@ -1971,6 +1979,7 @@
 				0254651A2947F60200C7C2F8 /* es */,
 				02F85A02297A45DE008F57C8 /* nn */,
 				020E765A29835D2C00B862B8 /* tzm */,
+				02DAAEB629D3B95C00BB608A /* mr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -2002,6 +2011,7 @@
 				02D2D11B2724B20F003654A8 /* pt-BR */,
 				020F1E7C279D15D6004496EB /* pt */,
 				025465212947F60200C7C2F8 /* es */,
+				02DAAEB329D3B95C00BB608A /* mr */,
 			);
 			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
@@ -2036,6 +2046,7 @@
 				0254651B2947F60200C7C2F8 /* es */,
 				02F85A03297A45DE008F57C8 /* nn */,
 				020E765B29835D2C00B862B8 /* tzm */,
+				02DAAEB729D3B95C00BB608A /* mr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

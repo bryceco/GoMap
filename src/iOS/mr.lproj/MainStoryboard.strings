@@ -1,99 +1,78 @@
 /* Class = "UILabel"; text = "Get Directions"; ObjectID = "1xx-L0-hKm"; */
-"1xx-L0-hKm.text" = "Obtener indicaciones";
-
-/* Class = "UIViewController"; title = "First"; ObjectID = "2"; */
-"2.title" = "Primero";
+"1xx-L0-hKm.text" = "दिशानिर्देश मिळवा";
 
 /* Class = "UIButton"; normalTitle = "Comment"; ObjectID = "2g1-vb-Cjc"; */
-"2g1-vb-Cjc.normalTitle" = "Comentario";
-
-/* Class = "UIButton"; normalTitle = "Bing attribution"; ObjectID = "2Ka-IT-DQC"; */
-"2Ka-IT-DQC.normalTitle" = "Atribución a Bing";
+"2g1-vb-Cjc.normalTitle" = "टिप्पणी";
 
 /* Class = "UINavigationItem"; title = "Upload"; ObjectID = "7Ua-cx-BHI"; */
-"7Ua-cx-BHI.title" = "Cargar";
+"7Ua-cx-BHI.title" = "चढवा";
 
 /* Class = "UILabel"; text = "username"; ObjectID = "9G2-Gl-CeP"; Note = "Placeholder - ignore"; */
-"9G2-Gl-CeP.text" = "nombre de usuario";
+"9G2-Gl-CeP.text" = "वापरकर्ता नाव";
 
 /* Class = "UILabel"; text = "New comment:"; ObjectID = "9hH-Ja-fKn"; */
-"9hH-Ja-fKn.text" = "Comentario nuevo:";
+"9hH-Ja-fKn.text" = "नवीन टिप्पणी:";
 
 /* Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u"; */
 "9t5-wq-j1u.text" = "66.6 FPS";
 
-/* Class = "UITextView"; text = "Changeset comment goes here"; ObjectID = "ach-1A-88x"; */
-"ach-1A-88x.text" = "El comentario del conjunto de cambios va aquí";
-
-/* Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt"; */
-"E22-sL-sNt.accessibilityHint" = "Reorientar el mapa al norte";
-
 /* Class = "UIButton"; accessibilityLabel = "Compass"; ObjectID = "E22-sL-sNt"; */
-"E22-sL-sNt.accessibilityLabel" = "Brújula";
+"E22-sL-sNt.accessibilityLabel" = "होकायंत्र";
 
 /* Class = "UINavigationItem"; title = "Search for Location"; ObjectID = "FaM-WV-S6I"; */
-"FaM-WV-S6I.title" = "Buscar ubicación";
+"FaM-WV-S6I.title" = "स्थान शोधा";
 
 /* Class = "UIButton"; normalTitle = "Center"; ObjectID = "Fo4-Nq-pAz"; */
-"Fo4-Nq-pAz.normalTitle" = "Centro";
+"Fo4-Nq-pAz.normalTitle" = "केंद्र";
 
 /* Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "gdu-Sf-XrE"; */
-"gdu-Sf-XrE.title" = "Consolidar";
+"gdu-Sf-XrE.title" = "वचनबद्ध";
 
 /* Class = "UILabel"; text = "Subtitle"; ObjectID = "l7S-YL-RKK"; */
-"l7S-YL-RKK.text" = "Subtítulo";
+"l7S-YL-RKK.text" = "उपशीर्षक";
 
 /* Class = "UILabel"; text = "-"; ObjectID = "LSJ-rB-J2c"; Note = "Placeholder - ignore"; */
 "LSJ-rB-J2c.text" = "-";
 
 /* Class = "UINavigationItem"; title = "Note"; ObjectID = "MBY-TK-Wuy"; */
-"MBY-TK-Wuy.title" = "Nota";
-
-/* Class = "UILabel"; text = "Zoom to Edit"; ObjectID = "N5Q-nV-TPG"; */
-"N5Q-nV-TPG.text" = "Ampliar para editar";
-
-/* Class = "UILabel"; text = "A Error Message Flashing Z"; ObjectID = "nU5-T2-ADn"; Note = "Placeholder - Don't translate"; */
-"nU5-T2-ADn.text" = "Un mensaje de error parpadeando Z";
+"MBY-TK-Wuy.title" = "नोंद";
 
 /* Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1"; */
-"OJ0-aO-ri1.normalTitle" = "Resolver";
+"OJ0-aO-ri1.normalTitle" = "निराकरण करा";
 
 /* Class = "UITextView"; text = "Various comments..."; ObjectID = "PHk-s9-onx"; Note = "Placeholder - ignore"; */
-"PHk-s9-onx.text" = "Varios comentarios...";
+"PHk-s9-onx.text" = "विविध टिप्पण्या...";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "qP9-Sc-sc4"; */
-"qP9-Sc-sc4.text" = "Etiqueta";
+"qP9-Sc-sc4.text" = "लेबल";
 
 /* Class = "UINavigationItem"; title = "Bing Maps"; ObjectID = "Qz0-Ce-YCX"; */
-"Qz0-Ce-YCX.title" = "Mapas de Bing";
+"Qz0-Ce-YCX.title" = "Bing नकाशे";
 
 /* Class = "UIViewController"; title = "Search for Location"; ObjectID = "siu-I6-IEp"; */
-"siu-I6-IEp.title" = "Buscar ubicación";
+"siu-I6-IEp.title" = "स्थान शोधा";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "stf-JU-iga"; */
-"stf-JU-iga.text" = "Título";
-
-/* Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H"; */
-"TcP-6i-B8H.text" = "Especifica un nombre (\"Nueva York\"), una URL u otro texto que contenga coordenadas lat/lon, o una referencia a un objeto OSM (\"camino 51014987\"):";
+"stf-JU-iga.text" = "शीर्षक";
 
 /* Class = "UILabel"; text = "2014-06-17 17:54 UTC"; ObjectID = "tOO-VD-MeJ"; */
-"tOO-VD-MeJ.text" = "17-06-2014 17:54 UTC";
+"tOO-VD-MeJ.text" = "2014-06-17 17:54 UTC";
 
 /* Class = "UILabel"; text = "action"; ObjectID = "VNE-ee-a7u"; Note = "Placeholder - ignore"; */
-"VNE-ee-a7u.text" = "acción";
+"VNE-ee-a7u.text" = "क्रिया";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr"; */
-"vRO-Aj-Sdr.text" = "Título";
+"vRO-Aj-Sdr.text" = "शीर्षक";
 
 /* Class = "UISearchBar"; placeholder = "Niagara Falls"; ObjectID = "xw9-Ro-Fai"; */
-"xw9-Ro-Fai.placeholder" = "Cataratas del Niágara";
+"xw9-Ro-Fai.placeholder" = "नायगारा धबधबा";
 
 /* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[0] = "Tags"; ObjectID = "zrW-uc-hfQ"; */
-"zrW-uc-hfQ.segmentTitles[0]" = "Etiquetas";
+"zrW-uc-hfQ.segmentTitles[0]" = "टॅग्स";
 
 /* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[1] = "Delete"; ObjectID = "zrW-uc-hfQ"; */
-"zrW-uc-hfQ.segmentTitles[1]" = "Eliminar";
+"zrW-uc-hfQ.segmentTitles[1]" = "पुसा";
 
 /* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[2] = "More..."; ObjectID = "zrW-uc-hfQ"; */
-"zrW-uc-hfQ.segmentTitles[2]" = "Más…";
+"zrW-uc-hfQ.segmentTitles[2]" = "अधिक...";
 

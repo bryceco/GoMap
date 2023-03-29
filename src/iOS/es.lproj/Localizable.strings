@@ -56,17 +56,29 @@
    Plural number of days */
 "%ld Days" = "%ld días";
 
+/* Brief synopsis of a mapper's activity (count,last active date) */
+"%ld edits, last active %@" = "%1$ld ediciones, última activa %2$@";
+
 /* length of a gpx track */
 "%ld meters, %ld points" = "%1$ld metros, %2$ld puntos";
 
+/* length of a gpx track */
+"%ld meters, %ld points, %ld waypoints" = "%1$ld metros, %2$ld puntos, %3$ld waypoints";
+
 /* Number of tiles/objects in cache */
 "%ld objects" = "%ld objetos";
+
+/* Always plural */
+"%lu tiles needed" = "%lu mosaicos necesarios";
 
 /* Location of Add Node button on the screen */
 "+ Button Position" = "Posición de botón «+»";
 
 /* unknown user name */
 "<unknown>" = "<desconocido>";
+
+/* No comment provided by engineer. */
+"A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." = "Todas tus tareas personalizadas se copian al portapapeles en formato JSON. Puedes pegarlo en cualquier lugar y guardarlo o enviarlo a otras personas.";
 
 /* No comment provided by engineer. */
 "A GPX Track records your path as you travel along a road or trail" = "Un rastro GPX registra su trayectoria mientras recorre un camino o sendero";
@@ -76,6 +88,12 @@
 
 /* No comment provided by engineer. */
 "Accept" = "Aceptar";
+
+/* A type of quest */
+"Add Building Type" = "Agregar el tipo del edificio";
+
+/* A type of quest */
+"Add Highway Surface" = "Agregar la superficie de la autopista";
 
 /* Add to relation */
 "Add inner member" = "Añadir miembro interior";
@@ -89,23 +107,56 @@
 /* No comment provided by engineer. */
 "add object to relation" = "añadir objeto a relación";
 
+/* A type of quest */
+"Add Opening Hours" = "Añadir horarios de apertura";
+
 /* Add to relation */
 "Add outer member" = "Añadir miembro exterior";
 
+/* A type of quest */
+"Add Parking Type" = "Añadir tipos de estacionamiento";
+
+/* A type of quest */
+"Add Sidewalk Surface" = "Añadir superficie de acera";
+
+/* A type of quest */
+"Add Speed Limit" = "Añadir límite de velocidad";
+
+/* A type of quest */
+"Add Telephone Number" = "Añadir número de teléfono";
+
 /* No comment provided by engineer. */
 "Add way to multipolygon?" = "¿Quiere añadir la vía al multipolígono?";
+
+/* A type of quest */
+"Add Website" = "Añadir página web";
 
 /* No comment provided by engineer. */
 "added to multipolygon relation" = "añadido a relación multipoligonal";
 
 /* No comment provided by engineer. */
+"Adding members:" = "Añadiendo los miembros:";
+
+/* No comment provided by engineer. */
 "Additional imagery" = "Imágenes adicionales";
+
+/* No comment provided by engineer. */
+"Advanced Quest Builder" = "Creador de misiones avanzado";
 
 /* No comment provided by engineer. */
 "Aerial only" = "Solo aéreas";
 
 /* No comment provided by engineer. */
+"All choices" = "Todas las opciones";
+
+/* No comment provided by engineer. */
 "All Tags" = "Todas las etiquetas";
+
+/* Show an error message */
+"An error occured while exporting: %@" = "Se ha producido un error al exportar: %@";
+
+/* Show an error message */
+"An error occured while importing: %@" = "Se ha producido un error al importar: %@";
 
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "Se produjo un error desconocido al recuperar los metadatos";
@@ -126,6 +177,9 @@
 /* back button */
 "Back" = "Atrás";
 
+/* identifies current aerial imagery */
+"Background imagery %@" = "Imágenes de fondo %@";
+
 /* No comment provided by engineer. */
 "Bad login" = "Acceso incorrecto";
 
@@ -136,7 +190,16 @@
 "Better imagery available" = "Mejores imágenes disponibles";
 
 /* No comment provided by engineer. */
+"Build a New Quest" = "Crear una nueva misión";
+
+/* No comment provided by engineer. */
 "Cache size warning" = "Alerta sobre tamaño de antememoria";
+
+/* No comment provided by engineer. */
+"Cache trimmed" = "Caché recortada";
+
+/* No comment provided by engineer. */
+"Can only add ways to multipolygons" = "Sólo puede añadir formas a los multipolígonos";
 
 /* No comment provided by engineer. */
 "Can't delete node that is part of a relation" = "No es posible eliminar un nodo que forma parte de una relación";
@@ -145,7 +208,13 @@
 "Can't delete relation that is not a multipolygon" = "No es posible eliminar una relación que no sea un multipolígono";
 
 /* No comment provided by engineer. */
+"Can't delete way that is part of a Route or similar relation" = "No se puede eliminar un camino que forma parte de una ruta o relación similar";
+
+/* No comment provided by engineer. */
 "Can't extend way" = "No es posible extender la vía";
+
+/* No comment provided by engineer. */
+"Can't remove Turn Restriction 'via' node" = "No se puede eliminar la restricción de giro 'via' del nodo";
 
 /* No comment provided by engineer. */
 "Cancel" = "Cancelar";
@@ -286,7 +355,7 @@
 "Height: %1$@ ± %2$@ meters" = "Altura: %1$@ ± %2$@ metros";
 
 /* rate the app now */
-"I'll do it!" = "Lo haré";
+"I'll do it!" = "¡Lo haré!";
 
 /* OSM node/way/relation identifier */
 "Identifier" = "Identificador";
@@ -304,7 +373,7 @@
 "Joining would invalidate a Turn Restriction the way belongs to" = "La incorporación invalidará una restricción de giro a que pertenece la vía";
 
 /* coordinates */
-"Lat/Lon" = "Lat./long.";
+"Lat/Lon" = "Latitud/longitud";
 
 /* No comment provided by engineer. */
 "Left" = "Izquierda";
@@ -331,7 +400,7 @@
 "Make Rectangular" = "Hacer rectangular";
 
 /* rate the app later */
-"Maybe later..." = "Quizá luego";
+"Maybe later..." = "Quizás más tarde...";
 
 /* No comment provided by engineer. */
 "Member of multipolygon relation" = "Miembro de una relación multipoligonal";
@@ -594,7 +663,7 @@
 "Updating Note..." = "Actualizando la nota…";
 
 /* No comment provided by engineer. */
-"Upload complete!" = "Finalizó la carga.";
+"Upload complete!" = "¡Carga completa!";
 
 /* No comment provided by engineer. */
 "Upload to OSM" = "Cargar a OSM";
