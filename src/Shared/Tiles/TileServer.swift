@@ -297,7 +297,7 @@ final class TileServer: Equatable, Codable {
 	static let mapboxLocator = TileServer(
 		withName: "Mapbox Locator",
 		identifier: MAPBOX_LOCATOR_IDENTIFIER,
-		url: "https://api.mapbox.com/styles/v1/openstreetmap/ckasmteyi1tda1ipfis6wqhuq/tiles/256/{zoom}/{x}/{y}{@2x}?access_token={apikey}",
+		url: "https://{switch:a,b,c,d}.tiles.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.jpg?access_token={apikey}",
 		best: false,
 		apiKey: MapboxLocatorToken,
 		maxZoom: 20,

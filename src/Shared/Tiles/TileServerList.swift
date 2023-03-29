@@ -20,7 +20,16 @@ enum TypeCastError: Error {
 
 final class TileServerList {
 	private var userDefinedList: [TileServer] = [] // user-defined tile servers
-	private var downloadedList: [TileServer] = [] // downloaded on each launch
+	private var downloadedList: [TileServer] = [] {
+		didSet {
+			if let locator = downloadedList.first(where: { $0.identifier == Self.MapBoxLocatorId }) {
+				mapboxLocator = locator
+			}
+		}
+	}
+
+	var mapboxLocator = TileServer.mapboxLocator
+
 	private var recentlyUsedList = MostRecentlyUsed<TileServer>(maxCount: 6,
 	                                                            userDefaultsKey: RECENTLY_USED_KEY,
 	                                                            autoLoadSave: false)
@@ -77,7 +86,7 @@ final class TileServerList {
 		var cachedData = NSData(contentsOfFile: pathToExternalAerialsCache()) as Data?
 		if let data = cachedData {
 			var delta = CACurrentMediaTime()
-			let externalAerials = processOsmLabAerialsData(data)
+			let externalAerials = Self.processOsmLabAerialsData(data)
 			delta = CACurrentMediaTime() - delta
 			print("TileServerList decode time = \(delta)")
 
@@ -127,7 +136,7 @@ final class TileServerList {
 							// if the data is large then only download again periodically
 							self.lastDownloadDate = Date()
 						}
-						let externalAerials = processOsmLabAerialsData(data)
+						let externalAerials = Self.processOsmLabAerialsData(data)
 						if externalAerials.count > 100 {
 							// cache download for next time
 							let fileUrl = URL(fileURLWithPath: pathToExternalAerialsCache())

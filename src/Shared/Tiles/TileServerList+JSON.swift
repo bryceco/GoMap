@@ -17,6 +17,9 @@ func --> <T>(lhs: Any?, rhs: T.Type) throws -> T {
 }
 
 extension TileServerList {
+	static let MapBoxLocatorId = "mapbox_locator_overlay"
+	static let MapBoxLayerId = "Mapbox"
+
 	private struct Welcome {
 		private let json: [String: Any]
 		var features: [Feature] { get throws { try (json["features"] --> [Any].self).map({ try Feature($0) }) }}
@@ -118,22 +121,12 @@ extension TileServerList {
 		}
 	}
 
-	private func processOsmLabAerialsList(_ featureArray: [Feature]) throws -> [TileServer] {
+	private static func processOsmLabAerialsList(_ featureArray: [Feature]) throws -> [TileServer] {
 		let categories: [Category: Bool] = [
 			.photo: true,
 			.historicphoto: true,
 			.elevation: true
 		]
-
-		let supportedTypes = [
-			"tms": true,
-			"wms": true,
-			"scanex": false,
-			"wms_endpoint": false,
-			"wmts": false,
-			"bing": false
-		]
-
 		let supportedProjections = Set<String>(TileServer.supportedProjections)
 
 		var externalAerials: [TileServer] = []
@@ -144,8 +137,20 @@ extension TileServerList {
 				print("Aerial: skipping non-Feature")
 				continue
 			}
-
 			let properties = try entry.properties
+
+			let type = try properties.type
+			switch type {
+			case .tms, .wms:
+				break
+			case .scanex,
+			     .wms_endpoint,
+			     .wmts,
+			     .bing:
+				// Not supported
+				continue
+			}
+
 			let name = try properties.name
 			if name.hasPrefix("Maxar ") {
 				// we special case their imagery because they require a special key
@@ -161,8 +166,9 @@ extension TileServerList {
 				// good
 			} else if identifier == "OpenTopoMap" {
 				// special exception for this one
+			} else if identifier == MapBoxLocatorId {
+				// this can replace our built-in version
 			} else {
-				// NSLog(@"category %@ - %@",category,identifier);
 				continue
 			}
 			let startDateString = try properties.start_date
@@ -177,25 +183,16 @@ extension TileServerList {
 			guard
 				url.hasPrefix("http:") || url.hasPrefix("https:")
 			else {
-				// invalid url
 				print("Aerial: bad url: \(name)")
 				continue
 			}
 
 			let maxZoom = try properties.max_zoom ?? 0
 
-			let type = try properties.type
-			if let supported = supportedTypes[type.rawValue],
-			   supported == true
+			if (try properties.overlay) ?? false,
+			   identifier != MapBoxLocatorId
 			{
-				// great
-			} else {
-				// print("Aerial: unsupported type \(type): \(name)")
-				continue
-			}
-
-			if try properties.overlay ?? false {
-				// we don@"t support overlays yet
+				// we don@"t support overlays except locator
 				continue
 			}
 
@@ -214,7 +211,9 @@ extension TileServerList {
 			let attribDict = try properties.attribution
 			let attribString = try attribDict?.text ?? ""
 			let attribUrl = try attribDict?.url ?? ""
-			if var attribIconString = attribIconString {
+			if var attribIconString = attribIconString,
+			   attribIconString != ""
+			{
 				if attribIconString.hasPrefix("http") {
 					attribIconStringIsHttp = true
 				} else if let range = attribIconString.range(of: ",") {
@@ -241,14 +240,13 @@ extension TileServerList {
 			let best = try properties.best ?? false
 
 			// support for {apikey}
-			var apikey: String = ""
-			if identifier == "Mapbox" {
+			var apikey = ""
+			if identifier == MapBoxLocatorId || identifier == MapBoxLayerId {
 				apikey = MapboxLocatorToken
 			} else if url.contains(".thunderforest.com/") {
 				// Please don't use in other apps. Sign up for a free account at Thunderforest.com insead.
 				apikey = "be3dc024e3924c22beb5f841d098a8a3"
 			}
-
 			if url.contains("{apikey}"),
 			   apikey == ""
 			{
@@ -280,7 +278,7 @@ extension TileServerList {
 		return externalAerials
 	}
 
-	func processOsmLabAerialsData(_ data: Data?) -> [TileServer] {
+	static func processOsmLabAerialsData(_ data: Data?) -> [TileServer] {
 		guard let data = data,
 		      data.count > 0
 		else { return [] }
@@ -298,7 +296,7 @@ extension TileServerList {
 				// josm variety
 			}
 			let features = try welcome.features
-			return try processOsmLabAerialsList(features)
+			return try Self.processOsmLabAerialsList(features)
 		} catch {
 			print("\(error)")
 			return []
