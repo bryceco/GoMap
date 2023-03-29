@@ -1801,11 +1801,10 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 	func consistencyCheckDebugOnly() {
 		// This is extremely expensive: DEBUG only!
-
 		consistencyCheckRelationMembers()
-		spatial.consistencyCheck(nodes: Array(nodes.values),
-		                         ways: Array(ways.values),
-		                         relations: Array(relations.values))
+		spatial.consistencyCheck(nodes: nodes,
+		                         ways: ways,
+		                         relations: relations)
 
 		// make sure that if the undo manager is holding an object that it's consistent with mapData
 		let undoObjects = undoManager.objectRefs()
@@ -1849,7 +1848,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 				wayCountDict[node.ident]! -= 1
 			}
 		}
-		if let index = wayCountDict.first(where: { $0.1 != 0 }) {
+		if let index = wayCountDict.first(where: { $0.value != 0 }) {
 			print("node \(index.key) has bad wayCount: \(index.value)")
 			assertionFailure()
 		}
@@ -1858,9 +1857,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	func consistencyCheck() {
 #if DEBUG
 		if isUnderDebugger() {
-			print("start consistency check")
 			consistencyCheckDebugOnly()
-			print("finish consistency check")
 		}
 #endif
 	}
