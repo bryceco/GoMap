@@ -681,6 +681,7 @@ Para descargar las teselas más recientes, incluidos los cambios cargados anteri
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>Go Map!!</source>
+        <target state="translated">Go Map!!</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleGetInfoString" xml:space="preserve">
@@ -1096,18 +1097,22 @@ Para descargar las teselas más recientes, incluidos los cambios cargados anteri
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" xml:space="preserve">
         <source>Can't remove Turn Restriction node connecting 'to'/'from' to 'via'</source>
+        <target state="translated">No se puede eliminar el nodo de restricción de giro que conecta 'a'/'desde' a 'a través de'</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction to/from way" xml:space="preserve">
         <source>Can't remove Turn Restriction to/from way</source>
+        <target state="translated">No se puede eliminar la restricción de giro hacia/desde la vía</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove component of a Route or similar relation" xml:space="preserve">
         <source>Can't remove component of a Route or similar relation</source>
+        <target state="translated">No se puede eliminar el componente de una ruta o relación similar</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove node in Turn Restriction 'via' way" xml:space="preserve">
         <source>Can't remove node in Turn Restriction 'via' way</source>
+        <target state="translated">No se puede eliminar el nodo en la forma 'via' de Restricción de giro</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cancel" xml:space="preserve">
@@ -1122,6 +1127,7 @@ Para descargar las teselas más recientes, incluidos los cambios cargados anteri
       </trans-unit>
       <trans-unit id="Cannot connect an inner way to an outer way" xml:space="preserve">
         <source>Cannot connect an inner way to an outer way</source>
+        <target state="translated">No se puede conectar una vía interior a una vía exterior</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Change" xml:space="preserve">
@@ -1136,6 +1142,7 @@ Para descargar las teselas más recientes, incluidos los cambios cargados anteri
       </trans-unit>
       <trans-unit id="Clear Aerial Tiles" xml:space="preserve">
         <source>Clear Aerial Tiles</source>
+        <target state="translated">Azulejos transparentes para fotografía aérea</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear GPS Overlay Tiles" xml:space="preserve">
