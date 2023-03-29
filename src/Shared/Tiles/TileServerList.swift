@@ -88,14 +88,14 @@ final class TileServerList {
 		var cachedData = NSData(contentsOfFile: pathToExternalAerialsCache()) as Data?
 		if let data = cachedData {
 			var delta = CACurrentMediaTime()
-			var externalAerials = Self.processOsmLabAerialsData(data)
+			let externalAerials = Self.processOsmLabAerialsData(data)
 			delta = CACurrentMediaTime() - delta
 			print("TileServerList decode time = \(delta)")
 
 #if false && DEBUG
 			// serialize to bplist
 			do {
-				var encoder = PropertyListEncoder()
+				let encoder = PropertyListEncoder()
 				encoder.outputFormat = .binary
 				let data2 = try encoder.encode(externalAerials)
 				delta = CACurrentMediaTime()

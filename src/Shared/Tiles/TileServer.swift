@@ -98,7 +98,7 @@ final class TileServer: Equatable, Codable {
 		let wmsProjection = try container.decode(String.self, forKey: .wmsProjection)
 		let geoJSON = try container.decode(GeoJSON?.self, forKey: .geoJSON)
 		let attributionString = try container.decode(String.self, forKey: .attributionString)
-		let attributionIconString = try container.decode(String.self, forKey: .attributionIconString)
+		let attributionIconString = try container.decode(String?.self, forKey: .attributionIconString)
 		let attributionUrl = try container.decode(String.self, forKey: .attributionUrl)
 
 		self.init(withName: name, identifier: identifier, url: url, best: best,
