@@ -48,6 +48,7 @@ final class TileServer: Equatable, Codable {
 	let wmsProjection: String
 	let geoJSON: GeoJSON?
 	let attributionString: String
+	let attributionIconString: String?
 	let attributionUrl: String
 	let placeholderImage: Data?
 
@@ -66,10 +67,9 @@ final class TileServer: Equatable, Codable {
 		case wmsProjection
 		case geoJSON
 		case attributionString
+		case attributionIconString
 		case attributionUrl
 	}
-
-	private(set) var attributionIcon: UIImage?
 
 	static let supportedProjections = [
 		"EPSG:3857", // Google Maps and OpenStreetMap
@@ -98,12 +98,13 @@ final class TileServer: Equatable, Codable {
 		let wmsProjection = try container.decode(String.self, forKey: .wmsProjection)
 		let geoJSON = try container.decode(GeoJSON?.self, forKey: .geoJSON)
 		let attributionString = try container.decode(String.self, forKey: .attributionString)
+		let attributionIconString = try container.decode(String.self, forKey: .attributionIconString)
 		let attributionUrl = try container.decode(String.self, forKey: .attributionUrl)
 
 		self.init(withName: name, identifier: identifier, url: url, best: best,
 		          apiKey: apiKey, maxZoom: maxZoom, roundUp: roundZoomUp, startDate: startDate, endDate: endDate,
 		          wmsProjection: wmsProjection, geoJSON: geoJSON,
-		          attribString: attributionString, attribIcon: nil, attribUrl: attributionUrl)
+		          attribString: attributionString, attribIconString: attributionIconString, attribUrl: attributionUrl)
 	}
 
 	func encode(to encoder: Encoder) throws {
@@ -121,6 +122,7 @@ final class TileServer: Equatable, Codable {
 		try container.encode(geoJSON, forKey: .geoJSON)
 		try container.encode(attributionString, forKey: .attributionString)
 		try container.encode(attributionUrl, forKey: .attributionUrl)
+		try container.encode(attributionIconString, forKey: .attributionIconString)
 	}
 
 	init(
@@ -136,7 +138,7 @@ final class TileServer: Equatable, Codable {
 		wmsProjection projection: String?,
 		geoJSON: GeoJSON?,
 		attribString: String,
-		attribIcon: UIImage?,
+		attribIconString: String?,
 		attribUrl: String)
 	{
 		// normalize URLs
@@ -151,6 +153,7 @@ final class TileServer: Equatable, Codable {
 		self.apiKey = apiKey
 		wmsProjection = projection ?? ""
 		attributionString = attribString.count != 0 ? attribString : name
+		attributionIconString = attribIconString
 		attributionUrl = attribUrl
 
 		self.maxZoom = maxZoom > 0 ? maxZoom : 21
@@ -159,7 +162,6 @@ final class TileServer: Equatable, Codable {
 		self.endDate = endDate
 		self.geoJSON = geoJSON
 		polygon = geoJSON?.cgPath.copy()
-		attributionIcon = attribIcon
 
 		placeholderImage = TileServer.getPlaceholderImage(forIdentifier: identifier)
 	}
@@ -239,28 +241,24 @@ final class TileServer: Equatable, Codable {
 		wmsProjection: nil,
 		geoJSON: nil,
 		attribString: "",
-		attribIcon: nil,
+		attribIconString: nil,
 		attribUrl: "")
 
-	static let maxarPremiumAerial: TileServer = {
-		let service = TileServer(
-			withName: "Maxar Premium Aerial",
-			identifier: MAXAR_PREMIUM_IDENTIFIER,
-			url: MaxarPremiumUrl,
-			best: false,
-			apiKey: "",
-			maxZoom: 21,
-			roundUp: true,
-			startDate: nil,
-			endDate: nil,
-			wmsProjection: nil,
-			geoJSON: nil,
-			attribString: "Maxar Premium",
-			attribIcon: nil,
-			attribUrl: "https://wiki.openstreetmap.org/wiki/DigitalGlobe")
-		service.loadIcon(fromWeb: "https://osmlab.github.io/editor-layer-index/sources/world/Maxar.png")
-		return service
-	}()
+	static let maxarPremiumAerial = TileServer(
+		withName: "Maxar Premium Aerial",
+		identifier: MAXAR_PREMIUM_IDENTIFIER,
+		url: MaxarPremiumUrl,
+		best: false,
+		apiKey: "",
+		maxZoom: 21,
+		roundUp: true,
+		startDate: nil,
+		endDate: nil,
+		wmsProjection: nil,
+		geoJSON: nil,
+		attribString: "Maxar Premium",
+		attribIconString: "https://osmlab.github.io/editor-layer-index/sources/world/Maxar.png",
+		attribUrl: "https://wiki.openstreetmap.org/wiki/DigitalGlobe")
 
 	static let mapnik = TileServer(
 		withName: "MapnikTiles",
@@ -275,7 +273,7 @@ final class TileServer: Equatable, Codable {
 		wmsProjection: nil,
 		geoJSON: nil,
 		attribString: "",
-		attribIcon: nil,
+		attribIconString: nil,
 		attribUrl: "")
 
 	static let gpsTrace = TileServer(
@@ -291,7 +289,7 @@ final class TileServer: Equatable, Codable {
 		wmsProjection: nil,
 		geoJSON: nil,
 		attribString: "",
-		attribIcon: nil,
+		attribIconString: nil,
 		attribUrl: "")
 
 	static let mapboxLocator = TileServer(
@@ -307,7 +305,7 @@ final class TileServer: Equatable, Codable {
 		wmsProjection: nil,
 		geoJSON: nil,
 		attribString: "",
-		attribIcon: nil,
+		attribIconString: nil,
 		attribUrl: "")
 
 	static let noName = TileServer(
@@ -323,7 +321,7 @@ final class TileServer: Equatable, Codable {
 		wmsProjection: nil,
 		geoJSON: nil,
 		attribString: "",
-		attribIcon: nil,
+		attribIconString: nil,
 		attribUrl: "")
 
 	private static let builtinBingAerial = TileServer(
@@ -339,7 +337,7 @@ final class TileServer: Equatable, Codable {
 		wmsProjection: nil,
 		geoJSON: nil,
 		attribString: "",
-		attribIcon: UIImage(named: "bing-logo-white"),
+		attribIconString: "bing-logo-white",
 		attribUrl: "")
 
 	private static var dynamicBingAerial: TileServer?
@@ -401,9 +399,8 @@ final class TileServer: Equatable, Codable {
 						                      wmsProjection: Self.builtinBingAerial.wmsProjection,
 						                      geoJSON: Self.builtinBingAerial.geoJSON,
 						                      attribString: Self.builtinBingAerial.attributionString,
-						                      attribIcon: Self.builtinBingAerial.attributionIcon,
+						                      attribIconString: json.brandLogoUri,
 						                      attribUrl: Self.builtinBingAerial.attributionUrl)
-						bing.loadIcon(fromWeb: json.brandLogoUri)
 						Self.dynamicBingAerial = bing
 						callback?(.success(bing))
 					} catch {
@@ -455,7 +452,7 @@ final class TileServer: Equatable, Codable {
 		          wmsProjection: projection,
 		          geoJSON: nil,
 		          attribString: "",
-		          attribIcon: nil,
+		          attribIconString: nil,
 		          attribUrl: "")
 	}
 
@@ -488,30 +485,76 @@ final class TileServer: Equatable, Codable {
 		return placeholderImage?.elementsEqual(data) ?? false
 	}
 
-	func scaleAttributionIcon(toHeight height: CGFloat) {
-		if let attributionIcon = attributionIcon,
-		   abs(attributionIcon.size.height - height) > 0.1
-		{
-			let scale = attributionIcon.size.height / height
-			var size = attributionIcon.size
-			size.height /= scale
-			size.width /= scale
-			UIGraphicsBeginImageContext(size)
-			attributionIcon.draw(in: CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height))
-			let imageCopy = UIGraphicsGetImageFromCurrentImageContext()
-			UIGraphicsEndImageContext()
-			self.attributionIcon = imageCopy
+	static func scaleAttribution(icon: UIImage, toHeight height: CGFloat) -> UIImage {
+		guard abs(icon.size.height - height) < 0.1 else {
+			return icon
 		}
+		let scale = icon.size.height / height
+		var size = icon.size
+		size.height /= scale
+		size.width /= scale
+		UIGraphicsBeginImageContext(size)
+		icon.draw(in: CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height))
+		let imageCopy = UIGraphicsGetImageFromCurrentImageContext()
+		UIGraphicsEndImageContext()
+		return imageCopy ?? icon
 	}
 
-	func loadIcon(fromWeb url: String) {
-		DispatchQueue.main.async(execute: {
-			// FIXME: cache requires requests to start on main thread. We should have the cache use its own queue
-			self.attributionIcon = TileServer.iconCache.object(withKey: self.identifier,
-			                                                   fallbackURL: { URL(string: url) },
-			                                                   objectForData: { UIImage(data: $0) },
-			                                                   completion: { self.attributionIcon = try? $0.get() })
-		})
+	private var _attributionIcon: UIImage?
+	func attributionIcon(height: CGFloat, completion: (() -> Void)?) -> UIImage? {
+		if let icon = _attributionIcon {
+			return icon
+		}
+		guard let attributionIconString = attributionIconString,
+		      attributionIconString != ""
+		else {
+			return nil
+		}
+		if attributionIconString.hasPrefix("http") {
+			guard let completion = completion else {
+				return nil
+			}
+			let url = attributionIconString
+			if let icon = TileServer.iconCache.object(withKey: identifier,
+			                                          fallbackURL: { URL(string: url) },
+			                                          objectForData: { UIImage(data: $0) },
+			                                          completion: { self._attributionIcon = try? $0.get(); completion()
+			                                          })
+			{
+				_attributionIcon = Self.scaleAttribution(icon: icon, toHeight: height)
+				return icon
+			}
+			return nil
+		}
+
+		if let range = attributionIconString.range(of: ",") {
+			let format = String(attributionIconString.prefix(upTo: range.lowerBound))
+			let supported = ["data:image/png;base64": true,
+			                 "png:base64": true,
+			                 "data:image/svg+xml;base64": false]
+			guard supported[format] == true else {
+				print("Aerial: unsupported icon format in \(identifier): \(format)")
+				return nil
+			}
+			let string = String(attributionIconString.dropFirst(format.count + 1))
+			if let decodedData = Data(base64Encoded: string, options: []),
+			   let icon = UIImage(data: decodedData)
+			{
+				_attributionIcon = Self.scaleAttribution(icon: icon, toHeight: height)
+			}
+			if _attributionIcon == nil {
+				print("bad icon decode: \(attributionIconString)")
+			}
+			return _attributionIcon
+		}
+
+		if let icon = UIImage(named: attributionIconString) {
+			_attributionIcon = icon
+			return icon
+		}
+
+		print("Aerial: unsupported icon format in \(identifier): \(attributionIconString)")
+		return nil
 	}
 
 	var description: String {

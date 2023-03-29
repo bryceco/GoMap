@@ -20,14 +20,7 @@ enum TypeCastError: Error {
 
 final class TileServerList {
 	private var userDefinedList: [TileServer] = [] // user-defined tile servers
-	private var downloadedList: [TileServer] = [] {
-		didSet {
-			if let locator = downloadedList.first(where: { $0.identifier == Self.MapBoxLocatorId }) {
-				mapboxLocator = locator
-			}
-		}
-	}
-
+	private var downloadedList: [TileServer] = []
 	var mapboxLocator = TileServer.mapboxLocator
 
 	private var recentlyUsedList = MostRecentlyUsed<TileServer>(maxCount: 6,
@@ -81,12 +74,21 @@ final class TileServerList {
 		return ""
 	}
 
+	func updateDownloadList(with list: [TileServer]) {
+		var list = list
+		if let locatorIdx = list.indices.first(where: { list[$0].identifier == Self.MapBoxLocatorId }) {
+			mapboxLocator = list[locatorIdx]
+			list.remove(at: locatorIdx)
+		}
+		downloadedList = list
+	}
+
 	func fetchOsmLabAerials(_ completion: @escaping (_ isAsync: Bool) -> Void) {
 		// get cached data
 		var cachedData = NSData(contentsOfFile: pathToExternalAerialsCache()) as Data?
 		if let data = cachedData {
 			var delta = CACurrentMediaTime()
-			let externalAerials = Self.processOsmLabAerialsData(data)
+			var externalAerials = Self.processOsmLabAerialsData(data)
 			delta = CACurrentMediaTime() - delta
 			print("TileServerList decode time = \(delta)")
 
@@ -108,7 +110,7 @@ final class TileServerList {
 			}
 #endif
 
-			downloadedList = externalAerials
+			updateDownloadList(with: externalAerials)
 			completion(false)
 
 			if externalAerials.count < 100 {
@@ -144,7 +146,7 @@ final class TileServerList {
 
 							// notify caller of update
 							DispatchQueue.main.async(execute: { [self] in
-								downloadedList = externalAerials
+								updateDownloadList(with: externalAerials)
 								completion(true)
 							})
 						}

@@ -928,16 +928,14 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	func updateAerialAttributionButton() {
 		let service = aerialLayer.tileServer
-		aerialServiceLogo.isHidden = aerialLayer
-			.isHidden || (service.attributionString.count == 0 && service.attributionIcon == nil)
+		let icon = service.attributionIcon(height: aerialServiceLogo.frame.size.height,
+		                                   completion: {
+		                                   	self.updateAerialAttributionButton()
+		                                   })
+		aerialServiceLogo.isHidden = aerialLayer.isHidden || (service.attributionString.isEmpty && icon == nil)
 		if !aerialServiceLogo.isHidden {
-			// For Bing maps, the attribution icon is part of the app's assets and already has the desired size,
-			// so there's no need to scale it.
-			if !service.isBingAerial() {
-				service.scaleAttributionIcon(toHeight: aerialServiceLogo.frame.size.height)
-			}
-			let gap = service.attributionIcon != nil && service.attributionString.count > 0 ? " " : ""
-			aerialServiceLogo.setImage(service.attributionIcon, for: .normal)
+			let gap = icon != nil && service.attributionString.count > 0 ? " " : ""
+			aerialServiceLogo.setImage(icon, for: .normal)
 			aerialServiceLogo.setTitle(gap + service.attributionString, for: .normal)
 		}
 	}

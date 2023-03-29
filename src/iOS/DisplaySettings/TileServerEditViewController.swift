@@ -94,7 +94,7 @@ class TileServerEditViewController: UITableViewController {
 			wmsProjection: projection,
 			geoJSON: nil,
 			attribString: "",
-			attribIcon: nil,
+			attribIconString: nil,
 			attribUrl: "")
 		completion?(service)
 
