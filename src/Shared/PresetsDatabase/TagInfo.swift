@@ -46,7 +46,13 @@ class TagInfo {
 			let data = try Data(contentsOf: path)
 			return try plistEncoder.decode(CacheType.self, from: data)
 		} catch {
-			print("\(error)")
+			if (error as NSError).domain == NSCocoaErrorDomain,
+			   (error as NSError).code == NSFileReadNoSuchFileError
+			{
+				// not found, so ignore
+			} else {
+				print("\(error)")
+			}
 			return [:]
 		}
 	}
