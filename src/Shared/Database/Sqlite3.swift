@@ -20,13 +20,13 @@ enum SqliteError: LocalizedError {
 
 	public var errorDescription: String? {
 		switch self {
-		case let .open(rc): return "SqliteError.open() -> \(rc)"
-		case let .close(rc): return "SqliteError.close() -> \(rc)"
-		case let .exec(stmt, rc): return "SqliteError.exec('\(stmt)') -> \(rc)"
-		case let .prepare(stmt, rc): return "SqliteError.prepare('\(stmt)') -> \(rc)"
-		case let .clearBindings(rc): return "SqliteError.clearBindings() -> \(rc)"
-		case let .bind(rc): return "SqliteError.bind() -> \(rc)"
-		case let .step(rc): return "SqliteError.step() -> \(rc)"
+		case let .open(rc): return "SqliteError.open() -> \(Sqlite.errorMessageFor(code: rc))"
+		case let .close(rc): return "SqliteError.close() -> \(Sqlite.errorMessageFor(code: rc))"
+		case let .exec(stmt, rc): return "SqliteError.exec('\(stmt)') -> \(Sqlite.errorMessageFor(code: rc))"
+		case let .prepare(stmt, rc): return "SqliteError.prepare('\(stmt)') -> \(Sqlite.errorMessageFor(code: rc))"
+		case let .clearBindings(rc): return "SqliteError.clearBindings() -> \(Sqlite.errorMessageFor(code: rc))"
+		case let .bind(rc): return "SqliteError.bind() -> \(Sqlite.errorMessageFor(code: rc))"
+		case let .step(rc): return "SqliteError.step() -> \(Sqlite.errorMessageFor(code: rc))"
 		}
 	}
 }
@@ -81,6 +81,8 @@ final class Sqlite {
 			throw SqliteError.open(rc)
 		}
 		self.db = db
+		// Enable extended result codes
+		sqlite3_extended_result_codes(db, 1)
 	}
 
 	deinit {
@@ -89,6 +91,13 @@ final class Sqlite {
 
 	func errorMessage() -> String {
 		if let msg = sqlite3_errmsg(db) {
+			return String(cString: msg)
+		}
+		return ""
+	}
+
+	static func errorMessageFor(code: Int32) -> String {
+		if let msg = sqlite3_errstr(code) {
 			return String(cString: msg)
 		}
 		return ""
