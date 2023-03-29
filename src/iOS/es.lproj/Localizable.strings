@@ -214,7 +214,19 @@
 "Can't extend way" = "No es posible extender la vía";
 
 /* No comment provided by engineer. */
+"Can't remove component of a Route or similar relation" = "No se puede eliminar el componente de una ruta o relación similar";
+
+/* No comment provided by engineer. */
+"Can't remove node in Turn Restriction 'via' way" = "No se puede eliminar el nodo en la forma 'via' de Restricción de giro";
+
+/* No comment provided by engineer. */
 "Can't remove Turn Restriction 'via' node" = "No se puede eliminar la restricción de giro 'via' del nodo";
+
+/* No comment provided by engineer. */
+"Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" = "No se puede eliminar el nodo de restricción de giro que conecta 'a'/'desde' a 'a través de'";
+
+/* No comment provided by engineer. */
+"Can't remove Turn Restriction to/from way" = "No se puede eliminar la restricción de giro hacia/desde la vía";
 
 /* No comment provided by engineer. */
 "Cancel" = "Cancelar";
@@ -223,10 +235,16 @@
 "Cannot compose message" = "No es posible redactar el mensaje";
 
 /* No comment provided by engineer. */
+"Cannot connect an inner way to an outer way" = "No se puede conectar una vía interior a una vía exterior";
+
+/* No comment provided by engineer. */
 "Change" = "Cambiar";
 
 /* OSM changeset identifier */
 "Changeset" = "Conjunto de cambios";
+
+/* Delete cached data */
+"Clear Aerial Tiles" = "Azulejos transparentes para fotografía aérea";
 
 /* Delete cached data */
 "Clear GPX Tracks" = "Vaciar rastros GPX";
