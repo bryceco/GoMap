@@ -159,7 +159,7 @@ class PresetValueTextField: AutocompleteTextField {
 			?? getSurveyDateButton()
 			?? getDirectionButton()
 		let associatedView2 = getHeightButton()
-			?? getYesNoButton(keyValueDict: owner.keyValueDict)
+			?? getYesNoButton(keyValueDict: owner?.keyValueDict ?? [:])
 			?? getSpeedButton()
 		rightView = associatedView1 ?? associatedView2
 		rightViewMode = rightView != nil ? .always : .never
