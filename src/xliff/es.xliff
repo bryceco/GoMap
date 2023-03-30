@@ -1147,6 +1147,7 @@ Para descargar las teselas más recientes, incluidos los cambios cargados anteri
       </trans-unit>
       <trans-unit id="Clear GPS Overlay Tiles" xml:space="preserve">
         <source>Clear GPS Overlay Tiles</source>
+        <target state="translated">Borrar los mosaicos de superposición del GPS</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear GPX Tracks" xml:space="preserve">
