@@ -1574,7 +1574,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 				relations.removeValue(forKey: k)
 			}
 
-			print(String(format: "remove %ld objects\n", removeNodes.count + removeWays.count + removeRelations.count))
+			print(String(format: "remove %ld objects", removeNodes.count + removeWays.count + removeRelations.count))
 
 			if Double(nodes.count + ways.count + relations.count) < (Double(maxObjects) * 1.3) {
 				// good enough
@@ -1612,7 +1612,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		consistencyCheck()
 
 		t = CACurrentMediaTime() - t
-		print("Discard sweep time = \(t)\n")
+		print("Discard sweep time = \(t)")
 
 		// make a copy of items to save because the dictionary might get updated by the time the Database block runs
 		let saveNodes = nodes.values
@@ -1634,17 +1634,17 @@ final class OsmMapData: NSObject, NSSecureCoding {
 				// need to let db2 go out of scope here so file is no longer in use
 			} catch {
 				// we couldn't create the new database, so abort the discard
-				print("failed to recreate SQL database\n")
+				print("failed to recreate SQL database")
 				return
 			}
 			let realPath = Database.databasePath(withName: "")
 			let error = rename(tmpPath, realPath)
 			if error != 0 {
-				print("failed to rename SQL database\n")
+				print("failed to rename SQL database")
 			}
 			t2 = CACurrentMediaTime() - t2
 			print(String(
-				format: "%@Discard save time = %f, saved %ld objects\n",
+				format: "%@Discard save time = %f, saved %ld objects",
 				t2 > 1.0 ? "*** " : "",
 				t2,
 				Int(nodeCount()) + Int(wayCount()) + Int(relationCount())))
@@ -1765,7 +1765,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		} catch {
 			// database couldn't be read
 			print("Error: \(error.localizedDescription)")
-			print("Unable to read database: recreating from scratch\n")
+			print("Unable to read database: recreating from scratch")
 			try? Database.delete(withName: "")
 			// need to download all regions
 			decode.region.rootQuad.reset()
