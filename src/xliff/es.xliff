@@ -1157,14 +1157,17 @@ Para descargar las teselas más recientes, incluidos los cambios cargados anteri
       </trans-unit>
       <trans-unit id="Clear Locator Overlay Tiles" xml:space="preserve">
         <source>Clear Locator Overlay Tiles</source>
+        <target state="translated">Borrar mosaicos de superposición de localizador</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear Mapnik Tiles" xml:space="preserve">
         <source>Clear Mapnik Tiles</source>
+        <target state="translated">Teselas transparentes de Mapnik</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear OSM Data" xml:space="preserve">
         <source>Clear OSM Data</source>
+        <target state="translated">Borrar los datos de OSM</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Commit" xml:space="preserve">
@@ -1178,14 +1181,17 @@ Para descargar las teselas más recientes, incluidos los cambios cargados anteri
       </trans-unit>
       <trans-unit id="Confirm move" xml:space="preserve">
         <source>Confirm move</source>
+        <target state="translated">Confirmar el movimiento</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Connecting the nodes would damage a relation" xml:space="preserve">
         <source>Connecting the nodes would damage a relation</source>
+        <target state="translated">Conectar este nodo romperá una relación</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Copied" xml:space="preserve">
         <source>Copied</source>
+        <target state="translated">Copiado</target>
         <note>text was copied to the system clipboard</note>
       </trans-unit>
       <trans-unit id="Copy Tags" xml:space="preserve">
@@ -1217,6 +1223,7 @@ Para descargar las teselas más recientes, incluidos los cambios cargados anteri
       </trans-unit>
       <trans-unit id="Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." xml:space="preserve">
         <source>Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value.</source>
+        <target state="translated">Crea una fila en la tabla para cada par de clave/valor y si los objetos coincidentes deben incluirse o excluirse. Deja el valor vacío para indicar que la clave no está presente. Utilice clave=* para que coincida cualquier valor.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
@@ -1258,10 +1265,12 @@ Para descargar las teselas más recientes, incluidos los cambios cargados anteri
       </trans-unit>
       <trans-unit id="Detach from relation" xml:space="preserve">
         <source>Detach from relation</source>
+        <target state="translated">Separarse de la relación</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Discard" xml:space="preserve">
         <source>Discard</source>
+        <target state="translated">Descartar</target>
         <note>Discard changes</note>
       </trans-unit>
       <trans-unit id="Disconnect" xml:space="preserve">
@@ -1311,16 +1320,21 @@ Para descargar las teselas más recientes, incluidos los cambios cargados anteri
       </trans-unit>
       <trans-unit id="Editor only" xml:space="preserve">
         <source>Editor only</source>
+        <target state="translated">Sólo editor</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Editor with Aerial" xml:space="preserve">
         <source>Editor with Aerial</source>
+        <target state="translated">Editor de la foto aérea</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Ensure Location Services is enabled and you have granted this application access.&#10;&#10;Error: %@" xml:space="preserve">
         <source>Ensure Location Services is enabled and you have granted this application access.
 
 Error: %@</source>
+        <target state="translated">Asegúrese de que los servicios de ubicación están activados y de que has concedido acceso a ellos a esta aplicación.
+
+Error: %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Ensure the editor view is visible and displays objects in the local area" xml:space="preserve">
@@ -1345,26 +1359,32 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Extending a 'via' in a Turn Restriction will break the relation" xml:space="preserve">
         <source>Extending a 'via' in a Turn Restriction will break the relation</source>
+        <target state="translated">La ampliación de una "vía" en una restricción de giro romperá la relación</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Extending a way which belongs to a Route or similar relation may damage the relation" xml:space="preserve">
         <source>Extending a way which belongs to a Route or similar relation may damage the relation</source>
+        <target state="translated">Extender un camino que pertenece a una Ruta o relación similar puede dañar la relación</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Filters" xml:space="preserve">
         <source>Filters</source>
+        <target state="translated">Filtros</target>
         <note>Header for quest filters section</note>
       </trans-unit>
       <trans-unit id="GPX Upload Complete" xml:space="preserve">
         <source>GPX Upload Complete</source>
+        <target state="translated">Subida del GPX completada</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="GPX Upload Failed" xml:space="preserve">
         <source>GPX Upload Failed</source>
+        <target state="translated">Fallo la subida de GPX</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Geometry" xml:space="preserve">
         <source>Geometry</source>
+        <target state="translated">Geometría</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
@@ -1379,6 +1399,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Icon" xml:space="preserve">
         <source>Icon</source>
+        <target state="translated">Icono</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Identifier" xml:space="preserve">
@@ -1393,18 +1414,22 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Import" xml:space="preserve">
         <source>Import</source>
+        <target state="translated">Importar</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Import Error" xml:space="preserve">
         <source>Import Error</source>
+        <target state="translated">Error al importar</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Import Quests" xml:space="preserve">
         <source>Import Quests</source>
+        <target state="translated">Importar tareas</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="In order to measure height, please enable camera access in the app's settings." xml:space="preserve">
         <source>In order to measure height, please enable camera access in the app's settings.</source>
+        <target state="translated">Para medir la altura, activa el acceso a la cámara en los ajustes de la aplicación.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Invalid URL" xml:space="preserve">
@@ -1424,14 +1449,17 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Keys" xml:space="preserve">
         <source>Keys</source>
+        <target state="translated">Claves</target>
         <note>The tag keys section of a quest definition</note>
       </trans-unit>
       <trans-unit id="Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." xml:space="preserve">
         <source>Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English.</source>
+        <target state="translated">La selección del idioma sólo afecta a los preajustes y sólo para aquellos preajustes que están traducidos para el identificador. La interfaz principal sigue estando en inglés.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Last updated %@" xml:space="preserve">
         <source>Last updated %@</source>
+        <target state="translated">Última actualización %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Lat/Lon" xml:space="preserve">
@@ -1456,6 +1484,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Line" xml:space="preserve">
         <source>Line</source>
+        <target state="translated">Línea</target>
         <note>Object geometry: a way (but not an area)</note>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
@@ -1475,6 +1504,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Mail delivery is not available on this device" xml:space="preserve">
         <source>Mail delivery is not available on this device</source>
+        <target state="translated">La entrega del correo no está disponible en este dispositivo</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Make Circular" xml:space="preserve">
@@ -1489,10 +1519,12 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Max nodes after joining is 2000" xml:space="preserve">
         <source>Max nodes after joining is 2000</source>
+        <target state="translated">El número máximo de nodos tras la adhesión es 2000</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Maximum way length is 2000 nodes" xml:space="preserve">
         <source>Maximum way length is 2000 nodes</source>
+        <target state="translated">La longitud máxima de la vía es de 2000 nodos</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Maybe later..." xml:space="preserve">
@@ -1502,6 +1534,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Measure Direction" xml:space="preserve">
         <source>Measure Direction</source>
+        <target state="translated">Dirección de medición</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Member of multipolygon relation" xml:space="preserve">
@@ -1521,10 +1554,12 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Missing way to connect to" xml:space="preserve">
         <source>Missing way to connect to</source>
+        <target state="translated">Falta la forma de conectarse a</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Modified" xml:space="preserve">
         <source>Modified</source>
+        <target state="translated">Modificado</target>
         <note>last modified date</note>
       </trans-unit>
       <trans-unit id="Modify" xml:space="preserve">
@@ -1543,6 +1578,9 @@ Error: %@</source>
         <source>Modifying the raw XML data allows you to correct errors that prevent uploading.
 
 It is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format.</source>
+        <target state="translated">Modificar los datos XML sin procesar te permite corregir los errores que impiden la carga.
+
+Es una operación avanzada que sólo debe llevarse a cabo si tienes un conocimiento profundo del formato del conjunto de cambios de OSM.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="More..." xml:space="preserve">
@@ -1552,6 +1590,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Most recent" xml:space="preserve">
         <source>Most recent</source>
+        <target state="translated">Más reciente</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Move" xml:space="preserve">
@@ -1571,10 +1610,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Name" xml:space="preserve">
         <source>Name</source>
+        <target state="translated">Nombre</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Needs Survey" xml:space="preserve">
         <source>Needs Survey</source>
+        <target state="translated">Encuesta sobre las necesidades</target>
         <note>Quest for objects that aren't recently updated</note>
       </trans-unit>
       <trans-unit id="Network error" xml:space="preserve">
@@ -1595,6 +1636,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="No Data" xml:space="preserve">
         <source>No Data</source>
+        <target state="translated">Sin datos</target>
         <note>Alert title</note>
       </trans-unit>
       <trans-unit id="No Left Turn restriction" xml:space="preserve">
@@ -1659,6 +1701,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Not found" xml:space="preserve">
         <source>Not found</source>
+        <target state="translated">No encontrado</target>
         <note>User credentials not found</note>
       </trans-unit>
       <trans-unit id="Note History" xml:space="preserve">
@@ -1668,10 +1711,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Nothing to upload, no changes have been made." xml:space="preserve">
         <source>Nothing to upload, no changes have been made.</source>
+        <target state="translated">No hay nada que subir, no se han hecho cambios.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Number of recent items to display" xml:space="preserve">
         <source>Number of recent items to display</source>
+        <target state="translated">Número de elementos recientes a mostrar</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="OK" xml:space="preserve">
@@ -1681,6 +1726,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Object modified" xml:space="preserve">
         <source>Object modified</source>
+        <target state="translated">Objeto modificado</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Old value: (oldValue)" xml:space="preserve">
@@ -1689,14 +1735,17 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Only Left Turn restriction" xml:space="preserve">
         <source>Only Left Turn restriction</source>
+        <target state="translated">Sólo restricción de giro a la izquierda</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only Right Turn restriction" xml:space="preserve">
         <source>Only Right Turn restriction</source>
+        <target state="translated">Sólo restricción de giro a la derecha</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only Straight On restriction" xml:space="preserve">
         <source>Only Straight On restriction</source>
+        <target state="translated">Solo se permite conducir en línea recta</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only multipolygon relations are supported" xml:space="preserve">
@@ -1706,6 +1755,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Only ways/multipolygons can be rotated" xml:space="preserve">
         <source>Only ways/multipolygons can be rotated</source>
+        <target state="translated">Solo se pueden rotar varias carreteras/polígonos</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Open Settings" xml:space="preserve">
@@ -1725,14 +1775,17 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Paste the JSON for your quests into the field below" xml:space="preserve">
         <source>Paste the JSON for your quests into the field below</source>
+        <target state="translated">Pega el JSON para sus misiones en el campo a continuación</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Pasting %@ characters, maximum tag length is 255" xml:space="preserve">
         <source>Pasting %@ characters, maximum tag length is 255</source>
+        <target state="translated">Al pegar caracteres %@, la longitud máxima de la etiqueta es 255</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)" xml:space="preserve">
         <source>Pasting %ld tag(s)</source>
+        <target state="translated">Pegando etiqueta(s) %ld</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Perform Action" xml:space="preserve">
@@ -1747,6 +1800,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Point" xml:space="preserve">
         <source>Point</source>
+        <target state="translated">Punto</target>
         <note>Object geometry: a node</note>
       </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
@@ -1761,6 +1815,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Provide a single-character symbol (emoji or unicode character) to identify this quest:" xml:space="preserve">
         <source>Provide a single-character symbol (emoji or unicode character) to identify this quest:</source>
+        <target state="translated">Proporciona un símbolo de un solo carácter (emoji o carácter unicode) para identificar esta búsqueda:</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Purge" xml:space="preserve">
@@ -1770,14 +1825,17 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Quest" xml:space="preserve">
         <source>Quest</source>
+        <target state="translated">Búsqueda</target>
         <note>The current Quest the user is answering</note>
       </trans-unit>
       <trans-unit id="Quest Definition Error" xml:space="preserve">
         <source>Quest Definition Error</source>
+        <target state="translated">Error de definición de la búsqueda</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Quests were imported successfully." xml:space="preserve">
         <source>Quests were imported successfully.</source>
+        <target state="translated">Las tareas se han importado correctamente.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." xml:space="preserve">
