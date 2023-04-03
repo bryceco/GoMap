@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Bryce Cogswell. All rights reserved.
 //
 
+import FastCodable
 import UIKit
 
 private let CUSTOMAERIALLIST_KEY = "AerialList"
@@ -92,14 +93,12 @@ final class TileServerList {
 			delta = CACurrentMediaTime() - delta
 			print("TileServerList decode time = \(delta)")
 
-#if false && DEBUG
+#if true && DEBUG
 			// serialize to bplist
 			do {
-				let encoder = PropertyListEncoder()
-				encoder.outputFormat = .binary
-				let data2 = try encoder.encode(externalAerials)
+				let data2 = FastEncoder.encode(externalAerials)
 				delta = CACurrentMediaTime()
-				let list2 = try PropertyListDecoder().decode([TileServer].self, from: data2)
+				let list2 = try FastDecoder.decode([TileServer].self, from: data2)
 				delta = CACurrentMediaTime() - delta
 				print("t2 = \(delta)")
 				if list2 == externalAerials {

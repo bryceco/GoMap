@@ -7,6 +7,7 @@
 //
 
 import CoreGraphics.CGPath
+import FastCodable
 import Foundation
 import UIKit.UIBezierPath
 
@@ -22,10 +23,35 @@ extension Double: DoubleValue {
 
 extension NSNumber: DoubleValue {}
 
-struct GeoJSON: Codable {
-	enum PointList: Codable {
+struct GeoJSON: Codable, FastCodable {
+	enum PointList: Codable, FastCodable {
 		case polygon(points: [[[Double]]])
 		case multiPolygon(points: [[[[Double]]]])
+
+		func fastEncode(to encoder: FastEncoder) {
+			switch self {
+			case let .multiPolygon(points):
+				1.fastEncode(to: encoder)
+				points.fastEncode(to: encoder)
+			case let .polygon(points):
+				2.fastEncode(to: encoder)
+				points.fastEncode(to: encoder)
+			}
+		}
+
+		init(fromFast decoder: FastDecoder) throws {
+			let type = try Int(fromFast: decoder)
+			switch type {
+			case 1:
+				let points = try [[[[Double]]]].init(fromFast: decoder)
+				self = .multiPolygon(points: points)
+			case 2:
+				let points = try [[[Double]]].init(fromFast: decoder)
+				self = .polygon(points: points)
+			default:
+				fatalError()
+			}
+		}
 
 		init(from decoder: Decoder) throws {
 			// If we're decoding JSON then we may not know the type, so just guess until one works
@@ -80,6 +106,15 @@ struct GeoJSON: Codable {
 	func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
 		try container.encode(coordinates, forKey: .coordinates)
+	}
+
+	func fastEncode(to encoder: FastEncoder) {
+		coordinates.fastEncode(to: encoder)
+	}
+
+	init(fromFast decoder: FastDecoder) throws {
+		coordinates = try PointList(fromFast: decoder)
+		bezierPath = try Self.bezierPath(for: coordinates)
 	}
 
 	init?(geometry: [String: Any]?) throws {

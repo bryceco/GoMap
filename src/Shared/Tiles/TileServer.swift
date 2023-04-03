@@ -7,6 +7,7 @@
 //
 
 import CommonCrypto
+import FastCodable
 import UIKit
 
 private let BING_MAPS_KEY: String = [
@@ -27,7 +28,7 @@ private let MAXAR_PREMIUM_IDENTIFIER = "Maxar-Premium"
 private let MAXAR_STANDARD_IDENTIFIER = "Maxar-Standard"
 
 /// A provider of tile imagery, such as Bing or Mapbox
-final class TileServer: Equatable, Codable {
+final class TileServer: Equatable, Codable, FastCodable {
 	private static let iconCache: PersistentWebCache<UIImage> = {
 		let cache = PersistentWebCache<UIImage>(name: "AerialServiceIconCache", memorySize: 10000)
 		cache.removeObjectsAsyncOlderThan(Date(timeIntervalSinceNow: -30.0 * (24.0 * 60.0 * 60.0)))
@@ -124,6 +125,47 @@ final class TileServer: Equatable, Codable {
 		try container.encode(attributionUrl, forKey: .attributionUrl)
 		try container.encode(attributionIconString, forKey: .attributionIconString)
 	}
+
+	func fastEncode(to encoder: FastEncoder) {
+		name.fastEncode(to: encoder)
+		identifier.fastEncode(to: encoder)
+		url.fastEncode(to: encoder)
+		best.fastEncode(to: encoder)
+		apiKey.fastEncode(to: encoder)
+		maxZoom.fastEncode(to: encoder)
+		roundZoomUp.fastEncode(to: encoder)
+		startDate.fastEncode(to: encoder)
+		endDate.fastEncode(to: encoder)
+		wmsProjection.fastEncode(to: encoder)
+		geoJSON.fastEncode(to: encoder)
+		attributionString.fastEncode(to: encoder)
+		attributionIconString.fastEncode(to: encoder)
+		attributionUrl.fastEncode(to: encoder)
+	}
+
+	convenience init(fromFast decoder: FastDecoder) throws {
+		let name = try String(fromFast: decoder)
+		let identifier = try String(fromFast: decoder)
+		let url = try String(fromFast: decoder)
+		let best = try Bool(fromFast: decoder)
+		let apiKey = try String(fromFast: decoder)
+		let maxZoom = try Int(fromFast: decoder)
+		let roundZoomUp = try Bool(fromFast: decoder)
+		let startDate = try String?(fromFast: decoder)
+		let endDate = try String?(fromFast: decoder)
+		let wmsProjection = try String(fromFast: decoder)
+		let geoJSON = try GeoJSON?(fromFast: decoder)
+		let attributionString = try String(fromFast: decoder)
+		let attributionIconString = try String?(fromFast: decoder)
+		let attributionUrl = try String(fromFast: decoder)
+
+		self.init(withName: name, identifier: identifier, url: url, best: best,
+				  apiKey: apiKey, maxZoom: maxZoom, roundUp: roundZoomUp, startDate: startDate, endDate: endDate,
+				  wmsProjection: wmsProjection, geoJSON: geoJSON,
+				  attribString: attributionString, attribIconString: attributionIconString, attribUrl: attributionUrl)
+	}
+
+
 
 	init(
 		withName name: String,
