@@ -1,5 +1,26 @@
 /* No comment provided by engineer. */
+"\tRelation " = "\tसंबंध ";
+
+/* No comment provided by engineer. */
+"\tWay " = "\tमार्ग ";
+
+/* No comment provided by engineer. */
+" (%d members)\n" = " (%d सदस्य)\n";
+
+/* No comment provided by engineer. */
+" (%d nodes)\n" = " (%d गाठी)\n";
+
+/* No comment provided by engineer. */
+" (node)" = " (गाठ)";
+
+/* No comment provided by engineer. */
+" (way)" = " (मार्ग)";
+
+/* No comment provided by engineer. */
 "(new object)" = "(नवीन वस्तू)";
+
+/* No comment provided by engineer. */
+"(node in way)" = "(मार्गातील गाठ)";
 
 /* No comment provided by engineer. */
 "(node)" = "(गाठ)";
@@ -10,18 +31,120 @@
 /* No comment provided by engineer. */
 "(way)" = "(मार्ग)";
 
+/* area in m^2 */
+"%.0f m^2" = "%.0f चौ.मी.";
+
+/* way length if > 10m */
+"%.0f meters, %ld nodes" = "%1$.0f मीटर, %2$ld गाठी";
+
+/* way length if < 10m */
+"%.1f meters, %ld nodes" = "%1$.1f मीटर, %2$ld गाठी";
+
+/* These values will always be large (plural) */
+"%.2f MB, %ld files" = "%1$.2f MB, %2$ld फाईली";
+
+/* No comment provided by engineer. */
+"%@ (relation)" = "%@ (संबंध)";
+
+/* No comment provided by engineer. */
+"%@ changeset" = "%@ बदलसंच";
+
+/* Always plural */
+"%@ meters" = "%@ मीटर";
+
 /* One or more days
    Plural number of days */
 "%ld Days" = "%ld दिवस";
 
+/* Brief synopsis of a mapper's activity (count,last active date) */
+"%ld edits, last active %@" = "%1$ld संपादने, शेवटचे सक्रिय %2$@";
+
+/* length of a gpx track */
+"%ld meters, %ld points" = "%1$ld मीटर, %2$ld बिंदू";
+
+/* length of a gpx track */
+"%ld meters, %ld points, %ld waypoints" = "%1$ld मीटर, %2$ld बिंदू, %3$ld मार्गबिंदू";
+
 /* Number of tiles/objects in cache */
 "%ld objects" = "%ld वस्तू";
+
+/* Always plural */
+"%lu tiles needed" = "%lu फरश्या आवश्यक";
+
+/* Location of Add Node button on the screen */
+"+ Button Position" = "+ बटणचे स्थान";
 
 /* unknown user name */
 "<unknown>" = "<अज्ञात>";
 
 /* No comment provided by engineer. */
+"A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." = "सर्व वापरकर्ता-परिभाषित शोधांची एक प्रत क्लिपबोर्डवर JSON स्वरूपात कॉपी केली गेली आहे. ह्याची प्रत साठवण्यासाठी किंवा दुसऱ्याला पाठवण्यासाठी तुम्ही ती पेस्ट करुन वापरू शकता.";
+
+/* No comment provided by engineer. */
 "A GPX Track records your path as you travel along a road or trail" = "तुम्ही रस्त्याने किंवा पायवाटेने प्रवास करता तेव्हा GPX ट्रॅक तुमचा मार्ग रेकॉर्ड करतो";
+
+/* No comment provided by engineer. */
+"A relation the node belongs to is not fully downloaded" = "ही गाठ ज्या संबंधाचा भाग आहे तो संबंध पूर्णपणे डाऊनलोड झालेला नाही";
+
+/* No comment provided by engineer. */
+"Accept" = "स्वीकार";
+
+/* A type of quest */
+"Add Building Type" = "इमारतीचा प्रकार जोडा";
+
+/* A type of quest */
+"Add Highway Surface" = "महामार्गाचा पृष्ठभाग जोडा";
+
+/* Add to relation */
+"Add inner member" = "आतील सदस्य जोडा";
+
+/* Edit action */
+"Add Note" = "टीप जोडा";
+
+/* A type of quest */
+"Add Opening Hours" = "उघडण्याच्या वेळा जोडा";
+
+/* Add to relation */
+"Add outer member" = "बाह्य सदस्य जोडा";
+
+/* A type of quest */
+"Add Parking Type" = "वाहनतळ प्रकार जोडा";
+
+/* A type of quest */
+"Add Sidewalk Surface" = "पदपथाचा पृष्ठभाग जोडा";
+
+/* A type of quest */
+"Add Speed Limit" = "वेग मर्यादा जोडा";
+
+/* A type of quest */
+"Add Telephone Number" = "दूरध्वनी क्रमांक जोडा";
+
+/* No comment provided by engineer. */
+"Add way to multipolygon?" = "बहुभुजात मार्ग जोडायचा?";
+
+/* A type of quest */
+"Add Website" = "संकेतस्थळ जोडा";
+
+/* No comment provided by engineer. */
+"Adding members:" = "सदस्य जोडत आहे:";
+
+/* No comment provided by engineer. */
+"Additional imagery" = "अतिरिक्त प्रतिमा";
+
+/* No comment provided by engineer. */
+"Advanced Quest Builder" = "प्रगत शोध बिल्डर";
+
+/* No comment provided by engineer. */
+"Aerial only" = "फक्त हवाई प्रतिमा";
+
+/* No comment provided by engineer. */
+"All choices" = "सर्व पर्याय";
+
+/* No comment provided by engineer. */
+"All Tags" = "सर्व टॅग";
+
+/* Show an error message */
+"An error occured while exporting: %@" = "निर्यात करताना त्रुटी उद्भवली: %@";
 
 /* Show an error message */
 "An error occured while importing: %@" = "आयात करताना एक त्रुटी उद्भवली: % @";
@@ -36,6 +159,9 @@
 /* No comment provided by engineer. */
 "Attention" = "सावधान";
 
+/* node/way/relation attributes */
+"Attributes" = "गुणधर्म";
+
 /* Automatic selection of presets languages */
 "Automatic" = "स्वयंचलित";
 
@@ -46,19 +172,58 @@
 "Background imagery %@" = "पार्श्वभूमी प्रतिमा %@";
 
 /* No comment provided by engineer. */
+"Bad login" = "वाईट सनोंद-प्रवेश";
+
+/* No comment provided by engineer. */
+"Better background imagery is available for your location. Would you like to change to it?" = "तुमच्या स्थानासाठी जास्त चांगली पार्श्वभूमी प्रतिमा उपलब्ध आहे. त्यावर बदलू इच्छिता?";
+
+/* No comment provided by engineer. */
+"Better imagery available" = "उत्तम प्रतिमा उपलब्ध";
+
+/* No comment provided by engineer. */
+"Build a New Quest" = "नवीन शोध तयार करा";
+
+/* No comment provided by engineer. */
 "Cache size warning" = "कॅश आकार चेतावणी";
+
+/* No comment provided by engineer. */
+"Cache trimmed" = "कॅश पुसून टाकले";
 
 /* No comment provided by engineer. */
 "Can only add ways to multipolygons" = "केवळ बहुभुजांमध्ये मार्ग जोडू शकता";
 
 /* No comment provided by engineer. */
+"Can't delete node that is part of a relation" = "संबंधाचा भाग असलेली गाठ पुसून टाकू शकत नाही";
+
+/* No comment provided by engineer. */
+"Can't delete relation that is not a multipolygon" = "बहुभुज नसलेला संबंध पुसून टाकू शकत नाही";
+
+/* No comment provided by engineer. */
+"Can't delete way that is part of a Route or similar relation" = "मार्ग किंवा तत्सम संबंधाचा भाग असलेला मार्ग पुसू शकत नाही";
+
+/* No comment provided by engineer. */
+"Can't extend way" = "मार्ग वाढवू शकत नाही";
+
+/* No comment provided by engineer. */
 "Can't remove component of a Route or similar relation" = "मार्ग किंवा तत्सम संबंधाचा घटक काढू शकत नाही";
+
+/* No comment provided by engineer. */
+"Can't remove node in Turn Restriction 'via' way" = "वळण प्रतिबंध 'via' मार्गातील गाठ काढू शकत नाही";
+
+/* No comment provided by engineer. */
+"Can't remove Turn Restriction 'via' node" = "वळण प्रतिबंध असलेली 'via' गाठ काढून टाकू शकत नाही";
+
+/* No comment provided by engineer. */
+"Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" = "'to'/'from' ते 'via' जोडणारी वळण प्रतिबंध गाठ काढू शकत नाही";
 
 /* No comment provided by engineer. */
 "Can't remove Turn Restriction to/from way" = "मार्गावर/पासून वळणाचे निर्बंध काढू शकत नाही";
 
 /* No comment provided by engineer. */
 "Cancel" = "रद्द करा";
+
+/* e-mail message */
+"Cannot compose message" = "निरोप तयार करू शकत नाही";
 
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "आतील मार्ग बाह्य मार्गाशी जोडू शकत नाही";
@@ -70,7 +235,16 @@
 "Changeset" = "बदलसंच";
 
 /* Delete cached data */
+"Clear Aerial Tiles" = "हवाई प्रतिमा पुसा";
+
+/* Delete cached data */
+"Clear GPS Overlay Tiles" = "GPS आच्छादन फरश्या पुसा";
+
+/* Delete cached data */
 "Clear GPX Tracks" = "GPX ट्रॅक साफ करा";
+
+/* Delete cached data */
+"Clear Locator Overlay Tiles" = "Locator आच्छादन फरश्या पुसा";
 
 /* Delete cached data */
 "Clear Mapnik Tiles" = "Mapnik फरशा साफ करा";
@@ -82,7 +256,13 @@
 "Commit" = "वचनबद्ध";
 
 /* No comment provided by engineer. */
+"Configure" = "मांडणी करा";
+
+/* No comment provided by engineer. */
 "Confirm move" = "हालचालीची पुष्टी करा";
+
+/* No comment provided by engineer. */
+"Connecting the nodes would damage a relation" = "गाठी जोडल्या तर संबंध खराब होऊ शकतो";
 
 /* text was copied to the system clipboard */
 "Copied" = "कॉपी केले";
@@ -114,11 +294,26 @@
 /* No comment provided by engineer. */
 "Delete\n" = "पुसा\n";
 
+/* Confirm deleting a node/way */
+"Delete %@?" = "%@ पुसून टाकायचे?";
+
 /* No comment provided by engineer. */
 "Delete completely" = "पूर्णपणे पुसा";
 
+/* No comment provided by engineer. */
+"Delete failed" = "पुसणे अपयशी";
+
+/* No comment provided by engineer. */
+"Detach from relation" = "संबंधापासून तोडा";
+
 /* Discard changes */
 "Discard" = "काढून टाका";
+
+/* Edit action */
+"Disconnect" = "जोडणी तोडा";
+
+/* No comment provided by engineer. */
+"Display options" = "पर्याय दाखवा";
 
 /* Distance to an object with an error value */
 "Distance: %1$@ ± %2$@ meters" = "अंतर: %1$@ ± %2$@ मीटर";
@@ -130,10 +325,25 @@
 "Duplicate" = "नक्कल";
 
 /* No comment provided by engineer. */
+"Edit" = "संपादा";
+
+/* No comment provided by engineer. */
+"Edit restrictions" = "प्रतिबंध संपादा";
+
+/* No comment provided by engineer. */
+"Edit XML" = "XML संपादा";
+
+/* No comment provided by engineer. */
 "Editing layer not visible" = "संपादन स्तर दृश्यमान नाही";
 
 /* No comment provided by engineer. */
 "Editor only" = "फक्त संपादक";
+
+/* No comment provided by engineer. */
+"Editor with Aerial" = "हवाई प्रतिमेसह संपादक";
+
+/* No comment provided by engineer. */
+"Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "स्थान सेवा सक्षम असल्याची व ती वापरण्याची परवानगी असल्याची पुष्टी करा\n\nत्रुटी: %@";
 
 /* No comment provided by engineer. */
 "Ensure the editor view is visible and displays objects in the local area" = "संपादक दृश्य दृश्यमान असल्याची खात्री करा आणि स्थानिक क्षेत्रातील वस्तू प्रदर्शित करा";
@@ -142,5 +352,11 @@
 "Error" = "त्रुटी";
 
 /* No comment provided by engineer. */
+"Error connecting to way" = "मार्गला जोडताना त्रुटी";
+
+/* No comment provided by engineer. */
 "Error fetching metadata: %@" = "मेटाडेटा आणताना त्रुटी: %@";
+
+/* No comment provided by engineer. */
+"Extending a 'via' in a Turn Restriction will break the relation" = "वळण प्रतिबंधात 'via'";
 

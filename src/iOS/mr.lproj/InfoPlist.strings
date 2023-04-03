@@ -4,6 +4,24 @@
 /* Bundle name */
 "CFBundleName" = "Go Map!!";
 
+/* (No Comment) */
+"GPS Exchange Format (GPX)" = "GPS विनिमय स्वरुप (GPX)";
+
+/* Privacy - Bluetooth Peripheral Usage Description */
+"NSBluetoothPeripheralUsageDescription" = "बाह्य ब्लुटुथ GPS उपकारांना जोडा";
+
 /* Privacy - Camera Usage Description */
 "NSCameraUsageDescription" = "इमारती किंवा वस्तूंची उंची मोजण्यासाठी आणि उघडण्याच्या तासांच्या चिन्हांमध्ये मजकूर ओळखण्यासाठी कॅमेरा वापरला जातो.";
+
+/* Privacy - Location Always and When In Use Usage Description */
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "स्थान मागोवा \"नेहमी चालू\" ठेवल्याने निष्क्रिय असताना GPX फाईल मुद्रण शक्य होते.";
+
+/* Privacy - Location Always Usage Description */
+"NSLocationAlwaysUsageDescription" = "आपले स्थान नकाशावर सतत दाखवले जाईल व त्याचा पाठलाग केला जाईल.";
+
+/* Privacy - Location Usage Description */
+"NSLocationUsageDescription" = "स्थान सेवा सक्षम केल्याने ॲपला आपल्या शेजारच्या वस्तू दाखवणे शक्य होईल. ह्याने आपण स्वतः सर्वेक्षण केलेल्या वस्तू नकाशावर जोडणे सोपे होते.";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "आपले स्थान नकाशावर सतत दाखवले जाईल व त्याचा पाठलाग केला जाईल.";
 

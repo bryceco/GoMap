@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="2.title" xml:space="preserve">
         <source>First</source>
-        <target state="translated">पहिले</target>
+        <target>पहिले</target>
         <note>Class = "UIViewController"; title = "First"; ObjectID = "2";</note>
       </trans-unit>
       <trans-unit id="2Ka-IT-DQC.normalTitle" xml:space="preserve">
@@ -46,7 +46,7 @@
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityHint" xml:space="preserve">
         <source>Reorient map north</source>
-        <target state="translated">नकाशा उत्तरेकडे वळवा</target>
+        <target>नकाशा उत्तरेकडे वळवा</target>
         <note>Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt";</note>
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityLabel" xml:space="preserve">
@@ -80,7 +80,7 @@
       </trans-unit>
       <trans-unit id="N5Q-nV-TPG.text" xml:space="preserve">
         <source>Zoom to Edit</source>
-        <target state="translated">झूम करुन संपादा</target>
+        <target>झूम करुन संपादा</target>
         <note>Class = "UILabel"; text = "Zoom to Edit"; ObjectID = "N5Q-nV-TPG";</note>
       </trans-unit>
       <trans-unit id="OJ0-aO-ri1.normalTitle" xml:space="preserve">
@@ -109,7 +109,7 @@
       </trans-unit>
       <trans-unit id="ach-1A-88x.text" xml:space="preserve">
         <source>Changeset comment goes here</source>
-        <target state="translated">बदलसंचाची टिप्पणी इथे</target>
+        <target>बदलसंचाची टिप्पणी इथे</target>
         <note>Class = "UITextView"; text = "Changeset comment goes here"; ObjectID = "ach-1A-88x";</note>
       </trans-unit>
       <trans-unit id="gdu-Sf-XrE.title" xml:space="preserve">
@@ -124,7 +124,7 @@
       </trans-unit>
       <trans-unit id="nU5-T2-ADn.text" xml:space="preserve">
         <source>A Error Message Flashing Z</source>
-        <target state="translated">A Error Message Flashing Z</target>
+        <target>A Error Message Flashing Z</target>
         <note>Class = "UILabel"; text = "A Error Message Flashing Z"; ObjectID = "nU5-T2-ADn"; Note = "Placeholder - Don't translate";</note>
       </trans-unit>
       <trans-unit id="qP9-Sc-sc4.text" xml:space="preserve">
@@ -181,7 +181,7 @@
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
         <source>Position your device parallel to the direction of the object.</source>
-        <target state="translated">आपले उपकरण वस्तूच्या दिशेला समांतर ठेवा.</target>
+        <target>आपले उपकरण वस्तूच्या दिशेला समांतर ठेवा.</target>
         <note>Class = "UILabel"; text = "Position your device parallel to the direction of the object."; ObjectID = "4vY-m2-xMW";</note>
       </trans-unit>
       <trans-unit id="Jc3-Um-Aiy.text" xml:space="preserve">
@@ -225,7 +225,7 @@
       </trans-unit>
       <trans-unit id="2ZY-zi-luF.text" xml:space="preserve">
         <source>Clear Cache</source>
-        <target state="translated">कॅश पुसा</target>
+        <target>कॅश पुसा</target>
         <note>Class = "UILabel"; text = "Clear Cache"; ObjectID = "2ZY-zi-luF";</note>
       </trans-unit>
       <trans-unit id="4s8-Bj-JOX.normalTitle" xml:space="preserve">
@@ -250,7 +250,7 @@
       </trans-unit>
       <trans-unit id="8HT-Bc-Q2z.title" xml:space="preserve">
         <source>Aerial Imagery</source>
-        <target state="translated">हवाई प्रतिमा</target>
+        <target>हवाई प्रतिमा</target>
         <note>Class = "UINavigationItem"; title = "Aerial Imagery"; ObjectID = "8HT-Bc-Q2z";</note>
       </trans-unit>
       <trans-unit id="8S7-Kw-QHF.normalTitle" xml:space="preserve">
@@ -260,7 +260,7 @@
       </trans-unit>
       <trans-unit id="8es-4f-sj3.headerTitle" xml:space="preserve">
         <source>Overlays</source>
-        <target state="translated">आच्छादन</target>
+        <target>आच्छादन</target>
         <note>Class = "UITableViewSection"; headerTitle = "Overlays"; ObjectID = "8es-4f-sj3";</note>
       </trans-unit>
       <trans-unit id="9L3-JO-Whj.text" xml:space="preserve">
@@ -270,7 +270,7 @@
       </trans-unit>
       <trans-unit id="186-0W-Nrr.title" xml:space="preserve">
         <source>Display</source>
-        <target state="translated">देखावा</target>
+        <target>देखावा</target>
         <note>Class = "UINavigationItem"; title = "Display"; ObjectID = "186-0W-Nrr";</note>
       </trans-unit>
       <trans-unit id="DmO-dW-3Fh.text" xml:space="preserve">
@@ -300,42 +300,42 @@
       </trans-unit>
       <trans-unit id="H3p-Ta-kIy.title" xml:space="preserve">
         <source>QA Poole No Name Tiles</source>
-        <target state="translated">QA Poole No Name फरश्या</target>
+        <target>QA Poole No Name फरश्या</target>
         <note>Class = "UINavigationItem"; title = "QA Poole No Name Tiles"; ObjectID = "H3p-Ta-kIy"; Note = "Title for Simon Poole's \"No name\" (missing name) tile overlay";</note>
       </trans-unit>
       <trans-unit id="Idx-2G-6F7.text" xml:space="preserve">
         <source>Power Features</source>
-        <target state="translated">पॉवर वैशिष्ट्ये</target>
+        <target>पॉवर वैशिष्ट्ये</target>
         <note>Class = "UILabel"; text = "Power Features"; ObjectID = "Idx-2G-6F7";</note>
       </trans-unit>
       <trans-unit id="Jz1-GP-Wbe.text" xml:space="preserve">
         <source>Paths</source>
-        <target state="translated">मार्ग</target>
+        <target>मार्ग</target>
         <note>Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe";</note>
       </trans-unit>
       <trans-unit id="LxX-tl-ZLH.text" xml:space="preserve">
         <source>Enable Filters</source>
-        <target state="translated">गाळणी सक्षम करा</target>
+        <target>गाळणी सक्षम करा</target>
         <note>Class = "UILabel"; text = "Enable Filters"; ObjectID = "LxX-tl-ZLH";</note>
       </trans-unit>
       <trans-unit id="MPq-PX-jf0.text" xml:space="preserve">
         <source>Editor with Aerial</source>
-        <target state="translated">हवाई प्रतिमेसह संपादक</target>
+        <target>हवाई प्रतिमेसह संपादक</target>
         <note>Class = "UILabel"; text = "Editor with Aerial"; ObjectID = "MPq-PX-jf0";</note>
       </trans-unit>
       <trans-unit id="MZF-am-tCM.title" xml:space="preserve">
         <source>Aerial Provider</source>
-        <target state="translated">हवाई प्रतिमा प्रदाता</target>
+        <target>हवाई प्रतिमा प्रदाता</target>
         <note>Class = "UINavigationItem"; title = "Aerial Provider"; ObjectID = "MZF-am-tCM";</note>
       </trans-unit>
       <trans-unit id="MeQ-4N-FqC.text" xml:space="preserve">
         <source>GPX Tracks you record or download will be automatically deleted after:</source>
-        <target state="translated">आपण मुद्रित किंवा डाऊनलोड केलेले GPX ट्रॅक ह्या काळानंतर काढून टाकले जातील:</target>
+        <target>आपण मुद्रित किंवा डाऊनलोड केलेले GPX ट्रॅक ह्या काळानंतर काढून टाकले जातील:</target>
         <note>Class = "UILabel"; text = "GPX Tracks you record or download will be automatically deleted after:"; ObjectID = "MeQ-4N-FqC";</note>
       </trans-unit>
       <trans-unit id="O0U-6M-7AT.text" xml:space="preserve">
         <source>Quests</source>
-        <target state="translated">शोध</target>
+        <target>शोध</target>
         <note>Class = "UILabel"; text = "Quests"; ObjectID = "O0U-6M-7AT";</note>
       </trans-unit>
       <trans-unit id="OiJ-GU-gZ3.title" xml:space="preserve">
@@ -350,17 +350,17 @@
       </trans-unit>
       <trans-unit id="PSE-3C-cDx.text" xml:space="preserve">
         <source>Notes and Fixmes</source>
-        <target state="translated">टिपा व Fixme</target>
+        <target>टिपा व Fixme</target>
         <note>Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "PSE-3C-cDx";</note>
       </trans-unit>
       <trans-unit id="RJU-Z2-QFh.headerTitle" xml:space="preserve">
         <source>Interactions</source>
-        <target state="translated">परस्परसंवाद</target>
+        <target>परस्परसंवाद</target>
         <note>Class = "UITableViewSection"; headerTitle = "Interactions"; ObjectID = "RJU-Z2-QFh";</note>
       </trans-unit>
       <trans-unit id="RxO-IV-UE7.text" xml:space="preserve">
         <source>Service Roads</source>
-        <target state="translated">सेवा मार्ग</target>
+        <target>सेवा मार्ग</target>
         <note>Class = "UILabel"; text = "Service Roads"; ObjectID = "RxO-IV-UE7";</note>
       </trans-unit>
       <trans-unit id="SNa-W1-wga.footerTitle" xml:space="preserve">
@@ -369,7 +369,7 @@
 Warning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.
 
 Clear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed.</source>
-        <target state="translated">OSM सर्व्हर सोबतची समकालिक स्थिती तुटल्यास OSM डेटाचा कॅश पुसून टाका. आपण संपादन करत असलेल्या डेटाला इतर कोणी बदलले किंवा आपला एखादा चढवण्याचा प्रयत्न अपयशी ठरला तर असे होऊ शकते.
+        <target>OSM सर्व्हर सोबतची समकालिक स्थिती तुटल्यास OSM डेटाचा कॅश पुसून टाका. आपण संपादन करत असलेल्या डेटाला इतर कोणी बदलले किंवा आपला एखादा चढवण्याचा प्रयत्न अपयशी ठरला तर असे होऊ शकते.
 
 सावधान: OSM कॅश पुसून टाकल्याने आपण अद्याप न चढवलेले बदल गमवून बसाल.
 
@@ -378,7 +378,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="SNa-W1-wga.headerTitle" xml:space="preserve">
         <source>Discard &amp; Refresh</source>
-        <target state="translated">पुसा &amp; रिफ्रेश</target>
+        <target>पुसा &amp; रिफ्रेश</target>
         <note>Class = "UITableViewSection"; headerTitle = "Discard &amp; Refresh"; ObjectID = "SNa-W1-wga";</note>
       </trans-unit>
       <trans-unit id="Uum-Wn-9CF.text" xml:space="preserve">
@@ -388,12 +388,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="VUR-wT-knn.text" xml:space="preserve">
         <source>Enable Rotation</source>
-        <target state="translated">फिरवणे सक्षम करा</target>
+        <target>फिरवणे सक्षम करा</target>
         <note>Class = "UILabel"; text = "Enable Rotation"; ObjectID = "VUR-wT-knn";</note>
       </trans-unit>
       <trans-unit id="WnI-tY-WWa.text" xml:space="preserve">
         <source>Delete tracks after:</source>
-        <target state="translated">ट्रॅक पुसून टाकण्याची मुदत:</target>
+        <target>ट्रॅक पुसून टाकण्याची मुदत:</target>
         <note>Class = "UILabel"; text = "Delete tracks after:"; ObjectID = "WnI-tY-WWa";</note>
       </trans-unit>
       <trans-unit id="Z8C-Ef-iJE.title" xml:space="preserve">
@@ -403,32 +403,32 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="ZP1-qY-kXe.text" xml:space="preserve">
         <source>Unnamed Roads</source>
-        <target state="translated">अनामिक मार्ग</target>
+        <target>अनामिक मार्ग</target>
         <note>Class = "UILabel"; text = "Unnamed Roads"; ObjectID = "ZP1-qY-kXe";</note>
       </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.footerTitle" xml:space="preserve">
         <source>If specifying a WMS URL you must also provide the projection used</source>
-        <target state="translated">WMS चे URL वापरताना प्रक्षेपण पण पुरवणे आवश्यक आहे</target>
+        <target>WMS चे URL वापरताना प्रक्षेपण पण पुरवणे आवश्यक आहे</target>
         <note>Class = "UITableViewSection"; footerTitle = "If specifying a WMS URL you must also provide the projection used"; ObjectID = "Zn9-Sg-9fS";</note>
       </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.headerTitle" xml:space="preserve">
         <source>WMS Projection</source>
-        <target state="translated">WMS प्रक्षेपण</target>
+        <target>WMS प्रक्षेपण</target>
         <note>Class = "UITableViewSection"; headerTitle = "WMS Projection"; ObjectID = "Zn9-Sg-9fS";</note>
       </trans-unit>
       <trans-unit id="Zzc-4t-QhT.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target state="translated">हवाई प्रतिमा फरश्या</target>
+        <target>हवाई प्रतिमा फरश्या</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.footerTitle" xml:space="preserve">
         <source>Go Map!! will automatically discard old data to optimize performance.</source>
-        <target state="translated">कार्यप्रदर्शन सुधरवण्यासाठी Go Map!! जुना डेटा आपोआप पुसून टाकेल.</target>
+        <target>कार्यप्रदर्शन सुधरवण्यासाठी Go Map!! जुना डेटा आपोआप पुसून टाकेल.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Go Map!! will automatically discard old data to optimize performance."; ObjectID = "bmY-Hw-jv6";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.headerTitle" xml:space="preserve">
         <source>Cache Management</source>
-        <target state="translated">कॅश व्यवस्थापन</target>
+        <target>कॅश व्यवस्थापन</target>
         <note>Class = "UITableViewSection"; headerTitle = "Cache Management"; ObjectID = "bmY-Hw-jv6";</note>
       </trans-unit>
       <trans-unit id="cXC-ij-AMQ.title" xml:space="preserve">
@@ -459,18 +459,18 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       <trans-unit id="dzT-B4-za3.placeholder" xml:space="preserve">
         <source>http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
  </source>
-        <target state="translated">http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
+        <target>http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
  </target>
         <note>Class = "UITextField"; placeholder = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "; ObjectID = "dzT-B4-za3";</note>
       </trans-unit>
       <trans-unit id="eFa-yZ-YZl.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target state="translated">हवाई प्रतिमा फरश्या</target>
+        <target>हवाई प्रतिमा फरश्या</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eFa-yZ-YZl";</note>
       </trans-unit>
       <trans-unit id="eLW-GB-ugG.text" xml:space="preserve">
         <source>Position + Button on </source>
-        <target state="translated">+ बटनचे स्थान </target>
+        <target>+ बटनचे स्थान </target>
         <note>Class = "UILabel"; text = "Position + Button on "; ObjectID = "eLW-GB-ugG"; Note = "The location on the screen where the user prefers the + (add node) button to appear";</note>
       </trans-unit>
       <trans-unit id="eN6-SZ-99I.text" xml:space="preserve">
@@ -480,7 +480,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="eTY-48-gab.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target state="translated">हवाई प्रतिमा फरश्या</target>
+        <target>हवाई प्रतिमा फरश्या</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eTY-48-gab";</note>
       </trans-unit>
       <trans-unit id="eac-Db-EaW.normalTitle" xml:space="preserve">
@@ -495,12 +495,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="fFT-hv-mKl.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target state="translated">हवाई प्रतिमा फरश्या</target>
+        <target>हवाई प्रतिमा फरश्या</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fFT-hv-mKl";</note>
       </trans-unit>
       <trans-unit id="fHH-rC-iGa.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target state="translated">हवाई प्रतिमा फरश्या</target>
+        <target>हवाई प्रतिमा फरश्या</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fHH-rC-iGa";</note>
       </trans-unit>
       <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve">
@@ -515,7 +515,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="gdL-Os-R6R.text" xml:space="preserve">
         <source>Points</source>
-        <target state="translated">गाठी</target>
+        <target>गाठी</target>
         <note>Class = "UILabel"; text = "Points"; ObjectID = "gdL-Os-R6R";</note>
       </trans-unit>
       <trans-unit id="gre-3S-iPA.text" xml:space="preserve">
@@ -530,18 +530,18 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="hMJ-yP-XJe.text" xml:space="preserve">
         <source>OpenStreetMap GPS Traces</source>
-        <target state="translated">OpenStreetMap GPS अनुरेखा</target>
+        <target>OpenStreetMap GPS अनुरेखा</target>
         <note>Class = "UILabel"; text = "OpenStreetMap GPS Traces"; ObjectID = "hMJ-yP-XJe";</note>
       </trans-unit>
       <trans-unit id="hkr-kO-jbt.text" xml:space="preserve">
         <source>Traffic Roads</source>
-        <target state="translated">रहदारीचे मार्ग</target>
+        <target>रहदारीचे मार्ग</target>
         <note>Class = "UILabel"; text = "Traffic Roads"; ObjectID = "hkr-kO-jbt";</note>
       </trans-unit>
       <trans-unit id="hsp-Xj-TU6.text" xml:space="preserve">
         <source>Simon Poole Map Data © OpenStreetMap contributors
 </source>
-        <target state="translated">Simon Poole Map Data © ओपनस्ट्रीटमॅप योगदानकर्ते
+        <target>Simon Poole Map Data © ओपनस्ट्रीटमॅप योगदानकर्ते
 </target>
         <note>Class = "UITextView"; text = "Simon Poole Map Data © OpenStreetMap contributors\n"; ObjectID = "hsp-Xj-TU6";</note>
       </trans-unit>
@@ -562,7 +562,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="oSD-0y-Vt0.title" xml:space="preserve">
         <source>Configure GPX Tracks</source>
-        <target state="translated">GPX ट्रॅकची मांडणी</target>
+        <target>GPX ट्रॅकची मांडणी</target>
         <note>Class = "UINavigationItem"; title = "Configure GPX Tracks"; ObjectID = "oSD-0y-Vt0";</note>
       </trans-unit>
       <trans-unit id="pQK-9y-t4z.text" xml:space="preserve">
@@ -587,7 +587,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="scg-Po-M3L.headerTitle" xml:space="preserve">
         <source>Filter Objects</source>
-        <target state="translated">वस्तूंची गाळणी</target>
+        <target>वस्तूंची गाळणी</target>
         <note>Class = "UITableViewSection"; headerTitle = "Filter Objects"; ObjectID = "scg-Po-M3L";</note>
       </trans-unit>
       <trans-unit id="swu-t3-p5w.text" xml:space="preserve">
@@ -597,7 +597,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="tS9-CP-pqu.title" xml:space="preserve">
         <source>Clear Cache</source>
-        <target state="translated">कॅश पुसा</target>
+        <target>कॅश पुसा</target>
         <note>Class = "UINavigationItem"; title = "Clear Cache"; ObjectID = "tS9-CP-pqu";</note>
       </trans-unit>
       <trans-unit id="tU9-Ml-4ko.title" xml:space="preserve">
@@ -607,7 +607,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="twn-Ve-8vl.text" xml:space="preserve">
         <source>Water Features</source>
-        <target state="translated">पाण्याची वैशिष्ट्ये</target>
+        <target>पाण्याची वैशिष्ट्ये</target>
         <note>Class = "UILabel"; text = "Water Features"; ObjectID = "twn-Ve-8vl";</note>
       </trans-unit>
       <trans-unit id="uOd-BB-zEq.text" xml:space="preserve">
@@ -622,7 +622,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="uZo-P0-sR7.text" xml:space="preserve">
         <source>Building Level</source>
-        <target state="translated">इमारत मजले</target>
+        <target>इमारत मजले</target>
         <note>Class = "UILabel"; text = "Building Level"; ObjectID = "uZo-P0-sR7";</note>
       </trans-unit>
       <trans-unit id="v6h-g5-fka.text" xml:space="preserve">
@@ -657,12 +657,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.footerTitle" xml:space="preserve">
         <source>A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL</source>
-        <target state="translated">{x}, {y} व {z} स्थानधारकांसोबत TMS ची URL किंवा एक WMS URL</target>
+        <target>{x}, {y} व {z} स्थानधारकांसोबत TMS ची URL किंवा एक WMS URL</target>
         <note>Class = "UITableViewSection"; footerTitle = "A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL"; ObjectID = "zD6-m4-1PD";</note>
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.headerTitle" xml:space="preserve">
         <source>Template URL of the tile server</source>
-        <target state="translated">फरशी सर्व्हरच्या URL चे स्वरुप</target>
+        <target>फरशी सर्व्हरच्या URL चे स्वरुप</target>
         <note>Class = "UITableViewSection"; headerTitle = "Template URL of the tile server"; ObjectID = "zD6-m4-1PD";</note>
       </trans-unit>
       <trans-unit id="zI2-YM-qbl.normalTitle" xml:space="preserve">
@@ -693,12 +693,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="GPS Exchange Format (GPX)" xml:space="preserve">
         <source>GPS Exchange Format (GPX)</source>
-        <target state="translated">GPS विनिमय स्वरुप (GPX)</target>
+        <target>GPS विनिमय स्वरुप (GPX)</target>
         <note/>
       </trans-unit>
       <trans-unit id="NSBluetoothPeripheralUsageDescription" xml:space="preserve">
         <source>Connect to external Bluetooth GPS devices</source>
-        <target state="translated">बाह्य ब्लुटुथ GPS उपकारांना जोडा</target>
+        <target>बाह्य ब्लुटुथ GPS उपकारांना जोडा</target>
         <note>Privacy - Bluetooth Peripheral Usage Description</note>
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
@@ -712,22 +712,22 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
         <source>Always on location tracking allows the app to record GPX files when inactive.</source>
-        <target state="translated">स्थान मागोवा "नेहमी चालू" ठेवल्याने निष्क्रिय असताना GPX फाईल मुद्रण शक्य होते.</target>
+        <target>स्थान मागोवा "नेहमी चालू" ठेवल्याने निष्क्रिय असताना GPX फाईल मुद्रण शक्य होते.</target>
         <note>Privacy - Location Always and When In Use Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysUsageDescription" xml:space="preserve">
         <source>Your location will be displayed and followed on the map.</source>
-        <target state="translated">आपले स्थान नकाशावर सतत दाखवले जाईल व त्याचा पाठलाग केला जाईल.</target>
+        <target>आपले स्थान नकाशावर सतत दाखवले जाईल व त्याचा पाठलाग केला जाईल.</target>
         <note>Privacy - Location Always Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationUsageDescription" xml:space="preserve">
         <source>Enabling location services allows the app to display objects in your vicinity. This allows you to easily update or add data you survey yourself.</source>
-        <target state="translated">स्थान सेवा सक्षम केल्याने ॲपला आपल्या शेजारच्या वस्तू दाखवणे शक्य होईल. ह्याने आपण स्वतः सर्वेक्षण केलेल्या वस्तू नकाशावर जोडणे सोपे होते.</target>
+        <target>स्थान सेवा सक्षम केल्याने ॲपला आपल्या शेजारच्या वस्तू दाखवणे शक्य होईल. ह्याने आपण स्वतः सर्वेक्षण केलेल्या वस्तू नकाशावर जोडणे सोपे होते.</target>
         <note>Privacy - Location Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationWhenInUseUsageDescription" xml:space="preserve">
         <source>Your location will be displayed and followed on the map.</source>
-        <target state="translated">आपले स्थान नकाशावर सतत दाखवले जाईल व त्याचा पाठलाग केला जाईल.</target>
+        <target>आपले स्थान नकाशावर सतत दाखवले जाईल व त्याचा पाठलाग केला जाईल.</target>
         <note>Privacy - Location When In Use Usage Description</note>
       </trans-unit>
     </body>
@@ -739,71 +739,71 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
     <body>
       <trans-unit id="&#9;Relation " xml:space="preserve">
         <source>	Relation </source>
-        <target state="translated">	संबंध </target>
+        <target>	संबंध </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="&#9;Way " xml:space="preserve">
         <source>	Way </source>
-        <target state="translated">	मार्ग </target>
+        <target>	मार्ग </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;" xml:space="preserve">
         <source> (%d members)
 </source>
-        <target state="translated"> (%d सदस्य)
+        <target> (%d सदस्य)
 </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;" xml:space="preserve">
         <source> (%d nodes)
 </source>
-        <target state="translated"> (%d गाठी)
+        <target> (%d गाठी)
 </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (node)" xml:space="preserve">
         <source> (node)</source>
-        <target state="translated"> (गाठ)</target>
+        <target> (गाठ)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (way)" xml:space="preserve">
         <source> (way)</source>
-        <target state="translated"> (मार्ग)</target>
+        <target> (मार्ग)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%.0f m^2" xml:space="preserve">
         <source>%.0f m^2</source>
-        <target state="translated">%.0f चौ.मी.</target>
+        <target>%.0f चौ.मी.</target>
         <note>area in m^2</note>
       </trans-unit>
       <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
         <source>%1$.0f meters, %2$ld nodes</source>
-        <target state="translated">%1$.0f मीटर, %2$ld गाठी</target>
+        <target>%1$.0f मीटर, %2$ld गाठी</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
         <source>%1$.1f meters, %2$ld nodes</source>
-        <target state="translated">%1$.1f मीटर, %2$ld गाठी</target>
+        <target>%1$.1f मीटर, %2$ld गाठी</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
         <source>%1$.2f MB, %2$ld files</source>
-        <target state="translated">%1$.2f MB, %2$ld फाईली</target>
+        <target>%1$.2f MB, %2$ld फाईली</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
         <source>%@ (relation)</source>
-        <target state="translated">%@ (संबंध)</target>
+        <target>%@ (संबंध)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ changeset" xml:space="preserve">
         <source>%@ changeset</source>
-        <target state="translated">%@ बदलसंच</target>
+        <target>%@ बदलसंच</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ meters" xml:space="preserve">
         <source>%@ meters</source>
-        <target state="translated">%@ मीटर</target>
+        <target>%@ मीटर</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="%ld Days" xml:space="preserve">
@@ -814,17 +814,17 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="%ld edits, last active %@" xml:space="preserve">
         <source>%1$ld edits, last active %2$@</source>
-        <target state="translated">%1$ld संपादने, शेवटचे सक्रिय %2$@</target>
+        <target>%1$ld संपादने, शेवटचे सक्रिय %2$@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$ld meters, %2$ld points</source>
-        <target state="translated">%1$ld मीटर, %2$ld बिंदू</target>
+        <target>%1$ld मीटर, %2$ld बिंदू</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints" xml:space="preserve">
         <source>%1$ld meters, %2$ld points, %3$ld waypoints</source>
-        <target state="translated">%1$ld मीटर, %2$ld बिंदू, %3$ld मार्गबिंदू</target>
+        <target>%1$ld मीटर, %2$ld बिंदू, %3$ld मार्गबिंदू</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld objects" xml:space="preserve">
@@ -834,7 +834,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="%lu tiles needed" xml:space="preserve">
         <source>%lu tiles needed</source>
-        <target state="translated">%lu फरश्या आवश्यक</target>
+        <target>%lu फरश्या आवश्यक</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="(new object)" xml:space="preserve">
@@ -844,7 +844,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
         <source>(node in way)</source>
-        <target state="translated">(मार्गातील गाठ)</target>
+        <target>(मार्गातील गाठ)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(node)" xml:space="preserve">
@@ -864,7 +864,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="+ Button Position" xml:space="preserve">
         <source>+ Button Position</source>
-        <target state="translated">+ बटणचे स्थान</target>
+        <target>+ बटणचे स्थान</target>
         <note>Location of Add Node button on the screen</note>
       </trans-unit>
       <trans-unit id="1 Day" xml:space="preserve">
@@ -883,112 +883,112 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." xml:space="preserve">
         <source>A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else.</source>
-        <target state="translated">सर्व वापरकर्ता-परिभाषित शोधांची एक प्रत क्लिपबोर्डवर JSON स्वरूपात कॉपी केली गेली आहे. ह्याची प्रत साठवण्यासाठी किंवा दुसऱ्याला पाठवण्यासाठी तुम्ही ती पेस्ट करुन वापरू शकता.</target>
+        <target>सर्व वापरकर्ता-परिभाषित शोधांची एक प्रत क्लिपबोर्डवर JSON स्वरूपात कॉपी केली गेली आहे. ह्याची प्रत साठवण्यासाठी किंवा दुसऱ्याला पाठवण्यासाठी तुम्ही ती पेस्ट करुन वापरू शकता.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="A relation the node belongs to is not fully downloaded" xml:space="preserve">
         <source>A relation the node belongs to is not fully downloaded</source>
-        <target state="translated">ही गाठ ज्या संबंधाचा भाग आहे तो संबंध पूर्णपणे डाऊनलोड झालेला नाही</target>
+        <target>ही गाठ ज्या संबंधाचा भाग आहे तो संबंध पूर्णपणे डाऊनलोड झालेला नाही</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Accept" xml:space="preserve">
         <source>Accept</source>
-        <target state="translated">स्वीकार</target>
+        <target>स्वीकार</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Add Building Type" xml:space="preserve">
         <source>Add Building Type</source>
-        <target state="translated">इमारतीचा प्रकार जोडा</target>
+        <target>इमारतीचा प्रकार जोडा</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Highway Surface" xml:space="preserve">
         <source>Add Highway Surface</source>
-        <target state="translated">महामार्गाचा पृष्ठभाग जोडा</target>
+        <target>महामार्गाचा पृष्ठभाग जोडा</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
         <source>Add Note</source>
-        <target state="translated">टीप जोडा</target>
+        <target>टीप जोडा</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Add Opening Hours" xml:space="preserve">
         <source>Add Opening Hours</source>
-        <target state="translated">उघडण्याच्या वेळा जोडा</target>
+        <target>उघडण्याच्या वेळा जोडा</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Parking Type" xml:space="preserve">
         <source>Add Parking Type</source>
-        <target state="translated">वाहनतळ प्रकार जोडा</target>
+        <target>वाहनतळ प्रकार जोडा</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Sidewalk Surface" xml:space="preserve">
         <source>Add Sidewalk Surface</source>
-        <target state="translated">पदपथाचा पृष्ठभाग जोडा</target>
+        <target>पदपथाचा पृष्ठभाग जोडा</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Speed Limit" xml:space="preserve">
         <source>Add Speed Limit</source>
-        <target state="translated">वेग मर्यादा जोडा</target>
+        <target>वेग मर्यादा जोडा</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Telephone Number" xml:space="preserve">
         <source>Add Telephone Number</source>
-        <target state="translated">दूरध्वनी क्रमांक जोडा</target>
+        <target>दूरध्वनी क्रमांक जोडा</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Website" xml:space="preserve">
         <source>Add Website</source>
-        <target state="translated">संकेतस्थळ जोडा</target>
+        <target>संकेतस्थळ जोडा</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add inner member" xml:space="preserve">
         <source>Add inner member</source>
-        <target state="translated">आतील सदस्य जोडा</target>
+        <target>आतील सदस्य जोडा</target>
         <note>Add to relation</note>
       </trans-unit>
       <trans-unit id="Add outer member" xml:space="preserve">
         <source>Add outer member</source>
-        <target state="translated">बाह्य सदस्य जोडा</target>
+        <target>बाह्य सदस्य जोडा</target>
         <note>Add to relation</note>
       </trans-unit>
       <trans-unit id="Add way to multipolygon?" xml:space="preserve">
         <source>Add way to multipolygon?</source>
-        <target state="translated">बहुभुजात मार्ग जोडायचा?</target>
+        <target>बहुभुजात मार्ग जोडायचा?</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Adding members:" xml:space="preserve">
         <source>Adding members:</source>
-        <target state="translated">सदस्य जोडत आहे:</target>
+        <target>सदस्य जोडत आहे:</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Additional imagery" xml:space="preserve">
         <source>Additional imagery</source>
-        <target state="translated">अतिरिक्त प्रतिमा</target>
+        <target>अतिरिक्त प्रतिमा</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Advanced Quest Builder" xml:space="preserve">
         <source>Advanced Quest Builder</source>
-        <target state="translated">प्रगत शोध बिल्डर</target>
+        <target>प्रगत शोध बिल्डर</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
         <source>Aerial only</source>
-        <target state="translated">फक्त हवाई प्रतिमा</target>
+        <target>फक्त हवाई प्रतिमा</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="All Tags" xml:space="preserve">
         <source>All Tags</source>
-        <target state="translated">सर्व टॅग</target>
+        <target>सर्व टॅग</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="All choices" xml:space="preserve">
         <source>All choices</source>
-        <target state="translated">सर्व पर्याय</target>
+        <target>सर्व पर्याय</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="An error occured while exporting: %@" xml:space="preserve">
         <source>An error occured while exporting: %@</source>
-        <target state="translated">निर्यात करताना त्रुटी उद्भवली: %@</target>
+        <target>निर्यात करताना त्रुटी उद्भवली: %@</target>
         <note>Show an error message</note>
       </trans-unit>
       <trans-unit id="An error occured while importing: %@" xml:space="preserve">
@@ -1014,7 +1014,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Attributes" xml:space="preserve">
         <source>Attributes</source>
-        <target state="translated">गुणधर्म</target>
+        <target>गुणधर्म</target>
         <note>node/way/relation attributes</note>
       </trans-unit>
       <trans-unit id="Automatic" xml:space="preserve">
@@ -1034,22 +1034,22 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Bad login" xml:space="preserve">
         <source>Bad login</source>
-        <target state="translated">वाईट सनोंद-प्रवेश</target>
+        <target>वाईट सनोंद-प्रवेश</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Better background imagery is available for your location. Would you like to change to it?" xml:space="preserve">
         <source>Better background imagery is available for your location. Would you like to change to it?</source>
-        <target state="translated">तुमच्या स्थानासाठी जास्त चांगली पार्श्वभूमी प्रतिमा उपलब्ध आहे. त्यावर बदलू इच्छिता?</target>
+        <target>तुमच्या स्थानासाठी जास्त चांगली पार्श्वभूमी प्रतिमा उपलब्ध आहे. त्यावर बदलू इच्छिता?</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Better imagery available" xml:space="preserve">
         <source>Better imagery available</source>
-        <target state="translated">उत्तम प्रतिमा उपलब्ध</target>
+        <target>उत्तम प्रतिमा उपलब्ध</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Build a New Quest" xml:space="preserve">
         <source>Build a New Quest</source>
-        <target state="translated">नवीन शोध तयार करा</target>
+        <target>नवीन शोध तयार करा</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
@@ -1059,7 +1059,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Cache trimmed" xml:space="preserve">
         <source>Cache trimmed</source>
-        <target state="translated">कॅश पुसून टाकले</target>
+        <target>कॅश पुसून टाकले</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can only add ways to multipolygons" xml:space="preserve">
@@ -1069,32 +1069,32 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Can't delete node that is part of a relation" xml:space="preserve">
         <source>Can't delete node that is part of a relation</source>
-        <target state="translated">संबंधाचा भाग असलेली गाठ पुसून टाकू शकत नाही</target>
+        <target>संबंधाचा भाग असलेली गाठ पुसून टाकू शकत नाही</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't delete relation that is not a multipolygon" xml:space="preserve">
         <source>Can't delete relation that is not a multipolygon</source>
-        <target state="translated">बहुभुज नसलेला संबंध पुसून टाकू शकत नाही</target>
+        <target>बहुभुज नसलेला संबंध पुसून टाकू शकत नाही</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't delete way that is part of a Route or similar relation" xml:space="preserve">
         <source>Can't delete way that is part of a Route or similar relation</source>
-        <target state="translated">मार्ग किंवा तत्सम संबंधाचा भाग असलेला मार्ग पुसू शकत नाही</target>
+        <target>मार्ग किंवा तत्सम संबंधाचा भाग असलेला मार्ग पुसू शकत नाही</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't extend way" xml:space="preserve">
         <source>Can't extend way</source>
-        <target state="translated">मार्ग वाढवू शकत नाही</target>
+        <target>मार्ग वाढवू शकत नाही</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction 'via' node" xml:space="preserve">
         <source>Can't remove Turn Restriction 'via' node</source>
-        <target state="translated">वळण प्रतिबंध असलेली 'via' गाठ काढून टाकू शकत नाही</target>
+        <target>वळण प्रतिबंध असलेली 'via' गाठ काढून टाकू शकत नाही</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" xml:space="preserve">
         <source>Can't remove Turn Restriction node connecting 'to'/'from' to 'via'</source>
-        <target state="translated">'to'/'from' ते 'via' जोडणारी वळण प्रतिबंध गाठ काढू शकत नाही</target>
+        <target>'to'/'from' ते 'via' जोडणारी वळण प्रतिबंध गाठ काढू शकत नाही</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction to/from way" xml:space="preserve">
@@ -1109,7 +1109,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Can't remove node in Turn Restriction 'via' way" xml:space="preserve">
         <source>Can't remove node in Turn Restriction 'via' way</source>
-        <target state="translated">वळण प्रतिबंध 'via' मार्गातील गाठ काढू शकत नाही</target>
+        <target>वळण प्रतिबंध 'via' मार्गातील गाठ काढू शकत नाही</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cancel" xml:space="preserve">
@@ -1119,7 +1119,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Cannot compose message" xml:space="preserve">
         <source>Cannot compose message</source>
-        <target state="translated">निरोप तयार करू शकत नाही</target>
+        <target>निरोप तयार करू शकत नाही</target>
         <note>e-mail message</note>
       </trans-unit>
       <trans-unit id="Cannot connect an inner way to an outer way" xml:space="preserve">
@@ -1139,12 +1139,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Clear Aerial Tiles" xml:space="preserve">
         <source>Clear Aerial Tiles</source>
-        <target state="translated">हवाई प्रतिमा पुसा</target>
+        <target>हवाई प्रतिमा पुसा</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear GPS Overlay Tiles" xml:space="preserve">
         <source>Clear GPS Overlay Tiles</source>
-        <target state="translated">GPS आच्छादन फरश्या पुसा</target>
+        <target>GPS आच्छादन फरश्या पुसा</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear GPX Tracks" xml:space="preserve">
@@ -1154,7 +1154,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Clear Locator Overlay Tiles" xml:space="preserve">
         <source>Clear Locator Overlay Tiles</source>
-        <target state="translated">Locator आच्छादन फरश्या पुसा</target>
+        <target>Locator आच्छादन फरश्या पुसा</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear Mapnik Tiles" xml:space="preserve">
@@ -1174,7 +1174,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Configure" xml:space="preserve">
         <source>Configure</source>
-        <target state="translated">मांडणी करा</target>
+        <target>मांडणी करा</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Confirm move" xml:space="preserve">
@@ -1184,7 +1184,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Connecting the nodes would damage a relation" xml:space="preserve">
         <source>Connecting the nodes would damage a relation</source>
-        <target state="translated">गाठी जोडल्या तर संबंध खराब होऊ शकतो</target>
+        <target>गाठी जोडल्या तर संबंध खराब होऊ शकतो</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Copied" xml:space="preserve">
@@ -1247,7 +1247,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Delete %@?" xml:space="preserve">
         <source>Delete %@?</source>
-        <target state="translated">%@ पुसून टाकायचे?</target>
+        <target>%@ पुसून टाकायचे?</target>
         <note>Confirm deleting a node/way</note>
       </trans-unit>
       <trans-unit id="Delete completely" xml:space="preserve">
@@ -1257,12 +1257,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Delete failed" xml:space="preserve">
         <source>Delete failed</source>
-        <target state="translated">पुसणे अपयशी</target>
+        <target>पुसणे अपयशी</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Detach from relation" xml:space="preserve">
         <source>Detach from relation</source>
-        <target state="translated">संबंधापासून तोडा</target>
+        <target>संबंधापासून तोडा</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Discard" xml:space="preserve">
@@ -1272,12 +1272,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Disconnect" xml:space="preserve">
         <source>Disconnect</source>
-        <target state="translated">जोडणी तोडा</target>
+        <target>जोडणी तोडा</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Display options" xml:space="preserve">
         <source>Display options</source>
-        <target state="translated">पर्याय दाखवा</target>
+        <target>पर्याय दाखवा</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Distance: %1$@ ± %2$@ meters" xml:space="preserve">
@@ -1297,17 +1297,17 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Edit" xml:space="preserve">
         <source>Edit</source>
-        <target state="translated">संपादा</target>
+        <target>संपादा</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Edit XML" xml:space="preserve">
         <source>Edit XML</source>
-        <target state="translated">XML संपादा</target>
+        <target>XML संपादा</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Edit restrictions" xml:space="preserve">
         <source>Edit restrictions</source>
-        <target state="translated">प्रतिबंध संपादा</target>
+        <target>प्रतिबंध संपादा</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Editing layer not visible" xml:space="preserve">
@@ -1322,14 +1322,14 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Editor with Aerial" xml:space="preserve">
         <source>Editor with Aerial</source>
-        <target state="translated">हवाई प्रतिमेसह संपादक</target>
+        <target>हवाई प्रतिमेसह संपादक</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Ensure Location Services is enabled and you have granted this application access.&#10;&#10;Error: %@" xml:space="preserve">
         <source>Ensure Location Services is enabled and you have granted this application access.
 
 Error: %@</source>
-        <target state="translated">स्थान सेवा सक्षम असल्याची व ती वापरण्याची परवानगी असल्याची पुष्टी करा
+        <target>स्थान सेवा सक्षम असल्याची व ती वापरण्याची परवानगी असल्याची पुष्टी करा
 
 त्रुटी: %@</target>
         <note>No comment provided by engineer.</note>
@@ -1346,7 +1346,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Error connecting to way" xml:space="preserve">
         <source>Error connecting to way</source>
-        <target state="translated">मार्गला जोडताना त्रुटी</target>
+        <target>मार्गला जोडताना त्रुटी</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Error fetching metadata: %@" xml:space="preserve">
@@ -1356,7 +1356,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Extending a 'via' in a Turn Restriction will break the relation" xml:space="preserve">
         <source>Extending a 'via' in a Turn Restriction will break the relation</source>
-        <target state="translated">वळण प्रतिबंधात 'via'</target>
+        <target>वळण प्रतिबंधात 'via'</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Extending a way which belongs to a Route or similar relation may damage the relation" xml:space="preserve">

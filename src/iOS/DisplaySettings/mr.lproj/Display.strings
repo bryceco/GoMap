@@ -7,6 +7,9 @@
 /* Class = "UILabel"; text = "Details"; ObjectID = "2Ku-Lb-uCf"; */
 "2Ku-Lb-uCf.text" = "तपशील";
 
+/* Class = "UILabel"; text = "Clear Cache"; ObjectID = "2ZY-zi-luF"; */
+"2ZY-zi-luF.text" = "कॅश पुसा";
+
 /* Class = "UIButton"; normalTitle = "99 Days"; ObjectID = "4s8-Bj-JOX"; */
 "4s8-Bj-JOX.normalTitle" = "99 दिवस";
 
@@ -19,11 +22,26 @@
 /* Class = "UITextField"; placeholder = "-1..3,7"; ObjectID = "7ga-PZ-MfV"; */
 "7ga-PZ-MfV.placeholder" = "-1..3,7";
 
+/* Class = "UITableViewSection"; headerTitle = "Overlays"; ObjectID = "8es-4f-sj3"; */
+"8es-4f-sj3.headerTitle" = "आच्छादन";
+
+/* Class = "UINavigationItem"; title = "Aerial Imagery"; ObjectID = "8HT-Bc-Q2z"; */
+"8HT-Bc-Q2z.title" = "हवाई प्रतिमा";
+
 /* Class = "UIButton"; normalTitle = "Details"; ObjectID = "8S7-Kw-QHF"; */
 "8S7-Kw-QHF.normalTitle" = "तपशील";
 
 /* Class = "UILabel"; text = "Mapnik only"; ObjectID = "9L3-JO-Whj"; */
 "9L3-JO-Whj.text" = "फक्त Mapnik";
+
+/* Class = "UINavigationItem"; title = "Display"; ObjectID = "186-0W-Nrr"; */
+"186-0W-Nrr.title" = "देखावा";
+
+/* Class = "UITableViewSection"; footerTitle = "Go Map!! will automatically discard old data to optimize performance."; ObjectID = "bmY-Hw-jv6"; */
+"bmY-Hw-jv6.footerTitle" = "कार्यप्रदर्शन सुधरवण्यासाठी Go Map!! जुना डेटा आपोआप पुसून टाकेल.";
+
+/* Class = "UITableViewSection"; headerTitle = "Cache Management"; ObjectID = "bmY-Hw-jv6"; */
+"bmY-Hw-jv6.headerTitle" = "कॅश व्यवस्थापन";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "cpC-iE-1Dm"; */
 "cpC-iE-1Dm.text" = "शीर्षक";
@@ -43,8 +61,14 @@
 /* Class = "UILabel"; text = "Collect in background:"; ObjectID = "DmO-dW-3Fh"; */
 "DmO-dW-3Fh.text" = "पार्श्वभूमीत गोळा करा:";
 
+/* Class = "UITextField"; placeholder = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "; ObjectID = "dzT-B4-za3"; */
+"dzT-B4-za3.placeholder" = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n ";
+
 /* Class = "UIButton"; normalTitle = "Bing"; ObjectID = "eac-Db-EaW"; */
 "eac-Db-EaW.normalTitle" = "Bing";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eFa-yZ-YZl"; */
+"eFa-yZ-YZl.text" = "हवाई प्रतिमा फरश्या";
 
 /* Class = "UILabel"; text = "12:00:00"; ObjectID = "EHa-L5-Hcz"; */
 "EHa-L5-Hcz.text" = "12:00:00";
@@ -52,20 +76,35 @@
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F"; */
 "el8-h8-H1F.normalTitle" = "बटण";
 
+/* Class = "UILabel"; text = "Position + Button on "; ObjectID = "eLW-GB-ugG"; Note = "The location on the screen where the user prefers the + (add node) button to appear"; */
+"eLW-GB-ugG.text" = "+ बटनचे स्थान ";
+
 /* Class = "UILabel"; text = "Details"; ObjectID = "EmS-9F-1qc"; */
 "EmS-9F-1qc.text" = "तपशील";
 
 /* Class = "UILabel"; text = "Editor only"; ObjectID = "eN6-SZ-99I"; */
 "eN6-SZ-99I.text" = "फक्त संपादक";
 
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eTY-48-gab"; */
+"eTY-48-gab.text" = "हवाई प्रतिमा फरश्या";
+
 /* Class = "UILabel"; text = "Details"; ObjectID = "F9l-B0-puf"; */
 "F9l-B0-puf.text" = "तपशील";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fFT-hv-mKl"; */
+"fFT-hv-mKl.text" = "हवाई प्रतिमा फरश्या";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fHH-rC-iGa"; */
+"fHH-rC-iGa.text" = "हवाई प्रतिमा फरश्या";
 
 /* Class = "UILabel"; text = "Details"; ObjectID = "g2G-5j-Y4q"; */
 "g2G-5j-Y4q.text" = "तपशील";
 
 /* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "g46-cV-NBw"; */
 "g46-cV-NBw.text" = "हवाई प्रतिमा फरशा";
+
+/* Class = "UILabel"; text = "Points"; ObjectID = "gdL-Os-R6R"; */
+"gdL-Os-R6R.text" = "गाठी";
 
 /* Class = "UILabel"; text = "Details"; ObjectID = "GNK-bZ-i9X"; */
 "GNK-bZ-i9X.text" = "तपशील";
@@ -76,8 +115,26 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "h1O-06-ApF"; */
 "h1O-06-ApF.text" = "लेबल";
 
+/* Class = "UINavigationItem"; title = "QA Poole No Name Tiles"; ObjectID = "H3p-Ta-kIy"; Note = "Title for Simon Poole's \"No name\" (missing name) tile overlay"; */
+"H3p-Ta-kIy.title" = "QA Poole No Name फरश्या";
+
+/* Class = "UILabel"; text = "Traffic Roads"; ObjectID = "hkr-kO-jbt"; */
+"hkr-kO-jbt.text" = "रहदारीचे मार्ग";
+
+/* Class = "UILabel"; text = "OpenStreetMap GPS Traces"; ObjectID = "hMJ-yP-XJe"; */
+"hMJ-yP-XJe.text" = "OpenStreetMap GPS अनुरेखा";
+
+/* Class = "UITextView"; text = "Simon Poole Map Data © OpenStreetMap contributors\n"; ObjectID = "hsp-Xj-TU6"; */
+"hsp-Xj-TU6.text" = "Simon Poole Map Data © ओपनस्ट्रीटमॅप योगदानकर्ते\n";
+
+/* Class = "UILabel"; text = "Power Features"; ObjectID = "Idx-2G-6F7"; */
+"Idx-2G-6F7.text" = "पॉवर वैशिष्ट्ये";
+
 /* Class = "UITextField"; placeholder = "(TMS)"; ObjectID = "iuk-Fk-3Fw"; */
 "iuk-Fk-3Fw.placeholder" = "(TMS)";
+
+/* Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe"; */
+"Jz1-GP-Wbe.text" = "मार्ग";
 
 /* Class = "UILabel"; text = "Past/Future"; ObjectID = "lu0-kr-5Cc"; */
 "lu0-kr-5Cc.text" = "भूत/भविष्य";
@@ -85,11 +142,29 @@
 /* Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ"; */
 "lwG-AE-nIZ.headerTitle" = "पार्श्वभूमी";
 
+/* Class = "UILabel"; text = "Enable Filters"; ObjectID = "LxX-tl-ZLH"; */
+"LxX-tl-ZLH.text" = "गाळणी सक्षम करा";
+
+/* Class = "UILabel"; text = "GPX Tracks you record or download will be automatically deleted after:"; ObjectID = "MeQ-4N-FqC"; */
+"MeQ-4N-FqC.text" = "आपण मुद्रित किंवा डाऊनलोड केलेले GPX ट्रॅक ह्या काळानंतर काढून टाकले जातील:";
+
+/* Class = "UILabel"; text = "Editor with Aerial"; ObjectID = "MPq-PX-jf0"; */
+"MPq-PX-jf0.text" = "हवाई प्रतिमेसह संपादक";
+
+/* Class = "UINavigationItem"; title = "Aerial Provider"; ObjectID = "MZF-am-tCM"; */
+"MZF-am-tCM.title" = "हवाई प्रतिमा प्रदाता";
+
+/* Class = "UILabel"; text = "Quests"; ObjectID = "O0U-6M-7AT"; */
+"O0U-6M-7AT.text" = "शोध";
+
 /* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "OiJ-GU-gZ3"; */
 "OiJ-GU-gZ3.title" = "रद्द करा";
 
 /* Class = "UILabel"; text = "Landuse"; ObjectID = "Okg-2D-O6U"; */
 "Okg-2D-O6U.text" = "भूउपयोग";
+
+/* Class = "UINavigationItem"; title = "Configure GPX Tracks"; ObjectID = "oSD-0y-Vt0"; */
+"oSD-0y-Vt0.title" = "GPX ट्रॅकची मांडणी";
 
 /* Class = "UILabel"; text = "Buildings"; ObjectID = "pQK-9y-t4z"; */
 "pQK-9y-t4z.text" = "इमारती";
@@ -97,17 +172,41 @@
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "pR1-M8-pXH"; */
 "pR1-M8-pXH.title" = "मागे";
 
+/* Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "PSE-3C-cDx"; */
+"PSE-3C-cDx.text" = "टिपा व Fixme";
+
 /* Class = "UILabel"; text = "Boundaries"; ObjectID = "qdV-Je-jXT"; */
 "qdV-Je-jXT.text" = "सीमा";
 
 /* Class = "UILabel"; text = "Turn Restrictions"; ObjectID = "r6a-cT-Ufa"; */
 "r6a-cT-Ufa.text" = "वळण निर्बंध";
 
+/* Class = "UITableViewSection"; headerTitle = "Interactions"; ObjectID = "RJU-Z2-QFh"; */
+"RJU-Z2-QFh.headerTitle" = "परस्परसंवाद";
+
+/* Class = "UILabel"; text = "Service Roads"; ObjectID = "RxO-IV-UE7"; */
+"RxO-IV-UE7.text" = "सेवा मार्ग";
+
+/* Class = "UITableViewSection"; headerTitle = "Filter Objects"; ObjectID = "scg-Po-M3L"; */
+"scg-Po-M3L.headerTitle" = "वस्तूंची गाळणी";
+
+/* Class = "UITableViewSection"; footerTitle = "Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. \n\nWarning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.\n\nClear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed."; ObjectID = "SNa-W1-wga"; */
+"SNa-W1-wga.footerTitle" = "OSM सर्व्हर सोबतची समकालिक स्थिती तुटल्यास OSM डेटाचा कॅश पुसून टाका. आपण संपादन करत असलेल्या डेटाला इतर कोणी बदलले किंवा आपला एखादा चढवण्याचा प्रयत्न अपयशी ठरला तर असे होऊ शकते.\n\nसावधान: OSM कॅश पुसून टाकल्याने आपण अद्याप न चढवलेले बदल गमवून बसाल.\n\nआपण चढवलेले बदल दाखवणाऱ्या फरश्या डाऊनलोड करण्यासाठी Mapnik किंवा आच्छादन फरश्यांचे कॅश पुसून टाका. आपले बदल प्रक्रियित व्हायला २४ तास लागू शकता.";
+
+/* Class = "UITableViewSection"; headerTitle = "Discard & Refresh"; ObjectID = "SNa-W1-wga"; */
+"SNa-W1-wga.headerTitle" = "पुसा & रिफ्रेश";
+
 /* Class = "UILabel"; text = "URL"; ObjectID = "swu-t3-p5w"; */
 "swu-t3-p5w.text" = "URL";
 
+/* Class = "UINavigationItem"; title = "Clear Cache"; ObjectID = "tS9-CP-pqu"; */
+"tS9-CP-pqu.title" = "कॅश पुसा";
+
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "tU9-Ml-4ko"; */
 "tU9-Ml-4ko.title" = "मागे";
+
+/* Class = "UILabel"; text = "Water Features"; ObjectID = "twn-Ve-8vl"; */
+"twn-Ve-8vl.text" = "पाण्याची वैशिष्ट्ये";
 
 /* Class = "UILabel"; text = "Aerial only"; ObjectID = "uOd-BB-zEq"; */
 "uOd-BB-zEq.text" = "फक्त हवाई प्रतिमा";
@@ -118,17 +217,26 @@
 /* Class = "UILabel"; text = "Others"; ObjectID = "Uum-Wn-9CF"; */
 "Uum-Wn-9CF.text" = "इतर";
 
+/* Class = "UILabel"; text = "Building Level"; ObjectID = "uZo-P0-sR7"; */
+"uZo-P0-sR7.text" = "इमारत मजले";
+
 /* Class = "UILabel"; text = "12/22/20, 7:55 PM"; ObjectID = "v6h-g5-fka"; */
 "v6h-g5-fka.text" = "12/22/20, 7:55 PM";
 
 /* Class = "UILabel"; text = "Max Zoom"; ObjectID = "voF-Yf-33h"; */
 "voF-Yf-33h.text" = "कमाल झूम";
 
+/* Class = "UILabel"; text = "Enable Rotation"; ObjectID = "VUR-wT-knn"; */
+"VUR-wT-knn.text" = "फिरवणे सक्षम करा";
+
 /* Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF"; Note = "A hypothetical aerial imagery provider"; */
 "w75-Lj-3jF.placeholder" = "Portlandia GIS";
 
 /* Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C"; */
 "wev-ax-u4C.headerTitle" = "रीसेट";
+
+/* Class = "UILabel"; text = "Delete tracks after:"; ObjectID = "WnI-tY-WWa"; */
+"WnI-tY-WWa.text" = "ट्रॅक पुसून टाकण्याची मुदत:";
 
 /* Class = "UILabel"; text = "Details"; ObjectID = "xve-fW-qM7"; */
 "xve-fW-qM7.text" = "तपशील";
@@ -139,6 +247,24 @@
 /* Class = "UINavigationItem"; title = "GPX Tracks"; ObjectID = "Z8C-Ef-iJE"; */
 "Z8C-Ef-iJE.title" = "GPX ट्रॅक";
 
+/* Class = "UITableViewSection"; footerTitle = "A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL"; ObjectID = "zD6-m4-1PD"; */
+"zD6-m4-1PD.footerTitle" = "{x}, {y} व {z} स्थानधारकांसोबत TMS ची URL किंवा एक WMS URL";
+
+/* Class = "UITableViewSection"; headerTitle = "Template URL of the tile server"; ObjectID = "zD6-m4-1PD"; */
+"zD6-m4-1PD.headerTitle" = "फरशी सर्व्हरच्या URL चे स्वरुप";
+
 /* Class = "UIButton"; normalTitle = "Add New"; ObjectID = "zI2-YM-qbl"; */
 "zI2-YM-qbl.normalTitle" = "नवीन जोडा";
+
+/* Class = "UITableViewSection"; footerTitle = "If specifying a WMS URL you must also provide the projection used"; ObjectID = "Zn9-Sg-9fS"; */
+"Zn9-Sg-9fS.footerTitle" = "WMS चे URL वापरताना प्रक्षेपण पण पुरवणे आवश्यक आहे";
+
+/* Class = "UITableViewSection"; headerTitle = "WMS Projection"; ObjectID = "Zn9-Sg-9fS"; */
+"Zn9-Sg-9fS.headerTitle" = "WMS प्रक्षेपण";
+
+/* Class = "UILabel"; text = "Unnamed Roads"; ObjectID = "ZP1-qY-kXe"; */
+"ZP1-qY-kXe.text" = "अनामिक मार्ग";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT"; */
+"Zzc-4t-QhT.text" = "हवाई प्रतिमा फरश्या";
 

@@ -1,6 +1,9 @@
 /* Class = "UILabel"; text = "Get Directions"; ObjectID = "1xx-L0-hKm"; */
 "1xx-L0-hKm.text" = "दिशानिर्देश मिळवा";
 
+/* Class = "UIViewController"; title = "First"; ObjectID = "2"; */
+"2.title" = "पहिले";
+
 /* Class = "UIButton"; normalTitle = "Comment"; ObjectID = "2g1-vb-Cjc"; */
 "2g1-vb-Cjc.normalTitle" = "टिप्पणी";
 
@@ -15,6 +18,12 @@
 
 /* Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u"; */
 "9t5-wq-j1u.text" = "66.6 FPS";
+
+/* Class = "UITextView"; text = "Changeset comment goes here"; ObjectID = "ach-1A-88x"; */
+"ach-1A-88x.text" = "बदलसंचाची टिप्पणी इथे";
+
+/* Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt"; */
+"E22-sL-sNt.accessibilityHint" = "नकाशा उत्तरेकडे वळवा";
 
 /* Class = "UIButton"; accessibilityLabel = "Compass"; ObjectID = "E22-sL-sNt"; */
 "E22-sL-sNt.accessibilityLabel" = "होकायंत्र";
@@ -36,6 +45,12 @@
 
 /* Class = "UINavigationItem"; title = "Note"; ObjectID = "MBY-TK-Wuy"; */
 "MBY-TK-Wuy.title" = "नोंद";
+
+/* Class = "UILabel"; text = "Zoom to Edit"; ObjectID = "N5Q-nV-TPG"; */
+"N5Q-nV-TPG.text" = "झूम करुन संपादा";
+
+/* Class = "UILabel"; text = "A Error Message Flashing Z"; ObjectID = "nU5-T2-ADn"; Note = "Placeholder - Don't translate"; */
+"nU5-T2-ADn.text" = "A Error Message Flashing Z";
 
 /* Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1"; */
 "OJ0-aO-ri1.normalTitle" = "निराकरण करा";

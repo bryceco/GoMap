@@ -247,13 +247,34 @@
 "Clear Aerial Tiles" = "Azulejos transparentes para fotografía aérea";
 
 /* Delete cached data */
+"Clear GPS Overlay Tiles" = "Borrar los mosaicos de superposición del GPS";
+
+/* Delete cached data */
 "Clear GPX Tracks" = "Vaciar rastros GPX";
+
+/* Delete cached data */
+"Clear Locator Overlay Tiles" = "Borrar mosaicos de superposición de localizador";
+
+/* Delete cached data */
+"Clear Mapnik Tiles" = "Teselas transparentes de Mapnik";
+
+/* Delete cached data */
+"Clear OSM Data" = "Borrar los datos de OSM";
 
 /* No comment provided by engineer. */
 "computing size..." = "calculando tamaño…";
 
 /* No comment provided by engineer. */
 "Configure" = "Configurar";
+
+/* No comment provided by engineer. */
+"Confirm move" = "Confirmar el movimiento";
+
+/* No comment provided by engineer. */
+"Connecting the nodes would damage a relation" = "Conectar este nodo romperá una relación";
+
+/* text was copied to the system clipboard */
+"Copied" = "Copiado";
 
 /* Edit action */
 "Copy Tags" = "Copiar etiquetas";
@@ -263,6 +284,9 @@
 
 /* No comment provided by engineer. */
 "Create\n" = "Crear\n";
+
+/* No comment provided by engineer. */
+"Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." = "Crea una fila en la tabla para cada par de clave/valor y si los objetos coincidentes deben incluirse o excluirse. Deja el valor vacío para indicar que la clave no está presente. Utilice clave=* para que coincida cualquier valor.";
 
 /* No comment provided by engineer. */
 "create node" = "crear nodo";
@@ -327,6 +351,12 @@
 /* No comment provided by engineer. */
 "delete way" = "eliminar vía";
 
+/* No comment provided by engineer. */
+"Detach from relation" = "Separarse de la relación";
+
+/* Discard changes */
+"Discard" = "Descartar";
+
 /* Edit action */
 "Disconnect" = "Desconectar";
 
@@ -358,6 +388,15 @@
 "Editing layer not visible" = "Capa de edición no visible";
 
 /* No comment provided by engineer. */
+"Editor only" = "Sólo editor";
+
+/* No comment provided by engineer. */
+"Editor with Aerial" = "Editor de la foto aérea";
+
+/* No comment provided by engineer. */
+"Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "Asegúrese de que los servicios de ubicación están activados y de que has concedido acceso a ellos a esta aplicación.\n\nError: %@";
+
+/* No comment provided by engineer. */
 "Ensure the editor view is visible and displays objects in the local area" = "Cerciórese de que la vista del editor sea visible y muestre los objetos en el área local";
 
 /* Error dialog title */
@@ -369,17 +408,50 @@
 /* No comment provided by engineer. */
 "Error fetching metadata: %@" = "Error al recuperar los metadatos: %s";
 
+/* No comment provided by engineer. */
+"Extending a 'via' in a Turn Restriction will break the relation" = "La ampliación de una \"vía\" en una restricción de giro romperá la relación";
+
+/* No comment provided by engineer. */
+"Extending a way which belongs to a Route or similar relation may damage the relation" = "Extender un camino que pertenece a una Ruta o relación similar puede dañar la relación";
+
+/* Header for quest filters section */
+"Filters" = "Filtros";
+
+/* No comment provided by engineer. */
+"Geometry" = "Geometría";
+
+/* No comment provided by engineer. */
+"GPX Upload Complete" = "Subida del GPX completada";
+
+/* No comment provided by engineer. */
+"GPX Upload Failed" = "Fallo la subida de GPX";
+
 /* Height of an object with an error value */
 "Height: %1$@ ± %2$@ meters" = "Altura: %1$@ ± %2$@ metros";
 
 /* rate the app now */
 "I'll do it!" = "¡Lo haré!";
 
+/* No comment provided by engineer. */
+"Icon" = "Icono";
+
 /* OSM node/way/relation identifier */
 "Identifier" = "Identificador";
 
 /* No comment provided by engineer. */
 "Ignore" = "Ignorar";
+
+/* No comment provided by engineer. */
+"Import" = "Importar";
+
+/* No comment provided by engineer. */
+"Import Error" = "Error al importar";
+
+/* No comment provided by engineer. */
+"Import Quests" = "Importar tareas";
+
+/* No comment provided by engineer. */
+"In order to measure height, please enable camera access in the app's settings." = "Para medir la altura, activa el acceso a la cámara en los ajustes de la aplicación.";
 
 /* No comment provided by engineer. */
 "Invalid URL" = "URL no válido";
@@ -389,6 +461,15 @@
 
 /* No comment provided by engineer. */
 "Joining would invalidate a Turn Restriction the way belongs to" = "La incorporación invalidará una restricción de giro a que pertenece la vía";
+
+/* The tag keys section of a quest definition */
+"Keys" = "Claves";
+
+/* No comment provided by engineer. */
+"Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "La selección del idioma sólo afecta a los preajustes y sólo para aquellos preajustes que están traducidos para el identificador. La interfaz principal sigue estando en inglés.";
+
+/* No comment provided by engineer. */
+"Last updated %@" = "Última actualización %@";
 
 /* coordinates */
 "Lat/Lon" = "Latitud/longitud";
@@ -402,6 +483,9 @@
 /* No comment provided by engineer. */
 "Length" = "Longitud";
 
+/* Object geometry: a way (but not an area) */
+"Line" = "Línea";
+
 /* No comment provided by engineer. */
 "Location unavailable" = "Ubicación no disponible";
 
@@ -411,14 +495,26 @@
 /* No comment provided by engineer. */
 "Low memory: clearing cache" = "Poco espacio: vaciando antememoria";
 
+/* No comment provided by engineer. */
+"Mail delivery is not available on this device" = "La entrega del correo no está disponible en este dispositivo";
+
 /* Edit action */
 "Make Circular" = "Hacer circular";
 
 /* Edit action */
 "Make Rectangular" = "Hacer rectangular";
 
+/* No comment provided by engineer. */
+"Max nodes after joining is 2000" = "El número máximo de nodos tras la adhesión es 2000";
+
+/* No comment provided by engineer. */
+"Maximum way length is 2000 nodes" = "La longitud máxima de la vía es de 2000 nodos";
+
 /* rate the app later */
 "Maybe later..." = "Quizás más tarde...";
+
+/* No comment provided by engineer. */
+"Measure Direction" = "Dirección de medición";
 
 /* No comment provided by engineer. */
 "Member of multipolygon relation" = "Miembro de una relación multipoligonal";
@@ -433,13 +529,25 @@
 "meters" = "metros";
 
 /* No comment provided by engineer. */
+"Missing way to connect to" = "Falta la forma de conectarse a";
+
+/* last modified date */
+"Modified" = "Modificado";
+
+/* No comment provided by engineer. */
 "Modify" = "Modificar";
 
 /* No comment provided by engineer. */
 "Modify\n" = "Modificar\n";
 
+/* No comment provided by engineer. */
+"Modifying the raw XML data allows you to correct errors that prevent uploading.\n\nIt is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format." = "Modificar los datos XML sin procesar te permite corregir los errores que impiden la carga.\n\nEs una operación avanzada que sólo debe llevarse a cabo si tienes un conocimiento profundo del formato del conjunto de cambios de OSM.";
+
 /* Edit action */
 "More..." = "Más…";
+
+/* No comment provided by engineer. */
+"Most recent" = "Más reciente";
 
 /* No comment provided by engineer. */
 "Move" = "Trasladar";
@@ -449,6 +557,12 @@
 
 /* No comment provided by engineer. */
 "Multipolygon" = "Multipolígono";
+
+/* No comment provided by engineer. */
+"Name" = "Nombre";
+
+/* Quest for objects that aren't recently updated */
+"Needs Survey" = "Encuesta sobre las necesidades";
 
 /* No comment provided by engineer. */
 "Network error" = "Error de red";
@@ -462,6 +576,9 @@
 
 /* GPX track */
 "No active track" = "No hay ningún rastro activo";
+
+/* Alert title */
+"No Data" = "Sin datos";
 
 /* No comment provided by engineer. */
 "No Left Turn restriction" = "Restricción de giro a la izquierda";
@@ -502,14 +619,38 @@
 /* No comment provided by engineer. */
 "Node Tags" = "Etiquetas del nodo";
 
+/* User credentials not found */
+"Not found" = "No encontrado";
+
 /* OSM note */
 "Note History" = "Historial de nota";
+
+/* No comment provided by engineer. */
+"Nothing to upload, no changes have been made." = "No hay nada que subir, no se han hecho cambios.";
+
+/* No comment provided by engineer. */
+"Number of recent items to display" = "Número de elementos recientes a mostrar";
+
+/* No comment provided by engineer. */
+"Object modified" = "Objeto modificado";
 
 /* No comment provided by engineer. */
 "OK" = "Aceptar";
 
 /* No comment provided by engineer. */
+"Only Left Turn restriction" = "Sólo restricción de giro a la izquierda";
+
+/* No comment provided by engineer. */
 "Only multipolygon relations are supported" = "Solo se admiten las relaciones multipoligonales";
+
+/* No comment provided by engineer. */
+"Only Right Turn restriction" = "Sólo restricción de giro a la derecha";
+
+/* No comment provided by engineer. */
+"Only Straight On restriction" = "Solo se permite conducir en línea recta";
+
+/* No comment provided by engineer. */
+"Only ways/multipolygons can be rotated" = "Solo se pueden rotar varias carreteras/polígonos";
 
 /* Open the iOS Settings app */
 "Open Settings" = "Abrir configuración";
@@ -524,10 +665,22 @@
 "Paste" = "Pegar";
 
 /* No comment provided by engineer. */
+"Paste the JSON for your quests into the field below" = "Pega el JSON para sus misiones en el campo a continuación";
+
+/* No comment provided by engineer. */
+"Pasting %@ characters, maximum tag length is 255" = "Al pegar caracteres %@, la longitud máxima de la etiqueta es 255";
+
+/* No comment provided by engineer. */
+"Pasting %ld tag(s)" = "Pegando etiqueta(s) %ld";
+
+/* No comment provided by engineer. */
 "Perform Action" = "Efectuar acción";
 
 /* No comment provided by engineer. */
 "Please wait" = "Espere";
+
+/* Object geometry: a node */
+"Point" = "Punto";
 
 /* No comment provided by engineer. */
 "Previous" = "Anterior";
@@ -535,8 +688,20 @@
 /* previous GPX track */
 "Previous Tracks" = "Rastros anteriores";
 
+/* No comment provided by engineer. */
+"Provide a single-character symbol (emoji or unicode character) to identify this quest:" = "Proporciona un símbolo de un solo carácter (emoji o carácter unicode) para identificar esta búsqueda:";
+
 /* Discard editing changes when resetting OSM data cache */
 "Purge" = "Purgar";
+
+/* The current Quest the user is answering */
+"Quest" = "Búsqueda";
+
+/* No comment provided by engineer. */
+"Quest Definition Error" = "Error de definición de la búsqueda";
+
+/* No comment provided by engineer. */
+"Quests were imported successfully." = "Las tareas se han importado correctamente.";
 
 /* Alert title message */
 "Recent Aerial Imagery" = "Imágenes aéreas recientes";

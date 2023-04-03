@@ -93,7 +93,7 @@ final class TileServerList {
 			delta = CACurrentMediaTime() - delta
 			print("TileServerList decode time = \(delta)")
 
-#if true && DEBUG
+#if false && DEBUG
 			// serialize to bplist
 			do {
 				let data2 = FastEncoder.encode(externalAerials)
