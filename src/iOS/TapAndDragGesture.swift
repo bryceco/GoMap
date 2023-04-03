@@ -16,7 +16,7 @@ private enum TapDragGestureState {
 }
 
 private let DoubleTapTime: TimeInterval = 0.25
-private let DoubleTapDistance: Float = 22.0
+private let DoubleTapDistance: Float = 40.0
 
 private func TouchTranslation(_ touch: UITouch, _ view: UIView) -> CGPoint {
 	let newPoint = touch.location(in: view)
@@ -68,6 +68,7 @@ class TapAndDragGesture: UIGestureRecognizer {
 		{
 			guard let touch = touches.first else { return }
 			let loc = touch.location(in: view)
+
 			if ProcessInfo.processInfo.systemUptime - lastTouchTimestamp < DoubleTapTime,
 			   hypot(Float(lastTouchLocation.x - loc.x), Float(lastTouchLocation.y - loc.y)) < DoubleTapDistance
 			{
