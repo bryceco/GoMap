@@ -244,9 +244,9 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 				   dict["name"] == nil
 				{
 					// find name field and make it first responder
-					DispatchQueue.main.async(execute: {
+					DispatchQueue.main.async(execute: { [weak self] in
 						let index = IndexPath(row: 1, section: 0)
-						if let cell = self.tableView.cellForRow(at: index) as? FeaturePresetCell,
+						if let cell = self?.tableView.cellForRow(at: index) as? FeaturePresetCell,
 						   case let .key(presetKey) = cell.presetKey,
 						   presetKey.tagKey == "name"
 						{
@@ -319,6 +319,10 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		guard let tabController = tabBarController as? POITabBarController else {
+			return UITableViewCell()
+		}
+
 		if drillDownGroup == nil {
 			// special case the key/value cells and the customize button
 			if indexPath.section == allPresets?.sectionCount() {
@@ -345,7 +349,6 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 			}
 		}
 
-		let tabController = tabBarController as! POITabBarController
 		let keyValueDict = tabController.keyValueDict
 
 		let rowObject = (drillDownGroup != nil) ? drillDownGroup!.presetKeys[indexPath.row]
@@ -370,8 +373,8 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 				if value != "" {
 					// This shouldn't be necessary but the cell height isn't correct
 					// when the cell first appears.
-					DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
-						self.updateTextViewSize(cell.valueField)
+					DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: { [weak self] in
+						self?.updateTextViewSize(cell.valueField)
 					})
 				} else {
 					FeaturePresetAreaCell.addPlaceholderText(cell.valueField)
@@ -488,8 +491,8 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		{
 			dest.key = presetKey.tagKey
 			dest.presetValueList = presetKey.presetList ?? []
-			dest.onSetValue = {
-				self.updateTagDict(withValue: $0, forKey: presetKey.tagKey)
+			dest.onSetValue = { [weak self] in
+				self?.updateTagDict(withValue: $0, forKey: presetKey.tagKey)
 			}
 			var name = presetKey.name
 			if let indexPath = tableView.indexPath(for: cell),
