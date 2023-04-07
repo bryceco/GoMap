@@ -91,7 +91,7 @@ class OsmUserPrefs: CustomStringConvertible, CustomDebugStringConvertible {
 				return
 			}
 			self.preferences.removeAll()
-			self.oldPreferenceKeys = dict.compactMap({ $0.key.hasPrefix(self.PREFIX) ? $0.key : nil })
+			self.oldPreferenceKeys = dict.keys.filter({ $0.hasPrefix(self.PREFIX) })
 
 			while let key2 = dict.keys.first {
 				guard key2.hasPrefix(self.PREFIX) else {
@@ -108,6 +108,9 @@ class OsmUserPrefs: CustomStringConvertible, CustomDebugStringConvertible {
 						dict.removeValue(forKey: index)
 					}
 					self.preferences[key] = value
+					// Also remove the initial key to ensure we make forward progress.
+					// This is only necessary if the store is corrupt.
+					dict.removeValue(forKey: key2)
 				} else {
 					self.preferences[key] = dict[key]
 					dict.removeValue(forKey: key)
@@ -153,10 +156,9 @@ class OsmUserPrefs: CustomStringConvertible, CustomDebugStringConvertible {
 				request.httpBody = value.data(using: .utf8)
 			}
 			URLSession.shared.data(with: request, completionHandler: { result in
-				print("\(result)")
 			})
 		}
-		oldPreferenceKeys = dict.compactMap { $0.key.hasPrefix(self.PREFIX) ? $0.key : nil }
+		oldPreferenceKeys = dict.compactMap { $0.key.hasPrefix(self.PREFIX) && !$0.value.isEmpty ? $0.key : nil }
 
 		callback(true)
 	}
