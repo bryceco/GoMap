@@ -160,12 +160,10 @@ final class TileServer: Equatable, Codable, FastCodable {
 		let attributionUrl = try String(fromFast: decoder)
 
 		self.init(withName: name, identifier: identifier, url: url, best: best,
-				  apiKey: apiKey, maxZoom: maxZoom, roundUp: roundZoomUp, startDate: startDate, endDate: endDate,
-				  wmsProjection: wmsProjection, geoJSON: geoJSON,
-				  attribString: attributionString, attribIconString: attributionIconString, attribUrl: attributionUrl)
+		          apiKey: apiKey, maxZoom: maxZoom, roundUp: roundZoomUp, startDate: startDate, endDate: endDate,
+		          wmsProjection: wmsProjection, geoJSON: geoJSON,
+		          attribString: attributionString, attribIconString: attributionIconString, attribUrl: attributionUrl)
 	}
-
-
 
 	init(
 		withName name: String,

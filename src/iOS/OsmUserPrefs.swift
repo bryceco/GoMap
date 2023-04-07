@@ -107,12 +107,13 @@ class OsmUserPrefs: CustomStringConvertible, CustomDebugStringConvertible {
 						value += v
 						dict.removeValue(forKey: index)
 					}
-					self.preferences[key] = value
+					self.preferences[key] = value.removingPercentEncoding!
+
 					// Also remove the initial key to ensure we make forward progress.
 					// This is only necessary if the store is corrupt.
 					dict.removeValue(forKey: key2)
 				} else {
-					self.preferences[key] = dict[key]
+					self.preferences[key] = dict[key]?.removingPercentEncoding
 					dict.removeValue(forKey: key)
 				}
 			}
@@ -121,7 +122,9 @@ class OsmUserPrefs: CustomStringConvertible, CustomDebugStringConvertible {
 	}
 
 	func upload(_ callback: @escaping (Bool) -> Void) {
-		var dict = preferences
+		var dict = preferences.mapValues({
+			$0.addingPercentEncoding(withAllowedCharacters: CharacterSet.asciiExceptPercent)!
+		})
 		while let item = dict.first(where: { $0.value.count > MAX_LENGTH }) {
 			dict.removeValue(forKey: item.key)
 
@@ -155,8 +158,7 @@ class OsmUserPrefs: CustomStringConvertible, CustomDebugStringConvertible {
 				request.httpMethod = "PUT"
 				request.httpBody = value.data(using: .utf8)
 			}
-			URLSession.shared.data(with: request, completionHandler: { result in
-			})
+			URLSession.shared.data(with: request, completionHandler: { _ in })
 		}
 		oldPreferenceKeys = dict.compactMap { $0.key.hasPrefix(self.PREFIX) && !$0.value.isEmpty ? $0.key : nil }
 

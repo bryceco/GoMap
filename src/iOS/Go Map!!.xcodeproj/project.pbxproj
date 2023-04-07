@@ -139,6 +139,7 @@
 		02D6238526A6628300A4F147 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02D6238326A6628300A4F147 /* MainInterface.storyboard */; };
 		02D6238926A6628300A4F147 /* PhotoShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 02D6237F26A6628300A4F147 /* PhotoShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		02D95B9429DA8D1F00F8FCA9 /* FastCodable in Frameworks */ = {isa = PBXBuildFile; productRef = 02D95B9329DA8D1F00F8FCA9 /* FastCodable */; };
+		02D95B9629E0AE7F00F8FCA9 /* CharacterSet+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D95B9529E0AE7F00F8FCA9 /* CharacterSet+Extension.swift */; };
 		02DC59811671B79100213558 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02DC59801671B79100213558 /* CoreText.framework */; };
 		02E049BA2650B0E10028B57F /* TurnRestrictController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096AF263D4FF500E3B129 /* TurnRestrictController.swift */; };
 		02E049BB2651BAB90028B57F /* UndoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C381C306263FD0E8003142BA /* UndoManager.swift */; };
@@ -596,6 +597,7 @@
 		02D7DF8826790A80003EE233 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Changeset.strings; sourceTree = "<group>"; };
 		02D95B9129DA8B9B00F8FCA9 /* FastCodable */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FastCodable; path = ../../../FastCodable; sourceTree = "<group>"; };
 		02D95B9229DA8CBB00F8FCA9 /* FastCodable */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FastCodable; path = ../../../FastCodable; sourceTree = "<group>"; };
+		02D95B9529E0AE7F00F8FCA9 /* CharacterSet+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CharacterSet+Extension.swift"; sourceTree = "<group>"; };
 		02DAAEB329D3B95C00BB608A /* mr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mr; path = mr.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
 		02DAAEB429D3B95C00BB608A /* mr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mr; path = mr.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		02DAAEB529D3B95C00BB608A /* mr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mr; path = mr.lproj/Display.strings; sourceTree = "<group>"; };
@@ -1181,6 +1183,7 @@
 				02CA15502824A6B40047B0E5 /* String+Ext.swift */,
 				0266DE852655A21F007A502E /* Superview.swift */,
 				0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */,
+				02D95B9529E0AE7F00F8FCA9 /* CharacterSet+Extension.swift */,
 			);
 			name = Utility;
 			path = ../Shared/Utility;
@@ -1619,6 +1622,7 @@
 				0293FEB1299D5C78002EED90 /* MapMarkerIgnoreList.swift in Sources */,
 				02505C5329A2EAD60078D60D /* AdvancedQuestBuilder.swift in Sources */,
 				020EBA7926506156001D56F4 /* MercatorTileLayer.swift in Sources */,
+				02D95B9629E0AE7F00F8FCA9 /* CharacterSet+Extension.swift in Sources */,
 				02354F7A246349E100878A04 /* CurvedGlyphLayer.swift in Sources */,
 				0226B771268300C9005DB9E2 /* Data+Wrapper.swift in Sources */,
 				ED56E5B426026542000B368C /* BingMetadataViewController.swift in Sources */,
