@@ -749,6 +749,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		// Support zoom via tap and drag
 		tapAndDragGesture = TapAndDragGesture(target: self, action: #selector(handleTapAndDragGesture(_:)))
 		tapAndDragGesture.delegate = self
+		tapAndDragGesture.delaysTouchesBegan = false
+		tapAndDragGesture.delaysTouchesEnded = false
 		addGestureRecognizer(tapAndDragGesture)
 
 		// these need to be loaded late because assigning to them changes the view
