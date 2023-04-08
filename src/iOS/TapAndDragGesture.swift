@@ -70,7 +70,6 @@ class TapAndDragGesture: UIGestureRecognizer {
 		if tapState == .needFirstTap {
 			lastTouchLocation = loc
 		} else if tapState == .needSecondTap {
-			print("\(touch.timestamp - lastTouchTimestamp)")
 			guard
 				touch.timestamp - lastTouchTimestamp < DoubleTapTime,
 				hypot(Float(lastTouchLocation.x - loc.x), Float(lastTouchLocation.y - loc.y)) < DoubleTapDistance
