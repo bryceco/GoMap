@@ -137,16 +137,18 @@ final class MapMarkerButton: MapView.MapViewButton {
 		didSet {
 			guard isHighlighted != oldValue else { return }
 			if isHighlighted {
-				let pulseAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
-				pulseAnimation.duration = 0.2
-				pulseAnimation.fromValue = 0.5
-				pulseAnimation.toValue = 1.0
-				pulseAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-				pulseAnimation.autoreverses = true
-				pulseAnimation.repeatCount = .greatestFiniteMagnitude
-				layer.add(pulseAnimation, forKey: "animateOpacity")
+				if let shapeLayer = layer.sublayers?.first as? CAShapeLayer {
+					let pulseAnimation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.strokeColor))
+					pulseAnimation.duration = 0.3
+					pulseAnimation.fromValue = shapeLayer.strokeColor
+					pulseAnimation.toValue = UIColor.green.cgColor
+					pulseAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+					pulseAnimation.autoreverses = true
+					pulseAnimation.repeatCount = .greatestFiniteMagnitude
+					shapeLayer.add(pulseAnimation, forKey: "animateBorder")
+				}
 			} else {
-				layer.removeAnimation(forKey: "animateOpacity")
+				layer.sublayers?.first?.removeAnimation(forKey: "animateBorder")
 			}
 		}
 	}
