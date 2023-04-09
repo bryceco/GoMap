@@ -1,16 +1,23 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "KissXML",
-        "repositoryURL": "https://github.com/robbiehanson/KissXML",
-        "state": {
-          "branch": "master",
-          "revision": "990cdef080213b5a3f0d9709b845d553bd3ddb97",
-          "version": null
-        }
+  "pins" : [
+    {
+      "identity" : "fastcodable",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/bryceco/FastCodable",
+      "state" : {
+        "branch" : "main",
+        "revision" : "4f698d964291095ea4dd211ae432582bbea631e3"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "kissxml",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/robbiehanson/KissXML",
+      "state" : {
+        "branch" : "master",
+        "revision" : "990cdef080213b5a3f0d9709b845d553bd3ddb97"
+      }
+    }
+  ],
+  "version" : 2
 }

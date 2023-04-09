@@ -18,6 +18,7 @@
 		020685D826D3253F00A447F9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 020685D626D3253F00A447F9 /* InfoPlist.strings */; };
 		020798012994706000D3C654 /* QuestBuilderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020798002994706000D3C654 /* QuestBuilderController.swift */; };
 		02079803299470FB00D3C654 /* QuestBuilder.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02079802299470FB00D3C654 /* QuestBuilder.storyboard */; };
+		02092ECD29E2497E0095042B /* FastCodable in Frameworks */ = {isa = PBXBuildFile; productRef = 02092ECC29E2497E0095042B /* FastCodable */; };
 		020E160B267A82050037DE49 /* TileServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020E160A267A82050037DE49 /* TileServer.swift */; };
 		020EBA7926506156001D56F4 /* MercatorTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925326411C2B000A2A99 /* MercatorTileLayer.swift */; };
 		020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */; };
@@ -138,7 +139,6 @@
 		02D6238226A6628300A4F147 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D6238126A6628300A4F147 /* ShareViewController.swift */; };
 		02D6238526A6628300A4F147 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02D6238326A6628300A4F147 /* MainInterface.storyboard */; };
 		02D6238926A6628300A4F147 /* PhotoShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 02D6237F26A6628300A4F147 /* PhotoShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		02D95B9429DA8D1F00F8FCA9 /* FastCodable in Frameworks */ = {isa = PBXBuildFile; productRef = 02D95B9329DA8D1F00F8FCA9 /* FastCodable */; };
 		02D95B9629E0AE7F00F8FCA9 /* CharacterSet+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D95B9529E0AE7F00F8FCA9 /* CharacterSet+Extension.swift */; };
 		02DC59811671B79100213558 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02DC59801671B79100213558 /* CoreText.framework */; };
 		02E049BA2650B0E10028B57F /* TurnRestrictController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096AF263D4FF500E3B129 /* TurnRestrictController.swift */; };
@@ -595,8 +595,6 @@
 		02D7DF8626790A80003EE233 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/POI.strings; sourceTree = "<group>"; };
 		02D7DF8726790A80003EE233 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Settings.strings; sourceTree = "<group>"; };
 		02D7DF8826790A80003EE233 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Changeset.strings; sourceTree = "<group>"; };
-		02D95B9129DA8B9B00F8FCA9 /* FastCodable */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FastCodable; path = ../../../FastCodable; sourceTree = "<group>"; };
-		02D95B9229DA8CBB00F8FCA9 /* FastCodable */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FastCodable; path = ../../../FastCodable; sourceTree = "<group>"; };
 		02D95B9529E0AE7F00F8FCA9 /* CharacterSet+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CharacterSet+Extension.swift"; sourceTree = "<group>"; };
 		02DAAEB329D3B95C00BB608A /* mr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mr; path = mr.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
 		02DAAEB429D3B95C00BB608A /* mr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mr; path = mr.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
@@ -779,7 +777,6 @@
 				02401F361DE021EE00F32AF5 /* ExternalAccessory.framework in Frameworks */,
 				02EDCC081683EC2D007F9934 /* CFNetwork.framework in Frameworks */,
 				027AD5D219F5A18700120654 /* CoreFoundation.framework in Frameworks */,
-				02D95B9429DA8D1F00F8FCA9 /* FastCodable in Frameworks */,
 				02ACBA3816713CCB00BB4414 /* CoreGraphics.framework in Frameworks */,
 				02ACBD2116717BC500BB4414 /* CoreLocation.framework in Frameworks */,
 				02DC59811671B79100213558 /* CoreText.framework in Frameworks */,
@@ -787,6 +784,7 @@
 				02B52E7728C9788200CB55F3 /* libswiftCoreGraphics.tbd in Frameworks */,
 				02ACBA3616713CCB00BB4414 /* Foundation.framework in Frameworks */,
 				021C6AB3168768C800FB17B0 /* MessageUI.framework in Frameworks */,
+				02092ECD29E2497E0095042B /* FastCodable in Frameworks */,
 				02ACBD1F16717BBB00BB4414 /* QuartzCore.framework in Frameworks */,
 				02E6267219973A0700565D62 /* Security.framework in Frameworks */,
 				02ACBA3416713CCB00BB4414 /* UIKit.framework in Frameworks */,
@@ -869,7 +867,6 @@
 		02ACBA2416713CCB00BB4414 = {
 			isa = PBXGroup;
 			children = (
-				02D95B9029DA8B9B00F8FCA9 /* Packages */,
 				02BACD22205A1DDB00C74A49 /* Go Map!!.entitlements */,
 				024E6D2E24CBBCE500E1E2A3 /* apple-app-site-association */,
 				02ACBA3916713CCB00BB4414 /* Go Map! */,
@@ -1115,15 +1112,6 @@
 			path = PhotoShare;
 			sourceTree = "<group>";
 		};
-		02D95B9029DA8B9B00F8FCA9 /* Packages */ = {
-			isa = PBXGroup;
-			children = (
-				02D95B9129DA8B9B00F8FCA9 /* FastCodable */,
-				02D95B9229DA8CBB00F8FCA9 /* FastCodable */,
-			);
-			name = Packages;
-			sourceTree = "<group>";
-		};
 		02F53299267ACFBB0088DF41 /* EditorLayer */ = {
 			isa = PBXGroup;
 			children = (
@@ -1318,7 +1306,7 @@
 			name = "Go Map!!";
 			packageProductDependencies = (
 				025CCA11271244B800074726 /* KissXML */,
-				02D95B9329DA8D1F00F8FCA9 /* FastCodable */,
+				02092ECC29E2497E0095042B /* FastCodable */,
 			);
 			productName = OSMiOS;
 			productReference = 02ACBA2F16713CCB00BB4414 /* Go Map!!.app */;
@@ -1454,6 +1442,7 @@
 			mainGroup = 02ACBA2416713CCB00BB4414;
 			packageReferences = (
 				025CCA10271244B800074726 /* XCRemoteSwiftPackageReference "KissXML" */,
+				02092ECB29E2497E0095042B /* XCRemoteSwiftPackageReference "FastCodable" */,
 			);
 			productRefGroup = 02ACBA3016713CCB00BB4414 /* Products */;
 			projectDirPath = "";
@@ -2614,6 +2603,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		02092ECB29E2497E0095042B /* XCRemoteSwiftPackageReference "FastCodable" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bryceco/FastCodable";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		025CCA10271244B800074726 /* XCRemoteSwiftPackageReference "KissXML" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/robbiehanson/KissXML";
@@ -2625,14 +2622,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		02092ECC29E2497E0095042B /* FastCodable */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02092ECB29E2497E0095042B /* XCRemoteSwiftPackageReference "FastCodable" */;
+			productName = FastCodable;
+		};
 		025CCA11271244B800074726 /* KissXML */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 025CCA10271244B800074726 /* XCRemoteSwiftPackageReference "KissXML" */;
 			productName = KissXML;
-		};
-		02D95B9329DA8D1F00F8FCA9 /* FastCodable */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = FastCodable;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
