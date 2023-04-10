@@ -30,9 +30,9 @@ final class QuestUserList: Codable {
 		list = listCopy.list
 	}
 
-	convenience init(fromUserDefaults defaults: UserDefaults, key: String) {
+	convenience init(fromUserPrefsWithKey key: UserPrefs.Pref) {
 		do {
-			if let data = defaults.object(forKey: key) as! Data? {
+			if let data = UserPrefs.shared.object(forKey: key) as! Data? {
 				try self.init(fromJsonData: data)
 				return
 			}
@@ -40,9 +40,9 @@ final class QuestUserList: Codable {
 		self.init()
 	}
 
-	func save(toUserDefaults defaults: UserDefaults, key: String) {
+	func save(toUserPrefsWithKey key: UserPrefs.Pref) {
 		let data = asJsonData()
-		UserDefaults.standard.set(data, forKey: key)
+		UserPrefs.shared.set(object: data, forKey: key)
 	}
 
 	func asJsonData() -> Data {
@@ -305,13 +305,13 @@ class QuestList {
 	}
 
 	func loadPrefs() {
-		enabled = UserDefaults.standard.object(forKey: "QuestTypeEnabledDict") as? [String: Bool] ?? [:]
-		userQuests = QuestUserList(fromUserDefaults: UserDefaults.standard, key: "QuestUserDefinedList")
+		enabled = UserPrefs.shared.object(forKey: .questTypeEnabledDict) as? [String: Bool] ?? [:]
+		userQuests = QuestUserList(fromUserPrefsWithKey: .questUserDefinedList)
 	}
 
 	func savePrefs() {
-		UserDefaults.standard.set(enabled, forKey: "QuestTypeEnabledDict")
-		userQuests.save(toUserDefaults: UserDefaults.standard, key: "QuestUserDefinedList")
+		UserPrefs.shared.set(object: enabled, forKey: .questTypeEnabledDict)
+		userQuests.save(toUserPrefsWithKey: .questUserDefinedList)
 	}
 
 	func addUserQuest(_ quest: QuestDefinition,

@@ -12,33 +12,33 @@ import Foundation
 class MostRecentlyUsed<T: Equatable> {
 	private(set) var items: [T]
 	let maxCount: Int
-	let userDefaultsKey: String
+	let userPrefsKey: UserPrefs.Pref
 	let autoLoadSave: Bool
 
 	var count: Int { return items.count }
 
 	init(maxCount: Int,
-	     userDefaultsKey: String,
+	     userPrefsKey: UserPrefs.Pref,
 	     autoLoadSave: Bool = true)
 	{
 		self.maxCount = maxCount
-		self.userDefaultsKey = userDefaultsKey
+		self.userPrefsKey = userPrefsKey
 		self.autoLoadSave = autoLoadSave
 		if autoLoadSave {
-			items = UserDefaults.standard.object(forKey: userDefaultsKey) as? [T] ?? []
+			items = UserPrefs.shared.object(forKey: userPrefsKey) as? [T] ?? []
 		} else {
 			items = []
 		}
 	}
 
 	func load(withMapping: (String) -> T?) {
-		let strings = UserDefaults.standard.object(forKey: userDefaultsKey) as? [String] ?? []
+		let strings = UserPrefs.shared.object(forKey: userPrefsKey) as? [String] ?? []
 		items = strings.compactMap(withMapping)
 	}
 
 	func save(withMapping: (T) -> String) {
 		let strings = items.map(withMapping)
-		UserDefaults.standard.set(strings, forKey: userDefaultsKey)
+		UserPrefs.shared.set(object: strings, forKey: userPrefsKey)
 	}
 
 	func remove(_ item: T) {
@@ -52,7 +52,7 @@ class MostRecentlyUsed<T: Equatable> {
 			items.removeLast()
 		}
 		if autoLoadSave {
-			UserDefaults.standard.set(items, forKey: userDefaultsKey)
+			UserPrefs.shared.set(object: items, forKey: userPrefsKey)
 		}
 	}
 }

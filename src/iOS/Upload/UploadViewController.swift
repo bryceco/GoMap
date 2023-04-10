@@ -25,8 +25,8 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 	@IBOutlet var commentHistoryButton: UIButton!
 	@IBOutlet var sourceHistoryButton: UIButton!
 
-	var recentCommentList = MostRecentlyUsed<String>(maxCount: 5, userDefaultsKey: "recentCommitComments")
-	var recentSourceList = MostRecentlyUsed<String>(maxCount: 5, userDefaultsKey: "recentSourceComments")
+	var recentCommentList = MostRecentlyUsed<String>(maxCount: 5, userPrefsKey: .recentCommitComments)
+	var recentSourceList = MostRecentlyUsed<String>(maxCount: 5, userPrefsKey: .recentSourceComments)
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -65,11 +65,8 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 		let mapView = AppDelegate.shared.mapView
 		mapData = mapView?.editorLayer.mapData
 
-		let comment = UserDefaults.standard.object(forKey: "uploadComment") as? String
-		commentTextView.text = comment
-
-		let source = UserDefaults.standard.object(forKey: "uploadSource") as? String
-		sourceTextField.text = source
+		commentTextView.text = UserPrefs.shared.string(forKey: .uploadComment)
+		sourceTextField.text = UserPrefs.shared.string(forKey: .uploadSource)
 		sourceTextField.placeholder = "survey, Bing, knowledge" // overrules translations: see #557
 
 		let text = mapData?.changesetAsAttributedString()
@@ -97,8 +94,8 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
-		UserDefaults.standard.set(commentTextView.text, forKey: "uploadComment")
-		UserDefaults.standard.set(sourceTextField.text, forKey: "uploadSource")
+		UserPrefs.shared.set(commentTextView.text, forKey: .uploadComment)
+		UserPrefs.shared.set(sourceTextField.text, forKey: .uploadSource)
 	}
 
 	func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -153,7 +150,10 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 			return
 		}
 
-		if !UserDefaults.standard.bool(forKey: "userDidPreviousUpload") {
+		guard
+			let didPrev = UserPrefs.shared.bool(forKey: .userDidPreviousUpload),
+			didPrev
+		else {
 			let alert = UIAlertController(
 				title: NSLocalizedString("Attention", comment: ""),
 				message: NSLocalizedString(
@@ -166,7 +166,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 			alert.addAction(UIAlertAction(title: NSLocalizedString("Commit", comment: ""),
 			                              style: .default,
 			                              handler: { [self] _ in
-			                              	UserDefaults.standard.set(true, forKey: "userDidPreviousUpload")
+				UserPrefs.shared.set(true, forKey: .userDidPreviousUpload)
 			                              	commit(nil)
 			                              }))
 			present(alert, animated: true)
@@ -231,11 +231,9 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 					appDelegate.mapView.flashMessage(NSLocalizedString("Upload complete!", comment: ""), duration: 1.5)
 
 					// record number of uploads
-					let appVersion = appDelegate.appVersion()
-					let uploadKey = "uploadCount-\(appVersion)"
-					var editCount = UserDefaults.standard.integer(forKey: uploadKey)
+					var editCount = UserPrefs.shared.integer(forKey: .uploadCountPerVersion) ?? 0
 					editCount += 1
-					UserDefaults.standard.set(editCount, forKey: uploadKey)
+					UserPrefs.shared.set(editCount, forKey: .uploadCountPerVersion)
 					appDelegate.mapView.ask(toRate: editCount)
 				})
 			}

@@ -22,8 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	let oAuth2 = OAuth2()
 
 	var userName: String? {
-		get { UserDefaults.standard.string(forKey: "userName") }
-		set { UserDefaults.standard.set(newValue, forKey: "userName") }
+		get { UserPrefs.shared.string(forKey: .userName) }
+		set { UserPrefs.shared.set(newValue, forKey: .userName) }
 	}
 
 	override init() {
@@ -78,15 +78,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 #endif
 
-		let defaults = UserDefaults.standard
-
 		// save the app version so we can detect upgrades
-		let prevVersion = defaults.object(forKey: "appVersion") as? String
+		let prevVersion = UserPrefs.shared.string(forKey: .appVersion)
 		if prevVersion != appVersion() {
 			print("Upgrade!")
+			UserPrefs.shared.set(0, forKey: .uploadCountPerVersion)
 			isAppUpgrade = true
 		}
-		defaults.set(appVersion(), forKey: "appVersion")
+		UserPrefs.shared.set(appVersion(), forKey: .appVersion)
 
 		return true
 	}

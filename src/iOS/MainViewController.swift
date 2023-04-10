@@ -64,7 +64,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 	}
 
 	func updateButtonPositionsFor(layout: MainViewButtonLayout) {
-		UserDefaults.standard.set(layout.rawValue, forKey: "buttonLayout")
+		UserPrefs.shared.set(layout.rawValue, forKey: .mapViewButtonLayout)
 
 		let isLeft = layout == .buttonsOnLeft
 		let attribute: NSLayoutConstraint.Attribute = isLeft ? .leading : .trailing
@@ -133,10 +133,8 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		navigationController?.isNavigationBarHidden = true
 
 		// update button layout constraints
-		UserDefaults.standard.register(defaults: [
-			"buttonLayout": NSNumber(value: MainViewButtonLayout.buttonsOnRight.rawValue)
-		])
-		buttonLayout = MainViewButtonLayout(rawValue: UserDefaults.standard.integer(forKey: "buttonLayout"))
+		buttonLayout = MainViewButtonLayout(rawValue: UserPrefs.shared.integer(forKey: .mapViewButtonLayout)
+			?? MainViewButtonLayout.buttonsOnRight.rawValue)
 
 		if #available(iOS 13.4, macCatalyst 13.0, *) {
 			// mouseover support for Mac Catalyst and iPad:

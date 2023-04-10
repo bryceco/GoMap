@@ -21,7 +21,7 @@ class POITabBarController: UITabBarController {
 		keyValueDict = selection?.tags ?? [:]
 		relationList = selection?.parentRelations ?? []
 
-		var tabIndex = UserDefaults.standard.integer(forKey: "POITabIndex")
+		var tabIndex = UserPrefs.shared.integer(forKey: .poiTabIndex) ?? 0
 		if tabIndex == 2,
 		   selection == nil
 		{
@@ -103,6 +103,6 @@ class POITabBarController: UITabBarController {
 
 	override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
 		let tabIndex = tabBar.items!.firstIndex(of: item)!
-		UserDefaults.standard.set(tabIndex, forKey: "POITabIndex")
+		UserPrefs.shared.set(tabIndex, forKey: .poiTabIndex)
 	}
 }

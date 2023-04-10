@@ -19,6 +19,7 @@
 		020798012994706000D3C654 /* QuestBuilderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020798002994706000D3C654 /* QuestBuilderController.swift */; };
 		02079803299470FB00D3C654 /* QuestBuilder.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02079802299470FB00D3C654 /* QuestBuilder.storyboard */; };
 		02092ECD29E2497E0095042B /* FastCodable in Frameworks */ = {isa = PBXBuildFile; productRef = 02092ECC29E2497E0095042B /* FastCodable */; };
+		02092ECF29E32DD40095042B /* UserPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02092ECE29E32DD40095042B /* UserPrefs.swift */; };
 		02092ED129E8ADB70095042B /* ArchivePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02092ED029E8ADB70095042B /* ArchivePath.swift */; };
 		020E160B267A82050037DE49 /* TileServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020E160A267A82050037DE49 /* TileServer.swift */; };
 		020EBA7926506156001D56F4 /* MercatorTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925326411C2B000A2A99 /* MercatorTileLayer.swift */; };
@@ -325,6 +326,7 @@
 		0208898726BB1539003AF6BF /* ars */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ars; path = ars.lproj/POI.strings; sourceTree = "<group>"; };
 		0208898826BB1539003AF6BF /* ars */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ars; path = ars.lproj/Settings.strings; sourceTree = "<group>"; };
 		0208898926BB1539003AF6BF /* ars */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ars; path = ars.lproj/Changeset.strings; sourceTree = "<group>"; };
+		02092ECE29E32DD40095042B /* UserPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserPrefs.swift; path = ../Shared/UserPrefs.swift; sourceTree = "<group>"; };
 		02092ED029E8ADB70095042B /* ArchivePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivePath.swift; sourceTree = "<group>"; };
 		020E160A267A82050037DE49 /* TileServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileServer.swift; sourceTree = "<group>"; };
 		020E765929835D2C00B862B8 /* tzm */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tzm; path = tzm.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
@@ -997,6 +999,7 @@
 				C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */,
 				02F5329A267AD0250088DF41 /* Tiles */,
 				C365A562263FC53F007DEC94 /* TurnRestrictHwyView.swift */,
+				02092ECE29E32DD40095042B /* UserPrefs.swift */,
 				02F5329C267AD2B20088DF41 /* Utility */,
 				C381C305263FD0CA003142BA /* VectorMath.swift */,
 				C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */,
@@ -1552,6 +1555,7 @@
 				02BB355D29B6A55D00FB52E5 /* OsmUserPrefs.swift in Sources */,
 				C3D096AE263D4BFB00E3B129 /* UploadViewController.swift in Sources */,
 				0288169E265895FA00C30EA2 /* OsmMapData+Edit.swift in Sources */,
+				02092ECF29E32DD40095042B /* UserPrefs.swift in Sources */,
 				C365A569263FCC9C007DEC94 /* TapAndDragGesture.swift in Sources */,
 				02A59EDB297DE4E100B0A676 /* PresetField.swift in Sources */,
 				02A59EE92981D75700B0A676 /* OAuth2.swift in Sources */,

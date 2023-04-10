@@ -17,7 +17,6 @@ typealias EditActionReturnWay = () -> OsmWay
 typealias EditActionReturnNode = () -> OsmNode
 
 // "https://api.openstreetmap.org/"
-let OSM_SERVER_KEY = "OSM Server"
 var OSM_API_URL = ""
 
 final class OsmUserStatistics {
@@ -121,7 +120,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			purgeSoft()
 		}
 
-		UserDefaults.standard.set(hostname, forKey: OSM_SERVER_KEY)
+		UserPrefs.shared.set(hostname, forKey: .osmServerUrl)
 		OSM_API_URL = hostname
 	}
 
@@ -1220,8 +1219,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	// MARK: Init/Save/Restore
 
 	func initCommon() {
-		UserDefaults.standard.register(defaults: [OSM_SERVER_KEY: "https://api.openstreetmap.org/"])
-		let server = UserDefaults.standard.object(forKey: OSM_SERVER_KEY) as! String
+		let server = UserPrefs.shared.string(forKey: .osmServerUrl)
+			?? "https://api.openstreetmap.org/"
 		setServer(server)
 		setupPeriodicSaveTimer()
 	}

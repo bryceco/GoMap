@@ -18,7 +18,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	private var resultsArray: [NominatimResult] = []
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 	@IBOutlet var tableView: UITableView!
-	private var historyArray = MostRecentlyUsed<String>(maxCount: 20, userDefaultsKey: "searchHistory")
+	private var historyArray = MostRecentlyUsed<String>(maxCount: 20, userPrefsKey: .searchHistory)
 	private var showingHistory = true
 
 	override func viewDidLoad() {

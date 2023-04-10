@@ -20,8 +20,6 @@ final class GpxTrackLayerWithProperties: CAShapeLayer {
 
 final class GpxLayer: CALayer, GetDiskCacheSize {
 	private static let DefaultExpirationDays = 7
-	private static let USER_DEFAULTS_GPX_EXPIRATIION_KEY = "GpxTrackExpirationDays"
-	private static let USER_DEFAULTS_GPX_BACKGROUND_TRACKING = "GpxTrackBackgroundTracking"
 
 	let mapView: MapView
 	var stabilizingCount = 0
@@ -52,16 +50,10 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 
 	init(mapView: MapView) {
 		self.mapView = mapView
-		let uploads = UserDefaults.standard.object(forKey: "GpxUploads") as? [String: NSNumber] ?? [:]
+		let uploads = UserPrefs.shared.object(forKey: .gpxUploadedGpxTracks) as? [String: NSNumber] ?? [:]
 		uploadedTracks = uploads.mapValues({ $0.boolValue })
 
 		super.init()
-
-		UserDefaults.standard.register(
-			defaults: [
-				GpxLayer.USER_DEFAULTS_GPX_EXPIRATIION_KEY: NSNumber(value: GpxLayer.DefaultExpirationDays),
-				GpxLayer.USER_DEFAULTS_GPX_BACKGROUND_TRACKING: NSNumber(value: false)
-			])
 
 		actions = [
 			"onOrderIn": NSNull(),
@@ -84,7 +76,7 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 	var uploadedTracks: [String: Bool] {
 		didSet {
 			let dict = uploadedTracks.mapValues({ NSNumber(value: $0) })
-			UserDefaults.standard.set(dict, forKey: "GpxUploads")
+			UserPrefs.shared.set(object: dict, forKey: .gpxUploadedGpxTracks)
 		}
 	}
 
@@ -246,20 +238,19 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 	// If zero then never delete them
 	static var expirationDays: Int {
 		get {
-			(UserDefaults.standard.object(forKey: GpxLayer.USER_DEFAULTS_GPX_EXPIRATIION_KEY) as? NSNumber)?
-				.intValue ?? Self.DefaultExpirationDays
+			UserPrefs.shared.integer(forKey: .gpxTracksExpireAfterDays) ?? Self.DefaultExpirationDays
 		}
-		set { UserDefaults.standard.set(NSNumber(value: newValue), forKey: GpxLayer.USER_DEFAULTS_GPX_EXPIRATIION_KEY) }
+		set {
+			UserPrefs.shared.set(newValue, forKey: .gpxTracksExpireAfterDays)
+		}
 	}
 
 	static var backgroundTracking: Bool {
 		get {
-			(UserDefaults.standard.object(forKey: GpxLayer.USER_DEFAULTS_GPX_BACKGROUND_TRACKING) as? NSNumber)?
-				.boolValue ?? false
+			UserPrefs.shared.bool(forKey: .gpxRecordsTracksInBackground) ?? false
 		}
 		set {
-			UserDefaults.standard
-				.set(NSNumber(value: newValue), forKey: GpxLayer.USER_DEFAULTS_GPX_BACKGROUND_TRACKING)
+			UserPrefs.shared.set(newValue, forKey: .gpxRecordsTracksInBackground)
 		}
 	}
 

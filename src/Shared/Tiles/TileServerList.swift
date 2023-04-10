@@ -9,10 +9,6 @@
 import FastCodable
 import UIKit
 
-private let CUSTOMAERIALLIST_KEY = "AerialList"
-private let CUSTOMAERIALSELECTION_KEY = "AerialListSelection"
-private let RECENTLY_USED_KEY = "AerialListRecentlyUsed"
-
 enum TypeCastError: Error {
 	case invalidType
 	case unexpectedNil
@@ -25,11 +21,11 @@ final class TileServerList {
 	var mapboxLocator = TileServer.mapboxLocator
 
 	private var recentlyUsedList = MostRecentlyUsed<TileServer>(maxCount: 6,
-	                                                            userDefaultsKey: RECENTLY_USED_KEY,
+																userPrefsKey: .recentAerialsList,
 	                                                            autoLoadSave: false)
 	private(set) var lastDownloadDate: Date? {
-		get { UserDefaults.standard.object(forKey: "lastImageryDownloadDate") as? Date }
-		set { UserDefaults.standard.set(newValue, forKey: "lastImageryDownloadDate") }
+		get { UserPrefs.shared.object(forKey: .lastImageryDownloadDate) as? Date }
+		set { UserPrefs.shared.set(object: newValue, forKey: .lastImageryDownloadDate) }
 	}
 
 	var onChange: (() -> Void)?
@@ -142,8 +138,7 @@ final class TileServerList {
 	}
 
 	private func load() {
-		let defaults = UserDefaults.standard
-		let list = defaults.object(forKey: CUSTOMAERIALLIST_KEY) as? [[String: Any]] ?? []
+		let list = UserPrefs.shared.object(forKey: .customAerialList) as? [[String: Any]] ?? []
 		userDefinedList = list.map({ TileServer(withDictionary: $0) })
 
 		// build a dictionary of all known sources
@@ -164,16 +159,15 @@ final class TileServerList {
 		// fetch and decode recently used list
 		recentlyUsedList.load(withMapping: { dict[$0] })
 
-		let currentIdentifier = (defaults.object(forKey: CUSTOMAERIALSELECTION_KEY) as? String)
+		let currentIdentifier = UserPrefs.shared.string(forKey: .currentAerialSelection)
 			?? TileServer.defaultServer
 		currentServer = dict[currentIdentifier] ?? dict[TileServer.defaultServer] ?? builtinServers()[0]
 	}
 
 	func save() {
-		let defaults = UserDefaults.standard
 		let a = userDefinedList.map({ $0.dictionary() })
-		defaults.set(a, forKey: CUSTOMAERIALLIST_KEY)
-		defaults.set(currentServer.identifier, forKey: CUSTOMAERIALSELECTION_KEY)
+		UserPrefs.shared.set(object: a, forKey: .customAerialList)
+		UserPrefs.shared.set(currentServer.identifier, forKey: .currentAerialSelection)
 
 		recentlyUsedList.save(withMapping: { $0.identifier })
 	}

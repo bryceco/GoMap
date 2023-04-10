@@ -23,8 +23,8 @@ extension EditorMapLayer {
 	// MARK: Copy/Paste
 
 	private var copyPasteTags: [String: String] {
-		get { return UserDefaults.standard.object(forKey: "copyPasteTags") as? [String: String] ?? [:] }
-		set { UserDefaults.standard.set(newValue, forKey: "copyPasteTags") }
+		get { return UserPrefs.shared.object(forKey: .copyPasteTags) as? [String: String] ?? [:] }
+		set { UserPrefs.shared.set(object: newValue, forKey: .copyPasteTags) }
 	}
 
 	func copyTags(_ object: OsmBaseObject) -> Bool {

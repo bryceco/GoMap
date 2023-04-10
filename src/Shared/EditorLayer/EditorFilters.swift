@@ -13,72 +13,54 @@ final class EditorFilters {
 
 	var enableObjectFilters = false { // turn all filters on/on
 		didSet {
-			UserDefaults.standard.set(enableObjectFilters, forKey: "editor.enableObjectFilters")
+			UserPrefs.shared.set(object: enableObjectFilters, forKey: .editor_enableObjectFilters)
 			onChange?()
 		}
 	}
 
-	var showLevel = false { didSet { save("Level", showLevel) }}
-	var showPoints = false { didSet { save("Points", showPoints) }}
-	var showTrafficRoads = false { didSet { save("TrafficRoads", showTrafficRoads) }}
-	var showServiceRoads = false { didSet { save("ServiceRoads", showServiceRoads) }}
-	var showPaths = false { didSet { save("Paths", showPaths) }}
-	var showBuildings = false { didSet { save("Buildings", showBuildings) }}
-	var showLanduse = false { didSet { save("Landuse", showLanduse) }}
-	var showBoundaries = false { didSet { save("Boundaries", showBoundaries) }}
-	var showWater = false { didSet { save("Water", showWater) }}
-	var showRail = false { didSet { save("Rail", showRail) }}
-	var showPower = false { didSet { save("Power", showPower) }}
-	var showPastFuture = false { didSet { save("PastFuture", showPastFuture) }}
-	var showOthers = false { didSet { save("Others", showOthers) }}
+	var showLevel = false { didSet { save(.editor_showLevel, showLevel) }}
+	var showPoints = false { didSet { save(.editor_showPoints, showPoints) }}
+	var showTrafficRoads = false { didSet { save(.editor_showTrafficRoads, showTrafficRoads) }}
+	var showServiceRoads = false { didSet { save(.editor_showServiceRoads, showServiceRoads) }}
+	var showPaths = false { didSet { save(.editor_showPaths, showPaths) }}
+	var showBuildings = false { didSet { save(.editor_showBuildings, showBuildings) }}
+	var showLanduse = false { didSet { save(.editor_showLanduse, showLanduse) }}
+	var showBoundaries = false { didSet { save(.editor_showBoundaries, showBoundaries) }}
+	var showWater = false { didSet { save(.editor_showWater, showWater) }}
+	var showRail = false { didSet { save(.editor_showRail, showRail) }}
+	var showPower = false { didSet { save(.editor_showPower, showPower) }}
+	var showPastFuture = false { didSet { save(.editor_showPastFuture, showPastFuture) }}
+	var showOthers = false { didSet { save(.editor_showOthers, showOthers) }}
 
 	var showLevelRange = "" { // range of levels for building level
 		didSet {
-			UserDefaults.standard.set(self.showLevelRange, forKey: "editor.showLevelRange")
+			UserPrefs.shared.set(self.showLevelRange, forKey: .editor_showLevelRange)
 			onChange?()
 		}
 	}
 
-	func save(_ name: String, _ value: Bool) {
-		UserDefaults.standard.setValue(value, forKey: "editor.show\(name)")
+	func save(_ pref: UserPrefs.Pref, _ value: Bool) {
+		UserPrefs.shared.set(value, forKey: pref)
 		onChange?()
 	}
 
 	init() {
-		let defaults = UserDefaults.standard
-		defaults.register(defaults: [
-			"editor.enableObjectFilters": NSNumber(value: false),
-			"editor.showLevel": NSNumber(value: false),
-			"editor.showLevelRange": "",
-			"editor.showPoints": NSNumber(value: true),
-			"editor.showTrafficRoads": NSNumber(value: true),
-			"editor.showServiceRoads": NSNumber(value: true),
-			"editor.showPaths": NSNumber(value: true),
-			"editor.showBuildings": NSNumber(value: true),
-			"editor.showLanduse": NSNumber(value: true),
-			"editor.showBoundaries": NSNumber(value: true),
-			"editor.showWater": NSNumber(value: true),
-			"editor.showRail": NSNumber(value: true),
-			"editor.showPower": NSNumber(value: true),
-			"editor.showPastFuture": NSNumber(value: true),
-			"editor.showOthers": NSNumber(value: true)
-		])
-
-		enableObjectFilters = defaults.bool(forKey: "editor.enableObjectFilters")
-		showLevel = defaults.bool(forKey: "editor.showLevel")
-		showLevelRange = defaults.object(forKey: "editor.showLevelRange") as? String ?? ""
-		showPoints = defaults.bool(forKey: "editor.showPoints")
-		showTrafficRoads = defaults.bool(forKey: "editor.showTrafficRoads")
-		showServiceRoads = defaults.bool(forKey: "editor.showServiceRoads")
-		showPaths = defaults.bool(forKey: "editor.showPaths")
-		showBuildings = defaults.bool(forKey: "editor.showBuildings")
-		showLanduse = defaults.bool(forKey: "editor.showLanduse")
-		showBoundaries = defaults.bool(forKey: "editor.showBoundaries")
-		showWater = defaults.bool(forKey: "editor.showWater")
-		showRail = defaults.bool(forKey: "editor.showRail")
-		showPower = defaults.bool(forKey: "editor.showPower")
-		showPastFuture = defaults.bool(forKey: "editor.showPastFuture")
-		showOthers = defaults.bool(forKey: "editor.showOthers")
+		let prefs = UserPrefs.shared
+		enableObjectFilters = prefs.bool(forKey: .editor_enableObjectFilters) ?? false
+		showLevel = prefs.bool(forKey: .editor_showLevel) ?? false
+		showLevelRange = prefs.object(forKey: .editor_showLevelRange) as? String ?? ""
+		showPoints = prefs.bool(forKey: .editor_showPoints) ?? false
+		showTrafficRoads = prefs.bool(forKey: .editor_showTrafficRoads) ?? false
+		showServiceRoads = prefs.bool(forKey: .editor_showServiceRoads) ?? false
+		showPaths = prefs.bool(forKey: .editor_showPaths) ?? false
+		showBuildings = prefs.bool(forKey: .editor_showBuildings) ?? false
+		showLanduse = prefs.bool(forKey: .editor_showLanduse) ?? false
+		showBoundaries = prefs.bool(forKey: .editor_showBoundaries) ?? false
+		showWater = prefs.bool(forKey: .editor_showWater) ?? false
+		showRail = prefs.bool(forKey: .editor_showRail) ?? false
+		showPower = prefs.bool(forKey: .editor_showPower) ?? false
+		showPastFuture = prefs.bool(forKey: .editor_showPastFuture) ?? false
+		showOthers = prefs.bool(forKey: .editor_showOthers) ?? false
 	}
 
 	private let traffic_roads: Set<String> = [

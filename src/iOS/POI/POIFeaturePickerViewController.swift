@@ -37,15 +37,15 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	weak var delegate: POIFeaturePickerDelegate?
 
 	class func loadMostRecent(forGeometry geometry: GEOMETRY) {
-		if let max = UserDefaults.standard.object(forKey: "mostRecentTypesMaximum") as? NSNumber,
-		   max.intValue > 0
+		if let max = UserPrefs.shared.integer(forKey: .mostRecentTypesMaximum),
+		   max > 0
 		{
-			mostRecentMaximum = max.intValue
+			mostRecentMaximum = max
 		} else {
 			mostRecentMaximum = MOST_RECENT_DEFAULT_COUNT
 		}
-		let defaults = "mostRecentTypes.\(geometry.rawValue)"
-		let a = UserDefaults.standard.object(forKey: defaults) as? [String] ?? []
+		let pref = UserPrefs.Pref.prefFor(geom: geometry)
+		let a = UserPrefs.shared.object(forKey: pref) as? [String] ?? []
 		mostRecentArray = a.compactMap({ PresetsDatabase.shared.presetFeatureForFeatureID($0) })
 	}
 
@@ -189,8 +189,8 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		}
 
 		let a = mostRecentArray.map({ $0.featureID })
-		let defaults = "mostRecentTypes.\(geometry.rawValue)"
-		UserDefaults.standard.set(a, forKey: defaults)
+		let pref = UserPrefs.Pref.prefFor(geom: geometry)
+		UserPrefs.shared.set(object: a, forKey: pref)
 	}
 
 	func updateTags(with feature: PresetFeature) {
@@ -269,7 +269,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 				count = 99
 			}
 			mostRecentMaximum = count
-			UserDefaults.standard.set(mostRecentMaximum, forKey: "mostRecentTypesMaximum")
+			UserPrefs.shared.set(mostRecentMaximum, forKey: .mostRecentTypesMaximum)
 		}))
 		alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
 		present(alert, animated: true)
