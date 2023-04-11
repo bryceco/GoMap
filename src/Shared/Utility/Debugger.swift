@@ -37,7 +37,7 @@ func mach_task_self() -> task_t {
 	return mach_task_self_
 }
 
-func MemoryUsed() -> Double {
+func MemoryUsed() -> Double? {
 	var info = mach_task_basic_info()
 	var count = mach_msg_type_number_t(MemoryLayout.size(ofValue: info) / MemoryLayout<integer_t>.size)
 	let kerr = withUnsafeMutablePointer(to: &info) { infoPtr in
@@ -52,7 +52,16 @@ func MemoryUsed() -> Double {
 		                          })
 	}
 	guard kerr == KERN_SUCCESS else {
-		return 0.0
+		return nil
 	}
 	return Double(info.resident_size)
+}
+
+func TotalDeviceMemory() -> Double? {
+	var mib: [Int32] = [CTL_HW, HW_MEMSIZE]
+	var memorySize: UInt = 0
+	var size = MemoryLayout.stride(ofValue: memorySize)
+	let errno = sysctl(&mib, UInt32(mib.count), &memorySize, &size, nil, 0)
+	guard errno == 0 else { return nil }
+	return Double(memorySize)
 }

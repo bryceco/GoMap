@@ -1788,15 +1788,12 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			}
 		}
 		// ensure there is no object with parentRelations that isn't actually a member
-		nodes.values
-			.forEach({ obj in
-				obj.parentRelations.forEach({ assert($0.members.map({ $0.obj }).contains(obj)) }) })
-		ways.values
-			.forEach({ obj in
-				obj.parentRelations.forEach({ assert($0.members.map({ $0.obj }).contains(obj)) }) })
-		relations.values
-			.forEach({ obj in
-				obj.parentRelations.forEach({ assert($0.members.map({ $0.obj }).contains(obj)) }) })
+		nodes.values.forEach({ obj in
+			obj.parentRelations.forEach({ assert($0.members.map({ $0.obj }).contains(obj)) }) })
+		ways.values.forEach({ obj in
+			obj.parentRelations.forEach({ assert($0.members.map({ $0.obj }).contains(obj)) }) })
+		relations.values.forEach({ obj in
+			obj.parentRelations.forEach({ assert($0.members.map({ $0.obj }).contains(obj)) }) })
 	}
 
 	func consistencyCheckDebugOnly() {

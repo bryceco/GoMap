@@ -635,10 +635,20 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 
-		DLog("memory warning: \(MemoryUsed() / 1_000000.0) MB used")
+		if var memoryUsed = MemoryUsed(),
+		   var memoryTotal = TotalDeviceMemory()
+		{
+			let bytesPerMB = Double(1024 * 1024)
+			memoryUsed /= bytesPerMB
+			memoryTotal /= bytesPerMB
 
+			DLog("memory warning: \(memoryUsed) of \(memoryTotal) MB used")
+			if memoryUsed / memoryTotal < 0.4 {
+				// ignore unless we're being a memory hog
+				return
+			}
+		}
 		mapView.flashMessage(NSLocalizedString("Low memory: clearing cache", comment: ""))
-
 		mapView.editorLayer.didReceiveMemoryWarning()
 	}
 

@@ -694,7 +694,9 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 				objects: [parentRelation, undo!])
 		}
 		guard let index = parentRelations.firstIndex(of: parentRelation) else {
-			DLog("missing relation")
+			// This happens if the relation contains an object as a member
+			// multiple times, in which case we'll try to remove the parent
+			// multiple times.
 			return
 		}
 		parentRelations.remove(at: index)
