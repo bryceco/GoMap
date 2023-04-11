@@ -82,14 +82,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		let prevVersion = UserPrefs.shared.string(forKey: .appVersion)
 		if prevVersion != appVersion() {
 			print("Upgrade!")
-			UserPrefs.shared.set(0, forKey: .uploadCountPerVersion)
 			isAppUpgrade = true
+			UserPrefs.shared.set(appVersion(), forKey: .appVersion)
+			UserPrefs.shared.set(0, forKey: .uploadCountPerVersion)
 		}
-		UserPrefs.shared.set(appVersion(), forKey: .appVersion)
 
 		// Sync preferences in iCloud
 		UserPrefs.shared.synchronize()
-
+		if isAppUpgrade {
+			// This only does any work if the iCloud store is empty,
+			// otherwise it just returns
+			UserPrefs.shared.copyUserDefaultsToUbiquitousStore()
+		}
 		return true
 	}
 

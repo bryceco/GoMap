@@ -9,7 +9,7 @@
 import Foundation
 
 final class UserPrefs {
-	enum Pref: String {
+	enum Pref: String, CaseIterable {
 		case userName
 		case appVersion
 		case mapViewButtonLayout = "buttonLayout"
@@ -95,7 +95,7 @@ final class UserPrefs {
 	}
 
 	static let shared = UserPrefs()
-	private var onChangeDelegates: [String: [(Pref) -> Void]] = [:]
+	private var onChangeDelegates: [Pref: [(Pref) -> Void]] = [:]
 
 	init() {
 		NotificationCenter.default.addObserver(self,
@@ -105,16 +105,16 @@ final class UserPrefs {
 	}
 
 	func onChange(_ key: Pref, callback: @escaping ((Pref) -> Void)) {
-		var list = onChangeDelegates[key.rawValue] ?? []
+		var list = onChangeDelegates[key] ?? []
 		list.append(callback)
-		onChangeDelegates[key.rawValue] = list
+		onChangeDelegates[key] = list
 	}
 
 	@objc func ubiquitousKeyValueStoreDidChange(_ notification: NSNotification) {
-		let reason = notification.userInfo?[NSUbiquitousKeyValueStoreChangeReasonKey]
-		let changes = notification.userInfo?[NSUbiquitousKeyValueStoreChangedKeysKey]
+		let reason = notification.userInfo?[NSUbiquitousKeyValueStoreChangeReasonKey] as? Int
+		let changes = notification.userInfo?[NSUbiquitousKeyValueStoreChangedKeysKey] as? [String]
 
-		switch reason as? Int {
+		switch reason {
 		case NSUbiquitousKeyValueStoreServerChange:
 			print("Server change")
 		case NSUbiquitousKeyValueStoreInitialSyncChange:
@@ -128,9 +128,9 @@ final class UserPrefs {
 		}
 
 		DispatchQueue.main.async {
-			for key in changes as? [String] ?? [] {
+			for key in changes ?? [] {
 				guard let pref = Pref(rawValue: key) else { continue }
-				for callback in self.onChangeDelegates[key] ?? [] {
+				for callback in self.onChangeDelegates[pref] ?? [] {
 					callback(pref)
 				}
 			}
@@ -140,6 +140,17 @@ final class UserPrefs {
 	func synchronize() {
 		UserDefaults.standard.synchronize()
 		NSUbiquitousKeyValueStore.default.synchronize()
+	}
+
+	func copyUserDefaultsToUbiquitousStore() {
+		guard NSUbiquitousKeyValueStore.default.dictionaryRepresentation.count == 0 else {
+			return
+		}
+		for pref in Pref.allCases where pref.sharedAcrossDevices {
+			if let obj = UserDefaults.standard.object(forKey: pref.rawValue) {
+				NSUbiquitousKeyValueStore.default.set(obj, forKey: pref.rawValue)
+			}
+		}
 	}
 
 	// String
