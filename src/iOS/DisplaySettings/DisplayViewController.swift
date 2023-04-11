@@ -62,12 +62,12 @@ class DisplayViewController: UITableViewController {
 			}
 		}
 
-		var mask = 0
-		mask |= notesSwitch.isOn ? Int(MapViewOverlays.NOTES.rawValue) : 0
-		mask |= questsSwitch.isOn ? Int(MapViewOverlays.QUESTS.rawValue) : 0
-		mask |= gpsTraceSwitch.isOn ? Int(MapViewOverlays.GPSTRACE.rawValue) : 0
-		mask |= unnamedRoadSwitch.isOn ? Int(MapViewOverlays.NONAME.rawValue) : 0
-		mapView.viewOverlayMask = MapViewOverlays(rawValue: mask)
+		var mask = MapViewOverlays()
+		mask.insert(notesSwitch.isOn ? .NOTES : [])
+		mask.insert(questsSwitch.isOn ? .QUESTS : [])
+		mask.insert(gpsTraceSwitch.isOn ? .GPSTRACE : [])
+		mask.insert(unnamedRoadSwitch.isOn ? .NONAME : [])
+		mapView.viewOverlayMask = mask
 
 		mapView.enableRotation = rotationSwitch.isOn
 		mapView.enableUnnamedRoadHalo = unnamedRoadSwitch.isOn

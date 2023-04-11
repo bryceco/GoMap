@@ -21,7 +21,7 @@ final class TileServerList {
 	var mapboxLocator = TileServer.mapboxLocator
 
 	private var recentlyUsedList = MostRecentlyUsed<TileServer>(maxCount: 6,
-																userPrefsKey: .recentAerialsList,
+	                                                            userPrefsKey: .recentAerialsList,
 	                                                            autoLoadSave: false)
 	private(set) var lastDownloadDate: Date? {
 		get { UserPrefs.shared.object(forKey: .lastImageryDownloadDate) as? Date }
@@ -40,6 +40,12 @@ final class TileServerList {
 			if isAsync {
 				self.onChange?()
 			}
+		})
+
+		UserPrefs.shared.onChange(.customAerialList, callback: { _ in
+			// This occurs if a user added imagery on a different device and it shared to us via iCloud
+			self.load()
+			self.onChange?()
 		})
 	}
 

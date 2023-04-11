@@ -32,7 +32,7 @@ final class QuestUserList: Codable {
 
 	convenience init(fromUserPrefsWithKey key: UserPrefs.Pref) {
 		do {
-			if let data = UserPrefs.shared.object(forKey: key) as! Data? {
+			if let data = UserPrefs.shared.object(forKey: key) as? Data {
 				try self.init(fromJsonData: data)
 				return
 			}
@@ -291,6 +291,10 @@ class QuestList {
 		loadPrefs()
 		list += userQuests.list.compactMap { try? $0.makeQuestInstance() }
 		sortList()
+
+		UserPrefs.shared.onChange(.questUserDefinedList, callback: { _ in
+			self.userQuests = QuestUserList(fromUserPrefsWithKey: .questUserDefinedList)
+		})
 	}
 
 	func sortList() {

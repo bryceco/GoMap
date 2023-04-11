@@ -80,50 +80,45 @@ final class PresetKeyUserDefined: PresetKey {
 }
 
 class PresetKeyUserDefinedList: Codable {
-	let key = "userDefinedPresetKeys"
 	private(set) var list: [PresetKeyUserDefined] = []
-	private let userPrefs: OsmUserPrefs
-
 	public static let shared = PresetKeyUserDefinedList()
 
 	init() {
-		do {
-			let path = PresetKeyUserDefinedList.archivePath()
-			let data = try Data(contentsOf: URL(fileURLWithPath: path))
-			let classList = [NSArray.self,
-			                 NSMutableString.self,
-			                 PresetKeyUserDefined.self,
-			                 PresetValue.self]
-			list = try NSKeyedUnarchiver.unarchivedObject(ofClasses: classList, from: data)
-				as? [PresetKeyUserDefined] ?? []
-		} catch {
-			list = []
+		// First try reading from UserPrefs
+		if let data = UserPrefs.shared.object(forKey: .userDefinedPresetKeys) as? Data,
+		   let list = try? JSONDecoder().decode([PresetKeyUserDefined].self, from: data)
+		{
+			self.list = list
+		} else {
+			// Legacy method of storing data
+			do {
+				let path = PresetKeyUserDefinedList.archivePath()
+				let data = try Data(contentsOf: URL(fileURLWithPath: path))
+				let classList = [NSArray.self,
+				                 NSMutableString.self,
+				                 PresetKeyUserDefined.self,
+				                 PresetValue.self]
+				list = try NSKeyedUnarchiver.unarchivedObject(ofClasses: classList, from: data)
+					as? [PresetKeyUserDefined] ?? []
+			} catch {
+				list = []
+			}
 		}
-
-		userPrefs = OsmUserPrefs()
-		userPrefs.download({ success in
-			guard success,
-			      let prefString = self.userPrefs.get(key: self.key)
+		UserPrefs.shared.onChange(.userDefinedPresetKeys, callback: { pref in
+			guard
+				let newValue = UserPrefs.shared.object(forKey: pref),
+				let data = newValue as? Data,
+				let list = try? JSONDecoder().decode([PresetKeyUserDefined].self, from: data)
 			else {
 				return
 			}
-			let data = Data(prefString.utf8)
-			if let list = try? JSONDecoder().decode([PresetKeyUserDefined].self, from: data) {
-				self.list = list
-			}
+			self.list = list
 		})
 	}
 
 	func save() {
-		let path = PresetKeyUserDefinedList.archivePath()
-		let data = try? NSKeyedArchiver.archivedData(withRootObject: list as NSArray, requiringSecureCoding: true)
-		try? data?.write(to: URL(fileURLWithPath: path))
-
-		if let encodeData = try? JSONEncoder().encode(list),
-		   let encodeString = String(data: encodeData, encoding: .utf8)
-		{
-			userPrefs.set(key: key, value: encodeString)
-			userPrefs.upload({ _ in })
+		if let encodeData = try? JSONEncoder().encode(list) {
+			UserPrefs.shared.set(object: encodeData, forKey: .userDefinedPresetKeys)
 		}
 	}
 
@@ -148,7 +143,6 @@ class PresetKeyUserDefinedList: Codable {
 	required init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		list = try container.decode([PresetKeyUserDefined].self, forKey: .list)
-		userPrefs = OsmUserPrefs()
 	}
 
 	func encode(to encoder: Encoder) throws {

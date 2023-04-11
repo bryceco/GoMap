@@ -8,48 +8,48 @@
 
 import Foundation
 
-class UserPrefs {
+final class UserPrefs {
 	enum Pref: String {
-		case userName = "userName"
-		case appVersion = "appVersion"
+		case userName
+		case appVersion
 		case mapViewButtonLayout = "buttonLayout"
 
 		case hoursRecognizerLanguage = "HoursRecognizerLanguage"
 
 		case poiTabIndex = "POITabIndex"
-		case copyPasteTags = "copyPasteTags"
+		case copyPasteTags
 		case currentRegion = "CurrentRegion"
 
 		// Next OSM ID
-		case nextUnusedIdentifier = "nextUnusedIdentifier"
+		case nextUnusedIdentifier
 
 		case osmServerUrl = "OSM Server"
-		case preferredLanguage = "preferredLanguage"
+		case preferredLanguage
 
 		// Uploads
-		case recentCommitComments = "recentCommitComments"
-		case recentSourceComments = "recentSourceComments"
-		case uploadComment = "uploadComment"
-		case uploadSource = "uploadSource"
-		case userDidPreviousUpload = "userDidPreviousUpload"
+		case recentCommitComments
+		case recentSourceComments
+		case uploadComment
+		case uploadSource
+		case userDidPreviousUpload
 		case uploadCountPerVersion = "uploadCount"
 
 		// MapView
 		case view_scale = "view.scale"
 		case view_latitude = "view.latitude"
 		case view_longitude = "view.longitude"
-		case mapViewState = "mapViewState"
-		case mapViewOverlays = "mapViewOverlays"
-		case mapViewEnableBirdsEye = "mapViewEnableBirdsEye"
-		case mapViewEnableRotation = "mapViewEnableRotation"
-		case automaticCacheManagement = "automaticCacheManagement"
-		case mapViewEnableUnnamedRoadHalo = "mapViewEnableUnnamedRoadHalo"
-		case mapViewEnableBreadCrumb = "mapViewEnableBreadCrumb"
-		case mapViewEnableTurnRestriction = "mapViewEnableTurnRestriction"
+		case mapViewState
+		case mapViewOverlays
+		case mapViewEnableBirdsEye
+		case mapViewEnableRotation
+		case automaticCacheManagement
+		case mapViewEnableUnnamedRoadHalo
+		case mapViewEnableBreadCrumb
+		case mapViewEnableTurnRestriction
 		case latestAerialCheckLatLon = "LatestAerialCheckLatLon"
 
 		// Nominatim
-		case searchHistory = "searchHistory"
+		case searchHistory
 
 		// GPX
 		case gpxRecordsTracksInBackground = "GpxTrackBackgroundTracking"
@@ -61,13 +61,16 @@ class UserPrefs {
 		case questUserDefinedList = "QuestUserDefinedList"
 
 		// Tile Server List
-		case lastImageryDownloadDate = "lastImageryDownloadDate"
+		case lastImageryDownloadDate
 		case customAerialList = "AerialList"
 		case currentAerialSelection = "AerialListSelection"
 		case recentAerialsList = "AerialListRecentlyUsed"
 
+		// POI presets
+		case userDefinedPresetKeys
+
 		// Stuff for most recent POI features
-		case mostRecentTypesMaximum = "mostRecentTypesMaximum"
+		case mostRecentTypesMaximum
 		case mostRecentTypes_point = "mostRecentTypes.point"
 		case mostRecentTypes_line = "mostRecentTypes.line"
 		case mostRecentTypes_area = "mostRecentTypes.area"
@@ -92,70 +95,125 @@ class UserPrefs {
 	}
 
 	static let shared = UserPrefs()
+	private var onChangeDelegates: [String: [(Pref) -> Void]] = [:]
+
+	init() {
+		NotificationCenter.default.addObserver(self,
+		                                       selector: #selector(Self.ubiquitousKeyValueStoreDidChange(_:)),
+		                                       name: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
+		                                       object: NSUbiquitousKeyValueStore.default)
+	}
+
+	func onChange(_ key: Pref, callback: @escaping ((Pref) -> Void)) {
+		var list = onChangeDelegates[key.rawValue] ?? []
+		list.append(callback)
+		onChangeDelegates[key.rawValue] = list
+	}
+
+	@objc func ubiquitousKeyValueStoreDidChange(_ notification: NSNotification) {
+		let reason = notification.userInfo?[NSUbiquitousKeyValueStoreChangeReasonKey]
+		let changes = notification.userInfo?[NSUbiquitousKeyValueStoreChangedKeysKey]
+
+		switch reason as? Int {
+		case NSUbiquitousKeyValueStoreServerChange:
+			print("Server change")
+		case NSUbiquitousKeyValueStoreInitialSyncChange:
+			print("Initial sync change")
+		case NSUbiquitousKeyValueStoreQuotaViolationChange:
+			print("Quota violation")
+		case NSUbiquitousKeyValueStoreAccountChange:
+			print("Account change")
+		default:
+			print("other reason")
+		}
+
+		DispatchQueue.main.async {
+			for key in changes as? [String] ?? [] {
+				guard let pref = Pref(rawValue: key) else { continue }
+				for callback in self.onChangeDelegates[key] ?? [] {
+					callback(pref)
+				}
+			}
+		}
+	}
 
 	func synchronize() {
 		UserDefaults.standard.synchronize()
+		NSUbiquitousKeyValueStore.default.synchronize()
 	}
 
 	// String
 	func string(forKey key: Pref) -> String? {
-		return UserDefaults.standard.string(forKey: key.rawValue)
+		return object(forKey: key) as? String
 	}
 
 	func set(_ value: String?, forKey key: Pref) {
 		UserDefaults.standard.set(value, forKey: key.rawValue)
+		if key.sharedAcrossDevices {
+			NSUbiquitousKeyValueStore.default.set(value, forKey: key.rawValue)
+		}
 	}
 
 	// Integer
 	func integer(forKey key: Pref) -> Int? {
-		guard
-			let value = UserDefaults.standard.object(forKey: key.rawValue) as? NSNumber
-		else {
+		guard let number = object(forKey: key) as? NSNumber else {
 			return nil
 		}
-		return value.intValue
+		return number.intValue
 	}
 
 	func set(_ value: Int, forKey key: Pref) {
 		UserDefaults.standard.set(value, forKey: key.rawValue)
+		if key.sharedAcrossDevices {
+			NSUbiquitousKeyValueStore.default.set(value, forKey: key.rawValue)
+		}
 	}
 
 	// Double
 	func double(forKey key: Pref) -> Double? {
-		guard
-			let value = UserDefaults.standard.object(forKey: key.rawValue) as? NSNumber
-		else {
+		guard let number = object(forKey: key) as? NSNumber else {
 			return nil
 		}
-		return value.doubleValue
+		return number.doubleValue
 	}
 
 	func set(_ value: Double, forKey key: Pref) {
 		UserDefaults.standard.set(value, forKey: key.rawValue)
+		if key.sharedAcrossDevices {
+			NSUbiquitousKeyValueStore.default.set(value, forKey: key.rawValue)
+		}
 	}
 
 	// Bool
 	func bool(forKey key: Pref) -> Bool? {
-		guard
-			let value = UserDefaults.standard.object(forKey: key.rawValue) as? NSNumber
-		else {
+		guard let number = object(forKey: key) as? NSNumber else {
 			return nil
 		}
-		return value.boolValue
+		return number.boolValue
 	}
 
 	func set(_ value: Bool, forKey key: Pref) {
 		UserDefaults.standard.set(value, forKey: key.rawValue)
+		if key.sharedAcrossDevices {
+			NSUbiquitousKeyValueStore.default.set(value, forKey: key.rawValue)
+		}
 	}
 
 	// Object
 	func object(forKey key: Pref) -> Any? {
-		// This might be stored as an NSNumber object, need to test if it matters
+		if key.sharedAcrossDevices,
+		   let obj = NSUbiquitousKeyValueStore.default.object(forKey: key.rawValue)
+		{
+			return obj
+		}
 		return UserDefaults.standard.object(forKey: key.rawValue)
 	}
 
 	func set(object value: Any?, forKey key: Pref) {
 		UserDefaults.standard.set(value, forKey: key.rawValue)
+		if key.sharedAcrossDevices {
+			NSUbiquitousKeyValueStore.default.set(value, forKey: key.rawValue)
+		}
 	}
 }
 
@@ -164,7 +222,7 @@ extension UserPrefs.Pref {
 		switch self {
 		case .userName,
 		     .appVersion,
-			 .uploadCountPerVersion,
+		     .uploadCountPerVersion,
 		     .nextUnusedIdentifier:
 			return false
 
@@ -181,18 +239,17 @@ extension UserPrefs.Pref {
 
 		case .hoursRecognizerLanguage,
 		     .copyPasteTags,
-		     .currentRegion,
 		     .poiTabIndex:
 			return true
 
 		// POI types
+		case .userDefinedPresetKeys:
+			return true
 		case .mostRecentTypesMaximum,
 		     .mostRecentTypes_point,
 		     .mostRecentTypes_line,
 		     .mostRecentTypes_area,
-		     .mostRecentTypes_vertex,
-		     .questTypeEnabledDict,
-		     .questUserDefinedList:
+		     .mostRecentTypes_vertex:
 			return true
 
 		// Object filters
@@ -217,6 +274,7 @@ extension UserPrefs.Pref {
 		case .view_scale,
 		     .view_latitude,
 		     .view_longitude,
+		     .currentRegion,
 		     .mapViewState,
 		     .mapViewOverlays,
 		     .mapViewEnableBirdsEye,
@@ -225,7 +283,7 @@ extension UserPrefs.Pref {
 		     .mapViewEnableUnnamedRoadHalo,
 		     .mapViewEnableBreadCrumb,
 		     .mapViewEnableTurnRestriction,
-			 .mapViewButtonLayout,
+		     .mapViewButtonLayout,
 		     .latestAerialCheckLatLon:
 			return false
 
@@ -234,6 +292,11 @@ extension UserPrefs.Pref {
 		     .recentAerialsList:
 			return false
 
+		case .questTypeEnabledDict,
+		     .questUserDefinedList:
+			return true
+
+		// User-defined imagery
 		case .customAerialList:
 			return true
 
@@ -244,7 +307,7 @@ extension UserPrefs.Pref {
 		     .uploadSource,
 		     .recentCommitComments,
 		     .recentSourceComments,
-			 .userDidPreviousUpload:
+		     .userDidPreviousUpload:
 			return true
 		}
 	}

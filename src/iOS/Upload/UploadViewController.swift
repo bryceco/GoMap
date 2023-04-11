@@ -166,7 +166,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 			alert.addAction(UIAlertAction(title: NSLocalizedString("Commit", comment: ""),
 			                              style: .default,
 			                              handler: { [self] _ in
-				UserPrefs.shared.set(true, forKey: .userDidPreviousUpload)
+			                              	UserPrefs.shared.set(true, forKey: .userDidPreviousUpload)
 			                              	commit(nil)
 			                              }))
 			present(alert, animated: true)

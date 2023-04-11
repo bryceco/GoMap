@@ -87,6 +87,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 		UserPrefs.shared.set(appVersion(), forKey: .appVersion)
 
+		// Sync preferences in iCloud
+		UserPrefs.shared.synchronize()
+
 		return true
 	}
 
