@@ -827,16 +827,21 @@ extension EditorMapLayer {
 		}
 
 		// special case for adding members to relations:
-		if selectedPrimary?.isRelation()?.isMultipolygon() ?? false {
+		if let relation = selectedPrimary as? OsmRelation,
+		   relation.isMultipolygon()
+		{
 			let ways = objects.compactMap({ $0 as? OsmWay })
-			if ways.count == 1 {
+			if ways.count == 1,
+			   let way = ways.first,
+			   !relation.members.contains(where: { $0.obj == way })
+			{
 				let confirm = UIAlertController(
 					title: NSLocalizedString("Add way to multipolygon?", comment: ""),
 					message: nil,
 					preferredStyle: .alert)
 				let addMmember: ((String?) -> Void) = { [self] role in
 					do {
-						let add = try self.mapData.canAdd(ways[0],
+						let add = try self.mapData.canAdd(way,
 						                                  to: self.selectedRelation!,
 						                                  withRole: role)
 						add()
@@ -860,11 +865,12 @@ extension EditorMapLayer {
 						addMmember("inner")
 					}))
 				confirm
-					.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel,
+					.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+					                         style: .cancel,
 					                         handler: nil))
 				owner.presentAlert(alert: confirm, location: .none)
+				return
 			}
-			return
 		}
 
 		let multiSelectSheet = UIAlertController(

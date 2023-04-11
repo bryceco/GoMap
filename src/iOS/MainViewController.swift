@@ -643,10 +643,12 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			memoryTotal /= bytesPerMB
 
 			DLog("memory warning: \(memoryUsed) of \(memoryTotal) MB used")
+#if !DEBUG
 			if memoryUsed / memoryTotal < 0.4 {
 				// ignore unless we're being a memory hog
 				return
 			}
+#endif
 		}
 		mapView.flashMessage(NSLocalizedString("Low memory: clearing cache", comment: ""))
 		mapView.editorLayer.didReceiveMemoryWarning()
