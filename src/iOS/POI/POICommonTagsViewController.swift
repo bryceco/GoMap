@@ -208,6 +208,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 			extraKeys.removeAll(where: { $0 == key })
 		}
 		extraTags = extraKeys.sorted().map { ($0, dict[$0]!) }
+		extraTags.append(("",""))
 	}
 
 	// MARK: display
@@ -310,7 +311,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 			return drillDownGroup?.presetKeys.count ?? 0
 		}
 		if section == (allPresets?.sectionCount() ?? 0) {
-			return extraTags.count + 1 // tags plus an empty slot
+			return extraTags.count // tags plus an empty slot
 		}
 		if section > (allPresets?.sectionCount() ?? 0) {
 			return 1 // customize button
@@ -330,15 +331,9 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 				let cell = tableView.dequeueReusableCell(withIdentifier: "KeyValueCell",
 				                                         for: indexPath) as! KeyValueTableCell
 				cell.keyValueCellOwner = self
-				if indexPath.row < extraTags.count {
-					cell.text1?.text = extraTags[indexPath.row].k
-					cell.text2?.text = extraTags[indexPath.row].v
-					cell.text2.key = cell.text1?.text ?? ""
-				} else {
-					cell.text1?.text = ""
-					cell.text2?.text = ""
-					cell.text2.key = ""
-				}
+				cell.text1?.text = extraTags[indexPath.row].k
+				cell.text2?.text = extraTags[indexPath.row].v
+				cell.text2.key = cell.text1?.text ?? ""
 				cell.isSet.backgroundColor = cell.value == "" ? nil : Self.isSetHighlight
 				return cell
 			}
@@ -541,18 +536,10 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 			// user swiped to delete a cell
 			if indexPath.section == allPresets?.sectionCount() {
 				// Extra tags section
-				if indexPath.row < extraTags.count {
-					let kv = extraTags[indexPath.row]
-					extraTags.remove(at: indexPath.row)
-					updateTagDict(withValue: "", forKey: kv.k)
-					tableView.deleteRows(at: [indexPath], with: .fade)
-				} else {
-					// it's the last row, which is the empty row, so fake it
-					if let kv = tableView.cellForRow(at: indexPath) as? KeyValueTableCell {
-						kv.text1.text = ""
-						kv.text2.text = ""
-					}
-				}
+				let kv = extraTags[indexPath.row]
+				extraTags.remove(at: indexPath.row)
+				updateTagDict(withValue: "", forKey: kv.k)
+				tableView.deleteRows(at: [indexPath], with: .fade)
 			} else {
 				// for regular cells just set the value to ""
 				let cell = tableView.cellForRow(at: indexPath)
@@ -612,8 +599,21 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		if #available(iOS 13.0, *) {
 			tabBarController?.isModalInPresentation = saveButton.isEnabled
 		}
-		if let cell: FeaturePresetCell = textField.superviewOfType() {
-			cell.isSet.backgroundColor = cell.valueField.text == "" ? nil : Self.isSetHighlight
+		if let cell: UITableViewCell = textField.superviewOfType() {
+			switch cell {
+			case let cell as FeaturePresetCell:
+				cell.isSet.backgroundColor = cell.valueField.text == "" ? nil : Self.isSetHighlight
+			case let cell as FeatureTypeCell:
+				cell.isSet.backgroundColor = cell.valueField.text == "" ? nil : Self.isSetHighlight
+			case let cell as FeaturePresetAreaCell:
+				cell.isSet.backgroundColor = cell.valueField.text == "" ? nil : Self.isSetHighlight
+			case let cell as TextPairTableCell:
+				cell.isSet.backgroundColor = cell.text1.text == "" || cell.text2.text == ""
+					? nil : Self.isSetHighlight
+				break
+			default:
+				break
+			}
 		}
 	}
 
@@ -739,26 +739,52 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	var childViewPresented = false
 	var currentTextField: UITextField?
 
-	func keyValueChanged(for kv: KeyValueTableCell) {
-		if let indexPath = tableView.indexPath(for: kv) {
-			let row = indexPath.row
-			if row < extraTags.count {
-				// they edited an existing value, so delete it before updating in case key changed
-				let oldKey = extraTags[row].k
-				updateTagDict(withValue: "", forKey: oldKey)
-			} else {
-				// new value
-				extraTags.append(("", ""))
-			}
-			extraTags[row] = (kv.key, kv.value)
-			updateTagDict(withValue: kv.value, forKey: kv.key)
-		}
+	func keyValueEditingChanged(for kv: KeyValueTableCell) {
+		// doesn't matter whether key or value changed here:
+		self.textFieldChanged(kv.text2)
+	}
 
-		if kv.key != "", kv.value != "" {
-			selectedFeature = nil
-			updatePresets()
-		} else {
-			kv.isSet.backgroundColor = nil
+	// This is largely duplicated in All Tags, and could potentially be moved
+	// into KeyValueTableCell itself.
+	func keyValueEditingEnded(for pair: KeyValueTableCell) {
+		guard let indexPath = tableView.indexPath(for: pair)
+		else { return }
+		let kv = (k: pair.key, v: pair.value)
+		extraTags[indexPath.row] = kv
+
+		updateTagDict(withValue: kv.v, forKey: kv.k)
+
+		if pair.key != "", pair.value != "" {
+			// move the edited row up
+			var index = (0..<indexPath.row).first(where: {
+				extraTags[$0].k == "" || extraTags[$0].v == ""
+			}) ?? indexPath.row
+			if index < indexPath.row {
+				extraTags.remove(at: indexPath.row)
+				extraTags.insert(kv, at: index)
+				tableView.moveRow(at: indexPath, to: IndexPath(row: index, section: indexPath.section))
+			}
+
+			// if we created a row that defines a key that duplicates a row with
+			// the same key elsewhere then delete the other row
+			while let i = extraTags.indices.first(where: { $0 != index && extraTags[$0].k == kv.k }) {
+				extraTags.remove(at: i)
+				tableView.deleteRows(at: [IndexPath(row: i, section: indexPath.section)], with: .none)
+				if i < index {
+					index -= 1
+				}
+			}
+
+			tableView.scrollToRow(at: IndexPath(row: index, section: indexPath.section), at: .middle, animated: true)
+
+		} else if kv.k.count != 0 || kv.v.count != 0 {
+			// ensure there's a blank line either elsewhere, or create one below us
+			let haveBlank = extraTags.first(where: { $0.k.count == 0 && $0.v.count == 0 }) != nil
+			if !haveBlank {
+				let newPath = IndexPath(row: indexPath.row + 1, section: indexPath.section)
+				extraTags.insert(("", ""), at: newPath.row)
+				tableView.insertRows(at: [newPath], with: .none)
+			}
 		}
 	}
 

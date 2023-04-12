@@ -353,21 +353,23 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		return keyValueDictionary()
 	}
 
-	func keyValueChanged(for pair: KeyValueTableCell) {
-		guard let indexPath = tableView.indexPath(for: pair)
-		else { return }
-		let kv = (k: pair.key, v: pair.value)
-		tags[indexPath.row] = kv
+	func keyValueEditingChanged(for kvCell: KeyValueTableCell) {
+		guard let indexPath = tableView.indexPath(for: kvCell) else { return }
+		tags[indexPath.row] = (k: kvCell.key, v: kvCell.value)
 
 		let tabController = tabBarController as! POITabBarController
+		saveButton.isEnabled = tabController.isTagDictChanged(keyValueDictionary())
+		if #available(iOS 13.0, *) {
+			tabBarController?.isModalInPresentation = saveButton.isEnabled
+		}
+	}
 
-		if pair.key != "", pair.value != "" {
-			let dict = keyValueDictionary()
-			saveButton.isEnabled = tabController.isTagDictChanged(dict)
-			if #available(iOS 13.0, *) {
-				tabBarController?.isModalInPresentation = saveButton.isEnabled
-			}
+	func keyValueEditingEnded(for kvCell: KeyValueTableCell) {
+		guard let indexPath = tableView.indexPath(for: kvCell) else { return }
+		let kv = (k: kvCell.key, v: kvCell.value)
+		tags[indexPath.row] = kv
 
+		if kvCell.key != "", kvCell.value != "" {
 			// move the edited row up
 			var index = (0..<indexPath.row).first(where: {
 				tags[$0].k == "" || tags[$0].v == ""
@@ -375,14 +377,14 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 			if index < indexPath.row {
 				tags.remove(at: indexPath.row)
 				tags.insert(kv, at: index)
-				tableView.moveRow(at: indexPath, to: IndexPath(row: index, section: 0))
+				tableView.moveRow(at: indexPath, to: IndexPath(row: index, section: indexPath.section))
 			}
 
 			// if we created a row that defines a key that duplicates a row with
 			// the same key elsewhere then delete the other row
 			while let i = tags.indices.first(where: { $0 != index && tags[$0].k == kv.k }) {
 				tags.remove(at: i)
-				tableView.deleteRows(at: [IndexPath(row: i, section: 0)], with: .none)
+				tableView.deleteRows(at: [IndexPath(row: i, section: indexPath.section)], with: .none)
 				if i < index {
 					index -= 1
 				}
@@ -391,7 +393,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 			// update recommended tags
 			if let nextRow = updateWithRecomendations(forFeature: false) {
 				// a new feature was defined
-				let newPath = IndexPath(row: nextRow, section: 0)
+				let newPath = IndexPath(row: nextRow, section: indexPath.section)
 				tableView.scrollToRow(at: newPath, at: .middle, animated: false)
 
 				// move focus to next empty cell
@@ -399,7 +401,9 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 				nextCell.text1.becomeFirstResponder()
 			}
 
-			tableView.scrollToRow(at: IndexPath(row: index, section: 0), at: .middle, animated: true)
+			tableView.scrollToRow(at: IndexPath(row: index, section: indexPath.section),
+								  at: .middle,
+								  animated: true)
 
 		} else if kv.k.count != 0 || kv.v.count != 0 {
 			// ensure there's a blank line either elsewhere, or create one below us

@@ -37,7 +37,8 @@ protocol KeyValueTableCellOwner: UITableViewController {
 	var allPresetKeys: [PresetKey] { get }
 	var childViewPresented: Bool { get set }
 	var currentTextField: UITextField? { get set }
-	func keyValueChanged(for kv: KeyValueTableCell)
+	func keyValueEditingChanged(for kv: KeyValueTableCell)
+	func keyValueEditingEnded(for kv: KeyValueTableCell)
 	var keyValueDict: [String: String] { get }
 }
 
@@ -53,6 +54,10 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 
 		text1.autocorrectionType = .no
 		text2.autocorrectionType = .no
+		text1.autocapitalizationType = .none
+		text2.autocapitalizationType = .none
+		text1.spellCheckingType = .no
+		text2.spellCheckingType = .no
 
 		weak var weakSelf = self
 		text1.didSelectAutocomplete = {
@@ -66,6 +71,7 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		text1.addTarget(self, action: #selector(textFieldReturn(_:)), for: .editingDidEndOnExit)
 		text1.addTarget(self, action: #selector(textFieldEditingDidBegin(_:)), for: .editingDidBegin)
 		text1.addTarget(self, action: #selector(textFieldEditingDidEnd(_:)), for: .editingDidEnd)
+		text1.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
 
 		text2.addTarget(self, action: #selector(textFieldReturn(_:)), for: .editingDidEndOnExit)
 		text2.addTarget(self, action: #selector(textFieldEditingDidBegin(_:)), for: .editingDidBegin)
@@ -90,9 +96,9 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 	func updateTextViewSize() {
 		// This resizes the cell to be appropriate for the content
 		UIView.setAnimationsEnabled(false)
-		textView?.sizeToFit()
-		keyValueCellOwner?.tableView.beginUpdates()
-		keyValueCellOwner?.tableView.endUpdates()
+		keyValueCellOwner?.tableView.performBatchUpdates({
+			textView?.sizeToFit()
+		})
 		UIView.setAnimationsEnabled(true)
 	}
 
@@ -178,7 +184,9 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 
 	func notifyKeyValueChange(ended: Bool) {
 		if ended {
-			keyValueCellOwner?.keyValueChanged(for: self)
+			keyValueCellOwner?.keyValueEditingEnded(for: self)
+		} else {
+			keyValueCellOwner?.keyValueEditingChanged(for: self)
 		}
 	}
 
@@ -247,6 +255,10 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		}
 	}
 
+	@objc func textFieldEditingChanged(_ textField: UITextField) {
+		notifyKeyValueChange(ended: false)
+	}
+
 	@objc func textFieldEditingDidEnd(_ textField: UITextField) {
 		if textField === text1 {
 			text2.key = text1.text ?? ""
@@ -262,6 +274,10 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 	}
 
 	func textViewDidChange(_ textView: UITextView) {
+		// Update underlying text field. This does not trigger a change notification.
+		self.text2.text = self.textView?.text
+		// notify owner
+		notifyKeyValueChange(ended: false)
 		updateTextViewSize()
 	}
 
