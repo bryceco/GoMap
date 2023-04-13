@@ -342,3 +342,107 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		return keyValueCellOwner?.keyValueDict ?? [:]
 	}
 }
+
+class KeyValueTableSection {
+	typealias KeyValue = (k: String, v: String)
+	private var tags: [KeyValue] = []
+	weak var tableView: UITableView?
+
+	init(tableView: UITableView) {
+		self.tableView = tableView
+	}
+
+	var count: Int { tags.count }
+
+	var allTags: [KeyValue] { tags }
+
+	subscript(index: Int) -> KeyValue {
+		get { tags[index] }
+		set { tags[index] = newValue }
+	}
+
+	func keyValueDictionary() -> [String: String] {
+		var dict = [String: String]()
+		for (k, v) in tags {
+			// strip whitespace around text
+			let key = k.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+			let val = v.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+			if key.count != 0, val.count != 0 {
+				dict[key] = val
+			}
+		}
+		return dict
+	}
+
+	func setRaw(_ values: [KeyValue]) {
+		tags = values
+	}
+
+	func set(_ values: [KeyValue]) {
+		tags = values.sorted(by: { obj1, obj2 in
+			let key1 = obj1.k
+			let key2 = obj2.k
+			let tiger1 = key1.hasPrefix("tiger:") || key1.hasPrefix("gnis:")
+			let tiger2 = key2.hasPrefix("tiger:") || key2.hasPrefix("gnis:")
+			if tiger1 == tiger2 {
+				return key1 < key2
+			} else {
+				return (tiger1 ? 1 : 0) < (tiger2 ? 1 : 0)
+			}
+		})
+		tags.append(("",""))
+	}
+
+	func append(_ value: KeyValue) {
+		tags.append(value)
+	}
+
+	func remove(at indexPath: IndexPath) {
+		tags.remove(at: indexPath.row)
+		tableView?.deleteRows(at: [indexPath], with: .fade)
+	}
+
+	func keyValueEditingEnded(for pair: KeyValueTableCell) -> KeyValue? {
+		guard let tableView = tableView,
+			  let indexPath = tableView.indexPath(for: pair)
+		else { return nil }
+
+		let kv = (k: pair.key, v: pair.value)
+		tags[indexPath.row] = kv
+
+		if pair.key != "", pair.value != "" {
+			// move the edited row up
+			var index = (0..<indexPath.row).first(where: {
+				tags[$0].k == "" || tags[$0].v == ""
+			}) ?? indexPath.row
+			if index < indexPath.row {
+				tags.remove(at: indexPath.row)
+				tags.insert(kv, at: index)
+				tableView.moveRow(at: indexPath, to: IndexPath(row: index, section: indexPath.section))
+			}
+
+			// if we created a row that defines a key that duplicates a row with
+			// the same key elsewhere then delete the other row
+			while let i = tags.indices.first(where: { $0 != index && tags[$0].k == kv.k }) {
+				tags.remove(at: i)
+				tableView.deleteRows(at: [IndexPath(row: i, section: indexPath.section)], with: .none)
+				if i < index {
+					index -= 1
+				}
+			}
+
+			tableView.scrollToRow(at: IndexPath(row: index, section: indexPath.section), at: .middle, animated: true)
+
+		} else if kv.k.count != 0 || kv.v.count != 0 {
+			// ensure there's a blank line either elsewhere, or create one below us
+			let haveBlank = tags.first(where: { $0.k.count == 0 && $0.v.count == 0 }) != nil
+			if !haveBlank {
+				let newPath = IndexPath(row: indexPath.row + 1, section: indexPath.section)
+				tags.insert(("", ""), at: newPath.row)
+				tableView.insertRows(at: [newPath], with: .none)
+			}
+		}
+		return kv
+	}
+
+}

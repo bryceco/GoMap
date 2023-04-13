@@ -72,12 +72,13 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	private var childPushed = false
 	private var drillDownGroup: PresetGroup?
 	private var firstResponderTextField: UITextField?
-	private var extraTags: [(k: String, v: String)] = [] // array of key/values not covered by presets
+	private var extraTags: KeyValueTableSection! // array of key/values not covered by presets
 
 	static let isSetHighlight = UIColor.systemBlue
 
 	override func viewDidLoad() {
 		// have to update presets before call super because super asks for the number of sections
+		extraTags = KeyValueTableSection(tableView: self.tableView)
 		updatePresets()
 
 		super.viewDidLoad()
@@ -207,8 +208,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		for key in presetKeys {
 			extraKeys.removeAll(where: { $0 == key })
 		}
-		extraTags = extraKeys.sorted().map { ($0, dict[$0]!) }
-		extraTags.append(("",""))
+		extraTags.set( extraKeys.map { ($0, dict[$0]!) })
 	}
 
 	// MARK: display
@@ -536,10 +536,8 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 			// user swiped to delete a cell
 			if indexPath.section == allPresets?.sectionCount() {
 				// Extra tags section
-				let kv = extraTags[indexPath.row]
-				extraTags.remove(at: indexPath.row)
-				updateTagDict(withValue: "", forKey: kv.k)
-				tableView.deleteRows(at: [indexPath], with: .fade)
+				extraTags.remove(at: indexPath)
+				updateTagDict(withValue: "", forKey: extraTags[indexPath.row].k)
 			} else {
 				// for regular cells just set the value to ""
 				let cell = tableView.cellForRow(at: indexPath)
@@ -744,47 +742,9 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		self.textFieldChanged(kv.text2)
 	}
 
-	// This is largely duplicated in All Tags, and could potentially be moved
-	// into KeyValueTableCell itself.
 	func keyValueEditingEnded(for pair: KeyValueTableCell) {
-		guard let indexPath = tableView.indexPath(for: pair)
-		else { return }
-		let kv = (k: pair.key, v: pair.value)
-		extraTags[indexPath.row] = kv
-
-		updateTagDict(withValue: kv.v, forKey: kv.k)
-
-		if pair.key != "", pair.value != "" {
-			// move the edited row up
-			var index = (0..<indexPath.row).first(where: {
-				extraTags[$0].k == "" || extraTags[$0].v == ""
-			}) ?? indexPath.row
-			if index < indexPath.row {
-				extraTags.remove(at: indexPath.row)
-				extraTags.insert(kv, at: index)
-				tableView.moveRow(at: indexPath, to: IndexPath(row: index, section: indexPath.section))
-			}
-
-			// if we created a row that defines a key that duplicates a row with
-			// the same key elsewhere then delete the other row
-			while let i = extraTags.indices.first(where: { $0 != index && extraTags[$0].k == kv.k }) {
-				extraTags.remove(at: i)
-				tableView.deleteRows(at: [IndexPath(row: i, section: indexPath.section)], with: .none)
-				if i < index {
-					index -= 1
-				}
-			}
-
-			tableView.scrollToRow(at: IndexPath(row: index, section: indexPath.section), at: .middle, animated: true)
-
-		} else if kv.k.count != 0 || kv.v.count != 0 {
-			// ensure there's a blank line either elsewhere, or create one below us
-			let haveBlank = extraTags.first(where: { $0.k.count == 0 && $0.v.count == 0 }) != nil
-			if !haveBlank {
-				let newPath = IndexPath(row: indexPath.row + 1, section: indexPath.section)
-				extraTags.insert(("", ""), at: newPath.row)
-				tableView.insertRows(at: [newPath], with: .none)
-			}
+		if let kv = extraTags.keyValueEditingEnded(for: pair) {
+			updateTagDict(withValue: kv.v, forKey: kv.k)
 		}
 	}
 

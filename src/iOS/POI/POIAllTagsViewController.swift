@@ -10,22 +10,81 @@ import UIKit
 
 private let EDIT_RELATIONS = false
 
-class SectionHeaderCell: UITableViewCell {
-	@IBOutlet var label: UILabel!
+private class SectionHeaderCell: UITableViewHeaderFooterView {
+	static let reuseIdentifier = "SectionHeaderCell"
+
+	let label = UILabel()
+	let button = UIButton()
+
+	override init(reuseIdentifier: String?) {
+		super.init(reuseIdentifier: reuseIdentifier)
+		configureContents()
+	 }
+
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
+	func configureContents() {
+		label.translatesAutoresizingMaskIntoConstraints = false
+		button.translatesAutoresizingMaskIntoConstraints = false
+
+		if #available(iOS 13.0, *) {
+			label.textColor = UIColor.secondaryLabel
+		} else {
+			label.textColor = UIColor.darkGray
+		}
+		button.setTitle(">", for: .normal)
+		button.setTitleColor(UIColor.systemBlue, for: .normal)
+		button.addTarget(self, action: #selector(pickFeature(_:)), for: .touchUpInside)
+
+		contentView.addSubview(label)
+		contentView.addSubview(button)
+
+		 NSLayoutConstraint.activate([
+			label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+			label.leadingAnchor.constraint(equalToSystemSpacingAfter: contentView.leadingAnchor, multiplier: 1.0),
+			label.trailingAnchor.constraint(greaterThanOrEqualTo: button.leadingAnchor, constant: 10.0),
+
+			button.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+			button.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor, constant: 10.0),
+			button.widthAnchor.constraint(equalToConstant: 44.0)
+		 ])
+	 }
+
+	@objc func pickFeature(_ sender: Any?) {
+		var r: UIResponder = self
+		while true {
+			if let vc = r as? POIAllTagsViewController {
+				let storyboard = UIStoryboard(name: "POI", bundle: nil)
+				let myVC = storyboard.instantiateViewController(withIdentifier: "PoiTypeViewController")
+					as! POIFeaturePickerViewController
+				myVC.delegate = vc
+				vc.navigationController?.pushViewController(myVC, animated: true)
+				return
+			}
+			guard let next = r.next else { return }
+			r = next
+		}
+	}
 }
 
 class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate, KeyValueTableCellOwner {
-	private var tags: [(k: String, v: String)] = []
+	var allPresetKeys: [PresetKey] = []
+	private var tags: KeyValueTableSection!
 	private var relations: [OsmRelation] = []
 	private var members: [OsmMember] = []
 	@IBOutlet var saveButton: UIBarButtonItem!
 	internal var childViewPresented = false
 	private var currentFeature: PresetFeature?
 	internal var currentTextField: UITextField?
-	internal var allPresetKeys: [PresetKey] = [] // updated whenever a value changes
 	private var prevNextToolbar: UIToolbar!
 
 	override func viewDidLoad() {
+		tags = KeyValueTableSection(tableView: tableView)
+		tableView.register(SectionHeaderCell.self,
+						   forHeaderFooterViewReuseIdentifier: SectionHeaderCell.reuseIdentifier)
+
 		super.viewDidLoad()
 
 		editButtonItem.target = self
@@ -75,7 +134,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 	func updateWithRecomendations(forFeature forceReload: Bool) -> Int? {
 		let tabController = tabBarController as? POITabBarController
 		let geometry = tabController?.selection?.geometry() ?? GEOMETRY.POINT
-		let dict = keyValueDictionary()
+		let dict = tags.keyValueDictionary()
 		let newFeature = PresetsDatabase.shared.presetFeatureMatching(
 			tags: dict,
 			geometry: geometry,
@@ -87,29 +146,29 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		}
 		currentFeature = newFeature
 
-		// remove all entries without key & value
-		tags = tags.filter { $0.k != "" && $0.v != "" }
+		// Keep entries with key & value
+		var list = tags.allTags
+		list.removeAll(where: { $0.k == "" || $0.v == "" })
 
 		let nextRow = tags.count
 
-		// add new cell ready to be edited
-		tags.append(("", ""))
+		list.append(("",""))
 
 		// add placeholder keys
-		allPresetKeys = []
 		if let newFeature = currentFeature {
-			let presets = PresetsForFeature(withFeature: newFeature, objectTags: dict, geometry: geometry, update: nil)
-			allPresetKeys = presets.allPresetKeys()
-			var newKeys: [String] = allPresetKeys.map({ $0.tagKey }).filter({ $0 != "" })
-			newKeys = newKeys.filter { key in
-				tags.first(where: { $0.k == key }) == nil
-			}
-			newKeys.sort()
-			for key in newKeys {
-				tags.append((key, ""))
+			let presets = PresetsForFeature(withFeature: newFeature,
+											objectTags: dict,
+											geometry: geometry,
+											update: nil)
+			self.allPresetKeys = presets.allPresetKeys()
+			let newKeys: Set<String> = Set(allPresetKeys.map({ $0.tagKey }).filter({ $0 != "" }))
+				.subtracting(tags.allTags.map{$0.k})
+
+			for key in Array(newKeys).sorted() {
+				list.append((key, ""))
 			}
 		}
-
+		tags.setRaw(list)
 		tableView.reloadData()
 
 		return nextRow
@@ -122,22 +181,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		relations = tabController.relationList
 		members = (tabController.selection as? OsmRelation)?.members ?? []
 
-		tags = []
-		for (key, value) in tabController.keyValueDict {
-			tags.append((key, value))
-		}
-
-		tags.sort(by: { obj1, obj2 in
-			let key1 = obj1.k
-			let key2 = obj2.k
-			let tiger1 = key1.hasPrefix("tiger:") || key1.hasPrefix("gnis:")
-			let tiger2 = key2.hasPrefix("tiger:") || key2.hasPrefix("gnis:")
-			if tiger1 == tiger2 {
-				return key1 < key2
-			} else {
-				return (tiger1 ? 1 : 0) < (tiger2 ? 1 : 0)
-			}
-		})
+		tags.set( tabController.keyValueDict.map{ ($0.key,$0.value) })
 
 		_ = updateWithRecomendations(forFeature: true)
 
@@ -149,7 +193,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 
 	func saveState() {
 		let tabController = tabBarController as? POITabBarController
-		tabController?.keyValueDict = keyValueDictionary()
+		tabController?.keyValueDict = tags.keyValueDictionary()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -226,7 +270,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		if section == 0 {
-			return NSLocalizedString("Tags", comment: "")
+			return nil // NSLocalizedString("Tags", comment: "")
 		} else if section == 1 {
 			return NSLocalizedString("Relations", comment: "")
 		} else {
@@ -326,19 +370,6 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		}
 	}
 
-	func keyValueDictionary() -> [String: String] {
-		var dict = [String: String]()
-		for (k, v) in tags {
-			// strip whitespace around text
-			let key = k.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-			let val = v.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-			if key.count != 0, val.count != 0 {
-				dict[key] = val
-			}
-		}
-		return dict
-	}
-
 	// MARK: Tab key
 
 	override var keyCommands: [UIKeyCommand]? {
@@ -350,7 +381,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 	// MARK: TextField delegate
 
 	var keyValueDict: [String: String] {
-		return keyValueDictionary()
+		return tags.keyValueDictionary()
 	}
 
 	func keyValueEditingChanged(for kvCell: KeyValueTableCell) {
@@ -358,62 +389,14 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		tags[indexPath.row] = (k: kvCell.key, v: kvCell.value)
 
 		let tabController = tabBarController as! POITabBarController
-		saveButton.isEnabled = tabController.isTagDictChanged(keyValueDictionary())
+		saveButton.isEnabled = tabController.isTagDictChanged(tags.keyValueDictionary())
 		if #available(iOS 13.0, *) {
 			tabBarController?.isModalInPresentation = saveButton.isEnabled
 		}
 	}
 
 	func keyValueEditingEnded(for kvCell: KeyValueTableCell) {
-		guard let indexPath = tableView.indexPath(for: kvCell) else { return }
-		let kv = (k: kvCell.key, v: kvCell.value)
-		tags[indexPath.row] = kv
-
-		if kvCell.key != "", kvCell.value != "" {
-			// move the edited row up
-			var index = (0..<indexPath.row).first(where: {
-				tags[$0].k == "" || tags[$0].v == ""
-			}) ?? indexPath.row
-			if index < indexPath.row {
-				tags.remove(at: indexPath.row)
-				tags.insert(kv, at: index)
-				tableView.moveRow(at: indexPath, to: IndexPath(row: index, section: indexPath.section))
-			}
-
-			// if we created a row that defines a key that duplicates a row with
-			// the same key elsewhere then delete the other row
-			while let i = tags.indices.first(where: { $0 != index && tags[$0].k == kv.k }) {
-				tags.remove(at: i)
-				tableView.deleteRows(at: [IndexPath(row: i, section: indexPath.section)], with: .none)
-				if i < index {
-					index -= 1
-				}
-			}
-
-			// update recommended tags
-			if let nextRow = updateWithRecomendations(forFeature: false) {
-				// a new feature was defined
-				let newPath = IndexPath(row: nextRow, section: indexPath.section)
-				tableView.scrollToRow(at: newPath, at: .middle, animated: false)
-
-				// move focus to next empty cell
-				let nextCell = tableView.cellForRow(at: newPath) as! TextPairTableCell
-				nextCell.text1.becomeFirstResponder()
-			}
-
-			tableView.scrollToRow(at: IndexPath(row: index, section: indexPath.section),
-								  at: .middle,
-								  animated: true)
-
-		} else if kv.k.count != 0 || kv.v.count != 0 {
-			// ensure there's a blank line either elsewhere, or create one below us
-			let haveBlank = tags.first(where: { $0.k.count == 0 && $0.v.count == 0 }) != nil
-			if !haveBlank {
-				let newPath = IndexPath(row: indexPath.row + 1, section: indexPath.section)
-				tags.insert(("", ""), at: newPath.row)
-				tableView.insertRows(at: [newPath], with: .none)
-			}
-		}
+		_ = tags.keyValueEditingEnded(for: kvCell)
 		saveState()
 	}
 
@@ -464,9 +447,8 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		if section == 0 {
-			let ident = "SectionHeaderCell"
-			let cell: SectionHeaderCell = tableView.dequeueReusableCell(withIdentifier: ident) as! SectionHeaderCell
-			cell.label.text = currentFeature?.name ?? "TAGS"
+			let cell: SectionHeaderCell = tableView.dequeueReusableHeaderFooterView(withIdentifier: SectionHeaderCell.reuseIdentifier) as! SectionHeaderCell
+			cell.label.text = currentFeature?.name.uppercased() ?? "TAGS"
 			return cell
 		} else {
 			return nil
@@ -515,14 +497,14 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 			if indexPath.section == 0 {
 				let kv = tags[indexPath.row]
 				tabController.removeValueFromKeyValueDict(key: kv.k)
-				//			[tabController.keyValueDict removeObjectForKey:tag];
-				tags.remove(at: indexPath.row)
+				tags.remove(at: indexPath)
 			} else if indexPath.section == 1 {
 				relations.remove(at: indexPath.row)
+				tableView.deleteRows(at: [indexPath], with: .fade)
 			} else {
 				members.remove(at: indexPath.row)
+				tableView.deleteRows(at: [indexPath], with: .fade)
 			}
-			tableView.deleteRows(at: [indexPath], with: .fade)
 
 			saveButton.isEnabled = tabController.isTagDictChanged()
 			if #available(iOS 13.0, *) {
@@ -552,7 +534,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 			return true
 		}
 		let tabController = tabBarController as! POITabBarController
-		let dict = keyValueDictionary()
+		let dict = tags.keyValueDictionary()
 		if tabController.isTagDictChanged(dict) {
 			let alert = UIAlertController(
 				title: NSLocalizedString("Object modified", comment: ""),
