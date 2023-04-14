@@ -84,21 +84,23 @@ enum EDIT_ACTION: Int {
 	}
 }
 
-private let Z_AERIAL: CGFloat = -100
-private let Z_NONAME: CGFloat = -99
-private let Z_MAPNIK: CGFloat = -98
-private let Z_LOCATOR: CGFloat = -50
-private let Z_GPSTRACE: CGFloat = -40
-private let Z_EDITOR: CGFloat = -20
-private let Z_QUADDOWNLOAD: CGFloat = -18
-private let Z_GPX: CGFloat = -15
-private let Z_ROTATEGRAPHIC: CGFloat = -3
-private let Z_BLINK: CGFloat = 4
-private let Z_CROSSHAIRS: CGFloat = 5
-private let Z_BALL: CGFloat = 6
-private let Z_TOOLBAR: CGFloat = 90
-private let Z_PUSHPIN: CGFloat = 105
-private let Z_FLASH: CGFloat = 110
+private enum ZLAYER: CGFloat {
+	case AERIAL = -100
+	case NONAME = -99
+	case MAPNIK = -98
+	case LOCATOR = -50
+	case GPSTRACE = -40
+	case EDITOR = -20
+	case QUADDOWNLOAD = -18
+	case GPX = -15
+	case ROTATEGRAPHIC = -3
+	case BLINK = 4
+	case CROSSHAIRS = 5
+	case BALL = 6
+	case TOOLBAR = 90
+	case PUSHPIN = 105
+	case FLASH = 110
+}
 
 // how close to an object do we need to tap to select it
 let DefaultHitTestRadius: CGFloat = 10.0
@@ -572,25 +574,25 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		var bg: [CALayer] = []
 
 		locatorLayer = MercatorTileLayer(mapView: self)
-		locatorLayer.zPosition = Z_LOCATOR
+		locatorLayer.zPosition = ZLAYER.LOCATOR.rawValue
 		locatorLayer.tileServer = TileServer.mapboxLocator
 		locatorLayer.isHidden = true
 		bg.append(locatorLayer)
 
 		gpsTraceLayer = MercatorTileLayer(mapView: self)
-		gpsTraceLayer.zPosition = Z_GPSTRACE
+		gpsTraceLayer.zPosition = ZLAYER.GPSTRACE.rawValue
 		gpsTraceLayer.tileServer = TileServer.gpsTrace
 		gpsTraceLayer.isHidden = true
 		bg.append(gpsTraceLayer)
 
 		noNameLayer = MercatorTileLayer(mapView: self)
-		noNameLayer.zPosition = Z_NONAME
+		noNameLayer.zPosition = ZLAYER.NONAME.rawValue
 		noNameLayer.tileServer = TileServer.noName
 		noNameLayer.isHidden = true
 		bg.append(noNameLayer)
 
 		aerialLayer = MercatorTileLayer(mapView: self)
-		aerialLayer.zPosition = Z_AERIAL
+		aerialLayer.zPosition = ZLAYER.AERIAL.rawValue
 		aerialLayer.opacity = 0.75
 		aerialLayer.tileServer = tileServerList.currentServer
 		aerialLayer.isHidden = true
@@ -598,16 +600,16 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		mapnikLayer = MercatorTileLayer(mapView: self)
 		mapnikLayer.tileServer = TileServer.mapnik
-		mapnikLayer.zPosition = Z_MAPNIK
+		mapnikLayer.zPosition = ZLAYER.MAPNIK.rawValue
 		mapnikLayer.isHidden = true
 		bg.append(mapnikLayer)
 
 		editorLayer = EditorMapLayer(owner: self)
-		editorLayer.zPosition = Z_EDITOR
+		editorLayer.zPosition = ZLAYER.EDITOR.rawValue
 		bg.append(editorLayer)
 
 		gpxLayer = GpxLayer(mapView: self)
-		gpxLayer.zPosition = Z_GPX
+		gpxLayer.zPosition = ZLAYER.GPX.rawValue
 		gpxLayer.isHidden = true
 		bg.append(gpxLayer)
 
@@ -628,10 +630,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		// implement crosshairs
 		crossHairs = CrossHairsLayer(radius: 12.0)
 		crossHairs.position = bounds.center()
-		crossHairs.zPosition = Z_CROSSHAIRS
+		crossHairs.zPosition = ZLAYER.CROSSHAIRS.rawValue
 		layer.addSublayer(crossHairs)
 
-		locationBallLayer.zPosition = Z_BALL
+		locationBallLayer.zPosition = ZLAYER.BALL.rawValue
 		locationBallLayer.heading = 0.0
 		locationBallLayer.showHeading = true
 		locationBallLayer.isHidden = true
@@ -682,7 +684,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline)
 			],
 			for: .normal)
-		editControl.layer.zPosition = Z_TOOLBAR
+		editControl.layer.zPosition = ZLAYER.TOOLBAR.rawValue
 		editControl.layer.cornerRadius = 4.0
 #if targetEnvironment(macCatalyst)
 		// We add a constraint in the storyboard to make the edit control buttons taller
@@ -740,7 +742,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		flashLabel.font = UIFont.preferredFont(forTextStyle: .title3)
 		flashLabel.layer.cornerRadius = 5
 		flashLabel.layer.masksToBounds = true
-		flashLabel.layer.zPosition = Z_FLASH
+		flashLabel.layer.zPosition = ZLAYER.FLASH.rawValue
 		flashLabel.isHidden = true
 
 		// magnifying glass
@@ -1225,7 +1227,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		path.close()
 		rotateObjectOverlay.path = path.cgPath
 		rotateObjectOverlay.fillColor = UIColor(red: 0.0, green: 1.0, blue: 1.0, alpha: 0.4).cgColor
-		rotateObjectOverlay.zPosition = Z_ROTATEGRAPHIC
+		rotateObjectOverlay.zPosition = ZLAYER.ROTATEGRAPHIC.rawValue
 		layer.addSublayer(rotateObjectOverlay)
 
 		isRotateObjectMode = (rotateObjectOverlay, rotateObjectCenter)
@@ -2169,7 +2171,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		let pushpinView = PushPinView()
 		pushPin = pushpinView
 		refreshPushpinText()
-		pushpinView.layer.zPosition = Z_PUSHPIN
+		pushpinView.layer.zPosition = ZLAYER.PUSHPIN.rawValue
 		pushpinView.arrowPoint = point
 
 		if let object = object {
@@ -2289,7 +2291,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		blinkLayer.fillColor = nil
 		blinkLayer.lineWidth = 3.0
 		blinkLayer.frame = CGRect(x: 0, y: 0, width: bounds.size.width, height: bounds.size.height)
-		blinkLayer.zPosition = Z_BLINK
+		blinkLayer.zPosition = ZLAYER.BLINK.rawValue
 		blinkLayer.strokeColor = UIColor.black.cgColor
 
 		let dots = CAShapeLayer()
