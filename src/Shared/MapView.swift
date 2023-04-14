@@ -2338,6 +2338,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			if displayGpxLogs {
 				including.insert(.gpx)
 			}
+		} else if !viewOverlayMask.contains(.QUESTS) {
+			including.remove(.quest)
 		}
 
 		mapMarkerDatabase.updateRegion(screenLatLonRect(),
