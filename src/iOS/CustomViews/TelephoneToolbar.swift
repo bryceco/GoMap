@@ -29,7 +29,7 @@ class TelephoneToolbar: UIToolbar {
 				action: #selector(insertSpace(_:))),
 			space,
 			Self.makeButton(
-				title: "-",
+				title: "\u{2014}",
 				target: self,
 				action: #selector(insertDash(_:))),
 			UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
