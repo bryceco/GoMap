@@ -721,7 +721,7 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 			center = wayPoint
 		} else {
 			// get midpoint
-			var mid = track.points.count / 2
+			let mid = track.points.count / 2
 			guard mid < track.points.count else {
 				return
 			}
