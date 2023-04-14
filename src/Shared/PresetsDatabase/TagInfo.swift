@@ -57,8 +57,7 @@ class TagInfo {
 		}
 	}
 
-	// search the taginfo database, return the data immediately if its cached,
-	// and call the update function later if it isn't
+	// search the taginfo database
 	class func taginfoFor(key: String, searchKeys: Bool, update: @escaping ([String]) -> Void) {
 		DispatchQueue.global(qos: .default).async(execute: {
 			let cleanKey = searchKeys ? key.trimmingCharacters(in: CharacterSet(charactersIn: ":")) : key
@@ -74,9 +73,11 @@ class TagInfo {
 			let results = json?["data"] as? [[String: Any]] ?? []
 			var resultList: [String] = []
 			if searchKeys {
+				let totalCount = results.map{ ($0["count_all"] as? Int) ?? 0}.reduce(0, +)
+				let minCount = totalCount > 100000 ? 1000 : totalCount / 100
 				for v in results {
 					let inWiki = ((v["in_wiki"] as? NSNumber) ?? 0) == 1
-					if !inWiki, (v["count_all"] as? NSNumber)?.intValue ?? 0 < 1000 {
+					if !inWiki, ((v["count_all"] as? NSNumber)?.intValue ?? 0) < minCount {
 						continue // it's a very uncommon value, so ignore it
 					}
 					if let k = v["key"] as? String,
@@ -114,7 +115,7 @@ class TagInfo {
 
 		// if no result or it's out of date then fetch it asynchronously
 		if let update = update,
-		   Date().timeIntervalSince(date) > 100 * 24 * 60 * 60
+		   Date().timeIntervalSince(date) > 7 * 24 * 60 * 60
 		{
 			taginfoCache[cacheKey] = ResultType(date: Date(), result: []) // mark as in-transit
 			Self.taginfoFor(key: key, searchKeys: searchKeys, update: { result in
