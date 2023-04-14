@@ -1202,6 +1202,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	// MARK: Rotate object
 
 	func startObjectRotation() {
+		// remove previous rotation in case user pressed Rotate button twice
+		endObjectRotation()
+
 		guard let rotateObjectCenter = editorLayer.selectedNode?.latLon
 			?? editorLayer.selectedWay?.centerPoint()
 			?? editorLayer.selectedRelation?.centerPoint()
