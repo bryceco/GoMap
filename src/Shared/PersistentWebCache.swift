@@ -56,14 +56,9 @@ final class PersistentWebCache<T: AnyObject> {
 
 	init(name: String, memorySize: Int) {
 		let name = PersistentWebCache.encodeKey(forFilesystem: name)
-		let bundleName = Bundle.main.infoDictionary?["CFBundleIdentifier"] as! String
-		cacheDirectory = try! FileManager.default.url(
-			for: .cachesDirectory,
-			in: .userDomainMask,
-			appropriateFor: nil,
-			create: true).appendingPathComponent(bundleName, isDirectory: true)
-			.appendingPathComponent(name, isDirectory: true)
-
+		cacheDirectory = ArchivePath.urlForName(name,
+		                                        in: .cachesDirectory,
+		                                        bundleID: true)
 		memoryCache = NSCache<NSString, T>()
 		memoryCache.countLimit = 1000
 		memoryCache.totalCostLimit = memorySize

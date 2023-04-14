@@ -19,6 +19,7 @@
 		020798012994706000D3C654 /* QuestBuilderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020798002994706000D3C654 /* QuestBuilderController.swift */; };
 		02079803299470FB00D3C654 /* QuestBuilder.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02079802299470FB00D3C654 /* QuestBuilder.storyboard */; };
 		02092ECD29E2497E0095042B /* FastCodable in Frameworks */ = {isa = PBXBuildFile; productRef = 02092ECC29E2497E0095042B /* FastCodable */; };
+		02092ED129E8ADB70095042B /* ArchivePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02092ED029E8ADB70095042B /* ArchivePath.swift */; };
 		020E160B267A82050037DE49 /* TileServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020E160A267A82050037DE49 /* TileServer.swift */; };
 		020EBA7926506156001D56F4 /* MercatorTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925326411C2B000A2A99 /* MercatorTileLayer.swift */; };
 		020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */; };
@@ -323,6 +324,7 @@
 		0208898726BB1539003AF6BF /* ars */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ars; path = ars.lproj/POI.strings; sourceTree = "<group>"; };
 		0208898826BB1539003AF6BF /* ars */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ars; path = ars.lproj/Settings.strings; sourceTree = "<group>"; };
 		0208898926BB1539003AF6BF /* ars */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ars; path = ars.lproj/Changeset.strings; sourceTree = "<group>"; };
+		02092ED029E8ADB70095042B /* ArchivePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivePath.swift; sourceTree = "<group>"; };
 		020E160A267A82050037DE49 /* TileServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileServer.swift; sourceTree = "<group>"; };
 		020E765929835D2C00B862B8 /* tzm */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tzm; path = tzm.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		020E765A29835D2C00B862B8 /* tzm */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tzm; path = tzm.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1156,6 +1158,7 @@
 		02F5329C267AD2B20088DF41 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				02092ED029E8ADB70095042B /* ArchivePath.swift */,
 				C3D096BD263E178600E3B129 /* aes.swift */,
 				02A123EC264CAE6F005638C1 /* Atomic.swift */,
 				0226B770268300C9005DB9E2 /* Data+Wrapper.swift */,
@@ -1619,6 +1622,7 @@
 				02A123F1264EF139005638C1 /* QuadMap.swift in Sources */,
 				6442666822540EDF00C0D545 /* Disposable.swift in Sources */,
 				ED56E5C726027A50000B368C /* CreditsViewController.swift in Sources */,
+				02092ED129E8ADB70095042B /* ArchivePath.swift in Sources */,
 				ED9649F92601D58900EC0A60 /* POIPresetValuePickerController.swift in Sources */,
 				64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */,
 				02FEDAF42651DCC100DF15D7 /* POIAllTagsViewController.swift in Sources */,

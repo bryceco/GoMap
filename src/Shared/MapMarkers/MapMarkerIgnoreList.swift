@@ -45,8 +45,9 @@ final class MapMarkerIgnoreList: MapMarkerIgnoreListProtocol, Codable {
 
 	private func readIgnoreList() -> [String: IgnoreReason] {
 		do {
-			let dir = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
-			let path = dir.appendingPathComponent("mapMarkerIgnoreList")
+			let path = ArchivePath.urlForName("mapMarkerIgnoreList",
+			                                  in: .libraryDirectory,
+			                                  bundleID: false)
 			let data = try Data(contentsOf: path)
 			let unarchiver = try NSKeyedUnarchiver(forReadingFrom: data)
 			var list = unarchiver.decodeDecodable(IgnoreDict.self, forKey: NSKeyedArchiveRootObjectKey) ?? [:]
@@ -73,8 +74,9 @@ final class MapMarkerIgnoreList: MapMarkerIgnoreListProtocol, Codable {
 	private func writeIgnoreList() {
 		do {
 			let archiver = NSKeyedArchiver(requiringSecureCoding: true)
-			let dir = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
-			let path = dir.appendingPathComponent("mapMarkerIgnoreList")
+			let path = ArchivePath.urlForName("mapMarkerIgnoreList",
+			                                  in: .libraryDirectory,
+			                                  bundleID: false)
 			try archiver.encodeEncodable(ignoreList, forKey: NSKeyedArchiveRootObjectKey)
 			try archiver.encodedData.write(to: path)
 		} catch {

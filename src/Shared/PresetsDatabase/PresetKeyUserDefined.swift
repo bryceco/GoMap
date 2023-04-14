@@ -136,10 +136,9 @@ class PresetKeyUserDefinedList: Codable {
 	}
 
 	private class func archivePath() -> String {
-		let paths = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).map(\.path)
-		let cacheDirectory = paths[0]
-		let fullPath = URL(fileURLWithPath: cacheDirectory).appendingPathComponent("CustomPresetList.data").path
-		return fullPath
+		return ArchivePath.urlForName("CustomPresetList.data",
+		                              in: .libraryDirectory,
+		                              bundleID: false).path
 	}
 
 	// MARK: Codable

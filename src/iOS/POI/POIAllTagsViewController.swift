@@ -19,8 +19,9 @@ private class SectionHeaderCell: UITableViewHeaderFooterView {
 	override init(reuseIdentifier: String?) {
 		super.init(reuseIdentifier: reuseIdentifier)
 		configureContents()
-	 }
+	}
 
+	@available(*, unavailable)
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
@@ -41,7 +42,7 @@ private class SectionHeaderCell: UITableViewHeaderFooterView {
 		contentView.addSubview(label)
 		contentView.addSubview(button)
 
-		 NSLayoutConstraint.activate([
+		NSLayoutConstraint.activate([
 			label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 			label.leadingAnchor.constraint(equalToSystemSpacingAfter: contentView.leadingAnchor, multiplier: 1.0),
 			label.trailingAnchor.constraint(greaterThanOrEqualTo: button.leadingAnchor, constant: 10.0),
@@ -49,8 +50,8 @@ private class SectionHeaderCell: UITableViewHeaderFooterView {
 			button.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 			button.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor, constant: 10.0),
 			button.widthAnchor.constraint(equalToConstant: 44.0)
-		 ])
-	 }
+		])
+	}
 
 	@objc func pickFeature(_ sender: Any?) {
 		var r: UIResponder = self
@@ -83,7 +84,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 	override func viewDidLoad() {
 		tags = KeyValueTableSection(tableView: tableView)
 		tableView.register(SectionHeaderCell.self,
-						   forHeaderFooterViewReuseIdentifier: SectionHeaderCell.reuseIdentifier)
+		                   forHeaderFooterViewReuseIdentifier: SectionHeaderCell.reuseIdentifier)
 
 		super.viewDidLoad()
 
@@ -152,17 +153,17 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 
 		let nextRow = tags.count
 
-		list.append(("",""))
+		list.append(("", ""))
 
 		// add placeholder keys
 		if let newFeature = currentFeature {
 			let presets = PresetsForFeature(withFeature: newFeature,
-											objectTags: dict,
-											geometry: geometry,
-											update: nil)
-			self.allPresetKeys = presets.allPresetKeys()
+			                                objectTags: dict,
+			                                geometry: geometry,
+			                                update: nil)
+			allPresetKeys = presets.allPresetKeys()
 			let newKeys: Set<String> = Set(allPresetKeys.map({ $0.tagKey }).filter({ $0 != "" }))
-				.subtracting(tags.allTags.map{$0.k})
+				.subtracting(tags.allTags.map { $0.k })
 
 			for key in Array(newKeys).sorted() {
 				list.append((key, ""))
@@ -181,7 +182,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		relations = tabController.relationList
 		members = (tabController.selection as? OsmRelation)?.members ?? []
 
-		tags.set( tabController.keyValueDict.map{ ($0.key,$0.value) })
+		tags.set(tabController.keyValueDict.map { ($0.key, $0.value) })
 
 		_ = updateWithRecomendations(forFeature: true)
 
@@ -447,7 +448,9 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		if section == 0 {
-			let cell: SectionHeaderCell = tableView.dequeueReusableHeaderFooterView(withIdentifier: SectionHeaderCell.reuseIdentifier) as! SectionHeaderCell
+			let cell: SectionHeaderCell = tableView
+				.dequeueReusableHeaderFooterView(withIdentifier: SectionHeaderCell
+					.reuseIdentifier) as! SectionHeaderCell
 			cell.label.text = currentFeature?.name.uppercased() ?? "TAGS"
 			return cell
 		} else {

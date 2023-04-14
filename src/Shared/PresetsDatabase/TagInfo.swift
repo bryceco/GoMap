@@ -22,9 +22,9 @@ class TagInfo {
 	}
 
 	private static func pathToSaveFile() -> URL {
-		let dir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).map(\.path).first!
-		let file = URL(fileURLWithPath: dir).appendingPathComponent("tagInfo.plist")
-		return file
+		return ArchivePath.urlForName("tagInfo.plist",
+		                              in: .libraryDirectory,
+		                              bundleID: true)
 	}
 
 	private func save() {

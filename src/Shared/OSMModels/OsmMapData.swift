@@ -1393,16 +1393,10 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	}
 
 	static func pathToArchiveFile() -> String {
-		// get tile cache folder
-		let paths = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).map(\.path)
-		let bundleName = Bundle.main.infoDictionary?["CFBundleIdentifier"] as? String
-		let path = URL(fileURLWithPath: URL(fileURLWithPath: paths[0]).appendingPathComponent(bundleName ?? "").path)
-			.appendingPathComponent("OSM Downloaded Data.archive").path
-		try? FileManager.default.createDirectory(
-			atPath: URL(fileURLWithPath: path).deletingLastPathComponent().path,
-			withIntermediateDirectories: true,
-			attributes: nil)
-		return path
+		return ArchivePath.urlForFile(name: "OSM Downloaded Data.archive",
+		                              in: .libraryDirectory,
+		                              bundleID: true,
+		                              upgrading: [.cachesDirectory]).path
 	}
 
 	func sqlSave(

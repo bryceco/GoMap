@@ -58,21 +58,10 @@ final class TileServerList {
 	}
 
 	private func pathToExternalAerialsCache() -> String {
-		// get tile cache folder
-		let paths = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).map(\.path)
-		if paths.count != 0 {
-			let bundleName = Bundle.main.infoDictionary?["CFBundleIdentifier"] as? String
-			let path = URL(fileURLWithPath: URL(fileURLWithPath: paths[0]).appendingPathComponent(bundleName ?? "")
-				.path).appendingPathComponent("OSM Aerial Providers.json").path
-			do {
-				try FileManager.default.createDirectory(
-					atPath: URL(fileURLWithPath: path).deletingLastPathComponent().path,
-					withIntermediateDirectories: true,
-					attributes: nil)
-			} catch {}
-			return path
-		}
-		return ""
+		return ArchivePath.urlForFile(name: "OSM Aerial Providers.json",
+		                              in: .libraryDirectory,
+		                              bundleID: true,
+		                              upgrading: [.cachesDirectory]).path
 	}
 
 	func updateDownloadList(with list: [TileServer]) {

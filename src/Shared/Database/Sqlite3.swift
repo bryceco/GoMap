@@ -55,18 +55,12 @@ final class Sqlite {
 	private let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
 
 	class func pathForName(_ name: String) -> String {
-		let paths = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).map(\.path)
-		let bundleName = Bundle.main.infoDictionary?["CFBundleIdentifier"] as! String
 		let basename = "data.sqlite3"
 		let name = name.isEmpty ? basename : "\(name).\(basename)"
-		let url = URL(fileURLWithPath: paths[0])
-			.appendingPathComponent(bundleName, isDirectory: true)
-			.appendingPathComponent(name, isDirectory: false)
-		try? FileManager.default.createDirectory(
-			atPath: url.deletingLastPathComponent().path,
-			withIntermediateDirectories: true,
-			attributes: nil)
-		return url.path
+		return ArchivePath.urlForFile(name: name,
+		                              in: .libraryDirectory,
+		                              bundleID: true,
+		                              upgrading: [.cachesDirectory]).path
 	}
 
 	// return self if database can be opened

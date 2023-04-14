@@ -275,7 +275,7 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 
 	func textViewDidChange(_ textView: UITextView) {
 		// Update underlying text field. This does not trigger a change notification.
-		self.text2.text = self.textView?.text
+		text2.text = self.textView?.text
 		// notify owner
 		notifyKeyValueChange(ended: false)
 		updateTextViewSize()
@@ -390,7 +390,7 @@ class KeyValueTableSection {
 				return (tiger1 ? 1 : 0) < (tiger2 ? 1 : 0)
 			}
 		})
-		tags.append(("",""))
+		tags.append(("", ""))
 	}
 
 	func append(_ value: KeyValue) {
@@ -404,7 +404,7 @@ class KeyValueTableSection {
 
 	func keyValueEditingEnded(for pair: KeyValueTableCell) -> KeyValue? {
 		guard let tableView = tableView,
-			  let indexPath = tableView.indexPath(for: pair)
+		      let indexPath = tableView.indexPath(for: pair)
 		else { return nil }
 
 		let kv = (k: pair.key, v: pair.value)
@@ -444,5 +444,4 @@ class KeyValueTableSection {
 		}
 		return kv
 	}
-
 }

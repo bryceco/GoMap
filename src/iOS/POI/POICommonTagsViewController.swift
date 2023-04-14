@@ -78,7 +78,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 
 	override func viewDidLoad() {
 		// have to update presets before call super because super asks for the number of sections
-		extraTags = KeyValueTableSection(tableView: self.tableView)
+		extraTags = KeyValueTableSection(tableView: tableView)
 		updatePresets()
 
 		super.viewDidLoad()
@@ -208,7 +208,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		for key in presetKeys {
 			extraKeys.removeAll(where: { $0 == key })
 		}
-		extraTags.set( extraKeys.map { ($0, dict[$0]!) })
+		extraTags.set(extraKeys.map { ($0, dict[$0]!) })
 	}
 
 	// MARK: display
@@ -608,7 +608,6 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 			case let cell as TextPairTableCell:
 				cell.isSet.backgroundColor = cell.text1.text == "" || cell.text2.text == ""
 					? nil : Self.isSetHighlight
-				break
 			default:
 				break
 			}
@@ -739,7 +738,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 
 	func keyValueEditingChanged(for kv: KeyValueTableCell) {
 		// doesn't matter whether key or value changed here:
-		self.textFieldChanged(kv.text2)
+		textFieldChanged(kv.text2)
 	}
 
 	func keyValueEditingEnded(for pair: KeyValueTableCell) {

@@ -581,10 +581,9 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 	}
 
 	func saveDirectory() -> String {
-		let documentPaths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).map(\.path)
-		let docsDir = documentPaths[0]
-		let filePathInDocsDir = URL(fileURLWithPath: docsDir).appendingPathComponent("gpxPoints").path
-		return filePathInDocsDir
+		return ArchivePath.urlForName("gpxPoints",
+		                              in: .documentDirectory,
+		                              bundleID: false).path
 	}
 
 	override func action(forKey key: String) -> CAAction? {
