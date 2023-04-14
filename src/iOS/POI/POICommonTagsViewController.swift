@@ -536,8 +536,8 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 			// user swiped to delete a cell
 			if indexPath.section == allPresets?.sectionCount() {
 				// Extra tags section
-				extraTags.remove(at: indexPath)
 				updateTagDict(withValue: "", forKey: extraTags[indexPath.row].k)
+				extraTags.remove(at: indexPath)
 			} else {
 				// for regular cells just set the value to ""
 				let cell = tableView.cellForRow(at: indexPath)
