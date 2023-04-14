@@ -57,6 +57,31 @@ enum EDIT_ACTION: Int {
 	case PASTETAGS
 	case RESTRICT
 	case CREATE_RELATION
+
+	/// Localized names of edit actions
+	func actionTitle(abbreviated: Bool = false) -> String {
+		switch self {
+		case .SPLIT: return NSLocalizedString("Split", comment: "Edit action")
+		case .RECTANGULARIZE: return NSLocalizedString("Make Rectangular", comment: "Edit action")
+		case .STRAIGHTEN: return NSLocalizedString("Straighten", comment: "Edit action")
+		case .REVERSE: return NSLocalizedString("Reverse", comment: "Edit action")
+		case .DUPLICATE: return NSLocalizedString("Duplicate", comment: "Edit action")
+		case .ROTATE: return NSLocalizedString("Rotate", comment: "Edit action")
+		case .CIRCULARIZE: return NSLocalizedString("Make Circular", comment: "Edit action")
+		case .JOIN: return NSLocalizedString("Join", comment: "Edit action")
+		case .DISCONNECT: return NSLocalizedString("Disconnect", comment: "Edit action")
+		case .COPYTAGS: return NSLocalizedString("Copy Tags", comment: "Edit action")
+		case .PASTETAGS: return NSLocalizedString("Paste", comment: "Edit action")
+		case .EDITTAGS: return NSLocalizedString("Tags", comment: "Edit action")
+		case .ADDNOTE: return NSLocalizedString("Add Note", comment: "Edit action")
+		case .DELETE: return NSLocalizedString("Delete", comment: "Edit action")
+		case .MORE: return NSLocalizedString("More...", comment: "Edit action")
+		case .RESTRICT: return abbreviated
+			? NSLocalizedString("Restrict", comment: "Edit action")
+			: NSLocalizedString("Turn Restrictions", comment: "Edit action")
+		case .CREATE_RELATION: return NSLocalizedString("Create Relation", comment: "Edit action")
+		}
+	}
 }
 
 private let Z_AERIAL: CGFloat = -100
@@ -75,9 +100,11 @@ private let Z_TOOLBAR: CGFloat = 90
 private let Z_PUSHPIN: CGFloat = 105
 private let Z_FLASH: CGFloat = 110
 
-let DefaultHitTestRadius: CGFloat = 10.0 // how close to an object do we need to tap to select it
-let DragConnectHitTestRadius =
-	(DefaultHitTestRadius * 0.6) // how close to an object do we need to drag a node to connect to it
+// how close to an object do we need to tap to select it
+let DefaultHitTestRadius: CGFloat = 10.0
+
+// how close to an object do we need to drag a node to connect to it
+let DragConnectHitTestRadius = (DefaultHitTestRadius * 0.6)
 
 struct MapLocation {
 	var longitude = 0.0
@@ -96,30 +123,6 @@ protocol MapViewProgress {
 
 private let DisplayLinkHeading = "Heading"
 private let DisplayLinkPanning = "Panning" // disable gestures inside toolbar buttons
-
-/// Localized names of edit actions
-private func ActionTitle(_ action: EDIT_ACTION, _ abbrev: Bool) -> String {
-	switch action {
-	case .SPLIT: return NSLocalizedString("Split", comment: "Edit action")
-	case .RECTANGULARIZE: return NSLocalizedString("Make Rectangular", comment: "Edit action")
-	case .STRAIGHTEN: return NSLocalizedString("Straighten", comment: "Edit action")
-	case .REVERSE: return NSLocalizedString("Reverse", comment: "Edit action")
-	case .DUPLICATE: return NSLocalizedString("Duplicate", comment: "Edit action")
-	case .ROTATE: return NSLocalizedString("Rotate", comment: "Edit action")
-	case .CIRCULARIZE: return NSLocalizedString("Make Circular", comment: "Edit action")
-	case .JOIN: return NSLocalizedString("Join", comment: "Edit action")
-	case .DISCONNECT: return NSLocalizedString("Disconnect", comment: "Edit action")
-	case .COPYTAGS: return NSLocalizedString("Copy Tags", comment: "Edit action")
-	case .PASTETAGS: return NSLocalizedString("Paste", comment: "Edit action")
-	case .EDITTAGS: return NSLocalizedString("Tags", comment: "Edit action")
-	case .ADDNOTE: return NSLocalizedString("Add Note", comment: "Edit action")
-	case .DELETE: return NSLocalizedString("Delete", comment: "Edit action")
-	case .MORE: return NSLocalizedString("More...", comment: "Edit action")
-	case .RESTRICT: return abbrev ? NSLocalizedString("Restrict", comment: "Edit action")
-		: NSLocalizedString("Turn Restrictions", comment: "Edit action")
-	case .CREATE_RELATION: return NSLocalizedString("Create Relation", comment: "Edit action")
-	}
-}
 
 final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheetDelegate,
 	UIGestureRecognizerDelegate, SKStoreProductViewControllerDelegate
@@ -1908,7 +1911,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			}
 			editControl.removeAllSegments()
 			for action in editControlActions {
-				let title: String = ActionTitle(action, true)
+				let title: String = action.actionTitle(abbreviated: true)
 				editControl.insertSegment(withTitle: title,
 				                          at: editControl.numberOfSegments,
 				                          animated: false)
@@ -1937,7 +1940,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			message: nil,
 			preferredStyle: .actionSheet)
 		for value in actionList {
-			let title = ActionTitle(value, false)
+			let title = value.actionTitle()
 			actionSheet.addAction(UIAlertAction(title: title, style: .default, handler: { [self] _ in
 				editorLayer.performEdit(value)
 			}))
