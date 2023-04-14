@@ -2677,7 +2677,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	// long press on map allows selection of various objects near the location
 	@IBAction func screenLongPressGesture(_ longPress: UILongPressGestureRecognizer) {
-		if longPress.state == .began, !isHidden {
+		if longPress.state == .began, !editorLayer.isHidden {
 			let point = longPress.location(in: self)
 			editorLayer.longPressAtPoint(point)
 		}
