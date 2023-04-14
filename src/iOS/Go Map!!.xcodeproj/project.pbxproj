@@ -1158,9 +1158,10 @@
 		02F5329C267AD2B20088DF41 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				02092ED029E8ADB70095042B /* ArchivePath.swift */,
 				C3D096BD263E178600E3B129 /* aes.swift */,
+				02092ED029E8ADB70095042B /* ArchivePath.swift */,
 				02A123EC264CAE6F005638C1 /* Atomic.swift */,
+				02D95B9529E0AE7F00F8FCA9 /* CharacterSet+Extension.swift */,
 				0226B770268300C9005DB9E2 /* Data+Wrapper.swift */,
 				02F6A458268AE42800F2ACE7 /* Debugger.swift */,
 				02A59EE0297F6E6A00B0A676 /* Dictionary+Extension.swift */,
@@ -1174,7 +1175,6 @@
 				02CA15502824A6B40047B0E5 /* String+Ext.swift */,
 				0266DE852655A21F007A502E /* Superview.swift */,
 				0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */,
-				02D95B9529E0AE7F00F8FCA9 /* CharacterSet+Extension.swift */,
 			);
 			name = Utility;
 			path = ../Shared/Utility;

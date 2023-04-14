@@ -422,6 +422,7 @@ final class EditorMapLayer: CALayer {
 	static let medicalColor = UIColor(red: 0xDA / 255.0, green: 0x00 / 255.0, blue: 0x92 / 255.0, alpha: 1.0)
 	static let poiColor = UIColor.blue
 	static let stopColor = UIColor(red: 196 / 255.0, green: 4 / 255.0, blue: 4 / 255.0, alpha: 1.0)
+	static let springColor = UIColor(red: 0.4, green: 0.4, blue: 1.0, alpha: 1.0)
 
 	func defaultColor(for object: OsmBaseObject) -> UIColor? {
 		if object.tags["shop"] != nil {
@@ -438,6 +439,8 @@ final class EditorMapLayer: CALayer {
 			return Self.treeColor
 		} else if object.isNode() != nil, object.tags["highway"] == "stop" {
 			return Self.stopColor
+		} else if object.tags["natural"] == "spring" {
+			return Self.springColor
 		}
 		return nil
 	}
