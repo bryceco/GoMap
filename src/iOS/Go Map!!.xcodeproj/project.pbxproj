@@ -35,6 +35,7 @@
 		021FADE22588474300F6E1C0 /* PresetCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADE12588474300F6E1C0 /* PresetCategory.swift */; };
 		021FADEF25884BB900F6E1C0 /* OsmTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADEE25884BB900F6E1C0 /* OsmTags.swift */; };
 		0220526429283498003C6AE1 /* CountryCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220526329283498003C6AE1 /* CountryCoder.swift */; };
+		02225DA729EB3AE900859F9D /* GpxTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02225DA629EB3AE900859F9D /* GpxTrack.swift */; };
 		02263CDF2677F93A002BA72F /* QuadBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02263CDE2677F93A002BA72F /* QuadBox.swift */; };
 		0226B771268300C9005DB9E2 /* Data+Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B770268300C9005DB9E2 /* Data+Wrapper.swift */; };
 		0226B7732683BCB6005DB9E2 /* URLSession+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */; };
@@ -360,6 +361,7 @@
 		0221950026BB153B00A2F5F7 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
 		0221D55926D3251C00EAD649 /* ars */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ars; path = ars.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		0221D55A26D3251C00EAD649 /* ars */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ars; path = ars.lproj/Localizable.strings; sourceTree = "<group>"; };
+		02225DA629EB3AE900859F9D /* GpxTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GpxTrack.swift; path = ../Shared/GpxTrack.swift; sourceTree = "<group>"; };
 		02231F8925C4CB38000E7C07 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Changeset.strings"; sourceTree = "<group>"; };
 		02248A032568C3E2004272B2 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		02248A042568C3E2004272B2 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -982,6 +984,7 @@
 				0203473E266C1EDD000A7C3D /* ExternalGPS.swift */,
 				0200FECC2908B0EB002C3F94 /* GeoJSON.swift */,
 				02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */,
+				02225DA629EB3AE900859F9D /* GpxTrack.swift */,
 				C3FA9248263FF95B000A2A99 /* LocationParser.swift */,
 				02C8C56326F446A3003B0122 /* MapMarkers */,
 				024909C8267BF9F70027E531 /* MapTransform.swift */,
@@ -1639,6 +1642,7 @@
 				02EA1C6C2663398C00A0F827 /* TileQuadKey.swift in Sources */,
 				021FADD725873D0100F6E1C0 /* PresetsForFeature.swift in Sources */,
 				02A123ED264CAE6F005638C1 /* Atomic.swift in Sources */,
+				02225DA729EB3AE900859F9D /* GpxTrack.swift in Sources */,
 				02008650265B25DC008F37DD /* Database.swift in Sources */,
 				020E160B267A82050037DE49 /* TileServer.swift in Sources */,
 				02E049BE2651D1750028B57F /* UndoAction.m in Sources */,
