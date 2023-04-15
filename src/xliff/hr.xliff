@@ -2661,11 +2661,6 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
         <target>Natrag</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "Hgu-iP-FnG";</note>
       </trans-unit>
-      <trans-unit id="IcU-k2-G0m.normalTitle" xml:space="preserve">
-        <source>&gt;</source>
-        <target>&gt;</target>
-        <note>Class = "UIButton"; normalTitle = "&gt;"; ObjectID = "IcU-k2-G0m";</note>
-      </trans-unit>
       <trans-unit id="JAT-qD-dTS.text" xml:space="preserve">
         <source>Value 1</source>
         <target>Vrijednost 1</target>
@@ -2748,11 +2743,6 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
       <trans-unit id="XCc-6y-qYt.placeholder" xml:space="preserve">
         <source>key</source>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "XCc-6y-qYt"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="XJZ-vI-jat.text" xml:space="preserve">
-        <source>PROTOTYPE CELLS</source>
-        <target>ĆELIJE PROTOTIPA</target>
-        <note>Class = "UILabel"; text = "PROTOTYPE CELLS"; ObjectID = "XJZ-vI-jat";</note>
       </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
         <source>Subtitle</source>

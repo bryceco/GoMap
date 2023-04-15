@@ -220,6 +220,9 @@
 /* Class = "UILabel"; text = "Building Level"; ObjectID = "uZo-P0-sR7"; */
 "uZo-P0-sR7.text" = "Stockwerk";
 
+/* Class = "UILabel"; text = "12/22/20, 7:55 PM"; ObjectID = "v6h-g5-fka"; */
+"v6h-g5-fka.text" = "12/22/20, 7:55 PM";
+
 /* Class = "UILabel"; text = "Max Zoom"; ObjectID = "voF-Yf-33h"; */
 "voF-Yf-33h.text" = "Maximaler Zoom";
 

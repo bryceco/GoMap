@@ -155,7 +155,7 @@
 "MZF-am-tCM.title" = "हवाई प्रतिमा प्रदाता";
 
 /* Class = "UILabel"; text = "Quests"; ObjectID = "O0U-6M-7AT"; */
-"O0U-6M-7AT.text" = "शोध";
+"O0U-6M-7AT.text" = "मोहीम";
 
 /* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "OiJ-GU-gZ3"; */
 "OiJ-GU-gZ3.title" = "रद्द करा";
@@ -173,7 +173,7 @@
 "pR1-M8-pXH.title" = "मागे";
 
 /* Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "PSE-3C-cDx"; */
-"PSE-3C-cDx.text" = "टिपा व Fixme";
+"PSE-3C-cDx.text" = "टिपा व सुधार चिठ्ठ्या";
 
 /* Class = "UILabel"; text = "Boundaries"; ObjectID = "qdV-Je-jXT"; */
 "qdV-Je-jXT.text" = "सीमा";

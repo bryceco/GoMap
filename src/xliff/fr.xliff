@@ -2645,10 +2645,6 @@ Vous pouvez vider le cache (dans Paramètres d'affichage) pour améliorer les pe
         <target>Retour</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "Hgu-iP-FnG";</note>
       </trans-unit>
-      <trans-unit id="IcU-k2-G0m.normalTitle" xml:space="preserve">
-        <source>&gt;</source>
-        <note>Class = "UIButton"; normalTitle = "&gt;"; ObjectID = "IcU-k2-G0m";</note>
-      </trans-unit>
       <trans-unit id="JAT-qD-dTS.text" xml:space="preserve">
         <source>Value 1</source>
         <target>Valeur 1</target>
@@ -2731,11 +2727,6 @@ Vous pouvez vider le cache (dans Paramètres d'affichage) pour améliorer les pe
       <trans-unit id="XCc-6y-qYt.placeholder" xml:space="preserve">
         <source>key</source>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "XCc-6y-qYt"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="XJZ-vI-jat.text" xml:space="preserve">
-        <source>PROTOTYPE CELLS</source>
-        <target>CELLULES PROTOTYPES</target>
-        <note>Class = "UILabel"; text = "PROTOTYPE CELLS"; ObjectID = "XJZ-vI-jat";</note>
       </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
         <source>Subtitle</source>

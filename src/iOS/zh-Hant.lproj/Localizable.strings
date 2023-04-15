@@ -589,6 +589,9 @@
 /* No comment provided by engineer. */
 "Next" = "下一個";
 
+/* No comment provided by engineer. */
+"no" = "否";
+
 /* GPX track */
 "No active track" = "沒有啟用的航跡";
 
@@ -1009,6 +1012,9 @@
 
 /* No comment provided by engineer. */
 "What types of objects does this quest apply to?" = "這個任務會套用哪種物件類型？";
+
+/* No comment provided by engineer. */
+"yes" = "是";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "您即將要修改真的 OSM 資料庫，全世界所有人都會看到您的修改。\n\n如要繼續請請再次點擊提交，否則請點擊取消。";

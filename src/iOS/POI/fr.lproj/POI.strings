@@ -202,9 +202,6 @@
 /* Class = "UILabel"; text = "Food & Drink"; ObjectID = "XBV-Ie-LDT"; Note = "Do not translate"; */
 "XBV-Ie-LDT.text" = "Nourriture et boisson";
 
-/* Class = "UILabel"; text = "PROTOTYPE CELLS"; ObjectID = "XJZ-vI-jat"; */
-"XJZ-vI-jat.text" = "CELLULES PROTOTYPES";
-
 /* Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ"; */
 "z19-cc-gHZ.text" = "Valeur";
 

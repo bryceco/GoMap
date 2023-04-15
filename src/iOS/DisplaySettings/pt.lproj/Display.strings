@@ -61,11 +61,17 @@
 /* Class = "UILabel"; text = "Collect in background:"; ObjectID = "DmO-dW-3Fh"; */
 "DmO-dW-3Fh.text" = "Coletar em segundo plano:";
 
+/* Class = "UITextField"; placeholder = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "; ObjectID = "dzT-B4-za3"; */
+"dzT-B4-za3.placeholder" = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n ";
+
 /* Class = "UIButton"; normalTitle = "Bing"; ObjectID = "eac-Db-EaW"; */
 "eac-Db-EaW.normalTitle" = "Bing";
 
 /* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eFa-yZ-YZl"; */
 "eFa-yZ-YZl.text" = "Quadrículas de imagens aéreas";
+
+/* Class = "UILabel"; text = "12:00:00"; ObjectID = "EHa-L5-Hcz"; */
+"EHa-L5-Hcz.text" = "12:00:00";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F"; */
 "el8-h8-H1F.normalTitle" = "Botão";
@@ -124,6 +130,9 @@
 /* Class = "UILabel"; text = "Power Features"; ObjectID = "Idx-2G-6F7"; */
 "Idx-2G-6F7.text" = "Recursos elétricos";
 
+/* Class = "UITextField"; placeholder = "(TMS)"; ObjectID = "iuk-Fk-3Fw"; */
+"iuk-Fk-3Fw.placeholder" = "(TMS)";
+
 /* Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe"; */
 "Jz1-GP-Wbe.text" = "Caminhos";
 
@@ -145,6 +154,9 @@
 /* Class = "UINavigationItem"; title = "Aerial Provider"; ObjectID = "MZF-am-tCM"; */
 "MZF-am-tCM.title" = "Fornecedor de imagens aéreas";
 
+/* Class = "UILabel"; text = "Quests"; ObjectID = "O0U-6M-7AT"; */
+"O0U-6M-7AT.text" = "Missões";
+
 /* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "OiJ-GU-gZ3"; */
 "OiJ-GU-gZ3.title" = "Cancelar";
 
@@ -159,6 +171,9 @@
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "pR1-M8-pXH"; */
 "pR1-M8-pXH.title" = "Voltar";
+
+/* Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "PSE-3C-cDx"; */
+"PSE-3C-cDx.text" = "Notas e fixmes";
 
 /* Class = "UILabel"; text = "Boundaries"; ObjectID = "qdV-Je-jXT"; */
 "qdV-Je-jXT.text" = "Fronteiras";
@@ -204,6 +219,9 @@
 
 /* Class = "UILabel"; text = "Building Level"; ObjectID = "uZo-P0-sR7"; */
 "uZo-P0-sR7.text" = "Nível do edifício";
+
+/* Class = "UILabel"; text = "12/22/20, 7:55 PM"; ObjectID = "v6h-g5-fka"; */
+"v6h-g5-fka.text" = "12/22/20, 7:55 PM";
 
 /* Class = "UILabel"; text = "Max Zoom"; ObjectID = "voF-Yf-33h"; */
 "voF-Yf-33h.text" = "Ampliação máxima";

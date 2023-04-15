@@ -7,14 +7,23 @@
 /* Class = "UIButton"; normalTitle = "Comment"; ObjectID = "2g1-vb-Cjc"; */
 "2g1-vb-Cjc.normalTitle" = "留言";
 
+/* Class = "UIButton"; normalTitle = "Bing attribution"; ObjectID = "2Ka-IT-DQC"; */
+"2Ka-IT-DQC.normalTitle" = "Bing attribution";
+
 /* Class = "UINavigationItem"; title = "Upload"; ObjectID = "7Ua-cx-BHI"; */
 "7Ua-cx-BHI.title" = "上傳";
+
+/* Class = "UILabel"; text = "username"; ObjectID = "9G2-Gl-CeP"; Note = "Placeholder - ignore"; */
+"9G2-Gl-CeP.text" = "帳號";
 
 /* Class = "UILabel"; text = "New comment:"; ObjectID = "9hH-Ja-fKn"; */
 "9hH-Ja-fKn.text" = "新的留言：";
 
 /* Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u"; */
 "9t5-wq-j1u.text" = "66.6 FPS";
+
+/* Class = "UITextView"; text = "Changeset comment goes here"; ObjectID = "ach-1A-88x"; */
+"ach-1A-88x.text" = "變更集留言在此";
 
 /* Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt"; */
 "E22-sL-sNt.accessibilityHint" = "地圖定北";
@@ -37,14 +46,23 @@
 /* Class = "UILabel"; text = "Subtitle"; ObjectID = "l7S-YL-RKK"; */
 "l7S-YL-RKK.text" = "副標題";
 
+/* Class = "UILabel"; text = "-"; ObjectID = "LSJ-rB-J2c"; Note = "Placeholder - ignore"; */
+"LSJ-rB-J2c.text" = "-";
+
 /* Class = "UINavigationItem"; title = "Note"; ObjectID = "MBY-TK-Wuy"; */
 "MBY-TK-Wuy.title" = "註記";
 
 /* Class = "UILabel"; text = "Zoom to Edit"; ObjectID = "N5Q-nV-TPG"; */
 "N5Q-nV-TPG.text" = "放大後編輯";
 
+/* Class = "UILabel"; text = "A Error Message Flashing Z"; ObjectID = "nU5-T2-ADn"; Note = "Placeholder - Don't translate"; */
+"nU5-T2-ADn.text" = "A Error Message Flashing Z";
+
 /* Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1"; */
 "OJ0-aO-ri1.normalTitle" = "解決";
+
+/* Class = "UITextView"; text = "Various comments..."; ObjectID = "PHk-s9-onx"; Note = "Placeholder - ignore"; */
+"PHk-s9-onx.text" = "各種留言...";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "qP9-Sc-sc4"; */
 "qP9-Sc-sc4.text" = "標記";
@@ -60,6 +78,12 @@
 
 /* Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H"; */
 "TcP-6i-B8H.text" = "請提定名字 (\"紐約\")，含有經緯度的網址，或是 OSM 物件的編號 (\"路徑 51014987\")：";
+
+/* Class = "UILabel"; text = "2014-06-17 17:54 UTC"; ObjectID = "tOO-VD-MeJ"; */
+"tOO-VD-MeJ.text" = "2014-06-17 17:54 UTC";
+
+/* Class = "UILabel"; text = "action"; ObjectID = "VNE-ee-a7u"; Note = "Placeholder - ignore"; */
+"VNE-ee-a7u.text" = "行動";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr"; */
 "vRO-Aj-Sdr.text" = "標題";

@@ -13,6 +13,9 @@
 /* Privacy - Camera Usage Description */
 "NSCameraUsageDescription" = "इमारती किंवा वस्तूंची उंची मोजण्यासाठी आणि उघडण्याच्या तासांच्या चिन्हांमध्ये मजकूर ओळखण्यासाठी कॅमेरा वापरला जातो.";
 
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "प्रकाशनाधिकार 2012-2021 Bryce Cogswell";
+
 /* Privacy - Location Always and When In Use Usage Description */
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "स्थान मागोवा \"नेहमी चालू\" ठेवल्याने निष्क्रिय असताना GPX फाईल मुद्रण शक्य होते.";
 

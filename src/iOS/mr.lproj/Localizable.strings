@@ -32,7 +32,7 @@
 "(way)" = "(मार्ग)";
 
 /* area in m^2 */
-"%.0f m^2" = "%.0f चौ.मी.";
+"%.0f m^2" = "%.0f चौ.मी";
 
 /* way length if > 10m */
 "%.0f meters, %ld nodes" = "%1$.0f मीटर, %2$ld गाठी";
@@ -78,7 +78,7 @@
 "<unknown>" = "<अज्ञात>";
 
 /* No comment provided by engineer. */
-"A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." = "सर्व वापरकर्ता-परिभाषित शोधांची एक प्रत क्लिपबोर्डवर JSON स्वरूपात कॉपी केली गेली आहे. ह्याची प्रत साठवण्यासाठी किंवा दुसऱ्याला पाठवण्यासाठी तुम्ही ती पेस्ट करुन वापरू शकता.";
+"A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." = "सर्व वापरकर्ता-परिभाषित मोहिमांची एक प्रत क्लिपबोर्डवर JSON स्वरूपात कॉपी केली गेली आहे. ह्याची प्रत साठवण्यासाठी किंवा दुसऱ्याला पाठवण्यासाठी तुम्ही ती पेस्ट करुन वापरू शकता.";
 
 /* No comment provided by engineer. */
 "A GPX Track records your path as you travel along a road or trail" = "तुम्ही रस्त्याने किंवा पायवाटेने प्रवास करता तेव्हा GPX ट्रॅक तुमचा मार्ग रेकॉर्ड करतो";
@@ -132,7 +132,7 @@
 "Additional imagery" = "अतिरिक्त प्रतिमा";
 
 /* No comment provided by engineer. */
-"Advanced Quest Builder" = "प्रगत शोध बिल्डर";
+"Advanced Quest Builder" = "प्रगत मोहीम बांधणीकार";
 
 /* No comment provided by engineer. */
 "Aerial only" = "फक्त हवाई प्रतिमा";
@@ -181,7 +181,7 @@
 "Better imagery available" = "उत्तम प्रतिमा उपलब्ध";
 
 /* No comment provided by engineer. */
-"Build a New Quest" = "नवीन शोध तयार करा";
+"Build a New Quest" = "नवीन मोहीम रचा";
 
 /* No comment provided by engineer. */
 "Cache size warning" = "कॅश आकार चेतावणी";
@@ -321,6 +321,9 @@
 /* No comment provided by engineer. */
 "Done" = "झाले";
 
+/* create a duplicate */
+"duplicate" = "प्रत करा";
+
 /* Edit action */
 "Duplicate" = "नक्कल";
 
@@ -359,4 +362,279 @@
 
 /* No comment provided by engineer. */
 "Extending a 'via' in a Turn Restriction will break the relation" = "वळण प्रतिबंधात 'via'";
+
+/* No comment provided by engineer. */
+"Extending a way which belongs to a Route or similar relation may damage the relation" = "एखाद्या मार्गाशी किंवा तत्सम संबंधाशी संबंधित असलेल्या मार्गाचा विस्तार केल्यास संबंध खराब होऊ शकतो";
+
+/* Header for quest filters section */
+"Filters" = "गाळणी";
+
+/* No comment provided by engineer. */
+"Geometry" = "भूमिती";
+
+/* No comment provided by engineer. */
+"GPX Upload Complete" = "GPX चढवली गेली";
+
+/* No comment provided by engineer. */
+"GPX Upload Failed" = "GPX चढवण्यात अपयश";
+
+/* Height of an object with an error value */
+"Height: %1$@ ± %2$@ meters" = "उंची: %1$@ ± %2$@ मीटर";
+
+/* rate the app now */
+"I'll do it!" = "मी करेन!";
+
+/* No comment provided by engineer. */
+"Icon" = "चिन्ह";
+
+/* OSM node/way/relation identifier */
+"Identifier" = "ओळखांक";
+
+/* No comment provided by engineer. */
+"Ignore" = "दुर्लक्ष";
+
+/* No comment provided by engineer. */
+"Import" = "आयात";
+
+/* No comment provided by engineer. */
+"Import Error" = "आयात त्रुटी";
+
+/* No comment provided by engineer. */
+"Import Quests" = "मोहीम आयात करा";
+
+/* No comment provided by engineer. */
+"In order to measure height, please enable camera access in the app's settings." = "उंची मोजण्यासाठी, कृपया ॲपच्या मांडणीत कॅमेरा ॲक्सेस सक्षम करा.";
+
+/* No comment provided by engineer. */
+"Invalid URL" = "अवैध URL";
+
+/* Edit action */
+"Join" = "जोडा";
+
+/* The tag keys section of a quest definition */
+"Keys" = "कीज";
+
+/* kilometers per hour speed */
+"km/h" = "किमी/तास";
+
+/* No comment provided by engineer. */
+"Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "भाषेची निवड ही फक्त iD मध्ये अनुवादित असलेल्या प्रेसेटला लागू होते. मुख्य इंटरफेस हा इंग्रजीतच राहतो.";
+
+/* No comment provided by engineer. */
+"Last updated %@" = "शेवटचे अद्यतनित %@";
+
+/* coordinates */
+"Lat/Lon" = "रेखांश/अक्षांश";
+
+/* No comment provided by engineer. */
+"Left" = "डावे";
+
+/* Left-hand side of screen */
+"Left side" = "डावी बाजू";
+
+/* No comment provided by engineer. */
+"Length" = "लांबी";
+
+/* Object geometry: a way (but not an area) */
+"Line" = "रेष";
+
+/* No comment provided by engineer. */
+"Location unavailable" = "स्थान अनुपलब्ध";
+
+/* No comment provided by engineer. */
+"Login successful" = "सनोंद प्रवेश यशस्वी";
+
+/* No comment provided by engineer. */
+"Low memory: clearing cache" = "मेमरी कमी: कॅश पुसत आहे";
+
+/* Edit action */
+"Make Circular" = "वर्तुळाकार करा";
+
+/* Edit action */
+"Make Rectangular" = "आयताकार करा";
+
+/* rate the app later */
+"Maybe later..." = "कदाचित नंतर...";
+
+/* No comment provided by engineer. */
+"Members" = "सदस्य";
+
+/* No comment provided by engineer. */
+"Merge Tags" = "टॅग विलीन करा";
+
+/* No comment provided by engineer. */
+"meters" = "मीटर";
+
+/* last modified date */
+"Modified" = "परिवर्तित";
+
+/* No comment provided by engineer. */
+"Modify" = "बदला";
+
+/* No comment provided by engineer. */
+"Modify\n" = "बदला\n";
+
+/* Edit action */
+"More..." = "आणखी...";
+
+/* No comment provided by engineer. */
+"Most recent" = "सर्वात अलीकडचे";
+
+/* No comment provided by engineer. */
+"move" = "हलवा";
+
+/* miles per hour speed */
+"mph" = "mph";
+
+/* No comment provided by engineer. */
+"Multipolygon" = "बहुभुज";
+
+/* No comment provided by engineer. */
+"Name" = "नाव";
+
+/* Quest for objects that aren't recently updated */
+"Needs Survey" = "सर्वेक्षण आवश्यक";
+
+/* No comment provided by engineer. */
+"Network error" = "नेटवर्क त्रुटी";
+
+/* Never delete old GPX tracks
+   Never delete old tracks */
+"Never" = "कधीच नाही";
+
+/* No comment provided by engineer. */
+"Next" = "पुढे";
+
+/* No comment provided by engineer. */
+"no" = "नाही";
+
+/* Alert title */
+"No Data" = "डेटा नाही";
+
+/* No comment provided by engineer. */
+"Node" = "गाठ";
+
+/* No comment provided by engineer. */
+"OK" = "OK";
+
+/* Open the iOS Settings app */
+"Open Settings" = "मांडणी उघडा";
+
+/* Edit action */
+"Paste" = "चिटकवा";
+
+/* No comment provided by engineer. */
+"Paste the JSON for your quests into the field below" = "आपल्या मोहिमांसाठी खालील क्षेत्रात JSON चिकटवा";
+
+/* Object geometry: a node */
+"Point" = "बिंदू";
+
+/* No comment provided by engineer. */
+"Previous" = "पुढे";
+
+/* No comment provided by engineer. */
+"Provide a single-character symbol (emoji or unicode character) to identify this quest:" = "ही मोहीम ओळखण्यासाठी एक अक्षरी चिन्ह (इमोजी किंवा यूनिकोड अक्षर) प्रदान करा:";
+
+/* Discard editing changes when resetting OSM data cache */
+"Purge" = "पुसा";
+
+/* The current Quest the user is answering */
+"Quest" = "मोहीम";
+
+/* No comment provided by engineer. */
+"Quest Definition Error" = "मोहीम व्याख्या त्रुटी";
+
+/* No comment provided by engineer. */
+"Quests were imported successfully." = "मोहीम यशस्वीरित्या आयात केले गेले.";
+
+/* No comment provided by engineer. */
+"Redo" = "पुनःकरा";
+
+/* No comment provided by engineer. */
+"relation" = "संबंध";
+
+/* No comment provided by engineer. */
+"Relations" = "संबंध";
+
+/* retry opening hours recognition */
+"Retry" = "पुनःप्रयत्न";
+
+/* Edit action */
+"Reverse" = "उलटे";
+
+/* No comment provided by engineer. */
+"Right" = "उजवे";
+
+/* Edit action */
+"Rotate" = "फिरवा";
+
+/* Save changes */
+"Save" = "साठवा";
+
+/* set tag value */
+"Set" = "सेट";
+
+/* No comment provided by engineer. */
+"Settings" = "मांडणी";
+
+/* Open iOS sharing sheet
+   Title for sharing options */
+"Share" = "सामायिक";
+
+/* Space key on the keyboard */
+"Space" = "स्पेस";
+
+/* Edit action */
+"Split" = "तोडा";
+
+/* Begin downloading tiles */
+"Start" = "चालू";
+
+/* No comment provided by engineer. */
+"Stop" = "थांब";
+
+/* Edit action */
+"Straighten" = "सरळ करा";
+
+/* No comment provided by engineer. */
+"Success" = "यशवी";
+
+/* Edit action */
+"Tags" = "टॅग";
+
+/* The 'Type' header in Common Tags */
+"Type" = "प्रकार";
+
+/* OSM numeric user ID */
+"UID" = "UID";
+
+/* No comment provided by engineer. */
+"Undo" = "पूर्ववत";
+
+/* No comment provided by engineer. */
+"Unknown" = "अज्ञात";
+
+/* update an osm note */
+"Update" = "अद्ययावत";
+
+/* OSM user name */
+"User" = "वापरकर्ता";
+
+/* OSM object versioh */
+"Version" = "आवृत्ती";
+
+/* No comment provided by engineer. */
+"Warning" = "सावधान";
+
+/* No comment provided by engineer. */
+"What is the name of this quest? This is best written in the form of an action like 'Add Surface':" = "ह्या मोहिमेचे नाव काय? एखाद्या कृतीच्या स्वरुपात, जसे की 'पृष्ठभाग जोडा', लिहिणे सर्वात उत्तम:";
+
+/* No comment provided by engineer. */
+"What tag key is modified by this quest?" = "ह्या मोहिमेत कोणती 'टॅग की' बदलली जाते?";
+
+/* No comment provided by engineer. */
+"What types of objects does this quest apply to?" = "ही मोहीम कोणत्या प्रकारच्या वस्तूंना लागू होते?";
+
+/* No comment provided by engineer. */
+"yes" = "हो";
 

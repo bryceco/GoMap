@@ -100,9 +100,6 @@
 /* Class = "UINavigationItem"; title = "Attributes"; ObjectID = "hKU-EH-qxp"; */
 "hKU-EH-qxp.title" = "Atributos";
 
-/* Class = "UIButton"; normalTitle = ">"; ObjectID = "IcU-k2-G0m"; */
-"IcU-k2-G0m.normalTitle" = ">";
-
 /* Class = "UILabel"; text = "Changeset"; ObjectID = "ijx-N9-1eO"; */
 "ijx-N9-1eO.text" = "Conjunto de alterações";
 
@@ -216,9 +213,6 @@
 
 /* Class = "UITextField"; placeholder = "key"; ObjectID = "XCc-6y-qYt"; Note = "Do not translate"; */
 "XCc-6y-qYt.placeholder" = "key";
-
-/* Class = "UILabel"; text = "PROTOTYPE CELLS"; ObjectID = "XJZ-vI-jat"; */
-"XJZ-vI-jat.text" = "CÉLULAS PROTÓTIPOS";
 
 /* Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ"; */
 "z19-cc-gHZ.text" = "Valor";

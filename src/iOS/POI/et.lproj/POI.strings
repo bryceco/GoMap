@@ -100,9 +100,6 @@
 /* Class = "UINavigationItem"; title = "Attributes"; ObjectID = "hKU-EH-qxp"; */
 "hKU-EH-qxp.title" = "Atribuudid";
 
-/* Class = "UIButton"; normalTitle = ">"; ObjectID = "IcU-k2-G0m"; */
-"IcU-k2-G0m.normalTitle" = ">";
-
 /* Class = "UILabel"; text = "Changeset"; ObjectID = "ijx-N9-1eO"; */
 "ijx-N9-1eO.text" = "Muudatuste kogum";
 
@@ -210,9 +207,6 @@
 
 /* Class = "UILabel"; text = "Food & Drink"; ObjectID = "XBV-Ie-LDT"; Note = "Do not translate"; */
 "XBV-Ie-LDT.text" = "Toit & jook";
-
-/* Class = "UILabel"; text = "PROTOTYPE CELLS"; ObjectID = "XJZ-vI-jat"; */
-"XJZ-vI-jat.text" = "PROTOTÜÜPRAKUD";
 
 /* Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ"; */
 "z19-cc-gHZ.text" = "Väärtus";

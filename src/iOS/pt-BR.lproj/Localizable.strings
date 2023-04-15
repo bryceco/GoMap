@@ -574,7 +574,7 @@
 "Name" = "Nome";
 
 /* Quest for objects that aren't recently updated */
-"Needs Survey" = "Pesquisa de necessidades";
+"Needs Survey" = "Necessita ser verificado no local";
 
 /* No comment provided by engineer. */
 "Network error" = "Erro de rede";
@@ -710,7 +710,7 @@
 "Quest" = "Missão";
 
 /* No comment provided by engineer. */
-"Quest Definition Error" = "Erro na Definição da Missão";
+"Quest Definition Error" = "Erro na definição da missão";
 
 /* No comment provided by engineer. */
 "Quests were imported successfully." = "As missões foram importadas com sucesso.";

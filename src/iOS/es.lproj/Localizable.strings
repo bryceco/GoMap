@@ -262,6 +262,9 @@
 "Clear OSM Data" = "Borrar los datos de OSM";
 
 /* No comment provided by engineer. */
+"Commit" = "Consolidar";
+
+/* No comment provided by engineer. */
 "computing size..." = "calculando tamaño…";
 
 /* No comment provided by engineer. */
@@ -465,6 +468,9 @@
 /* The tag keys section of a quest definition */
 "Keys" = "Claves";
 
+/* kilometers per hour speed */
+"km/h" = "km/h";
+
 /* No comment provided by engineer. */
 "Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "La selección del idioma sólo afecta a los preajustes y sólo para aquellos preajustes que están traducidos para el identificador. La interfaz principal sigue estando en inglés.";
 
@@ -550,10 +556,16 @@
 "Most recent" = "Más reciente";
 
 /* No comment provided by engineer. */
+"move" = "mover";
+
+/* No comment provided by engineer. */
 "Move" = "Trasladar";
 
 /* No comment provided by engineer. */
 "Move selected object?" = "¿Quiere trasladar el objeto seleccionado?";
+
+/* miles per hour speed */
+"mph" = "Millas por hora (mph)";
 
 /* No comment provided by engineer. */
 "Multipolygon" = "Multipolígono";
@@ -573,6 +585,9 @@
 
 /* No comment provided by engineer. */
 "Next" = "Siguiente";
+
+/* No comment provided by engineer. */
+"no" = "no";
 
 /* GPX track */
 "No active track" = "No hay ningún rastro activo";
@@ -703,6 +718,9 @@
 /* No comment provided by engineer. */
 "Quests were imported successfully." = "Las tareas se han importado correctamente.";
 
+/* No comment provided by engineer. */
+"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "Clasificar esta aplicación facilita que otros cartógrafos la descubran y aumenta la visibilidad de OpenStreetMap.";
+
 /* Alert title message */
 "Recent Aerial Imagery" = "Imágenes aéreas recientes";
 
@@ -727,11 +745,20 @@
 /* No comment provided by engineer. */
 "Replace Tags" = "Reemplazar etiquetas";
 
+/* No comment provided by engineer. */
+"Requires a closed way with at least 3 nodes" = "Requiere una ruta cerrada con al menos 3 nodos";
+
+/* No comment provided by engineer. */
+"Requires a closed way with at least 4 nodes" = "Requiere una ruta cerrada con al menos 4 nodos";
+
 /* Edit action */
 "Restrict" = "Restringir";
 
 /* No comment provided by engineer. */
 "Restriction: %@" = "Restricción: %@";
+
+/* country name,2-character country code */
+"Results for %@ (%@)" = "Resultados para %1$@ (%2$@)";
 
 /* retry opening hours recognition */
 "Retry" = "Reintentar";
@@ -748,8 +775,26 @@
 /* Edit action */
 "Rotate" = "Girar";
 
+/* Save changes */
+"Save" = "Guardar";
+
+/* No comment provided by engineer. */
+"Save or discard your changes" = "Guardar o descartar los cambios";
+
+/* No comment provided by engineer. */
+"Select a highway approaching the intersection" = "Selecciona una carretera que se aproxime a la intersección";
+
+/* No comment provided by engineer. */
+"Select Object" = "Seleccionar un objeto";
+
+/* No comment provided by engineer. */
+"Selected object is off screen" = "El objeto seleccionado está fuera de la pantalla";
+
 /* set tag value */
 "Set" = "Establecer";
+
+/* The height=* tag */
+"Set Height Tag" = "Fijar la etiqueta de altura";
 
 /* No comment provided by engineer. */
 "set tags" = "establecer etiquetas";
@@ -765,7 +810,13 @@
 "Show Recent Items" = "Mostrar elementos recientes";
 
 /* No comment provided by engineer. */
+"Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." = "Algo ha ido mal al intentar restaurar tus datos. Cualquier cambio pendiente se ha perdido. Lo sentimos.";
+
+/* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "Se produjo un error al cargar el archivo GPX";
+
+/* Space key on the keyboard */
+"Space" = "Espacio";
 
 /* Edit action */
 "Split" = "Dividir";
@@ -782,11 +833,26 @@
 /* Edit action */
 "Straighten" = "Enderezar";
 
+/* No comment provided by engineer. */
+"Success" = "Éxito";
+
+/* No comment provided by engineer. */
+"Tag Key" = "Clave de la etiqueta";
+
 /* Edit action */
 "Tags" = "Etiquetas";
 
 /* No comment provided by engineer. */
+"The + button can be positioned on either the left or right side of the screen" = "El botón + puede situarse a la izquierda o a la derecha de la pantalla";
+
+/* No comment provided by engineer. */
 "The current location cannot be determined: " = "No se puede determinar la ubicación actual: ";
+
+/* No comment provided by engineer. */
+"The merged nodes contain conflicting tags" = "Los nodos fusionados contienen etiquetas conflictivas";
+
+/* No comment provided by engineer. */
+"The nodes have conflicting roles in parent relations" = "Los nodos tienen papeles conflictivos en las relaciones parentales";
 
 /* No comment provided by engineer. */
 "The object does not contain any tags" = "El objeto no contiene ninguna etiqueta";
@@ -799,6 +865,9 @@
 
 /* No comment provided by engineer. */
 "The target way is ambiguous" = "La vía de destino es ambigua";
+
+/* No comment provided by engineer. */
+"The turn contains an unrecognized turn restriction style. Proceeding will destroy it." = "El giro tiene una restricción de giro desconocida. Si continúa, se eliminará.";
 
 /* No comment provided by engineer. */
 "The way belongs to a relation that is not fully downloaded" = "La vía pertenece a una relación que no se ha descargado por completo";
@@ -816,19 +885,64 @@
 "This action requires GPS to be turned on" = "Esta acción requiere encender el GPS";
 
 /* No comment provided by engineer. */
+"This app does not yet support editing turn restrictions without a node as the 'via' member" = "Esta aplicación aún no admite la edición de restricciones de giro sin un nodo como miembro \"vía\"";
+
+/* No comment provided by engineer. */
+"This device is not able to provide heading data." = "Este dispositivo no puede proporcionar datos del rumbo.";
+
+/* No comment provided by engineer. */
+"This feature is only available on iOS 15 or later" = "Esta función sólo está disponible en iOS 15 o posterior";
+
+/* No comment provided by engineer. */
+"This page allows you to design quests with more specific criteria than the regular Quest Builder page." = "Esta página le permite diseñar misiones con criterios más específicos que la página normal del Constructor de misiones.";
+
+/* No comment provided by engineer. */
+"To add another member to the relation 'long press' on the way to be added" = "Para añadir otro miembro a la relación 'pulsación larga' sobre el camino a añadir";
+
+/* No comment provided by engineer. */
+"Travel ALLOWED from %@ to %@" = "Viajes PERMITIDOS desde %1$@ a %2$@";
+
+/* No comment provided by engineer. */
+"Travel from %@" = "Viaje desde %@";
+
+/* No comment provided by engineer. */
+"Travel ONLY from %@ to %@" = "Viaje SÓLO de %1$@ a %2$@";
+
+/* No comment provided by engineer. */
+"Travel PROHIBITED from %@ to %@" = "PROHIBIDO viajar de %1$@ a %2$@";
+
+/* No comment provided by engineer. */
 "Turn On Location Services to Allow %@ to Determine Your Location" = "Active los servicios de ubicación para que %@ determine dónde está";
 
 /* Edit action */
 "Turn Restrictions" = "Restricciones de giro";
 
+/* No comment provided by engineer. */
+"Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.\n\nSelect the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route." = "Las restricciones de giro especifican en qué carreteras puede girar al entrar en una intersección desde una dirección determinada.\n\nSelecciona la carretera desde la que se aproxima a la intersección y, a continuación, pulsa una flecha para alternar si la carretera de destino es una ruta permitida.";
+
 /* The 'Type' header in Common Tags */
 "Type" = "Tipo";
+
+/* No comment provided by engineer. */
+"U-Turn from %@ allowed" = "Se permite un cambio de sentido desde la dirección %@";
+
+/* No comment provided by engineer. */
+"U-Turn from %@ prohibited" = "Se prohíbe un cambio de sentido desde la dirección %@";
+
+/* OSM numeric user ID */
+"UID" = "UID";
 
 /* No comment provided by engineer. */
 "Unable to upload changes" = "No es posible cargar los cambios";
 
 /* No comment provided by engineer. */
 "Undo" = "Deshacer";
+
+/* No comment provided by engineer. */
+"Unknown" = "Desconocido";
+
+/* relation role=* tag */
+"Unknown role" = "Función desconocida";
 
 /* No comment provided by engineer. */
 "Unsupported turn restriction type" = "Tipo de restricción de giro no admitido";
@@ -857,8 +971,23 @@
 /* No comment provided by engineer. */
 "Uploading GPX..." = "Cargando GPX…";
 
+/* OSM user name */
+"User" = "Usuario";
+
+/* No comment provided by engineer. */
+"User-defined imagery" = "Imágenes definidas por el usuario";
+
 /* OSM object versioh */
 "Version" = "Versión";
+
+/* Object geometry: a node that is part of a way */
+"Vertex" = "Vértice";
+
+/* Year aerial imagery was created */
+"vintage %@" = "antiguo %@";
+
+/* Years aerial imagery was created */
+"vintage %@ - %@" = "antiguo %1$@ - %2$@";
 
 /* No comment provided by engineer. */
 "Warning" = "Atención";
@@ -872,11 +1001,38 @@
 /* No comment provided by engineer. */
 "Way Tags" = "Etiquetas de vía";
 
+/* No comment provided by engineer. */
+"What is the name of this quest? This is best written in the form of an action like 'Add Surface':" = "¿Cómo se llama esta búsqueda? Es mejor escribirlo en forma de una acción como \"Añadir superficie\":";
+
+/* No comment provided by engineer. */
+"What tag key is modified by this quest?" = "¿Qué clave de etiqueta modifica esta búsqueda?";
+
+/* No comment provided by engineer. */
+"What types of objects does this quest apply to?" = "¿A qué tipo de objetos se aplica esta búsqueda?";
+
+/* No comment provided by engineer. */
+"yes" = "sí";
+
+/* No comment provided by engineer. */
+"You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Estás a punto de realizar cambios en la base de datos de OpenStreetMap. Tus cambios serán visibles para todo el mundo.\n\nPara continuar pulsa Consolidar una vez más, de lo contrario pulsa Cancelar.";
+
 /* POI editor presets */
 "You can define your own custom presets here" = "Puede definir sus propias preconfiguraciones aquí";
 
 /* No comment provided by engineer. */
+"You can navigate to a relation member only if it is already downloaded.\nThese members are marked with '>'." = "Puede navegar a un miembro de la relación sólo si ya está descargado.\nEstos miembros están marcados con '>'.";
+
+/* No comment provided by engineer. */
 "You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "Ha hecho cambios que todavía no se cargan en el servidor. Si vacía la antememoria, esas modificaciones se perderán.";
+
+/* No comment provided by engineer. */
+"You must save or discard changes to the current object before editing its associated relation" = "Debes guardar o descartar los cambios en el objeto actual antes de editar su relación asociada";
+
+/* No comment provided by engineer. */
+"You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?" = "¡Has subido %ld conjuntos de cambios con esta versión de Go Map!!!\n\n¿Valora esta aplicación?";
+
+/* No comment provided by engineer. */
+"Your OSM data cache is getting large, which may lead to slow startup and shutdown times.\n\nYou may want to clear the cache (under Display settings) to improve performance." = "Tu caché de datos de OSM está creciendo, lo que puede provocar tiempos de arranque y apagado lentos.\n\nEs posible que desees borrar la memoria caché (en Configuración de pantalla) para mejorar el rendimiento.";
 
 /* No comment provided by engineer. */
 "Zoom to Edit" = "Acérquese para editar";
