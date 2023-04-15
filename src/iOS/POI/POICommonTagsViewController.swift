@@ -743,6 +743,10 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 
 	func keyValueEditingEnded(for pair: KeyValueTableCell) {
 		if let kv = extraTags.keyValueEditingEnded(for: pair) {
+			if kv.k != pair.priorKeyValue {
+				// delete value associated with previous key
+				updateTagDict(withValue: "", forKey: pair.priorKeyValue)
+			}
 			updateTagDict(withValue: kv.v, forKey: kv.k)
 		}
 	}

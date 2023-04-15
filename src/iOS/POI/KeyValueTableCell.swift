@@ -15,6 +15,7 @@ class TextPairTableCell: UITableViewCell {
 	@IBOutlet var text1: AutocompleteTextField!
 	@IBOutlet var text2: PresetValueTextField!
 	@IBOutlet var infoButton: UIButton!
+	var priorKeyValue: String = ""
 
 	// don't allow editing text while deleting
 	func shouldResignFirstResponder(forState state: UITableViewCell.StateMask) -> Bool {
@@ -248,6 +249,9 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		keyValueCellOwner?.currentTextField = textField
 
 		if textField === text1 {
+			// save original value in case user changes it
+			priorKeyValue = text1.text ?? ""
+
 			// get list of keys
 			let set = PresetsDatabase.shared.allTagKeys()
 			let list = Array(set)
