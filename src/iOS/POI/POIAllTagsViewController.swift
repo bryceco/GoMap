@@ -326,6 +326,8 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 			cell.text1.autocapitalizationType = .none
 			cell.text1.spellCheckingType = .no
 			cell.text2.defaultInputAccessoryView = prevNextToolbar
+
+			cell.isSet.backgroundColor = kv.k == "" || kv.v == "" ? nil : UIColor.systemBlue
 			return cell
 		} else if indexPath.section == 1 {
 			// Relations
@@ -387,7 +389,9 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 
 	func keyValueEditingChanged(for kvCell: KeyValueTableCell) {
 		guard let indexPath = tableView.indexPath(for: kvCell) else { return }
-		tags[indexPath.row] = (k: kvCell.key, v: kvCell.value)
+		let kv = (k: kvCell.key, v: kvCell.value)
+		tags[indexPath.row] = kv
+		kvCell.isSet.backgroundColor = kv.k == "" || kv.v == "" ? nil : UIColor.systemBlue
 
 		let tabController = tabBarController as! POITabBarController
 		saveButton.isEnabled = tabController.isTagDictChanged(tags.keyValueDictionary())

@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--POI Feature Presets-->
+        <!--Common Tags-->
         <scene sceneID="gM4-dB-RnE">
             <objects>
-                <tableViewController storyboardIdentifier="PoiCommonTagsViewController" title="Point of Interest" modalTransitionStyle="crossDissolve" id="6VA-gm-L0S" userLabel="POI Feature Presets" customClass="POICommonTagsViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PoiCommonTagsViewController" title="Point of Interest" modalTransitionStyle="crossDissolve" id="6VA-gm-L0S" userLabel="Common Tags" customClass="POICommonTagsViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="VZH-ZU-gFu">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -562,6 +562,13 @@
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YYq-JT-oMO" userLabel="isSet View">
+                                            <rect key="frame" x="0.0" y="-0.66666666666666785" width="7" height="44.333333333333343"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="7" id="Jbx-Hv-TbJ"/>
+                                            </constraints>
+                                        </view>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="key" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="X1y-nK-nVJ" userLabel="Text1" customClass="AutocompleteTextField" customModule="Go_Map__" customModuleProvider="target">
                                             <rect key="frame" x="20" y="5" width="121" height="34"/>
                                             <constraints>
@@ -603,10 +610,13 @@
                                         </button>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="YYq-JT-oMO" firstAttribute="leading" secondItem="sNa-Uq-eZb" secondAttribute="leading" id="95m-2D-dqB"/>
                                         <constraint firstAttribute="trailing" secondItem="zpj-gL-2Nt" secondAttribute="trailing" constant="4" id="Syd-9i-c0E"/>
                                         <constraint firstItem="zpj-gL-2Nt" firstAttribute="leading" secondItem="cP3-lR-lzM" secondAttribute="trailing" constant="4" id="Zbs-Gm-K7N"/>
                                         <constraint firstItem="zpj-gL-2Nt" firstAttribute="centerY" secondItem="sNa-Uq-eZb" secondAttribute="centerY" id="awn-BH-fl0"/>
                                         <constraint firstItem="X1y-nK-nVJ" firstAttribute="centerY" secondItem="sNa-Uq-eZb" secondAttribute="centerY" id="hXa-f3-jYw"/>
+                                        <constraint firstItem="YYq-JT-oMO" firstAttribute="top" secondItem="sNa-Uq-eZb" secondAttribute="top" constant="-0.5" id="kZG-6G-mk2"/>
+                                        <constraint firstAttribute="bottom" secondItem="YYq-JT-oMO" secondAttribute="bottom" constant="0.5" id="qbP-gm-0s3"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <constraints>
@@ -616,6 +626,7 @@
                                 </constraints>
                                 <connections>
                                     <outlet property="infoButton" destination="zpj-gL-2Nt" id="rhL-jy-n4V"/>
+                                    <outlet property="isSet" destination="YYq-JT-oMO" id="Gie-Kb-cpd"/>
                                     <outlet property="text1" destination="X1y-nK-nVJ" id="ayI-fI-Sgz"/>
                                     <outlet property="text2" destination="cP3-lR-lzM" id="oAt-ph-jQD"/>
                                 </connections>
