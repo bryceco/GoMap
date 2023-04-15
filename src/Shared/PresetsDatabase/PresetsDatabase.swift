@@ -131,7 +131,7 @@ final class PresetsDatabase {
 			DispatchQueue.main.async {
 				self.nsiFeatures = nsiPresets
 				self.nsiFeatureIndex = nsiIndex
-#if DEBUG
+#if DEBUG && false
 				if debug, isUnderDebugger() {
 					self.testAllPresetFields()
 				}
