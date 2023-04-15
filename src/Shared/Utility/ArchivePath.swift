@@ -68,7 +68,7 @@ enum ArchivePath {
 		                                       appropriateFor: nil,
 		                                       create: false)
 		if bundleID {
-			let bundleName = Bundle.main.infoDictionary!["CFBundleIdentifier"] as! String
+			let bundleName = Bundle.main.bundleIdentifier!
 			url = url.appendingPathComponent(bundleName, isDirectory: true)
 		}
 		url = url.appendingPathComponent(name, isDirectory: false)
@@ -108,5 +108,16 @@ enum ArchivePath {
 			}
 		}
 		return preferredURL
+	}
+
+	class func ubiquitousUrlForName(_ name: String,
+									in folder: FileManager.SearchPathDirectory,
+									callback: @escaping (URL?)->Void)
+	{
+		DispatchQueue.global(qos: .default).async {
+			let token = FileManager.default.ubiquityIdentityToken
+			let url = FileManager.default.url(forUbiquityContainerIdentifier: nil)
+			callback(url)
+		}
 	}
 }
