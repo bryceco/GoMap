@@ -13,7 +13,7 @@ enum ArchivePath {
 	case mapMarkerIgnoreList
 	case osmDataArchive
 	case tagInfo
-	case customPresets
+	case customPresets // deprecated, these are stored in UserDefaults now
 	case aerialProviers
 	case sqlite(String)
 	case webCache(String)
@@ -25,6 +25,10 @@ enum ArchivePath {
 	func url() -> URL {
 		switch self {
 		case .gpxPoints:
+			DispatchQueue.main.async {
+				MetadataClass.shared.ubiquitousUrlForName("gpxPoints", in: .documentDirectory, callback: { _ in })
+			}
+
 			return Self.urlForName("gpxPoints",
 			                       in: .documentDirectory,
 			                       bundleID: false)
@@ -61,7 +65,9 @@ enum ArchivePath {
 			                       bundleID: true)
 		}
 	}
+}
 
+private extension ArchivePath {
 	private static func urlForName(_ name: String, in folder: FileManager.SearchPathDirectory, bundleID: Bool) -> URL {
 		var url = try! FileManager.default.url(for: folder,
 		                                       in: .userDomainMask,
@@ -109,15 +115,79 @@ enum ArchivePath {
 		}
 		return preferredURL
 	}
+}
 
-	class func ubiquitousUrlForName(_ name: String,
-									in folder: FileManager.SearchPathDirectory,
-									callback: @escaping (URL?)->Void)
+class MetadataClass {
+	let metadataQuery = NSMetadataQuery()
+
+	init() {}
+	static let shared = MetadataClass()
+	func ubiquitousUrlForName(_ name: String,
+	                          in folder: FileManager.SearchPathDirectory,
+	                          callback: @escaping (URL?) -> Void)
 	{
-		DispatchQueue.global(qos: .default).async {
-			let token = FileManager.default.ubiquityIdentityToken
-			let url = FileManager.default.url(forUbiquityContainerIdentifier: nil)
-			callback(url)
-		}
+		metadataQuery.notificationBatchingInterval = 1
+		metadataQuery.searchScopes = [] // [NSMetadataQueryUbiquitousDataScope, NSMetadataQueryUbiquitousDocumentsScope]
+		metadataQuery.predicate = NSPredicate(format: "%K LIKE %@", NSMetadataItemFSNameKey, "*.txt")
+//		metadataQuery.sortDescriptors = [NSSortDescriptor(key: NSMetadataItemFSNameKey, ascending: true)]
+		NotificationCenter.default.addObserver(self,
+		                                       selector: #selector(handleQueryNotification(_:)),
+		                                       name: NSNotification.Name.NSMetadataQueryDidStartGathering,
+		                                       object: metadataQuery)
+		NotificationCenter.default.addObserver(self,
+		                                       selector: #selector(handleQueryNotification(_:)),
+		                                       name: NSNotification.Name.NSMetadataQueryDidFinishGathering,
+		                                       object: metadataQuery)
+		NotificationCenter.default.addObserver(self,
+		                                       selector: #selector(handleQueryNotification(_:)),
+		                                       name: NSNotification.Name.NSMetadataQueryDidUpdate,
+		                                       object: metadataQuery)
+		NotificationCenter.default.addObserver(self,
+		                                       selector: #selector(handleQueryNotification(_:)),
+		                                       name: NSNotification.Name.NSMetadataQueryGatheringProgress,
+		                                       object: metadataQuery)
+
+		NotificationCenter.default.addObserver(
+			forName: .NSMetadataQueryDidUpdate,
+			object: nil,
+			queue: .main,
+			using: { _ in
+				print("QUery results updated (self.query?.resultCount)")
+			})
+		NotificationCenter.default.addObserver(
+			forName: .NSMetadataQueryDidFinishGathering,
+			object: nil,
+			queue: .main,
+			using: { _ in
+				print("Got results (self.query?.results)")
+			})
+		metadataQuery.enableUpdates()
+		let ok = metadataQuery.start()
+		print("\(ok)")
+
+		/*
+		 DispatchQueue.global(qos: .default).async {
+		 	// let token = FileManager.default.ubiquityIdentityToken
+		 	let url = FileManager.default.url(forUbiquityContainerIdentifier: nil)
+
+		 	guard var url = url else { return }
+		 	print("\(url)")
+		 	do {
+		 		var list = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil)
+		 		print("\(list)")
+		 		url = url.appendingPathComponent("Documents")
+		 		list = try FileManager.default.contentsOfDirectory(at: list[0], includingPropertiesForKeys: nil)
+		 		print("\(list)")
+		 	} catch {
+		 		print("\(error)")
+		 	}
+		 }
+		  */
+	}
+
+	@objc func handleQueryNotification(_ notification: Any?) {
+		let notification = notification as! NSNotification
+		let query = notification.object as! NSMetadataQuery
+		print("\(query)")
 	}
 }

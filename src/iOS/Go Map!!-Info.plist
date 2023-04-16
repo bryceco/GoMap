@@ -176,5 +176,16 @@
 			</dict>
 		</dict>
 	</array>
-</dict>
+	<key>NSUbiquitousContainers</key>
+	<dict>
+		<key>iCloud.GoMap</key>
+		<dict>
+			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
+			<true/>
+			<key>NSUbiquitousContainerName</key>
+			<string>GoMap</string>
+			<key>NSUbiquitousContainerSupportedFolderLevels</key>
+			<string>Any</string>
+		</dict>
+	</dict></dict>
 </plist>
