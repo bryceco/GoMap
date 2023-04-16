@@ -15,7 +15,7 @@ class TextPairTableCell: UITableViewCell {
 	@IBOutlet var text1: AutocompleteTextField!
 	@IBOutlet var text2: PresetValueTextField!
 	@IBOutlet var infoButton: UIButton!
-	var priorKeyValue: String = ""
+	var priorKeyValue = ""
 
 	// don't allow editing text while deleting
 	func shouldResignFirstResponder(forState state: UITableViewCell.StateMask) -> Bool {

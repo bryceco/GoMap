@@ -34,8 +34,8 @@ class TelephoneToolbar: UIToolbar {
 				action: #selector(insertDash(_:))),
 			UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
 			UIBarButtonItem(barButtonSystemItem: .done,
-							target: self,
-							action: #selector(done(_:)))
+			                target: self,
+			                action: #selector(done(_:)))
 		]
 	}
 
@@ -66,8 +66,8 @@ class TelephoneToolbar: UIToolbar {
 	}
 
 	private class func makeButton(title: String,
-								  target: AnyObject,
-								  action: Selector) -> UIBarButtonItem
+	                              target: AnyObject,
+	                              action: Selector) -> UIBarButtonItem
 	{
 		let button = UIButton(type: .custom)
 		button.setTitle(title, for: .normal)
@@ -80,4 +80,3 @@ class TelephoneToolbar: UIToolbar {
 		return UIBarButtonItem(customView: button)
 	}
 }
-

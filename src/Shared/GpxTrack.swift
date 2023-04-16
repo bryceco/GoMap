@@ -23,7 +23,7 @@ final class GpxPoint: NSObject, NSSecureCoding {
 	let extensions: [DDXMLNode]
 
 	init(latLon: LatLon, accuracy: Double, elevation: Double, timestamp: Date?,
-		 name: String, desc: String, extensions: [DDXMLNode])
+	     name: String, desc: String, extensions: [DDXMLNode])
 	{
 		self.latLon = latLon
 		self.accuracy = accuracy
@@ -37,10 +37,10 @@ final class GpxPoint: NSObject, NSSecureCoding {
 
 	convenience init(withXML pt: DDXMLNode) throws {
 		guard let pt = pt as? DDXMLElement,
-			  let lat2 = pt.attribute(forName: "lat")?.stringValue,
-			  let lon2 = pt.attribute(forName: "lon")?.stringValue,
-			  let lat = Double(lat2),
-			  let lon = Double(lon2)
+		      let lat2 = pt.attribute(forName: "lat")?.stringValue,
+		      let lon2 = pt.attribute(forName: "lon")?.stringValue,
+		      let lat = Double(lat2),
+		      let lon = Double(lon2)
 		else {
 			throw GpxError.badGpxFormat
 		}
@@ -80,12 +80,12 @@ final class GpxPoint: NSObject, NSSecureCoding {
 		}
 
 		self.init(latLon: latLon,
-				  accuracy: 0.0,
-				  elevation: elevation,
-				  timestamp: timestamp,
-				  name: name,
-				  desc: description,
-				  extensions: extensions)
+		          accuracy: 0.0,
+		          elevation: elevation,
+		          timestamp: timestamp,
+		          name: name,
+		          desc: description,
+		          extensions: extensions)
 	}
 
 	required init(coder aDecoder: NSCoder) {
@@ -173,12 +173,12 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		}
 
 		let pt = GpxPoint(latLon: coordinate,
-						  accuracy: location.horizontalAccuracy,
-						  elevation: location.altitude,
-						  timestamp: location.timestamp,
-						  name: "",
-						  desc: "",
-						  extensions: [])
+		                  accuracy: location.horizontalAccuracy,
+		                  elevation: location.altitude,
+		                  timestamp: location.timestamp,
+		                  name: "",
+		                  desc: "",
+		                  extensions: [])
 
 		points.append(pt)
 	}
@@ -235,9 +235,9 @@ final class GpxTrack: NSObject, NSSecureCoding {
 
 		for pt in points {
 			guard let ptElement = DDXMLNode.element(withName: "trkpt") as? DDXMLElement,
-				  let attrLat = DDXMLNode.attribute(withName: "lat", stringValue: "\(pt.latLon.lat)") as? DDXMLNode,
-				  let attrLon = DDXMLNode.attribute(withName: "lon", stringValue: "\(pt.latLon.lon)") as? DDXMLNode,
-				  let eleElement = DDXMLNode.element(withName: "ele") as? DDXMLElement
+			      let attrLat = DDXMLNode.attribute(withName: "lat", stringValue: "\(pt.latLon.lat)") as? DDXMLNode,
+			      let attrLon = DDXMLNode.attribute(withName: "lon", stringValue: "\(pt.latLon.lon)") as? DDXMLNode,
+			      let eleElement = DDXMLNode.element(withName: "ele") as? DDXMLElement
 			else { return nil }
 
 			segElement.addChild(ptElement)
@@ -266,17 +266,17 @@ final class GpxTrack: NSObject, NSSecureCoding {
 
 	convenience init(xmlData data: Data) throws {
 		guard data.count > 0,
-			  let doc = try? DDXMLDocument(data: data, options: 0)
+		      let doc = try? DDXMLDocument(data: data, options: 0)
 		else {
 			throw GpxError.noData
 		}
 
 		guard let ns1 = DDXMLElement.namespace(withName: "ns1",
-											   stringValue: "http://www.topografix.com/GPX/1/0") as? DDXMLNode,
+		                                       stringValue: "http://www.topografix.com/GPX/1/0") as? DDXMLNode,
 			let ns2 = DDXMLElement.namespace(withName: "ns2",
-											 stringValue: "http://www.topografix.com/GPX/1/1") as? DDXMLNode,
+			                                 stringValue: "http://www.topografix.com/GPX/1/1") as? DDXMLNode,
 			let ns3 = DDXMLElement.namespace(withName: "ns3",
-											 stringValue: "http://topografix.com/GPX/1/1") as? DDXMLNode // HOT OSM uses this
+			                                 stringValue: "http://topografix.com/GPX/1/1") as? DDXMLNode // HOT OSM uses this
 		else {
 			throw GpxError.badGpxFormat
 		}
@@ -343,7 +343,7 @@ final class GpxTrack: NSObject, NSSecureCoding {
 
 	func duration() -> TimeInterval {
 		guard let start = points.first?.timestamp,
-			  let finish = points.last?.timestamp
+		      let finish = points.last?.timestamp
 		else { return 0.0 }
 		return finish.timeIntervalSince(start)
 	}
