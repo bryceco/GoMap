@@ -57,10 +57,7 @@ final class Sqlite {
 	class func pathForName(_ name: String) -> String {
 		let basename = "data.sqlite3"
 		let name = name.isEmpty ? basename : "\(name).\(basename)"
-		return ArchivePath.urlForFile(name: name,
-		                              in: .libraryDirectory,
-		                              bundleID: true,
-		                              upgrading: [.cachesDirectory]).path
+		return ArchivePath.sqlite(name).path()
 	}
 
 	// return self if database can be opened

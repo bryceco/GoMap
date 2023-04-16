@@ -22,9 +22,7 @@ class TagInfo {
 	}
 
 	private static func pathToSaveFile() -> URL {
-		return ArchivePath.urlForName("tagInfo.plist",
-		                              in: .libraryDirectory,
-		                              bundleID: true)
+		return ArchivePath.tagInfo.url()
 	}
 
 	private func save() {
@@ -73,7 +71,7 @@ class TagInfo {
 			let results = json?["data"] as? [[String: Any]] ?? []
 			var resultList: [String] = []
 			if searchKeys {
-				let totalCount = results.map{ ($0["count_all"] as? Int) ?? 0}.reduce(0, +)
+				let totalCount = results.map { ($0["count_all"] as? Int) ?? 0 }.reduce(0, +)
 				let minCount = totalCount > 100000 ? 1000 : totalCount / 100
 				for v in results {
 					let inWiki = ((v["in_wiki"] as? NSNumber) ?? 0) == 1

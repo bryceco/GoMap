@@ -8,8 +8,61 @@
 
 import Foundation
 
-class ArchivePath {
-	class func urlForName(_ name: String, in folder: FileManager.SearchPathDirectory, bundleID: Bool) -> URL {
+enum ArchivePath {
+	case gpxPoints
+	case mapMarkerIgnoreList
+	case osmDataArchive
+	case tagInfo
+	case customPresets
+	case aerialProviers
+	case sqlite(String)
+	case webCache(String)
+
+	func path() -> String {
+		return url().path
+	}
+
+	func url() -> URL {
+		switch self {
+		case .gpxPoints:
+			return Self.urlForName("gpxPoints",
+			                       in: .documentDirectory,
+			                       bundleID: false)
+		case .mapMarkerIgnoreList:
+			return Self.urlForName("mapMarkerIgnoreList",
+			                       in: .libraryDirectory,
+			                       bundleID: false)
+		case .osmDataArchive:
+			return Self.urlForFile(name: "OSM Downloaded Data.archive",
+			                       in: .libraryDirectory,
+			                       bundleID: true,
+			                       upgrading: [.cachesDirectory])
+		case .customPresets:
+			return Self.urlForName("CustomPresetList.data",
+			                       in: .libraryDirectory,
+			                       bundleID: false)
+		case .tagInfo:
+			return Self.urlForName("tagInfo.plist",
+			                       in: .libraryDirectory,
+			                       bundleID: true)
+		case .aerialProviers:
+			return Self.urlForFile(name: "OSM Aerial Providers.json",
+			                       in: .libraryDirectory,
+			                       bundleID: true,
+			                       upgrading: [.cachesDirectory])
+		case let .sqlite(name):
+			return Self.urlForFile(name: name,
+			                       in: .libraryDirectory,
+			                       bundleID: true,
+			                       upgrading: [.cachesDirectory])
+		case let .webCache(name):
+			return Self.urlForName(name,
+			                       in: .cachesDirectory,
+			                       bundleID: true)
+		}
+	}
+
+	private static func urlForName(_ name: String, in folder: FileManager.SearchPathDirectory, bundleID: Bool) -> URL {
 		var url = try! FileManager.default.url(for: folder,
 		                                       in: .userDomainMask,
 		                                       appropriateFor: nil,
@@ -22,7 +75,7 @@ class ArchivePath {
 		return url
 	}
 
-	private class func createFolderFor(file url: URL) {
+	private static func createFolderFor(file url: URL) {
 		try? FileManager.default.createDirectory(atPath: url.deletingLastPathComponent().path,
 		                                         withIntermediateDirectories: true,
 		                                         attributes: nil)
@@ -30,10 +83,10 @@ class ArchivePath {
 
 	// Compute the path to a file given. If the file only exists at a legacy location
 	// them move the file to the new, correct location.
-	class func urlForFile(name: String,
-	                      in preferred: FileManager.SearchPathDirectory,
-	                      bundleID: Bool,
-	                      upgrading legacyDirs: [FileManager.SearchPathDirectory]) -> URL
+	private static func urlForFile(name: String,
+	                               in preferred: FileManager.SearchPathDirectory,
+	                               bundleID: Bool,
+	                               upgrading legacyDirs: [FileManager.SearchPathDirectory]) -> URL
 	{
 		let preferredURL = urlForName(name, in: preferred, bundleID: bundleID)
 		if FileManager.default.fileExists(atPath: preferredURL.path) {

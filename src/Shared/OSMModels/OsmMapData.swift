@@ -1393,10 +1393,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	}
 
 	static func pathToArchiveFile() -> String {
-		return ArchivePath.urlForFile(name: "OSM Downloaded Data.archive",
-		                              in: .libraryDirectory,
-		                              bundleID: true,
-		                              upgrading: [.cachesDirectory]).path
+		return ArchivePath.osmDataArchive.path()
 	}
 
 	func sqlSave(

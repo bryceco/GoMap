@@ -136,9 +136,7 @@ class PresetKeyUserDefinedList: Codable {
 	}
 
 	private class func archivePath() -> String {
-		return ArchivePath.urlForName("CustomPresetList.data",
-		                              in: .libraryDirectory,
-		                              bundleID: false).path
+		return ArchivePath.customPresets.path()
 	}
 
 	// MARK: Codable

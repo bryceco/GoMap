@@ -56,9 +56,7 @@ final class PersistentWebCache<T: AnyObject> {
 
 	init(name: String, memorySize: Int) {
 		let name = PersistentWebCache.encodeKey(forFilesystem: name)
-		cacheDirectory = ArchivePath.urlForName(name,
-		                                        in: .cachesDirectory,
-		                                        bundleID: true)
+		cacheDirectory = ArchivePath.webCache(name).url()
 		memoryCache = NSCache<NSString, T>()
 		memoryCache.countLimit = 1000
 		memoryCache.totalCostLimit = memorySize

@@ -226,9 +226,7 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 	}
 
 	func saveDirectory() -> String {
-		return ArchivePath.urlForName("gpxPoints",
-		                              in: .documentDirectory,
-		                              bundleID: false).path
+		return ArchivePath.gpxPoints.path()
 	}
 
 	override func action(forKey key: String) -> CAAction? {

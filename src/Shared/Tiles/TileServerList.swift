@@ -58,10 +58,7 @@ final class TileServerList {
 	}
 
 	private func pathToExternalAerialsCache() -> String {
-		return ArchivePath.urlForFile(name: "OSM Aerial Providers.json",
-		                              in: .libraryDirectory,
-		                              bundleID: true,
-		                              upgrading: [.cachesDirectory]).path
+		return ArchivePath.aerialProviers.path()
 	}
 
 	func updateDownloadList(with list: [TileServer]) {
