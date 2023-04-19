@@ -2394,7 +2394,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		if pos.x.isInfinite || pos.y.isInfinite {
 			return
 		}
-		if let button = button as? MapMarkerButton {
+		if let button = button as? LocationButton {
 			button.arrowPoint = pos
 		} else {
 			var rc = button.bounds

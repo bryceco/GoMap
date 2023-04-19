@@ -8,6 +8,13 @@
 
 import UIKit
 
+// A marker that is displayed above the map. This could be:
+// * Quest
+// * FIXME
+// * Notes
+// * GPX Waypoint
+// * KeepRight
+
 class MapMarker {
 	private(set) var buttonId: Int // a unique value we assign to track marker buttons.
 	let latLon: LatLon
@@ -42,7 +49,7 @@ class MapMarker {
 	func makeButton() -> UIButton {
 		let button: MapView.MapViewButton
 		if self is QuestMarker {
-			button = MapMarkerButton(withLabel: buttonLabel)
+			button = LocationButton(withLabel: buttonLabel)
 		} else {
 			button = MapView.MapViewButton(type: .custom)
 			button.layer.backgroundColor = UIColor.blue.cgColor
