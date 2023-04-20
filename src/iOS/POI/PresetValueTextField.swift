@@ -341,13 +341,13 @@ class PresetValueTextField: AutocompleteTextField {
 			return nil
 		}
 		let button = TristateYesNoButton()
-		var value = text ?? ""
+		var value = presetKey.tagValueForPrettyName(text ?? "")
 		let isCulvert = presetKey.tagKey == "tunnel" && keyValueDict["waterway"] != nil && value == "culvert"
 		if isCulvert {
 			// Special hack for tunnel=culvert when used with waterways:
 			value = "yes"
 		}
-		button.setSelection(forString: value.lowercased())
+		button.setSelection(forString: value)
 		if let string = button.stringForSelection() {
 			// the string is "yes"/"no"
 			text = isCulvert ? "culvert" : string
