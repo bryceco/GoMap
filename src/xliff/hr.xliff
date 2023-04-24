@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="9G2-Gl-CeP.text" xml:space="preserve">
         <source>username</source>
-        <target state="translated">korisničko ime</target>
+        <target>korisničko ime</target>
         <note>Class = "UILabel"; text = "username"; ObjectID = "9G2-Gl-CeP"; Note = "Placeholder - ignore";</note>
       </trans-unit>
       <trans-unit id="9hH-Ja-fKn.text" xml:space="preserve">
@@ -72,7 +72,7 @@
       </trans-unit>
       <trans-unit id="LSJ-rB-J2c.text" xml:space="preserve">
         <source>-</source>
-        <target state="translated">-</target>
+        <target>-</target>
         <note>Class = "UILabel"; text = "-"; ObjectID = "LSJ-rB-J2c"; Note = "Placeholder - ignore";</note>
       </trans-unit>
       <trans-unit id="MBY-TK-Wuy.title" xml:space="preserve">
@@ -107,7 +107,7 @@
       </trans-unit>
       <trans-unit id="VNE-ee-a7u.text" xml:space="preserve">
         <source>action</source>
-        <target state="translated">radnja</target>
+        <target>radnja</target>
         <note>Class = "UILabel"; text = "action"; ObjectID = "VNE-ee-a7u"; Note = "Placeholder - ignore";</note>
       </trans-unit>
       <trans-unit id="ach-1A-88x.text" xml:space="preserve">
@@ -127,7 +127,7 @@
       </trans-unit>
       <trans-unit id="nU5-T2-ADn.text" xml:space="preserve">
         <source>A Error Message Flashing Z</source>
-        <target state="translated">A Error Message Flashing Z</target>
+        <target>A Error Message Flashing Z</target>
         <note>Class = "UILabel"; text = "A Error Message Flashing Z"; ObjectID = "nU5-T2-ADn"; Note = "Placeholder - Don't translate";</note>
       </trans-unit>
       <trans-unit id="qP9-Sc-sc4.text" xml:space="preserve">
@@ -352,7 +352,7 @@
       </trans-unit>
       <trans-unit id="PSE-3C-cDx.text" xml:space="preserve">
         <source>Notes and Fixmes</source>
-        <target state="translated">Bilješke i ispravci</target>
+        <target>Bilješke i ispravci</target>
         <note>Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "PSE-3C-cDx";</note>
       </trans-unit>
       <trans-unit id="RJU-Z2-QFh.headerTitle" xml:space="preserve">

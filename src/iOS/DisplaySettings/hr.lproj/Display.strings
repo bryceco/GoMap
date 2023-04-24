@@ -169,6 +169,9 @@
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "pR1-M8-pXH"; */
 "pR1-M8-pXH.title" = "Natrag";
 
+/* Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "PSE-3C-cDx"; */
+"PSE-3C-cDx.text" = "Bilješke i ispravci";
+
 /* Class = "UILabel"; text = "Boundaries"; ObjectID = "qdV-Je-jXT"; */
 "qdV-Je-jXT.text" = "Granice";
 

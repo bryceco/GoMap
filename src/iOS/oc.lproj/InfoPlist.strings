@@ -10,8 +10,17 @@
 /* Privacy - Bluetooth Peripheral Usage Description */
 "NSBluetoothPeripheralUsageDescription" = "Se connectar a d'aparelhs extèrnes GPS Bluetooth";
 
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "Drechs d’autor 2012-2021 Bryce Cogswell";
+
+/* Privacy - Location Always and When In Use Usage Description */
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "L’activacion permanenta de l’aplicacion permet l’enregistrament dei fichiers GPX estent non activa.";
+
 /* Privacy - Location Always Usage Description */
 "NSLocationAlwaysUsageDescription" = "Vòstra posicion serà visualizada e seguida sus la mapa.";
+
+/* Privacy - Location Usage Description */
+"NSLocationUsageDescription" = "L’activacion de la localizacion permet a l’aplicacion de monstrar leis objèctes pròches. Podètz ansin actualizar facilament ò ajustar lei donadas que relevatz vos.";
 
 /* Privacy - Location When In Use Usage Description */
 "NSLocationWhenInUseUsageDescription" = "Vòstra posicion serà visualizada emai seguida sus la mapa.";

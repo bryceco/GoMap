@@ -13,6 +13,9 @@
 /* Class = "UINavigationItem"; title = "Upload"; ObjectID = "7Ua-cx-BHI"; */
 "7Ua-cx-BHI.title" = "Prenesi";
 
+/* Class = "UILabel"; text = "username"; ObjectID = "9G2-Gl-CeP"; Note = "Placeholder - ignore"; */
+"9G2-Gl-CeP.text" = "korisničko ime";
+
 /* Class = "UILabel"; text = "New comment:"; ObjectID = "9hH-Ja-fKn"; */
 "9hH-Ja-fKn.text" = "Novi komentar:";
 
@@ -43,11 +46,17 @@
 /* Class = "UILabel"; text = "Subtitle"; ObjectID = "l7S-YL-RKK"; */
 "l7S-YL-RKK.text" = "Podnaslov";
 
+/* Class = "UILabel"; text = "-"; ObjectID = "LSJ-rB-J2c"; Note = "Placeholder - ignore"; */
+"LSJ-rB-J2c.text" = "-";
+
 /* Class = "UINavigationItem"; title = "Note"; ObjectID = "MBY-TK-Wuy"; */
 "MBY-TK-Wuy.title" = "Bilješka";
 
 /* Class = "UILabel"; text = "Zoom to Edit"; ObjectID = "N5Q-nV-TPG"; */
 "N5Q-nV-TPG.text" = "Za uređivanje uvećaj prikaz";
+
+/* Class = "UILabel"; text = "A Error Message Flashing Z"; ObjectID = "nU5-T2-ADn"; Note = "Placeholder - Don't translate"; */
+"nU5-T2-ADn.text" = "A Error Message Flashing Z";
 
 /* Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1"; */
 "OJ0-aO-ri1.normalTitle" = "Riješi";
@@ -72,6 +81,9 @@
 
 /* Class = "UILabel"; text = "2014-06-17 17:54 UTC"; ObjectID = "tOO-VD-MeJ"; */
 "tOO-VD-MeJ.text" = "2014-06-17 17:54 UTC";
+
+/* Class = "UILabel"; text = "action"; ObjectID = "VNE-ee-a7u"; Note = "Placeholder - ignore"; */
+"VNE-ee-a7u.text" = "radnja";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr"; */
 "vRO-Aj-Sdr.text" = "Naslov";

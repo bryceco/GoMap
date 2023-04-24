@@ -1,0 +1,87 @@
+/* Class = "UILabel"; text = "Get Directions"; ObjectID = "1xx-L0-hKm"; */
+"1xx-L0-hKm.text" = "Ensenhar lo camin";
+
+/* Class = "UIViewController"; title = "First"; ObjectID = "2"; */
+"2.title" = "Premier";
+
+/* Class = "UIButton"; normalTitle = "Comment"; ObjectID = "2g1-vb-Cjc"; */
+"2g1-vb-Cjc.normalTitle" = "Comentar";
+
+/* Class = "UINavigationItem"; title = "Upload"; ObjectID = "7Ua-cx-BHI"; */
+"7Ua-cx-BHI.title" = "Telecargar";
+
+/* Class = "UILabel"; text = "username"; ObjectID = "9G2-Gl-CeP"; Note = "Placeholder - ignore"; */
+"9G2-Gl-CeP.text" = "Nom d’usancier";
+
+/* Class = "UILabel"; text = "New comment:"; ObjectID = "9hH-Ja-fKn"; */
+"9hH-Ja-fKn.text" = "Comentari nòu:";
+
+/* Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u"; */
+"9t5-wq-j1u.text" = "66.6 FPS";
+
+/* Class = "UITextView"; text = "Changeset comment goes here"; ObjectID = "ach-1A-88x"; */
+"ach-1A-88x.text" = "Lo comentari de l’ensems de modificacions va aicí";
+
+/* Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt"; */
+"E22-sL-sNt.accessibilityHint" = "Orientar mai au Nòrd";
+
+/* Class = "UIButton"; accessibilityLabel = "Compass"; ObjectID = "E22-sL-sNt"; */
+"E22-sL-sNt.accessibilityLabel" = "Bossòla";
+
+/* Class = "UINavigationItem"; title = "Search for Location"; ObjectID = "FaM-WV-S6I"; */
+"FaM-WV-S6I.title" = "Recercar un luòc";
+
+/* Class = "UIButton"; normalTitle = "Center"; ObjectID = "Fo4-Nq-pAz"; */
+"Fo4-Nq-pAz.normalTitle" = "Centre";
+
+/* Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "gdu-Sf-XrE"; */
+"gdu-Sf-XrE.title" = "Validar";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "l7S-YL-RKK"; */
+"l7S-YL-RKK.text" = "Sota-títol";
+
+/* Class = "UINavigationItem"; title = "Note"; ObjectID = "MBY-TK-Wuy"; */
+"MBY-TK-Wuy.title" = "Nòta";
+
+/* Class = "UILabel"; text = "Zoom to Edit"; ObjectID = "N5Q-nV-TPG"; */
+"N5Q-nV-TPG.text" = "Regrandir per editar";
+
+/* Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1"; */
+"OJ0-aO-ri1.normalTitle" = "Reglar";
+
+/* Class = "UITextView"; text = "Various comments..."; ObjectID = "PHk-s9-onx"; Note = "Placeholder - ignore"; */
+"PHk-s9-onx.text" = "Comentaris divèrs…";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "qP9-Sc-sc4"; */
+"qP9-Sc-sc4.text" = "Etiqueta";
+
+/* Class = "UINavigationItem"; title = "Bing Maps"; ObjectID = "Qz0-Ce-YCX"; */
+"Qz0-Ce-YCX.title" = "Mapas Bing";
+
+/* Class = "UIViewController"; title = "Search for Location"; ObjectID = "siu-I6-IEp"; */
+"siu-I6-IEp.title" = "Recercar un luòc";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "stf-JU-iga"; */
+"stf-JU-iga.text" = "Títol";
+
+/* Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H"; */
+"TcP-6i-B8H.text" = "Indicatz un nom (\"Marselha\"), ò una URL ò un autre tèxte amb lei coordonadas en lat/lon, ò la referéncia d’un objècte OSM (\"way 51014987\"):";
+
+/* Class = "UILabel"; text = "action"; ObjectID = "VNE-ee-a7u"; Note = "Placeholder - ignore"; */
+"VNE-ee-a7u.text" = "accion";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr"; */
+"vRO-Aj-Sdr.text" = "Títol";
+
+/* Class = "UISearchBar"; placeholder = "Niagara Falls"; ObjectID = "xw9-Ro-Fai"; */
+"xw9-Ro-Fai.placeholder" = "Cascadas de Niagara";
+
+/* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[0] = "Tags"; ObjectID = "zrW-uc-hfQ"; */
+"zrW-uc-hfQ.segmentTitles[0]" = "Etiquetas";
+
+/* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[1] = "Delete"; ObjectID = "zrW-uc-hfQ"; */
+"zrW-uc-hfQ.segmentTitles[1]" = "Escafar";
+
+/* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[2] = "More..."; ObjectID = "zrW-uc-hfQ"; */
+"zrW-uc-hfQ.segmentTitles[2]" = "Mai…";
+

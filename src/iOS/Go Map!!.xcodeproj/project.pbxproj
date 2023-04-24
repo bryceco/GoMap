@@ -375,6 +375,8 @@
 		0235604426BB1568005CE9FE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/DirectionViewController.strings"; sourceTree = "<group>"; };
 		023A3F7D26BB155800748DF3 /* nb-NO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-NO"; path = "nb-NO.lproj/DirectionViewController.strings"; sourceTree = "<group>"; };
 		023B892A19C148790060CDB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
+		023C907129F6503E00ACF40C /* oc */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = oc; path = oc.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
+		023C907229F6503E00ACF40C /* oc */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = oc; path = oc.lproj/Display.strings; sourceTree = "<group>"; };
 		02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		02401F3A1DE157B800F32AF5 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		0244398C29C9402B009FC2D0 /* TileServerList+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TileServerList+JSON.swift"; sourceTree = "<group>"; };
@@ -1971,6 +1973,7 @@
 				020F1E7B279D15D6004496EB /* pt */,
 				025465202947F60200C7C2F8 /* es */,
 				02DAAEB529D3B95C00BB608A /* mr */,
+				023C907229F6503E00ACF40C /* oc */,
 			);
 			name = Display.storyboard;
 			sourceTree = "<group>";
@@ -2037,6 +2040,7 @@
 				020F1E7C279D15D6004496EB /* pt */,
 				025465212947F60200C7C2F8 /* es */,
 				02DAAEB329D3B95C00BB608A /* mr */,
+				023C907129F6503E00ACF40C /* oc */,
 			);
 			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
