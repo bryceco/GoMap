@@ -175,6 +175,9 @@
 /* Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ"; */
 "z19-cc-gHZ.text" = "值";
 
+/* Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "zpj-gL-2Nt"; */
+"zpj-gL-2Nt.normalTitle" = "ⓘ";
+
 /* Class = "UILabel"; text = "Subtitle"; ObjectID = "ZYn-TK-k7d"; Note = "Do not translate"; */
 "ZYn-TK-k7d.text" = "子标题";
 

@@ -3,7 +3,7 @@
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 9/16/21.
-//  Copyright © 2021 Bryce. All rights reserved.
+//  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
 import Foundation
@@ -33,25 +33,24 @@ class OsmNoteMarker: MapMarker {
 	let dateCreated: String
 	private(set) var comments: [OsmNoteComment]
 
-	override var key: String {
+	override var markerIdentifier: String {
 		return "note-\(noteId)"
 	}
 
-	override func shouldHide() -> Bool {
+	func shouldHide() -> Bool {
 		return status == "closed"
 	}
 
 	override var buttonLabel: String { "N" }
 
 	/// A note newly created by user
-	override init(lat: Double, lon: Double) {
+	override init(latLon: LatLon) {
 		noteId = 0
 		status = ""
 		dateCreated = ""
 		comments = []
 
-		super.init(lat: lat,
-		           lon: lon)
+		super.init(latLon: latLon)
 	}
 
 	/// Initialize based on OSM Notes query
@@ -115,7 +114,6 @@ class OsmNoteMarker: MapMarker {
 		self.status = status
 		self.dateCreated = dateCreated
 		self.comments = comments
-		super.init(lat: lat,
-		           lon: lon)
+		super.init(latLon: LatLon(latitude: lat, longitude: lon))
 	}
 }

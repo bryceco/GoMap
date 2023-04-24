@@ -28,6 +28,9 @@
 /* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j"; */
 "436-kv-L7j.placeholder" = "餐廳";
 
+/* Class = "UITextField"; placeholder = "ref"; ObjectID = "aCs-vS-YXj"; Note = "Do not translate"; */
+"aCs-vS-YXj.placeholder" = "編號";
+
 /* Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V"; Note = "Do not translate"; */
 "Ak4-ru-E4V.placeholder" = "狗";
 
@@ -73,6 +76,12 @@
 /* Class = "UILabel"; text = "Value 3"; ObjectID = "Fcv-4Q-gpE"; */
 "Fcv-4Q-gpE.text" = "值 3";
 
+/* Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; Note = "Do not translate"; */
+"Fe2-dc-zgA.placeholder" = "指定的";
+
+/* Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Do not translate"; */
+"foC-aN-GtH.placeholder" = "清除";
+
 /* Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3"; */
 "G5R-oP-lp3.title" = "自定義標籤";
 
@@ -81,6 +90,9 @@
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw"; Note = "Do not translate"; */
 "gv7-b8-wUw.text" = "標記";
+
+/* Class = "UITextView"; text = "Lorem ipsum dolor "; ObjectID = "hAy-aU-g8L"; Note = "Placeholder - Don't translate"; */
+"hAy-aU-g8L.text" = "Lorem ipsum dolor ";
 
 /* Class = "UITextField"; text = "value"; ObjectID = "hfr-Mf-ZHv"; */
 "hfr-Mf-ZHv.text" = "值";
@@ -127,11 +139,20 @@
 /* Class = "UILabel"; text = "Value 4"; ObjectID = "ng7-T9-SJ6"; */
 "ng7-T9-SJ6.text" = "值 4";
 
+/* Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "nil-45-Wvp"; */
+"nil-45-Wvp.normalTitle" = "ⓘ";
+
 /* Class = "UILabel"; text = "Value 2"; ObjectID = "nKt-LG-cSw"; */
 "nKt-LG-cSw.text" = "值 2";
 
 /* Class = "UILabel"; text = "Value 11"; ObjectID = "o63-qY-4vl"; */
 "o63-qY-4vl.text" = "值 11";
+
+/* Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; Note = "Do not translate"; */
+"oC6-w7-cwN.placeholder" = "拴著的";
+
+/* Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; Note = "Do not translate"; */
+"okh-JP-aKZ.placeholder" = "公園";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "omf-S9-Yjq"; */
 "omf-S9-Yjq.text" = "名稱";
@@ -157,6 +178,9 @@
 /* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "Rfe-SO-p0w"; */
 "Rfe-SO-p0w.title" = "取消";
 
+/* Class = "UITextField"; placeholder = "value"; ObjectID = "sHA-cr-GLb"; Note = "Do not translate"; */
+"sHA-cr-GLb.placeholder" = "value";
+
 /* Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ"; Note = "Do not translate"; */
 "sVp-1S-TjJ.placeholder" = "角色";
 
@@ -176,7 +200,7 @@
 "Vli-Ct-Lpz.text" = "無障礙通行";
 
 /* Class = "UITextField"; placeholder = "yes"; ObjectID = "vpk-jC-yxl"; Note = "Do not translate"; */
-"vpk-jC-yxl.placeholder" = "yes";
+"vpk-jC-yxl.placeholder" = "是";
 
 /* Class = "UILabel"; text = "Value 12"; ObjectID = "wFE-f1-sQa"; */
 "wFE-f1-sQa.text" = "值 12";
@@ -192,6 +216,9 @@
 
 /* Class = "UILabel"; text = "Food & Drink"; ObjectID = "XBV-Ie-LDT"; Note = "Do not translate"; */
 "XBV-Ie-LDT.text" = "食物和飲料";
+
+/* Class = "UITextField"; placeholder = "key"; ObjectID = "XCc-6y-qYt"; Note = "Do not translate"; */
+"XCc-6y-qYt.placeholder" = "key";
 
 /* Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ"; */
 "z19-cc-gHZ.text" = "值";

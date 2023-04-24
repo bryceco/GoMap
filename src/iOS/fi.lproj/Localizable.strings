@@ -65,6 +65,9 @@
 /* 1 day singular */
 "1 Day" = "1 päivä";
 
+/* No comment provided by engineer. */
+"Accept" = "Hyväksy";
+
 /* Edit action */
 "Add Note" = "Lisää karttailmoitus";
 
@@ -76,6 +79,9 @@
 
 /* No comment provided by engineer. */
 "All Tags" = "Kaikki tagit";
+
+/* No comment provided by engineer. */
+"An unknown error occurred fetching metadata" = "Tunnistamaton virhe tapahtui metadataa haettaessa.";
 
 /* No comment provided by engineer. */
 "Attention" = "Huomio";
@@ -137,6 +143,9 @@
 /* No comment provided by engineer. */
 "Delete\n" = "Poista\n";
 
+/* Confirm deleting a node/way */
+"Delete %@?" = "Poista %@?";
+
 /* No comment provided by engineer. */
 "Delete completely" = "Poista kokonaan";
 
@@ -176,6 +185,9 @@
 /* No comment provided by engineer. */
 "Display options" = "Näyttöasetukset";
 
+/* Distance to an object with an error value */
+"Distance: %1$@ ± %2$@ meters" = "Etäisyys: %1$@ ± %2$@ metriä";
+
 /* No comment provided by engineer. */
 "Done" = "Valmis";
 
@@ -196,6 +208,9 @@
 
 /* Error dialog title */
 "Error" = "Virhe";
+
+/* Height of an object with an error value */
+"Height: %1$@ ± %2$@ meters" = "Korkeus: %1$@ ± %2$@ metriä";
 
 /* rate the app now */
 "I'll do it!" = "Teen sen!";
@@ -297,6 +312,9 @@
 /* No comment provided by engineer. */
 "Open URL" = "Avaa URL";
 
+/* No comment provided by engineer. */
+"other object" = "muu objekti";
+
 /* Edit action */
 "Paste" = "Liitä";
 
@@ -326,6 +344,9 @@
 
 /* No comment provided by engineer. */
 "Restriction: %@" = "Rajoitus: %@";
+
+/* retry opening hours recognition */
+"Retry" = "Yritä uudelleen";
 
 /* Edit action */
 "Reverse" = "Käännä";
@@ -366,6 +387,9 @@
 
 /* Edit action */
 "Turn Restrictions" = "Kääntymisrajoitukset";
+
+/* The 'Type' header in Common Tags */
+"Type" = "Tyyppi";
 
 /* OSM numeric user ID */
 "UID" = "UID";

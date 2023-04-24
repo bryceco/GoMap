@@ -62,12 +62,12 @@ class CameraView: UIView, AVCapturePhotoCaptureDelegate, AVCaptureVideoDataOutpu
 		previewLayer.videoGravity = AVLayerVideoGravity.resizeAspect
 		previewLayer.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
 		layer.addSublayer(previewLayer)
-
-		captureSession.startRunning()
 	}
 
 	public func startRunning() {
-		captureSession?.startRunning()
+		DispatchQueue.global(qos: .default).async(execute: {
+			self.captureSession?.startRunning()
+		})
 	}
 
 	public func stopRunning() {
@@ -84,9 +84,12 @@ class CameraView: UIView, AVCapturePhotoCaptureDelegate, AVCaptureVideoDataOutpu
 	                          error: Error?)
 	{
 		let cgImage: CGImage?
+
 #if compiler(>=5.5)
+		// On newer Xcode cgImageRepresentation is a normal managed object
 		cgImage = photo.cgImageRepresentation()
 #else
+		// On older Xcode cgImageRepresentation is unmanaged
 		cgImage = photo.cgImageRepresentation()?.takeUnretainedValue()
 #endif
 
@@ -166,25 +169,27 @@ class CameraView: UIView, AVCapturePhotoCaptureDelegate, AVCaptureVideoDataOutpu
 	{
 		guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
 
-		let request = VNRecognizeTextRequest(completionHandler: { request, _ in
+		let request = VNRecognizeTextRequest(completionHandler: { [weak self] request, _ in
+			guard let weakSelf = self else { return }
+
 			// we need to check this before we tear down the boxes
-			if !(self.shouldRecordCallback?() ?? true) {
+			if !(weakSelf.shouldRecordCallback?() ?? true) {
 				// stop recording
 				DispatchQueue.main.sync {
-					self.stopRunning()
+					weakSelf.stopRunning()
 				}
 				return
 			}
 
 			guard let results = request.results as? [VNRecognizedTextObservation] else { return }
-			self.addBoxes(forObservations: results)
-			self.observationsCallback?(results, self)
-			self.displayBoxes()
+			weakSelf.addBoxes(forObservations: results)
+			weakSelf.observationsCallback?(results, weakSelf)
+			weakSelf.displayBoxes()
 
-			if !(self.shouldRecordCallback?() ?? true) {
+			if !(weakSelf.shouldRecordCallback?() ?? true) {
 				// stop recording
 				DispatchQueue.main.sync {
-					self.stopRunning()
+					weakSelf.stopRunning()
 				}
 			}
 		})

@@ -18,7 +18,7 @@ class HeadingProviderMock: HeadingProviding {
 
 	var delegate: HeadingProviderDelegate?
 
-	var isHeadingAvailable: Bool = true
+	var isHeadingAvailable = true
 
 	func startUpdatingHeading() {
 		startUpdatingHeadingCalled = true

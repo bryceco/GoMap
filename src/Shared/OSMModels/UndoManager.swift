@@ -10,7 +10,9 @@ import Foundation
 
 typealias UndoManagerChangeCallback = () -> Void
 
-class MyUndoManager: NSObject, NSCoding {
+class MyUndoManager: NSObject, NSSecureCoding {
+	static let supportsSecureCoding = true
+
 	private var runLoopObserver: CFRunLoopObserver?
 	private var undoStack: [UndoAction] = []
 	private var redoStack: [UndoAction] = []
@@ -263,7 +265,7 @@ class MyUndoManager: NSObject, NSCoding {
 		} else {
 			undoStack = coder.decodeObject() as? [UndoAction] ?? []
 			redoStack = coder.decodeObject() as? [UndoAction] ?? []
-			var len: Int = 0
+			var len = 0
 			withUnsafeMutablePointer(to: &len, {
 				if let ptr = coder.decodeBytes(withReturnedLength: $0) {
 					runLoopCounter = ptr.load(as: type(of: runLoopCounter))

@@ -125,7 +125,7 @@ class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
 		let now = Date()
 		var currentObjects: [OsmExtendedIdentifier: Date] = [:]
 		var closestHighwayWay: OsmWay?
-		var closestHighwayDist = 1000000.0
+		var closestHighwayDist = 1_000000.0
 		var newCurrentHighway: OsmWay?
 		for (distance, object) in a {
 			// track highway we're closest to

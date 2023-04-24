@@ -1,0 +1,252 @@
+/* Class = "UILabel"; text = "GPX Tracks"; ObjectID = "1f0-8q-yCi"; */
+"1f0-8q-yCi.text" = "GPX rajad";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "1SY-O5-qJR"; */
+"1SY-O5-qJR.title" = "Tühista";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "2Ku-Lb-uCf"; */
+"2Ku-Lb-uCf.text" = "Üksikasjad";
+
+/* Class = "UILabel"; text = "Clear Cache"; ObjectID = "2ZY-zi-luF"; */
+"2ZY-zi-luF.text" = "Tühjenda puhver";
+
+/* Class = "UIButton"; normalTitle = "99 Days"; ObjectID = "4s8-Bj-JOX"; */
+"4s8-Bj-JOX.normalTitle" = "99 päeva";
+
+/* Class = "UILabel"; text = "Projection"; ObjectID = "5hB-2Y-Wgl"; */
+"5hB-2Y-Wgl.text" = "Projektsioon";
+
+/* Class = "UILabel"; text = "Rail Features"; ObjectID = "7df-49-qTa"; */
+"7df-49-qTa.text" = "Raudtee omadused";
+
+/* Class = "UITextField"; placeholder = "-1..3,7"; ObjectID = "7ga-PZ-MfV"; */
+"7ga-PZ-MfV.placeholder" = "-1..3,7";
+
+/* Class = "UITableViewSection"; headerTitle = "Overlays"; ObjectID = "8es-4f-sj3"; */
+"8es-4f-sj3.headerTitle" = "Ülekatted";
+
+/* Class = "UINavigationItem"; title = "Aerial Imagery"; ObjectID = "8HT-Bc-Q2z"; */
+"8HT-Bc-Q2z.title" = "Aerofotod";
+
+/* Class = "UIButton"; normalTitle = "Details"; ObjectID = "8S7-Kw-QHF"; */
+"8S7-Kw-QHF.normalTitle" = "Üksikasjad";
+
+/* Class = "UILabel"; text = "Mapnik only"; ObjectID = "9L3-JO-Whj"; */
+"9L3-JO-Whj.text" = "Ainult Mapnik";
+
+/* Class = "UINavigationItem"; title = "Display"; ObjectID = "186-0W-Nrr"; */
+"186-0W-Nrr.title" = "Ekraan";
+
+/* Class = "UITableViewSection"; footerTitle = "Go Map!! will automatically discard old data to optimize performance."; ObjectID = "bmY-Hw-jv6"; */
+"bmY-Hw-jv6.footerTitle" = "Go Map!! jätab jõudluse optimeerimiseks vanad andmed automaatselt kõrvale.";
+
+/* Class = "UITableViewSection"; headerTitle = "Cache Management"; ObjectID = "bmY-Hw-jv6"; */
+"bmY-Hw-jv6.headerTitle" = "Puhvri haldus";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "cpC-iE-1Dm"; */
+"cpC-iE-1Dm.text" = "Pealkiri";
+
+/* Class = "UITableViewSection"; headerTitle = "Friendly Name"; ObjectID = "cpv-m2-oDm"; */
+"cpv-m2-oDm.headerTitle" = "Sõbralik nimi";
+
+/* Class = "UINavigationItem"; title = "Show Objects"; ObjectID = "cXC-ij-AMQ"; */
+"cXC-ij-AMQ.title" = "Kuva objektid";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "dci-gg-ddc"; */
+"dci-gg-ddc.title" = "Tühista";
+
+/* Class = "UILabel"; text = "Automatic"; ObjectID = "dIe-MC-t44"; */
+"dIe-MC-t44.text" = "Automaatne";
+
+/* Class = "UILabel"; text = "Collect in background:"; ObjectID = "DmO-dW-3Fh"; */
+"DmO-dW-3Fh.text" = "Kogu taustal:";
+
+/* Class = "UIButton"; normalTitle = "Bing"; ObjectID = "eac-Db-EaW"; */
+"eac-Db-EaW.normalTitle" = "Bing";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eFa-yZ-YZl"; */
+"eFa-yZ-YZl.text" = "Aerofotode paanid";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F"; */
+"el8-h8-H1F.normalTitle" = "Nupp";
+
+/* Class = "UILabel"; text = "Position + Button on "; ObjectID = "eLW-GB-ugG"; Note = "The location on the screen where the user prefers the + (add node) button to appear"; */
+"eLW-GB-ugG.text" = "Paiguta + nupp ";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "EmS-9F-1qc"; */
+"EmS-9F-1qc.text" = "Üksikasjad";
+
+/* Class = "UILabel"; text = "Editor only"; ObjectID = "eN6-SZ-99I"; */
+"eN6-SZ-99I.text" = "Ainult redaktor";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eTY-48-gab"; */
+"eTY-48-gab.text" = "Aerofotode paanid";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "F9l-B0-puf"; */
+"F9l-B0-puf.text" = "Üksikasjad";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fFT-hv-mKl"; */
+"fFT-hv-mKl.text" = "Aerofotode paanid";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fHH-rC-iGa"; */
+"fHH-rC-iGa.text" = "Aerofotode paanid";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "g2G-5j-Y4q"; */
+"g2G-5j-Y4q.text" = "Üksikasjad";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "g46-cV-NBw"; */
+"g46-cV-NBw.text" = "Aerofotode paanid";
+
+/* Class = "UILabel"; text = "Points"; ObjectID = "gdL-Os-R6R"; */
+"gdL-Os-R6R.text" = "Punktid";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "GNK-bZ-i9X"; */
+"GNK-bZ-i9X.text" = "Üksikasjad";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "gre-3S-iPA"; */
+"gre-3S-iPA.text" = "Lisateave";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "h1O-06-ApF"; */
+"h1O-06-ApF.text" = "Silt";
+
+/* Class = "UINavigationItem"; title = "QA Poole No Name Tiles"; ObjectID = "H3p-Ta-kIy"; Note = "Title for Simon Poole's \"No name\" (missing name) tile overlay"; */
+"H3p-Ta-kIy.title" = "QA Poole nimetud paanid";
+
+/* Class = "UILabel"; text = "Traffic Roads"; ObjectID = "hkr-kO-jbt"; */
+"hkr-kO-jbt.text" = "Liiklusteed";
+
+/* Class = "UILabel"; text = "OpenStreetMap GPS Traces"; ObjectID = "hMJ-yP-XJe"; */
+"hMJ-yP-XJe.text" = "OpenStreetMap GPS jäljed";
+
+/* Class = "UITextView"; text = "Simon Poole Map Data © OpenStreetMap contributors\n"; ObjectID = "hsp-Xj-TU6"; */
+"hsp-Xj-TU6.text" = "Simon Poole kaardiandmed © OpenStreetMapi toetajad\n";
+
+/* Class = "UILabel"; text = "Power Features"; ObjectID = "Idx-2G-6F7"; */
+"Idx-2G-6F7.text" = "Toitefunktsioonid";
+
+/* Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe"; */
+"Jz1-GP-Wbe.text" = "Rajad";
+
+/* Class = "UILabel"; text = "Past/Future"; ObjectID = "lu0-kr-5Cc"; */
+"lu0-kr-5Cc.text" = "Minevik/tulevik";
+
+/* Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ"; */
+"lwG-AE-nIZ.headerTitle" = "Taust";
+
+/* Class = "UILabel"; text = "Enable Filters"; ObjectID = "LxX-tl-ZLH"; */
+"LxX-tl-ZLH.text" = "Luba filtrid";
+
+/* Class = "UILabel"; text = "GPX Tracks you record or download will be automatically deleted after:"; ObjectID = "MeQ-4N-FqC"; */
+"MeQ-4N-FqC.text" = "Salvestatud või alla laetud GPX-rajad kustutatakse automaatselt pärast seda:";
+
+/* Class = "UILabel"; text = "Editor with Aerial"; ObjectID = "MPq-PX-jf0"; */
+"MPq-PX-jf0.text" = "Aerofotodega redaktor";
+
+/* Class = "UINavigationItem"; title = "Aerial Provider"; ObjectID = "MZF-am-tCM"; */
+"MZF-am-tCM.title" = "Aerofotode pakkuja";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "OiJ-GU-gZ3"; */
+"OiJ-GU-gZ3.title" = "Tühista";
+
+/* Class = "UILabel"; text = "Landuse"; ObjectID = "Okg-2D-O6U"; */
+"Okg-2D-O6U.text" = "Maakasutus";
+
+/* Class = "UINavigationItem"; title = "Configure GPX Tracks"; ObjectID = "oSD-0y-Vt0"; */
+"oSD-0y-Vt0.title" = "Seadista GPX Tracks";
+
+/* Class = "UILabel"; text = "Buildings"; ObjectID = "pQK-9y-t4z"; */
+"pQK-9y-t4z.text" = "Ehitised";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "pR1-M8-pXH"; */
+"pR1-M8-pXH.title" = "Tagasi";
+
+/* Class = "UILabel"; text = "Boundaries"; ObjectID = "qdV-Je-jXT"; */
+"qdV-Je-jXT.text" = "Piirid";
+
+/* Class = "UILabel"; text = "Turn Restrictions"; ObjectID = "r6a-cT-Ufa"; */
+"r6a-cT-Ufa.text" = "Pöördepiirangud";
+
+/* Class = "UITableViewSection"; headerTitle = "Interactions"; ObjectID = "RJU-Z2-QFh"; */
+"RJU-Z2-QFh.headerTitle" = "Koostoimed";
+
+/* Class = "UILabel"; text = "Service Roads"; ObjectID = "RxO-IV-UE7"; */
+"RxO-IV-UE7.text" = "Teenindusteed";
+
+/* Class = "UITableViewSection"; headerTitle = "Filter Objects"; ObjectID = "scg-Po-M3L"; */
+"scg-Po-M3L.headerTitle" = "Objektide filtreerimine";
+
+/* Class = "UITableViewSection"; footerTitle = "Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. \n\nWarning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.\n\nClear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed."; ObjectID = "SNa-W1-wga"; */
+"SNa-W1-wga.footerTitle" = "Tühjenda OSMi andmete vahemälu, kui rakenduse olek ei ole enam OSM serveriga sünkroonis. See võib juhtuda, kui keegi teine muudab andmeid, mida redigeerid, või kui üks sinu üleslaadimine ebaõnnestub poolel teel, mis takistab sul täiendavate andmete üleslaadimist.\n\nHoiatus: OSM vahemälu tühjendamine toob kaasa kõigi veel üles laadimata muudatuste kadumise.\n\nTühjenda Mapnik või Overlay paanide vahemälu, et laadida alla viimased paanid, mis kajastavad sinu poolt varem esitatud muudatusi. Sinu muudatuste töötlemiseks võib kuluda kuni 24 tundi.";
+
+/* Class = "UITableViewSection"; headerTitle = "Discard & Refresh"; ObjectID = "SNa-W1-wga"; */
+"SNa-W1-wga.headerTitle" = "Loobu & värskenda";
+
+/* Class = "UILabel"; text = "URL"; ObjectID = "swu-t3-p5w"; */
+"swu-t3-p5w.text" = "URL";
+
+/* Class = "UINavigationItem"; title = "Clear Cache"; ObjectID = "tS9-CP-pqu"; */
+"tS9-CP-pqu.title" = "Tühjenda puhver";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "tU9-Ml-4ko"; */
+"tU9-Ml-4ko.title" = "Tagasi";
+
+/* Class = "UILabel"; text = "Water Features"; ObjectID = "twn-Ve-8vl"; */
+"twn-Ve-8vl.text" = "Vee omadused";
+
+/* Class = "UILabel"; text = "Aerial only"; ObjectID = "uOd-BB-zEq"; */
+"uOd-BB-zEq.text" = "Ainult aerofotod";
+
+/* Class = "UITextField"; placeholder = "21"; ObjectID = "uQ3-vb-l3H"; */
+"uQ3-vb-l3H.placeholder" = "21";
+
+/* Class = "UILabel"; text = "Others"; ObjectID = "Uum-Wn-9CF"; */
+"Uum-Wn-9CF.text" = "Muud";
+
+/* Class = "UILabel"; text = "Building Level"; ObjectID = "uZo-P0-sR7"; */
+"uZo-P0-sR7.text" = "Hoone tase";
+
+/* Class = "UILabel"; text = "Max Zoom"; ObjectID = "voF-Yf-33h"; */
+"voF-Yf-33h.text" = "Maksimaalne suurendus";
+
+/* Class = "UILabel"; text = "Enable Rotation"; ObjectID = "VUR-wT-knn"; */
+"VUR-wT-knn.text" = "Luba pööramine";
+
+/* Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF"; Note = "A hypothetical aerial imagery provider"; */
+"w75-Lj-3jF.placeholder" = "Portlandia GIS";
+
+/* Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C"; */
+"wev-ax-u4C.headerTitle" = "Lähtesta";
+
+/* Class = "UILabel"; text = "Delete tracks after:"; ObjectID = "WnI-tY-WWa"; */
+"WnI-tY-WWa.text" = "Kustuta rajad peale:";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "xve-fW-qM7"; */
+"xve-fW-qM7.text" = "Üksikasjad";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "yue-km-52a"; */
+"yue-km-52a.text" = "Nimi";
+
+/* Class = "UINavigationItem"; title = "GPX Tracks"; ObjectID = "Z8C-Ef-iJE"; */
+"Z8C-Ef-iJE.title" = "GPX rajad";
+
+/* Class = "UITableViewSection"; footerTitle = "A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL"; ObjectID = "zD6-m4-1PD"; */
+"zD6-m4-1PD.footerTitle" = "TMS URL koos {x}, {y} ja {z} paigutustega või WMS URL";
+
+/* Class = "UITableViewSection"; headerTitle = "Template URL of the tile server"; ObjectID = "zD6-m4-1PD"; */
+"zD6-m4-1PD.headerTitle" = "Paaniserveri URL-i mall";
+
+/* Class = "UIButton"; normalTitle = "Add New"; ObjectID = "zI2-YM-qbl"; */
+"zI2-YM-qbl.normalTitle" = "Lisa uus";
+
+/* Class = "UITableViewSection"; footerTitle = "If specifying a WMS URL you must also provide the projection used"; ObjectID = "Zn9-Sg-9fS"; */
+"Zn9-Sg-9fS.footerTitle" = "WMS URL-i määramisel tuleb esitada ka kasutatud projektsioon";
+
+/* Class = "UITableViewSection"; headerTitle = "WMS Projection"; ObjectID = "Zn9-Sg-9fS"; */
+"Zn9-Sg-9fS.headerTitle" = "WMS projektsioon";
+
+/* Class = "UILabel"; text = "Unnamed Roads"; ObjectID = "ZP1-qY-kXe"; */
+"ZP1-qY-kXe.text" = "Nimetud teed";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT"; */
+"Zzc-4t-QhT.text" = "Aerofotode paanid";
+

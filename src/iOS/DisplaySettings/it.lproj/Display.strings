@@ -1,0 +1,180 @@
+/* Class = "UILabel"; text = "GPX Tracks"; ObjectID = "1f0-8q-yCi"; */
+"1f0-8q-yCi.text" = "Tracce GPX";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "1SY-O5-qJR"; */
+"1SY-O5-qJR.title" = "Annulla";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "2Ku-Lb-uCf"; */
+"2Ku-Lb-uCf.text" = "Dettagli";
+
+/* Class = "UILabel"; text = "Clear Cache"; ObjectID = "2ZY-zi-luF"; */
+"2ZY-zi-luF.text" = "Svuota cache";
+
+/* Class = "UIButton"; normalTitle = "99 Days"; ObjectID = "4s8-Bj-JOX"; */
+"4s8-Bj-JOX.normalTitle" = "99 giorni";
+
+/* Class = "UILabel"; text = "Projection"; ObjectID = "5hB-2Y-Wgl"; */
+"5hB-2Y-Wgl.text" = "Proiezione";
+
+/* Class = "UIButton"; normalTitle = "Details"; ObjectID = "8S7-Kw-QHF"; */
+"8S7-Kw-QHF.normalTitle" = "Dettagli";
+
+/* Class = "UITableViewSection"; footerTitle = "Go Map!! will automatically discard old data to optimize performance."; ObjectID = "bmY-Hw-jv6"; */
+"bmY-Hw-jv6.footerTitle" = "Go Map!! scarterà automaticamente i vecchi dati per ottimizzare le prestazioni.";
+
+/* Class = "UITableViewSection"; headerTitle = "Cache Management"; ObjectID = "bmY-Hw-jv6"; */
+"bmY-Hw-jv6.headerTitle" = "Gestione Cache";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "cpC-iE-1Dm"; */
+"cpC-iE-1Dm.text" = "Titolo";
+
+/* Class = "UITableViewSection"; headerTitle = "Friendly Name"; ObjectID = "cpv-m2-oDm"; */
+"cpv-m2-oDm.headerTitle" = "Nome Amichevole";
+
+/* Class = "UINavigationItem"; title = "Show Objects"; ObjectID = "cXC-ij-AMQ"; */
+"cXC-ij-AMQ.title" = "Mostra Oggetti";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "dci-gg-ddc"; */
+"dci-gg-ddc.title" = "Annulla";
+
+/* Class = "UILabel"; text = "Automatic"; ObjectID = "dIe-MC-t44"; */
+"dIe-MC-t44.text" = "Automatico";
+
+/* Class = "UILabel"; text = "Collect in background:"; ObjectID = "DmO-dW-3Fh"; */
+"DmO-dW-3Fh.text" = "Raccogli in background:";
+
+/* Class = "UIButton"; normalTitle = "Bing"; ObjectID = "eac-Db-EaW"; */
+"eac-Db-EaW.normalTitle" = "Bing";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F"; */
+"el8-h8-H1F.normalTitle" = "Pulsante";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "EmS-9F-1qc"; */
+"EmS-9F-1qc.text" = "Dettagli";
+
+/* Class = "UILabel"; text = "Editor only"; ObjectID = "eN6-SZ-99I"; */
+"eN6-SZ-99I.text" = "Solo editor";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "F9l-B0-puf"; */
+"F9l-B0-puf.text" = "Dettagli";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "g2G-5j-Y4q"; */
+"g2G-5j-Y4q.text" = "Dettagli";
+
+/* Class = "UILabel"; text = "Points"; ObjectID = "gdL-Os-R6R"; */
+"gdL-Os-R6R.text" = "Punti";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "GNK-bZ-i9X"; */
+"GNK-bZ-i9X.text" = "Dettagli";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "gre-3S-iPA"; */
+"gre-3S-iPA.text" = "Dettaglio";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "h1O-06-ApF"; */
+"h1O-06-ApF.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "OpenStreetMap GPS Traces"; ObjectID = "hMJ-yP-XJe"; */
+"hMJ-yP-XJe.text" = "Tracce GPS OpenStreetMap";
+
+/* Class = "UITextView"; text = "Simon Poole Map Data © OpenStreetMap contributors\n"; ObjectID = "hsp-Xj-TU6"; */
+"hsp-Xj-TU6.text" = "Simon Poole Dati Mappa © OpenStreetMap contributors\n";
+
+/* Class = "UITextField"; placeholder = "(TMS)"; ObjectID = "iuk-Fk-3Fw"; */
+"iuk-Fk-3Fw.placeholder" = "(TMS)";
+
+/* Class = "UILabel"; text = "Past/Future"; ObjectID = "lu0-kr-5Cc"; */
+"lu0-kr-5Cc.text" = "Passato/Futuro";
+
+/* Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ"; */
+"lwG-AE-nIZ.headerTitle" = "Sfondo";
+
+/* Class = "UILabel"; text = "Enable Filters"; ObjectID = "LxX-tl-ZLH"; */
+"LxX-tl-ZLH.text" = "Abilita filtri";
+
+/* Class = "UILabel"; text = "GPX Tracks you record or download will be automatically deleted after:"; ObjectID = "MeQ-4N-FqC"; */
+"MeQ-4N-FqC.text" = "Le tracce GPX registrate o scaricate saranno automaticamente cancellate dopo:";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "OiJ-GU-gZ3"; */
+"OiJ-GU-gZ3.title" = "Annulla";
+
+/* Class = "UINavigationItem"; title = "Configure GPX Tracks"; ObjectID = "oSD-0y-Vt0"; */
+"oSD-0y-Vt0.title" = "Configura tracce GPX";
+
+/* Class = "UILabel"; text = "Buildings"; ObjectID = "pQK-9y-t4z"; */
+"pQK-9y-t4z.text" = "Edifici";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "pR1-M8-pXH"; */
+"pR1-M8-pXH.title" = "Indietro";
+
+/* Class = "UILabel"; text = "Boundaries"; ObjectID = "qdV-Je-jXT"; */
+"qdV-Je-jXT.text" = "Confini";
+
+/* Class = "UILabel"; text = "Turn Restrictions"; ObjectID = "r6a-cT-Ufa"; */
+"r6a-cT-Ufa.text" = "Restrizioni di svolta";
+
+/* Class = "UITableViewSection"; headerTitle = "Interactions"; ObjectID = "RJU-Z2-QFh"; */
+"RJU-Z2-QFh.headerTitle" = "Interazioni";
+
+/* Class = "UILabel"; text = "Service Roads"; ObjectID = "RxO-IV-UE7"; */
+"RxO-IV-UE7.text" = "Strade di Servizio";
+
+/* Class = "UITableViewSection"; headerTitle = "Discard & Refresh"; ObjectID = "SNa-W1-wga"; */
+"SNa-W1-wga.headerTitle" = "Scarta & Aggiorna";
+
+/* Class = "UILabel"; text = "URL"; ObjectID = "swu-t3-p5w"; */
+"swu-t3-p5w.text" = "URL";
+
+/* Class = "UINavigationItem"; title = "Clear Cache"; ObjectID = "tS9-CP-pqu"; */
+"tS9-CP-pqu.title" = "Pulisci Cache";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "tU9-Ml-4ko"; */
+"tU9-Ml-4ko.title" = "Indietro";
+
+/* Class = "UITextField"; placeholder = "21"; ObjectID = "uQ3-vb-l3H"; */
+"uQ3-vb-l3H.placeholder" = "21";
+
+/* Class = "UILabel"; text = "Others"; ObjectID = "Uum-Wn-9CF"; */
+"Uum-Wn-9CF.text" = "Altri";
+
+/* Class = "UILabel"; text = "Max Zoom"; ObjectID = "voF-Yf-33h"; */
+"voF-Yf-33h.text" = "Zoom massimo";
+
+/* Class = "UILabel"; text = "Enable Rotation"; ObjectID = "VUR-wT-knn"; */
+"VUR-wT-knn.text" = "Abilita Rotazione";
+
+/* Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF"; Note = "A hypothetical aerial imagery provider"; */
+"w75-Lj-3jF.placeholder" = "Portlandia GIS";
+
+/* Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C"; */
+"wev-ax-u4C.headerTitle" = "Ripristina";
+
+/* Class = "UILabel"; text = "Delete tracks after:"; ObjectID = "WnI-tY-WWa"; */
+"WnI-tY-WWa.text" = "Elimina tracce dopo:";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "xve-fW-qM7"; */
+"xve-fW-qM7.text" = "Dettagli";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "yue-km-52a"; */
+"yue-km-52a.text" = "Nome";
+
+/* Class = "UINavigationItem"; title = "GPX Tracks"; ObjectID = "Z8C-Ef-iJE"; */
+"Z8C-Ef-iJE.title" = "Tracce GPX";
+
+/* Class = "UITableViewSection"; footerTitle = "A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL"; ObjectID = "zD6-m4-1PD"; */
+"zD6-m4-1PD.footerTitle" = "Un URL TMS con segnaposti {x}, {y} e {z} o un URL WMS";
+
+/* Class = "UITableViewSection"; headerTitle = "Template URL of the tile server"; ObjectID = "zD6-m4-1PD"; */
+"zD6-m4-1PD.headerTitle" = "Modello URL del server tile";
+
+/* Class = "UIButton"; normalTitle = "Add New"; ObjectID = "zI2-YM-qbl"; */
+"zI2-YM-qbl.normalTitle" = "Aggiungi Nuovo";
+
+/* Class = "UITableViewSection"; footerTitle = "If specifying a WMS URL you must also provide the projection used"; ObjectID = "Zn9-Sg-9fS"; */
+"Zn9-Sg-9fS.footerTitle" = "Se si specifica un URL WMS, è necessario fornire anche la proiezione utilizzata";
+
+/* Class = "UITableViewSection"; headerTitle = "WMS Projection"; ObjectID = "Zn9-Sg-9fS"; */
+"Zn9-Sg-9fS.headerTitle" = "Proiezione WMS";
+
+/* Class = "UILabel"; text = "Unnamed Roads"; ObjectID = "ZP1-qY-kXe"; */
+"ZP1-qY-kXe.text" = "Strade senza nome";
+

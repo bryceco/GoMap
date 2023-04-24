@@ -9,6 +9,20 @@
 import MapKit
 import UIKit
 
+class NotesOldCommentCell: UITableViewCell {
+	@IBOutlet var date: UILabel!
+	@IBOutlet var user: UILabel!
+	@IBOutlet var action: UILabel!
+	@IBOutlet var comment: UITextView!
+	@IBOutlet var commentBackground: UIView!
+}
+
+class NotesNewCommentCell: UITableViewCell {
+	@IBOutlet var textView: UITextView!
+	@IBOutlet var commentButton: UIButton!
+	@IBOutlet var resolveButton: UIButton!
+}
+
 class NotesTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
 	var newComment: String?
 
@@ -61,7 +75,7 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 		if indexPath.section == 0, note.comments.count > 0 {
 			let cell = tableView.dequeueReusableCell(
 				withIdentifier: "noteCommentCell",
-				for: indexPath) as! NotesCommentCell
+				for: indexPath) as! NotesOldCommentCell
 			let comment = note.comments[indexPath.row]
 			let user = comment.user.count > 0 ? comment.user : "anonymous"
 			cell.date.text = comment.date
@@ -82,14 +96,20 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 		} else if indexPath.row == 0 {
 			let cell = tableView.dequeueReusableCell(
 				withIdentifier: "noteResolveCell",
-				for: indexPath) as! NotesResolveCell
+				for: indexPath) as! NotesNewCommentCell
 			cell.textView.layer.cornerRadius = 5.0
 			cell.textView.layer.borderColor = UIColor.black.cgColor
 			cell.textView.layer.borderWidth = 1.0
 			cell.textView.delegate = self
 			cell.textView.text = newComment
-			cell.commentButton.isEnabled = false
-			cell.resolveButton.isEnabled = note?.comments != nil
+			if note.comments.count == 0 {
+				// brand new note
+				cell.resolveButton.isHidden = true
+				cell.commentButton.isEnabled = true
+			} else {
+				cell.resolveButton.isHidden = false
+				cell.commentButton.isEnabled = false
+			}
 			return cell
 		} else {
 			let cell = tableView.dequeueReusableCell(
@@ -105,8 +125,8 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 		if note?.comments != nil, indexPath.section == 0 {
 			// ignore
 		} else if indexPath.row == 1 {
-			// get directions
-			let coordinate = CLLocationCoordinate2DMake(self.note.lat, self.note.lon)
+			// open note location using Apple Maps and get directions there
+			let coordinate = CLLocationCoordinate2DMake(self.note.latLon.lat, self.note.latLon.lon)
 			let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
 			let note = MKMapItem(placemark: placemark)
 			note.name = "OSM Note"
@@ -118,26 +138,26 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 		}
 	}
 
-	func commentAndResolve(_ resolve: Bool, sender: UIView?) {
+	func newComment(_ text: String, resolves: Bool) {
 		view.endEditing(true)
-		guard let cell: NotesResolveCell = sender?.superviewOfType()
-		else { return }
 
-		let s = cell.textView.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+		let text = text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 		let alert = UIAlertController(
 			title: NSLocalizedString("Updating Note...", comment: "OSM Note"),
 			message: nil,
 			preferredStyle: .alert)
 		present(alert, animated: true)
 
-		mapView.notesDatabase.update(note: note, close: resolve, comment: s) { [self] result in
+		mapView.mapMarkerDatabase.update(note: note, close: resolves, comment: text) { [self] result in
 			alert.dismiss(animated: true)
 			switch result {
 			case let .success(newNote):
 				note = newNote
 				DispatchQueue.main.async(execute: { [self] in
 					done(nil)
-					mapView.refreshNoteButtonsFromDatabase()
+					// remove note markers that are now resolved
+					mapView.mapMarkerDatabase.removeMarkers(where: { ($0 as? OsmNoteMarker)?.shouldHide() ?? false })
+					mapView.updateMapMarkerButtonPositions()
 				})
 			case let .failure(error):
 				let alert2 = UIAlertController(
@@ -152,15 +172,19 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 	}
 
 	@IBAction func doComment(_ sender: Any) {
-		commentAndResolve(false, sender: sender as? UIView)
+		guard let cell: NotesNewCommentCell = (sender as? UIView)?.superviewOfType() else { return }
+		let text = cell.textView.text ?? ""
+		newComment(text, resolves: false)
 	}
 
 	@IBAction func doResolve(_ sender: Any) {
-		commentAndResolve(true, sender: sender as? UIView)
+		guard let cell: NotesNewCommentCell = (sender as? UIView)?.superviewOfType() else { return }
+		let text = cell.textView.text ?? ""
+		newComment(text, resolves: true)
 	}
 
 	func textViewDidChange(_ textView: UITextView) {
-		if let cell: NotesResolveCell = textView.superviewOfType() {
+		if let cell: NotesNewCommentCell = textView.superviewOfType() {
 			newComment = cell.textView.text
 			let s = newComment?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 			cell.commentButton.isEnabled = (s?.count ?? 0) > 0
@@ -170,18 +194,4 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 	@IBAction func done(_ sender: Any?) {
 		dismiss(animated: true)
 	}
-}
-
-class NotesCommentCell: UITableViewCell {
-	@IBOutlet var date: UILabel!
-	@IBOutlet var user: UILabel!
-	@IBOutlet var action: UILabel!
-	@IBOutlet var comment: UITextView!
-	@IBOutlet var commentBackground: UIView!
-}
-
-class NotesResolveCell: UITableViewCell {
-	@IBOutlet var textView: UITextView!
-	@IBOutlet var commentButton: UIButton!
-	@IBOutlet var resolveButton: UIButton!
 }

@@ -14,17 +14,18 @@ enum PresetFeatureOrCategory {
 	case feature(PresetFeature)
 }
 
-// The entire presets database from iD
+// Methods used to generate a UITableView
 extension PresetsDatabase {
 	func featuresAndCategoriesForGeometry(_ geometry: GEOMETRY) -> [PresetFeatureOrCategory] {
-		let list = jsonDefaults[geometry.rawValue] as! [String]
+		let list = presetDefaults[geometry.rawValue]!
 		let featureList = featuresAndCategoriesForMemberList(memberList: list)
 		return featureList
 	}
 
 	func featuresInCategory(_ category: PresetCategory?,
 	                        matching searchText: String,
-	                        geometry: GEOMETRY) -> [PresetFeature]
+	                        geometry: GEOMETRY,
+	                        location: MapView.CurrentRegion) -> [PresetFeature]
 	{
 		var list = [(feature: PresetFeature, score: Int)]()
 		if let category = category {
@@ -34,11 +35,10 @@ extension PresetsDatabase {
 				}
 			}
 		} else {
-			let countryCode = AppDelegate.shared.mapView.countryCodeForLocation
-			list = PresetsDatabase.shared.featuresMatchingSearchText(
+			list = Self.shared.featuresMatchingSearchText(
 				searchText,
 				geometry: geometry,
-				country: countryCode)
+				location: location)
 		}
 		list.sort(by: { obj1, obj2 -> Bool in
 			if obj1.score != obj2.score {
@@ -63,21 +63,11 @@ extension PresetsDatabase {
 
 	func allTagKeys() -> Set<String> {
 		var set = Set<String>()
-		for (_, dict) in jsonFields {
-			guard let dict = dict as? [String: Any] else { continue }
-			if let key = dict["key"] as? String {
-				set.insert(key)
-			}
-			if let keys = dict["keys"] as? [String] {
-				for key in keys {
-					set.insert(key)
-				}
-			}
+		for field in presetFields.values {
+			set.formUnion(field.allKeys)
 		}
 		PresetsDatabase.shared.enumeratePresetsUsingBlock({ feature in
-			for (key, _) in feature.tags {
-				set.insert(key)
-			}
+			set.formUnion(feature.tags.keys)
 		})
 		// these are additionl tags that people might want (e.g. for autocomplete)
 		set.formUnion(Set([
@@ -94,17 +84,15 @@ extension PresetsDatabase {
 
 	func allTagValuesForKey(_ key: String) -> Set<String> {
 		var set = Set<String>()
-		for (_, dict) in jsonFields {
-			guard let dict = dict as? [String: Any] else { continue }
-			if let k = dict["key"] as? String,
+		for (_, field) in presetFields {
+			if let k = field.key,
 			   k == key,
-			   let dict2 = dict["strings"] as? [String: Any],
-			   let dict3 = dict2["options"] as? [String: Any]
+			   let list = field.options
 			{
-				set.formUnion(Set(dict3.keys))
+				set.formUnion(list)
 			}
 		}
-		PresetsDatabase.shared.enumeratePresetsUsingBlock({ feature in
+		Self.shared.enumeratePresetsUsingBlock({ feature in
 			if let value = feature.tags[key] {
 				set.insert(value)
 			}
@@ -126,80 +114,10 @@ extension PresetsDatabase {
 	}()
 
 	func allFeatureKeys() -> Set<String> {
-		return PresetsDatabase.allFeatureKeysSet
+		return Self.allFeatureKeysSet
 	}
 
-	static let areaTagsDictionary: [String: [String: Bool]] = {
-		// make a list of items that can/cannot be areas
-		var areaKeys = [String: [String: Bool]]()
-		let ignore = ["barrier", "highway", "footway", "railway", "type"]
-
-		// whitelist
-		PresetsDatabase.shared.enumeratePresetsUsingBlock({ feature in
-			if feature.nsiSuggestion ||
-				!feature.geometry.contains("area") ||
-				feature.tags
-				.count >
-				1 // very specific tags aren't suitable for whitelist, since we don't know which key is primary (in iD the JSON order is preserved and it would be the first key)
-			{
-				return
-			}
-			for (key, _) in feature.tags {
-				if ignore.contains(key) {
-					return
-				}
-				areaKeys[key] = [String: Bool]()
-			}
-		})
-
-		// blacklist
-		PresetsDatabase.shared.enumeratePresetsUsingBlock({ feature in
-			if feature.nsiSuggestion ||
-				feature.geometry.contains("area")
-			{
-				return
-			}
-			for (key, value) in feature.tags {
-				if ignore.contains(key) {
-					return
-				}
-				if value == "*" {
-					return
-				}
-				if var d = areaKeys[key] {
-					d[value] = true
-				}
-			}
-		})
-		return areaKeys
-	}()
-
-	func isArea(_ way: OsmWay) -> Bool {
-		if let value = way.tags["area"] {
-			if OsmTags.isOsmBooleanTrue(value) {
-				return true
-			}
-			if OsmTags.isOsmBooleanFalse(value) {
-				return false
-			}
-		}
-		if !way.isClosed() {
-			return false
-		}
-		if way.tags.count == 0 {
-			return true // newly created closed way
-		}
-		for (key, val) in way.tags {
-			if let exclusions = PresetsDatabase.areaTagsDictionary[key] {
-				if exclusions[val] == nil {
-					return true
-				}
-			}
-		}
-		return false
-	}
-
-	static var autocompleteIgnoreList: [String: Bool] = [
+	static let autocompleteIgnoreList: [String: Bool] = [
 		"capacity": true,
 		"depth": true,
 		"ele": true,
@@ -214,10 +132,10 @@ extension PresetsDatabase {
 		"width": true
 	]
 	func eligibleForAutocomplete(_ key: String) -> Bool {
-		if PresetsDatabase.autocompleteIgnoreList[key] != nil {
+		if Self.autocompleteIgnoreList[key] != nil {
 			return false
 		}
-		for (suffix, isSuffix) in PresetsDatabase.autocompleteIgnoreList {
+		for (suffix, isSuffix) in Self.autocompleteIgnoreList {
 			if isSuffix, key.hasSuffix(suffix), key.dropLast(suffix.count).hasSuffix(":") {
 				return false
 			}
@@ -226,76 +144,17 @@ extension PresetsDatabase {
 	}
 
 	func featuresAndCategoriesForMemberList(memberList: [String]) -> [PresetFeatureOrCategory] {
-		var list: [PresetFeatureOrCategory] = []
-		for featureID in memberList {
-			if featureID.hasPrefix("category-") {
-				let category = PresetCategory(categoryID: featureID)
-				list.append(.category(category))
-			} else {
-				if let feature = PresetsDatabase.shared.presetFeatureForFeatureID(featureID) {
-					list.append(.feature(feature))
-				}
+		let list: [PresetFeatureOrCategory] = memberList.compactMap { featureID in
+			if featureID.hasPrefix("category-"),
+			   let cat = self.presetCategories[featureID]
+			{
+				return .category(cat)
+			} else if let feature = Self.shared.presetFeatureForFeatureID(featureID) {
+				return .feature(feature)
 			}
+			return nil
 		}
 		return list // list of PresetFeature or PresetCategory
-	}
-
-	// search the taginfo database, return the data immediately if its cached,
-	// and call the update function later if it isn't
-	func taginfoFor(key: String, searchKeys: Bool, update: (() -> Void)?) -> [String] {
-		let cacheKey = key + (searchKeys ? ":K" : ":V")
-		if let cached = taginfoCache[cacheKey] {
-			return cached
-		}
-		guard let update = update else {
-			// some callers don't want to wait for results
-			return []
-		}
-		taginfoCache[cacheKey] = [] // mark as in-transit
-
-		DispatchQueue.global(qos: .default).async(execute: {
-			let cleanKey = searchKeys ? key.trimmingCharacters(in: CharacterSet(charactersIn: ":")) : key
-			let urlText = searchKeys
-				?
-				"https://taginfo.openstreetmap.org/api/4/keys/all?query=\(cleanKey)&filter=characters_colon&page=1&rp=10&sortname=count_all&sortorder=desc"
-				:
-				"https://taginfo.openstreetmap.org/api/4/key/values?key=\(cleanKey)&page=1&rp=25&sortname=count_all&sortorder=desc"
-			guard let url = URL(string: urlText),
-			      let rawData = try? Data(contentsOf: url)
-			else { return }
-
-			let json = try? JSONSerialization.jsonObject(with: rawData, options: []) as? [String: Any]
-			let results = json?["data"] as? [[String: Any]] ?? []
-			var resultList: [String] = []
-			if searchKeys {
-				for v in results {
-					let inWiki = ((v["in_wiki"] as? NSNumber) ?? 0) == 1
-					if !inWiki, (v["count_all"] as? NSNumber)?.intValue ?? 0 < 1000 {
-						continue // it's a very uncommon value, so ignore it
-					}
-					if let k = v["key"] as? String {
-						resultList.append(k)
-					}
-				}
-			} else {
-				for v in results {
-					let inWiki = ((v["in_wiki"] as? NSNumber) ?? 0) == 1
-					if !inWiki, ((v["fraction"] as? NSNumber)?.doubleValue ?? 0.0) < 0.01 {
-						continue // it's a very uncommon value, so ignore it
-					}
-					if let val = v["value"] as? String {
-						resultList.append(val)
-					}
-				}
-			}
-			if resultList.count > 0 {
-				DispatchQueue.main.async(execute: {
-					self.taginfoCache[cacheKey] = resultList
-					update()
-				})
-			}
-		})
-		return []
 	}
 
 	private func commonPrefixOfMultiKeys(_ options: [String]) -> String {
@@ -348,32 +207,35 @@ extension PresetsDatabase {
 	func comboWith(
 		label: String,
 		key: String,
-		options: [String],
+		options: [[String]],
 		strings: [String: Any]?,
+		icons: [String: String]?,
 		defaultValue: String?,
 		placeholder: String?,
 		keyboard: UIKeyboardType,
 		capitalize: UITextAutocapitalizationType,
 		autocorrect: UITextAutocorrectionType) -> PresetKey
 	{
-		var presets: [PresetValue] = []
-		for value in options {
-			if let strings = strings as? [String: String] {
-				let name = strings[value] ?? OsmTags.PrettyTag(value)
-				presets.append(PresetValue(name: name, details: nil, tagValue: value))
-			} else if let strings = strings as? [String: [String: String]] {
-				let info = strings[value]
-				let name = info?["title"] ?? OsmTags.PrettyTag(value)
-				let desc = info?["description"] ?? ""
-				presets.append(PresetValue(name: name, details: desc, tagValue: value))
-			} else {
-				// print("missing strings definition: \(key)")
-				let name = OsmTags.PrettyTag(value)
-				presets.append(PresetValue(name: name, details: nil, tagValue: value))
-			}
+		let presets: [PresetValue] = options.flatMap { optionList in
+			optionList.map { value in
+				if let strings = strings as? [String: String] {
+					let name = strings[value] ?? OsmTags.PrettyTag(value)
+					return PresetValue(name: name, details: nil, icon: icons?[value], tagValue: value)
+				} else if let strings = strings as? [String: [String: String]] {
+					let info = strings[value]
+					let name = info?["title"] ?? OsmTags.PrettyTag(value)
+					let desc = info?["description"] ?? ""
+					return PresetValue(name: name, details: desc, icon: icons?[value], tagValue: value)
+				} else {
+					// print("missing strings definition: \(key)")
+					let name = OsmTags.PrettyTag(value)
+					return PresetValue(name: name, details: nil, icon: icons?[value], tagValue: value)
+				}
+			}.sorted(by: { $0.name.caseInsensitiveCompare($1.name) == .orderedAscending })
 		}
 		let tag = PresetKey(
 			name: label,
+			type: "",
 			tagKey: key,
 			defaultValue: defaultValue,
 			placeholder: placeholder,
@@ -395,11 +257,12 @@ extension PresetsDatabase {
 		autocorrect: UITextAutocorrectionType) -> PresetKey
 	{
 		let presets = [
-			PresetValue(name: PresetsDatabase.shared.yesForLocale, details: nil, tagValue: "yes"),
-			PresetValue(name: PresetsDatabase.shared.noForLocale, details: nil, tagValue: "no")
+			PresetValue(name: Self.shared.yesForLocale, details: nil, icon: nil, tagValue: "yes"),
+			PresetValue(name: Self.shared.noForLocale, details: nil, icon: nil, tagValue: "no")
 		]
 		let tag = PresetKey(
 			name: label,
+			type: "",
 			tagKey: key,
 			defaultValue: defaultValue,
 			placeholder: placeholder,
@@ -410,24 +273,22 @@ extension PresetsDatabase {
 		return tag
 	}
 
-	func groupForField(fieldName: String,
-	                   objectTags: [String: String],
-	                   geometry: GEOMETRY,
-	                   ignore: [String],
-	                   update: (() -> Void)?) -> PresetGroup?
+	func presetGroupForField(fieldName: String,
+	                         objectTags: [String: String],
+	                         geometry: GEOMETRY,
+	                         countryCode: String,
+	                         ignore: [String],
+	                         update: (() -> Void)?) -> PresetGroup?
 	{
-		guard let dict = jsonFields[fieldName] as? [String: Any] else { return nil }
-		if dict.count == 0 {
-			return nil
-		}
+		let field = presetFields[fieldName]!
 
-		if let geoList = dict["geometry"] as? [String] {
+		if let geoList = field.geometry {
 			if !geoList.contains(geometry.rawValue) {
 				return nil
 			}
 		}
 
-		if let prerequisiteTag = dict["prerequisiteTag"] as? [String: String] {
+		if let prerequisiteTag = field.prerequisiteTag {
 			if let key = prerequisiteTag["key"] {
 				guard let v = objectTags[key] else { return nil }
 				if let value = prerequisiteTag["value"] {
@@ -448,125 +309,122 @@ extension PresetsDatabase {
 			}
 		}
 
-		let type = dict["type"] as! String
-		let keyType = dict["key"] as? String ?? fieldName
-		let label = dict["label"] as? String ?? OsmTags.PrettyTag(keyType)
-		let placeholder = dict["placeholder"] as? String
-		let defaultValue = dict["default"] as? String
-		var keyboard = UIKeyboardType.default
-		var capitalize = keyType.hasPrefix("name:") || keyType == "operator"
-			? UITextAutocapitalizationType.words : UITextAutocapitalizationType.none
-		var autocorrect = UITextAutocorrectionType.no
+		// The locationSet test for presets uses only country codes,
+		// while the locationSet for features is more general.
+		if let locationSet = field.locationSet,
+		   !locationSet.contains(countryCode: countryCode)
+		{
+			return nil
+		}
 
-		switch type {
-		case "defaultcheck", "check", "onewayCheck":
-			let key = dict["key"] as! String
+		let key = field.key ?? fieldName
+		let label = field.label ?? OsmTags.PrettyTag(key)
+
+		switch field.type {
+		case "defaultCheck", "check", "onewayCheck":
 			let tag = yesNoWith(
 				label: label,
 				key: key,
-				defaultValue: defaultValue,
-				placeholder: placeholder,
-				keyboard: keyboard,
-				capitalize: capitalize,
-				autocorrect: autocorrect)
+				defaultValue: field.defaultValue,
+				placeholder: field.placeholder,
+				keyboard: .default,
+				capitalize: .none,
+				autocorrect: .no)
 			let group = PresetGroup(name: nil, tags: [.key(tag)])
 			return group
 
 		case "radio", "structureRadio", "manyCombo", "multiCombo":
 			// all of these can have multiple keys
-			let isMultiCombo = type == "multiCombo" // uses a prefix key with multiple suffixes
+			let isMultiCombo = field.type == "multiCombo" // uses a prefix key with multiple suffixes
 
-			var options = dict["options"] as? [String]
+			var options = field.options
 			if options == nil {
 				// need to get options from taginfo
-				let key = dict["key"] as! String
-				options = taginfoFor(key: key, searchKeys: isMultiCombo, update: update)
+				options = taginfoCache.taginfoFor(key: key, searchKeys: isMultiCombo, update: update)
 			} else if isMultiCombo {
 				// prepend key: to options
-				options = options!.map { k -> String in (dict["key"] as! String) + k }
+				options = options!.map { k -> String in key + k }
 			}
-			let strings = dict["strings"] as? [String: String]
 
-			if isMultiCombo || dict["keys"] != nil {
+			if isMultiCombo || field.keys != nil {
 				// a list of booleans
-				let keys = (isMultiCombo ? options : dict["keys"] as? [String]) ?? []
-				if keys.count == 1 {
-					let key = keys[0]
-					let option = options![0]
-					let name = strings?[option] ?? OsmTags.PrettyTag(option)
+				let keys = (isMultiCombo ? options : field.keys) ?? []
+				guard keys.count != 1 else {
+					let option = options!.first!
+					let name = field.strings?[option] ?? OsmTags.PrettyTag(option)
 					let tag = yesNoWith(
 						label: name,
-						key: key,
-						defaultValue: defaultValue,
-						placeholder: placeholder,
-						keyboard: keyboard,
-						capitalize: capitalize,
-						autocorrect: autocorrect)
+						key: keys.first!,
+						defaultValue: field.defaultValue,
+						placeholder: field.placeholder,
+						keyboard: .default,
+						capitalize: .none,
+						autocorrect: .no)
 					let group = PresetGroup(name: nil, tags: [.key(tag)])
 					return group
 				}
-				let group = multiComboWith(label: label, keys: keys, options: options!, strings: strings,
-				                           defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard,
-				                           capitalize: capitalize, autocorrect: autocorrect)
+				let group = multiComboWith(label: label, keys: keys, options: options!, strings: field.strings,
+				                           defaultValue: field.defaultValue, placeholder: field.placeholder,
+				                           keyboard: .default, capitalize: .none, autocorrect: .no)
 				return group
 			} else {
 				// a multiple selection
-				let key = dict["key"] as! String
 				let tag = comboWith(
 					label: label,
 					key: key,
-					options: options!,
-					strings: strings,
-					defaultValue: defaultValue,
-					placeholder: placeholder,
-					keyboard: keyboard,
-					capitalize: capitalize,
-					autocorrect: autocorrect)
+					options: [options!],
+					strings: field.strings,
+					icons: field.icons,
+					defaultValue: field.defaultValue,
+					placeholder: field.placeholder,
+					keyboard: .default,
+					capitalize: .none,
+					autocorrect: .no)
 				let group = PresetGroup(name: nil, tags: [.key(tag)])
 				return group
 			}
 
-		case "combo", "semiCombo", "networkCombo", "typeCombo":
+		case "combo", "semiCombo", "networkCombo", "typeCombo", "colour":
 
-			let key = dict["key"] as! String
-			if type == "typeCombo", ignore.contains(key) {
+			if field.type == "typeCombo", ignore.contains(key) {
 				return nil
 			}
-			let options = dict["options"] as? [String] ?? taginfoFor(key: key, searchKeys: false, update: update)
-			let strings = dict["strings"] as? [String: String]
+			let options = field.options ?? []
+			let options2 = taginfoCache.taginfoFor(key: key, searchKeys: false, update: update)
+				.filter({ !options.contains($0) })
 			let tag = comboWith(
 				label: label,
 				key: key,
-				options: options,
-				strings: strings,
-				defaultValue: defaultValue,
-				placeholder: placeholder,
-				keyboard: keyboard,
-				capitalize: capitalize,
-				autocorrect: autocorrect)
+				options: [options, options2],
+				strings: field.strings,
+				icons: field.icons,
+				defaultValue: field.defaultValue,
+				placeholder: field.placeholder,
+				keyboard: .default,
+				capitalize: .none,
+				autocorrect: .no)
 			let group = PresetGroup(name: nil, tags: [.key(tag)])
 			return group
 
-		case "access", "cycleway":
+		case "access", "directionalCombo": // "cycleway" is no longer used
 
 			var tagList: [PresetKeyOrGroup] = []
-
-			let keys = dict["keys"] as! [String]
-			let types = dict["types"] as! [String: String]
-			let strings = dict["strings"] as! [String: [String: String]]
-			let options = dict["options"] as! [String]
-			for key in keys {
+			let types = field.types ?? [:]
+			let strings = field.strings ?? [:]
+			let options = field.options!
+			for key in field.keys! {
 				let name = types[key] ?? OsmTags.PrettyTag(key)
 				let tag = comboWith(
 					label: name,
 					key: key,
-					options: options,
+					options: [options],
 					strings: strings,
-					defaultValue: defaultValue,
-					placeholder: placeholder,
-					keyboard: keyboard,
-					capitalize: capitalize,
-					autocorrect: autocorrect)
+					icons: field.icons,
+					defaultValue: field.defaultValue,
+					placeholder: field.placeholder,
+					keyboard: .default,
+					capitalize: .none,
+					autocorrect: .no)
 				tagList.append(.key(tag))
 			}
 			let group = PresetGroup(name: label, tags: tagList)
@@ -574,7 +432,7 @@ extension PresetsDatabase {
 
 		case "address":
 
-			let addressPrefix = dict["key"] as! String
+			let addressPrefix = key
 			let numericFields = [
 				"block_number",
 				"conscriptionnumber",
@@ -583,60 +441,59 @@ extension PresetsDatabase {
 				"postcode",
 				"unit"
 			]
-
-			let countryCode = AppDelegate.shared.mapView.countryCodeForLocation ?? "<unknown>"
-			var keysForCountry: [[String]]?
-			for localeDict in jsonAddressFormats {
-				guard let localeDict = localeDict as? [String: Any] else { continue }
-				if let countryCodeList = localeDict["countryCodes"] as? [String],
-				   countryCodeList.contains(countryCode)
+			var keysForCountry: [String]?
+			for locale in presetAddressFormats {
+				if let countryCodes = locale.countryCodes,
+				   countryCodes.contains(countryCode)
 				{
 					// country specific format
-					keysForCountry = localeDict["format"] as? [[String]]
+					keysForCountry = locale.addressKeys
 					break
 				} else {
 					// default
-					keysForCountry = localeDict["format"] as? [[String]]
+					keysForCountry = locale.addressKeys
 				}
 			}
 
-			let placeholders = dict["placeholders"] as? [String: Any]
+			let placeholders = field.placeholders
 			var addrs: [PresetKeyOrGroup] = []
-			for addressGroup in keysForCountry ?? [] {
-				for addressKey in addressGroup {
-					var name: String?
-					let placeholder = placeholders?[addressKey] as? String
-					if placeholder != nil, placeholder != "123" {
-						name = placeholder
-					} else {
-						name = OsmTags.PrettyTag(addressKey)
-					}
-					keyboard = numericFields.contains(addressKey) ? .numbersAndPunctuation : .default
-					let tagKey = "\(addressPrefix):\(addressKey)"
-					let tag = PresetKey(
-						name: name!,
-						tagKey: tagKey,
-						defaultValue: defaultValue,
-						placeholder: placeholder,
-						keyboard: keyboard,
-						capitalize: UITextAutocapitalizationType.words,
-						autocorrect: UITextAutocorrectionType.no,
-						presets: nil)
-					addrs.append(.key(tag))
+			for addressKey in keysForCountry ?? [] {
+				let name: String
+				let placeholder = placeholders?[addressKey] as? String
+				if let placeholder = placeholder, placeholder != "123" {
+					name = placeholder
+				} else {
+					name = OsmTags.PrettyTag(addressKey)
 				}
+				let keyboard: UIKeyboardType = numericFields.contains(addressKey) ? .numbersAndPunctuation : .default
+				let tagKey = "\(addressPrefix):\(addressKey)"
+				let tag = PresetKey(
+					name: name,
+					type: field.type,
+					tagKey: tagKey,
+					defaultValue: field.defaultValue,
+					placeholder: placeholder,
+					keyboard: keyboard,
+					capitalize: .words,
+					autocorrect: .no,
+					presets: nil)
+				addrs.append(.key(tag))
 			}
 			let group = PresetGroup(name: label, tags: addrs)
 			return group
 
 		case "text", "number", "email", "identifier", "maxweight_bridge", "textarea",
-		     "tel", "url", "roadheight", "roadspeed", "wikipedia", "wikidata":
+		     "tel", "url", "roadheight", "roadspeed", "wikipedia", "wikidata", "date":
 
-			// no presets
-			switch type {
-			case "number", "roadheight", "roadspeed":
+			// no presets, but we customize keyboard input
+			var keyboard: UIKeyboardType = .default
+			var capitalize: UITextAutocapitalizationType = .none
+			var autocorrect: UITextAutocorrectionType = .no
+			switch field.type {
+			case "number", "roadheight", "roadspeed", "date":
 				keyboard = .numbersAndPunctuation // UIKeyboardTypeDecimalPad doesn't have Done button
 			case "tel":
-				keyboard = .numbersAndPunctuation // UIKeyboardTypePhonePad doesn't have Done Button
+				keyboard = .phonePad
 			case "url":
 				keyboard = .URL
 			case "email":
@@ -644,15 +501,24 @@ extension PresetsDatabase {
 			case "textarea":
 				capitalize = .sentences
 				autocorrect = .yes
+			case "text":
+				switch field.key {
+				case "architect", "artist_name", "branch", "brand", "comment",
+				     "destination", "flag:name", "network", "operator", "subject":
+					capitalize = .words
+					autocorrect = .default
+				default:
+					break
+				}
 			default:
 				break
 			}
-			let key = dict["key"] as! String
 			let tag = PresetKey(
 				name: label,
+				type: field.type,
 				tagKey: key,
-				defaultValue: defaultValue,
-				placeholder: placeholder,
+				defaultValue: field.defaultValue,
+				placeholder: field.placeholder,
 				keyboard: keyboard,
 				capitalize: capitalize,
 				autocorrect: autocorrect,
@@ -660,13 +526,17 @@ extension PresetsDatabase {
 			let group = PresetGroup(name: nil, tags: [.key(tag)])
 			return group
 
-		case "localized", "restrictions":
-			// not implemented
+		case "localized":
+			// used for "name" field: not implemented
+			return nil
+
+		case "restrictions":
+			// used for turn restrictions: not implemented
 			return nil
 
 		default:
 #if DEBUG
-			assert(false)
+			assertionFailure()
 #endif
 			return nil
 		}

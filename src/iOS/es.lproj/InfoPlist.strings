@@ -1,0 +1,30 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Go Map!!";
+
+/* Bundle name */
+"CFBundleName" = "Go Map!!";
+
+/* (No Comment) */
+"GPS Exchange Format (GPX)" = "Formato de intercambio de GPS (GPX)";
+
+/* Privacy - Bluetooth Peripheral Usage Description */
+"NSBluetoothPeripheralUsageDescription" = "Conectar con dispositivos GPS Bluetooth externos";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "La cámara se utiliza para medir alturas de edificios u objetos, y para realizar el reconocimiento de texto en carteles de horarios de apertura.";
+
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "© 2012-2021 de Bryce Cogswell";
+
+/* Privacy - Location Always and When In Use Usage Description */
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "El rastreo de ubicación siempre encendido permite a la aplicación grabar archivos GPX mientras está inactiva.";
+
+/* Privacy - Location Always Usage Description */
+"NSLocationAlwaysUsageDescription" = "Tú ubicación se mostrará y seguirá en el mapa.";
+
+/* Privacy - Location Usage Description */
+"NSLocationUsageDescription" = "Habilitar los servicios de ubicación permite que la aplicación muestre objetos en tú barrio. Esto te permite actualizar o agregar fácilmente los datos que encuentras.";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "Tú ubicación se mostrará y seguirá en el mapa.";
+

@@ -2,28 +2,49 @@
 "\tRelation " = "\tHubungan ";
 
 /* No comment provided by engineer. */
-"\tWay " = "\tJalan ";
+"\tWay " = "\tWay ";
 
 /* No comment provided by engineer. */
 " (%d members)\n" = " (%d anggota)\n";
 
 /* No comment provided by engineer. */
-" (%d nodes)\n" = " (%d titik)\n";
+" (%d nodes)\n" = " (%d node)\n";
+
+/* No comment provided by engineer. */
+" (node)" = " (node)";
+
+/* No comment provided by engineer. */
+" (way)" = " (way)";
 
 /* No comment provided by engineer. */
 "(new object)" = "(obyek baru)";
 
 /* No comment provided by engineer. */
+"(node in way)" = "(node pada way)";
+
+/* No comment provided by engineer. */
+"(node)" = "(node)";
+
+/* No comment provided by engineer. */
 "(relation %@)" = "(hubungan %@)";
 
+/* No comment provided by engineer. */
+"(way)" = "(way)";
+
 /* way length if > 10m */
-"%.0f meters, %ld nodes" = "%1$.0f meter, %2$ld titik";
+"%.0f meters, %ld nodes" = "%1$.0f meter, %2$ld node";
 
 /* way length if < 10m */
-"%.1f meters, %ld nodes" = "%1$.1f meter, %2$ld nod";
+"%.1f meters, %ld nodes" = "%1$.1f meter, %2$ld node";
 
 /* These values will always be large (plural) */
 "%.2f MB, %ld files" = "%1$.2f MB, %2$ld berkas";
+
+/* No comment provided by engineer. */
+"%@ (relation)" = "%@ (relasi)";
+
+/* No comment provided by engineer. */
+"%@ changeset" = "%@ perubahan";
 
 /* Always plural */
 "%@ meters" = "%@ meter";
@@ -54,6 +75,12 @@
 "Add Note" = "Tambahkan Catatan";
 
 /* No comment provided by engineer. */
+"Add way to multipolygon?" = "Tambahkan way ke multipolygon?";
+
+/* No comment provided by engineer. */
+"added to multipolygon relation" = "ditambahkan ke relasi multipolygon";
+
+/* No comment provided by engineer. */
 "All choices" = "Semua pilihan";
 
 /* No comment provided by engineer. */
@@ -63,7 +90,7 @@
 "An unknown error occurred fetching metadata" = "Sebuah kesalahan yang tak diketahui terjadi ketika mengambil metadata";
 
 /* No comment provided by engineer. */
-"Attention" = "Atensi";
+"Attention" = "Perhatian";
 
 /* node/way/relation attributes */
 "Attributes" = "Atribut-atribut";
@@ -71,11 +98,26 @@
 /* Automatic selection of presets languages */
 "Automatic" = "Otomatis";
 
+/* back button */
+"Back" = "Kembali";
+
 /* identifies current aerial imagery */
 "Background imagery %@" = "Gambar latar %@";
 
 /* No comment provided by engineer. */
 "Cache size warning" = "Peringatan ukuran cache";
+
+/* No comment provided by engineer. */
+"Can only add ways to multipolygons" = "Hanya dapat menambahkan way ke multipolygon";
+
+/* No comment provided by engineer. */
+"Can't delete node that is part of a relation" = "Tidak dapat menghapus node yang merupakan anggota dari relasi";
+
+/* No comment provided by engineer. */
+"Can't delete relation that is not a multipolygon" = "Tidak dapat menghapus relasi yang bukan merupakan multipolygon";
+
+/* No comment provided by engineer. */
+"Can't remove Turn Restriction to/from way" = "Tidak dapat menghapus way ke/dari pada Pembatasan Belokan";
 
 /* No comment provided by engineer. */
 "Cancel" = "Batal";
@@ -95,8 +137,17 @@
 /* No comment provided by engineer. */
 "Confirm move" = "Konfirmasi perpindahan";
 
+/* Edit action */
+"Copy Tags" = "Salin Tag";
+
+/* No comment provided by engineer. */
+"Could not duplicate object" = "Tidak dapat menduplikasi objek";
+
 /* No comment provided by engineer. */
 "Create\n" = "Buat\n";
+
+/* No comment provided by engineer. */
+"create node" = "buat node";
 
 /* No comment provided by engineer. */
 "create relation" = "buat hubungan";
@@ -110,6 +161,9 @@
 /* No comment provided by engineer. */
 "create turn restriction" = "buat batasan belokan";
 
+/* No comment provided by engineer. */
+"create way" = "buat way";
+
 /* Edit action */
 "Delete" = "Hapus";
 
@@ -121,6 +175,12 @@
 
 /* No comment provided by engineer. */
 "Delete failed" = "Penghapusan gagal";
+
+/* No comment provided by engineer. */
+"delete multipolygon" = "hapus multipolygon";
+
+/* No comment provided by engineer. */
+"delete node" = "hapus node";
 
 /* No comment provided by engineer. */
 "delete object from relation" = "hapus obyek dari hubungan";
@@ -160,6 +220,9 @@
 
 /* Error dialog title */
 "Error" = "Kesalahan";
+
+/* No comment provided by engineer. */
+"Error connecting to way" = "Gagal menghubungkan ke way";
 
 /* No comment provided by engineer. */
 "Error fetching metadata: %@" = "Gagal mengambil metadata: %@";
@@ -206,8 +269,26 @@
 /* Edit action */
 "Make Circular" = "Buat Melingkar";
 
+/* Edit action */
+"Make Rectangular" = "Buat Kotak";
+
+/* No comment provided by engineer. */
+"Max nodes after joining is 2000" = "Node maksimum setelah menggabungkan adalah 2000";
+
+/* No comment provided by engineer. */
+"Maximum way length is 2000 nodes" = "Panjang maksimum way adalah 2000 node";
+
 /* rate the app later */
 "Maybe later..." = "Mungkin nanti...";
+
+/* No comment provided by engineer. */
+"Member of multipolygon relation" = "Anggota relasi multipolygon";
+
+/* No comment provided by engineer. */
+"Members" = "Anggota";
+
+/* No comment provided by engineer. */
+"Merge Tags" = "Satukan Tag";
 
 /* No comment provided by engineer. */
 "meters" = "meter";
@@ -237,6 +318,9 @@
 "Move selected object?" = "Pindahkan obyek yang dipilih?";
 
 /* No comment provided by engineer. */
+"Multipolygon" = "Multipolygon";
+
+/* No comment provided by engineer. */
 "Network error" = "Kesalahan jaringan";
 
 /* Never delete old GPX tracks
@@ -259,7 +343,25 @@
 "No Right Turn restriction" = "Tidak ada batasan Dilarang Belok Kanan";
 
 /* No comment provided by engineer. */
+"No Straight On restriction" = "Batasan Dilarang Lurus";
+
+/* No comment provided by engineer. */
+"No tags to paste" = "Tak ada tag untuk ditempel";
+
+/* No comment provided by engineer. */
 "No U-Turn restriction" = "Tidak ada batasan Dilarang Putar Balik";
+
+/* No comment provided by engineer. */
+"Node" = "Node";
+
+/* No comment provided by engineer. */
+"Node is not an element of way" = "Node bukan elemen dari way";
+
+/* No comment provided by engineer. */
+"Node must be the first or last node of the way" = "Node harus menjadi node pertama atau terakhir pada way";
+
+/* No comment provided by engineer. */
+"Node Tags" = "Tag Node";
 
 /* User credentials not found */
 "Not found" = "Tidak ditemukan";
@@ -276,6 +378,21 @@
 /* No comment provided by engineer. */
 "OK" = "Oke";
 
+/* No comment provided by engineer. */
+"Only Left Turn restriction" = "Batasan Harus Belok Kiri";
+
+/* No comment provided by engineer. */
+"Only multipolygon relations are supported" = "Hanya relasi multipolygon yang didukung";
+
+/* No comment provided by engineer. */
+"Only Right Turn restriction" = "Batasan Harus Belok Kanan";
+
+/* No comment provided by engineer. */
+"Only Straight On restriction" = "Batasan Harus Lurus";
+
+/* No comment provided by engineer. */
+"Only ways/multipolygons can be rotated" = "Hanya way/multipolygon yang bisa diputar";
+
 /* Open the iOS Settings app */
 "Open Settings" = "Buka Pengaturan";
 
@@ -289,6 +406,9 @@
 "Paste" = "Tempel";
 
 /* No comment provided by engineer. */
+"Pasting %@ characters, maximum tag length is 255" = "Menempelkan %@ karakter, panjang tag maksimum adalah 255";
+
+/* No comment provided by engineer. */
 "Pasting %ld tag(s)" = "Menempel %ld tag";
 
 /* No comment provided by engineer. */
@@ -300,11 +420,20 @@
 /* No comment provided by engineer. */
 "Previous" = "Sebelumnya";
 
+/* previous GPX track */
+"Previous Tracks" = "Lajur Sebelumnya";
+
 /* Discard editing changes when resetting OSM data cache */
 "Purge" = "Bersihkan";
 
 /* No comment provided by engineer. */
-"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "Menilai aplikasi ini membuat lebih mudah penyunting peta lain untuk menemukannya dan meningkatkan visibilitas OpenStreetMap.";
+"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "Nilai aplikasi ini supaya memudahkan penyunting peta lain untuk menemukannya dan meningkatkan visibilitas OpenStreetMap.";
+
+/* Alert title message */
+"Recent Aerial Imagery" = "Citra Udara Terbaru";
+
+/* No comment provided by engineer. */
+"Redo" = "Mengulangi";
 
 /* No comment provided by engineer. */
 "relation" = "hubungan";
@@ -316,7 +445,19 @@
 "Relation Tags" = "Tag-tag Hubungan";
 
 /* No comment provided by engineer. */
+"Relation: %@" = "Relasi: %@";
+
+/* No comment provided by engineer. */
 "Relations" = "Hubungan-hubungan";
+
+/* No comment provided by engineer. */
+"Replace Tags" = "Ganti Tag";
+
+/* No comment provided by engineer. */
+"Requires a closed way with at least 3 nodes" = "Membutuhkan way tertutup dengan setidaknya 3 node";
+
+/* No comment provided by engineer. */
+"Requires a closed way with at least 4 nodes" = "Membutuhkan way tertutup dengan setidaknya 4 node";
 
 /* Edit action */
 "Restrict" = "Batasi";
@@ -326,6 +467,12 @@
 
 /* country name,2-character country code */
 "Results for %@ (%@)" = "Hasil untuk %1$@ (%2$@)";
+
+/* retry opening hours recognition */
+"Retry" = "Coba lagi";
+
+/* Edit action */
+"Reverse" = "Balik";
 
 /* No comment provided by engineer. */
 "Right" = "Kanan";
@@ -337,7 +484,7 @@
 "Rotate" = "Putar";
 
 /* No comment provided by engineer. */
-"Select a highway approaching the intersection" = "Pilih jalan tol yang mendekati persimpangan";
+"Select a highway approaching the intersection" = "Pilih jalan yang mendekati persimpangan";
 
 /* No comment provided by engineer. */
 "Select Object" = "Pilih Obyek";
@@ -362,10 +509,19 @@
 "Share" = "Bagikan";
 
 /* No comment provided by engineer. */
+"Show Recent Items" = "Tampilkan Item Terbaru";
+
+/* No comment provided by engineer. */
+"Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." = "Ada yang tidak beres ketika mencoba memulihkan data Anda. Setiap perubahan yang tertunda telah hilang. Maaf.";
+
+/* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "Maaf, sebuah kesalahan terjadi ketika memuat berkas GPX";
 
 /* Edit action */
 "Split" = "Pisahkan";
+
+/* No comment provided by engineer. */
+"Standard imagery" = "Citra standar";
 
 /* Begin downloading tiles */
 "Start" = "Mulai";
@@ -386,7 +542,37 @@
 "The current location cannot be determined: " = "Lokasi saat ini tidak dapat ditentukan: ";
 
 /* No comment provided by engineer. */
+"The merged nodes contain conflicting tags" = "Node yang digabungkan berisi tag yang saling bertentangan";
+
+/* No comment provided by engineer. */
+"The object does not contain any tags" = "Objek ini tidak punya tag apapun";
+
+/* No comment provided by engineer. */
+"The restriction cannot be deleted" = "Batasan ini tidak dapat dihapus";
+
+/* No comment provided by engineer. */
+"The selected way must be completely visible" = "Way yang dipilih harus sepenuhnya terlihat";
+
+/* No comment provided by engineer. */
+"The turn contains an unrecognized turn restriction style. Proceeding will destroy it." = "Belokan ini mengandung gaya pembatasan belokan yang tidak dikenal. Melanjutkan akan menghancurkannya.";
+
+/* No comment provided by engineer. */
+"The way belongs to a relation that is not fully downloaded" = "Way ini merupakan anggota dari relasi yang belum sepenuhnya diunduh";
+
+/* No comment provided by engineer. */
+"The way is not sufficiently straight" = "Way ini tidak cukup lurus";
+
+/* No comment provided by engineer. */
+"The way must have at least 2 nodes" = "Way ini harus memiliki setidaknya 2 node";
+
+/* No comment provided by engineer. */
+"The ways contain incompatible tags" = "Way ini mengandung tag yang tidak kompatibel";
+
+/* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "Tindakan ini memerlukan GPS yang diaktifkan";
+
+/* No comment provided by engineer. */
+"To add another member to the relation 'long press' on the way to be added" = "Untuk menambahkan anggota lain ke relasi 'tekan yang lama' pada way yang ingin ditambahkan";
 
 /* No comment provided by engineer. */
 "Travel ALLOWED from %@ to %@" = "Perjalanan DIIZINKAN dari %1$@ ke %2$@";
@@ -396,6 +582,9 @@
 
 /* No comment provided by engineer. */
 "Travel PROHIBITED from %@ to %@" = "Perjalanan DILARANG dari %1$@ ke %2$@";
+
+/* No comment provided by engineer. */
+"Turn On Location Services to Allow %@ to Determine Your Location" = "Aktifkan Layanan Lokasi untuk Mengizinkan %@ untuk Menentukan Lokasi Anda";
 
 /* No comment provided by engineer. */
 "U-Turn from %@ allowed" = "Memutar balik dari %@ diizinkan";
@@ -439,12 +628,12 @@
 /* OSM object versioh */
 "Version" = "Versi";
 
+/* Years aerial imagery was created */
+"vintage %@ - %@" = "antik %1$@ - %2$@";
+
 /* No comment provided by engineer. */
 "Warning" = "Peringatan";
 
 /* No comment provided by engineer. */
 "You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "Anda telah membuat perubahan-perubahan yang bellum diunggah ke server. Menghapus cache akan menghilangkan perubahan-perubahan tersebut.";
-
-/* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "Anda harus memberikan nama pengguna OSM, bukan alamat surel.";
 

@@ -4,6 +4,9 @@
 /* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "l5O-tO-QFr"; */
 "l5O-tO-QFr.normalTitle" = "Abbrechen";
 
+/* Class = "UIButton"; normalTitle = "Set Height"; ObjectID = "QZK-2k-kEa"; */
+"QZK-2k-kEa.normalTitle" = "Höhe angeben";
+
 /* Class = "UIButton"; normalTitle = "Distance"; ObjectID = "SdH-uy-BuK"; */
 "SdH-uy-BuK.normalTitle" = "Distanz";
 

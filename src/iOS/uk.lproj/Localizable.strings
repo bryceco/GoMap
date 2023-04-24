@@ -1,591 +1,741 @@
 /* No comment provided by engineer. */
+"\tRelation " = "\tЗв’язок ";
 
 /* No comment provided by engineer. */
+"\tWay " = "\tЛінія ";
 
 /* No comment provided by engineer. */
+" (%d members)\n" = " (%d членів)\n";
 
 /* No comment provided by engineer. */
+" (%d nodes)\n" = " (%d точок)\n";
 
 /* No comment provided by engineer. */
+" (node)" = " (точка)";
 
 /* No comment provided by engineer. */
+" (way)" = " (лінія)";
 
 /* No comment provided by engineer. */
+"(new object)" = "(новий обʼєкт)";
 
 /* No comment provided by engineer. */
+"(node in way)" = "(точка на лінії)";
 
 /* No comment provided by engineer. */
+"(node)" = "(точка)";
 
 /* No comment provided by engineer. */
+"(relation %@)" = "(звʼзок %@)";
 
 /* No comment provided by engineer. */
+"(way)" = "(лінія)";
 
 /* way length if > 10m */
+"%.0f meters, %ld nodes" = "%1$.0f метрів, %2$ld точок";
 
 /* way length if < 10m */
+"%.1f meters, %ld nodes" = "%1$.1f метрів, %2$ld точок";
 
 /* These values will always be large (plural) */
+"%.2f MB, %ld files" = "%1$.2f МБ, %2$ld файлів";
 
 /* No comment provided by engineer. */
+"%@ (relation)" = "%@ (звʼязок)";
 
 /* No comment provided by engineer. */
+"%@ changeset" = "%@ набір змін";
 
 /* Always plural */
+"%@ meters" = "%@ метрів";
 
 /* One or more days
    Plural number of days */
+"%ld Days" = "%ld днів";
 
 /* Brief synopsis of a mapper's activity (count,last active date) */
+"%ld edits, last active %@" = "%1$ld змін, остання %2$@";
 
 /* length of a gpx track */
+"%ld meters, %ld points" = "%1$ld метрів, %2$ld точок";
 
 /* Number of tiles/objects in cache */
+"%ld objects" = "%ld обʼєктів";
 
 /* Always plural */
+"%lu tiles needed" = "Потрібно %lu тайлів";
 
 /* Location of Add Node button on the screen */
+"+ Button Position" = "Позиція кнопки +";
 
 /* unknown user name */
-
-/* 1 day singular */
-
-/* No comment provided by engineer. */
+"<unknown>" = "<невідомець>";
 
 /* No comment provided by engineer. */
+"A GPX Track records your path as you travel along a road or trail" = "GPX-трек записує ваш шлях поки ви рухаєтеся вздовж дороги чи стежки";
 
 /* No comment provided by engineer. */
+"A relation the node belongs to is not fully downloaded" = "Звʼязок до якого належить точка не завантажений повністю";
+
+/* No comment provided by engineer. */
+"Accept" = "Підтвердити";
 
 /* Add to relation */
-
-/* No comment provided by engineer. */
+"Add inner member" = "Додати член з роллю «inner»";
 
 /* Edit action */
-
-/* No comment provided by engineer. */
+"Add Note" = "Додати нотатку";
 
 /* Add to relation */
+"Add outer member" = "Додати член з роллю «outer»";
 
 /* No comment provided by engineer. */
+"Add way to multipolygon?" = "Додати лінію до мультиполігона?";
 
 /* No comment provided by engineer. */
+"Adding members:" = "Додавання членів:";
 
 /* No comment provided by engineer. */
+"Additional imagery" = "Додаткові фони";
 
 /* No comment provided by engineer. */
+"Aerial only" = "Тільки аерознімки";
 
 /* No comment provided by engineer. */
+"All choices" = "Усі варіанти";
 
 /* No comment provided by engineer. */
+"All Tags" = "Усі теґи";
 
 /* No comment provided by engineer. */
+"An unknown error occurred fetching metadata" = "Невідома помилка під час отримання метаданих";
 
 /* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
+"Attention" = "Увага";
 
 /* node/way/relation attributes */
+"Attributes" = "Атрибути";
 
 /* Automatic selection of presets languages */
+"Automatic" = "Автоматично";
 
 /* back button */
+"Back" = "Назад";
 
 /* identifies current aerial imagery */
+"Background imagery %@" = "Фонове зображення %@";
 
 /* No comment provided by engineer. */
+"Bad login" = "Неправильний логін";
 
 /* No comment provided by engineer. */
+"Better background imagery is available for your location. Would you like to change to it?" = "Для вашого місцезнаходження доступне краще фонове зображення. Бажаєте перейти на нього?";
 
 /* No comment provided by engineer. */
+"Cache size warning" = "Заувага про обсяг кешу";
 
 /* No comment provided by engineer. */
+"Cache trimmed" = "Кеш очищений";
 
 /* No comment provided by engineer. */
+"Can only add ways to multipolygons" = "До мультиполігонів можна додавати тільки лінії";
 
 /* No comment provided by engineer. */
+"Can't delete node that is part of a relation" = "Не можна видалити точку що є членом звʼязку";
 
 /* No comment provided by engineer. */
+"Can't delete relation that is not a multipolygon" = "Не можна видалити звʼязок що не є мультиполігоном";
 
 /* No comment provided by engineer. */
+"Can't delete way that is part of a Route or similar relation" = "Не можна видалити лінію що є частиною маршруту чи схожого звʼязку";
 
 /* No comment provided by engineer. */
+"Can't extend way" = "Не можна подовжити лінію";
 
 /* No comment provided by engineer. */
+"Can't remove component of a Route or similar relation" = "Не можна видалити компонент маршруту чи схожого звʼязка";
 
 /* No comment provided by engineer. */
+"Can't remove node in Turn Restriction 'via' way" = "Не можна видалити точку з лінії «via» що позначає обмеження маневрів";
 
 /* No comment provided by engineer. */
+"Can't remove Turn Restriction 'via' node" = "Не можна видалити точку «via» зі звʼязка для обмежень маневрів";
 
 /* No comment provided by engineer. */
+"Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" = "Не можна видалити точку обмежень маневрів що зʼєднує «to»/«from» з «via»";
 
 /* No comment provided by engineer. */
+"Can't remove Turn Restriction to/from way" = "Не можна видалити лінію з роллю «to» або «from» якою позначене обмеження маневрів";
+
+/* No comment provided by engineer. */
+"Cancel" = "Скасувати";
 
 /* e-mail message */
+"Cannot compose message" = "Не вдалося скласти повідомлення";
 
 /* No comment provided by engineer. */
+"Cannot connect an inner way to an outer way" = "Не вдалося зʼєднати лінію «inner» з лінією «outer»";
+
+/* No comment provided by engineer. */
+"Change" = "Зміна";
 
 /* OSM changeset identifier */
+"Changeset" = "Набір змін";
 
 /* Delete cached data */
+"Clear Aerial Tiles" = "Почистити тайли аерознімків";
 
 /* Delete cached data */
+"Clear GPS Overlay Tiles" = "Почистити тайли GPS-треків";
 
 /* Delete cached data */
+"Clear GPX Tracks" = "Видалити GPX-треки";
 
 /* Delete cached data */
+"Clear Locator Overlay Tiles" = "Видалити тайли шару «Локатор»";
 
 /* Delete cached data */
+"Clear Mapnik Tiles" = "Почистити тайли Mapnik";
 
 /* Delete cached data */
+"Clear OSM Data" = "Почистити дані OSM";
 
 /* No comment provided by engineer. */
+"Commit" = "Змінити";
 
 /* No comment provided by engineer. */
+"Configure" = "Налаштувати";
 
 /* No comment provided by engineer. */
+"Confirm move" = "Підтвердити рух";
 
 /* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
+"Connecting the nodes would damage a relation" = "Обʼєднання точок може пошкодити звʼязок";
 
 /* Edit action */
+"Copy Tags" = "Копіювати теґи";
 
 /* No comment provided by engineer. */
+"Could not duplicate object" = "Не можна здублювати обʼєкт";
 
 /* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
+"Create\n" = "Створити\n";
 
 /* Edit action */
+"Create Relation" = "Створити звʼязок";
 
 /* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
+"Create Relation Type" = "Зазначити тип звʼязку";
 
 /* current GPX track */
+"Current Track" = "Поточний трек";
 
 /* No comment provided by engineer. */
+"Database error" = "Помилка бази даних";
 
 /* Edit action */
+"Delete" = "Видалити";
 
 /* No comment provided by engineer. */
+"Delete\n" = "Видалити\n";
 
 /* Confirm deleting a node/way */
+"Delete %@?" = "Видалити %@?";
 
 /* No comment provided by engineer. */
+"Delete completely" = "Видалити повністю";
 
 /* No comment provided by engineer. */
+"Delete failed" = "Не вдалося видалити";
 
 /* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
+"Detach from relation" = "Прибрати зі звʼязку";
 
 /* Edit action */
+"Disconnect" = "Відʼєднати";
 
 /* No comment provided by engineer. */
+"Display options" = "Налаштування вигляду";
 
 /* Distance to an object with an error value */
+"Distance: %1$@ ± %2$@ meters" = "Відстань: %1$@ ± %2$@ метрів";
 
 /* No comment provided by engineer. */
-
-/* create a duplicate */
+"Done" = "Готово";
 
 /* Edit action */
+"Duplicate" = "Дублікувати";
 
 /* No comment provided by engineer. */
+"Edit" = "Редагувати";
 
 /* No comment provided by engineer. */
+"Edit restrictions" = "Редагувати обмеження";
 
 /* No comment provided by engineer. */
+"Edit XML" = "Редагувати XML";
 
 /* No comment provided by engineer. */
+"Editing layer not visible" = "Шар що редагується прихований";
 
 /* No comment provided by engineer. */
+"Editor only" = "Тільки редактор";
 
 /* No comment provided by engineer. */
+"Editor with Aerial" = "Редактор з аерознімком";
 
 /* No comment provided by engineer. */
+"Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "Впевніться що служби локації працюють і ви надали доступ цьому застосунку.\n\nПомилка: %@";
 
 /* No comment provided by engineer. */
+"Ensure the editor view is visible and displays objects in the local area" = "Впевніться що режим редагування увімкнений і видно обʼєкти навколо";
 
 /* Error dialog title */
+"Error" = "Помилка";
 
 /* No comment provided by engineer. */
+"Error connecting to way" = "Помилка підʼєднання до лінії";
 
 /* No comment provided by engineer. */
+"Error fetching metadata: %@" = "Помилка завантаження метаданих: %@";
 
 /* No comment provided by engineer. */
+"Extending a 'via' in a Turn Restriction will break the relation" = "Подовження лінії «via» яка бере участь у обмеженні маневрів зламає звʼязок";
 
 /* No comment provided by engineer. */
+"Extending a way which belongs to a Route or similar relation may damage the relation" = "Подовження лінії що входить до маршруту чи схожого звʼязку може пошкодити звʼязок";
 
 /* No comment provided by engineer. */
+"GPX Upload Complete" = "Завантаження GPX завершене";
 
 /* No comment provided by engineer. */
+"GPX Upload Failed" = "Завантажити GPX не вдалося";
 
 /* Height of an object with an error value */
+"Height: %1$@ ± %2$@ meters" = "Висота: %1$@ ± %2$@ метрів";
 
 /* rate the app now */
+"I'll do it!" = "Я зроблю це!";
 
 /* OSM node/way/relation identifier */
+"Identifier" = "Ідентифікатор";
 
 /* No comment provided by engineer. */
+"Ignore" = "Ігнорувати";
 
 /* No comment provided by engineer. */
+"In order to measure height, please enable camera access in the app's settings." = "Щоб виміряти висоту, будь ласка надайде доступ до камери у налаштуваннях застосунку.";
 
 /* No comment provided by engineer. */
+"Invalid URL" = "Помилковий URL";
 
 /* Edit action */
+"Join" = "Приєднати";
 
 /* No comment provided by engineer. */
+"Joining would invalidate a Turn Restriction the way belongs to" = "Приєднання зробить недійсним обмеження маневрів до якого входить лінія";
 
 /* No comment provided by engineer. */
+"Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "Змінення мови вплине тільки на заготовки й лише на ті що перекладені для iD. Основний інтерфейс буде англійською.";
 
 /* No comment provided by engineer. */
+"Last updated %@" = "Востаннє оновлено %@";
 
 /* coordinates */
+"Lat/Lon" = "Широта/Довгота";
 
 /* No comment provided by engineer. */
+"Left" = "Зліва";
 
 /* Left-hand side of screen */
+"Left side" = "Лівий бік";
 
 /* No comment provided by engineer. */
+"Length" = "Довжина";
 
 /* No comment provided by engineer. */
+"Location unavailable" = "Локація недоступна";
 
 /* No comment provided by engineer. */
+"Login successful" = "Ви увійшли";
 
 /* No comment provided by engineer. */
+"Low memory: clearing cache" = "Недостатньо памʼяті: очищення кешу";
 
 /* No comment provided by engineer. */
+"Mail delivery is not available on this device" = "Доставка пошти недоступна на цьому пристрої";
 
 /* Edit action */
+"Make Circular" = "Зробити круглим";
 
 /* Edit action */
+"Make Rectangular" = "Зробити кути прямими";
 
 /* No comment provided by engineer. */
+"Max nodes after joining is 2000" = "Максимальна кількість точок після приєднання — 2000";
 
 /* No comment provided by engineer. */
+"Maximum way length is 2000 nodes" = "Максимальна довжина лінії — 2000 точок";
 
 /* rate the app later */
+"Maybe later..." = "Можливо, пізніше…";
 
 /* No comment provided by engineer. */
+"Measure Direction" = "Виміряти напрямок";
 
 /* No comment provided by engineer. */
+"Member of multipolygon relation" = "Член мультиполігона";
 
 /* No comment provided by engineer. */
+"Members" = "Члени";
 
 /* No comment provided by engineer. */
+"Merge Tags" = "Обʼєднати теґи";
 
 /* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
+"Missing way to connect to" = "Немає лінії для приєднання";
 
 /* last modified date */
+"Modified" = "Змінено";
 
 /* No comment provided by engineer. */
+"Modify" = "Змінити";
 
 /* No comment provided by engineer. */
+"Modify\n" = "Змінити\n";
 
 /* No comment provided by engineer. */
+"Modifying the raw XML data allows you to correct errors that prevent uploading.\n\nIt is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format." = "Модифікуючи сирцеві XML-дані зможете виправити помилки що заважають відправити набір змін.\n\nЦе просунута операція яку маєте здійснювати лише якщо повністю розумієте формат даних набору змін OSM.";
 
 /* Edit action */
+"More..." = "Більше…";
 
 /* No comment provided by engineer. */
+"Most recent" = "Останній";
 
 /* No comment provided by engineer. */
+"Move" = "Сунути";
 
 /* No comment provided by engineer. */
+"Move selected object?" = "Сунути вибраний обʼєкт?";
 
 /* No comment provided by engineer. */
+"Multipolygon" = "Мультиполігон";
 
 /* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
+"Network error" = "Мережева помилка";
 
 /* Never delete old GPX tracks
    Never delete old tracks */
+"Never" = "Ніколи";
 
 /* No comment provided by engineer. */
+"Next" = "Наступний";
 
 /* GPX track */
+"No active track" = "Немає активного трека";
 
 /* Alert title */
+"No Data" = "Немає даних";
 
 /* No comment provided by engineer. */
+"No Left Turn restriction" = "Заборона лівого повороту";
 
 /* No comment provided by engineer. */
+"No results found" = "Нічого не знайдено";
 
 /* No comment provided by engineer. */
+"No Right Turn restriction" = "Заборона правого повороту";
 
 /* No comment provided by engineer. */
+"No Straight On restriction" = "Заборона руху прямо";
 
 /* No comment provided by engineer. */
+"No tags to paste" = "Немає теґів щоб їх вставити";
 
 /* No comment provided by engineer. */
+"No U-Turn restriction" = "Заборона розвороту";
 
 /* No comment provided by engineer. */
+"Node" = "Точка";
 
 /* No comment provided by engineer. */
+"Node Attributes" = "Атрибути точки";
 
 /* No comment provided by engineer. */
+"Node is not an element of way" = "Точка не належить лінії";
 
 /* No comment provided by engineer. */
+"Node must be the first or last node of the way" = "Точка має бути на початку або в кінці лінії";
 
 /* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
+"Node Tags" = "Теґи точки";
 
 /* User credentials not found */
+"Not found" = "Не знайдено";
 
 /* OSM note */
+"Note History" = "Історія нотатки";
 
 /* No comment provided by engineer. */
+"Nothing to upload, no changes have been made." = "Нема чого завантажувати, жодних змін не відбулося.";
 
 /* No comment provided by engineer. */
+"Number of recent items to display" = "Кількість останніх елементів щоб показати";
 
 /* No comment provided by engineer. */
+"Object modified" = "Обʼєкт змінений";
 
 /* No comment provided by engineer. */
-
-/* previous tag value */
-
-/* No comment provided by engineer. */
+"OK" = "Гаразд";
 
 /* No comment provided by engineer. */
+"Only Left Turn restriction" = "Лише поворот наліво";
 
 /* No comment provided by engineer. */
+"Only multipolygon relations are supported" = "Підтримуються лише звʼязки типу «мультиполігон»";
 
 /* No comment provided by engineer. */
+"Only Right Turn restriction" = "Лише поворот направо";
 
 /* No comment provided by engineer. */
+"Only Straight On restriction" = "Лише прямо";
+
+/* No comment provided by engineer. */
+"Only ways/multipolygons can be rotated" = "Повертати можна лише лінії чи мультиполігони";
 
 /* Open the iOS Settings app */
+"Open Settings" = "Відкрити налаштування";
 
 /* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
+"Open URL" = "Відкрити посилання";
 
 /* Edit action */
+"Paste" = "Вставити";
 
 /* No comment provided by engineer. */
+"Pasting %@ characters, maximum tag length is 255" = "Вставлення %@ символів, максимальна довжина теґу — 255";
 
 /* No comment provided by engineer. */
+"Pasting %ld tag(s)" = "Вставлення %ld теґів";
 
 /* No comment provided by engineer. */
+"Perform Action" = "Здійснити дію";
 
 /* No comment provided by engineer. */
+"Please wait" = "Зачекайте";
+
+/* No comment provided by engineer. */
+"Previous" = "Попередній";
 
 /* previous GPX track */
+"Previous Tracks" = "Попередні треки";
 
 /* Discard editing changes when resetting OSM data cache */
+"Purge" = "Вичистити";
 
 /* No comment provided by engineer. */
+"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "Якщо оціните застосунок — допоможете іншим картографам шукати його та зробите OpenStreetMap популярнішим.";
 
 /* Alert title message */
+"Recent Aerial Imagery" = "Нещодавні аерознімки";
 
 /* No comment provided by engineer. */
+"Redo" = "Повторити";
 
 /* No comment provided by engineer. */
+"Relation Attributes" = "Атрибути звʼзку";
 
 /* No comment provided by engineer. */
+"Relation Tags" = "Теґи звʼязка";
 
 /* No comment provided by engineer. */
+"Relation: %@" = "Звʼязок: %@";
 
 /* No comment provided by engineer. */
+"Relations" = "Звʼязки";
 
 /* No comment provided by engineer. */
+"Replace Tags" = "Замінити теґи";
 
 /* No comment provided by engineer. */
+"Requires a closed way with at least 3 nodes" = "Потрібна замкнена лінія щонайменше із трьома точками";
 
 /* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
+"Requires a closed way with at least 4 nodes" = "Потрібна замкнена лінія щонайменше із чотирма точками";
 
 /* Edit action */
+"Restrict" = "Заборонити";
 
 /* No comment provided by engineer. */
+"Restriction: %@" = "Обмеження: %@";
 
 /* country name,2-character country code */
+"Results for %@ (%@)" = "Результати для %1$@ (%2$@)";
 
 /* retry opening hours recognition */
+"Retry" = "Повторити";
 
 /* Edit action */
+"Reverse" = "Змінити напрямок";
 
 /* No comment provided by engineer. */
+"Right" = "Праворуч";
 
 /* Right-hand side of screen */
+"Right side" = "Правий бік";
 
 /* Edit action */
+"Rotate" = "Повернути";
 
 /* No comment provided by engineer. */
+"Select a highway approaching the intersection" = "Вибрати дорогу що веде до перехрестя";
 
 /* No comment provided by engineer. */
+"Select Object" = "Вибрати обʼєкт";
 
 /* No comment provided by engineer. */
+"Selected object is off screen" = "Вибрані обʼєкти поза екраном";
 
 /* set tag value */
+"Set" = "Додати";
 
 /* The height=* tag */
+"Set Height Tag" = "Додати теґ висоти";
 
 /* No comment provided by engineer. */
+"set tags" = "надати теґи";
 
 /* No comment provided by engineer. */
+"Settings" = "Налаштування";
 
 /* Open iOS sharing sheet
    Title for sharing options */
+"Share" = "Поділитися";
 
 /* No comment provided by engineer. */
+"Show Recent Items" = "Показати останні елементи";
 
 /* No comment provided by engineer. */
+"Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." = "Щось пішло не так під час відновлення ваших даних. Всі зміни що «зависли» було втрачено. Пробачте.";
 
 /* No comment provided by engineer. */
+"Sorry, an error occurred while loading the GPX file" = "Пробачте, під час завантаження GPX-файлу виникла помилка";
 
 /* Edit action */
+"Split" = "Розділити";
 
 /* No comment provided by engineer. */
+"Standard imagery" = "Стандартні знімки";
 
 /* Begin downloading tiles */
+"Start" = "Старт";
 
 /* No comment provided by engineer. */
+"Stop" = "Стоп";
 
 /* Edit action */
+"Straighten" = "Випрямити";
 
 /* Edit action */
+"Tags" = "Теґи";
 
 /* No comment provided by engineer. */
+"The + button can be positioned on either the left or right side of the screen" = "Кнопку з плюсом можна розташувати як зліва так і справа на екрані";
 
 /* No comment provided by engineer. */
+"The current location cannot be determined: " = "Поточну локацію не вдається визначити: ";
 
 /* No comment provided by engineer. */
+"The merged nodes contain conflicting tags" = "Обʼєднані точки містять теґи що конфліктують";
 
 /* No comment provided by engineer. */
+"The nodes have conflicting roles in parent relations" = "Точки мають ролі що конфліктують у батьківському звʼязку";
 
 /* No comment provided by engineer. */
+"The object does not contain any tags" = "Обʼєкт не містить жодних теґів";
 
 /* No comment provided by engineer. */
+"The restriction cannot be deleted" = "Обмеження не може бути видалене";
 
 /* No comment provided by engineer. */
+"The selected way must be completely visible" = "Лінія яку обрали має бути цілком на видноті";
 
 /* No comment provided by engineer. */
+"The target way is ambiguous" = "Цільова лінія невизначена";
 
 /* No comment provided by engineer. */
+"The turn contains an unrecognized turn restriction style. Proceeding will destroy it." = "Поворот містить нерозпізнане обмеження маневру. Якщо продовжите, знищите його.";
 
 /* No comment provided by engineer. */
+"The way belongs to a relation that is not fully downloaded" = "Лінія належить до звʼязку що не повністю завантажений";
 
 /* No comment provided by engineer. */
+"The way is not sufficiently straight" = "Лінія недостатньо пряма";
 
 /* No comment provided by engineer. */
+"The way must have at least 2 nodes" = "Лінія має мати хоча б дві точки";
 
 /* No comment provided by engineer. */
+"The ways contain incompatible tags" = "Лінії містять несумісні теґи";
 
 /* No comment provided by engineer. */
+"This action requires GPS to be turned on" = "Щоб здійснити дію GPS має бути увімкненим";
 
 /* No comment provided by engineer. */
+"This app does not yet support editing turn restrictions without a node as the 'via' member" = "Цей застосунок поки що не підтримує редагування обмежень повороту без точки з роллю «via»";
 
 /* No comment provided by engineer. */
+"This device is not able to provide heading data." = "Цей пристрій не може надати дані про курс.";
 
 /* No comment provided by engineer. */
+"To add another member to the relation 'long press' on the way to be added" = "Щоб додати інший член до звʼязку «затримайте» палець на лінії яку хочете додати";
 
 /* No comment provided by engineer. */
+"Travel ALLOWED from %@ to %@" = "Рух ДОЗВОЛЕНО з %1$@ в %2$@";
 
 /* No comment provided by engineer. */
+"Travel from %@" = "Маршрут з %@";
 
 /* No comment provided by engineer. */
+"Travel ONLY from %@ to %@" = "Рух ТІЛЬКИ з %1$@ до %2$@";
 
 /* No comment provided by engineer. */
+"Travel PROHIBITED from %@ to %@" = "Рух ЗАБОРОНЕНО з %1$@ в %2$@";
 
 /* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
+"Turn On Location Services to Allow %@ to Determine Your Location" = "Увікніть служби локації щоб дозволити %@ визначити ваше місцеперебування";
 
 /* Edit action */
-
-/* No comment provided by engineer. */
+"Turn Restrictions" = "Обмеження маневру";
 
 /* The 'Type' header in Common Tags */
+"Type" = "Тип";
 
 /* No comment provided by engineer. */
+"Unable to upload changes" = "Не вдається завантажити зміни";
 
 /* No comment provided by engineer. */
-
-/* OSM numeric user ID */
-
-/* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
+"Undo" = "Скасувати";
 
 /* relation role=* tag */
+"Unknown role" = "Невідома роль";
 
 /* No comment provided by engineer. */
+"Unsupported turn restriction type" = "Непідтримуваний тип обмеження повороту";
 
 /* update an osm note */
-
-/* Update the named tag value (e.g. foo=*) */
-
-/* No comment provided by engineer. */
-
-/* OSM Note */
+"Update" = "Оновлення";
 
 /* No comment provided by engineer. */
+"Upload complete!" = "Завантаження завершено!";
 
 /* No comment provided by engineer. */
+"Upload to OSM" = "Завантажити в OSM";
 
 /* No comment provided by engineer. */
+"Upload your changes" = "Завантажте свої зміни";
 
 /* No comment provided by engineer. */
-
-/* OSM user name */
-
-/* No comment provided by engineer. */
-
-/* OSM object versioh */
-
-/* Year aerial imagery was created */
-
-/* Years aerial imagery was created */
-
-/* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
-
-/* POI editor presets */
-
-/* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
-
-/* No comment provided by engineer. */
+"Way Tags" = "Теґи лінії";
 

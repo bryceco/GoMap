@@ -1,0 +1,261 @@
+/* Class = "UILabel"; text = "GPX Tracks"; ObjectID = "1f0-8q-yCi"; */
+"1f0-8q-yCi.text" = "GPX trasy";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "1SY-O5-qJR"; */
+"1SY-O5-qJR.title" = "Zrušit";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "2Ku-Lb-uCf"; */
+"2Ku-Lb-uCf.text" = "Podrobnosti";
+
+/* Class = "UILabel"; text = "Clear Cache"; ObjectID = "2ZY-zi-luF"; */
+"2ZY-zi-luF.text" = "Vyčistit mezipaměť";
+
+/* Class = "UIButton"; normalTitle = "99 Days"; ObjectID = "4s8-Bj-JOX"; */
+"4s8-Bj-JOX.normalTitle" = "99 dní";
+
+/* Class = "UILabel"; text = "Projection"; ObjectID = "5hB-2Y-Wgl"; */
+"5hB-2Y-Wgl.text" = "Projekce";
+
+/* Class = "UILabel"; text = "Rail Features"; ObjectID = "7df-49-qTa"; */
+"7df-49-qTa.text" = "Železniční prvky";
+
+/* Class = "UITextField"; placeholder = "-1..3,7"; ObjectID = "7ga-PZ-MfV"; */
+"7ga-PZ-MfV.placeholder" = "-1..3,7";
+
+/* Class = "UITableViewSection"; headerTitle = "Overlays"; ObjectID = "8es-4f-sj3"; */
+"8es-4f-sj3.headerTitle" = "Překryvy";
+
+/* Class = "UINavigationItem"; title = "Aerial Imagery"; ObjectID = "8HT-Bc-Q2z"; */
+"8HT-Bc-Q2z.title" = "Letecké snímky";
+
+/* Class = "UIButton"; normalTitle = "Details"; ObjectID = "8S7-Kw-QHF"; */
+"8S7-Kw-QHF.normalTitle" = "Podrobnosti";
+
+/* Class = "UILabel"; text = "Mapnik only"; ObjectID = "9L3-JO-Whj"; */
+"9L3-JO-Whj.text" = "Pouze Mapnik";
+
+/* Class = "UINavigationItem"; title = "Display"; ObjectID = "186-0W-Nrr"; */
+"186-0W-Nrr.title" = "Zobrazení";
+
+/* Class = "UITableViewSection"; footerTitle = "Go Map!! will automatically discard old data to optimize performance."; ObjectID = "bmY-Hw-jv6"; */
+"bmY-Hw-jv6.footerTitle" = "Go Map!! automaticky zahazuje stará data pro zlepšení výkonu.";
+
+/* Class = "UITableViewSection"; headerTitle = "Cache Management"; ObjectID = "bmY-Hw-jv6"; */
+"bmY-Hw-jv6.headerTitle" = "Správa mezipaměti";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "cpC-iE-1Dm"; */
+"cpC-iE-1Dm.text" = "Název";
+
+/* Class = "UITableViewSection"; headerTitle = "Friendly Name"; ObjectID = "cpv-m2-oDm"; */
+"cpv-m2-oDm.headerTitle" = "Přátelský název";
+
+/* Class = "UINavigationItem"; title = "Show Objects"; ObjectID = "cXC-ij-AMQ"; */
+"cXC-ij-AMQ.title" = "Zobrazit objekty";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "dci-gg-ddc"; */
+"dci-gg-ddc.title" = "Zrušit";
+
+/* Class = "UILabel"; text = "Automatic"; ObjectID = "dIe-MC-t44"; */
+"dIe-MC-t44.text" = "Automaticky";
+
+/* Class = "UILabel"; text = "Collect in background:"; ObjectID = "DmO-dW-3Fh"; */
+"DmO-dW-3Fh.text" = "Sběr na pozadí";
+
+/* Class = "UIButton"; normalTitle = "Bing"; ObjectID = "eac-Db-EaW"; */
+"eac-Db-EaW.normalTitle" = "Bing";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eFa-yZ-YZl"; */
+"eFa-yZ-YZl.text" = "Letecké snímky";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F"; */
+"el8-h8-H1F.normalTitle" = "Tlačítko";
+
+/* Class = "UILabel"; text = "Position + Button on "; ObjectID = "eLW-GB-ugG"; Note = "The location on the screen where the user prefers the + (add node) button to appear"; */
+"eLW-GB-ugG.text" = "Poloha tlačítka + ";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "EmS-9F-1qc"; */
+"EmS-9F-1qc.text" = "Podrobnosti";
+
+/* Class = "UILabel"; text = "Editor only"; ObjectID = "eN6-SZ-99I"; */
+"eN6-SZ-99I.text" = "Pouze editor";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eTY-48-gab"; */
+"eTY-48-gab.text" = "Letecké snímky";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "F9l-B0-puf"; */
+"F9l-B0-puf.text" = "Podrobnosti";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fFT-hv-mKl"; */
+"fFT-hv-mKl.text" = "Letecké snímky";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fHH-rC-iGa"; */
+"fHH-rC-iGa.text" = "Letecké snímky";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "g2G-5j-Y4q"; */
+"g2G-5j-Y4q.text" = "Podrobnosti";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "g46-cV-NBw"; */
+"g46-cV-NBw.text" = "Letecké snímky";
+
+/* Class = "UILabel"; text = "Points"; ObjectID = "gdL-Os-R6R"; */
+"gdL-Os-R6R.text" = "Body";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "GNK-bZ-i9X"; */
+"GNK-bZ-i9X.text" = "Podrobnosti";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "gre-3S-iPA"; */
+"gre-3S-iPA.text" = "Podrobnosti";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "h1O-06-ApF"; */
+"h1O-06-ApF.text" = "Štítek";
+
+/* Class = "UINavigationItem"; title = "QA Poole No Name Tiles"; ObjectID = "H3p-Ta-kIy"; Note = "Title for Simon Poole's \"No name\" (missing name) tile overlay"; */
+"H3p-Ta-kIy.title" = "QA Poole No Name Tiles";
+
+/* Class = "UILabel"; text = "Traffic Roads"; ObjectID = "hkr-kO-jbt"; */
+"hkr-kO-jbt.text" = "Dopravní cesty";
+
+/* Class = "UILabel"; text = "OpenStreetMap GPS Traces"; ObjectID = "hMJ-yP-XJe"; */
+"hMJ-yP-XJe.text" = "OpenStreetMap GPS stopy";
+
+/* Class = "UITextView"; text = "Simon Poole Map Data © OpenStreetMap contributors\n"; ObjectID = "hsp-Xj-TU6"; */
+"hsp-Xj-TU6.text" = "Simon Poole Map Data © OpenStreetMap přispěvatelé\n";
+
+/* Class = "UILabel"; text = "Power Features"; ObjectID = "Idx-2G-6F7"; */
+"Idx-2G-6F7.text" = "Energetika";
+
+/* Class = "UITextField"; placeholder = "(TMS)"; ObjectID = "iuk-Fk-3Fw"; */
+"iuk-Fk-3Fw.placeholder" = "(TMS)";
+
+/* Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe"; */
+"Jz1-GP-Wbe.text" = "Cesty";
+
+/* Class = "UILabel"; text = "Past/Future"; ObjectID = "lu0-kr-5Cc"; */
+"lu0-kr-5Cc.text" = "Minulost/budoucnost";
+
+/* Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ"; */
+"lwG-AE-nIZ.headerTitle" = "Pozadí";
+
+/* Class = "UILabel"; text = "Enable Filters"; ObjectID = "LxX-tl-ZLH"; */
+"LxX-tl-ZLH.text" = "Povolit filtry";
+
+/* Class = "UILabel"; text = "GPX Tracks you record or download will be automatically deleted after:"; ObjectID = "MeQ-4N-FqC"; */
+"MeQ-4N-FqC.text" = "Automaticky smazat nahrané či stažené GPX záznamy tras po:";
+
+/* Class = "UILabel"; text = "Editor with Aerial"; ObjectID = "MPq-PX-jf0"; */
+"MPq-PX-jf0.text" = "Editor a letecké snímky";
+
+/* Class = "UINavigationItem"; title = "Aerial Provider"; ObjectID = "MZF-am-tCM"; */
+"MZF-am-tCM.title" = "Poskytovatel snímků";
+
+/* Class = "UILabel"; text = "Quests"; ObjectID = "O0U-6M-7AT"; */
+"O0U-6M-7AT.text" = "Úkoly";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "OiJ-GU-gZ3"; */
+"OiJ-GU-gZ3.title" = "Zrušit";
+
+/* Class = "UILabel"; text = "Landuse"; ObjectID = "Okg-2D-O6U"; */
+"Okg-2D-O6U.text" = "Využití krajiny";
+
+/* Class = "UINavigationItem"; title = "Configure GPX Tracks"; ObjectID = "oSD-0y-Vt0"; */
+"oSD-0y-Vt0.title" = "Nastavení GPX tras";
+
+/* Class = "UILabel"; text = "Buildings"; ObjectID = "pQK-9y-t4z"; */
+"pQK-9y-t4z.text" = "Budovy";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "pR1-M8-pXH"; */
+"pR1-M8-pXH.title" = "Zpět";
+
+/* Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "PSE-3C-cDx"; */
+"PSE-3C-cDx.text" = "Poznámky a „fixme“ značky";
+
+/* Class = "UILabel"; text = "Boundaries"; ObjectID = "qdV-Je-jXT"; */
+"qdV-Je-jXT.text" = "Hranice";
+
+/* Class = "UILabel"; text = "Turn Restrictions"; ObjectID = "r6a-cT-Ufa"; */
+"r6a-cT-Ufa.text" = "Omezení odbočení";
+
+/* Class = "UITableViewSection"; headerTitle = "Interactions"; ObjectID = "RJU-Z2-QFh"; */
+"RJU-Z2-QFh.headerTitle" = "Interakce";
+
+/* Class = "UILabel"; text = "Service Roads"; ObjectID = "RxO-IV-UE7"; */
+"RxO-IV-UE7.text" = "Servisní cesty";
+
+/* Class = "UITableViewSection"; headerTitle = "Filter Objects"; ObjectID = "scg-Po-M3L"; */
+"scg-Po-M3L.headerTitle" = "Filtrovat objekty";
+
+/* Class = "UITableViewSection"; footerTitle = "Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. \n\nWarning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.\n\nClear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed."; ObjectID = "SNa-W1-wga"; */
+"SNa-W1-wga.footerTitle" = "Pročistěte mezipaměť pokud aplikace není synchronizovaná s OSM serverem. Může se to stát např. když někdo další změní data, která zrovna upravujete nebo pokud dojde k selhání nahrávání změn, což vám může bránit v nahrání dalších změn.\n\nUpozornění: Vyčištěním mezipaměti přijdete o všechny nenahrané změny.\n\nPro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahrané změny, pročistěte mezipaměť Mapnik nebo překryvných dlaždic. Zpracování vašich změn může trvat i 24 hodin.";
+
+/* Class = "UITableViewSection"; headerTitle = "Discard & Refresh"; ObjectID = "SNa-W1-wga"; */
+"SNa-W1-wga.headerTitle" = "Zahodit a obnovit";
+
+/* Class = "UILabel"; text = "URL"; ObjectID = "swu-t3-p5w"; */
+"swu-t3-p5w.text" = "URL";
+
+/* Class = "UINavigationItem"; title = "Clear Cache"; ObjectID = "tS9-CP-pqu"; */
+"tS9-CP-pqu.title" = "Vyčistit mezipaměť";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "tU9-Ml-4ko"; */
+"tU9-Ml-4ko.title" = "Zpět";
+
+/* Class = "UILabel"; text = "Water Features"; ObjectID = "twn-Ve-8vl"; */
+"twn-Ve-8vl.text" = "Vodní prvky";
+
+/* Class = "UILabel"; text = "Aerial only"; ObjectID = "uOd-BB-zEq"; */
+"uOd-BB-zEq.text" = "Pouze letecké snímky";
+
+/* Class = "UITextField"; placeholder = "21"; ObjectID = "uQ3-vb-l3H"; */
+"uQ3-vb-l3H.placeholder" = "21";
+
+/* Class = "UILabel"; text = "Others"; ObjectID = "Uum-Wn-9CF"; */
+"Uum-Wn-9CF.text" = "Ostatní";
+
+/* Class = "UILabel"; text = "Building Level"; ObjectID = "uZo-P0-sR7"; */
+"uZo-P0-sR7.text" = "Podlaží budov";
+
+/* Class = "UILabel"; text = "Max Zoom"; ObjectID = "voF-Yf-33h"; */
+"voF-Yf-33h.text" = "Max. přiblížení";
+
+/* Class = "UILabel"; text = "Enable Rotation"; ObjectID = "VUR-wT-knn"; */
+"VUR-wT-knn.text" = "Otáčení mapy";
+
+/* Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF"; Note = "A hypothetical aerial imagery provider"; */
+"w75-Lj-3jF.placeholder" = "Portlandia GIS";
+
+/* Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C"; */
+"wev-ax-u4C.headerTitle" = "Resetovat";
+
+/* Class = "UILabel"; text = "Delete tracks after:"; ObjectID = "WnI-tY-WWa"; */
+"WnI-tY-WWa.text" = "Smazat trasy po:";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "xve-fW-qM7"; */
+"xve-fW-qM7.text" = "Podrobnosti";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "yue-km-52a"; */
+"yue-km-52a.text" = "Název";
+
+/* Class = "UINavigationItem"; title = "GPX Tracks"; ObjectID = "Z8C-Ef-iJE"; */
+"Z8C-Ef-iJE.title" = "GPX trasy";
+
+/* Class = "UITableViewSection"; footerTitle = "A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL"; ObjectID = "zD6-m4-1PD"; */
+"zD6-m4-1PD.footerTitle" = "TMS URL adresa s {x}, {y} a {z} zástupci, nebo WMS URL adresa";
+
+/* Class = "UITableViewSection"; headerTitle = "Template URL of the tile server"; ObjectID = "zD6-m4-1PD"; */
+"zD6-m4-1PD.headerTitle" = "Šablona URL serveru s dlaždicemi";
+
+/* Class = "UIButton"; normalTitle = "Add New"; ObjectID = "zI2-YM-qbl"; */
+"zI2-YM-qbl.normalTitle" = "Přidat nové";
+
+/* Class = "UITableViewSection"; footerTitle = "If specifying a WMS URL you must also provide the projection used"; ObjectID = "Zn9-Sg-9fS"; */
+"Zn9-Sg-9fS.footerTitle" = "Při použití WMS URL adresy musíte zadat také použitou projekci";
+
+/* Class = "UITableViewSection"; headerTitle = "WMS Projection"; ObjectID = "Zn9-Sg-9fS"; */
+"Zn9-Sg-9fS.headerTitle" = "WMS projekce";
+
+/* Class = "UILabel"; text = "Unnamed Roads"; ObjectID = "ZP1-qY-kXe"; */
+"ZP1-qY-kXe.text" = "Nepojmenované ulice";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT"; */
+"Zzc-4t-QhT.text" = "Letecké snímky";
+

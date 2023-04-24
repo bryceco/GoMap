@@ -32,7 +32,7 @@ final class EditorFilters {
 	var showPastFuture = false { didSet { save("PastFuture", showPastFuture) }}
 	var showOthers = false { didSet { save("Others", showOthers) }}
 
-	var showLevelRange: String = "" { // range of levels for building level
+	var showLevelRange = "" { // range of levels for building level
 		didSet {
 			UserDefaults.standard.set(self.showLevelRange, forKey: "editor.showLevelRange")
 			onChange?()
@@ -191,7 +191,7 @@ final class EditorFilters {
 								}
 							}
 						} else {
-							assert(false)
+							assertionFailure()
 						}
 					}
 					return false

@@ -12,31 +12,49 @@ Do you want to help testing pre-releases of Go Map!!?
 
 ## Source code structure
 
-* iOS - Code specific to the iOS app
-* Mac - Code specific to the Mac app (old, doesn't build anymore)
-* Shared - Shared code (drawing code, OSM data structures, etc)
+* iOS - App-specific UI code
+	* CustomViews - A collection of UIViews and CALayers primarily used by MapView
+	* Direction - The view controller for measuring direction
+	* Height - The view controller for measuring height
+	* OpeningHours - Support for recognizing hours via camera 
+	* PhotoShare - App extension so we appear in the system Share menu
+	* POI - View Controllers for tagging objects
+	* Quests - Quest VCs and related code
+	* Upload - View controller for uploading changesets
+* Shared - General purpose code (drawing code, OSM data structures, etc)
+	* Database - A SQLite3 database storing downloaded OSM data
+	* EditorLayer - The low-level graphical display for drawing nodes/ways
+	* MapMarkers - Markers for Quests, Notes, etc.
+	* OSMModels - Code for managing and storing OSM objects (nodes, ways, etc.)
+	* PresetsDatabase - Code for processing iD presets
+	* Tiles - Aerial imagery processing and display
 * Images - Images used for application elements (buttons, etc)
 * POI-Icons - Icons used for map elements (POIs, etc)
 * presets - The presets database copied from the iD editor
 * xliff - Translation files
 
+## Application architecture
+
+![Architecture diagram](./Architecture.png)
+
 ## External assets
 
 A number of assets used in the app come from other repositories, and should be periodically updated. Because updating these items can be a lengthy process it is performed manually rather than at build time:
 - iD presets database (https://github.com/openstreetmap/id-tagging-schema) 
-- iD presets icons (https://github.com/ideditor/temaki.git, https://github.com/mapbox/maki.git)
-- Name suggestion index (https://github.com/osmlab/name-suggestion-index)
-- NSI brand imagery (pulled from facebook/twitter/wikipedia)
+- iD presets icons (https://github.com/ideditor/temaki, https://github.com/mapbox/maki)
+- Name Suggestion Index (https://github.com/osmlab/name-suggestion-index)
+- NSI brand imagery (pulled from Facebook/Twitter/Wikipedia)
+- StreetComplete quest filters (https://github.com/streetcomplete/StreetComplete)
 - WebLate translations (https://hosted.weblate.org/projects/go-map/app)
 
 ### How to update external assets
 
 Starting from the `src` directory:
-- `(cd presets && update.sh)`				# fetches latest presets.json, etc. files and NSI
-- `(cd POI-Icons && update.sh)`			# fetches maki/temaki icons 
-- `(cd presets && getBrandIcons.py)`		# downloads images from various websites and converts them to png as necessary
-- `(cd presets && uploadBrandIcons.sh)`	# uploads imagery to gomaposm.com where they can be downloaded on demand at runtime (password required)
-- `(cd xliff && update.sh)`					# downloads latest translations from weblate (password required)
+- `(cd presets && ./update.sh)`				# fetches latest presets.json, etc. files and NSI
+- `(cd presets && ./getBrandIcons.py)`		# downloads images from various websites and converts them to png as necessary
+- `(cd presets && ./uploadBrandIcons.sh)`	# uploads imagery to gomaposm.com where they can be downloaded on demand at runtime (password required)
+- `(cd POI-Icons && ./update.sh)`			# fetches maki/temaki icons 
+- `(cd xliff && ./update.sh)`					# downloads latest translations from weblate (password required). This step is very noisy and produces many pages of warnings that can be ignored.
 
 ## Continuous integration
 

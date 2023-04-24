@@ -50,8 +50,8 @@ class CustomPresetController: UITableViewController {
 		var presets: [PresetValue] = []
 		for field in valueFieldList {
 			let value = field.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
-			if value.count != 0 {
-				let preset = PresetValue(name: nil, details: nil, tagValue: value)
+			if value != "" {
+				let preset = PresetValue(name: nil, details: nil, icon: nil, tagValue: value)
 				presets.append(preset)
 			}
 		}

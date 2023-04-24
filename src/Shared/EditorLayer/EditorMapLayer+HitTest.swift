@@ -3,7 +3,7 @@
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 6/16/21.
-//  Copyright © 2021 Bryce. All rights reserved.
+//  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
 import CoreGraphics
@@ -38,8 +38,8 @@ extension EditorMapLayer {
 		_ coord1: CGPoint,
 		_ coord2: CGPoint) -> CGFloat
 	{
-		let line1 = OSMPoint(x: Double((coord1.x - point.x)/maxPixels), y: Double((coord1.y - point.y)/maxPixels))
-		let line2 = OSMPoint(x: Double((coord2.x - point.x)/maxPixels), y: Double((coord2.y - point.y)/maxPixels))
+		let line1 = OSMPoint(x: Double((coord1.x - point.x) / maxPixels), y: Double((coord1.y - point.y) / maxPixels))
+		let line2 = OSMPoint(x: Double((coord2.x - point.x) / maxPixels), y: Double((coord2.y - point.y) / maxPixels))
 		let pt = OSMPoint(x: 0, y: 0)
 		let dist = pt.distanceToLineSegment(line1, line2)
 		return CGFloat(dist)
@@ -48,7 +48,7 @@ extension EditorMapLayer {
 	private static func osmHitTest(way: OsmWay, location: LatLon, maxDegrees: OSMSize, segment: inout Int) -> CGFloat {
 		var previous = LatLon.zero
 		var seg = -1
-		var bestDist: CGFloat = 1000000
+		var bestDist: CGFloat = 1_000000
 		for node in way.nodes {
 			if seg >= 0 {
 				let dist = HitTestLineSegment(location, maxDegrees, node.latLon, previous)
@@ -63,10 +63,16 @@ extension EditorMapLayer {
 		return bestDist
 	}
 
-	private static func osmHitTest(way: OsmWay, location: CGPoint, maxPixels: CGFloat, mapTransform: MapTransform, segment: inout Int) -> CGFloat {
+	private static func osmHitTest(
+		way: OsmWay,
+		location: CGPoint,
+		maxPixels: CGFloat,
+		mapTransform: MapTransform,
+		segment: inout Int) -> CGFloat
+	{
 		var previous = mapTransform.screenPoint(forLatLon: way.nodes.first!.latLon, birdsEye: true)
 		var seg = 0
-		var bestDist: CGFloat = 1000000
+		var bestDist: CGFloat = 1_000000
 		for node in way.nodes.dropFirst() {
 			let pt = mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
 			let dist = HitTestLineSegment(location, maxPixels, pt, previous)
@@ -82,15 +88,17 @@ extension EditorMapLayer {
 
 	private static func osmHitTest(node: OsmNode, location: LatLon, maxDegrees: OSMSize) -> CGFloat {
 		let delta = OSMPoint(x: (location.lon - node.latLon.lon) / maxDegrees.width,
-							 y: (location.lat - node.latLon.lat) / maxDegrees.height)
+		                     y: (location.lat - node.latLon.lat) / maxDegrees.height)
 		let dist = hypot(delta.x, delta.y)
 		return CGFloat(dist)
 	}
 
-	private static func osmHitTest(node: OsmNode, location: CGPoint, maxPixels: CGFloat, mapTransform: MapTransform) -> CGFloat {
+	private static func osmHitTest(node: OsmNode, location: CGPoint, maxPixels: CGFloat,
+	                               mapTransform: MapTransform) -> CGFloat
+	{
 		let nodePt = mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
 		let delta = CGPoint(x: location.x - nodePt.x,
-							 y: location.y - nodePt.y)
+		                    y: location.y - nodePt.y)
 		let dist = hypot(delta.x, delta.y) / maxPixels
 		return dist
 	}
@@ -107,13 +115,20 @@ extension EditorMapLayer {
 	{
 		if MapTransform.projection == .polarSouth {
 			// need to hittest using screen coordinates rather than lat/lon
-			return osmHitTestEnumerate(point, radius: radius, mapTransform: owner.mapTransform, objects: objects, testNodes: testNodes, ignoreList: ignoreList, block: block)
+			return osmHitTestEnumerate(
+				point,
+				radius: radius,
+				mapTransform: owner.mapTransform,
+				objects: objects,
+				testNodes: testNodes,
+				ignoreList: ignoreList,
+				block: block)
 		}
 
 		let location = owner.mapTransform.latLon(forScreenPoint: point)
-		let p2 = owner.mapTransform.latLon(forScreenPoint: CGPoint(x: point.x+1, y: point.y+2))
-		let pixelsPerDegree = OSMSize(width: 1.0/Double(fabs(p2.lon-location.lon)),
-									  height: 1.0/Double(fabs(p2.lat-location.lat)))
+		let p2 = owner.mapTransform.latLon(forScreenPoint: CGPoint(x: point.x + 1, y: point.y + 2))
+		let pixelsPerDegree = OSMSize(width: 1.0 / Double(fabs(p2.lon - location.lon)),
+		                              height: 1.0 / Double(fabs(p2.lat - location.lat)))
 		let maxDegrees = OSMSize(width: Double(radius) / pixelsPerDegree.width,
 		                         height: Double(radius) / pixelsPerDegree.height)
 		let NODE_BIAS = 0.5 // make nodes appear closer so they can be selected
@@ -212,7 +227,11 @@ extension EditorMapLayer {
 			if let node = object as? OsmNode {
 				if !ignoreList.contains(node) {
 					if testNodes || node.wayCount == 0 {
-						var dist = osmHitTest(node: node, location: point, maxPixels: radius, mapTransform: mapTransform)
+						var dist = osmHitTest(
+							node: node,
+							location: point,
+							maxPixels: radius,
+							mapTransform: mapTransform)
 						dist *= CGFloat(NODE_BIAS)
 						if dist <= 1.0 {
 							block(node, dist, 0)
@@ -223,7 +242,12 @@ extension EditorMapLayer {
 			} else if let way = object as? OsmWay {
 				if !ignoreList.contains(way) {
 					var seg = 0
-					let distToWay = osmHitTest(way: way, location: point, maxPixels: radius, mapTransform: mapTransform, segment: &seg)
+					let distToWay = osmHitTest(
+						way: way,
+						location: point,
+						maxPixels: radius,
+						mapTransform: mapTransform,
+						segment: &seg)
 					if distToWay <= 1.0 {
 						block(way, distToWay, seg)
 						parentRelations.formUnion(Set(way.parentRelations))
@@ -234,7 +258,11 @@ extension EditorMapLayer {
 						if ignoreList.contains(node) {
 							continue
 						}
-						var dist = osmHitTest(node: node, location: point, maxPixels: radius, mapTransform: mapTransform)
+						var dist = osmHitTest(
+							node: node,
+							location: point,
+							maxPixels: radius,
+							mapTransform: mapTransform)
 						dist *= CGFloat(NODE_BIAS)
 						if dist < 1.0 {
 							block(node, dist, 0)
@@ -243,7 +271,7 @@ extension EditorMapLayer {
 					}
 				}
 			} else if let relation = object as? OsmRelation,
-					  relation.isMultipolygon()
+			          relation.isMultipolygon()
 			{
 				if !ignoreList.contains(relation) {
 					var bestDist: CGFloat = 10000.0
@@ -277,7 +305,6 @@ extension EditorMapLayer {
 		}
 	}
 
-
 	// default hit test when clicking on the map, or drag-connecting
 	func osmHitTest(_ point: CGPoint,
 	                radius: CGFloat,
@@ -289,7 +316,7 @@ extension EditorMapLayer {
 			return nil
 		}
 
-		var bestDist: CGFloat = 1000000
+		var bestDist: CGFloat = 1_000000
 		var best: [OsmBaseObject: Int] = [:]
 		EditorMapLayer.osmHitTestEnumerate(
 			point,
@@ -368,8 +395,12 @@ extension EditorMapLayer {
 			})
 		var objectList = Array(objectSet)
 		objectList.sort(by: { o1, o2 in
-			let diff = (o1.isRelation() != nil ? 2 : o1.isWay() != nil ? 1 : 0) -
-				(o2.isRelation() != nil ? 2 : o2.isWay() != nil ? 1 : 0)
+			let diff1 = (o1.hasInterestingTags() ? 1 : 0) - (o2.hasInterestingTags() ? 1 : 0)
+			if diff1 != 0 {
+				return diff1 > 0
+			}
+			let diff = (o1 is OsmRelation ? 1 : o1 is OsmWay ? 2 : 0)
+				- (o2 is OsmRelation ? 1 : o2 is OsmWay ? 2 : 0)
 			if diff != 0 {
 				return -diff < 0
 			}
@@ -385,7 +416,7 @@ extension EditorMapLayer {
 			return nil
 		}
 		var hit: OsmNode?
-		var bestDist: CGFloat = 1000000
+		var bestDist: CGFloat = 1_000000
 		EditorMapLayer.osmHitTestEnumerate(point,
 		                                   radius: radius,
 		                                   owner: owner,

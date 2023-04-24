@@ -7,7 +7,7 @@
 --closingparen same-line
 --commas inline
 --conflictmarkers reject
---decimalgrouping none
+--decimalgrouping 6
 --disable preferKeyPath,trailingClosures
 --elseposition same-line
 --emptybraces no-space

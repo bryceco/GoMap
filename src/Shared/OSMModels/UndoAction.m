@@ -10,6 +10,11 @@
 
 @implementation UndoAction
 
++(BOOL)supportsSecureCoding
+{
+	return true;
+}
+
 -(instancetype)initWithTarget:(id)target selector:(SEL)selector objects:(NSArray *)objects
 {
 	self = [super init];

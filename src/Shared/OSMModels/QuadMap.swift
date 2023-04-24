@@ -8,7 +8,9 @@
 
 import Foundation
 
-class QuadMap: NSObject, NSCoding {
+class QuadMap: NSObject, NSSecureCoding {
+	static let supportsSecureCoding = true
+
 	let rootQuad: QuadBox
 	let encodingContentsOnSave: Bool
 
@@ -72,7 +74,9 @@ class QuadMap: NSObject, NSCoding {
 
 	@objc func addMember(_ member: OsmBaseObject, undo: MyUndoManager?) {
 		if let undo = undo {
-			undo.registerUndo(withTarget: self, selector: #selector(removeMember(_:undo:)), objects: [member, undo])
+			undo.registerUndo(withTarget: self,
+			                  selector: #selector(removeMember(_:undo:)),
+			                  objects: [member, undo])
 		}
 		let boundingBox = member.boundingBox
 		rootQuad.addMember(member, bbox: boundingBox)
@@ -81,8 +85,8 @@ class QuadMap: NSObject, NSCoding {
 	@objc func removeMember(_ member: OsmBaseObject, undo: MyUndoManager?) -> Bool {
 		let boundingBox = member.boundingBox
 		let ok = rootQuad.removeMember(member, bbox: boundingBox)
-		if ok, undo != nil {
-			undo?.registerUndo(
+		if ok, let undo = undo {
+			undo.registerUndo(
 				withTarget: self,
 				selector: #selector(addMember(_:undo:)),
 				objects: [member, undo as Any])
@@ -162,27 +166,56 @@ class QuadMap: NSObject, NSCoding {
 		rootQuad.deleteObjects(withPredicate: predicate)
 	}
 
-	func consistencyCheck(nodes: [OsmNode], ways: [OsmWay], relations: [OsmRelation]) {
+	func consistencyCheck(nodes: [OsmIdentifier: OsmNode],
+	                      ways: [OsmIdentifier: OsmWay],
+	                      relations: [OsmIdentifier: OsmRelation])
+	{
 		// check that every object appears exactly once in the object tree
-		var dict: [OsmExtendedIdentifier: Int] = [:]
-		var nCount = 0
-		var wCount = 0
-		var rCount = 0
+		var countDict: [OsmExtendedIdentifier: Int] = [:]
+		var quadNodes: Set<OsmIdentifier> = []
+		var quadWays: Set<OsmIdentifier> = []
+		var quadRelations: Set<OsmIdentifier> = []
 		rootQuad.enumerateObjects { obj, rect in
-			let id = obj.extendedIdentifier
-			if let cnt = dict[id] {
-				dict[id] = cnt + 1
-			} else {
-				dict[id] = 1
-			}
 			assert(rect.containsRect(obj.boundingBox))
-			if obj is OsmNode { nCount += 1 }
-			if obj is OsmWay { wCount += 1 }
-			if obj is OsmRelation { rCount += 1 }
+			assert(!obj.deleted)
+			let id = obj.extendedIdentifier
+			if let cnt = countDict[id] {
+				countDict[id] = cnt + 1
+			} else {
+				countDict[id] = 1
+			}
+			if let obj = obj as? OsmNode {
+				quadNodes.insert(obj.ident)
+				assert(obj === nodes[obj.ident])
+			}
+			if let obj = obj as? OsmWay {
+				quadWays.insert(obj.ident)
+				assert(obj === ways[obj.ident])
+			}
+			if let obj = obj as? OsmRelation {
+				quadRelations.insert(obj.ident)
+				assert(obj === relations[obj.ident])
+			}
 		}
-		assert(dict.first(where: { $0.value != 1 }) == nil)
-		assert(nCount == nodes.lazy.filter({ !$0.deleted }).count)
-		assert(wCount == ways.lazy.filter({ !$0.deleted }).count)
-		assert(rCount == relations.lazy.filter({ !$0.deleted }).count)
+		// assert that no object appears multiple times in quad tree
+		assert(countDict.first(where: { $0.value != 1 }) == nil)
+
+		// check if there are any items that are missing from quad tree
+		let allNodes = Set<OsmIdentifier>(nodes.values.filter({ !$0.deleted }).map { $0.ident })
+		let allWays = Set<OsmIdentifier>(ways.values.filter({ !$0.deleted }).map { $0.ident })
+		let allRelations = Set<OsmIdentifier>(relations.values.filter({ !$0.deleted }).map { $0.ident })
+		let diffNodes = allNodes.subtracting(quadNodes)
+		let diffWays = allWays.subtracting(quadWays)
+		let diffRelations = allRelations.subtracting(quadRelations)
+		for extra in diffNodes {
+			print("node \(extra) is missing from quadMap")
+		}
+		for extra in diffWays {
+			print("way \(extra) is missing from quadMap")
+		}
+		for extra in diffRelations {
+			print("relation \(extra) is missing from quadMap")
+		}
+		assert(diffNodes.isEmpty && diffWays.isEmpty && diffRelations.isEmpty)
 	}
 }

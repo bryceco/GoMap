@@ -6,7 +6,9 @@
 //  Copyright © 2020 Bryce Cogswell. All rights reserved.
 //
 
-final class OsmMember: NSObject, NSCoding {
+final class OsmMember: NSObject, NSSecureCoding {
+	static let supportsSecureCoding = true
+
 	let ref: OsmIdentifier
 	private(set) var type: OSM_TYPE // way, node, or relation
 	private(set) var obj: OsmBaseObject?

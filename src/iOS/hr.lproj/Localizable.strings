@@ -31,6 +31,9 @@
 /* No comment provided by engineer. */
 "(way)" = "(put)";
 
+/* area in m^2 */
+"%.0f m^2" = "%.0f m^2";
+
 /* way length if > 10m */
 "%.0f meters, %ld nodes" = "%1$.0f m, broj čvorova: %2$ld";
 
@@ -122,6 +125,10 @@
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "Dogodila se nepoznata greška pri dohvaćanju metapodataka";
 
+/* Area of an object in m^2
+   Object geometry: a closed way or multipolygon) */
+"Area" = "Područje";
+
 /* No comment provided by engineer. */
 "Attention" = "Oprez";
 
@@ -139,6 +146,12 @@
 
 /* No comment provided by engineer. */
 "Bad login" = "Neispravna prijava";
+
+/* No comment provided by engineer. */
+"Better background imagery is available for your location. Would you like to change to it?" = "Za tvoju lokaciju su dostupne bolje pozadinske slike. Želiš li prijeći na njih?";
+
+/* No comment provided by engineer. */
+"Better imagery available" = "Dostupne su bolje slike";
 
 /* No comment provided by engineer. */
 "Cache size warning" = "Upozorenje o veličini predmemorije";
@@ -185,6 +198,9 @@
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "Nije moguće povezati unutarnji put s vanjskim putom";
 
+/* No comment provided by engineer. */
+"Change" = "Promijeni";
+
 /* OSM changeset identifier */
 "Changeset" = "Skup promjena";
 
@@ -207,7 +223,7 @@
 "Clear OSM Data" = "Izbriši OSM podatke";
 
 /* No comment provided by engineer. */
-"Commit" = "Spremi";
+"Commit" = "Potvrdi";
 
 /* No comment provided by engineer. */
 "computing size..." = "izračunavanje veličine …";
@@ -383,6 +399,9 @@
 /* No comment provided by engineer. */
 "Joining would invalidate a Turn Restriction the way belongs to" = "Spajanje bi poništilo zabranu skretanja s puta kojemu pripada";
 
+/* kilometers per hour speed */
+"km/h" = "km/h";
+
 /* No comment provided by engineer. */
 "Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "Odabir jezika utječe samo na predodređene postavke i na one, koje su prevedene za iD. Jezik glavnog sučelja je i nadalje engleski.";
 
@@ -472,6 +491,9 @@
 
 /* No comment provided by engineer. */
 "Move selected object?" = "Premjestiti odabrani objekt?";
+
+/* miles per hour speed */
+"mph" = "milja/h";
 
 /* No comment provided by engineer. */
 "Multipolygon" = "Mnogokut";
@@ -575,6 +597,9 @@
 
 /* Edit action */
 "Paste" = "Umetni";
+
+/* No comment provided by engineer. */
+"Pasting %@ characters, maximum tag length is 255" = "Umetanje znakova %@, maksimalna duljina oznake je 255";
 
 /* No comment provided by engineer. */
 "Pasting %ld tag(s)" = "Umetanje %ld oznake(a)";
@@ -685,6 +710,9 @@
 /* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "Oprosti, došlo je do greške tijekom učitavanja GPX datoteke";
 
+/* Space key on the keyboard */
+"Space" = "Ramaknica";
+
 /* Edit action */
 "Split" = "Razdvoji";
 
@@ -741,9 +769,6 @@
 
 /* No comment provided by engineer. */
 "The ways contain incompatible tags" = "Putovi sadrže nekompatibilne oznake";
-
-/* No comment provided by engineer. */
-"The XML is improperly formed" = "Neispravan oblik XML-a";
 
 /* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "Za ovu je radnju potrebno uključiti GPS";
@@ -854,7 +879,7 @@
 "Way Tags" = "Oznake puta";
 
 /* No comment provided by engineer. */
-"You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Promijenit ćeš podatke u aktivnoj OpenStreetMap bazi podataka. Tvoje promjene će vidjeti svi na svijetu.\n\nZa nastavak pritisni još jednom „Spremi”, inače pritisni „Odustani”.";
+"You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Promijenit ćeš podatke u aktivnoj OpenStreetMap bazi podataka. Tvoje promjene će vidjeti svi na svijetu.\n\nNastavi ponovnim pritiskom na „Potvrdi”, inače pritisni „Odustani”.";
 
 /* POI editor presets */
 "You can define your own custom presets here" = "Ovdje možeš definirati vlastite predodređene postavke";
@@ -864,9 +889,6 @@
 
 /* No comment provided by engineer. */
 "You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "Imaš promjene koje još nisu prenesene na poslužitelj. Ako izbrišeš predmemoriju, izgubit ćeš promjene.";
-
-/* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "Moraš zadati tvoje korisničko ime za OSM, a ne e-adresu.";
 
 /* No comment provided by engineer. */
 "You must save or discard changes to the current object before editing its associated relation" = "Moraš spremiti ili odbaciti promjene na trenutačnom objektu prije uređivanja njegove povezane veze";

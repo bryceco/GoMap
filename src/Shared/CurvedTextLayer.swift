@@ -253,7 +253,7 @@ final class CurvedTextLayer {
 
 			let s = string.substring(with: NSMakeRange(currentCharacter, count))
 			let angleString = String(format: "%.4f", loc.angle)
-			let cacheKey: String = "\(s):\(angleString)"
+			let cacheKey = "\(s):\(angleString)"
 			var layer = getCachedLayer(for: cacheKey, whiteOnBlack: whiteOnBlack)
 
 			var pixelLength: CGFloat = 0

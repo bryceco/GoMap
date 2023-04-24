@@ -11,13 +11,19 @@
 "NSBluetoothPeripheralUsageDescription" = "Koble til eksterne Blåtanns-GPS-enheter";
 
 /* Privacy - Camera Usage Description */
-"NSCameraUsageDescription" = "Kamera brukes for å måle høyden på bygninger eller objekter";
+"NSCameraUsageDescription" = "Kameraet brukes til å måle høyden på bygninger eller gjenstander, og til tekstgjenkjenning på skilt med åpningstider.";
+
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "Opphavsrett 2012-2021 Bryce Cogswell";
 
 /* Privacy - Location Always and When In Use Usage Description */
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "Sporingstilgang som alltid er på tillater programmet å lage GPX-filer når det er inaktivt.";
 
 /* Privacy - Location Always Usage Description */
 "NSLocationAlwaysUsageDescription" = "Din plassering vil bli vist og fulgt på kartet.";
+
+/* Privacy - Location Usage Description */
+"NSLocationUsageDescription" = "Aktivering av posisjonstjenester lar appen vise objekter i nærheten. Dette lar deg enkelt oppdatere eller legge til data du selv kartlegger.";
 
 /* Privacy - Location When In Use Usage Description */
 "NSLocationWhenInUseUsageDescription" = "Din plassering vil bli vist og fulgt på kartet.";

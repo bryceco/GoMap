@@ -1,0 +1,255 @@
+/* Class = "UILabel"; text = "GPX Tracks"; ObjectID = "1f0-8q-yCi"; */
+"1f0-8q-yCi.text" = "Traces GPX";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "1SY-O5-qJR"; */
+"1SY-O5-qJR.title" = "Annuler";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "2Ku-Lb-uCf"; */
+"2Ku-Lb-uCf.text" = "Détails";
+
+/* Class = "UILabel"; text = "Clear Cache"; ObjectID = "2ZY-zi-luF"; */
+"2ZY-zi-luF.text" = "Vider le cache";
+
+/* Class = "UIButton"; normalTitle = "99 Days"; ObjectID = "4s8-Bj-JOX"; */
+"4s8-Bj-JOX.normalTitle" = "99 jours";
+
+/* Class = "UILabel"; text = "Projection"; ObjectID = "5hB-2Y-Wgl"; */
+"5hB-2Y-Wgl.text" = "Projection";
+
+/* Class = "UILabel"; text = "Rail Features"; ObjectID = "7df-49-qTa"; */
+"7df-49-qTa.text" = "Éléments ferroviaires";
+
+/* Class = "UITextField"; placeholder = "-1..3,7"; ObjectID = "7ga-PZ-MfV"; */
+"7ga-PZ-MfV.placeholder" = "-1..3,7";
+
+/* Class = "UITableViewSection"; headerTitle = "Overlays"; ObjectID = "8es-4f-sj3"; */
+"8es-4f-sj3.headerTitle" = "Surcouches";
+
+/* Class = "UINavigationItem"; title = "Aerial Imagery"; ObjectID = "8HT-Bc-Q2z"; */
+"8HT-Bc-Q2z.title" = "Imagerie aérienne";
+
+/* Class = "UIButton"; normalTitle = "Details"; ObjectID = "8S7-Kw-QHF"; */
+"8S7-Kw-QHF.normalTitle" = "Détails";
+
+/* Class = "UILabel"; text = "Mapnik only"; ObjectID = "9L3-JO-Whj"; */
+"9L3-JO-Whj.text" = "Mapnik seulement";
+
+/* Class = "UINavigationItem"; title = "Display"; ObjectID = "186-0W-Nrr"; */
+"186-0W-Nrr.title" = "Affichage";
+
+/* Class = "UITableViewSection"; footerTitle = "Go Map!! will automatically discard old data to optimize performance."; ObjectID = "bmY-Hw-jv6"; */
+"bmY-Hw-jv6.footerTitle" = "Go Map!! supprimera automatiquement les anciennes données afin d'optimiser les performances.";
+
+/* Class = "UITableViewSection"; headerTitle = "Cache Management"; ObjectID = "bmY-Hw-jv6"; */
+"bmY-Hw-jv6.headerTitle" = "Gestion du cache";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "cpC-iE-1Dm"; */
+"cpC-iE-1Dm.text" = "Titre";
+
+/* Class = "UITableViewSection"; headerTitle = "Friendly Name"; ObjectID = "cpv-m2-oDm"; */
+"cpv-m2-oDm.headerTitle" = "Nom courant";
+
+/* Class = "UINavigationItem"; title = "Show Objects"; ObjectID = "cXC-ij-AMQ"; */
+"cXC-ij-AMQ.title" = "Afficher les objets";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "dci-gg-ddc"; */
+"dci-gg-ddc.title" = "Annuler";
+
+/* Class = "UILabel"; text = "Automatic"; ObjectID = "dIe-MC-t44"; */
+"dIe-MC-t44.text" = "Automatique";
+
+/* Class = "UILabel"; text = "Collect in background:"; ObjectID = "DmO-dW-3Fh"; */
+"DmO-dW-3Fh.text" = "Collecte en arrière plan";
+
+/* Class = "UIButton"; normalTitle = "Bing"; ObjectID = "eac-Db-EaW"; */
+"eac-Db-EaW.normalTitle" = "Bing";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eFa-yZ-YZl"; */
+"eFa-yZ-YZl.text" = "Tuiles d'imagerie aérienne";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F"; */
+"el8-h8-H1F.normalTitle" = "Bouton";
+
+/* Class = "UILabel"; text = "Position + Button on "; ObjectID = "eLW-GB-ugG"; Note = "The location on the screen where the user prefers the + (add node) button to appear"; */
+"eLW-GB-ugG.text" = "Position du bouton + ";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "EmS-9F-1qc"; */
+"EmS-9F-1qc.text" = "Détails";
+
+/* Class = "UILabel"; text = "Editor only"; ObjectID = "eN6-SZ-99I"; */
+"eN6-SZ-99I.text" = "Éditeur uniquement";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eTY-48-gab"; */
+"eTY-48-gab.text" = "Tuiles d'imagerie aérienne";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "F9l-B0-puf"; */
+"F9l-B0-puf.text" = "Détails";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fFT-hv-mKl"; */
+"fFT-hv-mKl.text" = "Tuiles d'imagerie aérienne";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fHH-rC-iGa"; */
+"fHH-rC-iGa.text" = "Tuiles d'imagerie aérienne";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "g2G-5j-Y4q"; */
+"g2G-5j-Y4q.text" = "Détails";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "g46-cV-NBw"; */
+"g46-cV-NBw.text" = "Tuiles d'imagerie aérienne";
+
+/* Class = "UILabel"; text = "Points"; ObjectID = "gdL-Os-R6R"; */
+"gdL-Os-R6R.text" = "Points";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "GNK-bZ-i9X"; */
+"GNK-bZ-i9X.text" = "Détails";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "gre-3S-iPA"; */
+"gre-3S-iPA.text" = "Détails";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "h1O-06-ApF"; */
+"h1O-06-ApF.text" = "Étiquette";
+
+/* Class = "UINavigationItem"; title = "QA Poole No Name Tiles"; ObjectID = "H3p-Ta-kIy"; Note = "Title for Simon Poole's \"No name\" (missing name) tile overlay"; */
+"H3p-Ta-kIy.title" = "Tuiles sans nom QA Poole";
+
+/* Class = "UILabel"; text = "Traffic Roads"; ObjectID = "hkr-kO-jbt"; */
+"hkr-kO-jbt.text" = "Voies de circulation";
+
+/* Class = "UILabel"; text = "OpenStreetMap GPS Traces"; ObjectID = "hMJ-yP-XJe"; */
+"hMJ-yP-XJe.text" = "Traces GPS OpenStreetMap";
+
+/* Class = "UITextView"; text = "Simon Poole Map Data © OpenStreetMap contributors\n"; ObjectID = "hsp-Xj-TU6"; */
+"hsp-Xj-TU6.text" = "Simon Poole Données carto © OpenStreetMap contributors\n";
+
+/* Class = "UILabel"; text = "Power Features"; ObjectID = "Idx-2G-6F7"; */
+"Idx-2G-6F7.text" = "Éléments d'énergie";
+
+/* Class = "UITextField"; placeholder = "(TMS)"; ObjectID = "iuk-Fk-3Fw"; */
+"iuk-Fk-3Fw.placeholder" = "(TMS)";
+
+/* Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe"; */
+"Jz1-GP-Wbe.text" = "Chemins";
+
+/* Class = "UILabel"; text = "Past/Future"; ObjectID = "lu0-kr-5Cc"; */
+"lu0-kr-5Cc.text" = "Passé / Futur";
+
+/* Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ"; */
+"lwG-AE-nIZ.headerTitle" = "Arrière-plan";
+
+/* Class = "UILabel"; text = "Enable Filters"; ObjectID = "LxX-tl-ZLH"; */
+"LxX-tl-ZLH.text" = "Activer les filtres";
+
+/* Class = "UILabel"; text = "GPX Tracks you record or download will be automatically deleted after:"; ObjectID = "MeQ-4N-FqC"; */
+"MeQ-4N-FqC.text" = "Les traces GPX que vous enregistrez ou téléchargez seront automatiquement supprimées après :";
+
+/* Class = "UILabel"; text = "Editor with Aerial"; ObjectID = "MPq-PX-jf0"; */
+"MPq-PX-jf0.text" = "Éditeur avec vue aérienne";
+
+/* Class = "UINavigationItem"; title = "Aerial Provider"; ObjectID = "MZF-am-tCM"; */
+"MZF-am-tCM.title" = "Fournisseur d'imagerie aérienne";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "OiJ-GU-gZ3"; */
+"OiJ-GU-gZ3.title" = "Annuler";
+
+/* Class = "UILabel"; text = "Landuse"; ObjectID = "Okg-2D-O6U"; */
+"Okg-2D-O6U.text" = "Occupation des sols";
+
+/* Class = "UINavigationItem"; title = "Configure GPX Tracks"; ObjectID = "oSD-0y-Vt0"; */
+"oSD-0y-Vt0.title" = "Configurer les traces GPX";
+
+/* Class = "UILabel"; text = "Buildings"; ObjectID = "pQK-9y-t4z"; */
+"pQK-9y-t4z.text" = "Bâtiments";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "pR1-M8-pXH"; */
+"pR1-M8-pXH.title" = "Retour";
+
+/* Class = "UILabel"; text = "Boundaries"; ObjectID = "qdV-Je-jXT"; */
+"qdV-Je-jXT.text" = "Limites";
+
+/* Class = "UILabel"; text = "Turn Restrictions"; ObjectID = "r6a-cT-Ufa"; */
+"r6a-cT-Ufa.text" = "Interdictions de tourner";
+
+/* Class = "UITableViewSection"; headerTitle = "Interactions"; ObjectID = "RJU-Z2-QFh"; */
+"RJU-Z2-QFh.headerTitle" = "Interactions";
+
+/* Class = "UILabel"; text = "Service Roads"; ObjectID = "RxO-IV-UE7"; */
+"RxO-IV-UE7.text" = "Voies de service";
+
+/* Class = "UITableViewSection"; headerTitle = "Filter Objects"; ObjectID = "scg-Po-M3L"; */
+"scg-Po-M3L.headerTitle" = "Filtrer les objets";
+
+/* Class = "UITableViewSection"; footerTitle = "Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. \n\nWarning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.\n\nClear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed."; ObjectID = "SNa-W1-wga"; */
+"SNa-W1-wga.footerTitle" = "Videz le cache de données OSM si l'application n'est plus à jour vis-à-vis du serveur OSM. Cela peut arriver si quelqu'un d'autre modifie des données que vous éditez, ou si un de vos téléversements échoue en cours de route, vous empêchant de téléverser des données supplémentaires.\n\nAvertissement : vider le cache OSM entraînera la perte de toutes les modifications que vous n'avez pas encore téléversées.\n\nVidez le cache des tuiles Mapnik ou de surcouche pour télécharger les dernières tuiles rendant compte de vos modifications soumises précédemment. Vos modifications peuvent mettre jusqu'à 24 heures pour être prises en compte.";
+
+/* Class = "UITableViewSection"; headerTitle = "Discard & Refresh"; ObjectID = "SNa-W1-wga"; */
+"SNa-W1-wga.headerTitle" = "Annuler et actualiser";
+
+/* Class = "UILabel"; text = "URL"; ObjectID = "swu-t3-p5w"; */
+"swu-t3-p5w.text" = "URL";
+
+/* Class = "UINavigationItem"; title = "Clear Cache"; ObjectID = "tS9-CP-pqu"; */
+"tS9-CP-pqu.title" = "Vider le cache";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "tU9-Ml-4ko"; */
+"tU9-Ml-4ko.title" = "Retour";
+
+/* Class = "UILabel"; text = "Water Features"; ObjectID = "twn-Ve-8vl"; */
+"twn-Ve-8vl.text" = "Éléments aquatiques";
+
+/* Class = "UILabel"; text = "Aerial only"; ObjectID = "uOd-BB-zEq"; */
+"uOd-BB-zEq.text" = "Imagerie aérienne uniquement";
+
+/* Class = "UITextField"; placeholder = "21"; ObjectID = "uQ3-vb-l3H"; */
+"uQ3-vb-l3H.placeholder" = "21";
+
+/* Class = "UILabel"; text = "Others"; ObjectID = "Uum-Wn-9CF"; */
+"Uum-Wn-9CF.text" = "Autres";
+
+/* Class = "UILabel"; text = "Building Level"; ObjectID = "uZo-P0-sR7"; */
+"uZo-P0-sR7.text" = "Niveau de bâtiment";
+
+/* Class = "UILabel"; text = "Max Zoom"; ObjectID = "voF-Yf-33h"; */
+"voF-Yf-33h.text" = "Zoom maximum";
+
+/* Class = "UILabel"; text = "Enable Rotation"; ObjectID = "VUR-wT-knn"; */
+"VUR-wT-knn.text" = "Permettre la rotation";
+
+/* Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF"; Note = "A hypothetical aerial imagery provider"; */
+"w75-Lj-3jF.placeholder" = "Portlandia GIS";
+
+/* Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C"; */
+"wev-ax-u4C.headerTitle" = "Réinitialiser";
+
+/* Class = "UILabel"; text = "Delete tracks after:"; ObjectID = "WnI-tY-WWa"; */
+"WnI-tY-WWa.text" = "Supprimer les traces après :";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "xve-fW-qM7"; */
+"xve-fW-qM7.text" = "Détails";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "yue-km-52a"; */
+"yue-km-52a.text" = "Nom";
+
+/* Class = "UINavigationItem"; title = "GPX Tracks"; ObjectID = "Z8C-Ef-iJE"; */
+"Z8C-Ef-iJE.title" = "Traces GPX";
+
+/* Class = "UITableViewSection"; footerTitle = "A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL"; ObjectID = "zD6-m4-1PD"; */
+"zD6-m4-1PD.footerTitle" = "Une URL TMS avec les caractères de remplacement {x}, {y} et {z}, ou une URL WMS";
+
+/* Class = "UITableViewSection"; headerTitle = "Template URL of the tile server"; ObjectID = "zD6-m4-1PD"; */
+"zD6-m4-1PD.headerTitle" = "URL-type du serveur de tuiles";
+
+/* Class = "UIButton"; normalTitle = "Add New"; ObjectID = "zI2-YM-qbl"; */
+"zI2-YM-qbl.normalTitle" = "Ajouter";
+
+/* Class = "UITableViewSection"; footerTitle = "If specifying a WMS URL you must also provide the projection used"; ObjectID = "Zn9-Sg-9fS"; */
+"Zn9-Sg-9fS.footerTitle" = "Si vous spécifiez une URL WMS, vous devez également fournir la projection utilisée";
+
+/* Class = "UITableViewSection"; headerTitle = "WMS Projection"; ObjectID = "Zn9-Sg-9fS"; */
+"Zn9-Sg-9fS.headerTitle" = "Projection WMS";
+
+/* Class = "UILabel"; text = "Unnamed Roads"; ObjectID = "ZP1-qY-kXe"; */
+"ZP1-qY-kXe.text" = "Routes non-nommées";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT"; */
+"Zzc-4t-QhT.text" = "Tuiles d'imagerie aérienne";
+

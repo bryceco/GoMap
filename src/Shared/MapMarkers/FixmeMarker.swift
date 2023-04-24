@@ -3,7 +3,7 @@
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 9/16/21.
-//  Copyright © 2021 Bryce. All rights reserved.
+//  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
 import Foundation
@@ -11,9 +11,8 @@ import Foundation
 // An OSM object containing a fixme= tag
 class FixmeMarker: MapMarker {
 	let fixmeID: OsmExtendedIdentifier
-	weak var object: OsmBaseObject?
 
-	override var key: String {
+	override var markerIdentifier: String {
 		return "fixme-\(fixmeID)"
 	}
 
@@ -25,7 +24,7 @@ class FixmeMarker: MapMarker {
 		return nil
 	}
 
-	override func shouldHide() -> Bool {
+	func shouldHide() -> Bool {
 		guard let object = object else { return true }
 		return FixmeMarker.fixmeTag(object) == nil
 	}
@@ -35,9 +34,8 @@ class FixmeMarker: MapMarker {
 	/// Initialize from FIXME data
 	init(object: OsmBaseObject, text: String) {
 		let center = object.selectionPoint()
-		self.object = object
 		fixmeID = object.extendedIdentifier
-		super.init(lat: center.lat,
-		           lon: center.lon)
+		super.init(latLon: center)
+		self.object = object
 	}
 }

@@ -1,7 +1,7 @@
 /* Class = "UILabel"; text = "Changes:"; ObjectID = "ArV-4u-j7D"; */
 "ArV-4u-j7D.text" = "Muudatused:";
 
-/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "BAY-7z-hwv"; */
+/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "BAY-7z-hwv"; Note = "Placeholder - do not translate"; */
 "BAY-7z-hwv.text" = "Lorem ipsum dolor sit er elit lamet,";
 
 /* Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "feW-AK-msn"; */
@@ -16,7 +16,7 @@
 /* Class = "UINavigationItem"; title = "Upload"; ObjectID = "Mdj-M0-0mZ"; */
 "Mdj-M0-0mZ.title" = "Saada";
 
-/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "Plh-7W-ceY"; */
+/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "Plh-7W-ceY"; Note = "Placeholder - do not translate"; */
 "Plh-7W-ceY.text" = "Lorem ipsum dolor sit er elit lamet,";
 
 /* Class = "UITextField"; placeholder = "survey, Bing, etc."; ObjectID = "ps9-Hb-Vow"; */

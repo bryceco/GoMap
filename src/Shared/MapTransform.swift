@@ -3,7 +3,7 @@
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 6/17/21.
-//  Copyright © 2021 Bryce. All rights reserved.
+//  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
 import CoreGraphics
@@ -31,7 +31,7 @@ final class MapTransform {
 
 	static var projection = Projection.mercator
 
-	static let latitudeLimit: Double = 85.051128
+	static let latitudeLimit = 85.051128
 
 	// This matrix translates between a "mapPoint" (a 256x256 mercator map of the world) and the screen
 	var transform = OSMTransform.identity {

@@ -3,10 +3,11 @@
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 6/16/21.
-//  Copyright © 2021 Bryce. All rights reserved.
+//  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
 import CommonCrypto
+import FastCodable
 import UIKit
 
 private let BING_MAPS_KEY: String = [
@@ -27,7 +28,7 @@ private let MAXAR_PREMIUM_IDENTIFIER = "Maxar-Premium"
 private let MAXAR_STANDARD_IDENTIFIER = "Maxar-Standard"
 
 /// A provider of tile imagery, such as Bing or Mapbox
-final class TileServer {
+final class TileServer: Equatable, Codable, FastCodable {
 	private static let iconCache: PersistentWebCache<UIImage> = {
 		let cache = PersistentWebCache<UIImage>(name: "AerialServiceIconCache", memorySize: 10000)
 		cache.removeObjectsAsyncOlderThan(Date(timeIntervalSinceNow: -30.0 * (24.0 * 60.0 * 60.0)))
@@ -39,18 +40,37 @@ final class TileServer {
 	let name: String
 	let identifier: String
 	let url: String
+	let best: Bool
+	let apiKey: String
 	let maxZoom: Int
-
-	let polygon: CGPath?
 	let roundZoomUp: Bool
 	let startDate: String?
 	let endDate: String?
 	let wmsProjection: String
+	let geoJSON: GeoJSON?
 	let attributionString: String
+	let attributionIconString: String?
 	let attributionUrl: String
 	let placeholderImage: Data?
 
-	private(set) var attributionIcon: UIImage?
+	private let polygon: CGPath?
+
+	enum CodingKeys: String, CodingKey {
+		case name
+		case identifier
+		case url
+		case best
+		case apiKey
+		case maxZoom
+		case roundZoomUp
+		case startDate
+		case endDate
+		case wmsProjection
+		case geoJSON
+		case attributionString
+		case attributionIconString
+		case attributionUrl
+	}
 
 	static let supportedProjections = [
 		"EPSG:3857", // Google Maps and OpenStreetMap
@@ -64,18 +84,101 @@ final class TileServer {
 		"EPSG:3785" // alias for 3857
 	]
 
+	convenience init(from decoder: Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+
+		let name = try container.decode(String.self, forKey: .name)
+		let identifier = try container.decode(String.self, forKey: .identifier)
+		let url = try container.decode(String.self, forKey: .url)
+		let best = try container.decode(Bool.self, forKey: .best)
+		let apiKey = try container.decode(String.self, forKey: .apiKey)
+		let maxZoom = try container.decode(Int.self, forKey: .maxZoom)
+		let roundZoomUp = try container.decode(Bool.self, forKey: .roundZoomUp)
+		let startDate = try container.decode(String?.self, forKey: .startDate)
+		let endDate = try container.decode(String?.self, forKey: .endDate)
+		let wmsProjection = try container.decode(String.self, forKey: .wmsProjection)
+		let geoJSON = try container.decode(GeoJSON?.self, forKey: .geoJSON)
+		let attributionString = try container.decode(String.self, forKey: .attributionString)
+		let attributionIconString = try container.decode(String?.self, forKey: .attributionIconString)
+		let attributionUrl = try container.decode(String.self, forKey: .attributionUrl)
+
+		self.init(withName: name, identifier: identifier, url: url, best: best,
+		          apiKey: apiKey, maxZoom: maxZoom, roundUp: roundZoomUp, startDate: startDate, endDate: endDate,
+		          wmsProjection: wmsProjection, geoJSON: geoJSON,
+		          attribString: attributionString, attribIconString: attributionIconString, attribUrl: attributionUrl)
+	}
+
+	func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(name, forKey: .name)
+		try container.encode(identifier, forKey: .identifier)
+		try container.encode(url, forKey: .url)
+		try container.encode(best, forKey: .best)
+		try container.encode(apiKey, forKey: .apiKey)
+		try container.encode(maxZoom, forKey: .maxZoom)
+		try container.encode(roundZoomUp, forKey: .roundZoomUp)
+		try container.encode(startDate, forKey: .startDate)
+		try container.encode(endDate, forKey: .endDate)
+		try container.encode(wmsProjection, forKey: .wmsProjection)
+		try container.encode(geoJSON, forKey: .geoJSON)
+		try container.encode(attributionString, forKey: .attributionString)
+		try container.encode(attributionUrl, forKey: .attributionUrl)
+		try container.encode(attributionIconString, forKey: .attributionIconString)
+	}
+
+	func fastEncode(to encoder: FastEncoder) {
+		name.fastEncode(to: encoder)
+		identifier.fastEncode(to: encoder)
+		url.fastEncode(to: encoder)
+		best.fastEncode(to: encoder)
+		apiKey.fastEncode(to: encoder)
+		maxZoom.fastEncode(to: encoder)
+		roundZoomUp.fastEncode(to: encoder)
+		startDate.fastEncode(to: encoder)
+		endDate.fastEncode(to: encoder)
+		wmsProjection.fastEncode(to: encoder)
+		geoJSON.fastEncode(to: encoder)
+		attributionString.fastEncode(to: encoder)
+		attributionIconString.fastEncode(to: encoder)
+		attributionUrl.fastEncode(to: encoder)
+	}
+
+	convenience init(fromFast decoder: FastDecoder) throws {
+		let name = try String(fromFast: decoder)
+		let identifier = try String(fromFast: decoder)
+		let url = try String(fromFast: decoder)
+		let best = try Bool(fromFast: decoder)
+		let apiKey = try String(fromFast: decoder)
+		let maxZoom = try Int(fromFast: decoder)
+		let roundZoomUp = try Bool(fromFast: decoder)
+		let startDate = try String?(fromFast: decoder)
+		let endDate = try String?(fromFast: decoder)
+		let wmsProjection = try String(fromFast: decoder)
+		let geoJSON = try GeoJSON?(fromFast: decoder)
+		let attributionString = try String(fromFast: decoder)
+		let attributionIconString = try String?(fromFast: decoder)
+		let attributionUrl = try String(fromFast: decoder)
+
+		self.init(withName: name, identifier: identifier, url: url, best: best,
+		          apiKey: apiKey, maxZoom: maxZoom, roundUp: roundZoomUp, startDate: startDate, endDate: endDate,
+		          wmsProjection: wmsProjection, geoJSON: geoJSON,
+		          attribString: attributionString, attribIconString: attributionIconString, attribUrl: attributionUrl)
+	}
+
 	init(
 		withName name: String,
 		identifier: String,
 		url: String,
+		best: Bool,
+		apiKey: String,
 		maxZoom: Int,
 		roundUp: Bool,
 		startDate: String?,
 		endDate: String?,
 		wmsProjection projection: String?,
-		polygon: CGPath?,
+		geoJSON: GeoJSON?,
 		attribString: String,
-		attribIcon: UIImage?,
+		attribIconString: String?,
 		attribUrl: String)
 	{
 		// normalize URLs
@@ -86,18 +189,25 @@ final class TileServer {
 		self.name = name
 		self.identifier = identifier
 		self.url = url
+		self.best = best
+		self.apiKey = apiKey
 		wmsProjection = projection ?? ""
 		attributionString = attribString.count != 0 ? attribString : name
+		attributionIconString = attribIconString
 		attributionUrl = attribUrl
 
-		self.maxZoom = maxZoom
+		self.maxZoom = maxZoom > 0 ? maxZoom : 21
 		roundZoomUp = roundUp
 		self.startDate = startDate
 		self.endDate = endDate
-		self.polygon = polygon?.copy()
-		attributionIcon = attribIcon
+		self.geoJSON = geoJSON
+		polygon = geoJSON?.cgPath.copy()
 
 		placeholderImage = TileServer.getPlaceholderImage(forIdentifier: identifier)
+	}
+
+	static func ==(lhs: TileServer, rhs: TileServer) -> Bool {
+		return lhs.identifier == rhs.identifier
 	}
 
 	func isBingAerial() -> Bool {
@@ -114,6 +224,15 @@ final class TileServer {
 
 	func isMaxar() -> Bool {
 		return (identifier == MAXAR_PREMIUM_IDENTIFIER) || (identifier == MAXAR_STANDARD_IDENTIFIER)
+	}
+
+	func coversLocation(_ point: LatLon) -> Bool {
+		guard let polygon = polygon else { return true }
+		return polygon.contains(CGPoint(OSMPoint(point)), using: .winding)
+	}
+
+	func isGlobalImagery() -> Bool {
+		return polygon == nil
 	}
 
 	static var dateFormatterList: [DateFormatter] = {
@@ -153,127 +272,112 @@ final class TileServer {
 		withName: "<none>",
 		identifier: "",
 		url: "",
+		best: false,
+		apiKey: "",
 		maxZoom: 0,
 		roundUp: false,
 		startDate: nil,
 		endDate: nil,
 		wmsProjection: nil,
-		polygon: nil,
+		geoJSON: nil,
 		attribString: "",
-		attribIcon: nil,
+		attribIconString: nil,
 		attribUrl: "")
 
-	static let maxarPremiumAerial: TileServer = {
-		let url =
-			"eZ5AGZGcRQyKahl/+UTyIm+vENuJECB4Hvu4ytCzjBoCBDeRMbsOkaQ7zD5rUAYfRDaQwnQRiqE4lj0KYTenPe1d1spljlcYgvYRsqjEtYp6AhCoBPO4Rz6d0Z9enlPqPj7KCvxyOcB8A/+3HkYjpMGMEcvA6oeSX9I0RH/PS9lQzmJACnINv3lFIonIZ1gY/yFVqi2FWnWCbTyFdy2+FlyrWqTfyeG8tstR+5wQsC+xmsaCmW8e41jROh1O0z+U"
-		let service = TileServer(
-			withName: "Maxar Premium Aerial",
-			identifier: MAXAR_PREMIUM_IDENTIFIER,
-			url: aes.decryptString(url),
-			maxZoom: 21,
-			roundUp: true,
-			startDate: nil,
-			endDate: nil,
-			wmsProjection: nil,
-			polygon: nil,
-			attribString: "Maxar Premium",
-			attribIcon: nil,
-			attribUrl: "https://wiki.openstreetmap.org/wiki/DigitalGlobe")
-		service.loadIcon(fromWeb: "https://osmlab.github.io/editor-layer-index/sources/world/Maxar.png")
-		return service
-	}()
-
-	static let maxarStandardAerial: TileServer = {
-		let url =
-			"eZ5AGZGcRQyKahl/+UTyIm+vENuJECB4Hvu4ytCzjBoCBDeRMbsOkaQ7zD5rUAYfRDaQwnQRiqE4lj0KYTenPe1d1spljlcYgvYRsqjEtYp6AhCoBPO4Rz6d0Z9enlPqPj7KCvxyOcB8A/+3HkYjpMGMEcvA6oeSX9I0RH/PS9mdAZEC5TmU3odUJQ0hNzczrKtUDmNujrTNfFVHhZZWPLEVZUC9cE94VF/AJkoIigdmXooJ+5UcPtH/uzc6NbOb"
-		let service = TileServer(
-			withName: "Maxar Standard Aerial",
-			identifier: MAXAR_STANDARD_IDENTIFIER,
-			url: aes.decryptString(url),
-			maxZoom: 21,
-			roundUp: true,
-			startDate: nil,
-			endDate: nil,
-			wmsProjection: nil,
-			polygon: nil,
-			attribString: "Maxar Standard",
-			attribIcon: nil,
-			attribUrl: "https://wiki.openstreetmap.org/wiki/DigitalGlobe")
-		service.loadIcon(fromWeb: "https://osmlab.github.io/editor-layer-index/sources/world/Maxar.png")
-		return service
-	}()
+	static let maxarPremiumAerial = TileServer(
+		withName: "Maxar Premium Aerial",
+		identifier: MAXAR_PREMIUM_IDENTIFIER,
+		url: MaxarPremiumUrl,
+		best: false,
+		apiKey: "",
+		maxZoom: 21,
+		roundUp: true,
+		startDate: nil,
+		endDate: nil,
+		wmsProjection: nil,
+		geoJSON: nil,
+		attribString: "Maxar Premium",
+		attribIconString: "https://osmlab.github.io/editor-layer-index/sources/world/Maxar.png",
+		attribUrl: "https://wiki.openstreetmap.org/wiki/DigitalGlobe")
 
 	static let mapnik = TileServer(
 		withName: "MapnikTiles",
 		identifier: MAPNIK_IDENTIFIER,
-		url: "https://{switch:a,b,c}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+		url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+		best: false,
+		apiKey: "",
 		maxZoom: 19,
 		roundUp: false,
 		startDate: nil,
 		endDate: nil,
 		wmsProjection: nil,
-		polygon: nil,
+		geoJSON: nil,
 		attribString: "",
-		attribIcon: nil,
+		attribIconString: nil,
 		attribUrl: "")
 
 	static let gpsTrace = TileServer(
 		withName: "OSM GPS Traces",
 		identifier: OSM_GPS_TRACE_IDENTIFIER,
-		url: "https://gps-{switch:a,b,c}.tile.openstreetmap.org/lines/{z}/{x}/{y}.png",
+		url: "https://gps.tile.openstreetmap.org/lines/{z}/{x}/{y}.png",
+		best: false,
+		apiKey: "",
 		maxZoom: 20,
 		roundUp: false,
 		startDate: nil,
 		endDate: nil,
 		wmsProjection: nil,
-		polygon: nil,
+		geoJSON: nil,
 		attribString: "",
-		attribIcon: nil,
+		attribIconString: nil,
 		attribUrl: "")
-
-	static let mapboxToken = Bundle.main.object(forInfoDictionaryKey: "MBXLocatorToken") as? String ?? ""
 
 	static let mapboxLocator = TileServer(
 		withName: "Mapbox Locator",
 		identifier: MAPBOX_LOCATOR_IDENTIFIER,
-		url: "https://api.mapbox.com/styles/v1/openstreetmap/ckasmteyi1tda1ipfis6wqhuq/tiles/256/{zoom}/{x}/{y}{@2x}?access_token=" +
-			mapboxToken,
+		url: "https://{switch:a,b,c,d}.tiles.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.jpg?access_token={apikey}",
+		best: false,
+		apiKey: MapboxLocatorToken,
 		maxZoom: 20,
 		roundUp: false,
 		startDate: nil,
 		endDate: nil,
 		wmsProjection: nil,
-		polygon: nil,
+		geoJSON: nil,
 		attribString: "",
-		attribIcon: nil,
+		attribIconString: nil,
 		attribUrl: "")
 
 	static let noName = TileServer(
 		withName: "QA Poole No Name",
 		identifier: NO_NAME_IDENTIFIER,
 		url: "https://tile{switch:2,3}.poole.ch/noname/{zoom}/{x}/{y}.png",
+		best: false,
+		apiKey: "",
 		maxZoom: 25,
 		roundUp: false,
 		startDate: nil,
 		endDate: nil,
 		wmsProjection: nil,
-		polygon: nil,
+		geoJSON: nil,
 		attribString: "",
-		attribIcon: nil,
+		attribIconString: nil,
 		attribUrl: "")
 
 	private static let builtinBingAerial = TileServer(
 		withName: "Bing Aerial",
 		identifier: BING_IDENTIFIER,
-		url: "https://ecn.{switch:t0,t1,t2,t3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=10618&key=" + BING_MAPS_KEY,
+		url: "https://ecn.{switch:t0,t1,t2,t3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=10618&key={apikey}",
+		best: false,
+		apiKey: BING_MAPS_KEY,
 		maxZoom: 21,
 		roundUp: true,
 		startDate: nil,
 		endDate: nil,
 		wmsProjection: nil,
-		polygon: nil,
+		geoJSON: nil,
 		attribString: "",
-		attribIcon: UIImage(named: "bing-logo-white"),
+		attribIconString: "bing-logo-white",
 		attribUrl: "")
 
 	private static var dynamicBingAerial: TileServer?
@@ -283,57 +387,71 @@ final class TileServer {
 	}
 
 	static func fetchDynamicBingServer(_ callback: ((Result<TileServer, Error>) -> Void)?) {
+		struct Welcome: Decodable {
+			let brandLogoUri: String
+			let resourceSets: [ResourceSet]
+			let statusCode: Int
+		}
+		struct ResourceSet: Decodable {
+			let resources: [Resource]
+		}
+		struct Resource: Decodable {
+			let __type: String
+			let imageUrl: String
+			let imageUrlSubdomains: [String]
+			let zoomMax, zoomMin: Int
+		}
 		let url = "https://dev.virtualearth.net/REST/v1/Imagery/Metadata/Aerial?include=ImageryProviders&key=" +
 			BING_MAPS_KEY
-		if let url = URL(string: url) {
-			URLSession.shared.data(with: url, completionHandler: { result in
-				DispatchQueue.main.async(execute: {
-					switch result {
-					case let .success(data):
-						if let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-						   let statusCode = json["statusCode"] as? Int,
-						   statusCode == 200,
-						   let brandLogoUri = json["brandLogoUri"] as? String,
-						   let resourceSets = json["resourceSets"] as? [Any],
-						   let resourceSet = resourceSets.first as? [String: Any],
-						   let resources = resourceSet["resources"] as? [Any],
-						   let res = resources.first as? [String: Any],
-						   var imageUrl = res["imageUrl"] as? String,
-						   let subdomains = res["imageUrlSubdomains"] as? [String],
-						   let zoomMax = res["zoomMax"] as? Int
-						{
-							let subdomains = subdomains.joined(separator: ",")
-							imageUrl = imageUrl.replacingOccurrences(of: "http://",
-							                                         with: "https://")
-							imageUrl = imageUrl.replacingOccurrences(of: "{subdomain}",
-							                                         with: "{switch:\(subdomains)}")
-							imageUrl = imageUrl.replacingOccurrences(of: "{quadkey}",
-							                                         with: "{u}")
-							imageUrl += "&key=" + BING_MAPS_KEY
-							let bing = TileServer(withName: Self.builtinBingAerial.name,
-							                      identifier: Self.builtinBingAerial.identifier,
-							                      url: imageUrl,
-							                      maxZoom: zoomMax,
-							                      roundUp: Self.builtinBingAerial.roundZoomUp,
-							                      startDate: Self.builtinBingAerial.startDate,
-							                      endDate: Self.builtinBingAerial.endDate,
-							                      wmsProjection: Self.builtinBingAerial.wmsProjection,
-							                      polygon: Self.builtinBingAerial.polygon,
-							                      attribString: Self.builtinBingAerial.attributionString,
-							                      attribIcon: Self.builtinBingAerial.attributionIcon,
-							                      attribUrl: Self.builtinBingAerial.attributionUrl)
-							bing.loadIcon(fromWeb: brandLogoUri)
-							Self.dynamicBingAerial = bing
-							callback?(.success(bing))
-						} else {
+		guard let url = URL(string: url) else { return }
+		URLSession.shared.data(with: url, completionHandler: { result in
+			DispatchQueue.main.async(execute: {
+				switch result {
+				case let .success(data):
+					do {
+						let json = try JSONDecoder().decode(Welcome.self, from: data)
+						guard
+							json.statusCode == 200,
+							let resource = json.resourceSets.first?.resources.first
+						else {
 							callback?(.failure(NSError()))
+							return
 						}
-					case let .failure(error):
+
+						let subdomains = resource.imageUrlSubdomains.joined(separator: ",")
+						var imageUrl = resource.imageUrl
+						imageUrl = imageUrl.replacingOccurrences(of: "http://",
+						                                         with: "https://")
+						imageUrl = imageUrl.replacingOccurrences(of: "{subdomain}",
+						                                         with: "{switch:\(subdomains)}")
+						imageUrl = imageUrl.replacingOccurrences(of: "{quadkey}",
+						                                         with: "{u}")
+						imageUrl += "&key={apikey}"
+						let bing = TileServer(withName: Self.builtinBingAerial.name,
+						                      identifier: Self.builtinBingAerial.identifier,
+						                      url: imageUrl,
+						                      best: false,
+						                      apiKey: BING_MAPS_KEY,
+						                      maxZoom: resource.zoomMax,
+						                      roundUp: Self.builtinBingAerial.roundZoomUp,
+						                      startDate: Self.builtinBingAerial.startDate,
+						                      endDate: Self.builtinBingAerial.endDate,
+						                      wmsProjection: Self.builtinBingAerial.wmsProjection,
+						                      geoJSON: Self.builtinBingAerial.geoJSON,
+						                      attribString: Self.builtinBingAerial.attributionString,
+						                      attribIconString: json.brandLogoUri,
+						                      attribUrl: Self.builtinBingAerial.attributionUrl)
+						Self.dynamicBingAerial = bing
+						callback?(.success(bing))
+					} catch {
+						print("\(error)")
 						callback?(.failure(error))
 					}
-				})
+				case let .failure(error):
+					callback?(.failure(error))
+				}
 			})
-		}
+		})
 	}
 
 	func dictionary() -> [String: Any] {
@@ -366,13 +484,15 @@ final class TileServer {
 		self.init(withName: dict["name"] as! String,
 		          identifier: url,
 		          url: url,
-		          maxZoom: (dict["zoom"] as? NSNumber)?.intValue ?? 21,
+		          best: false,
+		          apiKey: "",
+		          maxZoom: (dict["zoom"] as? NSNumber)?.intValue ?? 0,
 		          roundUp: (dict["roundUp"] as? NSNumber)?.boolValue ?? false,
 		          startDate: nil, endDate: nil,
 		          wmsProjection: projection,
-		          polygon: nil,
+		          geoJSON: nil,
 		          attribString: "",
-		          attribIcon: nil,
+		          attribIconString: nil,
 		          attribUrl: "")
 	}
 
@@ -405,30 +525,76 @@ final class TileServer {
 		return placeholderImage?.elementsEqual(data) ?? false
 	}
 
-	func scaleAttributionIcon(toHeight height: CGFloat) {
-		if let attributionIcon = attributionIcon,
-		   abs(attributionIcon.size.height - height) > 0.1
-		{
-			let scale = attributionIcon.size.height / height
-			var size = attributionIcon.size
-			size.height /= scale
-			size.width /= scale
-			UIGraphicsBeginImageContext(size)
-			attributionIcon.draw(in: CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height))
-			let imageCopy = UIGraphicsGetImageFromCurrentImageContext()
-			UIGraphicsEndImageContext()
-			self.attributionIcon = imageCopy
+	static func scaleAttribution(icon: UIImage, toHeight height: CGFloat) -> UIImage {
+		guard abs(icon.size.height - height) < 0.1 else {
+			return icon
 		}
+		let scale = icon.size.height / height
+		var size = icon.size
+		size.height /= scale
+		size.width /= scale
+		UIGraphicsBeginImageContext(size)
+		icon.draw(in: CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height))
+		let imageCopy = UIGraphicsGetImageFromCurrentImageContext()
+		UIGraphicsEndImageContext()
+		return imageCopy ?? icon
 	}
 
-	func loadIcon(fromWeb url: String) {
-		DispatchQueue.main.async(execute: {
-			// FIXME: cache requires requests to start on main thread. We should have the cache use its own queue
-			self.attributionIcon = TileServer.iconCache.object(withKey: self.identifier,
-			                                                   fallbackURL: { URL(string: url) },
-			                                                   objectForData: { UIImage(data: $0) },
-			                                                   completion: { self.attributionIcon = try? $0.get() })
-		})
+	private var _attributionIcon: UIImage?
+	func attributionIcon(height: CGFloat, completion: (() -> Void)?) -> UIImage? {
+		if let icon = _attributionIcon {
+			return icon
+		}
+		guard let attributionIconString = attributionIconString,
+		      attributionIconString != ""
+		else {
+			return nil
+		}
+		if attributionIconString.hasPrefix("http") {
+			guard let completion = completion else {
+				return nil
+			}
+			let url = attributionIconString
+			if let icon = TileServer.iconCache.object(withKey: identifier,
+			                                          fallbackURL: { URL(string: url) },
+			                                          objectForData: { UIImage(data: $0) },
+			                                          completion: { self._attributionIcon = try? $0.get(); completion()
+			                                          })
+			{
+				_attributionIcon = Self.scaleAttribution(icon: icon, toHeight: height)
+				return icon
+			}
+			return nil
+		}
+
+		if let range = attributionIconString.range(of: ",") {
+			let format = String(attributionIconString.prefix(upTo: range.lowerBound))
+			let supported = ["data:image/png;base64": true,
+			                 "png:base64": true,
+			                 "data:image/svg+xml;base64": false]
+			guard supported[format] == true else {
+				print("Aerial: unsupported icon format in \(identifier): \(format)")
+				return nil
+			}
+			let string = String(attributionIconString.dropFirst(format.count + 1))
+			if let decodedData = Data(base64Encoded: string, options: []),
+			   let icon = UIImage(data: decodedData)
+			{
+				_attributionIcon = Self.scaleAttribution(icon: icon, toHeight: height)
+			}
+			if _attributionIcon == nil {
+				print("bad icon decode: \(attributionIconString)")
+			}
+			return _attributionIcon
+		}
+
+		if let icon = UIImage(named: attributionIconString) {
+			_attributionIcon = icon
+			return icon
+		}
+
+		print("Aerial: unsupported icon format in \(identifier): \(attributionIconString)")
+		return nil
 	}
 
 	var description: String {
@@ -445,7 +611,7 @@ final class TileServer {
 		} else {
 			// EPSG:3857 and others
 			loc = OSMPoint(x: lon, y: log(tan((.pi / 2 + lat) / 2))) // mercatorRaw
-			loc = Mult(loc, 20037508.34 / .pi)
+			loc = Mult(loc, 20_037508.34 / .pi)
 		}
 		return loc
 	}
@@ -503,6 +669,9 @@ final class TileServer {
 		// retina screen
 		let retina = UIScreen.main.scale > 1 ? "@2x" : ""
 		url = url.replacingOccurrences(of: "{@2x}", with: retina)
+
+		// apikey
+		url = url.replacingOccurrences(of: "{apikey}", with: apiKey)
 
 		let urlString = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? url
 		// https://ecn.t1.tiles.virtualearth.net/tiles/a12313302102001233031.jpeg?g=587&key=ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk

@@ -10,16 +10,8 @@ import Foundation
 
 // not used as a class yet, maybe someday
 final class OsmTags {
-	private static let PrettyTagExpr: NSRegularExpression = {
-		do {
-			let e = try NSRegularExpression(
-				pattern: "^[abcdefghijklmnopqrstuvwxyz_:;]+$",
-				options: [])
-			return e
-		} catch {
-			abort()
-		}
-	}()
+	private static let PrettyTagExpr = try! NSRegularExpression(pattern: "^[abcdefghijklmnopqrstuvwxyz_:;]+$",
+	                                                            options: [])
 
 	class func PrettyTag(_ tag: String) -> String {
 		if PrettyTagExpr.matches(in: tag, options: [], range: NSRange(location: 0, length: tag.count)).count > 0 {
@@ -28,7 +20,7 @@ final class OsmTags {
 		return tag
 	}
 
-	@objc class func isOsmBooleanTrue(_ value: String?) -> Bool {
+	class func isOsmBooleanTrue(_ value: String?) -> Bool {
 		switch value {
 		case "true", "yes", "1":
 			return true
@@ -37,7 +29,7 @@ final class OsmTags {
 		}
 	}
 
-	@objc class func isOsmBooleanFalse(_ value: String?) -> Bool {
+	class func isOsmBooleanFalse(_ value: String?) -> Bool {
 		switch value {
 		case "false", "no", "0":
 			return true
@@ -45,6 +37,21 @@ final class OsmTags {
 			return false
 		}
 	}
+
+	class func isKey(_ key: String, variantOf baseKey: String) -> Bool {
+		return key == baseKey || key.hasSuffix(":" + baseKey) || key.hasPrefix(baseKey + ":")
+	}
+
+	static let surveyDateSynonyms: Set<String> = [
+		"check_date",
+		"survey_date",
+		"survey:date",
+		"survey",
+		"lastcheck",
+		"last_checked",
+		"updated",
+		"checked_exists:date"
+	]
 
 	// editing
 	static let tagsToAutomaticallyStrip: Set<String> =
@@ -64,7 +71,6 @@ final class OsmTags {
 		 "yh:TYPE",
 		 "yh:WIDTH_RANK"]
 
-	@objc
 	static func IsInterestingKey(_ key: String) -> Bool {
 		if key == "attribution" ||
 			key == "created_by" ||
@@ -160,7 +166,7 @@ final class OsmTags {
 	}
 
 	static func convertWebsiteValueToHttps(withKey key: String, value url: String) -> String? {
-		guard key == "website" else {
+		guard isKey(key, variantOf: "website") else {
 			// not a website value
 			return nil
 		}
@@ -173,5 +179,84 @@ final class OsmTags {
 			return nil
 		}
 		return "https://" + url
+	}
+
+	static func fixUpOpeningHours(withKey key: String, value: String) -> String? {
+		guard Self.isKey(key, variantOf: "opening_hours") else {
+			return nil
+		}
+		var value = value
+		// Replace days of week with correct capitalizations and normalize times
+		let scanner = Scanner(string: value)
+		scanner.charactersToBeSkipped = nil
+		value = ""
+		var timeSet = CharacterSet.decimalDigits
+		timeSet.insert(":")
+		while !scanner.isAtEnd {
+			func fixTime(_ t: String) -> String? {
+				let a = t.components(separatedBy: ":")
+				if a.count == 1,
+				   let hour = Int(a[0]),
+				   hour >= 0,
+				   hour <= 24
+				{
+					return String(format: "%02d:00", hour)
+				} else if a.count == 2,
+				          let hour = Int(a[0]),
+				          let min = Int(a[1]),
+				          hour >= 0,
+				          hour <= 24,
+				          min >= 0,
+				          min < 60
+				{
+					return String(format: "%02d:%02d", hour, min)
+				} else {
+					return nil
+				}
+			}
+
+			// check for time range
+			var t1, dash, t2: NSString?
+			if scanner.scanCharacters(from: timeSet, into: &t1),
+			   let t1 = t1 as? String,
+			   scanner.scanString("-", into: &dash),
+			   scanner.scanCharacters(from: timeSet, into: &t2),
+			   let t2 = t2 as? String,
+			   let f1 = fixTime(t1),
+			   let f2 = fixTime(t2)
+			{
+				value += f1 + "-" + f2
+				continue
+			}
+			value += (t1 as? String) ?? ""
+			value += (dash as? String) ?? ""
+			value += (t2 as? String) ?? ""
+
+			// check for a day
+			var str: NSString?
+			if scanner.scanCharacters(from: CharacterSet.letters, into: &str),
+			   let str = str as String?
+			{
+				let days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
+				if let index = days.firstIndex(where: { $0.lowercased() == str.lowercased() }) {
+					value += days[index]
+				} else {
+					value += str
+				}
+				continue
+			}
+
+			// consume anything else
+			if scanner.scanUpToCharacters(from: CharacterSet.letters.union(timeSet), into: &str) {
+				value += (str as String?) ?? ""
+			}
+		}
+		// remove any repeating spaces
+		value = value.description.replacingOccurrences(of: "  ", with: " ")
+
+		// remove spaces following commas
+		value = value.description.replacingOccurrences(of: ", ", with: ",")
+
+		return value
 	}
 }

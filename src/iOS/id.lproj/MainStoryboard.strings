@@ -1,0 +1,75 @@
+/* Class = "UILabel"; text = "Get Directions"; ObjectID = "1xx-L0-hKm"; */
+"1xx-L0-hKm.text" = "Dapatkan Petunjuk Arah";
+
+/* Class = "UIViewController"; title = "First"; ObjectID = "2"; */
+"2.title" = "Pertama";
+
+/* Class = "UIButton"; normalTitle = "Comment"; ObjectID = "2g1-vb-Cjc"; */
+"2g1-vb-Cjc.normalTitle" = "Komentar";
+
+/* Class = "UINavigationItem"; title = "Upload"; ObjectID = "7Ua-cx-BHI"; */
+"7Ua-cx-BHI.title" = "Unggah";
+
+/* Class = "UILabel"; text = "New comment:"; ObjectID = "9hH-Ja-fKn"; */
+"9hH-Ja-fKn.text" = "Komentar baru:";
+
+/* Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u"; */
+"9t5-wq-j1u.text" = "66.6 FPS";
+
+/* Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt"; */
+"E22-sL-sNt.accessibilityHint" = "Arahkan ulang peta ke utara";
+
+/* Class = "UIButton"; accessibilityLabel = "Compass"; ObjectID = "E22-sL-sNt"; */
+"E22-sL-sNt.accessibilityLabel" = "Kompas";
+
+/* Class = "UINavigationItem"; title = "Search for Location"; ObjectID = "FaM-WV-S6I"; */
+"FaM-WV-S6I.title" = "Cari Lokasi";
+
+/* Class = "UIButton"; normalTitle = "Center"; ObjectID = "Fo4-Nq-pAz"; */
+"Fo4-Nq-pAz.normalTitle" = "Tengah";
+
+/* Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "gdu-Sf-XrE"; */
+"gdu-Sf-XrE.title" = "Kommit";
+
+/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "HeZ-95-3K1"; Note = "Placeholder - do not translate"; */
+"HeZ-95-3K1.text" = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "l7S-YL-RKK"; */
+"l7S-YL-RKK.text" = "Subjudul";
+
+/* Class = "UINavigationItem"; title = "Note"; ObjectID = "MBY-TK-Wuy"; */
+"MBY-TK-Wuy.title" = "Catatan";
+
+/* Class = "UILabel"; text = "Zoom to Edit"; ObjectID = "N5Q-nV-TPG"; */
+"N5Q-nV-TPG.text" = "Perbesar untuk Menyunting";
+
+/* Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1"; */
+"OJ0-aO-ri1.normalTitle" = "Diselesaikan";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "qP9-Sc-sc4"; */
+"qP9-Sc-sc4.text" = "Label";
+
+/* Class = "UINavigationItem"; title = "Bing Maps"; ObjectID = "Qz0-Ce-YCX"; */
+"Qz0-Ce-YCX.title" = "Peta Bing";
+
+/* Class = "UIViewController"; title = "Search for Location"; ObjectID = "siu-I6-IEp"; */
+"siu-I6-IEp.title" = "Cari Lokasi";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "stf-JU-iga"; */
+"stf-JU-iga.text" = "Tajuk";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr"; */
+"vRO-Aj-Sdr.text" = "Tajuk";
+
+/* Class = "UISearchBar"; placeholder = "Niagara Falls"; ObjectID = "xw9-Ro-Fai"; */
+"xw9-Ro-Fai.placeholder" = "Air terjun Niagara";
+
+/* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[0] = "Tags"; ObjectID = "zrW-uc-hfQ"; */
+"zrW-uc-hfQ.segmentTitles[0]" = "Tag-tag";
+
+/* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[1] = "Delete"; ObjectID = "zrW-uc-hfQ"; */
+"zrW-uc-hfQ.segmentTitles[1]" = "Hapus";
+
+/* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[2] = "More..."; ObjectID = "zrW-uc-hfQ"; */
+"zrW-uc-hfQ.segmentTitles[2]" = "Lainnya...";
+

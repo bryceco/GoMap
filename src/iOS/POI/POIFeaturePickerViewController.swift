@@ -8,10 +8,9 @@
 
 import UIKit
 
-protocol POITypeViewControllerDelegate: NSObjectProtocol {
-	func typeViewController(
-		_ typeViewController: POIFeaturePickerViewController,
-		didChangeFeatureTo feature: PresetFeature)
+protocol POIFeaturePickerDelegate: AnyObject {
+	func featurePicker(_ typeViewController: POIFeaturePickerViewController,
+	                   didChangeFeatureTo feature: PresetFeature)
 }
 
 private let MOST_RECENT_DEFAULT_COUNT = 5
@@ -25,10 +24,7 @@ class FeaturePickerCell: UITableViewCell {
 }
 
 private var mostRecentArray: [PresetFeature] = []
-private var mostRecentMaximum: Int = 0
-
-// static so memory cache persists each time we appear
-private var logoCache = PersistentWebCache<UIImage>(name: "presetLogoCache", memorySize: 5 * 1000000)
+private var mostRecentMaximum = 0
 
 class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate {
 	private var featureList: [PresetFeatureOrCategory] = []
@@ -38,7 +34,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	private var isTopLevel = false
 
 	var parentCategory: PresetCategory?
-	weak var delegate: POITypeViewControllerDelegate?
+	weak var delegate: POIFeaturePickerDelegate?
 
 	class func loadMostRecent(forGeometry geometry: GEOMETRY) {
 		if let max = UserDefaults.standard.object(forKey: "mostRecentTypesMaximum") as? NSNumber,
@@ -48,14 +44,14 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		} else {
 			mostRecentMaximum = MOST_RECENT_DEFAULT_COUNT
 		}
-		let defaults: String = "mostRecentTypes.\(geometry.rawValue)"
+		let defaults = "mostRecentTypes.\(geometry.rawValue)"
 		let a = UserDefaults.standard.object(forKey: defaults) as? [String] ?? []
 		mostRecentArray = a.compactMap({ PresetsDatabase.shared.presetFeatureForFeatureID($0) })
 	}
 
 	func currentSelectionGeometry() -> GEOMETRY {
 		let tabController = tabBarController as? POITabBarController
-		let geometry = tabController?.selection?.geometry() ?? GEOMETRY.NODE // a brand new node
+		let geometry = tabController?.selection?.geometry() ?? GEOMETRY.POINT // a brand new node
 		return geometry
 	}
 
@@ -66,7 +62,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		tableView.rowHeight = UITableView.automaticDimension
 
 		let geometry = currentSelectionGeometry()
-		POIFeaturePickerViewController.loadMostRecent(forGeometry: geometry)
+		Self.loadMostRecent(forGeometry: geometry)
 
 		if let parentCategory = parentCategory {
 			featureList = parentCategory.members.map({ .feature($0) })
@@ -95,19 +91,19 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
 		if isTopLevel, section == 1 {
-			let countryCode = AppDelegate.shared.mapView.countryCodeForLocation
+			let countryCode = AppDelegate.shared.mapView.currentRegion.country
 			let locale = NSLocale.current as NSLocale
-			let countryName = locale.displayName(forKey: .countryCode, value: countryCode ?? "")
+			let countryName = locale.displayName(forKey: .countryCode, value: countryCode) ?? ""
 
-			if (countryCode?.count ?? 0) == 0 || (countryName?.count ?? 0) == 0 {
+			if countryCode.count == 0 || countryName.count == 0 {
 				// There's nothing to display.
 				return nil
 			}
 
 			return String.localizedStringWithFormat(
 				NSLocalizedString("Results for %@ (%@)", comment: "country name,2-character country code"),
-				countryName ?? "",
-				countryCode?.uppercased() ?? "")
+				countryName,
+				countryCode.uppercased())
 		}
 		return nil
 	}
@@ -148,83 +144,30 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 				feature = f
 			}
 		}
-		if feature.nsiSuggestion, feature.nsiLogo == nil, feature.logoURL != nil {
-#if false
-			// use built-in logo files
-			if feature.nsiLogo == nil {
-				feature.nsiLogo = feature.iconUnscaled()
-				DispatchQueue.global(qos: .default).async(execute: {
-					var name = feature.featureID.replacingOccurrences(of: "/", with: "_")
-					name = "presets/brandIcons/" + name
-					let path = Bundle.main.path(forResource: name, ofType: "jpg") ?? Bundle.main
-						.path(forResource: name, ofType: "png") ?? Bundle.main
-						.path(forResource: name, ofType: "gif") ?? Bundle.main
-						.path(forResource: name, ofType: "bmp") ?? nil
-					if let image = UIImage(contentsOfFile: path ?? "") {
-						DispatchQueue.main.async(execute: {
-							feature.nsiLogo = image
-							for cell in tableView.visibleCells {
-								guard let cell = cell as? FeaturePickerCell else {
-									continue
-								}
-								if cell.featureID == feature.featureID {
-									cell.pickerImage.image = image
-								}
-							}
-						})
-					}
-				})
-			}
-#else
-			feature.nsiLogo = feature.iconUnscaled()
-			let logo = logoCache.object(withKey: feature.featureID, fallbackURL: {
-#if true
-				// fetch icons from our private server
-				let name: String = feature.featureID.replacingOccurrences(of: "/", with: "_")
-				let url: String = "http://gomaposm.com/brandIcons/" + name
-				return URL(string: url)
-#else
-				// Fetch icons from a named public server. There are several downsides:
-				// * some image files are very large (megabytes)
-				// * many images are SVG which we don't support
-				return URL(string: feature.logoURL)
-#endif
-			}, objectForData: { data in
-				if let image = UIImage(data: data) {
-					return EditorMapLayer.ImageScaledToSize(image, 60.0)
-				} else {
-					return UIImage()
+
+		// If its an NSI feature then retrieve the logo icon
+		let icon = feature.nsiLogo({ img in
+			// If it completes later then update any cells using it
+			for cell in self.tableView.visibleCells {
+				if let cell = cell as? FeaturePickerCell,
+				   cell.featureID == feature.featureID
+				{
+					cell.pickerImage.image = img
 				}
-			}, completion: { result in
-				DispatchQueue.main.async(execute: {
-					let image = try? result.get()
-					feature.nsiLogo = image
-					for cell in tableView.visibleCells {
-						if let cell = cell as? FeaturePickerCell,
-						   cell.featureID == feature.featureID
-						{
-							cell.pickerImage.image = image
-						}
-					}
-				})
-			})
-			if logo != nil {
-				feature.nsiLogo = logo
 			}
-#endif
-		}
-		let brand: String = "☆ "
+		})
+		let brand = "☆ "
 		let tabController = tabBarController as? POITabBarController
 		let geometry = currentSelectionGeometry()
-		let currentFeature = PresetsDatabase.shared.matchObjectTagsToFeature(
-			tabController?.keyValueDict,
+
+		let currentFeature = PresetsDatabase.shared.presetFeatureMatching(
+			tags: tabController?.keyValueDict,
 			geometry: geometry,
+			location: AppDelegate.shared.mapView.currentRegion,
 			includeNSI: true)
 		let cell = tableView.dequeueReusableCell(withIdentifier: "FinalCell", for: indexPath) as! FeaturePickerCell
 		cell.title.text = feature.nsiSuggestion ? (brand + feature.friendlyName()) : feature.friendlyName()
-		cell.pickerImage.image = (feature.nsiLogo != nil) && (feature.nsiLogo != feature.iconUnscaled())
-			? feature.nsiLogo
-			: feature.iconUnscaled()?.withRenderingMode(.alwaysTemplate)
+		cell.pickerImage.image = icon
 		if #available(iOS 13.0, *) {
 			cell.pickerImage.tintColor = UIColor.label
 		} else {
@@ -252,8 +195,8 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 
 	func updateTags(with feature: PresetFeature) {
 		let geometry = currentSelectionGeometry()
-		delegate?.typeViewController(self, didChangeFeatureTo: feature)
-		POIFeaturePickerViewController.updateMostRecentArray(withSelection: feature, geometry: geometry)
+		delegate?.featurePicker(self, didChangeFeatureTo: feature)
+		Self.updateMostRecentArray(withSelection: feature, geometry: geometry)
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -301,7 +244,8 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 			searchArrayAll = PresetsDatabase.shared.featuresInCategory(
 				parentCategory,
 				matching: searchText,
-				geometry: geometry)
+				geometry: geometry,
+				location: AppDelegate.shared.mapView.currentRegion)
 			searchArrayRecent = mostRecentArray.filter { $0.matchesSearchText(searchText, geometry: geometry) != nil }
 		}
 		tableView.reloadData()

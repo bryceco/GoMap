@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <path d="m128,64c0,35.346 -28.654,64 -64,64s-64,-28.654 -64,-64 28.654,-64 64,-64 64,28.654 64,64" fill="#e9a76f"/>
+  <path d="M35.082,28L92.918,28A11.082,11.082 0,0 1,104 39.082L104,96.918A11.082,11.082 0,0 1,92.918 108L35.082,108A11.082,11.082 0,0 1,24 96.918L24,39.082A11.082,11.082 0,0 1,35.082 28z" fill="none" stroke-linejoin="round" stroke-linecap="round" stroke-width="8" stroke="#000"/>
+  <path d="M35.082,24L92.918,24A11.082,11.082 0,0 1,104 35.082L104,92.918A11.082,11.082 0,0 1,92.918 104L35.082,104A11.082,11.082 0,0 1,24 92.918L24,35.082A11.082,11.082 0,0 1,35.082 24z" fill="#fcfcfc" stroke-linejoin="round" stroke-linecap="round" stroke-width="8" stroke="#666"/>
+  <path d="m64,64 l-23.236,-13.955" fill="none" stroke-linejoin="round" stroke-linecap="round" stroke-width="8" stroke="#666"/>
+  <path d="M91.838,46.045 L64,64" fill="none" stroke-linejoin="round" stroke-linecap="round" stroke-width="6" stroke="#666"/>
+  <path d="m72.03,64a8.03,8.015 0,0 1,-8.03 8.015,8.03 8.015,0 0,1 -8.03,-8.015 8.03,8.015 0,0 1,8.03 -8.015,8.03 8.015,0 0,1 8.03,8.015" fill="#444"/>
+</svg>

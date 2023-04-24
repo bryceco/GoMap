@@ -108,7 +108,10 @@
 "Adding members:" = "Tillegg av medlemmer:";
 
 /* No comment provided by engineer. */
-"Additional imagery" = "Ytterligere bildemateriale.";
+"Additional imagery" = "Ytterligere bildemateriale";
+
+/* No comment provided by engineer. */
+"Aerial only" = "Kun flyfoto";
 
 /* No comment provided by engineer. */
 "All choices" = "Alle valg";
@@ -118,6 +121,10 @@
 
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "Ukjent feil ved innhenting av metadata";
+
+/* Area of an object in m^2
+   Object geometry: a closed way or multipolygon) */
+"Area" = "Flate";
 
 /* No comment provided by engineer. */
 "Attention" = "Merk";
@@ -136,6 +143,12 @@
 
 /* No comment provided by engineer. */
 "Bad login" = "Feil innlogging";
+
+/* No comment provided by engineer. */
+"Better background imagery is available for your location. Would you like to change to it?" = "Bedre bakgrunnsbilder er tilgjengelig for posisjonen din. Vil du bytte til det?";
+
+/* No comment provided by engineer. */
+"Better imagery available" = "Bedre bakgrunnsbilder tilgjengelig";
 
 /* No comment provided by engineer. */
 "Cache size warning" = "Advarsel om hurtiglagerstørrelse";
@@ -159,6 +172,18 @@
 "Can't extend way" = "Kan ikke forlenge vei";
 
 /* No comment provided by engineer. */
+"Can't remove component of a Route or similar relation" = "Kan ikke fjerne en komponent i en rute eller lignende relasjon";
+
+/* No comment provided by engineer. */
+"Can't remove Turn Restriction 'via' node" = "Kan ikke fjerne svingerestriksjon 'via' node";
+
+/* No comment provided by engineer. */
+"Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" = "Kan ikke fjerne node i svingerestriksjonen som kobler 'til'/'fra' til 'via'";
+
+/* No comment provided by engineer. */
+"Can't remove Turn Restriction to/from way" = "Kan ikke fjerne svingerestriksjon til/fra vei";
+
+/* No comment provided by engineer. */
 "Cancel" = "Avbryt";
 
 /* e-mail message */
@@ -166,6 +191,9 @@
 
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "Kan ikke koble til en indre vei til en ytre vei";
+
+/* No comment provided by engineer. */
+"Change" = "Endre";
 
 /* OSM changeset identifier */
 "Changeset" = "Endringsflis";
@@ -236,6 +264,9 @@
 /* No comment provided by engineer. */
 "Delete\n" = "Slett\n";
 
+/* Confirm deleting a node/way */
+"Delete %@?" = "Slett %@?";
+
 /* No comment provided by engineer. */
 "Delete completely" = "Slett fullstendig";
 
@@ -275,6 +306,9 @@
 /* No comment provided by engineer. */
 "Display options" = "Visningsinnstillinger";
 
+/* Distance to an object with an error value */
+"Distance: %1$@ ± %2$@ meters" = "Avstand: %1$@ ± %2$@ meter";
+
 /* No comment provided by engineer. */
 "Done" = "Ferdig";
 
@@ -297,19 +331,31 @@
 "Editing layer not visible" = "Redigeringslag ikke synlig";
 
 /* No comment provided by engineer. */
+"Editor only" = "Kun redigerer";
+
+/* No comment provided by engineer. */
+"Editor with Aerial" = "Redigerer med luftfoto";
+
+/* No comment provided by engineer. */
 "Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "Sørg for at plasseringstjenester er påslått og at du har innvilget denne programtilgangen.\n\nFeil: %@";
 
 /* Error dialog title */
 "Error" = "Feil";
 
 /* No comment provided by engineer. */
-"Error fetching metadata: %@" = "Klarte ikke å hente metadata: %@";
+"Error connecting to way" = "Kunne ikke koble til bane";
+
+/* No comment provided by engineer. */
+"Error fetching metadata: %@" = "Kunne ikke hente metadata: %@";
 
 /* No comment provided by engineer. */
 "GPX Upload Complete" = "GPX-fil opplastet";
 
 /* No comment provided by engineer. */
 "GPX Upload Failed" = "Klarte ikke å laste opp GPX-fil";
+
+/* Height of an object with an error value */
+"Height: %1$@ ± %2$@ meters" = "Høyde: %1$@ ± %2$@ meter";
 
 /* rate the app now */
 "I'll do it!" = "På saken!";
@@ -329,6 +375,9 @@
 /* Edit action */
 "Join" = "Knytt sammen";
 
+/* kilometers per hour speed */
+"km/h" = "km/t";
+
 /* No comment provided by engineer. */
 "Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "Språkvalg har kun innvirkning på forvalg, som også er oversatt for iD. Hovedgrensesnittet er fremdeles Engelsk.";
 
@@ -338,11 +387,17 @@
 /* coordinates */
 "Lat/Lon" = "Bredde-/lengdegrad";
 
+/* No comment provided by engineer. */
+"Left" = "Venstre";
+
 /* Left-hand side of screen */
 "Left side" = "Venstre side";
 
 /* No comment provided by engineer. */
 "Length" = "Lengde";
+
+/* No comment provided by engineer. */
+"Login successful" = "Innlogget";
 
 /* No comment provided by engineer. */
 "Mail delivery is not available on this device" = "Forsendelse per e-post er ikke tilgjengelig på denne enheten";
@@ -401,6 +456,9 @@
 /* No comment provided by engineer. */
 "Move selected object?" = "Flytt valgt object?";
 
+/* miles per hour speed */
+"mph" = "mp/t";
+
 /* No comment provided by engineer. */
 "Multipolygon" = "Multipolygon";
 
@@ -414,6 +472,9 @@
 /* No comment provided by engineer. */
 "Next" = "Neste";
 
+/* GPX track */
+"No active track" = "Ingen aktive spor";
+
 /* Alert title */
 "No Data" = "Ingen data";
 
@@ -424,6 +485,9 @@
 "No tags to paste" = "Ingen etiketter å lime inn";
 
 /* No comment provided by engineer. */
+"No U-Turn restriction" = "Ingen u-sving-begrensning";
+
+/* No comment provided by engineer. */
 "Node" = "Node";
 
 /* No comment provided by engineer. */
@@ -431,6 +495,12 @@
 
 /* No comment provided by engineer. */
 "node %@ (in way)" = "node %@ (i vei)";
+
+/* No comment provided by engineer. */
+"Node Attributes" = "Node-attributter";
+
+/* No comment provided by engineer. */
+"Node is not an element of way" = "Node er ikke et veielement";
 
 /* No comment provided by engineer. */
 "Node Tags" = "Nodeetiketter";
@@ -456,6 +526,9 @@
 /* previous tag value */
 "Old value: (oldValue)" = "Gammel verdi: (gammelVerdi)";
 
+/* No comment provided by engineer. */
+"Only multipolygon relations are supported" = "Kun multipolygonsrelasjoner støttes";
+
 /* Open the iOS Settings app */
 "Open Settings" = "Åpne innstillingene";
 
@@ -475,7 +548,7 @@
 "Perform Action" = "Utfør handling";
 
 /* No comment provided by engineer. */
-"Please wait" = "Vent …";
+"Please wait" = "Vent";
 
 /* No comment provided by engineer. */
 "Previous" = "Forrige";
@@ -486,11 +559,17 @@
 /* Discard editing changes when resetting OSM data cache */
 "Purge" = "Tøm";
 
+/* Alert title message */
+"Recent Aerial Imagery" = "Nylige luftbilder";
+
 /* No comment provided by engineer. */
 "Redo" = "Gjenta";
 
 /* No comment provided by engineer. */
 "relation" = "relasjon";
+
+/* No comment provided by engineer. */
+"Relation Attributes" = "Relasjons-attributter";
 
 /* No comment provided by engineer. */
 "Relation: %@" = "Relasjon: %@";
@@ -509,6 +588,12 @@
 
 /* country name,2-character country code */
 "Results for %@ (%@)" = "Resultater for %1$@ (%2$@)";
+
+/* retry opening hours recognition */
+"Retry" = "Prøv igjen";
+
+/* No comment provided by engineer. */
+"Right" = "Høyre";
 
 /* Right-hand side of screen */
 "Right side" = "Høyre side";
@@ -590,9 +675,6 @@
 "The ways contain incompatible tags" = "Veiene inneholder ufullstendige etiketter";
 
 /* No comment provided by engineer. */
-"The XML is improperly formed" = "Feilformatert XML";
-
-/* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "Handlingen krever at GPS er påslått";
 
 /* No comment provided by engineer. */
@@ -609,6 +691,15 @@
 
 /* No comment provided by engineer. */
 "Turn On Location Services to Allow %@ to Determine Your Location" = "Skru på posisjonstjenester for å tillate %@ å fastsette din posisjon";
+
+/* The 'Type' header in Common Tags */
+"Type" = "Type";
+
+/* No comment provided by engineer. */
+"U-Turn from %@ allowed" = "U-sving fra %@ tillatt";
+
+/* No comment provided by engineer. */
+"U-Turn from %@ prohibited" = "U-sving fra %@ forbudt";
 
 /* OSM numeric user ID */
 "UID" = "UID";
@@ -632,7 +723,7 @@
 "Updating Note..." = "Oppdaterer notat …";
 
 /* No comment provided by engineer. */
-"Upload complete!" = "Oppdatert.";
+"Upload complete!" = "Opplasting fullført!";
 
 /* No comment provided by engineer. */
 "Upload to OSM" = "Last opp til OSM";
@@ -669,9 +760,6 @@
 
 /* No comment provided by engineer. */
 "You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "Du har gjort endringer som ikke har blitt lastet opp til tjeneren enda. Tømming av hurtiglageret vil medføre tap av disse endringene.";
-
-/* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "Du må angi ditt OSM-brukernavn, ikke en e-postadresse.";
 
 /* No comment provided by engineer. */
 "You must save or discard changes to the current object before editing its associated relation" = "Du må lagre eller forkaste endringer i nåværende objekt før redigering av dets tilknyttede relasjon";

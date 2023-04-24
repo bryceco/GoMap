@@ -1,146 +1,15 @@
-/* Class = "UITextField"; placeholder = "no"; ObjectID = "0mW-YK-ajm"; Note = "Do not translate"; */
-
-/* Class = "UITextField"; placeholder = "type"; ObjectID = "0zS-QM-zwQ"; Note = "Do not translate"; */
-
-/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "1Yx-Ce-yfq"; */
-
-/* Class = "UITabBarItem"; title = "Attributes"; ObjectID = "2cB-FV-ozw"; */
-
-/* Class = "UILabel"; text = "Title"; ObjectID = "2Q5-Vd-FED"; Note = "Do not translate"; */
-
-/* Class = "UITableViewController"; title = "Point of Interest"; ObjectID = "6VA-gm-L0S"; */
-
-/* Class = "UILabel"; text = "Title"; ObjectID = "8Nt-xf-x5Q"; */
-
-/* Class = "UITextField"; placeholder = "Yes"; ObjectID = "9Nw-ha-JK5"; */
-
 /* Class = "UITabBarItem"; title = "All Tags"; ObjectID = "19J-sp-UTX"; */
-
-/* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j"; */
-
-/* Class = "UITextField"; placeholder = "ref"; ObjectID = "aCs-vS-YXj"; Note = "Do not translate"; */
-
-/* Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V"; Note = "Do not translate"; */
-
-/* Class = "UIBarButtonItem"; title = "Configure"; ObjectID = "aLi-Vs-z0k"; */
-
-/* Class = "UILabel"; text = "Add New"; ObjectID = "Bnh-U0-D7i"; */
+"19J-sp-UTX.title" = "Усі теґи";
 
 /* Class = "UINavigationItem"; title = "All Tags"; ObjectID = "cN9-3h-H3l"; */
-
-/* Class = "UITextField"; placeholder = "value"; ObjectID = "cP3-lR-lzM"; Note = "Do not translate"; */
-
-/* Class = "UITableViewSection"; headerTitle = "Preset Key"; ObjectID = "cTf-Rc-vqr"; */
-
-/* Class = "UILabel"; text = "Value 8"; ObjectID = "CXe-gQ-Zda"; */
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh"; Note = "Do not translate"; */
-
-/* Class = "UITableViewSection"; footerTitle = "The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard."; ObjectID = "Dfv-TT-J6i"; */
-
-/* Class = "UITableViewSection"; headerTitle = "Applies To"; ObjectID = "Dfv-TT-J6i"; */
-
-/* Class = "UILabel"; text = "Value 9"; ObjectID = "dsA-B6-s7R"; */
-
-/* Class = "UITextField"; placeholder = "Dogs Allowed"; ObjectID = "eG3-Xz-Nnp"; */
-
-/* Class = "UILabel"; text = "Key"; ObjectID = "Eou-a6-V4g"; */
-
-/* Class = "UITabBarController"; title = "Attributes"; ObjectID = "f5t-25-IXF"; */
-
-/* Class = "UILabel"; text = "Value 3"; ObjectID = "Fcv-4Q-gpE"; */
-
-/* Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; Note = "Do not translate"; */
-
-/* Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Do not translate"; */
+"cN9-3h-H3l.title" = "Усі теґи";
 
 /* Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3"; */
-
-/* Class = "UINavigationItem"; title = "Custom Presets"; ObjectID = "GIO-W7-q5U"; */
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw"; Note = "Do not translate"; */
-
-/* Class = "UITextField"; text = "value"; ObjectID = "hfr-Mf-ZHv"; */
-
-/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "Hgu-iP-FnG"; */
-
-/* Class = "UINavigationItem"; title = "Attributes"; ObjectID = "hKU-EH-qxp"; */
-
-/* Class = "UILabel"; text = "Changeset"; ObjectID = "ijx-N9-1eO"; */
-
-/* Class = "UILabel"; text = "Value 1"; ObjectID = "JAT-qD-dTS"; */
-
-/* Class = "UINavigationItem"; title = "POI Type"; ObjectID = "Jsm-mO-hgo"; */
-
-/* Class = "UITableViewSection"; footerTitle = "The possible values for the preset"; ObjectID = "jv1-BF-p2a"; */
-
-/* Class = "UITableViewSection"; headerTitle = "Preset values"; ObjectID = "jv1-BF-p2a"; */
-
-/* Class = "UITextField"; placeholder = "leisure "; ObjectID = "kPA-ky-U48"; Note = "Do not translate"; */
-
-/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "KX3-hG-OyE"; */
-
-/* Class = "UILabel"; text = "Value 5"; ObjectID = "li7-oV-pgT"; */
+"G5R-oP-lp3.title" = "Власні теґи";
 
 /* Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz"; */
+"lPv-s6-uEz.title" = "Поширені теґи";
 
 /* Class = "UINavigationItem"; title = "Common tags"; ObjectID = "mAb-DX-pqb"; */
-
-/* Class = "UILabel"; text = "Name"; ObjectID = "mcN-gM-s7u"; */
-
-/* Class = "UILabel"; text = "Value 4"; ObjectID = "ng7-T9-SJ6"; */
-
-/* Class = "UILabel"; text = "Value 2"; ObjectID = "nKt-LG-cSw"; */
-
-/* Class = "UILabel"; text = "Value 11"; ObjectID = "o63-qY-4vl"; */
-
-/* Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; Note = "Do not translate"; */
-
-/* Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; Note = "Do not translate"; */
-
-/* Class = "UILabel"; text = "Name"; ObjectID = "omf-S9-Yjq"; */
-
-/* Class = "UINavigationItem"; title = "Custom Preset"; ObjectID = "OND-s7-I6f"; */
-
-/* Class = "UILabel"; text = "Type"; ObjectID = "P3A-5n-1Iq"; */
-
-/* Class = "UIButton"; normalTitle = "Customize Presets"; ObjectID = "pHA-2B-6DC"; */
-
-/* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "pxY-di-zg7"; */
-
-/* Class = "UITableViewSection"; headerTitle = "Preset Name"; ObjectID = "QDv-7w-nbx"; */
-
-/* Class = "UILabel"; text = "Value 6"; ObjectID = "R0q-aM-ULf"; */
-
-/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "Rfe-SO-p0w"; */
-
-/* Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ"; Note = "Do not translate"; */
-
-/* Class = "UILabel"; text = "Key"; ObjectID = "teB-9L-Nrf"; */
-
-/* Class = "UILabel"; text = "Title"; ObjectID = "TK4-E8-1q7"; Note = "Do not translate"; */
-
-/* Class = "UITextField"; placeholder = "relation"; ObjectID = "Urd-9O-Mte"; Note = "Do not translate"; */
-
-/* Class = "UINavigationItem"; title = "Presets"; ObjectID = "v1b-PG-XxE"; */
-
-/* Class = "UILabel"; text = "Wheelchair Access"; ObjectID = "Vli-Ct-Lpz"; */
-
-/* Class = "UITextField"; placeholder = "yes"; ObjectID = "vpk-jC-yxl"; Note = "Do not translate"; */
-
-/* Class = "UILabel"; text = "Value 12"; ObjectID = "wFE-f1-sQa"; */
-
-/* Class = "UILabel"; text = "Value 10"; ObjectID = "Wim-Qa-dYQ"; */
-
-/* Class = "UILabel"; text = "Value 7"; ObjectID = "WoH-od-iKL"; */
-
-/* Class = "UITextField"; placeholder = "key"; ObjectID = "X1y-nK-nVJ"; Note = "Do not translate"; */
-
-/* Class = "UILabel"; text = "Food & Drink"; ObjectID = "XBV-Ie-LDT"; Note = "Do not translate"; */
-
-/* Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ"; */
-
-/* Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "zpj-gL-2Nt"; */
-
-/* Class = "UILabel"; text = "Subtitle"; ObjectID = "ZYn-TK-k7d"; Note = "Do not translate"; */
+"mAb-DX-pqb.title" = "Поширені теґи";
 

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21699.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="REI-FR-Yb0">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Quest Selection-->
+        <scene sceneID="mLR-da-eni">
+            <objects>
+                <tableViewController id="REI-FR-Yb0" userLabel="Quest Selection" customClass="QuestChooserController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="54M-6j-Hqz">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="QuestChooserTableCell" id="Jqx-2E-Fvw" customClass="QuestChooserTableCell" customModule="Go_Map__" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="393" height="48.333332061767578"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Jqx-2E-Fvw" id="hdy-yO-LLj">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="48.333332061767578"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lOo-Bh-qGh" userLabel="Enable Quest">
+                                            <rect key="frame" x="324" y="8.6666666666666643" width="51" height="31"/>
+                                            <connections>
+                                                <action selector="didSwitch:" destination="Jqx-2E-Fvw" eventType="valueChanged" id="pou-ag-Gsv"/>
+                                            </connections>
+                                        </switch>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="DPW-Qs-LFR">
+                                            <rect key="frame" x="19.999999999999986" y="8" width="253.66666666666663" height="32.333333333333336"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nZW-Wt-9mc">
+                                                    <rect key="frame" x="0.0" y="0.0" width="32" height="32.333333333333336"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="32" id="64y-La-k7u"/>
+                                                        <constraint firstAttribute="height" constant="32" id="Rth-gi-kUb"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="L" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rBr-Wt-i0E">
+                                                    <rect key="frame" x="40" y="0.0" width="32" height="32.333333333333336"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="32" id="x9V-39-Gmj"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Placeholder - do not translate"/>
+                                                    </attributedString>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="500" text="Add Sidewalk Surface" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cjq-BK-3eN">
+                                                    <rect key="frame" x="79.999999999999986" y="0.0" width="173.66666666666663" height="32.333333333333336"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <size key="shadowOffset" width="0.0" height="0.0"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Placeholder - do not translate"/>
+                                                    </attributedString>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="rBr-Wt-i0E" firstAttribute="centerY" secondItem="DPW-Qs-LFR" secondAttribute="centerY" id="ek8-CP-B5g"/>
+                                                <constraint firstItem="Cjq-BK-3eN" firstAttribute="centerY" secondItem="DPW-Qs-LFR" secondAttribute="centerY" id="reb-KI-gc3"/>
+                                                <constraint firstItem="nZW-Wt-9mc" firstAttribute="centerY" secondItem="DPW-Qs-LFR" secondAttribute="centerY" id="zYr-h9-c7a"/>
+                                            </constraints>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="lOo-Bh-qGh" firstAttribute="centerY" secondItem="hdy-yO-LLj" secondAttribute="centerY" id="O5i-Tj-qNb"/>
+                                        <constraint firstItem="DPW-Qs-LFR" firstAttribute="top" secondItem="hdy-yO-LLj" secondAttribute="top" constant="8" id="OpV-iK-yse"/>
+                                        <constraint firstAttribute="trailing" secondItem="lOo-Bh-qGh" secondAttribute="trailing" constant="20" symbolic="YES" id="fOI-vd-W0X"/>
+                                        <constraint firstAttribute="bottom" secondItem="DPW-Qs-LFR" secondAttribute="bottom" constant="8" id="mHb-CW-6Mx"/>
+                                        <constraint firstItem="DPW-Qs-LFR" firstAttribute="leading" secondItem="hdy-yO-LLj" secondAttribute="leading" constant="20" symbolic="YES" id="oDV-2l-bVD"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="icon" destination="nZW-Wt-9mc" id="IQS-d8-MPI"/>
+                                    <outlet property="label" destination="rBr-Wt-i0E" id="l6a-wZ-Z5c"/>
+                                    <outlet property="title" destination="Cjq-BK-3eN" id="2xl-fD-m1Z"/>
+                                    <outlet property="uiSwitch" destination="lOo-Bh-qGh" id="uZg-pO-Ye9"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BuildYourOwnQuestTableCell" id="wFx-Nm-hoF" customClass="BuildYourOwnQuestTableCell" customModule="Go_Map__" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="98.333332061767578" width="393" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wFx-Nm-hoF" id="1a8-5E-lPA">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Build a New Quest" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obG-9F-y5J">
+                                            <rect key="frame" x="126.66666666666667" y="11.666666666666666" width="139.66666666666663" height="20.333333333333336"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                            <color key="textColor" systemColor="linkColor"/>
+                                            <nil key="highlightedColor"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Placeholder - do not translate"/>
+                                            </attributedString>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="obG-9F-y5J" firstAttribute="centerX" secondItem="1a8-5E-lPA" secondAttribute="centerX" id="mai-qo-sAU"/>
+                                        <constraint firstItem="obG-9F-y5J" firstAttribute="centerY" secondItem="1a8-5E-lPA" secondAttribute="centerY" id="sug-cK-z3h"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="label" destination="obG-9F-y5J" id="goW-1W-bax"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImportExportCell" id="3ab-Rh-KkC">
+                                <rect key="frame" x="0.0" y="142" width="393" height="34.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3ab-Rh-KkC" id="m5O-Bn-J32">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="34.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="teO-II-BDV">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="34.666666666666664"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i3O-Tv-sbS">
+                                                    <rect key="frame" x="0.0" y="0.0" width="196.66666666666666" height="34.666666666666664"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" title="Import"/>
+                                                    <connections>
+                                                        <action selector="importQuests:" destination="REI-FR-Yb0" eventType="touchUpInside" id="Arc-4p-fJH"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4dk-L8-PaX">
+                                                    <rect key="frame" x="196.66666666666663" y="0.0" width="196.33333333333337" height="34.666666666666664"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" title="Export"/>
+                                                    <connections>
+                                                        <action selector="exportQuests:" destination="REI-FR-Yb0" eventType="touchUpInside" id="vaM-6L-pU6"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="teO-II-BDV" firstAttribute="leading" secondItem="m5O-Bn-J32" secondAttribute="leading" id="22p-Nf-EoT"/>
+                                        <constraint firstAttribute="trailing" secondItem="teO-II-BDV" secondAttribute="trailing" id="B8g-dg-cAF"/>
+                                        <constraint firstAttribute="bottom" secondItem="teO-II-BDV" secondAttribute="bottom" id="Za8-0q-07n"/>
+                                        <constraint firstItem="teO-II-BDV" firstAttribute="top" secondItem="m5O-Bn-J32" secondAttribute="top" id="gao-j3-78z"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="REI-FR-Yb0" id="pHe-eO-5xm"/>
+                            <outlet property="delegate" destination="REI-FR-Yb0" id="mGJ-0X-CfJ"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Select Quests" id="mNN-LL-gG7"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mfl-Yl-jcK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-742" y="1685"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

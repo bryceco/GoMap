@@ -1,0 +1,144 @@
+/* Class = "UITableViewSection"; headerTitle = "I don't have an account"; ObjectID = "1Mo-xe-IbY"; */
+"1Mo-xe-IbY.headerTitle" = "माझ्याकडे खाते नाही";
+
+/* Class = "UINavigationItem"; title = "Credits"; ObjectID = "1SU-BF-K3n"; */
+"1SU-BF-K3n.title" = "श्रेय";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "3qk-15-BUc"; */
+"3qk-15-BUc.text" = "तपशील";
+
+/* Class = "UITableViewSection"; headerTitle = "OpenStreetMap Server"; ObjectID = "6GT-p2-rPO"; */
+"6GT-p2-rPO.headerTitle" = "OpenStreetMap सर्व्हर";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "6Lj-wh-z9f"; */
+"6Lj-wh-z9f.text" = "तपशील";
+
+/* Class = "UILabel"; text = "OpenStreetMap Login"; ObjectID = "34N-Ep-rpf"; */
+"34N-Ep-rpf.text" = "OpenStreetMap सनोंद प्रवेश";
+
+/* Class = "UITextField"; placeholder = "api.openstreetmap.org"; ObjectID = "66J-ih-Lfh"; */
+"66J-ih-Lfh.placeholder" = "api.openstreetmap.org";
+
+/* Class = "UITableViewSection"; headerTitle = "Language"; ObjectID = "355-dx-Oi8"; */
+"355-dx-Oi8.headerTitle" = "भाषा";
+
+/* Class = "UILabel"; text = "Contact Us"; ObjectID = "ags-Mx-c1q"; */
+"ags-Mx-c1q.text" = "संपर्क माहिती";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "AHZ-L8-yUA"; */
+"AHZ-L8-yUA.title" = "मांडणी";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "AVI-04-hFN"; */
+"AVI-04-hFN.text" = "हवाई प्रतिमा फरशा";
+
+/* Class = "UIButton"; normalTitle = "Start"; ObjectID = "bt0-CH-HbH"; */
+"bt0-CH-HbH.normalTitle" = "प्रारंभ";
+
+/* Class = "UILabel"; text = "Weblate - Translations"; ObjectID = "CHj-a3-gC9"; */
+"CHj-a3-gC9.text" = "Weblate - अनुवाद";
+
+/* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "ctb-pg-pM9"; */
+"ctb-pg-pM9.title" = "साठवा";
+
+/* Class = "UIButton"; normalTitle = "Sign In"; ObjectID = "dIM-oE-zAg"; */
+"dIM-oE-zAg.normalTitle" = "सनोंद प्रवेश";
+
+/* Class = "UILabel"; text = "Detail detail detail detail detail"; ObjectID = "DiU-tt-U7H"; Note = "Do not translate"; */
+"DiU-tt-U7H.text" = "Detail detail detail detail detail";
+
+/* Class = "UIButton"; normalTitle = "Register new account"; ObjectID = "DY5-Ls-XZ1"; */
+"DY5-Ls-XZ1.normalTitle" = "नवीन खाते नोंदणी करा";
+
+/* Class = "UITableViewSection"; headerTitle = "Credentials"; ObjectID = "fbD-Hr-HNI"; */
+"fbD-Hr-HNI.headerTitle" = "ओळखपत्रे";
+
+/* Class = "UILabel"; text = "Advanced Settings"; ObjectID = "gec-8l-k4H"; */
+"gec-8l-k4H.text" = "प्रगत मांडणी";
+
+/* Class = "UITableViewSection"; headerTitle = "Advanced"; ObjectID = "gh3-sb-yuZ"; */
+"gh3-sb-yuZ.headerTitle" = "प्रगत";
+
+/* Class = "UINavigationItem"; title = "Advanced Settings"; ObjectID = "Gxc-44-SzR"; */
+"Gxc-44-SzR.title" = "प्रगत मांडणी";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "HNj-kK-OCP"; */
+"HNj-kK-OCP.text" = "शीर्षक";
+
+/* Class = "UINavigationItem"; title = "Language"; ObjectID = "ib9-wt-IzD"; */
+"ib9-wt-IzD.title" = "भाषा";
+
+/* Class = "UILabel"; text = "Email Feedback"; ObjectID = "iR4-av-Q7M"; */
+"iR4-av-Q7M.text" = "ईमेल द्वारे अभिप्राय";
+
+/* Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; Note = "Do not translate"; */
+"JbA-pC-plJ.text" = "Title title title title";
+
+/* Class = "UILabel"; text = "Nearby Mappers"; ObjectID = "jcn-Lx-tj3"; */
+"jcn-Lx-tj3.text" = "जवळचे मानचित्रकार";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "KIO-8j-QsO"; */
+"KIO-8j-QsO.text" = "उपशीर्षक";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "kt1-K7-kcu"; */
+"kt1-K7-kcu.title" = "मागे";
+
+/* Class = "UINavigationItem"; title = "Contact Us"; ObjectID = "ktz-ef-tti"; */
+"ktz-ef-tti.title" = "संपर्क माहिती";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "LaB-Et-hHT"; */
+"LaB-Et-hHT.text" = "तपशील";
+
+/* Class = "UINavigationItem"; title = "Prepare for Offline"; ObjectID = "m7D-wn-3MP"; */
+"m7D-wn-3MP.title" = "ऑफलाइनसाठी तयारी करा";
+
+/* Class = "UITableViewSection"; headerTitle = "Become a Tester"; ObjectID = "m7u-CH-jgg"; */
+"m7u-CH-jgg.headerTitle" = "परीक्षक व्हा";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "Mus-SG-1Sz"; */
+"Mus-SG-1Sz.text" = "तपशील";
+
+/* Class = "UITableViewSection"; headerTitle = "Miscellaneous"; ObjectID = "nIn-2k-PYG"; */
+"nIn-2k-PYG.headerTitle" = "इतर";
+
+/* Class = "UINavigationItem"; title = "Login"; ObjectID = "O6E-f1-A1k"; */
+"O6E-f1-A1k.title" = "सनोंद प्रवेश";
+
+/* Class = "UITableViewSection"; headerTitle = "About Us"; ObjectID = "oIj-UV-kLH"; */
+"oIj-UV-kLH.headerTitle" = "आमच्याबद्दल";
+
+/* Class = "UILabel"; text = "Language"; ObjectID = "osk-Kq-gDX"; */
+"osk-Kq-gDX.text" = "भाषा";
+
+/* Class = "UILabel"; text = "Prepare for Offline"; ObjectID = "rfX-TP-V0l"; */
+"rfX-TP-V0l.text" = "ऑफलाइनसाठी तयारी करा";
+
+/* Class = "UIButton"; normalTitle = "Start"; ObjectID = "snH-kp-6ib"; */
+"snH-kp-6ib.normalTitle" = "प्रारंभ";
+
+/* Class = "UILabel"; text = "Credits"; ObjectID = "TGa-tJ-nrC"; */
+"TGa-tJ-nrC.text" = "श्रेय";
+
+/* Class = "UITableViewSection"; headerTitle = "OpenStreetMap account"; ObjectID = "Tkc-bW-kNS"; */
+"Tkc-bW-kNS.headerTitle" = "OpenStreetMap खाते";
+
+/* Class = "UILabel"; text = "Join the TestFlight Beta"; ObjectID = "TrT-Nn-WKe"; */
+"TrT-Nn-WKe.text" = "TestFlight Beta मध्ये सहभागी व्हा";
+
+/* Class = "UILabel"; text = "Show FPS"; ObjectID = "UeH-ME-EV8"; Note = "Display the app's frames/second while running"; */
+"UeH-ME-EV8.text" = "FPS दाखवा";
+
+/* Class = "UILabel"; text = "Frames/Second"; ObjectID = "UvN-Qa-roL"; */
+"UvN-Qa-roL.text" = "फ्रेम्स/सेकंद";
+
+/* Class = "UINavigationItem"; title = "Nearby Mappers"; ObjectID = "VDO-HW-SLB"; */
+"VDO-HW-SLB.title" = "जवळचे मानचित्रकार";
+
+/* Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5"; */
+"whL-SZ-HD5.text" = "ईमेल द्वारे अभिप्राय";
+
+/* Class = "UILabel"; text = "GitHub - Issues & Source Code"; ObjectID = "x4m-oT-EG8"; */
+"x4m-oT-EG8.text" = "GitHub - मुद्दे व स्रोत आज्ञावली (सोर्स कोड)";
+
+/* Class = "UITableViewSection"; headerTitle = "Developer settings"; ObjectID = "yAO-9B-CTd"; */
+"yAO-9B-CTd.headerTitle" = "विकासक मांडणी";
+

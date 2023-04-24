@@ -577,6 +577,9 @@
 "Paste" = "Coller";
 
 /* No comment provided by engineer. */
+"Pasting %@ characters, maximum tag length is 255" = "Collage de caractères %@, la longueur maximale de la balise est de 255";
+
+/* No comment provided by engineer. */
 "Pasting %ld tag(s)" = "Collage de %ld étiquette(s)";
 
 /* No comment provided by engineer. */
@@ -743,9 +746,6 @@
 "The ways contain incompatible tags" = "Le chemin contient des étiquettes incompatibles";
 
 /* No comment provided by engineer. */
-"The XML is improperly formed" = "Le XML n'est pas correctement formatté";
-
-/* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "Cette action nécessite l'activation du GPS";
 
 /* No comment provided by engineer. */
@@ -864,9 +864,6 @@
 
 /* No comment provided by engineer. */
 "You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "Vous avez effectué des modifications qui n'ont pas encore été téléversées sur le serveur. Vider la cache entraînera la perte de ces modifications.";
-
-/* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "Vous devez fournir votre nom d’utilisateur OSM, pas une adresse courriel.";
 
 /* No comment provided by engineer. */
 "You must save or discard changes to the current object before editing its associated relation" = "Vous devez sauvegarder ou annuler les modifications apportées à l'objet courant avant d'éditer une relation qui lui est associée";

@@ -3,7 +3,7 @@
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 6/18/21.
-//  Copyright © 2021 Bryce. All rights reserved.
+//  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
 import Foundation
@@ -38,7 +38,7 @@ enum OsmParserError: LocalizedError {
 }
 
 class OsmDownloadParser: NSObject, XMLParserDelegate {
-	private var parserCurrentElementText: String = "" // not currently used, it's mostly whitespace
+	private var parserCurrentElementText = "" // not currently used, it's mostly whitespace
 	private var parserStack: [Any] = []
 	private var parseError: Error?
 

@@ -31,6 +31,9 @@
 /* No comment provided by engineer. */
 "(way)" = "(linie)";
 
+/* area in m^2 */
+"%.0f m^2" = "%.0f m^2";
+
 /* way length if > 10m */
 "%.0f meters, %ld nodes" = "%1$.0f metrů, %2$ld bodů";
 
@@ -59,6 +62,9 @@
 /* length of a gpx track */
 "%ld meters, %ld points" = "%1$ld metrů, %2$ld bodů";
 
+/* length of a gpx track */
+"%ld meters, %ld points, %ld waypoints" = "%1$ld metrů, %2$ld bodů, %3$ld bodů trasy";
+
 /* Number of tiles/objects in cache */
 "%ld objects" = "%ld objektů";
 
@@ -73,6 +79,9 @@
 
 /* 1 day singular */
 "1 Day" = "1 den";
+
+/* No comment provided by engineer. */
+"A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." = "Všechny uživatelsky definované úkoly byly zkopírovány do schránky v JSON formátu. Můžete si je někam vložit a uschovat nebo je někomu poslat.";
 
 /* No comment provided by engineer. */
 "A GPX Track records your path as you travel along a road or trail" = "GPX trasa zachycuje vaši cestu po silnici nebo pěšině";
@@ -119,8 +128,18 @@
 /* No comment provided by engineer. */
 "All Tags" = "Všechny značky";
 
+/* Show an error message */
+"An error occured while exporting: %@" = "Při exportu došlo k chybě: %@";
+
+/* Show an error message */
+"An error occured while importing: %@" = "Při importu došlo k chybě: %@";
+
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "Při stahování metadat došlo k neznámé chybě";
+
+/* Area of an object in m^2
+   Object geometry: a closed way or multipolygon) */
+"Area" = "Plocha";
 
 /* No comment provided by engineer. */
 "Attention" = "Upozornění";
@@ -139,6 +158,12 @@
 
 /* No comment provided by engineer. */
 "Bad login" = "Špatné přihlášení";
+
+/* No comment provided by engineer. */
+"Better background imagery is available for your location. Would you like to change to it?" = "Pro vaši lokalitu jsou k dispozici lepší snímky na pozadí. Chcete je použít?";
+
+/* No comment provided by engineer. */
+"Better imagery available" = "K dispozici jsou lepší snímky";
 
 /* No comment provided by engineer. */
 "Cache size warning" = "Upozornění na velikost mezipaměti";
@@ -185,6 +210,9 @@
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "Vnitřní a vnější linie nelze spojit";
 
+/* No comment provided by engineer. */
+"Change" = "Změnit";
+
 /* OSM changeset identifier */
 "Changeset" = "Sada změn";
 
@@ -220,6 +248,9 @@
 
 /* No comment provided by engineer. */
 "Connecting the nodes would damage a relation" = "Spojením bodů dojde k poškození relace";
+
+/* text was copied to the system clipboard */
+"Copied" = "Zkopírováno";
 
 /* Edit action */
 "Copy Tags" = "Kopírovat značky";
@@ -372,6 +403,15 @@
 "Ignore" = "Ignorovat";
 
 /* No comment provided by engineer. */
+"Import" = "Importovat";
+
+/* No comment provided by engineer. */
+"Import Error" = "Chyba importu";
+
+/* No comment provided by engineer. */
+"Import Quests" = "Importovat úkoly";
+
+/* No comment provided by engineer. */
 "In order to measure height, please enable camera access in the app's settings." = "Pro možnost měření výšky povolte přístup ke kameře v nastavení aplikace.";
 
 /* No comment provided by engineer. */
@@ -382,6 +422,9 @@
 
 /* No comment provided by engineer. */
 "Joining would invalidate a Turn Restriction the way belongs to" = "Spojením dojde k zneplatnění omezení odbočení do kterého cesta patří";
+
+/* kilometers per hour speed */
+"km/h" = "km/h";
 
 /* No comment provided by engineer. */
 "Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "Výběr jazyka ovlivňuje rozhraní aplikace a předvolby, které jsou lokalizované pro editor iD.";
@@ -472,6 +515,9 @@
 
 /* No comment provided by engineer. */
 "Move selected object?" = "Posunout vybraný objekt?";
+
+/* miles per hour speed */
+"mph" = "mph";
 
 /* No comment provided by engineer. */
 "Multipolygon" = "Multipolygon";
@@ -577,6 +623,12 @@
 "Paste" = "Vložit";
 
 /* No comment provided by engineer. */
+"Paste the JSON for your quests into the field below" = "Níže vložte své úkoly v JSON formátu";
+
+/* No comment provided by engineer. */
+"Pasting %@ characters, maximum tag length is 255" = "Vkládáte %@ znaků, maximální limit značky je 255 znaků.";
+
+/* No comment provided by engineer. */
 "Pasting %ld tag(s)" = "Vkládání %ld tagů";
 
 /* No comment provided by engineer. */
@@ -593,6 +645,15 @@
 
 /* Discard editing changes when resetting OSM data cache */
 "Purge" = "Pročistit";
+
+/* The current Quest the user is answering */
+"Quest" = "Úkol";
+
+/* No comment provided by engineer. */
+"Quest Definition Error" = "Chyba definice úkolu";
+
+/* No comment provided by engineer. */
+"Quests were imported successfully." = "Úkoly byly úspěšně importovány.";
 
 /* No comment provided by engineer. */
 "Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "Hodnocení aplikace umožňuje dalším maperům její nalezení a zviditelňuje OpenStreetMap.";
@@ -685,6 +746,9 @@
 /* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "Omlouváme se, při načítání GPX souboru došlo k chybě";
 
+/* Space key on the keyboard */
+"Space" = "Mezerník";
+
 /* Edit action */
 "Split" = "Rozdělit";
 
@@ -699,6 +763,12 @@
 
 /* Edit action */
 "Straighten" = "Narovnat";
+
+/* No comment provided by engineer. */
+"Success" = "Úspěch";
+
+/* No comment provided by engineer. */
+"Tag Key" = "Klíč značky";
 
 /* Edit action */
 "Tags" = "Značky";
@@ -743,9 +813,6 @@
 "The ways contain incompatible tags" = "Linie obsahují nekompatibilní značky";
 
 /* No comment provided by engineer. */
-"The XML is improperly formed" = "XML soubor je nesprávně naformatován";
-
-/* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "Tato akce vyžaduje zapnutou GPS";
 
 /* No comment provided by engineer. */
@@ -753,6 +820,9 @@
 
 /* No comment provided by engineer. */
 "This device is not able to provide heading data." = "Toto zařízení neumožňuje určovat směr.";
+
+/* No comment provided by engineer. */
+"This feature is only available on iOS 15 or later" = "Tato funkce je dostupná jen na iOS 15 a vyšší";
 
 /* No comment provided by engineer. */
 "To add another member to the relation 'long press' on the way to be added" = "Pro přidání dalšího člena do relace dlouze přidržte linii, kterou chcete přidat";
@@ -795,6 +865,9 @@
 
 /* No comment provided by engineer. */
 "Undo" = "Vrátit";
+
+/* No comment provided by engineer. */
+"Unknown" = "Neznámé";
 
 /* relation role=* tag */
 "Unknown role" = "Neznámá role";
@@ -864,9 +937,6 @@
 
 /* No comment provided by engineer. */
 "You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "Provedli jste změny, které ještě nebyly nahrány na server. Vyčištěním mezipaměti o tyto neuložené změny přijdete.";
-
-/* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "Zadejte své OSM uživatelské jméno, nikoliv e-mailovou adresu.";
 
 /* No comment provided by engineer. */
 "You must save or discard changes to the current object before editing its associated relation" = "Nejprve musíte uložit, nebo zahodit změny aktuálního objektu než začnete upravovat jeho související relaci";

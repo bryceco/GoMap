@@ -574,6 +574,9 @@
 "Paste" = "لصق";
 
 /* No comment provided by engineer. */
+"Pasting %@ characters, maximum tag length is 255" = "قمت بلصق %@ حرفًا، وهذا يتجاوز الحد الأقصى لطول الوسم وهو 255 حرف";
+
+/* No comment provided by engineer. */
 "Pasting %ld tag(s)" = "تُعرض عند نسخ / لصق الوسوم من عنصر لآخر";
 
 /* No comment provided by engineer. */
@@ -740,9 +743,6 @@
 "The ways contain incompatible tags" = "تحتوي الطرق على وسوم غير متوافقة";
 
 /* No comment provided by engineer. */
-"The XML is improperly formed" = "تم تشكيل XML بشكل غير صحيح";
-
-/* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "يتطلب هذا الإجراء تشغيل نظام تحديد المواقع العالمي (GPS)";
 
 /* No comment provided by engineer. */
@@ -861,9 +861,6 @@
 
 /* No comment provided by engineer. */
 "You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "لقد قمت بتغييرات لم يتم رفعها بعد إلى الخادم. سيؤدي مسح ذاكرة التخزين المؤقت إلى فقدان هذه التغييرات.";
-
-/* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "يجب عليك تقديم اسم مستخدم OSM الخاص بك، وليس عنوان بريد إلكتروني.";
 
 /* No comment provided by engineer. */
 "You must save or discard changes to the current object before editing its associated relation" = "يجب حفظ التغييرات على العنصر الحالي أو تجاهلها قبل تحرير العلاقة المقترنة به";

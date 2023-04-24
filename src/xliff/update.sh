@@ -7,7 +7,7 @@ fi
 
 WEBLATE_REPO="https://hosted.weblate.org/api/projects/go-map/repository/"
 PROJECT="../iOS/Go Map!!.xcodeproj/"
-TMPDIR=/tmp/xliff
+TMP_XLIFF=/tmp/xliff
 
 # Tell weblate to commit changes that translators have made
 curl -d operation=commit -H "Authorization: Token $WEBLATE_TOKEN" $WEBLATE_REPO
@@ -17,6 +17,11 @@ curl -d operation=push -H "Authorization: Token $WEBLATE_TOKEN" $WEBLATE_REPO
 
 # Download the updated XLIFFs to the local machine
 git pull
+
+# Convert language codes that are different than what iOS uses
+# Currently we only handle zgh -> tzm
+mv -f zgh.xliff tzm.xliff
+sed -i '' "s/target-language=\"zgh\"/target-language=\"tzm\"/" zgh.xliff
 
 # Strip empty translations
 sed -i ''  '/<target\/>/d' *.xliff
@@ -33,16 +38,19 @@ for f in *.xliff; do
 done
 
 # Export localizations back out to XLIFFs
-rm -rf $TMPDIR
+rm -rf $TMP_XLIFF
 LIST=""
 for f in *.xliff; do
 	LANG=$(echo $f | sed s/\.xliff//)
 	LIST="$LIST -exportLanguage $LANG"
 done
-xcodebuild -exportLocalizations -localizationPath $TMPDIR -project "$PROJECT" $LIST
+xcodebuild -exportLocalizations -localizationPath $TMP_XLIFF -project "$PROJECT" $LIST
 
 # Copy XLIFF files back here
-cp $TMPDIR/*/Localized\ Contents/*.xliff .
+cp $TMP_XLIFF/*/Localized\ Contents/*.xliff .
+
+# Rename tzm back to zgh
+mv -f tzm.xliff zgh.xliff
 
 # Make sure newly added strings are tracked by git
 find .. -name '*.strings' -print0 | xargs -0 git add

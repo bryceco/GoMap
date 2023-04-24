@@ -21,7 +21,7 @@ private final class PathPoints {
 	public let points: [CGPoint]
 	public let length: CGFloat
 	private var offset: CGFloat = 0.0
-	private var segment: Int = 0
+	private var segment = 0
 
 	init(WithPath path: CGPath) {
 		points = path.getPoints()
@@ -161,7 +161,7 @@ final class CurvedGlyphLayer {
 	public static var foreColor = UIColor.white
 	public static var backColor = UIColor.black.withAlphaComponent(0.3)
 
-	static var whiteOnBlack: Bool = true {
+	static var whiteOnBlack = true {
 		didSet {
 			if oldValue != whiteOnBlack {
 				GlyphLayer.clearCache()
@@ -291,17 +291,16 @@ final class CurvedGlyphLayer {
 		let font = StringGlyphs.uiFont
 
 		let paragraphStyle = NSMutableParagraphStyle()
-		paragraphStyle.lineSpacing = font.lineHeight - font.ascender + font
-			.descender +
-			6 // FIXME: 6 is a fudge factor so wrapped Chinese displays correctly, but English is now too large
+		paragraphStyle.lineSpacing = font.lineHeight - font.ascender + font.descender + 6
+		// FIXME: 6 is a fudge factor so wrapped Chinese displays correctly, but English is now too large
 
-		let attrString = NSAttributedString(string: string,
-		                                    attributes: [
-		                                    	NSAttributedString.Key.foregroundColor: CurvedGlyphLayer.foreColor
-		                                    		.cgColor,
-		                                    	NSAttributedString.Key.font: font,
-		                                    	NSAttributedString.Key.paragraphStyle: paragraphStyle
-		                                    ])
+		let attrString = NSAttributedString(
+			string: string,
+			attributes: [
+				NSAttributedString.Key.foregroundColor: CurvedGlyphLayer.foreColor.cgColor,
+				NSAttributedString.Key.font: font,
+				NSAttributedString.Key.paragraphStyle: paragraphStyle
+			])
 
 		let framesetter = CTFramesetterCreateWithAttributedString(attrString)
 
@@ -319,10 +318,8 @@ final class CurvedGlyphLayer {
 			maxWidth *= 2
 		}
 		bounds = bounds.insetBy(dx: -3, dy: -1)
-		bounds.size
-			.width = 2 *
-			ceil(bounds.size
-				.width / 2) // make divisible by 2 so when centered on anchor point at (0.5,0.5) everything still aligns
+		// make divisible by 2 so when centered on anchor point at (0.5,0.5) everything still aligns
+		bounds.size.width = 2 * ceil(bounds.size.width / 2)
 		bounds.size.height = 2 * ceil(bounds.size.height / 2)
 		layer.bounds = bounds
 
@@ -354,9 +351,7 @@ final class GlyphLayer: CALayerWithProperties {
 	private let glyphs: [CGGlyph]
 	private let positions: [CGPoint]
 	private let font: CTFont
-	// Calling super.init() on a CALayer subclass that contains a var doesn't work on iOS 9
-	// Declaring it NSManaged avoids this bug
-	@NSManaged var inUse: Bool
+	var inUse: Bool
 
 	private func copy() -> GlyphLayer {
 		return GlyphLayer(withCopy: self)
@@ -380,8 +375,8 @@ final class GlyphLayer: CALayerWithProperties {
 		self.glyphs = glyphs
 		self.positions = positions
 		self.font = font
-		super.init()
 		inUse = true
+		super.init()
 		let size = CTFontGetBoundingBox(font).size
 		let descent = CTFontGetDescent(font)
 		bounds = CGRect(x: 0, y: descent, width: positions.last!.x, height: size.height)
@@ -395,8 +390,8 @@ final class GlyphLayer: CALayerWithProperties {
 		glyphs = copy.glyphs
 		positions = copy.positions
 		font = copy.font
-		super.init()
 		inUse = true
+		super.init()
 		contentsScale = copy.contentsScale
 		anchorPoint = copy.anchorPoint
 		bounds = copy.bounds
@@ -414,6 +409,7 @@ final class GlyphLayer: CALayerWithProperties {
 		glyphs = layer.glyphs
 		positions = layer.positions
 		font = layer.font
+		inUse = true
 		super.init(layer: layer)
 	}
 

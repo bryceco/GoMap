@@ -574,6 +574,9 @@
 "Paste" = "Kleebi";
 
 /* No comment provided by engineer. */
+"Pasting %@ characters, maximum tag length is 255" = "%@ tähemärgi kleepimine, maksimaalne sildi pikkus on 255";
+
+/* No comment provided by engineer. */
 "Pasting %ld tag(s)" = "%ld sildi kleepimine";
 
 /* No comment provided by engineer. */
@@ -740,9 +743,6 @@
 "The ways contain incompatible tags" = "Teed sisaldavad kokkusobimatuid silte";
 
 /* No comment provided by engineer. */
-"The XML is improperly formed" = "XML on valesti vormistatud";
-
-/* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "See tegevus vajab, et GPS oleks sisse lülitatud";
 
 /* No comment provided by engineer. */
@@ -861,9 +861,6 @@
 
 /* No comment provided by engineer. */
 "You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "Oled teinud muudatusi, mida ei ole veel serverisse üles laetud. Vahemälu kustutamine põhjustab nende muudatuste kadumise.";
-
-/* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "Pead andma oma OSMi kasutajanime, mitte e-posti aadressi.";
 
 /* No comment provided by engineer. */
 "You must save or discard changes to the current object before editing its associated relation" = "Praeguse objekti muudatused tuleb ennem selle seotud seose redigeerimist salvestada või tühistada";

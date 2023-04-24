@@ -9,7 +9,9 @@
 import UIKit
 
 @objcMembers
-final class OsmRelation: OsmBaseObject {
+final class OsmRelation: OsmBaseObject, NSSecureCoding {
+	static let supportsSecureCoding = true
+
 	private(set) var members: [OsmMember]
 
 	override var description: String {
@@ -95,7 +97,7 @@ final class OsmRelation: OsmBaseObject {
 					// relation is not in current view
 				}
 			} else {
-				assert(false)
+				assertionFailure()
 			}
 		}
 		if needsRedraw {
@@ -165,9 +167,9 @@ final class OsmRelation: OsmBaseObject {
 		}
 	}
 
-	override func serverUpdate(inPlace newerVersion: OsmBaseObject) {
+	override func serverUpdate(with newerVersion: OsmBaseObject) {
 		let newerVersion = newerVersion as! OsmRelation
-		super.serverUpdate(inPlace: newerVersion)
+		super.serverUpdate(with: newerVersion)
 		members = newerVersion.members
 	}
 
@@ -264,6 +266,9 @@ final class OsmRelation: OsmBaseObject {
 	static func buildMultipolygonFromMembers(_ memberList: [OsmMember],
 	                                         repairing: Bool) -> ([[OsmNode]], Bool)
 	{
+		// FIXME: This code has at least one out-of-bounds crash, almost certainly due to a
+		// malformed relation. Probably needs to be rewritten to be more robust. Also need
+		// to identify the relation(s) that cause crashes.
 		var loopList: [[OsmNode]] = []
 		var loop: [OsmNode] = []
 		var members = memberList.filter({ ($0.obj is OsmWay) && ($0.role == "outer" || $0.role == "inner") })
@@ -419,7 +424,7 @@ final class OsmRelation: OsmBaseObject {
 	}
 
 	override func distance(toLineSegment point1: OSMPoint, point point2: OSMPoint) -> Double {
-		var dist = 1000000.0
+		var dist = 1_000000.0
 		for member in members {
 			if let object = member.obj {
 				if object.isRelation() == nil {
@@ -435,7 +440,7 @@ final class OsmRelation: OsmBaseObject {
 
 	override func latLonOnObject(forLatLon target: LatLon) -> LatLon {
 		var bestPoint = target
-		var bestDistance = 10000000.0
+		var bestDistance = 10_000000.0
 		for object in allMemberObjects() {
 			let pt = object.latLonOnObject(forLatLon: target)
 			let dist = OSMPoint(target).distanceToPoint(OSMPoint(pt))

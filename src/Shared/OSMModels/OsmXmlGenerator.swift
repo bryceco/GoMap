@@ -3,7 +3,7 @@
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 6/19/21.
-//  Copyright © 2021 Bryce. All rights reserved.
+//  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
 import Foundation
@@ -312,7 +312,7 @@ final class OsmXmlGenerator {
 			if tag.name == "tag" {
 				update(string, withTag: tag)
 			} else {
-				assert(false)
+				assertionFailure()
 			}
 		}
 	}
@@ -368,7 +368,7 @@ final class OsmXmlGenerator {
 			} else if tag.name == "nd" {
 				// skip
 			} else {
-				assert(false)
+				assertionFailure()
 			}
 		}
 	}
@@ -426,7 +426,7 @@ final class OsmXmlGenerator {
 			} else if tag.name == "member" {
 				update(string, withMember: tag)
 			} else {
-				assert(false)
+				assertionFailure()
 			}
 		}
 	}
@@ -463,7 +463,7 @@ final class OsmXmlGenerator {
 			} else if object.name == "relation" {
 				update(string, withRelation: object)
 			} else {
-				assert(false)
+				assertionFailure()
 			}
 		}
 	}

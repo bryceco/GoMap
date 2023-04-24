@@ -60,6 +60,10 @@
 	"areaColor" : "F7EFB7"
   },
 
+  "attraction" : {
+	"areaColor" : "E6598E"
+  },
+
   "barrier" : {
 	"lineColor" : "F0F050",
 	"lineWidth" : 1
@@ -354,6 +358,9 @@
 	"areaColor" : "B62C2C"
   },
 
+  "natural" : {
+	"areaColor" : "002F00"
+  },
   "natural/bay" : {
 	"areaColor" : "002F00"
   },

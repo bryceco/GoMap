@@ -11,13 +11,19 @@
 "NSBluetoothPeripheralUsageDescription" = "الاتصال بأجهزة بلوتوث GPS الخارجية";
 
 /* Privacy - Camera Usage Description */
-"NSCameraUsageDescription" = "يتم استخدام الكاميرا لقياس ارتفاعات المباني أو الأشياء";
+"NSCameraUsageDescription" = "تُستخدم الكاميرا لقياس ارتفاعات المباني أو الأشياء ، وأيضاً للتعرف على النص في لافتات ساعات العمل.";
+
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "حقوق النشر 2012-2021 Bryce Cogswell";
 
 /* Privacy - Location Always and When In Use Usage Description */
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "تشغيل تتبع الموقع بشكل دائم يسمح للتطبيق بتسجيل ملفات GPX عندما يكون التطبيق غير نشط.";
 
 /* Privacy - Location Always Usage Description */
 "NSLocationAlwaysUsageDescription" = "سيتم عرض موقعك وتتبعه على الخريطة.";
+
+/* Privacy - Location Usage Description */
+"NSLocationUsageDescription" = "عند تمكين خدمات الموقع سيعرض لك التطبيق الأشياء القريبة منك، كما يتيح لك تحديث أو إضافة البيانات التي تقوم باستطلاعها بنفسك بسهولة.";
 
 /* Privacy - Location When In Use Usage Description */
 "NSLocationWhenInUseUsageDescription" = "سيتم عرض موقعك وتتبعه على الخريطة.";

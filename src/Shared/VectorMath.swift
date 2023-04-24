@@ -19,7 +19,12 @@ let TRANSFORM_3D = 0
 
 // MARK: Point
 
-extension CGPoint {
+extension CGPoint: Hashable {
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(x)
+		hasher.combine(y)
+	}
+
 	static let zero = CGPoint(x: 0.0, y: 0.0)
 
 	@inline(__always) func withOffset(_ dx: CGFloat, _ dy: CGFloat) -> CGPoint {
@@ -112,6 +117,69 @@ extension CGRect {
 		          y: rc.origin.y,
 		          width: rc.size.width,
 		          height: rc.size.height)
+	}
+
+	func intersectsLineSegment(_ p1: CGPoint, _ p2: CGPoint) -> Bool {
+		let a_rectangleMinX = origin.x
+		let a_rectangleMinY = origin.y
+		let a_rectangleMaxX = origin.x + size.width
+		let a_rectangleMaxY = origin.y + size.height
+		let a_p1x = p1.x
+		let a_p1y = p1.y
+		let a_p2x = p2.x
+		let a_p2y = p2.y
+
+		// Find min and max X for the segment
+		var minX = a_p1x
+		var maxX = a_p2x
+
+		if a_p1x > a_p2x {
+			minX = a_p2x
+			maxX = a_p1x
+		}
+
+		// Find the intersection of the segment's and rectangle's x-projections
+		if maxX > a_rectangleMaxX {
+			maxX = a_rectangleMaxX
+		}
+		if minX < a_rectangleMinX {
+			minX = a_rectangleMinX
+		}
+		if minX > maxX {
+			// If their projections do not intersect return false
+			return false
+		}
+
+		// Find corresponding min and max Y for min and max X we found before
+		var minY = a_p1y
+		var maxY = a_p2y
+		let dx = a_p2x - a_p1x
+		if abs(dx) > 0.0000001 {
+			let a = (a_p2y - a_p1y) / dx
+			let b = a_p1y - a * a_p1x
+			minY = a * minX + b
+			maxY = a * maxX + b
+		}
+
+		if minY > maxY {
+			let tmp = maxY
+			maxY = minY
+			minY = tmp
+		}
+
+		// Find the intersection of the segment's and rectangle's y-projections
+		if maxY > a_rectangleMaxY {
+			maxY = a_rectangleMaxY
+		}
+		if minY < a_rectangleMinY {
+			minY = a_rectangleMinY
+		}
+		if minY > maxY {
+			// If Y-projections do not intersect return false
+			return false
+		}
+
+		return true
 	}
 }
 
@@ -335,69 +403,6 @@ extension OSMRect {
 		return rect
 	}
 
-	func intersectsLineSegment(_ p1: OSMPoint, _ p2: OSMPoint) -> Bool {
-		let a_rectangleMinX = origin.x
-		let a_rectangleMinY = origin.y
-		let a_rectangleMaxX = origin.x + size.width
-		let a_rectangleMaxY = origin.y + size.height
-		let a_p1x = p1.x
-		let a_p1y = p1.y
-		let a_p2x = p2.x
-		let a_p2y = p2.y
-
-		// Find min and max X for the segment
-		var minX = a_p1x
-		var maxX = a_p2x
-
-		if a_p1x > a_p2x {
-			minX = a_p2x
-			maxX = a_p1x
-		}
-
-		// Find the intersection of the segment's and rectangle's x-projections
-		if maxX > a_rectangleMaxX {
-			maxX = a_rectangleMaxX
-		}
-		if minX < a_rectangleMinX {
-			minX = a_rectangleMinX
-		}
-		if minX > maxX {
-			// If their projections do not intersect return false
-			return false
-		}
-
-		// Find corresponding min and max Y for min and max X we found before
-		var minY = a_p1y
-		var maxY = a_p2y
-		let dx = a_p2x - a_p1x
-		if abs(dx) > 0.0000001 {
-			let a = (a_p2y - a_p1y) / dx
-			let b = a_p1y - a * a_p1x
-			minY = a * minX + b
-			maxY = a * maxX + b
-		}
-
-		if minY > maxY {
-			let tmp = maxY
-			maxY = minY
-			minY = tmp
-		}
-
-		// Find the intersection of the segment's and rectangle's y-projections
-		if maxY > a_rectangleMaxY {
-			maxY = a_rectangleMaxY
-		}
-		if minY < a_rectangleMinY {
-			minY = a_rectangleMinY
-		}
-		if minY > maxY {
-			// If Y-projections do not intersect return false
-			return false
-		}
-
-		return true
-	}
-
 	func metersSizeForLatLon() -> OSMSize {
 		let w = GreatCircleDistance(LatLon(x: origin.x, y: origin.y), LatLon(x: origin.x + size.width, y: origin.y))
 		let h = GreatCircleDistance(LatLon(x: origin.x, y: origin.y), LatLon(x: origin.x, y: origin.y + size.height))
@@ -606,7 +611,7 @@ extension OSMTransform {
 	}
 }
 
-struct LatLon {
+struct LatLon: Equatable, Codable {
 	var lon: Double
 	var lat: Double
 
@@ -635,12 +640,16 @@ struct LatLon {
 	init(_ pt: OSMPoint) {
 		self.init(lon: pt.x, lat: pt.y)
 	}
+
+	@inline(__always) public static func ==(_ a: LatLon, _ b: LatLon) -> Bool {
+		return a.lon == b.lon && a.lat == b.lat
+	}
 }
 
 // MARK: miscellaneous
 
 /// Radius in meters
-let EarthRadius: Double = 6378137.0
+let EarthRadius = 6_378137.0
 
 @inline(__always) func radiansFromDegrees(_ degrees: Double) -> Double {
 	return degrees * (.pi / 180)
@@ -656,8 +665,8 @@ func MetersPerDegreeAt(latitude: Double) -> OSMPoint {
 // compute area inside a triangle using Heron's formula
 // input is the length of the 3 sides
 func AreaOfTriangleWithSides(_ s1: Double, _ s2: Double, _ s3: Double) -> Double {
-	let s = (s1 + s2 + s3)/2
-	let a = sqrt( s*(s-s1)*(s-s2)*(s-s3) )
+	let s = (s1 + s2 + s3) / 2
+	let a = sqrt(s * (s - s1) * (s - s2) * (s - s3))
 	return a
 }
 
@@ -668,19 +677,19 @@ func SurfaceAreaOfRect(_ latLon: OSMRect) -> Double {
 	let maxX = latLon.origin.x + latLon.size.width
 	let minY = latLon.origin.y
 	let maxY = latLon.origin.y + latLon.size.height
-	let top = GreatCircleDistance( LatLon(lon: minX, lat: minY), LatLon(lon: maxX, lat: minY))
-	let bot = GreatCircleDistance( LatLon(lon: minX, lat: maxY), LatLon(lon: maxX, lat: maxY))
-	let lft = GreatCircleDistance( LatLon(lon: minX, lat: minY), LatLon(lon: minX, lat: maxY))
-	let rgt = GreatCircleDistance( LatLon(lon: maxX, lat: minY), LatLon(lon: maxX, lat: maxY))
-	let dia = GreatCircleDistance( LatLon(lon: minX, lat: minY), LatLon(lon: maxX, lat: maxY))
+	let top = GreatCircleDistance(LatLon(lon: minX, lat: minY), LatLon(lon: maxX, lat: minY))
+	let bot = GreatCircleDistance(LatLon(lon: minX, lat: maxY), LatLon(lon: maxX, lat: maxY))
+	let lft = GreatCircleDistance(LatLon(lon: minX, lat: minY), LatLon(lon: minX, lat: maxY))
+	let rgt = GreatCircleDistance(LatLon(lon: maxX, lat: minY), LatLon(lon: maxX, lat: maxY))
+	let dia = GreatCircleDistance(LatLon(lon: minX, lat: minY), LatLon(lon: maxX, lat: maxY))
 
 	// Total area is the area of the two triangles formed by the diagonal
 	// This is approximate because we ignore curvature inside the triangles
-	let a1 = AreaOfTriangleWithSides( top, lft, dia)
-	let a2 = AreaOfTriangleWithSides( bot, rgt, dia)
-	return a1+a2
+	let a1 = AreaOfTriangleWithSides(top, lft, dia)
+	let a2 = AreaOfTriangleWithSides(bot, rgt, dia)
+	return a1 + a2
 
-	#if false
+#if false
 	// This is a naive approach that ignores curvature:
 	let lon1 = latLon.origin.x * .pi / 180.0
 	let lat1 = latLon.origin.y * .pi / 180.0
@@ -694,7 +703,7 @@ func SurfaceAreaOfRect(_ latLon: OSMRect) -> Double {
 	// use area of rectangle
 	let A = EarthRadius * EarthRadius * abs(sin(lat1) - sin(lat2)) * abs(lon1 - lon2)
 	return A
-	#endif
+#endif
 }
 
 // http://www.movable-type.co.uk/scripts/latlong.html
@@ -707,4 +716,44 @@ func GreatCircleDistance(_ p1: LatLon, _ p2: LatLon) -> Double {
 	let c: Double = 2 * atan2(sqrt(a), sqrt(1 - a))
 	let meters = EarthRadius * c
 	return meters
+}
+
+// area of a closed polygon (first and last points repeat), and boolean if it's clockwise
+func AreaOfPolygonClockwise(_ points: [CGPoint]) -> (area: Double, clockwise: Bool)? {
+	if points.count < 4 {
+		return nil // not a polygon
+	}
+	if points[0] != points.last! {
+		return nil // first and last aren't identical
+	}
+	// we skip the last/first wrap-around, but last is a duplicate of first so the algorithm still works correctly
+	var area = 0.0
+	var previous = points[0]
+	for point in points.dropFirst() {
+		area += (previous.x + point.x) * (previous.y - point.y)
+		previous = point
+	}
+	area *= 0.5
+	return area < 0 ? (-area, true) : (area, false)
+}
+
+func IsClockwisePolygon(_ points: [CGPoint]) -> Bool? {
+	return AreaOfPolygonClockwise(points)?.clockwise
+}
+
+// Input is a list of points in degrees, with the first and last points being equal
+func AreaInSquareMeters(points: [LatLon]) -> Double {
+	guard points.count > 3, points[0] == points.last! else { return 0.0 }
+	// convert to radians
+	let radians = points.map { LatLon(lon: $0.lon * (.pi / 180),
+	                                  lat: $0.lat * (.pi / 180)) }
+	var area = 0.0
+	var p1 = radians[0]
+	for p2 in radians[1..<radians.count] {
+		let delta = (p2.lon - p1.lon) * (2 + sin(p1.lat) + sin(p2.lat))
+		area += delta
+		p1 = p2
+	}
+	area = area * EarthRadius * EarthRadius / 2
+	return abs(area)
 }

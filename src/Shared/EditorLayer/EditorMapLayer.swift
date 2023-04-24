@@ -37,7 +37,7 @@ enum MenuLocation {
 protocol EditorMapLayerOwner: UIView, MapViewProgress {
 	var mapTransform: MapTransform { get }
 
-	func crosshairs() -> CGPoint
+	func centerPoint() -> CGPoint
 
 	func pushpinView() -> PushPinView? // fetch the pushpin from owner
 	func removePin()
@@ -74,6 +74,7 @@ protocol EditorMapLayerOwner: UIView, MapViewProgress {
 	// notify owner that tags changed so it can refresh e.g. fixme= buttons
 	func didUpdateObject()
 	func selectionDidChange()
+	func didDownloadData()
 }
 
 // MARK: EditorMapLayer
@@ -132,8 +133,9 @@ final class EditorMapLayer: CALayer {
 					title: NSLocalizedString("Cache size warning", comment: ""),
 					message: text,
 					preferredStyle: .alert)
-				alert!
-					.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+				alert!.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+				                               style: .cancel,
+				                               handler: nil))
 			}
 			self.mapData = mapData
 		} catch {
@@ -151,8 +153,9 @@ final class EditorMapLayer: CALayer {
 				                          	"Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.",
 				                          	comment: ""),
 				                          preferredStyle: .alert)
-				alert!
-					.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+				alert!.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+				                               style: .cancel,
+				                               handler: nil))
 			}
 		}
 
@@ -279,16 +282,58 @@ final class EditorMapLayer: CALayer {
 		setNeedsLayout()
 	}
 
-	func purgeCachedDataHard(_ hard: Bool) {
+	enum MapDataPurgeStyle {
+		case hard // purges everything
+		case soft // purges everything except user edits
+	}
+
+	func purgeCachedData(_ style: MapDataPurgeStyle) {
+#if DEBUG
+		// Get a weak reference to every object. Once we've purged everything then all
+		// references should be zeroed. If not then there is a retain cycle somewhere.
+		//
+		// Exception: If the user has an object selected and the tag editor open when
+		// this is called then POITabBarController will have a reference to it.
+		struct Weakly {
+			weak var obj: OsmBaseObject?
+		}
+		var weakly: [Weakly] = []
+		weakly += mapData.nodes.values.map { Weakly(obj: $0) }
+		weakly += mapData.ways.values.map { Weakly(obj: $0) }
+		weakly += mapData.relations.values.map { Weakly(obj: $0) }
+#endif
+
 		owner.removePin()
 		selectedNode = nil
 		selectedWay = nil
 		selectedRelation = nil
-		if hard {
+		switch style {
+		case .hard:
 			mapData.purgeHard()
-		} else {
+		case .soft:
 			mapData.purgeSoft()
 		}
+		for object in shownObjects + fadingOutSet {
+			for layer in object.shapeLayers ?? [] {
+				layer.removeFromSuperlayer()
+			}
+		}
+		shownObjects = []
+		fadingOutSet = []
+
+#if DEBUG
+		weakly.removeAll(where: { $0.obj == nil })
+
+		if let presented = UIApplication.shared.keyWindow?.rootViewController?.presentedViewController,
+		   let selection = (presented as? POITabBarController)?.selection
+		{
+			print("Holding reference to: \(selection)")
+		}
+		if isUnderDebugger() {
+			// if there were dirty objects then they'll still be in mapData
+			assert(weakly.count == mapData.nodeCount() + mapData.wayCount() + mapData.relationCount())
+		}
+#endif
 
 		setNeedsLayout()
 		updateMapLocation()
@@ -312,11 +357,11 @@ final class EditorMapLayer: CALayer {
 		let view: ViewRegion
 		switch MapTransform.projection {
 		case .mercator:
-			view = ViewRegion(encloses: { return box.containsRect($0)},
-							  intersects: { return box.intersectsRect($0)})
+			view = ViewRegion(encloses: { box.containsRect($0) },
+			                  intersects: { box.intersectsRect($0) })
 		case .polarSouth:
 			let mapTransform = owner.mapTransform
-			let sc = self.bounds
+			let sc = bounds
 			view = ViewRegion(encloses: {
 				let corners = $0.corners().map { mapTransform.screenPoint(forLatLon: LatLon($0), birdsEye: true) }
 				return corners.first(where: { !sc.contains($0) }) == nil
@@ -326,7 +371,7 @@ final class EditorMapLayer: CALayer {
 			})
 		}
 
-		let center = owner.mapTransform.latLon(forScreenPoint: owner.crosshairs())
+		let center = owner.mapTransform.latLon(forScreenPoint: owner.centerPoint())
 		print("box contains center = \(box.containsPoint(OSMPoint(center)))")
 
 		mapData.downloadMissingData(inRect: view, withProgress: owner, didChange: { [self] error in
@@ -341,12 +386,13 @@ final class EditorMapLayer: CALayer {
 				return
 			}
 			setNeedsLayout()
+			owner.didDownloadData()
 		})
 		setNeedsLayout()
 	}
 
 	func didReceiveMemoryWarning() {
-		purgeCachedDataHard(false)
+		purgeCachedData(.soft)
 		save()
 	}
 
@@ -396,22 +442,25 @@ final class EditorMapLayer: CALayer {
 	static let medicalColor = UIColor(red: 0xDA / 255.0, green: 0x00 / 255.0, blue: 0x92 / 255.0, alpha: 1.0)
 	static let poiColor = UIColor.blue
 	static let stopColor = UIColor(red: 196 / 255.0, green: 4 / 255.0, blue: 4 / 255.0, alpha: 1.0)
+	static let springColor = UIColor(red: 0.4, green: 0.4, blue: 1.0, alpha: 1.0)
 
 	func defaultColor(for object: OsmBaseObject) -> UIColor? {
 		if object.tags["shop"] != nil {
-			return EditorMapLayer.shopColor
+			return Self.shopColor
 		} else if object.tags["amenity"] != nil || object.tags["building"] != nil || object.tags["leisure"] != nil {
-			return EditorMapLayer.amenityColor
+			return Self.amenityColor
 		} else if object.tags["tourism"] != nil || object.tags["transport"] != nil {
-			return EditorMapLayer.tourismColor
+			return Self.tourismColor
 		} else if object.tags["medical"] != nil {
-			return EditorMapLayer.medicalColor
+			return Self.medicalColor
 		} else if object.tags["name"] != nil {
-			return EditorMapLayer.poiColor
+			return Self.poiColor
 		} else if object.tags["natural"] == "tree" {
-			return EditorMapLayer.treeColor
+			return Self.treeColor
 		} else if object.isNode() != nil, object.tags["highway"] == "stop" {
-			return EditorMapLayer.stopColor
+			return Self.stopColor
+		} else if object.tags["natural"] == "spring" {
+			return Self.springColor
 		}
 		return nil
 	}
@@ -428,16 +477,16 @@ final class EditorMapLayer: CALayer {
 
 	func invoke(
 		alongScreenClippedWay way: OsmWay,
-		block: @escaping (_ p1: OSMPoint, _ p2: OSMPoint, _ isEntry: Bool, _ isExit: Bool) -> Bool)
+		block: @escaping (_ p1: CGPoint, _ p2: CGPoint, _ isEntry: Bool, _ isExit: Bool) -> Bool)
 	{
-		let viewRect = OSMRect(bounds)
-		var prevInside: Bool = false
-		var prev = OSMPoint.zero
+		let viewRect = bounds
+		var prevInside = false
+		var prev = CGPoint.zero
 		var first = true
 
 		for node in way.nodes {
-			let pt = OSMPoint(owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false))
-			let inside = viewRect.containsPoint(pt)
+			let pt = owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false)
+			let inside = viewRect.contains(pt)
 			defer {
 				prev = pt
 				prevInside = inside
@@ -447,10 +496,10 @@ final class EditorMapLayer: CALayer {
 				continue
 			}
 
-			var cross: [OSMPoint] = []
+			var cross: [CGPoint] = []
 			if !(prevInside && inside) {
 				// at least one point was outside, so determine where line intersects the screen
-				cross = EditorMapLayer.ClipLineToRect(p1: prev, p2: pt, rect: viewRect)
+				cross = Self.ClipLineToRect(p1: prev, p2: pt, rect: viewRect)
 				if cross.isEmpty {
 					// both are outside and didn't cross
 					continue
@@ -500,8 +549,8 @@ final class EditorMapLayer: CALayer {
 	func pathClipped(toViewRect way: OsmWay, length pLength: UnsafeMutablePointer<CGFloat>?) -> CGPath? {
 		var path: CGMutablePath?
 		var length = 0.0
-		var firstPoint = OSMPoint.zero
-		var lastPoint = OSMPoint.zero
+		var firstPoint = CGPoint.zero
+		var lastPoint = CGPoint.zero
 
 		invoke(alongScreenClippedWay: way, block: { p1, p2, _, isExit in
 			if path == nil {
@@ -600,8 +649,8 @@ final class EditorMapLayer: CALayer {
 	}
 
 	func getShapeLayers(for object: OsmBaseObject) -> [CALayer & LayerPropertiesProviding] {
-		if object.shapeLayers != nil {
-			return object.shapeLayers!
+		if let shapeLayers = object.shapeLayers {
+			return shapeLayers
 		}
 
 		let renderInfo = object.renderInfo!
@@ -725,7 +774,7 @@ final class EditorMapLayer: CALayer {
 						// if its a building then add walls for 3D
 						if object.tags["building"] != nil {
 							// calculate height in meters
-							var height: Double = 0.0
+							var height = 0.0
 							if let value = object.tags["height"] {
 								// height in meters?
 								var v1: Double = 0
@@ -892,10 +941,12 @@ final class EditorMapLayer: CALayer {
 		var drawRef = true
 
 		// fetch icon
-		let feature = PresetsDatabase.shared.matchObjectTagsToFeature(node.tags,
-		                                                              geometry: node.geometry(),
-		                                                              includeNSI: false)
-		var icon = feature?.iconScaled24()
+		let location = AppDelegate.shared.mapView.currentRegion
+		let feature = PresetsDatabase.shared.presetFeatureMatching(tags: node.tags,
+		                                                           geometry: node.geometry(),
+		                                                           location: location,
+		                                                           includeNSI: false)
+		var icon = feature?.iconScaled24
 		if icon == nil {
 			if node.tags["amenity"] != nil || node.tags["name"] != nil {
 				icon = Self.genericMarkerIcon
@@ -1081,7 +1132,7 @@ final class EditorMapLayer: CALayer {
 		var directionValue: String?
 		if highway == "traffic_signals" {
 			directionValue = node.tags["traffic_signals:direction"]
-		} else if highway == "stop" {
+		} else if highway == "stop" || highway == "give_way" {
 			directionValue = node.tags["direction"]
 		}
 		if let directionValue = directionValue {
@@ -1644,8 +1695,7 @@ final class EditorMapLayer: CALayer {
 		highlightLayers = getShapeLayersForHighlights()
 
 		// get ocean
-		let ocean = getOceanLayer(shownObjects)
-		if let ocean = ocean {
+		if let ocean = getOceanLayer(shownObjects) {
 			highlightLayers.append(ocean)
 		}
 		for layer in highlightLayers {

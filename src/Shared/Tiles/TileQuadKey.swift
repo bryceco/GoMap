@@ -48,7 +48,7 @@ func QuadKeyToTileXY(_ quadKey: String) -> (x: Int, y: Int, z: Int) {
 			tileX |= mask
 			tileY |= mask
 		default:
-			assert(false)
+			assertionFailure()
 		}
 		i -= 1
 	}

@@ -11,13 +11,19 @@
 "NSBluetoothPeripheralUsageDescription" = "Připojení k externím Bluetooth GPS zařízením";
 
 /* Privacy - Camera Usage Description */
-"NSCameraUsageDescription" = "Kamera je použita k měření výšky budov a objektů";
+"NSCameraUsageDescription" = "Fotoaparát se používá k měření výšky budov nebo objektů a k rozpoznávání textu na cedulích s otevírací dobou.";
+
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "Copyright 2012–2021 Bryce Cogswell";
 
 /* Privacy - Location Always and When In Use Usage Description */
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "Vždy zapnuté sledování polohy umožňuje aktivní aplikaci zaznamenat GPX soubory.";
 
 /* Privacy - Location Always Usage Description */
 "NSLocationAlwaysUsageDescription" = "Vaše poloha bude sledována a zobrazena na mapě.";
+
+/* Privacy - Location Usage Description */
+"NSLocationUsageDescription" = "Povolení polohových služeb umožňuje aplikaci zobrazovat objekty ve vašem okolí. Díky tomu můžete snadno aktualizovat nebo přidávat data, která sami prozkoumáte.";
 
 /* Privacy - Location When In Use Usage Description */
 "NSLocationWhenInUseUsageDescription" = "Vaše poloha bude sledována a zobrazena na mapě.";

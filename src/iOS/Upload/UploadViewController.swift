@@ -22,6 +22,11 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 	@IBOutlet var sendMailButton: UIButton!
 	@IBOutlet var editXmlButton: UIButton!
 	@IBOutlet var clearCommentButton: UIButton!
+	@IBOutlet var commentHistoryButton: UIButton!
+	@IBOutlet var sourceHistoryButton: UIButton!
+
+	var recentCommentList = MostRecentlyUsed<String>(maxCount: 5, userDefaultsKey: "recentCommitComments")
+	var recentSourceList = MostRecentlyUsed<String>(maxCount: 5, userDefaultsKey: "recentSourceComments")
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -38,6 +43,20 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 		xmlTextView.layer.borderColor = color.cgColor
 		xmlTextView.layer.borderWidth = 2.0
 		xmlTextView.layer.cornerRadius = 10.0
+
+		// create button for source history
+		sourceHistoryButton = UIButton(type: .custom)
+		sourceHistoryButton.frame = CGRect(x: 0, y: 0, width: 22, height: 22)
+		sourceHistoryButton.setTitle("🔽", for: .normal)
+		sourceHistoryButton.addTarget(self, action: #selector(showSourceHistory), for: .touchUpInside)
+		sourceTextField.rightView = sourceHistoryButton
+		sourceTextField.rightViewMode = .always
+
+		if #available(iOS 13.0, *) {
+			progressView.style = .large
+		} else {
+			progressView.style = .whiteLarge
+		}
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -51,6 +70,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 
 		let source = UserDefaults.standard.object(forKey: "uploadSource") as? String
 		sourceTextField.text = source
+		sourceTextField.placeholder = "survey, Bing, knowledge" // overrules translations: see #557
 
 		let text = mapData?.changesetAsAttributedString()
 		if text == nil {
@@ -70,6 +90,9 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 		editXmlButton.isEnabled = text != nil
 
 		clearCommentButton.isHidden = true
+
+		commentHistoryButton.isHidden = recentCommentList.count == 0
+		sourceTextField.rightViewMode = recentSourceList.count > 0 ? .always : .never
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
@@ -91,9 +114,41 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 		clearCommentButton.isHidden = true
 	}
 
+	private func showHistorySheet(_ list: [String], button: UIButton, textView: UIView) {
+		let actionSheet = UIAlertController(
+			title: nil,
+			message: nil,
+			preferredStyle: .actionSheet)
+		for message in list {
+			actionSheet.addAction(UIAlertAction(title: message, style: .default, handler: { _ in
+				if let view = textView as? UITextView {
+					view.text = message
+					view.resignFirstResponder()
+				} else if let view = textView as? UITextField {
+					view.text = message
+					view.resignFirstResponder()
+				}
+			}))
+		}
+		actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+		                                    style: .cancel,
+		                                    handler: nil))
+		actionSheet.popoverPresentationController?.sourceView = button
+		actionSheet.popoverPresentationController?.sourceRect = button.bounds
+		present(actionSheet, animated: true)
+	}
+
+	@IBAction func showCommitMessageHistory(_ sender: Any) {
+		showHistorySheet(recentCommentList.items, button: commentHistoryButton, textView: commentTextView)
+	}
+
+	@IBAction func showSourceHistory(_ sender: Any) {
+		showHistorySheet(recentSourceList.items, button: sourceHistoryButton, textView: sourceTextField)
+	}
+
 	@IBAction func commit(_ sender: Any?) {
 		let appDelegate = AppDelegate.shared
-		if appDelegate.userName.count == 0 || appDelegate.userPassword.count == 0 {
+		if !appDelegate.oAuth2.isAuthorized() {
 			performSegue(withIdentifier: "loginSegue", sender: self)
 			return
 		}
@@ -105,14 +160,15 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 					"You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel.",
 					comment: ""),
 				preferredStyle: .alert)
-			alert
-				.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
-			alert
-				.addAction(UIAlertAction(title: NSLocalizedString("Commit", comment: ""), style: .default,
-				                         handler: { [self] _ in
-				                         	UserDefaults.standard.set(true, forKey: "userDidPreviousUpload")
-				                         	commit(nil)
-				                         }))
+			alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+			                              style: .cancel,
+			                              handler: nil))
+			alert.addAction(UIAlertAction(title: NSLocalizedString("Commit", comment: ""),
+			                              style: .default,
+			                              handler: { [self] _ in
+			                              	UserDefaults.standard.set(true, forKey: "userDidPreviousUpload")
+			                              	commit(nil)
+			                              }))
 			present(alert, animated: true)
 			return
 		}
@@ -128,23 +184,38 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 
 		var comment = commentTextView.text ?? ""
 		comment = comment.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+		if comment != "" {
+			recentCommentList.updateWith(comment)
+		}
 
 		var source = sourceTextField.text ?? ""
 		source = source.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+		if source != "" {
+			recentSourceList.updateWith(source)
+		}
 
-		let locale = PresetLanguages().preferredLanguageCode()
+		let locale = PresetLanguages.preferredLanguageCode()
 
-		let completion: ((String?) -> Void) = { [self] error in
+		let completion: ((Error?) -> Void) = { [self] error in
 			progressView.stopAnimating()
 			commitButton.isEnabled = true
 			cancelButton.isEnabled = true
-			if let error = error {
+			if let error = error as? UrlSessionError,
+			   case let .badStatusCode(code, _) = error,
+			   code == 401
+			{
+				// authentication error, so redirect to login page
+				appDelegate.oAuth2.removeAuthorization()
+				performSegue(withIdentifier: "loginSegue", sender: self)
+				return
+			} else if let error = error {
 				let alert = UIAlertController(
 					title: NSLocalizedString("Unable to upload changes", comment: ""),
-					message: error,
+					message: error.localizedDescription,
 					preferredStyle: .alert)
-				alert
-					.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+				alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+				                              style: .cancel,
+				                              handler: nil))
 				present(alert, animated: true)
 
 				if !xmlTextView.isEditable {
@@ -170,9 +241,9 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 			}
 		}
 
-		var imagery: String = ""
-		if appDelegate.mapView.viewState == MapViewState.EDITORAERIAL || appDelegate.mapView.viewState == MapViewState
-			.AERIAL
+		var imagery = ""
+		if appDelegate.mapView.viewState == MapViewState.EDITORAERIAL ||
+			appDelegate.mapView.viewState == MapViewState.AERIAL
 		{
 			imagery = appDelegate.mapView.aerialLayer.tileServer.name
 		}
@@ -184,7 +255,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 			do {
 				xmlDoc = try DDXMLDocument(xmlString: xmlText, options: 0)
 			} catch {
-				completion(NSLocalizedString("The XML is improperly formed", comment: ""))
+				completion(error)
 				return
 			}
 			mapData?.openChangesetAndUpload(
@@ -230,7 +301,8 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 			let mail = MFMailComposeViewController()
 			mail.mailComposeDelegate = self
 			let appName = appDelegate.appName()
-			mail.setSubject(String.localizedStringWithFormat(NSLocalizedString("%@ changeset", comment: ""), appName))
+			mail.setSubject(String.localizedStringWithFormat(NSLocalizedString("%@ changeset", comment: ""),
+			                                                 appName))
 			let xml = mapData?.changesetAsXml()
 			if let data = xml?.data(using: .utf8) {
 				mail.addAttachmentData(data, mimeType: "application/xml", fileName: "osmChange.osc")

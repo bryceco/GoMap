@@ -13,4 +13,15 @@ for f in *.*; do
 	mv $f "${f%.*}"
 done
 
-ls | xargs -I % curl -T "{%}" ftp://gomaposm.com/public_html/brandIcons/ --user $GOMAPOSM_USER_PASSWORD
+# create a zip file
+zip archive.zip *
+
+curl --upload-file archive.zip ftp://gomaposm.com/public_html/brandIcons/ --user $GOMAPOSM_USER_PASSWORD
+
+# unzip the archive on the server side
+curl https://gomaposm.com/brandIconsUnzipper.php
+
+
+
+# old way of uploading:
+# ls | xargs -I % curl -T "{%}" ftp://gomaposm.com/public_html/brandIcons/ --user $GOMAPOSM_USER_PASSWORD

@@ -31,6 +31,9 @@
 /* No comment provided by engineer. */
 "(way)" = "(線段)";
 
+/* area in m^2 */
+"%.0f m^2" = "%.0f 平方公尺";
+
 /* way length if > 10m */
 "%.0f meters, %ld nodes" = "%1$.0f 公尺, %2$ld 節點";
 
@@ -59,6 +62,9 @@
 /* length of a gpx track */
 "%ld meters, %ld points" = "%1$ld 公尺, %2$ld 點";
 
+/* length of a gpx track */
+"%ld meters, %ld points, %ld waypoints" = "%1$ld 公尺， %2$ld 點， %3$ld 航點";
+
 /* Number of tiles/objects in cache */
 "%ld objects" = "%ld 個物件";
 
@@ -75,10 +81,22 @@
 "1 Day" = "1 天";
 
 /* No comment provided by engineer. */
+"A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." = "您所自定義的任務，全部都以 JSON 格式複製到剪貼簿了。您可以貼上到任何地方保存或是轉送給其他人。";
+
+/* No comment provided by engineer. */
 "A GPX Track records your path as you travel along a road or trail" = "當您沿著道路或小徑移動時， GPX 軌跡記錄了您的移動路徑";
 
 /* No comment provided by engineer. */
 "A relation the node belongs to is not fully downloaded" = "節點所屬的關係沒有全部下載完畢";
+
+/* No comment provided by engineer. */
+"Accept" = "接受";
+
+/* A type of quest */
+"Add Building Type" = "添加建築物類型";
+
+/* A type of quest */
+"Add Highway Surface" = "添加道路鋪面";
 
 /* Add to relation */
 "Add inner member" = "新增內部成員";
@@ -92,11 +110,29 @@
 /* No comment provided by engineer. */
 "add object to relation" = "新增物件到關係中";
 
+/* A type of quest */
+"Add Opening Hours" = "添加營業時間";
+
 /* Add to relation */
 "Add outer member" = "新增外部成員";
 
+/* A type of quest */
+"Add Parking Type" = "添加停車場類型";
+
+/* A type of quest */
+"Add Sidewalk Surface" = "添加人行道鋪面";
+
+/* A type of quest */
+"Add Speed Limit" = "添加速限";
+
+/* A type of quest */
+"Add Telephone Number" = "添加電話號碼";
+
 /* No comment provided by engineer. */
 "Add way to multipolygon?" = "新增線段到複多邊形？";
+
+/* A type of quest */
+"Add Website" = "添加網址";
 
 /* No comment provided by engineer. */
 "added to multipolygon relation" = "已新增到複多邊形關係中";
@@ -108,6 +144,9 @@
 "Additional imagery" = "其他影像";
 
 /* No comment provided by engineer. */
+"Advanced Quest Builder" = "建立進階任務";
+
+/* No comment provided by engineer. */
 "Aerial only" = "只用空照影像";
 
 /* No comment provided by engineer. */
@@ -116,8 +155,18 @@
 /* No comment provided by engineer. */
 "All Tags" = "全部標籤";
 
+/* Show an error message */
+"An error occured while exporting: %@" = "輸出的時候發生了錯誤： %@";
+
+/* Show an error message */
+"An error occured while importing: %@" = "匯入的過程發生錯誤： %@";
+
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "更新詮釋資料時發生未知錯誤";
+
+/* Area of an object in m^2
+   Object geometry: a closed way or multipolygon) */
+"Area" = "面積";
 
 /* No comment provided by engineer. */
 "Attention" = "注意";
@@ -128,11 +177,23 @@
 /* Automatic selection of presets languages */
 "Automatic" = "自動";
 
+/* back button */
+"Back" = "返回";
+
 /* identifies current aerial imagery */
 "Background imagery %@" = "背景影像 %@";
 
 /* No comment provided by engineer. */
 "Bad login" = "無效登入";
+
+/* No comment provided by engineer. */
+"Better background imagery is available for your location. Would you like to change to it?" = "您所在的位置有更好的影像底圖，是否要使用看看？";
+
+/* No comment provided by engineer. */
+"Better imagery available" = "有更好的影像";
+
+/* No comment provided by engineer. */
+"Build a New Quest" = "建立新的任務";
 
 /* No comment provided by engineer. */
 "Cache size warning" = "快取總量的警告";
@@ -179,6 +240,9 @@
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "無法將內部線段連結到外部線段";
 
+/* No comment provided by engineer. */
+"Change" = "變更";
+
 /* OSM changeset identifier */
 "Changeset" = "變更集";
 
@@ -215,6 +279,9 @@
 /* No comment provided by engineer. */
 "Connecting the nodes would damage a relation" = "連接該節點將會破壞某個關係";
 
+/* text was copied to the system clipboard */
+"Copied" = "已複製";
+
 /* Edit action */
 "Copy Tags" = "複製標籤";
 
@@ -223,6 +290,9 @@
 
 /* No comment provided by engineer. */
 "Create\n" = "新增\n";
+
+/* No comment provided by engineer. */
+"Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." = "為每一個該被包含或排除於篩選條件之中的 key=value 分別在表單中新增一列，要篩選缺少 key 的情況請將 value 留空，要篩選任意 value 請使用 key=*。";
 
 /* No comment provided by engineer. */
 "create node" = "新增節點";
@@ -245,11 +315,17 @@
 /* current GPX track */
 "Current Track" = "當前的航跡";
 
+/* No comment provided by engineer. */
+"Database error" = "資料庫錯誤";
+
 /* Edit action */
 "Delete" = "刪除";
 
 /* No comment provided by engineer. */
 "Delete\n" = "刪除\n";
+
+/* Confirm deleting a node/way */
+"Delete %@?" = "刪除 %@ ？";
 
 /* No comment provided by engineer. */
 "Delete completely" = "完全刪除";
@@ -284,11 +360,17 @@
 /* No comment provided by engineer. */
 "Detach from relation" = "從關係中分離";
 
+/* Discard changes */
+"Discard" = "捨棄";
+
 /* Edit action */
 "Disconnect" = "斷開連接";
 
 /* No comment provided by engineer. */
 "Display options" = "顯示選項";
+
+/* Distance to an object with an error value */
+"Distance: %1$@ ± %2$@ meters" = "距離：%1$@ ± %2$@ 公尺";
 
 /* No comment provided by engineer. */
 "Done" = "完成";
@@ -338,20 +420,41 @@
 /* No comment provided by engineer. */
 "Extending a way which belongs to a Route or similar relation may damage the relation" = "延伸屬於某個路線或類似關係中的線段可能會破壞該關係";
 
+/* Header for quest filters section */
+"Filters" = "篩選條件";
+
+/* No comment provided by engineer. */
+"Geometry" = "幾何形狀";
+
 /* No comment provided by engineer. */
 "GPX Upload Complete" = "GPX 上傳完畢";
 
 /* No comment provided by engineer. */
 "GPX Upload Failed" = "GPX 上傳失敗";
 
+/* Height of an object with an error value */
+"Height: %1$@ ± %2$@ meters" = "高度：%1$@ ± %2$@ 公尺";
+
 /* rate the app now */
 "I'll do it!" = "來吧！";
+
+/* No comment provided by engineer. */
+"Icon" = "圖示";
 
 /* OSM node/way/relation identifier */
 "Identifier" = "識別符號";
 
 /* No comment provided by engineer. */
 "Ignore" = "忽略";
+
+/* No comment provided by engineer. */
+"Import" = "匯入";
+
+/* No comment provided by engineer. */
+"Import Error" = "匯入錯誤";
+
+/* No comment provided by engineer. */
+"Import Quests" = "匯入任務";
 
 /* No comment provided by engineer. */
 "In order to measure height, please enable camera access in the app's settings." = "為了要測量高度，請在 iOS 的設定中開啟 Go Map 的相機使用權限。";
@@ -364,6 +467,12 @@
 
 /* No comment provided by engineer. */
 "Joining would invalidate a Turn Restriction the way belongs to" = "若要加入，將會使線段所屬的轉向限制關係失效";
+
+/* The tag keys section of a quest definition */
+"Keys" = "標籤";
+
+/* kilometers per hour speed */
+"km/h" = "公里/小時";
 
 /* No comment provided by engineer. */
 "Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "語言選擇只會套用到預設組合以及那些在 iD 編輯器中已經翻譯完的預設組合。介面仍然是英文。";
@@ -382,6 +491,9 @@
 
 /* No comment provided by engineer. */
 "Length" = "長度";
+
+/* Object geometry: a way (but not an area) */
+"Line" = "線段";
 
 /* No comment provided by engineer. */
 "Location unavailable" = "無法定位";
@@ -409,6 +521,9 @@
 
 /* rate the app later */
 "Maybe later..." = "可能等一下再來...";
+
+/* No comment provided by engineer. */
+"Measure Direction" = "量測方向";
 
 /* No comment provided by engineer. */
 "Member of multipolygon relation" = "複多邊形關係的成員";
@@ -452,8 +567,17 @@
 /* No comment provided by engineer. */
 "Move selected object?" = "移動所選物件？";
 
+/* miles per hour speed */
+"mph" = "英里/小時";
+
 /* No comment provided by engineer. */
 "Multipolygon" = "複多邊形";
+
+/* No comment provided by engineer. */
+"Name" = "名稱";
+
+/* Quest for objects that aren't recently updated */
+"Needs Survey" = "需要踏查";
 
 /* No comment provided by engineer. */
 "Network error" = "網路問題";
@@ -464,6 +588,9 @@
 
 /* No comment provided by engineer. */
 "Next" = "下一個";
+
+/* No comment provided by engineer. */
+"no" = "否";
 
 /* GPX track */
 "No active track" = "沒有啟用的航跡";
@@ -556,6 +683,12 @@
 "Paste" = "貼上";
 
 /* No comment provided by engineer. */
+"Paste the JSON for your quests into the field below" = "請將 JSON 貼到下方的輸入框中";
+
+/* No comment provided by engineer. */
+"Pasting %@ characters, maximum tag length is 255" = "貼上 %@ 字元，最大標籤長度是 255";
+
+/* No comment provided by engineer. */
 "Pasting %ld tag(s)" = "貼上 %ld 標籤";
 
 /* No comment provided by engineer. */
@@ -564,14 +697,29 @@
 /* No comment provided by engineer. */
 "Please wait" = "請稍候";
 
+/* Object geometry: a node */
+"Point" = "點";
+
 /* No comment provided by engineer. */
 "Previous" = "上一個";
 
 /* previous GPX track */
 "Previous Tracks" = "上一個航跡";
 
+/* No comment provided by engineer. */
+"Provide a single-character symbol (emoji or unicode character) to identify this quest:" = "請提供一個可以辨識本任務的符號（支援 emoji）：";
+
 /* Discard editing changes when resetting OSM data cache */
 "Purge" = "清除";
+
+/* The current Quest the user is answering */
+"Quest" = "任務";
+
+/* No comment provided by engineer. */
+"Quest Definition Error" = "任務定義錯誤";
+
+/* No comment provided by engineer. */
+"Quests were imported successfully." = "任務已經成功地匯入。";
 
 /* No comment provided by engineer. */
 "Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "給這個 app 評分，可以讓圖客們更容易找到之外，同時提升了開放街圖的能見度。";
@@ -615,6 +763,9 @@
 /* country name,2-character country code */
 "Results for %@ (%@)" = "結果： %1$@ (%2$@)";
 
+/* retry opening hours recognition */
+"Retry" = "重試";
+
 /* Edit action */
 "Reverse" = "反轉方向";
 
@@ -626,6 +777,12 @@
 
 /* Edit action */
 "Rotate" = "旋轉";
+
+/* Save changes */
+"Save" = "儲存";
+
+/* No comment provided by engineer. */
+"Save or discard your changes" = "儲存或捨棄您的修改";
 
 /* No comment provided by engineer. */
 "Select a highway approaching the intersection" = "選擇一條靠近路口的道路";
@@ -656,7 +813,13 @@
 "Show Recent Items" = "顯示近期的項目";
 
 /* No comment provided by engineer. */
+"Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." = "當恢復資料時發生錯誤，任何暫存的變動都遺失了，抱歉。";
+
+/* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "抱歉，讀取 GPX 檔的時候遇到錯誤";
+
+/* Space key on the keyboard */
+"Space" = "空白";
 
 /* Edit action */
 "Split" = "拆分";
@@ -672,6 +835,12 @@
 
 /* Edit action */
 "Straighten" = "截彎取直";
+
+/* No comment provided by engineer. */
+"Success" = "成功";
+
+/* No comment provided by engineer. */
+"Tag Key" = "標籤的鍵";
 
 /* Edit action */
 "Tags" = "標籤";
@@ -716,13 +885,19 @@
 "The ways contain incompatible tags" = "線段包含不相容的標籤";
 
 /* No comment provided by engineer. */
-"The XML is improperly formed" = "XML 格式錯誤";
-
-/* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "這個行為需要啟用 GPS 功能";
 
 /* No comment provided by engineer. */
 "This app does not yet support editing turn restrictions without a node as the 'via' member" = "本軟體尚未支援編輯無轉向節點的轉向限制關係";
+
+/* No comment provided by engineer. */
+"This device is not able to provide heading data." = "這個裝置無法提供方向資料。";
+
+/* No comment provided by engineer. */
+"This feature is only available on iOS 15 or later" = "這個功能只能在 iOS 15 或之後的版本中使用";
+
+/* No comment provided by engineer. */
+"This page allows you to design quests with more specific criteria than the regular Quest Builder page." = "這裡可以讓您設計出比普通任務設定頁面更複雜的任務。";
 
 /* No comment provided by engineer. */
 "To add another member to the relation 'long press' on the way to be added" = "把另一個成員加入到關係中的做法是在線段上長按就可以新增";
@@ -748,6 +923,9 @@
 /* No comment provided by engineer. */
 "Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.\n\nSelect the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route." = "轉向限制關係在您抵達路口的時候會指明可以轉往哪一個方向\n\n選擇您進入路口的方向，然後點擊箭號以表示可以轉往的方向。";
 
+/* The 'Type' header in Common Tags */
+"Type" = "種類";
+
 /* No comment provided by engineer. */
 "U-Turn from %@ allowed" = "允許從 %@ 迴轉";
 
@@ -763,6 +941,9 @@
 /* No comment provided by engineer. */
 "Undo" = "上一步";
 
+/* No comment provided by engineer. */
+"Unknown" = "不明的";
+
 /* relation role=* tag */
 "Unknown role" = "不明的角色";
 
@@ -771,6 +952,9 @@
 
 /* update an osm note */
 "Update" = "更新";
+
+/* Update the named tag value (e.g. foo=*) */
+"Update '%@' tag" = "更新 '%@' 標籤";
 
 /* No comment provided by engineer. */
 "update relation members" = "更新關係的成員";
@@ -799,6 +983,9 @@
 /* OSM object versioh */
 "Version" = "版本";
 
+/* Object geometry: a node that is part of a way */
+"Vertex" = "頂點";
+
 /* Year aerial imagery was created */
 "vintage %@" = "年份 %@";
 
@@ -818,6 +1005,18 @@
 "Way Tags" = "路徑標籤";
 
 /* No comment provided by engineer. */
+"What is the name of this quest? This is best written in the form of an action like 'Add Surface':" = "這個任務的名稱是什麼？建議使用以動詞開頭的祈使句像是「添加鋪面」：";
+
+/* No comment provided by engineer. */
+"What tag key is modified by this quest?" = "哪些標籤的 key 在這個任務中被修改了？";
+
+/* No comment provided by engineer. */
+"What types of objects does this quest apply to?" = "這個任務會套用哪種物件類型？";
+
+/* No comment provided by engineer. */
+"yes" = "是";
+
+/* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "您即將要修改真的 OSM 資料庫，全世界所有人都會看到您的修改。\n\n如要繼續請請再次點擊提交，否則請點擊取消。";
 
 /* POI editor presets */
@@ -828,9 +1027,6 @@
 
 /* No comment provided by engineer. */
 "You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "您所編輯的內容尚未上傳到伺服器。清除快取將一併刪除這些內容。";
-
-/* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "您必須提供您的 OSM 使用者名稱，而非電子郵件信箱。";
 
 /* No comment provided by engineer. */
 "You must save or discard changes to the current object before editing its associated relation" = "您必須先儲存或捨棄對於所選物件的變更，然後才能編輯該物件的關係";

@@ -11,13 +11,19 @@
 "NSBluetoothPeripheralUsageDescription" = "連線到其他藍牙 GPS 裝置";
 
 /* Privacy - Camera Usage Description */
-"NSCameraUsageDescription" = "您的相機將會被用來測量建築物或實體物件的高度";
+"NSCameraUsageDescription" = "您的相機將會被用來測量建築物或實體物件的高度，同時也用於營業時間標示的文字辨識。";
+
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "版權所有 2012-2021 Bryce Cogswell";
 
 /* Privacy - Location Always and When In Use Usage Description */
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "持續定位並允許 app 紀錄資訊到 GPX 檔案，當 app 在背景執行時。";
 
 /* Privacy - Location Always Usage Description */
 "NSLocationAlwaysUsageDescription" = "您的定位動態將會顯示在地圖上。";
+
+/* Privacy - Location Usage Description */
+"NSLocationUsageDescription" = "允許位置服務來讓 app 顯示你附近的物件。這讓你很容易在探查時更新或新增資料。";
 
 /* Privacy - Location When In Use Usage Description */
 "NSLocationWhenInUseUsageDescription" = "您的定位動態將會顯示在地圖上。";

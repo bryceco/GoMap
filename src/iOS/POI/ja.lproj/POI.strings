@@ -77,7 +77,7 @@
 "Fcv-4Q-gpE.text" = "値 3";
 
 /* Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; Note = "Do not translate"; */
-"Fe2-dc-zgA.placeholder" = "designated";
+"Fe2-dc-zgA.placeholder" = "特定種の通行禁止";
 
 /* Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Do not translate"; */
 "foC-aN-GtH.placeholder" = "クリーン";
@@ -90,6 +90,9 @@
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw"; Note = "Do not translate"; */
 "gv7-b8-wUw.text" = "ラベル";
+
+/* Class = "UITextView"; text = "Lorem ipsum dolor "; ObjectID = "hAy-aU-g8L"; Note = "Placeholder - Don't translate"; */
+"hAy-aU-g8L.text" = "Lorem ipsum dolor ";
 
 /* Class = "UITextField"; text = "value"; ObjectID = "hfr-Mf-ZHv"; */
 "hfr-Mf-ZHv.text" = "値";
@@ -136,6 +139,9 @@
 /* Class = "UILabel"; text = "Value 4"; ObjectID = "ng7-T9-SJ6"; */
 "ng7-T9-SJ6.text" = "値 4";
 
+/* Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "nil-45-Wvp"; */
+"nil-45-Wvp.normalTitle" = "ⓘ";
+
 /* Class = "UILabel"; text = "Value 2"; ObjectID = "nKt-LG-cSw"; */
 "nKt-LG-cSw.text" = "値 2";
 
@@ -172,6 +178,9 @@
 /* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "Rfe-SO-p0w"; */
 "Rfe-SO-p0w.title" = "中止";
 
+/* Class = "UITextField"; placeholder = "value"; ObjectID = "sHA-cr-GLb"; Note = "Do not translate"; */
+"sHA-cr-GLb.placeholder" = "値";
+
 /* Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ"; Note = "Do not translate"; */
 "sVp-1S-TjJ.placeholder" = "ロール";
 
@@ -193,6 +202,9 @@
 /* Class = "UITextField"; placeholder = "yes"; ObjectID = "vpk-jC-yxl"; Note = "Do not translate"; */
 "vpk-jC-yxl.placeholder" = "yes";
 
+/* Class = "UILabel"; text = "Inscription"; ObjectID = "Wcg-RB-I2a"; Note = "Placeholder - Don't translate"; */
+"Wcg-RB-I2a.text" = "銘";
+
 /* Class = "UILabel"; text = "Value 12"; ObjectID = "wFE-f1-sQa"; */
 "wFE-f1-sQa.text" = "値 12";
 
@@ -207,6 +219,9 @@
 
 /* Class = "UILabel"; text = "Food & Drink"; ObjectID = "XBV-Ie-LDT"; Note = "Do not translate"; */
 "XBV-Ie-LDT.text" = "飲食";
+
+/* Class = "UITextField"; placeholder = "key"; ObjectID = "XCc-6y-qYt"; Note = "Do not translate"; */
+"XCc-6y-qYt.placeholder" = "キー";
 
 /* Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ"; */
 "z19-cc-gHZ.text" = "値";

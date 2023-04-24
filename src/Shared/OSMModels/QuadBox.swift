@@ -3,7 +3,7 @@
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 6/14/21.
-//  Copyright © 2021 Bryce. All rights reserved.
+//  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
 import Foundation
@@ -26,13 +26,14 @@ struct ViewRegion {
 	let intersects: (OSMRect) -> Bool
 }
 
-final class QuadBox: NSObject, NSCoding {
-	static let emptyChildren: [QuadBox?] = [nil, nil, nil, nil]
+final class QuadBox: NSObject, NSSecureCoding {
+	static let emptyChildren: ContiguousArray<QuadBox?> = [nil, nil, nil, nil]
+	static let supportsSecureCoding = true
 
 	let rect: OSMRect
-	var parent: QuadBox?
+	weak var parent: QuadBox?
 
-	var children: [QuadBox?] = QuadBox.emptyChildren
+	var children: ContiguousArray<QuadBox?> = QuadBox.emptyChildren
 	// this quad successfully downloaded all of its data, so we don't need to track children anymore
 	var isDownloaded = false
 	var downloadDate = 0.0
@@ -41,7 +42,7 @@ final class QuadBox: NSObject, NSCoding {
 	var isSplit = false
 
 	// member is used only for spatial
-	var members: [OsmBaseObject] = []
+	var members: ContiguousArray<OsmBaseObject> = []
 
 	private init(rect: OSMRect, parent: QuadBox?) {
 		self.rect = rect
@@ -434,7 +435,7 @@ final class QuadBox: NSObject, NSCoding {
 			// add to self
 			if members.contains(member) {
 #if DEBUG
-				assert(false) // duplicate entry
+				assertionFailure() // duplicate entry
 #endif
 				return
 			}
