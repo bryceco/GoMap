@@ -526,7 +526,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 	}
 
 	static func scaleAttribution(icon: UIImage, toHeight height: CGFloat) -> UIImage {
-		guard abs(icon.size.height - height) < 0.1 else {
+		guard abs(icon.size.height - height) > 0.1 else {
 			return icon
 		}
 		let scale = icon.size.height / height
@@ -558,7 +558,13 @@ final class TileServer: Equatable, Codable, FastCodable {
 			if let icon = TileServer.iconCache.object(withKey: identifier,
 			                                          fallbackURL: { URL(string: url) },
 			                                          objectForData: { UIImage(data: $0) },
-			                                          completion: { self._attributionIcon = try? $0.get(); completion()
+			                                          completion: {
+			                                          	if let image = try? $0.get() {
+			                                          		self._attributionIcon = Self.scaleAttribution(
+			                                          			icon: image,
+			                                          			toHeight: height)
+			                                          	}
+			                                          	completion()
 			                                          })
 			{
 				_attributionIcon = Self.scaleAttribution(icon: icon, toHeight: height)
