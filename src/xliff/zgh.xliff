@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
-  <file original="Base.lproj/MainStoryboard.storyboard" datatype="plaintext" source-language="en" target-language="tzm">
+  <file original="Base.lproj/MainStoryboard.storyboard" datatype="plaintext" source-language="en" target-language="zgh">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3" build-num="14E222b"/>
     </header>
@@ -143,7 +143,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="tzm" datatype="plaintext">
+  <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="zgh" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3" build-num="14E222b"/>
     </header>
@@ -172,7 +172,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="DisplaySettings/Base.lproj/Display.storyboard" datatype="plaintext" source-language="en" target-language="tzm">
+  <file original="DisplaySettings/Base.lproj/Display.storyboard" datatype="plaintext" source-language="en" target-language="zgh">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3" build-num="14E222b"/>
     </header>
@@ -545,7 +545,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
     </body>
   </file>
-  <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="tzm" datatype="plaintext">
+  <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="zgh" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3" build-num="14E222b"/>
     </header>
@@ -599,7 +599,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
     </body>
   </file>
-  <file original="en.lproj/Localizable.strings" source-language="en" target-language="tzm" datatype="plaintext">
+  <file original="en.lproj/Localizable.strings" source-language="en" target-language="zgh" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3" build-num="14E222b"/>
     </header>
@@ -2024,7 +2024,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
     </body>
   </file>
-  <file original="Height/Base.lproj/Height.storyboard" datatype="plaintext" source-language="en" target-language="tzm">
+  <file original="Height/Base.lproj/Height.storyboard" datatype="plaintext" source-language="en" target-language="zgh">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3" build-num="14E222b"/>
     </header>
@@ -2047,7 +2047,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
     </body>
   </file>
-  <file original="PhotoShare/Base.lproj/MainInterface.storyboard" datatype="plaintext" source-language="en" target-language="tzm">
+  <file original="PhotoShare/Base.lproj/MainInterface.storyboard" datatype="plaintext" source-language="en" target-language="zgh">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3" build-num="14E222b"/>
     </header>
@@ -2066,7 +2066,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
     </body>
   </file>
-  <file original="PhotoShare/en.lproj/InfoPlist.strings" datatype="plaintext" source-language="en" target-language="tzm">
+  <file original="PhotoShare/en.lproj/InfoPlist.strings" datatype="plaintext" source-language="en" target-language="zgh">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3" build-num="14E222b"/>
     </header>
@@ -2081,7 +2081,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
     </body>
   </file>
-  <file original="PhotoShare/en.lproj/Localizable.strings" datatype="plaintext" source-language="en" target-language="tzm">
+  <file original="PhotoShare/en.lproj/Localizable.strings" datatype="plaintext" source-language="en" target-language="zgh">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3" build-num="14E222b"/>
     </header>
@@ -2100,7 +2100,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
     </body>
   </file>
-  <file original="POI/Base.lproj/POI.storyboard" datatype="plaintext" source-language="en" target-language="tzm">
+  <file original="POI/Base.lproj/POI.storyboard" datatype="plaintext" source-language="en" target-language="zgh">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3" build-num="14E222b"/>
     </header>
@@ -2419,7 +2419,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
     </body>
   </file>
-  <file original="Settings/Base.lproj/Settings.storyboard" datatype="plaintext" source-language="en" target-language="tzm">
+  <file original="Settings/Base.lproj/Settings.storyboard" datatype="plaintext" source-language="en" target-language="zgh">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3" build-num="14E222b"/>
     </header>
@@ -2676,7 +2676,7 @@ http://glyphish.com
       </trans-unit>
     </body>
   </file>
-  <file original="Upload/Base.lproj/Changeset.storyboard" datatype="plaintext" source-language="en" target-language="tzm">
+  <file original="Upload/Base.lproj/Changeset.storyboard" datatype="plaintext" source-language="en" target-language="zgh">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3" build-num="14E222b"/>
     </header>

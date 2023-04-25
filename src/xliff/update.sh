@@ -18,11 +18,6 @@ curl -d operation=push -H "Authorization: Token $WEBLATE_TOKEN" $WEBLATE_REPO
 # Download the updated XLIFFs to the local machine
 git pull
 
-# Convert language codes that are different than what iOS uses
-# Currently we only handle zgh -> tzm
-mv -f zgh.xliff tzm.xliff
-sed -i '' "s/target-language=\"zgh\"/target-language=\"tzm\"/" tzm.xliff
-
 # Strip empty translations
 sed -i ''  '/<target\/>/d' *.xliff
 
@@ -48,9 +43,6 @@ xcodebuild -exportLocalizations -localizationPath $TMP_XLIFF -project "$PROJECT"
 
 # Copy XLIFF files back here
 cp $TMP_XLIFF/*/Localized\ Contents/*.xliff .
-
-# Rename tzm back to zgh
-mv -f tzm.xliff zgh.xliff
 
 # Make sure newly added strings are tracked by git
 find .. -name '*.strings' -print0 | xargs -0 git add
