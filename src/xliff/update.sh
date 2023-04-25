@@ -21,7 +21,7 @@ git pull
 # Convert language codes that are different than what iOS uses
 # Currently we only handle zgh -> tzm
 mv -f zgh.xliff tzm.xliff
-sed -i '' "s/target-language=\"zgh\"/target-language=\"tzm\"/" zgh.xliff
+sed -i '' "s/target-language=\"zgh\"/target-language=\"tzm\"/" tzm.xliff
 
 # Strip empty translations
 sed -i ''  '/<target\/>/d' *.xliff
