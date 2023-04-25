@@ -63,8 +63,8 @@ class MeasureDirectionViewModel: HeadingProviderDelegate {
 
 		if let oldValue = value, !oldValue.isEmpty {
 			oldValueLabelText.value = String(format: NSLocalizedString("Old value: %@",
-			                                            comment: "previous tag value"),
-											 oldValue)
+			                                                           comment: "previous tag value"),
+			                                 oldValue)
 		}
 	}
 
