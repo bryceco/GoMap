@@ -1925,10 +1925,12 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       </trans-unit>
       <trans-unit id="Save" xml:space="preserve">
         <source>Save</source>
+        <target state="translated">Spremi</target>
         <note>Save changes</note>
       </trans-unit>
       <trans-unit id="Save or discard your changes" xml:space="preserve">
         <source>Save or discard your changes</source>
+        <target state="translated">Spremi ili odbaci promjene</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Select Object" xml:space="preserve">
@@ -2014,10 +2016,12 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       </trans-unit>
       <trans-unit id="Success" xml:space="preserve">
         <source>Success</source>
+        <target state="translated">Uspjeh</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Tag Key" xml:space="preserve">
         <source>Tag Key</source>
+        <target state="translated">Ključ oznake</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Tags" xml:space="preserve">
@@ -2107,6 +2111,7 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       </trans-unit>
       <trans-unit id="This feature is only available on iOS 15 or later" xml:space="preserve">
         <source>This feature is only available on iOS 15 or later</source>
+        <target state="translated">Ova je funkcija dostupna samo na iOS-u 15 i novijim verzijama</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="This page allows you to design quests with more specific criteria than the regular Quest Builder page." xml:space="preserve">
@@ -2189,6 +2194,7 @@ Odaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu 
       </trans-unit>
       <trans-unit id="Unknown" xml:space="preserve">
         <source>Unknown</source>
+        <target state="translated">Nepoznato</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Unknown role" xml:space="preserve">
@@ -2253,6 +2259,7 @@ Odaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu 
       </trans-unit>
       <trans-unit id="Vertex" xml:space="preserve">
         <source>Vertex</source>
+        <target state="translated">Putna točka</target>
         <note>Object geometry: a node that is part of a way</note>
       </trans-unit>
       <trans-unit id="Warning" xml:space="preserve">
@@ -2443,6 +2450,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
       </trans-unit>
       <trans-unit id="no" xml:space="preserve">
         <source>no</source>
+        <target state="translated">ne</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">
@@ -2492,6 +2500,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
       </trans-unit>
       <trans-unit id="yes" xml:space="preserve">
         <source>yes</source>
+        <target state="translated">da</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>
@@ -2773,11 +2782,12 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
       </trans-unit>
       <trans-unit id="XCc-6y-qYt.placeholder" xml:space="preserve">
         <source>key</source>
+        <target state="translated">key</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "XCc-6y-qYt"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
         <source>Subtitle</source>
-        <target>Podnaslov</target>
+        <target state="translated">Subtitle</target>
         <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "ZYn-TK-k7d"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="aCs-vS-YXj.placeholder" xml:space="preserve">
@@ -2837,6 +2847,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
       </trans-unit>
       <trans-unit id="hAy-aU-g8L.text" xml:space="preserve">
         <source>Lorem ipsum dolor </source>
+        <target state="translated">Lorem ipsum dolor </target>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor "; ObjectID = "hAy-aU-g8L"; Note = "Placeholder - Don't translate";</note>
       </trans-unit>
       <trans-unit id="hKU-EH-qxp.title" xml:space="preserve">
@@ -2936,6 +2947,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
       </trans-unit>
       <trans-unit id="sHA-cr-GLb.placeholder" xml:space="preserve">
         <source>value</source>
+        <target state="translated">value</target>
         <note>Class = "UITextField"; placeholder = "value"; ObjectID = "sHA-cr-GLb"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="sVp-1S-TjJ.placeholder" xml:space="preserve">
