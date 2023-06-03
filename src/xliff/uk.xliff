@@ -67,6 +67,7 @@
       </trans-unit>
       <trans-unit id="HeZ-95-3K1.text" xml:space="preserve">
         <source>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</source>
+        <target state="translated">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</target>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "HeZ-95-3K1"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="LSJ-rB-J2c.text" xml:space="preserve">
@@ -239,6 +240,7 @@
       </trans-unit>
       <trans-unit id="7df-49-qTa.text" xml:space="preserve">
         <source>Rail Features</source>
+        <target state="translated">Залізничні обʼєкти</target>
         <note>Class = "UILabel"; text = "Rail Features"; ObjectID = "7df-49-qTa";</note>
       </trans-unit>
       <trans-unit id="7ga-PZ-MfV.placeholder" xml:space="preserve">
@@ -881,6 +883,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." xml:space="preserve">
         <source>A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else.</source>
+        <target state="translated">Копія всіх визначених користувачем квестів була скопійована до буферу обміну у форматі JSON. Ви можете вставити її кудись, щоб зберегти копію або надіслати комусь іншому.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="A relation the node belongs to is not fully downloaded" xml:space="preserve">
@@ -895,10 +898,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Add Building Type" xml:space="preserve">
         <source>Add Building Type</source>
+        <target state="translated">Додати тип будівлі</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Highway Surface" xml:space="preserve">
         <source>Add Highway Surface</source>
+        <target state="translated">Додати поверхню дороги</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
@@ -908,26 +913,32 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Add Opening Hours" xml:space="preserve">
         <source>Add Opening Hours</source>
+        <target state="translated">Додати години роботи</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Parking Type" xml:space="preserve">
         <source>Add Parking Type</source>
+        <target state="translated">Додати тип стоянки</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Sidewalk Surface" xml:space="preserve">
         <source>Add Sidewalk Surface</source>
+        <target state="translated">Додати поверхню тротуара</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Speed Limit" xml:space="preserve">
         <source>Add Speed Limit</source>
+        <target state="translated">Додати обмеження швидкості</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Telephone Number" xml:space="preserve">
         <source>Add Telephone Number</source>
+        <target state="translated">Додати телефонний номер</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Website" xml:space="preserve">
         <source>Add Website</source>
+        <target state="translated">Додати вебсайт</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add inner member" xml:space="preserve">
@@ -957,6 +968,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Advanced Quest Builder" xml:space="preserve">
         <source>Advanced Quest Builder</source>
+        <target state="translated">Просунутий редактор квестів</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
@@ -976,10 +988,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="An error occured while exporting: %@" xml:space="preserve">
         <source>An error occured while exporting: %@</source>
+        <target state="translated">Помилка під час експортування: %@</target>
         <note>Show an error message</note>
       </trans-unit>
       <trans-unit id="An error occured while importing: %@" xml:space="preserve">
         <source>An error occured while importing: %@</source>
+        <target state="translated">Помилка під час імпортування: %@</target>
         <note>Show an error message</note>
       </trans-unit>
       <trans-unit id="An unknown error occurred fetching metadata" xml:space="preserve">
@@ -989,6 +1003,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Area" xml:space="preserve">
         <source>Area</source>
+        <target state="translated">Площа</target>
         <note>Area of an object in m^2
    Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
@@ -1029,10 +1044,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Better imagery available" xml:space="preserve">
         <source>Better imagery available</source>
+        <target state="translated">Є кращий фоновий шар</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Build a New Quest" xml:space="preserve">
         <source>Build a New Quest</source>
+        <target state="translated">Створити новий квест</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
@@ -1172,6 +1189,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Copied" xml:space="preserve">
         <source>Copied</source>
+        <target state="translated">Скопійовано</target>
         <note>text was copied to the system clipboard</note>
       </trans-unit>
       <trans-unit id="Copy Tags" xml:space="preserve">
@@ -1203,6 +1221,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." xml:space="preserve">
         <source>Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value.</source>
+        <target state="translated">Створіть рядок у таблиці для кожної пари ключ/значення і вкажіть, чи потрібно включати або виключати обʼєкти, що збігаються. Залиште значення порожнім, щоб вказати, що ключ відсутній. Використовуйте key=* для збігу з будь-яким значенням.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
@@ -1249,6 +1268,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Discard" xml:space="preserve">
         <source>Discard</source>
+        <target state="translated">Відкинути</target>
         <note>Discard changes</note>
       </trans-unit>
       <trans-unit id="Disconnect" xml:space="preserve">
@@ -1347,6 +1367,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Filters" xml:space="preserve">
         <source>Filters</source>
+        <target state="translated">Фільтри</target>
         <note>Header for quest filters section</note>
       </trans-unit>
       <trans-unit id="GPX Upload Complete" xml:space="preserve">
@@ -1361,6 +1382,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Geometry" xml:space="preserve">
         <source>Geometry</source>
+        <target state="translated">Геометрія</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
@@ -1375,6 +1397,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Icon" xml:space="preserve">
         <source>Icon</source>
+        <target state="translated">Піктограма</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Identifier" xml:space="preserve">
@@ -1389,14 +1412,17 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Import" xml:space="preserve">
         <source>Import</source>
+        <target state="translated">Імпорт</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Import Error" xml:space="preserve">
         <source>Import Error</source>
+        <target state="translated">Помилка імпорту</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Import Quests" xml:space="preserve">
         <source>Import Quests</source>
+        <target state="translated">Імпорт квестів</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="In order to measure height, please enable camera access in the app's settings." xml:space="preserve">
@@ -1421,6 +1447,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Keys" xml:space="preserve">
         <source>Keys</source>
+        <target state="translated">Ключі</target>
         <note>The tag keys section of a quest definition</note>
       </trans-unit>
       <trans-unit id="Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." xml:space="preserve">
@@ -1455,6 +1482,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Line" xml:space="preserve">
         <source>Line</source>
+        <target state="translated">Лінія</target>
         <note>Object geometry: a way (but not an area)</note>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
@@ -1580,10 +1608,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Name" xml:space="preserve">
         <source>Name</source>
+        <target state="translated">Назва</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Needs Survey" xml:space="preserve">
         <source>Needs Survey</source>
+        <target state="translated">Потребує обстеження</target>
         <note>Quest for objects that aren't recently updated</note>
       </trans-unit>
       <trans-unit id="Network error" xml:space="preserve">
@@ -1743,6 +1773,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Paste the JSON for your quests into the field below" xml:space="preserve">
         <source>Paste the JSON for your quests into the field below</source>
+        <target state="translated">Вставте JSON для ваших квестів у поле внизу</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Pasting %@ characters, maximum tag length is 255" xml:space="preserve">
@@ -1767,6 +1798,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Point" xml:space="preserve">
         <source>Point</source>
+        <target state="translated">Точка</target>
         <note>Object geometry: a node</note>
       </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
@@ -1781,6 +1813,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Provide a single-character symbol (emoji or unicode character) to identify this quest:" xml:space="preserve">
         <source>Provide a single-character symbol (emoji or unicode character) to identify this quest:</source>
+        <target state="translated">Вкажіть один символ (емодзі чи символ юнікоду) щоб ідентифікувати цей квест:</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Purge" xml:space="preserve">
@@ -1790,14 +1823,17 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Quest" xml:space="preserve">
         <source>Quest</source>
+        <target state="translated">Квест</target>
         <note>The current Quest the user is answering</note>
       </trans-unit>
       <trans-unit id="Quest Definition Error" xml:space="preserve">
         <source>Quest Definition Error</source>
+        <target state="translated">Помилка у визначенні квесту</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Quests were imported successfully." xml:space="preserve">
         <source>Quests were imported successfully.</source>
+        <target state="translated">Квести імпортовані успішно.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." xml:space="preserve">
@@ -1892,10 +1928,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Save" xml:space="preserve">
         <source>Save</source>
+        <target state="translated">Зберегти</target>
         <note>Save changes</note>
       </trans-unit>
       <trans-unit id="Save or discard your changes" xml:space="preserve">
         <source>Save or discard your changes</source>
+        <target state="translated">Зберегти або відкинути зміни</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Select Object" xml:space="preserve">
@@ -1951,6 +1989,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Space" xml:space="preserve">
         <source>Space</source>
+        <target state="translated">Пропуск</target>
         <note>Space key on the keyboard</note>
       </trans-unit>
       <trans-unit id="Split" xml:space="preserve">
@@ -1980,10 +2019,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Success" xml:space="preserve">
         <source>Success</source>
+        <target state="translated">Успіх</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Tag Key" xml:space="preserve">
         <source>Tag Key</source>
+        <target state="translated">Ключ теґа</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Tags" xml:space="preserve">
@@ -2073,6 +2114,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="This feature is only available on iOS 15 or later" xml:space="preserve">
         <source>This feature is only available on iOS 15 or later</source>
+        <target state="translated">Ця функція працює лише починаючи з iOS 15</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="This page allows you to design quests with more specific criteria than the regular Quest Builder page." xml:space="preserve">
