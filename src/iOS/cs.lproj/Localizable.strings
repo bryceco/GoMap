@@ -92,6 +92,12 @@
 /* No comment provided by engineer. */
 "Accept" = "Přijmout";
 
+/* A type of quest */
+"Add Building Type" = "Přidat typ budovy";
+
+/* A type of quest */
+"Add Highway Surface" = "Přidat povrch cesty";
+
 /* Add to relation */
 "Add inner member" = "Přidat vnitřního člena";
 
@@ -104,11 +110,29 @@
 /* No comment provided by engineer. */
 "add object to relation" = "přidat objekt do relace";
 
+/* A type of quest */
+"Add Opening Hours" = "Přidat otevírací dobu";
+
 /* Add to relation */
 "Add outer member" = "Přidat vnějšího člena";
 
+/* A type of quest */
+"Add Parking Type" = "Přidat typ parkoviště";
+
+/* A type of quest */
+"Add Sidewalk Surface" = "Přidat povrch chodníku";
+
+/* A type of quest */
+"Add Speed Limit" = "Přidat rychlostní limit";
+
+/* A type of quest */
+"Add Telephone Number" = "Přidat telefonní číslo";
+
 /* No comment provided by engineer. */
 "Add way to multipolygon?" = "Přidat linii do multipolygonu?";
+
+/* A type of quest */
+"Add Website" = "Přidat web";
 
 /* No comment provided by engineer. */
 "added to multipolygon relation" = "přidáno do multipolygonové relace";
@@ -118,6 +142,9 @@
 
 /* No comment provided by engineer. */
 "Additional imagery" = "Další snímky";
+
+/* No comment provided by engineer. */
+"Advanced Quest Builder" = "Pokročilý editor úkolů";
 
 /* No comment provided by engineer. */
 "Aerial only" = "Pouze letecké snímky";
@@ -164,6 +191,9 @@
 
 /* No comment provided by engineer. */
 "Better imagery available" = "K dispozici jsou lepší snímky";
+
+/* No comment provided by engineer. */
+"Build a New Quest" = "Vytvořit nový úkol";
 
 /* No comment provided by engineer. */
 "Cache size warning" = "Upozornění na velikost mezipaměti";
@@ -262,6 +292,9 @@
 "Create\n" = "Vytvořit\n";
 
 /* No comment provided by engineer. */
+"Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." = "Vytvořte řádek v tabulce pro každý pár klíč: hodnota a uveďte, zda mají být odpovídající objekty zahrnuty, nebo vyloučeny. Ponechte hodnotu prázdnou pro indikaci, že klíč není přítomen. Použijte klíč=* pro shodu s jakoukoliv hodnotou.";
+
+/* No comment provided by engineer. */
 "create node" = "vytvořit bod";
 
 /* No comment provided by engineer. */
@@ -327,6 +360,9 @@
 /* No comment provided by engineer. */
 "Detach from relation" = "Odpojit od relace";
 
+/* Discard changes */
+"Discard" = "Zahodit";
+
 /* Edit action */
 "Disconnect" = "Odpojit";
 
@@ -384,6 +420,12 @@
 /* No comment provided by engineer. */
 "Extending a way which belongs to a Route or similar relation may damage the relation" = "Prodloužení cesty, která patří do trasy nebo podobné relace může poškodit relaci";
 
+/* Header for quest filters section */
+"Filters" = "Filtry";
+
+/* No comment provided by engineer. */
+"Geometry" = "Geometrie";
+
 /* No comment provided by engineer. */
 "GPX Upload Complete" = "Nahrávání GPX dokončeno";
 
@@ -395,6 +437,9 @@
 
 /* rate the app now */
 "I'll do it!" = "Udělám to!";
+
+/* No comment provided by engineer. */
+"Icon" = "Ikona";
 
 /* OSM node/way/relation identifier */
 "Identifier" = "Identifikátor";
@@ -423,6 +468,9 @@
 /* No comment provided by engineer. */
 "Joining would invalidate a Turn Restriction the way belongs to" = "Spojením dojde k zneplatnění omezení odbočení do kterého cesta patří";
 
+/* The tag keys section of a quest definition */
+"Keys" = "Klíče";
+
 /* kilometers per hour speed */
 "km/h" = "km/h";
 
@@ -443,6 +491,9 @@
 
 /* No comment provided by engineer. */
 "Length" = "Délka";
+
+/* Object geometry: a way (but not an area) */
+"Line" = "Linie";
 
 /* No comment provided by engineer. */
 "Location unavailable" = "Poloha je nedostupná";
@@ -523,6 +574,12 @@
 "Multipolygon" = "Multipolygon";
 
 /* No comment provided by engineer. */
+"Name" = "Název";
+
+/* Quest for objects that aren't recently updated */
+"Needs Survey" = "Vyžaduje průzkum";
+
+/* No comment provided by engineer. */
 "Network error" = "Chyba sítě";
 
 /* Never delete old GPX tracks
@@ -531,6 +588,9 @@
 
 /* No comment provided by engineer. */
 "Next" = "Další";
+
+/* No comment provided by engineer. */
+"no" = "ne";
 
 /* GPX track */
 "No active track" = "Žádná aktivní trasa";
@@ -637,11 +697,17 @@
 /* No comment provided by engineer. */
 "Please wait" = "Prosím čekejte";
 
+/* Object geometry: a node */
+"Point" = "Bod";
+
 /* No comment provided by engineer. */
 "Previous" = "Předchozí";
 
 /* previous GPX track */
 "Previous Tracks" = "Předchozí trasy";
+
+/* No comment provided by engineer. */
+"Provide a single-character symbol (emoji or unicode character) to identify this quest:" = "Zadejte jediný znak (emoji nebo unicode) pro identifikaci tohoto úkolu:";
 
 /* Discard editing changes when resetting OSM data cache */
 "Purge" = "Pročistit";
@@ -711,6 +777,12 @@
 
 /* Edit action */
 "Rotate" = "Otočit";
+
+/* Save changes */
+"Save" = "Uložit";
+
+/* No comment provided by engineer. */
+"Save or discard your changes" = "Uložit nebo zahodit vaše změny";
 
 /* No comment provided by engineer. */
 "Select a highway approaching the intersection" = "Vyberte silnici směřující do křížení";
@@ -825,6 +897,9 @@
 "This feature is only available on iOS 15 or later" = "Tato funkce je dostupná jen na iOS 15 a vyšší";
 
 /* No comment provided by engineer. */
+"This page allows you to design quests with more specific criteria than the regular Quest Builder page." = "Tady si můžete navrhnout úkoly s podrobnějšími pravidly než v běžném editoru úkolů.";
+
+/* No comment provided by engineer. */
 "To add another member to the relation 'long press' on the way to be added" = "Pro přidání dalšího člena do relace dlouze přidržte linii, kterou chcete přidat";
 
 /* No comment provided by engineer. */
@@ -908,6 +983,9 @@
 /* OSM object versioh */
 "Version" = "Verze";
 
+/* Object geometry: a node that is part of a way */
+"Vertex" = "Bod linie";
+
 /* Year aerial imagery was created */
 "vintage %@" = "ročník %@";
 
@@ -925,6 +1003,18 @@
 
 /* No comment provided by engineer. */
 "Way Tags" = "Značky linie";
+
+/* No comment provided by engineer. */
+"What is the name of this quest? This is best written in the form of an action like 'Add Surface':" = "Jaký je název tohoto úkolu? Nejlepší je ho zadat ve formě akce, jako např. „Přidat povrch“:";
+
+/* No comment provided by engineer. */
+"What tag key is modified by this quest?" = "Který klíč značky je upraven tímto úkolem?";
+
+/* No comment provided by engineer. */
+"What types of objects does this quest apply to?" = "Na které typy objektů se tento úkol vztahuje?";
+
+/* No comment provided by engineer. */
+"yes" = "ano";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Chystáte se provést změny v živé OpenStreetMap databázi. Vaše změny budou viditelné pro všechny na světě.\n\nChcete-li změny skutečně odeslat, znovu klepněte na Odeslat. Jinak klepněte na Zrušit.";

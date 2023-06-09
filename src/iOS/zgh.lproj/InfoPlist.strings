@@ -1,0 +1,9 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Go Map!!";
+
+/* Bundle name */
+"CFBundleName" = "Go Map!!";
+
+/* Privacy - Bluetooth Peripheral Usage Description */
+"NSBluetoothPeripheralUsageDescription" = "ⴰⵎⵢⴰⵡⴰⴹ ⴷ ⵡⴰⵍⵍⴰⵍⵏ ⵏ ⴱⵍⵓⵜⵓⵜ GPS ⵏ ⴱⵕⵕⴰ";
+

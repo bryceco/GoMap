@@ -86,6 +86,12 @@
 /* No comment provided by engineer. */
 "Accept" = "Prihvati";
 
+/* A type of quest */
+"Add Building Type" = "Dodaj vrstu zgrade";
+
+/* A type of quest */
+"Add Highway Surface" = "Dodaj površinski sloj autoceste";
+
 /* Add to relation */
 "Add inner member" = "Dodaj unutarnji član";
 
@@ -98,11 +104,29 @@
 /* No comment provided by engineer. */
 "add object to relation" = "vezi dodaj objekt";
 
+/* A type of quest */
+"Add Opening Hours" = "Dodaj radne sate";
+
 /* Add to relation */
 "Add outer member" = "Dodaj vanjski član";
 
+/* A type of quest */
+"Add Parking Type" = "Dodaj vrstu prkirališta";
+
+/* A type of quest */
+"Add Sidewalk Surface" = "Dodaj površinski sloj pločnika";
+
+/* A type of quest */
+"Add Speed Limit" = "Dodaj ograničenje brzine";
+
+/* A type of quest */
+"Add Telephone Number" = "Dodaj telefonski broj";
+
 /* No comment provided by engineer. */
 "Add way to multipolygon?" = "Dodati put mnogokutu?";
+
+/* A type of quest */
+"Add Website" = "Dodajte web-stranicu";
 
 /* No comment provided by engineer. */
 "added to multipolygon relation" = "dodano mnogokutnoj vezi";
@@ -121,6 +145,12 @@
 
 /* No comment provided by engineer. */
 "All Tags" = "Sve oznake";
+
+/* Show an error message */
+"An error occured while exporting: %@" = "Dogodila se greška tijekom izvoza: %@";
+
+/* Show an error message */
+"An error occured while importing: %@" = "Dogodila se greška tijekom uvoza: %@";
 
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "Dogodila se nepoznata greška pri dohvaćanju metapodataka";
@@ -152,6 +182,9 @@
 
 /* No comment provided by engineer. */
 "Better imagery available" = "Dostupne su bolje slike";
+
+/* No comment provided by engineer. */
+"Build a New Quest" = "Izradi novu pretragu";
 
 /* No comment provided by engineer. */
 "Cache size warning" = "Upozorenje o veličini predmemorije";
@@ -237,6 +270,9 @@
 /* No comment provided by engineer. */
 "Connecting the nodes would damage a relation" = "Spajanje čvorova bi pokvarilo vezu";
 
+/* text was copied to the system clipboard */
+"Copied" = "Kopirano";
+
 /* Edit action */
 "Copy Tags" = "Kopiraj oznake";
 
@@ -312,6 +348,9 @@
 /* No comment provided by engineer. */
 "Detach from relation" = "Odspoji iz veze";
 
+/* Discard changes */
+"Discard" = "Odbaci";
+
 /* Edit action */
 "Disconnect" = "Odspoji";
 
@@ -369,6 +408,12 @@
 /* No comment provided by engineer. */
 "Extending a way which belongs to a Route or similar relation may damage the relation" = "Produženje puta koji pripada ruti ili sličnoj vezi može oštetiti vezu";
 
+/* Header for quest filters section */
+"Filters" = "Filtri";
+
+/* No comment provided by engineer. */
+"Geometry" = "Geometrija";
+
 /* No comment provided by engineer. */
 "GPX Upload Complete" = "Prijenos na GPX gotov";
 
@@ -381,11 +426,23 @@
 /* rate the app now */
 "I'll do it!" = "Ja ću to obaviti!";
 
+/* No comment provided by engineer. */
+"Icon" = "Ikona";
+
 /* OSM node/way/relation identifier */
 "Identifier" = "Identifikator";
 
 /* No comment provided by engineer. */
 "Ignore" = "Zanemari";
+
+/* No comment provided by engineer. */
+"Import" = "Uvoz";
+
+/* No comment provided by engineer. */
+"Import Error" = "Greška u uvozu";
+
+/* No comment provided by engineer. */
+"Import Quests" = "Pretrage uvoza";
 
 /* No comment provided by engineer. */
 "In order to measure height, please enable camera access in the app's settings." = "Za mjerenje visine aktiviraj pristup kameri u postavkama programa.";
@@ -398,6 +455,9 @@
 
 /* No comment provided by engineer. */
 "Joining would invalidate a Turn Restriction the way belongs to" = "Spajanje bi poništilo zabranu skretanja s puta kojemu pripada";
+
+/* The tag keys section of a quest definition */
+"Keys" = "Ključevi";
 
 /* kilometers per hour speed */
 "km/h" = "km/h";
@@ -419,6 +479,9 @@
 
 /* No comment provided by engineer. */
 "Length" = "Duljina";
+
+/* Object geometry: a way (but not an area) */
+"Line" = "Linija";
 
 /* No comment provided by engineer. */
 "Location unavailable" = "Mjesto nedostupno";
@@ -499,6 +562,12 @@
 "Multipolygon" = "Mnogokut";
 
 /* No comment provided by engineer. */
+"Name" = "Ime";
+
+/* Quest for objects that aren't recently updated */
+"Needs Survey" = "Treba ispitati";
+
+/* No comment provided by engineer. */
 "Network error" = "Greška mreže";
 
 /* Never delete old GPX tracks
@@ -507,6 +576,9 @@
 
 /* No comment provided by engineer. */
 "Next" = "Sljedeće";
+
+/* No comment provided by engineer. */
+"no" = "ne";
 
 /* GPX track */
 "No active track" = "Nema aktivne staze";
@@ -599,6 +671,9 @@
 "Paste" = "Umetni";
 
 /* No comment provided by engineer. */
+"Paste the JSON for your quests into the field below" = "Unesi JSON za tvoje pretrage u donje polje";
+
+/* No comment provided by engineer. */
 "Pasting %@ characters, maximum tag length is 255" = "Umetanje znakova %@, maksimalna duljina oznake je 255";
 
 /* No comment provided by engineer. */
@@ -609,6 +684,9 @@
 
 /* No comment provided by engineer. */
 "Please wait" = "Pričekaj";
+
+/* Object geometry: a node */
+"Point" = "Točka";
 
 /* No comment provided by engineer. */
 "Previous" = "Prethodne";
@@ -676,6 +754,12 @@
 /* Edit action */
 "Rotate" = "Okreni";
 
+/* Save changes */
+"Save" = "Spremi";
+
+/* No comment provided by engineer. */
+"Save or discard your changes" = "Spremi ili odbaci promjene";
+
 /* No comment provided by engineer. */
 "Select a highway approaching the intersection" = "Odaberi autocestu koja se približava raskrižju";
 
@@ -727,6 +811,12 @@
 
 /* Edit action */
 "Straighten" = "Izravnaj";
+
+/* No comment provided by engineer. */
+"Success" = "Uspjeh";
+
+/* No comment provided by engineer. */
+"Tag Key" = "Ključ oznake";
 
 /* Edit action */
 "Tags" = "Oznake";
@@ -780,6 +870,9 @@
 "This device is not able to provide heading data." = "Ovaj uređaj nije u stanju pružiti podatke o smjeru.";
 
 /* No comment provided by engineer. */
+"This feature is only available on iOS 15 or later" = "Ova je funkcija dostupna samo na iOS-u 15 i novijim verzijama";
+
+/* No comment provided by engineer. */
 "To add another member to the relation 'long press' on the way to be added" = "Za dodavanje daljnjeg člana vezi, „pritisni dugo” na put kojemu se dodaje";
 
 /* No comment provided by engineer. */
@@ -821,6 +914,9 @@
 /* No comment provided by engineer. */
 "Undo" = "Poništi";
 
+/* No comment provided by engineer. */
+"Unknown" = "Nepoznato";
+
 /* relation role=* tag */
 "Unknown role" = "Nepoznata uloga";
 
@@ -860,6 +956,9 @@
 /* OSM object versioh */
 "Version" = "Verzija";
 
+/* Object geometry: a node that is part of a way */
+"Vertex" = "Putna točka";
+
 /* Year aerial imagery was created */
 "vintage %@" = "vrijeme snimanja %@";
 
@@ -877,6 +976,9 @@
 
 /* No comment provided by engineer. */
 "Way Tags" = "Oznake puta";
+
+/* No comment provided by engineer. */
+"yes" = "da";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Promijenit ćeš podatke u aktivnoj OpenStreetMap bazi podataka. Tvoje promjene će vidjeti svi na svijetu.\n\nNastavi ponovnim pritiskom na „Potvrdi”, inače pritisni „Odustani”.";

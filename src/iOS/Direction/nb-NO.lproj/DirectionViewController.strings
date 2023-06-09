@@ -4,9 +4,9 @@
 /* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "exg-Jc-FOH"; */
 "exg-Jc-FOH.normalTitle" = "Avbryt";
 
-/* Class = "UILabel"; text = "320"; ObjectID = "Jc3-Um-Aiy"; */
+/* Class = "UILabel"; text = "320"; ObjectID = "Jc3-Um-Aiy"; Note = "Placeholder - do not translate"; */
 "Jc3-Um-Aiy.text" = "320";
 
-/* Class = "UILabel"; text = "Old value: 42"; ObjectID = "vtk-nS-Ss4"; */
+/* Class = "UILabel"; text = "Old value: 42"; ObjectID = "vtk-nS-Ss4"; Note = "Placeholder - do not translate"; */
 "vtk-nS-Ss4.text" = "Gammel verdi: 42";
 

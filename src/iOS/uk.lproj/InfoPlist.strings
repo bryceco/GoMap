@@ -14,7 +14,7 @@
 "NSCameraUsageDescription" = "Камера потрібна щоб вимірювати висоту будівель чи інших обʼєктів та щоб розпізнавати текст на табличках з часом роботи.";
 
 /* Copyright (human-readable) */
-"NSHumanReadableCopyright" = "Усі права застережено 2012—2022 Брюс Коґсвелл";
+"NSHumanReadableCopyright" = "Усі права застережено 2012—2023 Брайс Коґсвелл";
 
 /* Privacy - Location Always and When In Use Usage Description */
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "Постійно увімкнене відстеження локації дозволить застосунку записувати файли GPX у фоновому режимі.";

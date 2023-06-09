@@ -523,9 +523,6 @@
 /* No comment provided by engineer. */
 "OK" = "OK";
 
-/* previous tag value */
-"Old value: (oldValue)" = "Gammel verdi: (gammelVerdi)";
-
 /* No comment provided by engineer. */
 "Only multipolygon relations are supported" = "Kun multipolygonsrelasjoner støttes";
 

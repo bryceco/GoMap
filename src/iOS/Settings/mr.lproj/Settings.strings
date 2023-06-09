@@ -4,6 +4,9 @@
 /* Class = "UINavigationItem"; title = "Credits"; ObjectID = "1SU-BF-K3n"; */
 "1SU-BF-K3n.title" = "श्रेय";
 
+/* Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va"; Note = "Display the user's touches when they tap the screen"; */
+"2Zi-cz-7Va.text" = "स्पर्श दाखवा";
+
 /* Class = "UILabel"; text = "Details"; ObjectID = "3qk-15-BUc"; */
 "3qk-15-BUc.text" = "तपशील";
 

@@ -271,7 +271,7 @@
 "Copy Tags" = "टॅग कॉपी करा";
 
 /* No comment provided by engineer. */
-"Could not duplicate object" = "वस्तूची नक्कल करता आली नाही";
+"Could not duplicate object" = "वस्तूची दुसरी प्रत करता आली नाही";
 
 /* No comment provided by engineer. */
 "Create\n" = "निर्माण\n";
@@ -322,10 +322,10 @@
 "Done" = "झाले";
 
 /* create a duplicate */
-"duplicate" = "प्रत करा";
+"duplicate" = "प्रतिलिपित करा";
 
 /* Edit action */
-"Duplicate" = "नक्कल";
+"Duplicate" = "प्रतिलिपित करा";
 
 /* No comment provided by engineer. */
 "Edit" = "संपादा";
@@ -556,11 +556,14 @@
 /* No comment provided by engineer. */
 "Relations" = "संबंध";
 
+/* No comment provided by engineer. */
+"Replace Tags" = "टॅग पुनःस्थापित करा";
+
 /* retry opening hours recognition */
 "Retry" = "पुनःप्रयत्न";
 
 /* Edit action */
-"Reverse" = "उलटे";
+"Reverse" = "उलटावा";
 
 /* No comment provided by engineer. */
 "Right" = "उजवे";

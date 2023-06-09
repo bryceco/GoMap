@@ -61,11 +61,17 @@
 /* Class = "UILabel"; text = "Collect in background:"; ObjectID = "DmO-dW-3Fh"; */
 "DmO-dW-3Fh.text" = "Sběr na pozadí";
 
+/* Class = "UITextField"; placeholder = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "; ObjectID = "dzT-B4-za3"; */
+"dzT-B4-za3.placeholder" = "https://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n ";
+
 /* Class = "UIButton"; normalTitle = "Bing"; ObjectID = "eac-Db-EaW"; */
 "eac-Db-EaW.normalTitle" = "Bing";
 
 /* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eFa-yZ-YZl"; */
 "eFa-yZ-YZl.text" = "Letecké snímky";
+
+/* Class = "UILabel"; text = "12:00:00"; ObjectID = "EHa-L5-Hcz"; */
+"EHa-L5-Hcz.text" = "12:00:00";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F"; */
 "el8-h8-H1F.normalTitle" = "Tlačítko";

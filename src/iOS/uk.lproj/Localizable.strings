@@ -31,6 +31,9 @@
 /* No comment provided by engineer. */
 "(way)" = "(лінія)";
 
+/* area in m^2 */
+"%.0f m^2" = "%.0f м^2";
+
 /* way length if > 10m */
 "%.0f meters, %ld nodes" = "%1$.0f метрів, %2$ld точок";
 
@@ -72,6 +75,9 @@
 "<unknown>" = "<невідомець>";
 
 /* No comment provided by engineer. */
+"A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." = "Копія всіх визначених користувачем квестів була скопійована до буферу обміну у форматі JSON. Ви можете вставити її кудись, щоб зберегти копію або надіслати комусь іншому.";
+
+/* No comment provided by engineer. */
 "A GPX Track records your path as you travel along a road or trail" = "GPX-трек записує ваш шлях поки ви рухаєтеся вздовж дороги чи стежки";
 
 /* No comment provided by engineer. */
@@ -80,17 +86,41 @@
 /* No comment provided by engineer. */
 "Accept" = "Підтвердити";
 
+/* A type of quest */
+"Add Building Type" = "Додати тип будівлі";
+
+/* A type of quest */
+"Add Highway Surface" = "Додати поверхню дороги";
+
 /* Add to relation */
 "Add inner member" = "Додати член з роллю «inner»";
 
 /* Edit action */
 "Add Note" = "Додати нотатку";
 
+/* A type of quest */
+"Add Opening Hours" = "Додати години роботи";
+
 /* Add to relation */
 "Add outer member" = "Додати член з роллю «outer»";
 
+/* A type of quest */
+"Add Parking Type" = "Додати тип стоянки";
+
+/* A type of quest */
+"Add Sidewalk Surface" = "Додати поверхню тротуара";
+
+/* A type of quest */
+"Add Speed Limit" = "Додати обмеження швидкості";
+
+/* A type of quest */
+"Add Telephone Number" = "Додати телефонний номер";
+
 /* No comment provided by engineer. */
 "Add way to multipolygon?" = "Додати лінію до мультиполігона?";
+
+/* A type of quest */
+"Add Website" = "Додати вебсайт";
 
 /* No comment provided by engineer. */
 "Adding members:" = "Додавання членів:";
@@ -99,7 +129,10 @@
 "Additional imagery" = "Додаткові фони";
 
 /* No comment provided by engineer. */
-"Aerial only" = "Тільки аерознімки";
+"Advanced Quest Builder" = "Просунутий редактор квестів";
+
+/* No comment provided by engineer. */
+"Aerial only" = "Тільки аерофото";
 
 /* No comment provided by engineer. */
 "All choices" = "Усі варіанти";
@@ -107,8 +140,18 @@
 /* No comment provided by engineer. */
 "All Tags" = "Усі теґи";
 
+/* Show an error message */
+"An error occured while exporting: %@" = "Помилка під час експортування: %@";
+
+/* Show an error message */
+"An error occured while importing: %@" = "Помилка під час імпортування: %@";
+
 /* No comment provided by engineer. */
 "An unknown error occurred fetching metadata" = "Невідома помилка під час отримання метаданих";
+
+/* Area of an object in m^2
+   Object geometry: a closed way or multipolygon) */
+"Area" = "Площа";
 
 /* No comment provided by engineer. */
 "Attention" = "Увага";
@@ -117,7 +160,7 @@
 "Attributes" = "Атрибути";
 
 /* Automatic selection of presets languages */
-"Automatic" = "Автоматично";
+"Automatic" = "Автоматичне";
 
 /* back button */
 "Back" = "Назад";
@@ -129,7 +172,13 @@
 "Bad login" = "Неправильний логін";
 
 /* No comment provided by engineer. */
-"Better background imagery is available for your location. Would you like to change to it?" = "Для вашого місцезнаходження доступне краще фонове зображення. Бажаєте перейти на нього?";
+"Better background imagery is available for your location. Would you like to change to it?" = "Для цього місця доступне краще фонове зображення. Бажаєте замінити фон на кращий?";
+
+/* No comment provided by engineer. */
+"Better imagery available" = "Є кращий фоновий шар";
+
+/* No comment provided by engineer. */
+"Build a New Quest" = "Створити новий квест";
 
 /* No comment provided by engineer. */
 "Cache size warning" = "Заувага про обсяг кешу";
@@ -177,13 +226,13 @@
 "Cannot connect an inner way to an outer way" = "Не вдалося зʼєднати лінію «inner» з лінією «outer»";
 
 /* No comment provided by engineer. */
-"Change" = "Зміна";
+"Change" = "Замінити";
 
 /* OSM changeset identifier */
 "Changeset" = "Набір змін";
 
 /* Delete cached data */
-"Clear Aerial Tiles" = "Почистити тайли аерознімків";
+"Clear Aerial Tiles" = "Почистити тайли аерофото";
 
 /* Delete cached data */
 "Clear GPS Overlay Tiles" = "Почистити тайли GPS-треків";
@@ -212,6 +261,9 @@
 /* No comment provided by engineer. */
 "Connecting the nodes would damage a relation" = "Обʼєднання точок може пошкодити звʼязок";
 
+/* text was copied to the system clipboard */
+"Copied" = "Скопійовано";
+
 /* Edit action */
 "Copy Tags" = "Копіювати теґи";
 
@@ -220,6 +272,9 @@
 
 /* No comment provided by engineer. */
 "Create\n" = "Створити\n";
+
+/* No comment provided by engineer. */
+"Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." = "Створіть рядок у таблиці для кожної пари ключ/значення і вкажіть, чи потрібно включати або виключати обʼєкти, що збігаються. Залиште значення порожнім, щоб вказати, що ключ відсутній. Використовуйте key=* для збігу з будь-яким значенням.";
 
 /* Edit action */
 "Create Relation" = "Створити звʼязок";
@@ -250,6 +305,9 @@
 
 /* No comment provided by engineer. */
 "Detach from relation" = "Прибрати зі звʼязку";
+
+/* Discard changes */
+"Discard" = "Відкинути";
 
 /* Edit action */
 "Disconnect" = "Відʼєднати";
@@ -282,7 +340,7 @@
 "Editor only" = "Тільки редактор";
 
 /* No comment provided by engineer. */
-"Editor with Aerial" = "Редактор з аерознімком";
+"Editor with Aerial" = "Редактор з аерофото";
 
 /* No comment provided by engineer. */
 "Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "Впевніться що служби локації працюють і ви надали доступ цьому застосунку.\n\nПомилка: %@";
@@ -305,6 +363,12 @@
 /* No comment provided by engineer. */
 "Extending a way which belongs to a Route or similar relation may damage the relation" = "Подовження лінії що входить до маршруту чи схожого звʼязку може пошкодити звʼязок";
 
+/* Header for quest filters section */
+"Filters" = "Фільтри";
+
+/* No comment provided by engineer. */
+"Geometry" = "Геометрія";
+
 /* No comment provided by engineer. */
 "GPX Upload Complete" = "Завантаження GPX завершене";
 
@@ -317,11 +381,23 @@
 /* rate the app now */
 "I'll do it!" = "Я зроблю це!";
 
+/* No comment provided by engineer. */
+"Icon" = "Піктограма";
+
 /* OSM node/way/relation identifier */
 "Identifier" = "Ідентифікатор";
 
 /* No comment provided by engineer. */
 "Ignore" = "Ігнорувати";
+
+/* No comment provided by engineer. */
+"Import" = "Імпорт";
+
+/* No comment provided by engineer. */
+"Import Error" = "Помилка імпорту";
+
+/* No comment provided by engineer. */
+"Import Quests" = "Імпорт квестів";
 
 /* No comment provided by engineer. */
 "In order to measure height, please enable camera access in the app's settings." = "Щоб виміряти висоту, будь ласка надайде доступ до камери у налаштуваннях застосунку.";
@@ -335,6 +411,9 @@
 /* No comment provided by engineer. */
 "Joining would invalidate a Turn Restriction the way belongs to" = "Приєднання зробить недійсним обмеження маневрів до якого входить лінія";
 
+/* The tag keys section of a quest definition */
+"Keys" = "Ключі";
+
 /* No comment provided by engineer. */
 "Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "Змінення мови вплине тільки на заготовки й лише на ті що перекладені для iD. Основний інтерфейс буде англійською.";
 
@@ -345,13 +424,16 @@
 "Lat/Lon" = "Широта/Довгота";
 
 /* No comment provided by engineer. */
-"Left" = "Зліва";
+"Left" = "Ліворуч";
 
 /* Left-hand side of screen */
-"Left side" = "Лівий бік";
+"Left side" = "Ліворуч";
 
 /* No comment provided by engineer. */
 "Length" = "Довжина";
+
+/* Object geometry: a way (but not an area) */
+"Line" = "Лінія";
 
 /* No comment provided by engineer. */
 "Location unavailable" = "Локація недоступна";
@@ -421,6 +503,12 @@
 
 /* No comment provided by engineer. */
 "Multipolygon" = "Мультиполігон";
+
+/* No comment provided by engineer. */
+"Name" = "Назва";
+
+/* Quest for objects that aren't recently updated */
+"Needs Survey" = "Потребує обстеження";
 
 /* No comment provided by engineer. */
 "Network error" = "Мережева помилка";
@@ -514,6 +602,9 @@
 "Paste" = "Вставити";
 
 /* No comment provided by engineer. */
+"Paste the JSON for your quests into the field below" = "Вставте JSON для ваших квестів у поле внизу";
+
+/* No comment provided by engineer. */
 "Pasting %@ characters, maximum tag length is 255" = "Вставлення %@ символів, максимальна довжина теґу — 255";
 
 /* No comment provided by engineer. */
@@ -525,20 +616,35 @@
 /* No comment provided by engineer. */
 "Please wait" = "Зачекайте";
 
+/* Object geometry: a node */
+"Point" = "Точка";
+
 /* No comment provided by engineer. */
 "Previous" = "Попередній";
 
 /* previous GPX track */
 "Previous Tracks" = "Попередні треки";
 
+/* No comment provided by engineer. */
+"Provide a single-character symbol (emoji or unicode character) to identify this quest:" = "Вкажіть один символ (емодзі чи символ юнікоду) щоб ідентифікувати цей квест:";
+
 /* Discard editing changes when resetting OSM data cache */
 "Purge" = "Вичистити";
 
+/* The current Quest the user is answering */
+"Quest" = "Квест";
+
 /* No comment provided by engineer. */
-"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "Якщо оціните застосунок — допоможете іншим картографам шукати його та зробите OpenStreetMap популярнішим.";
+"Quest Definition Error" = "Помилка у визначенні квесту";
+
+/* No comment provided by engineer. */
+"Quests were imported successfully." = "Квести імпортовані успішно.";
+
+/* No comment provided by engineer. */
+"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "Якщо оціните застосунок — допоможете іншим паперам шукати його та зробите OpenStreetMap популярнішим.";
 
 /* Alert title message */
-"Recent Aerial Imagery" = "Нещодавні аерознімки";
+"Recent Aerial Imagery" = "Нещодавні аерофото";
 
 /* No comment provided by engineer. */
 "Redo" = "Повторити";
@@ -583,10 +689,16 @@
 "Right" = "Праворуч";
 
 /* Right-hand side of screen */
-"Right side" = "Правий бік";
+"Right side" = "Праворуч";
 
 /* Edit action */
 "Rotate" = "Повернути";
+
+/* Save changes */
+"Save" = "Зберегти";
+
+/* No comment provided by engineer. */
+"Save or discard your changes" = "Зберегти або відкинути зміни";
 
 /* No comment provided by engineer. */
 "Select a highway approaching the intersection" = "Вибрати дорогу що веде до перехрестя";
@@ -622,6 +734,9 @@
 /* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "Пробачте, під час завантаження GPX-файлу виникла помилка";
 
+/* Space key on the keyboard */
+"Space" = "Пропуск";
+
 /* Edit action */
 "Split" = "Розділити";
 
@@ -629,13 +744,19 @@
 "Standard imagery" = "Стандартні знімки";
 
 /* Begin downloading tiles */
-"Start" = "Старт";
+"Start" = "Почати";
 
 /* No comment provided by engineer. */
 "Stop" = "Стоп";
 
 /* Edit action */
 "Straighten" = "Випрямити";
+
+/* No comment provided by engineer. */
+"Success" = "Успіх";
+
+/* No comment provided by engineer. */
+"Tag Key" = "Ключ теґа";
 
 /* Edit action */
 "Tags" = "Теґи";
@@ -689,6 +810,9 @@
 "This device is not able to provide heading data." = "Цей пристрій не може надати дані про курс.";
 
 /* No comment provided by engineer. */
+"This feature is only available on iOS 15 or later" = "Ця функція працює лише починаючи з iOS 15";
+
+/* No comment provided by engineer. */
 "To add another member to the relation 'long press' on the way to be added" = "Щоб додати інший член до звʼязку «затримайте» палець на лінії яку хочете додати";
 
 /* No comment provided by engineer. */
@@ -738,4 +862,10 @@
 
 /* No comment provided by engineer. */
 "Way Tags" = "Теґи лінії";
+
+/* No comment provided by engineer. */
+"You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "Ви зробили зміни і ще не завантажили їх на сервер. Якщо очистити кеш, ці зміни будуть втрачені.";
+
+/* No comment provided by engineer. */
+"Your OSM data cache is getting large, which may lead to slow startup and shutdown times.\n\nYou may want to clear the cache (under Display settings) to improve performance." = "Розмір кеш-памʼяті для даних OSM збільшився, тому застосунок може відкриватися й закриватися повільніше.\n\nВи можете почистити кеш-памʼять (у налаштуваннях перегляду) щоб зробити застосунок швидшим.";
 

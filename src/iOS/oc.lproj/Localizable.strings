@@ -122,3 +122,36 @@
 /* No comment provided by engineer. */
 "Additional imagery" = "Imatjariá complementària";
 
+/* No comment provided by engineer. */
+"Edit" = "Modificar";
+
+/* No comment provided by engineer. */
+"Edit restrictions" = "Modificar lei restriccions";
+
+/* No comment provided by engineer. */
+"Edit XML" = "Modificar lo XML";
+
+/* No comment provided by engineer. */
+"Editing layer not visible" = "A modificar la jaça invisibla";
+
+/* No comment provided by engineer. */
+"Editor only" = "Editor solament";
+
+/* No comment provided by engineer. */
+"Editor with Aerial" = "Editor amb l'aerian";
+
+/* No comment provided by engineer. */
+"Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "Regardatz que lei servicis de localizacion son ben activats e que i avètz autorizat l'accès.\n\nError : %@";
+
+/* No comment provided by engineer. */
+"Ensure the editor view is visible and displays objects in the local area" = "Avisatz-vos que la vista de l'editor es activa e que mòstra leis objèctes dins la zòna locala";
+
+/* Error dialog title */
+"Error" = "Error";
+
+/* No comment provided by engineer. */
+"Error connecting to way" = "Error de connexion de la linha";
+
+/* No comment provided by engineer. */
+"Error fetching metadata: %@" = "Error au moment de la recuperacion dei metadonadas : %@";
+
