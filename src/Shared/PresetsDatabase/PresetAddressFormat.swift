@@ -13,7 +13,7 @@ struct PresetAddressFormat {
 	let addressKeys: [String]
 
 	init(withJson json: [String: Any]) {
-		countryCodes = json["countryCodes"] as? [String]
+		countryCodes = json["countryCodes"] as! [String]?
 		addressKeys = (json["format"] as! [[String]]).flatMap({ $0 })
 	}
 }

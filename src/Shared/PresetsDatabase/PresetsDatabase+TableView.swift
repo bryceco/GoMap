@@ -443,15 +443,15 @@ extension PresetsDatabase {
 			]
 			var keysForCountry: [String]?
 			for locale in presetAddressFormats {
-				if let countryCodes = locale.countryCodes,
-				   countryCodes.contains(countryCode)
-				{
+				guard let countryCodes = locale.countryCodes else {
+					// default
+					keysForCountry = locale.addressKeys
+					continue
+				}
+				if countryCodes.contains(countryCode) {
 					// country specific format
 					keysForCountry = locale.addressKeys
 					break
-				} else {
-					// default
-					keysForCountry = locale.addressKeys
 				}
 			}
 
