@@ -100,6 +100,7 @@
       </trans-unit>
       <trans-unit id="TcP-6i-B8H.text" xml:space="preserve">
         <source>Specify a name ("New York"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object ("way 51014987"):</source>
+        <target state="translated">Укажите название («Нью-Йорк»), URL-адрес или любой текст, содержащий широту и долготу, или ссылку на объект OSM («way 51014987»):</target>
         <note>Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H";</note>
       </trans-unit>
       <trans-unit id="VNE-ee-a7u.text" xml:space="preserve">

@@ -1203,7 +1203,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Could not duplicate object" xml:space="preserve">
         <source>Could not duplicate object</source>
-        <target>वस्तूची नक्कल करता आली नाही</target>
+        <target state="translated">वस्तूची दुसरी प्रत करता आली नाही</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Create&#10;" xml:space="preserve">
@@ -1296,7 +1296,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Duplicate" xml:space="preserve">
         <source>Duplicate</source>
-        <target>नक्कल</target>
+        <target state="translated">प्रतिलिपित करा</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Edit" xml:space="preserve">
@@ -1832,6 +1832,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Replace Tags" xml:space="preserve">
         <source>Replace Tags</source>
+        <target state="translated">टॅग पुनःस्थापित करा</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Requires a closed way with at least 3 nodes" xml:space="preserve">
@@ -1861,7 +1862,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Reverse" xml:space="preserve">
         <source>Reverse</source>
-        <target>उलटे</target>
+        <target state="translated">उलटावा</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Right" xml:space="preserve">
@@ -2300,7 +2301,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="duplicate" xml:space="preserve">
         <source>duplicate</source>
-        <target>प्रत करा</target>
+        <target state="translated">प्रतिलिपित करा</target>
         <note>create a duplicate</note>
       </trans-unit>
       <trans-unit id="km/h" xml:space="preserve">
@@ -2815,6 +2816,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="2Zi-cz-7Va.text" xml:space="preserve">
         <source>Show Touches</source>
+        <target state="translated">स्पर्श दाखवा</target>
         <note>Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va"; Note = "Display the user's touches when they tap the screen";</note>
       </trans-unit>
       <trans-unit id="3qk-15-BUc.text" xml:space="preserve">
