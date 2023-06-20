@@ -8,18 +8,36 @@
 
 import Foundation
 
+extension Scanner {
+	func scanAnyCharacter(from string: String) -> String? {
+		for ch in string {
+			let chs = String(ch)
+			if self.scanString(chs, into: nil) {
+				return chs
+			}
+		}
+		return nil
+	}
+}
+
 /// An object that parses URLs and text for coordinates
 class LocationParser {
-	private static func scanDegreesMinutesSeconds(scanner: Scanner) -> Double? {
-		var sign: Double
-		if scanner.scanCharacters(from: CharacterSet(charactersIn: "+NE"), into: nil) {
-			sign = 1.0
-		} else if scanner.scanCharacters(from: CharacterSet(charactersIn: "-SW"), into: nil) {
-			sign = -1.0
-		} else {
-			sign = 1.0
-		}
+	enum LatOrLon {
+		case lat
+		case lon
+	}
 
+	private static func scanNSEW(scanner: Scanner) -> (Double,LatOrLon)? {
+		switch scanner.scanAnyCharacter(from: "NESW") {
+		case "N":	return (1.0, .lat)
+		case "S":	return (-1.0, .lat)
+		case "E":	return (1.0,.lon)
+		case "W":	return (-1.0, .lon)
+		default:	return nil
+		}
+	}
+
+	private static func scanDegreesMinutesSeconds(scanner: Scanner) -> Double? {
 		// Parse degrees, minutes, seconds:
 		var degrees = 0
 		var minutes = 0
@@ -27,34 +45,58 @@ class LocationParser {
 		guard scanner.scanInt(&degrees), // Degrees (integer),
 		      scanner.scanString("°", into: nil), // followed by °,
 		      scanner.scanInt(&minutes), // minutes (integer)
-		      scanner.scanString("'", into: nil), // followed by '
-		      scanner.scanDouble(&seconds), // seconds (floating point),
-		      scanner.scanString("\"", into: nil) // followed by "
+		      scanner.scanAnyCharacter(from: "'′") != nil // followed by '
 		else { return nil }
-		if scanner.scanString("N", into: nil) {
-			// ignore
-		} else if scanner.scanString("S", into: nil) {
-			sign = -sign
-		} else if scanner.scanString("E", into: nil) {
-			sign = -sign
-		} else if scanner.scanString("W", into: nil) {
-			// ignore
+		// optional seconds
+		let pos = scanner.scanLocation
+		if scanner.scanDouble(&seconds), // seconds (floating point),
+		   scanner.scanAnyCharacter(from: "\"″") != nil // followed by "
+		{
+			// got seconds too
+		} else {
+			seconds = 0.0
+			scanner.scanLocation = pos
 		}
 
-		return sign * (Double(degrees) + Double(minutes) / 60.0 + seconds / 3600.0)
+		let value = Double(abs(degrees)) + Double(minutes) / 60.0 + seconds / 3600.0
+		return degrees >= 0 ? value : -value
 	}
 
-	// parse a string like 19°33'51.6"N+155°56'07.7"W
+	// parse a string like:
+	// 26°35'36"N 106°40'44"E
+	// 19°33'51.6"N+155°56'07.7"W
+	// 49° 56′ 49″ W, 41° 43′ 57″ N
 	private static func scanDegreesMinutesSecondsPair(string: String) -> (Double, Double)? {
 		let scanner = Scanner(string: string)
-		scanner.charactersToBeSkipped = nil
-		if let lat = scanDegreesMinutesSeconds(scanner: scanner),
-		   scanner.scanCharacters(from: .whitespaces, into: nil),
-		   let lon = scanDegreesMinutesSeconds(scanner: scanner)
-		{
-			return (lat, lon)
+		scanner.charactersToBeSkipped = .whitespaces
+
+		let firstDir1 = scanNSEW(scanner: scanner)
+		guard let first = scanDegreesMinutesSeconds(scanner: scanner)
+		else { return nil }
+		let firstDir2 = scanNSEW(scanner: scanner)
+
+		let _ = scanner.scanAnyCharacter(from: "+,")
+
+		let secondDir1 = scanNSEW(scanner: scanner)
+		guard let second = scanDegreesMinutesSeconds(scanner: scanner)
+		else { return nil }
+		let secondDir2 = scanNSEW(scanner: scanner)
+
+		// now decode the NSEW values
+		switch (firstDir1?.1,firstDir2?.1,secondDir1?.1,secondDir2?.1) {
+		case (nil,nil,nil,nil):
+			return (first, second)
+		case (.lat,nil,.lon,nil):
+			return (first * firstDir1!.0, second * secondDir1!.0)
+		case (nil,.lat,nil,.lon):
+			return (first * firstDir2!.0, second * secondDir2!.0)
+		case (.lon,nil,.lat,nil):
+			return (second * secondDir1!.0, first * firstDir1!.0)
+		case (nil,.lon,nil,.lat):
+			return (second * secondDir2!.0, first * firstDir2!.0)
+		default:
+			return nil
 		}
-		return nil
 	}
 
 	private class func urlFor(string: String) -> URL? {
