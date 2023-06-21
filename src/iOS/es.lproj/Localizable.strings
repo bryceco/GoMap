@@ -652,6 +652,9 @@
 /* No comment provided by engineer. */
 "OK" = "Aceptar";
 
+/* previous tag value */
+"Old value: %@" = "Valor antiguo: %@";
+
 /* No comment provided by engineer. */
 "Only Left Turn restriction" = "Sólo restricción de giro a la izquierda";
 

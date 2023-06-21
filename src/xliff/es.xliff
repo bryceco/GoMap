@@ -1733,7 +1733,7 @@ Es una operación avanzada que sólo debe llevarse a cabo si tienes un conocimie
       </trans-unit>
       <trans-unit id="Old value: %@" xml:space="preserve">
         <source>Old value: %@</source>
-        <target state="translated">Valor antiguo: %@</target>
+        <target>Valor antiguo: %@</target>
         <note>previous tag value</note>
       </trans-unit>
       <trans-unit id="Only Left Turn restriction" xml:space="preserve">
