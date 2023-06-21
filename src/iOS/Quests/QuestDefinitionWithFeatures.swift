@@ -128,7 +128,7 @@ struct QuestDefinitionWithFeatures: QuestDefinition {
 	}
 
 	private static func makeInstanceWith(presetFeatures quest: QuestDefinitionWithFeatures) throws -> QuestInstance {
-		return try makeInstanceWith(ident: quest.title,
+		return try makeInstanceWith(ident: quest.ident,
 		                            title: quest.title,
 		                            label: quest.label,
 		                            tagKey: quest.tagKey,

@@ -183,7 +183,7 @@ class QuestChooserController: UITableViewController {
 
 	@available(iOS 15.0.0, *)
 	func openAdvancedQuestBuilder(quest: QuestDefinitionWithFilters?) {
-		let quest = quest ??
+		let questData = quest ??
 			QuestDefinitionWithFilters(title: "Add Cuisine",
 			                           label: "🍽️",
 			                           tagKeys: ["cuisine"],
@@ -200,7 +200,7 @@ class QuestChooserController: UITableViewController {
 			                           		included: .include)
 			                           ],
 			                           geometry: QuestDefinitionWithFilters.Geometries())
-		var view = AdvancedQuestBuilder(quest: quest)
+		var view = AdvancedQuestBuilder(quest: questData)
 		view.onSave = { [weak self] newQuest in
 			do {
 				try QuestList.shared.addUserQuest(newQuest, replacing: quest)
