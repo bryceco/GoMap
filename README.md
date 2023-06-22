@@ -5,6 +5,7 @@ Go Map!! is an iPhone/iPad editor for adding cartographic information to [OpenSt
 
 [![Download on the App Store badge][2]][3]
 
+[Recommended: Tutorial/help for Go Map!! *(Easy after just a 30-second read of this walkthrough link.)*][8]
 ## Join our TestFlight beta!
 
 Do you want to help testing pre-releases of Go Map!!?
@@ -100,6 +101,8 @@ The Go Map!! app icon was created by [@Binnette][5].
 [5]: https://github.com/Binnette
 [6]: https://github.com/nicklockwood/SwiftFormat
 [7]: https://github.com/nicklockwood/SwiftFormat#git-pre-commit-hook
+[8]: https://wiki.openstreetmap.org/w/index.php?title=Go_Map!!
+
 
 ## Presets and translation
 
