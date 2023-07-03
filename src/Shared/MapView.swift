@@ -2355,17 +2355,26 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	func updateMapMarkerButtonPositions() {
 		// need this to disable implicit animation
 		UIView.performWithoutAnimation({
+			let MaxMarkers = 50
+			var count = 0
 			// update new and existing buttons
 			for marker in self.mapMarkerDatabase.allMapMarkers {
 				// Update the location of the button
-				updateButtonPositionForMapMarker(marker: marker)
+				let onScreen = updateButtonPositionForMapMarker(marker: marker, hidden: count > MaxMarkers)
+				if onScreen {
+					count += 1
+				}
 			}
 		})
 	}
 
-	// Update the location of the button
-	private func updateButtonPositionForMapMarker(marker: MapMarker) {
+	// Update the location of the button. Return true if it is on-screen.
+	private func updateButtonPositionForMapMarker(marker: MapMarker, hidden: Bool) -> Bool {
 		// create buttons that haven't been created
+		guard !hidden else {
+			marker.button?.isHidden = true
+			return false
+		}
 		if marker.button == nil {
 			let button = marker.makeButton()
 			button.addTarget(self,
@@ -2379,7 +2388,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				object.observer = { obj in
 					let markers = self.mapMarkerDatabase.refreshMarkersFor(object: obj)
 					for marker in markers {
-						self.updateButtonPositionForMapMarker(marker: marker)
+						_ = self.updateButtonPositionForMapMarker(marker: marker, hidden: false)
 					}
 				}
 			}
@@ -2387,12 +2396,13 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		// Set position of button
 		let button = marker.button!
+		button.isHidden = false
 		let offsetX = (marker is KeepRightMarker) || (marker is FixmeMarker) ? 0.00001 : 0.0
 		let pos = mapTransform.screenPoint(forLatLon: LatLon(latitude: marker.latLon.lat,
 		                                                     longitude: marker.latLon.lon + offsetX),
 		                                   birdsEye: true)
 		if pos.x.isInfinite || pos.y.isInfinite {
-			return
+			return false
 		}
 		if let button = button as? LocationButton {
 			button.arrowPoint = pos
@@ -2402,6 +2412,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			                 dy: pos.y - rc.size.height / 2)
 			button.frame = rc
 		}
+		return bounds.contains(pos)
 	}
 
 	@objc func mapMarkerButtonPress(_ sender: Any?) {
