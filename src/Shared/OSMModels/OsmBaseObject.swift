@@ -683,6 +683,11 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 				selector: #selector(removeParentRelation(_:undo:)),
 				objects: [parentRelation, undo!])
 		}
+		#if DEBUG
+		if let current = AppDelegate.shared.mapView?.editorLayer.mapData.relations[parentRelation.ident] {
+			DbgAssert(current === parentRelation)
+		}
+		#endif
 		parentRelations.append(parentRelation)
 	}
 

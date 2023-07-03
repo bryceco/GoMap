@@ -805,7 +805,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		var didChange = true
 		while didChange {
 			didChange = false
-			for (_, relation) in relations {
+			for relation in relations.values {
 				let bbox = relation.boundingBox
 				relation.clearCachedProperties()
 				didChange = relation.resolveToMapData(self) || didChange
