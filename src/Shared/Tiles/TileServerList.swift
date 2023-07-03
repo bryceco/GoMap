@@ -189,7 +189,10 @@ final class TileServerList {
 				result.append(service)
 			}
 		}
-		result.append(TileServer.maxarPremiumAerial)
+		/*
+		  MAXAR is unavailable for the foreseeable future
+		 result.append(TileServer.maxarPremiumAerial)
+		 */
 
 		result = result.sorted(by: {
 			if $0.best, !$1.best {
