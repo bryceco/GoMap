@@ -25,7 +25,6 @@ private let OSM_GPS_TRACE_IDENTIFIER = "OsmGpsTraceIdentifier"
 private let MAPBOX_LOCATOR_IDENTIFIER = "MapboxLocatorIdentifier"
 private let NO_NAME_IDENTIFIER = "No Name Identifier"
 private let MAXAR_PREMIUM_IDENTIFIER = "Maxar-Premium"
-private let MAXAR_STANDARD_IDENTIFIER = "Maxar-Standard"
 
 /// A provider of tile imagery, such as Bing or Mapbox
 final class TileServer: Equatable, Codable, FastCodable {
@@ -223,7 +222,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 	}
 
 	func isMaxar() -> Bool {
-		return (identifier == MAXAR_PREMIUM_IDENTIFIER) || (identifier == MAXAR_STANDARD_IDENTIFIER)
+		return identifier == MAXAR_PREMIUM_IDENTIFIER
 	}
 
 	func coversLocation(_ point: LatLon) -> Bool {
