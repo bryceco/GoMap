@@ -12,7 +12,7 @@ extension Scanner {
 	func scanAnyCharacter(from string: String) -> String? {
 		for ch in string {
 			let chs = String(ch)
-			if self.scanString(chs, into: nil) {
+			if scanString(chs, into: nil) {
 				return chs
 			}
 		}
@@ -27,13 +27,13 @@ class LocationParser {
 		case lon
 	}
 
-	private static func scanNSEW(scanner: Scanner) -> (Double,LatOrLon)? {
+	private static func scanNSEW(scanner: Scanner) -> (Double, LatOrLon)? {
 		switch scanner.scanAnyCharacter(from: "NESW") {
-		case "N":	return (1.0, .lat)
-		case "S":	return (-1.0, .lat)
-		case "E":	return (1.0,.lon)
-		case "W":	return (-1.0, .lon)
-		default:	return nil
+		case "N": return (1.0, .lat)
+		case "S": return (-1.0, .lat)
+		case "E": return (1.0, .lon)
+		case "W": return (-1.0, .lon)
+		default: return nil
 		}
 	}
 
@@ -83,16 +83,16 @@ class LocationParser {
 		let secondDir2 = scanNSEW(scanner: scanner)
 
 		// now decode the NSEW values
-		switch (firstDir1?.1,firstDir2?.1,secondDir1?.1,secondDir2?.1) {
-		case (nil,nil,nil,nil):
+		switch (firstDir1?.1, firstDir2?.1, secondDir1?.1, secondDir2?.1) {
+		case (nil, nil, nil, nil):
 			return (first, second)
-		case (.lat,nil,.lon,nil):
+		case (.lat, nil, .lon, nil):
 			return (first * firstDir1!.0, second * secondDir1!.0)
-		case (nil,.lat,nil,.lon):
+		case (nil, .lat, nil, .lon):
 			return (first * firstDir2!.0, second * secondDir2!.0)
-		case (.lon,nil,.lat,nil):
+		case (.lon, nil, .lat, nil):
 			return (second * secondDir1!.0, first * firstDir1!.0)
-		case (nil,.lon,nil,.lat):
+		case (nil, .lon, nil, .lat):
 			return (second * secondDir2!.0, first * firstDir2!.0)
 		default:
 			return nil

@@ -157,9 +157,12 @@ final class TileServerList {
 		for service in userDefinedList {
 			dict[service.identifier] = service
 		}
-		for service in [TileServer.maxarPremiumAerial] {
-			dict[service.identifier] = service
-		}
+		/*
+		  MAXAR is unavailable for the foreseeable future
+		 for service in [TileServer.maxarPremiumAerial] {
+		 	dict[service.identifier] = service
+		 }
+		  */
 
 		// fetch and decode recently used list
 		recentlyUsedList.load(withMapping: { dict[$0] })

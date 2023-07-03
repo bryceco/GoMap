@@ -283,7 +283,7 @@ class QuestList {
 				ResurveyQuest(ageInYears: 2.0)
 			]
 			// we want all built-in idents to be easily recognized and not collide with user defined quests:
-			assert( !builtinList.contains(where: { $0.ident.prefix(2) != "__" }) )
+			assert(!builtinList.contains(where: { $0.ident.prefix(2) != "__" }))
 		} catch {
 			print("Quest initialization error: \(error)")
 			builtinList = []
