@@ -535,7 +535,6 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		"living_street": .name
 	]
 	func givenName() -> String? {
-
 		// first try the name in the user's locale
 		let preferredLocale = PresetLanguages.preferredLanguageCode()
 		if let name = tags["name:\(preferredLocale)"] {
@@ -689,11 +688,11 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 				selector: #selector(removeParentRelation(_:undo:)),
 				objects: [parentRelation, undo!])
 		}
-		#if DEBUG
+#if DEBUG
 		if let current = AppDelegate.shared.mapView?.editorLayer.mapData.relations[parentRelation.ident] {
 			DbgAssert(current === parentRelation)
 		}
-		#endif
+#endif
 		parentRelations.append(parentRelation)
 	}
 

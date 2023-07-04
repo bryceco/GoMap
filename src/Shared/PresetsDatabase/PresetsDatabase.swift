@@ -124,7 +124,9 @@ final class PresetsDatabase {
 			let nsiDict = Self.jsonForFile("nsi_presets.json") as! [String: Any]
 			let nsiPresets = (nsiDict["presets"] as! [String: Any])
 				.mapValuesWithKeys({ k, v in
-					PresetFeature(withID: k, jsonDict: v as! [String: Any], isNSI: true)!
+					PresetFeature(withID: k,
+					              jsonDict: v as! [String: Any],
+					              isNSI: true)!
 				})
 			let nsiIndex = Self.buildTagIndex([self.stdFeatures, nsiPresets],
 			                                  basePresets: self.stdFeatures)
