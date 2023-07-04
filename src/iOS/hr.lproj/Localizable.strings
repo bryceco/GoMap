@@ -62,6 +62,9 @@
 /* length of a gpx track */
 "%ld meters, %ld points" = "%1$ld m, broj točaka: %2$ld";
 
+/* length of a gpx track */
+"%ld meters, %ld points, %ld waypoints" = "%1$ld m, broj točaka: %2$ld, broj putnih točaka: %3$ld";
+
 /* Number of tiles/objects in cache */
 "%ld objects" = "Broj objekata: %ld";
 
@@ -232,7 +235,7 @@
 "Cannot connect an inner way to an outer way" = "Nije moguće povezati unutarnji put s vanjskim putom";
 
 /* No comment provided by engineer. */
-"Change" = "Promijeni";
+"Change" = "Promjena";
 
 /* OSM changeset identifier */
 "Changeset" = "Skup promjena";
@@ -642,6 +645,9 @@
 
 /* No comment provided by engineer. */
 "OK" = "U redu";
+
+/* previous tag value */
+"Old value: %@" = "Stara vrijednost: %@";
 
 /* No comment provided by engineer. */
 "Only Left Turn restriction" = "Samo zabrana skretanja ulijevo";
