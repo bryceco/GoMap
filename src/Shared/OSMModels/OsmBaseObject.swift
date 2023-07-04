@@ -535,7 +535,13 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		"living_street": .name
 	]
 	func givenName() -> String? {
-		// first try name tag
+
+		// first try the name in the user's locale
+		let preferredLocale = PresetLanguages.preferredLanguageCode()
+		if let name = tags["name:\(preferredLocale)"] {
+			return name
+		}
+		// then try name tag
 		if let name = tags["name"] {
 			return name
 		}
@@ -546,8 +552,8 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		// then try any other name:* tag
 		if let name = tags.first(where: { key, _ in
 			key.starts(with: "name:")
-		})?.value {
-			return name
+		}) {
+			return name.value
 		}
 		// for ways, use ref tag
 		if isWay() != nil,
