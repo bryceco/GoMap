@@ -21,6 +21,9 @@ git pull
 # Strip empty translations
 sed -i ''  '/<target\/>/d' *.xliff
 
+// Fix misnamed languages
+mv zgh.xliff tzm.xliff
+
 # Repair broken target language entries
 for f in *.xliff; do
 	LANG=$(echo $f | sed s/\.xliff//)
@@ -40,6 +43,9 @@ for f in *.xliff; do
 	LIST="$LIST -exportLanguage $LANG"
 done
 xcodebuild -exportLocalizations -localizationPath $TMP_XLIFF -project "$PROJECT" $LIST
+
+// Fix misnamed files
+mv tzm.xliff zgh.xliff
 
 # Copy XLIFF files back here
 cp $TMP_XLIFF/*/Localized\ Contents/*.xliff .
