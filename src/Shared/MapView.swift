@@ -1274,7 +1274,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		CATransaction.begin()
 		CATransaction.setAnimationDuration(0.5)
 
-		locatorLayer.isHidden = !newOverlays.contains(.LOCATOR)
+		locatorLayer.isHidden = !newOverlays.contains(.LOCATOR) || locatorLayer.tileServer.apiKey == ""
 		gpsTraceLayer.isHidden = !newOverlays.contains(.GPSTRACE)
 		noNameLayer.isHidden = !newOverlays.contains(.NONAME)
 
