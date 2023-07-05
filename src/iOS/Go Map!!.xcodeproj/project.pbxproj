@@ -409,9 +409,6 @@
 		02583B38279D15E70088977A /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/DirectionViewController.strings"; sourceTree = "<group>"; };
 		02583B39279D15E70088977A /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/MainInterface.strings"; sourceTree = "<group>"; };
 		02583B3A279D15E70088977A /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		025A7CC62A33CE4E00575174 /* zgh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zgh; path = zgh.lproj/DirectionViewController.strings; sourceTree = "<group>"; };
-		025A7CC72A33CE4E00575174 /* zgh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zgh; path = zgh.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		025A7CC82A33CE4E00575174 /* zgh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zgh; path = zgh.lproj/Localizable.strings; sourceTree = "<group>"; };
 		025AC50A2598002F00F924DC /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Settings.strings"; sourceTree = "<group>"; };
 		025B841619DCF55C0053C637 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
 		025D68A626790A8C007079B8 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1454,7 +1451,6 @@
 				nn,
 				tzm,
 				mr,
-				zgh,
 			);
 			mainGroup = 02ACBA2416713CCB00BB4414;
 			packageReferences = (
@@ -1814,7 +1810,6 @@
 				02F85A01297A45DE008F57C8 /* nn */,
 				020E765929835D2C00B862B8 /* tzm */,
 				02DAAEB429D3B95C00BB608A /* mr */,
-				025A7CC62A33CE4E00575174 /* zgh */,
 			);
 			name = DirectionViewController.xib;
 			sourceTree = "<group>";
@@ -2013,7 +2008,6 @@
 				02F85A02297A45DE008F57C8 /* nn */,
 				020E765A29835D2C00B862B8 /* tzm */,
 				02DAAEB629D3B95C00BB608A /* mr */,
-				025A7CC72A33CE4E00575174 /* zgh */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -2082,7 +2076,6 @@
 				02F85A03297A45DE008F57C8 /* nn */,
 				020E765B29835D2C00B862B8 /* tzm */,
 				02DAAEB729D3B95C00BB608A /* mr */,
-				025A7CC82A33CE4E00575174 /* zgh */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
