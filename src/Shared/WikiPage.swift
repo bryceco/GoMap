@@ -33,7 +33,7 @@ class WikiPage {
 			return result
 		}
 
-		let result = code.prefix(1).uppercased() + code.dropFirst() + ":"
+		let result = code.prefix(1).uppercased() + code.dropFirst().lowercased() + ":"
 		return result
 	}
 
