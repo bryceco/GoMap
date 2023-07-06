@@ -25,7 +25,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 
 		navigationController?.isNavigationBarHidden = false
 
-		let preferredLanguageCode = PresetLanguages.preferredLanguageCode
+		let preferredLanguageCode = PresetLanguages.preferredPresetLanguageCode
 		let preferredLanguage = PresetLanguages.localLanguageNameForCode(preferredLanguageCode())
 		language.text = preferredLanguage
 

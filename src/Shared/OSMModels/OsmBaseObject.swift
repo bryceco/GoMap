@@ -536,9 +536,16 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	]
 	func givenName() -> String? {
 		// first try the name in the user's locale
-		let preferredLocale = PresetLanguages.preferredLanguageCode()
+		var preferredLocale = PresetLanguages.preferredLanguageCode()
 		if let name = tags["name:\(preferredLocale)"] {
 			return name
+		}
+		// if the language code has a dash then try it without it
+		while let index = preferredLocale.lastIndex(of: "-") {
+			preferredLocale = String(preferredLocale[..<index])
+			if let name = tags["name:\(preferredLocale)"] {
+				return name
+			}
 		}
 		// then try name tag
 		if let name = tags["name"] {

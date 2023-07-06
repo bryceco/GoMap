@@ -9,7 +9,7 @@
 import Foundation
 
 final class PresetsDatabase {
-	static var shared = PresetsDatabase(withLanguageCode: PresetLanguages.preferredLanguageCode())
+	static var shared = PresetsDatabase(withLanguageCode: PresetLanguages.preferredPresetLanguageCode())
 	class func reload(withLanguageCode code: String) {
 		// called when language changes
 		shared = PresetsDatabase(withLanguageCode: code)

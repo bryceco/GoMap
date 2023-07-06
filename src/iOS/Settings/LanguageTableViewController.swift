@@ -59,7 +59,7 @@ class LanguageTableViewController: UITableViewController {
 
 		// accessory checkmark
 		if (PresetLanguages.preferredLanguageIsDefault() && indexPath.row == 0)
-			|| code == PresetLanguages.preferredLanguageCode()
+			|| code == PresetLanguages.preferredPresetLanguageCode()
 		{
 			cell.accessoryType = .checkmark
 		} else {
@@ -78,7 +78,7 @@ class LanguageTableViewController: UITableViewController {
 
 		self.tableView.reloadData()
 
-		PresetsDatabase.reload(withLanguageCode: PresetLanguages.preferredLanguageCode()) // reset tags
+		PresetsDatabase.reload(withLanguageCode: PresetLanguages.preferredPresetLanguageCode()) // reset tags
 		AppDelegate.shared.mapView.refreshPushpinText()
 	}
 }
