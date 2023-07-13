@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 53;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -201,6 +201,7 @@
 		C3D096DC263EB7DE00E3B129 /* MyApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096D7263EAE1E00E3B129 /* MyApplication.swift */; };
 		C3D096FC263F118500E3B129 /* FpsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341E1552639DEFC0022E983 /* FpsLabel.swift */; };
 		C3FA9249263FF95B000A2A99 /* LocationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA9248263FF95B000A2A99 /* LocationParser.swift */; };
+		CD677FFA2A5FC17300F28605 /* AccountInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD677FF92A5FC17300F28605 /* AccountInfoTableViewController.swift */; };
 		ED56E5AB26024DA5000B368C /* AutocompleteTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5AA26024DA5000B368C /* AutocompleteTextField.swift */; };
 		ED56E5B426026542000B368C /* BingMetadataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5B226026541000B368C /* BingMetadataViewController.swift */; };
 		ED56E5B526026542000B368C /* ClearCacheViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5B326026541000B368C /* ClearCacheViewController.swift */; };
@@ -757,6 +758,7 @@
 		C3FA925126411557000A2A99 /* TileQuadKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileQuadKey.swift; sourceTree = "<group>"; };
 		C3FA925326411C2B000A2A99 /* MercatorTileLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercatorTileLayer.swift; sourceTree = "<group>"; };
 		C3FA925626416BF5000A2A99 /* GpxLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxLayer.swift; sourceTree = "<group>"; };
+		CD677FF92A5FC17300F28605 /* AccountInfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfoTableViewController.swift; sourceTree = "<group>"; };
 		ED56E5AA26024DA5000B368C /* AutocompleteTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteTextField.swift; sourceTree = "<group>"; };
 		ED56E5B226026541000B368C /* BingMetadataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BingMetadataViewController.swift; sourceTree = "<group>"; };
 		ED56E5B326026541000B368C /* ClearCacheViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClearCacheViewController.swift; sourceTree = "<group>"; };
@@ -831,6 +833,7 @@
 		0244399529CA9A02009FC2D0 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				CD677FF92A5FC17300F28605 /* AccountInfoTableViewController.swift */,
 				ED9649BF2601C33E00EC0A60 /* AdvancedSettingsViewController.swift */,
 				ED56E5C226027A50000B368C /* ContactUsViewController.swift */,
 				ED56E5C326027A50000B368C /* CreditsViewController.swift */,
@@ -1672,6 +1675,7 @@
 				02F6A457268A934900F2ACE7 /* NSAttributedString+Ext.swift in Sources */,
 				02CB2406265DB7CB00835F32 /* CameraView.swift in Sources */,
 				02A123EF264EE7BC005638C1 /* aes.swift in Sources */,
+				CD677FFA2A5FC17300F28605 /* AccountInfoTableViewController.swift in Sources */,
 				6442666722540EDF00C0D545 /* Lock.swift in Sources */,
 				02C8C56726F44728003B0122 /* OsmNoteMarker.swift in Sources */,
 				02505C5B29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift in Sources */,
