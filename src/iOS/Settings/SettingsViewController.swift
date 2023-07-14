@@ -47,6 +47,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 				   let name = dict["display_name"] as? String
 				{
 					self.username.text = name
+                    appDelegate.userName = name
 				} else {
 					self.username.text = NSLocalizedString("<unknown>", comment: "unknown user name")
 				}

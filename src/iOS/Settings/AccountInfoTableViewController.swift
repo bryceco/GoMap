@@ -9,10 +9,12 @@
 import UIKit
 
 final class AccountInfoTableViewController: UITableViewController {
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var refreshAccountButton: UIButton!
-    @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var changesetsLabel: UILabel!
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet private weak var refreshAccountButton: UIButton!
+    @IBOutlet private weak var usernameLabel: UILabel!
+    @IBOutlet private weak var changesetsLabel: UILabel!
+
+    private let appDelegate = AppDelegate.shared
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +37,7 @@ final class AccountInfoTableViewController: UITableViewController {
         activityIndicator.startAnimating()
         refreshAccountButton.isHidden = true
 
-        AppDelegate.shared.oAuth2.getUserDetails { [weak self] dict in
+        appDelegate.oAuth2.getUserDetails { [weak self] dict in
             guard let strongSelf = self else { return }
 
             strongSelf.activityIndicator.stopAnimating()
@@ -43,7 +45,7 @@ final class AccountInfoTableViewController: UITableViewController {
 
             if let dict {
                 if let name = dict["display_name"] as? String {
-                    AppDelegate.shared.userName = name
+                    strongSelf.appDelegate.userName = name
                     strongSelf.usernameLabel.text = name
                 }
 
@@ -58,7 +60,9 @@ final class AccountInfoTableViewController: UITableViewController {
     }
 
     private func setupUI() {
-        usernameLabel.text = AppDelegate.shared.userName
+        if let username = appDelegate.userName {
+            usernameLabel.text = username
+        }
     }
 
     private func presentBadLoginDialog() {
@@ -77,8 +81,8 @@ final class AccountInfoTableViewController: UITableViewController {
     }
     
     @IBAction func didTapSignOutButton(_ sender: UIButton) {
-        AppDelegate.shared.oAuth2.removeAuthorization()
-        AppDelegate.shared.userName = nil
+        appDelegate.oAuth2.removeAuthorization()
+        appDelegate.userName = nil
 
         self.navigationController?.popToRootViewController(animated: true)
     }
