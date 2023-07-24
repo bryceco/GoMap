@@ -9,7 +9,7 @@
 import UIKit
 
 final class LoginViewController: UITableViewController {
-	@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 
 	@IBAction func registerAccount(_ sender: Any) {
 		if let url = URL(string: "https://www.openstreetmap.org/user/new") {

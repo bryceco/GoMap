@@ -39,6 +39,7 @@ final class PresetLanguages {
 		}
 		return "en"
 	}()
+
 	class func preferredLanguageCode() -> String {
 		return Self.preferredLanguageCode_
 	}

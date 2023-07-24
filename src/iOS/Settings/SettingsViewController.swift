@@ -10,16 +10,16 @@ import MessageUI
 import UIKit
 
 class SettingsViewController: UITableViewController, MFMailComposeViewControllerDelegate {
-    private struct SegueIdentifier {
-        static let login = "LoginSegue"
-        static let accountInfo = "AccountInfoSegue"
-    }
+	private enum SegueIdentifier {
+		static let login = "LoginSegue"
+		static let accountInfo = "AccountInfoSegue"
+	}
 
 	@IBOutlet var username: UILabel!
 	@IBOutlet var language: UILabel!
-    @IBOutlet weak var openStreetMapAccountCell: UITableViewCell!
+	@IBOutlet var openStreetMapAccountCell: UITableViewCell!
 
-    override func viewDidLoad() {
+	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		tableView.estimatedRowHeight = 44.0
@@ -47,7 +47,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 				   let name = dict["display_name"] as? String
 				{
 					self.username.text = name
-                    appDelegate.userName = name
+					appDelegate.userName = name
 				} else {
 					self.username.text = NSLocalizedString("<unknown>", comment: "unknown user name")
 				}
@@ -70,12 +70,12 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		self.tableView.deselectRow(at: indexPath, animated: true)
 
-        if let cell = tableView.cellForRow(at: indexPath), cell == openStreetMapAccountCell {
-            if AppDelegate.shared.oAuth2.isAuthorized() {
-                performSegue(withIdentifier: SegueIdentifier.accountInfo, sender: self)
-            } else {
-                performSegue(withIdentifier: SegueIdentifier.login, sender: self)
-            }
-        }
+		if let cell = tableView.cellForRow(at: indexPath), cell == openStreetMapAccountCell {
+			if AppDelegate.shared.oAuth2.isAuthorized() {
+				performSegue(withIdentifier: SegueIdentifier.accountInfo, sender: self)
+			} else {
+				performSegue(withIdentifier: SegueIdentifier.login, sender: self)
+			}
+		}
 	}
 }
