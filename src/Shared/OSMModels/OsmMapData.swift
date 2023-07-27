@@ -268,7 +268,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		// special case for street names
 		if key == "addr:street" {
-			for (_, object) in ways {
+			for object in ways.values {
 				if object.tags["highway"] != nil {
 					if let nameValue = object.tags["name"] {
 						set.insert(nameValue)

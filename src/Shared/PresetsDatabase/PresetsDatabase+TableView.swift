@@ -441,7 +441,7 @@ extension PresetsDatabase {
 				"postcode",
 				"unit"
 			]
-			var keysForCountry: [String]?
+			var keysForCountry: [String] = []
 			for locale in presetAddressFormats {
 				guard let countryCodes = locale.countryCodes else {
 					// default
@@ -454,10 +454,11 @@ extension PresetsDatabase {
 					break
 				}
 			}
+			keysForCountry = keysForCountry.flatMap({ $0.components(separatedBy: "+") })
 
 			let placeholders = field.placeholders
 			var addrs: [PresetKeyOrGroup] = []
-			for addressKey in keysForCountry ?? [] {
+			for addressKey in keysForCountry {
 				let name: String
 				let placeholder = placeholders?[addressKey] as? String
 				if let placeholder = placeholder, placeholder != "123" {
