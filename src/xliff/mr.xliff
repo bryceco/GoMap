@@ -1153,7 +1153,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Clear GPX Tracks" xml:space="preserve">
         <source>Clear GPX Tracks</source>
-        <target>GPX ट्रॅक साफ करा</target>
+        <target state="translated">GPX ट्रॅक पुसून टाका</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear Locator Overlay Tiles" xml:space="preserve">
@@ -1646,6 +1646,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="No active track" xml:space="preserve">
         <source>No active track</source>
+        <target state="translated">सक्रिय ट्रॅक नाही</target>
         <note>GPX track</note>
       </trans-unit>
       <trans-unit id="No results found" xml:space="preserve">
@@ -1773,6 +1774,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Previous Tracks" xml:space="preserve">
         <source>Previous Tracks</source>
+        <target state="translated">पूर्वीचे ट्रॅक</target>
         <note>previous GPX track</note>
       </trans-unit>
       <trans-unit id="Provide a single-character symbol (emoji or unicode character) to identify this quest:" xml:space="preserve">
@@ -2950,6 +2952,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Tkc-bW-kNS.footerTitle" xml:space="preserve">
         <source>In order to upload changes to the map you need a user name and password registered at openstreetmap.org. </source>
+        <target state="translated">नकाशावर बदल चढवण्यासाठी openstreetmap.org वर नोंदणीकृत वापरकर्तानाव व पासवर्ड आवश्यक आहे. </target>
         <note>Class = "UITableViewSection"; footerTitle = "In order to upload changes to the map you need a user name and password registered at openstreetmap.org. "; ObjectID = "Tkc-bW-kNS";</note>
       </trans-unit>
       <trans-unit id="Tkc-bW-kNS.headerTitle" xml:space="preserve">
