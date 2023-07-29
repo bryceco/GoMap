@@ -55,9 +55,6 @@
 /* Class = "UILabel"; text = "Weblate - Translations"; ObjectID = "CHj-a3-gC9"; */
 "CHj-a3-gC9.text" = "Weblate – Překlady";
 
-/* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "ctb-pg-pM9"; */
-"ctb-pg-pM9.title" = "Uložit";
-
 /* Class = "UITableViewSection"; headerTitle = "Bug Reports & Suggestions"; ObjectID = "dbi-X6-Day"; */
 "dbi-X6-Day.headerTitle" = "Hlášení chyb a náměty";
 

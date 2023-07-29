@@ -25,9 +25,6 @@
 /* Class = "UIButton"; normalTitle = "Start"; ObjectID = "bt0-CH-HbH"; */
 "bt0-CH-HbH.normalTitle" = "Aloita";
 
-/* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "ctb-pg-pM9"; */
-"ctb-pg-pM9.title" = "Tallenna";
-
 /* Class = "UILabel"; text = "Detail detail detail detail detail"; ObjectID = "DiU-tt-U7H"; Note = "Do not translate"; */
 "DiU-tt-U7H.text" = "Lisätietoja lisätietoja lisätietoja lisätietoja lisätietoja";
 

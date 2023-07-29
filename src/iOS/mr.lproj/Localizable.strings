@@ -241,7 +241,7 @@
 "Clear GPS Overlay Tiles" = "GPS आच्छादन फरश्या पुसा";
 
 /* Delete cached data */
-"Clear GPX Tracks" = "GPX ट्रॅक साफ करा";
+"Clear GPX Tracks" = "GPX ट्रॅक पुसून टाका";
 
 /* Delete cached data */
 "Clear Locator Overlay Tiles" = "Locator आच्छादन फरश्या पुसा";
@@ -508,6 +508,9 @@
 /* No comment provided by engineer. */
 "no" = "नाही";
 
+/* GPX track */
+"No active track" = "सक्रिय ट्रॅक नाही";
+
 /* Alert title */
 "No Data" = "डेटा नाही";
 
@@ -531,6 +534,9 @@
 
 /* No comment provided by engineer. */
 "Previous" = "पुढे";
+
+/* previous GPX track */
+"Previous Tracks" = "पूर्वीचे ट्रॅक";
 
 /* No comment provided by engineer. */
 "Provide a single-character symbol (emoji or unicode character) to identify this quest:" = "ही मोहीम ओळखण्यासाठी एक अक्षरी चिन्ह (इमोजी किंवा यूनिकोड अक्षर) प्रदान करा:";

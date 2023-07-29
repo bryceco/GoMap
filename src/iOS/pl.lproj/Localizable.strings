@@ -125,6 +125,24 @@
 /* create a duplicate */
 "duplicate" = "duplikuj";
 
+/* Error dialog title */
+"Error" = "Błąd";
+
+/* No comment provided by engineer. */
+"Error fetching metadata: %@" = "Błąd podczas pobierania metadanych: % @";
+
+/* Header for quest filters section */
+"Filters" = "Filtry";
+
+/* No comment provided by engineer. */
+"Geometry" = "Geometria";
+
+/* No comment provided by engineer. */
+"GPX Upload Complete" = "Przesyłanie GPX zakończone";
+
+/* No comment provided by engineer. */
+"GPX Upload Failed" = "Przesyłanie GPX nie powiodło się";
+
 /* No comment provided by engineer. */
 "move" = "przenieś";
 

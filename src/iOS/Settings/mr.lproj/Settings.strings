@@ -40,9 +40,6 @@
 /* Class = "UILabel"; text = "Weblate - Translations"; ObjectID = "CHj-a3-gC9"; */
 "CHj-a3-gC9.text" = "Weblate - अनुवाद";
 
-/* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "ctb-pg-pM9"; */
-"ctb-pg-pM9.title" = "साठवा";
-
 /* Class = "UIButton"; normalTitle = "Sign In"; ObjectID = "dIM-oE-zAg"; */
 "dIM-oE-zAg.normalTitle" = "सनोंद प्रवेश";
 
@@ -120,6 +117,9 @@
 
 /* Class = "UILabel"; text = "Credits"; ObjectID = "TGa-tJ-nrC"; */
 "TGa-tJ-nrC.text" = "श्रेय";
+
+/* Class = "UITableViewSection"; footerTitle = "In order to upload changes to the map you need a user name and password registered at openstreetmap.org. "; ObjectID = "Tkc-bW-kNS"; */
+"Tkc-bW-kNS.footerTitle" = "नकाशावर बदल चढवण्यासाठी openstreetmap.org वर नोंदणीकृत वापरकर्तानाव व पासवर्ड आवश्यक आहे. ";
 
 /* Class = "UITableViewSection"; headerTitle = "OpenStreetMap account"; ObjectID = "Tkc-bW-kNS"; */
 "Tkc-bW-kNS.headerTitle" = "OpenStreetMap खाते";

@@ -1153,7 +1153,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Clear GPX Tracks" xml:space="preserve">
         <source>Clear GPX Tracks</source>
-        <target state="translated">GPX ट्रॅक पुसून टाका</target>
+        <target>GPX ट्रॅक पुसून टाका</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear Locator Overlay Tiles" xml:space="preserve">
@@ -1646,7 +1646,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="No active track" xml:space="preserve">
         <source>No active track</source>
-        <target state="translated">सक्रिय ट्रॅक नाही</target>
+        <target>सक्रिय ट्रॅक नाही</target>
         <note>GPX track</note>
       </trans-unit>
       <trans-unit id="No results found" xml:space="preserve">
@@ -1774,7 +1774,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Previous Tracks" xml:space="preserve">
         <source>Previous Tracks</source>
-        <target state="translated">पूर्वीचे ट्रॅक</target>
+        <target>पूर्वीचे ट्रॅक</target>
         <note>previous GPX track</note>
       </trans-unit>
       <trans-unit id="Provide a single-character symbol (emoji or unicode character) to identify this quest:" xml:space="preserve">
@@ -2826,6 +2826,10 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target>तपशील</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "3qk-15-BUc";</note>
       </trans-unit>
+      <trans-unit id="5mG-fF-znF.text" xml:space="preserve">
+        <source>Name</source>
+        <note>Class = "UILabel"; text = "Name"; ObjectID = "5mG-fF-znF";</note>
+      </trans-unit>
       <trans-unit id="6GT-p2-rPO.footerTitle" xml:space="preserve">
         <source>Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.</source>
         <note>Class = "UITableViewSection"; footerTitle = "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org."; ObjectID = "6GT-p2-rPO";</note>
@@ -2839,6 +2843,10 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>Detail</source>
         <target>तपशील</target>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "6Lj-wh-z9f";</note>
+      </trans-unit>
+      <trans-unit id="7it-6c-BVW.headerTitle" xml:space="preserve">
+        <source>OpenStreetMap account</source>
+        <note>Class = "UITableViewSection"; headerTitle = "OpenStreetMap account"; ObjectID = "7it-6c-BVW";</note>
       </trans-unit>
       <trans-unit id="34N-Ep-rpf.text" xml:space="preserve">
         <source>OpenStreetMap Login</source>
@@ -2896,6 +2904,10 @@ http://glyphish.com
         <target>Weblate - अनुवाद</target>
         <note>Class = "UILabel"; text = "Weblate - Translations"; ObjectID = "CHj-a3-gC9";</note>
       </trans-unit>
+      <trans-unit id="DVR-54-ure.text" xml:space="preserve">
+        <source>-</source>
+        <note>Class = "UILabel"; text = "-"; ObjectID = "DVR-54-ure";</note>
+      </trans-unit>
       <trans-unit id="DY5-Ls-XZ1.normalTitle" xml:space="preserve">
         <source>Register new account</source>
         <target>नवीन खाते नोंदणी करा</target>
@@ -2945,6 +2957,10 @@ http://glyphish.com
         <target>सनोंद प्रवेश</target>
         <note>Class = "UINavigationItem"; title = "Login"; ObjectID = "O6E-f1-A1k";</note>
       </trans-unit>
+      <trans-unit id="Sxo-RO-d9L.text" xml:space="preserve">
+        <source>-</source>
+        <note>Class = "UILabel"; text = "-"; ObjectID = "Sxo-RO-d9L";</note>
+      </trans-unit>
       <trans-unit id="TGa-tJ-nrC.text" xml:space="preserve">
         <source>Credits</source>
         <target>श्रेय</target>
@@ -2952,7 +2968,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Tkc-bW-kNS.footerTitle" xml:space="preserve">
         <source>In order to upload changes to the map you need a user name and password registered at openstreetmap.org. </source>
-        <target state="translated">नकाशावर बदल चढवण्यासाठी openstreetmap.org वर नोंदणीकृत वापरकर्तानाव व पासवर्ड आवश्यक आहे. </target>
+        <target>नकाशावर बदल चढवण्यासाठी openstreetmap.org वर नोंदणीकृत वापरकर्तानाव व पासवर्ड आवश्यक आहे. </target>
         <note>Class = "UITableViewSection"; footerTitle = "In order to upload changes to the map you need a user name and password registered at openstreetmap.org. "; ObjectID = "Tkc-bW-kNS";</note>
       </trans-unit>
       <trans-unit id="Tkc-bW-kNS.headerTitle" xml:space="preserve">
@@ -2980,20 +2996,27 @@ http://glyphish.com
         <target>जवळचे मानचित्रकार</target>
         <note>Class = "UINavigationItem"; title = "Nearby Mappers"; ObjectID = "VDO-HW-SLB";</note>
       </trans-unit>
+      <trans-unit id="WpM-6Q-OOf.normalTitle" xml:space="preserve">
+        <source>Sign Out</source>
+        <note>Class = "UIButton"; normalTitle = "Sign Out"; ObjectID = "WpM-6Q-OOf";</note>
+      </trans-unit>
+      <trans-unit id="Wrw-fc-hCg.text" xml:space="preserve">
+        <source>Changesets</source>
+        <note>Class = "UILabel"; text = "Changesets"; ObjectID = "Wrw-fc-hCg";</note>
+      </trans-unit>
       <trans-unit id="ags-Mx-c1q.text" xml:space="preserve">
         <source>Contact Us</source>
         <target>संपर्क माहिती</target>
         <note>Class = "UILabel"; text = "Contact Us"; ObjectID = "ags-Mx-c1q";</note>
       </trans-unit>
+      <trans-unit id="b22-oG-lnl.title" xml:space="preserve">
+        <source>Account Info</source>
+        <note>Class = "UINavigationItem"; title = "Account Info"; ObjectID = "b22-oG-lnl"; Note = "OSM account information";</note>
+      </trans-unit>
       <trans-unit id="bt0-CH-HbH.normalTitle" xml:space="preserve">
         <source>Start</source>
         <target>प्रारंभ</target>
         <note>Class = "UIButton"; normalTitle = "Start"; ObjectID = "bt0-CH-HbH";</note>
-      </trans-unit>
-      <trans-unit id="ctb-pg-pM9.title" xml:space="preserve">
-        <source>Save</source>
-        <target>साठवा</target>
-        <note>Class = "UIBarButtonItem"; title = "Save"; ObjectID = "ctb-pg-pM9";</note>
       </trans-unit>
       <trans-unit id="dIM-oE-zAg.normalTitle" xml:space="preserve">
         <source>Sign In</source>
@@ -3018,6 +3041,10 @@ http://glyphish.com
         <source>Advanced</source>
         <target>प्रगत</target>
         <note>Class = "UITableViewSection"; headerTitle = "Advanced"; ObjectID = "gh3-sb-yuZ";</note>
+      </trans-unit>
+      <trans-unit id="i8N-Ya-Wr2.normalTitle" xml:space="preserve">
+        <source>Refresh Account</source>
+        <note>Class = "UIButton"; normalTitle = "Refresh Account"; ObjectID = "i8N-Ya-Wr2";</note>
       </trans-unit>
       <trans-unit id="iR4-av-Q7M.text" xml:space="preserve">
         <source>Email Feedback</source>

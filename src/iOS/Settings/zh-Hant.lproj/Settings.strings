@@ -55,9 +55,6 @@
 /* Class = "UILabel"; text = "Weblate - Translations"; ObjectID = "CHj-a3-gC9"; */
 "CHj-a3-gC9.text" = "Weblate - 翻譯";
 
-/* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "ctb-pg-pM9"; */
-"ctb-pg-pM9.title" = "儲存";
-
 /* Class = "UITableViewSection"; headerTitle = "Bug Reports & Suggestions"; ObjectID = "dbi-X6-Day"; */
 "dbi-X6-Day.headerTitle" = "臭蟲回報與建議回饋";
 
