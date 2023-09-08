@@ -3042,6 +3042,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="5mG-fF-znF.text" xml:space="preserve">
         <source>Name</source>
+        <target state="translated">名稱</target>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "5mG-fF-znF";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.footerTitle" xml:space="preserve">
@@ -3061,6 +3062,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="7it-6c-BVW.headerTitle" xml:space="preserve">
         <source>OpenStreetMap account</source>
+        <target state="translated">開放街圖帳號</target>
         <note>Class = "UITableViewSection"; headerTitle = "OpenStreetMap account"; ObjectID = "7it-6c-BVW";</note>
       </trans-unit>
       <trans-unit id="34N-Ep-rpf.text" xml:space="preserve">
@@ -3144,6 +3146,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="DVR-54-ure.text" xml:space="preserve">
         <source>-</source>
+        <target state="translated">-</target>
         <note>Class = "UILabel"; text = "-"; ObjectID = "DVR-54-ure";</note>
       </trans-unit>
       <trans-unit id="DY5-Ls-XZ1.normalTitle" xml:space="preserve">
@@ -3198,6 +3201,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Sxo-RO-d9L.text" xml:space="preserve">
         <source>-</source>
+        <target state="translated">-</target>
         <note>Class = "UILabel"; text = "-"; ObjectID = "Sxo-RO-d9L";</note>
       </trans-unit>
       <trans-unit id="TGa-tJ-nrC.text" xml:space="preserve">
@@ -3237,10 +3241,12 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="WpM-6Q-OOf.normalTitle" xml:space="preserve">
         <source>Sign Out</source>
+        <target state="translated">登出</target>
         <note>Class = "UIButton"; normalTitle = "Sign Out"; ObjectID = "WpM-6Q-OOf";</note>
       </trans-unit>
       <trans-unit id="Wrw-fc-hCg.text" xml:space="preserve">
         <source>Changesets</source>
+        <target state="translated">編輯變動集</target>
         <note>Class = "UILabel"; text = "Changesets"; ObjectID = "Wrw-fc-hCg";</note>
       </trans-unit>
       <trans-unit id="ags-Mx-c1q.text" xml:space="preserve">
@@ -3250,6 +3256,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="b22-oG-lnl.title" xml:space="preserve">
         <source>Account Info</source>
+        <target state="translated">帳號資訊</target>
         <note>Class = "UINavigationItem"; title = "Account Info"; ObjectID = "b22-oG-lnl"; Note = "OSM account information";</note>
       </trans-unit>
       <trans-unit id="bt0-CH-HbH.normalTitle" xml:space="preserve">
@@ -3284,6 +3291,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="i8N-Ya-Wr2.normalTitle" xml:space="preserve">
         <source>Refresh Account</source>
+        <target state="translated">重新整理帳號</target>
         <note>Class = "UIButton"; normalTitle = "Refresh Account"; ObjectID = "i8N-Ya-Wr2";</note>
       </trans-unit>
       <trans-unit id="iR4-av-Q7M.text" xml:space="preserve">
