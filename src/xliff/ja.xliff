@@ -2,7 +2,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3.1" build-num="14E300c"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
     </header>
     <body>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
@@ -179,7 +179,7 @@
   </file>
   <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3.1" build-num="14E300c"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
     </header>
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
@@ -208,7 +208,7 @@
   </file>
   <file original="DisplaySettings/Base.lproj/Display.storyboard" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3.1" build-num="14E300c"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
     </header>
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
@@ -677,7 +677,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3.1" build-num="14E300c"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -738,7 +738,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="en.lproj/Localizable.strings" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3.1" build-num="14E300c"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
     </header>
     <body>
       <trans-unit id="&#9;Relation " xml:space="preserve">
@@ -2520,7 +2520,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3.1" build-num="14E300c"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
     </header>
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
@@ -2547,7 +2547,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="PhotoShare/Base.lproj/MainInterface.storyboard" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3.1" build-num="14E300c"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
     </header>
     <body>
       <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
@@ -2569,7 +2569,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="PhotoShare/en.lproj/InfoPlist.strings" datatype="plaintext" source-language="en" target-language="ja">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3.1" build-num="14E300c"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -2584,7 +2584,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="PhotoShare/en.lproj/Localizable.strings" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3.1" build-num="14E300c"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
     </header>
     <body>
       <trans-unit id="Processing data..." xml:space="preserve">
@@ -2606,7 +2606,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="POI/Base.lproj/POI.storyboard" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3.1" build-num="14E300c"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
     </header>
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
@@ -3003,7 +3003,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="Settings/Base.lproj/Settings.storyboard" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3.1" build-num="14E300c"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
@@ -3043,7 +3043,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="5mG-fF-znF.text" xml:space="preserve">
         <source>Name</source>
-        <target state="translated">名前</target>
+        <target>名前</target>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "5mG-fF-znF";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.footerTitle" xml:space="preserve">
@@ -3063,7 +3063,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="7it-6c-BVW.headerTitle" xml:space="preserve">
         <source>OpenStreetMap account</source>
-        <target state="translated">OpenStreetMap アカウント</target>
+        <target>OpenStreetMap アカウント</target>
         <note>Class = "UITableViewSection"; headerTitle = "OpenStreetMap account"; ObjectID = "7it-6c-BVW";</note>
       </trans-unit>
       <trans-unit id="34N-Ep-rpf.text" xml:space="preserve">
@@ -3147,7 +3147,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="DVR-54-ure.text" xml:space="preserve">
         <source>-</source>
-        <target state="translated">-</target>
+        <target>-</target>
         <note>Class = "UILabel"; text = "-"; ObjectID = "DVR-54-ure";</note>
       </trans-unit>
       <trans-unit id="DY5-Ls-XZ1.normalTitle" xml:space="preserve">
@@ -3202,7 +3202,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Sxo-RO-d9L.text" xml:space="preserve">
         <source>-</source>
-        <target state="translated">-</target>
+        <target>-</target>
         <note>Class = "UILabel"; text = "-"; ObjectID = "Sxo-RO-d9L";</note>
       </trans-unit>
       <trans-unit id="TGa-tJ-nrC.text" xml:space="preserve">
@@ -3242,12 +3242,12 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="WpM-6Q-OOf.normalTitle" xml:space="preserve">
         <source>Sign Out</source>
-        <target state="translated">サインアウト</target>
+        <target>サインアウト</target>
         <note>Class = "UIButton"; normalTitle = "Sign Out"; ObjectID = "WpM-6Q-OOf";</note>
       </trans-unit>
       <trans-unit id="Wrw-fc-hCg.text" xml:space="preserve">
         <source>Changesets</source>
-        <target state="translated">変更セット</target>
+        <target>変更セット</target>
         <note>Class = "UILabel"; text = "Changesets"; ObjectID = "Wrw-fc-hCg";</note>
       </trans-unit>
       <trans-unit id="ags-Mx-c1q.text" xml:space="preserve">
@@ -3257,7 +3257,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="b22-oG-lnl.title" xml:space="preserve">
         <source>Account Info</source>
-        <target state="translated">アカウント情報</target>
+        <target>アカウント情報</target>
         <note>Class = "UINavigationItem"; title = "Account Info"; ObjectID = "b22-oG-lnl"; Note = "OSM account information";</note>
       </trans-unit>
       <trans-unit id="bt0-CH-HbH.normalTitle" xml:space="preserve">
@@ -3292,7 +3292,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="i8N-Ya-Wr2.normalTitle" xml:space="preserve">
         <source>Refresh Account</source>
-        <target state="translated">アカウントをリフレッシュ</target>
+        <target>アカウントをリフレッシュ</target>
         <note>Class = "UIButton"; normalTitle = "Refresh Account"; ObjectID = "i8N-Ya-Wr2";</note>
       </trans-unit>
       <trans-unit id="iR4-av-Q7M.text" xml:space="preserve">
@@ -3374,7 +3374,7 @@ http://glyphish.com
   </file>
   <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="14.3.1" build-num="14E300c"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
     </header>
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">

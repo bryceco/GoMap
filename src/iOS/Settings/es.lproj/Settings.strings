@@ -19,6 +19,9 @@
 /* Class = "UILabel"; text = "Details"; ObjectID = "3qk-15-BUc"; */
 "3qk-15-BUc.text" = "Detalles";
 
+/* Class = "UILabel"; text = "Name"; ObjectID = "5mG-fF-znF"; */
+"5mG-fF-znF.text" = "Nombre";
+
 /* Class = "UITableViewSection"; footerTitle = "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org."; ObjectID = "6GT-p2-rPO"; */
 "6GT-p2-rPO.footerTitle" = "Especifica un host si deseas editar datos ubicados en un servidor OSM alternativo. El host por defecto es api.openstreetmap.org.";
 
@@ -27,6 +30,9 @@
 
 /* Class = "UILabel"; text = "Detail"; ObjectID = "6Lj-wh-z9f"; */
 "6Lj-wh-z9f.text" = "Detalle";
+
+/* Class = "UITableViewSection"; headerTitle = "OpenStreetMap account"; ObjectID = "7it-6c-BVW"; */
+"7it-6c-BVW.headerTitle" = "Cuenta en OpenStreetMap";
 
 /* Class = "UILabel"; text = "OpenStreetMap Login"; ObjectID = "34N-Ep-rpf"; */
 "34N-Ep-rpf.text" = "Iniciar sesión en OpenStreetMap";
@@ -46,6 +52,9 @@
 /* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "AVI-04-hFN"; */
 "AVI-04-hFN.text" = "Teselas aéreas";
 
+/* Class = "UINavigationItem"; title = "Account Info"; ObjectID = "b22-oG-lnl"; Note = "OSM account information"; */
+"b22-oG-lnl.title" = "Información de la cuenta";
+
 /* Class = "UITextView"; text = "Copyright © 2012-2020 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nEXIF parsing code Copyright (c) 2010-2015 Mayank Lahiri\nhttps://github.com/mayanklahiri/easyexif\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F"; */
 "BHr-ta-k6F.text" = "Copyright © 2012-2020 Bryce Cogswell.\nReservados todos los derechos.\n\nLos datos de OpenStreetMap tienen licencia de Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nLas imágenes aéreas de Bing tienen derechos de autor de Microsoft y sus proveedores:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nLas imágenes aéreas de Mapbox son propiedad de Mapbox y sus proveedores: https://www.mapbox.com/tos\n\nAnálisis XML cortesía de KissXML de Robbie Hanson:\nhttps://github.com/robbiehanson/KissXML\n\nCódigo de análisis EXIF Copyright (c) 2010-2015 Mayank Lahiri\nhttps://github.com/mayanklahiri/easyexif\n\nSímbolos de la tarjeta SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOtros símbolos de Glyphish:\nhttp://glyphish.com\n";
 
@@ -63,6 +72,9 @@
 
 /* Class = "UILabel"; text = "Detail detail detail detail detail"; ObjectID = "DiU-tt-U7H"; Note = "Do not translate"; */
 "DiU-tt-U7H.text" = "Detail detail detail detail detail";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "DVR-54-ure"; */
+"DVR-54-ure.text" = "-";
 
 /* Class = "UIButton"; normalTitle = "Register new account"; ObjectID = "DY5-Ls-XZ1"; */
 "DY5-Ls-XZ1.normalTitle" = "Registrar una nueva cuenta";
@@ -84,6 +96,9 @@
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "HNj-kK-OCP"; */
 "HNj-kK-OCP.text" = "Título";
+
+/* Class = "UIButton"; normalTitle = "Refresh Account"; ObjectID = "i8N-Ya-Wr2"; */
+"i8N-Ya-Wr2.normalTitle" = "Actualizar la cuenta";
 
 /* Class = "UINavigationItem"; title = "Language"; ObjectID = "ib9-wt-IzD"; */
 "ib9-wt-IzD.title" = "Idioma";
@@ -136,6 +151,9 @@
 /* Class = "UIButton"; normalTitle = "Start"; ObjectID = "snH-kp-6ib"; */
 "snH-kp-6ib.normalTitle" = "Iniciar";
 
+/* Class = "UILabel"; text = "-"; ObjectID = "Sxo-RO-d9L"; */
+"Sxo-RO-d9L.text" = "-";
+
 /* Class = "UILabel"; text = "Credits"; ObjectID = "TGa-tJ-nrC"; */
 "TGa-tJ-nrC.text" = "Créditos";
 
@@ -159,6 +177,12 @@
 
 /* Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5"; */
 "whL-SZ-HD5.text" = "Comentarios por correo electrónico";
+
+/* Class = "UIButton"; normalTitle = "Sign Out"; ObjectID = "WpM-6Q-OOf"; */
+"WpM-6Q-OOf.normalTitle" = "Cerrar sesión";
+
+/* Class = "UILabel"; text = "Changesets"; ObjectID = "Wrw-fc-hCg"; */
+"Wrw-fc-hCg.text" = "Conjuntos de cambios";
 
 /* Class = "UILabel"; text = "GitHub - Issues & Source Code"; ObjectID = "x4m-oT-EG8"; */
 "x4m-oT-EG8.text" = "GitHub - Problemas & Código fuente";

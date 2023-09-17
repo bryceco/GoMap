@@ -55,6 +55,9 @@
 /* Class = "UILabel"; text = "Zoom to Edit"; ObjectID = "N5Q-nV-TPG"; */
 "N5Q-nV-TPG.text" = "Zoomen zum bearbeiten";
 
+/* Class = "UILabel"; text = "A Error Message Flashing Z"; ObjectID = "nU5-T2-ADn"; Note = "Placeholder - Don't translate"; */
+"nU5-T2-ADn.text" = "A Error Message Flashing Z";
+
 /* Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1"; */
 "OJ0-aO-ri1.normalTitle" = "Erledigen";
 
