@@ -1,0 +1,1492 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "CFBundleDisplayName" : {
+      "comment" : "Bundle display name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "!!Go Map"
+          }
+        },
+        "ars" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "!!Go Map"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Go Map!!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "nb-NO" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "nn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "oc" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "tzm" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        }
+      }
+    },
+    "CFBundleGetInfoString" : {
+      "comment" : "Get Info string",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "CFBundleName" : {
+      "comment" : "Bundle name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "!!Go Map"
+          }
+        },
+        "ars" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "!!Go Map"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Go Map!!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "nb-NO" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "nn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "oc" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "tzm" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        }
+      }
+    },
+    "GPS Exchange Format (GPX)" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تنسيق تبادل GPS (GPX)"
+          }
+        },
+        "ars" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تنسيق تبادل GPS (GPX)"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS Exchange Format (GPX)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS Exchange Format (GPX)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formato de intercambio de GPS (GPX)"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS-vahetusformaat (GPX)"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS Exchange Format (GPX)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS Exchange Format (GPX)"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS format za razmjenu podataka (GPX)"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS Exchange Format (GPX)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS Exchange Format (GPX)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS交換形式 (GPX)"
+          }
+        },
+        "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS विनिमय स्वरुप (GPX)"
+          }
+        },
+        "nb-NO" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS-utvekslingsformat (GPX)"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS Exchange Format (GPX)"
+          }
+        },
+        "nn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS-utvekslingformat (GPX)"
+          }
+        },
+        "oc" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Format d'escambi GPS (GPX)"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS Exchange Format (GPX)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS Exchange Format (GPX)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS Exchange Format (GPX)"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS Exchange Format (GPX)"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Định dạng Trao đổi GPS (GPX)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS Exchange Format (GPX)"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS 交換格式 (GPX)"
+          }
+        }
+      }
+    },
+    "NSBluetoothPeripheralUsageDescription" : {
+      "comment" : "Privacy - Bluetooth Peripheral Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاتصال بأجهزة بلوتوث GPS الخارجية"
+          }
+        },
+        "ars" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاتصال بأجهزة بلوتوث GPS الخارجية"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Připojení k externím Bluetooth GPS zařízením"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbinde mit externen Bluetooth GPS-Geräten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Connect to external Bluetooth GPS devices"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conectar con dispositivos GPS Bluetooth externos"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loo ühendus väliste Bluetooth GPS seadmetega"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yhdistä ulkoiseen Bluetooth GPS -laitteeseen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se connecter aux appareils GPS externes en Bluetooth"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poveži se s vanjskim Bluetooth GPS uređajima"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hubungkan dengan perangkat GPS Bluetooth eksternal"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connetti dispositivi GPS Bluetooth esterni"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "外部Bluetooth GPS装置に接続"
+          }
+        },
+        "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "बाह्य ब्लुटुथ GPS उपकारांना जोडा"
+          }
+        },
+        "nb-NO" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koble til eksterne Blåtanns-GPS-enheter"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbind met externe Bluetooth GPS-apparaten"
+          }
+        },
+        "oc" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se connectar a d'aparelhs extèrnes GPS Bluetooth"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Połącz się z zewnętrznymi urządzeniami GPS poprzez Bluetooth"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conectar por Bluetooth a um GPS externo"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conectar-se por Bluetooth a GPS externo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подключиться к внешнему Bluetooth GPS устройству"
+          }
+        },
+        "tzm" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ⴰⵎⵢⴰⵡⴰⴹ ⴷ ⵡⴰⵍⵍⴰⵍⵏ ⵏ ⴱⵍⵓⵜⵓⵜ GPS ⵏ ⴱⵕⵕⴰ"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зʼєднати з GPS-пристроєм через Bluetooth"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kết nối với các thiết bị GPS Bluetooth"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "连接到外部蓝牙GPS设备"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "連線到其他藍牙 GPS 裝置"
+          }
+        }
+      }
+    },
+    "NSCameraUsageDescription" : {
+      "comment" : "Privacy - Camera Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تُستخدم الكاميرا لقياس ارتفاعات المباني أو الأشياء ، وأيضاً للتعرف على النص في لافتات ساعات العمل."
+          }
+        },
+        "ars" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تُستخدم الكاميرا لقياس ارتفاعات المباني أو الأشياء ، وأيضاً للتعرف على النص في لافتات ساعات العمل."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fotoaparát se používá k měření výšky budov nebo objektů a k rozpoznávání textu na cedulích s otevírací dobou."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Kamera wird zur Höhenmessung von Gebäuden oder Objekten und zur Texterkennung bei Öffnungszeitenschildern eingesetzt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "The camera is used to measure heights of buildings or objects, and to perform text recognition in opening hours signs."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La cámara se utiliza para medir alturas de edificios u objetos, y para realizar el reconocimiento de texto en carteles de horarios de apertura."
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaamerat kasutatakse hoonete või objektide kõrguse mõõtmiseks, samuti tekstituvastuseks lahtiolekuaegade siltidelt."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kameraa käytetään mittaamaan rakennusten tai objektien korkeuksia sekä aukioloaikojen automaattista tunnistukseen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La caméra est utilisée pour mesurer la hauteur des bâtiments ou des objets, et pour effectuer la reconnaissance de texte dans les panneaux d'heures d'ouverture."
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kamera se koristi za mjerenje visina zgrada ili objekata, te za prepoznavanje teksta na natpisima radnog vremena."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kamera digunakan untuk mengukur tinggi bangunan atau objek, dan untuk melakukan pengenalan teks pada tanda jam buka."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カメラは建物やオブジェクトの高さ計測と開店時間のテキスト認識に使われます。"
+          }
+        },
+        "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इमारती किंवा वस्तूंची उंची मोजण्यासाठी आणि उघडण्याच्या तासांच्या चिन्हांमध्ये मजकूर ओळखण्यासाठी कॅमेरा वापरला जातो."
+          }
+        },
+        "nb-NO" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kameraet brukes til å måle høyden på bygninger eller gjenstander, og til tekstgjenkjenning på skilt med åpningstider."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De camera wordt gebruikt om de hoogte van gebouwen of objecten te meten en voor tekstherkenning bij borden met openingstijden."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A câmara é utilizada para medir a altura de edifícios ou objetos e para fazer o reconhecimento de texto em painéis com o horário de funcionamento."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A câmera é usada para medir a altura de edifícios ou objetos e para realizar o reconhecimento de texto em placas de horário de funcionamento."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Камера потрібна щоб вимірювати висоту будівель чи інших обʼєктів та щоб розпізнавати текст на табличках з часом роботи."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "照相机被用于测量建筑物或物体的高度，并对标识牌上的开放时间进行文本识别。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您的相機將會被用來測量建築物或實體物件的高度，同時也用於營業時間標示的文字辨識。"
+          }
+        }
+      }
+    },
+    "NSHumanReadableCopyright" : {
+      "comment" : "Copyright (human-readable)",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حقوق النشر 2012-2021 Bryce Cogswell"
+          }
+        },
+        "ars" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حقوق النشر 2012-2021 Bryce Cogswell"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright 2012–2021 Bryce Cogswell"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Urheberrecht 2012-2021 Bryce Cogswell"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Copyright 2012-2021 Bryce Cogswell"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "© 2012-2021 de Bryce Cogswell"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Autoriõigus 2012-2021 Bryce Cogswell"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Droits d’auteur 2012-2021 Bryce Cogswell"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Autorska prava 2012. – 2021. Bryce Cogswell"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hak Cipta 2012-2021 Bryce Cogswell"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "著作権 2012-2021 Bryce Cogswell"
+          }
+        },
+        "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "प्रकाशनाधिकार 2012-2021 Bryce Cogswell"
+          }
+        },
+        "nb-NO" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opphavsrett 2012-2021 Bryce Cogswell"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright 2012-2021 Bryce Cogswell"
+          }
+        },
+        "oc" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drechs d’autor 2012-2021 Bryce Cogswell"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Direitos de autor: 2012-2021 Bryce Cogswell"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Direitos autorais 2012-2021 Bryce Cogswell"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Авторское право 2012-2021 Брайс Когсвелл"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Усі права застережено 2012—2023 Брайс Коґсвелл"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版權所有 2012-2021 Bryce Cogswell"
+          }
+        }
+      }
+    },
+    "NSLocationAlwaysAndWhenInUseUsageDescription" : {
+      "comment" : "Privacy - Location Always and When In Use Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تشغيل تتبع الموقع بشكل دائم يسمح للتطبيق بتسجيل ملفات GPX عندما يكون التطبيق غير نشط."
+          }
+        },
+        "ars" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تشغيل تتبع الموقع بشكل دائم يسمح للتطبيق بتسجيل ملفات GPX عندما يكون التطبيق غير نشط."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vždy zapnuté sledování polohy umožňuje aktivní aplikaci zaznamenat GPX soubory."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Standortdienste immer zu erlauben, ermöglicht der App, GPX-Dateien auch dann aufzuzeichnen, wenn sie inaktiv ist."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Always on location tracking allows the app to record GPX files when inactive."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El rastreo de ubicación siempre encendido permite a la aplicación grabar archivos GPX mientras está inactiva."
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alati sisselülitatud asukoha jälgimine võimaldab rakendusel salvestada GPX-faile, kui see ei ole aktiivne."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'activation permanente de la localisation permet à l'application d'enregistrer des fichiers GPX pendant que celle-ci est inactive."
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uvijek uključeno praćenje mjesta omogućuje programu snimanje GPX datoteka kad je neaktivna."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pelacakan lokasi yang selalu aktif memungkinkan aplikasi untuk merekam berkas GPX saat nonaktif."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il monitoraggio della posizione sempre attivo consente all'app di registrare i file GPX quando non è attiva."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "非アクティブ時にGPXファイルの記録による現在地のトラッキングをアプリに常時許可する。"
+          }
+        },
+        "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "स्थान मागोवा \"नेहमी चालू\" ठेवल्याने निष्क्रिय असताना GPX फाईल मुद्रण शक्य होते."
+          }
+        },
+        "nb-NO" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sporingstilgang som alltid er på tillater programmet å lage GPX-filer når det er inaktivt."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De permanent actieve locatiebepaling staat de app toe om GPX-bestanden op te nemen wanneer deze inactief is."
+          }
+        },
+        "oc" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L’activacion permanenta de l’aplicacion permet l’enregistrament dei fichiers GPX estent non activa."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Funkcja śledzenia lokalizacji pozwala aplikacji na nagrywanie plików GPX, gdy jest nieaktywna."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O rastreamento de localização sempre ativo permite que a aplicação grave ficheiros GPX quando esta está inativa."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O rastreamento de localização sempre ativado permite que o aplicativo grave arquivos GPX quando inativo."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Постоянное отслеживание местоположения позволяет приложению записывать файлы GPX, даже когда оно неактивно."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Постійно увімкнене відстеження локації дозволить застосунку записувати файли GPX у фоновому режимі."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chế độ theo dõi luôn luôn cho phép ứng dụng ghi các tập tin GPX ngay cả khi không sử dụng tích cực."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "始终处于位置跟踪状态，允许应用程序在不活动时记录GPX文件。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "持續定位並允許 app 紀錄資訊到 GPX 檔案，當 app 在背景執行時。"
+          }
+        }
+      }
+    },
+    "NSLocationAlwaysUsageDescription" : {
+      "comment" : "Privacy - Location Always Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سيتم عرض موقعك وتتبعه على الخريطة."
+          }
+        },
+        "ars" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سيتم عرض موقعك وتتبعه على الخريطة."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vaše poloha bude sledována a zobrazena na mapě."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Standort wird angezeigt und auf der Karte verfolgt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Your location will be displayed and followed on the map."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tú ubicación se mostrará y seguirá en el mapa."
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sinu asukoht kuvatakse ja jälgitakse kaardil."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sijaintiasi näytettään ja seurataan kartalla."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre position sera affichée et suivie sur la carte."
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tvoje će se mjesto prikazati i pratiti na karti."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lokasi Anda akan ditampilkan dan diikuti di peta."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La tua posizione verrà visualizzata e seguita sulla mappa."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "マップ上にあなたの位置が表示、追跡されます。"
+          }
+        },
+        "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपले स्थान नकाशावर सतत दाखवले जाईल व त्याचा पाठलाग केला जाईल."
+          }
+        },
+        "nb-NO" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Din plassering vil bli vist og fulgt på kartet."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je locatie wordt weergegeven en gevolgd op de kaart."
+          }
+        },
+        "oc" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vòstra posicion serà visualizada e seguida sus la mapa."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twoja lokalizacja zostanie wyświetlona i obserwowana na mapie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A sua localização será mostrada e seguida no mapa."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sua localização será exibida e seguida no mapa."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваше местоположение будет отображаться и отслеживаться на карте."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваша локація зʼявиться на мапі та оновлюватиметься."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hiển thị và theo dõi vị trí của bạn trên bản đồ."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您的位置将在地图上显示并跟踪。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您的定位動態將會顯示在地圖上。"
+          }
+        }
+      }
+    },
+    "NSLocationUsageDescription" : {
+      "comment" : "Privacy - Location Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عند تمكين خدمات الموقع سيعرض لك التطبيق الأشياء القريبة منك، كما يتيح لك تحديث أو إضافة البيانات التي تقوم باستطلاعها بنفسك بسهولة."
+          }
+        },
+        "ars" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عند تمكين خدمات الموقع سيعرض لك التطبيق الأشياء القريبة منك، كما يتيح لك تحديث أو إضافة البيانات التي تقوم باستطلاعها بنفسك بسهولة."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Povolení polohových služeb umožňuje aplikaci zobrazovat objekty ve vašem okolí. Díky tomu můžete snadno aktualizovat nebo přidávat data, která sami prozkoumáte."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn Sie die Standortdienste aktivieren, kann die App Objekte in der Nähe anzeigen. So können Sie selbst erhobene Daten leicht aktualisieren oder hinzufügen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Enabling location services allows the app to display objects in your vicinity. This allows you to easily update or add data you survey yourself."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Habilitar los servicios de ubicación permite que la aplicación muestre objetos en tú barrio. Esto te permite actualizar o agregar fácilmente los datos que encuentras."
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asukohateenuste lubamine võimaldab rakendusel kuvada teie läheduses asuvaid objekte. See võimaldab teil hõlpsasti uuendada või lisada andmeid, mida te ise mõõdistate."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sallimalla paikannuspalvelut sovellus voi näyttää lähettyvillä olevat objektit. Tämä tekee lähialueesi päivittämisen ja kartoittamisen helpoksi."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'activation des services de localisation permet à l'application d'afficher les objets situés à proximité. Vous pouvez ainsi facilement mettre à jour ou ajouter des données que vous relevez vous-même."
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktiviranje usluga lociranja omogućuje programu prikaz objekata u tvojoj blizini. To omogućuje jednostavno aktualiziranje ili dodavanje podataka vlastitim anketama."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mengaktifkan layanan lokasi memungkinkan aplikasi untuk menampilkan objek di sekitar Anda. Ini memungkinkan Anda untuk memperbarui atau menambahkan data yang Anda survei sendiri dengan mudah."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "位置サービスを有効化するとあなたの周りのオブジェクトの表示をアプリに許可します。これにより自身の調査によるデータ追加・更新が容易になります。"
+          }
+        },
+        "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "स्थान सेवा सक्षम केल्याने ॲपला आपल्या शेजारच्या वस्तू दाखवणे शक्य होईल. ह्याने आपण स्वतः सर्वेक्षण केलेल्या वस्तू नकाशावर जोडणे सोपे होते."
+          }
+        },
+        "nb-NO" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktivering av posisjonstjenester lar appen vise objekter i nærheten. Dette lar deg enkelt oppdatere eller legge til data du selv kartlegger."
+          }
+        },
+        "oc" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L’activacion de la localizacion permet a l’aplicacion de monstrar leis objèctes pròches. Podètz ansin actualizar facilament ò ajustar lei donadas que relevatz vos."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A ativação dos serviços de localização permite que a aplicação mostre elementos nas suas redondezas. Isto permite-lhe atualizar ou adicionar facilmente dados ao fazer o reconhecimento no terreno."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ativar os serviços de localização permite que o aplicativo mostre objetos na sua proximidade. Isto permite a você atualizar ou adicionar dados facilmente durante sua pesquisa."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Якщо увімкнете служби локації застосунок зможе показувати об’єкти неподалік. Так ви легко оновите чи додасте дані які збираєте."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "允許位置服務來讓 app 顯示你附近的物件。這讓你很容易在探查時更新或新增資料。"
+          }
+        }
+      }
+    },
+    "NSLocationWhenInUseUsageDescription" : {
+      "comment" : "Privacy - Location When In Use Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سيتم عرض موقعك وتتبعه على الخريطة."
+          }
+        },
+        "ars" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سيتم عرض موقعك وتتبعه على الخريطة."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vaše poloha bude sledována a zobrazena na mapě."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Standort wird angezeigt und auf der Karte verfolgt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Your location will be displayed and followed on the map."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tú ubicación se mostrará y seguirá en el mapa."
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teie asukoht kuvatakse ja seda jälgitakse kaardil."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre position sera affichée et suivie sur la carte."
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tvoje će se mjesto prikazati i pratiti na karti."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lokasi Anda akan ditampilkan dan diikuti pada peta."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La tua posizione verrà visualizzata e seguita sulla mappa."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "マップ上にあなたの位置が表示、追跡されます。"
+          }
+        },
+        "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपले स्थान नकाशावर सतत दाखवले जाईल व त्याचा पाठलाग केला जाईल."
+          }
+        },
+        "nb-NO" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Din plassering vil bli vist og fulgt på kartet."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je locatie wordt weergegeven en gevolgd op de kaart."
+          }
+        },
+        "oc" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vòstra posicion serà visualizada emai seguida sus la mapa."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twoja lokalizacja będzie wyświetlana i śledzona na mapie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A sua localização será mostrada e seguida no mapa."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sua localização será exibida e seguida no mapa."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваше местоположение будет отображаться и отслеживаться на карте."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваша локація з’явиться на мапі та оновлюватиметься."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hiển thị và theo dõi vị trí của bạn trên bản đồ."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您的位置将在地图上显示并跟踪。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您的定位動態將會顯示在地圖上。"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

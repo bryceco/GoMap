@@ -1,9 +1,0 @@
-/* Class = "UIButton"; normalTitle = "OK"; ObjectID = "05z-LH-xEK"; */
-"05z-LH-xEK.normalTitle" = "OK";
-
-/* Class = "UILabel"; text = "Go Map!! will open at the location the photo was taken."; ObjectID = "cy3-gz-fvk"; */
-"cy3-gz-fvk.text" = "Go Map!! は写真が撮られた場所でオープンします。";
-
-/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "Zxw-Em-faC"; */
-"Zxw-Em-faC.normalTitle" = "キャンセル";
-
