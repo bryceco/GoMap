@@ -783,9 +783,11 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <note/>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;|==|plural.one" xml:space="preserve">
-        <target state="needs-review-l10n"> (%d 件のメンバー)
+        <target state="translated"> (%d 件のメンバー)
 </target>
         <note/>
+        <target> (%d 件のメンバー)
+</target>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;|==|plural.other" xml:space="preserve">
         <source> (%d members)
@@ -795,9 +797,11 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <note/>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;|==|plural.one" xml:space="preserve">
-        <target state="needs-review-l10n"> (%d 件のノード)
+        <target state="translated"> (%d 件のノード)
 </target>
         <note/>
+        <target> (%d 件のノード)
+</target>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;|==|plural.other" xml:space="preserve">
         <source> (%d nodes)
@@ -852,9 +856,10 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="%ld Days|==|plural.one" xml:space="preserve">
-        <target state="needs-review-l10n">%ld 日</target>
+        <target state="translated">%ld 日</target>
         <note>Plural number of days
 One or more days</note>
+        <target>%ld 日</target>
       </trans-unit>
       <trans-unit id="%ld Days|==|plural.other" xml:space="preserve">
         <source>%ld Days</source>
