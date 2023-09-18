@@ -799,7 +799,7 @@ Para descargar las teselas más recientes, incluidos los cambios cargados anteri
       <trans-unit id=" (%d nodes)&#10;|==|plural.one" xml:space="preserve">
         <source> (%d node)
 </source>
-        <target state="needs-review-l10n"> (%d nodos)
+        <target state="translated"> (%d nodo)
 </target>
         <note/>
       </trans-unit>
@@ -869,12 +869,12 @@ One or more days</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.one" xml:space="preserve">
         <source>%ld edit, last active %@</source>
-        <target state="needs-review-l10n">%1$ld ediciones, última activa %2$@</target>
+        <target state="translated">%ld edición, último activo %@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.other" xml:space="preserve">
         <source>%ld edits, last active %@</source>
-        <target state="translated">%1$ld ediciones, última activa %2$@</target>
+        <target state="translated">%1$ld ediciones, último activo %2$@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
@@ -884,27 +884,27 @@ One or more days</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@, %3$#@waypoints@</source>
-        <target state="needs-review-l10n">%1$#@meters@ metros, %2$#@points@ puntos, %3$#@waypoints@ waypoints</target>
+        <target state="translated">%1$#@meters@, %2$#@points@, %3$#@waypoints@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%ld meter</source>
-        <target state="needs-review-l10n">%1$ld</target>
+        <target state="translated">%ld metro</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="needs-review-l10n">%1$ld</target>
+        <target state="translated">%ld metros</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.one" xml:space="preserve">
         <source>%ld point</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%ld punto</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.other" xml:space="preserve">
         <source>%ld points</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%ld puntos</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.one" xml:space="preserve">
@@ -919,22 +919,22 @@ One or more days</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%ld meter</source>
-        <target state="needs-review-l10n">%1$ld</target>
+        <target state="translated">%ld metro</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="needs-review-l10n">%1$ld</target>
+        <target state="translated">%ld metros</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.one" xml:space="preserve">
         <source>%ld point</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%ld punto</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.other" xml:space="preserve">
         <source>%ld points</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%ld puntos</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
@@ -984,6 +984,7 @@ One or more days</note>
       </trans-unit>
       <trans-unit id="1 Day" xml:space="preserve">
         <source>1 Day</source>
+        <target state="translated">1 Día</target>
         <note>1 day singular</note>
       </trans-unit>
       <trans-unit id="&lt;unknown&gt;" xml:space="preserve">
@@ -1259,6 +1260,7 @@ Area of an object in m^2</note>
       </trans-unit>
       <trans-unit id="Clear All" xml:space="preserve">
         <source>Clear All</source>
+        <target state="translated">Borrar todo</target>
         <note/>
       </trans-unit>
       <trans-unit id="Clear GPS Overlay Tiles" xml:space="preserve">
@@ -2661,10 +2663,12 @@ Es posible que desees borrar la memoria caché (en Configuración de pantalla) p
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>Go Map!!</source>
+        <target state="translated">Go Map!!</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>PhotoShare</source>
+        <target state="translated">PhotoShare</target>
         <note>Bundle name</note>
       </trans-unit>
     </body>
@@ -2982,7 +2986,7 @@ Es posible que desees borrar la memoria caché (en Configuración de pantalla) p
       </trans-unit>
       <trans-unit id="lPv-s6-uEz.title" xml:space="preserve">
         <source>Common Tags</source>
-        <target state="translated">Etiquetas comunes</target>
+        <target state="translated">Etiquetas Habituales</target>
         <note>Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz";</note>
       </trans-unit>
       <trans-unit id="li7-oV-pgT.text" xml:space="preserve">
@@ -2992,7 +2996,7 @@ Es posible que desees borrar la memoria caché (en Configuración de pantalla) p
       </trans-unit>
       <trans-unit id="mAb-DX-pqb.title" xml:space="preserve">
         <source>Common tags</source>
-        <target state="translated">Etiquetas comunes</target>
+        <target state="translated">Etiquetas habituales</target>
         <note>Class = "UINavigationItem"; title = "Common tags"; ObjectID = "mAb-DX-pqb";</note>
       </trans-unit>
       <trans-unit id="mcN-gM-s7u.text" xml:space="preserve">
@@ -3263,7 +3267,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="JbA-pC-plJ.text" xml:space="preserve">
         <source>Title title title title</source>
-        <target state="translated">Title title title title</target>
+        <target state="translated">título</target>
         <note>Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="KIO-8j-QsO.text" xml:space="preserve">
