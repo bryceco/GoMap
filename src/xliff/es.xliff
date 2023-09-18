@@ -2986,7 +2986,7 @@ Es posible que desees borrar la memoria caché (en Configuración de pantalla) p
       </trans-unit>
       <trans-unit id="lPv-s6-uEz.title" xml:space="preserve">
         <source>Common Tags</source>
-        <target state="translated">Etiquetas Habituales</target>
+        <target state="translated">Etiquetas habituales</target>
         <note>Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz";</note>
       </trans-unit>
       <trans-unit id="li7-oV-pgT.text" xml:space="preserve">
