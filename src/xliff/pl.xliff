@@ -2304,10 +2304,12 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
         <source>OK</source>
+        <target state="translated">OK</target>
         <note>Class = "UIButton"; normalTitle = "OK"; ObjectID = "05z-LH-xEK";</note>
       </trans-unit>
       <trans-unit id="Zxw-Em-faC.normalTitle" xml:space="preserve">
         <source>Cancel</source>
+        <target state="translated">Anuluj</target>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "Zxw-Em-faC";</note>
       </trans-unit>
       <trans-unit id="cy3-gz-fvk.text" xml:space="preserve">
@@ -2357,22 +2359,27 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
         <source>no</source>
+        <target state="translated">nie</target>
         <note>Class = "UITextField"; placeholder = "no"; ObjectID = "0mW-YK-ajm"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="0zS-QM-zwQ.placeholder" xml:space="preserve">
         <source>type</source>
+        <target state="translated">rodzaj</target>
         <note>Class = "UITextField"; placeholder = "type"; ObjectID = "0zS-QM-zwQ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="1Yx-Ce-yfq.title" xml:space="preserve">
         <source>Back</source>
+        <target state="translated">Wstecz</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "1Yx-Ce-yfq";</note>
       </trans-unit>
       <trans-unit id="2Q5-Vd-FED.text" xml:space="preserve">
         <source>Title</source>
+        <target state="translated">Tytuł</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "2Q5-Vd-FED"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="2cB-FV-ozw.title" xml:space="preserve">
         <source>Attributes</source>
+        <target state="translated">Atrybuty</target>
         <note>Class = "UITabBarItem"; title = "Attributes"; ObjectID = "2cB-FV-ozw";</note>
       </trans-unit>
       <trans-unit id="6VA-gm-L0S.title" xml:space="preserve">
@@ -2381,10 +2388,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="8Nt-xf-x5Q.text" xml:space="preserve">
         <source>Title</source>
+        <target state="translated">Tytuł</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "8Nt-xf-x5Q";</note>
       </trans-unit>
       <trans-unit id="9Nw-ha-JK5.placeholder" xml:space="preserve">
         <source>Yes</source>
+        <target state="translated">Tak</target>
         <note>Class = "UITextField"; placeholder = "Yes"; ObjectID = "9Nw-ha-JK5";</note>
       </trans-unit>
       <trans-unit id="19J-sp-UTX.title" xml:space="preserve">
@@ -2393,10 +2402,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="436-kv-L7j.placeholder" xml:space="preserve">
         <source>Restaurant</source>
+        <target state="translated">Restauracja</target>
         <note>Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j";</note>
       </trans-unit>
       <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve">
         <source>dog</source>
+        <target state="translated">pies</target>
         <note>Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="Bnh-U0-D7i.text" xml:space="preserve">
@@ -2417,6 +2428,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="Eou-a6-V4g.text" xml:space="preserve">
         <source>Key</source>
+        <target state="translated">Klucz</target>
         <note>Class = "UILabel"; text = "Key"; ObjectID = "Eou-a6-V4g";</note>
       </trans-unit>
       <trans-unit id="Fcv-4Q-gpE.text" xml:space="preserve">
@@ -2438,6 +2450,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="Hgu-iP-FnG.title" xml:space="preserve">
         <source>Back</source>
+        <target state="translated">Wstecz</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "Hgu-iP-FnG";</note>
       </trans-unit>
       <trans-unit id="JAT-qD-dTS.text" xml:space="preserve">
@@ -2450,6 +2463,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="KX3-hG-OyE.title" xml:space="preserve">
         <source>Back</source>
+        <target state="translated">Wstecz</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "KX3-hG-OyE";</note>
       </trans-unit>
       <trans-unit id="OND-s7-I6f.title" xml:space="preserve">
@@ -2458,6 +2472,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="P3A-5n-1Iq.text" xml:space="preserve">
         <source>Type</source>
+        <target state="translated">Rodzaj</target>
         <note>Class = "UILabel"; text = "Type"; ObjectID = "P3A-5n-1Iq";</note>
       </trans-unit>
       <trans-unit id="QDv-7w-nbx.headerTitle" xml:space="preserve">
@@ -2470,14 +2485,17 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="Rfe-SO-p0w.title" xml:space="preserve">
         <source>Cancel</source>
+        <target state="translated">Anuluj</target>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "Rfe-SO-p0w";</note>
       </trans-unit>
       <trans-unit id="TK4-E8-1q7.text" xml:space="preserve">
         <source>Title</source>
+        <target state="translated">Tytuł</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "TK4-E8-1q7"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="Urd-9O-Mte.placeholder" xml:space="preserve">
         <source>relation</source>
+        <target state="translated">relacja</target>
         <note>Class = "UITextField"; placeholder = "relation"; ObjectID = "Urd-9O-Mte"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="Vli-Ct-Lpz.text" xml:space="preserve">
@@ -2498,6 +2516,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="X1y-nK-nVJ.placeholder" xml:space="preserve">
         <source>key</source>
+        <target state="translated">klucz</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "X1y-nK-nVJ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="XBV-Ie-LDT.text" xml:space="preserve">
@@ -2510,6 +2529,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
         <source>Subtitle</source>
+        <target state="translated">Napisy</target>
         <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "ZYn-TK-k7d"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="aCs-vS-YXj.placeholder" xml:space="preserve">
@@ -2518,6 +2538,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="aLi-Vs-z0k.title" xml:space="preserve">
         <source>Configure</source>
+        <target state="translated">Konfiguruj</target>
         <note>Class = "UIBarButtonItem"; title = "Configure"; ObjectID = "aLi-Vs-z0k";</note>
       </trans-unit>
       <trans-unit id="cN9-3h-H3l.title" xml:space="preserve">
@@ -2526,6 +2547,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="cP3-lR-lzM.placeholder" xml:space="preserve">
         <source>value</source>
+        <target state="translated">wartość</target>
         <note>Class = "UITextField"; placeholder = "value"; ObjectID = "cP3-lR-lzM"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="cTf-Rc-vqr.headerTitle" xml:space="preserve">
@@ -2534,6 +2556,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="daQ-tl-pKh.text" xml:space="preserve">
         <source>Label</source>
+        <target state="translated">Etykieta</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="dsA-B6-s7R.text" xml:space="preserve">
@@ -2546,14 +2569,17 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="f5t-25-IXF.title" xml:space="preserve">
         <source>Attributes</source>
+        <target state="translated">Atrybuty</target>
         <note>Class = "UITabBarController"; title = "Attributes"; ObjectID = "f5t-25-IXF";</note>
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
         <source>clean</source>
+        <target state="translated">czyste</target>
         <note>Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
         <source>Label</source>
+        <target state="translated">Etykieta</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="hAy-aU-g8L.text" xml:space="preserve">
@@ -2562,10 +2588,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="hKU-EH-qxp.title" xml:space="preserve">
         <source>Attributes</source>
+        <target state="translated">Atrybuty</target>
         <note>Class = "UINavigationItem"; title = "Attributes"; ObjectID = "hKU-EH-qxp";</note>
       </trans-unit>
       <trans-unit id="hfr-Mf-ZHv.text" xml:space="preserve">
         <source>value</source>
+        <target state="translated">wartość</target>
         <note>Class = "UITextField"; text = "value"; ObjectID = "hfr-Mf-ZHv";</note>
       </trans-unit>
       <trans-unit id="ijx-N9-1eO.text" xml:space="preserve">
@@ -2962,6 +2990,7 @@ http://glyphish.com
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">
         <source>Changes:</source>
+        <target state="translated">Zmiany:</target>
         <note>Class = "UILabel"; text = "Changes:"; ObjectID = "ArV-4u-j7D";</note>
       </trans-unit>
       <trans-unit id="BAY-7z-hwv.text" xml:space="preserve">
@@ -2974,6 +3003,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Mdj-M0-0mZ.title" xml:space="preserve">
         <source>Upload</source>
+        <target state="translated">Prześlij</target>
         <note>Class = "UINavigationItem"; title = "Upload"; ObjectID = "Mdj-M0-0mZ";</note>
       </trans-unit>
       <trans-unit id="Plh-7W-ceY.text" xml:space="preserve">
@@ -2982,6 +3012,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Rqu-ny-n3F.normalTitle" xml:space="preserve">
         <source>Mail</source>
+        <target state="translated">E-mail</target>
         <note>Class = "UIButton"; normalTitle = "Mail"; ObjectID = "Rqu-ny-n3F";</note>
       </trans-unit>
       <trans-unit id="feW-AK-msn.title" xml:space="preserve">
@@ -2990,6 +3021,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="hcE-yO-3eH.normalTitle" xml:space="preserve">
         <source>Edit</source>
+        <target state="translated">Edytuj</target>
         <note>Class = "UIButton"; normalTitle = "Edit"; ObjectID = "hcE-yO-3eH";</note>
       </trans-unit>
       <trans-unit id="ikj-u9-9Bn.text" xml:space="preserve">
@@ -3002,6 +3034,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="yZR-tZ-66S.text" xml:space="preserve">
         <source>Source:</source>
+        <target state="translated">Źródło:</target>
         <note>Class = "UILabel"; text = "Source:"; ObjectID = "yZR-tZ-66S";</note>
       </trans-unit>
     </body>
