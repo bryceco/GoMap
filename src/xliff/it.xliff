@@ -17,6 +17,7 @@
       </trans-unit>
       <trans-unit id="2Ka-IT-DQC.normalTitle" xml:space="preserve">
         <source>Bing attribution</source>
+        <target state="translated">Attribuzione Bing</target>
         <note>Class = "UIButton"; normalTitle = "Bing attribution"; ObjectID = "2Ka-IT-DQC";</note>
       </trans-unit>
       <trans-unit id="2g1-vb-Cjc.normalTitle" xml:space="preserve">
@@ -31,6 +32,7 @@
       </trans-unit>
       <trans-unit id="9G2-Gl-CeP.text" xml:space="preserve">
         <source>username</source>
+        <target state="translated">username</target>
         <note>Class = "UILabel"; text = "username"; ObjectID = "9G2-Gl-CeP"; Note = "Placeholder - ignore";</note>
       </trans-unit>
       <trans-unit id="9hH-Ja-fKn.text" xml:space="preserve">
@@ -45,6 +47,7 @@
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityHint" xml:space="preserve">
         <source>Reorient map north</source>
+        <target state="translated">Riorienta nord mappa</target>
         <note>Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt";</note>
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityLabel" xml:space="preserve">
@@ -54,10 +57,12 @@
       </trans-unit>
       <trans-unit id="FaM-WV-S6I.title" xml:space="preserve">
         <source>Search for Location</source>
+        <target state="translated">Cerca per luogo</target>
         <note>Class = "UINavigationItem"; title = "Search for Location"; ObjectID = "FaM-WV-S6I";</note>
       </trans-unit>
       <trans-unit id="Fo4-Nq-pAz.normalTitle" xml:space="preserve">
         <source>Center</source>
+        <target state="translated">Centro</target>
         <note>Class = "UIButton"; normalTitle = "Center"; ObjectID = "Fo4-Nq-pAz";</note>
       </trans-unit>
       <trans-unit id="HeZ-95-3K1.text" xml:space="preserve">
@@ -67,6 +72,7 @@
       </trans-unit>
       <trans-unit id="LSJ-rB-J2c.text" xml:space="preserve">
         <source>-</source>
+        <target state="translated">-</target>
         <note>Class = "UILabel"; text = "-"; ObjectID = "LSJ-rB-J2c"; Note = "Placeholder - ignore";</note>
       </trans-unit>
       <trans-unit id="MBY-TK-Wuy.title" xml:space="preserve">
@@ -81,10 +87,12 @@
       </trans-unit>
       <trans-unit id="OJ0-aO-ri1.normalTitle" xml:space="preserve">
         <source>Resolve</source>
+        <target state="translated">Risolvi</target>
         <note>Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1";</note>
       </trans-unit>
       <trans-unit id="PHk-s9-onx.text" xml:space="preserve">
         <source>Various comments...</source>
+        <target state="translated">Vari commenti...</target>
         <note>Class = "UITextView"; text = "Various comments..."; ObjectID = "PHk-s9-onx"; Note = "Placeholder - ignore";</note>
       </trans-unit>
       <trans-unit id="Qz0-Ce-YCX.title" xml:space="preserve">
@@ -102,6 +110,7 @@
       </trans-unit>
       <trans-unit id="ach-1A-88x.text" xml:space="preserve">
         <source>Changeset comment goes here</source>
+        <target state="translated">Il commento del changeset va qui</target>
         <note>Class = "UITextView"; text = "Changeset comment goes here"; ObjectID = "ach-1A-88x";</note>
       </trans-unit>
       <trans-unit id="gdu-Sf-XrE.title" xml:space="preserve">
@@ -137,6 +146,7 @@
       </trans-unit>
       <trans-unit id="vRO-Aj-Sdr.text" xml:space="preserve">
         <source>Title</source>
+        <target state="translated">Titolo</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr";</note>
       </trans-unit>
       <trans-unit id="xw9-Ro-Fai.placeholder" xml:space="preserve">
@@ -156,6 +166,7 @@
       </trans-unit>
       <trans-unit id="zrW-uc-hfQ.segmentTitles[2]" xml:space="preserve">
         <source>More...</source>
+        <target state="translated">Di più...</target>
         <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[2] = "More..."; ObjectID = "zrW-uc-hfQ";</note>
       </trans-unit>
     </body>
@@ -167,6 +178,7 @@
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
         <source>Position your device parallel to the direction of the object.</source>
+        <target state="translated">Posiziona il tuo dispositivo parallelamente alla direzione dell''oggetto.</target>
         <note>Class = "UILabel"; text = "Position your device parallel to the direction of the object."; ObjectID = "4vY-m2-xMW";</note>
       </trans-unit>
       <trans-unit id="Jc3-Um-Aiy.text" xml:space="preserve">
