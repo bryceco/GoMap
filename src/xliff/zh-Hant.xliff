@@ -783,9 +783,11 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <note/>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;|==|plural.one" xml:space="preserve">
-        <target state="needs-review-l10n"> (%d 個成員)
+        <target state="translated"> (%d 個成員)
 </target>
         <note/>
+        <target> (%d 個成員)
+</target>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;|==|plural.other" xml:space="preserve">
         <source> (%d members)
@@ -795,9 +797,11 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <note/>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;|==|plural.one" xml:space="preserve">
-        <target state="needs-review-l10n"> (%d 個節點)
+        <target state="translated"> (%d 個節點)
 </target>
         <note/>
+        <target> (%d 個節點)
+</target>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;|==|plural.other" xml:space="preserve">
         <source> (%d nodes)
@@ -852,9 +856,10 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="%ld Days|==|plural.one" xml:space="preserve">
-        <target state="needs-review-l10n">%ld 天</target>
+        <target state="translated">%ld 天</target>
         <note>Plural number of days
 One or more days</note>
+        <target>%ld 天</target>
       </trans-unit>
       <trans-unit id="%ld Days|==|plural.other" xml:space="preserve">
         <source>%ld Days</source>
@@ -863,8 +868,9 @@ One or more days</note>
 One or more days</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.one" xml:space="preserve">
-        <target state="needs-review-l10n">%1$ld 編輯次數, 最近編輯 %2$@</target>
+        <target state="translated">%1$ld 編輯次數, 最近編輯 %2$@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
+        <target>%ld 次編輯，最後編輯 %@</target>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.other" xml:space="preserve">
         <source>%ld edits, last active %@</source>
@@ -907,8 +913,9 @@ One or more days</note>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
-        <target state="needs-review-l10n">%ld 個物件</target>
+        <target state="translated">%ld 個物件</target>
         <note>Number of tiles/objects in cache</note>
+        <target>%ld 個物件</target>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.other" xml:space="preserve">
         <source>%ld objects</source>
@@ -1228,6 +1235,7 @@ Area of an object in m^2</note>
       </trans-unit>
       <trans-unit id="Clear All" xml:space="preserve">
         <source>Clear All</source>
+        <target state="translated">全部清除</target>
         <note/>
       </trans-unit>
       <trans-unit id="Clear GPS Overlay Tiles" xml:space="preserve">
@@ -2599,6 +2607,31 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="translated">是</target>
         <note/>
       </trans-unit>
+      <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.one" xml:space="preserve">
+        <source>%ld meter</source>
+        <target state="translated">%ld 公尺</target>
+        <note>length of a gpx track</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.one" xml:space="preserve">
+        <source>%ld point</source>
+        <target state="translated">%ld 點</target>
+        <note>length of a gpx track</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.one" xml:space="preserve">
+        <source>%ld point</source>
+        <target state="translated">%ld 點</target>
+        <note>length of a gpx track</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.one" xml:space="preserve">
+        <source>%ld waypoint</source>
+        <target state="translated">%ld 航點</target>
+        <note>length of a gpx track</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.one" xml:space="preserve">
+        <source>%ld meter</source>
+        <target state="translated">%ld 公尺</target>
+        <note>length of a gpx track</note>
+      </trans-unit>
     </body>
   </file>
   <file original="PhotoShare/Base.lproj/MainInterface.storyboard" source-language="en" target-language="zh-Hant" datatype="plaintext">
@@ -2630,10 +2663,12 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>Go Map!!</source>
+        <target state="translated">Go Map!!</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>PhotoShare</source>
+        <target state="translated">PhotoShare</target>
         <note>Bundle name</note>
       </trans-unit>
     </body>
