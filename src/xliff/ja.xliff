@@ -912,8 +912,9 @@ One or more days</note>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
-        <target state="needs-review-l10n">%ld オブジェクト</target>
+        <target state="translated">%ld オブジェクト</target>
         <note>Number of tiles/objects in cache</note>
+        <target>%ld 件のオブジェクト</target>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.other" xml:space="preserve">
         <source>%ld objects</source>
@@ -1233,6 +1234,7 @@ Area of an object in m^2</note>
       </trans-unit>
       <trans-unit id="Clear All" xml:space="preserve">
         <source>Clear All</source>
+        <target state="translated">すべてクリア</target>
         <note/>
       </trans-unit>
       <trans-unit id="Clear GPS Overlay Tiles" xml:space="preserve">
@@ -2604,6 +2606,31 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="translated">はい</target>
         <note/>
       </trans-unit>
+      <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.one" xml:space="preserve">
+        <source>%ld meter</source>
+        <target state="translated">%ld メートル</target>
+        <note>length of a gpx track</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.one" xml:space="preserve">
+        <source>%ld point</source>
+        <target state="translated">%ld 件のポイント</target>
+        <note>length of a gpx track</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.one" xml:space="preserve">
+        <source>%ld point</source>
+        <target state="translated">%ld 件のポイント</target>
+        <note>length of a gpx track</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.one" xml:space="preserve">
+        <source>%ld waypoint</source>
+        <target state="translated">%ld 件のウェイポイント</target>
+        <note>length of a gpx track</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.one" xml:space="preserve">
+        <source>%ld meter</source>
+        <target state="translated">%ld メートル</target>
+        <note>length of a gpx track</note>
+      </trans-unit>
     </body>
   </file>
   <file original="PhotoShare/Base.lproj/MainInterface.storyboard" source-language="en" target-language="ja" datatype="plaintext">
@@ -2635,10 +2662,12 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>Go Map!!</source>
+        <target state="needs-translation">Go Map!!</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>PhotoShare</source>
+        <target state="needs-translation">PhotoShare</target>
         <note>Bundle name</note>
       </trans-unit>
     </body>
