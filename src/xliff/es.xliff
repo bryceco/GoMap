@@ -42,7 +42,7 @@
       </trans-unit>
       <trans-unit id="9t5-wq-j1u.text" xml:space="preserve">
         <source>66.6 FPS</source>
-        <target state="translated">66.6 FPS</target>
+        <target state="translated">66,6 FPS</target>
         <note>Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u";</note>
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityHint" xml:space="preserve">
@@ -218,7 +218,7 @@
       </trans-unit>
       <trans-unit id="1f0-8q-yCi.text" xml:space="preserve">
         <source>GPX Tracks</source>
-        <target state="translated">Rastros GPX</target>
+        <target state="translated">Trazas GPX</target>
         <note>Class = "UILabel"; text = "GPX Tracks"; ObjectID = "1f0-8q-yCi";</note>
       </trans-unit>
       <trans-unit id="2Ku-Lb-uCf.text" xml:space="preserve">
@@ -333,7 +333,7 @@
       </trans-unit>
       <trans-unit id="MeQ-4N-FqC.text" xml:space="preserve">
         <source>GPX Tracks you record or download will be automatically deleted after:</source>
-        <target state="translated">Las pistas GPX grabadas se eliminan automáticamente después de:</target>
+        <target state="translated">Las trazas GPX que grabe o descargue se eliminan automáticamente después de:</target>
         <note>Class = "UILabel"; text = "GPX Tracks you record or download will be automatically deleted after:"; ObjectID = "MeQ-4N-FqC";</note>
       </trans-unit>
       <trans-unit id="O0U-6M-7AT.text" xml:space="preserve">
@@ -372,11 +372,11 @@
 Warning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.
 
 Clear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed.</source>
-        <target state="translated">Borre la caché si la aplicación no está sincronizada con el servidor OSM. Esto puede suceder, por ejemplo, si otra persona cambia los datos que está editando actualmente o si no se cargan los cambios, lo que puede impedir que cargue más cambios.
+        <target state="translated">Vacíe la antememoria si la aplicación no está sincronizada con el servidor OSM. Esto puede suceder, por ejemplo, si otra persona cambia los datos que está editando actualmente o si no se cargan los cambios, lo que puede impedir que cargue más cambios.
 
-Advertencia: al borrar la memoria caché, perderá todos los cambios no guardados.
+Atención: al vaciar la antememoria perderá todos los cambios no guardados.
 
-Para descargar las teselas más recientes, incluidos los cambios cargados anteriormente, borre Mapnik o la caché de teselas superpuestas. Puede tomar hasta 24 horas para que se procesen sus cambios.</target>
+Para descargar las teselas más recientes, con los cambios enviados anteriormente, vacíe las antememorias de Mapnik o de teselas superpuestas. Puede tomar hasta 24 horas para que se procesen sus cambios.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. \n\nWarning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.\n\nClear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed."; ObjectID = "SNa-W1-wga";</note>
       </trans-unit>
       <trans-unit id="SNa-W1-wga.headerTitle" xml:space="preserve">
@@ -396,12 +396,12 @@ Para descargar las teselas más recientes, incluidos los cambios cargados anteri
       </trans-unit>
       <trans-unit id="WnI-tY-WWa.text" xml:space="preserve">
         <source>Delete tracks after:</source>
-        <target state="translated">Eliminar rastros tras:</target>
+        <target state="translated">Eliminar trazas tras:</target>
         <note>Class = "UILabel"; text = "Delete tracks after:"; ObjectID = "WnI-tY-WWa";</note>
       </trans-unit>
       <trans-unit id="Z8C-Ef-iJE.title" xml:space="preserve">
         <source>GPX Tracks</source>
-        <target state="translated">Rastros GPX</target>
+        <target state="translated">Trazas GPX</target>
         <note>Class = "UINavigationItem"; title = "GPX Tracks"; ObjectID = "Z8C-Ef-iJE";</note>
       </trans-unit>
       <trans-unit id="ZP1-qY-kXe.text" xml:space="preserve">
@@ -478,7 +478,7 @@ Para descargar las teselas más recientes, incluidos los cambios cargados anteri
       </trans-unit>
       <trans-unit id="eN6-SZ-99I.text" xml:space="preserve">
         <source>Editor only</source>
-        <target state="translated">Sólo editor</target>
+        <target state="translated">Solo editor</target>
         <note>Class = "UILabel"; text = "Editor only"; ObjectID = "eN6-SZ-99I";</note>
       </trans-unit>
       <trans-unit id="eTY-48-gab.text" xml:space="preserve">
@@ -565,7 +565,7 @@ Para descargar las teselas más recientes, incluidos los cambios cargados anteri
       </trans-unit>
       <trans-unit id="oSD-0y-Vt0.title" xml:space="preserve">
         <source>Configure GPX Tracks</source>
-        <target state="translated">Configurar rastros GPX</target>
+        <target state="translated">Configurar trazas GPX</target>
         <note>Class = "UINavigationItem"; title = "Configure GPX Tracks"; ObjectID = "oSD-0y-Vt0";</note>
       </trans-unit>
       <trans-unit id="pQK-9y-t4z.text" xml:space="preserve">
@@ -799,7 +799,7 @@ Para descargar las teselas más recientes, incluidos los cambios cargados anteri
       <trans-unit id=" (%d nodes)&#10;|==|plural.one" xml:space="preserve">
         <source> (%d node)
 </source>
-        <target state="needs-review-l10n"> (%d nodos)
+        <target state="translated"> (%d nodo)
 </target>
         <note/>
       </trans-unit>
@@ -869,42 +869,42 @@ One or more days</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.one" xml:space="preserve">
         <source>%ld edit, last active %@</source>
-        <target state="needs-review-l10n">%1$ld ediciones, última activa %2$@</target>
+        <target state="translated">%ld edición, último activo %@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.other" xml:space="preserve">
         <source>%ld edits, last active %@</source>
-        <target state="translated">%1$ld ediciones, última activa %2$@</target>
+        <target state="translated">%1$ld ediciones, último activo %2$@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@</source>
-        <target state="needs-review-l10n">%1$#@meters@ metros, %2$#@points@ puntos</target>
+        <target state="translated">%1$#@meters@, %2$#@points@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@, %3$#@waypoints@</source>
-        <target state="needs-review-l10n">%1$#@meters@ metros, %2$#@points@ puntos, %3$#@waypoints@ waypoints</target>
+        <target state="translated">%1$#@meters@, %2$#@points@, %3$#@waypoints@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%ld meter</source>
-        <target state="needs-review-l10n">%1$ld</target>
+        <target state="translated">%ld metro</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="needs-review-l10n">%1$ld</target>
+        <target state="translated">%ld metros</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.one" xml:space="preserve">
         <source>%ld point</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%ld punto</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.other" xml:space="preserve">
         <source>%ld points</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%ld puntos</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.one" xml:space="preserve">
@@ -919,22 +919,22 @@ One or more days</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%ld meter</source>
-        <target state="needs-review-l10n">%1$ld</target>
+        <target state="translated">%ld metro</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="needs-review-l10n">%1$ld</target>
+        <target state="translated">%ld metros</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.one" xml:space="preserve">
         <source>%ld point</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%ld punto</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.other" xml:space="preserve">
         <source>%ld points</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%ld puntos</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
@@ -984,6 +984,7 @@ One or more days</note>
       </trans-unit>
       <trans-unit id="1 Day" xml:space="preserve">
         <source>1 Day</source>
+        <target state="translated">1 Día</target>
         <note>1 day singular</note>
       </trans-unit>
       <trans-unit id="&lt;unknown&gt;" xml:space="preserve">
@@ -993,7 +994,7 @@ One or more days</note>
       </trans-unit>
       <trans-unit id="A GPX Track records your path as you travel along a road or trail" xml:space="preserve">
         <source>A GPX Track records your path as you travel along a road or trail</source>
-        <target state="translated">Un rastro GPX registra su trayectoria mientras recorre un camino o sendero</target>
+        <target state="translated">Una traza GPX registra su trayectoria mientras recorre un camino o sendero</target>
         <note/>
       </trans-unit>
       <trans-unit id="A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." xml:space="preserve">
@@ -1174,12 +1175,12 @@ Area of an object in m^2</note>
       </trans-unit>
       <trans-unit id="Cache trimmed" xml:space="preserve">
         <source>Cache trimmed</source>
-        <target state="translated">Caché recortada</target>
+        <target state="translated">Antememoria recortada</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can only add ways to multipolygons" xml:space="preserve">
         <source>Can only add ways to multipolygons</source>
-        <target state="translated">Sólo puede añadir formas a los multipolígonos</target>
+        <target state="translated">Solo se pueden añadir vías a los multipolígonos</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can't delete node that is part of a relation" xml:space="preserve">
@@ -1259,6 +1260,7 @@ Area of an object in m^2</note>
       </trans-unit>
       <trans-unit id="Clear All" xml:space="preserve">
         <source>Clear All</source>
+        <target state="translated">Borrar todo</target>
         <note/>
       </trans-unit>
       <trans-unit id="Clear GPS Overlay Tiles" xml:space="preserve">
@@ -1268,7 +1270,7 @@ Area of an object in m^2</note>
       </trans-unit>
       <trans-unit id="Clear GPX Tracks" xml:space="preserve">
         <source>Clear GPX Tracks</source>
-        <target state="translated">Vaciar rastros GPX</target>
+        <target state="translated">Vaciar trazas GPX</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear Locator Overlay Tiles" xml:space="preserve">
@@ -1345,7 +1347,7 @@ Area of an object in m^2</note>
       </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
         <source>Current Track</source>
-        <target state="translated">Rastro actual</target>
+        <target state="translated">Traza actual</target>
         <note>current GPX track</note>
       </trans-unit>
       <trans-unit id="Database error" xml:space="preserve">
@@ -1437,7 +1439,7 @@ Area of an object in m^2</note>
       </trans-unit>
       <trans-unit id="Editor only" xml:space="preserve">
         <source>Editor only</source>
-        <target state="translated">Sólo editor</target>
+        <target state="translated">Solo editor</target>
         <note/>
       </trans-unit>
       <trans-unit id="Editor with Aerial" xml:space="preserve">
@@ -1571,7 +1573,7 @@ Error: %@</target>
       </trans-unit>
       <trans-unit id="Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." xml:space="preserve">
         <source>Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English.</source>
-        <target state="translated">La selección del idioma sólo afecta a los preajustes y sólo para aquellos preajustes que están traducidos para el identificador. La interfaz principal sigue estando en inglés.</target>
+        <target state="translated">La selección del idioma solo afecta a las preconfiguraciones y solo para aquellas que estén traducidas en iD. La interfaz principal sigue estando en inglés.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Last updated %@" xml:space="preserve">
@@ -1695,9 +1697,9 @@ Error: %@</target>
         <source>Modifying the raw XML data allows you to correct errors that prevent uploading.
 
 It is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format.</source>
-        <target state="translated">Modificar los datos XML sin procesar te permite corregir los errores que impiden la carga.
+        <target state="translated">Modificar los datos XML en bruto le permite corregir errores que impiden la carga.
 
-Es una operación avanzada que sólo debe llevarse a cabo si tienes un conocimiento profundo del formato del conjunto de cambios de OSM.</target>
+Es una operación avanzada que solo debe llevarse a cabo si tiene un conocimiento profundo del formato de los conjuntos de cambios de OSM.</target>
         <note/>
       </trans-unit>
       <trans-unit id="More..." xml:space="preserve">
@@ -1732,7 +1734,7 @@ Es una operación avanzada que sólo debe llevarse a cabo si tienes un conocimie
       </trans-unit>
       <trans-unit id="Needs Survey" xml:space="preserve">
         <source>Needs Survey</source>
-        <target state="translated">Encuesta sobre las necesidades</target>
+        <target state="translated">Necesita reconocimiento</target>
         <note>Quest for objects that aren't recently updated</note>
       </trans-unit>
       <trans-unit id="Network error" xml:space="preserve">
@@ -1778,7 +1780,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="No active track" xml:space="preserve">
         <source>No active track</source>
-        <target state="translated">No hay ningún rastro activo</target>
+        <target state="translated">No hay ninguna traza activa</target>
         <note>GPX track</note>
       </trans-unit>
       <trans-unit id="No results found" xml:space="preserve">
@@ -1853,12 +1855,12 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Only Left Turn restriction" xml:space="preserve">
         <source>Only Left Turn restriction</source>
-        <target state="translated">Sólo restricción de giro a la izquierda</target>
+        <target state="translated">Solo restricción de giro a la izquierda</target>
         <note/>
       </trans-unit>
       <trans-unit id="Only Right Turn restriction" xml:space="preserve">
         <source>Only Right Turn restriction</source>
-        <target state="translated">Sólo restricción de giro a la derecha</target>
+        <target state="translated">Solo restricción de giro a la derecha</target>
         <note/>
       </trans-unit>
       <trans-unit id="Only Straight On restriction" xml:space="preserve">
@@ -1873,7 +1875,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Only ways/multipolygons can be rotated" xml:space="preserve">
         <source>Only ways/multipolygons can be rotated</source>
-        <target state="translated">Solo se pueden rotar varias carreteras/polígonos</target>
+        <target state="translated">Solo se pueden girar las vías o los multipolígonos</target>
         <note/>
       </trans-unit>
       <trans-unit id="Open Settings" xml:space="preserve">
@@ -1928,7 +1930,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Previous Tracks" xml:space="preserve">
         <source>Previous Tracks</source>
-        <target state="translated">Rastros anteriores</target>
+        <target state="translated">Trazas anteriores</target>
         <note>previous GPX track</note>
       </trans-unit>
       <trans-unit id="Provide a single-character symbol (emoji or unicode character) to identify this quest:" xml:space="preserve">
@@ -2234,7 +2236,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="This feature is only available on iOS 15 or later" xml:space="preserve">
         <source>This feature is only available on iOS 15 or later</source>
-        <target state="translated">Esta función sólo está disponible en iOS 15 o posterior</target>
+        <target state="translated">Esta funcionalidad solo está disponible en iOS 15 o posterior</target>
         <note/>
       </trans-unit>
       <trans-unit id="This page allows you to design quests with more specific criteria than the regular Quest Builder page." xml:space="preserve">
@@ -2254,7 +2256,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Travel ONLY from %@ to %@" xml:space="preserve">
         <source>Travel ONLY from %@ to %@</source>
-        <target state="translated">Viaje SÓLO de %1$@ a %2$@</target>
+        <target state="translated">Viaje SOLO de %1$@ a %2$@</target>
         <note/>
       </trans-unit>
       <trans-unit id="Travel PROHIBITED from %@ to %@" xml:space="preserve">
@@ -2348,7 +2350,7 @@ Selecciona la carretera desde la que se aproxima a la intersección y, a continu
       </trans-unit>
       <trans-unit id="Upload complete!" xml:space="preserve">
         <source>Upload complete!</source>
-        <target state="translated">¡Carga completa!</target>
+        <target state="translated">Se completó la carga.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Upload to OSM" xml:space="preserve">
@@ -2420,9 +2422,9 @@ Selecciona la carretera desde la que se aproxima a la intersección y, a continu
         <source>You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.
 
 To continue press Commit once again, otherwise press Cancel.</source>
-        <target state="translated">Estás a punto de realizar cambios en la base de datos de OpenStreetMap. Tus cambios serán visibles para todo el mundo.
+        <target state="translated">Está a punto de efectuar cambios en la base de datos de OpenStreetMap. Sus cambios serán visibles para todo el mundo.
 
-Para continuar pulsa Consolidar una vez más, de lo contrario pulsa Cancelar.</target>
+Para continuar, pulse en Confirmar una vez más; de lo contrario, pulse en Cancelar.</target>
         <note/>
       </trans-unit>
       <trans-unit id="You can define your own custom presets here" xml:space="preserve">
@@ -2433,8 +2435,8 @@ Para continuar pulsa Consolidar una vez más, de lo contrario pulsa Cancelar.</t
       <trans-unit id="You can navigate to a relation member only if it is already downloaded.&#10;These members are marked with '&gt;'." xml:space="preserve">
         <source>You can navigate to a relation member only if it is already downloaded.
 These members are marked with '&gt;'.</source>
-        <target state="translated">Puede navegar a un miembro de la relación sólo si ya está descargado.
-Estos miembros están marcados con '&gt;'.</target>
+        <target state="translated">Puede navegar a un miembro de la relación solo si ya está descargado.
+Estos miembros están marcados con «&gt;».</target>
         <note/>
       </trans-unit>
       <trans-unit id="You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." xml:space="preserve">
@@ -2444,25 +2446,25 @@ Estos miembros están marcados con '&gt;'.</target>
       </trans-unit>
       <trans-unit id="You must save or discard changes to the current object before editing its associated relation" xml:space="preserve">
         <source>You must save or discard changes to the current object before editing its associated relation</source>
-        <target state="translated">Debes guardar o descartar los cambios en el objeto actual antes de editar su relación asociada</target>
+        <target state="translated">Debe guardar o descartar los cambios en el objeto actual antes de editar su relación asociada</target>
         <note/>
       </trans-unit>
       <trans-unit id="You've uploaded %ld changesets with this version of Go Map!!&#10;&#10;Rate this app?" xml:space="preserve">
         <source>You've uploaded %ld changesets with this version of Go Map!!
 
 Rate this app?</source>
-        <target state="translated">¡Has subido %ld conjuntos de cambios con esta versión de Go Map!!!
+        <target state="translated">Ha cargado %ld conjuntos de cambios con esta versión de Go Map!!
 
-¿Valora esta aplicación?</target>
+¿Quiere valorar esta aplicación?</target>
         <note/>
       </trans-unit>
       <trans-unit id="Your OSM data cache is getting large, which may lead to slow startup and shutdown times.&#10;&#10;You may want to clear the cache (under Display settings) to improve performance." xml:space="preserve">
         <source>Your OSM data cache is getting large, which may lead to slow startup and shutdown times.
 
 You may want to clear the cache (under Display settings) to improve performance.</source>
-        <target state="translated">Tu caché de datos de OSM está creciendo, lo que puede provocar tiempos de arranque y apagado lentos.
+        <target state="translated">La antememoria de datos de OSM está creciendo, lo que puede lentificar el arranque y el apagado.
 
-Es posible que desees borrar la memoria caché (en Configuración de pantalla) para mejorar el rendimiento.</target>
+Es posible que desee vaciar la antememoria (en la configuración de pantalla) para mejorar el desempeño.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Zoom to Edit" xml:space="preserve">
@@ -2572,7 +2574,7 @@ Es posible que desees borrar la memoria caché (en Configuración de pantalla) p
       </trans-unit>
       <trans-unit id="mph" xml:space="preserve">
         <source>mph</source>
-        <target state="translated">Millas por hora (mph)</target>
+        <target state="translated">mph</target>
         <note>miles per hour speed</note>
       </trans-unit>
       <trans-unit id="no" xml:space="preserve">
@@ -2661,10 +2663,12 @@ Es posible que desees borrar la memoria caché (en Configuración de pantalla) p
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>Go Map!!</source>
+        <target state="translated">Go Map!!</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>PhotoShare</source>
+        <target state="translated">PhotoShare</target>
         <note>Bundle name</note>
       </trans-unit>
     </body>
@@ -2763,7 +2767,7 @@ Es posible que desees borrar la memoria caché (en Configuración de pantalla) p
       </trans-unit>
       <trans-unit id="Dfv-TT-J6i.footerTitle" xml:space="preserve">
         <source>The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard.</source>
-        <target state="translated">El preajuste estará disponible al editar objetos que coincidan con esta combinación clave/valor. Deja cualquiera de los dos en blanco para el comodín.</target>
+        <target state="translated">La preconfiguración estará disponible al editar objetos que coincidan con esta combinación clave/valor. Deje cualquiera de los dos en blanco para el comodín.</target>
         <note>Class = "UITableViewSection"; footerTitle = "The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard."; ObjectID = "Dfv-TT-J6i";</note>
       </trans-unit>
       <trans-unit id="Dfv-TT-J6i.headerTitle" xml:space="preserve">
@@ -2783,7 +2787,7 @@ Es posible que desees borrar la memoria caché (en Configuración de pantalla) p
       </trans-unit>
       <trans-unit id="Fe2-dc-zgA.placeholder" xml:space="preserve">
         <source>designated</source>
-        <target state="translated">Designado</target>
+        <target state="translated">designado</target>
         <note>Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="G5R-oP-lp3.title" xml:space="preserve">
@@ -2793,7 +2797,7 @@ Es posible que desees borrar la memoria caché (en Configuración de pantalla) p
       </trans-unit>
       <trans-unit id="GIO-W7-q5U.title" xml:space="preserve">
         <source>Custom Presets</source>
-        <target state="translated">Preajustes personalizados</target>
+        <target state="translated">Preconfiguraciones personalizadas</target>
         <note>Class = "UINavigationItem"; title = "Custom Presets"; ObjectID = "GIO-W7-q5U";</note>
       </trans-unit>
       <trans-unit id="Hgu-iP-FnG.title" xml:space="preserve">
@@ -2818,7 +2822,7 @@ Es posible que desees borrar la memoria caché (en Configuración de pantalla) p
       </trans-unit>
       <trans-unit id="OND-s7-I6f.title" xml:space="preserve">
         <source>Custom Preset</source>
-        <target state="translated">Preajuste personalizado</target>
+        <target state="translated">Preconfiguración personalizada</target>
         <note>Class = "UINavigationItem"; title = "Custom Preset"; ObjectID = "OND-s7-I6f";</note>
       </trans-unit>
       <trans-unit id="P3A-5n-1Iq.text" xml:space="preserve">
@@ -2828,7 +2832,7 @@ Es posible que desees borrar la memoria caché (en Configuración de pantalla) p
       </trans-unit>
       <trans-unit id="QDv-7w-nbx.headerTitle" xml:space="preserve">
         <source>Preset Name</source>
-        <target state="translated">Nombre predefinido</target>
+        <target state="translated">Nombre de preconfiguración</target>
         <note>Class = "UITableViewSection"; headerTitle = "Preset Name"; ObjectID = "QDv-7w-nbx";</note>
       </trans-unit>
       <trans-unit id="R0q-aM-ULf.text" xml:space="preserve">
@@ -2962,12 +2966,12 @@ Es posible que desees borrar la memoria caché (en Configuración de pantalla) p
       </trans-unit>
       <trans-unit id="ijx-N9-1eO.text" xml:space="preserve">
         <source>Changeset</source>
-        <target state="translated">conjunto de cambios</target>
+        <target state="translated">Conjunto de cambios</target>
         <note>Class = "UILabel"; text = "Changeset"; ObjectID = "ijx-N9-1eO";</note>
       </trans-unit>
       <trans-unit id="jv1-BF-p2a.footerTitle" xml:space="preserve">
         <source>The possible values for the preset</source>
-        <target state="translated">Los posibles valores para la preselección</target>
+        <target state="translated">Los valores posibles de la preconfiguración</target>
         <note>Class = "UITableViewSection"; footerTitle = "The possible values for the preset"; ObjectID = "jv1-BF-p2a";</note>
       </trans-unit>
       <trans-unit id="jv1-BF-p2a.headerTitle" xml:space="preserve">
@@ -2982,7 +2986,7 @@ Es posible que desees borrar la memoria caché (en Configuración de pantalla) p
       </trans-unit>
       <trans-unit id="lPv-s6-uEz.title" xml:space="preserve">
         <source>Common Tags</source>
-        <target state="translated">Etiquetas comunes</target>
+        <target state="translated">Etiquetas habituales</target>
         <note>Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz";</note>
       </trans-unit>
       <trans-unit id="li7-oV-pgT.text" xml:space="preserve">
@@ -2992,7 +2996,7 @@ Es posible que desees borrar la memoria caché (en Configuración de pantalla) p
       </trans-unit>
       <trans-unit id="mAb-DX-pqb.title" xml:space="preserve">
         <source>Common tags</source>
-        <target state="translated">Etiquetas comunes</target>
+        <target state="translated">Etiquetas habituales</target>
         <note>Class = "UINavigationItem"; title = "Common tags"; ObjectID = "mAb-DX-pqb";</note>
       </trans-unit>
       <trans-unit id="mcN-gM-s7u.text" xml:space="preserve">
@@ -3037,7 +3041,7 @@ Es posible que desees borrar la memoria caché (en Configuración de pantalla) p
       </trans-unit>
       <trans-unit id="pHA-2B-6DC.normalTitle" xml:space="preserve">
         <source>Customize Presets</source>
-        <target state="translated">Personalizar las preselecciones</target>
+        <target state="translated">Personalizar preconfiguraciones</target>
         <note>Class = "UIButton"; normalTitle = "Customize Presets"; ObjectID = "pHA-2B-6DC";</note>
       </trans-unit>
       <trans-unit id="pxY-di-zg7.placeholder" xml:space="preserve">
@@ -3062,7 +3066,7 @@ Es posible que desees borrar la memoria caché (en Configuración de pantalla) p
       </trans-unit>
       <trans-unit id="v1b-PG-XxE.title" xml:space="preserve">
         <source>Presets</source>
-        <target state="translated">Preajustes</target>
+        <target state="translated">Preconfiguraciones</target>
         <note>Class = "UINavigationItem"; title = "Presets"; ObjectID = "v1b-PG-XxE";</note>
       </trans-unit>
       <trans-unit id="vpk-jC-yxl.placeholder" xml:space="preserve">
@@ -3263,7 +3267,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="JbA-pC-plJ.text" xml:space="preserve">
         <source>Title title title title</source>
-        <target state="translated">Title title title title</target>
+        <target state="translated">Título título título título</target>
         <note>Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="KIO-8j-QsO.text" xml:space="preserve">
@@ -3283,7 +3287,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="O6E-f1-A1k.title" xml:space="preserve">
         <source>Login</source>
-        <target state="translated">Inicio de sesión</target>
+        <target state="translated">Acceso</target>
         <note>Class = "UINavigationItem"; title = "Login"; ObjectID = "O6E-f1-A1k";</note>
       </trans-unit>
       <trans-unit id="Sxo-RO-d9L.text" xml:space="preserve">
@@ -3313,12 +3317,12 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="UeH-ME-EV8.text" xml:space="preserve">
         <source>Show FPS</source>
-        <target state="translated">Mostrar los FPS</target>
+        <target state="translated">Mostrar FPS</target>
         <note>Class = "UILabel"; text = "Show FPS"; ObjectID = "UeH-ME-EV8"; Note = "Display the app's frames/second while running";</note>
       </trans-unit>
       <trans-unit id="UvN-Qa-roL.text" xml:space="preserve">
         <source>Frames/Second</source>
-        <target state="translated">Fotogramas/Segundo</target>
+        <target state="translated">Fotogramas/segundo</target>
         <note>Class = "UILabel"; text = "Frames/Second"; ObjectID = "UvN-Qa-roL";</note>
       </trans-unit>
       <trans-unit id="VDO-HW-SLB.title" xml:space="preserve">
@@ -3353,7 +3357,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="dIM-oE-zAg.normalTitle" xml:space="preserve">
         <source>Sign In</source>
-        <target state="translated">Iniciar sesión</target>
+        <target state="translated">Acceder</target>
         <note>Class = "UIButton"; normalTitle = "Sign In"; ObjectID = "dIM-oE-zAg";</note>
       </trans-unit>
       <trans-unit id="dbi-X6-Day.headerTitle" xml:space="preserve">
@@ -3448,7 +3452,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="x4m-oT-EG8.text" xml:space="preserve">
         <source>GitHub - Issues &amp; Source Code</source>
-        <target state="translated">GitHub - Problemas &amp; Código fuente</target>
+        <target state="translated">GitHub - Defectos y código fuente</target>
         <note>Class = "UILabel"; text = "GitHub - Issues &amp; Source Code"; ObjectID = "x4m-oT-EG8";</note>
       </trans-unit>
       <trans-unit id="yAO-9B-CTd.headerTitle" xml:space="preserve">
@@ -3495,7 +3499,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="feW-AK-msn.title" xml:space="preserve">
         <source>Commit</source>
-        <target state="translated">Consolidar</target>
+        <target state="translated">Confirmar</target>
         <note>Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "feW-AK-msn";</note>
       </trans-unit>
       <trans-unit id="hcE-yO-3eH.normalTitle" xml:space="preserve">
