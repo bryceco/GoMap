@@ -777,11 +777,15 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       <trans-unit id=" (%d members)&#10;|==|plural.few" xml:space="preserve">
         <source> (%d members)
 </source>
+        <target state="new"> (%d members)
+</target>
         <note/>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;|==|plural.many" xml:space="preserve">
         <source> (%d members)
 </source>
+        <target state="new"> (%d members)
+</target>
         <note/>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;|==|plural.one" xml:space="preserve">
@@ -801,11 +805,15 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       <trans-unit id=" (%d nodes)&#10;|==|plural.few" xml:space="preserve">
         <source> (%d nodes)
 </source>
+        <target state="new"> (%d nodes)
+</target>
         <note/>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;|==|plural.many" xml:space="preserve">
         <source> (%d nodes)
 </source>
+        <target state="new"> (%d nodes)
+</target>
         <note/>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;|==|plural.one" xml:space="preserve">
@@ -869,11 +877,13 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="%ld Days|==|plural.few" xml:space="preserve">
         <source>%ld Days</source>
+        <target state="new">%ld Days</target>
         <note>Plural number of days
 One or more days</note>
       </trans-unit>
       <trans-unit id="%ld Days|==|plural.many" xml:space="preserve">
         <source>%ld Days</source>
+        <target state="new">%ld Days</target>
         <note>Plural number of days
 One or more days</note>
       </trans-unit>
@@ -891,10 +901,12 @@ One or more days</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.few" xml:space="preserve">
         <source>%ld edits, last active %@</source>
+        <target state="new">%ld edits, last active %@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.many" xml:space="preserve">
         <source>%ld edits, last active %@</source>
+        <target state="new">%ld edits, last active %@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.one" xml:space="preserve">
@@ -914,54 +926,67 @@ One or more days</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@, %3$#@waypoints@</source>
+        <target state="new">%1$#@meters@, %2$#@points@, %3$#@waypoints@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.few" xml:space="preserve">
         <source>%ld meters</source>
+        <target state="new">%ld meters</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.many" xml:space="preserve">
         <source>%ld meters</source>
+        <target state="new">%ld meters</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%ld meter</source>
+        <target state="new">%ld meter</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
+        <target state="new">%ld meters</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.few" xml:space="preserve">
         <source>%ld points</source>
+        <target state="new">%ld points</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.many" xml:space="preserve">
         <source>%ld points</source>
+        <target state="new">%ld points</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.one" xml:space="preserve">
         <source>%ld point</source>
+        <target state="new">%ld point</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.other" xml:space="preserve">
         <source>%ld points</source>
+        <target state="new">%ld points</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.few" xml:space="preserve">
         <source>%ld waypoints</source>
+        <target state="new">%ld waypoints</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.many" xml:space="preserve">
         <source>%ld waypoints</source>
+        <target state="new">%ld waypoints</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.one" xml:space="preserve">
         <source>%ld waypoint</source>
+        <target state="new">%ld waypoint</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.other" xml:space="preserve">
         <source>%ld waypoints</source>
+        <target state="new">%ld waypoints</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.few" xml:space="preserve">
@@ -1006,10 +1031,12 @@ One or more days</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.few" xml:space="preserve">
         <source>%ld objects</source>
+        <target state="new">%ld objects</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.many" xml:space="preserve">
         <source>%ld objects</source>
+        <target state="new">%ld objects</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">

@@ -782,26 +782,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <target state="translated">	線段 </target>
         <note/>
       </trans-unit>
-      <trans-unit id=" (%d members)&#10;|==|plural.one" xml:space="preserve">
-        <target state="translated"> (%d 個成員)
-</target>
-        <note/>
-        <target> (%d 個成員)
-</target>
-      </trans-unit>
       <trans-unit id=" (%d members)&#10;|==|plural.other" xml:space="preserve">
         <source> (%d members)
 </source>
         <target state="translated"> (%d 個成員)
 </target>
         <note/>
-      </trans-unit>
-      <trans-unit id=" (%d nodes)&#10;|==|plural.one" xml:space="preserve">
-        <target state="translated"> (%d 個節點)
-</target>
-        <note/>
-        <target> (%d 個節點)
-</target>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;|==|plural.other" xml:space="preserve">
         <source> (%d nodes)
@@ -855,22 +841,11 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <target state="translated">%@ 公尺</target>
         <note>Always plural</note>
       </trans-unit>
-      <trans-unit id="%ld Days|==|plural.one" xml:space="preserve">
-        <target state="translated">%ld 天</target>
-        <note>Plural number of days
-One or more days</note>
-        <target>%ld 天</target>
-      </trans-unit>
       <trans-unit id="%ld Days|==|plural.other" xml:space="preserve">
         <source>%ld Days</source>
         <target state="translated">%ld 天</target>
         <note>Plural number of days
 One or more days</note>
-      </trans-unit>
-      <trans-unit id="%ld edits, last active %@|==|plural.one" xml:space="preserve">
-        <target state="translated">%1$ld 編輯次數, 最近編輯 %2$@</target>
-        <note>Brief synopsis of a mapper's activity (count,last active date)</note>
-        <target>%ld 次編輯，最後編輯 %@</target>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.other" xml:space="preserve">
         <source>%ld edits, last active %@</source>
@@ -911,11 +886,6 @@ One or more days</note>
         <source>%ld points</source>
         <target state="needs-review-l10n">%2$ld</target>
         <note>length of a gpx track</note>
-      </trans-unit>
-      <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
-        <target state="translated">%ld 個物件</target>
-        <note>Number of tiles/objects in cache</note>
-        <target>%ld 個物件</target>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.other" xml:space="preserve">
         <source>%ld objects</source>
@@ -2606,31 +2576,6 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>yes</source>
         <target state="translated">是</target>
         <note/>
-      </trans-unit>
-      <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.one" xml:space="preserve">
-        <source>%ld meter</source>
-        <target state="translated">%ld 公尺</target>
-        <note>length of a gpx track</note>
-      </trans-unit>
-      <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.one" xml:space="preserve">
-        <source>%ld point</source>
-        <target state="translated">%ld 點</target>
-        <note>length of a gpx track</note>
-      </trans-unit>
-      <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.one" xml:space="preserve">
-        <source>%ld point</source>
-        <target state="translated">%ld 點</target>
-        <note>length of a gpx track</note>
-      </trans-unit>
-      <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.one" xml:space="preserve">
-        <source>%ld waypoint</source>
-        <target state="translated">%ld 航點</target>
-        <note>length of a gpx track</note>
-      </trans-unit>
-      <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.one" xml:space="preserve">
-        <source>%ld meter</source>
-        <target state="translated">%ld 公尺</target>
-        <note>length of a gpx track</note>
       </trans-unit>
     </body>
   </file>

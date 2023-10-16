@@ -785,6 +785,8 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       <trans-unit id=" (%d members)&#10;|==|plural.few" xml:space="preserve">
         <source> (%d members)
 </source>
+        <target state="new"> (%d members)
+</target>
         <note/>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;|==|plural.one" xml:space="preserve">
@@ -804,6 +806,8 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       <trans-unit id=" (%d nodes)&#10;|==|plural.few" xml:space="preserve">
         <source> (%d nodes)
 </source>
+        <target state="new"> (%d nodes)
+</target>
         <note/>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;|==|plural.one" xml:space="preserve">
@@ -867,6 +871,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="%ld Days|==|plural.few" xml:space="preserve">
         <source>%ld Days</source>
+        <target state="new">%ld Days</target>
         <note>Plural number of days
 One or more days</note>
       </trans-unit>
@@ -884,6 +889,7 @@ One or more days</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.few" xml:space="preserve">
         <source>%ld edits, last active %@</source>
+        <target state="new">%ld edits, last active %@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.one" xml:space="preserve">
@@ -983,6 +989,7 @@ One or more days</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.few" xml:space="preserve">
         <source>%ld objects</source>
+        <target state="new">%ld objects</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">

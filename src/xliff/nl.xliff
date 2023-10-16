@@ -863,30 +863,37 @@ One or more days</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@, %3$#@waypoints@</source>
+        <target state="new">%1$#@meters@, %2$#@points@, %3$#@waypoints@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%ld meter</source>
+        <target state="new">%ld meter</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
+        <target state="new">%ld meters</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.one" xml:space="preserve">
         <source>%ld point</source>
+        <target state="new">%ld point</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.other" xml:space="preserve">
         <source>%ld points</source>
+        <target state="new">%ld points</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.one" xml:space="preserve">
         <source>%ld waypoint</source>
+        <target state="new">%ld waypoint</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.other" xml:space="preserve">
         <source>%ld waypoints</source>
+        <target state="new">%ld waypoints</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.one" xml:space="preserve">

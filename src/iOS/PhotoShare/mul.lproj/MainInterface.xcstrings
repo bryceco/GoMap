@@ -95,6 +95,12 @@
             "value" : "OK"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -327,6 +333,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Annuleren"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anuluj"
           }
         },
         "pt" : {

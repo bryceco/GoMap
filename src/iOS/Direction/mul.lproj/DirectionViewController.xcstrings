@@ -65,6 +65,12 @@
             "value" : "Postavi uređaj paralelno sa smjerom objekta."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posiziona il tuo dispositivo parallelamente alla direzione dell''oggetto."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",

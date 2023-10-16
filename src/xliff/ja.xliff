@@ -782,26 +782,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <target state="translated">	ウェイ </target>
         <note/>
       </trans-unit>
-      <trans-unit id=" (%d members)&#10;|==|plural.one" xml:space="preserve">
-        <target state="translated"> (%d 件のメンバー)
-</target>
-        <note/>
-        <target> (%d 件のメンバー)
-</target>
-      </trans-unit>
       <trans-unit id=" (%d members)&#10;|==|plural.other" xml:space="preserve">
         <source> (%d members)
 </source>
         <target state="translated"> (%d 件のメンバー)
 </target>
         <note/>
-      </trans-unit>
-      <trans-unit id=" (%d nodes)&#10;|==|plural.one" xml:space="preserve">
-        <target state="translated"> (%d 件のノード)
-</target>
-        <note/>
-        <target> (%d 件のノード)
-</target>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;|==|plural.other" xml:space="preserve">
         <source> (%d nodes)
@@ -855,21 +841,11 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <target state="translated">%@ メートル</target>
         <note>Always plural</note>
       </trans-unit>
-      <trans-unit id="%ld Days|==|plural.one" xml:space="preserve">
-        <target state="translated">%ld 日</target>
-        <note>Plural number of days
-One or more days</note>
-        <target>%ld 日</target>
-      </trans-unit>
       <trans-unit id="%ld Days|==|plural.other" xml:space="preserve">
         <source>%ld Days</source>
         <target state="translated">%ld 日</target>
         <note>Plural number of days
 One or more days</note>
-      </trans-unit>
-      <trans-unit id="%ld edits, last active %@|==|plural.one" xml:space="preserve">
-        <target state="needs-review-l10n">%1$ld 件の編集, 最新アクティブ化 %2$@</target>
-        <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.other" xml:space="preserve">
         <source>%ld edits, last active %@</source>
@@ -910,11 +886,6 @@ One or more days</note>
         <source>%ld points</source>
         <target state="needs-review-l10n">%2$ld</target>
         <note>length of a gpx track</note>
-      </trans-unit>
-      <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
-        <target state="translated">%ld オブジェクト</target>
-        <note>Number of tiles/objects in cache</note>
-        <target>%ld 件のオブジェクト</target>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.other" xml:space="preserve">
         <source>%ld objects</source>
@@ -2606,31 +2577,6 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="translated">はい</target>
         <note/>
       </trans-unit>
-      <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.one" xml:space="preserve">
-        <source>%ld meter</source>
-        <target state="translated">%ld メートル</target>
-        <note>length of a gpx track</note>
-      </trans-unit>
-      <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.one" xml:space="preserve">
-        <source>%ld point</source>
-        <target state="translated">%ld 件のポイント</target>
-        <note>length of a gpx track</note>
-      </trans-unit>
-      <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.one" xml:space="preserve">
-        <source>%ld point</source>
-        <target state="translated">%ld 件のポイント</target>
-        <note>length of a gpx track</note>
-      </trans-unit>
-      <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.one" xml:space="preserve">
-        <source>%ld waypoint</source>
-        <target state="translated">%ld 件のウェイポイント</target>
-        <note>length of a gpx track</note>
-      </trans-unit>
-      <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.one" xml:space="preserve">
-        <source>%ld meter</source>
-        <target state="translated">%ld メートル</target>
-        <note>length of a gpx track</note>
-      </trans-unit>
     </body>
   </file>
   <file original="PhotoShare/Base.lproj/MainInterface.storyboard" source-language="en" target-language="ja" datatype="plaintext">
@@ -2662,12 +2608,10 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>Go Map!!</source>
-        <target state="needs-translation">Go Map!!</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>PhotoShare</source>
-        <target state="needs-translation">PhotoShare</target>
         <note>Bundle name</note>
       </trans-unit>
     </body>

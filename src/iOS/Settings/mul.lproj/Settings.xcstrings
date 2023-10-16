@@ -2738,7 +2738,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Iniciar sesión"
+            "value" : "Acceder"
           }
         },
         "hr" : {
@@ -4190,7 +4190,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Title title title title"
+            "value" : "Título título título título"
           }
         },
         "fi" : {
@@ -5522,7 +5522,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inicio de sesión"
+            "value" : "Acceso"
           }
         },
         "et" : {
@@ -6800,7 +6800,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mostrar los FPS"
+            "value" : "Mostrar FPS"
           }
         },
         "et" : {
@@ -6938,7 +6938,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fotogramas/Segundo"
+            "value" : "Fotogramas/segundo"
           }
         },
         "et" : {
@@ -7436,7 +7436,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "GitHub - Problemas & Código fuente"
+            "value" : "GitHub - Defectos y código fuente"
           }
         },
         "et" : {

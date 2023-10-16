@@ -38,7 +38,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rastros GPX"
+            "value" : "Trazas GPX"
           }
         },
         "et" : {
@@ -3890,7 +3890,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sólo editor"
+            "value" : "Solo editor"
           }
         },
         "et" : {
@@ -6734,7 +6734,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Las pistas GPX grabadas se eliminan automáticamente después de:"
+            "value" : "Las trazas GPX que grabe o descargue se eliminan automáticamente después de:"
           }
         },
         "et" : {
@@ -7442,7 +7442,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Configurar rastros GPX"
+            "value" : "Configurar trazas GPX"
           }
         },
         "et" : {
@@ -8648,7 +8648,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Borre la caché si la aplicación no está sincronizada con el servidor OSM. Esto puede suceder, por ejemplo, si otra persona cambia los datos que está editando actualmente o si no se cargan los cambios, lo que puede impedir que cargue más cambios.\n\nAdvertencia: al borrar la memoria caché, perderá todos los cambios no guardados.\n\nPara descargar las teselas más recientes, incluidos los cambios cargados anteriormente, borre Mapnik o la caché de teselas superpuestas. Puede tomar hasta 24 horas para que se procesen sus cambios."
+            "value" : "Vacíe la antememoria si la aplicación no está sincronizada con el servidor OSM. Esto puede suceder, por ejemplo, si otra persona cambia los datos que está editando actualmente o si no se cargan los cambios, lo que puede impedir que cargue más cambios.\n\nAtención: al vaciar la antememoria perderá todos los cambios no guardados.\n\nPara descargar las teselas más recientes, con los cambios enviados anteriormente, vacíe las antememorias de Mapnik o de teselas superpuestas. Puede tomar hasta 24 horas para que se procesen sus cambios."
           }
         },
         "et" : {
@@ -10676,7 +10676,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Eliminar rastros tras:"
+            "value" : "Eliminar trazas tras:"
           }
         },
         "et" : {
@@ -11102,7 +11102,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rastros GPX"
+            "value" : "Trazas GPX"
           }
         },
         "et" : {

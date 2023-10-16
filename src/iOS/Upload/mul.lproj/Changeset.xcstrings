@@ -101,6 +101,12 @@
             "value" : "Veranderingen:"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zmiany:"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -302,7 +308,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Consolidar"
+            "value" : "Confirmar"
           }
         },
         "et" : {
@@ -489,6 +495,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bewerken"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edytuj"
           }
         },
         "pt" : {
@@ -819,6 +831,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uploaden"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prześlij"
           }
         },
         "pt" : {
@@ -1193,6 +1211,12 @@
             "value" : "Mail"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-mail"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1335,6 +1359,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kjelde:"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Źródło:"
           }
         },
         "pt" : {

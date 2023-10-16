@@ -101,6 +101,12 @@
             "value" : "nee"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nie"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -225,6 +231,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "type"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "rodzaj"
           }
         },
         "pt" : {
@@ -357,6 +369,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Terug"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wstecz"
           }
         },
         "pt" : {
@@ -497,6 +515,12 @@
             "value" : "Attributen"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atrybuty"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -633,6 +657,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Titel"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tytuł"
           }
         },
         "pt" : {
@@ -893,6 +923,12 @@
             "value" : "Titel"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tytuł"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1029,6 +1065,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ja"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tak"
           }
         },
         "pt" : {
@@ -1307,6 +1349,12 @@
             "value" : "Restaurant"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restauracja"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1547,6 +1595,12 @@
             "value" : "hond"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pies"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1671,6 +1725,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aanpassen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konfiguruj"
           }
         },
         "pt" : {
@@ -2081,6 +2141,12 @@
             "value" : "waarde"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "wartość"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2459,6 +2525,12 @@
             "value" : "Label"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etykieta"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2528,7 +2600,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "El preajuste estará disponible al editar objetos que coincidan con esta combinación clave/valor. Deja cualquiera de los dos en blanco para el comodín."
+            "value" : "La preconfiguración estará disponible al editar objetos que coincidan con esta combinación clave/valor. Deje cualquiera de los dos en blanco para el comodín."
           }
         },
         "et" : {
@@ -3065,6 +3137,12 @@
             "value" : "Sleutel"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klucz"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3189,6 +3267,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Attributen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atrybuty"
           }
         },
         "pt" : {
@@ -3392,7 +3476,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Designado"
+            "value" : "designado"
           }
         },
         "et" : {
@@ -3549,6 +3633,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "clean"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "czyste"
           }
         },
         "pt" : {
@@ -3752,7 +3842,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Preajustes personalizados"
+            "value" : "Preconfiguraciones personalizadas"
           }
         },
         "et" : {
@@ -3927,6 +4017,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Label"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etykieta"
           }
         },
         "pt" : {
@@ -4109,6 +4205,12 @@
             "value" : "waarde"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "wartość"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4239,6 +4341,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Terug"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wstecz"
           }
         },
         "pt" : {
@@ -4373,6 +4481,12 @@
             "value" : "Attributen"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atrybuty"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4448,7 +4562,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "conjunto de cambios"
+            "value" : "Conjunto de cambios"
           }
         },
         "et" : {
@@ -4844,7 +4958,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Los posibles valores para la preselección"
+            "value" : "Los valores posibles de la preconfiguración"
           }
         },
         "et" : {
@@ -5255,6 +5369,12 @@
             "value" : "Terug"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wstecz"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5462,7 +5582,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Etiquetas comunes"
+            "value" : "Etiquetas habituales"
           }
         },
         "et" : {
@@ -5606,7 +5726,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Etiquetas comunes"
+            "value" : "Etiquetas habituales"
           }
         },
         "et" : {
@@ -6656,7 +6776,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Preajuste personalizado"
+            "value" : "Preconfiguración personalizada"
           }
         },
         "et" : {
@@ -6839,6 +6959,12 @@
             "value" : "Type"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rodzaj"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6914,7 +7040,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Personalizar las preselecciones"
+            "value" : "Personalizar preconfiguraciones"
           }
         },
         "et" : {
@@ -7166,7 +7292,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nombre predefinido"
+            "value" : "Nombre de preconfiguración"
           }
         },
         "et" : {
@@ -7473,6 +7599,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Annuleren"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anuluj"
           }
         },
         "pt" : {
@@ -7913,6 +8045,12 @@
             "value" : "Titel"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tytuł"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8039,6 +8177,12 @@
             "value" : "relatie"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "relacja"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8108,7 +8252,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Preajustes"
+            "value" : "Preconfiguraciones"
           }
         },
         "et" : {
@@ -8957,6 +9101,12 @@
             "value" : "sleutel"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klucz"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9519,6 +9669,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Subtitel"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Napisy"
           }
         },
         "pt" : {
