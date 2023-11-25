@@ -430,10 +430,10 @@ class LocationParser {
 	}
 
 	/// decode as google maps
-	/// https://goo.gl/maps/yGZxAN37wcmERVD6A
+	/// https://maps.app.goo.gl/1G7doKp5QEgBCkir7
 	static func isGoogleMapsRedirect(url: URL, callback: @escaping ((MapLocation?) -> Void)) -> Bool {
 		guard let comps = URLComponents(url: url, resolvingAgainstBaseURL: true),
-		      comps.host == "goo.gl"
+		      comps.host == "maps.app.goo.gl"
 		else {
 			return false
 		}
