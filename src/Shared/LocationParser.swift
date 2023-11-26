@@ -431,7 +431,7 @@ class LocationParser {
 
 	/// decode as google maps
 	/// https://maps.app.goo.gl/1G7doKp5QEgBCkir7
-	 static func isGoogleMapRedirect(url: URL, callback: @escaping ((MapLocation?) -> Void)) -> Bool {
+	 static func isGoogleMapsRedirect(url: URL, callback: @escaping ((MapLocation?) -> Void)) -> Bool {
         // First, resolve the shortened URL
         let api_key = "[YOUR_ID_KEY]"
         resolveShortURL(url: url) { resolvedURL in
