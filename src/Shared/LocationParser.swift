@@ -445,7 +445,7 @@ class LocationParser {
             if let latLong = extractLatLongFromURL(resolvedURL) {
                         callback(latLong)
                 } else if let ftidValue = parseSecondPartOfFTID(from: resolvedURL),
-               let newURL = URL(string: "https://maps.googleapis.com/maps/api/place/details/json?key=\(api_key))&cid=\(ftidValue)") {
+               let newURL = URL(string: "https://maps.googleapis.com/maps/api/place/details/json?key=\(api_key)&cid=\(ftidValue)") {
                 print(newURL.absoluteString)
                 fetchLocationDetails(url: newURL) { location in
                     callback(location)
