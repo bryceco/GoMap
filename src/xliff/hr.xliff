@@ -894,12 +894,12 @@ One or more days</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.one" xml:space="preserve">
         <source>%ld edit, last active %@</source>
-        <target state="needs-review-l10n">%1$ld uređivanja, zadnje aktivno %2$@</target>
+        <target state="translated">%ld promjena, zadnja aktivnost %@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.other" xml:space="preserve">
         <source>%ld edits, last active %@</source>
-        <target state="translated">%1$ld uređivanja, zadnje aktivno %2$@</target>
+        <target state="translated">%ld promjene, zadnja aktivnost %@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
@@ -1123,7 +1123,7 @@ One or more days</note>
       </trans-unit>
       <trans-unit id="Add way to multipolygon?" xml:space="preserve">
         <source>Add way to multipolygon?</source>
-        <target state="translated">Dodati put mnogokutu?</target>
+        <target state="translated">Dodati put višedjelnom mnogokutu?</target>
         <note/>
       </trans-unit>
       <trans-unit id="Adding members:" xml:space="preserve">
@@ -1233,7 +1233,7 @@ Area of an object in m^2</note>
       </trans-unit>
       <trans-unit id="Can only add ways to multipolygons" xml:space="preserve">
         <source>Can only add ways to multipolygons</source>
-        <target state="translated">Putovi se mogu dodati samo mnogokutima</target>
+        <target state="translated">Putovi se mogu dodati samo višedjelnim mnogokutima</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can't delete node that is part of a relation" xml:space="preserve">
@@ -1243,7 +1243,7 @@ Area of an object in m^2</note>
       </trans-unit>
       <trans-unit id="Can't delete relation that is not a multipolygon" xml:space="preserve">
         <source>Can't delete relation that is not a multipolygon</source>
-        <target state="translated">Nije moguće izbrisati vezu koja nije mnogokut</target>
+        <target state="translated">Nije moguće izbrisati vezu koja nije višedjelni mnogokut</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can't delete way that is part of a Route or similar relation" xml:space="preserve">
@@ -1710,7 +1710,7 @@ Greška: %@</target>
       </trans-unit>
       <trans-unit id="Member of multipolygon relation" xml:space="preserve">
         <source>Member of multipolygon relation</source>
-        <target state="translated">Član mnogokutne veze</target>
+        <target state="translated">Član veze višedjelnog mnogokuta</target>
         <note/>
       </trans-unit>
       <trans-unit id="Members" xml:space="preserve">
@@ -1776,7 +1776,7 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       </trans-unit>
       <trans-unit id="Multipolygon" xml:space="preserve">
         <source>Multipolygon</source>
-        <target state="translated">Mnogokut</target>
+        <target state="translated">Višedjelni mnogokut</target>
         <note/>
       </trans-unit>
       <trans-unit id="Name" xml:space="preserve">
@@ -1922,12 +1922,12 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Only multipolygon relations are supported" xml:space="preserve">
         <source>Only multipolygon relations are supported</source>
-        <target state="translated">Podržane su samo mnogokutne veze</target>
+        <target state="translated">Podržane su samo veze višedjelnih mnogokuta</target>
         <note/>
       </trans-unit>
       <trans-unit id="Only ways/multipolygons can be rotated" xml:space="preserve">
         <source>Only ways/multipolygons can be rotated</source>
-        <target state="translated">Okretati se mogu samo putovi/mnogokuti</target>
+        <target state="translated">Okretati se mogu samo putovi/višedjelni mnogokuti</target>
         <note/>
       </trans-unit>
       <trans-unit id="Open Settings" xml:space="preserve">
@@ -2528,7 +2528,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
       </trans-unit>
       <trans-unit id="added to multipolygon relation" xml:space="preserve">
         <source>added to multipolygon relation</source>
-        <target state="translated">dodano mnogokutnoj vezi</target>
+        <target state="translated">dodano u vezu višedjelnog mnogokuta</target>
         <note/>
       </trans-unit>
       <trans-unit id="computing size..." xml:space="preserve">
@@ -2558,7 +2558,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
       </trans-unit>
       <trans-unit id="delete multipolygon" xml:space="preserve">
         <source>delete multipolygon</source>
-        <target state="translated">izbriši mnogokut</target>
+        <target state="translated">izbriši višedjelni mnogokut</target>
         <note/>
       </trans-unit>
       <trans-unit id="delete node" xml:space="preserve">
