@@ -17,6 +17,7 @@
       </trans-unit>
       <trans-unit id="2Ka-IT-DQC.normalTitle" xml:space="preserve">
         <source>Bing attribution</source>
+        <target state="translated">Bing atribuce</target>
         <note>Class = "UIButton"; normalTitle = "Bing attribution"; ObjectID = "2Ka-IT-DQC";</note>
       </trans-unit>
       <trans-unit id="2g1-vb-Cjc.normalTitle" xml:space="preserve">
@@ -126,6 +127,7 @@
       </trans-unit>
       <trans-unit id="nU5-T2-ADn.text" xml:space="preserve">
         <source>A Error Message Flashing Z</source>
+        <target state="translated">A Error Message Flashing Z</target>
         <note>Class = "UILabel"; text = "A Error Message Flashing Z"; ObjectID = "nU5-T2-ADn"; Note = "Placeholder - Don't translate";</note>
       </trans-unit>
       <trans-unit id="qP9-Sc-sc4.text" xml:space="preserve">
@@ -145,6 +147,7 @@
       </trans-unit>
       <trans-unit id="tOO-VD-MeJ.text" xml:space="preserve">
         <source>2014-06-17 17:54 UTC</source>
+        <target state="translated">2014-06-17 17:54 UTC</target>
         <note>Class = "UILabel"; text = "2014-06-17 17:54 UTC"; ObjectID = "tOO-VD-MeJ";</note>
       </trans-unit>
       <trans-unit id="vRO-Aj-Sdr.text" xml:space="preserve">
@@ -627,6 +630,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="v6h-g5-fka.text" xml:space="preserve">
         <source>12/22/20, 7:55 PM</source>
+        <target state="translated">12/22/20, 7:55 PM</target>
         <note>Class = "UILabel"; text = "12/22/20, 7:55 PM"; ObjectID = "v6h-g5-fka";</note>
       </trans-unit>
       <trans-unit id="voF-Yf-33h.text" xml:space="preserve">
@@ -2774,6 +2778,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>PhotoShare</source>
+        <target state="translated">PhotoShare</target>
         <note>Bundle name</note>
       </trans-unit>
     </body>
@@ -3355,6 +3360,7 @@ https://www.r3gi.cz
       </trans-unit>
       <trans-unit id="DiU-tt-U7H.text" xml:space="preserve">
         <source>Detail detail detail detail detail</source>
+        <target state="translated">Detail detail detail detail detail</target>
         <note>Class = "UILabel"; text = "Detail detail detail detail detail"; ObjectID = "DiU-tt-U7H"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="Gcr-zK-nDq.text" xml:space="preserve">
@@ -3374,6 +3380,7 @@ https://www.r3gi.cz
       </trans-unit>
       <trans-unit id="JbA-pC-plJ.text" xml:space="preserve">
         <source>Title title title title</source>
+        <target state="translated">Title title title title</target>
         <note>Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="KIO-8j-QsO.text" xml:space="preserve">
@@ -3398,6 +3405,7 @@ https://www.r3gi.cz
       </trans-unit>
       <trans-unit id="Sxo-RO-d9L.text" xml:space="preserve">
         <source>-</source>
+        <target state="translated">-</target>
         <note>Class = "UILabel"; text = "-"; ObjectID = "Sxo-RO-d9L";</note>
       </trans-unit>
       <trans-unit id="TGa-tJ-nrC.text" xml:space="preserve">
