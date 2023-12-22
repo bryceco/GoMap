@@ -3719,8 +3719,8 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "%ld dana"
+                  "state" : "translated",
+                  "value" : "%ld dan"
                 }
               },
               "other" : {
@@ -4324,14 +4324,14 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "%1$ld uređivanja, zadnje aktivno %2$@"
+                  "state" : "translated",
+                  "value" : "%ld promjena, zadnja aktivnost %@"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%1$ld uređivanja, zadnje aktivno %2$@"
+                  "value" : "%ld promjene, zadnja aktivnost %@"
                 }
               }
             }
@@ -5267,14 +5267,14 @@
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%ld m"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%ld m"
                     }
                   }
                 }
@@ -5293,14 +5293,14 @@
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%ld točka"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%ld točke"
                     }
                   }
                 }
@@ -7048,14 +7048,14 @@
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%ld m"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%ld m"
                     }
                   }
                 }
@@ -7074,14 +7074,14 @@
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%ld točka"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%ld točke"
                     }
                   }
                 }
@@ -8342,8 +8342,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld meters"
+                      "state" : "translated",
+                      "value" : "%ld 米"
                     }
                   }
                 }
@@ -8356,8 +8356,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld points"
+                      "state" : "translated",
+                      "value" : "%ld 点"
                     }
                   }
                 }
@@ -8713,6 +8713,12 @@
         "ja" : {
           "variations" : {
             "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%ld 件のオブジェクト"
+                }
+              },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
@@ -9025,6 +9031,12 @@
         "zh-Hant" : {
           "variations" : {
             "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%ld 個物件"
+                }
+              },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
@@ -11169,7 +11181,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dodati put mnogokutu?"
+            "value" : "Dodati put višedjelnom mnogokutu?"
           }
         },
         "id" : {
@@ -11376,7 +11388,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "dodano mnogokutnoj vezi"
+            "value" : "dodano u vezu višedjelnog mnogokuta"
           }
         },
         "id" : {
@@ -13913,7 +13925,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Putovi se mogu dodati samo mnogokutima"
+            "value" : "Putovi se mogu dodati samo višedjelnim mnogokutima"
           }
         },
         "id" : {
@@ -14161,7 +14173,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nije moguće izbrisati vezu koja nije mnogokut"
+            "value" : "Nije moguće izbrisati vezu koja nije višedjelni mnogokut"
           }
         },
         "id" : {
@@ -19123,7 +19135,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "izbriši mnogokut"
+            "value" : "izbriši višedjelni mnogokut"
           }
         },
         "id" : {
@@ -26376,7 +26388,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Član mnogokutne veze"
+            "value" : "Član veze višedjelnog mnogokuta"
           }
         },
         "id" : {
@@ -28197,7 +28209,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mnogokut"
+            "value" : "Višedjelni mnogokut"
           }
         },
         "id" : {
@@ -31480,7 +31492,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Podržane su samo mnogokutne veze"
+            "value" : "Podržane su samo veze višedjelnih mnogokuta"
           }
         },
         "id" : {
@@ -31822,7 +31834,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Okretati se mogu samo putovi/mnogokuti"
+            "value" : "Okretati se mogu samo putovi/višedjelni mnogokuti"
           }
         },
         "id" : {

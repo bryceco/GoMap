@@ -917,6 +917,12 @@
             "value" : "Nombre"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ime"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1353,6 +1359,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cuenta en OpenStreetMap"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OpenStreetMap račun"
           }
         },
         "ja" : {
@@ -2195,6 +2207,12 @@
             "value" : "Información de la cuenta"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podaci računa"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2789,6 +2807,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Detail detail detail detail detail\"; ObjectID = \"DiU-tt-U7H\"; Note = \"Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detail detail detail detail detail"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2880,6 +2904,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
+        "hr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "-"
@@ -4175,6 +4205,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Title title title title\"; ObjectID = \"JbA-pC-plJ\"; Note = \"Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Title title title title"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6179,6 +6215,12 @@
       "comment" : "Class = \"UILabel\"; text = \"-\"; ObjectID = \"Sxo-RO-d9L\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6192,6 +6234,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
+        "hr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "-"
@@ -7343,6 +7391,12 @@
             "value" : "Cerrar sesión"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odjava"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7383,6 +7437,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Conjuntos de cambios"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skupovi promjena"
           }
         },
         "ja" : {

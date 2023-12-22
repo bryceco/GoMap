@@ -437,6 +437,12 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"Bing attribution\"; ObjectID = \"2Ka-IT-DQC\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bing atribuce"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2381,6 +2387,12 @@
       "comment" : "Class = \"UILabel\"; text = \"A Error Message Flashing Z\"; ObjectID = \"nU5-T2-ADn\"; Note = \"Placeholder - Don't translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Error Message Flashing Z"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3341,6 +3353,12 @@
       "comment" : "Class = \"UILabel\"; text = \"2014-06-17 17:54 UTC\"; ObjectID = \"tOO-VD-MeJ\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2014-06-17 17:54 UTC"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",

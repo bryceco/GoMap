@@ -2,7 +2,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
     </header>
     <body>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
@@ -179,7 +179,7 @@
   </file>
   <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
     </header>
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
@@ -208,7 +208,7 @@
   </file>
   <file original="DisplaySettings/Base.lproj/Display.storyboard" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
     </header>
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
@@ -677,7 +677,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
     </header>
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
@@ -704,7 +704,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="InfoPlist.xcstrings" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -765,7 +765,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Localizable.xcstrings" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
     </header>
     <body>
       <trans-unit id="" xml:space="preserve">
@@ -886,6 +886,10 @@ One or more days</note>
         <source>%ld points</source>
         <target state="needs-review-l10n">%2$ld</target>
         <note>length of a gpx track</note>
+      </trans-unit>
+      <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
+        <target state="translated">%ld 件のオブジェクト</target>
+        <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.other" xml:space="preserve">
         <source>%ld objects</source>
@@ -2577,66 +2581,11 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="translated">はい</target>
         <note/>
       </trans-unit>
-      <trans-unit id="%ld Days|==|plural.one" xml:space="preserve">
-        <source>%ld Day</source>
-        <target state="translated">%ld 日</target>
-        <note>Plural number of days
-One or more days</note>
-      </trans-unit>
-      <trans-unit id=" (%d nodes)&#10;|==|plural.one" xml:space="preserve">
-        <source> (%d node)
-</source>
-        <target state="translated"> (%d 件のノード)
-</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id=" (%d members)&#10;|==|plural.one" xml:space="preserve">
-        <source> (%d member)
-</source>
-        <target state="translated"> (%d 件のメンバー)
-</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
-        <source>%ld objects</source>
-        <target state="translated">%ld 件のオブジェクト</target>
-        <note>Number of tiles/objects in cache</note>
-      </trans-unit>
-      <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.one" xml:space="preserve">
-        <source>%ld meter</source>
-        <target state="translated">%ld メートル</target>
-        <note>length of a gpx track</note>
-      </trans-unit>
-      <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.one" xml:space="preserve">
-        <source>%ld point</source>
-        <target state="translated">%ld 件のポイント</target>
-        <note>length of a gpx track</note>
-      </trans-unit>
-      <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.one" xml:space="preserve">
-        <source>%ld point</source>
-        <target state="translated">%ld 件のポイント</target>
-        <note>length of a gpx track</note>
-      </trans-unit>
-      <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.one" xml:space="preserve">
-        <source>%ld waypoint</source>
-        <target state="translated">%ld 件のウェイポイント</target>
-        <note>length of a gpx track</note>
-      </trans-unit>
-      <trans-unit id="%ld edits, last active %@|==|plural.one" xml:space="preserve">
-        <source>%ld edit, last active %@</source>
-        <target state="translated">%ld 件の編集, 最新アクティブ化 %@</target>
-        <note>Brief synopsis of a mapper's activity (count,last active date)</note>
-      </trans-unit>
-      <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.one" xml:space="preserve">
-        <source>%ld meter</source>
-        <target state="translated">%ld メートル</target>
-        <note>length of a gpx track</note>
-      </trans-unit>
     </body>
   </file>
   <file original="PhotoShare/Base.lproj/MainInterface.storyboard" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
     </header>
     <body>
       <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
@@ -2658,7 +2607,7 @@ One or more days</note>
   </file>
   <file original="PhotoShare/InfoPlist.xcstrings" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -2675,7 +2624,7 @@ One or more days</note>
   </file>
   <file original="PhotoShare/Localizable.xcstrings" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
     </header>
     <body>
       <trans-unit id="Processing data..." xml:space="preserve">
@@ -2697,7 +2646,7 @@ One or more days</note>
   </file>
   <file original="POI/Base.lproj/POI.storyboard" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
     </header>
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
@@ -3094,7 +3043,7 @@ One or more days</note>
   </file>
   <file original="Settings/Base.lproj/Settings.storyboard" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
@@ -3465,7 +3414,7 @@ http://glyphish.com
   </file>
   <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="ja" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0" build-num="15A240d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
     </header>
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">
