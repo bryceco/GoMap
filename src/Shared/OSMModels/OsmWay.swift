@@ -105,6 +105,9 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 			"magic_carpet": true,
 			"yes": true
 		],
+		"barrier": [
+			"retaining_wall": true
+		],
 		"highway": [
 			"motorway": true,
 			"motorway_link": true,
