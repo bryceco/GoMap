@@ -85,6 +85,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			hostname = "api.openstreetmap.org"
 		case "dev":
 			hostname = "api06.dev.openstreetmap.org"
+		case "ohm":
+			hostname = "https://www.openhistoricalmap.org"
 		default:
 			break
 		}

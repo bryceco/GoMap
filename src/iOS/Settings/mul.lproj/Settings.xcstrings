@@ -938,114 +938,114 @@
       }
     },
     "6GT-p2-rPO.footerTitle" : {
-      "comment" : "Class = \"UITableViewSection\"; footerTitle = \"Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.\"; ObjectID = \"6GT-p2-rPO\";",
+      "comment" : "Class = \"UITableViewSection\"; footerTitle = \"Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.\\n\\nYou can also enter \\\"dev\\\" for the development server (for testing), \\\"ohm\\\" for the OpenHistoricalMap server, or leave blank for the default server.\"; ObjectID = \"6GT-p2-rPO\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "حدد مضيفًا آخر إذا كنت ترغب في تحرير البيانات الموجودة على خادم OSM آخر، علماً بأن المضيف الافتراضي هو api.openstreetmap.org."
           }
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "حدد مضيفًا آخر إذا كنت ترغب في تحرير البيانات الموجودة على خادم OSM آخر، علماً بأن المضيف الافتراضي هو api.openstreetmap.org."
           }
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Zadejte adresu hostitele, pokud chcete upravovat data umístěná na alternativním OSM serveru. Výchozí hostitel je api.openstreetmap.org."
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Geben Sie einen Host an, wenn Sie Daten bearbeiten möchten, die sich auf einem anderen OSM-Server befinden. Der Standard-Host ist api.openstreetmap.org."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org."
+            "value" : "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.\n\nYou can also enter \"dev\" for the development server (for testing), \"ohm\" for the OpenHistoricalMap server, or leave blank for the default server."
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Especifica un host si deseas editar datos ubicados en un servidor OSM alternativo. El host por defecto es api.openstreetmap.org."
           }
         },
         "et" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Määra host kui soovid muuta teises OSM serveris asuvaid andmeid. Vaikimisi host on api.openstreetmap.org."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Spécifiez un hôte si vous souhaitez éditer les données sur un serveur OSM alternatif. L'hôte par défaut est api.openstreetmap.org."
           }
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Odredi računalo, ako želiš uređivati podatke koji se nalaze na alternativnom poslužitelju OSM-a. Standardno računalo je api.openstreetmap.org."
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "代替OSMサーバー上にあるデータを編集したい場合にはホストを指定してください。デフォルトのホストはapi.openstreetmap.org です。"
           }
         },
         "nb-NO" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Angi en vert hvis du ønsker å redigere data som finnes på en alternativ OSM-tjener. Forvalgt vert er api.openstreetmap.org."
           }
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Specificeer een host als je gegevens op een alternatieve OSM-server wilt bewerken. De standaardhost is api.openstreetmap.org."
           }
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Especifique um host se quiser editar os dados localizados num servidor OpenStreetMap alternativo. O host padrão é api.openstreetmap.org."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Especifique um host se você gostaria de editar os dados localizados em um servidor OpenStreetMap alternativo. O host padrão é api.openstreetmap.org."
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Введите адрес узла, если вы хотите редактировать данные, находящиеся на альтернативном сервере OSM. Узел по умолчанию: api.openstreetmap.org."
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Введіть адресу альтернативного OSM-сервера, якщо ви хочете редагувати дані там. Адреса за замовчуванням: api.openstreetmap.org."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "如果你想编辑位于另一个OSM服务器上的数据，请指定一个主机。默认主机是api.openstreetmap.org。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "您可以指定主機，如果您要編輯的資料儲存於其他 OSM 伺服器。預設的主機為 api.openstreetmap.org。"
           }
         }
