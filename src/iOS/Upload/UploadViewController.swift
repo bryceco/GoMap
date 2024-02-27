@@ -10,7 +10,7 @@ import MessageUI
 import QuartzCore
 import UIKit
 
-class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeViewControllerDelegate {
+class UploadViewController: UIViewController, UITextViewDelegate {
 	var mapData: OsmMapData!
 	@IBOutlet var commentContainerView: UIView!
 	@IBOutlet var xmlTextView: UITextView!
@@ -19,7 +19,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 	@IBOutlet var commitButton: UIBarButtonItem!
 	@IBOutlet var cancelButton: UIBarButtonItem!
 	@IBOutlet var progressView: UIActivityIndicatorView!
-	@IBOutlet var sendMailButton: UIButton!
+	@IBOutlet var exportOscButton: UIButton!
 	@IBOutlet var editXmlButton: UIButton!
 	@IBOutlet var clearCommentButton: UIButton!
 	@IBOutlet var commentHistoryButton: UIButton!
@@ -86,7 +86,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 			xmlTextView.attributedText = text
 		}
 
-		sendMailButton.isEnabled = text != nil
+		exportOscButton.isEnabled = text != nil
 		editXmlButton.isEnabled = text != nil
 
 		clearCommentButton.isHidden = true
@@ -176,7 +176,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 		progressView.startAnimating()
 		commitButton.isEnabled = false
 		cancelButton.isEnabled = false
-		sendMailButton.isEnabled = false
+		exportOscButton.isEnabled = false
 		editXmlButton.isEnabled = false
 
 		commentTextView.resignFirstResponder()
@@ -219,7 +219,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 				present(alert, animated: true)
 
 				if !xmlTextView.isEditable {
-					sendMailButton.isEnabled = true
+					exportOscButton.isEnabled = true
 					editXmlButton.isEnabled = true
 				}
 			} else {
@@ -281,7 +281,7 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 		xmlTextView.attributedText = nil
 		xmlTextView.text = xml
 		xmlTextView.isEditable = true
-		sendMailButton.isEnabled = false
+		exportOscButton.isEnabled = false
 		editXmlButton.isEnabled = false
 
 		let alert = UIAlertController(
@@ -294,36 +294,22 @@ class UploadViewController: UIViewController, UITextViewDelegate, MFMailComposeV
 		present(alert, animated: true)
 	}
 
-	@IBAction func sendMail(_ sender: Any) {
-		if MFMailComposeViewController.canSendMail() {
-			let appDelegate = AppDelegate.shared
+	@IBAction func exportOscFile(_ sender: Any) {
 
-			let mail = MFMailComposeViewController()
-			mail.mailComposeDelegate = self
-			let appName = appDelegate.appName()
-			mail.setSubject(String.localizedStringWithFormat(NSLocalizedString("%@ changeset", comment: ""),
-			                                                 appName))
-			let xml = mapData?.changesetAsXml()
-			if let data = xml?.data(using: .utf8) {
-				mail.addAttachmentData(data, mimeType: "application/xml", fileName: "osmChange.osc")
-			}
-			present(mail, animated: true)
-		} else {
-			let error = UIAlertController(
-				title: NSLocalizedString("Cannot compose message", comment: ""),
-				message: NSLocalizedString("Mail delivery is not available on this device", comment: ""),
-				preferredStyle: .alert)
-			error.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
-			present(error, animated: true)
+		if let xml = mapData?.changesetAsXml(),
+		   let text = xml.data(using: .utf8),
+		   let path = FileManager.default.urls(for: .cachesDirectory,in: .userDomainMask).first?.appendingPathComponent("osmChange.osc"),
+		   ((try? text.write(to: path, options: .atomicWrite)) != nil)
+		{
+			let objectsToShare = [path] as [Any]
+			let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+
+			// Excluded activities
+			activityVC.excludedActivityTypes = [UIActivity.ActivityType.addToReadingList]
+
+			activityVC.popoverPresentationController?.sourceView = sender as? UIView
+			self.present(activityVC, animated: true, completion: nil)
 		}
-	}
-
-	func mailComposeController(
-		_ controller: MFMailComposeViewController,
-		didFinishWith result: MFMailComposeResult,
-		error: Error?)
-	{
-		dismiss(animated: true)
 	}
 
 	func textViewDidChange(_ textView: UITextView) {
