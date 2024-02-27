@@ -295,11 +295,11 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 	}
 
 	@IBAction func exportOscFile(_ sender: Any) {
-
 		if let xml = mapData?.changesetAsXml(),
 		   let text = xml.data(using: .utf8),
-		   let path = FileManager.default.urls(for: .cachesDirectory,in: .userDomainMask).first?.appendingPathComponent("osmChange.osc"),
-		   ((try? text.write(to: path, options: .atomicWrite)) != nil)
+		   let path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?
+		   .appendingPathComponent("osmChange.osc"),
+		   (try? text.write(to: path, options: .atomicWrite)) != nil
 		{
 			let objectsToShare = [path] as [Any]
 			let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
@@ -308,7 +308,7 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 			activityVC.excludedActivityTypes = [UIActivity.ActivityType.addToReadingList]
 
 			activityVC.popoverPresentationController?.sourceView = sender as? UIView
-			self.present(activityVC, animated: true, completion: nil)
+			present(activityVC, animated: true, completion: nil)
 		}
 	}
 

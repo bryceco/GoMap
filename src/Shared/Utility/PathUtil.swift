@@ -10,7 +10,7 @@ import CoreGraphics
 
 extension CGPath {
 	func apply(action: (CGPathElement) -> Void) {
-		self.applyWithBlock({ elementPointer in
+		applyWithBlock({ elementPointer in
 			action(elementPointer.pointee)
 		})
 	}
