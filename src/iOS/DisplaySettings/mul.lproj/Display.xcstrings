@@ -1879,6 +1879,18 @@
         }
       }
     },
+    "ahv-4V-kjV.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"HealthKit routes:\"; ObjectID = \"ahv-4V-kjV\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "HealthKit routes:"
+          }
+        }
+      }
+    },
     "bmY-Hw-jv6.footerTitle" : {
       "comment" : "Class = \"UITableViewSection\"; footerTitle = \"Go Map!! will automatically discard old data to optimize performance.\"; ObjectID = \"bmY-Hw-jv6\";",
       "extractionState" : "extracted_with_value",
@@ -8607,6 +8619,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "過濾物件"
+          }
+        }
+      }
+    },
+    "Sdv-R2-za8.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Import\"; ObjectID = \"Sdv-R2-za8\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Import"
           }
         }
       }

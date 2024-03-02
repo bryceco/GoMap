@@ -78,6 +78,56 @@ class GpxTrackBackgroundCollection: UITableViewCell {
 	}
 }
 
+class GpxTrackImportHealthKit: UITableViewCell {
+	@IBOutlet var importButton: UIButton!
+	@IBOutlet var activityIndicator: UIActivityIndicatorView!
+	var vc: UIViewController!
+
+	@IBAction func importHealthKitRoutes(_ sender: Any) {
+		activityIndicator.isHidden = false
+		activityIndicator.startAnimating()
+		HealthKitRoutes.shared.getWorkoutRoutes { result in
+			self.activityIndicator.stopAnimating()
+			self.activityIndicator.isHidden = true
+			switch result {
+			case let .failure(error):
+				let alert = UIAlertController(title: NSLocalizedString("HealthKit", comment: "iOS HealthKit framework"),
+				                              message: error.localizedDescription,
+				                              preferredStyle: .alert)
+				alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+												style: .default,
+												handler: nil))
+				self.vc.present(alert, animated: true)
+			case let .success(routes):
+				let origCount = AppDelegate.shared.mapView.gpxLayer.previousTracks.count
+				for route in routes {
+					let gpx = GpxTrack()
+					gpx.name = "HealthKit"
+					for point in route {
+						gpx.addPoint(point)
+					}
+					gpx.finish()
+					AppDelegate.shared.mapView.gpxLayer.addGPX(track: gpx, center: false)
+				}
+				if let tableView = self.vc.view as? UITableView {
+					tableView.reloadData()
+				}
+				let newCount = AppDelegate.shared.mapView.gpxLayer.previousTracks.count - origCount
+				let message = NSLocalizedString(
+					"\(newCount) new route(s) imported,\n\(routes.count - newCount) duplicate(s) skipped",
+					comment: "")
+				let alert = UIAlertController(title: NSLocalizedString("HealthKit", comment: "iOS HealthKit framework"),
+				                              message: message,
+				                              preferredStyle: .alert)
+				alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+												style: .default,
+												handler: nil))
+				self.vc.present(alert, animated: true)
+			}
+		}
+	}
+}
+
 class GpxTrackExpirationCell: UITableViewCell {
 	@IBOutlet var expirationButton: UIButton!
 }
@@ -228,11 +278,10 @@ class GpxViewController: UITableViewController {
 			return 1
 		} else if section == SECTION_PREVIOUS_TRACKS {
 			// previous tracks
-			let appDelegate = AppDelegate.shared
-			return appDelegate.mapView.gpxLayer.previousTracks.count
+			return AppDelegate.shared.mapView.gpxLayer.previousTracks.count
 		} else if section == SECTION_CONFIGURE {
 			// configuration
-			return 2
+			return 3
 		} else {
 			return 0
 		}
@@ -270,7 +319,8 @@ class GpxViewController: UITableViewController {
 		}
 		if indexPath.section == SECTION_CONFIGURE {
 			// configuration section
-			if indexPath.row == 0 {
+			switch indexPath.row {
+			case 0:
 				// days before deleting
 				let cell = tableView.dequeueReusableCell(
 					withIdentifier: "GpxTrackExpirationCell",
@@ -284,13 +334,23 @@ class GpxViewController: UITableViewController {
 				cell.expirationButton.setTitle(title, for: .normal)
 				cell.expirationButton.sizeToFit()
 				return cell
-			} else {
+			case 1:
 				// enable background use
 				let cell = tableView.dequeueReusableCell(
 					withIdentifier: "GpxTrackBackgroundCollection",
 					for: indexPath) as! GpxTrackBackgroundCollection
 				cell.enableBackground.isOn = mapView.gpsInBackground
 				return cell
+			case 2:
+				// HealthKit support
+				let cell = tableView.dequeueReusableCell(
+					withIdentifier: "GpxTrackImportHealthKit",
+					for: indexPath) as! GpxTrackImportHealthKit
+				cell.activityIndicator.isHidden = true
+				cell.vc = self
+				return cell
+			default:
+				assertionFailure()
 			}
 		}
 

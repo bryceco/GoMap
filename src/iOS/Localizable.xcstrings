@@ -1964,6 +1964,9 @@
         }
       }
     },
+    "(newCount) new route(s) imported,\n(routes.count - newCount) duplicate(s) skipped" : {
+
+    },
     "(node in way)" : {
       "localizations" : {
         "ar" : {
@@ -23013,6 +23016,9 @@
           }
         }
       }
+    },
+    "HealthKit" : {
+      "comment" : "iOS HealthKit framework"
     },
     "Height: %1$@ ± %2$@ meters" : {
       "comment" : "Height of an object with an error value",
