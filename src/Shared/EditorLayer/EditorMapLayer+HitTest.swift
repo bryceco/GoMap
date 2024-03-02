@@ -83,7 +83,7 @@ extension EditorMapLayer {
 			}
 
 			if let node = object as? OsmNode {
-				if !ignoreList.contains(node) {
+				if !ignoreList.contains(where: { $0 === node }) {
 					if testNodes || node.wayCount == 0 {
 						var dist = osmHitTest(node: node, location: location, maxDegrees: maxDegrees)
 						dist *= CGFloat(NODE_BIAS)
@@ -94,7 +94,7 @@ extension EditorMapLayer {
 					}
 				}
 			} else if let way = object as? OsmWay {
-				if !ignoreList.contains(way) {
+				if !ignoreList.contains(where: { $0 === way }) {
 					var seg = 0
 					let distToWay = osmHitTest(way: way, location: location, maxDegrees: maxDegrees, segment: &seg)
 					if distToWay <= 1.0 {
@@ -104,7 +104,11 @@ extension EditorMapLayer {
 				}
 				if testNodes {
 					for node in way.nodes {
-						if ignoreList.contains(node) {
+						// ignoreList can be very large sometimes, and using a regular contains()
+						// ends up invoking OsmBaseObject::isEqual, which is fairly slow because
+						// it requires dynamic type casting. We can speed things up by doing
+						// a direct object comparison here:
+						if ignoreList.contains(where: { $0 === node }) {
 							continue
 						}
 						var dist = osmHitTest(node: node, location: location, maxDegrees: maxDegrees)
@@ -118,11 +122,11 @@ extension EditorMapLayer {
 			} else if let relation = object as? OsmRelation,
 			          relation.isMultipolygon()
 			{
-				if !ignoreList.contains(relation) {
+				if !ignoreList.contains(where: { $0 === relation }) {
 					var bestDist: CGFloat = 10000.0
 					for member in relation.members {
 						if let way = member.obj as? OsmWay {
-							if !ignoreList.contains(way) {
+							if !ignoreList.contains(where: { $0 === way }) {
 								if (member.role == "inner") || (member.role == "outer") {
 									var seg = 0
 									let dist = osmHitTest(
