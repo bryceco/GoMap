@@ -386,6 +386,7 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="Sdv-R2-za8.normalTitle" xml:space="preserve">
         <source>Import</source>
+        <target state="translated">Importar</target>
         <note>Class = "UIButton"; normalTitle = "Import"; ObjectID = "Sdv-R2-za8";</note>
       </trans-unit>
       <trans-unit id="Uum-Wn-9CF.text" xml:space="preserve">
@@ -430,6 +431,7 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="ahv-4V-kjV.text" xml:space="preserve">
         <source>HealthKit routes:</source>
+        <target state="translated">Rutas de HealthKit:</target>
         <note>Class = "UILabel"; text = "HealthKit routes:"; ObjectID = "ahv-4V-kjV";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.footerTitle" xml:space="preserve">
@@ -746,10 +748,12 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="NSHealthShareUsageDescription" xml:space="preserve">
         <source>Routes from your workouts can be imported as GPX routes.</source>
+        <target state="translated">Las rutas de tus entrenamientos se pueden importar como rutas GPX.</target>
         <note>Privacy - Health Share Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHealthUpdateUsageDescription" xml:space="preserve">
         <source>Health information is never updated.</source>
+        <target state="translated">La información sanitaria nunca se actualiza.</target>
         <note>Privacy - Health Update Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
@@ -956,6 +960,8 @@ One or more days</note>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped" xml:space="preserve">
         <source>%1$ld new route(s) imported,
 %2$ld duplicate(s) skipped</source>
+        <target state="translated">%1$ld nueva(s) ruta(s) importada(s),
+%2$ld duplicado(s) omitido(s)</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
@@ -1529,6 +1535,7 @@ Error: %@</target>
       </trans-unit>
       <trans-unit id="HealthKit" xml:space="preserve">
         <source>HealthKit</source>
+        <target state="translated">HealthKit</target>
         <note>iOS HealthKit framework</note>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
