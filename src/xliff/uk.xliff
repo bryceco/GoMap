@@ -3122,7 +3122,7 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.
 
 You can also enter "dev" for the development server (for testing), "ohm" for the OpenHistoricalMap server, or leave blank for the default server.</source>
-        <target state="needs-review-l10n">Введіть адресу альтернативного OSM-сервера, якщо ви хочете редагувати дані там. Адреса за замовчуванням: api.openstreetmap.org.</target>
+        <target state="needs-translation">Введіть адресу альтернативного OSM-сервера, якщо ви хочете редагувати дані там. Адреса за замовчуванням: api.openstreetmap.org.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.\n\nYou can also enter \"dev\" for the development server (for testing), \"ohm\" for the OpenHistoricalMap server, or leave blank for the default server."; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.headerTitle" xml:space="preserve">
