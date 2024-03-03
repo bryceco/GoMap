@@ -95,8 +95,8 @@ class GpxTrackImportHealthKit: UITableViewCell {
 				                              message: error.localizedDescription,
 				                              preferredStyle: .alert)
 				alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
-												style: .default,
-												handler: nil))
+				                              style: .default,
+				                              handler: nil))
 				self.vc.present(alert, animated: true)
 			case let .success(routes):
 				let origCount = AppDelegate.shared.mapView.gpxLayer.previousTracks.count
@@ -120,8 +120,8 @@ class GpxTrackImportHealthKit: UITableViewCell {
 				                              message: message,
 				                              preferredStyle: .alert)
 				alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
-												style: .default,
-												handler: nil))
+				                              style: .default,
+				                              handler: nil))
 				self.vc.present(alert, animated: true)
 			}
 		}
