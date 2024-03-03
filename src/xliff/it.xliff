@@ -3188,7 +3188,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Rqu-ny-n3F.normalTitle" xml:space="preserve">
         <source>Export</source>
-        <target state="needs-review-l10n">Messaggi</target>
+        <target state="needs-translation">Messaggi</target>
         <note>Class = "UIButton"; normalTitle = "Export"; ObjectID = "Rqu-ny-n3F";</note>
       </trans-unit>
       <trans-unit id="feW-AK-msn.title" xml:space="preserve">
