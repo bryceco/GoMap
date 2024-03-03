@@ -3028,7 +3028,7 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
         <source>Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.
 
 You can also enter "dev" for the development server (for testing), "ohm" for the OpenHistoricalMap server, or leave blank for the default server.</source>
-        <target state="needs-review-l10n">Angi en vert hvis du ønsker å redigere data som finnes på en alternativ OSM-tjener. Forvalgt vert er api.openstreetmap.org.</target>
+        <target state="needs-translation">Angi en vert hvis du ønsker å redigere data som finnes på en alternativ OSM-tjener. Forvalgt vert er api.openstreetmap.org.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.\n\nYou can also enter \"dev\" for the development server (for testing), \"ohm\" for the OpenHistoricalMap server, or leave blank for the default server."; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.headerTitle" xml:space="preserve">
@@ -3351,7 +3351,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Rqu-ny-n3F.normalTitle" xml:space="preserve">
         <source>Export</source>
-        <target state="needs-review-l10n">Mail</target>
+        <target state="needs-translation">Mail</target>
         <note>Class = "UIButton"; normalTitle = "Export"; ObjectID = "Rqu-ny-n3F";</note>
       </trans-unit>
       <trans-unit id="feW-AK-msn.title" xml:space="preserve">
