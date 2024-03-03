@@ -3551,12 +3551,6 @@
             "value" : "предназначенный"
           }
         },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "föredragen"
-          }
-        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
