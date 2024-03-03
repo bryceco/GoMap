@@ -1195,7 +1195,6 @@
 				"pt-BR",
 				oc,
 				pt,
-				sv,
 				es,
 				nn,
 				tzm,
