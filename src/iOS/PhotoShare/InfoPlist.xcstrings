@@ -35,6 +35,12 @@
             "value" : "Go Map!!"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",

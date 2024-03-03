@@ -5618,7 +5618,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Etichette comuni"
+            "value" : "Tag Comuni"
           }
         },
         "ja" : {
@@ -5751,6 +5751,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tag umum"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tag comuni"
           }
         },
         "ja" : {
@@ -7317,6 +7323,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nama Preset"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome preimpostato"
           }
         },
         "ja" : {

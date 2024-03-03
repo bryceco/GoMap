@@ -581,6 +581,12 @@
             "value" : "Unduh ubin yang diperbesar"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scarica tiles ingrandite"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -693,6 +699,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tampilkan Sentuhan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra tocchi"
           }
         },
         "ja" : {
@@ -921,6 +933,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ime"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome"
           }
         },
         "ja" : {
@@ -2213,6 +2231,12 @@
             "value" : "Podaci računa"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informazioni Account"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2397,6 +2421,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mulai"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inizia"
           }
         },
         "ja" : {
@@ -2763,6 +2793,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prijava"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrati"
           }
         },
         "ja" : {
@@ -3267,6 +3303,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sentuhan untuk perekaman layar"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tocchi durante la registrazione dello schermo"
           }
         },
         "ja" : {
@@ -3903,6 +3945,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Actualizar la cuenta"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiorna Account"
           }
         },
         "ja" : {
@@ -7397,6 +7445,12 @@
             "value" : "Odjava"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disconnetti Account"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7443,6 +7497,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Skupovi promjena"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifiche"
           }
         },
         "ja" : {

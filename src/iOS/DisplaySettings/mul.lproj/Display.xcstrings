@@ -1229,6 +1229,12 @@
             "value" : "Lapisan-lapisan"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sovrapposizioni"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1365,6 +1371,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aerofotografije"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Immagini Aeree"
           }
         },
         "ja" : {
@@ -1659,6 +1671,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hanya Mapnik"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo vista mappa"
           }
         },
         "ja" : {
@@ -5579,6 +5597,12 @@
             "value" : "Jalan Raya"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strade trafficate"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6881,6 +6905,12 @@
             "value" : "Uređivač s aerofotografijama"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifica con vista aerea"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7005,6 +7035,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pružatelj aerofotografija"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fornitore immagini aeree"
           }
         },
         "ja" : {
@@ -7353,6 +7389,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Namjena zemljišta"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uso del territorio"
           }
         },
         "ja" : {
@@ -7887,6 +7929,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bilješke i ispravci"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Note e correzioni"
           }
         },
         "ja" : {
@@ -8549,6 +8597,12 @@
             "value" : "Saring Obyek"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtra oggetti"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8691,6 +8745,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Izbriši predmemoriju podataka OSM-a, ako dođe do neusklađenosti između programa i OSM poslužitelja. To se može dogoditi, ako netko drugi promijeni podatke koje uređuješ ili ako jedan od tvojih prijenosa ne uspije te onemogućuje prijenos dodatnih podataka.\n\nUpozorenje: Brisanjem predmemorije OSM-a izgubit ćeš sve promjene koje još nisu prenesene.\n\nIzbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih pločica koje odražavaju tvoje prethodno poslane promjene. Obrada tvojih promjena može potrajati do 24 sata."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancella la cache dei dati OSM se lo stato dell'applicazione non è più sincronizzato con il server OSM. Ciò può verificarsi se qualcun altro modifica i dati che stai modificando o se uno dei tuoi caricamenti non riesce a metà impedendoti di caricare dati aggiuntivi.\n\nAttenzione: svuotare la cache di OSM farà perdere tutte le modifiche che non sono state ancora caricate.\n\nCancella le cache dei riquadri Mapnik o Overlay per scaricare i riquadri più recenti che riflettono le modifiche inviate in precedenza. L'elaborazione delle modifiche potrebbe richiedere fino a 24 ore."
           }
         },
         "ja" : {
@@ -9521,6 +9581,12 @@
             "value" : "Hanya udara"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo vista aerea"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9951,6 +10017,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tingkat Bangunan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Livello di costruzione"
           }
         },
         "ja" : {
@@ -12081,6 +12153,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pločice aerofotografije"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiles Aerei"
           }
         },
         "ja" : {

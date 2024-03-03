@@ -729,6 +729,12 @@
             "value" : "Kamera digunakan untuk mengukur tinggi bangunan atau objek, dan untuk melakukan pengenalan teks pada tanda jam buka."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La fotocamera viene utilizzata per misurare l'altezza di edifici o oggetti e per eseguire il riconoscimento del testo nei segnali degli orari di apertura."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1309,6 +1315,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mengaktifkan layanan lokasi memungkinkan aplikasi untuk menampilkan objek di sekitar Anda. Ini memungkinkan Anda untuk memperbarui atau menambahkan data yang Anda survei sendiri dengan mudah."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'attivazione dei servizi di localizzazione consente all'app di visualizzare gli oggetti nelle tue vicinanze. Ciò ti consente di aggiornare o aggiungere facilmente i dati rilevati tu stesso."
           }
         },
         "ja" : {

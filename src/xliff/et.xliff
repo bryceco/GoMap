@@ -2,7 +2,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="et" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.2" build-num="15C500b"/>
     </header>
     <body>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
@@ -167,7 +167,7 @@
   </file>
   <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="et" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.2" build-num="15C500b"/>
     </header>
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
@@ -196,7 +196,7 @@
   </file>
   <file original="DisplaySettings/Base.lproj/Display.storyboard" source-language="en" target-language="et" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.2" build-num="15C500b"/>
     </header>
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
@@ -369,6 +369,10 @@ Tühjenda Mapnik või Overlay paanide vahemälu, et laadida alla viimased paanid
         <target state="translated">Loobu &amp; värskenda</target>
         <note>Class = "UITableViewSection"; headerTitle = "Discard &amp; Refresh"; ObjectID = "SNa-W1-wga";</note>
       </trans-unit>
+      <trans-unit id="Sdv-R2-za8.normalTitle" xml:space="preserve">
+        <source>Import</source>
+        <note>Class = "UIButton"; normalTitle = "Import"; ObjectID = "Sdv-R2-za8";</note>
+      </trans-unit>
       <trans-unit id="Uum-Wn-9CF.text" xml:space="preserve">
         <source>Others</source>
         <target state="translated">Muud</target>
@@ -408,6 +412,10 @@ Tühjenda Mapnik või Overlay paanide vahemälu, et laadida alla viimased paanid
         <source>Aerial Tiles</source>
         <target state="translated">Aerofotode paanid</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT";</note>
+      </trans-unit>
+      <trans-unit id="ahv-4V-kjV.text" xml:space="preserve">
+        <source>HealthKit routes:</source>
+        <note>Class = "UILabel"; text = "HealthKit routes:"; ObjectID = "ahv-4V-kjV";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.footerTitle" xml:space="preserve">
         <source>Go Map!! will automatically discard old data to optimize performance.</source>
@@ -658,7 +666,7 @@ Tühjenda Mapnik või Overlay paanide vahemälu, et laadida alla viimased paanid
   </file>
   <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="et" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.2" build-num="15C500b"/>
     </header>
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
@@ -685,7 +693,7 @@ Tühjenda Mapnik või Overlay paanide vahemälu, et laadida alla viimased paanid
   </file>
   <file original="InfoPlist.xcstrings" source-language="en" target-language="et" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.2" build-num="15C500b"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -717,6 +725,14 @@ Tühjenda Mapnik või Overlay paanide vahemälu, et laadida alla viimased paanid
         <target state="translated">Kaamerat kasutatakse hoonete või objektide kõrguse mõõtmiseks, samuti tekstituvastuseks lahtiolekuaegade siltidelt.</target>
         <note>Privacy - Camera Usage Description</note>
       </trans-unit>
+      <trans-unit id="NSHealthShareUsageDescription" xml:space="preserve">
+        <source>Routes from your workouts can be imported as GPX routes.</source>
+        <note>Privacy - Health Share Usage Description</note>
+      </trans-unit>
+      <trans-unit id="NSHealthUpdateUsageDescription" xml:space="preserve">
+        <source>Health information is never updated.</source>
+        <note>Privacy - Health Update Usage Description</note>
+      </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
         <source>Copyright 2012-2021 Bryce Cogswell</source>
         <target state="translated">Autoriõigus 2012-2021 Bryce Cogswell</target>
@@ -746,7 +762,7 @@ Tühjenda Mapnik või Overlay paanide vahemälu, et laadida alla viimased paanid
   </file>
   <file original="Localizable.xcstrings" source-language="en" target-language="et" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.2" build-num="15C500b"/>
     </header>
     <body>
       <trans-unit id="" xml:space="preserve">
@@ -935,6 +951,11 @@ One or more days</note>
       <trans-unit id="(new object)" xml:space="preserve">
         <source>(new object)</source>
         <target state="translated">(uus objekt)</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="(newCount) new route(s) imported,&#10;(routes.count - newCount) duplicate(s) skipped" xml:space="preserve">
+        <source>(newCount) new route(s) imported,
+(routes.count - newCount) duplicate(s) skipped</source>
         <note/>
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
@@ -1461,6 +1482,10 @@ Viga: %@</target>
       <trans-unit id="Geometry" xml:space="preserve">
         <source>Geometry</source>
         <note/>
+      </trans-unit>
+      <trans-unit id="HealthKit" xml:space="preserve">
+        <source>HealthKit</source>
+        <note>iOS HealthKit framework</note>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Height: %1$@ ± %2$@ meters</source>
@@ -2561,7 +2586,7 @@ Tulemuslikkuse parandamiseks võiksid vahemälu tühjendada (ekraani seadete alt
   </file>
   <file original="PhotoShare/Base.lproj/MainInterface.storyboard" source-language="en" target-language="et" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.2" build-num="15C500b"/>
     </header>
     <body>
       <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
@@ -2583,7 +2608,7 @@ Tulemuslikkuse parandamiseks võiksid vahemälu tühjendada (ekraani seadete alt
   </file>
   <file original="PhotoShare/InfoPlist.xcstrings" source-language="en" target-language="et" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.2" build-num="15C500b"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -2598,7 +2623,7 @@ Tulemuslikkuse parandamiseks võiksid vahemälu tühjendada (ekraani seadete alt
   </file>
   <file original="PhotoShare/Localizable.xcstrings" source-language="en" target-language="et" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.2" build-num="15C500b"/>
     </header>
     <body>
       <trans-unit id="Processing data..." xml:space="preserve">
@@ -2620,7 +2645,7 @@ Tulemuslikkuse parandamiseks võiksid vahemälu tühjendada (ekraani seadete alt
   </file>
   <file original="POI/Base.lproj/POI.storyboard" source-language="en" target-language="et" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.2" build-num="15C500b"/>
     </header>
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
@@ -3012,7 +3037,7 @@ Tulemuslikkuse parandamiseks võiksid vahemälu tühjendada (ekraani seadete alt
   </file>
   <file original="Settings/Base.lproj/Settings.storyboard" source-language="en" target-language="et" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.2" build-num="15C500b"/>
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
@@ -3055,9 +3080,11 @@ Tulemuslikkuse parandamiseks võiksid vahemälu tühjendada (ekraani seadete alt
         <note>Class = "UILabel"; text = "Name"; ObjectID = "5mG-fF-znF";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.footerTitle" xml:space="preserve">
-        <source>Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.</source>
-        <target state="translated">Määra host kui soovid muuta teises OSM serveris asuvaid andmeid. Vaikimisi host on api.openstreetmap.org.</target>
-        <note>Class = "UITableViewSection"; footerTitle = "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org."; ObjectID = "6GT-p2-rPO";</note>
+        <source>Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.
+
+You can also enter "dev" for the development server (for testing), "ohm" for the OpenHistoricalMap server, or leave blank for the default server.</source>
+        <target state="needs-review-l10n">Määra host kui soovid muuta teises OSM serveris asuvaid andmeid. Vaikimisi host on api.openstreetmap.org.</target>
+        <note>Class = "UITableViewSection"; footerTitle = "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.\n\nYou can also enter \"dev\" for the development server (for testing), \"ohm\" for the OpenHistoricalMap server, or leave blank for the default server."; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.headerTitle" xml:space="preserve">
         <source>OpenStreetMap Server</source>
@@ -3371,7 +3398,7 @@ http://glyphish.com
   </file>
   <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="et" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.1" build-num="15C65"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.2" build-num="15C500b"/>
     </header>
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">
@@ -3399,9 +3426,9 @@ http://glyphish.com
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "Plh-7W-ceY"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="Rqu-ny-n3F.normalTitle" xml:space="preserve">
-        <source>Mail</source>
-        <target state="translated">E-kiri</target>
-        <note>Class = "UIButton"; normalTitle = "Mail"; ObjectID = "Rqu-ny-n3F";</note>
+        <source>Export</source>
+        <target state="needs-review-l10n">E-kiri</target>
+        <note>Class = "UIButton"; normalTitle = "Export"; ObjectID = "Rqu-ny-n3F";</note>
       </trans-unit>
       <trans-unit id="feW-AK-msn.title" xml:space="preserve">
         <source>Commit</source>

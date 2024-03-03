@@ -3293,6 +3293,12 @@
             "value" : "Odredi ime („New York”), URL ili drugi tekst koji sadrži geografske koordinate ili referencu na OSM objekt („put 51014987”):"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Specificare un nome (\"New York\"), un URL o altro testo contenente coordinate lat/lon, o un riferimento a un oggetto OSM (\"way 51014987\"):"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",

@@ -220,6 +220,12 @@
             "value" : "\tWay "
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\tTracciato "
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2029,6 +2035,12 @@
             "value" : "(node pada way)"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(nodo in tracciato)"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2459,6 +2471,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "(way)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(tracciato)"
           }
         },
         "ja" : {
@@ -4358,8 +4376,8 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "%ld edit, last active %@"
+                  "state" : "translated",
+                  "value" : "%ld modifiche, ultima attività %@"
                 }
               },
               "other" : {
@@ -8717,12 +8735,6 @@
         "ja" : {
           "variations" : {
             "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%ld 件のオブジェクト"
-                }
-              },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
@@ -9035,12 +9047,6 @@
         "zh-Hant" : {
           "variations" : {
             "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%ld 個物件"
-                }
-              },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
@@ -9932,6 +9938,12 @@
             "value" : "Prihvati"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accetta"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10033,6 +10045,12 @@
             "value" : "Dodaj vrstu zgrade"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiungi tipologia di edificio"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10096,6 +10114,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dodaj površinski sloj autoceste"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiungi superficie autostradale"
           }
         },
         "ja" : {
@@ -10673,6 +10697,12 @@
             "value" : "Dodaj radne sate"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiungi orari apertura"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10881,6 +10911,12 @@
             "value" : "Dodaj vrstu prkirališta"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiungi tipo di parcheggio"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10950,6 +10986,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dodaj površinski sloj pločnika"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiungi superficie marciapiede"
           }
         },
         "ja" : {
@@ -15639,6 +15681,12 @@
             "value" : "Izbriši pločice aerofotografije"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulisci Tiles Aerei"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15725,6 +15773,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Izbriši sve"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulisci tutto"
           }
         },
         "ja" : {
@@ -17070,6 +17124,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Salin Tag"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copia Tag"
           }
         },
         "ja" : {
@@ -20977,6 +21037,12 @@
             "value" : "Duplikasi"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duplica"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -22949,6 +23015,12 @@
             "value" : "Prijenos na GPX neuspio"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caricamento GPX Fallito"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -24428,6 +24500,12 @@
             "value" : "Odabir jezika utječe samo na predodređene postavke i na one, koje su prevedene za iD. Jezik glavnog sučelja je i nadalje engleski."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La selezione della lingua influisce solo sui preset e solo su quelli tradotti per iD. L'interfaccia principale è ancora inglese."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -24544,6 +24622,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Terakhir diperbarui %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ultimo aggiornamento %@"
           }
         },
         "ja" : {
@@ -25712,6 +25796,12 @@
             "value" : "Buat Melingkar"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rendi circolare"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -25835,6 +25925,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Buat Kotak"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rendi rettangolare"
           }
         },
         "ja" : {
@@ -26658,6 +26754,12 @@
             "value" : "Satukan Tag"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unisci Tag"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -27155,6 +27257,12 @@
             "value" : "Modifikasi"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifica"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -27516,6 +27624,12 @@
             "value" : "Lainnya..."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Altro..."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -27644,6 +27758,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Baru-baru ini"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Più Recenti"
           }
         },
         "ja" : {
@@ -27912,6 +28032,12 @@
             "value" : "Pindahkan"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muovi"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -28028,6 +28154,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pindahkan obyek yang dipilih?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muovere l'oggetto selezionato?"
           }
         },
         "ja" : {
@@ -28311,6 +28443,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ime"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome"
           }
         },
         "ja" : {
@@ -29269,6 +29407,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tidak menemukan apapun"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun risultato trovato"
           }
         },
         "ja" : {
@@ -32760,6 +32904,12 @@
             "value" : "Lakukan Tindakan"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esegui l'azione"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -35223,6 +35373,12 @@
             "value" : "Hasil untuk %1$@ (%2$@)"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Risultati per %@ (%@)"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -35340,6 +35496,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Coba lagi"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riprova"
           }
         },
         "ja" : {
@@ -35465,6 +35627,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Balik"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inverti"
           }
         },
         "ja" : {
@@ -35833,6 +36001,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Putar"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ruota"
           }
         },
         "ja" : {
@@ -37065,6 +37239,12 @@
             "value" : "Tampilkan Item Terbaru"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra elementi recenti"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -37577,6 +37757,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Citra standar"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Immagini standard"
           }
         },
         "ja" : {
@@ -43026,6 +43212,12 @@
             "value" : "Korisnički određene slike"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Immagini definite dall'utente"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -44643,6 +44835,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "S ovom Go Map verzijom prenio/prenijela si %ld skupa promjena!!\n\nOcijeniti ovu aplikaciju?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hai caricato %ld modifiche con questa versione di Go Map!!\n\nVuoi lasciare una recensione?"
           }
         },
         "ja" : {

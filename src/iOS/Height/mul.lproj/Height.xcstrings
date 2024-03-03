@@ -359,6 +359,12 @@
             "value" : "Tetapkan Tinggi"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imposta Altezza"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
