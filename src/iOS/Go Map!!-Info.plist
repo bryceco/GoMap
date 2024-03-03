@@ -98,6 +98,8 @@
 	<string>The camera is used to measure heights of buildings or objects, and to perform text recognition in opening hours signs.</string>
 	<key>NSHealthShareUsageDescription</key>
 	<string>Routes from your workouts can be imported as GPX routes.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Health information is never updated.</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright 2012-2021 Bryce Cogswell</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
