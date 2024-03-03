@@ -938,6 +938,11 @@ One or more days</note>
         <target state="needs-review-l10n">%2$ld</target>
         <note>length of a gpx track</note>
       </trans-unit>
+      <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped" xml:space="preserve">
+        <source>%1$ld new route(s) imported,
+%2$ld duplicate(s) skipped</source>
+        <note>result of importing GPX routes</note>
+      </trans-unit>
       <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
         <source>%ld objects</source>
         <target state="needs-review-l10n">%ld objets</target>
@@ -956,11 +961,6 @@ One or more days</note>
       <trans-unit id="(new object)" xml:space="preserve">
         <source>(new object)</source>
         <target state="translated">(nouvel objet)</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="(newCount) new route(s) imported,&#10;(routes.count - newCount) duplicate(s) skipped" xml:space="preserve">
-        <source>(newCount) new route(s) imported,
-(routes.count - newCount) duplicate(s) skipped</source>
         <note/>
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
@@ -3087,7 +3087,7 @@ Vous pouvez vider le cache (dans Paramètres d'affichage) pour améliorer les pe
         <source>Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.
 
 You can also enter "dev" for the development server (for testing), "ohm" for the OpenHistoricalMap server, or leave blank for the default server.</source>
-        <target state="needs-translation">Spécifiez un hôte si vous souhaitez éditer les données sur un serveur OSM alternatif. L'hôte par défaut est api.openstreetmap.org.</target>
+        <target state="needs-review-l10n">Spécifiez un hôte si vous souhaitez éditer les données sur un serveur OSM alternatif. L'hôte par défaut est api.openstreetmap.org.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.\n\nYou can also enter \"dev\" for the development server (for testing), \"ohm\" for the OpenHistoricalMap server, or leave blank for the default server."; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.headerTitle" xml:space="preserve">
@@ -3432,7 +3432,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Rqu-ny-n3F.normalTitle" xml:space="preserve">
         <source>Export</source>
-        <target state="needs-translation">Messages</target>
+        <target state="needs-review-l10n">Messages</target>
         <note>Class = "UIButton"; normalTitle = "Export"; ObjectID = "Rqu-ny-n3F";</note>
       </trans-unit>
       <trans-unit id="feW-AK-msn.title" xml:space="preserve">

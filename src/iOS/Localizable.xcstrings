@@ -8451,6 +8451,7 @@
       }
     },
     "%ld new route(s) imported,\n%ld duplicate(s) skipped" : {
+      "comment" : "result of importing GPX routes",
       "localizations" : {
         "en" : {
           "stringUnit" : {

@@ -772,6 +772,11 @@ One or more days</note>
         <source>%ld points</source>
         <note>length of a gpx track</note>
       </trans-unit>
+      <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped" xml:space="preserve">
+        <source>%1$ld new route(s) imported,
+%2$ld duplicate(s) skipped</source>
+        <note>result of importing GPX routes</note>
+      </trans-unit>
       <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
         <source>%ld objects</source>
         <note>Number of tiles/objects in cache</note>
@@ -786,11 +791,6 @@ One or more days</note>
       </trans-unit>
       <trans-unit id="(new object)" xml:space="preserve">
         <source>(new object)</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="(newCount) new route(s) imported,&#10;(routes.count - newCount) duplicate(s) skipped" xml:space="preserve">
-        <source>(newCount) new route(s) imported,
-(routes.count - newCount) duplicate(s) skipped</source>
         <note/>
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">

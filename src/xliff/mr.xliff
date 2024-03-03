@@ -952,6 +952,11 @@ One or more days</note>
         <target state="needs-review-l10n">%2$ld</target>
         <note>length of a gpx track</note>
       </trans-unit>
+      <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped" xml:space="preserve">
+        <source>%1$ld new route(s) imported,
+%2$ld duplicate(s) skipped</source>
+        <note>result of importing GPX routes</note>
+      </trans-unit>
       <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
         <source>%ld objects</source>
         <target state="needs-review-l10n">%ld वस्तू</target>
@@ -970,11 +975,6 @@ One or more days</note>
       <trans-unit id="(new object)" xml:space="preserve">
         <source>(new object)</source>
         <target state="translated">(नवीन वस्तू)</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="(newCount) new route(s) imported,&#10;(routes.count - newCount) duplicate(s) skipped" xml:space="preserve">
-        <source>(newCount) new route(s) imported,
-(routes.count - newCount) duplicate(s) skipped</source>
         <note/>
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
@@ -3270,7 +3270,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Rqu-ny-n3F.normalTitle" xml:space="preserve">
         <source>Export</source>
-        <target state="needs-translation">ईमेल</target>
+        <target state="needs-review-l10n">ईमेल</target>
         <note>Class = "UIButton"; normalTitle = "Export"; ObjectID = "Rqu-ny-n3F";</note>
       </trans-unit>
       <trans-unit id="feW-AK-msn.title" xml:space="preserve">

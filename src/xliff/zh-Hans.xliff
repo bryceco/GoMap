@@ -844,6 +844,11 @@ One or more days</note>
         <target state="needs-review-l10n">%2$ld</target>
         <note>length of a gpx track</note>
       </trans-unit>
+      <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped" xml:space="preserve">
+        <source>%1$ld new route(s) imported,
+%2$ld duplicate(s) skipped</source>
+        <note>result of importing GPX routes</note>
+      </trans-unit>
       <trans-unit id="%ld objects|==|plural.other" xml:space="preserve">
         <source>%ld objects</source>
         <target state="translated">%ld 个对象</target>
@@ -857,11 +862,6 @@ One or more days</note>
       <trans-unit id="(new object)" xml:space="preserve">
         <source>(new object)</source>
         <target state="translated">(新建对象)</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="(newCount) new route(s) imported,&#10;(routes.count - newCount) duplicate(s) skipped" xml:space="preserve">
-        <source>(newCount) new route(s) imported,
-(routes.count - newCount) duplicate(s) skipped</source>
         <note/>
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
@@ -2887,7 +2887,7 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.
 
 You can also enter "dev" for the development server (for testing), "ohm" for the OpenHistoricalMap server, or leave blank for the default server.</source>
-        <target state="needs-translation">如果你想编辑位于另一个OSM服务器上的数据，请指定一个主机。默认主机是api.openstreetmap.org。</target>
+        <target state="needs-review-l10n">如果你想编辑位于另一个OSM服务器上的数据，请指定一个主机。默认主机是api.openstreetmap.org。</target>
         <note>Class = "UITableViewSection"; footerTitle = "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.\n\nYou can also enter \"dev\" for the development server (for testing), \"ohm\" for the OpenHistoricalMap server, or leave blank for the default server."; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.headerTitle" xml:space="preserve">
@@ -3206,7 +3206,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Rqu-ny-n3F.normalTitle" xml:space="preserve">
         <source>Export</source>
-        <target state="needs-translation">邮件</target>
+        <target state="needs-review-l10n">邮件</target>
         <note>Class = "UIButton"; normalTitle = "Export"; ObjectID = "Rqu-ny-n3F";</note>
       </trans-unit>
       <trans-unit id="feW-AK-msn.title" xml:space="preserve">
