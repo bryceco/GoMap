@@ -890,6 +890,7 @@ One or more days</note>
       <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
         <target state="translated">%ld 個物件</target>
         <note>Number of tiles/objects in cache</note>
+        <target>%ld 個物件</target>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.other" xml:space="preserve">
         <source>%ld objects</source>
@@ -2580,6 +2581,56 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>yes</source>
         <target state="translated">是</target>
         <note/>
+      </trans-unit>
+      <trans-unit id="%ld Days|==|plural.one" xml:space="preserve">
+        <source>%ld Day</source>
+        <target state="translated">%ld 天</target>
+        <note>Plural number of days
+One or more days</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.one" xml:space="preserve">
+        <source>%ld meter</source>
+        <target state="translated">%ld 公尺</target>
+        <note>length of a gpx track</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.one" xml:space="preserve">
+        <source>%ld point</source>
+        <target state="translated">%ld 個點</target>
+        <note>length of a gpx track</note>
+      </trans-unit>
+      <trans-unit id=" (%d members)&#10;|==|plural.one" xml:space="preserve">
+        <source> (%d member)
+</source>
+        <target state="translated"> (%d 個成員)
+</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id=" (%d nodes)&#10;|==|plural.one" xml:space="preserve">
+        <source> (%d node)
+</source>
+        <target state="translated"> (%d 個節點)
+</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.one" xml:space="preserve">
+        <source>%ld point</source>
+        <target state="translated">%ld 個點</target>
+        <note>length of a gpx track</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.one" xml:space="preserve">
+        <source>%ld waypoint</source>
+        <target state="translated">%ld 個航點</target>
+        <note>length of a gpx track</note>
+      </trans-unit>
+      <trans-unit id="%ld edits, last active %@|==|plural.one" xml:space="preserve">
+        <source>%ld edit, last active %@</source>
+        <target state="translated">%ld 次編輯，最後編輯 %@</target>
+        <note>Brief synopsis of a mapper's activity (count,last active date)</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.one" xml:space="preserve">
+        <source>%ld meter</source>
+        <target state="translated">%ld 公尺</target>
+        <note>length of a gpx track</note>
       </trans-unit>
     </body>
   </file>
