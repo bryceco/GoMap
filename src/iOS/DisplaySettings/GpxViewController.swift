@@ -113,9 +113,11 @@ class GpxTrackImportHealthKit: UITableViewCell {
 					tableView.reloadData()
 				}
 				let newCount = AppDelegate.shared.mapView.gpxLayer.previousTracks.count - origCount
-				let message = NSLocalizedString(
-					"\(newCount) new route(s) imported,\n\(routes.count - newCount) duplicate(s) skipped",
-					comment: "")
+				let message = String.localizedStringWithFormat(
+					NSLocalizedString("%ld new route(s) imported,\n%ld duplicate(s) skipped",
+					                  comment: "result of importing GPX routes"),
+					newCount,
+					routes.count - newCount)
 				let alert = UIAlertController(title: NSLocalizedString("HealthKit", comment: "iOS HealthKit framework"),
 				                              message: message,
 				                              preferredStyle: .alert)

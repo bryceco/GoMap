@@ -1970,9 +1970,6 @@
         }
       }
     },
-    "(newCount) new route(s) imported,\n(routes.count - newCount) duplicate(s) skipped" : {
-
-    },
     "(node in way)" : {
       "localizations" : {
         "ar" : {
@@ -8449,6 +8446,16 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "%ld new route(s) imported,\n%ld duplicate(s) skipped" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$ld new route(s) imported,\n%2$ld duplicate(s) skipped"
           }
         }
       }
