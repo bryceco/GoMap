@@ -18,3 +18,5 @@ DerivedData/
 # Build results
 *.dSYM.zip
 *.ipa
+
+**/src/presets/brandIcons/
