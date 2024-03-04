@@ -144,7 +144,7 @@ class ClearCacheViewController: UITableViewController {
 			if isUnderDebugger() {
 				// Soft purge is used to simulate a low-memory condition
 				alert.addAction(UIAlertAction(
-					title: "Debug: Soft Purge",
+					title: "Debug: Simulate low memory purge",
 					style: .destructive,
 					handler: { _ in
 						appDelegate.mapView.editorLayer.purgeCachedData(.soft)
@@ -153,7 +153,7 @@ class ClearCacheViewController: UITableViewController {
 					}))
 				// Discard stale is used to simulate automatic cache management
 				alert.addAction(UIAlertAction(
-					title: "Debug: Discard Stale Data",
+					title: "Debug: Simulate automatic cache management purge",
 					style: .destructive,
 					handler: { _ in
 						_ = appDelegate.mapView.editorLayer.mapData.discardStaleData(maxObjects: 1000)
@@ -162,7 +162,7 @@ class ClearCacheViewController: UITableViewController {
 					}))
 				// Regular purge
 				alert.addAction(UIAlertAction(
-					title: "Debug: Purge Hard",
+					title: "Debug: Purge Hard ignoring modifications",
 					style: .destructive,
 					handler: { _ in
 						appDelegate.mapView.editorLayer.purgeCachedData(.hard)
