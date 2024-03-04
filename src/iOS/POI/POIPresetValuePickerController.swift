@@ -26,7 +26,7 @@ class POIPresetValuePickerController: UITableViewController {
 	}()
 
 	func fetchWikiImagesAndDescriptions() {
-		let languageCode = PresetLanguages.preferredLanguageCode()
+		let languageCode = PresetLanguages.preferredPresetLanguageCode()
 		for preset in presetValueList {
 			if let meta = WikiPage.shared.wikiDataFor(
 				key: key,

@@ -99,7 +99,7 @@ class ResurveyQuest: QuestInstance {
 			return shopPredicate(obj.tags)
 		}
 
-		super.init(ident: "needsSurvey",
+		super.init(ident: "__needsSurvey",
 		           title: NSLocalizedString("Needs Survey", comment: "Quest for objects that aren't recently updated"),
 		           label: "ic_quest_check",
 		           tagKeys: ["check_date", "name", "phone", "opening_hours"],
@@ -130,7 +130,7 @@ class QuestList {
 			let phoneFeaturesPredicate = try Self.predicateForKey("phone", more: false)
 
 			let addBuildingType = QuestInstance(
-				ident: "BuildingType",
+				ident: "__BuildingType",
 				title: NSLocalizedString("Add Building Type", comment: "A type of quest"),
 				label: "ic_quest_building",
 				tagKeys: ["building"],
@@ -140,7 +140,7 @@ class QuestList {
 				acceptsValue: { _ in true })
 
 			let addSidewalkSurface = QuestInstance(
-				ident: "SidewalkSurface",
+				ident: "__SidewalkSurface",
 				title: NSLocalizedString("Add Sidewalk Surface", comment: "A type of quest"),
 				label: "ic_quest_sidewalk",
 				tagKeys: ["surface"],
@@ -165,7 +165,7 @@ class QuestList {
 				acceptsValue: { _ in true })
 
 			let addHighwaySurface = QuestInstance(
-				ident: "HighwaySurface",
+				ident: "__HighwaySurface",
 				title: NSLocalizedString("Add Highway Surface", comment: "A type of quest"),
 				label: "ic_quest_way_surface",
 				tagKeys: ["surface"],
@@ -195,7 +195,7 @@ class QuestList {
 				acceptsValue: { _ in true })
 
 			let addSpeedLimit = QuestInstance(
-				ident: "SpeedLimit",
+				ident: "__SpeedLimit",
 				title: NSLocalizedString("Add Speed Limit", comment: "A type of quest"),
 				label: "ic_quest_max_speed",
 				tagKeys: ["maxspeed"],
@@ -222,7 +222,7 @@ class QuestList {
 				})
 
 			let addPhoneNumber = QuestInstance(
-				ident: "TelephoneNumber",
+				ident: "__TelephoneNumber",
 				title: NSLocalizedString("Add Telephone Number", comment: "A type of quest"),
 				label: "ic_quest_phone",
 				tagKeys: ["phone"],
@@ -237,7 +237,7 @@ class QuestList {
 				})
 
 			let addParkingLotType = QuestInstance(
-				ident: "ParkingLotTYpe",
+				ident: "__ParkingLotTYpe",
 				title: NSLocalizedString("Add Parking Type", comment: "A type of quest"),
 				label: "ic_quest_parking",
 				tagKeys: ["parking"],
@@ -250,7 +250,7 @@ class QuestList {
 
 			let websitePredicate = try Self.predicateForKey("website", more: false)
 			let addWebsite = QuestInstance(
-				ident: "Website",
+				ident: "__Website",
 				title: NSLocalizedString("Add Website", comment: "A type of quest"),
 				label: "🌐",
 				tagKeys: ["website"],
@@ -265,7 +265,7 @@ class QuestList {
 				})
 
 			let addOpeningHours = try QuestDefinitionWithFeatures(
-				ident: "OpeningHours",
+				ident: "__OpeningHours",
 				title: NSLocalizedString("Add Opening Hours", comment: "A type of quest"),
 				label: "ic_quest_opening_hours",
 				tagKey: "opening_hours",
@@ -282,6 +282,8 @@ class QuestList {
 				addParkingLotType,
 				ResurveyQuest(ageInYears: 2.0)
 			]
+			// we want all built-in idents to be easily recognized and not collide with user defined quests:
+			assert(!builtinList.contains(where: { $0.ident.prefix(2) != "__" }))
 		} catch {
 			print("Quest initialization error: \(error)")
 			builtinList = []
@@ -362,7 +364,7 @@ class QuestList {
 	}
 
 	func isUserQuest(_ quest: QuestProtocol) -> Bool {
-		return !builtinList.contains(where: { $0.ident == quest.ident })
+		return quest.ident.prefix(2) != "__"
 	}
 
 	// MARK: Import/export

@@ -25,7 +25,6 @@ private let OSM_GPS_TRACE_IDENTIFIER = "OsmGpsTraceIdentifier"
 private let MAPBOX_LOCATOR_IDENTIFIER = "MapboxLocatorIdentifier"
 private let NO_NAME_IDENTIFIER = "No Name Identifier"
 private let MAXAR_PREMIUM_IDENTIFIER = "Maxar-Premium"
-private let MAXAR_STANDARD_IDENTIFIER = "Maxar-Standard"
 
 /// A provider of tile imagery, such as Bing or Mapbox
 final class TileServer: Equatable, Codable, FastCodable {
@@ -223,7 +222,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 	}
 
 	func isMaxar() -> Bool {
-		return (identifier == MAXAR_PREMIUM_IDENTIFIER) || (identifier == MAXAR_STANDARD_IDENTIFIER)
+		return identifier == MAXAR_PREMIUM_IDENTIFIER
 	}
 
 	func coversLocation(_ point: LatLon) -> Bool {
@@ -335,7 +334,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 	static let mapboxLocator = TileServer(
 		withName: "Mapbox Locator",
 		identifier: MAPBOX_LOCATOR_IDENTIFIER,
-		url: "https://{switch:a,b,c,d}.tiles.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.jpg?access_token={apikey}",
+		url: "https://api.mapbox.com/styles/v1/openstreetmap/ckasmteyi1tda1ipfis6wqhuq/tiles/256/{zoom}/{x}/{y}?access_token={apikey}",
 		best: false,
 		apiKey: MapboxLocatorToken,
 		maxZoom: 20,
@@ -526,7 +525,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 	}
 
 	static func scaleAttribution(icon: UIImage, toHeight height: CGFloat) -> UIImage {
-		guard abs(icon.size.height - height) < 0.1 else {
+		guard abs(icon.size.height - height) > 0.1 else {
 			return icon
 		}
 		let scale = icon.size.height / height
@@ -558,7 +557,13 @@ final class TileServer: Equatable, Codable, FastCodable {
 			if let icon = TileServer.iconCache.object(withKey: identifier,
 			                                          fallbackURL: { URL(string: url) },
 			                                          objectForData: { UIImage(data: $0) },
-			                                          completion: { self._attributionIcon = try? $0.get(); completion()
+			                                          completion: {
+			                                          	if let image = try? $0.get() {
+			                                          		self._attributionIcon = Self.scaleAttribution(
+			                                          			icon: image,
+			                                          			toHeight: height)
+			                                          	}
+			                                          	completion()
 			                                          })
 			{
 				_attributionIcon = Self.scaleAttribution(icon: icon, toHeight: height)
@@ -673,11 +678,9 @@ final class TileServer: Equatable, Codable, FastCodable {
 		// apikey
 		url = url.replacingOccurrences(of: "{apikey}", with: apiKey)
 
-		let urlString = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? url
-		// https://ecn.t1.tiles.virtualearth.net/tiles/a12313302102001233031.jpeg?g=587&key=ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk
-		// https://ecn.%7Bswitch:t0,t1,t2,t3%7D.tiles.virtualearth.net/tiles/a%7Bu%7D.jpeg?g=587&key=ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk
-		// https://ecn.{switch:t0,t1,t2,t3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=587&key=ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk
+		// expand spaces
+		url = url.replacingOccurrences(of: " ", with: "%20")
 
-		return URL(string: urlString)!
+		return URL(string: url)!
 	}
 }

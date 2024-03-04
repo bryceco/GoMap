@@ -10,8 +10,14 @@ import MessageUI
 import UIKit
 
 class SettingsViewController: UITableViewController, MFMailComposeViewControllerDelegate {
+	private enum SegueIdentifier {
+		static let login = "LoginSegue"
+		static let accountInfo = "AccountInfoSegue"
+	}
+
 	@IBOutlet var username: UILabel!
 	@IBOutlet var language: UILabel!
+	@IBOutlet var openStreetMapAccountCell: UITableViewCell!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -25,7 +31,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 
 		navigationController?.isNavigationBarHidden = false
 
-		let preferredLanguageCode = PresetLanguages.preferredLanguageCode
+		let preferredLanguageCode = PresetLanguages.preferredPresetLanguageCode
 		let preferredLanguage = PresetLanguages.localLanguageNameForCode(preferredLanguageCode())
 		language.text = preferredLanguage
 
@@ -41,6 +47,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 				   let name = dict["display_name"] as? String
 				{
 					self.username.text = name
+					appDelegate.userName = name
 				} else {
 					self.username.text = NSLocalizedString("<unknown>", comment: "unknown user name")
 				}
@@ -62,5 +69,13 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		self.tableView.deselectRow(at: indexPath, animated: true)
+
+		if let cell = tableView.cellForRow(at: indexPath), cell == openStreetMapAccountCell {
+			if AppDelegate.shared.oAuth2.isAuthorized() {
+				performSegue(withIdentifier: SegueIdentifier.accountInfo, sender: self)
+			} else {
+				performSegue(withIdentifier: SegueIdentifier.login, sender: self)
+			}
+		}
 	}
 }

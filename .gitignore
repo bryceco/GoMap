@@ -19,4 +19,4 @@ DerivedData/
 *.dSYM.zip
 *.ipa
 
-**/src/presets/brandIcons/
+src/presets/brandIcons/

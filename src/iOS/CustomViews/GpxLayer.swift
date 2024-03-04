@@ -330,7 +330,6 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 		let stable = stabilizingCount
 
 		endActiveTrack()
-		//        previousTracks = nil
 		sublayers = nil
 
 		let dir = saveDirectory()
@@ -366,15 +365,32 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 	}
 
 	// Load a GPX trace from an external source
-	func loadGPXData(_ data: Data, center: Bool) throws {
-		let newTrack = try GpxTrack(xmlData: data)
-		previousTracks.insert(newTrack, at: 0)
+	func addGPX(track: GpxTrack, center: Bool) {
+		// ensure the track doesn't already exist
+		if previousTracks.contains(where: {
+			$0.name == track.name &&
+				$0.points.count == track.points.count &&
+				$0.points.first?.latLon == track.points.first?.latLon &&
+				$0.points.last?.latLon == track.points.last?.latLon
+		}) {
+			// duplicate track
+			return
+		}
+		previousTracks.append(track)
+		previousTracks.sort(by: { $0.creationDate > $1.creationDate })
+
 		if center {
-			self.center(on: newTrack)
-			selectedTrack = newTrack
+			self.center(on: track)
+			selectedTrack = track
 			mapView.displayGpxLogs = true // ensure GPX tracks are visible
 		}
-		save(toDisk: newTrack)
+		save(toDisk: track)
+	}
+
+	// Load a GPX trace from an external source
+	func loadGPXData(_ data: Data, center: Bool) throws {
+		let newTrack = try GpxTrack(xmlData: data)
+		addGPX(track: newTrack, center: center)
 	}
 
 	// MARK: Drawing
@@ -426,9 +442,8 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 				if let path2 = path.mutableCopy(using: &tran) {
 					path = path2
 				}
-				refPoint = OSMPoint(
-					x: initial.x + Double(bbox.origin.x) / PATH_SCALING,
-					y: initial.y + Double(bbox.origin.y) / PATH_SCALING)
+				refPoint = OSMPoint(x: initial.x + Double(bbox.origin.x) / PATH_SCALING,
+				                    y: initial.y + Double(bbox.origin.y) / PATH_SCALING)
 			} else {}
 		}
 

@@ -170,6 +170,9 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		if let prev = prev {
 			let d = GreatCircleDistance(coordinate, prev.latLon)
 			distance += d
+		} else {
+			// Use the first timestamp as the creation date
+			creationDate = location.timestamp
 		}
 
 		let pt = GpxPoint(latLon: coordinate,
@@ -312,7 +315,7 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		self.init()
 		points = trkPoints
 		wayPoints = wptPoints
-		creationDate = Date()
+		creationDate = trkPoints.first?.timestamp ?? wptPoints.first?.timestamp ?? Date()
 	}
 
 	convenience init(xmlFile path: String) throws {

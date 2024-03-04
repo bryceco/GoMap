@@ -10,14 +10,8 @@ import CoreGraphics
 
 extension CGPath {
 	func apply(action: (CGPathElement) -> Void) {
-		// get a copy of the block to invoke on each element
-		var action = action
-		// call the native CGPath.apply(), passing the block in info
-		apply(info: &action, function: { type, element in
-			// cast info to be a function pointer
-			let block = type!.bindMemory(to: ((CGPathElement) -> Void).self, capacity: 1).pointee
-			// call the function
-			block(element.pointee)
+		applyWithBlock({ elementPointer in
+			action(elementPointer.pointee)
 		})
 	}
 

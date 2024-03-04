@@ -207,7 +207,7 @@ extension PresetsDatabase {
 	func comboWith(
 		label: String,
 		key: String,
-		options: [String],
+		options: [[String]],
 		strings: [String: Any]?,
 		icons: [String: String]?,
 		defaultValue: String?,
@@ -216,21 +216,22 @@ extension PresetsDatabase {
 		capitalize: UITextAutocapitalizationType,
 		autocorrect: UITextAutocorrectionType) -> PresetKey
 	{
-		var presets: [PresetValue] = []
-		for value in options {
-			if let strings = strings as? [String: String] {
-				let name = strings[value] ?? OsmTags.PrettyTag(value)
-				presets.append(PresetValue(name: name, details: nil, icon: icons?[value], tagValue: value))
-			} else if let strings = strings as? [String: [String: String]] {
-				let info = strings[value]
-				let name = info?["title"] ?? OsmTags.PrettyTag(value)
-				let desc = info?["description"] ?? ""
-				presets.append(PresetValue(name: name, details: desc, icon: icons?[value], tagValue: value))
-			} else {
-				// print("missing strings definition: \(key)")
-				let name = OsmTags.PrettyTag(value)
-				presets.append(PresetValue(name: name, details: nil, icon: icons?[value], tagValue: value))
-			}
+		let presets: [PresetValue] = options.flatMap { optionList in
+			optionList.map { value in
+				if let strings = strings as? [String: String] {
+					let name = strings[value] ?? OsmTags.PrettyTag(value)
+					return PresetValue(name: name, details: nil, icon: icons?[value], tagValue: value)
+				} else if let strings = strings as? [String: [String: String]] {
+					let info = strings[value]
+					let name = info?["title"] ?? OsmTags.PrettyTag(value)
+					let desc = info?["description"] ?? ""
+					return PresetValue(name: name, details: desc, icon: icons?[value], tagValue: value)
+				} else {
+					// print("missing strings definition: \(key)")
+					let name = OsmTags.PrettyTag(value)
+					return PresetValue(name: name, details: nil, icon: icons?[value], tagValue: value)
+				}
+			}.sorted(by: { $0.name.caseInsensitiveCompare($1.name) == .orderedAscending })
 		}
 		let tag = PresetKey(
 			name: label,
@@ -371,7 +372,7 @@ extension PresetsDatabase {
 				let tag = comboWith(
 					label: label,
 					key: key,
-					options: options!,
+					options: [options!],
 					strings: field.strings,
 					icons: field.icons,
 					defaultValue: field.defaultValue,
@@ -388,13 +389,13 @@ extension PresetsDatabase {
 			if field.type == "typeCombo", ignore.contains(key) {
 				return nil
 			}
-			var options = field.options ?? []
+			let options = field.options ?? []
 			let options2 = taginfoCache.taginfoFor(key: key, searchKeys: false, update: update)
-			options += options2.filter({ !options.contains($0) })
+				.filter({ !options.contains($0) })
 			let tag = comboWith(
 				label: label,
 				key: key,
-				options: options,
+				options: [options, options2],
 				strings: field.strings,
 				icons: field.icons,
 				defaultValue: field.defaultValue,
@@ -416,7 +417,7 @@ extension PresetsDatabase {
 				let tag = comboWith(
 					label: name,
 					key: key,
-					options: options,
+					options: [options],
 					strings: strings,
 					icons: field.icons,
 					defaultValue: field.defaultValue,
@@ -440,23 +441,24 @@ extension PresetsDatabase {
 				"postcode",
 				"unit"
 			]
-			var keysForCountry: [String]?
+			var keysForCountry: [String] = []
 			for locale in presetAddressFormats {
-				if let countryCodes = locale.countryCodes,
-				   countryCodes.contains(countryCode)
-				{
+				guard let countryCodes = locale.countryCodes else {
+					// default
+					keysForCountry = locale.addressKeys
+					continue
+				}
+				if countryCodes.contains(countryCode) {
 					// country specific format
 					keysForCountry = locale.addressKeys
 					break
-				} else {
-					// default
-					keysForCountry = locale.addressKeys
 				}
 			}
+			keysForCountry = keysForCountry.flatMap({ $0.components(separatedBy: "+") })
 
 			let placeholders = field.placeholders
 			var addrs: [PresetKeyOrGroup] = []
-			for addressKey in keysForCountry ?? [] {
+			for addressKey in keysForCountry {
 				let name: String
 				let placeholder = placeholders?[addressKey] as? String
 				if let placeholder = placeholder, placeholder != "123" {

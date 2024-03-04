@@ -260,6 +260,7 @@ class PresetValueTextField: AutocompleteTextField {
 		dateFormatter.formatOptions = [.withYear, .withMonth, .withDay, .withDashSeparatorInDate]
 		dateFormatter.timeZone = NSTimeZone.local
 		text = dateFormatter.string(from: now)
+		notifyValueChange(ended: false)
 		notifyValueChange(ended: true)
 	}
 
@@ -280,6 +281,7 @@ class PresetValueTextField: AutocompleteTextField {
 			value: text,
 			setValue: { [weak self] newValue in
 				self?.text = newValue
+				self?.notifyValueChange(ended: false)
 				self?.notifyValueChange(ended: true)
 			})
 		resignFirstResponder()
@@ -312,6 +314,7 @@ class PresetValueTextField: AutocompleteTextField {
 		let vc = HeightViewController.instantiate()
 		vc.callback = { [weak self] newValue in
 			self?.text = newValue
+			self?.notifyValueChange(ended: false)
 			self?.notifyValueChange(ended: true)
 		}
 		resignFirstResponder()
@@ -341,13 +344,13 @@ class PresetValueTextField: AutocompleteTextField {
 			return nil
 		}
 		let button = TristateYesNoButton()
-		var value = text ?? ""
+		var value = presetKey.tagValueForPrettyName(text ?? "")
 		let isCulvert = presetKey.tagKey == "tunnel" && keyValueDict["waterway"] != nil && value == "culvert"
 		if isCulvert {
 			// Special hack for tunnel=culvert when used with waterways:
 			value = "yes"
 		}
-		button.setSelection(forString: value.lowercased())
+		button.setSelection(forString: value)
 		if let string = button.stringForSelection() {
 			// the string is "yes"/"no"
 			text = isCulvert ? "culvert" : string
@@ -424,6 +427,7 @@ class PresetValueTextField: AutocompleteTextField {
 		let vc = OpeningHoursRecognizerController.with(onAccept: { newValue in
 			self.text = newValue
 			self.owner.viewController?.navigationController?.popViewController(animated: true)
+			self.notifyValueChange(ended: false)
 			self.notifyValueChange(ended: true)
 		}, onCancel: {
 			self.owner.viewController?.navigationController?.popViewController(animated: true)

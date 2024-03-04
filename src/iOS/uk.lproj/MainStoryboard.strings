@@ -1,9 +1,0 @@
-/* Class = "UINavigationItem"; title = "Search for Location"; ObjectID = "FaM-WV-S6I"; */
-"FaM-WV-S6I.title" = "Шукати локацію";
-
-/* Class = "UIViewController"; title = "Search for Location"; ObjectID = "siu-I6-IEp"; */
-"siu-I6-IEp.title" = "Шукати локацію";
-
-/* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[0] = "Tags"; ObjectID = "zrW-uc-hfQ"; */
-"zrW-uc-hfQ.segmentTitles[0]" = "Теґи";
-

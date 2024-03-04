@@ -84,6 +84,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			hostname = "api.openstreetmap.org"
 		case "dev":
 			hostname = "api06.dev.openstreetmap.org"
+		case "ohm":
+			hostname = "https://www.openhistoricalmap.org"
 		default:
 			break
 		}
@@ -267,7 +269,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		// special case for street names
 		if key == "addr:street" {
-			for (_, object) in ways {
+			for object in ways.values {
 				if object.tags["highway"] != nil {
 					if let nameValue = object.tags["name"] {
 						set.insert(nameValue)
@@ -804,7 +806,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		var didChange = true
 		while didChange {
 			didChange = false
-			for (_, relation) in relations {
+			for relation in relations.values {
 				let bbox = relation.boundingBox
 				relation.clearCachedProperties()
 				didChange = relation.resolveToMapData(self) || didChange

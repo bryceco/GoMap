@@ -17,7 +17,8 @@ extension Data {
 	}
 
 	static func fromStruct<Type>(_ v: Type) -> Data {
-		var v = v
-		return Data(bytes: &v, count: MemoryLayout.size(ofValue: v))
+		withUnsafePointer(to: v) { v2 in
+			Data(bytes: v2, count: MemoryLayout.size(ofValue: v))
+		}
 	}
 }

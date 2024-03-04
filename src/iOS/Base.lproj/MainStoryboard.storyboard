@@ -806,10 +806,10 @@
             </objects>
             <point key="canvasLocation" x="-2125" y="534"/>
         </scene>
-        <!--Search for Location-->
+        <!--Nominatim View Controller-->
         <scene sceneID="nhJ-xs-noU">
             <objects>
-                <viewController title="Search for Location" id="siu-I6-IEp" customClass="NominatimViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Search for Location" id="siu-I6-IEp" userLabel="Nominatim View Controller" customClass="NominatimViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SQe-Tw-wQG">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -849,7 +849,7 @@
                                 </connections>
                             </tableView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="BJx-hX-58b">
-                                <rect key="frame" x="178" y="125" width="37" height="37"/>
+                                <rect key="frame" x="178" y="223.33333333333334" width="37" height="37.000000000000028"/>
                             </activityIndicatorView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kw9-Kv-I2B" userLabel="Description View">
                                 <rect key="frame" x="0.0" y="55.999999999999993" width="393" height="101.33333333333331"/>
@@ -877,7 +877,7 @@
                             <constraint firstItem="abd-jd-9tI" firstAttribute="top" secondItem="xw9-Ro-Fai" secondAttribute="bottom" id="2UE-0c-j5w"/>
                             <constraint firstItem="JYP-Gu-HBL" firstAttribute="trailing" secondItem="Kw9-Kv-I2B" secondAttribute="trailing" id="63I-uY-OYs"/>
                             <constraint firstItem="Kw9-Kv-I2B" firstAttribute="leading" secondItem="JYP-Gu-HBL" secondAttribute="leading" id="6qk-WP-VUO"/>
-                            <constraint firstItem="BJx-hX-58b" firstAttribute="top" secondItem="SQe-Tw-wQG" secondAttribute="top" constant="125" id="Ctw-fE-ucI"/>
+                            <constraint firstItem="xw9-Ro-Fai" firstAttribute="bottom" secondItem="BJx-hX-58b" secondAttribute="top" constant="-10" id="7Bb-mb-s9M"/>
                             <constraint firstItem="Kw9-Kv-I2B" firstAttribute="top" secondItem="JYP-Gu-HBL" secondAttribute="top" id="D2J-dS-rZs"/>
                             <constraint firstItem="xw9-Ro-Fai" firstAttribute="leading" secondItem="JYP-Gu-HBL" secondAttribute="leading" id="L7s-F4-sIf"/>
                             <constraint firstItem="abd-jd-9tI" firstAttribute="leading" secondItem="JYP-Gu-HBL" secondAttribute="leading" id="SBf-Qz-WXs"/>

@@ -125,8 +125,42 @@ extension TileServerList {
 		let categories: [Category: Bool] = [
 			.photo: true,
 			.historicphoto: true,
+			.other: true,
 			.elevation: true
 		]
+
+		// Copied from Rapid
+		let discard: [String] = [
+			"^osmbe$", // 'OpenStreetMap (Belgian Style)'
+			"^osmfr(-(basque|breton|occitan))?$", // 'OpenStreetMap (French, Basque, Breton, Occitan Style)'
+			"^osm-mapnik-german_style$", // 'OpenStreetMap (German Style)'
+			"^HDM_HOT$", // 'OpenStreetMap (HOT Style)'
+			"^osm-mapnik-black_and_white$", // 'OpenStreetMap (Standard Black & White)'
+			"^osm-mapnik-no_labels$", // 'OpenStreetMap (Mapnik, no labels)'
+			"^OpenStreetMap-turistautak$", // 'OpenStreetMap (turistautak)'
+
+			"^cyclosm$", // 'CyclOSM'
+			"^hike_n_bike$", // 'Hike & Bike'
+			"^landsat$", // 'Landsat'
+			"^skobbler$", // 'Skobbler'
+			"^public_transport_oepnv$", // 'Public Transport (ÖPNV)'
+			"^tf-(cycle|landscape|outdoors)$", // 'Thunderforest OpenCycleMap, Landscape, Outdoors'
+			"^qa_no_address$", // 'QA No Address'
+			"^wikimedia-map$", // 'Wikimedia Map'
+
+			"^openpt_map$",
+			"^openrailwaymap$",
+			"^openseamap$",
+			"^opensnowmap-overlay$",
+
+			"^osmim-", // low zoom osmim imagery
+			"^US-TIGER-Roads-201\\d", // older than 2020
+			"^Waymarked_Trails", // Waymarked Trails *
+			"^OSM_Inspector", // OSM Inspector *
+			"^EOXAT" // EOX AT *  (iD#9807)
+		]
+		let discardRE = try discard.map { try NSRegularExpression(pattern: $0) }
+
 		let supportedProjections = Set<String>(TileServer.supportedProjections)
 
 		var externalAerials: [TileServer] = []
@@ -171,6 +205,16 @@ extension TileServerList {
 			} else {
 				continue
 			}
+
+			// check if it's in our discard list
+			if discardRE.first(where: { $0.numberOfMatches(in: identifier,
+			                                               range: NSRange(location: 0,
+			                                                              length: identifier.utf8.count)) != 0 }) != nil
+			{
+				print("Discard \(identifier)")
+				continue
+			}
+
 			let startDateString = try properties.start_date
 			let endDateString = try properties.end_date
 			let endDate = TileServer.date(from: endDateString)
