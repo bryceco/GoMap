@@ -65,7 +65,7 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 	}
 
 	func resolveToMapData(_ mapData: OsmMapData) -> Bool {
-		DbgAssert(mapData.relations[self.ident] === self)
+		DbgAssert(mapData.relations[ident] === self)
 		var needsRedraw = false
 		for member in members {
 			if member.obj != nil {
