@@ -198,7 +198,7 @@
                                                 <action selector="importHealthKitRoutes:" destination="OcI-dB-s7D" eventType="touchUpInside" id="thM-1r-8XF"/>
                                             </connections>
                                         </button>
-                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="6ur-iy-RLA">
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="6ur-iy-RLA">
                                             <rect key="frame" x="318" y="12" width="20" height="20"/>
                                         </activityIndicatorView>
                                     </subviews>
