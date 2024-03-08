@@ -1,4 +1,5 @@
 {
+  "originHash" : "42f493c2bdadf08d86c0d6ef9ef23ed1fe5a95ad292dd7e62ca8f84f54bbff11",
   "pins" : [
     {
       "identity" : "fastcodable",
@@ -19,5 +20,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
