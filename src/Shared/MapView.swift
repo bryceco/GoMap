@@ -211,7 +211,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	private(set) lazy var mapMarkerDatabase = MapMarkerDatabase()
 
 	private(set) lazy var aerialLayer = MercatorTileLayer(mapView: self)
+	#if true
+	private(set) lazy var mapnikLayer = MapboxVectorTilesView(mapView: self)
+	#else
 	private(set) lazy var mapnikLayer = MercatorTileLayer(mapView: self)
+	#endif
 	private(set) lazy var noNameLayer = MercatorTileLayer(mapView: self)
 	private(set) lazy var editorLayer = EditorMapLayer(owner: self)
 	private(set) lazy var gpxLayer = GpxLayer(mapView: self)
@@ -222,7 +226,12 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	private(set) lazy var locatorLayer = MercatorTileLayer(mapView: self)
 	private(set) lazy var gpsTraceLayer = MercatorTileLayer(mapView: self)
 
-	private(set) var backgroundLayers: [CALayer] = [] // list of all layers that need to be resized, etc.
+
+	enum LayerOrView {
+		   case layer(CALayer)
+		   case view(UIView)
+	   }
+	private(set) var backgroundLayers: [LayerOrView] = [] // list of all layers that need to be resized, etc.
 
 	var mapTransform = MapTransform()
 	var screenFromMapTransform: OSMTransform {
@@ -573,49 +582,48 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		// this option needs to be set before the editor is initialized
 		enableAutomaticCacheManagement = UserPrefs.shared.bool(forKey: .automaticCacheManagement) ?? true
 
-		var bg: [CALayer] = []
+		var bg: [LayerOrView] = []
 
 		locatorLayer = MercatorTileLayer(mapView: self)
 		locatorLayer.zPosition = ZLAYER.LOCATOR.rawValue
 		locatorLayer.tileServer = TileServer.mapboxLocator
 		locatorLayer.isHidden = true
-		bg.append(locatorLayer)
+		bg.append(.layer(locatorLayer))
 
 		gpsTraceLayer = MercatorTileLayer(mapView: self)
 		gpsTraceLayer.zPosition = ZLAYER.GPSTRACE.rawValue
 		gpsTraceLayer.tileServer = TileServer.gpsTrace
 		gpsTraceLayer.isHidden = true
-		bg.append(gpsTraceLayer)
+		bg.append(.layer(gpsTraceLayer))
 
 		noNameLayer = MercatorTileLayer(mapView: self)
 		noNameLayer.zPosition = ZLAYER.NONAME.rawValue
 		noNameLayer.tileServer = TileServer.noName
 		noNameLayer.isHidden = true
-		bg.append(noNameLayer)
+		bg.append(.layer(noNameLayer))
 
 		aerialLayer = MercatorTileLayer(mapView: self)
 		aerialLayer.zPosition = ZLAYER.AERIAL.rawValue
 		aerialLayer.tileServer = tileServerList.currentServer
 		aerialLayer.isHidden = true
-		bg.append(aerialLayer)
+		bg.append(.layer(aerialLayer))
 
-		mapnikLayer = MercatorTileLayer(mapView: self)
-		mapnikLayer.tileServer = TileServer.mapnik
-		mapnikLayer.zPosition = ZLAYER.MAPNIK.rawValue
+		mapnikLayer = MapboxVectorTilesView(mapView: self)
+		mapnikLayer.layer.zPosition = ZLAYER.MAPNIK.rawValue
 		mapnikLayer.isHidden = true
-		bg.append(mapnikLayer)
+		bg.append(.view(mapnikLayer))
 
 		editorLayer = EditorMapLayer(owner: self)
 		editorLayer.zPosition = ZLAYER.EDITOR.rawValue
-		bg.append(editorLayer)
+		bg.append(.layer(editorLayer))
 
 		gpxLayer.zPosition = ZLAYER.GPX.rawValue
 		gpxLayer.isHidden = true
-		bg.append(gpxLayer)
+		bg.append(.layer(gpxLayer))
 
 		customLayer.zPosition = ZLAYER.GPX.rawValue
 		customLayer.isHidden = true
-		bg.append(customLayer)
+		bg.append(.layer(customLayer))
 
 #if DEBUG && false
 		quadDownloadLayer = QuadDownloadLayer(mapView: self)
@@ -627,8 +635,13 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 #endif
 
 		backgroundLayers = bg
-		for layer in backgroundLayers {
-			self.layer.addSublayer(layer)
+		for bg in backgroundLayers {
+			switch bg {
+			case .layer(let layer):
+				self.layer.addSublayer(layer)
+			case .view(let view):
+				self.addSubview(view)
+			}
 		}
 
 		// implement crosshairs
@@ -859,9 +872,15 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		let bounds = self.bounds
 
 		// update bounds of layers
-		for layer in backgroundLayers {
-			layer.frame = bounds
-			layer.bounds = bounds
+		for bg in backgroundLayers {
+			switch bg {
+			case .layer(let layer):
+				layer.frame = bounds
+				layer.bounds = bounds
+			case .view(let view):
+				view.frame = bounds
+				view.bounds = bounds
+			}
 		}
 
 		crossHairs.position = bounds.center()

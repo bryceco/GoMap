@@ -13,7 +13,7 @@ class OfflineTableViewCell: UITableViewCell {
 	@IBOutlet var button: UIButton!
 	@IBOutlet var activityView: UIActivityIndicatorView!
 	var tileList: [String] = []
-	var tileLayer: MercatorTileLayer?
+	var tileLayer: TilesProvider?
 
 	override func awakeFromNib() {
 		if #available(iOS 13.0, *) {
@@ -99,5 +99,55 @@ class OfflineViewController: UITableViewController {
 			activityCount += 1
 			downloadFile(for: cell)
 		}
+	}
+}
+
+protocol TilesProvider {
+	var mapView: MapView { get }
+	func currentTiles() -> [String]
+	func zoomLevel() -> Int
+	func maxZoom() -> Int
+	func purgeTileCache()
+	func downloadTile(forKey cacheKey: String, completion: @escaping () -> Void)
+}
+
+extension TilesProvider {
+	// Used for bulk downloading tiles for offline use
+	func allTilesIntersectingVisibleRect() -> [String] {
+		let currentSet = Set(currentTiles())
+
+		let rect = mapView.boundingMapRectForScreen()
+		let minZoomLevel = min(zoomLevel(), maxZoom())
+		let maxZoomLevel = min(zoomLevel() + 2, maxZoom())
+
+		var neededTiles: [String] = []
+		for zoomLevel in minZoomLevel...maxZoomLevel {
+			let zoom = Double(1 << zoomLevel) / 256.0
+			let tileNorth = Int(floor(rect.origin.y * zoom))
+			let tileWest = Int(floor(rect.origin.x * zoom))
+			let tileSouth = Int(ceil((rect.origin.y + rect.size.height) * zoom))
+			let tileEast = Int(ceil((rect.origin.x + rect.size.width) * zoom))
+
+			if tileWest < 0 || tileWest >= tileEast || tileNorth < 0 || tileNorth >= tileSouth {
+				// stuff breaks if they zoom all the way out
+				continue
+			}
+
+			for tileX in tileWest..<tileEast {
+				for tileY in tileNorth..<tileSouth {
+					let cacheKey = QuadKey(forZoom: zoomLevel, tileX: tileX, tileY: tileY)
+					if currentSet.contains(cacheKey) {
+						// already have it
+					} else {
+						neededTiles.append(cacheKey)
+					}
+				}
+			}
+		}
+		return neededTiles
+	}
+
+	func purgeTileCache() {
+		URLCache.shared.removeAllCachedResponses()
 	}
 }
