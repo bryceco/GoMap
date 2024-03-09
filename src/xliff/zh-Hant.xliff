@@ -386,6 +386,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Sdv-R2-za8.normalTitle" xml:space="preserve">
         <source>Import</source>
+        <target state="translated">匯入</target>
         <note>Class = "UIButton"; normalTitle = "Import"; ObjectID = "Sdv-R2-za8";</note>
       </trans-unit>
       <trans-unit id="Uum-Wn-9CF.text" xml:space="preserve">
@@ -430,6 +431,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="ahv-4V-kjV.text" xml:space="preserve">
         <source>HealthKit routes:</source>
+        <target state="translated">HealthKit 路線：</target>
         <note>Class = "UILabel"; text = "HealthKit routes:"; ObjectID = "ahv-4V-kjV";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.footerTitle" xml:space="preserve">
@@ -746,10 +748,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="NSHealthShareUsageDescription" xml:space="preserve">
         <source>Routes from your workouts can be imported as GPX routes.</source>
+        <target state="translated">你的訓練路線能被匯入為 GPX 路徑。</target>
         <note>Privacy - Health Share Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHealthUpdateUsageDescription" xml:space="preserve">
         <source>Health information is never updated.</source>
+        <target state="translated">健康資訊從未更新。</target>
         <note>Privacy - Health Update Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
@@ -1474,6 +1478,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="HealthKit" xml:space="preserve">
         <source>HealthKit</source>
+        <target state="translated">HealthKit</target>
         <note>iOS HealthKit framework</note>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
@@ -2601,6 +2606,31 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>yes</source>
         <target state="translated">是</target>
         <note/>
+      </trans-unit>
+      <trans-unit id="%ld Days|==|plural.one" xml:space="preserve">
+        <source>%ld Day</source>
+        <target state="translated">%ld 天</target>
+        <note>Plural number of days
+One or more days</note>
+      </trans-unit>
+      <trans-unit id=" (%d members)&#10;|==|plural.one" xml:space="preserve">
+        <source> (%d member)
+</source>
+        <target state="translated"> (%d 成員)
+</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id=" (%d nodes)&#10;|==|plural.one" xml:space="preserve">
+        <source> (%d node)
+</source>
+        <target state="translated"> (%d 節點)
+</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
+        <source>%ld objects</source>
+        <target state="translated">%ld 物件</target>
+        <note>Number of tiles/objects in cache</note>
       </trans-unit>
     </body>
   </file>
