@@ -386,6 +386,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Sdv-R2-za8.normalTitle" xml:space="preserve">
         <source>Import</source>
+        <target state="translated">匯入</target>
         <note>Class = "UIButton"; normalTitle = "Import"; ObjectID = "Sdv-R2-za8";</note>
       </trans-unit>
       <trans-unit id="Uum-Wn-9CF.text" xml:space="preserve">
@@ -430,6 +431,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="ahv-4V-kjV.text" xml:space="preserve">
         <source>HealthKit routes:</source>
+        <target state="translated">HealthKit 路線：</target>
         <note>Class = "UILabel"; text = "HealthKit routes:"; ObjectID = "ahv-4V-kjV";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.footerTitle" xml:space="preserve">
@@ -746,10 +748,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="NSHealthShareUsageDescription" xml:space="preserve">
         <source>Routes from your workouts can be imported as GPX routes.</source>
+        <target state="translated">你的訓練路線能被匯入為 GPX 路徑。</target>
         <note>Privacy - Health Share Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHealthUpdateUsageDescription" xml:space="preserve">
         <source>Health information is never updated.</source>
+        <target state="translated">健康資訊從未更新。</target>
         <note>Privacy - Health Update Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
@@ -906,6 +910,8 @@ One or more days</note>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped" xml:space="preserve">
         <source>%1$ld new route(s) imported,
 %2$ld duplicate(s) skipped</source>
+        <target state="translated">匯入 %1$ld 新路線，
+跳過 %2$ld 重覆的</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.other" xml:space="preserve">
@@ -1474,6 +1480,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="HealthKit" xml:space="preserve">
         <source>HealthKit</source>
+        <target state="translated">HealthKit</target>
         <note>iOS HealthKit framework</note>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
@@ -2602,6 +2609,61 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="translated">是</target>
         <note/>
       </trans-unit>
+      <trans-unit id="%ld Days|==|plural.one" xml:space="preserve">
+        <source>%ld Day</source>
+        <target state="translated">%ld 天</target>
+        <note>Plural number of days
+One or more days</note>
+      </trans-unit>
+      <trans-unit id=" (%d members)&#10;|==|plural.one" xml:space="preserve">
+        <source> (%d member)
+</source>
+        <target state="translated"> (%d 成員)
+</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id=" (%d nodes)&#10;|==|plural.one" xml:space="preserve">
+        <source> (%d node)
+</source>
+        <target state="translated"> (%d 節點)
+</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
+        <source>%ld objects</source>
+        <target state="translated">%ld 物件</target>
+        <note>Number of tiles/objects in cache</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.one" xml:space="preserve">
+        <source>%ld meter</source>
+        <target state="translated">%ld 公尺</target>
+        <note>length of a gpx track</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.one" xml:space="preserve">
+        <source>%ld point</source>
+        <target state="translated">%ld 點</target>
+        <note>length of a gpx track</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.one" xml:space="preserve">
+        <source>%ld point</source>
+        <target state="translated">%ld 點</target>
+        <note>length of a gpx track</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.one" xml:space="preserve">
+        <source>%ld waypoint</source>
+        <target state="translated">%ld 路徑節點</target>
+        <note>length of a gpx track</note>
+      </trans-unit>
+      <trans-unit id="%ld edits, last active %@|==|plural.one" xml:space="preserve">
+        <source>%ld edit, last active %@</source>
+        <target state="translated">%ld 編輯，上次活動 %@</target>
+        <note>Brief synopsis of a mapper's activity (count,last active date)</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.one" xml:space="preserve">
+        <source>%ld meter</source>
+        <target state="translated">%ld 公尺</target>
+        <note>length of a gpx track</note>
+      </trans-unit>
     </body>
   </file>
   <file original="PhotoShare/Base.lproj/MainInterface.storyboard" source-language="en" target-language="zh-Hant" datatype="plaintext">
@@ -3110,7 +3172,9 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.
 
 You can also enter "dev" for the development server (for testing), "ohm" for the OpenHistoricalMap server, or leave blank for the default server.</source>
-        <target state="needs-review-l10n">您可以指定主機，如果您要編輯的資料儲存於其他 OSM 伺服器。預設的主機為 api.openstreetmap.org。</target>
+        <target state="translated">您可以指定主機，如果您要編輯的資料儲存於其他 OSM 伺服器。預設的主機為 api.openstreetmap.org。
+
+你也可以輸入"dev"表示開發伺服器 (為了測試)，"ohm" 則是開放歷史地圖伺服器，或是留空使用預設伺服器。</target>
         <note>Class = "UITableViewSection"; footerTitle = "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.\n\nYou can also enter \"dev\" for the development server (for testing), \"ohm\" for the OpenHistoricalMap server, or leave blank for the default server."; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.headerTitle" xml:space="preserve">
