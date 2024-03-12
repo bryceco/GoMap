@@ -3503,7 +3503,7 @@
       }
     },
     "%ld Days" : {
-      "comment" : "Plural number of days\nOne or more days",
+      "comment" : "One or more days\nPlural number of days",
       "localizations" : {
         "ar" : {
           "variations" : {
@@ -8458,6 +8458,18 @@
             "state" : "new",
             "value" : "%1$ld new route(s) imported,\n%2$ld duplicate(s) skipped"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$ld nueva(s) ruta(s) importada(s),\n%2$ld duplicado(s) omitido(s)"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "匯入 %1$ld 新路線，\n跳過 %2$ld 重覆的"
+          }
         }
       }
     },
@@ -9055,6 +9067,12 @@
         "zh-Hant" : {
           "variations" : {
             "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%ld 物件"
+                }
+              },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
@@ -12536,7 +12554,7 @@
       }
     },
     "Area" : {
-      "comment" : "Object geometry: a closed way or multipolygon)\nArea of an object in m^2",
+      "comment" : "Area of an object in m^2\nObject geometry: a closed way or multipolygon)",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -23098,7 +23116,21 @@
       }
     },
     "HealthKit" : {
-      "comment" : "iOS HealthKit framework"
+      "comment" : "iOS HealthKit framework",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HealthKit"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HealthKit"
+          }
+        }
+      }
     },
     "Height: %1$@ ± %2$@ meters" : {
       "comment" : "Height of an object with an error value",
