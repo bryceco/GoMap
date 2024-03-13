@@ -84,6 +84,9 @@ class GpxTrackImportHealthKit: UITableViewCell {
 	var vc: UIViewController!
 
 	@IBAction func importHealthKitRoutes(_ sender: Any) {
+		if #available(iOS 13.0, *) {
+			activityIndicator.style = .medium
+		}
 		activityIndicator.isHidden = false
 		activityIndicator.startAnimating()
 		HealthKitRoutes.shared.getWorkoutRoutes { result in

@@ -1906,6 +1906,18 @@
             "state" : "new",
             "value" : "HealthKit routes:"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rutas de HealthKit:"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HealthKit 路線："
+          }
         }
       }
     },
@@ -8685,6 +8697,18 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Import"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importar"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "匯入"
           }
         }
       }

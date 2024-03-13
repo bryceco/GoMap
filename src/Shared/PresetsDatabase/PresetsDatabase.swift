@@ -272,15 +272,22 @@ final class PresetsDatabase {
 			if let list = index[key] {
 				for feature in list {
 					var score = feature.matchObjectTagsScore(objectTags, geometry: geometry, location: location)
+					guard score > 0 else {
+						continue
+					}
 					if !feature.searchable {
 						score *= 0.999
 					}
-					if score > bestScore {
+					if score >= bestScore {
 						// special case for quests where we want to ensure we pick
 						// a feature containing presetKey
 						if let withPresetKey = withPresetKey,
 						   feature.fieldContainingTagKey(withPresetKey, more: true) == nil
 						{
+							continue
+						}
+						// For ties we take the first alphabetically, just to be consistent
+						if score == bestScore, feature.featureID > bestFeature!.featureID {
 							continue
 						}
 						bestScore = score

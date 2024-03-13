@@ -1063,8 +1063,8 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "您可以指定主機，如果您要編輯的資料儲存於其他 OSM 伺服器。預設的主機為 api.openstreetmap.org。"
+            "state" : "translated",
+            "value" : "您可以指定主機，如果您要編輯的資料儲存於其他 OSM 伺服器。預設的主機為 api.openstreetmap.org。\n\n你也可以輸入\"dev\"表示開發伺服器 (為了測試)，\"ohm\" 則是開放歷史地圖伺服器，或是留空使用預設伺服器。"
           }
         }
       }

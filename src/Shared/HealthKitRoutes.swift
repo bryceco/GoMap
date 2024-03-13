@@ -47,14 +47,12 @@ class HealthKitRoutes {
 
 		healthStore.requestAuthorization(toShare: nil, read: Set(types)) { _, error in
 			let sortByDate = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)
-			// FIXME: We'd like to use this predicate but it crashes for some reason
-			// let activities: Set<HKWorkoutActivityType> = [.walking, .running, .cycling]
-			// let activityPredicates = activities.map { HKQuery.predicateForWorkouts(with: $0) }
-			// let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: activityPredicates)
+			let startDate = Calendar.current.date(byAdding: .day, value: -31, to: Date())!
+			let predicate = HKQuery.predicateForSamples(withStart: startDate, end: nil, options: [])
 
 			let routeQuery = HKSampleQuery(
 				sampleType: HKSeriesType.workoutRoute(),
-				predicate: nil, // predicate,
+				predicate: predicate,
 				limit: HKObjectQueryNoLimit,
 				sortDescriptors: [sortByDate]) { _, samples, error in
 					if let error = error {

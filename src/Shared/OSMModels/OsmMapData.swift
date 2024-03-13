@@ -1769,7 +1769,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	// MARK: Consistency checking
 
 	func consistencyCheckRelationMembers() {
-		// make sure that every relation member contains the relation in parentRelations
+		// make sure that parentRelations is correct for every relation member
 		var allMembers = Set<OsmBaseObject>()
 		for (_, relation) in relations {
 			for member in relation.members {

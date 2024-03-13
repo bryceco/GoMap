@@ -800,6 +800,18 @@
             "state" : "new",
             "value" : "Routes from your workouts can be imported as GPX routes."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las rutas de tus entrenamientos se pueden importar como rutas GPX."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的訓練路線能被匯入為 GPX 路徑。"
+          }
         }
       }
     },
@@ -811,6 +823,18 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Health information is never updated."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La información sanitaria nunca se actualiza."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "健康資訊從未更新。"
           }
         }
       }
