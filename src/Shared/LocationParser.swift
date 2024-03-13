@@ -431,129 +431,132 @@ class LocationParser {
 
 	/// decode as google maps
 	/// https://maps.app.goo.gl/1G7doKp5QEgBCkir7
-	 static func isGoogleMapsRedirect(url: URL, callback: @escaping ((MapLocation?) -> Void)) -> Bool {
-        // First, resolve the shortened URL
-        let api_key = "[YOUR_ID_KEY]"
-        resolveShortURL(url: url) { resolvedURL in
-            print("Resolved URL \(resolvedURL?.absoluteString)")
-            guard let resolvedURL = resolvedURL else {
-                callback(nil)
-                return
-            }
-                    
-            // Extract the ftid value and construct the new URL
-            if let latLong = extractLatLongFromURL(resolvedURL) {
-                        callback(latLong)
-                } else if let ftidValue = parseSecondPartOfFTID(from: resolvedURL),
-               let newURL = URL(string: "https://maps.googleapis.com/maps/api/place/details/json?key=\(api_key)&cid=\(ftidValue)") {
-                print(newURL.absoluteString)
-                fetchLocationDetails(url: newURL) { location in
-                    callback(location)
-                }
-            } else {
-                callback(nil)
-            }
-        }
-        return true
-    }
-    
-    static func extractLatLongFromURL(_ url: URL) -> MapLocation? {
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
-              let queryItems = components.queryItems else {
-            return nil
-        }
+	static func isGoogleMapsRedirect(url: URL, callback: @escaping ((MapLocation?) -> Void)) -> Bool {
+		// First, resolve the shortened URL
+		let api_key = GoogleToken
+		resolveGoogleShortURL(url: url) { resolvedURL in
+			guard let resolvedURL = resolvedURL else {
+				callback(nil)
+				return
+			}
 
-        if let q = queryItems.first(where: { $0.name == "q" })?.value,
-           let range = q.range(of: ",") {
-            let latString = String(q[..<range.lowerBound])
-            let longString = String(q[range.upperBound...])
-            
-            if let lat = Double(latString), let long = Double(longString) {
-                return MapLocation(longitude: long, latitude: lat)
-            }
-        }
+			// Extract the ftid value and construct the new URL
+			if let latLong = extractLatLongFromGoogleURL(resolvedURL) {
+				callback(latLong)
+			} else if let ftidValue = parseSecondPartOfGoogleFTID(from: resolvedURL),
+			          let newURL =
+			          URL(
+			          	string: "https://maps.googleapis.com/maps/api/place/details/json?key=\(api_key)&cid=\(ftidValue)")
+			{
+				print(newURL.absoluteString)
+				fetchGoogleLocationDetails(url: newURL) { location in
+					callback(location)
+				}
+			} else {
+				callback(nil)
+			}
+		}
+		return true
+	}
 
-        return nil
-    }
+	static func extractLatLongFromGoogleURL(_ url: URL) -> MapLocation? {
+		guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+		      let queryItems = components.queryItems
+		else {
+			return nil
+		}
 
-    
-    static func fetchLocationDetails(url: URL, completion: @escaping (MapLocation?) -> Void) {
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else {
-                completion(nil)
-                return
-            }
+		if let q = queryItems.first(where: { $0.name == "q" })?.value,
+		   let range = q.range(of: ",")
+		{
+			let latString = String(q[..<range.lowerBound])
+			let longString = String(q[range.upperBound...])
 
-            do {
-                let response = try JSONDecoder().decode(ApiResponse.self, from: data)
-                let location = response.result.geometry.location
-                let mapLocation = MapLocation(longitude: location.lng, latitude: location.lat)
-                completion(mapLocation)
-            } catch {
-                completion(nil)
-            }
-        }.resume()
-    }
-    
-    struct ApiResponse: Codable {
-        let result: Result
-    }
+			if let lat = Double(latString), let long = Double(longString) {
+				return MapLocation(longitude: long, latitude: lat)
+			}
+		}
 
-    struct Result: Codable {
-        let geometry: Geometry
-    }
+		return nil
+	}
 
-    struct Geometry: Codable {
-        let location: Location
-    }
+	static func fetchGoogleLocationDetails(url: URL, completion: @escaping (MapLocation?) -> Void) {
+		URLSession.shared.dataTask(with: url) { data, _, error in
+			guard let data = data, error == nil else {
+				completion(nil)
+				return
+			}
 
-    struct Location: Codable {
-        let lat: Double
-        let lng: Double
-    }
-    
-    // Helper function to resolve a shortened URL
- static func resolveShortURL(url: URL, completion: @escaping (URL?) -> Void) {
-     var request = URLRequest(url: url)
-     request.httpMethod = "GET"  // Changed from HEAD to GET
-     print("Start to resolve short url: \(url.absoluteString)")
-     let task = URLSession.shared.dataTask(with: request) { _, response, _ in
-         completion((response as? HTTPURLResponse)?.url)
-     }
-     task.resume()
- }
+			do {
+				let response = try JSONDecoder().decode(ApiResponse.self, from: data)
+				let location = response.result.geometry.location
+				let mapLocation = MapLocation(longitude: location.lng, latitude: location.lat)
+				completion(mapLocation)
+			} catch {
+				completion(nil)
+			}
+		}.resume()
+	}
 
-    
-    func parseSecondPartOfFTID(from url: URL) -> String? {
-        print("Trying to parse FTID \(url.absoluteString)")
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
-              let queryItems = components.queryItems else {
-            return nil
-        }
+	struct ApiResponse: Codable {
+		let result: Result
+	}
 
-        if let ftid = queryItems.first(where: { $0.name == "ftid" })?.value,
-           let range = ftid.range(of: ":") {
-            let secondPart = ftid[range.upperBound...]
-            return String(secondPart)
-        }
-        print("Trying to parse FTID Failed")
-        return nil
-    }
+	struct Result: Codable {
+		let geometry: Geometry
+	}
 
-   
-       // Helper function to extract the ftid parameter from a URL
-    static func parseSecondPartOfFTID(from url: URL) -> String? {
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
-              let queryItems = components.queryItems else {
-            return nil
-        }
+	struct Geometry: Codable {
+		let location: Location
+	}
 
-        if let ftid = queryItems.first(where: { $0.name == "ftid" })?.value,
-           let range = ftid.range(of: ":") {
-            let secondPart = ftid[range.upperBound...]
-            return String(secondPart)
-        }
+	struct Location: Codable {
+		let lat: Double
+		let lng: Double
+	}
 
-        return nil
-    }
+	// Helper function to resolve a shortened URL
+	static func resolveGoogleShortURL(url: URL, completion: @escaping (URL?) -> Void) {
+		var request = URLRequest(url: url)
+		request.httpMethod = "GET" // Changed from HEAD to GET
+		let task = URLSession.shared.dataTask(with: request) { _, response, _ in
+			completion((response as? HTTPURLResponse)?.url)
+		}
+		task.resume()
+	}
+
+	func parseSecondPartOfGoogleFTID(from url: URL) -> String? {
+		guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+		      let queryItems = components.queryItems
+		else {
+			return nil
+		}
+
+		if let ftid = queryItems.first(where: { $0.name == "ftid" })?.value,
+		   let range = ftid.range(of: ":")
+		{
+			let secondPart = ftid[range.upperBound...]
+			return String(secondPart)
+		}
+		print("Trying to parse FTID Failed")
+		return nil
+	}
+
+	// Helper function to extract the ftid parameter from a URL
+	static func parseSecondPartOfGoogleFTID(from url: URL) -> String? {
+		guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+		      let queryItems = components.queryItems
+		else {
+			return nil
+		}
+
+		if let ftid = queryItems.first(where: { $0.name == "ftid" })?.value,
+		   let range = ftid.range(of: ":")
+		{
+			let secondPart = ftid[range.upperBound...]
+			return String(secondPart)
+		}
+
+		return nil
+	}
 }

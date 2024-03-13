@@ -145,6 +145,8 @@
 		02E049BB2651BAB90028B57F /* UndoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C381C306263FD0E8003142BA /* UndoManager.swift */; };
 		02E049BE2651D1750028B57F /* UndoAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E049BD2651D1750028B57F /* UndoAction.m */; };
 		02E6267219973A0700565D62 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02E6267119973A0700565D62 /* Security.framework */; };
+		02E9ABC02BA151AA00F0EF69 /* GoogleMaps.secret in Sources */ = {isa = PBXBuildFile; fileRef = 02E9ABBE2BA1502600F0EF69 /* GoogleMaps.secret */; };
+		02E9ABC12BA1533F00F0EF69 /* GoogleMaps.secret in Sources */ = {isa = PBXBuildFile; fileRef = 02E9ABBE2BA1502600F0EF69 /* GoogleMaps.secret */; };
 		02EA1C6B26631D0D00A0F827 /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C381C305263FD0CA003142BA /* VectorMath.swift */; };
 		02EA1C6C2663398C00A0F827 /* TileQuadKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925126411557000A2A99 /* TileQuadKey.swift */; };
 		02EA545B2AB7CCA3004688F9 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 02EA545A2AB7CCA3004688F9 /* InfoPlist.xcstrings */; };
@@ -235,6 +237,20 @@
 			fileType = pattern.proxy;
 			inputFiles = (
 				"",
+			);
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).swift",
+			);
+			runOncePerArchitecture = 0;
+			script = "#!/bin/sh\n# Converts a file named *.secret to *.swift\n#\n# The contents of *.secret should be a /bin/sh script\n# that generates outout that becomes foo.swift\n\ninput=\"$INPUT_FILE_DIR/$INPUT_FILE_NAME\"\noutput=\"$DERIVED_SOURCES_DIR/${INPUT_FILE_NAME%.secret}.swift\"\n/bin/sh \"$input\" > \"$output\"\n";
+		};
+		02E9ABC22BA1538800F0EF69 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.secret";
+			fileType = pattern.proxy;
+			inputFiles = (
 			);
 			isEditable = 1;
 			outputFiles = (
@@ -421,6 +437,7 @@
 		02E049BD2651D1750028B57F /* UndoAction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UndoAction.m; sourceTree = "<group>"; };
 		02E6267119973A0700565D62 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Go Map!!-Bridging-Header.h"; sourceTree = "<group>"; };
+		02E9ABBE2BA1502600F0EF69 /* GoogleMaps.secret */ = {isa = PBXFileReference; lastKnownFileType = text; path = GoogleMaps.secret; sourceTree = "<group>"; };
 		02EA54572AB7CCA3004688F9 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/Height.xcstrings; sourceTree = "<group>"; };
 		02EA54582AB7CCA3004688F9 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/DirectionViewController.xcstrings; sourceTree = "<group>"; };
 		02EA54592AB7CCA3004688F9 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/Changeset.xcstrings; sourceTree = "<group>"; };
@@ -692,6 +709,7 @@
 				02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */,
 				C3004F51263A6CA5006BF313 /* MainViewController.swift */,
 				022B2FDA2718CCAC00AB4C28 /* MapboxLocator.secret */,
+				02E9ABBE2BA1502600F0EF69 /* GoogleMaps.secret */,
 				0293FEB2299D84F7002EED90 /* MaxarAerial.secret */,
 				C3D096D7263EAE1E00E3B129 /* MyApplication.swift */,
 				C3004F4C263A6306006BF313 /* NominatimViewController.swift */,
@@ -1086,6 +1104,7 @@
 				02D6237D26A6628300A4F147 /* Resources */,
 			);
 			buildRules = (
+				02E9ABC22BA1538800F0EF69 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -1279,6 +1298,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02E9ABC02BA151AA00F0EF69 /* GoogleMaps.secret in Sources */,
 				020798012994706000D3C654 /* QuestBuilderController.swift in Sources */,
 				0293FEB3299D84F7002EED90 /* MaxarAerial.secret in Sources */,
 				02CE3CE229909D1D00DDACE0 /* QuestSolverController.swift in Sources */,
@@ -1446,6 +1466,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02E9ABC12BA1533F00F0EF69 /* GoogleMaps.secret in Sources */,
 				02D6238226A6628300A4F147 /* ShareViewController.swift in Sources */,
 				02D02ED829D0EFB6005E6BB8 /* EXIF.swift in Sources */,
 				0200C1C22703B42600A79804 /* LocationParser.swift in Sources */,
