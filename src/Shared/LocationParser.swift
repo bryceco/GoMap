@@ -430,31 +430,130 @@ class LocationParser {
 	}
 
 	/// decode as google maps
-	/// https://goo.gl/maps/yGZxAN37wcmERVD6A
-	static func isGoogleMapsRedirect(url: URL, callback: @escaping ((MapLocation?) -> Void)) -> Bool {
-		guard let comps = URLComponents(url: url, resolvingAgainstBaseURL: true),
-		      comps.host == "goo.gl"
-		else {
-			return false
-		}
-		// fetch the redirected URL
-		var request = URLRequest(url: url)
-		request.httpMethod = "HEAD"
-		request.cachePolicy = .returnCacheDataElseLoad
-		let task = URLSession.shared.downloadTask(
-			with: request,
-			completionHandler: { _, response, _ in
-				if let code = (response as? HTTPURLResponse)?.statusCode,
-				   code == 200 || code == 301 || code == 302,
-				   let url = response?.url,
-				   let loc = Self.mapLocationFrom(url: url)
-				{
-					callback(loc)
-				} else {
-					callback(nil)
-				}
-			})
-		task.resume()
-		return true
-	}
+	/// https://maps.app.goo.gl/1G7doKp5QEgBCkir7
+	 static func isGoogleMapsRedirect(url: URL, callback: @escaping ((MapLocation?) -> Void)) -> Bool {
+        // First, resolve the shortened URL
+        let api_key = "[YOUR_ID_KEY]"
+        resolveShortURL(url: url) { resolvedURL in
+            print("Resolved URL \(resolvedURL?.absoluteString)")
+            guard let resolvedURL = resolvedURL else {
+                callback(nil)
+                return
+            }
+                    
+            // Extract the ftid value and construct the new URL
+            if let latLong = extractLatLongFromURL(resolvedURL) {
+                        callback(latLong)
+                } else if let ftidValue = parseSecondPartOfFTID(from: resolvedURL),
+               let newURL = URL(string: "https://maps.googleapis.com/maps/api/place/details/json?key=\(api_key)&cid=\(ftidValue)") {
+                print(newURL.absoluteString)
+                fetchLocationDetails(url: newURL) { location in
+                    callback(location)
+                }
+            } else {
+                callback(nil)
+            }
+        }
+        return true
+    }
+    
+    static func extractLatLongFromURL(_ url: URL) -> MapLocation? {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+              let queryItems = components.queryItems else {
+            return nil
+        }
+
+        if let q = queryItems.first(where: { $0.name == "q" })?.value,
+           let range = q.range(of: ",") {
+            let latString = String(q[..<range.lowerBound])
+            let longString = String(q[range.upperBound...])
+            
+            if let lat = Double(latString), let long = Double(longString) {
+                return MapLocation(longitude: long, latitude: lat)
+            }
+        }
+
+        return nil
+    }
+
+    
+    static func fetchLocationDetails(url: URL, completion: @escaping (MapLocation?) -> Void) {
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else {
+                completion(nil)
+                return
+            }
+
+            do {
+                let response = try JSONDecoder().decode(ApiResponse.self, from: data)
+                let location = response.result.geometry.location
+                let mapLocation = MapLocation(longitude: location.lng, latitude: location.lat)
+                completion(mapLocation)
+            } catch {
+                completion(nil)
+            }
+        }.resume()
+    }
+    
+    struct ApiResponse: Codable {
+        let result: Result
+    }
+
+    struct Result: Codable {
+        let geometry: Geometry
+    }
+
+    struct Geometry: Codable {
+        let location: Location
+    }
+
+    struct Location: Codable {
+        let lat: Double
+        let lng: Double
+    }
+    
+    // Helper function to resolve a shortened URL
+ static func resolveShortURL(url: URL, completion: @escaping (URL?) -> Void) {
+     var request = URLRequest(url: url)
+     request.httpMethod = "GET"  // Changed from HEAD to GET
+     print("Start to resolve short url: \(url.absoluteString)")
+     let task = URLSession.shared.dataTask(with: request) { _, response, _ in
+         completion((response as? HTTPURLResponse)?.url)
+     }
+     task.resume()
+ }
+
+    
+    func parseSecondPartOfFTID(from url: URL) -> String? {
+        print("Trying to parse FTID \(url.absoluteString)")
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+              let queryItems = components.queryItems else {
+            return nil
+        }
+
+        if let ftid = queryItems.first(where: { $0.name == "ftid" })?.value,
+           let range = ftid.range(of: ":") {
+            let secondPart = ftid[range.upperBound...]
+            return String(secondPart)
+        }
+        print("Trying to parse FTID Failed")
+        return nil
+    }
+
+   
+       // Helper function to extract the ftid parameter from a URL
+    static func parseSecondPartOfFTID(from url: URL) -> String? {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+              let queryItems = components.queryItems else {
+            return nil
+        }
+
+        if let ftid = queryItems.first(where: { $0.name == "ftid" })?.value,
+           let range = ftid.range(of: ":") {
+            let secondPart = ftid[range.upperBound...]
+            return String(secondPart)
+        }
+
+        return nil
+    }
 }
