@@ -147,6 +147,7 @@
 		02E6267219973A0700565D62 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02E6267119973A0700565D62 /* Security.framework */; };
 		02E9ABC02BA151AA00F0EF69 /* GoogleMaps.secret in Sources */ = {isa = PBXBuildFile; fileRef = 02E9ABBE2BA1502600F0EF69 /* GoogleMaps.secret */; };
 		02E9ABC12BA1533F00F0EF69 /* GoogleMaps.secret in Sources */ = {isa = PBXBuildFile; fileRef = 02E9ABBE2BA1502600F0EF69 /* GoogleMaps.secret */; };
+		02E9ABC42BA54C9500F0EF69 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 02E9ABC32BA54C9500F0EF69 /* PrivacyInfo.xcprivacy */; };
 		02EA1C6B26631D0D00A0F827 /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C381C305263FD0CA003142BA /* VectorMath.swift */; };
 		02EA1C6C2663398C00A0F827 /* TileQuadKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925126411557000A2A99 /* TileQuadKey.swift */; };
 		02EA545B2AB7CCA3004688F9 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 02EA545A2AB7CCA3004688F9 /* InfoPlist.xcstrings */; };
@@ -438,6 +439,7 @@
 		02E6267119973A0700565D62 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Go Map!!-Bridging-Header.h"; sourceTree = "<group>"; };
 		02E9ABBE2BA1502600F0EF69 /* GoogleMaps.secret */ = {isa = PBXFileReference; lastKnownFileType = text; path = GoogleMaps.secret; sourceTree = "<group>"; };
+		02E9ABC32BA54C9500F0EF69 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		02EA54572AB7CCA3004688F9 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/Height.xcstrings; sourceTree = "<group>"; };
 		02EA54582AB7CCA3004688F9 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/DirectionViewController.xcstrings; sourceTree = "<group>"; };
 		02EA54592AB7CCA3004688F9 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/Changeset.xcstrings; sourceTree = "<group>"; };
@@ -730,8 +732,6 @@
 		02ACBA3A16713CCB00BB4414 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */,
-				0254C6CD2579CD88000705B4 /* POI-Icons */,
 				02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */,
 				02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */,
 				02ACBA3B16713CCB00BB4414 /* Go Map!!-Info.plist */,
@@ -739,6 +739,9 @@
 				023B892A19C148790060CDB5 /* Images.xcassets */,
 				02EA545A2AB7CCA3004688F9 /* InfoPlist.xcstrings */,
 				02EA545D2AB7CCA3004688F9 /* Localizable.xcstrings */,
+				0254C6CD2579CD88000705B4 /* POI-Icons */,
+				029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */,
+				02E9ABC32BA54C9500F0EF69 /* PrivacyInfo.xcprivacy */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1255,6 +1258,7 @@
 				027AB4FA250E9C8000C404CD /* Settings.storyboard in Resources */,
 				0244399429CA4461009FC2D0 /* HoursRecognizer.json in Resources */,
 				02ED19811BBF119C00A57CF4 /* Launch Screen.storyboard in Resources */,
+				02E9ABC42BA54C9500F0EF69 /* PrivacyInfo.xcprivacy in Resources */,
 				027AB503250E9CA500C404CD /* Changeset.storyboard in Resources */,
 				027AB4FD250E9C8A00C404CD /* POI.storyboard in Resources */,
 				0246A78126A4AA3A00941A44 /* DirectionViewController.xib in Resources */,
@@ -1734,7 +1738,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CURRENT_PROJECT_VERSION = 3604;
+				CURRENT_PROJECT_VERSION = 3605;
 				DEVELOPMENT_TEAM = MKTTC6734C;
 				DISPLAY_NAME = "Go Map!! Debug";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1748,7 +1752,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.6.4;
+				MARKETING_VERSION = 3.6.5;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-DDEBUG ";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap;
 				PRODUCT_NAME = "Go Map!!";
@@ -1779,7 +1783,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CURRENT_PROJECT_VERSION = 3604;
+				CURRENT_PROJECT_VERSION = 3605;
 				DEVELOPMENT_TEAM = MKTTC6734C;
 				DISPLAY_NAME = "Go Map!!";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1793,7 +1797,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.6.4;
+				MARKETING_VERSION = 3.6.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap;
 				PRODUCT_NAME = "Go Map!!";
 				PROVISIONING_PROFILE = "";
@@ -1827,7 +1831,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3604;
+				CURRENT_PROJECT_VERSION = 3605;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = MKTTC6734C;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1841,7 +1845,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.6.4;
+				MARKETING_VERSION = 3.6.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap.PhotoShare;
@@ -1875,7 +1879,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3604;
+				CURRENT_PROJECT_VERSION = 3605;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = MKTTC6734C;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1890,7 +1894,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.6.4;
+				MARKETING_VERSION = 3.6.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap.PhotoShare;
