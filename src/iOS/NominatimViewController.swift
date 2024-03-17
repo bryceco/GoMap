@@ -160,7 +160,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	/// try parsing as GOO.GL redirect
 	/// https://goo.gl/maps/yGZxAN37wcmERVD6A
 	func parsedAsGoogleDynamicLink(_ string: String) -> Bool {
-		if !LocationParser.isGoogleMapsRedirect(urlString: string, callback: { mapLocation in
+		guard LocationParser.isGoogleMapsRedirect(urlString: string, callback: { mapLocation in
 			DispatchQueue.main.async {
 				self.activityIndicator.stopAnimating()
 				if let mapLocation = mapLocation {
@@ -168,9 +168,11 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 					self.jumpTo(lat: mapLocation.latitude,
 					            lon: mapLocation.longitude,
 					            zoom: mapLocation.zoom)
+				} else {
+					self.presentErrorMessage()
 				}
 			}
-		}) {
+		}) else {
 			return false
 		}
 		activityIndicator.startAnimating()
