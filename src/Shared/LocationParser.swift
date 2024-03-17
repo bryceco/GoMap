@@ -431,7 +431,14 @@ class LocationParser {
 
 	/// decode as google maps
 	/// https://maps.app.goo.gl/1G7doKp5QEgBCkir7
-	static func isGoogleMapsRedirect(url: URL, callback: @escaping ((MapLocation?) -> Void)) -> Bool {
+	static func isGoogleMapsRedirect(urlString: String, callback: @escaping ((MapLocation?) -> Void)) -> Bool {
+		guard let url = URL(string: urlString),
+		      let host = url.host,
+		      host.hasSuffix("goo.gl") || host.hasSuffix("google.com")
+		else {
+			return false
+		}
+
 		// First, resolve the shortened URL
 		let api_key = GoogleToken
 		resolveGoogleShortURL(url: url) { resolvedURL in
@@ -444,9 +451,8 @@ class LocationParser {
 			if let latLong = extractLatLongFromGoogleURL(resolvedURL) {
 				callback(latLong)
 			} else if let ftidValue = parseSecondPartOfGoogleFTID(from: resolvedURL),
-			          let newURL =
-			          URL(
-			          	string: "https://maps.googleapis.com/maps/api/place/details/json?key=\(api_key)&cid=\(ftidValue)")
+			          let newURL = URL(string:
+			          	"https://maps.googleapis.com/maps/api/place/details/json?key=\(api_key)&cid=\(ftidValue)")
 			{
 				print(newURL.absoluteString)
 				fetchGoogleLocationDetails(url: newURL) { location in

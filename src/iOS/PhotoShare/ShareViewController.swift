@@ -142,7 +142,7 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 							return
 						}
 
-						if LocationParser.isGoogleMapsRedirect(url: url, callback: { loc in
+						if LocationParser.isGoogleMapsRedirect(urlString: url.absoluteString, callback: { loc in
 							DispatchQueue.main.async {
 								guard let loc = loc else {
 									self.setUnrecognizedText()
