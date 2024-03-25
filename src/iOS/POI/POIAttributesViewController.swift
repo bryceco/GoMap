@@ -212,17 +212,17 @@ class POIAttributesViewController: UITableViewController {
 		case .identifier:
 			let type = object.osmType.string
 			let ident = object.ident
-			urlString = "https://www.openstreetmap.org/browse/\(type)/\(ident)"
+			urlString = "https://www.openstreetmap.org/\(type)/\(ident)"
 		case .user:
 			let user = object.user
 			urlString = "https://www.openstreetmap.org/user/\(user)"
 		case .version:
 			let type = object.osmType.string
 			let ident = object.ident
-			urlString = "https://www.openstreetmap.org/browse/\(type)/\(ident)/history"
+			urlString = "https://www.openstreetmap.org/\(type)/\(ident)/history"
 		case .changeset:
 			urlString = String(
-				format: "https://www.openstreetmap.org/browse/changeset/%ld",
+				format: "https://www.openstreetmap.org/changeset/%ld",
 				Int(object.changeset))
 		case .uid, .modified:
 			return
