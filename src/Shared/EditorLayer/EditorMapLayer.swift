@@ -16,7 +16,7 @@ private let FADE_INOUT = false
 private let SINGLE_SIDED_WALLS = true
 
 // drawing options
-private let DEFAULT_LINECAP = CAShapeLayerLineCap.square
+private let DEFAULT_LINECAP = CAShapeLayerLineCap.butt
 private let DEFAULT_LINEJOIN = CAShapeLayerLineJoin.miter
 private let MinIconSizeInPixels: CGFloat = 24.0
 private let Pixels_Per_Character: CGFloat = 8.0
@@ -642,7 +642,7 @@ final class EditorMapLayer: CALayer {
 
 		// casing
 		if object.isWay() != nil || (object.isRelation()?.isMultipolygon() ?? false) {
-			if renderInfo.lineWidth != 0.0, !(object.isWay()?.isArea() ?? false) {
+            if renderInfo.casingWidth != 0.0, renderInfo.casingColor != nil, !(object.isWay()?.isArea() ?? false) {
 				var refPoint = OSMPoint.zero
 				let path = object.linePathForObject(withRefPoint: &refPoint)
 				if let path = path {
@@ -651,10 +651,11 @@ final class EditorMapLayer: CALayer {
 						layer.anchorPoint = CGPoint(x: 0, y: 0)
 						layer.position = CGPoint(refPoint)
 						layer.path = path
-						layer.strokeColor = UIColor.black.cgColor
+                        layer.strokeColor = renderInfo.casingColor?.cgColor // TODO: type check
 						layer.fillColor = nil
-						layer.lineWidth = (1 + renderInfo.lineWidth) * highwayScale
-						layer.lineCap = DEFAULT_LINECAP
+                        layer.lineWidth = renderInfo.casingWidth
+                        layer.lineCap = renderInfo.casingCap
+                        layer.lineDashPattern = renderInfo.casingDashPattern
 						layer.lineJoin = DEFAULT_LINEJOIN
 						layer.zPosition = Z_CASING
 						let props = layer.properties
@@ -684,7 +685,7 @@ final class EditorMapLayer: CALayer {
 						haloLayer.path = path
 						haloLayer.strokeColor = UIColor.red.cgColor
 						haloLayer.fillColor = nil
-						haloLayer.lineWidth = (2 + renderInfo.lineWidth) * highwayScale
+						haloLayer.lineWidth = renderInfo.lineWidth + 4
 						haloLayer.lineCap = DEFAULT_LINECAP
 						haloLayer.lineJoin = DEFAULT_LINEJOIN
 						haloLayer.zPosition = Z_HALO
@@ -703,9 +704,9 @@ final class EditorMapLayer: CALayer {
 			let path = object.linePathForObject(withRefPoint: &refPoint)
 
 			if let path = path {
-				var lineWidth = renderInfo.lineWidth * highwayScale
+				var lineWidth = renderInfo.lineWidth
 				if lineWidth == 0 {
-					lineWidth = 1
+					lineWidth = 2
 				}
 
 				let layer = CAShapeLayerWithProperties()
@@ -714,11 +715,12 @@ final class EditorMapLayer: CALayer {
 				layer.bounds = CGRect(x: 0, y: 0, width: bbox.size.width, height: bbox.size.height)
 				layer.position = CGPoint(refPoint)
 				layer.path = path
-				layer.strokeColor = (renderInfo.lineColor ?? UIColor.black).cgColor
+				layer.strokeColor = (renderInfo.lineColor ?? UIColor.white).cgColor
 				layer.fillColor = nil
 				layer.lineWidth = lineWidth
-				layer.lineCap = DEFAULT_LINECAP
-				layer.lineJoin = DEFAULT_LINEJOIN
+                layer.lineCap = renderInfo.lineCap
+                layer.lineDashPattern = renderInfo.lineDashPattern
+                layer.lineJoin = .round
 				layer.zPosition = Z_LINE
 
 				let props = layer.properties
