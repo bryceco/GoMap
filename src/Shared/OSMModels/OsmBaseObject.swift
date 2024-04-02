@@ -110,8 +110,9 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		// Occasionally we'll build a temporary object and then see if that object already exists,
 		// in which case don't assert if either object is not marked as constructed
 		let equal = ident == other.ident && type(of: self) === type(of: other)
-		DbgAssert(!equal || !constructed() || !other
-			.constructed()) // There should never be more than one copy of an object
+		DbgAssert(!equal 
+				  || !constructed() 
+				  || !other.constructed()) // There should never be more than one copy of an object
 		return equal
 	}
 
