@@ -69,7 +69,6 @@ final class RenderInfo {
 		self.areaColor = areaColor
 	}
 
-
 	// The priority is a small integer bounded by RenderInfoMaxPriority which
 	// allows us to sort them quickly using a Counting Sort algorithm.
 	// The priority is cached per-object in renderPriority
