@@ -21,7 +21,6 @@
 
 import Foundation
 import UIKit
-import Collections
 
 extension RenderInfo {
 	static func match(primary: String?, status: String?, classes: [String]) -> RenderInfo {

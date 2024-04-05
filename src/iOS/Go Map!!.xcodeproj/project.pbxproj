@@ -99,7 +99,6 @@
 		02ACBA3616713CCB00BB4414 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3516713CCB00BB4414 /* Foundation.framework */; };
 		02ACBA3816713CCB00BB4414 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3716713CCB00BB4414 /* CoreGraphics.framework */; };
 		02ACBA4D16713CCB00BB4414 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */; };
-		02ACBCFD16713F2B00BB4414 /* RenderInfo.json in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBBBB16713F2A00BB4414 /* RenderInfo.json */; };
 		02ACBD191671737300BB4414 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD181671737300BB4414 /* libxml2.dylib */; };
 		02ACBD1F16717BBB00BB4414 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */; };
 		02ACBD2116717BC500BB4414 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD2016717BC500BB4414 /* CoreLocation.framework */; };
@@ -185,13 +184,6 @@
 		64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */; };
 		64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */; };
 		B25C231A2BB8B09C000891B6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25C23192BB8B09C000891B6 /* Theme.swift */; };
-		B25C231D2BB8B92B000891B6 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = B25C231C2BB8B92B000891B6 /* OrderedCollections */; };
-		B25C231F2BB8B93B000891B6 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = B25C231E2BB8B93B000891B6 /* Collections */; };
-		B25C23212BB8B957000891B6 /* BitCollections in Frameworks */ = {isa = PBXBuildFile; productRef = B25C23202BB8B957000891B6 /* BitCollections */; };
-		B25C23232BB8B957000891B6 /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = B25C23222BB8B957000891B6 /* DequeModule */; };
-		B25C23252BB8B957000891B6 /* HashTreeCollections in Frameworks */ = {isa = PBXBuildFile; productRef = B25C23242BB8B957000891B6 /* HashTreeCollections */; };
-		B25C23272BB8B957000891B6 /* HeapModule in Frameworks */ = {isa = PBXBuildFile; productRef = B25C23262BB8B957000891B6 /* HeapModule */; };
-		B25C23292BB8B957000891B6 /* _RopeModule in Frameworks */ = {isa = PBXBuildFile; productRef = B25C23282BB8B957000891B6 /* _RopeModule */; };
 		B287A89A2BBC64F70050A15D /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = B287A8992BBC64F70050A15D /* Style.swift */; };
 		C3004F4D263A6306006BF313 /* NominatimViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3004F4C263A6306006BF313 /* NominatimViewController.swift */; };
 		C3004F52263A6CA5006BF313 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3004F51263A6CA5006BF313 /* MainViewController.swift */; };
@@ -397,7 +389,6 @@
 		02ACBA3716713CCB00BB4414 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		02ACBA3B16713CCB00BB4414 /* Go Map!!-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Go Map!!-Info.plist"; sourceTree = "<group>"; };
 		02ACBA4116713CCB00BB4414 /* Go Map!!-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Go Map!!-Prefix.pch"; sourceTree = "<group>"; };
-		02ACBBBB16713F2A00BB4414 /* RenderInfo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RenderInfo.json; sourceTree = "<group>"; };
 		02ACBD181671737300BB4414 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		02ACBD2016717BC500BB4414 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -567,11 +558,8 @@
 				02401F361DE021EE00F32AF5 /* ExternalAccessory.framework in Frameworks */,
 				02EDCC081683EC2D007F9934 /* CFNetwork.framework in Frameworks */,
 				027AD5D219F5A18700120654 /* CoreFoundation.framework in Frameworks */,
-				B25C23252BB8B957000891B6 /* HashTreeCollections in Frameworks */,
-				B25C231D2BB8B92B000891B6 /* OrderedCollections in Frameworks */,
 				02ACBA3816713CCB00BB4414 /* CoreGraphics.framework in Frameworks */,
 				02ACBD2116717BC500BB4414 /* CoreLocation.framework in Frameworks */,
-				B25C231F2BB8B93B000891B6 /* Collections in Frameworks */,
 				02DC59811671B79100213558 /* CoreText.framework in Frameworks */,
 				025CCA12271244B800074726 /* KissXML in Frameworks */,
 				02B52E7728C9788200CB55F3 /* libswiftCoreGraphics.tbd in Frameworks */,
@@ -579,13 +567,9 @@
 				021C6AB3168768C800FB17B0 /* MessageUI.framework in Frameworks */,
 				02092ECD29E2497E0095042B /* FastCodable in Frameworks */,
 				02ACBD1F16717BBB00BB4414 /* QuartzCore.framework in Frameworks */,
-				B25C23212BB8B957000891B6 /* BitCollections in Frameworks */,
 				02E6267219973A0700565D62 /* Security.framework in Frameworks */,
 				02ACBA3416713CCB00BB4414 /* UIKit.framework in Frameworks */,
-				B25C23292BB8B957000891B6 /* _RopeModule in Frameworks */,
-				B25C23232BB8B957000891B6 /* DequeModule in Frameworks */,
 				02A194B219C6A432002338DA /* libsqlite3.0.dylib in Frameworks */,
-				B25C23272BB8B957000891B6 /* HeapModule in Frameworks */,
 				02ACBD191671737300BB4414 /* libxml2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -927,7 +911,6 @@
 				02F53297267AB41C0088DF41 /* EditorMapLayer+HitTest.swift */,
 				022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */,
 				C3D096D1263EA7E100E3B129 /* LayerProperties.swift */,
-				02ACBBBB16713F2A00BB4414 /* RenderInfo.json */,
 				C3D096B8263DFA2A00E3B129 /* RenderInfo.swift */,
 			);
 			name = EditorLayer;
@@ -1121,13 +1104,6 @@
 			packageProductDependencies = (
 				025CCA11271244B800074726 /* KissXML */,
 				02092ECC29E2497E0095042B /* FastCodable */,
-				B25C231C2BB8B92B000891B6 /* OrderedCollections */,
-				B25C231E2BB8B93B000891B6 /* Collections */,
-				B25C23202BB8B957000891B6 /* BitCollections */,
-				B25C23222BB8B957000891B6 /* DequeModule */,
-				B25C23242BB8B957000891B6 /* HashTreeCollections */,
-				B25C23262BB8B957000891B6 /* HeapModule */,
-				B25C23282BB8B957000891B6 /* _RopeModule */,
 			);
 			productName = OSMiOS;
 			productReference = 02ACBA2F16713CCB00BB4414 /* Go Map!!.app */;
@@ -1263,7 +1239,6 @@
 			packageReferences = (
 				025CCA10271244B800074726 /* XCRemoteSwiftPackageReference "KissXML" */,
 				02092ECB29E2497E0095042B /* XCRemoteSwiftPackageReference "FastCodable" */,
-				B25C231B2BB8B92B000891B6 /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = 02ACBA3016713CCB00BB4414 /* Products */;
 			projectDirPath = "";
@@ -1302,7 +1277,6 @@
 				027AB500250E9C9B00C404CD /* Height.storyboard in Resources */,
 				0287D25229947B2900BEAD9E /* QuestChooser.storyboard in Resources */,
 				023B892B19C148790060CDB5 /* Images.xcassets in Resources */,
-				02ACBCFD16713F2B00BB4414 /* RenderInfo.json in Resources */,
 				02079803299470FB00D3C654 /* QuestBuilder.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2177,14 +2151,6 @@
 				kind = branch;
 			};
 		};
-		B25C231B2BB8B92B000891B6 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apple/swift-collections.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2197,41 +2163,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 025CCA10271244B800074726 /* XCRemoteSwiftPackageReference "KissXML" */;
 			productName = KissXML;
-		};
-		B25C231C2BB8B92B000891B6 /* OrderedCollections */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B25C231B2BB8B92B000891B6 /* XCRemoteSwiftPackageReference "swift-collections" */;
-			productName = OrderedCollections;
-		};
-		B25C231E2BB8B93B000891B6 /* Collections */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B25C231B2BB8B92B000891B6 /* XCRemoteSwiftPackageReference "swift-collections" */;
-			productName = Collections;
-		};
-		B25C23202BB8B957000891B6 /* BitCollections */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B25C231B2BB8B92B000891B6 /* XCRemoteSwiftPackageReference "swift-collections" */;
-			productName = BitCollections;
-		};
-		B25C23222BB8B957000891B6 /* DequeModule */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B25C231B2BB8B92B000891B6 /* XCRemoteSwiftPackageReference "swift-collections" */;
-			productName = DequeModule;
-		};
-		B25C23242BB8B957000891B6 /* HashTreeCollections */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B25C231B2BB8B92B000891B6 /* XCRemoteSwiftPackageReference "swift-collections" */;
-			productName = HashTreeCollections;
-		};
-		B25C23262BB8B957000891B6 /* HeapModule */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B25C231B2BB8B92B000891B6 /* XCRemoteSwiftPackageReference "swift-collections" */;
-			productName = HeapModule;
-		};
-		B25C23282BB8B957000891B6 /* _RopeModule */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B25C231B2BB8B92B000891B6 /* XCRemoteSwiftPackageReference "swift-collections" */;
-			productName = _RopeModule;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

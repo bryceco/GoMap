@@ -144,7 +144,6 @@ def selector_to_if(selector, cmp="=="):
 def to_swift_fn(styles, indent=0):
     res = "let r = RenderInfo()\n"
     for keys, style in styles:
-        # 3 at a time
         if_stms = []
         for [selector, and_styles, not_styles] in keys:
             try:
@@ -499,7 +498,6 @@ with open(args.output, "w") as f:
 
 import Foundation
 import UIKit
-import Collections
 
 extension RenderInfo {
 \tstatic func match(primary: String?, status: String?, classes: [String]) -> RenderInfo {
