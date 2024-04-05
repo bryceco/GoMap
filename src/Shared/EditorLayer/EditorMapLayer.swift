@@ -642,7 +642,7 @@ final class EditorMapLayer: CALayer {
 
 		// casing
 		if object.isWay() != nil || (object.isRelation()?.isMultipolygon() ?? false) {
-            if renderInfo.casingWidth != 0.0, renderInfo.casingColor != nil, !(object.isWay()?.isArea() ?? false) {
+			if renderInfo.casingWidth != 0.0, renderInfo.casingColor != nil, !(object.isWay()?.isArea() ?? false) {
 				var refPoint = OSMPoint.zero
 				let path = object.linePathForObject(withRefPoint: &refPoint)
 				if let path = path {
@@ -651,11 +651,11 @@ final class EditorMapLayer: CALayer {
 						layer.anchorPoint = CGPoint(x: 0, y: 0)
 						layer.position = CGPoint(refPoint)
 						layer.path = path
-                        layer.strokeColor = renderInfo.casingColor?.cgColor // TODO: type check
+						layer.strokeColor = renderInfo.casingColor?.cgColor // TODO: type check
 						layer.fillColor = nil
-                        layer.lineWidth = renderInfo.casingWidth
-                        layer.lineCap = renderInfo.casingCap
-                        layer.lineDashPattern = renderInfo.casingDashPattern
+						layer.lineWidth = renderInfo.casingWidth
+						layer.lineCap = renderInfo.casingCap
+						layer.lineDashPattern = renderInfo.casingDashPattern
 						layer.lineJoin = DEFAULT_LINEJOIN
 						layer.zPosition = Z_CASING
 						let props = layer.properties
@@ -718,9 +718,9 @@ final class EditorMapLayer: CALayer {
 				layer.strokeColor = (renderInfo.lineColor ?? UIColor.white).cgColor
 				layer.fillColor = nil
 				layer.lineWidth = lineWidth
-                layer.lineCap = renderInfo.lineCap
-                layer.lineDashPattern = renderInfo.lineDashPattern
-                layer.lineJoin = .round
+				layer.lineCap = renderInfo.lineCap
+				layer.lineDashPattern = renderInfo.lineDashPattern
+				layer.lineJoin = .round
 				layer.zPosition = Z_LINE
 
 				let props = layer.properties
