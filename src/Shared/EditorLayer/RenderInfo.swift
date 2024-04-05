@@ -31,14 +31,14 @@ final class RenderInfo {
 
 	var key = ""
 	var value: String?
-    var lineColor: UIColor?
-    var lineWidth: CGFloat = 0.0
-    var lineCap: CAShapeLayerLineCap = .butt
-    var lineDashPattern: [NSNumber]?
-    var casingColor: UIColor?
-    var casingWidth: CGFloat = 0.0
-    var casingCap: CAShapeLayerLineCap = .butt
-    var casingDashPattern: [NSNumber]?
+	var lineColor: UIColor?
+	var lineWidth: CGFloat = 0.0
+	var lineCap: CAShapeLayerLineCap = .butt
+	var lineDashPattern: [NSNumber]?
+	var casingColor: UIColor?
+	var casingWidth: CGFloat = 0.0
+	var casingCap: CAShapeLayerLineCap = .butt
+	var casingDashPattern: [NSNumber]?
 	var areaColor: UIColor?
 
 	var description: String {
@@ -49,26 +49,26 @@ final class RenderInfo {
 		return self === g_AddressRender
 	}
 
-    init(lineColor: UIColor? = UIColor.white,
-         lineWidth: CGFloat = 2.0,
-         lineCap: CAShapeLayerLineCap = .round,
-         lineDashPattern: [CGFloat]? = nil,
-         casingColor: UIColor? = nil,
-         casingWidth: CGFloat = 0.0,
-         casingCap: CAShapeLayerLineCap = .butt,
-         casingDashPattern: [CGFloat]? = nil,
-         areaColor: UIColor? = nil) {
-        
-        self.lineColor = lineColor
-        self.lineWidth = lineWidth
-        self.lineCap = lineCap
-        self.lineDashPattern = lineDashPattern?.map { NSNumber(value: $0) }
-        self.casingColor = casingColor
-        self.casingWidth = casingWidth
-        self.casingCap = casingCap
-        self.casingDashPattern = casingDashPattern?.map { NSNumber(value: $0) }
-        self.areaColor = areaColor
-    }
+	init(lineColor: UIColor? = UIColor.white,
+		lineWidth: CGFloat = 2.0,
+		lineCap: CAShapeLayerLineCap = .round,
+		lineDashPattern: [CGFloat]? = nil,
+		casingColor: UIColor? = nil,
+		casingWidth: CGFloat = 0.0,
+		casingCap: CAShapeLayerLineCap = .butt,
+		casingDashPattern: [CGFloat]? = nil,
+		areaColor: UIColor? = nil) {
+		
+		self.lineColor = lineColor
+		self.lineWidth = lineWidth
+		self.lineCap = lineCap
+		self.lineDashPattern = lineDashPattern?.map { NSNumber(value: $0) }
+		self.casingColor = casingColor
+		self.casingWidth = casingWidth
+		self.casingCap = casingCap
+		self.casingDashPattern = casingDashPattern?.map { NSNumber(value: $0) }
+		self.areaColor = areaColor
+	}
 
 
 	// The priority is a small integer bounded by RenderInfoMaxPriority which
@@ -177,13 +177,11 @@ final class RenderInfo {
 
 final class RenderInfoDatabase {
 	var allFeatures: [RenderInfo] = []
-	var keyDict: OrderedDictionary<String, RenderInfo> = [:]
 
 	static let shared = RenderInfoDatabase()
 	static let nsZero = NSNumber(value: 0.0)
 
-
-    required init() {}
+	required init() {}
     
 	func renderInfoForObject(_ object: OsmBaseObject) -> RenderInfo {
 		var tags = object.tags
@@ -200,7 +198,7 @@ final class RenderInfoDatabase {
 			}
 		}
 
-        return RenderInfo.style(tags: tags)
+		return RenderInfo.style(tags: tags)
 
 		// check if it is an address point
 		if object.isNode() != nil,
