@@ -2,7 +2,7 @@ import argparse
 import os
 import regex
 import sys
-from collections import Counter, defaultdict
+
 
 parser = argparse.ArgumentParser(description="Convert CSS files to a Swift theme file.")
 parser.add_argument("input_dir", help="Input directory containing .css files")
@@ -11,6 +11,9 @@ parser.add_argument(
     "--output",
     default="./Theme.swift",
     help="Output Swift theme file path (default: ./Theme.swift)",
+)
+parser.add_argument(
+    "--debug", action="store_true", help="generate code with timing information"
 )
 args = parser.parse_args()
 
@@ -132,9 +135,7 @@ def selector_to_if(selector, cmp="=="):
             return "status != nil"
         return "status == nil"
     if selector.startswith("status-"):
-        if cmp == "==":
-            return f"status == {swift_repr(selector.removeprefix('status-'))}"
-        return f"status != {swift_repr(selector.removeprefix('status-'))}"
+        return f"status {cmp} {swift_repr(selector.removeprefix('status-'))}"
     if cmp == "!=":
         return "!classes.contains(" + swift_repr(selector) + ")"
     return "classes.contains(" + swift_repr(selector) + ")"
@@ -142,17 +143,25 @@ def selector_to_if(selector, cmp="=="):
 
 def to_swift_fn(styles, indent=0):
     res = "let r = RenderInfo()\n"
-    for selector, style in styles:
-        if_stm = selector_to_if(selector)
-        if and_styles := style.get("and"):
+    for keys, style in styles:
+        # 3 at a time
+        if_stms = []
+        for [selector, and_styles, not_styles] in keys:
+            try:
+                if_stm = selector_to_if(selector)
+            except:
+                breakpoint()
             for and_selector in and_styles:
                 if_stm += " && " + selector_to_if(and_selector)
-            del style["and"]
-        if not_styles := style.get("not"):
             for not_selector in not_styles:
                 if_stm += " && " + selector_to_if(not_selector, "!=")
-            del style["not"]
-        res += "\t" * indent + "if (" + if_stm + ") {\n"
+            if_stms.append(if_stm)
+        if len(if_stms)> 1:
+            if_stms = ["(" + if_stm + ")" if '&&' in if_stm or '||' in if_stm else if_stm for if_stm in if_stms ]
+            rendered_if = " || ".join(if_stms)
+        else:
+            rendered_if = if_stms[0]
+        res += "\t" * indent + "if " + rendered_if + " {\n"
         res += to_swift(style, indent + 1)
         res += "\t" * indent + "}" + "\n"
     return res
@@ -234,7 +243,6 @@ def extract_path_css(file_path):
 
 
 styles = []
-selectors = defaultdict(list)
 seen_keys = []
 css_keys = {
     "stroke": 126,
@@ -273,10 +281,13 @@ def parse_css_color(json_css, key, value):
 
 
 def parse_css_width(json_css, key, value):
-    # TODO: floats?
-    # TODO: divide?
     json_css[key] = float(value.removesuffix("px"))
 
+
+def int_or_float(n):
+    if int(float(n)) == float(n):
+        return int(n)
+    return float(n)
 
 for file_path in sorted(css_files):
     path_css = extract_path_css(file_path)
@@ -305,7 +316,7 @@ for file_path in sorted(css_files):
                 else:
                     value = value.split(",")
                     json_css["lineDashPattern"] = [
-                        int(float(v.removesuffix("px"))) for v in value
+                        int_or_float(v.removesuffix("px")) for v in value
                     ]
         # err(css)
         # err(json_css)
@@ -392,13 +403,7 @@ for file_path in sorted(css_files):
                     del new_styles["lineDashPattern"]
 
             if new_styles:
-                if and_parts:
-                    new_styles["and"] = and_parts
-                if not_parts:
-                    new_styles["not"] = not_parts
-
-                styles.append([key, new_styles])
-                selectors[key].append(c)
+                styles.append([[key, and_parts, not_parts], new_styles])
 
             # err(c, css)
         # err(classes, css)
@@ -406,8 +411,13 @@ for file_path in sorted(css_files):
 
 # https://www.w3.org/TR/CSS21/cascade.html#specificity
 def css_precedence(style):
-    return len(style.get("not", [])) + len(style.get("and", []))
 
+    return 1 + len(style[1]) + len(style[2])
+
+def css_keys_equal(a, b):
+    if isinstance(a[0], list):
+        return len(a) == len(b) and all(css_keys_equal(a[i], b[i]) for i in range(len(a)))
+    return a[0] == b[0] and sorted(a[1]) == sorted(b[1]) and sorted(a[2]) == sorted(b[2])
 
 def merge_styles(styles):
     new_styles = []
@@ -417,14 +427,8 @@ def merge_styles(styles):
             new_styles.append((key, style))
             continue
         prev_key, prev_style = new_styles[-1]
-        if (
-            key == prev_key
-            and sorted(style.get("and", [])) == sorted(prev_style.get("and", []))
-            and sorted(style.get("not", [])) == sorted(prev_style.get("not", []))
-        ):
-            rest_keys = set(style.keys()) - {"and", "not"}
-            rest_prev_keys = set(prev_style.keys()) - {"and", "not"}
-            shared_keys = rest_keys & rest_prev_keys
+        if css_keys_equal(key, prev_key):
+            shared_keys = style.keys() & prev_style.keys()
             if all(style[k] == prev_style[k] for k in shared_keys):
                 new_styles[-1] = (key, {**prev_style, **style})
             else:
@@ -435,14 +439,40 @@ def merge_styles(styles):
     return new_styles
 
 
+# if the css body is the same, merge the selectors into a list that will
+# be checked in order with ||
+def merge_styles_part_two(styles):
+    new_styles = []
+    for i, (key, style) in enumerate(styles):
+        if i == 0:
+            new_styles.append(([key], style))
+            continue
+        prev_key, prev_style = new_styles[-1]
+        if style == prev_style:
+            new_styles[-1] = (prev_key + [key], prev_style)
+        else:
+            new_styles.append(([key], style))
+
+    return new_styles
+
 styles = merge_styles(styles)
-styles = sorted(styles, key=lambda x: css_precedence(x[1]))
+styles = sorted(styles, key=lambda x: css_precedence(x[0]))
+styles = merge_styles(styles)
+styles = merge_styles_part_two(styles)
+styles = merge_styles(styles)
 
 # for k, v in styles:
 #     if "-" in k:
 #         base = k.split("-")[0]
 #         if base in styles:
 #             styles[k] = styles[base] | v
+
+debug_start = ""
+debug_end = ""
+if args.debug:
+    debug_start = "let start = Date()\n\t\t"
+    debug_end = "\n\t\tlet total = Date().timeIntervalSince(start) * 1000\n"+'\t\tprint(String(format: "match   : %.6f ms", total))\n'
+
 
 with open(args.output, "w") as f:
     f.write(
@@ -460,11 +490,12 @@ with open(args.output, "w") as f:
 // OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 // PERFORMANCE OF THIS SOFTWARE.
 
+//
 //  Theme.swift
 //  Go Map!!
 //
 //  Created by Boris Verkhovskiy on 2024-03-30.
-
+//
 
 import Foundation
 import UIKit
@@ -473,8 +504,9 @@ import Collections
 extension RenderInfo {
 \tstatic func match(primary: String?, status: String?, classes: [String]) -> RenderInfo {
 \t\t"""
++ debug_start
         + to_swift_fn(styles, 2)
-        + """
+        + debug_end + """
 \t\treturn r
 \t}
 }
