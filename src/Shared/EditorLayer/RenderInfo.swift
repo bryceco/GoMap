@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Collections
 
 private let RenderInfoMaxPriority = (33 + 1) * 3
 
