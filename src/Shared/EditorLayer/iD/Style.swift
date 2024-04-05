@@ -84,7 +84,6 @@ extension RenderInfo {
 		var primary: String?
 		var status: String?
 		var classes: [String] = []
-		let start = Date()
 
 		// Pick at most one primary classification tag.
 		for key in primaries {
@@ -167,14 +166,6 @@ extension RenderInfo {
 		// Ignore tag keys/values with special characters like spaces
 		classes = classes.filter { $0.range(of: "^[-_a-zA-Z0-9]+$", options: .regularExpression) != nil }
 
-		let duration = Date().timeIntervalSince(start) * 1000
-		print(String(format: "classify: %.6f ms", duration))
-
-		let r = RenderInfo.match(primary: primary, status: status, classes: classes)
-
-		let total = Date().timeIntervalSince(start) * 1000
-		print(String(format: "total   : %.6f ms", total))
-
-		return r
+		return RenderInfo.match(primary: primary, status: status, classes: classes)
 	}
 }
