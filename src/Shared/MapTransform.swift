@@ -295,6 +295,13 @@ final class MapTransform {
 		return meters
 	}
 
+	func distance(from: CGPoint, to: CGPoint) -> Double {
+		let c1 = latLon(forScreenPoint: from)
+		let c2 = latLon(forScreenPoint: to)
+		let meters = GreatCircleDistance(c1, c2)
+		return meters
+	}
+
 	func screenPoint(on object: OsmBaseObject, forScreenPoint point: CGPoint) -> CGPoint {
 		let latLon = latLon(forScreenPoint: point)
 		let latLon2 = object.latLonOnObject(forLatLon: latLon)

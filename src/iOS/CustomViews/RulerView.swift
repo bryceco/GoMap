@@ -119,11 +119,14 @@ class RulerView: UIView {
 	}
 
 	private func updateText() {
-		guard let metersPerPixel = mapView?.metersPerPixel() else {
+		guard let mapView = mapView else {
 			return
 		}
+		let left = convert(CGPoint(x: bounds.minX, y: bounds.minY), to: mapView)
+		let right = convert(CGPoint(x: bounds.maxX, y: bounds.minY), to: mapView)
+		let rulerLength = mapView.distance(from: left, to: right)
 
-		var width = Measurement(value: bounds.width * metersPerPixel, unit: UnitLength.meters)
+		var width = Measurement(value: rulerLength, unit: UnitLength.meters)
 		switch unitType {
 		case .metric:
 			if width.value >= 1000 {
