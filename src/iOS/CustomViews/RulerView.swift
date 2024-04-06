@@ -146,6 +146,7 @@ class RulerView: UIView {
 		let formatter = MeasurementFormatter()
 		formatter.unitOptions = [.providedUnit]
 		formatter.numberFormatter = NumberFormatter()
+		formatter.numberFormatter.minimumSignificantDigits = 3
 		formatter.numberFormatter.maximumSignificantDigits = 3
 		textLayer.string = formatter.string(from: width)
 	}
