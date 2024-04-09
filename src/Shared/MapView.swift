@@ -1326,6 +1326,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		return mapTransform.metersPerPixel(atScreenPoint: crossHairs.position)
 	}
 
+	func distance(from: CGPoint, to: CGPoint) -> Double {
+		return mapTransform.distance(from: from, to: to)
+	}
+
 	func boundingMapRectForScreen() -> OSMRect {
 		let rc = OSMRect(layer.bounds)
 		return mapTransform.boundingMapRect(forScreenRect: rc)
