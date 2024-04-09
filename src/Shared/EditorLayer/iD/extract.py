@@ -15,6 +15,9 @@ parser.add_argument(
 parser.add_argument(
     "--debug", action="store_true", help="generate code with timing information"
 )
+parser.add_argument(
+    "--decomp", action="store_true", help="generate standalone code paste-able into godbolt.org"
+)
 args = parser.parse_args()
 
 # Read all .css files in the input directory
@@ -284,9 +287,10 @@ def parse_css_width(json_css, key, value):
 
 
 def int_or_float(n):
-    if int(float(n)) == float(n):
+    n = float(n)
+    if int(n) == n:
         return int(n)
-    return float(n)
+    return n
 
 for file_path in sorted(css_files):
     path_css = extract_path_css(file_path)
@@ -410,7 +414,6 @@ for file_path in sorted(css_files):
 
 # https://www.w3.org/TR/CSS21/cascade.html#specificity
 def css_precedence(style):
-
     return 1 + len(style[1]) + len(style[2])
 
 def css_keys_equal(a, b):
@@ -472,10 +475,40 @@ if args.debug:
     debug_start = "let start = Date()\n\t\t"
     debug_end = "\n\t\tlet total = Date().timeIntervalSince(start) * 1000\n"+'\t\tprint(String(format: "match   : %.6f ms", total))\n'
 
+decomp = ""
+if args.decomp:
+    decomp = """import Foundation
 
-with open(args.output, "w") as f:
-    f.write(
-        """// Copyright (c) 2017, iD Contributors
+struct UIColor {
+    var red: Float
+    var green: Float
+    var blue: Float
+    var alpha: Float
+
+    static let black = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+    static let clear = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+}
+enum LineCapStyle {
+    case butt
+    case round
+    case square
+}
+
+class RenderInfo {
+	var value: String?
+    var lineColor: UIColor?
+    var lineWidth: CGFloat = 0.0
+    var lineCap: LineCapStyle = .butt
+    var lineDashPattern: [NSNumber]?
+    var casingColor: UIColor?
+    var casingWidth: CGFloat = 0.0
+    var casingCap: LineCapStyle = .butt
+    var casingDashPattern: [NSNumber]?
+	var areaColor: UIColor?
+}
+"""
+
+code = """// Copyright (c) 2017, iD Contributors
 //
 // Permission to use, copy, modify, and/or distribute this software for any
 // purpose with or without fee is hereby granted, provided that the above
@@ -497,18 +530,24 @@ with open(args.output, "w") as f:
 //
 
 import Foundation
-import UIKit
+"""
+if args.decomp:
+    code += decomp
+else: code += """import UIKit
 
 extension RenderInfo {
-\tstatic func match(primary: String?, status: String?, classes: [String]) -> RenderInfo {
-\t\t"""
-+ debug_start
-        + to_swift_fn(styles, 2)
-        + debug_end + """
+\tstatic """
+
+code += "func match(primary: String?, status: String?, classes: [String]) -> RenderInfo {\n\t\t"
+code += debug_start
+code += to_swift_fn(styles, 2)
+code += debug_end
+code += """
 \t\treturn r
 \t}
-}
 """
-    )
+if not args.decomp:
+    code += "}"
 
-    # static func match(primary: String?, primaryVal: String?, status: String?, statusVal: String?, classes: [String]) -> RenderInfo {
+with open(args.output, "w") as f:
+    f.write(code + '\n')
