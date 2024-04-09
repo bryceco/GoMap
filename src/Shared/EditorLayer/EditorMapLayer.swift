@@ -658,21 +658,8 @@ final class EditorMapLayer: CALayer {
 						layer.lineDashPattern = renderInfo.casingDashPattern
 						layer.lineJoin = DEFAULT_LINEJOIN
 						layer.zPosition = Z_CASING
-						let props = layer.properties
-						props.position = refPoint
-						props.lineWidth = layer.lineWidth
-						if let bridge = object.tags["bridge"],
-						   !OsmTags.isOsmBooleanFalse(bridge)
-						{
-							props.lineWidth += 4
-						}
-						if let tunnel = object.tags["tunnel"],
-						   !OsmTags.isOsmBooleanFalse(tunnel)
-						{
-							props.lineWidth += 2
-							layer.strokeColor = UIColor.brown.cgColor
-						}
-
+						layer.properties.position = refPoint
+						layer.properties.lineWidth = layer.lineWidth
 						layers.append(layer)
 					}
 
