@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -39,10 +39,10 @@
                                 </connections>
                             </view>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TJj-HW-GPO" customClass="RulerView" customModule="Go_Map__" customModuleProvider="target">
-                                <rect key="frame" x="12" y="723" width="120" height="30"/>
+                                <rect key="frame" x="12" y="738" width="120" height="15"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="9lX-7p-riE"/>
+                                    <constraint firstAttribute="height" constant="15" id="9lX-7p-riE"/>
                                     <constraint firstAttribute="width" constant="120" id="IbR-gh-YSN"/>
                                 </constraints>
                             </view>
@@ -943,6 +943,7 @@
                                             <constraint firstAttribute="trailing" secondItem="mhx-8A-Atc" secondAttribute="trailing" constant="8" id="SAA-bu-ylY"/>
                                             <constraint firstAttribute="trailing" secondItem="qP9-Sc-sc4" secondAttribute="trailing" id="eLm-Cg-DhZ"/>
                                             <constraint firstItem="mhx-8A-Atc" firstAttribute="top" secondItem="qP9-Sc-sc4" secondAttribute="bottom" constant="8" id="hX2-cC-Fk1"/>
+                                            <constraint firstItem="qP9-Sc-sc4" firstAttribute="top" secondItem="APA-kz-Xeq" secondAttribute="top" id="muZ-Rz-g9e"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -962,7 +963,6 @@
                             <constraint firstItem="0as-7d-L0W" firstAttribute="leading" secondItem="fg1-MM-IyW" secondAttribute="leading" id="U3F-vT-3NH"/>
                             <constraint firstAttribute="trailing" secondItem="0as-7d-L0W" secondAttribute="trailing" id="Udi-0g-Cm3"/>
                             <constraint firstItem="Mms-6q-xZ5" firstAttribute="bottom" secondItem="0as-7d-L0W" secondAttribute="bottom" id="XT2-Cq-fUX"/>
-                            <constraint firstItem="qP9-Sc-sc4" firstAttribute="top" secondItem="APA-kz-Xeq" secondAttribute="top" id="muZ-Rz-g9e"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1020,13 +1020,13 @@
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
