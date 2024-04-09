@@ -179,8 +179,6 @@ final class RenderInfoDatabase {
 	static let shared = RenderInfoDatabase()
 	static let nsZero = NSNumber(value: 0.0)
 
-	required init() {}
-    
 	func renderInfoForObject(_ object: OsmBaseObject) -> RenderInfo {
 		var tags = object.tags
 		// if the object is part of a rendered relation then inherit that relation's tags
