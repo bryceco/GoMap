@@ -23,7 +23,11 @@ import Foundation
 import UIKit
 
 extension RenderInfo {
-	static func match(primary: String?, status: String?, classes: [String]) -> RenderInfo {
+	static func match(primary: String?, status: String?, classes: [String]) -> RenderInfo? {
+		guard primary != nil || status != nil || !classes.isEmpty else {
+			return nil
+		}
+
 		let r = RenderInfo()
 		if classes.contains("barrier-hedge") || classes.contains("landuse-flowerbed") || classes.contains("landuse-forest") || classes.contains("landuse-grass") || classes.contains("landuse-recreation_ground") || classes.contains("landuse-village_green") || classes.contains("leisure-garden") || classes.contains("leisure-golf_course") || classes.contains("leisure-nature_reserve") || classes.contains("leisure-park") || classes.contains("leisure-pitch") || classes.contains("leisure-track") || primary == "natural" || classes.contains("natural-wood") || classes.contains("golf-tee") || classes.contains("golf-fairway") || classes.contains("golf-rough") || classes.contains("golf-green") {
 			r.lineColor = UIColor(red: 0.549, green: 0.816, blue: 0.373, alpha: 1.0)

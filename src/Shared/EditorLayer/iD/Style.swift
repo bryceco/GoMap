@@ -79,8 +79,8 @@ let osmSemipavedTags: [String: [String: Bool]] = [
 ]
 
 extension RenderInfo {
-	static func style(tags: [String: String]) -> RenderInfo {
-		
+	static func style(tags: [String: String]) -> RenderInfo? {
+
 		var primary: String?
 		var status: String?
 		var classes: [String] = []

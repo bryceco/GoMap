@@ -194,11 +194,13 @@ final class RenderInfoDatabase {
 			}
 		}
 
-		return RenderInfo.style(tags: tags)
+		if let renderInfo = RenderInfo.style(tags: tags) {
+			return renderInfo
+		}
 
 		// check if it is an address point
-		if object.isNode() != nil,
-		   !object.tags.isEmpty,
+		if object is OsmNode,
+		   !tags.isEmpty,
 		   tags.first(where: { key, _ in OsmTags.IsInterestingKey(key) && !key.hasPrefix("addr:") }) == nil
 		{
 			return g_AddressRender
