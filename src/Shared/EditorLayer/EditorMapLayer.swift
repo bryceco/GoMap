@@ -564,7 +564,7 @@ final class EditorMapLayer: CALayer {
 
 	private static let ZSCALE: CGFloat = 0.001
 	private static let Z_BASE: CGFloat = -1.0
-	private let Z_OCEAN = Z_BASE + 1 * ZSCALE
+	public let Z_OCEAN = Z_BASE + 1 * ZSCALE
 	private let Z_AREA = Z_BASE + 2 * ZSCALE
 	private let Z_HALO = Z_BASE + 3 * ZSCALE
 	private let Z_CASING = Z_BASE + 4 * ZSCALE
@@ -1146,7 +1146,9 @@ final class EditorMapLayer: CALayer {
 		var nameLimit = Int(5 + (geekScore - 500) / 200) // 500 -> 5, 2500 -> 10
 		var nameSet: Set<String> = []
 		var layers: [CALayer & LayerPropertiesProviding] = []
-		let regularColor = UIColor.cyan
+		let wayColor = UIColor(red: 0.2, green: 1.0, blue: 0.4, alpha: 1.0)
+		let nodeInWayColor = UIColor.cyan
+		let selectedNodeColor = UIColor.yellow
 		let relationColor = UIColor(red: 66 / 255.0, green: 188 / 255.0, blue: 244 / 255.0, alpha: 1.0)
 
 		// highlighting
@@ -1168,13 +1170,8 @@ final class EditorMapLayer: CALayer {
 
 			if let way = object as? OsmWay {
 				let path = self.path(for: way)
-				var lineWidth: CGFloat = selected ? 1.0 : 2.0
-				let wayColor = selected ? regularColor : relationColor
-
-				if lineWidth == 0 {
-					lineWidth = 1
-				}
-				lineWidth += 2 // since we're drawing highlight 2-wide we don't want it to intrude inward on way
+				let lineWidth: CGFloat = (object.renderInfo?.lineWidth ?? 2.0) + 2
+				let wayColor = selected ? wayColor : relationColor
 
 				let layer = CAShapeLayerWithProperties()
 				layer.strokeColor = wayColor.cgColor
@@ -1241,7 +1238,7 @@ final class EditorMapLayer: CALayer {
 				for node in nodes {
 					let layer2 = CAShapeLayerWithProperties()
 					layer2.position = owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false)
-					layer2.strokeColor = node == selectedNode ? UIColor.yellow.cgColor : UIColor.green.cgColor
+					layer2.strokeColor = node == selectedNode ? selectedNodeColor.cgColor : nodeInWayColor.cgColor
 					layer2.fillColor = UIColor.clear.cgColor
 					layer2.lineWidth = 3.0
 					layer2.shadowColor = UIColor.black.cgColor
