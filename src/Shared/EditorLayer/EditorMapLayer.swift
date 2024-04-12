@@ -672,7 +672,7 @@ final class EditorMapLayer: CALayer {
 						haloLayer.path = path
 						haloLayer.strokeColor = UIColor.red.cgColor
 						haloLayer.fillColor = nil
-						haloLayer.lineWidth = renderInfo.lineWidth + 4
+						haloLayer.lineWidth = renderInfo.lineWidth + 2
 						haloLayer.lineCap = DEFAULT_LINECAP
 						haloLayer.lineJoin = DEFAULT_LINEJOIN
 						haloLayer.zPosition = Z_HALO
@@ -693,7 +693,7 @@ final class EditorMapLayer: CALayer {
 			if let path = path {
 				var lineWidth = renderInfo.lineWidth
 				if lineWidth == 0 {
-					lineWidth = 2
+					lineWidth = 1
 				}
 
 				let layer = CAShapeLayerWithProperties()

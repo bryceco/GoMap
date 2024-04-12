@@ -283,11 +283,11 @@ def parse_css_color(json_css, key, value):
 
 
 def parse_css_width(json_css, key, value):
-    json_css[key] = float(value.removesuffix("px"))
+    json_css[key] = float(value.removesuffix("px")) / 2
 
 
 def int_or_float(n):
-    n = float(n)
+    n = float(n) / 2
     if int(n) == n:
         return int(n)
     return n

@@ -49,7 +49,7 @@ final class RenderInfo {
 	}
 
 	init(lineColor: UIColor? = UIColor.white,
-		lineWidth: CGFloat = 2.0,
+		lineWidth: CGFloat = 1.0,
 		lineCap: CAShapeLayerLineCap = .round,
 		lineDashPattern: [CGFloat]? = nil,
 		casingColor: UIColor? = nil,

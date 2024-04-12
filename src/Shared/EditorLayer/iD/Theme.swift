@@ -73,9 +73,9 @@ extension RenderInfo {
 		}
 		if primary == "highway" {
 			r.lineColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
-			r.lineWidth = 8.0
+			r.lineWidth = 4.0
 			r.casingColor = UIColor(red: 0.267, green: 0.267, blue: 0.267, alpha: 1.0)
-			r.casingWidth = 10.0
+			r.casingWidth = 5.0
 		}
 		if classes.contains("highway-motorway") || classes.contains("highway-motorway_link") || classes.contains("motorway") {
 			r.lineColor = UIColor(red: 0.812, green: 0.125, blue: 0.506, alpha: 1.0)
@@ -106,12 +106,12 @@ extension RenderInfo {
 			r.casingColor = UIColor(red: 0.267, green: 0.267, blue: 0.267, alpha: 1.0)
 		}
 		if classes.contains("highway-living_street") || classes.contains("highway-bus_guideway") || classes.contains("highway-service") || classes.contains("highway-track") || classes.contains("highway-road") {
-			r.lineWidth = 5.0
-			r.casingWidth = 7.0
+			r.lineWidth = 2.5
+			r.casingWidth = 3.5
 		}
 		if classes.contains("highway-path") || classes.contains("highway-footway") || classes.contains("highway-cycleway") || classes.contains("highway-bridleway") || classes.contains("highway-corridor") || classes.contains("highway-steps") {
-			r.lineWidth = 3.0
-			r.casingWidth = 5.0
+			r.lineWidth = 1.5
+			r.casingWidth = 2.5
 		}
 		if classes.contains("highway-living_street") || classes.contains("living_street") {
 			r.lineColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
@@ -119,16 +119,16 @@ extension RenderInfo {
 		}
 		if classes.contains("highway-corridor") || classes.contains("corridor") {
 			r.lineColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-			r.lineDashPattern = [2, 8]
+			r.lineDashPattern = [1, 4]
 			r.casingColor = UIColor(red: 0.549, green: 0.816, blue: 0.373, alpha: 1.0)
 			r.casingCap = .round
 			r.casingDashPattern = nil
 		}
 		if classes.contains("highway-pedestrian") || classes.contains("pedestrian") {
 			r.lineColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-			r.lineWidth = 3.5
+			r.lineWidth = 1.75
 			r.lineCap = .butt
-			r.lineDashPattern = [8, 8]
+			r.lineDashPattern = [4, 4]
 			r.casingColor = UIColor(red: 0.6, green: 0.533, blue: 0.533, alpha: 1.0)
 			r.casingCap = .round
 			r.casingDashPattern = nil
@@ -151,7 +151,7 @@ extension RenderInfo {
 		}
 		if classes.contains("highway-path") || classes.contains("highway-footway") || classes.contains("highway-cycleway") || classes.contains("highway-bridleway") {
 			r.lineCap = .butt
-			r.lineDashPattern = [6, 6]
+			r.lineDashPattern = [3, 3]
 		}
 		if classes.contains("crossing") || classes.contains("footway-access_aisle") || classes.contains("public_transport-platform") || classes.contains("highway-platform") || classes.contains("railway-platform") || classes.contains("railway-platform_edge") || classes.contains("man_made-pier") {
 			r.lineColor = UIColor(red: 0.867, green: 0.8, blue: 0.667, alpha: 1.0)
@@ -181,14 +181,14 @@ extension RenderInfo {
 		if classes.contains("highway-steps") {
 			r.lineColor = UIColor(red: 0.506, green: 0.824, blue: 0.361, alpha: 1.0)
 			r.lineCap = .butt
-			r.lineDashPattern = [3, 3]
+			r.lineDashPattern = [1.5, 1.5]
 			r.casingColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 			r.casingCap = .round
 			r.casingDashPattern = nil
 		}
 		if primary == "aeroway" {
 			r.lineColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-			r.lineWidth = 1.0
+			r.lineWidth = 0.5
 			r.lineDashPattern = nil
 		}
 		if classes.contains("aeroway-runway") {
@@ -196,26 +196,26 @@ extension RenderInfo {
 		}
 		if classes.contains("aeroway-taxiway") || classes.contains("taxiway") {
 			r.lineColor = UIColor(red: 1.0, green: 1.0, blue: 0.0, alpha: 1.0)
-			r.lineWidth = 5.0
+			r.lineWidth = 2.5
 			r.casingColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
-			r.casingWidth = 7.0
+			r.casingWidth = 3.5
 		}
 		if classes.contains("aeroway-runway") {
 			r.lineColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-			r.lineWidth = 2.0
+			r.lineWidth = 1.0
 			r.lineCap = .butt
-			r.lineDashPattern = [24, 48]
+			r.lineDashPattern = [12, 24]
 			r.casingColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
-			r.casingWidth = 10.0
+			r.casingWidth = 5.0
 			r.casingCap = .square
 		}
 		if primary == "railway" {
 			r.lineColor = UIColor(red: 0.933, green: 0.933, blue: 0.933, alpha: 1.0)
-			r.lineWidth = 2.0
+			r.lineWidth = 1.0
 			r.lineCap = .butt
-			r.lineDashPattern = [12, 12]
+			r.lineDashPattern = [6, 6]
 			r.casingColor = UIColor(red: 0.333, green: 0.333, blue: 0.333, alpha: 1.0)
-			r.casingWidth = 7.0
+			r.casingWidth = 3.5
 		}
 		if classes.contains("railway-subway") {
 			r.lineColor = UIColor(red: 0.733, green: 0.733, blue: 0.733, alpha: 1.0)
@@ -223,29 +223,29 @@ extension RenderInfo {
 		}
 		if classes.contains("waterway-dock") || classes.contains("waterway-boatyard") || classes.contains("waterway-fuel") {
 			r.lineColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-			r.lineWidth = 1.0
+			r.lineWidth = 0.5
 			r.areaColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)
 		}
 		if primary == "waterway" {
-			r.lineWidth = 5.0
-			r.casingWidth = 7.0
+			r.lineWidth = 2.5
+			r.casingWidth = 3.5
 		}
 		if classes.contains("waterway-river") {
-			r.lineWidth = 8.0
-			r.casingWidth = 10.0
+			r.lineWidth = 4.0
+			r.casingWidth = 5.0
 		}
 		if classes.contains("waterway-ditch") {
 			r.lineColor = UIColor(red: 0.2, green: 0.6, blue: 0.667, alpha: 1.0)
 		}
 		if primary == "aerialway" || classes.contains("attraction-summer_toboggan") || classes.contains("attraction-water_slide") || classes.contains("golf-cartpath") || classes.contains("man_made-pipeline") || classes.contains("natural-tree_row") || classes.contains("roller_coaster-track") || classes.contains("roller_coaster-support") || classes.contains("piste") {
-			r.lineWidth = 5.0
-			r.casingWidth = 7.0
+			r.lineWidth = 2.5
+			r.casingWidth = 3.5
 		}
 		if classes.contains("route-ferry") {
 			r.lineColor = UIColor(red: 0.345, green: 0.663, blue: 0.929, alpha: 1.0)
-			r.lineWidth = 3.0
+			r.lineWidth = 1.5
 			r.lineCap = .butt
-			r.lineDashPattern = [12, 8]
+			r.lineDashPattern = [6, 4]
 		}
 		if primary == "aerialway" {
 			r.lineColor = UIColor(red: 0.8, green: 0.333, blue: 0.333, alpha: 1.0)
@@ -265,9 +265,9 @@ extension RenderInfo {
 		}
 		if classes.contains("roller_coaster-track") {
 			r.lineColor = UIColor(red: 0.867, green: 0.867, blue: 0.867, alpha: 1.0)
-			r.lineWidth = 3.0
+			r.lineWidth = 1.5
 			r.lineCap = .butt
-			r.lineDashPattern = [5, 1]
+			r.lineDashPattern = [2.5, 0.5]
 			r.casingColor = UIColor(red: 0.439, green: 0.439, blue: 0.439, alpha: 1.0)
 		}
 		if classes.contains("roller_coaster-support") {
@@ -279,33 +279,33 @@ extension RenderInfo {
 		}
 		if primary == "power" {
 			r.lineColor = UIColor(red: 0.576, green: 0.576, blue: 0.576, alpha: 1.0)
-			r.lineWidth = 2.0
+			r.lineWidth = 1.0
 		}
 		if classes.contains("man_made-pipeline") {
 			r.lineColor = UIColor(red: 0.796, green: 0.816, blue: 0.847, alpha: 1.0)
 			r.lineCap = .butt
-			r.lineDashPattern = [80, 1.25]
+			r.lineDashPattern = [40, 0.625]
 			r.casingColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
 		}
 		if primary == "boundary" {
 			r.lineColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-			r.lineWidth = 2.0
+			r.lineWidth = 1.0
 			r.lineCap = .butt
-			r.lineDashPattern = [20, 5, 5, 5]
+			r.lineDashPattern = [10, 2.5, 2.5, 2.5]
 			r.casingColor = UIColor(red: 0.51, green: 0.71, blue: 0.996, alpha: 1.0)
-			r.casingWidth = 6.0
+			r.casingWidth = 3.0
 		}
 		if classes.contains("boundary-protected_area") || classes.contains("boundary-national_park") {
 			r.casingColor = UIColor(red: 0.69, green: 0.886, blue: 0.596, alpha: 1.0)
 		}
 		if classes.contains("man_made-groyne") || classes.contains("man_made-breakwater") {
-			r.lineWidth = 3.0
+			r.lineWidth = 1.5
 			r.lineCap = .round
-			r.lineDashPattern = [15, 5, 1, 5]
+			r.lineDashPattern = [7.5, 2.5, 0.5, 2.5]
 		}
 		if classes.contains("bridge") {
 			r.casingColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
-			r.casingWidth = 16.0
+			r.casingWidth = 8.0
 			r.casingCap = .butt
 			r.casingDashPattern = nil
 		}
@@ -319,18 +319,18 @@ extension RenderInfo {
 		}
 		if classes.contains("embankment") || classes.contains("cutting") {
 			r.casingColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
-			r.casingWidth = 22.0
+			r.casingWidth = 11.0
 			r.casingCap = .butt
-			r.casingDashPattern = [2, 4]
+			r.casingDashPattern = [1, 2]
 		}
 		if classes.contains("unpaved") {
 			r.casingColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
 			r.casingCap = .butt
-			r.casingDashPattern = [4, 4]
+			r.casingDashPattern = [2, 2]
 		}
 		if classes.contains("semipaved") {
 			r.casingCap = .butt
-			r.casingDashPattern = [6, 2]
+			r.casingDashPattern = [3, 1]
 		}
 		if primary == "building" {
 			r.lineColor = UIColor(red: 0.878, green: 0.431, blue: 0.373, alpha: 1.0)
@@ -349,8 +349,8 @@ extension RenderInfo {
 			r.areaColor = UIColor(red: 0.549, green: 0.549, blue: 0.549, alpha: 0.5)
 		}
 		if classes.contains("highway-service") && classes.contains("service-driveway") {
-			r.lineWidth = 4.25
-			r.casingWidth = 6.25
+			r.lineWidth = 2.125
+			r.casingWidth = 3.125
 		}
 		if classes.contains("highway-service") && classes.contains("service") {
 			r.lineColor = UIColor(red: 0.867, green: 0.8, blue: 0.667, alpha: 1.0)
@@ -377,10 +377,10 @@ extension RenderInfo {
 			r.lineColor = UIColor(red: 0.831, green: 0.706, blue: 0.706, alpha: 1.0)
 		}
 		if primary == "highway" && classes.contains("crossing-unmarked") {
-			r.lineDashPattern = [6, 4]
+			r.lineDashPattern = [3, 2]
 		}
 		if primary == "highway" && classes.contains("crossing-marked") {
-			r.lineDashPattern = [6, 3]
+			r.lineDashPattern = [3, 1.5]
 		}
 		if classes.contains("highway-footway") && classes.contains("crossing-marked") {
 			r.lineColor = UIColor(red: 0.298, green: 0.267, blue: 0.267, alpha: 1.0)
@@ -393,7 +393,7 @@ extension RenderInfo {
 		}
 		if primary == "highway" && classes.contains("footway-access_aisle") {
 			r.lineColor = UIColor(red: 0.298, green: 0.267, blue: 0.267, alpha: 1.0)
-			r.lineDashPattern = [4, 2]
+			r.lineDashPattern = [2, 1]
 		}
 		if (primary == "railway" && classes.contains("railway-platform_edge")) || (primary == "railway" && classes.contains("railway-platform")) {
 			r.lineDashPattern = nil
@@ -411,25 +411,25 @@ extension RenderInfo {
 			r.areaColor = UIColor(red: 0.467, green: 0.827, blue: 0.871, alpha: 0.3)
 		}
 		if classes.contains("barrier") && primary != "waterway" {
-			r.lineWidth = 3.0
+			r.lineWidth = 1.5
 			r.lineCap = .round
-			r.lineDashPattern = [15, 5, 1, 5]
+			r.lineDashPattern = [7.5, 2.5, 0.5, 2.5]
 		}
 		if (classes.contains("barrier") && classes.contains("barrier-wall")) || (classes.contains("barrier") && classes.contains("barrier-retaining_wall")) || (classes.contains("barrier") && classes.contains("barrier-city_wall")) {
 			r.lineCap = .butt
-			r.lineDashPattern = [16, 3, 9, 3]
+			r.lineDashPattern = [8, 1.5, 4.5, 1.5]
 		}
 		if (primary == "railway" && classes.contains("bridge")) || (classes.contains("highway-living_street") && classes.contains("bridge")) || (classes.contains("highway-path") && classes.contains("bridge")) || (classes.contains("highway-corridor") && classes.contains("bridge")) || (classes.contains("highway-pedestrian") && classes.contains("bridge")) || (classes.contains("highway-service") && classes.contains("bridge")) || (classes.contains("highway-track") && classes.contains("bridge")) || (classes.contains("highway-steps") && classes.contains("bridge")) || (classes.contains("highway-footway") && classes.contains("bridge")) || (classes.contains("highway-cycleway") && classes.contains("bridge")) || (classes.contains("highway-bridleway") && classes.contains("bridge")) {
-			r.casingWidth = 10.0
+			r.casingWidth = 5.0
 		}
 		if (classes.contains("bridge") && classes.contains("unpaved")) || (classes.contains("bridge") && classes.contains("semipaved")) {
 			r.casingColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
 		}
 		if status != nil && status != "disused" {
 			r.lineCap = .butt
-			r.lineDashPattern = [7, 3]
+			r.lineDashPattern = [3.5, 1.5]
 			r.casingCap = .butt
-			r.casingDashPattern = [7, 3]
+			r.casingDashPattern = [3.5, 1.5]
 		}
 		if primary == "railway" && status != nil && !classes.contains("service") {
 			r.lineColor = UIColor(red: 0.933, green: 0.933, blue: 0.933, alpha: 1.0)
@@ -439,28 +439,28 @@ extension RenderInfo {
 		}
 		if primary == "highway" && status != nil && status == "construction" {
 			r.lineColor = UIColor(red: 0.988, green: 0.424, blue: 0.078, alpha: 1.0)
-			r.lineWidth = 8.0
-			r.lineCap = .butt
-			r.lineDashPattern = [10, 10]
-			r.casingColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-			r.casingWidth = 10.0
-			r.casingCap = .butt
-			r.casingDashPattern = nil
-		}
-		if (primary == "highway" && status != nil && status == "construction" && classes.contains("construction-path")) || (primary == "highway" && status != nil && status == "construction" && classes.contains("construction-footway")) || (primary == "highway" && status != nil && status == "construction" && classes.contains("construction-cycleway")) || (primary == "highway" && status != nil && status == "construction" && classes.contains("construction-bridleway")) || (primary == "highway" && status != nil && status == "construction" && classes.contains("construction-steps")) {
 			r.lineWidth = 4.0
 			r.lineCap = .butt
-			r.lineDashPattern = [10, 10]
+			r.lineDashPattern = [5, 5]
+			r.casingColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 			r.casingWidth = 5.0
 			r.casingCap = .butt
 			r.casingDashPattern = nil
 		}
+		if (primary == "highway" && status != nil && status == "construction" && classes.contains("construction-path")) || (primary == "highway" && status != nil && status == "construction" && classes.contains("construction-footway")) || (primary == "highway" && status != nil && status == "construction" && classes.contains("construction-cycleway")) || (primary == "highway" && status != nil && status == "construction" && classes.contains("construction-bridleway")) || (primary == "highway" && status != nil && status == "construction" && classes.contains("construction-steps")) {
+			r.lineWidth = 2.0
+			r.lineCap = .butt
+			r.lineDashPattern = [5, 5]
+			r.casingWidth = 2.5
+			r.casingCap = .butt
+			r.casingDashPattern = nil
+		}
 		if (primary == "highway" && status != nil && status == "proposed" && classes.contains("proposed-path")) || (primary == "highway" && status != nil && status == "proposed" && classes.contains("proposed-footway")) || (primary == "highway" && status != nil && status == "proposed" && classes.contains("proposed-cycleway")) || (primary == "highway" && status != nil && status == "proposed" && classes.contains("proposed-bridleway")) || (primary == "highway" && status != nil && status == "proposed" && classes.contains("proposed-steps")) {
-			r.lineWidth = 3.0
-			r.casingWidth = 4.5
+			r.lineWidth = 1.5
+			r.casingWidth = 2.25
 		}
 		if (primary == "highway" && classes.contains("bridge") && status != nil && status == "proposed" && classes.contains("proposed-path")) || (primary == "highway" && classes.contains("bridge") && status != nil && status == "proposed" && classes.contains("proposed-footway")) || (primary == "highway" && classes.contains("bridge") && status != nil && status == "proposed" && classes.contains("proposed-cycleway")) || (primary == "highway" && classes.contains("bridge") && status != nil && status == "proposed" && classes.contains("proposed-bridleway")) || (primary == "highway" && classes.contains("bridge") && status != nil && status == "proposed" && classes.contains("proposed-steps")) {
-			r.casingWidth = 10.0
+			r.casingWidth = 5.0
 		}
 
 		return r
