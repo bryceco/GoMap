@@ -156,7 +156,7 @@ class ClearCacheViewController: UITableViewController {
 					title: "Debug: Automatic cache management",
 					style: .destructive,
 					handler: { _ in
-						_ = appDelegate.mapView.editorLayer.mapData.discardStaleData(maxObjects: 1000, maxAge: 5*60)
+						_ = appDelegate.mapView.editorLayer.mapData.discardStaleData(maxObjects: 1000, maxAge: 5 * 60)
 						refreshAfterPurge()
 						self.navigationController?.popViewController(animated: true)
 					}))

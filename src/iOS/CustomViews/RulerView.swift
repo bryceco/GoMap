@@ -50,7 +50,7 @@ class RulerView: UIView {
 		unitType = Locale.current.usesMetricSystem ? .metric : .imperial
 
 		super.init(coder: coder)
-		self.isUserInteractionEnabled = true
+		isUserInteractionEnabled = true
 
 		backgroundColor = nil
 
@@ -88,7 +88,11 @@ class RulerView: UIView {
 		let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(toggleUnitType))
 		addGestureRecognizer(tapGestureRecognizer)
 
-		NotificationCenter.default.addObserver(self, selector: #selector(localeDidChange), name: NSLocale.currentLocaleDidChangeNotification, object: nil)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(localeDidChange),
+			name: NSLocale.currentLocaleDidChangeNotification,
+			object: nil)
 	}
 
 	override var frame: CGRect {
