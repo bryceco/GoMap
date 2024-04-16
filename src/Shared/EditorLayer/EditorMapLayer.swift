@@ -1,5 +1,5 @@
 //
-//  OsmMapLayer.swift
+//  EditorMapLayer.swift
 //  OpenStreetMap
 //
 //  Created by Bryce Cogswell on 10/5/12.
@@ -90,7 +90,8 @@ final class EditorMapLayer: CALayer {
 	struct DragState {
 		var startPoint: LatLon // to track total movement
 		var didMove: Bool // to maintain undo stack
-		var confirmDrag: Bool // should we confirm that the user wanted to drag the selected object? Only if they haven't modified it since selecting it
+		var confirmDrag: Bool // should we confirm that the user wanted to drag the selected object? Only if they
+		// haven't modified it since selecting it
 	}
 
 	var dragState = DragState(startPoint: .zero, didMove: false, confirmDrag: false)
@@ -220,7 +221,8 @@ final class EditorMapLayer: CALayer {
 			if let pushpin = context["pushpin"] as? String,
 			   let primary = self.selectedPrimary
 			{
-				// since we don't record the pushpin location until after a drag has begun we need to re-center on the object:
+				// since we don't record the pushpin location until after a drag has begun we need to re-center on the
+				// object:
 				var pt = NSCoder.cgPoint(for: pushpin)
 				let loc = self.owner.mapTransform.latLon(forScreenPoint: pt)
 				let pos = primary.latLonOnObject(forLatLon: loc)
@@ -937,7 +939,8 @@ final class EditorMapLayer: CALayer {
 			backgroundLayer.borderWidth = 1.0
 			backgroundLayer.isOpaque = true
 
-			/// The actual icon image serves as a `mask` for the icon's color layer, allowing for "tinting" of the icons.
+			/// The actual icon image serves as a `mask` for the icon's color layer, allowing for "tinting" of the
+			/// icons.
 			let iconMaskLayer = CALayer()
 			let padding: CGFloat = 4
 			iconMaskLayer.frame = CGRect(
@@ -1496,7 +1499,9 @@ final class EditorMapLayer: CALayer {
 		}
 		if addressCount > 50 {
 			let range = NSIndexSet(indexesIn: NSRange(location: objectLimit - addressCount, length: addressCount))
-			for deletionIndex in range.reversed() { objects.remove(at: deletionIndex) }
+			for deletionIndex in range.reversed() {
+				objects.remove(at: deletionIndex)
+			}
 		}
 
 		return objects
@@ -1717,7 +1722,7 @@ final class EditorMapLayer: CALayer {
 	var selectedRelation: OsmRelation? {
 		didSet {
 			if oldValue != selectedRelation {
-				self.setNeedsDisplay()
+				setNeedsDisplay()
 				owner.selectionDidChange()
 			}
 		}
@@ -1731,9 +1736,9 @@ final class EditorMapLayer: CALayer {
 				updateMapLocation()
 			}
 			if !wasHidden, isHidden {
-				self.selectedNode = nil
-				self.selectedWay = nil
-				self.selectedRelation = nil
+				selectedNode = nil
+				selectedWay = nil
+				selectedRelation = nil
 				owner.removePin()
 			}
 		}

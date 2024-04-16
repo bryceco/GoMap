@@ -40,7 +40,7 @@ let statuses = [
 	"dismantled", "razed", "demolished", "destroyed", "removed", "obliterated",
 	// existent occasionally, e.g. stormwater drainage basin
 	"intermittent"
-];
+]
 let secondaries = [
 	"oneway", "bridge", "tunnel", "embankment", "cutting", "barrier",
 	"surface", "tracktype", "footway", "crossing", "service", "sport",
@@ -49,8 +49,9 @@ let secondaries = [
 ]
 
 let osmPathHighwayTagValues = [
-	"path": true, "footway": true, "cycleway": true, "bridleway": true, "pedestrian": true, "corridor": true, "steps": true
-];
+	"path": true, "footway": true, "cycleway": true, "bridleway": true, "pedestrian": true, "corridor": true,
+	"steps": true
+]
 
 let osmPavedTags: [String: [String: Bool]] = [
 	"surface": [

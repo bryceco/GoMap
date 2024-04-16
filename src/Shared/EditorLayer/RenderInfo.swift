@@ -59,8 +59,8 @@ final class RenderInfo {
 		casingWidth: CGFloat = 0.0,
 		casingCap: CAShapeLayerLineCap = .butt,
 		casingDashPattern: [CGFloat]? = nil,
-		areaColor: UIColor? = nil) {
-		
+		areaColor: UIColor? = nil)
+	{
 		self.lineColor = lineColor
 		self.lineWidth = lineWidth
 		self.lineCap = lineCap
