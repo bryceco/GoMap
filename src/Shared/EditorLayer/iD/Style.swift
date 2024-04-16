@@ -80,33 +80,25 @@ let osmSemipavedTags: [String: [String: Bool]] = [
 
 extension RenderInfo {
 	static func style(tags: [String: String]) -> RenderInfo {
-		
 		var primary: String?
+		var primaryValue: String?
 		var status: String?
-		var classes: [String] = []
+		var surface: String?
 
 		// Pick at most one primary classification tag.
 		for key in primaries {
 			if let val = tags[key], val != "no" {
-				var modifiedKey = key
-				if key == "piste:type" {
-					modifiedKey = "piste"
-				} else if key == "building:part" {
-					modifiedKey = "building_part"
-				}
-				
-				primary = modifiedKey
+				primary = key
 				if statuses.contains(val) {
 					status = val
-					classes.append(modifiedKey)
 				} else {
-					classes.append(contentsOf: [modifiedKey, "\(modifiedKey)-\(val)"])
+					primaryValue = val
 				}
-				
+
 				break
 			}
 		}
-		
+
 		if primary == nil {
 			for stat in statuses {
 				for prim in primaries {
@@ -118,7 +110,7 @@ extension RenderInfo {
 				}
 			}
 		}
-		
+
 		// Add at most one status tag, only if relates to primary tag..
 		if status == nil {
 			for stat in statuses {
@@ -130,26 +122,20 @@ extension RenderInfo {
 					} else if primary == nil, primaries.contains(val) {
 						status = stat
 						primary = val
-						classes.append(val)
 					}
-					
+
 					if status != nil {
 						break
 					}
 				}
 			}
 		}
-		
-		// Add any secondary tags
-		for key in secondaries {
-			if let val = tags[key], val != "no", key != primary {
-				classes.append(contentsOf: [key, "\(key)-\(val)"])
-			}
-		}
-		
+
 		// For highways, look for surface tagging..
-		if (primary == "highway" && !(osmPathHighwayTagValues[tags["highway"] ?? ""] ?? false)) || primary == "aeroway" {
-			var surface = tags["highway"] == "track" ? "unpaved" : "paved"
+		if (primary == "highway" && !(osmPathHighwayTagValues[tags["highway"] ?? ""] ?? false)) || primary ==
+			"aeroway"
+		{
+			surface = tags["highway"] == "track" ? "unpaved" : "paved"
 			for (key, val) in tags {
 				if let paved = osmPavedTags[key]?[val] {
 					surface = paved ? "paved" : "unpaved"
@@ -160,12 +146,13 @@ extension RenderInfo {
 					}
 				}
 			}
-			classes.append(surface)
 		}
-		
-		// Ignore tag keys/values with special characters like spaces
-		classes = classes.filter { $0.range(of: "^[-_a-zA-Z0-9]+$", options: .regularExpression) != nil }
 
-		return RenderInfo.match(primary: primary, status: status, classes: classes)
+		return RenderInfo.match(
+			primary: primary,
+			primaryValue: primaryValue,
+			status: status,
+			surface: surface,
+			tags: tags)
 	}
 }

@@ -16,7 +16,9 @@ parser.add_argument(
     "--debug", action="store_true", help="generate code with timing information"
 )
 parser.add_argument(
-    "--decomp", action="store_true", help="generate standalone code paste-able into godbolt.org"
+    "--decomp",
+    action="store_true",
+    help="generate standalone code paste-able into godbolt.org",
 )
 args = parser.parse_args()
 
@@ -129,37 +131,74 @@ secondaries = [
     "proposed",
 ]
 
+surfaces = ["paved", "unpaved", "semipaved"]
+
+
+# TODO: also check key != primary
+def has_tag(key, value, cmp="=="):
+    if value is None:
+        if cmp == "==":
+            return f"has(tags, {swift_repr(key)})"
+        else:
+            return f"!has(tags, {swift_repr(key)})"
+    return f"tags[{swift_repr(key)}] {cmp} {swift_repr(value)}"
+
 
 def selector_to_if(selector, cmp="=="):
-    if selector in primaries:
-        return f"primary {cmp} {swift_repr(selector)}"
-    if selector == "status":
+    if "-" in selector:
+        key, value = selector.split("-", 1)
+    else:
+        key = selector
+        value = None
+
+    if key == "piste":
+        key = "piste:type"
+    if key == "building_part":
+        key = "building:part"
+
+    if key in primaries:
         if cmp == "==":
-            return "status != nil"
-        return "status == nil"
-    if selector.startswith("status-"):
-        return f"status {cmp} {swift_repr(selector.removeprefix('status-'))}"
-    if cmp == "!=":
-        return "!classes.contains(" + swift_repr(selector) + ")"
-    return "classes.contains(" + swift_repr(selector) + ")"
+            if value is None:
+                cond = f"primary {cmp} {swift_repr(key)}"
+            else:
+                cond = f"(primary {cmp} {swift_repr(key)} && primaryValue {cmp} {swift_repr(value)})"
+            if key in secondaries:  # some are both
+                cond = "(" + cond + " || " + has_tag(key, value, cmp) + ")"
+        else:
+            if value is None:
+                cond = f"primary {cmp} {swift_repr(key)}"
+            else:
+                cond = f"primary == {swift_repr(key)} && primaryValue {cmp} {swift_repr(value)}"
+            if key in secondaries:  # some are both
+                cond = "(" + cond + " && " + has_tag(key, value, cmp) + ")"
+        return cond
+
+    if key == "status":
+        if value is None:
+            if cmp == "==":
+                return "status != nil"
+            return "status == nil"
+        return f"status {cmp} {swift_repr(value)}"
+
+    if selector in surfaces:
+        return f"surface {cmp} {swift_repr(selector)}"
+
+    return has_tag(key, value, cmp)
 
 
 def to_swift_fn(styles, indent=0):
-    res = "let r = RenderInfo()\n"
+    res = 'let r = RenderInfo(key: primary ?? "", value: primaryValue)\n'
     for keys, style in styles:
         if_stms = []
         for [selector, and_styles, not_styles] in keys:
-            try:
-                if_stm = selector_to_if(selector)
-            except:
-                breakpoint()
-            for and_selector in and_styles:
+            if_stm = selector_to_if(selector)
+            for and_selector in sorted(and_styles):  # sort to help branch predictor
                 if_stm += " && " + selector_to_if(and_selector)
-            for not_selector in not_styles:
+            for not_selector in sorted(not_styles):
                 if_stm += " && " + selector_to_if(not_selector, "!=")
             if_stms.append(if_stm)
-        if len(if_stms)> 1:
-            if_stms = ["(" + if_stm + ")" if '&&' in if_stm or '||' in if_stm else if_stm for if_stm in if_stms ]
+        if len(if_stms) > 1:
+            if_stms = ["(" + if_stm + ")" for if_stm in if_stms]
             rendered_if = " || ".join(if_stms)
         else:
             rendered_if = if_stms[0]
@@ -292,6 +331,7 @@ def int_or_float(n):
         return int(n)
     return n
 
+
 for file_path in sorted(css_files):
     path_css = extract_path_css(file_path)
     for group in path_css:
@@ -416,10 +456,16 @@ for file_path in sorted(css_files):
 def css_precedence(style):
     return 1 + len(style[1]) + len(style[2])
 
+
 def css_keys_equal(a, b):
     if isinstance(a[0], list):
-        return len(a) == len(b) and all(css_keys_equal(a[i], b[i]) for i in range(len(a)))
-    return a[0] == b[0] and sorted(a[1]) == sorted(b[1]) and sorted(a[2]) == sorted(b[2])
+        return len(a) == len(b) and all(
+            css_keys_equal(a[i], b[i]) for i in range(len(a))
+        )
+    return (
+        a[0] == b[0] and sorted(a[1]) == sorted(b[1]) and sorted(a[2]) == sorted(b[2])
+    )
+
 
 def merge_styles(styles):
     new_styles = []
@@ -457,6 +503,7 @@ def merge_styles_part_two(styles):
 
     return new_styles
 
+
 styles = merge_styles(styles)
 styles = sorted(styles, key=lambda x: css_precedence(x[0]))
 styles = merge_styles(styles)
@@ -473,7 +520,10 @@ debug_start = ""
 debug_end = ""
 if args.debug:
     debug_start = "let start = Date()\n\t\t"
-    debug_end = "\n\t\tlet total = Date().timeIntervalSince(start) * 1000\n"+'\t\tprint(String(format: "match   : %.6f ms", total))\n'
+    debug_end = (
+        "\n\t\tlet total = Date().timeIntervalSince(start) * 1000\n"
+        + '\t\tprint(String(format: "match   : %.6f ms", total))\n'
+    )
 
 decomp = ""
 if args.decomp:
@@ -533,12 +583,18 @@ import Foundation
 """
 if args.decomp:
     code += decomp
-else: code += """import UIKit
+else:
+    code += """import UIKit
 
 extension RenderInfo {
+\tstatic func has(_ tags: [String: String], _ key: String) -> Bool {
+\t\tlet value = tags[key]
+\t\treturn value != nil && value != "no"
+\t}
+
 \tstatic """
 
-code += "func match(primary: String?, status: String?, classes: [String]) -> RenderInfo {\n\t\t"
+code += "func match(primary: String?, primaryValue: String?, status: String?, surface: String?, tags: [String: String]) -> RenderInfo {\n\t\t"
 code += debug_start
 code += to_swift_fn(styles, 2)
 code += debug_end
@@ -550,4 +606,4 @@ if not args.decomp:
     code += "}"
 
 with open(args.output, "w") as f:
-    f.write(code + '\n')
+    f.write(code + "\n")

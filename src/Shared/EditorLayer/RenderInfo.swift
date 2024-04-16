@@ -48,7 +48,10 @@ final class RenderInfo {
 		return self === g_AddressRender
 	}
 
-	init(lineColor: UIColor? = UIColor.white,
+	init(
+		key: String = "",
+		value: String? = nil,
+		lineColor: UIColor? = UIColor.white,
 		lineWidth: CGFloat = 1.0,
 		lineCap: CAShapeLayerLineCap = .round,
 		lineDashPattern: [CGFloat]? = nil,
@@ -195,15 +198,5 @@ final class RenderInfoDatabase {
 		}
 
 		return RenderInfo.style(tags: tags)
-
-		// check if it is an address point
-		if object.isNode() != nil,
-		   !object.tags.isEmpty,
-		   tags.first(where: { key, _ in OsmTags.IsInterestingKey(key) && !key.hasPrefix("addr:") }) == nil
-		{
-			return g_AddressRender
-		}
-
-		return g_DefaultRender
 	}
 }
