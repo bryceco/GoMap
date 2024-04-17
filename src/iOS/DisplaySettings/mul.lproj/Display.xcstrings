@@ -1004,7 +1004,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ж/д объекты"
+            "value" : "Железнодорожные объекты"
           }
         },
         "uk" : {
@@ -1911,6 +1911,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rutas de HealthKit:"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Маршруты от HealthKit:"
           }
         },
         "zh-Hant" : {
@@ -2870,7 +2876,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Автоматический"
+            "value" : "Автоматическое"
           }
         },
         "uk" : {
@@ -4964,7 +4970,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Очки"
+            "value" : "Точки"
           }
         },
         "uk" : {
@@ -6428,7 +6434,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Прошлое/Будущее"
+            "value" : "Жизненные циклы"
           }
         },
         "uk" : {
@@ -6716,7 +6722,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Включить фильтры"
+            "value" : "Фильтры"
           }
         },
         "uk" : {
@@ -7173,6 +7179,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Missões"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Квесты"
           }
         },
         "uk" : {
@@ -7973,6 +7985,12 @@
             "value" : "Notas e correções"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заметки и Fixme"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8660,7 +8678,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Фильтровать объекты"
+            "value" : "Фильтрация объектов"
           }
         },
         "uk" : {
@@ -8693,6 +8711,12 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"Import\"; ObjectID = \"Sdv-R2-za8\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -8703,6 +8727,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Importar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Импортировать"
           }
         },
         "zh-Hant" : {
@@ -9950,7 +9980,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Другие"
+            "value" : "Всё остальное"
           }
         },
         "uk" : {
@@ -10448,7 +10478,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Включить возможность вращения"
+            "value" : "Вращение карты"
           }
         },
         "uk" : {

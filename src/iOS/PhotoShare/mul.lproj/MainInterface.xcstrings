@@ -221,6 +221,12 @@
             "value" : "Go Map!! abrirá na localização onde a foto foi tirada."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!! откроется на местоположение где было сделано фото."
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",

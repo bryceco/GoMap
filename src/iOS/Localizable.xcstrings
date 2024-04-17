@@ -799,8 +799,8 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : " (%d элементов)\n"
+                  "state" : "translated",
+                  "value" : " (%d элемент)\n"
                 }
               },
               "other" : {
@@ -1403,14 +1403,14 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : " (%d точки)\n"
+                  "state" : "translated",
+                  "value" : " (%d точка)\n"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : " (%d точки)\n"
+                  "value" : " (%d точек)\n"
                 }
               }
             }
@@ -2611,6 +2611,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%.0f m^2"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.0f м²"
           }
         },
         "tzm" : {
@@ -3990,8 +3996,8 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "%ld дней"
+                  "state" : "translated",
+                  "value" : "%ld день"
                 }
               },
               "other" : {
@@ -7956,7 +7962,7 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%#@meters@, %#@points@, %#@waypoints@"
           },
           "substitutions" : {
@@ -7979,14 +7985,14 @@
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld meter"
+                      "state" : "translated",
+                      "value" : "%ld метр"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld meters"
+                      "state" : "translated",
+                      "value" : "%ld метра"
                     }
                   }
                 }
@@ -8011,14 +8017,14 @@
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld point"
+                      "state" : "translated",
+                      "value" : "%ld точка"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld points"
+                      "state" : "translated",
+                      "value" : "%ld точек"
                     }
                   }
                 }
@@ -8043,14 +8049,14 @@
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld waypoint"
+                      "state" : "translated",
+                      "value" : "%ld путевая точка"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld waypoints"
+                      "state" : "translated",
+                      "value" : "%ld путевых точек"
                     }
                   }
                 }
@@ -8463,6 +8469,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$ld nueva(s) ruta(s) importada(s),\n%2$ld duplicado(s) omitido(s)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$ld новых маршрутов импортировано,\n%2$ld дубликат(-ов) пропущено"
           }
         },
         "zh-Hant" : {
@@ -8961,14 +8973,14 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "%ld объекты"
+                  "state" : "translated",
+                  "value" : "%ld объект"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%ld объекты"
+                  "value" : "%ld объектов"
                 }
               }
             }
@@ -9067,12 +9079,6 @@
         "zh-Hant" : {
           "variations" : {
             "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%ld 物件"
-                }
-              },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
@@ -9640,6 +9646,12 @@
             "value" : "Uma cópia de todas as missões definidas pelo usuário foi copiada para a área de transferência no formato JSON. Você pode colá-lo em algum lugar para mantê-lo como cópia ou enviá-lo para outra pessoa."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Копия всех пользовательских квестов была скопирована в буфер обмена в формате JSON. Вы можете вставить его где нибудь, чтобы сохранить копию или отправить его кому-то другому."
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10101,6 +10113,12 @@
             "value" : "Adicionar o tipo de construção"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить Тип Здания"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10170,6 +10188,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Adicionar o tipo de superfície"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить тип дорожного покрытия"
           }
         },
         "uk" : {
@@ -10759,6 +10783,12 @@
             "value" : "Adicionar horário de funcionamento"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить часы работы"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10973,6 +11003,12 @@
             "value" : "Adicionar tipo de estacionamento"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить тип парковки"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11050,6 +11086,12 @@
             "value" : "Adicionar tipo de superfície para a calçada"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить тип покрытия тротуара"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11121,6 +11163,12 @@
             "value" : "Adicionar limite de velocidade"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить ограничения скорости"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11190,6 +11238,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Adicionar número de telefone"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить номера телефона"
           }
         },
         "uk" : {
@@ -11397,6 +11451,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Adicionar página da Internet"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить вебсайт"
           }
         },
         "uk" : {
@@ -11845,6 +11905,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Construtor de missões avançado"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Расширенный конструктор квестов"
           }
         },
         "uk" : {
@@ -12332,6 +12398,12 @@
             "value" : "Aconteceu um erro durante a exportação de %@"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Возникла ошибка во время экспорта: %@"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12395,6 +12467,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aconteceu um erro durante a importação de %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Возникла ошибка во время импорта: %@"
           }
         },
         "uk" : {
@@ -12620,6 +12698,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Área"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Площадь"
           }
         },
         "uk" : {
@@ -13530,6 +13614,12 @@
             "value" : "Há uma imagem de fundo melhor disponível para sua localização. Você gostaria de trocá-la?"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Для вашего местоположения доступны более качественные фоновые изображения. Хотите перейти на них?"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13606,6 +13696,12 @@
             "value" : "Disponível imagem de fundo melhor"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Доступны изображения получше"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13670,6 +13766,12 @@
             "value" : "Construa uma nova missão"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать новый квест"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13683,6 +13785,9 @@
           }
         }
       }
+    },
+    "Building" : {
+      "comment" : "The object is a building"
     },
     "Cache size warning" : {
       "localizations" : {
@@ -15511,6 +15616,12 @@
             "value" : "Trocar"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изменить"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15811,6 +15922,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "すべてクリア"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отчистить всё"
           }
         },
         "zh-Hant" : {
@@ -17075,6 +17192,12 @@
             "value" : "Copiado"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скопировано"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17522,6 +17645,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Crie uma linha na tabela para cada par de chave/valor e indique se objetos correspondentes devem ser incluídos ou excluídos. Deixe o valor vazio para indicar que a chave não está presente. Use key=* para corresponder a qualquer valor."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создайте строку в таблице для каждой пары ключ=значение и укажите, следует ли включать или исключать соответствующие объекты. Оставьте значение пустым, чтобы указать что ключ отсутствует. Используйте ключ=* для соответствия любому значению."
           }
         },
         "uk" : {
@@ -20345,6 +20474,12 @@
             "value" : "Descartar"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отменить"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -22789,6 +22924,12 @@
             "value" : "Filtros"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Фильтры"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -22857,6 +22998,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Geometria"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Геометрия"
           }
         },
         "uk" : {
@@ -23119,6 +23266,12 @@
       "comment" : "iOS HealthKit framework",
       "localizations" : {
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HealthKit"
+          }
+        },
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "HealthKit"
@@ -23418,6 +23571,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ícone"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Иконка"
           }
         },
         "uk" : {
@@ -23739,6 +23898,12 @@
             "value" : "Importar"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Импортировать"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -23803,6 +23968,12 @@
             "value" : "Erro na importação"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка импорта"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -23865,6 +24036,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Importar missões"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Импортировать квесты"
           }
         },
         "uk" : {
@@ -24405,6 +24582,12 @@
             "value" : "Chaves"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ключи"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -24480,6 +24663,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "km/h"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "км/ч"
           }
         },
         "zh-Hant" : {
@@ -25291,6 +25480,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Linha"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Линия"
           }
         },
         "uk" : {
@@ -26462,6 +26657,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Medir a direção"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Измерить направление"
           }
         },
         "uk" : {
@@ -28327,6 +28528,12 @@
             "value" : "mph"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "миля/ч"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -28515,6 +28722,12 @@
             "value" : "Nome"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Имя"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -28578,6 +28791,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Necessita ser verificado no local"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Необходимо обследование"
           }
         },
         "uk" : {
@@ -29027,6 +29246,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "não"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "нет"
           }
         },
         "zh-Hant" : {
@@ -31516,6 +31741,12 @@
             "value" : "Valor antigo: %@"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Старое значение: %@"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -32656,6 +32887,12 @@
             "value" : "Cole o JSON das suas missões no campo abaixo"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вставьте JSON ваших квестов в поле ниже"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -33187,6 +33424,12 @@
             "value" : "Ponto"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Точка"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -33494,6 +33737,12 @@
             "value" : "Forneça um símbolo de um único caractere (emoji ou caractere Unicode) para identificar esta missão:"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Укажите один символ (эмодзи или букву), для идентификации этого квеста:"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -33684,6 +33933,12 @@
             "value" : "Missão"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Квест"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -33742,6 +33997,12 @@
             "value" : "Erro na definição da missão"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка при создании квеста"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -33798,6 +34059,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "As missões foram importadas com sucesso."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Квесты были успешно импортированы."
           }
         },
         "uk" : {
@@ -36168,6 +36435,12 @@
             "value" : "Salvar"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранить"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -36224,6 +36497,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Salvar ou descartar as modificações"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранить или отменить изменения"
           }
         },
         "uk" : {
@@ -37427,6 +37706,12 @@
             "value" : "Algo deu errado ao tentar restaurar seus dados. Todas as alterações pendentes foram perdidas. Desculpe."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Что-то пошло не так при попытке восстановить ваши данные. Все неотправленные изменения были потеряны. Извините."
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -37602,6 +37887,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Espaço"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пробел"
           }
         },
         "uk" : {
@@ -38309,6 +38600,12 @@
             "value" : "Sucesso"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Успех"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -38365,6 +38662,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Chave de etiqueta"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ключ Тега"
           }
         },
         "uk" : {
@@ -40224,6 +40527,12 @@
             "value" : "Este dispositivo não pode fornecer dados de direção."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это устройство не предоставляет данные о курсе."
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -40282,6 +40591,12 @@
             "value" : "Este recurso está disponível a partir do iOS 15"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эта функция доступна только на iOS 15 или позже"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -40332,6 +40647,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Esta página permite que você projete missões com critérios mais específicos do que a página regular do Construtor de Missões."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эта страница позволяет вам разрабатывать квесты с более конкретными критериями, чем обычный конструктор квестов."
           }
         },
         "zh-Hant" : {
@@ -41921,6 +42242,12 @@
             "value" : "Desconhecido"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не указано"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -43484,6 +43811,12 @@
             "value" : "Vértice"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вершина"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -44168,6 +44501,12 @@
             "value" : "Qual é o nome desta missão? O ideal é que seja escrito na forma de uma ação, como 'Adicionar Superfície':"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Как называется этот квест? Это лучше написать в виде действия, например 'Добавить поверхность':"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -44218,6 +44557,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Qual chave de etiqueta é modificada por esta missão?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Какой ключ тега модифицируется этим квестом?"
           }
         },
         "zh-Hant" : {
@@ -44272,6 +44617,12 @@
             "value" : "A quais tipos de objetos esta missão se aplica?"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "К какими типами объектов связан этот квест?"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -44322,6 +44673,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "sim"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "да"
           }
         },
         "zh-Hant" : {

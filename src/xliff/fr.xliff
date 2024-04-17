@@ -1158,6 +1158,10 @@ Object geometry: a closed way or multipolygon)</note>
         <source>Build a New Quest</source>
         <note/>
       </trans-unit>
+      <trans-unit id="Building" xml:space="preserve">
+        <source>Building</source>
+        <note>The object is a building</note>
+      </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
         <source>Cache size warning</source>
         <target state="translated">Avertissement de taille du cache</target>

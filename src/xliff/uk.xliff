@@ -1290,6 +1290,10 @@ Object geometry: a closed way or multipolygon)</note>
         <target state="translated">Створити новий квест</target>
         <note/>
       </trans-unit>
+      <trans-unit id="Building" xml:space="preserve">
+        <source>Building</source>
+        <note>The object is a building</note>
+      </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
         <source>Cache size warning</source>
         <target state="translated">Заувага про обсяг кешу</target>

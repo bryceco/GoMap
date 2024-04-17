@@ -116,7 +116,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Получить подсказки"
+            "value" : "В путь"
           }
         },
         "uk" : {
@@ -467,6 +467,12 @@
             "value" : "Bing imenovanje"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atribusi Bing"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -695,6 +701,12 @@
             "value" : "korisničko ime"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nama pengguna"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -723,6 +735,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "nome de utilizador"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "имя пользователя"
           }
         },
         "uk" : {
@@ -2063,6 +2081,12 @@
             "value" : "-"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2082,6 +2106,12 @@
           }
         },
         "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "-"
@@ -2631,6 +2661,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Razni komentari …"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Berbagai komentar ..."
           }
         },
         "it" : {
@@ -3293,6 +3329,12 @@
             "value" : "Odredi ime („New York”), URL ili drugi tekst koji sadrži geografske koordinate ili referencu na OSM objekt („put 51014987”):"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tentukan sebuah nama (\"New York\"), URL atau teks lain yang berisi koordinat lintang/bujur, atau referensi ke sebuah objek OSM (\"jalan 51014987\"):"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3461,6 +3503,12 @@
             "value" : "radnja"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "aksi"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3483,6 +3531,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ação"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "действие"
           }
         },
         "zh-Hant" : {

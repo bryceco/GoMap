@@ -194,6 +194,12 @@
             "value" : "O conteúdo da URL não é reconhecido."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не распознано содержимое URL."
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",

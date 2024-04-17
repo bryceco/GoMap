@@ -947,6 +947,12 @@
             "value" : "名前"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Имя"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1389,6 +1395,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OpenStreetMap アカウント"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Аккаунт OpenStreetMap"
           }
         },
         "zh-Hant" : {
@@ -2243,6 +2255,12 @@
             "value" : "アカウント情報"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Информация об аккаунте"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2825,6 +2843,12 @@
             "value" : "Entrar"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Войти"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2952,6 +2976,12 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "-"
@@ -3947,6 +3977,12 @@
             "value" : "Actualizar la cuenta"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktualiziraj račun"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3957,6 +3993,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "アカウントをリフレッシュ"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обновить аккаунт"
           }
         },
         "zh-Hant" : {
@@ -6299,6 +6341,12 @@
             "value" : "-"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7457,6 +7505,12 @@
             "value" : "サインアウト"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выйти"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7509,6 +7563,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "変更セット"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пакеты правок"
           }
         },
         "zh-Hant" : {

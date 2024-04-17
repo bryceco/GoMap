@@ -771,6 +771,12 @@
             "value" : "A câmera é usada para medir a altura de edifícios ou objetos e para realizar o reconhecimento de texto em placas de horário de funcionamento."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Камера используется для измерения высоты зданий или объектов, и для выполнения распознавания текста в знаках часов открытия."
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -807,6 +813,12 @@
             "value" : "Las rutas de tus entrenamientos se pueden importar como rutas GPX."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Маршруты ваших тренировок можно импортировать как GPX."
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -829,6 +841,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "La información sanitaria nunca se actualiza."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приложение никогда не изменяет данные о Вашем здоровье."
           }
         },
         "zh-Hant" : {
@@ -1381,6 +1399,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ativar os serviços de localização permite que o aplicativo mostre objetos na sua proximidade. Isto permite a você atualizar ou adicionar dados facilmente durante sua pesquisa."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включение местоположения позволяет приложению отображать объекты в вашем районе. Это позволяет легко обновлять или добавлять данные, которые вы исследуете самостоятельно."
           }
         },
         "uk" : {

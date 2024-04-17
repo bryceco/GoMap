@@ -914,10 +914,6 @@ Plural number of days</note>
 跳過 %2$ld 重覆的</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
-      <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
-        <target state="translated">%ld 物件</target>
-        <note>Number of tiles/objects in cache</note>
-      </trans-unit>
       <trans-unit id="%ld objects|==|plural.other" xml:space="preserve">
         <source>%ld objects</source>
         <target state="translated">%ld 個物件</target>
@@ -1143,6 +1139,10 @@ Object geometry: a closed way or multipolygon)</note>
         <source>Build a New Quest</source>
         <target state="translated">建立新的任務</target>
         <note/>
+      </trans-unit>
+      <trans-unit id="Building" xml:space="preserve">
+        <source>Building</source>
+        <note>The object is a building</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
         <source>Cache size warning</source>

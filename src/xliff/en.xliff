@@ -1200,6 +1200,11 @@ Object geometry: a closed way or multipolygon)</note>
         <target state="new">Build a New Quest</target>
         <note/>
       </trans-unit>
+      <trans-unit id="Building" xml:space="preserve">
+        <source>Building</source>
+        <target state="new">Building</target>
+        <note>The object is a building</note>
+      </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
         <source>Cache size warning</source>
         <target state="new">Cache size warning</target>
