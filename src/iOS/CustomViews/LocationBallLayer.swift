@@ -10,7 +10,7 @@ import QuartzCore
 import UIKit
 
 final class LocationBallLayer: CALayer {
-	private var headingLayer: CAShapeLayer
+	private var headingLayer: CAGradientLayer
 	private var ringLayer: CAShapeLayer
 
 	var showHeading = false {
@@ -44,13 +44,13 @@ final class LocationBallLayer: CALayer {
 	override init(layer: Any) {
 		let layer = layer as! Self
 		ringLayer = CAShapeLayer()
-		headingLayer = CAShapeLayer()
+		headingLayer = CAGradientLayer()
 		super.init(layer: layer)
 	}
 
 	override init() {
 		ringLayer = CAShapeLayer()
-		headingLayer = CAShapeLayer()
+		headingLayer = CAGradientLayer()
 
 		super.init()
 		frame = CGRect(x: 0, y: 0, width: 16, height: 16)
@@ -67,50 +67,63 @@ final class LocationBallLayer: CALayer {
 			"transform": NSNull()
 		]
 
-#if os(iOS)
+		let circleColor = UIColor(red: 79 / 255.0, green: 138 / 255.0, blue: 247 / 255.0, alpha: 1.0)
+
+		// create an animated expanding ring that shows GPS accuracy
 		ringLayer.fillColor = UIColor.clear.cgColor
-		ringLayer.strokeColor = UIColor(red: 0.5, green: 0.5, blue: 1.0, alpha: 1.0).cgColor
-#else
-		ringLayer.fillColor = NSColor(calibratedRed: 0.8, green: 0.8, blue: 1.0, alpha: 0.4).cgColor
-		ringLayer.strokeColor = NSColor(calibratedRed: 0.5, green: 0.5, blue: 1.0, alpha: 1.0).cgColor
-#endif
+		ringLayer.strokeColor = circleColor.cgColor
 		ringLayer.lineWidth = 2.0
 		ringLayer.frame = bounds
 		ringLayer.position = CGPoint(x: 16, y: 16)
-
 		let animation = ringAnimation(withRadius: 100)
 		ringLayer.add(animation, forKey: "ring")
-
 		addSublayer(ringLayer)
 
-		let imageLayer = CALayer()
-		let image = UIImage(named: "BlueBall")!
-		imageLayer.contents = image.cgImage
-		imageLayer.frame = bounds
-		addSublayer(imageLayer)
+		// create a mask that will be shaped as a cone for the heading
+		let rc = CGRect(x: 0.0, y: 0.0, width: 80.0, height: 80.0)
+		let gradientMask = CAShapeLayer()
+		gradientMask.fillColor = UIColor.black.cgColor
+		gradientMask.frame = rc
 
+		// create a radial gradient for the heading cone
 		headingLayer.isHidden = true
-		headingLayer.fillColor = UIColor(red: 0.5, green: 1.0, blue: 0.5, alpha: 0.4).cgColor
-		headingLayer.strokeColor = UIColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0).cgColor
-		headingLayer.zPosition = -1
-		var rc = bounds
-		rc.origin.x += rc.size.width / 2
-		rc.origin.y += rc.size.height / 2
-		headingLayer.frame = rc
+		headingLayer.frame = rc.offsetBy(dx: (bounds.size.width - rc.width) / 2,
+		                                 dy: (bounds.size.height - rc.height) / 2)
+		headingLayer.type = .radial
+		headingLayer.startPoint = CGPoint(x: 0.5, y: 0.5)
+		headingLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+		headingLayer.colors = [circleColor.cgColor,
+		                       circleColor.cgColor,
+		                       circleColor.withAlphaComponent(0.7).cgColor,
+		                       circleColor.withAlphaComponent(0.4).cgColor,
+		                       circleColor.withAlphaComponent(0.2).cgColor]
+		headingLayer.mask = gradientMask
 		addSublayer(headingLayer)
+
+		// create a circle marking the current location
+		let circleLayer = CAShapeLayer()
+		circleLayer.path = UIBezierPath(ovalIn: bounds).cgPath
+		circleLayer.frame = bounds
+		circleLayer.fillColor = circleColor.cgColor
+		circleLayer.strokeColor = UIColor.white.cgColor
+		circleLayer.lineWidth = 2.0
+		addSublayer(circleLayer)
+
+		// add shadow
+		self.shadowColor = UIColor.black.cgColor
+		self.shadowOffset = CGSize(width: 3, height: 3)
+		self.shadowOpacity = 0.6
 	}
 
 	func ringAnimation(withRadius radius: CGFloat) -> CABasicAnimation {
 		let startRadius: CGFloat = 5
 		let finishRadius = radius
-		let startPath = CGMutablePath()
-		startPath
-			.addEllipse(in: CGRect(x: -startRadius, y: -startRadius, width: 2 * startRadius, height: 2 * startRadius))
-
-		let finishPath = CGMutablePath()
-		finishPath
-			.addEllipse(in: CGRect(x: -finishRadius, y: -finishRadius, width: 2 * finishRadius,
-			                       height: 2 * finishRadius))
+		let startPath = CGPath(ellipseIn: CGRect(x: -startRadius, y: -startRadius,
+		                                         width: 2 * startRadius, height: 2 * startRadius),
+		                       transform: nil)
+		let finishPath = CGPath(ellipseIn: CGRect(x: -finishRadius, y: -finishRadius,
+		                                          width: 2 * finishRadius, height: 2 * finishRadius),
+		                        transform: nil)
 		let anim = CABasicAnimation(keyPath: "path")
 		anim.duration = 2.0
 		anim.fromValue = startPath
@@ -125,17 +138,19 @@ final class LocationBallLayer: CALayer {
 	override func layoutSublayers() {
 		if showHeading, headingAccuracy > 0 {
 			// draw heading
-			let radius: CGFloat = 40.0
+			let shapeLayer = headingLayer.mask as! CAShapeLayer
+			let radius = shapeLayer.bounds.width / 2
 			let path = CGMutablePath()
+			let center = shapeLayer.bounds.center()
 			path.addArc(
-				center: CGPoint(x: 0.0, y: 0.0),
+				center: center,
 				radius: radius,
 				startAngle: heading - headingAccuracy,
 				endAngle: heading + headingAccuracy,
 				clockwise: false)
-			path.addLine(to: CGPoint(x: 0, y: 0))
+			path.addLine(to: center)
 			path.closeSubpath()
-			headingLayer.path = path
+			shapeLayer.path = path
 			headingLayer.isHidden = false
 		} else {
 			headingLayer.isHidden = true
