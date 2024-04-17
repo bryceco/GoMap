@@ -232,6 +232,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			if let pushpinView = pushPin {
 				pp = mapTransform.latLon(forScreenPoint: pushpinView.arrowPoint)
 			}
+			// we could move the blink outline similar to pushpin, but it's complicated and less important
+			unblinkObject()
 
 			// Wrap around if we translate too far longitudinally
 			let unitX = t.unitX()
