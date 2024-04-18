@@ -531,12 +531,21 @@ extension EditorMapLayer {
 		let deleteHandler: ((_ action: UIAlertAction?) -> Void) = { [self] _ in
 			do {
 				let canDelete = try self.canDeleteSelectedObject()
+				let deletedNode: Int? = selectedNode == nil ? nil : selectedWay?.nodes.firstIndex(of: selectedNode!)
 				canDelete()
 				var pos = pushpinView.arrowPoint
 				owner.removePin()
-				if self.selectedPrimary != nil {
-					pos = owner.mapTransform.screenPoint(on: selectedPrimary, forScreenPoint: pos)
-					if let primary = self.selectedPrimary {
+				// update location of pushpin
+				if let primary = self.selectedPrimary {
+					if let way = primary as? OsmWay,
+					   let nodeIndex = deletedNode,
+					   let node = nodeIndex == 0 ? way.nodes.first : nodeIndex == way.nodes.count ? way.nodes.last : nil
+					{
+						selectedNode = node
+						pos = owner.mapTransform.screenPoint(on: node, forScreenPoint: pos)
+						owner.placePushpin(at: pos, object: node)
+					} else {
+						pos = owner.mapTransform.screenPoint(on: primary, forScreenPoint: pos)
 						owner.placePushpin(at: pos, object: primary)
 					}
 				}

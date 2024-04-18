@@ -266,18 +266,22 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	}
 
 	public func computeBoundingBox() {
+		// This is specialized for OsmNode, OsmWay, OsmRelation so we should never get here
 		fatalError()
 	}
 
 	func distance(toLineSegment point1: OSMPoint, point point2: OSMPoint) -> Double {
+		// This is specialized for OsmNode, OsmWay, OsmRelation so we should never get here
 		fatalError()
 	}
 
 	func selectionPoint() -> LatLon {
+		// This is specialized for OsmNode, OsmWay, OsmRelation so we should never get here
 		fatalError()
 	}
 
 	func latLonOnObject(forLatLon target: LatLon) -> LatLon {
+		// This is specialized for OsmNode, OsmWay, OsmRelation so we should never get here
 		fatalError()
 	}
 
