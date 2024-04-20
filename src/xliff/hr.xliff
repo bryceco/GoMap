@@ -938,12 +938,12 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%ld meter</source>
-        <target state="translated">%ld m</target>
+        <target state="translated">%ld metar</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="translated">%ld m</target>
+        <target state="translated">%ld metra</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.few" xml:space="preserve">
@@ -983,12 +983,12 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%ld meter</source>
-        <target state="translated">%ld m</target>
+        <target state="translated">%ld metar</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="translated">%ld m</target>
+        <target state="translated">%ld metra</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.few" xml:space="preserve">
@@ -1247,6 +1247,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Building" xml:space="preserve">
         <source>Building</source>
+        <target state="translated">Zgrada</target>
         <note>The object is a building</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
@@ -1588,6 +1589,7 @@ Greška: %@</target>
       </trans-unit>
       <trans-unit id="HealthKit" xml:space="preserve">
         <source>HealthKit</source>
+        <target state="translated">HealthKit</target>
         <note>iOS HealthKit framework</note>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
@@ -1844,12 +1846,12 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="No Left Turn restriction" xml:space="preserve">
         <source>No Left Turn restriction</source>
-        <target state="translated">Nema zabrane skretanja nalijevo</target>
+        <target state="translated">Nema zabrane skretanja ulijevo</target>
         <note/>
       </trans-unit>
       <trans-unit id="No Right Turn restriction" xml:space="preserve">
         <source>No Right Turn restriction</source>
-        <target state="translated">Nema zabrane skretanja nadesno</target>
+        <target state="translated">Nema zabrane skretanja udesno</target>
         <note/>
       </trans-unit>
       <trans-unit id="No Straight On restriction" xml:space="preserve">
@@ -3216,7 +3218,9 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
         <source>Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.
 
 You can also enter "dev" for the development server (for testing), "ohm" for the OpenHistoricalMap server, or leave blank for the default server.</source>
-        <target state="needs-review-l10n">Odredi računalo, ako želiš uređivati podatke koji se nalaze na alternativnom poslužitelju OSM-a. Standardno računalo je api.openstreetmap.org.</target>
+        <target state="translated">Odredi računalo, ako želiš uređivati podatke koji se nalaze na alternativnom OSM serveru. Standardno računalo je api.openstreetmap.org.
+
+Također možeš upisati "dev" za razvojni server (za testiranje), "ohm" za OpenHistoricalMap server ili ostavi prazno za zadani server.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.\n\nYou can also enter \"dev\" for the development server (for testing), \"ohm\" for the OpenHistoricalMap server, or leave blank for the default server."; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.headerTitle" xml:space="preserve">
