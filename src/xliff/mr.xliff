@@ -836,8 +836,8 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <note/>
       </trans-unit>
       <trans-unit id="%.0f m^2" xml:space="preserve">
-        <source>%.0f m^2</source>
-        <target state="translated">%.0f चौ.मी</target>
+        <source>%.0f m²</source>
+        <target state="needs-review-l10n">%.0f चौ.मी</target>
         <note>area in m^2</note>
       </trans-unit>
       <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
@@ -846,13 +846,33 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
-        <source>%.1f meters, %ld nodes</source>
-        <target state="translated">%1$.1f मीटर, %2$ld गाठी</target>
+        <source>%1$.1f meters, %2$#@arg2@</source>
+        <target state="needs-review-l10n">%1$.1f मीटर, %2$#@arg2@ गाठी</target>
+        <note>way length if &lt; 10m</note>
+      </trans-unit>
+      <trans-unit id="%.1f meters, %ld nodes|==|substitutions.arg2.plural.one" xml:space="preserve">
+        <source>%2$ld node</source>
+        <target state="needs-review-l10n">%2$ld</target>
+        <note>way length if &lt; 10m</note>
+      </trans-unit>
+      <trans-unit id="%.1f meters, %ld nodes|==|substitutions.arg2.plural.other" xml:space="preserve">
+        <source>%2$ld nodes</source>
+        <target state="needs-review-l10n">%2$ld</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
-        <source>%.2f MB, %ld files</source>
-        <target state="translated">%1$.2f MB, %2$ld फाईली</target>
+        <source>%1$.2f MB, %2$#@arg2@</source>
+        <target state="needs-review-l10n">%1$.2f MB, %2$#@arg2@ फाईली</target>
+        <note>These values will always be large (plural)</note>
+      </trans-unit>
+      <trans-unit id="%.2f MB, %ld files|==|substitutions.arg2.plural.one" xml:space="preserve">
+        <source>%2$ld file</source>
+        <target state="needs-review-l10n">%2$ld</target>
+        <note>These values will always be large (plural)</note>
+      </trans-unit>
+      <trans-unit id="%.2f MB, %ld files|==|substitutions.arg2.plural.other" xml:space="preserve">
+        <source>%2$ld files</source>
+        <target state="needs-review-l10n">%2$ld</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
@@ -891,6 +911,31 @@ Plural number of days</note>
         <source>%ld edits, last active %@</source>
         <target state="translated">%1$ld संपादने, शेवटचे सक्रिय %2$@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld nodes" xml:space="preserve">
+        <source>%1$#@meters@, %2$#@nodes@</source>
+        <target state="new">%1$#@meters@, %2$#@nodes@</target>
+        <note>way length if &gt; 10m</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.one" xml:space="preserve">
+        <source>%1$ld meter</source>
+        <target state="new">%1$ld meter</target>
+        <note>way length if &gt; 10m</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.other" xml:space="preserve">
+        <source>%1$ld meters</source>
+        <target state="new">%1$ld meters</target>
+        <note>way length if &gt; 10m</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.one" xml:space="preserve">
+        <source>%2$ld node</source>
+        <target state="new">%2$ld node</target>
+        <note>way length if &gt; 10m</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.other" xml:space="preserve">
+        <source>%2$ld nodes</source>
+        <target state="new">%2$ld nodes</target>
+        <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@</source>
@@ -953,12 +998,34 @@ Plural number of days</note>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped" xml:space="preserve">
-        <source>%1$ld new route(s) imported,
-%2$ld duplicate(s) skipped</source>
+        <source>%1$#@routes@ imported,
+%2$#@duplicates@ skipped</source>
+        <target state="new">%1$#@routes@ imported,
+%2$#@duplicates@ skipped</target>
+        <note>result of importing GPX routes</note>
+      </trans-unit>
+      <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.one" xml:space="preserve">
+        <source>%2$ld duplicate</source>
+        <target state="new">%2$ld duplicate</target>
+        <note>result of importing GPX routes</note>
+      </trans-unit>
+      <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.other" xml:space="preserve">
+        <source>%2$ld duplicates</source>
+        <target state="new">%2$ld duplicates</target>
+        <note>result of importing GPX routes</note>
+      </trans-unit>
+      <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.routes.plural.one" xml:space="preserve">
+        <source>%1$ld new route</source>
+        <target state="new">%1$ld new route</target>
+        <note>result of importing GPX routes</note>
+      </trans-unit>
+      <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.routes.plural.other" xml:space="preserve">
+        <source>%1$ld new routes</source>
+        <target state="new">%1$ld new routes</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
-        <source>%ld objects</source>
+        <source>%ld object</source>
         <target state="needs-review-l10n">%ld वस्तू</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
@@ -967,7 +1034,12 @@ Plural number of days</note>
         <target state="translated">%ld वस्तू</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
-      <trans-unit id="%lu tiles needed" xml:space="preserve">
+      <trans-unit id="%lu tiles needed|==|plural.one" xml:space="preserve">
+        <source>%lu tile needed</source>
+        <target state="needs-review-l10n">%lu फरश्या आवश्यक</target>
+        <note>Always plural</note>
+      </trans-unit>
+      <trans-unit id="%lu tiles needed|==|plural.other" xml:space="preserve">
         <source>%lu tiles needed</source>
         <target state="translated">%lu फरश्या आवश्यक</target>
         <note>Always plural</note>
@@ -1893,8 +1965,24 @@ Never delete old tracks</note>
         <source>Pasting %@ characters, maximum tag length is 255</source>
         <note/>
       </trans-unit>
-      <trans-unit id="Pasting %ld tag(s)" xml:space="preserve">
-        <source>Pasting %ld tag(s)</source>
+      <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.one" xml:space="preserve">
+        <source>Pasting %ld character, maximum tag length is 255</source>
+        <target state="new">Pasting %ld character, maximum tag length is 255</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.other" xml:space="preserve">
+        <source>Pasting %ld characters, maximum tag length is 255</source>
+        <target state="new">Pasting %ld characters, maximum tag length is 255</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Pasting %ld tag(s)|==|plural.one" xml:space="preserve">
+        <source>Pasting %ld tag</source>
+        <target state="new">Pasting %ld tag</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Pasting %ld tag(s)|==|plural.other" xml:space="preserve">
+        <source>Pasting %ld tags</source>
+        <target state="new">Pasting %ld tags</target>
         <note/>
       </trans-unit>
       <trans-unit id="Perform Action" xml:space="preserve">
@@ -2364,10 +2452,22 @@ These members are marked with '&gt;'.</source>
         <source>You must save or discard changes to the current object before editing its associated relation</source>
         <note/>
       </trans-unit>
-      <trans-unit id="You've uploaded %ld changesets with this version of Go Map!!&#10;&#10;Rate this app?" xml:space="preserve">
+      <trans-unit id="You've uploaded %ld changesets with this version of Go Map!!&#10;&#10;Rate this app?|==|plural.one" xml:space="preserve">
+        <source>You've uploaded %ld changeset with this version of Go Map!!
+
+Rate this app?</source>
+        <target state="new">You've uploaded %ld changeset with this version of Go Map!!
+
+Rate this app?</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="You've uploaded %ld changesets with this version of Go Map!!&#10;&#10;Rate this app?|==|plural.other" xml:space="preserve">
         <source>You've uploaded %ld changesets with this version of Go Map!!
 
 Rate this app?</source>
+        <target state="new">You've uploaded %ld changesets with this version of Go Map!!
+
+Rate this app?</target>
         <note/>
       </trans-unit>
       <trans-unit id="Your OSM data cache is getting large, which may lead to slow startup and shutdown times.&#10;&#10;You may want to clear the cache (under Display settings) to improve performance." xml:space="preserve">

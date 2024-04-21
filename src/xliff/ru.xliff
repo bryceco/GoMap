@@ -807,14 +807,14 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       <trans-unit id=" (%d members)&#10;|==|plural.few" xml:space="preserve">
         <source> (%d members)
 </source>
-        <target state="new"> (%d members)
+        <target state="translated"> (%d элемета)
 </target>
         <note/>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;|==|plural.many" xml:space="preserve">
         <source> (%d members)
 </source>
-        <target state="new"> (%d members)
+        <target state="translated"> (%d элементов)
 </target>
         <note/>
       </trans-unit>
@@ -835,14 +835,14 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       <trans-unit id=" (%d nodes)&#10;|==|plural.few" xml:space="preserve">
         <source> (%d nodes)
 </source>
-        <target state="new"> (%d nodes)
+        <target state="translated"> (%d точки)
 </target>
         <note/>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;|==|plural.many" xml:space="preserve">
         <source> (%d nodes)
 </source>
-        <target state="new"> (%d nodes)
+        <target state="translated"> (%d точек)
 </target>
         <note/>
       </trans-unit>
@@ -871,8 +871,8 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <note/>
       </trans-unit>
       <trans-unit id="%.0f m^2" xml:space="preserve">
-        <source>%.0f m^2</source>
-        <target state="translated">%.0f м²</target>
+        <source>%.0f m²</source>
+        <target state="needs-review-l10n">%.0f м²</target>
         <note>area in m^2</note>
       </trans-unit>
       <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
@@ -881,13 +881,53 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
-        <source>%.1f meters, %ld nodes</source>
-        <target state="translated">%1$.1f метров, %2$ld точек</target>
+        <source>%1$.1f meters, %2$#@arg2@</source>
+        <target state="translated">%1$.1f метра, %2$#@arg2@</target>
+        <note>way length if &lt; 10m</note>
+      </trans-unit>
+      <trans-unit id="%.1f meters, %ld nodes|==|substitutions.arg2.plural.few" xml:space="preserve">
+        <source>%2$ld nodes</source>
+        <target state="translated">%2$ld точки</target>
+        <note>way length if &lt; 10m</note>
+      </trans-unit>
+      <trans-unit id="%.1f meters, %ld nodes|==|substitutions.arg2.plural.many" xml:space="preserve">
+        <source>%2$ld nodes</source>
+        <target state="translated">%2$ld точек</target>
+        <note>way length if &lt; 10m</note>
+      </trans-unit>
+      <trans-unit id="%.1f meters, %ld nodes|==|substitutions.arg2.plural.one" xml:space="preserve">
+        <source>%2$ld node</source>
+        <target state="translated">%2$ld точка</target>
+        <note>way length if &lt; 10m</note>
+      </trans-unit>
+      <trans-unit id="%.1f meters, %ld nodes|==|substitutions.arg2.plural.other" xml:space="preserve">
+        <source>%2$ld nodes</source>
+        <target state="translated">%2$ld точки</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
-        <source>%.2f MB, %ld files</source>
-        <target state="translated">%1$.2f МБ, %2$d файлов</target>
+        <source>%1$.2f MB, %2$#@arg2@</source>
+        <target state="translated">%1$.2f МБ, %2$#@arg2@</target>
+        <note>These values will always be large (plural)</note>
+      </trans-unit>
+      <trans-unit id="%.2f MB, %ld files|==|substitutions.arg2.plural.few" xml:space="preserve">
+        <source>%2$ld files</source>
+        <target state="translated">%2$d файла</target>
+        <note>These values will always be large (plural)</note>
+      </trans-unit>
+      <trans-unit id="%.2f MB, %ld files|==|substitutions.arg2.plural.many" xml:space="preserve">
+        <source>%2$ld files</source>
+        <target state="translated">%2$d файлов</target>
+        <note>These values will always be large (plural)</note>
+      </trans-unit>
+      <trans-unit id="%.2f MB, %ld files|==|substitutions.arg2.plural.one" xml:space="preserve">
+        <source>%2$ld file</source>
+        <target state="translated">%2$d файл</target>
+        <note>These values will always be large (plural)</note>
+      </trans-unit>
+      <trans-unit id="%.2f MB, %ld files|==|substitutions.arg2.plural.other" xml:space="preserve">
+        <source>%2$ld files</source>
+        <target state="translated">%2$d файла</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
@@ -907,13 +947,13 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="%ld Days|==|plural.few" xml:space="preserve">
         <source>%ld Days</source>
-        <target state="new">%ld Days</target>
+        <target state="translated">%ld дня</target>
         <note>One or more days
 Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld Days|==|plural.many" xml:space="preserve">
         <source>%ld Days</source>
-        <target state="new">%ld Days</target>
+        <target state="translated">%ld дней</target>
         <note>One or more days
 Plural number of days</note>
       </trans-unit>
@@ -931,17 +971,17 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.few" xml:space="preserve">
         <source>%ld edits, last active %@</source>
-        <target state="new">%ld edits, last active %@</target>
+        <target state="translated">%1$ld правки, последняя правка %2$@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.many" xml:space="preserve">
         <source>%ld edits, last active %@</source>
-        <target state="new">%ld edits, last active %@</target>
+        <target state="translated">%1$ld правок, последняя правка %2$@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.one" xml:space="preserve">
         <source>%ld edit, last active %@</source>
-        <target state="needs-review-l10n">%1$ld правок, последняя правка %2$@</target>
+        <target state="translated">%1$ld правка, последняя правка %2$@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.other" xml:space="preserve">
@@ -949,9 +989,54 @@ Plural number of days</note>
         <target state="translated">%1$ld правок, последняя правка %2$@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
+      <trans-unit id="%ld meters, %ld nodes" xml:space="preserve">
+        <source>%1$#@meters@, %2$#@nodes@</source>
+        <target state="new">%1$#@meters@, %2$#@nodes@</target>
+        <note>way length if &gt; 10m</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.few" xml:space="preserve">
+        <source>%1$ld meters</source>
+        <target state="translated">%1$ld метра</target>
+        <note>way length if &gt; 10m</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.many" xml:space="preserve">
+        <source>%1$ld meters</source>
+        <target state="translated">%1$ld метров</target>
+        <note>way length if &gt; 10m</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.one" xml:space="preserve">
+        <source>%1$ld meter</source>
+        <target state="translated">%1$ld метр</target>
+        <note>way length if &gt; 10m</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.other" xml:space="preserve">
+        <source>%1$ld meters</source>
+        <target state="translated">%1$ld метра</target>
+        <note>way length if &gt; 10m</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.few" xml:space="preserve">
+        <source>%2$ld nodes</source>
+        <target state="translated">%2$ld точки</target>
+        <note>way length if &gt; 10m</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.many" xml:space="preserve">
+        <source>%2$ld nodes</source>
+        <target state="translated">%2$ld точек</target>
+        <note>way length if &gt; 10m</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.one" xml:space="preserve">
+        <source>%2$ld node</source>
+        <target state="translated">%2$ld точка</target>
+        <note>way length if &gt; 10m</note>
+      </trans-unit>
+      <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.other" xml:space="preserve">
+        <source>%2$ld nodes</source>
+        <target state="translated">%2$ld точки</target>
+        <note>way length if &gt; 10m</note>
+      </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@</source>
-        <target state="needs-review-l10n">%1$#@meters@ метров, %2$#@points@ точек</target>
+        <target state="translated">%1$#@meters@, %2$#@points@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints" xml:space="preserve">
@@ -961,12 +1046,12 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.few" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="new">%ld meters</target>
+        <target state="translated">%ld метра</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.many" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="new">%ld meters</target>
+        <target state="translated">%ld метров</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.one" xml:space="preserve">
@@ -981,12 +1066,12 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.few" xml:space="preserve">
         <source>%ld points</source>
-        <target state="new">%ld points</target>
+        <target state="translated">%ld точки</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.many" xml:space="preserve">
         <source>%ld points</source>
-        <target state="new">%ld points</target>
+        <target state="translated">%ld точек</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.one" xml:space="preserve">
@@ -1001,12 +1086,12 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.few" xml:space="preserve">
         <source>%ld waypoints</source>
-        <target state="new">%ld waypoints</target>
+        <target state="translated">%ld путевые точки</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.many" xml:space="preserve">
         <source>%ld waypoints</source>
-        <target state="new">%ld waypoints</target>
+        <target state="translated">%ld путевых точек</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.one" xml:space="preserve">
@@ -1021,64 +1106,104 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.few" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="needs-review-l10n">%1$ld</target>
+        <target state="translated">%1$ld метра</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.many" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="needs-review-l10n">%1$ld</target>
+        <target state="translated">%1$ld метров</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%ld meter</source>
-        <target state="needs-review-l10n">%1$ld</target>
+        <target state="translated">%1$ld метр</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="needs-review-l10n">%1$ld</target>
+        <target state="translated">%1$ld метра</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.few" xml:space="preserve">
         <source>%ld points</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld точки</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.many" xml:space="preserve">
         <source>%ld points</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld точек</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.one" xml:space="preserve">
         <source>%ld point</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld точка</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.other" xml:space="preserve">
         <source>%ld points</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld точки</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped" xml:space="preserve">
-        <source>%1$ld new route(s) imported,
-%2$ld duplicate(s) skipped</source>
-        <target state="translated">%1$ld новых маршрутов импортировано,
-%2$ld дубликат(-ов) пропущено</target>
+        <source>%1$#@routes@ imported,
+%2$#@duplicates@ skipped</source>
+        <target state="translated">%1$#@routes@,
+%2$#@duplicates@</target>
+        <note>result of importing GPX routes</note>
+      </trans-unit>
+      <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.few" xml:space="preserve">
+        <source>%2$ld duplicates</source>
+        <target state="translated">%2$ld дубликата пропущено</target>
+        <note>result of importing GPX routes</note>
+      </trans-unit>
+      <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.many" xml:space="preserve">
+        <source>%2$ld duplicates</source>
+        <target state="translated">%2$ld дубликатов пропущено</target>
+        <note>result of importing GPX routes</note>
+      </trans-unit>
+      <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.one" xml:space="preserve">
+        <source>%2$ld duplicate</source>
+        <target state="translated">%2$ld дубликат пропущен</target>
+        <note>result of importing GPX routes</note>
+      </trans-unit>
+      <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.other" xml:space="preserve">
+        <source>%2$ld duplicates</source>
+        <target state="translated">%2$ld дубликата пропущено</target>
+        <note>result of importing GPX routes</note>
+      </trans-unit>
+      <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.routes.plural.few" xml:space="preserve">
+        <source>%1$ld new routes</source>
+        <target state="translated">%1$ld новых маршрута импортировано</target>
+        <note>result of importing GPX routes</note>
+      </trans-unit>
+      <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.routes.plural.many" xml:space="preserve">
+        <source>%1$ld new routes</source>
+        <target state="translated">%1$ld новых маршрутов импортировано</target>
+        <note>result of importing GPX routes</note>
+      </trans-unit>
+      <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.routes.plural.one" xml:space="preserve">
+        <source>%1$ld new route</source>
+        <target state="translated">%1$ld новый маршрут импортирован</target>
+        <note>result of importing GPX routes</note>
+      </trans-unit>
+      <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.routes.plural.other" xml:space="preserve">
+        <source>%1$ld new routes</source>
+        <target state="translated">%1$ld новых маршрута импортировано</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.few" xml:space="preserve">
         <source>%ld objects</source>
-        <target state="new">%ld objects</target>
+        <target state="translated">%ld объекта</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.many" xml:space="preserve">
         <source>%ld objects</source>
-        <target state="new">%ld objects</target>
+        <target state="translated">%ld объектов</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
-        <source>%ld objects</source>
-        <target state="translated">%ld объект</target>
+        <source>%ld object</source>
+        <target state="needs-review-l10n">%ld объект</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.other" xml:space="preserve">
@@ -1086,9 +1211,24 @@ Plural number of days</note>
         <target state="translated">%ld объектов</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
-      <trans-unit id="%lu tiles needed" xml:space="preserve">
+      <trans-unit id="%lu tiles needed|==|plural.few" xml:space="preserve">
         <source>%lu tiles needed</source>
-        <target state="translated">Необходимо %lu тайлов</target>
+        <target state="translated">Не хватает %lu тайлов</target>
+        <note>Always plural</note>
+      </trans-unit>
+      <trans-unit id="%lu tiles needed|==|plural.many" xml:space="preserve">
+        <source>%lu tiles needed</source>
+        <target state="translated">Не хватает %lu тайлов</target>
+        <note>Always plural</note>
+      </trans-unit>
+      <trans-unit id="%lu tiles needed|==|plural.one" xml:space="preserve">
+        <source>%lu tile needed</source>
+        <target state="translated">Не хватает %lu тайла</target>
+        <note>Always plural</note>
+      </trans-unit>
+      <trans-unit id="%lu tiles needed|==|plural.other" xml:space="preserve">
+        <source>%lu tiles needed</source>
+        <target state="translated">Не хватает %lu тайлов</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="(new object)" xml:space="preserve">
@@ -2051,9 +2191,44 @@ Never delete old tracks</note>
         <target state="translated">Вставка %@ символов, максимальная длина тега 255</target>
         <note/>
       </trans-unit>
-      <trans-unit id="Pasting %ld tag(s)" xml:space="preserve">
-        <source>Pasting %ld tag(s)</source>
-        <target state="translated">Вставка %ld тегов</target>
+      <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.few" xml:space="preserve">
+        <source>Pasting %ld characters, maximum tag length is 255</source>
+        <target state="translated">Вставка %@ символов, максимальная длина тега 255</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.many" xml:space="preserve">
+        <source>Pasting %ld characters, maximum tag length is 255</source>
+        <target state="translated">Вставка %@ символов, максимальная длина тега 255</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.one" xml:space="preserve">
+        <source>Pasting %ld character, maximum tag length is 255</source>
+        <target state="translated">Вставка %@ символа, максимальная длина тега 255</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.other" xml:space="preserve">
+        <source>Pasting %ld characters, maximum tag length is 255</source>
+        <target state="translated">Вставка %@ символов, максимальная длина тега 255</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Pasting %ld tag(s)|==|plural.few" xml:space="preserve">
+        <source>Pasting %ld tags</source>
+        <target state="new">Pasting %ld tags</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Pasting %ld tag(s)|==|plural.many" xml:space="preserve">
+        <source>Pasting %ld tags</source>
+        <target state="new">Pasting %ld tags</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Pasting %ld tag(s)|==|plural.one" xml:space="preserve">
+        <source>Pasting %ld tag</source>
+        <target state="translated">Вставка %ld тега</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Pasting %ld tag(s)|==|plural.other" xml:space="preserve">
+        <source>Pasting %ld tags</source>
+        <target state="needs-review-l10n">Вставка %ld тегов</target>
         <note/>
       </trans-unit>
       <trans-unit id="Perform Action" xml:space="preserve">
@@ -2597,11 +2772,38 @@ These members are marked with '&gt;'.</source>
         <target state="translated">Вы должны сохранить или отменить правки текущего объекта перед тем, как редактировать связанное отношение</target>
         <note/>
       </trans-unit>
-      <trans-unit id="You've uploaded %ld changesets with this version of Go Map!!&#10;&#10;Rate this app?" xml:space="preserve">
+      <trans-unit id="You've uploaded %ld changesets with this version of Go Map!!&#10;&#10;Rate this app?|==|plural.few" xml:space="preserve">
         <source>You've uploaded %ld changesets with this version of Go Map!!
 
 Rate this app?</source>
-        <target state="translated">Вы загрузили %ld пакетов правок используя эту версию Go Map!!
+        <target state="translated">Вы загрузили %ld пакета правок используя эту версию Go Map!!
+
+Хотите оценить приложение?</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="You've uploaded %ld changesets with this version of Go Map!!&#10;&#10;Rate this app?|==|plural.many" xml:space="preserve">
+        <source>You've uploaded %ld changesets with this version of Go Map!!
+
+Rate this app?</source>
+        <target state="needs-review-l10n">Вы загрузили %ld пакетов правок используя эту версию Go Map!!
+
+Хотите оценить приложение?</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="You've uploaded %ld changesets with this version of Go Map!!&#10;&#10;Rate this app?|==|plural.one" xml:space="preserve">
+        <source>You've uploaded %ld changeset with this version of Go Map!!
+
+Rate this app?</source>
+        <target state="translated">Вы загрузили %ld пакет правок используя эту версию Go Map!!
+
+Хотите оценить приложение?</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="You've uploaded %ld changesets with this version of Go Map!!&#10;&#10;Rate this app?|==|plural.other" xml:space="preserve">
+        <source>You've uploaded %ld changesets with this version of Go Map!!
+
+Rate this app?</source>
+        <target state="translated">Вы загрузили %ld пакета правок используя эту версию Go Map!!
 
 Хотите оценить приложение?</target>
         <note/>
