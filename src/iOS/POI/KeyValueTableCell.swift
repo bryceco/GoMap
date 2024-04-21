@@ -208,8 +208,8 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		   insert.count > 1,
 		   let vc = warningVC
 		{
-			let format = NSLocalizedString("Pasting %@ characters, maximum tag length is 255", comment: "")
-			let message = String(format: format, NSNumber(value: insert.count))
+			let message = String.localizedStringWithFormat(
+				NSLocalizedString("Pasting %ld characters, maximum tag length is 255", comment: ""), insert.count)
 			let alert = UIAlertController(title: NSLocalizedString("Error", comment: ""),
 			                              message: message,
 			                              preferredStyle: .alert)

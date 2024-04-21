@@ -153,8 +153,8 @@ class POIAttributesViewController: UITableViewController {
 					cell.title.text = NSLocalizedString("Length", comment: "")
 					cell.value.text = len >= 10
 						? String.localizedStringWithFormat(
-							NSLocalizedString("%.0f meters, %ld nodes", comment: "way length if > 10m"),
-							len,
+							NSLocalizedString("%ld meters, %ld nodes", comment: "way length if > 10m"),
+							Int(len),
 							nodes)
 						: String.localizedStringWithFormat(
 							NSLocalizedString("%.1f meters, %ld nodes", comment: "way length if < 10m"),
@@ -163,10 +163,10 @@ class POIAttributesViewController: UITableViewController {
 					cell.accessoryType = .none
 				case 1:
 					// area (only if closed way)
-					let len = way.areaInSquareMeters()
+					let area = way.areaInSquareMeters()
 					cell.title.text = NSLocalizedString("Area", comment: "Area of an object in m^2")
 					cell.value.text = String.localizedStringWithFormat(
-						NSLocalizedString("%.0f m^2", comment: "area in m^2"), len)
+						NSLocalizedString("%.0f m^2", comment: "area in m^2"), area)
 				case 2:
 					// building
 					cell.title.text = NSLocalizedString("Building", comment: "The object is a building")
