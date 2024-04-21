@@ -10475,14 +10475,14 @@
             "plural" : {
               "few" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "%ld objects"
+                  "state" : "translated",
+                  "value" : "%ld объекта"
                 }
               },
               "many" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "%ld objects"
+                  "state" : "translated",
+                  "value" : "%ld объектов"
                 }
               },
               "one" : {
@@ -10494,7 +10494,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%ld объектов"
+                  "value" : "%ld объекта"
                 }
               }
             }
@@ -10916,16 +10916,28 @@
         "ru" : {
           "variations" : {
             "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Не хватает %lu тайлов"
+                }
+              },
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Не хватает %lu тайлов"
+                }
+              },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "Необходимо %lu тайлов"
+                  "state" : "translated",
+                  "value" : "Не хватает %lu тайла"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Необходимо %lu тайлов"
+                  "value" : "Не хватает %lu тайлов"
                 }
               }
             }
