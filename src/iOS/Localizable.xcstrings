@@ -13889,6 +13889,18 @@
             }
           }
         },
+        "id" : {
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%lu tiles needed"
+                }
+              }
+            }
+          }
+        },
         "it" : {
           "variations" : {
             "plural" : {
@@ -51506,6 +51518,18 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "S ovom Go Map verzijom prenio/prenijela si %ld skupa promjena!!\n\nOcijeniti ovu aplikaciju?"
+                }
+              }
+            }
+          }
+        },
+        "id" : {
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?"
                 }
               }
             }

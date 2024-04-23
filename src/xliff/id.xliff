@@ -918,6 +918,7 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="%lu tiles needed|==|plural.other" xml:space="preserve">
         <source>%lu tiles needed</source>
+        <target state="new">%lu tiles needed</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="(new object)" xml:space="preserve">
@@ -2307,6 +2308,9 @@ These members are marked with '&gt;'.</source>
         <source>You've uploaded %ld changesets with this version of Go Map!!
 
 Rate this app?</source>
+        <target state="new">You've uploaded %ld changesets with this version of Go Map!!
+
+Rate this app?</target>
         <note/>
       </trans-unit>
       <trans-unit id="Your OSM data cache is getting large, which may lead to slow startup and shutdown times.&#10;&#10;You may want to clear the cache (under Display settings) to improve performance." xml:space="preserve">
