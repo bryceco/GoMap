@@ -37,54 +37,72 @@ extension EditorMapLayer {
 		return copyPasteTags.count > 0
 	}
 
-	private func pasteTagsMerge(_ object: OsmBaseObject) {
-		// Merge tags
-		let newTags = OsmTags.Merge(ourTags: object.tags, otherTags: copyPasteTags, allowConflicts: true)!
-		mapData.setTags(newTags, for: object)
-		setNeedsLayout()
-		owner.didUpdateObject()
-	}
-
-	private func pasteTagsReplace(_ object: OsmBaseObject) {
+	private func pasteTagsReplace(_ object: OsmBaseObject, pasting: [String: String]) {
 		// Replace all tags
-		mapData.setTags(copyPasteTags, for: object)
+		mapData.setTags(pasting, for: object)
 		setNeedsLayout()
 		owner.didUpdateObject()
 	}
 
 	/// Offers the option to either merge tags or replace them with the copied tags.
 	func pasteTags() {
-		let copyPasteTags = self.copyPasteTags
-		guard let selectedPrimary = selectedPrimary else { return }
-		guard copyPasteTags.count > 0 else {
+		let pasteTags = copyPasteTags
+		guard let selectedPrimary = selectedPrimary,
+		      pasteTags.count > 0
+		else {
 			owner.showAlert(NSLocalizedString("No tags to paste", comment: ""), message: nil)
 			return
 		}
 
-		if selectedPrimary.tags.count > 0 {
-			let question = String.localizedStringWithFormat(
-				NSLocalizedString("Pasting %ld tag(s)", comment: ""),
-				copyPasteTags.count)
-			let alertPaste = UIAlertController(
-				title: NSLocalizedString("Paste", comment: ""),
-				message: question,
-				preferredStyle: .alert)
-			alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
-			                                   style: .cancel,
-			                                   handler: nil))
+		if selectedPrimary.tags.isEmpty {
+			// Don't prompt when pasting to an untagged object
+			pasteTagsReplace(selectedPrimary, pasting: pasteTags)
+			return
+		}
+
+		let mergedTags = OsmTags.Merge(ourTags: selectedPrimary.tags, otherTags: pasteTags, allowConflicts: true)!
+		if mergedTags == selectedPrimary.tags {
+			// After tags are merged the result is the same, so there's no change
+			owner.showAlert(
+				NSLocalizedString("No change", comment: "Nothing changed as a result of the action"),
+				message: nil)
+			return
+		}
+
+		let changed = Set(pasteTags.keys).intersection(Set(selectedPrimary.tags.keys)).sorted().joined(separator: ", ")
+		let added = Set(pasteTags.keys).subtracting(Set(selectedPrimary.tags.keys)).sorted().joined(separator: ", ")
+		let unchanged = Set(selectedPrimary.tags.keys).subtracting(Set(pasteTags.keys)).sorted().joined(separator: ", ")
+
+		var question = String.localizedStringWithFormat(
+			NSLocalizedString("Pasting %ld tag(s)", comment: ""),
+			pasteTags.count)
+		if changed.count > 0 {
+			question += NSLocalizedString("\n\nChanges: \(changed)", comment: "A list of keys")
+		}
+		if added.count > 0 {
+			question += NSLocalizedString("\n\nAdds: \(added)", comment: "A list of keys")
+		}
+		if unchanged.count > 0 {
+			question += NSLocalizedString("\n\nUnchanged: \(unchanged)", comment: "A list of keys")
+		}
+		let alertPaste = UIAlertController(title: NSLocalizedString("Paste", comment: ""),
+		                                   message: question,
+		                                   preferredStyle: .alert)
+		alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+		                                   style: .cancel,
+		                                   handler: nil))
+		if mergedTags != pasteTags {
 			alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Merge Tags", comment: ""),
 			                                   style: .default, handler: { [self] _ in
-			                                   	self.pasteTagsMerge(selectedPrimary)
+			                                   	self.pasteTagsReplace(selectedPrimary, pasting: mergedTags)
 			                                   }))
-			alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Replace Tags", comment: ""),
-			                                   style: .default,
-			                                   handler: { [self] _ in
-			                                   	self.pasteTagsReplace(selectedPrimary)
-			                                   }))
-			owner.presentAlert(alert: alertPaste, location: .none)
-		} else {
-			pasteTagsReplace(selectedPrimary)
 		}
+		alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Replace Tags", comment: ""),
+		                                   style: .default,
+		                                   handler: { [self] _ in
+		                                   	self.pasteTagsReplace(selectedPrimary, pasting: pasteTags)
+		                                   }))
+		owner.presentAlert(alert: alertPaste, location: .none)
 	}
 
 	/// Called by the tag editor when user finally commits changes.

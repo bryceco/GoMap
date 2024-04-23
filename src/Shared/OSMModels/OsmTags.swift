@@ -105,7 +105,8 @@ final class OsmTags {
 	}
 
 	// result is nil only if allowConflicts==false
-	static func Merge(ourTags: [String: String], otherTags: [String: String],
+	static func Merge(ourTags: [String: String],
+	                  otherTags: [String: String],
 	                  allowConflicts: Bool) -> [String: String]?
 	{
 		guard !ourTags.isEmpty else { return otherTags }
