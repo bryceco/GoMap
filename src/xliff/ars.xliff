@@ -1337,7 +1337,7 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
         <source>%ld object</source>
-        <target state="needs-review-l10n">%ld عنصر/عناصر</target>
+        <target state="needs-translation">%ld عنصر/عناصر</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.other" xml:space="preserve">
