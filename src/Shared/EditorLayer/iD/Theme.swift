@@ -23,7 +23,6 @@ import Foundation
 import UIKit
 
 extension RenderInfo {
-
 	static func has(_ tags: [String: String], _ key: String) -> Bool {
 		let value = tags[key]
 		return value != nil && value != "no"

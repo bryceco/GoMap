@@ -110,9 +110,9 @@ final class LocationBallLayer: CALayer {
 		addSublayer(circleLayer)
 
 		// add shadow
-		self.shadowColor = UIColor.black.cgColor
-		self.shadowOffset = CGSize(width: 3, height: 3)
-		self.shadowOpacity = 0.6
+		shadowColor = UIColor.black.cgColor
+		shadowOffset = CGSize(width: 3, height: 3)
+		shadowOpacity = 0.6
 	}
 
 	func ringAnimation(withRadius radius: CGFloat) -> CABasicAnimation {
