@@ -838,7 +838,7 @@ Limpe os ficheiros temporários das quadrículas Mapnik ou de sobreposição par
       </trans-unit>
       <trans-unit id="%.0f m^2" xml:space="preserve">
         <source>%.0f m²</source>
-        <target state="needs-review-l10n">%.0f m^2</target>
+        <target state="needs-translation">%.0f m^2</target>
         <note>area in m^2</note>
       </trans-unit>
       <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
@@ -1027,7 +1027,7 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
         <source>%ld object</source>
-        <target state="needs-review-l10n">%ld objetos</target>
+        <target state="needs-translation">%ld objetos</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.other" xml:space="preserve">
