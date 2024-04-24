@@ -431,6 +431,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       </trans-unit>
       <trans-unit id="ahv-4V-kjV.text" xml:space="preserve">
         <source>HealthKit routes:</source>
+        <target state="translated">HealthKit Routen:</target>
         <note>Class = "UILabel"; text = "HealthKit routes:"; ObjectID = "ahv-4V-kjV";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.footerTitle" xml:space="preserve">
@@ -747,10 +748,12 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       </trans-unit>
       <trans-unit id="NSHealthShareUsageDescription" xml:space="preserve">
         <source>Routes from your workouts can be imported as GPX routes.</source>
+        <target state="translated">Routen von Ihrem Training können als GPX Routen importiert werden.</target>
         <note>Privacy - Health Share Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHealthUpdateUsageDescription" xml:space="preserve">
         <source>Health information is never updated.</source>
+        <target state="translated">Gesundheitsinformationen werden nie aktualisiert.</target>
         <note>Privacy - Health Update Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
@@ -1264,6 +1267,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Building" xml:space="preserve">
         <source>Building</source>
+        <target state="translated">Gebäude</target>
         <note>The object is a building</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
@@ -1606,6 +1610,7 @@ Error: %@</target>
       </trans-unit>
       <trans-unit id="HealthKit" xml:space="preserve">
         <source>HealthKit</source>
+        <target state="translated">HealthKit</target>
         <note>iOS HealthKit framework</note>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">

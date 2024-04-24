@@ -386,6 +386,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="Sdv-R2-za8.normalTitle" xml:space="preserve">
         <source>Import</source>
+        <target state="translated">Uvoz</target>
         <note>Class = "UIButton"; normalTitle = "Import"; ObjectID = "Sdv-R2-za8";</note>
       </trans-unit>
       <trans-unit id="Uum-Wn-9CF.text" xml:space="preserve">
@@ -430,6 +431,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="ahv-4V-kjV.text" xml:space="preserve">
         <source>HealthKit routes:</source>
+        <target state="translated">HealthKit rute:</target>
         <note>Class = "UILabel"; text = "HealthKit routes:"; ObjectID = "ahv-4V-kjV";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.footerTitle" xml:space="preserve">
@@ -750,6 +752,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="NSHealthUpdateUsageDescription" xml:space="preserve">
         <source>Health information is never updated.</source>
+        <target state="translated">Podaci o zdravlju se nikada ne aktualiziraju.</target>
         <note>Privacy - Health Update Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
@@ -1000,12 +1003,12 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%ld meter</source>
-        <target state="translated">%ld m</target>
+        <target state="translated">%ld metar</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="translated">%ld m</target>
+        <target state="translated">%ld metra</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.few" xml:space="preserve">
@@ -1045,12 +1048,12 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%ld meter</source>
-        <target state="translated">%ld m</target>
+        <target state="translated">%ld metar</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="translated">%ld m</target>
+        <target state="translated">%ld metra</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.few" xml:space="preserve">
@@ -1201,7 +1204,7 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="Add Highway Surface" xml:space="preserve">
         <source>Add Highway Surface</source>
-        <target state="translated">Dodaj površinski sloj autoceste</target>
+        <target state="translated">Dodaj vrstu kolnika autoceste</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
@@ -1216,12 +1219,12 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="Add Parking Type" xml:space="preserve">
         <source>Add Parking Type</source>
-        <target state="translated">Dodaj vrstu prkirališta</target>
+        <target state="translated">Dodaj vrstu parkirališta</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Sidewalk Surface" xml:space="preserve">
         <source>Add Sidewalk Surface</source>
-        <target state="translated">Dodaj površinski sloj pločnika</target>
+        <target state="translated">Dodaj vrstu pločnika</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Speed Limit" xml:space="preserve">
@@ -1351,6 +1354,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Building" xml:space="preserve">
         <source>Building</source>
+        <target state="translated">Zgrada</target>
         <note>The object is a building</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
@@ -1692,6 +1696,7 @@ Greška: %@</target>
       </trans-unit>
       <trans-unit id="HealthKit" xml:space="preserve">
         <source>HealthKit</source>
+        <target state="translated">HealthKit</target>
         <note>iOS HealthKit framework</note>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
@@ -1948,12 +1953,12 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="No Left Turn restriction" xml:space="preserve">
         <source>No Left Turn restriction</source>
-        <target state="translated">Nema zabrane skretanja nalijevo</target>
+        <target state="translated">Nema zabrane skretanja ulijevo</target>
         <note/>
       </trans-unit>
       <trans-unit id="No Right Turn restriction" xml:space="preserve">
         <source>No Right Turn restriction</source>
-        <target state="translated">Nema zabrane skretanja nadesno</target>
+        <target state="translated">Nema zabrane skretanja udesno</target>
         <note/>
       </trans-unit>
       <trans-unit id="No Straight On restriction" xml:space="preserve">
@@ -3363,7 +3368,9 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
         <source>Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.
 
 You can also enter "dev" for the development server (for testing), "ohm" for the OpenHistoricalMap server, or leave blank for the default server.</source>
-        <target state="needs-review-l10n">Odredi računalo, ako želiš uređivati podatke koji se nalaze na alternativnom poslužitelju OSM-a. Standardno računalo je api.openstreetmap.org.</target>
+        <target state="translated">Odredi računalo, ako želiš uređivati podatke koji se nalaze na alternativnom OSM serveru. Standardno računalo je api.openstreetmap.org.
+
+Također možeš upisati "dev" za razvojni server (za testiranje), "ohm" za OpenHistoricalMap server ili ostavi prazno za zadani server.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.\n\nYou can also enter \"dev\" for the development server (for testing), \"ohm\" for the OpenHistoricalMap server, or leave blank for the default server."; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.headerTitle" xml:space="preserve">
