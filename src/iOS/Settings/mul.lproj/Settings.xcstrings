@@ -1015,8 +1015,8 @@
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Odredi računalo, ako želiš uređivati podatke koji se nalaze na alternativnom poslužitelju OSM-a. Standardno računalo je api.openstreetmap.org."
+            "state" : "translated",
+            "value" : "Odredi računalo, ako želiš uređivati podatke koji se nalaze na alternativnom OSM serveru. Standardno računalo je api.openstreetmap.org.\n\nTakođer možeš upisati \"dev\" za razvojni server (za testiranje), \"ohm\" za OpenHistoricalMap server ili ostavi prazno za zadani server."
           }
         },
         "ja" : {

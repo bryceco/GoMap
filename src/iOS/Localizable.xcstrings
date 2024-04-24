@@ -2379,7 +2379,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "(отношения %@)"
+            "value" : "(отношение %@)"
           }
         },
         "uk" : {
@@ -8331,13 +8331,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%ld m"
+                      "value" : "%ld metar"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%ld m"
+                      "value" : "%ld metra"
                     }
                   }
                 }
@@ -10112,13 +10112,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%ld m"
+                      "value" : "%ld metar"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%ld m"
+                      "value" : "%ld metra"
                     }
                   }
                 }
@@ -15157,7 +15157,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dodaj površinski sloj autoceste"
+            "value" : "Dodaj vrstu kolnika autoceste"
           }
         },
         "it" : {
@@ -15964,7 +15964,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dodaj vrstu prkirališta"
+            "value" : "Dodaj vrstu parkirališta"
           }
         },
         "it" : {
@@ -16047,7 +16047,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dodaj površinski sloj pločnika"
+            "value" : "Dodaj vrstu pločnika"
           }
         },
         "it" : {
@@ -18787,7 +18787,33 @@
       }
     },
     "Building" : {
-      "comment" : "The object is a building"
+      "comment" : "The object is a building",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gebäude"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edificio"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zgrada"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Здание"
+          }
+        }
+      }
     },
     "Cache size warning" : {
       "localizations" : {
@@ -28265,7 +28291,19 @@
     "HealthKit" : {
       "comment" : "iOS HealthKit framework",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HealthKit"
+          }
+        },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HealthKit"
+          }
+        },
+        "hr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "HealthKit"
@@ -34553,7 +34591,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nema zabrane skretanja nalijevo"
+            "value" : "Nema zabrane skretanja ulijevo"
           }
         },
         "id" : {
@@ -34789,7 +34827,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nema zabrane skretanja nadesno"
+            "value" : "Nema zabrane skretanja udesno"
           }
         },
         "id" : {

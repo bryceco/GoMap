@@ -801,6 +801,12 @@
       "comment" : "Privacy - Health Share Usage Description",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Routen von Ihrem Training können als GPX Routen importiert werden."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -831,6 +837,12 @@
       "comment" : "Privacy - Health Update Usage Description",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesundheitsinformationen werden nie aktualisiert."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -841,6 +853,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "La información sanitaria nunca se actualiza."
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podaci o zdravlju se nikada ne aktualiziraju."
           }
         },
         "ru" : {
