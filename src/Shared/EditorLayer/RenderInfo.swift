@@ -25,6 +25,24 @@ private let g_DefaultRender: RenderInfo = {
 	return info
 }()
 
+func DynamicColor(red r: CGFloat, green g: CGFloat, blue b: CGFloat, alpha: CGFloat) -> UIColor {
+	if #available(iOS 13.0, *) { // Dark Mode
+		return UIColor(dynamicProvider: { traitCollection in
+			if traitCollection.userInterfaceStyle == .dark {
+				// lighten colors for dark mode
+				let delta: CGFloat = 0.3
+				let r3 = r * (1 - delta) + delta
+				let g3 = g * (1 - delta) + delta
+				let b3 = b * (1 - delta) + delta
+				return UIColor(red: r3, green: g3, blue: b3, alpha: alpha)
+			}
+			return UIColor(red: r, green: g, blue: b, alpha: alpha)
+		})
+	} else {
+		return UIColor(red: r, green: g, blue: b, alpha: alpha)
+	}
+}
+
 final class RenderInfo {
 	var renderPriority = 0
 
@@ -32,6 +50,12 @@ final class RenderInfo {
 	var value: String?
 	var lineColor: UIColor?
 	var lineWidth: CGFloat = 0.0
+	var lineCap: CAShapeLayerLineCap = .butt
+	var lineDashPattern: [NSNumber]?
+	var casingColor: UIColor?
+	var casingWidth: CGFloat = 0.0
+	var casingCap: CAShapeLayerLineCap = .butt
+	var casingDashPattern: [NSNumber]?
 	var areaColor: UIColor?
 
 	var description: String {
@@ -42,41 +66,28 @@ final class RenderInfo {
 		return self === g_AddressRender
 	}
 
-	class func color(forHexString text: String?) -> UIColor? {
-		guard let text = text else { return nil }
-		assert(text.count == 6)
-
-		var r: CGFloat = 0
-		var g: CGFloat = 0
-		var b: CGFloat = 0
-		let start = text.index(text.startIndex, offsetBy: 0)
-		let hexColor = String(text[start...])
-		if hexColor.count == 6 {
-			let scanner = Scanner(string: hexColor)
-			var hexNumber: UInt64 = 0
-			if scanner.scanHexInt64(&hexNumber) {
-				r = CGFloat((hexNumber & 0xFF0000) >> 16) / 255.0
-				g = CGFloat((hexNumber & 0x00FF00) >> 8) / 255.0
-				b = CGFloat((hexNumber & 0x0000FF) >> 0) / 255.0
-			}
-		}
-
-		if #available(iOS 13.0, *) { // Dark Mode
-			let color = UIColor(dynamicProvider: { traitCollection in
-				if traitCollection.userInterfaceStyle == .dark {
-					// lighten colors for dark mode
-					let delta: CGFloat = 0.3
-					let r3 = r * (1 - delta) + delta
-					let g3 = g * (1 - delta) + delta
-					let b3 = b * (1 - delta) + delta
-					return UIColor(red: r3, green: g3, blue: b3, alpha: 1.0)
-				}
-				return UIColor(red: r, green: g, blue: b, alpha: 1.0)
-			})
-			return color
-		} else {
-			return UIColor(red: r, green: g, blue: b, alpha: 1.0)
-		}
+	init(
+		key: String = "",
+		value: String? = nil,
+		lineColor: UIColor? = UIColor.white,
+		lineWidth: CGFloat = 1.0,
+		lineCap: CAShapeLayerLineCap = .round,
+		lineDashPattern: [CGFloat]? = nil,
+		casingColor: UIColor? = nil,
+		casingWidth: CGFloat = 0.0,
+		casingCap: CAShapeLayerLineCap = .butt,
+		casingDashPattern: [CGFloat]? = nil,
+		areaColor: UIColor? = nil)
+	{
+		self.lineColor = lineColor
+		self.lineWidth = lineWidth
+		self.lineCap = lineCap
+		self.lineDashPattern = lineDashPattern?.map { NSNumber(value: $0) }
+		self.casingColor = casingColor
+		self.casingWidth = casingWidth
+		self.casingCap = casingCap
+		self.casingDashPattern = casingDashPattern?.map { NSNumber(value: $0) }
+		self.areaColor = areaColor
 	}
 
 	// The priority is a small integer bounded by RenderInfoMaxPriority which
@@ -185,54 +196,13 @@ final class RenderInfo {
 
 final class RenderInfoDatabase {
 	var allFeatures: [RenderInfo] = []
-	var keyDict: [String: [String: RenderInfo]] = [:]
 
 	static let shared = RenderInfoDatabase()
 	static let nsZero = NSNumber(value: 0.0)
 
-	class func readConfiguration() -> [RenderInfo] {
-		struct RenderInfoEntry: Decodable {
-			let lineColor: String?
-			let lineWidth: Double?
-			let areaColor: String?
-		}
-
-		let path = Bundle.main.path(forResource: "RenderInfo", ofType: "json")!
-		let data = NSData(contentsOfFile: path)! as Data
-		let features = try! JSONDecoder().decode([String: RenderInfoEntry].self, from: data)
-
-		var renderList: [RenderInfo] = []
-
-		for (feature, dict) in features {
-			let keyValue = feature.components(separatedBy: "/")
-			let render = RenderInfo()
-			render.key = keyValue[0]
-			render.value = keyValue.count > 1 ? keyValue[1] : ""
-			render.lineColor = RenderInfo.color(forHexString: dict.lineColor)
-			render.areaColor = RenderInfo.color(forHexString: dict.areaColor)
-			render.lineWidth = dict.lineWidth ?? 0.0
-			renderList.append(render)
-		}
-		return renderList
-	}
-
-	required init() {
-		allFeatures = RenderInfoDatabase.readConfiguration()
-		keyDict = [:]
-		for tag: RenderInfo in allFeatures {
-			var valDict = keyDict[tag.key]
-			if valDict == nil {
-				valDict = [tag.value ?? "": tag]
-			} else {
-				valDict![tag.value ?? ""] = tag
-			}
-			keyDict[tag.key] = valDict
-		}
-	}
-
 	func renderInfoForObject(_ object: OsmBaseObject) -> RenderInfo {
 		var tags = object.tags
-		// if the object is part of a rendered relation than inherit that relation's tags
+		// if the object is part of a rendered relation then inherit that relation's tags
 		if object.isWay() != nil,
 		   object.parentRelations.count != 0,
 		   !object.hasInterestingTags()
@@ -245,37 +215,13 @@ final class RenderInfoDatabase {
 			}
 		}
 
-		// try exact match
-		var bestRender: RenderInfo?
-		var bestIsDefault = false
-		var bestCount = 0
-		for (key, value) in tags {
-			guard let valDict = keyDict[key] else { continue }
-			var isDefault = false
-			var render = valDict[value]
-			if render == nil {
-				render = valDict[""]
-				if render != nil {
-					isDefault = true
-				}
-			}
-			guard let render = render else { continue }
-
-			let count: Int = ((render.lineColor != nil) ? 1 : 0) + ((render.areaColor != nil) ? 1 : 0)
-			if bestRender == nil || (bestIsDefault && !isDefault) || (count > bestCount) {
-				bestRender = render
-				bestCount = count
-				bestIsDefault = isDefault
-				continue
-			}
-		}
-		if let bestRender = bestRender {
-			return bestRender
+		if let renderInfo = RenderInfo.style(tags: tags) {
+			return renderInfo
 		}
 
 		// check if it is an address point
-		if object.isNode() != nil,
-		   !object.tags.isEmpty,
+		if object is OsmNode,
+		   !tags.isEmpty,
 		   tags.first(where: { key, _ in OsmTags.IsInterestingKey(key) && !key.hasPrefix("addr:") }) == nil
 		{
 			return g_AddressRender

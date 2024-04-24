@@ -1,5 +1,5 @@
 //
-//  OsmMapLayer.swift
+//  EditorMapLayer.swift
 //  OpenStreetMap
 //
 //  Created by Bryce Cogswell on 10/5/12.
@@ -16,7 +16,7 @@ private let FADE_INOUT = false
 private let SINGLE_SIDED_WALLS = true
 
 // drawing options
-private let DEFAULT_LINECAP = CAShapeLayerLineCap.square
+private let DEFAULT_LINECAP = CAShapeLayerLineCap.butt
 private let DEFAULT_LINEJOIN = CAShapeLayerLineJoin.miter
 private let MinIconSizeInPixels: CGFloat = 24.0
 private let Pixels_Per_Character: CGFloat = 8.0
@@ -90,7 +90,8 @@ final class EditorMapLayer: CALayer {
 	struct DragState {
 		var startPoint: LatLon // to track total movement
 		var didMove: Bool // to maintain undo stack
-		var confirmDrag: Bool // should we confirm that the user wanted to drag the selected object? Only if they haven't modified it since selecting it
+		var confirmDrag: Bool // should we confirm that the user wanted to drag the selected object? Only if they
+		// haven't modified it since selecting it
 	}
 
 	var dragState = DragState(startPoint: .zero, didMove: false, confirmDrag: false)
@@ -220,7 +221,8 @@ final class EditorMapLayer: CALayer {
 			if let pushpin = context["pushpin"] as? String,
 			   let primary = self.selectedPrimary
 			{
-				// since we don't record the pushpin location until after a drag has begun we need to re-center on the object:
+				// since we don't record the pushpin location until after a drag has begun we need to re-center on the
+				// object:
 				var pt = NSCoder.cgPoint(for: pushpin)
 				let loc = self.owner.mapTransform.latLon(forScreenPoint: pt)
 				let pos = primary.latLonOnObject(forLatLon: loc)
@@ -564,7 +566,7 @@ final class EditorMapLayer: CALayer {
 
 	private static let ZSCALE: CGFloat = 0.001
 	private static let Z_BASE: CGFloat = -1.0
-	private let Z_OCEAN = Z_BASE + 1 * ZSCALE
+	public let Z_OCEAN = Z_BASE + 1 * ZSCALE
 	private let Z_AREA = Z_BASE + 2 * ZSCALE
 	private let Z_HALO = Z_BASE + 3 * ZSCALE
 	private let Z_CASING = Z_BASE + 4 * ZSCALE
@@ -642,7 +644,7 @@ final class EditorMapLayer: CALayer {
 
 		// casing
 		if object.isWay() != nil || (object.isRelation()?.isMultipolygon() ?? false) {
-			if renderInfo.lineWidth != 0.0, !(object.isWay()?.isArea() ?? false) {
+			if renderInfo.casingWidth != 0.0, renderInfo.casingColor != nil, !(object.isWay()?.isArea() ?? false) {
 				var refPoint = OSMPoint.zero
 				let path = object.linePathForObject(withRefPoint: &refPoint)
 				if let path = path {
@@ -651,27 +653,15 @@ final class EditorMapLayer: CALayer {
 						layer.anchorPoint = CGPoint(x: 0, y: 0)
 						layer.position = CGPoint(refPoint)
 						layer.path = path
-						layer.strokeColor = UIColor.black.cgColor
+						layer.strokeColor = renderInfo.casingColor?.cgColor // TODO: type check
 						layer.fillColor = nil
-						layer.lineWidth = (1 + renderInfo.lineWidth) * highwayScale
-						layer.lineCap = DEFAULT_LINECAP
+						layer.lineWidth = renderInfo.casingWidth
+						layer.lineCap = renderInfo.casingCap
+						layer.lineDashPattern = renderInfo.casingDashPattern
 						layer.lineJoin = DEFAULT_LINEJOIN
 						layer.zPosition = Z_CASING
-						let props = layer.properties
-						props.position = refPoint
-						props.lineWidth = layer.lineWidth
-						if let bridge = object.tags["bridge"],
-						   !OsmTags.isOsmBooleanFalse(bridge)
-						{
-							props.lineWidth += 4
-						}
-						if let tunnel = object.tags["tunnel"],
-						   !OsmTags.isOsmBooleanFalse(tunnel)
-						{
-							props.lineWidth += 2
-							layer.strokeColor = UIColor.brown.cgColor
-						}
-
+						layer.properties.position = refPoint
+						layer.properties.lineWidth = layer.lineWidth
 						layers.append(layer)
 					}
 
@@ -684,7 +674,7 @@ final class EditorMapLayer: CALayer {
 						haloLayer.path = path
 						haloLayer.strokeColor = UIColor.red.cgColor
 						haloLayer.fillColor = nil
-						haloLayer.lineWidth = (2 + renderInfo.lineWidth) * highwayScale
+						haloLayer.lineWidth = renderInfo.lineWidth + 2
 						haloLayer.lineCap = DEFAULT_LINECAP
 						haloLayer.lineJoin = DEFAULT_LINEJOIN
 						haloLayer.zPosition = Z_HALO
@@ -703,9 +693,9 @@ final class EditorMapLayer: CALayer {
 			let path = object.linePathForObject(withRefPoint: &refPoint)
 
 			if let path = path {
-				var lineWidth = renderInfo.lineWidth * highwayScale
+				var lineWidth = renderInfo.lineWidth
 				if lineWidth == 0 {
-					lineWidth = 1
+					lineWidth = 2
 				}
 
 				let layer = CAShapeLayerWithProperties()
@@ -714,11 +704,12 @@ final class EditorMapLayer: CALayer {
 				layer.bounds = CGRect(x: 0, y: 0, width: bbox.size.width, height: bbox.size.height)
 				layer.position = CGPoint(refPoint)
 				layer.path = path
-				layer.strokeColor = (renderInfo.lineColor ?? UIColor.black).cgColor
+				layer.strokeColor = (renderInfo.lineColor ?? UIColor.white).cgColor
 				layer.fillColor = nil
 				layer.lineWidth = lineWidth
-				layer.lineCap = DEFAULT_LINECAP
-				layer.lineJoin = DEFAULT_LINEJOIN
+				layer.lineCap = renderInfo.lineCap
+				layer.lineDashPattern = renderInfo.lineDashPattern
+				layer.lineJoin = .round
 				layer.zPosition = Z_LINE
 
 				let props = layer.properties
@@ -948,7 +939,8 @@ final class EditorMapLayer: CALayer {
 			backgroundLayer.borderWidth = 1.0
 			backgroundLayer.isOpaque = true
 
-			/// The actual icon image serves as a `mask` for the icon's color layer, allowing for "tinting" of the icons.
+			/// The actual icon image serves as a `mask` for the icon's color layer, allowing for "tinting" of the
+			/// icons.
 			let iconMaskLayer = CALayer()
 			let padding: CGFloat = 4
 			iconMaskLayer.frame = CGRect(
@@ -1157,7 +1149,9 @@ final class EditorMapLayer: CALayer {
 		var nameLimit = Int(5 + (geekScore - 500) / 200) // 500 -> 5, 2500 -> 10
 		var nameSet: Set<String> = []
 		var layers: [CALayer & LayerPropertiesProviding] = []
-		let regularColor = UIColor.cyan
+		let wayColor = UIColor(red: 0.2, green: 1.0, blue: 0.4, alpha: 1.0)
+		let nodeInWayColor = UIColor.cyan
+		let selectedNodeColor = UIColor.yellow
 		let relationColor = UIColor(red: 66 / 255.0, green: 188 / 255.0, blue: 244 / 255.0, alpha: 1.0)
 
 		// highlighting
@@ -1179,13 +1173,8 @@ final class EditorMapLayer: CALayer {
 
 			if let way = object as? OsmWay {
 				let path = self.path(for: way)
-				var lineWidth: CGFloat = selected ? 1.0 : 2.0
-				let wayColor = selected ? regularColor : relationColor
-
-				if lineWidth == 0 {
-					lineWidth = 1
-				}
-				lineWidth += 2 // since we're drawing highlight 2-wide we don't want it to intrude inward on way
+				let lineWidth: CGFloat = (object.renderInfo?.lineWidth ?? 2.0) + 2
+				let wayColor = selected ? wayColor : relationColor
 
 				let layer = CAShapeLayerWithProperties()
 				layer.strokeColor = wayColor.cgColor
@@ -1252,7 +1241,7 @@ final class EditorMapLayer: CALayer {
 				for node in nodes {
 					let layer2 = CAShapeLayerWithProperties()
 					layer2.position = owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false)
-					layer2.strokeColor = node == selectedNode ? UIColor.yellow.cgColor : UIColor.green.cgColor
+					layer2.strokeColor = node == selectedNode ? selectedNodeColor.cgColor : nodeInWayColor.cgColor
 					layer2.fillColor = UIColor.clear.cgColor
 					layer2.lineWidth = 3.0
 					layer2.shadowColor = UIColor.black.cgColor
@@ -1507,7 +1496,9 @@ final class EditorMapLayer: CALayer {
 		}
 		if addressCount > 50 {
 			let range = NSIndexSet(indexesIn: NSRange(location: objectLimit - addressCount, length: addressCount))
-			for deletionIndex in range.reversed() { objects.remove(at: deletionIndex) }
+			for deletionIndex in range.reversed() {
+				objects.remove(at: deletionIndex)
+			}
 		}
 
 		return objects
@@ -1728,7 +1719,7 @@ final class EditorMapLayer: CALayer {
 	var selectedRelation: OsmRelation? {
 		didSet {
 			if oldValue != selectedRelation {
-				self.setNeedsDisplay()
+				setNeedsDisplay()
 				owner.selectionDidChange()
 			}
 		}
@@ -1742,9 +1733,9 @@ final class EditorMapLayer: CALayer {
 				updateMapLocation()
 			}
 			if !wasHidden, isHidden {
-				self.selectedNode = nil
-				self.selectedWay = nil
-				self.selectedRelation = nil
+				selectedNode = nil
+				selectedWay = nil
+				selectedRelation = nil
 				owner.removePin()
 			}
 		}

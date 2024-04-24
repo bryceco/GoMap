@@ -99,7 +99,6 @@
 		02ACBA3616713CCB00BB4414 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3516713CCB00BB4414 /* Foundation.framework */; };
 		02ACBA3816713CCB00BB4414 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3716713CCB00BB4414 /* CoreGraphics.framework */; };
 		02ACBA4D16713CCB00BB4414 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */; };
-		02ACBCFD16713F2B00BB4414 /* RenderInfo.json in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBBBB16713F2A00BB4414 /* RenderInfo.json */; };
 		02ACBD191671737300BB4414 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD181671737300BB4414 /* libxml2.dylib */; };
 		02ACBD1F16717BBB00BB4414 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */; };
 		02ACBD2116717BC500BB4414 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD2016717BC500BB4414 /* CoreLocation.framework */; };
@@ -184,6 +183,8 @@
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
 		64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */; };
 		64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */; };
+		B25C231A2BB8B09C000891B6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25C23192BB8B09C000891B6 /* Theme.swift */; };
+		B287A89A2BBC64F70050A15D /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = B287A8992BBC64F70050A15D /* Style.swift */; };
 		C3004F4D263A6306006BF313 /* NominatimViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3004F4C263A6306006BF313 /* NominatimViewController.swift */; };
 		C3004F52263A6CA5006BF313 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3004F51263A6CA5006BF313 /* MainViewController.swift */; };
 		C3004F54263A99DD006BF313 /* POIAttributesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3004F53263A99DC006BF313 /* POIAttributesViewController.swift */; };
@@ -388,7 +389,6 @@
 		02ACBA3716713CCB00BB4414 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		02ACBA3B16713CCB00BB4414 /* Go Map!!-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Go Map!!-Info.plist"; sourceTree = "<group>"; };
 		02ACBA4116713CCB00BB4414 /* Go Map!!-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Go Map!!-Prefix.pch"; sourceTree = "<group>"; };
-		02ACBBBB16713F2A00BB4414 /* RenderInfo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RenderInfo.json; sourceTree = "<group>"; };
 		02ACBD181671737300BB4414 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		02ACBD2016717BC500BB4414 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -479,6 +479,8 @@
 		64D74BF12253DF49004FFD20 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSMMapDataTestCase.swift; sourceTree = "<group>"; };
 		64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+UserDefaults.swift"; sourceTree = "<group>"; };
+		B25C23192BB8B09C000891B6 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		B287A8992BBC64F70050A15D /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		C3004F4C263A6306006BF313 /* NominatimViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NominatimViewController.swift; sourceTree = "<group>"; };
 		C3004F51263A6CA5006BF313 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C3004F53263A99DC006BF313 /* POIAttributesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POIAttributesViewController.swift; sourceTree = "<group>"; };
@@ -900,6 +902,7 @@
 		02F53299267ACFBB0088DF41 /* EditorLayer */ = {
 			isa = PBXGroup;
 			children = (
+				B287A8982BBC64A50050A15D /* iD */,
 				02D5B5F2248F154D00FEE448 /* Colors.swift */,
 				02354F79246349E100878A04 /* CurvedGlyphLayer.swift */,
 				02CD9973265C65C200213AD6 /* EditorFilters.swift */,
@@ -908,7 +911,6 @@
 				02F53297267AB41C0088DF41 /* EditorMapLayer+HitTest.swift */,
 				022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */,
 				C3D096D1263EA7E100E3B129 /* LayerProperties.swift */,
-				02ACBBBB16713F2A00BB4414 /* RenderInfo.json */,
 				C3D096B8263DFA2A00E3B129 /* RenderInfo.swift */,
 			);
 			name = EditorLayer;
@@ -1069,6 +1071,15 @@
 				64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		B287A8982BBC64A50050A15D /* iD */ = {
+			isa = PBXGroup;
+			children = (
+				B25C23192BB8B09C000891B6 /* Theme.swift */,
+				B287A8992BBC64F70050A15D /* Style.swift */,
+			);
+			path = iD;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1266,7 +1277,6 @@
 				027AB500250E9C9B00C404CD /* Height.storyboard in Resources */,
 				0287D25229947B2900BEAD9E /* QuestChooser.storyboard in Resources */,
 				023B892B19C148790060CDB5 /* Images.xcassets in Resources */,
-				02ACBCFD16713F2B00BB4414 /* RenderInfo.json in Resources */,
 				02079803299470FB00D3C654 /* QuestBuilder.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1437,10 +1447,12 @@
 				02EDBF6826535B9D00B7072E /* OsmNode.swift in Sources */,
 				ED56E5C626027A50000B368C /* ContactUsViewController.swift in Sources */,
 				02A123E9264C8B60005638C1 /* GpxLayer.swift in Sources */,
+				B25C231A2BB8B09C000891B6 /* Theme.swift in Sources */,
 				ED56E5AB26024DA5000B368C /* AutocompleteTextField.swift in Sources */,
 				0266DE862655A21F007A502E /* Superview.swift in Sources */,
 				02F53298267AB41C0088DF41 /* EditorMapLayer+HitTest.swift in Sources */,
 				02CB2408265DB7CB00835F32 /* HoursRecognizer.swift in Sources */,
+				B287A89A2BBC64F70050A15D /* Style.swift in Sources */,
 				02D5B5F3248F154D00FEE448 /* Colors.swift in Sources */,
 				021FADCD25873C8200F6E1C0 /* PresetsDatabase+TableView.swift in Sources */,
 				02505C5729A458A30078D60D /* QuestDefinition.swift in Sources */,
