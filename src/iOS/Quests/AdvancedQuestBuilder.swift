@@ -177,6 +177,9 @@ struct AdvancedQuestBuilder: View {
 				Text("Cancel").font(.body)
 			},
 			trailing: Button(action: {
+				// Dismiss keyboard before saving
+				UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
+												to: nil, from: nil, for: nil)
 				// Do some cleanup before saving
 				quest.filters = quest.filters.map({ item in
 					QuestDefinitionFilter(
