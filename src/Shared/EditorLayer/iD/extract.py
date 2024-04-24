@@ -16,9 +16,13 @@ parser.add_argument(
     "--debug", action="store_true", help="generate code with timing information"
 )
 parser.add_argument(
+<<<<<<< HEAD
     "--decomp",
     action="store_true",
     help="generate standalone code paste-able into godbolt.org",
+=======
+    "--decomp", action="store_true", help="generate standalone code paste-able into godbolt.org"
+>>>>>>> be1bb8211f9b1c47340ac2527803e0465ccc603a
 )
 args = parser.parse_args()
 
@@ -187,7 +191,8 @@ def selector_to_if(selector, cmp="=="):
 
 
 def to_swift_fn(styles, indent=0):
-    res = 'let r = RenderInfo(key: primary ?? "", value: primaryValue)\n'
+    res = 'guard primary != nil || primaryValue != nil else { return nil }\n'
+    res += 'let r = RenderInfo(key: primary ?? "", value: primaryValue)\n'
     for keys, style in styles:
         if_stms = []
         for [selector, and_styles, not_styles] in keys:
@@ -594,7 +599,7 @@ extension RenderInfo {
 
 \tstatic """
 
-code += "func match(primary: String?, primaryValue: String?, status: String?, surface: String?, tags: [String: String]) -> RenderInfo {\n\t\t"
+code += "func match(primary: String?, primaryValue: String?, status: String?, surface: String?, tags: [String: String]) -> RenderInfo? {\n\t\t"
 code += debug_start
 code += to_swift_fn(styles, 2)
 code += debug_end

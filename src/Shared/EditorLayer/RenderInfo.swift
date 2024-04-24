@@ -25,6 +25,24 @@ private let g_DefaultRender: RenderInfo = {
 	return info
 }()
 
+func DynamicColor(red r: CGFloat, green g: CGFloat, blue b: CGFloat, alpha: CGFloat) -> UIColor {
+	if #available(iOS 13.0, *) { // Dark Mode
+		return UIColor(dynamicProvider: { traitCollection in
+			if traitCollection.userInterfaceStyle == .dark {
+				// lighten colors for dark mode
+				let delta: CGFloat = 0.3
+				let r3 = r * (1 - delta) + delta
+				let g3 = g * (1 - delta) + delta
+				let b3 = b * (1 - delta) + delta
+				return UIColor(red: r3, green: g3, blue: b3, alpha: alpha)
+			}
+			return UIColor(red: r, green: g, blue: b, alpha: alpha)
+		})
+	} else {
+		return UIColor(red: r, green: g, blue: b, alpha: alpha)
+	}
+}
+
 final class RenderInfo {
 	var renderPriority = 0
 
@@ -197,6 +215,18 @@ final class RenderInfoDatabase {
 			}
 		}
 
-		return RenderInfo.style(tags: tags)
+		if let renderInfo = RenderInfo.style(tags: tags) {
+			return renderInfo
+		}
+
+		// check if it is an address point
+		if object is OsmNode,
+		   !tags.isEmpty,
+		   tags.first(where: { key, _ in OsmTags.IsInterestingKey(key) && !key.hasPrefix("addr:") }) == nil
+		{
+			return g_AddressRender
+		}
+
+		return g_DefaultRender
 	}
 }

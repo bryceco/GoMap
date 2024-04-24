@@ -23,14 +23,16 @@ import Foundation
 import UIKit
 
 extension RenderInfo {
+
 	static func has(_ tags: [String: String], _ key: String) -> Bool {
 		let value = tags[key]
 		return value != nil && value != "no"
 	}
 
 	static func match(primary: String?, primaryValue: String?, status: String?, surface: String?,
-	                  tags: [String: String]) -> RenderInfo
+	                  tags: [String: String]) -> RenderInfo?
 	{
+		guard primary != nil || primaryValue != nil else { return nil }
 		let r = RenderInfo(key: primary ?? "", value: primaryValue)
 		if (tags["barrier"] == "hedge") || (primary == "landuse" && primaryValue == "flowerbed") ||
 			(primary == "landuse" && primaryValue == "forest") || (primary == "landuse" && primaryValue == "grass") ||
@@ -47,16 +49,16 @@ extension RenderInfo {
 			(tags["golf"] == "fairway") ||
 			(tags["golf"] == "rough") || (tags["golf"] == "green")
 		{
-			r.lineColor = UIColor(red: 0.549, green: 0.816, blue: 0.373, alpha: 1.0)
-			r.areaColor = UIColor(red: 0.549, green: 0.816, blue: 0.373, alpha: 0.3)
+			r.lineColor = DynamicColor(red: 0.549, green: 0.816, blue: 0.373, alpha: 1.0)
+			r.areaColor = DynamicColor(red: 0.549, green: 0.816, blue: 0.373, alpha: 0.3)
 		}
 		if (primary == "amenity" && primaryValue == "fountain") ||
 			((primary == "leisure" && primaryValue == "swimming_pool") || tags["leisure"] == "swimming_pool") ||
 			(primary == "natural" && primaryValue == "bay") || (primary == "natural" && primaryValue == "strait") ||
 			(primary == "natural" && primaryValue == "water")
 		{
-			r.lineColor = UIColor(red: 0.467, green: 0.827, blue: 0.871, alpha: 1.0)
-			r.areaColor = UIColor(red: 0.467, green: 0.827, blue: 0.871, alpha: 0.3)
+			r.lineColor = DynamicColor(red: 0.467, green: 0.827, blue: 0.871, alpha: 1.0)
+			r.areaColor = DynamicColor(red: 0.467, green: 0.827, blue: 0.871, alpha: 0.3)
 		}
 		if ((primary == "leisure" && primaryValue == "track") || tags["leisure"] == "track") ||
 			(primary == "natural" && primaryValue == "beach") || (primary == "natural" && primaryValue == "sand") ||
@@ -67,42 +69,42 @@ extension RenderInfo {
 			(primary == "amenity" && primaryValue == "university") ||
 			(primary == "amenity" && primaryValue == "research_institute")
 		{
-			r.lineColor = UIColor(red: 1.0, green: 1.0, blue: 0.58, alpha: 0.75)
-			r.areaColor = UIColor(red: 1.0, green: 1.0, blue: 0.58, alpha: 0.25)
+			r.lineColor = DynamicColor(red: 1.0, green: 1.0, blue: 0.58, alpha: 0.75)
+			r.areaColor = DynamicColor(red: 1.0, green: 1.0, blue: 0.58, alpha: 0.25)
 		}
 		if (primary == "landuse" && primaryValue == "residential") || (status == "construction") {
-			r.lineColor = UIColor(red: 0.769, green: 0.741, blue: 0.098, alpha: 1.0)
-			r.areaColor = UIColor(red: 0.769, green: 0.741, blue: 0.098, alpha: 0.3)
+			r.lineColor = DynamicColor(red: 0.769, green: 0.741, blue: 0.098, alpha: 1.0)
+			r.areaColor = DynamicColor(red: 0.769, green: 0.741, blue: 0.098, alpha: 0.3)
 		}
 		if (primary == "landuse" && primaryValue == "retail") ||
 			(primary == "landuse" && primaryValue == "commercial") ||
 			(primary == "landuse" && primaryValue == "landfill") || (primary == "military") ||
 			(primary == "landuse" && primaryValue == "military")
 		{
-			r.lineColor = UIColor(red: 0.839, green: 0.533, blue: 0.102, alpha: 1.0)
-			r.areaColor = UIColor(red: 0.839, green: 0.533, blue: 0.102, alpha: 0.3)
+			r.lineColor = DynamicColor(red: 0.839, green: 0.533, blue: 0.102, alpha: 1.0)
+			r.areaColor = DynamicColor(red: 0.839, green: 0.533, blue: 0.102, alpha: 0.3)
 		}
 		if (primary == "landuse" && primaryValue == "industrial") || (primary == "power" && primaryValue == "plant") {
-			r.lineColor = UIColor(red: 0.894, green: 0.643, blue: 0.961, alpha: 1.0)
-			r.areaColor = UIColor(red: 0.894, green: 0.643, blue: 0.961, alpha: 0.3)
+			r.lineColor = DynamicColor(red: 0.894, green: 0.643, blue: 0.961, alpha: 1.0)
+			r.areaColor = DynamicColor(red: 0.894, green: 0.643, blue: 0.961, alpha: 0.3)
 		}
 		if primary == "natural" && primaryValue == "wetland" {
-			r.lineColor = UIColor(red: 0.6, green: 0.882, blue: 0.667, alpha: 1.0)
-			r.areaColor = UIColor(red: 0.6, green: 0.882, blue: 0.667, alpha: 0.3)
+			r.lineColor = DynamicColor(red: 0.6, green: 0.882, blue: 0.667, alpha: 1.0)
+			r.areaColor = DynamicColor(red: 0.6, green: 0.882, blue: 0.667, alpha: 0.3)
 		}
 		if (primary == "landuse" && primaryValue == "cemetery") ||
 			(primary == "landuse" && primaryValue == "farmland") ||
 			(primary == "landuse" && primaryValue == "meadow") || (primary == "landuse" && primaryValue == "orchard") ||
 			(primary == "landuse" && primaryValue == "vineyard")
 		{
-			r.lineColor = UIColor(red: 0.749, green: 0.91, blue: 0.247, alpha: 1.0)
-			r.areaColor = UIColor(red: 0.749, green: 0.91, blue: 0.247, alpha: 0.3)
+			r.lineColor = DynamicColor(red: 0.749, green: 0.91, blue: 0.247, alpha: 1.0)
+			r.areaColor = DynamicColor(red: 0.749, green: 0.91, blue: 0.247, alpha: 0.3)
 		}
 		if (primary == "landuse" && primaryValue == "farmyard") ||
 			((primary == "leisure" && primaryValue == "horse_riding") || tags["leisure"] == "horse_riding")
 		{
-			r.lineColor = UIColor(red: 0.961, green: 0.863, blue: 0.729, alpha: 1.0)
-			r.areaColor = UIColor(red: 0.961, green: 0.863, blue: 0.729, alpha: 0.3)
+			r.lineColor = DynamicColor(red: 0.961, green: 0.863, blue: 0.729, alpha: 1.0)
+			r.areaColor = DynamicColor(red: 0.961, green: 0.863, blue: 0.729, alpha: 0.3)
 		}
 		if (primary == "amenity" && primaryValue == "parking") || (primary == "landuse" && primaryValue == "railway") ||
 			(primary == "landuse" && primaryValue == "quarry") ||
@@ -116,7 +118,7 @@ extension RenderInfo {
 			(primary == "natural" && primaryValue == "shingle") || (primary == "waterway" && primaryValue == "dam") ||
 			(primary == "waterway" && primaryValue == "weir")
 		{
-			r.lineColor = UIColor(red: 0.667, green: 0.667, blue: 0.667, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.667, green: 0.667, blue: 0.667, alpha: 1.0)
 		}
 		if (primary == "amenity" && primaryValue == "parking") || (primary == "landuse" && primaryValue == "railway") ||
 			(primary == "landuse" && primaryValue == "quarry") ||
@@ -130,58 +132,58 @@ extension RenderInfo {
 			(primary == "natural" && primaryValue == "stone") || (primary == "natural" && primaryValue == "shingle") ||
 			(primary == "waterway" && primaryValue == "dam") || (primary == "waterway" && primaryValue == "weir")
 		{
-			r.areaColor = UIColor(red: 0.549, green: 0.549, blue: 0.549, alpha: 0.5)
+			r.areaColor = DynamicColor(red: 0.549, green: 0.549, blue: 0.549, alpha: 0.5)
 		}
 		if (primary == "natural" && primaryValue == "cave_entrance") ||
 			(primary == "natural" && primaryValue == "glacier")
 		{
-			r.lineColor = UIColor(red: 0.667, green: 0.667, blue: 0.667, alpha: 1.0)
-			r.areaColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)
+			r.lineColor = DynamicColor(red: 0.667, green: 0.667, blue: 0.667, alpha: 1.0)
+			r.areaColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)
 		}
 		if primary == "highway" {
-			r.lineColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
 			r.lineWidth = 4.0
-			r.casingColor = UIColor(red: 0.267, green: 0.267, blue: 0.267, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.267, green: 0.267, blue: 0.267, alpha: 1.0)
 			r.casingWidth = 5.0
 		}
 		if (primary == "highway" && primaryValue == "motorway") ||
 			(primary == "highway" && primaryValue == "motorway_link") || has(tags, "motorway")
 		{
-			r.lineColor = UIColor(red: 0.812, green: 0.125, blue: 0.506, alpha: 1.0)
-			r.casingColor = UIColor(red: 0.439, green: 0.216, blue: 0.184, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.812, green: 0.125, blue: 0.506, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.439, green: 0.216, blue: 0.184, alpha: 1.0)
 		}
 		if (primary == "highway" && primaryValue == "trunk") ||
 			(primary == "highway" && primaryValue == "trunk_link") ||
 			has(tags, "trunk")
 		{
-			r.lineColor = UIColor(red: 0.867, green: 0.184, blue: 0.133, alpha: 1.0)
-			r.casingColor = UIColor(red: 0.439, green: 0.216, blue: 0.184, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.867, green: 0.184, blue: 0.133, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.439, green: 0.216, blue: 0.184, alpha: 1.0)
 		}
 		if (primary == "highway" && primaryValue == "primary") ||
 			(primary == "highway" && primaryValue == "primary_link") || has(tags, "primary")
 		{
-			r.lineColor = UIColor(red: 0.976, green: 0.596, blue: 0.024, alpha: 1.0)
-			r.casingColor = UIColor(red: 0.439, green: 0.216, blue: 0.184, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.976, green: 0.596, blue: 0.024, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.439, green: 0.216, blue: 0.184, alpha: 1.0)
 		}
 		if (primary == "highway" && primaryValue == "secondary") ||
 			(primary == "highway" && primaryValue == "secondary_link") || has(tags, "secondary")
 		{
-			r.lineColor = UIColor(red: 0.953, green: 0.953, blue: 0.071, alpha: 1.0)
-			r.casingColor = UIColor(red: 0.439, green: 0.216, blue: 0.184, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.953, green: 0.953, blue: 0.071, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.439, green: 0.216, blue: 0.184, alpha: 1.0)
 		}
 		if (primary == "highway" && primaryValue == "tertiary") ||
 			(primary == "highway" && primaryValue == "tertiary_link") || has(tags, "tertiary")
 		{
-			r.lineColor = UIColor(red: 1.0, green: 0.976, blue: 0.702, alpha: 1.0)
-			r.casingColor = UIColor(red: 0.439, green: 0.216, blue: 0.184, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 1.0, green: 0.976, blue: 0.702, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.439, green: 0.216, blue: 0.184, alpha: 1.0)
 		}
 		if (primary == "highway" && primaryValue == "residential") || has(tags, "residential") {
-			r.lineColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-			r.casingColor = UIColor(red: 0.267, green: 0.267, blue: 0.267, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.267, green: 0.267, blue: 0.267, alpha: 1.0)
 		}
 		if (primary == "highway" && primaryValue == "unclassified") || has(tags, "unclassified") {
-			r.lineColor = UIColor(red: 0.867, green: 0.8, blue: 0.667, alpha: 1.0)
-			r.casingColor = UIColor(red: 0.267, green: 0.267, blue: 0.267, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.867, green: 0.8, blue: 0.667, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.267, green: 0.267, blue: 0.267, alpha: 1.0)
 		}
 		if (primary == "highway" && primaryValue == "living_street") ||
 			(primary == "highway" && primaryValue == "bus_guideway") ||
@@ -200,40 +202,40 @@ extension RenderInfo {
 			r.casingWidth = 2.5
 		}
 		if (primary == "highway" && primaryValue == "living_street") || has(tags, "living_street") {
-			r.lineColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
-			r.casingColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 		}
 		if (primary == "highway" && primaryValue == "corridor") || has(tags, "corridor") {
-			r.lineColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 			r.lineDashPattern = [1, 4]
-			r.casingColor = UIColor(red: 0.549, green: 0.816, blue: 0.373, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.549, green: 0.816, blue: 0.373, alpha: 1.0)
 			r.casingCap = .round
 			r.casingDashPattern = nil
 		}
 		if (primary == "highway" && primaryValue == "pedestrian") || has(tags, "pedestrian") {
-			r.lineColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 			r.lineWidth = 1.75
 			r.lineCap = .butt
 			r.lineDashPattern = [4, 4]
-			r.casingColor = UIColor(red: 0.6, green: 0.533, blue: 0.533, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.6, green: 0.533, blue: 0.533, alpha: 1.0)
 			r.casingCap = .round
 			r.casingDashPattern = nil
 		}
 		if (primary == "highway" && primaryValue == "road") || has(tags, "road") {
-			r.lineColor = UIColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1.0)
-			r.casingColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
 		}
 		if primary == "highway" && primaryValue == "service" {
-			r.lineColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-			r.casingColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
 		}
 		if (primary == "highway" && primaryValue == "bus_guideway") || has(tags, "service") {
-			r.lineColor = UIColor(red: 0.867, green: 0.8, blue: 0.667, alpha: 1.0)
-			r.casingColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.867, green: 0.8, blue: 0.667, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
 		}
 		if (primary == "highway" && primaryValue == "track") || has(tags, "track") {
-			r.lineColor = UIColor(red: 0.773, green: 0.71, blue: 0.624, alpha: 1.0)
-			r.casingColor = UIColor(red: 0.455, green: 0.435, blue: 0.435, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.773, green: 0.71, blue: 0.624, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.455, green: 0.435, blue: 0.435, alpha: 1.0)
 		}
 		if (primary == "highway" && primaryValue == "path") || (primary == "highway" && primaryValue == "footway") ||
 			(primary == "highway" && primaryValue == "cycleway") ||
@@ -248,10 +250,10 @@ extension RenderInfo {
 			(primary == "railway" && primaryValue == "platform_edge") ||
 			((primary == "man_made" && primaryValue == "pier") || tags["man_made"] == "pier")
 		{
-			r.lineColor = UIColor(red: 0.867, green: 0.8, blue: 0.667, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.867, green: 0.8, blue: 0.667, alpha: 1.0)
 		}
 		if primary == "highway" && primaryValue == "path" {
-			r.casingColor = UIColor(red: 0.867, green: 0.8, blue: 0.667, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.867, green: 0.8, blue: 0.667, alpha: 1.0)
 			r.casingCap = .round
 			r.casingDashPattern = nil
 		}
@@ -259,73 +261,73 @@ extension RenderInfo {
 			(primary == "highway" && primaryValue == "cycleway") ||
 			(primary == "highway" && primaryValue == "bridleway")
 		{
-			r.casingColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 			r.casingCap = .round
 			r.casingDashPattern = nil
 		}
 		if (primary == "highway" && primaryValue == "path") || (primary == "highway" && primaryValue == "footway") ||
 			(primary == "highway" && primaryValue == "bus_stop")
 		{
-			r.lineColor = UIColor(red: 0.6, green: 0.533, blue: 0.533, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.6, green: 0.533, blue: 0.533, alpha: 1.0)
 		}
 		if primary == "highway" && primaryValue == "cycleway" {
-			r.lineColor = UIColor(red: 0.345, green: 0.663, blue: 0.929, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.345, green: 0.663, blue: 0.929, alpha: 1.0)
 		}
 		if primary == "highway" && primaryValue == "bridleway" {
-			r.lineColor = UIColor(red: 0.878, green: 0.427, blue: 0.373, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.878, green: 0.427, blue: 0.373, alpha: 1.0)
 		}
 		if (primary == "leisure" && primaryValue == "track") || tags["leisure"] == "track" {
-			r.lineColor = UIColor(red: 0.898, green: 0.722, blue: 0.169, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.898, green: 0.722, blue: 0.169, alpha: 1.0)
 		}
 		if primary == "highway" && primaryValue == "steps" {
-			r.lineColor = UIColor(red: 0.506, green: 0.824, blue: 0.361, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.506, green: 0.824, blue: 0.361, alpha: 1.0)
 			r.lineCap = .butt
 			r.lineDashPattern = [1.5, 1.5]
-			r.casingColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 			r.casingCap = .round
 			r.casingDashPattern = nil
 		}
 		if primary == "aeroway" {
-			r.lineColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 			r.lineWidth = 0.5
 			r.lineDashPattern = nil
 		}
 		if primary == "aeroway" && primaryValue == "runway" {
-			r.areaColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.6)
+			r.areaColor = DynamicColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.6)
 		}
 		if (primary == "aeroway" && primaryValue == "taxiway") || has(tags, "taxiway") {
-			r.lineColor = UIColor(red: 1.0, green: 1.0, blue: 0.0, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 1.0, green: 1.0, blue: 0.0, alpha: 1.0)
 			r.lineWidth = 2.5
-			r.casingColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
 			r.casingWidth = 3.5
 		}
 		if primary == "aeroway" && primaryValue == "runway" {
-			r.lineColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 			r.lineWidth = 1.0
 			r.lineCap = .butt
 			r.lineDashPattern = [12, 24]
-			r.casingColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
 			r.casingWidth = 5.0
 			r.casingCap = .square
 		}
 		if primary == "railway" {
-			r.lineColor = UIColor(red: 0.933, green: 0.933, blue: 0.933, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.933, green: 0.933, blue: 0.933, alpha: 1.0)
 			r.lineWidth = 1.0
 			r.lineCap = .butt
 			r.lineDashPattern = [6, 6]
-			r.casingColor = UIColor(red: 0.333, green: 0.333, blue: 0.333, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.333, green: 0.333, blue: 0.333, alpha: 1.0)
 			r.casingWidth = 3.5
 		}
 		if primary == "railway" && primaryValue == "subway" {
-			r.lineColor = UIColor(red: 0.733, green: 0.733, blue: 0.733, alpha: 1.0)
-			r.casingColor = UIColor(red: 0.133, green: 0.133, blue: 0.133, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.733, green: 0.733, blue: 0.733, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.133, green: 0.133, blue: 0.133, alpha: 1.0)
 		}
 		if (primary == "waterway" && primaryValue == "dock") || (primary == "waterway" && primaryValue == "boatyard") ||
 			(primary == "waterway" && primaryValue == "fuel")
 		{
-			r.lineColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 			r.lineWidth = 0.5
-			r.areaColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)
+			r.areaColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)
 		}
 		if primary == "waterway" {
 			r.lineWidth = 2.5
@@ -336,7 +338,7 @@ extension RenderInfo {
 			r.casingWidth = 5.0
 		}
 		if primary == "waterway" && primaryValue == "ditch" {
-			r.lineColor = UIColor(red: 0.2, green: 0.6, blue: 0.667, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.2, green: 0.6, blue: 0.667, alpha: 1.0)
 		}
 		if (primary == "aerialway") || (primary == "attraction" && primaryValue == "summer_toboggan") ||
 			(primary == "attraction" && primaryValue == "water_slide") || (tags["golf"] == "cartpath") ||
@@ -349,63 +351,63 @@ extension RenderInfo {
 			r.casingWidth = 3.5
 		}
 		if primary == "route" && primaryValue == "ferry" {
-			r.lineColor = UIColor(red: 0.345, green: 0.663, blue: 0.929, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.345, green: 0.663, blue: 0.929, alpha: 1.0)
 			r.lineWidth = 1.5
 			r.lineCap = .butt
 			r.lineDashPattern = [6, 4]
 		}
 		if primary == "aerialway" {
-			r.lineColor = UIColor(red: 0.8, green: 0.333, blue: 0.333, alpha: 1.0)
-			r.casingColor = UIColor(red: 0.267, green: 0.267, blue: 0.267, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.8, green: 0.333, blue: 0.333, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.267, green: 0.267, blue: 0.267, alpha: 1.0)
 		}
 		if primary == "piste:type" {
-			r.lineColor = UIColor(red: 0.667, green: 0.6, blue: 0.867, alpha: 1.0)
-			r.casingColor = UIColor(red: 0.267, green: 0.267, blue: 0.267, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.667, green: 0.6, blue: 0.867, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.267, green: 0.267, blue: 0.267, alpha: 1.0)
 		}
 		if primary == "attraction" && primaryValue == "summer_toboggan" {
-			r.lineColor = UIColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1.0)
-			r.casingColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
 		}
 		if primary == "attraction" && primaryValue == "water_slide" {
-			r.lineColor = UIColor(red: 0.667, green: 0.878, blue: 0.796, alpha: 1.0)
-			r.casingColor = UIColor(red: 0.239, green: 0.424, blue: 0.443, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.667, green: 0.878, blue: 0.796, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.239, green: 0.424, blue: 0.443, alpha: 1.0)
 		}
 		if primary == "roller_coaster" && primaryValue == "track" {
-			r.lineColor = UIColor(red: 0.867, green: 0.867, blue: 0.867, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.867, green: 0.867, blue: 0.867, alpha: 1.0)
 			r.lineWidth = 1.5
 			r.lineCap = .butt
 			r.lineDashPattern = [2.5, 0.5]
-			r.casingColor = UIColor(red: 0.439, green: 0.439, blue: 0.439, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.439, green: 0.439, blue: 0.439, alpha: 1.0)
 		}
 		if primary == "roller_coaster" && primaryValue == "support" {
-			r.lineColor = UIColor(red: 0.439, green: 0.439, blue: 0.439, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.439, green: 0.439, blue: 0.439, alpha: 1.0)
 		}
 		if tags["golf"] == "cartpath" {
-			r.lineColor = UIColor(red: 0.867, green: 0.8, blue: 0.667, alpha: 1.0)
-			r.casingColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.867, green: 0.8, blue: 0.667, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
 		}
 		if primary == "power" {
-			r.lineColor = UIColor(red: 0.576, green: 0.576, blue: 0.576, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.576, green: 0.576, blue: 0.576, alpha: 1.0)
 			r.lineWidth = 1.0
 		}
 		if (primary == "man_made" && primaryValue == "pipeline") || tags["man_made"] == "pipeline" {
-			r.lineColor = UIColor(red: 0.796, green: 0.816, blue: 0.847, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.796, green: 0.816, blue: 0.847, alpha: 1.0)
 			r.lineCap = .butt
 			r.lineDashPattern = [40, 0.625]
-			r.casingColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
 		}
 		if primary == "boundary" {
-			r.lineColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 			r.lineWidth = 1.0
 			r.lineCap = .butt
 			r.lineDashPattern = [10, 2.5, 2.5, 2.5]
-			r.casingColor = UIColor(red: 0.51, green: 0.71, blue: 0.996, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.51, green: 0.71, blue: 0.996, alpha: 1.0)
 			r.casingWidth = 3.0
 		}
 		if (primary == "boundary" && primaryValue == "protected_area") ||
 			(primary == "boundary" && primaryValue == "national_park")
 		{
-			r.casingColor = UIColor(red: 0.69, green: 0.886, blue: 0.596, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.69, green: 0.886, blue: 0.596, alpha: 1.0)
 		}
 		if ((primary == "man_made" && primaryValue == "groyne") || tags["man_made"] == "groyne") ||
 			((primary == "man_made" && primaryValue == "breakwater") || tags["man_made"] == "breakwater")
@@ -415,7 +417,7 @@ extension RenderInfo {
 			r.lineDashPattern = [7.5, 2.5, 0.5, 2.5]
 		}
 		if has(tags, "bridge") {
-			r.casingColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
 			r.casingWidth = 8.0
 			r.casingCap = .butt
 			r.casingDashPattern = nil
@@ -429,13 +431,13 @@ extension RenderInfo {
 			r.lineDashPattern = nil
 		}
 		if has(tags, "embankment") || has(tags, "cutting") {
-			r.casingColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
 			r.casingWidth = 11.0
 			r.casingCap = .butt
 			r.casingDashPattern = [1, 2]
 		}
 		if surface == "unpaved" {
-			r.casingColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
 			r.casingCap = .butt
 			r.casingDashPattern = [2, 2]
 		}
@@ -444,8 +446,8 @@ extension RenderInfo {
 			r.casingDashPattern = [3, 1]
 		}
 		if primary == "building" {
-			r.lineColor = UIColor(red: 0.878, green: 0.431, blue: 0.373, alpha: 1.0)
-			r.areaColor = UIColor(red: 0.878, green: 0.431, blue: 0.373, alpha: 0.3)
+			r.lineColor = DynamicColor(red: 0.878, green: 0.431, blue: 0.373, alpha: 1.0)
+			r.areaColor = DynamicColor(red: 0.878, green: 0.431, blue: 0.373, alpha: 0.3)
 		}
 		if (((primary == "leisure" && primaryValue == "pitch") || tags["leisure"] == "pitch") && tags["sport"] ==
 			"beachvolleyball") ||
@@ -454,37 +456,37 @@ extension RenderInfo {
 			(((primary == "leisure" && primaryValue == "pitch") || tags["leisure"] == "pitch") && tags["sport"] ==
 				"softball")
 		{
-			r.lineColor = UIColor(red: 1.0, green: 1.0, blue: 0.58, alpha: 0.75)
-			r.areaColor = UIColor(red: 1.0, green: 1.0, blue: 0.58, alpha: 0.25)
+			r.lineColor = DynamicColor(red: 1.0, green: 1.0, blue: 0.58, alpha: 0.75)
+			r.areaColor = DynamicColor(red: 1.0, green: 1.0, blue: 0.58, alpha: 0.25)
 		}
 		if (primary == "landuse" && primaryValue == "grass") && tags["golf"] == "green" {
-			r.lineColor = UIColor(red: 0.749, green: 0.91, blue: 0.247, alpha: 1.0)
-			r.areaColor = UIColor(red: 0.749, green: 0.91, blue: 0.247, alpha: 0.3)
+			r.lineColor = DynamicColor(red: 0.749, green: 0.91, blue: 0.247, alpha: 1.0)
+			r.areaColor = DynamicColor(red: 0.749, green: 0.91, blue: 0.247, alpha: 0.3)
 		}
 		if (((primary == "leisure" && primaryValue == "pitch") || tags["leisure"] == "pitch") && tags["sport"] ==
 			"basketball") ||
 			(((primary == "leisure" && primaryValue == "pitch") || tags["leisure"] == "pitch") && tags["sport"] ==
 				"skateboard")
 		{
-			r.lineColor = UIColor(red: 0.667, green: 0.667, blue: 0.667, alpha: 1.0)
-			r.areaColor = UIColor(red: 0.549, green: 0.549, blue: 0.549, alpha: 0.5)
+			r.lineColor = DynamicColor(red: 0.667, green: 0.667, blue: 0.667, alpha: 1.0)
+			r.areaColor = DynamicColor(red: 0.549, green: 0.549, blue: 0.549, alpha: 0.5)
 		}
 		if (primary == "highway" && primaryValue == "service") && tags["service"] == "driveway" {
 			r.lineWidth = 2.125
 			r.casingWidth = 3.125
 		}
 		if (primary == "highway" && primaryValue == "service") && has(tags, "service") {
-			r.lineColor = UIColor(red: 0.867, green: 0.8, blue: 0.667, alpha: 1.0)
-			r.casingColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.867, green: 0.8, blue: 0.667, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
 		}
 		if (primary == "highway" && primaryValue == "service") && tags["service"] == "parking_aisle" {
-			r.lineColor = UIColor(red: 0.8, green: 0.792, blue: 0.78, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.8, green: 0.792, blue: 0.78, alpha: 1.0)
 		}
 		if (primary == "highway" && primaryValue == "service") && tags["service"] == "driveway" {
-			r.lineColor = UIColor(red: 1.0, green: 0.965, blue: 0.894, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 1.0, green: 0.965, blue: 0.894, alpha: 1.0)
 		}
 		if (primary == "highway" && primaryValue == "service") && tags["service"] == "emergency_access" {
-			r.lineColor = UIColor(red: 0.867, green: 0.698, blue: 0.667, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.867, green: 0.698, blue: 0.667, alpha: 1.0)
 		}
 		if ((primary == "highway" && primaryValue == "footway") && tags["public_transport"] == "platform") ||
 			((primary == "highway" && primaryValue == "footway") &&
@@ -492,15 +494,15 @@ extension RenderInfo {
 			(primary == "highway" && has(tags, "crossing")) ||
 			(primary == "highway" && tags["footway"] == "access_aisle")
 		{
-			r.casingColor = UIColor(red: 0.867, green: 0.8, blue: 0.667, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.867, green: 0.8, blue: 0.667, alpha: 1.0)
 			r.casingCap = .round
 			r.casingDashPattern = nil
 		}
 		if (primary == "highway" && primaryValue == "path") && tags["bridge"] == "boardwalk" {
-			r.lineColor = UIColor(red: 0.867, green: 0.8, blue: 0.667, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.867, green: 0.8, blue: 0.667, alpha: 1.0)
 		}
 		if (primary == "highway" && primaryValue == "footway") && tags["footway"] == "sidewalk" {
-			r.lineColor = UIColor(red: 0.831, green: 0.706, blue: 0.706, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.831, green: 0.706, blue: 0.706, alpha: 1.0)
 		}
 		if primary == "highway" && tags["crossing"] == "unmarked" {
 			r.lineDashPattern = [3, 2]
@@ -509,16 +511,16 @@ extension RenderInfo {
 			r.lineDashPattern = [3, 1.5]
 		}
 		if (primary == "highway" && primaryValue == "footway") && tags["crossing"] == "marked" {
-			r.lineColor = UIColor(red: 0.298, green: 0.267, blue: 0.267, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.298, green: 0.267, blue: 0.267, alpha: 1.0)
 		}
 		if (primary == "highway" && primaryValue == "footway") && tags["crossing"] == "unmarked" {
-			r.lineColor = UIColor(red: 0.467, green: 0.416, blue: 0.416, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.467, green: 0.416, blue: 0.416, alpha: 1.0)
 		}
 		if (primary == "highway" && primaryValue == "cycleway") && tags["crossing"] == "marked" {
-			r.lineColor = UIColor(red: 0.267, green: 0.376, blue: 0.467, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.267, green: 0.376, blue: 0.467, alpha: 1.0)
 		}
 		if primary == "highway" && tags["footway"] == "access_aisle" {
-			r.lineColor = UIColor(red: 0.298, green: 0.267, blue: 0.267, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.298, green: 0.267, blue: 0.267, alpha: 1.0)
 			r.lineDashPattern = [2, 1]
 		}
 		if (primary == "railway" && (primary == "railway" && primaryValue == "platform_edge")) ||
@@ -528,15 +530,15 @@ extension RenderInfo {
 			r.casingWidth = 0.0
 		}
 		if primary == "railway" && status != nil {
-			r.casingColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1.0)
 		}
 		if primary == "railway" && status == "disused" {
-			r.casingColor = UIColor(red: 0.502, green: 0.502, blue: 0.502, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.502, green: 0.502, blue: 0.502, alpha: 1.0)
 		}
 		if primary == "waterway" && primary == "waterway" && primaryValue != "dam" {
-			r.lineColor = UIColor(red: 0.467, green: 0.867, blue: 0.867, alpha: 1.0)
-			r.casingColor = UIColor(red: 0.267, green: 0.267, blue: 0.267, alpha: 1.0)
-			r.areaColor = UIColor(red: 0.467, green: 0.827, blue: 0.871, alpha: 0.3)
+			r.lineColor = DynamicColor(red: 0.467, green: 0.867, blue: 0.867, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.267, green: 0.267, blue: 0.267, alpha: 1.0)
+			r.areaColor = DynamicColor(red: 0.467, green: 0.827, blue: 0.871, alpha: 0.3)
 		}
 		if has(tags, "barrier") && primary != "waterway" {
 			r.lineWidth = 1.5
@@ -565,7 +567,7 @@ extension RenderInfo {
 			r.casingWidth = 5.0
 		}
 		if (has(tags, "bridge") && surface == "unpaved") || (has(tags, "bridge") && surface == "semipaved") {
-			r.casingColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
 		}
 		if status != nil && status != "disused" {
 			r.lineCap = .butt
@@ -574,17 +576,17 @@ extension RenderInfo {
 			r.casingDashPattern = [3.5, 1.5]
 		}
 		if primary == "railway" && status != nil && !has(tags, "service") {
-			r.lineColor = UIColor(red: 0.933, green: 0.933, blue: 0.933, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.933, green: 0.933, blue: 0.933, alpha: 1.0)
 		}
 		if has(tags, "barrier") && tags["barrier"] != "hedge" && primary != "waterway" {
-			r.lineColor = UIColor(red: 0.867, green: 0.867, blue: 0.867, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.867, green: 0.867, blue: 0.867, alpha: 1.0)
 		}
 		if primary == "highway" && status != nil && status == "construction" {
-			r.lineColor = UIColor(red: 0.988, green: 0.424, blue: 0.078, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 0.988, green: 0.424, blue: 0.078, alpha: 1.0)
 			r.lineWidth = 4.0
 			r.lineCap = .butt
 			r.lineDashPattern = [5, 5]
-			r.casingColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 			r.casingWidth = 5.0
 			r.casingCap = .butt
 			r.casingDashPattern = nil
