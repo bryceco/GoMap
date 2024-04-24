@@ -919,27 +919,27 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes" xml:space="preserve">
         <source>%1$#@meters@, %2$#@nodes@</source>
-        <target state="new">%1$#@meters@, %2$#@nodes@</target>
+        <target state="translated">%1$#@metros@, %2$#@nudos@</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%1$ld meter</source>
-        <target state="new">%1$ld meter</target>
+        <target state="translated">%1$ld metro</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%1$ld meters</source>
-        <target state="new">%1$ld meters</target>
+        <target state="translated">%1$ld metros</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.one" xml:space="preserve">
         <source>%2$ld node</source>
-        <target state="new">%2$ld node</target>
+        <target state="translated">%2$ld nudo</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.other" xml:space="preserve">
         <source>%2$ld nodes</source>
-        <target state="new">%2$ld nodes</target>
+        <target state="translated">%2$ld nudos</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
@@ -2012,12 +2012,12 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.one" xml:space="preserve">
         <source>Pasting %ld character, maximum tag length is 255</source>
-        <target state="new">Pasting %ld character, maximum tag length is 255</target>
+        <target state="translated">Pegando carácter %ld, la longitud máxima de la etiqueta es 255</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.other" xml:space="preserve">
         <source>Pasting %ld characters, maximum tag length is 255</source>
-        <target state="new">Pasting %ld characters, maximum tag length is 255</target>
+        <target state="translated">Pegando los caracteres %ld, la longitud máxima de la etiqueta es 255</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.one" xml:space="preserve">
