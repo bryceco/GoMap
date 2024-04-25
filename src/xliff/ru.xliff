@@ -310,7 +310,7 @@
       </trans-unit>
       <trans-unit id="Idx-2G-6F7.text" xml:space="preserve">
         <source>Power Features</source>
-        <target state="translated">Настройки энергопотребления</target>
+        <target state="translated">Энергетика</target>
         <note>Class = "UILabel"; text = "Power Features"; ObjectID = "Idx-2G-6F7";</note>
       </trans-unit>
       <trans-unit id="Jz1-GP-Wbe.text" xml:space="preserve">
@@ -2214,12 +2214,12 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.few" xml:space="preserve">
         <source>Pasting %ld tags</source>
-        <target state="new">Pasting %ld tags</target>
+        <target state="translated">Вставка %ld тегов</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.many" xml:space="preserve">
         <source>Pasting %ld tags</source>
-        <target state="new">Pasting %ld tags</target>
+        <target state="translated">Вставка %@ тегов</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.one" xml:space="preserve">
@@ -2229,7 +2229,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.other" xml:space="preserve">
         <source>Pasting %ld tags</source>
-        <target state="needs-review-l10n">Вставка %ld тегов</target>
+        <target state="translated">Вставка %ld тега</target>
         <note/>
       </trans-unit>
       <trans-unit id="Perform Action" xml:space="preserve">
