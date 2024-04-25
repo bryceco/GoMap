@@ -589,8 +589,6 @@ extension EditorMapLayer {
 		layer.frame = bounds
 		layer.bounds = bounds
 		layer.fillColor = UIColor(red: 0, green: 0, blue: 1, alpha: 0.1).cgColor
-		layer.strokeColor = UIColor.blue.cgColor
-		layer.lineWidth = 2.0
 		layer.zPosition = Z_OCEAN
 
 		return layer
