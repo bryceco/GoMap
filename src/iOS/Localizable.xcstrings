@@ -6580,8 +6580,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%#@meters@, %#@nodes@"
+            "state" : "translated",
+            "value" : "%1$#@metros@, %2$#@nudos@"
           },
           "substitutions" : {
             "meters" : {
@@ -6591,14 +6591,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg meter"
+                      "state" : "translated",
+                      "value" : "%arg metro"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg meters"
+                      "state" : "translated",
+                      "value" : "%arg metros"
                     }
                   }
                 }
@@ -6611,14 +6611,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg node"
+                      "state" : "translated",
+                      "value" : "%arg nudo"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg nodes"
+                      "state" : "translated",
+                      "value" : "%arg nudos"
                     }
                   }
                 }
@@ -7408,7 +7408,7 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%#@meters@, %#@nodes@"
           },
           "substitutions" : {
@@ -38203,14 +38203,14 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "Pasting %ld character, maximum tag length is 255"
+                  "state" : "translated",
+                  "value" : "Pegando carácter %ld, la longitud máxima de la etiqueta es 255"
                 }
               },
               "other" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "Pasting %ld characters, maximum tag length is 255"
+                  "state" : "translated",
+                  "value" : "Pegando los caracteres %ld, la longitud máxima de la etiqueta es 255"
                 }
               }
             }
@@ -39125,14 +39125,14 @@
             "plural" : {
               "few" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "Pasting %ld tags"
+                  "state" : "translated",
+                  "value" : "Вставка %ld тегов"
                 }
               },
               "many" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "Pasting %ld tags"
+                  "state" : "translated",
+                  "value" : "Вставка %@ тегов"
                 }
               },
               "one" : {
@@ -39143,8 +39143,8 @@
               },
               "other" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "Вставка %ld тегов"
+                  "state" : "translated",
+                  "value" : "Вставка %ld тега"
                 }
               }
             }
@@ -47530,7 +47530,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ограничения поворота"
+            "value" : "Ограничения манёвров"
           }
         },
         "uk" : {
