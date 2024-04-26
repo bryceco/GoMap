@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -750,10 +750,7 @@ http://glyphish.com
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection headerTitle="OpenStreetMap Server" id="6GT-p2-rPO">
-                                <string key="footerTitle">Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.
-
-You can also enter "dev" for the development server (for testing), "ohm" for the OpenHistoricalMap server, or leave blank for the default server.</string>
+                            <tableViewSection headerTitle="OpenStreetMap Server" footerTitle="Select a server if you would like to edit data located on an alternate OSM server." id="6GT-p2-rPO">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="h4d-u5-ma6">
                                         <rect key="frame" x="0.0" y="55.5" width="414" height="43.5"/>
@@ -786,7 +783,7 @@ You can also enter "dev" for the development server (for testing), "ohm" for the
                             <tableViewSection headerTitle="Developer settings" id="yAO-9B-CTd">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="QRb-MZ-ZLs">
-                                        <rect key="frame" x="0.0" y="263" width="414" height="43"/>
+                                        <rect key="frame" x="0.0" y="183" width="414" height="43"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QRb-MZ-ZLs" id="C3b-mV-Gif">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
@@ -828,7 +825,7 @@ You can also enter "dev" for the development server (for testing), "ohm" for the
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="9vC-qJ-lmS">
-                                        <rect key="frame" x="0.0" y="306" width="414" height="43"/>
+                                        <rect key="frame" x="0.0" y="226" width="414" height="43"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9vC-qJ-lmS" id="csd-bd-m3P">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
@@ -1048,7 +1045,7 @@ You can also enter "dev" for the development server (for testing), "ohm" for the
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

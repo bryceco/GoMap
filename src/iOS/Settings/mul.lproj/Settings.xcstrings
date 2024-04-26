@@ -962,7 +962,7 @@
       }
     },
     "6GT-p2-rPO.footerTitle" : {
-      "comment" : "Class = \"UITableViewSection\"; footerTitle = \"Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.\\n\\nYou can also enter \\\"dev\\\" for the development server (for testing), \\\"ohm\\\" for the OpenHistoricalMap server, or leave blank for the default server.\"; ObjectID = \"6GT-p2-rPO\";",
+      "comment" : "Class = \"UITableViewSection\"; footerTitle = \"Select a server if you would like to edit data located on an alternate OSM server.\"; ObjectID = \"6GT-p2-rPO\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
@@ -992,7 +992,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.\n\nYou can also enter \"dev\" for the development server (for testing), \"ohm\" for the OpenHistoricalMap server, or leave blank for the default server."
+            "value" : "Select a server if you would like to edit data located on an alternate OSM server."
           }
         },
         "es" : {
@@ -1015,7 +1015,7 @@
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Odredi računalo, ako želiš uređivati podatke koji se nalaze na alternativnom OSM serveru. Standardno računalo je api.openstreetmap.org.\n\nTakođer možeš upisati \"dev\" za razvojni server (za testiranje), \"ohm\" za OpenHistoricalMap server ili ostavi prazno za zadani server."
           }
         },
@@ -1069,7 +1069,7 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "您可以指定主機，如果您要編輯的資料儲存於其他 OSM 伺服器。預設的主機為 api.openstreetmap.org。\n\n你也可以輸入\"dev\"表示開發伺服器 (為了測試)，\"ohm\" 則是開放歷史地圖伺服器，或是留空使用預設伺服器。"
           }
         }
