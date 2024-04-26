@@ -27,22 +27,6 @@ enum OAuthError: LocalizedError {
 }
 
 class OAuth2 {
-	struct OAuthServer {
-		let authURL: String // used for OAuth connections
-		let apiURL: String // used for API connections
-		let client_id: String
-	}
-
-	let servers = [
-		// the production server
-		OAuthServer(authURL: "https://www.openstreetmap.org/",
-		            apiURL: "https://api.openstreetmap.org/",
-		            client_id: "mzRn5Z-X0nSptHgA3o5g30HeaaljTXfv0GMOLhmwqeo"),
-		// the dev server
-		OAuthServer(authURL: "https://master.apis.dev.openstreetmap.org/",
-		            apiURL: "https://api06.dev.openstreetmap.org/",
-		            client_id: "SGsePsBukg7xPkIaqNIQlAgiAa3vjauIFkbcsPXB2Tg")
-	]
 	static let redirect_uri = "gomaposm://oauth/callback"
 	static let scope = "read_prefs write_prefs read_gpx write_gpx write_notes write_api"
 
@@ -50,7 +34,8 @@ class OAuth2 {
 	private var state = ""
 	private(set) var authorizationHeader: (name: String, value: String)?
 
-	var server: OAuthServer { servers.first(where: { $0.apiURL == OSM_API_URL }) ?? servers[0] }
+	// These values are all computed dynamically based on the current server (kinda ugly)
+	var server: OsmServer { OsmServerList.first(where: { $0.apiURL == OSM_API_URL }) ?? OsmServerList[0] }
 	var client_id: String { server.client_id }
 	var serverURL: String { server.authURL }
 	var oauthUrl: URL { return URL(string: serverURL)!.appendingPathComponent("oauth2") }

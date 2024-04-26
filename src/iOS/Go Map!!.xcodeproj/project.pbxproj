@@ -165,6 +165,7 @@
 		02F6A457268A934900F2ACE7 /* NSAttributedString+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */; };
 		02F6A459268AE42800F2ACE7 /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F6A458268AE42800F2ACE7 /* Debugger.swift */; };
 		02FEDAF42651DCC100DF15D7 /* POIAllTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3004F61263B2524006BF313 /* POIAllTagsViewController.swift */; };
+		02FF1EC82BDC1E180071C96F /* OsmServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FF1EC72BDC1E180071C96F /* OsmServer.swift */; };
 		64305F7423E723B200232BB9 /* LocationURLParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */; };
 		64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CEC225E7CD900ADE7FB /* GoMapTests.swift */; };
 		64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CF7225E867800ADE7FB /* HeadingProviderMock.swift */; };
@@ -457,6 +458,7 @@
 		02F53297267AB41C0088DF41 /* EditorMapLayer+HitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorMapLayer+HitTest.swift"; sourceTree = "<group>"; };
 		02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Ext.swift"; sourceTree = "<group>"; };
 		02F6A458268AE42800F2ACE7 /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
+		02FF1EC72BDC1E180071C96F /* OsmServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmServer.swift; sourceTree = "<group>"; };
 		64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationURLParserTestCase.swift; sourceTree = "<group>"; };
 		64348CEA225E7CD900ADE7FB /* GoMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		64348CEC225E7CD900ADE7FB /* GoMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoMapTests.swift; sourceTree = "<group>"; };
@@ -1022,6 +1024,7 @@
 				C3D096EE263EBE5D00E3B129 /* OsmMember.swift */,
 				C3D096EF263EBE5D00E3B129 /* OsmNode.swift */,
 				C3D096F2263EBE5E00E3B129 /* OsmRelation.swift */,
+				02FF1EC72BDC1E180071C96F /* OsmServer.swift */,
 				021FADEE25884BB900F6E1C0 /* OsmTags.swift */,
 				0203B06329B3D62900B020DF /* OsmType.swift */,
 				C3D096F0263EBE5D00E3B129 /* OsmWay.swift */,
@@ -1436,6 +1439,7 @@
 				02E049BE2651D1750028B57F /* UndoAction.m in Sources */,
 				026FC76726509D6E005DDAFF /* SpeechBalloonView.swift in Sources */,
 				ED56E5C526027A50000B368C /* CustomPresetListViewController.swift in Sources */,
+				02FF1EC82BDC1E180071C96F /* OsmServer.swift in Sources */,
 				C3D096CF263EA0DB00E3B129 /* KeyChain.swift in Sources */,
 				ED56E5EC26028B5F000B368C /* FilterObjectsViewController.swift in Sources */,
 				C341E15C2639DF440022E983 /* NearbyMappersViewController.swift in Sources */,

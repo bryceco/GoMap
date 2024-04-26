@@ -13,12 +13,21 @@ class AdvancedSettingsViewController: UITableViewController {
 	@IBOutlet var switchTouches: UISwitch!
 
 	private var originalHostname: String?
+	var hostnameButton: UIButton!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		tableView.estimatedRowHeight = 44
 		tableView.rowHeight = UITableView.automaticDimension
+
+		// create button for source history
+		hostnameButton = UIButton(type: .custom)
+		hostnameButton.frame = CGRect(x: 0, y: 0, width: 22, height: 22)
+		hostnameButton.setTitle("🔽", for: .normal)
+		hostnameButton.addTarget(self, action: #selector(showSourceHistory), for: .touchUpInside)
+		hostname.rightView = hostnameButton
+		hostname.rightViewMode = .always
 	}
 
 	@IBAction func textFieldReturn(_ sender: UITextField) {
@@ -66,5 +75,24 @@ class AdvancedSettingsViewController: UITableViewController {
 		let toggle = sender as! UISwitch
 		let app = UIApplication.shared as! MyApplication
 		app.showTouchCircles = toggle.isOn
+	}
+
+	@IBAction func showSourceHistory(_ sender: Any) {
+		let actionSheet = UIAlertController(
+			title: nil,
+			message: nil,
+			preferredStyle: .actionSheet)
+		for server in OsmServerList {
+			actionSheet.addAction(UIAlertAction(title: server.fullName, style: .default, handler: { _ in
+				self.hostname.text = server.apiURL
+				self.textFieldReturn(self.hostname)
+			}))
+		}
+		actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+		                                    style: .cancel,
+		                                    handler: nil))
+		actionSheet.popoverPresentationController?.sourceView = hostnameButton
+		actionSheet.popoverPresentationController?.sourceRect = hostnameButton.bounds
+		present(actionSheet, animated: true)
 	}
 }

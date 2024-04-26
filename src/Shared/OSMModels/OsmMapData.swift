@@ -79,32 +79,16 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		var hostname = hostname
 		hostname = hostname.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
-		switch hostname {
-		case "":
-			hostname = "api.openstreetmap.org"
-		case "dev":
-			hostname = "api06.dev.openstreetmap.org"
-		case "ohm":
-			hostname = "https://www.openhistoricalmap.org"
-		default:
-			break
-		}
-
 		if hostname.hasPrefix("http://") || hostname.hasPrefix("https://") {
 			// great
 		} else {
 			hostname = "https://" + hostname
 		}
 
-		while hostname.hasSuffix("//") {
-			// fix for previous releases that may have accidently set an extra slash
-			hostname = (hostname as NSString?)?.substring(to: hostname.count - 1) ?? ""
+		while hostname.hasSuffix("/") {
+			hostname = String(hostname.dropLast())
 		}
-		if hostname.hasSuffix("/") {
-			// great
-		} else {
-			hostname = hostname + "/"
-		}
+		hostname = hostname + "/"
 
 		return hostname
 	}
