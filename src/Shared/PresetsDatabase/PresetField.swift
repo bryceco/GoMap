@@ -50,6 +50,7 @@ final class PresetField: CustomDebugStringConvertible {
 	var replacement: String? { jsonDict["replacement"] as! String? }
 	var reference: [String: String]? { jsonDict["reference"] as! [String: String]? }
 	var icons: [String: String]? { jsonDict["icons"] as! [String: String]? }
+	var universal: Bool { (jsonDict["universal"] as! Bool?) ?? false }
 
 	// preconditions
 	var geometry: [String]? { jsonDict["geometry"] as! [String]? }

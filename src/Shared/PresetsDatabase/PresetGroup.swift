@@ -35,8 +35,20 @@ final class PresetGroup {
 		self.isDrillDown = isDrillDown
 	}
 
-	convenience init(fromMerger p1: PresetGroup, with p2: PresetGroup) {
-		self.init(name: p1.name, tags: p1.presetKeys + p2.presetKeys)
+	convenience init(fromMerger p1: PresetGroup, with p2: PresetGroup, sort: Bool) {
+		var list = p1.presetKeys + p2.presetKeys
+		if sort {
+			list.sort(by: { a, b in
+				if case let .key(aa) = a,
+				   case let .key(bb) = b
+				{
+					return aa.name < bb.name
+				}
+				DbgAssert(false)
+				return false // shouldn't happen
+			})
+		}
+		self.init(name: p1.name, tags: list)
 	}
 
 	var description: String {

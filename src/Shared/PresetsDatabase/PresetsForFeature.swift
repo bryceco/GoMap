@@ -78,17 +78,15 @@ final class PresetsForFeature {
 		return list
 	}
 
-	func addPresetsForFields(
-		inFeatureID featureID: String,
+	private func addPresetsForFieldNames(
+		fields: [String],
+		sort: Bool,
 		objectTags: [String: String],
 		geometry: GEOMETRY,
-		field fieldGetter: @escaping (_ feature: PresetFeature) -> [String]?,
 		ignore: [String],
 		dupSet: inout Set<String>,
 		update: (() -> Void)?)
 	{
-		let fields = PresetsForFeature.fieldsFor(featureID: featureID, field: fieldGetter)
-
 		for field in fields {
 			if dupSet.contains(field) {
 				continue
@@ -105,11 +103,12 @@ final class PresetsForFeature {
 			else {
 				continue
 			}
+
 			// if both this group and the previous don't have a name then merge them
 			if group.name == nil || group.isDrillDown, sectionList.count > 1 {
 				var prev = sectionList.last!
 				if prev.name == nil {
-					prev = PresetGroup(fromMerger: prev, with: group)
+					prev = PresetGroup(fromMerger: prev, with: group, sort: sort)
 					sectionList.removeLast()
 					sectionList.append(prev)
 					continue
@@ -117,6 +116,26 @@ final class PresetsForFeature {
 			}
 			sectionList.append(group)
 		}
+	}
+
+	func addPresetsForFields(
+		inFeatureID featureID: String,
+		objectTags: [String: String],
+		geometry: GEOMETRY,
+		field fieldGetter: @escaping (_ feature: PresetFeature) -> [String]?,
+		ignore: [String],
+		dupSet: inout Set<String>,
+		update: (() -> Void)?)
+	{
+		let fields = PresetsForFeature.fieldsFor(featureID: featureID, field: fieldGetter)
+		addPresetsForFieldNames(
+			fields: fields,
+			sort: false,
+			objectTags: objectTags,
+			geometry: geometry,
+			ignore: ignore,
+			dupSet: &dupSet,
+			update: update)
 	}
 
 	init(withFeature feature: PresetFeature?, // feature == nil if a new object
@@ -187,14 +206,33 @@ final class PresetsForFeature {
 			ignore: ignoreTags,
 			dupSet: &dupSet,
 			update: update)
+
 		// Create a break between the common items and the rare items
 		sectionList.append(PresetGroup(name: nil,
 		                               tags: [PresetKeyOrGroup]()))
-		addPresetsForFields(
-			inFeatureID: feature.featureID,
+
+		// add moreFields fields
+		let fields = PresetsForFeature.fieldsFor(featureID: feature.featureID, field: { f in f.moreFields })
+		addPresetsForFieldNames(
+			fields: fields,
+			sort: false,
 			objectTags: objectTags,
 			geometry: geometry,
-			field: { f in f.moreFields },
+			ignore: ignoreTags,
+			dupSet: &dupSet,
+			update: update)
+
+		// Create a break before universal items
+		sectionList.append(PresetGroup(name: nil,
+		                               tags: [PresetKeyOrGroup]()))
+
+		// add universal fields
+		let uni = PresetsDatabase.shared.presetFields.compactMap({ k, v in v.universal ? k : nil })
+		addPresetsForFieldNames(
+			fields: uni,
+			sort: true,
+			objectTags: objectTags,
+			geometry: geometry,
 			ignore: ignoreTags,
 			dupSet: &dupSet,
 			update: update)
