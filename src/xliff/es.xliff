@@ -189,10 +189,12 @@
       </trans-unit>
       <trans-unit id="Jc3-Um-Aiy.text" xml:space="preserve">
         <source>320</source>
+        <target state="translated">320</target>
         <note>Class = "UILabel"; text = "320"; ObjectID = "Jc3-Um-Aiy"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="Yt9-h6-KKC.normalTitle" xml:space="preserve">
         <source>Update "direction" tag</source>
+        <target state="translated">Actualizar la etiqueta "dirección</target>
         <note>Class = "UIButton"; normalTitle = "Update \"direction\" tag"; ObjectID = "Yt9-h6-KKC"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="exg-Jc-FOH.normalTitle" xml:space="preserve">
@@ -202,6 +204,7 @@
       </trans-unit>
       <trans-unit id="vtk-nS-Ss4.text" xml:space="preserve">
         <source>Old value: 42</source>
+        <target state="translated">Valor antiguo: 42</target>
         <note>Class = "UILabel"; text = "Old value: 42"; ObjectID = "vtk-nS-Ss4"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
     </body>
@@ -2993,6 +2996,7 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="Wcg-RB-I2a.text" xml:space="preserve">
         <source>Inscription</source>
+        <target state="translated">Inscripción</target>
         <note>Class = "UILabel"; text = "Inscription"; ObjectID = "Wcg-RB-I2a"; Note = "Placeholder - Don't translate";</note>
       </trans-unit>
       <trans-unit id="Wim-Qa-dYQ.text" xml:space="preserve">
@@ -3647,6 +3651,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="ps9-Hb-Vow.placeholder" xml:space="preserve">
         <source>survey, Bing, etc.</source>
+        <target state="translated">survey, Bing, etc.</target>
         <note>Class = "UITextField"; placeholder = "survey, Bing, etc."; ObjectID = "ps9-Hb-Vow";</note>
       </trans-unit>
       <trans-unit id="yZR-tZ-66S.text" xml:space="preserve">
