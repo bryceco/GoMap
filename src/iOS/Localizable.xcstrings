@@ -2651,10 +2651,54 @@
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.1f أمتار، %#@arg2@ عقد"
+            "value" : "%#@meters@ أمتار، %#@nodes@ عقد"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "two" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -2703,10 +2747,48 @@
         "ars" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.1f أمتار، %#@arg2@ عقد"
+            "value" : "%#@meters@ أمتار، %#@nodes@ عقد"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "two" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -2755,10 +2837,42 @@
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.1f metrů, %#@arg2@ bodů"
+            "value" : "%#@meters@ metrů, %#@nodes@ bodů"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -2795,10 +2909,30 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.1f Meter, %#@arg2@ Knoten"
+            "value" : "%#@meters@ Meter, %#@nodes@ Knoten"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -2823,10 +2957,30 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$.1f meters, %#@arg2@"
+            "value" : "%#@meters@, %#@nodes@"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg meter"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg meters"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -2851,10 +3005,30 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.1f metros, %#@arg2@ nodos"
+            "value" : "%#@meters@ metros, %#@nodes@ nodos"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -2879,10 +3053,10 @@
         "et" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.0f meetrit, %#@arg2@ punkti"
+            "value" : "%1$.0f meetrit, %#@nodes@ punkti"
           },
           "substitutions" : {
-            "arg2" : {
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -2907,10 +3081,30 @@
         "fi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.1f metriä, %#@arg2@ pistettä"
+            "value" : "%#@meters@ metriä, %#@nodes@ pistettä"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -2935,10 +3129,30 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.1f mètres, %#@arg2@ nœuds"
+            "value" : "%#@meters@ mètres, %#@nodes@ nœuds"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -2963,10 +3177,36 @@
         "hr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.1f m, broj čvorova: %#@arg2@"
+            "value" : "%#@meters@ m, broj čvorova: %#@nodes@"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -2997,10 +3237,24 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.1f meter, %#@arg2@ node"
+            "value" : "%#@meters@ meter, %#@nodes@ node"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -3018,11 +3272,31 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$.1f meters, %#@arg2@"
+            "state" : "needs_review",
+            "value" : "%#@meters@ meters, %#@nodes@"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -3047,10 +3321,24 @@
         "ja" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.1f メートル, %#@arg2@ ノード"
+            "value" : "%#@meters@ メートル, %#@nodes@ ノード"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -3069,10 +3357,30 @@
         "mr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.1f मीटर, %#@arg2@ गाठी"
+            "value" : "%#@meters@ मीटर, %#@nodes@ गाठी"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -3097,10 +3405,30 @@
         "nb-NO" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.1f meter, %#@arg2@ node"
+            "value" : "%#@meters@ meter, %#@nodes@ node"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -3125,10 +3453,30 @@
         "nl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.1f meter, %#@arg2@ knopen"
+            "value" : "%#@meters@ meter, %#@nodes@ knopen"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -3152,11 +3500,31 @@
         },
         "nn" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$.1f meters, %#@arg2@"
+            "state" : "needs_review",
+            "value" : "%#@meters@ meters, %#@nodes@"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -3181,10 +3549,48 @@
         "oc" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.1f mètres, %#@arg2@ nos"
+            "value" : "%#@meters@ mètres, %#@nodes@ nos"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "two" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -3232,11 +3638,43 @@
         },
         "pl" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$.1f meters, %#@arg2@"
+            "state" : "needs_review",
+            "value" : "%#@meters@ meters, %#@nodes@"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -3273,10 +3711,30 @@
         "pt" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.1f metros, %#@arg2@ nós"
+            "value" : "%#@meters@ metros, %#@nodes@ nós"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -3301,10 +3759,30 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.1f metros, %#@arg2@ nós"
+            "value" : "%#@meters@ metros, %#@nodes@ nós"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -3328,11 +3806,43 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$.1f метра, %#@arg2@"
+            "state" : "needs_review",
+            "value" : "%#@meters@ метра, %#@nodes@"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -3368,11 +3878,31 @@
         },
         "si" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$.1f meters, %#@arg2@"
+            "state" : "needs_review",
+            "value" : "%#@meters@ meters, %#@nodes@"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -3396,11 +3926,31 @@
         },
         "tzm" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$.1f meters, %#@arg2@"
+            "state" : "needs_review",
+            "value" : "%#@meters@ meters, %#@nodes@"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -3425,10 +3975,42 @@
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.1f метрів, %#@arg2@ точок"
+            "value" : "%#@meters@ метрів, %#@nodes@ точок"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -3465,10 +4047,24 @@
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.1f mét, %#@arg2@ nốt"
+            "value" : "%#@meters@ mét, %#@nodes@ nốt"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -3487,10 +4083,24 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.1f 米, %#@arg2@ 个节点"
+            "value" : "%#@meters@ 米, %#@nodes@ 个节点"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -3509,10 +4119,24 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.1f 公尺, %#@arg2@ 節點"
+            "value" : "%#@meters@ 公尺, %#@nodes@ 節點"
           },
           "substitutions" : {
-            "arg2" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -3536,12 +4160,56 @@
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.2f ميقا بايت، %#@arg2@ ملف/ات"
+            "value" : "%#@megabytes@ ميقا بايت، %#@files@ ملف/ات"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "two" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
               "variations" : {
                 "plural" : {
                   "few" : {
@@ -3588,10 +4256,10 @@
         "ars" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.2f ميقا بايت، %#@arg2@ ملف/ات"
+            "value" : "%#@megabytes@ ميقا بايت، %#@files@ ملف/ات"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -3634,18 +4302,88 @@
                   }
                 }
               }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "two" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
             }
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.2f MB, %#@arg2@ souborů"
+            "value" : "%#@megabytes@ MB, %#@files@ souborů"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
               "variations" : {
                 "plural" : {
                   "few" : {
@@ -3680,12 +4418,32 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.2f MB, %#@arg2@ Dateien"
+            "value" : "%#@megabytes@ MB, %#@files@ Dateien"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
               "variations" : {
                 "plural" : {
                   "one" : {
@@ -3708,10 +4466,10 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$.2f MB, %#@arg2@"
+            "value" : "%#@megabytes@ , %#@files@"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -3730,18 +4488,58 @@
                   }
                 }
               }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg MB"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg MB"
+                    }
+                  }
+                }
+              }
             }
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.2f MB, %#@arg2@ archivos"
+            "value" : "%#@megabytes@ MB, %#@files@ archivos"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
               "variations" : {
                 "plural" : {
                   "one" : {
@@ -3764,12 +4562,32 @@
         "et" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.2f MB, %#@arg2@ faili"
+            "value" : "%#@megabytes@ MB, %#@files@ faili"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
               "variations" : {
                 "plural" : {
                   "one" : {
@@ -3792,12 +4610,32 @@
         "fi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.2f MT, %#@arg2@ tiedostoa"
+            "value" : "%#@megabytes@ MT, %#@files@ tiedostoa"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
               "variations" : {
                 "plural" : {
                   "one" : {
@@ -3820,12 +4658,32 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.2f Mo, %#@arg2@ fichiers"
+            "value" : "%#@megabytes@ Mo, %#@files@ fichiers"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
               "variations" : {
                 "plural" : {
                   "one" : {
@@ -3848,12 +4706,38 @@
         "hr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.2f MB, broj datoteka: %#@arg2@"
+            "value" : "%#@megabytes@ MB, broj datoteka: %#@files@"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
               "variations" : {
                 "plural" : {
                   "few" : {
@@ -3882,12 +4766,26 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.2f MB, %#@arg2@ berkas"
+            "value" : "%#@megabytes@ MB, %#@files@ berkas"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
               "variations" : {
                 "plural" : {
                   "other" : {
@@ -3903,11 +4801,11 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$.2f MB, %#@arg2@"
+            "state" : "needs_review",
+            "value" : "%#@megabytes@ MB, %#@files@"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -3926,18 +4824,52 @@
                   }
                 }
               }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
             }
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.2f MB, %#@arg2@ ファイル"
+            "value" : "%#@megabytes@ MB, %#@files@ ファイル"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
               "variations" : {
                 "plural" : {
                   "other" : {
@@ -3954,12 +4886,32 @@
         "mr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.2f MB, %#@arg2@ फाईली"
+            "value" : "%#@megabytes@ MB, %#@files@ फाईली"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
               "variations" : {
                 "plural" : {
                   "one" : {
@@ -3982,12 +4934,32 @@
         "nb-NO" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.2f MB, %#@arg2@ filer"
+            "value" : "%#@megabytes@ MB, %#@files@ filer"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
               "variations" : {
                 "plural" : {
                   "one" : {
@@ -4010,12 +4982,32 @@
         "nl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.2f MB, %#@arg2@ bestanden"
+            "value" : "%#@megabytes@ MB, %#@files@ bestanden"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
               "variations" : {
                 "plural" : {
                   "one" : {
@@ -4037,11 +5029,11 @@
         },
         "nn" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$.2f MB, %#@arg2@"
+            "state" : "needs_review",
+            "value" : "%#@megabytes@ MB, %#@files@"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -4060,16 +5052,36 @@
                   }
                 }
               }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
             }
           }
         },
         "oc" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.2f MB, %#@arg2@ fichiers"
+            "value" : "%#@megabytes@ MB, %#@files@ fichiers"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -4112,18 +5124,88 @@
                   }
                 }
               }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "two" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
             }
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.2f MB, %#@arg2@ plików"
+            "value" : "%#@megabytes@ MB, %#@files@ plików"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
               "variations" : {
                 "plural" : {
                   "few" : {
@@ -4158,12 +5240,32 @@
         "pt" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.2f MB, %#@arg2@ ficheiros"
+            "value" : "%#@megabytes@ MB, %#@files@ ficheiros"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
               "variations" : {
                 "plural" : {
                   "one" : {
@@ -4186,12 +5288,32 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.2f MB, %#@arg2@ arquivos"
+            "value" : "%#@megabytes@ MB, %#@files@ arquivos"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
               "variations" : {
                 "plural" : {
                   "one" : {
@@ -4213,11 +5335,11 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$.2f МБ, %#@arg2@"
+            "state" : "needs_review",
+            "value" : "%#@megabytes@ МБ, %#@files@"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "d",
               "variations" : {
@@ -4248,16 +5370,48 @@
                   }
                 }
               }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
             }
           }
         },
         "si" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$.2f MB, %#@arg2@"
+            "state" : "needs_review",
+            "value" : "%#@megabytes@ MB, %#@files@"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -4276,16 +5430,36 @@
                   }
                 }
               }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
             }
           }
         },
         "tzm" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$.2f MB, %#@arg2@"
+            "state" : "needs_review",
+            "value" : "%#@megabytes@ MB, %#@files@"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
               "variations" : {
@@ -4300,6 +5474,26 @@
                     "stringUnit" : {
                       "state" : "new",
                       "value" : "%arg files"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
                     }
                   }
                 }
@@ -4310,12 +5504,44 @@
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.2f МБ, %#@arg2@ файлів"
+            "value" : "%#@megabytes@ МБ, %#@files@ файлів"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
               "variations" : {
                 "plural" : {
                   "few" : {
@@ -4350,12 +5576,26 @@
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.2f MB, %#@arg2@ tập tin"
+            "value" : "%#@megabytes@ MB, %#@files@ tập tin"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
               "variations" : {
                 "plural" : {
                   "other" : {
@@ -4372,12 +5612,26 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.2f MB, %#@arg2@ 个文件"
+            "value" : "%#@megabytes@ MB, %#@files@ 个文件"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
               "variations" : {
                 "plural" : {
                   "other" : {
@@ -4394,12 +5648,26 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$.2f MB, %#@arg2@ 檔案"
+            "value" : "%#@megabytes@ MB, %#@files@ 檔案"
           },
           "substitutions" : {
-            "arg2" : {
+            "files" : {
               "argNum" : 2,
               "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
               "variations" : {
                 "plural" : {
                   "other" : {
