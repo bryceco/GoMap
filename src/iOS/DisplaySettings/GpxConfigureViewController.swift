@@ -31,7 +31,7 @@ class GpxConfigureViewController: UIViewController, UIPickerViewDelegate, UIPick
 		if row == 1 {
 			return NSLocalizedString("1 Day", comment: "1 day singular")
 		}
-		return String.localizedStringWithFormat(NSLocalizedString("%ld Days", comment: "Plural number of days"), row)
+		return String.localizedStringWithFormat(NSLocalizedString("%ld Days", comment: ""), row)
 	}
 
 	func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

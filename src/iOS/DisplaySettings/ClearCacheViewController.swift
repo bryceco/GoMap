@@ -97,7 +97,7 @@ class ClearCacheViewController: UITableViewController {
 				object?.getDiskCacheSize(&size, count: &count)
 				DispatchQueue.main.async(execute: {
 					cell.detailLabel.text = String.localizedStringWithFormat(
-						NSLocalizedString("%.2f MB, %ld files", comment: "These values will always be large (plural)"),
+						NSLocalizedString("%.2f MB, %ld files", comment: ""),
 						Double(size) / (1024 * 1024),
 						count)
 				})

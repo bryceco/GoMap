@@ -57,7 +57,7 @@ class OfflineViewController: UITableViewController {
 			cell.tileLayer?.downloadTile(forKey: cacheKey,
 			                             completion: {
 			                             	cell.detailLabel.text = String.localizedStringWithFormat(
-			                             		NSLocalizedString("%lu tiles needed", comment: "Always plural"),
+			                             		NSLocalizedString("%lu tiles needed", comment: ""),
 			                             		UInt(cell.tileList.count))
 			                             	if cell.activityView.isAnimating {
 			                             		// recurse
