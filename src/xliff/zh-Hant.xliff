@@ -831,39 +831,39 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <target state="needs-review-l10n">%.0f 平方公尺</target>
         <note>area in m^2</note>
       </trans-unit>
-      <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
-        <source>%.0f meters, %ld nodes</source>
-        <target state="translated">%1$.0f 公尺, %2$ld 節點</target>
-        <note>way length if &gt; 10m</note>
-      </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
-        <source>%1$.1f meters, %2$#@arg2@</source>
-        <target state="needs-review-l10n">%1$.1f 公尺, %2$#@arg2@ 節點</target>
+        <source>%1$#@meters@, %2$#@nodes@</source>
+        <target state="needs-review-l10n">%1$#@meters@ 公尺, %2$#@nodes@ 節點</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
-      <trans-unit id="%.1f meters, %ld nodes|==|substitutions.arg2.plural.other" xml:space="preserve">
+      <trans-unit id="%.1f meters, %ld nodes|==|substitutions.meters.plural.other" xml:space="preserve">
+        <source>%1$.1f meters</source>
+        <target state="needs-review-l10n">%1$.1f</target>
+        <note>way length if &lt; 10m</note>
+      </trans-unit>
+      <trans-unit id="%.1f meters, %ld nodes|==|substitutions.nodes.plural.other" xml:space="preserve">
         <source>%2$ld nodes</source>
         <target state="needs-review-l10n">%2$ld</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
-        <source>%1$.2f MB, %2$#@arg2@</source>
-        <target state="needs-review-l10n">%1$.2f MB, %2$#@arg2@ 檔案</target>
+        <source>%1$#@megabytes@ , %2$#@files@</source>
+        <target state="needs-review-l10n">%1$#@megabytes@ MB, %2$#@files@ 檔案</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
-      <trans-unit id="%.2f MB, %ld files|==|substitutions.arg2.plural.other" xml:space="preserve">
+      <trans-unit id="%.2f MB, %ld files|==|substitutions.files.plural.other" xml:space="preserve">
         <source>%2$ld files</source>
         <target state="needs-review-l10n">%2$ld</target>
+        <note>These values will always be large (plural)</note>
+      </trans-unit>
+      <trans-unit id="%.2f MB, %ld files|==|substitutions.megabytes.plural.other" xml:space="preserve">
+        <source>%1$.2f MB</source>
+        <target state="needs-review-l10n">%1$.2f</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
         <source>%@ (relation)</source>
         <target state="translated">%@ (關係)</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="%@ changeset" xml:space="preserve">
-        <source>%@ changeset</source>
-        <target state="translated">%@ 變更集</target>
         <note/>
       </trans-unit>
       <trans-unit id="%@ meters" xml:space="preserve">
@@ -1912,11 +1912,6 @@ Never delete old tracks</note>
       <trans-unit id="Paste the JSON for your quests into the field below" xml:space="preserve">
         <source>Paste the JSON for your quests into the field below</source>
         <target state="translated">請將 JSON 貼到下方的輸入框中</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="Pasting %@ characters, maximum tag length is 255" xml:space="preserve">
-        <source>Pasting %@ characters, maximum tag length is 255</source>
-        <target state="translated">貼上 %@ 字元，最大標籤長度是 255</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.other" xml:space="preserve">
@@ -3158,13 +3153,11 @@ You may want to clear the cache (under Display settings) to improve performance.
         <note>Class = "UILabel"; text = "Name"; ObjectID = "5mG-fF-znF";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.footerTitle" xml:space="preserve">
-        <source>Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.
-
-You can also enter "dev" for the development server (for testing), "ohm" for the OpenHistoricalMap server, or leave blank for the default server.</source>
-        <target state="translated">您可以指定主機，如果您要編輯的資料儲存於其他 OSM 伺服器。預設的主機為 api.openstreetmap.org。
+        <source>Select a server if you would like to edit data located on an alternate OSM server.</source>
+        <target state="needs-review-l10n">您可以指定主機，如果您要編輯的資料儲存於其他 OSM 伺服器。預設的主機為 api.openstreetmap.org。
 
 你也可以輸入"dev"表示開發伺服器 (為了測試)，"ohm" 則是開放歷史地圖伺服器，或是留空使用預設伺服器。</target>
-        <note>Class = "UITableViewSection"; footerTitle = "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.\n\nYou can also enter \"dev\" for the development server (for testing), \"ohm\" for the OpenHistoricalMap server, or leave blank for the default server."; ObjectID = "6GT-p2-rPO";</note>
+        <note>Class = "UITableViewSection"; footerTitle = "Select a server if you would like to edit data located on an alternate OSM server."; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.headerTitle" xml:space="preserve">
         <source>OpenStreetMap Server</source>

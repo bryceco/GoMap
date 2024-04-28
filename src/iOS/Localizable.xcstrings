@@ -541,20 +541,20 @@
             "plural" : {
               "few" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : " (%d members)\n"
+                  "state" : "translated",
+                  "value" : " (%d člana)\n"
                 }
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : " (broj članova: %d)\n"
+                  "state" : "translated",
+                  "value" : " (%d član)\n"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : " (broj članova: %d)\n"
+                  "value" : " (%d članova)\n"
                 }
               }
             }
@@ -1145,20 +1145,20 @@
             "plural" : {
               "few" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : " (%d nodes)\n"
+                  "state" : "translated",
+                  "value" : " (%d čvora)\n"
                 }
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : " (broj čvorova: %d)\n"
+                  "state" : "translated",
+                  "value" : " (%d čvor)\n"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : " (broj čvorova: %d)\n"
+                  "value" : " (%d čvorova)\n"
                 }
               }
             }
@@ -2591,8 +2591,8 @@
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%.0f m^2"
+            "state" : "translated",
+            "value" : "%.0f m²"
           }
         },
         "ja" : {
@@ -2783,6 +2783,12 @@
                     "stringUnit" : {
                       "state" : "needs_review",
                       "value" : "%arg"
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg meters"
                     }
                   }
                 }
@@ -3586,6 +3592,12 @@
                       "state" : "needs_review",
                       "value" : "%arg"
                     }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg meters"
+                    }
                   }
                 }
               }
@@ -4336,6 +4348,12 @@
                     "stringUnit" : {
                       "state" : "needs_review",
                       "value" : "%arg"
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg MB"
                     }
                   }
                 }
@@ -5158,6 +5176,12 @@
                     "stringUnit" : {
                       "state" : "needs_review",
                       "value" : "%arg"
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg MB"
                     }
                   }
                 }
@@ -6210,8 +6234,8 @@
             "plural" : {
               "few" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "%ld Days"
+                  "state" : "translated",
+                  "value" : "%ld dana"
                 }
               },
               "one" : {
@@ -6815,8 +6839,8 @@
             "plural" : {
               "few" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "%ld edits, last active %@"
+                  "state" : "translated",
+                  "value" : "%ld promjene, zadnja aktivnost %@"
                 }
               },
               "one" : {
@@ -6828,7 +6852,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%ld promjene, zadnja aktivnost %@"
+                  "value" : "%ld promjena, zadnja aktivnost %@"
                 }
               }
             }
@@ -7556,7 +7580,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@meters@, %#@nodes@"
+            "value" : "%1$#@metros@, %2$#@nudos@"
           },
           "substitutions" : {
             "meters" : {
@@ -7747,7 +7771,7 @@
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%#@meters@, %#@nodes@"
           },
           "substitutions" : {
@@ -7758,20 +7782,20 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg meters"
+                      "state" : "translated",
+                      "value" : "%arg metra"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg meter"
+                      "state" : "translated",
+                      "value" : "%arg metar"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg meters"
+                      "state" : "translated",
+                      "value" : "%arg metara"
                     }
                   }
                 }
@@ -7784,20 +7808,20 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg nodes"
+                      "state" : "translated",
+                      "value" : "%arg čvora"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg node"
+                      "state" : "translated",
+                      "value" : "%arg čvor"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg nodes"
+                      "state" : "translated",
+                      "value" : "%arg čvorova"
                     }
                   }
                 }
@@ -9299,8 +9323,8 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%ld metra"
                     }
                   },
                   "one" : {
@@ -9312,7 +9336,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%ld metra"
+                      "value" : "%ld metara"
                     }
                   }
                 }
@@ -9325,8 +9349,8 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%ld točke"
                     }
                   },
                   "one" : {
@@ -11080,8 +11104,8 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%ld metra"
                     }
                   },
                   "one" : {
@@ -11093,7 +11117,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%ld metra"
+                      "value" : "%ld metara"
                     }
                   }
                 }
@@ -11106,8 +11130,8 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%ld točke"
                     }
                   },
                   "one" : {
@@ -11119,7 +11143,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%ld točke"
+                      "value" : "%ld točaka"
                     }
                   }
                 }
@@ -13026,8 +13050,8 @@
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%#@routes@ imported,\n%#@duplicates@ skipped"
+            "state" : "translated",
+            "value" : "%#@routes@ uvezeno,\n%#@duplicates@ preskočeno"
           },
           "substitutions" : {
             "duplicates" : {
@@ -13037,20 +13061,20 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg duplicates"
+                      "state" : "translated",
+                      "value" : "%arg duplikata"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg duplicate"
+                      "state" : "translated",
+                      "value" : "%arg duplikat"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg duplicates"
+                      "state" : "translated",
+                      "value" : "%arg duplikata"
                     }
                   }
                 }
@@ -13063,20 +13087,20 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg new routes"
+                      "state" : "translated",
+                      "value" : "%arg nove rute"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg new route"
+                      "state" : "translated",
+                      "value" : "%arg nova ruta"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg new routes"
+                      "state" : "translated",
+                      "value" : "%arg novih ruta"
                     }
                   }
                 }
@@ -14240,20 +14264,20 @@
             "plural" : {
               "few" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "%ld objects"
+                  "state" : "translated",
+                  "value" : "%ld objekta"
                 }
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "Broj objekata: %ld"
+                  "state" : "translated",
+                  "value" : "%ld objekt"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Broj objekata: %ld"
+                  "value" : "%ld objekata"
                 }
               }
             }
@@ -14845,20 +14869,20 @@
             "plural" : {
               "few" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "%lu tiles needed"
+                  "state" : "translated",
+                  "value" : "Potrebne su %lu pločice"
                 }
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "Broj potrebnih pločica: %lu"
+                  "state" : "translated",
+                  "value" : "Potrebna je %lu pločica"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Broj potrebnih pločica: %lu"
+                  "value" : "Potrebno je %lu pločica"
                 }
               }
             }
@@ -15818,7 +15842,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vezu kojoj čvor pripada nije moguće potpuno preuzeti"
+            "value" : "Veza kojoj čvor pripada nije u potpunosti preuzeta"
           }
         },
         "it" : {
@@ -19782,6 +19806,12 @@
             "value" : "Zgrada"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "建物"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -20817,7 +20847,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nije moguće ukloniti čvor u zabrani skretanja s puta „preko”"
+            "value" : "Nije moguće ukloniti čvor u ograničenju skretanja s puta „preko”"
           }
         },
         "ja" : {
@@ -20917,7 +20947,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nije moguće ukloniti čvor zabrane skretanja „preko”"
+            "value" : "Nije moguće ukloniti čvor ograničenja skretanja „preko”"
           }
         },
         "ja" : {
@@ -21023,7 +21053,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nije moguće ukloniti čvor zabrane skretanja, koji povezuje „u smjeru”/„iz smjera” u „preko”"
+            "value" : "Nije moguće ukloniti čvor ograničenja skretanja, koji povezuje „u smjeru”/„iz smjera” u „preko”"
           }
         },
         "ja" : {
@@ -21129,7 +21159,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nije moguće ukloniti zabranu skretanja s puta „u smjeru”/„iz smjera”"
+            "value" : "Nije moguće ukloniti ograničenje skretanja s puta „u smjeru”/„iz smjera”"
           }
         },
         "id" : {
@@ -24224,7 +24254,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "stvori zabranu skretanja"
+            "value" : "stvori ograničenje skretanja"
           }
         },
         "id" : {
@@ -25969,7 +25999,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "izbriši zabranu"
+            "value" : "izbriši ograničenje"
           }
         },
         "id" : {
@@ -27462,7 +27492,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uredi zabrane"
+            "value" : "Uredi ograničenja"
           }
         },
         "id" : {
@@ -28715,7 +28745,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Produženje veze „preko” u zabrani skretanja, prekinut će vezu"
+            "value" : "Produženje veze „preko” u ograničenju skretanja će prekinuti vezu"
           }
         },
         "ja" : {
@@ -29068,7 +29098,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prijenos na GPX gotov"
+            "value" : "GPX prijenos završen"
           }
         },
         "ja" : {
@@ -29186,7 +29216,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prijenos na GPX neuspio"
+            "value" : "GPX prijenos neuspio"
           }
         },
         "it" : {
@@ -29282,6 +29312,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "HealthKit"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "健康キット"
           }
         },
         "ru" : {
@@ -30497,7 +30533,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Spajanje bi poništilo zabranu skretanja s puta kojemu pripada"
+            "value" : "Spajanje bi poništilo ograničenje skretanja s puta kojemu pripada"
           }
         },
         "ja" : {
@@ -35566,7 +35602,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nema zabrane skretanja ulijevo"
+            "value" : "Nema ograničenja skretanja ulijevo"
           }
         },
         "id" : {
@@ -35802,7 +35838,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nema zabrane skretanja udesno"
+            "value" : "Nema ograničenja skretanja udesno"
           }
         },
         "id" : {
@@ -35914,7 +35950,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nema zabrane kretanja ravno"
+            "value" : "Nema ograničenja kretanja ravno"
           }
         },
         "id" : {
@@ -36150,7 +36186,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nema zabrane polukružnog okretanja"
+            "value" : "Nema ograničenja polukružnog okretanja"
           }
         },
         "id" : {
@@ -37815,7 +37851,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Samo zabrana skretanja ulijevo"
+            "value" : "Ograničenje samo za skretanje ulijevo"
           }
         },
         "id" : {
@@ -38045,7 +38081,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Samo zabrana skretanja udesno"
+            "value" : "Ograničenje samo za skretanje udesno"
           }
         },
         "id" : {
@@ -38157,7 +38193,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Samo zabrana kretanja ravno"
+            "value" : "Ograničenje samo za kretanja ravno"
           }
         },
         "id" : {
@@ -39149,20 +39185,20 @@
             "plural" : {
               "few" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "Pasting %ld characters, maximum tag length is 255"
+                  "state" : "translated",
+                  "value" : "Umetanje %@ znaka, maksimalni broj znakova za oznaku je 255"
                 }
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "Pasting %ld character, maximum tag length is 255"
+                  "state" : "translated",
+                  "value" : "Umetanje %@ znaka, maksimalni broj znakova za oznaku je 255"
                 }
               },
               "other" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "Pasting %ld characters, maximum tag length is 255"
+                  "state" : "translated",
+                  "value" : "Umetanje %@ znakova, maksimalni broj znakova za oznaku je 255"
                 }
               }
             }
@@ -39753,20 +39789,20 @@
             "plural" : {
               "few" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "Pasting %ld tags"
+                  "state" : "translated",
+                  "value" : "Umetanje %ld oznaka"
                 }
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "Umetanje %ld oznake(a)"
+                  "state" : "translated",
+                  "value" : "Umetanje %ld oznake"
                 }
               },
               "other" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "Umetanje %ld oznake(a)"
+                  "state" : "translated",
+                  "value" : "Umetanje %ld oznaka"
                 }
               }
             }
@@ -42561,7 +42597,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zabrana: %@"
+            "value" : "Ograničenje: %@"
           }
         },
         "id" : {
@@ -42674,7 +42710,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rezultati za %1$@ (%2$@)"
+            "value" : "Rezultati za %@ (%@)"
           }
         },
         "id" : {
@@ -46737,7 +46773,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Skretanje sadrži neprepoznatu vrstu zabrane skretanja. Nastavljanjem će se uništiti."
+            "value" : "Skretanje sadrži neprepoznatu vrstu ograničenje skretanja. Nastavljanjem će se uništiti."
           }
         },
         "id" : {
@@ -47409,7 +47445,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ovaj program još ne podržava uređivanje zabrane skretanja bez čvora kao člana „preko”"
+            "value" : "Ovaj program još ne podržava uređivanje ograničenja skretanja bez čvora kao člana „preko”"
           }
         },
         "ja" : {
@@ -48374,7 +48410,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zabrane skretanja"
+            "value" : "Ograničenja skretanja"
           }
         },
         "ja" : {
@@ -48480,7 +48516,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zabrane skretanja navode ceste, na koje možeš skrenuti prilikom ulaska u raskrižje iz zadanog smjera.\n\nOdaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu uključivanje/isključivanje ceste do odredišta kao dozvoljene rute."
+            "value" : "Ograničenja skretanja navode ceste, na koje možeš skrenuti prilikom ulaska u raskrižje iz zadanog smjera.\n\nOdaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu uključivanje/isključivanje ceste do odredišta kao dozvoljene rute."
           }
         },
         "ja" : {
@@ -48888,7 +48924,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "UID"
+            "value" : "Jedinstveni identifikator (UID)"
           }
         },
         "id" : {
@@ -49425,7 +49461,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nepodržana vrsta zabrane skretanja"
+            "value" : "Nepodržana vrsta ograničenja skretanja"
           }
         },
         "id" : {
@@ -52416,20 +52452,20 @@
             "plural" : {
               "few" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?"
+                  "state" : "translated",
+                  "value" : "S ovom Go Map verzijom prenio/prenijela si %ld skupa promjena!!\n\nOcijeniti ovu aplikaciju?"
                 }
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "S ovom Go Map verzijom prenio/prenijela si %ld skupa promjena!!\n\nOcijeniti ovu aplikaciju?"
+                  "state" : "translated",
+                  "value" : "S ovom Go Map verzijom prenio/prenijela si %ld skup promjena!!\n\nOcijeniti ovu aplikaciju?"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "S ovom Go Map verzijom prenio/prenijela si %ld skupa promjena!!\n\nOcijeniti ovu aplikaciju?"
+                  "value" : "S ovom Go Map verzijom prenio/prenijela si %ld skupova promjena!!\n\nOcijeniti ovu aplikaciju?"
                 }
               }
             }

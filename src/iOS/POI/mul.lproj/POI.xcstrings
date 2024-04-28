@@ -7784,7 +7784,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "uloga"
+            "value" : "role"
           }
         },
         "id" : {
@@ -8625,6 +8625,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Inscription"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inscripción"
           }
         },
         "ja" : {

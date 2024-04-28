@@ -819,6 +819,18 @@
             "value" : "Las rutas de tus entrenamientos se pueden importar como rutas GPX."
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rute tvojih treninga mogu se uvesti kao GPX rute."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "トレーニングの経路はGPX形式の経路としてインポートできます。"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -859,6 +871,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Podaci o zdravlju se nikada ne aktualiziraju."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "健康情報が全く更新されていません。"
           }
         },
         "ru" : {

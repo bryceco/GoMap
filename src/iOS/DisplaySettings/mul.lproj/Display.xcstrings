@@ -1925,6 +1925,12 @@
             "value" : "HealthKit rute:"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "健康キットの経路:"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6818,7 +6824,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "GPX staze koje snimaš ili preuzimaš automatski će se izbrisati nakon:"
+            "value" : "GPX staze koje snimaš ili preuzimaš će se automatski izbrisati nakon:"
           }
         },
         "it" : {
@@ -8228,7 +8234,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zabrane skretanja"
+            "value" : "Ograničenja skretanja"
           }
         },
         "id" : {
@@ -8745,6 +8751,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uvoz"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "インポート"
           }
         },
         "ru" : {

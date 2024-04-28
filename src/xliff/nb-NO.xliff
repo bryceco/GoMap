@@ -811,49 +811,59 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <source>%.0f m²</source>
         <note>area in m^2</note>
       </trans-unit>
-      <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
-        <source>%.0f meters, %ld nodes</source>
-        <target state="translated">%1$.0f meter, %2$ld noder</target>
-        <note>way length if &gt; 10m</note>
-      </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
-        <source>%1$.1f meters, %2$#@arg2@</source>
-        <target state="needs-review-l10n">%1$.1f meter, %2$#@arg2@ node</target>
+        <source>%1$#@meters@, %2$#@nodes@</source>
+        <target state="needs-review-l10n">%1$#@meters@ meter, %2$#@nodes@ node</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
-      <trans-unit id="%.1f meters, %ld nodes|==|substitutions.arg2.plural.one" xml:space="preserve">
+      <trans-unit id="%.1f meters, %ld nodes|==|substitutions.meters.plural.one" xml:space="preserve">
+        <source>%1$.1f meter</source>
+        <target state="needs-review-l10n">%1$.1f</target>
+        <note>way length if &lt; 10m</note>
+      </trans-unit>
+      <trans-unit id="%.1f meters, %ld nodes|==|substitutions.meters.plural.other" xml:space="preserve">
+        <source>%1$.1f meters</source>
+        <target state="needs-review-l10n">%1$.1f</target>
+        <note>way length if &lt; 10m</note>
+      </trans-unit>
+      <trans-unit id="%.1f meters, %ld nodes|==|substitutions.nodes.plural.one" xml:space="preserve">
         <source>%2$ld node</source>
         <target state="needs-review-l10n">%2$ld</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
-      <trans-unit id="%.1f meters, %ld nodes|==|substitutions.arg2.plural.other" xml:space="preserve">
+      <trans-unit id="%.1f meters, %ld nodes|==|substitutions.nodes.plural.other" xml:space="preserve">
         <source>%2$ld nodes</source>
         <target state="needs-review-l10n">%2$ld</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
-        <source>%1$.2f MB, %2$#@arg2@</source>
-        <target state="needs-review-l10n">%1$.2f MB, %2$#@arg2@ filer</target>
+        <source>%1$#@megabytes@ , %2$#@files@</source>
+        <target state="needs-review-l10n">%1$#@megabytes@ MB, %2$#@files@ filer</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
-      <trans-unit id="%.2f MB, %ld files|==|substitutions.arg2.plural.one" xml:space="preserve">
+      <trans-unit id="%.2f MB, %ld files|==|substitutions.files.plural.one" xml:space="preserve">
         <source>%2$ld file</source>
         <target state="needs-review-l10n">%2$ld</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
-      <trans-unit id="%.2f MB, %ld files|==|substitutions.arg2.plural.other" xml:space="preserve">
+      <trans-unit id="%.2f MB, %ld files|==|substitutions.files.plural.other" xml:space="preserve">
         <source>%2$ld files</source>
         <target state="needs-review-l10n">%2$ld</target>
+        <note>These values will always be large (plural)</note>
+      </trans-unit>
+      <trans-unit id="%.2f MB, %ld files|==|substitutions.megabytes.plural.one" xml:space="preserve">
+        <source>%1$.2f MB</source>
+        <target state="needs-review-l10n">%1$.2f</target>
+        <note>These values will always be large (plural)</note>
+      </trans-unit>
+      <trans-unit id="%.2f MB, %ld files|==|substitutions.megabytes.plural.other" xml:space="preserve">
+        <source>%1$.2f MB</source>
+        <target state="needs-review-l10n">%1$.2f</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
         <source>%@ (relation)</source>
         <target state="translated">%@ (relasjon)</target>
-        <note/>
-      </trans-unit>
-      <trans-unit id="%@ changeset" xml:space="preserve">
-        <source>%@ changeset</source>
-        <target state="translated">%@ endringssett</target>
         <note/>
       </trans-unit>
       <trans-unit id="%@ meters" xml:space="preserve">
@@ -1920,10 +1930,6 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Paste the JSON for your quests into the field below" xml:space="preserve">
         <source>Paste the JSON for your quests into the field below</source>
-        <note/>
-      </trans-unit>
-      <trans-unit id="Pasting %@ characters, maximum tag length is 255" xml:space="preserve">
-        <source>Pasting %@ characters, maximum tag length is 255</source>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.one" xml:space="preserve">
@@ -3125,11 +3131,9 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
         <note>Class = "UILabel"; text = "Name"; ObjectID = "5mG-fF-znF";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.footerTitle" xml:space="preserve">
-        <source>Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.
-
-You can also enter "dev" for the development server (for testing), "ohm" for the OpenHistoricalMap server, or leave blank for the default server.</source>
+        <source>Select a server if you would like to edit data located on an alternate OSM server.</source>
         <target state="needs-review-l10n">Angi en vert hvis du ønsker å redigere data som finnes på en alternativ OSM-tjener. Forvalgt vert er api.openstreetmap.org.</target>
-        <note>Class = "UITableViewSection"; footerTitle = "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.\n\nYou can also enter \"dev\" for the development server (for testing), \"ohm\" for the OpenHistoricalMap server, or leave blank for the default server."; ObjectID = "6GT-p2-rPO";</note>
+        <note>Class = "UITableViewSection"; footerTitle = "Select a server if you would like to edit data located on an alternate OSM server."; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.headerTitle" xml:space="preserve">
         <source>OpenStreetMap Server</source>
