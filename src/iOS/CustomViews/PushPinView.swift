@@ -42,6 +42,14 @@ final class PushPinView: UIButton, CAAnimationDelegate, UIGestureRecognizerDeleg
 				return
 			}
 			center = CGPoint(x: arrowPoint.x, y: arrowPoint.y + bounds.size.height / 2)
+
+			// if the label is covering the crosshairs then decrease our opacity
+			let crosshairs = shapeLayer.convert(CGPoint(x: 0,y: 0), from: self.superview?.layer)
+			if shapeLayer.path?.contains(crosshairs) ?? false {
+				shapeLayer.opacity = 0.4
+			} else {
+				shapeLayer.opacity = 1.0
+			}
 		}
 	}
 
@@ -92,9 +100,9 @@ final class PushPinView: UIButton, CAAnimationDelegate, UIGestureRecognizerDeleg
 		shapeLayer.addSublayer(textLayer)
 
 		shapeLayer.addSublayer(moveButton)
-		shapeLayer.addSublayer(placeholderLayer)
 
 		layer.addSublayer(shapeLayer)
+		layer.addSublayer(placeholderLayer)
 
 		let pan = UIPanGestureRecognizer(target: self, action: #selector(draggingGesture(_:)))
 		pan.delegate = self
