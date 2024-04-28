@@ -585,7 +585,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		aerialLayer = MercatorTileLayer(mapView: self)
 		aerialLayer.zPosition = ZLAYER.AERIAL.rawValue
-		aerialLayer.opacity = 0.75
 		aerialLayer.tileServer = tileServerList.currentServer
 		aerialLayer.isHidden = true
 		bg.append(aerialLayer)
@@ -1283,7 +1282,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			aerialLayer.isHidden = false
 			mapnikLayer.isHidden = true
 			userInstructionLabel.isHidden = true
-			aerialLayer.opacity = 0.75
 			editorLayer.whiteText = true
 		case MapViewState.AERIAL:
 			aerialLayer.tileServer = tileServerList.currentServer
@@ -1291,7 +1289,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			aerialLayer.isHidden = false
 			mapnikLayer.isHidden = true
 			userInstructionLabel.isHidden = true
-			aerialLayer.opacity = 1.0
 		case MapViewState.MAPNIK:
 			editorLayer.isHidden = true
 			aerialLayer.isHidden = true
