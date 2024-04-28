@@ -149,11 +149,20 @@ extension RenderInfo {
 			}
 		}
 
-		return RenderInfo.match(
+		guard let r = RenderInfo.match(
 			primary: primary,
 			primaryValue: primaryValue,
 			status: status,
 			surface: surface,
 			tags: tags)
+		else {
+			return nil
+		}
+		r.lineWidth = 2 * r.lineWidth
+		r.casingWidth = 2 * r.casingWidth
+		r.lineDashPattern = r.lineDashPattern?.map({ NSNumber(value: $0.doubleValue * 0.5) })
+		r.casingDashPattern = r.casingDashPattern?.map({ NSNumber(value: $0.doubleValue * 0.5) })
+
+		return r
 	}
 }
