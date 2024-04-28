@@ -6005,7 +6005,7 @@
       }
     },
     "%ld Days" : {
-      "comment" : "One or more days\nPlural number of days",
+      "comment" : "One or more days",
       "localizations" : {
         "ar" : {
           "variations" : {
@@ -7580,7 +7580,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$#@metros@, %2$#@nudos@"
+            "value" : "%1$#@meters@, %2$#@nodes@"
           },
           "substitutions" : {
             "meters" : {
