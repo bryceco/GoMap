@@ -44,7 +44,7 @@ final class PushPinView: UIButton, CAAnimationDelegate, UIGestureRecognizerDeleg
 			center = CGPoint(x: arrowPoint.x, y: arrowPoint.y + bounds.size.height / 2)
 
 			// if the label is covering the crosshairs then decrease our opacity
-			let crosshairs = shapeLayer.convert(CGPoint(x: 0,y: 0), from: self.superview?.layer)
+			let crosshairs = shapeLayer.convert(CGPoint(x: 0, y: 0), from: superview?.layer)
 			if shapeLayer.path?.contains(crosshairs) ?? false {
 				shapeLayer.opacity = 0.4
 			} else {

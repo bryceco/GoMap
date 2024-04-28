@@ -133,12 +133,6 @@ final class GpxTrack: NSObject, NSSecureCoding {
 	private var recording = false
 	private var distance = 0.0
 
-	static let nullShapePaths = [CGPath?](repeating: nil, count: 32)
-
-	// An array of paths, each simplified according to zoom level
-	// so we have good performance when zoomed out:
-	public var shapePaths = GpxTrack.nullShapePaths
-
 	private var _name: String?
 	var name: String {
 		get {
@@ -152,7 +146,7 @@ final class GpxTrack: NSObject, NSSecureCoding {
 	var creationDate = Date() // when trace was recorded or downloaded
 	private(set) var points: [GpxPoint] = []
 	private(set) var wayPoints: [GpxPoint] = []
-	var shapeLayer: GpxTrackLayerWithProperties?
+	var shapeLayer: LineShapeLayer?
 
 	func addPoint(_ location: CLLocation) {
 		recording = true

@@ -9,19 +9,9 @@
 import CoreLocation.CLLocation
 import UIKit
 
-final class GpxTrackLayerWithProperties: CAShapeLayer {
-	struct Properties {
-		var position: OSMPoint?
-		var lineWidth: CGFloat
-	}
-
-	var props = Properties(position: nil, lineWidth: 0.0)
-}
-
-final class GpxLayer: CALayer, GetDiskCacheSize {
+final class GpxLayer: LineDrawingLayer, GetDiskCacheSize {
 	private static let DefaultExpirationDays = 7
 
-	let mapView: MapView
 	var stabilizingCount = 0
 
 	private(set) var activeTrack: GpxTrack? // track currently being recorded
@@ -29,48 +19,26 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 	// track picked in view controller
 	weak var selectedTrack: GpxTrack? {
 		didSet {
-			if oldValue != selectedTrack {
-				oldValue?.shapeLayer?.removeFromSuperlayer()
-				oldValue?.shapeLayer = nil // color changes
-				selectedTrack?.shapeLayer?.removeFromSuperlayer()
-				selectedTrack?.shapeLayer = nil // color changes
-			}
+			// update for color change of selected track
 			setNeedsLayout()
 		}
 	}
 
 	private(set) var previousTracks: [GpxTrack] = [] // sorted with most recent first
 
-	override init(layer: Any) {
-		let layer = layer as! GpxLayer
-		mapView = layer.mapView
-		uploadedTracks = [:]
-		super.init(layer: layer)
-	}
+	/*
+	 override init(layer: Any) {
+	 	let layer = layer as! GpxLayer
+	 	mapView = layer.mapView
+	 	uploadedTracks = [:]
+	 	super.init(layer: layer)
+	 }
+	  */
 
-	init(mapView: MapView) {
-		self.mapView = mapView
+	override init(mapView: MapView) {
 		let uploads = UserPrefs.shared.object(forKey: .gpxUploadedGpxTracks) as? [String: NSNumber] ?? [:]
 		uploadedTracks = uploads.mapValues({ $0.boolValue })
-
-		super.init()
-
-		actions = [
-			"onOrderIn": NSNull(),
-			"onOrderOut": NSNull(),
-			"hidden": NSNull(),
-			"sublayers": NSNull(),
-			"contents": NSNull(),
-			"bounds": NSNull(),
-			"position": NSNull(),
-			"transform": NSNull(),
-			"lineWidth": NSNull()
-		]
-
-		// observe changes to geometry
-		mapView.mapTransform.observe(by: self, callback: { self.setNeedsLayout() })
-
-		setNeedsLayout()
+		super.init(mapView: mapView)
 	}
 
 	var uploadedTracks: [String: Bool] {
@@ -92,9 +60,9 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 	func endActiveTrack() {
 		if let activeTrack = activeTrack {
 			// redraw shape with archive color
+			setNeedsLayout()
+
 			activeTrack.finish()
-			activeTrack.shapeLayer?.removeFromSuperlayer()
-			activeTrack.shapeLayer = nil
 
 			// add to list of previous tracks
 			if activeTrack.points.count > 1 {
@@ -215,6 +183,20 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 		} else {
 			return previousTracks
 		}
+	}
+
+	override func allLineShapeLayers() -> [LineShapeLayer] {
+		return allTracks().map({
+			if $0.shapeLayer == nil {
+				$0.shapeLayer = LineShapeLayer(with: $0.points.map { $0.latLon })
+			}
+			$0.shapeLayer!.color =
+				$0 == selectedTrack ? UIColor.red : UIColor(red: 1.0,
+				                                            green: 99 / 255.0,
+				                                            blue: 249 / 255.0,
+				                                            alpha: 1.0)
+			return $0.shapeLayer!
+		})
 	}
 
 	func saveDirectory() -> String {
@@ -391,150 +373,6 @@ final class GpxLayer: CALayer, GetDiskCacheSize {
 	func loadGPXData(_ data: Data, center: Bool) throws {
 		let newTrack = try GpxTrack(xmlData: data)
 		addGPX(track: newTrack, center: center)
-	}
-
-	// MARK: Drawing
-
-	override var bounds: CGRect {
-		get {
-			return super.bounds
-		}
-		set(bounds) {
-			super.bounds = bounds
-			//	_baseLayer.frame = bounds;
-			setNeedsLayout()
-		}
-	}
-
-	// Convert the track to a CGPath so we can draw it
-	func path(for track: GpxTrack, refPoint: inout OSMPoint) -> CGPath {
-		var path = CGMutablePath()
-		var initial = OSMPoint(x: 0, y: 0)
-		var haveInitial = false
-		var first = true
-
-		for point in track.points {
-			var pt = MapTransform.mapPoint(forLatLon: point.latLon)
-			if pt.x.isInfinite {
-				break
-			}
-			if !haveInitial {
-				initial = pt
-				haveInitial = true
-			}
-			pt.x -= initial.x
-			pt.y -= initial.y
-			pt.x *= PATH_SCALING
-			pt.y *= PATH_SCALING
-			if first {
-				path.move(to: CGPoint(x: pt.x, y: pt.y))
-				first = false
-			} else {
-				path.addLine(to: CGPoint(x: pt.x, y: pt.y))
-			}
-		}
-
-		if haveInitial {
-			// place refPoint at upper-left corner of bounding box so it can be the origin for the frame/anchorPoint
-			let bbox = path.boundingBoxOfPath
-			if !bbox.origin.x.isInfinite {
-				var tran = CGAffineTransform(translationX: -bbox.origin.x, y: -bbox.origin.y)
-				if let path2 = path.mutableCopy(using: &tran) {
-					path = path2
-				}
-				refPoint = OSMPoint(x: initial.x + Double(bbox.origin.x) / PATH_SCALING,
-				                    y: initial.y + Double(bbox.origin.y) / PATH_SCALING)
-			} else {}
-		}
-
-		return path
-	}
-
-	func getShapeLayer(for track: GpxTrack) -> GpxTrackLayerWithProperties {
-		if let shapeLayer = track.shapeLayer {
-			return shapeLayer
-		}
-
-		var refPoint = OSMPoint(x: 0, y: 0)
-		let path = self.path(for: track, refPoint: &refPoint)
-		track.shapePaths = GpxTrack.nullShapePaths
-		track.shapePaths[0] = path
-
-		let color = track == selectedTrack ? UIColor.red : UIColor(
-			red: 1.0,
-			green: 99 / 255.0,
-			blue: 249 / 255.0,
-			alpha: 1.0)
-
-		let layer = GpxTrackLayerWithProperties()
-		layer.anchorPoint = CGPoint.zero
-		layer.position = CGPoint(refPoint)
-		layer.path = path
-		layer.strokeColor = color.cgColor
-		layer.fillColor = nil
-		layer.lineWidth = 2.0
-		layer.lineCap = .square
-		layer.lineJoin = .miter
-		layer.zPosition = 0.0
-		layer.actions = actions
-		layer.props.position = refPoint
-		layer.props.lineWidth = layer.lineWidth
-		track.shapeLayer = layer
-		return layer
-	}
-
-	func layoutSublayersSafe() {
-		let tRotation = mapView.screenFromMapTransform.rotation()
-		let tScale = mapView.screenFromMapTransform.scale()
-		let pScale = tScale / PATH_SCALING
-		var scale = Int(floor(-log(pScale)))
-		if scale < 0 {
-			scale = 0
-		}
-
-		for track in allTracks() {
-			let layer = getShapeLayer(for: track)
-
-			if track.shapePaths[scale] == nil {
-				let epsilon = pow(Double(10.0), Double(scale)) / 256.0
-				track.shapePaths[scale] = track.shapePaths[0]?.pathWithReducedPoints(epsilon)
-			}
-			//		DLog(@"reduce %ld to %ld\n",CGPathPointCount(track->shapePaths[0]),CGPathPointCount(track->shapePaths[scale]));
-			layer.path = track.shapePaths[scale]
-
-			// configure the layer for presentation
-			guard let pt = layer.props.position else { return }
-			let pt2 = OSMPoint(mapView.mapTransform.screenPoint(forMapPoint: pt, birdsEye: false))
-
-			// rotate and scale
-			var t = CGAffineTransform(translationX: CGFloat(pt2.x - pt.x), y: CGFloat(pt2.y - pt.y))
-			t = t.scaledBy(x: CGFloat(pScale), y: CGFloat(pScale))
-			t = t.rotated(by: CGFloat(tRotation))
-			layer.setAffineTransform(t)
-
-			let shape = layer
-			shape.lineWidth = layer.props.lineWidth / CGFloat(pScale)
-
-			// add the layer if not already present
-			if layer.superlayer == nil {
-				insertSublayer(layer, at: UInt32(sublayers?.count ?? 0)) // place at bottom
-			}
-		}
-
-		if mapView.mapTransform.birdsEyeRotation != 0 {
-			var t = CATransform3DIdentity
-			t.m34 = -1.0 / CGFloat(mapView.mapTransform.birdsEyeDistance)
-			t = CATransform3DRotate(t, CGFloat(mapView.mapTransform.birdsEyeRotation), 1.0, 0, 0)
-			sublayerTransform = t
-		} else {
-			sublayerTransform = CATransform3DIdentity
-		}
-	}
-
-	override func layoutSublayers() {
-		if !isHidden {
-			layoutSublayersSafe()
-		}
 	}
 
 	// MARK: Properties
