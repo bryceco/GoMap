@@ -189,6 +189,7 @@
       </trans-unit>
       <trans-unit id="Jc3-Um-Aiy.text" xml:space="preserve">
         <source>320</source>
+        <target state="translated">320</target>
         <note>Class = "UILabel"; text = "320"; ObjectID = "Jc3-Um-Aiy"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="Yt9-h6-KKC.normalTitle" xml:space="preserve">
@@ -333,7 +334,7 @@
       </trans-unit>
       <trans-unit id="MeQ-4N-FqC.text" xml:space="preserve">
         <source>GPX Tracks you record or download will be automatically deleted after:</source>
-        <target state="translated">GPX staze koje snimaš ili preuzimaš automatski će se izbrisati nakon:</target>
+        <target state="translated">GPX staze koje snimaš ili preuzimaš će se automatski izbrisati nakon:</target>
         <note>Class = "UILabel"; text = "GPX Tracks you record or download will be automatically deleted after:"; ObjectID = "MeQ-4N-FqC";</note>
       </trans-unit>
       <trans-unit id="O0U-6M-7AT.text" xml:space="preserve">
@@ -595,7 +596,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="r6a-cT-Ufa.text" xml:space="preserve">
         <source>Turn Restrictions</source>
-        <target state="translated">Zabrane skretanja</target>
+        <target state="translated">Ograničenja skretanja</target>
         <note>Class = "UILabel"; text = "Turn Restrictions"; ObjectID = "r6a-cT-Ufa";</note>
       </trans-unit>
       <trans-unit id="scg-Po-M3L.headerTitle" xml:space="preserve">
@@ -748,6 +749,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="NSHealthShareUsageDescription" xml:space="preserve">
         <source>Routes from your workouts can be imported as GPX routes.</source>
+        <target state="translated">Rute tvojih treninga mogu se uvesti kao GPX rute.</target>
         <note>Privacy - Health Share Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHealthUpdateUsageDescription" xml:space="preserve">
@@ -804,42 +806,42 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       <trans-unit id=" (%d members)&#10;|==|plural.few" xml:space="preserve">
         <source> (%d members)
 </source>
-        <target state="new"> (%d members)
+        <target state="translated"> (%d člana)
 </target>
         <note/>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;|==|plural.one" xml:space="preserve">
         <source> (%d member)
 </source>
-        <target state="needs-review-l10n"> (broj članova: %d)
+        <target state="translated"> (%d član)
 </target>
         <note/>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;|==|plural.other" xml:space="preserve">
         <source> (%d members)
 </source>
-        <target state="translated"> (broj članova: %d)
+        <target state="translated"> (%d članova)
 </target>
         <note/>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;|==|plural.few" xml:space="preserve">
         <source> (%d nodes)
 </source>
-        <target state="new"> (%d nodes)
+        <target state="translated"> (%d čvora)
 </target>
         <note/>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;|==|plural.one" xml:space="preserve">
         <source> (%d node)
 </source>
-        <target state="needs-review-l10n"> (broj čvorova: %d)
+        <target state="translated"> (%d čvor)
 </target>
         <note/>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;|==|plural.other" xml:space="preserve">
         <source> (%d nodes)
 </source>
-        <target state="translated"> (broj čvorova: %d)
+        <target state="translated"> (%d čvorova)
 </target>
         <note/>
       </trans-unit>
@@ -855,52 +857,52 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="%.0f m^2" xml:space="preserve">
         <source>%.0f m²</source>
-        <target state="needs-review-l10n">%.0f m^2</target>
+        <target state="translated">%.0f m²</target>
         <note>area in m^2</note>
       </trans-unit>
       <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
         <source>%.0f meters, %ld nodes</source>
-        <target state="translated">%1$.0f m, broj čvorova: %2$ld</target>
+        <target state="needs-translation">%1$.0f m, broj čvorova: %2$ld</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
         <source>%1$.1f meters, %2$#@arg2@</source>
-        <target state="needs-review-l10n">%1$.1f m, broj čvorova: %2$#@arg2@</target>
+        <target state="needs-translation">%1$.1f m, broj čvorova: %2$#@arg2@</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.arg2.plural.few" xml:space="preserve">
         <source>%2$ld nodes</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld čvora</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.arg2.plural.one" xml:space="preserve">
         <source>%2$ld node</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld čvor</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.arg2.plural.other" xml:space="preserve">
         <source>%2$ld nodes</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld čvorova</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
         <source>%1$.2f MB, %2$#@arg2@</source>
-        <target state="needs-review-l10n">%1$.2f MB, broj datoteka: %2$#@arg2@</target>
+        <target state="translated">%1$.2f MB, %2$#@arg2@</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.arg2.plural.few" xml:space="preserve">
         <source>%2$ld files</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld datoteke</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.arg2.plural.one" xml:space="preserve">
         <source>%2$ld file</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld datoteka</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.arg2.plural.other" xml:space="preserve">
         <source>%2$ld files</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld datoteka</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
@@ -920,7 +922,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="%ld Days|==|plural.few" xml:space="preserve">
         <source>%ld Days</source>
-        <target state="new">%ld Days</target>
+        <target state="translated">%ld dana</target>
         <note>One or more days
 Plural number of days</note>
       </trans-unit>
@@ -938,7 +940,7 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.few" xml:space="preserve">
         <source>%ld edits, last active %@</source>
-        <target state="new">%ld edits, last active %@</target>
+        <target state="translated">%ld promjene, zadnja aktivnost %@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.one" xml:space="preserve">
@@ -948,42 +950,42 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.other" xml:space="preserve">
         <source>%ld edits, last active %@</source>
-        <target state="translated">%ld promjene, zadnja aktivnost %@</target>
+        <target state="translated">%ld promjena, zadnja aktivnost %@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes" xml:space="preserve">
         <source>%1$#@meters@, %2$#@nodes@</source>
-        <target state="new">%1$#@meters@, %2$#@nodes@</target>
+        <target state="translated">%1$#@meters@, %2$#@nodes@</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.few" xml:space="preserve">
         <source>%1$ld meters</source>
-        <target state="new">%1$ld meters</target>
+        <target state="translated">%1$ld metra</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%1$ld meter</source>
-        <target state="new">%1$ld meter</target>
+        <target state="translated">%1$ld metar</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%1$ld meters</source>
-        <target state="new">%1$ld meters</target>
+        <target state="translated">%1$ld metara</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.few" xml:space="preserve">
         <source>%2$ld nodes</source>
-        <target state="new">%2$ld nodes</target>
+        <target state="translated">%2$ld čvora</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.one" xml:space="preserve">
         <source>%2$ld node</source>
-        <target state="new">%2$ld node</target>
+        <target state="translated">%2$ld čvor</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.other" xml:space="preserve">
         <source>%2$ld nodes</source>
-        <target state="new">%2$ld nodes</target>
+        <target state="translated">%2$ld čvorova</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
@@ -998,7 +1000,7 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.few" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="needs-review-l10n">%1$ld</target>
+        <target state="translated">%ld metra</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.one" xml:space="preserve">
@@ -1008,12 +1010,12 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="translated">%ld metra</target>
+        <target state="translated">%ld metara</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.few" xml:space="preserve">
         <source>%ld points</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%ld točke</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.one" xml:space="preserve">
@@ -1023,7 +1025,7 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.other" xml:space="preserve">
         <source>%ld points</source>
-        <target state="translated">%ld točke</target>
+        <target state="translated">%ld točaka</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.few" xml:space="preserve">
@@ -1043,7 +1045,7 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.few" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="needs-review-l10n">%1$ld</target>
+        <target state="translated">%ld metra</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.one" xml:space="preserve">
@@ -1053,12 +1055,12 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="translated">%ld metra</target>
+        <target state="translated">%ld metara</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.few" xml:space="preserve">
         <source>%ld points</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%ld točke</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.one" xml:space="preserve">
@@ -1074,68 +1076,68 @@ Plural number of days</note>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped" xml:space="preserve">
         <source>%1$#@routes@ imported,
 %2$#@duplicates@ skipped</source>
-        <target state="new">%1$#@routes@ imported,
-%2$#@duplicates@ skipped</target>
+        <target state="translated">%1$#@routes@ uvezeno,
+%2$#@duplicates@ preskočeno</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.few" xml:space="preserve">
         <source>%2$ld duplicates</source>
-        <target state="new">%2$ld duplicates</target>
+        <target state="translated">%2$ld duplikata</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.one" xml:space="preserve">
         <source>%2$ld duplicate</source>
-        <target state="new">%2$ld duplicate</target>
+        <target state="translated">%2$ld duplikat</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.other" xml:space="preserve">
         <source>%2$ld duplicates</source>
-        <target state="new">%2$ld duplicates</target>
+        <target state="translated">%2$ld duplikata</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.routes.plural.few" xml:space="preserve">
         <source>%1$ld new routes</source>
-        <target state="new">%1$ld new routes</target>
+        <target state="translated">%1$ld nove rute</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.routes.plural.one" xml:space="preserve">
         <source>%1$ld new route</source>
-        <target state="new">%1$ld new route</target>
+        <target state="translated">%1$ld nova ruta</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.routes.plural.other" xml:space="preserve">
         <source>%1$ld new routes</source>
-        <target state="new">%1$ld new routes</target>
+        <target state="translated">%1$ld novih ruta</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.few" xml:space="preserve">
         <source>%ld objects</source>
-        <target state="new">%ld objects</target>
+        <target state="translated">%ld objekta</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
         <source>%ld object</source>
-        <target state="needs-review-l10n">Broj objekata: %ld</target>
+        <target state="translated">%ld objekt</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.other" xml:space="preserve">
         <source>%ld objects</source>
-        <target state="translated">Broj objekata: %ld</target>
+        <target state="translated">%ld objekata</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%lu tiles needed|==|plural.few" xml:space="preserve">
         <source>%lu tiles needed</source>
-        <target state="new">%lu tiles needed</target>
+        <target state="translated">Potrebne su %lu pločice</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="%lu tiles needed|==|plural.one" xml:space="preserve">
         <source>%lu tile needed</source>
-        <target state="needs-review-l10n">Broj potrebnih pločica: %lu</target>
+        <target state="translated">Potrebna je %lu pločica</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="%lu tiles needed|==|plural.other" xml:space="preserve">
         <source>%lu tiles needed</source>
-        <target state="translated">Broj potrebnih pločica: %lu</target>
+        <target state="translated">Potrebno je %lu pločica</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="(new object)" xml:space="preserve">
@@ -1189,7 +1191,7 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="A relation the node belongs to is not fully downloaded" xml:space="preserve">
         <source>A relation the node belongs to is not fully downloaded</source>
-        <target state="translated">Vezu kojoj čvor pripada nije moguće potpuno preuzeti</target>
+        <target state="translated">Veza kojoj čvor pripada nije u potpunosti preuzeta</target>
         <note/>
       </trans-unit>
       <trans-unit id="Accept" xml:space="preserve">
@@ -1394,17 +1396,17 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction 'via' node" xml:space="preserve">
         <source>Can't remove Turn Restriction 'via' node</source>
-        <target state="translated">Nije moguće ukloniti čvor zabrane skretanja „preko”</target>
+        <target state="translated">Nije moguće ukloniti čvor ograničenja skretanja „preko”</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" xml:space="preserve">
         <source>Can't remove Turn Restriction node connecting 'to'/'from' to 'via'</source>
-        <target state="translated">Nije moguće ukloniti čvor zabrane skretanja, koji povezuje „u smjeru”/„iz smjera” u „preko”</target>
+        <target state="translated">Nije moguće ukloniti čvor ograničenja skretanja, koji povezuje „u smjeru”/„iz smjera” u „preko”</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction to/from way" xml:space="preserve">
         <source>Can't remove Turn Restriction to/from way</source>
-        <target state="translated">Nije moguće ukloniti zabranu skretanja s puta „u smjeru”/„iz smjera”</target>
+        <target state="translated">Nije moguće ukloniti ograničenje skretanja s puta „u smjeru”/„iz smjera”</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can't remove component of a Route or similar relation" xml:space="preserve">
@@ -1414,7 +1416,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Can't remove node in Turn Restriction 'via' way" xml:space="preserve">
         <source>Can't remove node in Turn Restriction 'via' way</source>
-        <target state="translated">Nije moguće ukloniti čvor u zabrani skretanja s puta „preko”</target>
+        <target state="translated">Nije moguće ukloniti čvor u ograničenju skretanja s puta „preko”</target>
         <note/>
       </trans-unit>
       <trans-unit id="Cancel" xml:space="preserve">
@@ -1617,7 +1619,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Edit restrictions" xml:space="preserve">
         <source>Edit restrictions</source>
-        <target state="translated">Uredi zabrane</target>
+        <target state="translated">Uredi ograničenja</target>
         <note/>
       </trans-unit>
       <trans-unit id="Editing layer not visible" xml:space="preserve">
@@ -1666,7 +1668,7 @@ Greška: %@</target>
       </trans-unit>
       <trans-unit id="Extending a 'via' in a Turn Restriction will break the relation" xml:space="preserve">
         <source>Extending a 'via' in a Turn Restriction will break the relation</source>
-        <target state="translated">Produženje veze „preko” u zabrani skretanja, prekinut će vezu</target>
+        <target state="translated">Produženje veze „preko” u ograničenju skretanja će prekinuti vezu</target>
         <note/>
       </trans-unit>
       <trans-unit id="Extending a way which belongs to a Route or similar relation may damage the relation" xml:space="preserve">
@@ -1681,12 +1683,12 @@ Greška: %@</target>
       </trans-unit>
       <trans-unit id="GPX Upload Complete" xml:space="preserve">
         <source>GPX Upload Complete</source>
-        <target state="translated">Prijenos na GPX gotov</target>
+        <target state="translated">GPX prijenos završen</target>
         <note/>
       </trans-unit>
       <trans-unit id="GPX Upload Failed" xml:space="preserve">
         <source>GPX Upload Failed</source>
-        <target state="translated">Prijenos na GPX neuspio</target>
+        <target state="translated">GPX prijenos neuspio</target>
         <note/>
       </trans-unit>
       <trans-unit id="Geometry" xml:space="preserve">
@@ -1756,7 +1758,7 @@ Greška: %@</target>
       </trans-unit>
       <trans-unit id="Joining would invalidate a Turn Restriction the way belongs to" xml:space="preserve">
         <source>Joining would invalidate a Turn Restriction the way belongs to</source>
-        <target state="translated">Spajanje bi poništilo zabranu skretanja s puta kojemu pripada</target>
+        <target state="translated">Spajanje bi poništilo ograničenje skretanja s puta kojemu pripada</target>
         <note/>
       </trans-unit>
       <trans-unit id="Keys" xml:space="preserve">
@@ -1953,22 +1955,22 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="No Left Turn restriction" xml:space="preserve">
         <source>No Left Turn restriction</source>
-        <target state="translated">Nema zabrane skretanja ulijevo</target>
+        <target state="translated">Nema ograničenja skretanja ulijevo</target>
         <note/>
       </trans-unit>
       <trans-unit id="No Right Turn restriction" xml:space="preserve">
         <source>No Right Turn restriction</source>
-        <target state="translated">Nema zabrane skretanja udesno</target>
+        <target state="translated">Nema ograničenja skretanja udesno</target>
         <note/>
       </trans-unit>
       <trans-unit id="No Straight On restriction" xml:space="preserve">
         <source>No Straight On restriction</source>
-        <target state="translated">Nema zabrane kretanja ravno</target>
+        <target state="translated">Nema ograničenja kretanja ravno</target>
         <note/>
       </trans-unit>
       <trans-unit id="No U-Turn restriction" xml:space="preserve">
         <source>No U-Turn restriction</source>
-        <target state="translated">Nema zabrane polukružnog okretanja</target>
+        <target state="translated">Nema ograničenja polukružnog okretanja</target>
         <note/>
       </trans-unit>
       <trans-unit id="No active track" xml:space="preserve">
@@ -2048,17 +2050,17 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Only Left Turn restriction" xml:space="preserve">
         <source>Only Left Turn restriction</source>
-        <target state="translated">Samo zabrana skretanja ulijevo</target>
+        <target state="translated">Ograničenje samo za skretanje ulijevo</target>
         <note/>
       </trans-unit>
       <trans-unit id="Only Right Turn restriction" xml:space="preserve">
         <source>Only Right Turn restriction</source>
-        <target state="translated">Samo zabrana skretanja udesno</target>
+        <target state="translated">Ograničenje samo za skretanje udesno</target>
         <note/>
       </trans-unit>
       <trans-unit id="Only Straight On restriction" xml:space="preserve">
         <source>Only Straight On restriction</source>
-        <target state="translated">Samo zabrana kretanja ravno</target>
+        <target state="translated">Ograničenje samo za kretanja ravno</target>
         <note/>
       </trans-unit>
       <trans-unit id="Only multipolygon relations are supported" xml:space="preserve">
@@ -2093,37 +2095,37 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Pasting %@ characters, maximum tag length is 255" xml:space="preserve">
         <source>Pasting %@ characters, maximum tag length is 255</source>
-        <target state="translated">Umetanje znakova %@, maksimalna duljina oznake je 255</target>
+        <target state="translated">Umetanje %@ znakova, maksimalni broj znakova za oznaku je 255</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.few" xml:space="preserve">
         <source>Pasting %ld characters, maximum tag length is 255</source>
-        <target state="new">Pasting %ld characters, maximum tag length is 255</target>
+        <target state="translated">Umetanje %@ znaka, maksimalni broj znakova za oznaku je 255</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.one" xml:space="preserve">
         <source>Pasting %ld character, maximum tag length is 255</source>
-        <target state="new">Pasting %ld character, maximum tag length is 255</target>
+        <target state="translated">Umetanje %@ znaka, maksimalni broj znakova za oznaku je 255</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.other" xml:space="preserve">
         <source>Pasting %ld characters, maximum tag length is 255</source>
-        <target state="new">Pasting %ld characters, maximum tag length is 255</target>
+        <target state="translated">Umetanje %@ znakova, maksimalni broj znakova za oznaku je 255</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.few" xml:space="preserve">
         <source>Pasting %ld tags</source>
-        <target state="new">Pasting %ld tags</target>
+        <target state="translated">Umetanje %ld oznaka</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.one" xml:space="preserve">
         <source>Pasting %ld tag</source>
-        <target state="needs-review-l10n">Umetanje %ld oznake(a)</target>
+        <target state="translated">Umetanje %ld oznake</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.other" xml:space="preserve">
         <source>Pasting %ld tags</source>
-        <target state="needs-review-l10n">Umetanje %ld oznake(a)</target>
+        <target state="translated">Umetanje %ld oznaka</target>
         <note/>
       </trans-unit>
       <trans-unit id="Perform Action" xml:space="preserve">
@@ -2229,12 +2231,12 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Restriction: %@" xml:space="preserve">
         <source>Restriction: %@</source>
-        <target state="translated">Zabrana: %@</target>
+        <target state="translated">Ograničenje: %@</target>
         <note/>
       </trans-unit>
       <trans-unit id="Results for %@ (%@)" xml:space="preserve">
         <source>Results for %@ (%@)</source>
-        <target state="translated">Rezultati za %1$@ (%2$@)</target>
+        <target state="translated">Rezultati za %@ (%@)</target>
         <note>country name,2-character country code</note>
       </trans-unit>
       <trans-unit id="Retry" xml:space="preserve">
@@ -2410,7 +2412,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="The turn contains an unrecognized turn restriction style. Proceeding will destroy it." xml:space="preserve">
         <source>The turn contains an unrecognized turn restriction style. Proceeding will destroy it.</source>
-        <target state="translated">Skretanje sadrži neprepoznatu vrstu zabrane skretanja. Nastavljanjem će se uništiti.</target>
+        <target state="translated">Skretanje sadrži neprepoznatu vrstu ograničenje skretanja. Nastavljanjem će se uništiti.</target>
         <note/>
       </trans-unit>
       <trans-unit id="The way belongs to a relation that is not fully downloaded" xml:space="preserve">
@@ -2440,7 +2442,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="This app does not yet support editing turn restrictions without a node as the 'via' member" xml:space="preserve">
         <source>This app does not yet support editing turn restrictions without a node as the 'via' member</source>
-        <target state="translated">Ovaj program još ne podržava uređivanje zabrane skretanja bez čvora kao člana „preko”</target>
+        <target state="translated">Ovaj program još ne podržava uređivanje ograničenja skretanja bez čvora kao člana „preko”</target>
         <note/>
       </trans-unit>
       <trans-unit id="This device is not able to provide heading data." xml:space="preserve">
@@ -2489,14 +2491,14 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Turn Restrictions" xml:space="preserve">
         <source>Turn Restrictions</source>
-        <target state="translated">Zabrane skretanja</target>
+        <target state="translated">Ograničenja skretanja</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.&#10;&#10;Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route." xml:space="preserve">
         <source>Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.
 
 Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route.</source>
-        <target state="translated">Zabrane skretanja navode ceste, na koje možeš skrenuti prilikom ulaska u raskrižje iz zadanog smjera.
+        <target state="translated">Ograničenja skretanja navode ceste, na koje možeš skrenuti prilikom ulaska u raskrižje iz zadanog smjera.
 
 Odaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu uključivanje/isključivanje ceste do odredišta kao dozvoljene rute.</target>
         <note/>
@@ -2518,7 +2520,7 @@ Odaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu 
       </trans-unit>
       <trans-unit id="UID" xml:space="preserve">
         <source>UID</source>
-        <target state="translated">UID</target>
+        <target state="translated">Jedinstveni identifikator (UID)</target>
         <note>OSM numeric user ID</note>
       </trans-unit>
       <trans-unit id="Unable to upload changes" xml:space="preserve">
@@ -2543,7 +2545,7 @@ Odaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu 
       </trans-unit>
       <trans-unit id="Unsupported turn restriction type" xml:space="preserve">
         <source>Unsupported turn restriction type</source>
-        <target state="translated">Nepodržana vrsta zabrane skretanja</target>
+        <target state="translated">Nepodržana vrsta ograničenja skretanja</target>
         <note/>
       </trans-unit>
       <trans-unit id="Update" xml:space="preserve">
@@ -2663,16 +2665,16 @@ Ti su članovi označeni s „&gt;”.</target>
         <source>You've uploaded %ld changesets with this version of Go Map!!
 
 Rate this app?</source>
-        <target state="new">You've uploaded %ld changesets with this version of Go Map!!
+        <target state="translated">S ovom Go Map verzijom prenio/prenijela si %ld skupa promjena!!
 
-Rate this app?</target>
+Ocijeniti ovu aplikaciju?</target>
         <note/>
       </trans-unit>
       <trans-unit id="You've uploaded %ld changesets with this version of Go Map!!&#10;&#10;Rate this app?|==|plural.one" xml:space="preserve">
         <source>You've uploaded %ld changeset with this version of Go Map!!
 
 Rate this app?</source>
-        <target state="needs-review-l10n">S ovom Go Map verzijom prenio/prenijela si %ld skupa promjena!!
+        <target state="translated">S ovom Go Map verzijom prenio/prenijela si %ld skup promjena!!
 
 Ocijeniti ovu aplikaciju?</target>
         <note/>
@@ -2681,7 +2683,7 @@ Ocijeniti ovu aplikaciju?</target>
         <source>You've uploaded %ld changesets with this version of Go Map!!
 
 Rate this app?</source>
-        <target state="translated">S ovom Go Map verzijom prenio/prenijela si %ld skupa promjena!!
+        <target state="translated">S ovom Go Map verzijom prenio/prenijela si %ld skupova promjena!!
 
 Ocijeniti ovu aplikaciju?</target>
         <note/>
@@ -2732,7 +2734,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
       </trans-unit>
       <trans-unit id="create turn restriction" xml:space="preserve">
         <source>create turn restriction</source>
-        <target state="translated">stvori zabranu skretanja</target>
+        <target state="translated">stvori ograničenje skretanja</target>
         <note/>
       </trans-unit>
       <trans-unit id="create way" xml:space="preserve">
@@ -2767,7 +2769,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
       </trans-unit>
       <trans-unit id="delete restriction" xml:space="preserve">
         <source>delete restriction</source>
-        <target state="translated">izbriši zabranu</target>
+        <target state="translated">izbriši ograničenje</target>
         <note/>
       </trans-unit>
       <trans-unit id="delete route" xml:space="preserve">
@@ -3284,7 +3286,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
       </trans-unit>
       <trans-unit id="sVp-1S-TjJ.placeholder" xml:space="preserve">
         <source>role</source>
-        <target state="translated">uloga</target>
+        <target state="translated">role</target>
         <note>Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ"; Note = "Do not translate";</note>
       </trans-unit>
       <trans-unit id="teB-9L-Nrf.text" xml:space="preserve">
