@@ -102,7 +102,7 @@
       </trans-unit>
       <trans-unit id="TcP-6i-B8H.text" xml:space="preserve">
         <source>Specify a name ("New York"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object ("way 51014987"):</source>
-        <target state="translated">Odredi ime („New York”), URL ili drugi tekst koji sadrži geografske koordinate ili referencu na OSM objekt („put 51014987”):</target>
+        <target state="translated">Odredi ime („Zagreb”), URL adresu ili neki drugi tekst koji sadrži geografske koordinate ili referencu na OSM objekt („put 51014987”):</target>
         <note>Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H";</note>
       </trans-unit>
       <trans-unit id="VNE-ee-a7u.text" xml:space="preserve">
@@ -157,7 +157,7 @@
       </trans-unit>
       <trans-unit id="xw9-Ro-Fai.placeholder" xml:space="preserve">
         <source>Niagara Falls</source>
-        <target state="translated">Slapovi Niagare</target>
+        <target state="translated">Plitvička jezera</target>
         <note>Class = "UISearchBar"; placeholder = "Niagara Falls"; ObjectID = "xw9-Ro-Fai";</note>
       </trans-unit>
       <trans-unit id="zrW-uc-hfQ.segmentTitles[0]" xml:space="preserve">
@@ -249,7 +249,7 @@
       </trans-unit>
       <trans-unit id="7ga-PZ-MfV.placeholder" xml:space="preserve">
         <source>-1..3,7</source>
-        <target state="translated">-1..3,7</target>
+        <target state="translated">−1 … 3,7</target>
         <note>Class = "UITextField"; placeholder = "-1..3,7"; ObjectID = "7ga-PZ-MfV";</note>
       </trans-unit>
       <trans-unit id="8HT-Bc-Q2z.title" xml:space="preserve">
@@ -417,7 +417,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.footerTitle" xml:space="preserve">
         <source>If specifying a WMS URL you must also provide the projection used</source>
-        <target state="translated">Ako odrešuješ WMS URL, moraš navesti i korištenu projekciju</target>
+        <target state="translated">Ako odrešuješ URL adresu WMS protokola, moraš navesti i korištenu projekciju</target>
         <note>Class = "UITableViewSection"; footerTitle = "If specifying a WMS URL you must also provide the projection used"; ObjectID = "Zn9-Sg-9fS";</note>
       </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.headerTitle" xml:space="preserve">
@@ -606,7 +606,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="swu-t3-p5w.text" xml:space="preserve">
         <source>URL</source>
-        <target state="translated">URL</target>
+        <target state="translated">URL adresa</target>
         <note>Class = "UILabel"; text = "URL"; ObjectID = "swu-t3-p5w";</note>
       </trans-unit>
       <trans-unit id="tS9-CP-pqu.title" xml:space="preserve">
@@ -671,12 +671,12 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.footerTitle" xml:space="preserve">
         <source>A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL</source>
-        <target state="translated">TMS URL s rezerviranim mjestima {x}, {y} i {z} ili WMS URL</target>
+        <target state="translated">URL adresa TMS protokola s rezerviranim mjestima {x}, {y} i {z} ili URL adresa WMS protokola</target>
         <note>Class = "UITableViewSection"; footerTitle = "A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL"; ObjectID = "zD6-m4-1PD";</note>
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.headerTitle" xml:space="preserve">
         <source>Template URL of the tile server</source>
-        <target state="translated">URL predloška od poslužitelja pločica</target>
+        <target state="translated">URL adresa predloška od servera s pločicama</target>
         <note>Class = "UITableViewSection"; headerTitle = "Template URL of the tile server"; ObjectID = "zD6-m4-1PD";</note>
       </trans-unit>
       <trans-unit id="zI2-YM-qbl.normalTitle" xml:space="preserve">
@@ -862,7 +862,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
         <source>%1$#@meters@, %2$#@nodes@</source>
-        <target state="needs-review-l10n">%1$#@meters@ m, broj čvorova: %2$#@nodes@</target>
+        <target state="translated">%1$#@meters@, %2$#@nodes@</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.meters.plural.few" xml:space="preserve">
@@ -1010,12 +1010,12 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@</source>
-        <target state="needs-review-l10n">%1$#@meters@ m, broj točaka: %2$#@points@</target>
+        <target state="translated">%1$#@meters@, %2$#@points@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@, %3$#@waypoints@</source>
-        <target state="needs-review-l10n">%1$#@meters@ m, broj točaka: %2$#@points@, broj putnih točaka: %3$#@waypoints@</target>
+        <target state="translated">%1$#@meters@, %2$#@points@, %3$#@waypoints@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.few" xml:space="preserve">
@@ -1050,17 +1050,17 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.few" xml:space="preserve">
         <source>%ld waypoints</source>
-        <target state="needs-review-l10n">%3$ld</target>
+        <target state="translated">%ld međutočke</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.one" xml:space="preserve">
         <source>%ld waypoint</source>
-        <target state="needs-review-l10n">%3$ld</target>
+        <target state="translated">%ld međutočka</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.other" xml:space="preserve">
         <source>%ld waypoints</source>
-        <target state="needs-review-l10n">%3$ld</target>
+        <target state="translated">%ld međutočaka</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.few" xml:space="preserve">
@@ -1276,7 +1276,7 @@ Plural number of days</note>
       </trans-unit>
       <trans-unit id="Add way to multipolygon?" xml:space="preserve">
         <source>Add way to multipolygon?</source>
-        <target state="translated">Dodati put višedjelnom mnogokutu?</target>
+        <target state="translated">Dodati put mnogokutu?</target>
         <note/>
       </trans-unit>
       <trans-unit id="Adding members:" xml:space="preserve">
@@ -1391,7 +1391,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Can only add ways to multipolygons" xml:space="preserve">
         <source>Can only add ways to multipolygons</source>
-        <target state="translated">Putovi se mogu dodati samo višedjelnim mnogokutima</target>
+        <target state="translated">Putovi se mogu dodati samo mnogokutima</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can't delete node that is part of a relation" xml:space="preserve">
@@ -1401,7 +1401,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Can't delete relation that is not a multipolygon" xml:space="preserve">
         <source>Can't delete relation that is not a multipolygon</source>
-        <target state="translated">Nije moguće izbrisati vezu koja nije višedjelni mnogokut</target>
+        <target state="translated">Nije moguće izbrisati vezu koja nije mnogokut</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can't delete way that is part of a Route or similar relation" xml:space="preserve">
@@ -1476,7 +1476,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Clear GPS Overlay Tiles" xml:space="preserve">
         <source>Clear GPS Overlay Tiles</source>
-        <target state="translated">Izbriši GPS pločice slojeva</target>
+        <target state="translated">Izbriši pločice GPS sloja</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear GPX Tracks" xml:space="preserve">
@@ -1486,7 +1486,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Clear Locator Overlay Tiles" xml:space="preserve">
         <source>Clear Locator Overlay Tiles</source>
-        <target state="translated">Izbriši lokatorske pločice slojeva</target>
+        <target state="translated">Izbriši pločice lokatorskog sloja</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear Mapnik Tiles" xml:space="preserve">
@@ -1661,14 +1661,14 @@ Object geometry: a closed way or multipolygon)</note>
         <source>Ensure Location Services is enabled and you have granted this application access.
 
 Error: %@</source>
-        <target state="translated">Osiguraj, da je usluga određivanja mjesta aktivirana i da program ima prava pristupa.
+        <target state="translated">Osiguraj da je prikaz uređivača vidljiv i da prikazuje objekte u lokalnom području
 
 Greška: %@</target>
         <note/>
       </trans-unit>
       <trans-unit id="Ensure the editor view is visible and displays objects in the local area" xml:space="preserve">
         <source>Ensure the editor view is visible and displays objects in the local area</source>
-        <target state="translated">Osiguraj, da je prikaz uređivača vidljiv i da prikazuje objekte u lokalnom području</target>
+        <target state="translated">Osiguraj da je prikaz uređivača vidljiv i da prikazuje objekte u lokalnom području</target>
         <note/>
       </trans-unit>
       <trans-unit id="Error" xml:space="preserve">
@@ -1768,7 +1768,7 @@ Greška: %@</target>
       </trans-unit>
       <trans-unit id="Invalid URL" xml:space="preserve">
         <source>Invalid URL</source>
-        <target state="translated">Nevažeći URL</target>
+        <target state="translated">Nevažeća URL adresa</target>
         <note/>
       </trans-unit>
       <trans-unit id="Join" xml:space="preserve">
@@ -1873,7 +1873,7 @@ Greška: %@</target>
       </trans-unit>
       <trans-unit id="Member of multipolygon relation" xml:space="preserve">
         <source>Member of multipolygon relation</source>
-        <target state="translated">Član veze višedjelnog mnogokuta</target>
+        <target state="translated">Član veze mnogokuta</target>
         <note/>
       </trans-unit>
       <trans-unit id="Members" xml:space="preserve">
@@ -1939,7 +1939,7 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       </trans-unit>
       <trans-unit id="Multipolygon" xml:space="preserve">
         <source>Multipolygon</source>
-        <target state="translated">Višedjelni mnogokut</target>
+        <target state="translated">Mnogokut</target>
         <note/>
       </trans-unit>
       <trans-unit id="Name" xml:space="preserve">
@@ -2085,12 +2085,12 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Only multipolygon relations are supported" xml:space="preserve">
         <source>Only multipolygon relations are supported</source>
-        <target state="translated">Podržane su samo veze višedjelnih mnogokuta</target>
+        <target state="translated">Podržane su samo veze mnogokuta</target>
         <note/>
       </trans-unit>
       <trans-unit id="Only ways/multipolygons can be rotated" xml:space="preserve">
         <source>Only ways/multipolygons can be rotated</source>
-        <target state="translated">Okretati se mogu samo putovi/višedjelni mnogokuti</target>
+        <target state="translated">Okretati se mogu samo putovi/mnogokuti</target>
         <note/>
       </trans-unit>
       <trans-unit id="Open Settings" xml:space="preserve">
@@ -2100,7 +2100,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Open URL" xml:space="preserve">
         <source>Open URL</source>
-        <target state="translated">Otvori URL</target>
+        <target state="translated">Otvori URL adresu</target>
         <note/>
       </trans-unit>
       <trans-unit id="Paste" xml:space="preserve">
@@ -2513,9 +2513,9 @@ Never delete old tracks</note>
         <source>Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.
 
 Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route.</source>
-        <target state="translated">Ograničenja skretanja navode ceste, na koje možeš skrenuti prilikom ulaska u raskrižje iz zadanog smjera.
+        <target state="translated">Ograničenja skretanja određuju ceste na koje možeš skrenuti prilikom ulaska u raskrižje iz zadanog smjera.
 
-Odaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu uključivanje/isključivanje ceste do odredišta kao dozvoljene rute.</target>
+Odaberi autocestu iz koje se približavaš raskrižju. Zatim dodirni strelicu za uključivanje/isključivanje za određivanje je li cesta do odredišta dozvoljena ruta.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Type" xml:space="preserve">
@@ -2668,7 +2668,7 @@ Ti su članovi označeni s „&gt;”.</target>
       </trans-unit>
       <trans-unit id="You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." xml:space="preserve">
         <source>You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost.</source>
-        <target state="translated">Imaš promjene koje još nisu prenesene na poslužitelj. Ako izbrišeš predmemoriju, izgubit ćeš promjene.</target>
+        <target state="translated">Izradio/la si promjene koje još nisu prenesene na server. Brisanjem predmemorije ćeš izgubiti te promjene.</target>
         <note/>
       </trans-unit>
       <trans-unit id="You must save or discard changes to the current object before editing its associated relation" xml:space="preserve">
@@ -2707,9 +2707,9 @@ Ocijeniti ovu aplikaciju?</target>
         <source>Your OSM data cache is getting large, which may lead to slow startup and shutdown times.
 
 You may want to clear the cache (under Display settings) to improve performance.</source>
-        <target state="translated">Tvoja predmemorija podataka OSM-a raste, što može usporiti pokretanje i isključivanje.
+        <target state="translated">Tvoja predmemorija OSM podataka raste, što može usporiti vremena pokretanja i isključivanja.
 
-Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).</target>
+Za poboljšanje performance, izbriši predmemoriju (u postavci „Prikaz”).</target>
         <note/>
       </trans-unit>
       <trans-unit id="Zoom to Edit" xml:space="preserve">
@@ -2729,7 +2729,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
       </trans-unit>
       <trans-unit id="added to multipolygon relation" xml:space="preserve">
         <source>added to multipolygon relation</source>
-        <target state="translated">dodano u vezu višedjelnog mnogokuta</target>
+        <target state="translated">dodano vezi mnogokuta</target>
         <note/>
       </trans-unit>
       <trans-unit id="computing size..." xml:space="preserve">
@@ -2759,7 +2759,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
       </trans-unit>
       <trans-unit id="delete multipolygon" xml:space="preserve">
         <source>delete multipolygon</source>
-        <target state="translated">izbriši višedjelni mnogokut</target>
+        <target state="translated">izbriši mnogokut</target>
         <note/>
       </trans-unit>
       <trans-unit id="delete node" xml:space="preserve">
@@ -2930,7 +2930,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
       </trans-unit>
       <trans-unit id="The URL content isn't recognized." xml:space="preserve">
         <source>The URL content isn't recognized.</source>
-        <target state="translated">Sadržaj URL-a nije prepoznat.</target>
+        <target state="translated">Sadržaj URL adrese nije prepoznat.</target>
         <note>Error message when sharing a URL to Go Map!!</note>
       </trans-unit>
       <trans-unit id="Unfortunately the selected image does not contain location information." xml:space="preserve">
@@ -3383,14 +3383,12 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.footerTitle" xml:space="preserve">
         <source>Select a server if you would like to edit data located on an alternate OSM server.</source>
-        <target state="needs-review-l10n">Odredi računalo, ako želiš uređivati podatke koji se nalaze na alternativnom OSM serveru. Standardno računalo je api.openstreetmap.org.
-
-Također možeš upisati "dev" za razvojni server (za testiranje), "ohm" za OpenHistoricalMap server ili ostavi prazno za zadani server.</target>
+        <target state="translated">Odaberi server ako želiš uređivati podatke koji se nalaze na alternativnom OSM serveru.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Select a server if you would like to edit data located on an alternate OSM server."; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.headerTitle" xml:space="preserve">
         <source>OpenStreetMap Server</source>
-        <target state="translated">OpenStreetMap poslužitelj</target>
+        <target state="translated">OpenStreetMap server</target>
         <note>Class = "UITableViewSection"; headerTitle = "OpenStreetMap Server"; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6Lj-wh-z9f.text" xml:space="preserve">
