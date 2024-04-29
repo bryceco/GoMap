@@ -3182,8 +3182,8 @@
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%#@meters@ m, broj čvorova: %#@nodes@"
+            "state" : "translated",
+            "value" : "%#@meters@, %#@nodes@"
           },
           "substitutions" : {
             "meters" : {
@@ -4562,14 +4562,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg MB"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg MB"
                     }
                   }
                 }
@@ -7580,7 +7580,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$#@meters@, %2$#@nodes@"
+            "value" : "%1$#@metros@, %2$#@nudos@"
           },
           "substitutions" : {
             "meters" : {
@@ -9312,8 +9312,8 @@
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%#@meters@ m, broj točaka: %#@points@"
+            "state" : "translated",
+            "value" : "%#@meters@, %#@points@"
           },
           "substitutions" : {
             "meters" : {
@@ -11093,8 +11093,8 @@
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%#@meters@ m, broj točaka: %#@points@, broj putnih točaka: %#@waypoints@"
+            "state" : "translated",
+            "value" : "%#@meters@, %#@points@, %#@waypoints@"
           },
           "substitutions" : {
             "meters" : {
@@ -11156,20 +11156,20 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%ld međutočke"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%ld međutočka"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%ld međutočaka"
                     }
                   }
                 }
@@ -17306,7 +17306,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dodati put višedjelnom mnogokutu?"
+            "value" : "Dodati put mnogokutu?"
           }
         },
         "id" : {
@@ -17519,7 +17519,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "dodano u vezu višedjelnog mnogokuta"
+            "value" : "dodano vezi mnogokuta"
           }
         },
         "id" : {
@@ -20133,7 +20133,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Putovi se mogu dodati samo višedjelnim mnogokutima"
+            "value" : "Putovi se mogu dodati samo mnogokutima"
           }
         },
         "id" : {
@@ -20381,7 +20381,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nije moguće izbrisati vezu koja nije višedjelni mnogokut"
+            "value" : "Nije moguće izbrisati vezu koja nije mnogokut"
           }
         },
         "id" : {
@@ -22017,7 +22017,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Izbriši GPS pločice slojeva"
+            "value" : "Izbriši pločice GPS sloja"
           }
         },
         "ja" : {
@@ -22255,7 +22255,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Izbriši lokatorske pločice slojeva"
+            "value" : "Izbriši pločice lokatorskog sloja"
           }
         },
         "ja" : {
@@ -25385,7 +25385,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "izbriši višedjelni mnogokut"
+            "value" : "izbriši mnogokut"
           }
         },
         "id" : {
@@ -28124,7 +28124,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Osiguraj, da je usluga određivanja mjesta aktivirana i da program ima prava pristupa.\n\nGreška: %@"
+            "value" : "Osiguraj da je prikaz uređivača vidljiv i da prikazuje objekte u lokalnom području\n\nGreška: %@"
           }
         },
         "ja" : {
@@ -28242,7 +28242,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Osiguraj, da je prikaz uređivača vidljiv i da prikazuje objekte u lokalnom području"
+            "value" : "Osiguraj da je prikaz uređivača vidljiv i da prikazuje objekte u lokalnom području"
           }
         },
         "ja" : {
@@ -30278,7 +30278,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nevažeći URL"
+            "value" : "Nevažeća URL adresa"
           }
         },
         "id" : {
@@ -32781,7 +32781,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Član veze višedjelnog mnogokuta"
+            "value" : "Član veze mnogokuta"
           }
         },
         "id" : {
@@ -34644,7 +34644,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Višedjelni mnogokut"
+            "value" : "Mnogokut"
           }
         },
         "id" : {
@@ -37963,7 +37963,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Podržane su samo veze višedjelnih mnogokuta"
+            "value" : "Podržane su samo veze mnogokuta"
           }
         },
         "id" : {
@@ -38305,7 +38305,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Okretati se mogu samo putovi/višedjelni mnogokuti"
+            "value" : "Okretati se mogu samo putovi/mnogokuti"
           }
         },
         "id" : {
@@ -38548,7 +38548,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Otvori URL"
+            "value" : "Otvori URL adresu"
           }
         },
         "id" : {
@@ -48516,7 +48516,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ograničenja skretanja navode ceste, na koje možeš skrenuti prilikom ulaska u raskrižje iz zadanog smjera.\n\nOdaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu uključivanje/isključivanje ceste do odredišta kao dozvoljene rute."
+            "value" : "Ograničenja skretanja određuju ceste na koje možeš skrenuti prilikom ulaska u raskrižje iz zadanog smjera.\n\nOdaberi autocestu iz koje se približavaš raskrižju. Zatim dodirni strelicu za uključivanje/isključivanje za određivanje je li cesta do odredišta dozvoljena ruta."
           }
         },
         "ja" : {
@@ -52064,7 +52064,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Imaš promjene koje još nisu prenesene na poslužitelj. Ako izbrišeš predmemoriju, izgubit ćeš promjene."
+            "value" : "Izradio/la si promjene koje još nisu prenesene na server. Brisanjem predmemorije ćeš izgubiti te promjene."
           }
         },
         "id" : {
@@ -52850,7 +52850,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tvoja predmemorija podataka OSM-a raste, što može usporiti pokretanje i isključivanje.\n\nZa poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”)."
+            "value" : "Tvoja predmemorija OSM podataka raste, što može usporiti vremena pokretanja i isključivanja.\n\nZa poboljšanje performance, izbriši predmemoriju (u postavci „Prikaz”)."
           }
         },
         "ja" : {

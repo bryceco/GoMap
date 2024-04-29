@@ -1088,7 +1088,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "-1..3,7"
+            "value" : "−1 … 3,7"
           }
         },
         "id" : {
@@ -9086,7 +9086,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "URL"
+            "value" : "URL adresa"
           }
         },
         "id" : {
@@ -11444,7 +11444,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "TMS URL s rezerviranim mjestima {x}, {y} i {z} ili WMS URL"
+            "value" : "URL adresa TMS protokola s rezerviranim mjestima {x}, {y} i {z} ili URL adresa WMS protokola"
           }
         },
         "it" : {
@@ -11570,7 +11570,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "URL predloška od poslužitelja pločica"
+            "value" : "URL adresa predloška od servera s pločicama"
           }
         },
         "id" : {
@@ -11858,7 +11858,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ako odrešuješ WMS URL, moraš navesti i korištenu projekciju"
+            "value" : "Ako odrešuješ URL adresu WMS protokola, moraš navesti i korištenu projekciju"
           }
         },
         "it" : {

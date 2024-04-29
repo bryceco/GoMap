@@ -660,7 +660,7 @@ Tühjenda Mapnik või Overlay paanide vahemälu, et laadida alla viimased paanid
       <trans-unit id="zI2-YM-qbl.normalTitle" xml:space="preserve">
         <source>Add New</source>
         <target state="translated">Lisa uus</target>
-        <note>Class = "UIButton"; normalTitle = "Add New"; ObjectID = "zI2-YM-qbl";</note>
+        <note>Class = "UIButton"; normalTitle = "Add New"; ObjectID = "zI2-YM-qbl"; Note = "Add new aerial imagery provider";</note>
       </trans-unit>
     </body>
   </file>
@@ -874,14 +874,12 @@ Tühjenda Mapnik või Overlay paanide vahemälu, et laadida alla viimased paanid
       <trans-unit id="%ld Days|==|plural.one" xml:space="preserve">
         <source>%ld Day</source>
         <target state="needs-review-l10n">%ld päeva</target>
-        <note>One or more days
-Plural number of days</note>
+        <note>One or more days</note>
       </trans-unit>
       <trans-unit id="%ld Days|==|plural.other" xml:space="preserve">
         <source>%ld Days</source>
         <target state="translated">%ld päeva</target>
-        <note>One or more days
-Plural number of days</note>
+        <note>One or more days</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.one" xml:space="preserve">
         <source>%ld edit, last active %@</source>
@@ -2801,7 +2799,7 @@ Tulemuslikkuse parandamiseks võiksid vahemälu tühjendada (ekraani seadete alt
       <trans-unit id="Bnh-U0-D7i.text" xml:space="preserve">
         <source>Add New</source>
         <target state="translated">Lisa uus</target>
-        <note>Class = "UILabel"; text = "Add New"; ObjectID = "Bnh-U0-D7i";</note>
+        <note>Class = "UILabel"; text = "Add New"; ObjectID = "Bnh-U0-D7i"; Note = "Add user-defined tagging preset";</note>
       </trans-unit>
       <trans-unit id="CXe-gQ-Zda.text" xml:space="preserve">
         <source>Value 8</source>

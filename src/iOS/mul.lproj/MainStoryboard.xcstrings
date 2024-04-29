@@ -3326,7 +3326,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Odredi ime („New York”), URL ili drugi tekst koji sadrži geografske koordinate ili referencu na OSM objekt („put 51014987”):"
+            "value" : "Odredi ime („Zagreb”), URL adresu ili neki drugi tekst koji sadrži geografske koordinate ili referencu na OSM objekt („put 51014987”):"
           }
         },
         "id" : {
@@ -3722,7 +3722,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Slapovi Niagare"
+            "value" : "Plitvička jezera"
           }
         },
         "id" : {
