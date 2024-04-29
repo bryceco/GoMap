@@ -1772,7 +1772,7 @@
       }
     },
     "Bnh-U0-D7i.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Add New\"; ObjectID = \"Bnh-U0-D7i\";",
+      "comment" : "Class = \"UILabel\"; text = \"Add New\"; ObjectID = \"Bnh-U0-D7i\"; Note = \"Add user-defined tagging preset\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {

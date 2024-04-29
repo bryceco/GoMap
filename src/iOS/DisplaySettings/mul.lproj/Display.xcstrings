@@ -11654,7 +11654,7 @@
       }
     },
     "zI2-YM-qbl.normalTitle" : {
-      "comment" : "Class = \"UIButton\"; normalTitle = \"Add New\"; ObjectID = \"zI2-YM-qbl\";",
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Add New\"; ObjectID = \"zI2-YM-qbl\"; Note = \"Add new aerial imagery provider\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {

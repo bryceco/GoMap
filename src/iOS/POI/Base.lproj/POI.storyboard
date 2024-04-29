@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -182,8 +182,8 @@
                                                 <constraint firstAttribute="width" constant="7" id="qGS-Df-AdY"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" text="Inscription" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wcg-RB-I2a">
-                                            <rect key="frame" x="15" y="10" width="155" height="24"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" text="Inscription" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wcg-RB-I2a">
+                                            <rect key="frame" x="15" y="10" width="180.33333333333334" height="24"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="155" id="aTB-ii-0OW"/>
                                             </constraints>
@@ -194,8 +194,8 @@
                                                 <fragment content="Placeholder - Don't translate"/>
                                             </attributedString>
                                         </label>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" text="Lorem ipsum dolor " textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hAy-aU-g8L">
-                                            <rect key="frame" x="176" y="6" width="202.5" height="32"/>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Lorem ipsum dolor " textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hAy-aU-g8L">
+                                            <rect key="frame" x="201.33333333333331" y="6" width="156.33333333333331" height="32"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <color key="textColor" systemColor="labelColor"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -307,9 +307,11 @@
                                         </button>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="XCc-6y-qYt" firstAttribute="leading" secondItem="C3T-nH-Ohr" secondAttribute="leading" constant="20" id="B5O-vQ-1DJ"/>
                                         <constraint firstItem="XCc-6y-qYt" firstAttribute="centerY" secondItem="C3T-nH-Ohr" secondAttribute="centerY" id="Cz4-DH-7rR"/>
                                         <constraint firstItem="nil-45-Wvp" firstAttribute="leading" secondItem="sHA-cr-GLb" secondAttribute="trailing" constant="4" id="DxG-mK-ark"/>
                                         <constraint firstItem="B9b-Kf-bWy" firstAttribute="leading" secondItem="C3T-nH-Ohr" secondAttribute="leading" id="PSk-3d-G74"/>
+                                        <constraint firstItem="sHA-cr-GLb" firstAttribute="centerY" secondItem="C3T-nH-Ohr" secondAttribute="centerY" id="RKx-T5-lDz"/>
                                         <constraint firstItem="nil-45-Wvp" firstAttribute="centerY" secondItem="C3T-nH-Ohr" secondAttribute="centerY" id="Vgc-4W-CUE"/>
                                         <constraint firstAttribute="trailing" secondItem="nil-45-Wvp" secondAttribute="trailing" constant="4" id="r11-D7-9BS"/>
                                         <constraint firstAttribute="bottom" secondItem="B9b-Kf-bWy" secondAttribute="bottom" constant="0.5" id="wWY-yJ-wsh"/>
@@ -317,8 +319,6 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <constraints>
-                                    <constraint firstItem="XCc-6y-qYt" firstAttribute="leading" secondItem="C3T-nH-Ohr" secondAttribute="leading" constant="20" id="B5O-vQ-1DJ"/>
-                                    <constraint firstItem="sHA-cr-GLb" firstAttribute="centerY" secondItem="C3T-nH-Ohr" secondAttribute="centerY" id="RKx-T5-lDz"/>
                                     <constraint firstItem="sHA-cr-GLb" firstAttribute="leading" secondItem="XCc-6y-qYt" secondAttribute="trailing" constant="13" id="dz3-WX-pRo"/>
                                 </constraints>
                                 <connections>
@@ -385,7 +385,7 @@
                                         <stackView opaque="NO" contentMode="center" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="DcA-k0-mZa">
                                             <rect key="frame" x="90" y="15.333333333333336" width="43.333333333333343" height="36"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gv7-b8-wUw" userLabel="Title">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gv7-b8-wUw" userLabel="Title">
                                                     <rect key="frame" x="0.0" y="0.0" width="43.333333333333336" height="20.333333333333332"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
@@ -394,7 +394,7 @@
                                                         <fragment content="Do not translate"/>
                                                     </attributedString>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="daQ-tl-pKh" userLabel="Details">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="daQ-tl-pKh" userLabel="Details">
                                                     <rect key="frame" x="0.0" y="20.333333333333329" width="43.333333333333336" height="15.666666666666664"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
@@ -610,6 +610,7 @@
                                         </button>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="X1y-nK-nVJ" firstAttribute="leading" secondItem="sNa-Uq-eZb" secondAttribute="leading" constant="20" id="8i3-2v-jVU"/>
                                         <constraint firstItem="YYq-JT-oMO" firstAttribute="leading" secondItem="sNa-Uq-eZb" secondAttribute="leading" id="95m-2D-dqB"/>
                                         <constraint firstAttribute="trailing" secondItem="zpj-gL-2Nt" secondAttribute="trailing" constant="4" id="Syd-9i-c0E"/>
                                         <constraint firstItem="zpj-gL-2Nt" firstAttribute="leading" secondItem="cP3-lR-lzM" secondAttribute="trailing" constant="4" id="Zbs-Gm-K7N"/>
@@ -617,11 +618,10 @@
                                         <constraint firstItem="X1y-nK-nVJ" firstAttribute="centerY" secondItem="sNa-Uq-eZb" secondAttribute="centerY" id="hXa-f3-jYw"/>
                                         <constraint firstItem="YYq-JT-oMO" firstAttribute="top" secondItem="sNa-Uq-eZb" secondAttribute="top" constant="-0.5" id="kZG-6G-mk2"/>
                                         <constraint firstAttribute="bottom" secondItem="YYq-JT-oMO" secondAttribute="bottom" constant="0.5" id="qbP-gm-0s3"/>
+                                        <constraint firstItem="cP3-lR-lzM" firstAttribute="centerY" secondItem="sNa-Uq-eZb" secondAttribute="centerY" id="vfj-SJ-cEY"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <constraints>
-                                    <constraint firstItem="X1y-nK-nVJ" firstAttribute="leading" secondItem="sNa-Uq-eZb" secondAttribute="leading" constant="20" id="8i3-2v-jVU"/>
-                                    <constraint firstItem="cP3-lR-lzM" firstAttribute="centerY" secondItem="sNa-Uq-eZb" secondAttribute="centerY" id="vfj-SJ-cEY"/>
                                     <constraint firstItem="cP3-lR-lzM" firstAttribute="leading" secondItem="X1y-nK-nVJ" secondAttribute="trailing" constant="13" id="vqt-5E-Wez"/>
                                 </constraints>
                                 <connections>
@@ -664,14 +664,16 @@
                                             </connections>
                                         </textField>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Urd-9O-Mte" firstAttribute="leading" secondItem="7MN-vj-ZSm" secondAttribute="leading" constant="20" id="VKy-a8-Ffc"/>
+                                        <constraint firstItem="Urd-9O-Mte" firstAttribute="top" secondItem="7MN-vj-ZSm" secondAttribute="top" constant="8" id="dzG-vN-e20"/>
+                                        <constraint firstAttribute="trailing" secondItem="0zS-QM-zwQ" secondAttribute="trailing" constant="20" id="rSO-2I-AeB"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <constraints>
-                                    <constraint firstItem="Urd-9O-Mte" firstAttribute="leading" secondItem="7MN-vj-ZSm" secondAttribute="leading" constant="20" id="VKy-a8-Ffc"/>
                                     <constraint firstItem="Urd-9O-Mte" firstAttribute="top" secondItem="0zS-QM-zwQ" secondAttribute="top" id="cwE-gS-49j"/>
-                                    <constraint firstItem="Urd-9O-Mte" firstAttribute="top" secondItem="7MN-vj-ZSm" secondAttribute="top" constant="8" id="dzG-vN-e20"/>
                                     <constraint firstItem="0zS-QM-zwQ" firstAttribute="leading" secondItem="Urd-9O-Mte" secondAttribute="trailing" constant="13" id="hwn-3D-NLa"/>
                                     <constraint firstItem="0zS-QM-zwQ" firstAttribute="bottom" secondItem="Urd-9O-Mte" secondAttribute="bottom" id="jji-pl-Q6N"/>
-                                    <constraint firstItem="7MN-vj-ZSm" firstAttribute="trailing" secondItem="0zS-QM-zwQ" secondAttribute="trailing" constant="20" id="rSO-2I-AeB"/>
                                     <constraint firstItem="Urd-9O-Mte" firstAttribute="baseline" secondItem="0zS-QM-zwQ" secondAttribute="baseline" id="wK2-4e-E9V"/>
                                 </constraints>
                                 <connections>
@@ -721,12 +723,14 @@
                                             </connections>
                                         </textField>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="aCs-vS-YXj" firstAttribute="centerY" secondItem="41v-lC-obU" secondAttribute="centerY" id="Lnm-Af-qlw"/>
+                                        <constraint firstItem="sVp-1S-TjJ" firstAttribute="leading" secondItem="41v-lC-obU" secondAttribute="leading" constant="20" id="R7g-TT-cvY"/>
+                                        <constraint firstAttribute="trailing" secondItem="aCs-vS-YXj" secondAttribute="trailing" constant="20" id="bBc-pU-IjS"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <constraints>
-                                    <constraint firstItem="aCs-vS-YXj" firstAttribute="centerY" secondItem="41v-lC-obU" secondAttribute="centerY" id="Lnm-Af-qlw"/>
-                                    <constraint firstItem="sVp-1S-TjJ" firstAttribute="leading" secondItem="41v-lC-obU" secondAttribute="leading" constant="20" id="R7g-TT-cvY"/>
                                     <constraint firstItem="sVp-1S-TjJ" firstAttribute="bottom" secondItem="aCs-vS-YXj" secondAttribute="bottom" id="Y8G-WF-Myn"/>
-                                    <constraint firstItem="41v-lC-obU" firstAttribute="trailing" secondItem="aCs-vS-YXj" secondAttribute="trailing" constant="20" id="bBc-pU-IjS"/>
                                     <constraint firstItem="sVp-1S-TjJ" firstAttribute="top" secondItem="aCs-vS-YXj" secondAttribute="top" id="kHG-Rw-qpN"/>
                                     <constraint firstItem="aCs-vS-YXj" firstAttribute="leading" secondItem="sVp-1S-TjJ" secondAttribute="trailing" constant="13" id="lHq-Rr-c6k"/>
                                     <constraint firstItem="aCs-vS-YXj" firstAttribute="baseline" secondItem="sVp-1S-TjJ" secondAttribute="baseline" id="uKH-4N-AKa"/>
@@ -1593,6 +1597,9 @@
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Add user-defined tagging preset"/>
+                                            </attributedString>
                                         </label>
                                     </subviews>
                                     <constraints>
@@ -1632,7 +1639,7 @@
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
