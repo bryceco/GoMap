@@ -554,11 +554,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 
 		layer.masksToBounds = true
-		if #available(iOS 13.0, *) {
-			backgroundColor = UIColor.systemGray6
-		} else {
-			backgroundColor = UIColor(white: 0.85, alpha: 1.0)
-		}
+		backgroundColor = UIColor(white: 0.1, alpha: 1.0)
 
 		// this option needs to be set before the editor is initialized
 		enableAutomaticCacheManagement = UserPrefs.shared.bool(forKey: .automaticCacheManagement) ?? true
