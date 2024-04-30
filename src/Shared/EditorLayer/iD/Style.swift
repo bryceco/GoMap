@@ -19,7 +19,7 @@
 //  Created by Boris Verkhovskiy on 2024-04-02.
 //
 
-import Foundation
+import UIKit
 
 let primaries = [
 	"building", "highway", "railway", "waterway", "aeroway", "aerialway",
@@ -162,7 +162,12 @@ extension RenderInfo {
 		r.casingWidth = 2 * r.casingWidth
 		r.lineDashPattern = r.lineDashPattern?.map({ NSNumber(value: $0.doubleValue * 0.5) })
 		r.casingDashPattern = r.casingDashPattern?.map({ NSNumber(value: $0.doubleValue * 0.5) })
-
+		if r.casingColor == nil {
+			r.casingColor = UIColor.black
+			r.casingWidth = r.lineWidth + 1
+		} else {
+			DbgAssert(r.lineWidth < r.casingWidth)
+		}
 		return r
 	}
 }

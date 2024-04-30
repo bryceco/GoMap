@@ -644,7 +644,7 @@ final class EditorMapLayer: CALayer {
 
 		// casing
 		if object.isWay() != nil || (object.isRelation()?.isMultipolygon() ?? false) {
-			if renderInfo.casingWidth != 0.0, renderInfo.casingColor != nil, !(object.isWay()?.isArea() ?? false) {
+			if renderInfo.casingWidth > renderInfo.lineWidth, renderInfo.casingColor != nil {
 				var refPoint = OSMPoint.zero
 				let path = object.linePathForObject(withRefPoint: &refPoint)
 				if let path = path {
