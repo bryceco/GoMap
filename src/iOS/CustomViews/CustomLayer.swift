@@ -11,6 +11,7 @@ import Foundation
 import CoreLocation.CLLocation
 import UIKit
 
+// A layer in MapView that displays custom data (GeoJSON, etc) that the user wants to load
 final class CustomLayer: LineDrawingLayer {
 	private(set) var allLayers: [LineShapeLayer] = []
 
@@ -50,6 +51,11 @@ final class CustomLayer: LineDrawingLayer {
 		}
 		for line in lines {
 			line.color = color
+		}
+		if center,
+		   let first = lines.first?.firstPoint
+		{
+			self.center(on: first)
 		}
 		allLayers = lines
 		isHidden = false

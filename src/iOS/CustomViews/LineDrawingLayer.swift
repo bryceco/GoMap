@@ -9,10 +9,12 @@
 import UIKit
 
 class LineShapeLayer: CAShapeLayer {
-	struct Properties {
+	fileprivate struct Properties {
 		var position: OSMPoint?
 		var lineWidth: CGFloat
 	}
+
+	let firstPoint: LatLon?
 
 	fileprivate var props = Properties(position: nil, lineWidth: 0.0)
 
@@ -32,10 +34,12 @@ class LineShapeLayer: CAShapeLayer {
 		props = layer.props
 		shapePaths = layer.shapePaths
 		color = layer.color
+		firstPoint = layer.firstPoint
 		super.init(layer: layer)
 	}
 
 	init(with points: [LatLon]) {
+		firstPoint = points.first
 		super.init()
 		var refPoint = OSMPoint.zero
 		shapePaths = [CGPath?](repeating: nil, count: 32)

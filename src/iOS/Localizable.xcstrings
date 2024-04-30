@@ -28975,6 +28975,9 @@
         }
       }
     },
+    "GeoJSON" : {
+      "comment" : "The name of a GeoJSON file"
+    },
     "Geometry" : {
       "localizations" : {
         "cs" : {
@@ -29050,6 +29053,9 @@
           }
         }
       }
+    },
+    "GPX" : {
+      "comment" : "The name of a GPX file"
     },
     "GPX Upload Complete" : {
       "localizations" : {
@@ -44765,117 +44771,8 @@
         }
       }
     },
-    "Sorry, an error occurred while loading the GPX file" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "عذرا، حدث خطأ أثناء تحميل ملف GPX"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "عذرا، حدث خطأ أثناء تحميل ملف GPX"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Omlouváme se, při načítání GPX souboru došlo k chybě"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Entschuldigung, ein Fehler beim Laden der GPX-Datei ist aufgetreten"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Se produjo un error al cargar el archivo GPX"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vabandust, GPX faili laadimisel tekkis viga"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Désolé, une erreur s'est produite lors du chargement du fichier GPX"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Oprosti, došlo je do greške tijekom učitavanja GPX datoteke"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Maaf, sebuah kesalahan terjadi ketika memuat berkas GPX"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "すみません、GPXファイルのアップロード中にエラーが発生しました"
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kunne ikke laste inn GPX-filen"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sorry, een fout is opgetreden bij het laden van het GPX-bestand"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lamento, ocorreu um erro ao carregar o ficheiro GPX"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lamento, um erro aconteceu enquanto carregava o arquivo GPX"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Простите, произошла ошибка при загрузке GPX-файла"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Пробачте, під час завантаження GPX-файлу виникла помилка"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "抱歉，加载GPX文件时发生错误"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "抱歉，讀取 GPX 檔的時候遇到錯誤"
-          }
-        }
-      }
+    "Sorry, an error occurred while loading the %@ file" : {
+      "comment" : "Argument is a file type like 'GPX' or 'GeoJSON'"
     },
     "Space" : {
       "comment" : "Space key on the keyboard",

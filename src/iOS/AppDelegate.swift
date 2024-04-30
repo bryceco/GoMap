@@ -137,9 +137,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		return try Data(contentsOf: url, options: [])
 	}
 
-	func displayGpxError(_ error: Error) {
-		var message = NSLocalizedString("Sorry, an error occurred while loading the GPX file",
-		                                comment: "")
+	func displayImportError(_ error: Error, filetype: String) {
+		var message = String.localizedStringWithFormat(
+			NSLocalizedString("Sorry, an error occurred while loading the %@ file",
+			                  comment: "Argument is a file type like 'GPX' or 'GeoJSON'"),
+			filetype)
 		message += "\n\n"
 		message += error.localizedDescription
 		mapView.showAlert(NSLocalizedString("Open URL", comment: ""),
@@ -150,6 +152,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	                 open url: URL,
 	                 options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool
 	{
+		let localizedGPX = NSLocalizedString("GPX", comment: "The name of a GPX file")
+
 		if url.isFileURL {
 			let data: Data
 			do {
@@ -169,7 +173,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 						try mapView.gpxLayer.loadGPXData(data, center: true)
 						mapView.updateMapMarkersFromServer(withDelay: 0.1, including: [.gpx])
 					} catch {
-						displayGpxError(error)
+						displayImportError(error, filetype: localizedGPX)
 					}
 				})
 				return true
@@ -192,7 +196,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 					do {
 						try mapView.customLayer.loadGeoJSON(data, center: true)
 					} catch {
-						displayGpxError(error)
+						displayImportError(
+							error,
+							filetype: NSLocalizedString("GeoJSON", comment: "The name of a GeoJSON file"))
 					}
 				})
 				return true
@@ -226,10 +232,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 								try mapView.gpxLayer.loadGPXData(data, center: true)
 								mapView.updateMapMarkersFromServer(withDelay: 0.1, including: [.gpx])
 							} catch {
-								displayGpxError(error)
+								displayImportError(error, filetype: localizedGPX)
 							}
 						case let .failure(error):
-							displayGpxError(error)
+							displayImportError(error, filetype: localizedGPX)
 						}
 					})
 				}
