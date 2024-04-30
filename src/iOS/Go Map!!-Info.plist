@@ -9,6 +9,22 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.geojson</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>geojson</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>GeoJSON</string>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
+		</dict>
+		<dict>
 			<key>CFBundleTypeIconFile</key>
 			<string>question.png</string>
 			<key>CFBundleTypeName</key>
@@ -191,5 +207,6 @@
 			<key>NSUbiquitousContainerSupportedFolderLevels</key>
 			<string>Any</string>
 		</dict>
-	</dict></dict>
+	</dict>
+</dict>
 </plist>

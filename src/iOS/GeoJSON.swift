@@ -23,6 +23,7 @@ extension Double: DoubleValue {
 
 extension NSNumber: DoubleValue {}
 
+// This handles just the geometry portion of a GeoJSON file
 struct GeoJSON: Codable, FastCodable {
 	enum PointList: Codable, FastCodable {
 		case polygon(points: [[[Double]]])
@@ -227,4 +228,14 @@ extension GeoJSON {
 			return try Self.bezierPathFor(multipolygon: points)
 		}
 	}
+}
+
+struct GeoJSONFeature: Decodable {
+	let type: String
+	let geometry: GeoJSON
+}
+
+struct GeoJSONFile: Decodable {
+	let type: String
+	let features: [GeoJSONFeature]
 }

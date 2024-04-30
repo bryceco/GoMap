@@ -28,22 +28,28 @@ final class CustomLayer: LineDrawingLayer {
 
 	// Load GeoJSON from an external source
 	func loadGeoJSON(_ data: Data, center: Bool) throws {
-		let geo: GeoJSON = try JSONDecoder().decode(GeoJSON.self, from: data)
+		let geo: GeoJSONFile = try JSONDecoder().decode(GeoJSONFile.self, from: data)
 		var lines: [LineShapeLayer] = []
+		let color = UIColor(red: 115 / 255.0, green: 67 / 255.0, blue: 211 / 255.0, alpha: 1.0)
 
-		switch geo.coordinates {
-		case let .polygon(poly):
-			for line in poly {
-				let shape = LineShapeLayer(with: line.map { LatLon(x: $0[0], y: $0[1]) })
-				lines.append(shape)
-			}
-		case let .multiPolygon(multi):
-			for poly in multi {
+		for feature in geo.features {
+			switch feature.geometry.coordinates {
+			case let .polygon(poly):
 				for line in poly {
 					let shape = LineShapeLayer(with: line.map { LatLon(x: $0[0], y: $0[1]) })
 					lines.append(shape)
 				}
+			case let .multiPolygon(multi):
+				for poly in multi {
+					for line in poly {
+						let shape = LineShapeLayer(with: line.map { LatLon(x: $0[0], y: $0[1]) })
+						lines.append(shape)
+					}
+				}
 			}
+		}
+		for line in lines {
+			line.color = color
 		}
 		allLayers = lines
 		isHidden = false
