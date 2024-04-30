@@ -342,8 +342,7 @@ final class GpxLayer: LineDrawingLayer, GetDiskCacheSize {
 			}
 			center = track.points[mid]
 		}
-		let widthDegrees = (20.0 /* meters */ / EarthRadius) * 360.0
-		mapView.setTransformFor(latLon: center.latLon, width: widthDegrees)
+		mapView.centerOn(latLon: center.latLon, metersWide: 20.0)
 	}
 
 	// Load a GPX trace from an external source

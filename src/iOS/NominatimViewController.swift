@@ -94,10 +94,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			let scale = pow(2.0, zoom)
 			appDelegate.mapView.setTransformFor(latLon: latLon, scale: scale)
 		} else {
-			let metersPerDegree = MetersPerDegreeAt(latitude: lat)
-			let minMeters: Double = 50
-			let widthDegrees = minMeters / metersPerDegree.y
-			appDelegate.mapView.setTransformFor(latLon: latLon, width: widthDegrees)
+			appDelegate.mapView.centerOn(latLon: latLon, metersWide: 50.0)
 		}
 
 		dismiss(animated: true)

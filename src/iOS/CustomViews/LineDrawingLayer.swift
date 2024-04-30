@@ -13,6 +13,7 @@ class LineShapeLayer: CAShapeLayer {
 		var position: OSMPoint?
 		var lineWidth: CGFloat
 	}
+
 	fileprivate var props = Properties(position: nil, lineWidth: 0.0)
 
 	// An array of paths, each simplified according to zoom level

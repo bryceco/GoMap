@@ -186,6 +186,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 					return false
 				}
 				return false
+			case "geojson":
+				// Load GeoJSON into user custom data layer
+				DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [self] in
+					do {
+						try mapView.customLayer.loadGeoJSON(data, center: true)
+					} catch {
+						displayGpxError(error)
+					}
+				})
+				return true
 			default:
 				return false
 			}

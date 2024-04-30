@@ -92,6 +92,7 @@ private enum ZLAYER: CGFloat {
 	case GPSTRACE = -40
 	case EDITOR = -20
 	case QUADDOWNLOAD = -18
+	case CUSTOM = -16
 	case GPX = -15
 	case ROTATEGRAPHIC = -3
 	case BLINK = 4
@@ -208,6 +209,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	private(set) lazy var noNameLayer = MercatorTileLayer(mapView: self)
 	private(set) lazy var editorLayer = EditorMapLayer(owner: self)
 	private(set) lazy var gpxLayer = GpxLayer(mapView: self)
+	private(set) lazy var customLayer = CustomLayer(mapView: self)
 	private(set) var quadDownloadLayer: QuadDownloadLayer?
 
 	// overlays
@@ -388,6 +390,12 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		didSet {
 			gpxLayer.isHidden = !displayGpxLogs
 			locationManager.allowsBackgroundLocationUpdates = gpsInBackground && displayGpxLogs
+		}
+	}
+
+	var displayUserCustomData = false {
+		didSet {
+			customLayer.isHidden = !displayUserCustomData
 		}
 	}
 
@@ -595,10 +603,13 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		editorLayer.zPosition = ZLAYER.EDITOR.rawValue
 		bg.append(editorLayer)
 
-		gpxLayer = GpxLayer(mapView: self)
 		gpxLayer.zPosition = ZLAYER.GPX.rawValue
 		gpxLayer.isHidden = true
 		bg.append(gpxLayer)
+
+		customLayer.zPosition = ZLAYER.GPX.rawValue
+		customLayer.isHidden = true
+		bg.append(customLayer)
 
 #if DEBUG && false
 		quadDownloadLayer = QuadDownloadLayer(mapView: self)
@@ -1340,7 +1351,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		return mapTransform.latLon(forScreenPoint: centerPoint())
 	}
 
-	func setTransformFor(latLon: LatLon) {
+	private func setTransformFor(latLon: LatLon) {
 		var lat = latLon.lat
 		lat = min(lat, MapTransform.latitudeLimit)
 		lat = max(lat, -MapTransform.latitudeLimit)
@@ -1359,10 +1370,19 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		adjustZoom(by: CGFloat(ratio), aroundScreenPoint: crossHairs.position)
 	}
 
-	func setTransformFor(latLon: LatLon, width widthDegrees: Double) {
+	func centerOn(latLon: LatLon, widthDegrees: Double) {
 		let scale = 360 / (widthDegrees / 2)
 		setTransformFor(latLon: latLon,
 		                scale: scale)
+	}
+
+	func centerOn(latLon: LatLon, metersWide: Double) {
+		let degrees = metersToDegrees(meters: metersWide, latitude: latLon.lat)
+		centerOn(latLon: latLon, widthDegrees: degrees)
+	}
+
+	func centerOn(latLon: LatLon) {
+		centerOn(latLon: latLon, metersWide: 20.0)
 	}
 
 	func setMapLocation(_ location: MapLocation) {
@@ -1584,9 +1604,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			if userOverrodeLocationZoom {
 				setTransformFor(latLon: LatLon(newLocation.coordinate))
 			} else {
-				let widthDegrees = Double(20.0 /* meters */ / EarthRadius * 360.0)
-				setTransformFor(latLon: LatLon(newLocation.coordinate),
-				                width: widthDegrees)
+				centerOn(latLon: LatLon(newLocation.coordinate),
+				         metersWide: 20.0)
 			}
 		}
 
@@ -1611,8 +1630,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			controller.setGpsState(GPS_STATE.NONE)
 			if !isLocationSpecified() {
 				// go home
-				setTransformFor(latLon: LatLon(latitude: 47.6858, longitude: -122.1917),
-				                width: 0.01)
+				centerOn(latLon: LatLon(latitude: 47.6858, longitude: -122.1917),
+				         widthDegrees: 0.01)
 			}
 			var text = String.localizedStringWithFormat(
 				NSLocalizedString(
@@ -1653,7 +1672,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		placePushpin(at: point, object: selection)
 
 		if !bounds.contains(pushPin!.arrowPoint) {
-			// need to zoom to location
+			// set location without changing zoom
 			setTransformFor(latLon: loc)
 		}
 	}

@@ -662,6 +662,15 @@ func MetersPerDegreeAt(latitude: Double) -> OSMPoint {
 	return OSMPoint(x: lon, y: lat)
 }
 
+// convert a distance in meters to degrees
+// different than the previous function, we should probably pick one or the other :)
+func metersToDegrees(meters: Double, latitude: Double) -> Double {
+	let metersPerDegreeAtEquator = 111321.0 // meters
+	let scalingFactor = cos(latitude * .pi / 180.0)
+	let degrees = meters / (metersPerDegreeAtEquator * scalingFactor)
+	return degrees
+}
+
 // area in square meters
 func SurfaceAreaOfRect(_ latLon: OSMRect) -> Double {
 	// http://mathforum.org/library/drmath/view/63767.html
