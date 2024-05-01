@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "0mW-YK-ajm.placeholder" : {
-      "comment" : "Class = \"UITextField\"; placeholder = \"no\"; ObjectID = \"0mW-YK-ajm\"; Note = \"Do not translate\";",
+      "comment" : "Class = \"UITextField\"; placeholder = \"no\"; ObjectID = \"0mW-YK-ajm\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
@@ -134,7 +134,7 @@
       }
     },
     "0zS-QM-zwQ.placeholder" : {
-      "comment" : "Class = \"UITextField\"; placeholder = \"type\"; ObjectID = \"0zS-QM-zwQ\"; Note = \"Do not translate\";",
+      "comment" : "Class = \"UITextField\"; placeholder = \"type\"; ObjectID = \"0zS-QM-zwQ\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
@@ -560,7 +560,7 @@
       }
     },
     "2Q5-Vd-FED.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Title\"; ObjectID = \"2Q5-Vd-FED\"; Note = \"Do not translate\";",
+      "comment" : "Class = \"UILabel\"; text = \"Title\"; ObjectID = \"2Q5-Vd-FED\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
@@ -1394,7 +1394,7 @@
       }
     },
     "aCs-vS-YXj.placeholder" : {
-      "comment" : "Class = \"UITextField\"; placeholder = \"ref\"; ObjectID = \"aCs-vS-YXj\"; Note = \"Do not translate\";",
+      "comment" : "Class = \"UITextField\"; placeholder = \"ref\"; ObjectID = \"aCs-vS-YXj\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
@@ -1496,7 +1496,7 @@
       }
     },
     "Ak4-ru-E4V.placeholder" : {
-      "comment" : "Class = \"UITextField\"; placeholder = \"dog\"; ObjectID = \"Ak4-ru-E4V\"; Note = \"Do not translate\";",
+      "comment" : "Class = \"UITextField\"; placeholder = \"dog\"; ObjectID = \"Ak4-ru-E4V\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
@@ -2048,7 +2048,7 @@
       }
     },
     "cP3-lR-lzM.placeholder" : {
-      "comment" : "Class = \"UITextField\"; placeholder = \"value\"; ObjectID = \"cP3-lR-lzM\"; Note = \"Do not translate\";",
+      "comment" : "Class = \"UITextField\"; placeholder = \"value\"; ObjectID = \"cP3-lR-lzM\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
@@ -2432,7 +2432,7 @@
       }
     },
     "daQ-tl-pKh.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Label\"; ObjectID = \"daQ-tl-pKh\"; Note = \"Do not translate\";",
+      "comment" : "Class = \"UILabel\"; text = \"Label\"; ObjectID = \"daQ-tl-pKh\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
@@ -3440,7 +3440,7 @@
       }
     },
     "Fe2-dc-zgA.placeholder" : {
-      "comment" : "Class = \"UITextField\"; placeholder = \"designated\"; ObjectID = \"Fe2-dc-zgA\"; Note = \"Do not translate\";",
+      "comment" : "Class = \"UITextField\"; placeholder = \"designated\"; ObjectID = \"Fe2-dc-zgA\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
@@ -3560,7 +3560,7 @@
       }
     },
     "foC-aN-GtH.placeholder" : {
-      "comment" : "Class = \"UITextField\"; placeholder = \"clean\"; ObjectID = \"foC-aN-GtH\"; Note = \"Do not translate\";",
+      "comment" : "Class = \"UITextField\"; placeholder = \"clean\"; ObjectID = \"foC-aN-GtH\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
@@ -3920,7 +3920,7 @@
       }
     },
     "gv7-b8-wUw.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Label\"; ObjectID = \"gv7-b8-wUw\"; Note = \"Do not translate\";",
+      "comment" : "Class = \"UILabel\"; text = \"Label\"; ObjectID = \"gv7-b8-wUw\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
@@ -4052,7 +4052,7 @@
       }
     },
     "hAy-aU-g8L.text" : {
-      "comment" : "Class = \"UITextView\"; text = \"Lorem ipsum dolor \"; ObjectID = \"hAy-aU-g8L\"; Note = \"Placeholder - Don't translate\";",
+      "comment" : "Class = \"UITextView\"; text = \"Lorem ipsum dolor \"; ObjectID = \"hAy-aU-g8L\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
@@ -5168,7 +5168,7 @@
       }
     },
     "kPA-ky-U48.placeholder" : {
-      "comment" : "Class = \"UITextField\"; placeholder = \"leisure \"; ObjectID = \"kPA-ky-U48\"; Note = \"Do not translate\";",
+      "comment" : "Class = \"UITextField\"; placeholder = \"leisure \"; ObjectID = \"kPA-ky-U48\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
@@ -6410,7 +6410,7 @@
       }
     },
     "oC6-w7-cwN.placeholder" : {
-      "comment" : "Class = \"UITextField\"; placeholder = \"leashed\"; ObjectID = \"oC6-w7-cwN\"; Note = \"Do not translate\";",
+      "comment" : "Class = \"UITextField\"; placeholder = \"leashed\"; ObjectID = \"oC6-w7-cwN\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
@@ -6506,7 +6506,7 @@
       }
     },
     "okh-JP-aKZ.placeholder" : {
-      "comment" : "Class = \"UITextField\"; placeholder = \"park\"; ObjectID = \"okh-JP-aKZ\"; Note = \"Do not translate\";",
+      "comment" : "Class = \"UITextField\"; placeholder = \"park\"; ObjectID = \"okh-JP-aKZ\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
@@ -7664,7 +7664,7 @@
       }
     },
     "sHA-cr-GLb.placeholder" : {
-      "comment" : "Class = \"UITextField\"; placeholder = \"value\"; ObjectID = \"sHA-cr-GLb\"; Note = \"Do not translate\";",
+      "comment" : "Class = \"UITextField\"; placeholder = \"value\"; ObjectID = \"sHA-cr-GLb\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
@@ -7724,7 +7724,7 @@
       }
     },
     "sVp-1S-TjJ.placeholder" : {
-      "comment" : "Class = \"UITextField\"; placeholder = \"role\"; ObjectID = \"sVp-1S-TjJ\"; Note = \"Do not translate\";",
+      "comment" : "Class = \"UITextField\"; placeholder = \"role\"; ObjectID = \"sVp-1S-TjJ\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
@@ -7976,7 +7976,7 @@
       }
     },
     "TK4-E8-1q7.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Title\"; ObjectID = \"TK4-E8-1q7\"; Note = \"Do not translate\";",
+      "comment" : "Class = \"UILabel\"; text = \"Title\"; ObjectID = \"TK4-E8-1q7\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
@@ -8108,7 +8108,7 @@
       }
     },
     "Urd-9O-Mte.placeholder" : {
-      "comment" : "Class = \"UITextField\"; placeholder = \"relation\"; ObjectID = \"Urd-9O-Mte\"; Note = \"Do not translate\";",
+      "comment" : "Class = \"UITextField\"; placeholder = \"relation\"; ObjectID = \"Urd-9O-Mte\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
@@ -8486,7 +8486,7 @@
       }
     },
     "vpk-jC-yxl.placeholder" : {
-      "comment" : "Class = \"UITextField\"; placeholder = \"yes\"; ObjectID = \"vpk-jC-yxl\"; Note = \"Do not translate\";",
+      "comment" : "Class = \"UITextField\"; placeholder = \"yes\"; ObjectID = \"vpk-jC-yxl\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
@@ -8612,7 +8612,7 @@
       }
     },
     "Wcg-RB-I2a.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Inscription\"; ObjectID = \"Wcg-RB-I2a\"; Note = \"Placeholder - Don't translate\";",
+      "comment" : "Class = \"UILabel\"; text = \"Inscription\"; ObjectID = \"Wcg-RB-I2a\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -9038,7 +9038,7 @@
       }
     },
     "X1y-nK-nVJ.placeholder" : {
-      "comment" : "Class = \"UITextField\"; placeholder = \"key\"; ObjectID = \"X1y-nK-nVJ\"; Note = \"Do not translate\";",
+      "comment" : "Class = \"UITextField\"; placeholder = \"key\"; ObjectID = \"X1y-nK-nVJ\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
@@ -9170,7 +9170,7 @@
       }
     },
     "XBV-Ie-LDT.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Food & Drink\"; ObjectID = \"XBV-Ie-LDT\"; Note = \"Do not translate\";",
+      "comment" : "Class = \"UILabel\"; text = \"Food & Drink\"; ObjectID = \"XBV-Ie-LDT\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
@@ -9290,7 +9290,7 @@
       }
     },
     "XCc-6y-qYt.placeholder" : {
-      "comment" : "Class = \"UITextField\"; placeholder = \"key\"; ObjectID = \"XCc-6y-qYt\"; Note = \"Do not translate\";",
+      "comment" : "Class = \"UITextField\"; placeholder = \"key\"; ObjectID = \"XCc-6y-qYt\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
@@ -9614,7 +9614,7 @@
       }
     },
     "ZYn-TK-k7d.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Subtitle\"; ObjectID = \"ZYn-TK-k7d\"; Note = \"Do not translate\";",
+      "comment" : "Class = \"UILabel\"; text = \"Subtitle\"; ObjectID = \"ZYn-TK-k7d\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {

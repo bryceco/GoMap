@@ -146,7 +146,7 @@
       }
     },
     "BAY-7z-hwv.text" : {
-      "comment" : "Class = \"UITextView\"; text = \"Lorem ipsum dolor sit er elit lamet,\"; ObjectID = \"BAY-7z-hwv\"; Note = \"Placeholder - do not translate\";",
+      "comment" : "Class = \"UITextView\"; text = \"Lorem ipsum dolor sit er elit lamet,\"; ObjectID = \"BAY-7z-hwv\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
@@ -884,7 +884,7 @@
       }
     },
     "Plh-7W-ceY.text" : {
-      "comment" : "Class = \"UITextView\"; text = \"Lorem ipsum dolor sit er elit lamet,\"; ObjectID = \"Plh-7W-ceY\"; Note = \"Placeholder - do not translate\";",
+      "comment" : "Class = \"UITextView\"; text = \"Lorem ipsum dolor sit er elit lamet,\"; ObjectID = \"Plh-7W-ceY\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {

@@ -668,7 +668,7 @@
       }
     },
     "9G2-Gl-CeP.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"username\"; ObjectID = \"9G2-Gl-CeP\"; Note = \"Placeholder - ignore\";",
+      "comment" : "Class = \"UILabel\"; text = \"username\"; ObjectID = \"9G2-Gl-CeP\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
@@ -2048,7 +2048,7 @@
       }
     },
     "LSJ-rB-J2c.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"-\"; ObjectID = \"LSJ-rB-J2c\"; Note = \"Placeholder - ignore\";",
+      "comment" : "Class = \"UILabel\"; text = \"-\"; ObjectID = \"LSJ-rB-J2c\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
@@ -2414,7 +2414,7 @@
       }
     },
     "nU5-T2-ADn.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"A Error Message Flashing Z\"; ObjectID = \"nU5-T2-ADn\"; Note = \"Placeholder - Don't translate\";",
+      "comment" : "Class = \"UILabel\"; text = \"A Error Message Flashing Z\"; ObjectID = \"nU5-T2-ADn\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
@@ -2624,7 +2624,7 @@
       }
     },
     "PHk-s9-onx.text" : {
-      "comment" : "Class = \"UITextView\"; text = \"Various comments...\"; ObjectID = \"PHk-s9-onx\"; Note = \"Placeholder - ignore\";",
+      "comment" : "Class = \"UITextView\"; text = \"Various comments...\"; ObjectID = \"PHk-s9-onx\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
@@ -3470,7 +3470,7 @@
       }
     },
     "VNE-ee-a7u.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"action\"; ObjectID = \"VNE-ee-a7u\"; Note = \"Placeholder - ignore\";",
+      "comment" : "Class = \"UILabel\"; text = \"action\"; ObjectID = \"VNE-ee-a7u\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
