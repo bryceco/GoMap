@@ -343,6 +343,9 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 	// #if CUSTOM_TRANSFORM
 	private func setSublayerPositions(_ _layerDict: [String: CALayer]) {
 		// update locations of tiles
+		let metersPerPixel = mapView.metersPerPixel()
+		let offsetPixels = CGPoint(x: imageryOffsetMeters.x / metersPerPixel,
+		                           y: -imageryOffsetMeters.y / metersPerPixel)
 		let tRotation = mapView.screenFromMapTransform.rotation()
 		let tScale = mapView.screenFromMapTransform.scale()
 		for (tileKey, layer) in _layerDict {
@@ -359,7 +362,8 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 			layer.anchorPoint = CGPoint(x: 0, y: 0)
 
 			scale *= tScale / 256
-			let t = CGAffineTransform(rotationAngle: CGFloat(tRotation)).scaledBy(x: CGFloat(scale), y: CGFloat(scale))
+			var t = CGAffineTransform(rotationAngle: CGFloat(tRotation)).scaledBy(x: CGFloat(scale), y: CGFloat(scale))
+			t = t.translatedBy(x: offsetPixels.x / scale, y: offsetPixels.y / scale)
 			layer.setAffineTransform(t)
 		}
 	}
@@ -493,6 +497,14 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 	override var isHidden: Bool {
 		didSet(wasHidden) {
 			if wasHidden, !isHidden {
+				setNeedsLayout()
+			}
+		}
+	}
+
+	var imageryOffsetMeters = CGPoint.zero {
+		didSet {
+			if imageryOffsetMeters != oldValue {
 				setNeedsLayout()
 			}
 		}

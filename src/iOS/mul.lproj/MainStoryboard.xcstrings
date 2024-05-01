@@ -1105,6 +1105,18 @@
         }
       }
     },
+    "DFj-Vi-kBz.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"(0,0)\"; ObjectID = \"DFj-Vi-kBz\"; Note = \"Placeholder - Do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "(0,0)"
+          }
+        }
+      }
+    },
     "E22-sL-sNt.accessibilityHint" : {
       "comment" : "Class = \"UIButton\"; accessibilityHint = \"Reorient map north\"; ObjectID = \"E22-sL-sNt\";",
       "extractionState" : "extracted_with_value",

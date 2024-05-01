@@ -128,7 +128,7 @@ private let DisplayLinkHeading = "Heading"
 private let DisplayLinkPanning = "Panning" // disable gestures inside toolbar buttons
 
 final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheetDelegate,
-	UIGestureRecognizerDelegate, SKStoreProductViewControllerDelegate
+	UIGestureRecognizerDelegate, SKStoreProductViewControllerDelegate, DPadDelegate
 {
 	var lastMouseDragPos = CGPoint.zero
 	var progressActive = AtomicInt(0)
@@ -164,6 +164,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	@IBOutlet var rulerView: RulerView!
 	@IBOutlet var progressIndicator: UIActivityIndicatorView!
 	@IBOutlet var editControl: UISegmentedControl!
+	@IBOutlet var aerialAlignmentButton: UIButton!
+	@IBOutlet var dPadView: DPadView!
 
 	private var magnifyingGlass: MagnifyingGlass!
 
@@ -736,6 +738,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		compassButton.backgroundColor = UIColor.white
 		compass(on: compassButton.layer, withRadius: compassButton.bounds.size.width / 2)
 
+		// dPadView
+		dPadView.delegate = self
+
 		// error message label
 		flashLabel.font = UIFont.preferredFont(forTextStyle: .title3)
 		flashLabel.layer.cornerRadius = 5
@@ -1276,6 +1281,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		gpsTraceLayer.isHidden = !newOverlays.contains(.GPSTRACE)
 		noNameLayer.isHidden = !newOverlays.contains(.NONAME)
 
+		aerialAlignmentButton.isHidden = true
+		dPadView.isHidden = true
+
 		switch newState {
 		case MapViewState.EDITOR:
 			editorLayer.isHidden = false
@@ -1290,6 +1298,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			mapnikLayer.isHidden = true
 			userInstructionLabel.isHidden = true
 			editorLayer.whiteText = true
+			aerialAlignmentButton.isHidden = false
 		case MapViewState.AERIAL:
 			aerialLayer.tileServer = tileServerList.currentServer
 			editorLayer.isHidden = true
@@ -1326,6 +1335,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	func setAerialTileServer(_ service: TileServer) {
 		aerialLayer.tileServer = service
 		updateAerialAttributionButton()
+		// update imagery offset
+		aerialLayer.imageryOffsetMeters = CGPointZero
+		updateAerialAlignmentButton()
 	}
 
 	func metersPerPixel() -> Double {
@@ -1434,6 +1446,33 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			print("progressDecrement = \(progressActive.value())")
 		}
 #endif
+	}
+
+	// MARK: Aerial imagery alignment
+
+	@IBAction func aerialAlignmentPressed(_ sender: Any) {
+		dPadView.isHidden = !dPadView.isHidden
+	}
+
+	func updateAerialAlignmentButton() {
+		let offset = aerialLayer.imageryOffsetMeters
+		let buttonText: String
+		if offset == CGPointZero {
+			buttonText = "(0,0)"
+		} else {
+			buttonText = String(format: "(%.1f,%.1f)", arguments: [offset.x, offset.y])
+		}
+		UIView.performWithoutAnimation {
+			aerialAlignmentButton.setTitle(buttonText, for: .normal)
+			aerialAlignmentButton.layoutIfNeeded()
+		}
+	}
+
+	func dPadPress(_ shift: CGPoint) {
+		let scale = 0.5
+		let newOffset = aerialLayer.imageryOffsetMeters.plus(CGPoint(x: shift.x * scale, y: shift.y * scale))
+		aerialLayer.imageryOffsetMeters = newOffset
+		updateAerialAlignmentButton()
 	}
 
 	// MARK: GPS and Location Manager

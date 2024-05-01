@@ -294,6 +294,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			mapView.compassButton,
 			mapView.centerOnGPSButton,
 			mapView.helpButton,
+			mapView.aerialAlignmentButton,
 			settingsButton,
 			uploadButton,
 			displayButton,
@@ -323,7 +324,9 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			}
 			// image blue tint
 			if let button = view as? UIButton {
-				if button != mapView.compassButton, button != mapView.helpButton {
+				if button != mapView.compassButton, button != mapView.helpButton,
+				   button != mapView.aerialAlignmentButton
+				{
 					let image = button.currentImage?.withRenderingMode(.alwaysTemplate)
 					button.setImage(image, for: .normal)
 					if #available(iOS 13.0, *) {
@@ -400,6 +403,9 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			button.backgroundColor = UIColor.systemBackground
 		} else {
 			button.backgroundColor = UIColor.white
+		}
+		if button == mapView.aerialAlignmentButton {
+			button.backgroundColor = button.backgroundColor?.withAlphaComponent(0.6)
 		}
 #endif
 	}

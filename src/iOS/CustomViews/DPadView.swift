@@ -8,16 +8,17 @@
 
 import UIKit
 
-fileprivate enum Direction { case up, down, left, right }
+private enum Direction { case up, down, left, right }
 
-fileprivate class ArrowButton: UIButton {
+private class ArrowButton: UIButton {
 	let direction: Direction
-	
+
 	init(frame: CGRect, direction: Direction) {
 		self.direction = direction
 		super.init(frame: frame)
 	}
-	
+
+	@available(*, unavailable)
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
@@ -28,7 +29,6 @@ protocol DPadDelegate {
 }
 
 class DPadView: UIView {
-
 	var delegate: DPadDelegate?
 
 	private func arrowButton(frame: CGRect, dir: Direction) -> ArrowButton {
@@ -93,27 +93,27 @@ class DPadView: UIView {
 		layer.addSublayer(plusLayer)
 
 		// draw triangle buttons
-		let buttonSize = CGSize(width: (1-2*plusInset)*frame.width,
-								height: (1-2*plusInset)*frame.height)
-		let leftButton = arrowButton(frame: CGRect(origin: CGPoint(x: 0.0, 
-																   y: bounds.midY-plusInset*bounds.height/2),
-												   size: buttonSize),
-									 dir: .left)
-		let rightButton = arrowButton(frame: CGRect(origin: CGPoint(x: bounds.maxX-buttonSize.width,
-																	y: bounds.midY-plusInset*bounds.height/2),
-												   size: buttonSize),
-									 dir: .right)
-		let upButton = arrowButton(frame: CGRect(origin: CGPoint(x: bounds.midX-plusInset*bounds.width/2,
-															   y: 0.0),
-												   size: buttonSize),
-									 dir: .up)
-		let downButton = arrowButton(frame: CGRect(origin: CGPoint(x: bounds.midX-plusInset*bounds.width/2,
-																 y: bounds.maxY-buttonSize.height),
-												   size: buttonSize),
-									 dir: .down)
-		for button in [leftButton,rightButton,upButton,downButton] {
+		let buttonSize = CGSize(width: (1 - 2 * plusInset) * frame.width,
+		                        height: (1 - 2 * plusInset) * frame.height)
+		let leftButton = arrowButton(frame: CGRect(origin: CGPoint(x: 0.0,
+		                                                           y: bounds.midY - plusInset * bounds.height / 2),
+		                                           size: buttonSize),
+		                             dir: .left)
+		let rightButton = arrowButton(frame: CGRect(origin: CGPoint(x: bounds.maxX - buttonSize.width,
+		                                                            y: bounds.midY - plusInset * bounds.height / 2),
+		                                            size: buttonSize),
+		                              dir: .right)
+		let upButton = arrowButton(frame: CGRect(origin: CGPoint(x: bounds.midX - plusInset * bounds.width / 2,
+		                                                         y: 0.0),
+		                                         size: buttonSize),
+		                           dir: .up)
+		let downButton = arrowButton(frame: CGRect(origin: CGPoint(x: bounds.midX - plusInset * bounds.width / 2,
+		                                                           y: bounds.maxY - buttonSize.height),
+		                                           size: buttonSize),
+		                             dir: .down)
+		for button in [leftButton, rightButton, upButton, downButton] {
 			button.addTarget(self, action: #selector(buttonPress(_:)), for: .touchUpInside)
-			self.addSubview(button)
+			addSubview(button)
 		}
 	}
 

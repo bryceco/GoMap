@@ -24,9 +24,11 @@
                                 <gestureRecognizers/>
                                 <connections>
                                     <outlet property="addNodeButton" destination="53z-ij-akY" id="fNB-z4-AOz"/>
+                                    <outlet property="aerialAlignmentButton" destination="DFj-Vi-kBz" id="pAF-6Z-MIn"/>
                                     <outlet property="aerialServiceLogo" destination="2Ka-IT-DQC" id="KDN-9Z-L5e"/>
                                     <outlet property="centerOnGPSButton" destination="Fo4-Nq-pAz" id="EWp-gg-bm2"/>
                                     <outlet property="compassButton" destination="E22-sL-sNt" id="aGc-Fs-I8q"/>
+                                    <outlet property="dPadView" destination="FM9-uI-awq" id="pUA-Lp-9UL"/>
                                     <outlet property="editControl" destination="zrW-uc-hfQ" id="0UY-5Y-O1k"/>
                                     <outlet property="flashLabel" destination="nU5-T2-ADn" id="deT-NP-s3P"/>
                                     <outlet property="fpsLabel" destination="9t5-wq-j1u" id="3lK-so-dSY"/>
@@ -59,6 +61,17 @@
                                     <segue destination="TCa-h6-J4b" kind="modal" id="lDk-N5-xnN"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DFj-Vi-kBz" userLabel="ImageOffset">
+                                <rect key="frame" x="228.66666666666666" y="65" width="32.999999999999972" height="30"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="(0,0)"/>
+                                <attributedString key="userComments">
+                                    <fragment content="Placeholder - Do not translate"/>
+                                </attributedString>
+                                <connections>
+                                    <action selector="aerialAlignmentPressed:" destination="fss-Ag-fKJ" eventType="touchUpInside" id="YMj-pK-LTZ"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E22-sL-sNt" userLabel="Compass">
                                 <rect key="frame" x="341" y="69" width="42" height="42"/>
                                 <accessibility key="accessibilityConfiguration" hint="Reorient map north" identifier="compass_button" label="Compass"/>
@@ -72,6 +85,14 @@
                                     <action selector="compassPressed:" destination="fss-Ag-fKJ" eventType="touchUpInside" id="j6f-G1-Ixj"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FM9-uI-awq" customClass="DPadView" customModule="Go_Map__" customModuleProvider="target">
+                                <rect key="frame" x="195.33333333333334" y="110" width="100.00000000000003" height="100"/>
+                                <color key="backgroundColor" systemColor="systemGray2Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="FM9-uI-awq" secondAttribute="height" multiplier="1:1" id="NEa-xr-uXX"/>
+                                    <constraint firstAttribute="width" constant="100" id="QWn-Jr-fKb"/>
+                                </constraints>
+                            </view>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NOu-1p-3jQ" userLabel="Status Bar Blur View">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="59"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Pi6-3v-UIw">
@@ -289,9 +310,11 @@
                             <constraint firstItem="53z-ij-akY" firstAttribute="top" secondItem="UQ6-Pa-U58" secondAttribute="bottom" constant="15" id="53n-hh-QYd"/>
                             <constraint firstItem="zrW-uc-hfQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="P70-Oz-du4" secondAttribute="leading" constant="10" id="61W-gY-DkK"/>
                             <constraint firstItem="9t5-wq-j1u" firstAttribute="bottom" secondItem="zrW-uc-hfQ" secondAttribute="top" constant="-9" id="8bu-LO-ZqN"/>
+                            <constraint firstItem="E22-sL-sNt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DFj-Vi-kBz" secondAttribute="trailing" constant="8" id="BDw-sy-9Rb"/>
                             <constraint firstItem="nU5-T2-ADn" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="bottom" multiplier="0.7" id="Fhe-r4-MSI"/>
                             <constraint firstItem="Fo4-Nq-pAz" firstAttribute="trailing" secondItem="rdp-7O-8Ad" secondAttribute="trailing" id="FrU-Ie-xYw"/>
                             <constraint firstItem="fss-Ag-fKJ" firstAttribute="trailing" secondItem="j5Z-hB-i8A" secondAttribute="trailing" id="H27-5O-hII"/>
+                            <constraint firstItem="FM9-uI-awq" firstAttribute="centerX" secondItem="DFj-Vi-kBz" secondAttribute="centerX" id="HMH-99-O5W"/>
                             <constraint firstItem="YRw-Aj-GwS" firstAttribute="bottom" secondItem="P70-Oz-du4" secondAttribute="bottom" constant="-10" id="I7y-94-ztw"/>
                             <constraint firstItem="rdp-7O-8Ad" firstAttribute="top" secondItem="E22-sL-sNt" secondAttribute="bottom" constant="15" id="Knr-t7-Lp5"/>
                             <constraint firstItem="TnL-YC-BCg" firstAttribute="top" secondItem="2Ka-IT-DQC" secondAttribute="bottom" constant="5" id="L2k-t0-NDx"/>
@@ -309,14 +332,17 @@
                             <constraint firstItem="P70-Oz-du4" firstAttribute="trailing" secondItem="YRw-Aj-GwS" secondAttribute="trailing" constant="12" id="bGw-oa-eIq"/>
                             <constraint firstItem="zrW-uc-hfQ" firstAttribute="centerX" secondItem="P70-Oz-du4" secondAttribute="centerX" id="c6c-uP-uxf"/>
                             <constraint firstItem="P70-Oz-du4" firstAttribute="bottom" secondItem="zrW-uc-hfQ" secondAttribute="bottom" constant="70" id="d8b-kS-a2G"/>
+                            <constraint firstItem="FM9-uI-awq" firstAttribute="top" secondItem="DFj-Vi-kBz" secondAttribute="bottom" constant="15" id="dzP-5h-Xg0"/>
                             <constraint firstItem="YRw-Aj-GwS" firstAttribute="leading" secondItem="poU-5O-e7Y" secondAttribute="trailing" constant="15" id="ebY-VV-Eqh"/>
                             <constraint firstItem="2Ka-IT-DQC" firstAttribute="leading" secondItem="P70-Oz-du4" secondAttribute="leading" constant="9" id="fJO-dR-3cL"/>
+                            <constraint firstItem="DFj-Vi-kBz" firstAttribute="leading" secondItem="2Ka-IT-DQC" secondAttribute="trailing" constant="8" id="fSm-mb-pQA"/>
                             <constraint firstItem="Zh9-uC-62t" firstAttribute="top" secondItem="P70-Oz-du4" secondAttribute="top" constant="40" id="iOT-VE-tJF"/>
                             <constraint firstItem="nU5-T2-ADn" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="P70-Oz-du4" secondAttribute="centerX" multiplier="0.35" id="iYx-Jd-It7"/>
                             <constraint firstItem="fss-Ag-fKJ" firstAttribute="top" secondItem="j5Z-hB-i8A" secondAttribute="top" id="jfH-he-UaM"/>
                             <constraint firstItem="E22-sL-sNt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2Ka-IT-DQC" secondAttribute="trailing" constant="10" id="l1H-da-MAD"/>
                             <constraint firstItem="UQ6-Pa-U58" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Fo4-Nq-pAz" secondAttribute="bottom" constant="15" id="lbv-Yq-4tQ"/>
                             <constraint firstItem="TnL-YC-BCg" firstAttribute="leading" secondItem="P70-Oz-du4" secondAttribute="leading" constant="10" id="mJQ-Ae-Zby"/>
+                            <constraint firstItem="DFj-Vi-kBz" firstAttribute="centerY" secondItem="2Ka-IT-DQC" secondAttribute="centerY" id="mdF-Xw-MTg"/>
                             <constraint firstItem="Fo4-Nq-pAz" firstAttribute="top" secondItem="rdp-7O-8Ad" secondAttribute="bottom" constant="15" id="nLz-re-rFx"/>
                             <constraint firstItem="NOu-1p-3jQ" firstAttribute="top" secondItem="j5Z-hB-i8A" secondAttribute="top" id="org-l3-ORG"/>
                             <constraint firstItem="E22-sL-sNt" firstAttribute="top" secondItem="P70-Oz-du4" secondAttribute="top" constant="10" id="ppF-tq-PYy"/>
@@ -373,7 +399,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-1837.5" y="-163.75"/>
+            <point key="canvasLocation" x="-1838.9312977099237" y="-164.08450704225353"/>
         </scene>
         <!--DisplayViewController-->
         <scene sceneID="fHT-zn-jOT">
@@ -1027,6 +1053,9 @@
         </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
