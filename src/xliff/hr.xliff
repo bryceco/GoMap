@@ -1204,6 +1204,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." xml:space="preserve">
         <source>A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else.</source>
+        <target state="translated">Kopija svih korisnički definiranih potraga kopirana je u međuspremnik u JSON formatu. Možeš ih negdje umetnuti za zadržavanje kopije ili za slanje nekoj drugoj osobi.</target>
         <note/>
       </trans-unit>
       <trans-unit id="A relation the node belongs to is not fully downloaded" xml:space="preserve">
@@ -1288,6 +1289,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="Advanced Quest Builder" xml:space="preserve">
         <source>Advanced Quest Builder</source>
+        <target state="translated">Napredna pretraga</target>
         <note/>
       </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
@@ -1550,6 +1552,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." xml:space="preserve">
         <source>Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value.</source>
+        <target state="translated">Stvori redak u tablici za svaki par ključeva/vrijednosti i je li se poklapajući objekti trebaju uključiti ili isključiti. Ostavi vrijednost praznu za označavanje da ključ nije prisutan. Koristi key=* za poklapanje bilo koje vrijednosti.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
@@ -1700,6 +1703,7 @@ Greška: %@</target>
       </trans-unit>
       <trans-unit id="GPX" xml:space="preserve">
         <source>GPX</source>
+        <target state="translated">GPX</target>
         <note>The name of a GPX file</note>
       </trans-unit>
       <trans-unit id="GPX Upload Complete" xml:space="preserve">
@@ -1714,6 +1718,7 @@ Greška: %@</target>
       </trans-unit>
       <trans-unit id="GeoJSON" xml:space="preserve">
         <source>GeoJSON</source>
+        <target state="translated">GeoJSON</target>
         <note>The name of a GeoJSON file</note>
       </trans-unit>
       <trans-unit id="Geometry" xml:space="preserve">
@@ -1763,7 +1768,7 @@ Greška: %@</target>
       </trans-unit>
       <trans-unit id="Import Quests" xml:space="preserve">
         <source>Import Quests</source>
-        <target state="translated">Pretrage uvoza</target>
+        <target state="translated">Uvezi pretrage</target>
         <note/>
       </trans-unit>
       <trans-unit id="In order to measure height, please enable camera access in the app's settings." xml:space="preserve">
@@ -2115,7 +2120,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Paste the JSON for your quests into the field below" xml:space="preserve">
         <source>Paste the JSON for your quests into the field below</source>
-        <target state="translated">Unesi JSON za tvoje pretrage u donje polje</target>
+        <target state="translated">Umetni JSON za tvoje pretrage u donje polje</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.few" xml:space="preserve">
@@ -2175,6 +2180,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Provide a single-character symbol (emoji or unicode character) to identify this quest:" xml:space="preserve">
         <source>Provide a single-character symbol (emoji or unicode character) to identify this quest:</source>
+        <target state="translated">Navedi jedan simbol (emoji ili unicode znak) za identifikaciju ove pretrage:</target>
         <note/>
       </trans-unit>
       <trans-unit id="Purge" xml:space="preserve">
@@ -2184,14 +2190,17 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Quest" xml:space="preserve">
         <source>Quest</source>
+        <target state="translated">Pretraga</target>
         <note>The current Quest the user is answering</note>
       </trans-unit>
       <trans-unit id="Quest Definition Error" xml:space="preserve">
         <source>Quest Definition Error</source>
+        <target state="translated">Greška u definiciji pretrage</target>
         <note/>
       </trans-unit>
       <trans-unit id="Quests were imported successfully." xml:space="preserve">
         <source>Quests were imported successfully.</source>
+        <target state="translated">Pretrage su uspješno uvezene.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." xml:space="preserve">
@@ -2342,6 +2351,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Sorry, an error occurred while loading the %@ file" xml:space="preserve">
         <source>Sorry, an error occurred while loading the %@ file</source>
+        <target state="translated">Nažalost se dogodila greške tijekom učitavanja datoteke %@</target>
         <note>Argument is a file type like 'GPX' or 'GeoJSON'</note>
       </trans-unit>
       <trans-unit id="Space" xml:space="preserve">
@@ -2476,6 +2486,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="This page allows you to design quests with more specific criteria than the regular Quest Builder page." xml:space="preserve">
         <source>This page allows you to design quests with more specific criteria than the regular Quest Builder page.</source>
+        <target state="translated">Ova stranica omogućuje dizajniranje pretrage s specifičnijim kriterijima od obične stranice pretrage.</target>
         <note/>
       </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
@@ -2639,14 +2650,17 @@ Odaberi autocestu iz koje se približavaš raskrižju. Zatim dodirni strelicu za
       </trans-unit>
       <trans-unit id="What is the name of this quest? This is best written in the form of an action like 'Add Surface':" xml:space="preserve">
         <source>What is the name of this quest? This is best written in the form of an action like 'Add Surface':</source>
+        <target state="translated">Kako se zove ova potraga? Ovo je najbolje napisati u obliku radnje poput „Dodaj površinu”:</target>
         <note/>
       </trans-unit>
       <trans-unit id="What tag key is modified by this quest?" xml:space="preserve">
         <source>What tag key is modified by this quest?</source>
+        <target state="translated">Koji je ključ oznake promijenjen ovom pretragom?</target>
         <note/>
       </trans-unit>
       <trans-unit id="What types of objects does this quest apply to?" xml:space="preserve">
         <source>What types of objects does this quest apply to?</source>
+        <target state="translated">Na koje se vrste objekata odnosi ova pretraga?</target>
         <note/>
       </trans-unit>
       <trans-unit id="You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.&#10;&#10;To continue press Commit once again, otherwise press Cancel." xml:space="preserve">
