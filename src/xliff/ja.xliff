@@ -45,6 +45,10 @@
         <target state="translated">66.6 FPS</target>
         <note>Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u";</note>
       </trans-unit>
+      <trans-unit id="DFj-Vi-kBz.normalTitle" xml:space="preserve">
+        <source>(0,0)</source>
+        <note>Class = "UIButton"; normalTitle = "(0,0)"; ObjectID = "DFj-Vi-kBz"; Note = "Placeholder - Do not translate";</note>
+      </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityHint" xml:space="preserve">
         <source>Reorient map north</source>
         <target state="translated">マップを北向きにする</target>

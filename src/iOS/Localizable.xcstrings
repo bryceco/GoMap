@@ -15615,6 +15615,12 @@
             "value" : "Todas tus tareas personalizadas se copian al portapapeles en formato JSON. Puedes pegarlo en cualquier lugar y guardarlo o enviarlo a otras personas."
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopija svih korisnički definiranih potraga kopirana je u međuspremnik u JSON formatu. Možeš ih negdje umetnuti za zadržavanje kopije ili za slanje nekoj drugoj osobi."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17880,6 +17886,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Creador de misiones avanzado"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Napredna pretraga"
           }
         },
         "ja" : {
@@ -23660,6 +23672,12 @@
             "value" : "Crea una fila en la tabla para cada par de clave/valor y si los objetos coincidentes deben incluirse o excluirse. Deja el valor vacío para indicar que la clave no está presente. Utilice clave=* para que coincida cualquier valor."
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stvori redak u tablici za svaki par ključeva/vrijednosti i je li se poklapajući objekti trebaju uključiti ili isključiti. Ostavi vrijednost praznu za označavanje da ključ nije prisutan. Koristi key=* za poklapanje bilo koje vrijednosti."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -28976,7 +28994,27 @@
       }
     },
     "GeoJSON" : {
-      "comment" : "The name of a GeoJSON file"
+      "comment" : "The name of a GeoJSON file",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GeoJSON"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GeoJSON"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GeoJSON"
+          }
+        }
+      }
     },
     "Geometry" : {
       "localizations" : {
@@ -29055,7 +29093,27 @@
       }
     },
     "GPX" : {
-      "comment" : "The name of a GPX file"
+      "comment" : "The name of a GPX file",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX"
+          }
+        }
+      }
     },
     "GPX Upload Complete" : {
       "localizations" : {
@@ -30066,7 +30124,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pretrage uvoza"
+            "value" : "Uvezi pretrage"
           }
         },
         "ja" : {
@@ -38915,7 +38973,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unesi JSON za tvoje pretrage u donje polje"
+            "value" : "Umetni JSON za tvoje pretrage u donje polje"
           }
         },
         "ja" : {
@@ -40758,6 +40816,12 @@
             "value" : "Proporciona un símbolo de un solo carácter (emoji o carácter unicode) para identificar esta búsqueda:"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navedi jedan simbol (emoji ili unicode znak) za identifikaciju ove pretrage:"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -40954,6 +41018,12 @@
             "value" : "Búsqueda"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pretraga"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -41018,6 +41088,12 @@
             "value" : "Error de definición de la búsqueda"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Greška u definiciji pretrage"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -41080,6 +41156,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Las tareas se han importado correctamente."
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pretrage su uspješno uvezene."
           }
         },
         "ja" : {
@@ -44772,7 +44854,27 @@
       }
     },
     "Sorry, an error occurred while loading the %@ file" : {
-      "comment" : "Argument is a file type like 'GPX' or 'GeoJSON'"
+      "comment" : "Argument is a file type like 'GPX' or 'GeoJSON'",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lo sentimos, se produjo un error al cargar el archivo %@"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nažalost se dogodila greške tijekom učitavanja datoteke %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Произошла ошибка при загрузки %@ файла"
+          }
+        }
+      }
     },
     "Space" : {
       "comment" : "Space key on the keyboard",
@@ -47565,6 +47667,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Esta página le permite diseñar misiones con criterios más específicos que la página normal del Constructor de misiones."
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ova stranica omogućuje dizajniranje pretrage s specifičnijim kriterijima od obične stranice pretrage."
           }
         },
         "ja" : {
@@ -51413,6 +51521,12 @@
             "value" : "¿Cómo se llama esta búsqueda? Es mejor escribirlo en forma de una acción como \"Añadir superficie\":"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kako se zove ova potraga? Ovo je najbolje napisati u obliku radnje poput „Dodaj površinu”:"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -51471,6 +51585,12 @@
             "value" : "¿Qué clave de etiqueta modifica esta búsqueda?"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koji je ključ oznake promijenjen ovom pretragom?"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -51527,6 +51647,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "¿A qué tipo de objetos se aplica esta búsqueda?"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Na koje se vrste objekata odnosi ova pretraga?"
           }
         },
         "ja" : {

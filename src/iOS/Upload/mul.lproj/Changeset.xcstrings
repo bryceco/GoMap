@@ -92,7 +92,7 @@
         "nb-NO" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Changes:"
+            "value" : "Endringer:"
           }
         },
         "nl" : {
@@ -488,7 +488,7 @@
         "nb-NO" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Edit"
+            "value" : "Endre"
           }
         },
         "nl" : {
