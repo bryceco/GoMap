@@ -1803,6 +1803,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="GPX" xml:space="preserve">
         <source>GPX</source>
+        <target state="translated">GPX</target>
         <note>The name of a GPX file</note>
       </trans-unit>
       <trans-unit id="GPX Upload Complete" xml:space="preserve">
@@ -1817,6 +1818,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="GeoJSON" xml:space="preserve">
         <source>GeoJSON</source>
+        <target state="translated">GeoJSON</target>
         <note>The name of a GeoJSON file</note>
       </trans-unit>
       <trans-unit id="Geometry" xml:space="preserve">
@@ -2459,6 +2461,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Sorry, an error occurred while loading the %@ file" xml:space="preserve">
         <source>Sorry, an error occurred while loading the %@ file</source>
+        <target state="translated">Произошла ошибка при загрузки %@ файла</target>
         <note>Argument is a file type like 'GPX' or 'GeoJSON'</note>
       </trans-unit>
       <trans-unit id="Space" xml:space="preserve">

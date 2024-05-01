@@ -3436,7 +3436,7 @@ http://glyphish.com
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">
         <source>Changes:</source>
-        <target state="translated">Changes:</target>
+        <target state="translated">Endringer:</target>
         <note>Class = "UILabel"; text = "Changes:"; ObjectID = "ArV-4u-j7D";</note>
       </trans-unit>
       <trans-unit id="BAY-7z-hwv.text" xml:space="preserve">
@@ -3470,7 +3470,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="hcE-yO-3eH.normalTitle" xml:space="preserve">
         <source>Edit</source>
-        <target state="translated">Edit</target>
+        <target state="translated">Endre</target>
         <note>Class = "UIButton"; normalTitle = "Edit"; ObjectID = "hcE-yO-3eH";</note>
       </trans-unit>
       <trans-unit id="ikj-u9-9Bn.text" xml:space="preserve">
