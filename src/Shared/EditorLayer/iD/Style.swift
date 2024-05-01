@@ -165,8 +165,8 @@ extension RenderInfo {
 		if r.casingColor == nil {
 			r.casingColor = UIColor.black
 			r.casingWidth = r.lineWidth + 1
-		} else {
-			DbgAssert(r.lineWidth < r.casingWidth)
+		} else if r.lineWidth >= r.casingWidth {
+			r.casingWidth = r.lineWidth + 1
 		}
 		return r
 	}
