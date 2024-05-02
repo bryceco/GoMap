@@ -47,6 +47,7 @@
       </trans-unit>
       <trans-unit id="DFj-Vi-kBz.normalTitle" xml:space="preserve">
         <source>(0,0)</source>
+        <target state="translated">(0,0)</target>
         <note>Class = "UIButton"; normalTitle = "(0,0)"; ObjectID = "DFj-Vi-kBz"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityHint" xml:space="preserve">
@@ -343,7 +344,7 @@
       </trans-unit>
       <trans-unit id="O0U-6M-7AT.text" xml:space="preserve">
         <source>Quests</source>
-        <target state="translated">Pretrage</target>
+        <target state="translated">Zadaci</target>
         <note>Class = "UILabel"; text = "Quests"; ObjectID = "O0U-6M-7AT";</note>
       </trans-unit>
       <trans-unit id="OiJ-GU-gZ3.title" xml:space="preserve">
@@ -680,7 +681,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.headerTitle" xml:space="preserve">
         <source>Template URL of the tile server</source>
-        <target state="translated">URL adresa predloška od servera s pločicama</target>
+        <target state="translated">Predložak URL adrese servera s pločicama</target>
         <note>Class = "UITableViewSection"; headerTitle = "Template URL of the tile server"; ObjectID = "zD6-m4-1PD";</note>
       </trans-unit>
       <trans-unit id="zI2-YM-qbl.normalTitle" xml:space="preserve">
@@ -778,7 +779,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="NSLocationUsageDescription" xml:space="preserve">
         <source>Enabling location services allows the app to display objects in your vicinity. This allows you to easily update or add data you survey yourself.</source>
-        <target state="translated">Aktiviranje usluga lociranja omogućuje programu prikaz objekata u tvojoj blizini. To omogućuje jednostavno aktualiziranje ili dodavanje podataka vlastitim anketama.</target>
+        <target state="translated">Aktiviranje usluga lociranja omogućuje programu prikaz objekata u tvojoj blizini. To omogućuje jednostavno aktualiziranje ili dodavanje vlastitih prikupljenih podataka.</target>
         <note>Privacy - Location Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationWhenInUseUsageDescription" xml:space="preserve">
@@ -1208,7 +1209,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." xml:space="preserve">
         <source>A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else.</source>
-        <target state="translated">Kopija svih korisnički definiranih potraga kopirana je u međuspremnik u JSON formatu. Možeš ih negdje umetnuti za zadržavanje kopije ili za slanje nekoj drugoj osobi.</target>
+        <target state="translated">Kopija svih korisnički definiranih zadataka kopirana je u međuspremnik u JSON formatu. Možeš ih negdje umetnuti za zadržavanje kopije ili za slanje nekoj drugoj osobi.</target>
         <note/>
       </trans-unit>
       <trans-unit id="A relation the node belongs to is not fully downloaded" xml:space="preserve">
@@ -1293,7 +1294,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="Advanced Quest Builder" xml:space="preserve">
         <source>Advanced Quest Builder</source>
-        <target state="translated">Napredna pretraga</target>
+        <target state="translated">Napredni uređivač zadataka</target>
         <note/>
       </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
@@ -1374,7 +1375,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Build a New Quest" xml:space="preserve">
         <source>Build a New Quest</source>
-        <target state="translated">Izradi novu pretragu</target>
+        <target state="translated">Izradi novi zadatak</target>
         <note/>
       </trans-unit>
       <trans-unit id="Building" xml:space="preserve">
@@ -1772,7 +1773,7 @@ Greška: %@</target>
       </trans-unit>
       <trans-unit id="Import Quests" xml:space="preserve">
         <source>Import Quests</source>
-        <target state="translated">Uvezi pretrage</target>
+        <target state="translated">Uvezi zadatke</target>
         <note/>
       </trans-unit>
       <trans-unit id="In order to measure height, please enable camera access in the app's settings." xml:space="preserve">
@@ -2124,7 +2125,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Paste the JSON for your quests into the field below" xml:space="preserve">
         <source>Paste the JSON for your quests into the field below</source>
-        <target state="translated">Umetni JSON za tvoje pretrage u donje polje</target>
+        <target state="translated">Umetni JSON za tvoje zadatke u donje polje</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.few" xml:space="preserve">
@@ -2184,7 +2185,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Provide a single-character symbol (emoji or unicode character) to identify this quest:" xml:space="preserve">
         <source>Provide a single-character symbol (emoji or unicode character) to identify this quest:</source>
-        <target state="translated">Navedi jedan simbol (emoji ili unicode znak) za identifikaciju ove pretrage:</target>
+        <target state="translated">Zadaj jedan simbol (emoji ili unicode znak) za identifikaciju ovog zadatka:</target>
         <note/>
       </trans-unit>
       <trans-unit id="Purge" xml:space="preserve">
@@ -2194,17 +2195,17 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Quest" xml:space="preserve">
         <source>Quest</source>
-        <target state="translated">Pretraga</target>
+        <target state="translated">Zadatak</target>
         <note>The current Quest the user is answering</note>
       </trans-unit>
       <trans-unit id="Quest Definition Error" xml:space="preserve">
         <source>Quest Definition Error</source>
-        <target state="translated">Greška u definiciji pretrage</target>
+        <target state="translated">Greška u definiciji zadatka</target>
         <note/>
       </trans-unit>
       <trans-unit id="Quests were imported successfully." xml:space="preserve">
         <source>Quests were imported successfully.</source>
-        <target state="translated">Pretrage su uspješno uvezene.</target>
+        <target state="translated">Zadaci su uspješno uvezeni.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." xml:space="preserve">
@@ -2490,7 +2491,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="This page allows you to design quests with more specific criteria than the regular Quest Builder page." xml:space="preserve">
         <source>This page allows you to design quests with more specific criteria than the regular Quest Builder page.</source>
-        <target state="translated">Ova stranica omogućuje dizajniranje pretrage s specifičnijim kriterijima od obične stranice pretrage.</target>
+        <target state="translated">Ova stranica omogućuje izradu zadataka s specifičnijim kriterijima od obične stranice zadataka.</target>
         <note/>
       </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
@@ -2654,17 +2655,17 @@ Odaberi autocestu iz koje se približavaš raskrižju. Zatim dodirni strelicu za
       </trans-unit>
       <trans-unit id="What is the name of this quest? This is best written in the form of an action like 'Add Surface':" xml:space="preserve">
         <source>What is the name of this quest? This is best written in the form of an action like 'Add Surface':</source>
-        <target state="translated">Kako se zove ova potraga? Ovo je najbolje napisati u obliku radnje poput „Dodaj površinu”:</target>
+        <target state="translated">Kako se zove ovaj zadatak? Najbolje je zapisati ga u obliku radnje poput „Dodaj površinu”:</target>
         <note/>
       </trans-unit>
       <trans-unit id="What tag key is modified by this quest?" xml:space="preserve">
         <source>What tag key is modified by this quest?</source>
-        <target state="translated">Koji je ključ oznake promijenjen ovom pretragom?</target>
+        <target state="translated">Koji ključ oznake mijenja ovaj zadatak?</target>
         <note/>
       </trans-unit>
       <trans-unit id="What types of objects does this quest apply to?" xml:space="preserve">
         <source>What types of objects does this quest apply to?</source>
-        <target state="translated">Na koje se vrste objekata odnosi ova pretraga?</target>
+        <target state="translated">Na koje se vrste objekata odnosi ovaj zadatak?</target>
         <note/>
       </trans-unit>
       <trans-unit id="You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.&#10;&#10;To continue press Commit once again, otherwise press Cancel." xml:space="preserve">
