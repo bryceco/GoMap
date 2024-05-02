@@ -47,6 +47,7 @@
       </trans-unit>
       <trans-unit id="DFj-Vi-kBz.normalTitle" xml:space="preserve">
         <source>(0,0)</source>
+        <target state="translated">(0,0)</target>
         <note>Class = "UIButton"; normalTitle = "(0,0)"; ObjectID = "DFj-Vi-kBz"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityHint" xml:space="preserve">
