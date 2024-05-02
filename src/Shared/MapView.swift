@@ -155,7 +155,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	var mainViewController = MainViewController()
 	@IBOutlet var fpsLabel: FpsLabel!
 	@IBOutlet var userInstructionLabel: UILabel!
-	@IBOutlet var compassButton: UIButton!
+	@IBOutlet var compassButton: CompassButton!
 	@IBOutlet var flashLabel: UILabel!
 	@IBOutlet var aerialServiceLogo: UIButton!
 	@IBOutlet var helpButton: UIButton!
@@ -732,12 +732,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		// center button
 		centerOnGPSButton.isHidden = true
 
-		// compass button
-		compassButton.contentMode = .center
-		compassButton.setImage(nil, for: .normal)
-		compassButton.backgroundColor = UIColor.white
-		compass(on: compassButton.layer, withRadius: compassButton.bounds.size.width / 2)
-
 		// dPadView
 		dPadView.delegate = self
 
@@ -810,49 +804,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 			// get notes
 			updateMapMarkersFromServer(withDelay: 0, including: [])
-		}
-	}
-
-	func compass(on layer: CALayer, withRadius radius: CGFloat) {
-		let needleWidth = round(radius / 5)
-		layer.bounds = CGRect(x: 0, y: 0, width: 2 * radius, height: 2 * radius)
-		layer.cornerRadius = radius
-		do {
-			let north = CAShapeLayer()
-			let path = UIBezierPath()
-			path.move(to: CGPoint(x: -needleWidth, y: 0))
-			path.addLine(to: CGPoint(x: needleWidth, y: 0))
-			path.addLine(to: CGPoint(x: 0, y: -round(radius * 0.9)))
-			path.close()
-			north.path = path.cgPath
-			north.fillColor = UIColor.systemRed.cgColor
-			north.position = CGPoint(x: radius, y: radius)
-			layer.addSublayer(north)
-		}
-		do {
-			let south = CAShapeLayer()
-			let path = UIBezierPath()
-			path.move(to: CGPoint(x: -needleWidth, y: 0))
-			path.addLine(to: CGPoint(x: needleWidth, y: 0))
-			path.addLine(to: CGPoint(x: 0, y: round(radius * 0.9)))
-			path.close()
-			south.path = path.cgPath
-			south.fillColor = UIColor.lightGray.cgColor
-			south.position = CGPoint(x: radius, y: radius)
-			layer.addSublayer(south)
-		}
-		do {
-			let pivot = CALayer()
-			pivot.bounds = CGRect(
-				x: radius - needleWidth / 2,
-				y: radius - needleWidth / 2,
-				width: needleWidth,
-				height: needleWidth)
-			pivot.backgroundColor = UIColor.white.cgColor
-			pivot.borderColor = UIColor.black.cgColor
-			pivot.cornerRadius = needleWidth / 2
-			pivot.position = CGPoint(x: radius, y: radius)
-			layer.addSublayer(pivot)
 		}
 	}
 
@@ -1795,7 +1746,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		screenFromMapTransform = t
 
 		let screenAngle = screenFromMapTransform.rotation()
-		compassButton.transform = CGAffineTransform(rotationAngle: CGFloat(screenAngle))
+		compassButton.rotate(angle: CGFloat(screenAngle))
 		if !locationBallLayer.isHidden {
 			if gpsState == .HEADING, abs(locationBallLayer.heading - -.pi / 2) < 0.0001 {
 				// don't pin location ball to North until we've animated our rotation to north
