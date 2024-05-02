@@ -97,7 +97,8 @@ private enum ZLAYER: CGFloat {
 	case ROTATEGRAPHIC = -3
 	case BLINK = 4
 	case CROSSHAIRS = 5
-	case BALL = 6
+	case D_PAD = 6
+	case BALL = 10
 	case TOOLBAR = 90
 	case PUSHPIN = 105
 	case FLASH = 110
@@ -734,6 +735,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		// dPadView
 		dPadView.delegate = self
+		dPadView.layer.zPosition = ZLAYER.D_PAD.rawValue
 
 		// error message label
 		flashLabel.font = UIFont.preferredFont(forTextStyle: .title3)

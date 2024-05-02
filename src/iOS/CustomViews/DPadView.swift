@@ -48,7 +48,11 @@ class DPadView: UIView {
 		let arrowLayer = CAShapeLayer()
 		arrowLayer.path = arrowPath.cgPath
 		arrowLayer.fillColor = UIColor.white.cgColor
-		arrowLayer.strokeColor = UIColor.blue.cgColor
+		if #available(iOS 13.0, *) {
+			arrowLayer.strokeColor = UIColor.link.cgColor
+		} else {
+			arrowLayer.strokeColor = UIColor.systemBlue.cgColor
+		}
 		button.layer.addSublayer(arrowLayer)
 
 		switch dir {
@@ -89,7 +93,8 @@ class DPadView: UIView {
 		let plusLayer = CAShapeLayer()
 		plusLayer.path = plusPath.cgPath
 		plusLayer.fillColor = UIColor.lightGray.cgColor
-		plusLayer.strokeColor = UIColor.black.cgColor
+		MainViewController.applyButtonShadow(layer: plusLayer)
+		plusLayer.shadowPath = plusPath.cgPath
 		layer.addSublayer(plusLayer)
 
 		// draw triangle buttons

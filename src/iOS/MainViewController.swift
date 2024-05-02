@@ -278,6 +278,14 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 	// MARK: Button configuration
 
+	class func applyButtonShadow(layer: CALayer) {
+		layer.shadowColor = UIColor.black.cgColor
+		layer.shadowOffset = CGSize(width: 0, height: 0)
+		layer.shadowRadius = 4
+		layer.shadowOpacity = 0.5
+		layer.masksToBounds = false
+	}
+
 	func setButtonAppearances() {
 		// Update button styling
 		// This is called every time fonts change, screen rotates, etc so
@@ -314,13 +322,9 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			}
 			// shadow
 			if view.superview != undoRedoView {
-				view.layer.shadowColor = UIColor.black.cgColor
-				view.layer.shadowOffset = CGSize(width: 0, height: 0)
-				view.layer.shadowRadius = 3
-				view.layer.shadowOpacity = 0.5
+				Self.applyButtonShadow(layer: view.layer)
 				view.layer.shadowPath = UIBezierPath(roundedRect: view.bounds,
 				                                     cornerRadius: view.layer.cornerRadius).cgPath
-				view.layer.masksToBounds = false
 			}
 			// image blue tint
 			if let button = view as? UIButton {
@@ -405,7 +409,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			button.backgroundColor = UIColor.white
 		}
 		if button == mapView.aerialAlignmentButton {
-			button.backgroundColor = button.backgroundColor?.withAlphaComponent(0.6)
+			button.backgroundColor = button.backgroundColor?.withAlphaComponent(0.7)
 		}
 #endif
 	}
