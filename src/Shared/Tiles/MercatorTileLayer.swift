@@ -9,8 +9,6 @@
 import QuartzCore
 import UIKit
 
-// let CUSTOM_TRANSFORM = 1
-
 @inline(__always) private func modulus(_ a: Int, _ n: Int) -> Int {
 	var m = a % n
 	if m < 0 {
@@ -258,11 +256,6 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 			layer.isOpaque = true
 			layer.isHidden = true
 			layer.setValue(tileKey, forKey: "tileKey")
-			// #if !CUSTOM_TRANSFORM
-			//        layer?.anchorPoint = CGPoint(x: 0, y: 1)
-			//        let scale = 256.0 / Double((1 << zoomLevel))
-			//        layer?.frame = CGRect(x: CGFloat(Double(tileX) * scale), y: CGFloat(Double(tileY) * scale), width: CGFloat(scale), height: CGFloat(scale))
-			// #endif
 			layerDict[tileKey] = layer
 
 			isPerformingLayout.increment()
@@ -286,20 +279,16 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 					switch result {
 					case let .success(image):
 						if layer.superlayer != nil {
+							CATransaction.begin()
+							CATransaction.setDisableActions(true)
 #if os(iOS)
 							layer.contents = image.cgImage
 #else
 							layer.contents = image
 #endif
 							layer.isHidden = false
-							// #if CUSTOM_TRANSFORM
+							CATransaction.commit()
 							setNeedsLayout()
-							// #else
-							//                    let rc = mapView.boundingMapRectForScreen()
-							//                    removeUnneededTiles(for: rc, zoomLevel: Int(zoomLevel))
-							// #endif
-
-							// after we've set the content we need to prune other layers since we're no longer transparent
 						} else {
 							// no longer needed
 						}
@@ -340,7 +329,6 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		super.setNeedsLayout()
 	}
 
-	// #if CUSTOM_TRANSFORM
 	private func setSublayerPositions(_ _layerDict: [String: CALayer]) {
 		// update locations of tiles
 		let metersPerPixel = mapView.metersPerPixel()
@@ -367,8 +355,6 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 			layer.setAffineTransform(t)
 		}
 	}
-
-	// #endif
 
 	private func layoutSublayersSafe() {
 		let rect = mapView.boundingMapRectForScreen()
@@ -409,14 +395,9 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 			}
 		}
 
-		// #if CUSTOM_TRANSFORM
 		// update locations of tiles
 		setSublayerPositions(layerDict)
 		removeUnneededTiles(for: OSMRect(bounds), zoomLevel: zoomLevel)
-		// #else
-		//        let rc = mapView.boundingMapRectForScreen()
-		//        removeUnneededTiles(for: rc, zoomLevel: Int(zoomLevel))
-		// #endif
 	}
 
 	override func layoutSublayers() {
@@ -424,7 +405,10 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 			return
 		}
 		isPerformingLayout.increment()
+		CATransaction.begin()
+		CATransaction.setDisableActions(true)
 		layoutSublayersSafe()
+		CATransaction.commit()
 		isPerformingLayout.decrement()
 	}
 
