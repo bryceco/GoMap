@@ -35,7 +35,7 @@ func QuadKeyToTileXY(_ quadKey: String) -> (x: Int, y: Int, z: Int) {
 	var tileY = 0
 
 	var i = tileZ
-	for char in quadKey.reversed() {
+	for char in quadKey {
 		let mask = 1 << (i - 1)
 		switch char {
 		case "0":
