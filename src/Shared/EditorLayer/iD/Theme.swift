@@ -29,9 +29,8 @@ extension RenderInfo {
 	}
 
 	static func match(primary: String?, primaryValue: String?, status: String?, surface: String?,
-	                  tags: [String: String]) -> RenderInfo?
+	                  tags: [String: String]) -> RenderInfo
 	{
-		guard primary != nil || primaryValue != nil else { return nil }
 		let r = RenderInfo(key: primary ?? "", value: primaryValue)
 		if (tags["barrier"] == "hedge") || (primary == "landuse" && primaryValue == "flowerbed") ||
 			(primary == "landuse" && primaryValue == "forest") || (primary == "landuse" && primaryValue == "grass") ||

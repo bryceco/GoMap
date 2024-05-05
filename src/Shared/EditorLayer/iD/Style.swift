@@ -21,13 +21,13 @@
 
 import UIKit
 
-let primaries = [
+private let primaries = [
 	"building", "highway", "railway", "waterway", "aeroway", "aerialway",
 	"piste:type", "boundary", "power", "amenity", "natural", "landuse",
 	"leisure", "military", "place", "man_made", "route", "attraction",
 	"roller_coaster", "building:part", "indoor"
 ]
-let statuses = [
+private let statuses = [
 	// nonexistent, might be built
 	"proposed", "planned",
 	// under maintentance or between groundbreaking and opening
@@ -41,19 +41,19 @@ let statuses = [
 	// existent occasionally, e.g. stormwater drainage basin
 	"intermittent"
 ]
-let secondaries = [
+private let secondaries = [
 	"oneway", "bridge", "tunnel", "embankment", "cutting", "barrier",
 	"surface", "tracktype", "footway", "crossing", "service", "sport",
 	"public_transport", "location", "parking", "golf", "type", "leisure",
 	"man_made", "indoor", "construction", "proposed"
 ]
 
-let osmPathHighwayTagValues = [
+private let osmPathHighwayTagValues = [
 	"path": true, "footway": true, "cycleway": true, "bridleway": true, "pedestrian": true, "corridor": true,
 	"steps": true
 ]
 
-let osmPavedTags: [String: [String: Bool]] = [
+private let osmPavedTags: [String: [String: Bool]] = [
 	"surface": [
 		"paved": true,
 		"asphalt": true,
@@ -67,7 +67,7 @@ let osmPavedTags: [String: [String: Bool]] = [
 	]
 ]
 
-let osmSemipavedTags: [String: [String: Bool]] = [
+private let osmSemipavedTags: [String: [String: Bool]] = [
 	"surface": [
 		"cobblestone": true,
 		"cobblestone:flattened": true,
@@ -80,7 +80,7 @@ let osmSemipavedTags: [String: [String: Bool]] = [
 ]
 
 extension RenderInfo {
-	static func style(tags: [String: String]) -> RenderInfo? {
+	static func style(tags: [String: String]) -> RenderInfo {
 		var primary: String?
 		var primaryValue: String?
 		var status: String?
@@ -149,25 +149,11 @@ extension RenderInfo {
 			}
 		}
 
-		guard let r = RenderInfo.match(
+		return RenderInfo.match(
 			primary: primary,
 			primaryValue: primaryValue,
 			status: status,
 			surface: surface,
 			tags: tags)
-		else {
-			return nil
-		}
-		r.lineWidth = 2 * r.lineWidth
-		r.casingWidth = 2 * r.casingWidth
-		r.lineDashPattern = r.lineDashPattern?.map({ NSNumber(value: $0.doubleValue * 0.5) })
-		r.casingDashPattern = r.casingDashPattern?.map({ NSNumber(value: $0.doubleValue * 0.5) })
-		if r.casingColor == nil {
-			r.casingColor = UIColor.black
-			r.casingWidth = r.lineWidth + 1
-		} else if r.lineWidth >= r.casingWidth {
-			r.casingWidth = r.lineWidth + 1
-		}
-		return r
 	}
 }

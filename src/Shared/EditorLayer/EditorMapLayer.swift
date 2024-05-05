@@ -1474,10 +1474,7 @@ final class EditorMapLayer: CALayer {
 		// get renderInfo for objects
 		for object in objects {
 			if object.renderInfo == nil {
-				object.renderInfo = RenderInfoDatabase.shared.renderInfoForObject(object)
-			}
-			if object.renderPriorityCached == 0 {
-				object.renderPriorityCached = object.renderInfo!.renderPriorityForObject(object)
+				object.renderInfo = RenderInfo.forObject(object)
 			}
 		}
 
@@ -1489,7 +1486,7 @@ final class EditorMapLayer: CALayer {
 		var addressCount = 0
 		while addressCount < objectLimit {
 			let obj = objects[objectLimit - addressCount - 1]
-			if !obj.renderInfo!.isAddressPoint() {
+			if !obj.renderInfo!.isAddressPoint {
 				break
 			}
 			addressCount += 1

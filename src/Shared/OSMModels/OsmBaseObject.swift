@@ -70,8 +70,6 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 	final var _constructed = false
 
-	public final var renderPriorityCached = 0
-
 	private(set) final var deleted = false
 
 	final var renderInfo: RenderInfo?
@@ -414,7 +412,6 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 	func clearCachedProperties() {
 		renderInfo = nil
-		renderPriorityCached = 0
 		isShown = .UNKNOWN
 		_boundingBox = nil
 		_geometry = nil
