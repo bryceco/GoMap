@@ -1114,6 +1114,18 @@
             "state" : "new",
             "value" : "(0,0)"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(0,0)"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(0,0)"
+          }
         }
       }
     },

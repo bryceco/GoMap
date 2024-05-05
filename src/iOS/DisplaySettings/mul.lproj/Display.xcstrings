@@ -7172,7 +7172,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pretrage"
+            "value" : "Zadaci"
           }
         },
         "ja" : {
@@ -11570,7 +11570,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "URL adresa predloška od servera s pločicama"
+            "value" : "Predložak URL adrese servera s pločicama"
           }
         },
         "id" : {

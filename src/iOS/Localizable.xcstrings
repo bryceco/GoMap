@@ -15618,7 +15618,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kopija svih korisnički definiranih potraga kopirana je u međuspremnik u JSON formatu. Možeš ih negdje umetnuti za zadržavanje kopije ili za slanje nekoj drugoj osobi."
+            "value" : "Kopija svih korisnički definiranih zadataka kopirana je u međuspremnik u JSON formatu. Možeš ih negdje umetnuti za zadržavanje kopije ili za slanje nekoj drugoj osobi."
           }
         },
         "ja" : {
@@ -17891,7 +17891,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Napredna pretraga"
+            "value" : "Napredni uređivač zadataka"
           }
         },
         "ja" : {
@@ -19750,7 +19750,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Izradi novu pretragu"
+            "value" : "Izradi novi zadatak"
           }
         },
         "ja" : {
@@ -30124,7 +30124,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uvezi pretrage"
+            "value" : "Uvezi zadatke"
           }
         },
         "ja" : {
@@ -38973,7 +38973,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Umetni JSON za tvoje pretrage u donje polje"
+            "value" : "Umetni JSON za tvoje zadatke u donje polje"
           }
         },
         "ja" : {
@@ -40819,7 +40819,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Navedi jedan simbol (emoji ili unicode znak) za identifikaciju ove pretrage:"
+            "value" : "Zadaj jedan simbol (emoji ili unicode znak) za identifikaciju ovog zadatka:"
           }
         },
         "ja" : {
@@ -41021,7 +41021,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pretraga"
+            "value" : "Zadatak"
           }
         },
         "ja" : {
@@ -41091,7 +41091,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Greška u definiciji pretrage"
+            "value" : "Greška u definiciji zadatka"
           }
         },
         "ja" : {
@@ -41161,7 +41161,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pretrage su uspješno uvezene."
+            "value" : "Zadaci su uspješno uvezeni."
           }
         },
         "ja" : {
@@ -47672,7 +47672,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ova stranica omogućuje dizajniranje pretrage s specifičnijim kriterijima od obične stranice pretrage."
+            "value" : "Ova stranica omogućuje izradu zadataka s specifičnijim kriterijima od obične stranice zadataka."
           }
         },
         "ja" : {
@@ -51524,7 +51524,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kako se zove ova potraga? Ovo je najbolje napisati u obliku radnje poput „Dodaj površinu”:"
+            "value" : "Kako se zove ovaj zadatak? Najbolje je zapisati ga u obliku radnje poput „Dodaj površinu”:"
           }
         },
         "ja" : {
@@ -51588,7 +51588,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Koji je ključ oznake promijenjen ovom pretragom?"
+            "value" : "Koji ključ oznake mijenja ovaj zadatak?"
           }
         },
         "ja" : {
@@ -51652,7 +51652,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Na koje se vrste objekata odnosi ova pretraga?"
+            "value" : "Na koje se vrste objekata odnosi ovaj zadatak?"
           }
         },
         "ja" : {
