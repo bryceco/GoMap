@@ -407,4 +407,54 @@ final class PresetFeature: CustomDebugStringConvertible {
 		}
 		return true
 	}
+
+	private var cachedWikiDescription: Any? = NSNull()
+	func wikiDescription(update: @escaping (String) -> Void) -> String? {
+		if nsiSuggestion {
+			// NSI entries have their own, more specific description
+			return nil
+		}
+		if !(cachedWikiDescription is NSNull) {
+			return cachedWikiDescription as! String?
+		}
+		cachedWikiDescription = nil
+		let key: String
+		let value: String
+		if let reference = reference {
+			key = reference["key"]!
+			value = reference["value"] ?? ""
+		} else if tags.count == 1 {
+			let kv = tags.first!
+			key = kv.key
+			value = kv.value
+		} else {
+			return nil
+		}
+
+		let languageCode = PresetLanguages.preferredPresetLanguageCode()
+		if let result =
+			WikiPage.shared.wikiDataFor(key: key,
+			                            value: value,
+			                            language: languageCode,
+			                            imageWidth: 0,
+			                            update: { result in
+			                            	if let result = result {
+			                            		self.cachedWikiDescription = result.description
+			                            		update(result.description)
+			                            	} else {
+			                            		TagInfo.wikiInfoFor(key: key,
+			                            		                    value: value,
+			                            		                    update: { result in
+			                            		                    	guard result != "" else { return }
+			                            		                    	self.cachedWikiDescription = result
+			                            		                    	update(result)
+			                            		                    })
+			                            	}
+			                            })
+		{
+			cachedWikiDescription = result.description
+			return result.description
+		}
+		return nil
+	}
 }

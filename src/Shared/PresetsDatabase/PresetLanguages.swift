@@ -28,20 +28,21 @@ final class PresetLanguages {
 		return code == nil
 	}
 
-	static let preferredLanguageCode_ = {
-		if let pref = Locale.preferredLanguages.first {
-			// the language code includes a region that we don't want, so rebuild it without it
-			let locale = Locale(identifier: pref)
-			let code = [locale.languageCode, locale.scriptCode]
-				.compactMap { $0 }
-				.joined(separator: "-")
-			return code
-		}
-		return "en"
-	}()
+	private static let preferredLanguageCodes_: [String] = Locale.preferredLanguages.map {
+		// the language code includes a region that we don't want, so rebuild it without it
+		let locale = Locale(identifier: $0)
+		let code = [locale.languageCode, locale.scriptCode]
+			.compactMap { $0 }
+			.joined(separator: "-")
+		return code
+	}
+
+	class func preferredLanguageCodes() -> [String] {
+		return Self.preferredLanguageCodes_
+	}
 
 	class func preferredLanguageCode() -> String {
-		return Self.preferredLanguageCode_
+		return Self.preferredLanguageCodes().first ?? "en"
 	}
 
 	class func preferredPresetLanguageCode() -> String {
@@ -53,7 +54,7 @@ final class PresetLanguages {
 		return matches.first ?? "en"
 	}
 
-	// code is either a language core, or nil if the default is requested
+	// code is either a language code, or nil if the default is requested
 	class func setPreferredLanguageCode(_ code: String?) {
 		UserPrefs.shared.set(code, forKey: .preferredLanguage)
 	}

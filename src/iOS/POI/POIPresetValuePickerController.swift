@@ -33,7 +33,8 @@ class POIPresetValuePickerController: UITableViewController {
 				value: preset.tagValue,
 				language: languageCode,
 				imageWidth: Self.ImageWidth,
-				completion: { meta in
+				update: { meta in
+					guard let meta = meta else { return }
 					let tag = meta.key + "=" + meta.value
 					self.descriptions[tag] = meta.description
 					self.images[tag] = meta.image

@@ -175,7 +175,13 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		}
 		cell.pickerImage.contentMode = .scaleAspectFit
 		cell.setNeedsUpdateConstraints()
-		cell.details.text = feature.summary()
+		let description = feature.wikiDescription(update: { desc in
+			cell.details.text = desc
+			if let index = self.tableView.indexPath(for: cell) {
+				self.tableView.reloadRows(at: [index], with: .automatic)
+			}
+		})
+		cell.details.text = description ?? feature.summary()
 		cell.accessoryType = currentFeature === feature ? .checkmark : .none
 		cell.featureID = feature.featureID
 		return cell

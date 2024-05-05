@@ -124,4 +124,33 @@ class TagInfo {
 		}
 		return cached?.result ?? []
 	}
+
+	// search the taginfo database
+	class func wikiInfoFor(key: String, value: String, update: @escaping (String) -> Void) {
+		DispatchQueue.global(qos: .default).async(execute: {
+			let abibase = "https://taginfo.openstreetmap.org/api/4/"
+			let urlText: String
+			if value == "" {
+				urlText = "\(abibase)key/wiki_pages?key=\(key)"
+			} else {
+				urlText = "\(abibase)tag/wiki_pages?key=\(key)&value=\(value)"
+			}
+			guard let url = URL(string: urlText),
+			      let rawData = try? Data(contentsOf: url)
+			else { return }
+
+			let json = try? JSONSerialization.jsonObject(with: rawData, options: []) as? [String: Any]
+			let results = json?["data"] as? [[String: Any]] ?? []
+			for lang in [PresetLanguages.preferredPresetLanguageCode()] + PresetLanguages.preferredLanguageCodes() {
+				guard let wiki = results.first(where: { $0["lang"] as? String == lang }),
+				      let description = wiki["description"] as? String
+				else {
+					continue
+				}
+				DispatchQueue.main.async(execute: {
+					update(description)
+				})
+			}
+		})
+	}
 }

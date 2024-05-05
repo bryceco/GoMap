@@ -20,12 +20,12 @@ class CompassButton: UIButton {
 		super.init(frame: frame)
 		commonInit()
 	}
-	
+
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
 		commonInit()
 	}
-	
+
 	func compass(withRadius radius: CGFloat) {
 		let needleWidth = round(radius / 5)
 		layer.bounds = CGRect(x: 0, y: 0, width: 2 * radius, height: 2 * radius)

@@ -294,7 +294,7 @@ class WikiPage {
 	// Returns description and image information about a key/value pair. If the
 	// data is cached it is returned immediately, otherwise it is returned via callback.
 	func wikiDataFor(key: String, value: String, language: String, imageWidth: Int,
-	                 completion: @escaping (KeyValueMetadata) -> Void) -> KeyValueMetadata?
+	                 update: @escaping (KeyValueMetadata?) -> Void) -> KeyValueMetadata?
 	{
 		let meta = descriptionCache.object(
 			withKey: language + ":" + key + "=" + value,
@@ -318,16 +318,19 @@ class WikiPage {
 				self.descriptionForJson(data: data, language: language, imageWidth: imageWidth)
 			},
 			completion: { result in
-				guard let result = try? result.get() else { return }
+				guard let result = try? result.get() else {
+					update(nil)
+					return
+				}
 				let kv = KeyValueMetadata(key: key,
 				                          value: value,
 				                          description: result.description,
 				                          imagePath: result.imagePath,
 				                          image: nil)
-				if let image = self.imageFor(meta: kv, completion: completion) {
-					completion(image)
+				if let image = self.imageFor(meta: kv, completion: update) {
+					update(image)
 				} else {
-					completion(kv)
+					update(kv)
 				}
 			})
 		guard let meta = meta else { return nil }
@@ -346,7 +349,7 @@ class WikiPage {
 				                          description: meta.description,
 				                          imagePath: meta.imagePath,
 				                          image: try? result.get())
-				completion(kv)
+				update(kv)
 			})
 		{
 			let kv = KeyValueMetadata(key: key,
