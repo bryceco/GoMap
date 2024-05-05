@@ -322,6 +322,9 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			}
 			// shadow
 			if view.superview != undoRedoView {
+				if view == mapView.aerialAlignmentButton {
+					print("\(view.bounds)")
+				}
 				Self.applyButtonShadow(layer: view.layer)
 				view.layer.shadowPath = UIBezierPath(roundedRect: view.bounds,
 				                                     cornerRadius: view.layer.cornerRadius).cgPath
@@ -409,7 +412,12 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			button.backgroundColor = UIColor.white
 		}
 		if button == mapView.aerialAlignmentButton {
-			button.backgroundColor = button.backgroundColor?.withAlphaComponent(0.7)
+			button.backgroundColor = button.backgroundColor?.withAlphaComponent(0.4)
+			// shadows don't work correctly with semi-transparent views
+			// see https://ikyle.me/blog/2020/calayer-external-only-shadow for a workaround
+			button.layer.shadowColor = nil
+			button.layer.shadowRadius = 0
+			button.layer.shadowOpacity = 0.0
 		}
 #endif
 	}
