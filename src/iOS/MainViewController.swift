@@ -322,9 +322,6 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			}
 			// shadow
 			if view.superview != undoRedoView {
-				if view == mapView.aerialAlignmentButton {
-					print("\(view.bounds)")
-				}
 				Self.applyButtonShadow(layer: view.layer)
 				view.layer.shadowPath = UIBezierPath(roundedRect: view.bounds,
 				                                     cornerRadius: view.layer.cornerRadius).cgPath
