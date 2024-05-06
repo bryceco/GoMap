@@ -128,6 +128,15 @@
 		02CB2408265DB7CB00835F32 /* HoursRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB2404265DB7CB00835F32 /* HoursRecognizer.swift */; };
 		02CB523429907832007F758D /* QuestMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB523329907832007F758D /* QuestMarker.swift */; };
 		02CB52362990801E007F758D /* QuestList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB52352990801E007F758D /* QuestList.swift */; };
+		02CBF3B32BE8529A000DE2AD /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02CBF3B22BE8529A000DE2AD /* WidgetKit.framework */; };
+		02CBF3B52BE8529A000DE2AD /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02CBF3B42BE8529A000DE2AD /* SwiftUI.framework */; };
+		02CBF3B82BE8529A000DE2AD /* GpxWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CBF3B72BE8529A000DE2AD /* GpxWidgetBundle.swift */; };
+		02CBF3BA2BE8529A000DE2AD /* GpxWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CBF3B92BE8529A000DE2AD /* GpxWidgetLiveActivity.swift */; };
+		02CBF3BE2BE8529B000DE2AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02CBF3BD2BE8529B000DE2AD /* Assets.xcassets */; };
+		02CBF3C22BE8529B000DE2AD /* GpxWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 02CBF3B12BE8529A000DE2AD /* GpxWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		02CBF3C82BE85829000DE2AD /* GpxTrackWidgetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CBF3C72BE85829000DE2AD /* GpxTrackWidgetManager.swift */; };
+		02CBF3CC2BE8655D000DE2AD /* GpxTrackAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CBF3CB2BE8655D000DE2AD /* GpxTrackAttributes.swift */; };
+		02CBF3CD2BE86646000DE2AD /* GpxTrackAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CBF3CB2BE8655D000DE2AD /* GpxTrackAttributes.swift */; };
 		02CC01D12584195E004444EF /* PresetFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC01D02584195E004444EF /* PresetFeature.swift */; };
 		02CC01DC25843F2F004444EF /* PresetLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC01DB25843F2F004444EF /* PresetLanguages.swift */; };
 		02CD9974265C65C200213AD6 /* EditorFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CD9973265C65C200213AD6 /* EditorFilters.swift */; };
@@ -273,6 +282,13 @@
 /* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
+		02CBF3C02BE8529B000DE2AD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 02ACBA2616713CCB00BB4414 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 02CBF3B02BE8529A000DE2AD;
+			remoteInfo = GpxWidgetExtension;
+		};
 		02D6238726A6628300A4F147 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 02ACBA2616713CCB00BB4414 /* Project object */;
@@ -303,6 +319,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				02CBF3C22BE8529B000DE2AD /* GpxWidgetExtension.appex in Embed Foundation Extensions */,
 				02D6238926A6628300A4F147 /* PhotoShare.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
@@ -431,6 +448,16 @@
 		02CB52352990801E007F758D /* QuestList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestList.swift; sourceTree = "<group>"; };
 		02CB523D299097C3007F758D /* QuestSolver.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QuestSolver.storyboard; sourceTree = "<group>"; };
 		02CB523E299097C3007F758D /* QuestSolverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestSolverController.swift; sourceTree = "<group>"; };
+		02CBF3B12BE8529A000DE2AD /* GpxWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = GpxWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		02CBF3B22BE8529A000DE2AD /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		02CBF3B42BE8529A000DE2AD /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		02CBF3B72BE8529A000DE2AD /* GpxWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpxWidgetBundle.swift; sourceTree = "<group>"; };
+		02CBF3B92BE8529A000DE2AD /* GpxWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpxWidgetLiveActivity.swift; sourceTree = "<group>"; };
+		02CBF3BD2BE8529B000DE2AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		02CBF3BF2BE8529B000DE2AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		02CBF3C32BE8529B000DE2AD /* GpxWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GpxWidgetExtension.entitlements; sourceTree = "<group>"; };
+		02CBF3C72BE85829000DE2AD /* GpxTrackWidgetManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxTrackWidgetManager.swift; sourceTree = "<group>"; };
+		02CBF3CB2BE8655D000DE2AD /* GpxTrackAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpxTrackAttributes.swift; sourceTree = "<group>"; };
 		02CC01D02584195E004444EF /* PresetFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetFeature.swift; sourceTree = "<group>"; };
 		02CC01DB25843F2F004444EF /* PresetLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetLanguages.swift; sourceTree = "<group>"; };
 		02CD9973265C65C200213AD6 /* EditorFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorFilters.swift; sourceTree = "<group>"; };
@@ -592,6 +619,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		02CBF3AE2BE8529A000DE2AD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02CBF3B52BE8529A000DE2AD /* SwiftUI.framework in Frameworks */,
+				02CBF3B32BE8529A000DE2AD /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		02D6237C26A6628300A4F147 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -673,6 +709,7 @@
 				64348CEB225E7CD900ADE7FB /* GoMapTests */,
 				64348D09225EA24E00ADE7FB /* GoMapUITests */,
 				02D6238026A6628300A4F147 /* PhotoShare */,
+				02CBF3B62BE8529A000DE2AD /* GpxWidget */,
 				02ACBA3216713CCB00BB4414 /* Frameworks */,
 				02ACBA3016713CCB00BB4414 /* Products */,
 			);
@@ -685,6 +722,7 @@
 				64348CEA225E7CD900ADE7FB /* GoMapTests.xctest */,
 				64348D08225EA24E00ADE7FB /* GoMapUITests.xctest */,
 				02D6237F26A6628300A4F147 /* PhotoShare.appex */,
+				02CBF3B12BE8529A000DE2AD /* GpxWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -712,6 +750,8 @@
 				0277E29316A673CC00456BED /* OpenGLES.framework */,
 				02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */,
 				02ACBA3316713CCB00BB4414 /* UIKit.framework */,
+				02CBF3B22BE8529A000DE2AD /* WidgetKit.framework */,
+				02CBF3B42BE8529A000DE2AD /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -726,6 +766,8 @@
 				64D74BF02253DF39004FFD20 /* Direction */,
 				0244399629CA9A28009FC2D0 /* DisplaySettings */,
 				02E9ABBE2BA1502600F0EF69 /* GoogleMaps.secret */,
+				02CBF3CB2BE8655D000DE2AD /* GpxTrackAttributes.swift */,
+				02CBF3C72BE85829000DE2AD /* GpxTrackWidgetManager.swift */,
 				02BC04E924C6767100BFA5EF /* Height */,
 				02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */,
 				C3D096DA263EB73E00E3B129 /* main.swift */,
@@ -881,6 +923,18 @@
 				02CB523E299097C3007F758D /* QuestSolverController.swift */,
 			);
 			path = Quests;
+			sourceTree = "<group>";
+		};
+		02CBF3B62BE8529A000DE2AD /* GpxWidget */ = {
+			isa = PBXGroup;
+			children = (
+				02CBF3BD2BE8529B000DE2AD /* Assets.xcassets */,
+				02CBF3B72BE8529A000DE2AD /* GpxWidgetBundle.swift */,
+				02CBF3C32BE8529B000DE2AD /* GpxWidgetExtension.entitlements */,
+				02CBF3B92BE8529A000DE2AD /* GpxWidgetLiveActivity.swift */,
+				02CBF3BF2BE8529B000DE2AD /* Info.plist */,
+			);
+			path = GpxWidget;
 			sourceTree = "<group>";
 		};
 		02CC01CF2584190A004444EF /* PresetsDatabase */ = {
@@ -1134,6 +1188,7 @@
 			);
 			dependencies = (
 				02D6238826A6628300A4F147 /* PBXTargetDependency */,
+				02CBF3C12BE8529B000DE2AD /* PBXTargetDependency */,
 			);
 			name = "Go Map!!";
 			packageProductDependencies = (
@@ -1143,6 +1198,23 @@
 			productName = OSMiOS;
 			productReference = 02ACBA2F16713CCB00BB4414 /* Go Map!!.app */;
 			productType = "com.apple.product-type.application";
+		};
+		02CBF3B02BE8529A000DE2AD /* GpxWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 02CBF3C62BE8529B000DE2AD /* Build configuration list for PBXNativeTarget "GpxWidgetExtension" */;
+			buildPhases = (
+				02CBF3AD2BE8529A000DE2AD /* Sources */,
+				02CBF3AE2BE8529A000DE2AD /* Frameworks */,
+				02CBF3AF2BE8529A000DE2AD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GpxWidgetExtension;
+			productName = GpxWidgetExtension;
+			productReference = 02CBF3B12BE8529A000DE2AD /* GpxWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		02D6237E26A6628300A4F147 /* PhotoShare */ = {
 			isa = PBXNativeTarget;
@@ -1205,7 +1277,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastSwiftUpdateCheck = 1250;
+				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1520;
 				ORGANIZATIONNAME = "Bryce Cogswell";
 				TargetAttributes = {
@@ -1215,6 +1287,9 @@
 								enabled = 1;
 							};
 						};
+					};
+					02CBF3B02BE8529A000DE2AD = {
+						CreatedOnToolsVersion = 15.3;
 					};
 					02D6237E26A6628300A4F147 = {
 						CreatedOnToolsVersion = 12.5.1;
@@ -1283,6 +1358,7 @@
 				64348CE9225E7CD900ADE7FB /* GoMapTests */,
 				64348D07225EA24E00ADE7FB /* GoMapUITests */,
 				02D6237E26A6628300A4F147 /* PhotoShare */,
+				02CBF3B02BE8529A000DE2AD /* GpxWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -1314,6 +1390,14 @@
 				0287D25229947B2900BEAD9E /* QuestChooser.storyboard in Resources */,
 				023B892B19C148790060CDB5 /* Images.xcassets in Resources */,
 				02079803299470FB00D3C654 /* QuestBuilder.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		02CBF3AF2BE8529A000DE2AD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02CBF3BE2BE8529B000DE2AD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1357,6 +1441,7 @@
 				EDB2C3A62609E6E100C08293 /* LoginViewController.swift in Sources */,
 				647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */,
 				021FADD225873CC000F6E1C0 /* PresetKeyUserDefined.swift in Sources */,
+				02CBF3C82BE85829000DE2AD /* GpxTrackWidgetManager.swift in Sources */,
 				ED56E5B526026542000B368C /* ClearCacheViewController.swift in Sources */,
 				026FC7682650A17B005DDAFF /* VoiceAnnouncement.swift in Sources */,
 				ED56E5E426028181000B368C /* DisplayViewController.swift in Sources */,
@@ -1422,6 +1507,7 @@
 				024909CB267D99190027E531 /* OsmDownloader.swift in Sources */,
 				02696CD52B8EF19400AB70B6 /* HealthKitRoutes.swift in Sources */,
 				02A123EA264C8BA3005638C1 /* TileServerList.swift in Sources */,
+				02CBF3CC2BE8655D000DE2AD /* GpxTrackAttributes.swift in Sources */,
 				C3D096AC263D48F700E3B129 /* AppDelegate.swift in Sources */,
 				023320A22BE07B2000E3311A /* DataOverlayLayer.swift in Sources */,
 				02F2449A264F635800C42E41 /* PathUtil.swift in Sources */,
@@ -1522,6 +1608,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		02CBF3AD2BE8529A000DE2AD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02CBF3CD2BE86646000DE2AD /* GpxTrackAttributes.swift in Sources */,
+				02CBF3BA2BE8529A000DE2AD /* GpxWidgetLiveActivity.swift in Sources */,
+				02CBF3B82BE8529A000DE2AD /* GpxWidgetBundle.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		02D6237B26A6628300A4F147 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1564,6 +1660,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		02CBF3C12BE8529B000DE2AD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 02CBF3B02BE8529A000DE2AD /* GpxWidgetExtension */;
+			targetProxy = 02CBF3C02BE8529B000DE2AD /* PBXContainerItemProxy */;
+		};
 		02D6238826A6628300A4F147 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 02D6237E26A6628300A4F147 /* PhotoShare */;
@@ -1869,6 +1970,108 @@
 			};
 			name = Release;
 		};
+		02CBF3C42BE8529B000DE2AD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = GpxWidget/GpxWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3900;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = MKTTC6734C;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GpxWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = GpxWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Bryce Cogswell. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 3.9.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap.GpxWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		02CBF3C52BE8529B000DE2AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = GpxWidget/GpxWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 3900;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = MKTTC6734C;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GpxWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = GpxWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Bryce Cogswell. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 3.9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap.GpxWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		02D6238C26A6628300A4F147 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2145,6 +2348,15 @@
 			buildConfigurations = (
 				02ACBA6216713CCB00BB4414 /* Debug */,
 				02ACBA6316713CCB00BB4414 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		02CBF3C62BE8529B000DE2AD /* Build configuration list for PBXNativeTarget "GpxWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				02CBF3C42BE8529B000DE2AD /* Debug */,
+				02CBF3C52BE8529B000DE2AD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

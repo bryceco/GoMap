@@ -29139,6 +29139,9 @@
         }
       }
     },
+    "Enable GPX" : {
+
+    },
     "Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" : {
       "localizations" : {
         "ar" : {
@@ -47329,6 +47332,9 @@
           }
         }
       }
+    },
+    "Start/Stop recording GPX tracks." : {
+
     },
     "Stop" : {
       "localizations" : {

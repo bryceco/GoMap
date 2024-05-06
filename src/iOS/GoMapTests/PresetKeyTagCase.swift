@@ -14,8 +14,8 @@ class PresetKeyTagCase: XCTestCase {
 	func testInitWithPresetsShouldPreferThePlaceholderParameterIfProvided() {
 		let placeholder = "Lorem ipsum"
 
-		let firstPreset = PresetValue(name: "Ja", details: "", tagValue: "yes")
-		let secondPreset = PresetValue(name: "Nein", details: "", tagValue: "no")
+		let firstPreset = PresetValue(name: "Ja", details: "", icon: nil, tagValue: "yes")
+		let secondPreset = PresetValue(name: "Nein", details: "", icon: nil, tagValue: "no")
 
 		let tagKey = PresetKey(name: "Rückenlehne",
 		                       type: "text",
@@ -32,10 +32,10 @@ class PresetKeyTagCase: XCTestCase {
 
 	func testInitWithPresetsShouldUseTheirNamesForPlaceholder() {
 		let firstPresetName = "Ja"
-		let firstPreset = PresetValue(name: firstPresetName, details: "", tagValue: "yes")
+		let firstPreset = PresetValue(name: firstPresetName, details: "", icon: nil, tagValue: "yes")
 
 		let secondPresentName = "Nein"
-		let secondPreset = PresetValue(name: secondPresentName, details: "", tagValue: "no")
+		let secondPreset = PresetValue(name: secondPresentName, details: "", icon: nil, tagValue: "no")
 
 		let tagKey = PresetKey(name: "Rückenlehne",
 		                       type: "text",

@@ -11,7 +11,6 @@ import UIKit
 
 final class GpxLayer: DrawingLayer, GetDiskCacheSize, DrawingLayerDelegate {
 	private static let DefaultExpirationDays = 7
-
 	var stabilizingCount = 0
 
 	private(set) var activeTrack: GpxTrack? // track currently being recorded
@@ -47,6 +46,10 @@ final class GpxLayer: DrawingLayer, GetDiskCacheSize, DrawingLayerDelegate {
 		activeTrack = GpxTrack()
 		stabilizingCount = 0
 		selectedTrack = activeTrack
+
+		if #available(iOS 16.2, *) {
+			GpxTrackWidgetManager.shared.startTrack(fromWidget: false)
+		}
 	}
 
 	func endActiveTrack() {
@@ -55,6 +58,10 @@ final class GpxLayer: DrawingLayer, GetDiskCacheSize, DrawingLayerDelegate {
 			setNeedsLayout()
 
 			activeTrack.finish()
+
+			if #available(iOS 16.2, *) {
+				GpxTrackWidgetManager.shared.endTrack(fromWidget: false)
+			}
 
 			// add to list of previous tracks
 			if activeTrack.points.count > 1 {
@@ -129,6 +136,11 @@ final class GpxLayer: DrawingLayer, GetDiskCacheSize, DrawingLayerDelegate {
 
 	func addPoint(_ location: CLLocation) {
 		if let activeTrack = activeTrack {
+			defer {
+				if #available(iOS 16.2, *) {
+					GpxTrackWidgetManager.shared.updateTrack()
+				}
+			}
 			// ignore bad data while starting up
 			stabilizingCount += 1
 			if stabilizingCount >= 5 {
