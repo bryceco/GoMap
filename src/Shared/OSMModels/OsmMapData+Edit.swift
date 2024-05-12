@@ -751,6 +751,20 @@ extension OsmMapData {
 		}
 	}
 
+	func canExtractNode(_ node: OsmNode) throws -> EditAction {
+		return { [self] in
+			registerUndoCommentString(NSLocalizedString("Extract Node",
+			                                            comment: "Edit action"))
+			let newNode = createNode(atLocation: node.latLon)
+			for way in waysContaining(node) {
+				while let index = way.nodes.firstIndex(of: node) {
+					way.addNode(newNode, atIndex: index + 1, undo: undoManager)
+					way.removeNodeAtIndex(index, undo: undoManager)
+				}
+			}
+		}
+	}
+
 	// returns the new other half
 	func canSplitWay(_ selectedWay: OsmWay, at node: OsmNode) throws -> EditActionReturnWay {
 		return { [self] in

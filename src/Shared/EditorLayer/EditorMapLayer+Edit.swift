@@ -613,6 +613,7 @@ extension EditorMapLayer {
 				let disconnect = parentWays.count > 1 ||
 					selectedNode.hasInterestingTags() ||
 					selectedWay.isSelfIntersection(selectedNode)
+				let extract = selectedNode.hasInterestingTags()
 				let split = selectedWay.isClosed() ||
 					(selectedNode != selectedWay.nodes[0] && selectedNode != selectedWay.nodes.last)
 				let join = parentWays.count > 1
@@ -623,6 +624,9 @@ extension EditorMapLayer {
 
 				if disconnect {
 					actionList.append(.DISCONNECT)
+				}
+				if extract {
+					actionList.append(.EXTRACTNODE)
 				}
 				if split {
 					actionList.append(.SPLIT)
@@ -684,7 +688,7 @@ extension EditorMapLayer {
 				selectedNode = nil
 				owner.didUpdateObject()
 			}
-		case .SPLIT, .JOIN, .DISCONNECT, .RESTRICT, .ADDNOTE, .DELETE, .MORE:
+		case .SPLIT, .JOIN, .DISCONNECT, .EXTRACTNODE, .RESTRICT, .ADDNOTE, .DELETE, .MORE:
 			break
 		}
 
@@ -749,6 +753,9 @@ extension EditorMapLayer {
 				let disconnect = try mapData.canDisconnectWay(selectedWay!, at: selectedNode!)
 				selectedNode = disconnect()
 				owner.placePushpinForSelection(at: nil)
+			case .EXTRACTNODE:
+				let extract = try mapData.canExtractNode(selectedNode!)
+				extract()
 			case .SPLIT:
 				let split = try mapData.canSplitWay(selectedWay!, at: selectedNode!)
 				_ = split()

@@ -28916,6 +28916,9 @@
         }
       }
     },
+    "Extract Node" : {
+      "comment" : "Edit action"
+    },
     "Filters" : {
       "comment" : "Header for quest filters section",
       "localizations" : {

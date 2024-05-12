@@ -52,6 +52,7 @@ enum EDIT_ACTION: Int {
 	case ROTATE
 	case JOIN
 	case DISCONNECT
+	case EXTRACTNODE
 	case CIRCULARIZE
 	case COPYTAGS
 	case PASTETAGS
@@ -70,6 +71,7 @@ enum EDIT_ACTION: Int {
 		case .CIRCULARIZE: return NSLocalizedString("Make Circular", comment: "Edit action")
 		case .JOIN: return NSLocalizedString("Join", comment: "Edit action")
 		case .DISCONNECT: return NSLocalizedString("Disconnect", comment: "Edit action")
+		case .EXTRACTNODE: return NSLocalizedString("Extract Node", comment: "Edit action")
 		case .COPYTAGS: return NSLocalizedString("Copy Tags", comment: "Edit action")
 		case .PASTETAGS: return NSLocalizedString("Paste", comment: "Edit action")
 		case .EDITTAGS: return NSLocalizedString("Tags", comment: "Edit action")
