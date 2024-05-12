@@ -879,7 +879,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				layer.bounds = bounds
 			case .view(let view):
 				view.frame = bounds
-				view.bounds = bounds
+				if view is MapboxVectorTilesView {
+					view.bounds = bounds.offsetBy(dx: bounds.width/2, dy: bounds.height/2)
+				} else {
+					view.bounds = bounds
+				}
 			}
 		}
 

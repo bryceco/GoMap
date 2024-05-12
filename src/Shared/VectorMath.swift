@@ -646,6 +646,12 @@ struct LatLon: Equatable, Codable {
 	}
 }
 
+extension CLLocationCoordinate2D {
+	@inline(__always) init(_ latlon: LatLon) {
+		self.init(latitude: latlon.lat, longitude: latlon.lon)
+	}
+}
+
 // MARK: miscellaneous
 
 /// Radius in meters
