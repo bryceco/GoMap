@@ -129,7 +129,8 @@ private let DisplayLinkHeading = "Heading"
 private let DisplayLinkPanning = "Panning" // disable gestures inside toolbar buttons
 
 final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheetDelegate,
-	UIGestureRecognizerDelegate, SKStoreProductViewControllerDelegate, DPadDelegate
+	UIGestureRecognizerDelegate, SKStoreProductViewControllerDelegate, DPadDelegate,
+	UISheetPresentationControllerDelegate
 {
 	var lastMouseDragPos = CGPoint.zero
 	var progressActive = AtomicInt(0)
@@ -2475,6 +2476,14 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					let vc = QuestSolverController.instantiate(marker: marker,
 					                                           object: object,
 					                                           onClose: onClose)
+					if #available(iOS 15.0, *),
+					   let sheet = vc.sheetPresentationController
+					{
+						sheet.selectedDetentIdentifier = .large
+						sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+						sheet.detents = [.medium(), .large()]
+						sheet.delegate = self
+					}
 					mainViewController.present(vc, animated: true)
 				} else {
 					presentTagEditor(nil)
@@ -2498,6 +2507,22 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			}
 		} else if let note = marker as? OsmNoteMarker {
 			mainViewController.performSegue(withIdentifier: "NotesSegue", sender: note)
+		}
+	}
+
+	// This gets called when the user changes the size of a sheet
+	@available(iOS 15.0, *)
+	func sheetPresentationControllerDidChangeSelectedDetentIdentifier(
+		_ sheetPresentationController: UISheetPresentationController)
+	{
+		// if they are switching to a medium sheet size then adjust the map to be centered in the upper screen
+		if sheetPresentationController.selectedDetentIdentifier == .medium,
+		   let pin = pushPin?.arrowPoint
+		{
+			let newPin = CGPoint(x: bounds.midX,
+			                     y: (bounds.minY + bounds.center().y) / 2)
+			let translation = newPin.minus(pin)
+			adjustOrigin(by: translation)
 		}
 	}
 
