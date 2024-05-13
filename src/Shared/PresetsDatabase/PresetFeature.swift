@@ -20,7 +20,6 @@ final class PresetFeature: CustomDebugStringConvertible {
 	let fieldsWithRedirect: [String]?
 	let geometry: [String]
 	let icon: String? // icon on the map
-	let logoURL: String? // NSI brand image
 	let locationSet: [String: [Any]]?
 	let matchScore: Float
 	let moreFieldsWithRedirect: [String]?
@@ -44,7 +43,6 @@ final class PresetFeature: CustomDebugStringConvertible {
 		fieldsWithRedirect = jsonDict["fields"] as! [String]?
 		geometry = jsonDict["geometry"] as! [String]? ?? []
 		icon = jsonDict["icon"] as! String?
-		logoURL = jsonDict["imageURL"] as! String?
 		locationSet = jsonDict["locationSet"] as! [String: [Any]]?
 		matchScore = Float(jsonDict["matchScore"] as! Double? ?? 1.0)
 		moreFieldsWithRedirect = jsonDict["moreFields"] as! [String]?
