@@ -13,10 +13,9 @@ import UIKit
 final class PresetFeature: CustomDebugStringConvertible {
 	static let uninitializedImage = UIImage()
 
-	let featureID: String
-
-	// from json dictionary:
 	let _addTags: [String: String]?
+	let aliases: [String] // an alias is a localizable alternative to 'name'
+	let featureID: String
 	let fieldsWithRedirect: [String]?
 	let geometry: [String]
 	let icon: String? // icon on the map
@@ -29,31 +28,31 @@ final class PresetFeature: CustomDebugStringConvertible {
 	let searchable: Bool
 	let tags: [String: String]
 	let terms: [String]
-	let aliases: [String] // an alias is a localizable alternative to 'name'
 
+	// computed properties
 	var addTags: [String: String] { return _addTags ?? tags }
 	var removeTags: [String: String] { return _removeTags ?? addTags }
 
-
-	init(withID featureID: String,
-		  _addTags: [String: String]?,
-		  fieldsWithRedirect: [String]?,
-		  geometry: [String],
-		  icon: String?, // icon on the map
-		  locationSet: [String: [Any]]?,
-		  matchScore: Float,
-		  moreFieldsWithRedirect: [String]?,
-		  nameWithRedirect: String,
-		  reference: [String: String]?,
-		  _removeTags: [String: String]?,
-		  searchable: Bool,
-		  tags: [String: String],
-		  terms: [String],
-		  aliases: [String], // an alias is a localizable alternative to 'name'
-		  isNSI: Bool) 
+	init(_addTags: [String: String]?,
+	     aliases: [String], // an alias is a localizable alternative to 'name'
+	     featureID: String,
+	     fieldsWithRedirect: [String]?,
+	     geometry: [String],
+	     icon: String?, // icon on the map
+	     locationSet: [String: [Any]]?,
+	     matchScore: Float,
+	     moreFieldsWithRedirect: [String]?,
+	     nameWithRedirect: String,
+	     nsiSuggestion: Bool,
+	     reference: [String: String]?,
+	     _removeTags: [String: String]?,
+	     searchable: Bool,
+	     tags: [String: String],
+	     terms: [String])
 	{
-		self.featureID = featureID
 		self._addTags = _addTags
+		self.aliases = aliases
+		self.featureID = featureID
 		self.fieldsWithRedirect = fieldsWithRedirect
 		self.geometry = geometry
 		self.icon = icon
@@ -61,39 +60,43 @@ final class PresetFeature: CustomDebugStringConvertible {
 		self.matchScore = matchScore
 		self.moreFieldsWithRedirect = moreFieldsWithRedirect
 		self.nameWithRedirect = nameWithRedirect
+		self.nsiSuggestion = nsiSuggestion
 		self.reference = reference
 		self._removeTags = _removeTags
 		self.searchable = searchable
 		self.tags = tags
 		self.terms = terms
-		self.aliases = aliases
-		self.nsiSuggestion = isNSI
 	}
 
-	init?(withID featureID: String, jsonDict: [String: Any], isNSI: Bool) {
+	convenience init?(withID featureID: String,
+	                  jsonDict: [String: Any],
+	                  isNSI: Bool)
+	{
 		guard jsonDict["tags"] is [String: String] else { return nil }
 
-		self.featureID = featureID
-
-		_addTags = jsonDict["addTags"] as! [String: String]?
-		fieldsWithRedirect = jsonDict["fields"] as! [String]?
-		geometry = jsonDict["geometry"] as! [String]? ?? []
-		icon = jsonDict["icon"] as! String?
-		locationSet = jsonDict["locationSet"] as! [String: [Any]]?
-		matchScore = Float(jsonDict["matchScore"] as! Double? ?? 1.0)
-		moreFieldsWithRedirect = jsonDict["moreFields"] as! [String]?
-		nameWithRedirect = jsonDict["name"] as! String? ?? featureID
-		reference = jsonDict["reference"] as! [String: String]?
-		_removeTags = jsonDict["removeTags"] as! [String: String]?
-		searchable = jsonDict["searchable"] as! Bool? ?? true
-		tags = jsonDict["tags"] as! [String: String]
-		if let terms = jsonDict["terms"] as? String {
-			self.terms = terms.split(separator: ",").map({ String($0) })
-		} else {
-			terms = jsonDict["terms"] as! [String]? ?? jsonDict["matchNames"] as! [String]? ?? []
-		}
-		aliases = (jsonDict["aliases"] as! String?)?.split(separator: "\n").map({ String($0) }) ?? []
-		nsiSuggestion = isNSI
+		self.init(
+			_addTags: jsonDict["addTags"] as! [String: String]?,
+			aliases: (jsonDict["aliases"] as! String?)?.split(separator: "\n").map({ String($0) }) ?? [],
+			featureID: featureID,
+			fieldsWithRedirect: jsonDict["fields"] as! [String]?,
+			geometry: jsonDict["geometry"] as! [String]? ?? [],
+			icon: jsonDict["icon"] as! String?,
+			locationSet: jsonDict["locationSet"] as! [String: [Any]]?,
+			matchScore: Float(jsonDict["matchScore"] as! Double? ?? 1.0),
+			moreFieldsWithRedirect: jsonDict["moreFields"] as! [String]?,
+			nameWithRedirect: jsonDict["name"] as! String? ?? featureID,
+			nsiSuggestion: isNSI,
+			reference: jsonDict["reference"] as! [String: String]?,
+			_removeTags: jsonDict["removeTags"] as! [String: String]?,
+			searchable: jsonDict["searchable"] as! Bool? ?? true,
+			tags: jsonDict["tags"] as! [String: String],
+			terms: {
+				if let terms = jsonDict["terms"] as? String {
+					return terms.split(separator: ",").map({ String($0) })
+				} else {
+					return jsonDict["terms"] as! [String]? ?? jsonDict["matchNames"] as! [String]? ?? []
+				}
+			}())
 	}
 
 	let nsiSuggestion: Bool // is from NSI
