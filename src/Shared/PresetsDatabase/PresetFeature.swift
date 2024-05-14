@@ -34,6 +34,42 @@ final class PresetFeature: CustomDebugStringConvertible {
 	var addTags: [String: String] { return _addTags ?? tags }
 	var removeTags: [String: String] { return _removeTags ?? addTags }
 
+
+	init(withID featureID: String,
+		  _addTags: [String: String]?,
+		  fieldsWithRedirect: [String]?,
+		  geometry: [String],
+		  icon: String?, // icon on the map
+		  locationSet: [String: [Any]]?,
+		  matchScore: Float,
+		  moreFieldsWithRedirect: [String]?,
+		  nameWithRedirect: String,
+		  reference: [String: String]?,
+		  _removeTags: [String: String]?,
+		  searchable: Bool,
+		  tags: [String: String],
+		  terms: [String],
+		  aliases: [String], // an alias is a localizable alternative to 'name'
+		  isNSI: Bool) 
+	{
+		self.featureID = featureID
+		self._addTags = _addTags
+		self.fieldsWithRedirect = fieldsWithRedirect
+		self.geometry = geometry
+		self.icon = icon
+		self.locationSet = locationSet
+		self.matchScore = matchScore
+		self.moreFieldsWithRedirect = moreFieldsWithRedirect
+		self.nameWithRedirect = nameWithRedirect
+		self.reference = reference
+		self._removeTags = _removeTags
+		self.searchable = searchable
+		self.tags = tags
+		self.terms = terms
+		self.aliases = aliases
+		self.nsiSuggestion = isNSI
+	}
+
 	init?(withID featureID: String, jsonDict: [String: Any], isNSI: Bool) {
 		guard jsonDict["tags"] is [String: String] else { return nil }
 

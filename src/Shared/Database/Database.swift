@@ -43,13 +43,13 @@ final class Database {
 	// MARK: initialize
 
 	class func databasePath(withName name: String) -> String {
-		return Sqlite.pathForName(name)
+		return Sqlite.pathForOsmName(name)
 	}
 
 	// return self if database can be opened
 	// return nil if database doesn't exist or is corrupted
 	init(name: String) throws {
-		let db = try Sqlite(name: name)
+		let db = try Sqlite(osmName: name)
 		self.db = db
 		try db.exec("PRAGMA foreign_keys=ON;")
 	}

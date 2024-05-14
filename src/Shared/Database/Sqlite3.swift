@@ -54,16 +54,14 @@ final class Sqlite {
 
 	private let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
 
-	class func pathForName(_ name: String) -> String {
+	class func pathForOsmName(_ name: String) -> String {
 		let basename = "data.sqlite3"
 		let name = name.isEmpty ? basename : "\(name).\(basename)"
 		return ArchivePath.sqlite(name).path()
 	}
 
 	// return self if database can be opened
-	init(name: String) throws {
-		path = Sqlite.pathForName(name)
-
+	init(path: String, readonly: Bool) throws {
 		var db: sqlite3_db?
 		let rc = sqlite3_open_v2(path, &db, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, nil)
 		guard rc == SQLITE_OK,
@@ -71,9 +69,15 @@ final class Sqlite {
 		else {
 			throw SqliteError.open(rc)
 		}
+		self.path = path
 		self.db = db
 		// Enable extended result codes
 		sqlite3_extended_result_codes(db, 1)
+	}
+
+	convenience init(osmName: String) throws {
+		let path = Sqlite.pathForOsmName(osmName)
+		try self.init(path: path, readonly: false)
 	}
 
 	deinit {

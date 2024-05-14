@@ -10,11 +10,53 @@ import json
 file = open("nsi_presets.json")
 data = json.load(file)
 
-print("create table brands(id INTEGER, identifier TEXT, name TEXT, icon TEXT, geometry INTEGER, matchScore REAL, imageURL TEXT );")
-print("create table locationSet(id INTEGER, location TEXT, include INTEGER, foreign key (id) references brands(id));")
-print("create table terms(id INTEGER, term TEXT, foreign key (id) references brands(id));")
-print("create table tags(id INTEGER, key TEXT, value TEXT, foreign key (id) references brands(id));")
-print("create table addTags(id INTEGER, key TEXT, value TEXT, foreign key (id) references brands(id));")
+print("""
+create table brands(
+	id INTEGER PRIMARY KEY,
+	featureID TEXT,
+	geometry INTEGER,
+	icon TEXT,
+	matchScore REAL,
+	name TEXT
+);
+create table fields(
+	id INTEGER,
+	field TEXT,
+	foreign key (id) references brands(id)
+);
+CREATE INDEX fields_index ON fields (id);
+
+create table locationSet(
+	id INTEGER,
+	location TEXT,
+	include INTEGER,
+	foreign key (id) references brands(id)
+);
+CREATE INDEX locationSetIndex ON locationSet (id);
+
+create table terms(
+	id INTEGER,
+	term TEXT,
+	foreign key (id) references brands(id)
+);
+CREATE INDEX termsIndex ON terms (id);
+
+create table tags(
+	id INTEGER,
+	key TEXT,
+	value TEXT,
+	foreign key (id) references brands(id)
+);
+CREATE INDEX tagsIndex ON tags (id);
+
+create table addTags(
+	id INTEGER,
+	key TEXT,
+	value TEXT,
+	foreign key (id) references brands(id)
+);
+CREATE INDEX addTagsIndex ON addTags (id);
+""")
 
 geom_map={
 	"point": 1,
@@ -31,22 +73,17 @@ location_map={
 id = -1
 
 presets = data["presets"]
-for identifier in presets:
+for featureID in presets:
 	id += 1
-	dict = presets[identifier]
-	name = dict["name"]
-	icon = dict["icon"]
+	dict = presets[featureID]
+	name = dict["name"].replace('"','""')
+	icon = dict.get("icon")
 	geom = 0
 	for g in dict["geometry"]:
 		geom += geom_map[g]
 	matchScore = dict["matchScore"]
-	imageURL = dict.get("imageURL")
 
-	identifier = ""
-	imageURL = ""
-
-	print(f'insert into brands(id,identifier,name,icon,geometry,matchScore,imageURL) values ({id},"{identifier}","{name}","{icon}","{geom}","{matchScore}","{imageURL}");')
-
+	print(f'insert into brands(id,featureID,name,icon,geometry,matchScore) values ({id},"{featureID}","{name}","{icon}","{geom}","{matchScore}");')
 	tags = dict["tags"]
 	for key in tags:
 		value = tags[key].replace('"','""')

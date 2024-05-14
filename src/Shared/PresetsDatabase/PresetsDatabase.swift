@@ -23,12 +23,14 @@ final class PresetsDatabase {
 	var nsiFeatureIndex: [String: [PresetFeature]] // generic+NSI index
 	var nsiGeoJson: [String: GeoJSON] // geojson regions for NSI
 
-	private class func dataForFile(_ file: String) -> Data? {
-		guard
-			let path = Bundle.main.resourceURL?
+	class func pathForFile(_ file: String) -> URL? {
+		return Bundle.main.resourceURL?
 			.appendingPathComponent("presets")
 			.appendingPathComponent(file)
-		else {
+	}
+
+	private class func dataForFile(_ file: String) -> Data? {
+		guard let path = Self.pathForFile(file) else {
 			return nil
 		}
 		return try? Data(contentsOf: path)
