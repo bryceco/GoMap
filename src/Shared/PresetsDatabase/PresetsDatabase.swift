@@ -217,8 +217,8 @@ final class PresetsDatabase {
 	func enumeratePresetsAndNsiIn(region: MapView.CurrentRegion, using block: (_ feature: PresetFeature) -> Void) {
 		if region != localRegion {
 			localRegion = region
-			stdLocal = stdFeatures.values.filter({ $0.searchable && $0.locationSetIncludes(region) })
-			nsiLocal = nsiFeatures.values.filter({ $0.searchable && $0.locationSetIncludes(region) })
+			stdLocal = stdFeatures.values.filter({ $0.searchable && $0.locationSet.overlaps(region) })
+			nsiLocal = nsiFeatures.values.filter({ $0.searchable && $0.locationSet.overlaps(region) })
 		}
 		for v in stdLocal {
 			block(v)

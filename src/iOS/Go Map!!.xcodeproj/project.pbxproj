@@ -144,6 +144,7 @@
 		02D6238926A6628300A4F147 /* PhotoShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 02D6237F26A6628300A4F147 /* PhotoShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		02D95B9629E0AE7F00F8FCA9 /* CharacterSet+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D95B9529E0AE7F00F8FCA9 /* CharacterSet+Extension.swift */; };
 		02DC59811671B79100213558 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02DC59801671B79100213558 /* CoreText.framework */; };
+		02DFFD1E2BF3E0F0002A0189 /* LocationSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DFFD1D2BF3E0F0002A0189 /* LocationSet.swift */; };
 		02E049BA2650B0E10028B57F /* TurnRestrictController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096AF263D4FF500E3B129 /* TurnRestrictController.swift */; };
 		02E049BB2651BAB90028B57F /* UndoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C381C306263FD0E8003142BA /* UndoManager.swift */; };
 		02E049BE2651D1750028B57F /* UndoAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E049BD2651D1750028B57F /* UndoAction.m */; };
@@ -443,6 +444,7 @@
 		02D6238A26A6628300A4F147 /* PhotoShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PhotoShare.entitlements; sourceTree = "<group>"; };
 		02D95B9529E0AE7F00F8FCA9 /* CharacterSet+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CharacterSet+Extension.swift"; sourceTree = "<group>"; };
 		02DC59801671B79100213558 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		02DFFD1D2BF3E0F0002A0189 /* LocationSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSet.swift; sourceTree = "<group>"; };
 		02E049BC2651D1750028B57F /* UndoAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UndoAction.h; sourceTree = "<group>"; };
 		02E049BD2651D1750028B57F /* UndoAction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UndoAction.m; sourceTree = "<group>"; };
 		02E6267119973A0700565D62 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -892,6 +894,7 @@
 				021FADD625873D0100F6E1C0 /* PresetsForFeature.swift */,
 				021FADBF258594EE00F6E1C0 /* PresetValue.swift */,
 				02C456A729C8DB410077E3FD /* TagInfo.swift */,
+				02DFFD1D2BF3E0F0002A0189 /* LocationSet.swift */,
 			);
 			name = PresetsDatabase;
 			path = ../Shared/PresetsDatabase;
@@ -1478,6 +1481,7 @@
 				02505C5729A458A30078D60D /* QuestDefinition.swift in Sources */,
 				0203B06429B3D62900B020DF /* OsmType.swift in Sources */,
 				02F6A457268A934900F2ACE7 /* NSAttributedString+Ext.swift in Sources */,
+				02DFFD1E2BF3E0F0002A0189 /* LocationSet.swift in Sources */,
 				02CB2406265DB7CB00835F32 /* CameraView.swift in Sources */,
 				02A123EF264EE7BC005638C1 /* aes.swift in Sources */,
 				CD677FFA2A5FC17300F28605 /* AccountInfoTableViewController.swift in Sources */,

@@ -8,31 +8,6 @@
 
 import Foundation
 
-struct LocationSet {
-	let include: [String]?
-	let exclude: [String]?
-
-	init?(withJson json: Any?) {
-		guard let json = json as? [String: Any] else { return nil }
-		include = json["include"] as? [String]
-		exclude = json["exclude"] as? [String]
-	}
-
-	func contains(countryCode: String) -> Bool {
-		if let includeList = include,
-		   !includeList.map({ $0.lowercased() }).contains(countryCode)
-		{
-			return false
-		}
-		if let excludeList = exclude,
-		   excludeList.map({ $0.lowercased() }).contains(countryCode)
-		{
-			return false
-		}
-		return true
-	}
-}
-
 final class PresetField: CustomDebugStringConvertible {
 	let jsonDict: [String: Any]
 

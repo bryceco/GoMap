@@ -19,7 +19,7 @@ final class PresetFeature: CustomDebugStringConvertible {
 	let fieldsWithRedirect: [String]?
 	let geometry: [String]
 	let icon: String? // icon on the map
-	let locationSet: [String: [Any]]?
+	let locationSet: LocationSet
 	let matchScore: Float
 	let moreFieldsWithRedirect: [String]?
 	let nameWithRedirect: String
@@ -39,7 +39,7 @@ final class PresetFeature: CustomDebugStringConvertible {
 	     fieldsWithRedirect: [String]?,
 	     geometry: [String],
 	     icon: String?, // icon on the map
-	     locationSet: [String: [Any]]?,
+	     locationSet: LocationSet,
 	     matchScore: Float,
 	     moreFieldsWithRedirect: [String]?,
 	     nameWithRedirect: String,
@@ -81,7 +81,7 @@ final class PresetFeature: CustomDebugStringConvertible {
 			fieldsWithRedirect: jsonDict["fields"] as! [String]?,
 			geometry: jsonDict["geometry"] as! [String]? ?? [],
 			icon: jsonDict["icon"] as! String?,
-			locationSet: jsonDict["locationSet"] as! [String: [Any]]?,
+			locationSet: LocationSet(withJson: jsonDict["locationSet"]),
 			matchScore: Float(jsonDict["matchScore"] as! Double? ?? 1.0),
 			moreFieldsWithRedirect: jsonDict["moreFields"] as! [String]?,
 			nameWithRedirect: jsonDict["name"] as! String? ?? featureID,
@@ -338,7 +338,7 @@ final class PresetFeature: CustomDebugStringConvertible {
 	{
 		if let geometry = geometry,
 		   !self.geometry.contains(geometry.rawValue) ||
-		   !locationSetIncludes(location)
+		   !locationSet.overlaps(location)
 		{
 			return 0.0
 		}
@@ -384,65 +384,6 @@ final class PresetFeature: CustomDebugStringConvertible {
 			}
 		}
 		return result
-	}
-
-	func locationMatches(_ location: Any, at currentLocation: MapView.CurrentRegion) -> Bool {
-		if let location = location as? String {
-			if location == "001" {
-				return true
-			} else if location.hasSuffix(".geojson") {
-				if let geojson = PresetsDatabase.shared.nsiGeoJson[location],
-				   geojson.contains(currentLocation.latLon)
-				{
-					return true
-				}
-				return false
-			} else {
-				if currentLocation.regions.contains(location) {
-					return true
-				}
-				return false
-			}
-		} else if let numbers = location as? [NSNumber],
-		          (2...3).contains(numbers.count)
-		{
-			// lat, lon, radius
-			let lon = numbers[0].doubleValue
-			let lat = numbers[1].doubleValue
-			let radius = numbers.count > 2 ? numbers[2].doubleValue : 25000.0
-			let dist = GreatCircleDistance(LatLon(lon: lon, lat: lat),
-			                               currentLocation.latLon)
-			return dist <= radius
-		}
-		print("unknown locationSet entry: \(location)")
-		return false
-	}
-
-	func locationSetIncludes(_ location: MapView.CurrentRegion) -> Bool {
-		guard let locationSet = locationSet else { return true }
-		if let includeList = locationSet["include"] {
-			if nsiSuggestion {
-				if !includeList.contains(where: { locationMatches($0, at: location) }) {
-					return false
-				}
-			} else {
-				if !includeList.contains(where: { $0 as? String == location.country }) {
-					return false
-				}
-			}
-		}
-		if let excludeList = locationSet["exclude"] {
-			if nsiSuggestion {
-				if excludeList.contains(where: { locationMatches($0, at: location) }) {
-					return false
-				}
-			} else {
-				if excludeList.contains(where: { $0 as? String == location.country }) {
-					return false
-				}
-			}
-		}
-		return true
 	}
 
 	private var cachedWikiDescription: Any? = NSNull()
