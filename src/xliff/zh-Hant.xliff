@@ -887,17 +887,17 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes" xml:space="preserve">
         <source>%1$#@meters@, %2$#@nodes@</source>
-        <target state="new">%1$#@meters@, %2$#@nodes@</target>
+        <target state="translated">%1$#@公尺@, %2$#@節點@</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%1$ld meters</source>
-        <target state="new">%1$ld meters</target>
+        <target state="translated">%1$ld 公尺</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.other" xml:space="preserve">
         <source>%2$ld nodes</source>
-        <target state="new">%2$ld nodes</target>
+        <target state="translated">%2$ld 節點</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
@@ -3168,9 +3168,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.footerTitle" xml:space="preserve">
         <source>Select a server if you would like to edit data located on an alternate OSM server.</source>
-        <target state="needs-review-l10n">您可以指定主機，如果您要編輯的資料儲存於其他 OSM 伺服器。預設的主機為 api.openstreetmap.org。
-
-你也可以輸入"dev"表示開發伺服器 (為了測試)，"ohm" 則是開放歷史地圖伺服器，或是留空使用預設伺服器。</target>
+        <target state="translated">如果您想要編輯其他 OSM 伺服器的資料，請選擇一台伺服器。</target>
         <note>Class = "UITableViewSection"; footerTitle = "Select a server if you would like to edit data located on an alternate OSM server."; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.headerTitle" xml:space="preserve">
