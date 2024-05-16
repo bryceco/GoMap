@@ -214,9 +214,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	}
 
 	func enumerateObjects(inRegion bbox: OSMRect, block: (_ obj: OsmBaseObject) -> Void) {
-#if false && DEBUG
-		print("box = \(NSCoder.string(for: CGRectFromOSMRect(bbox)))")
-#endif
 		if bbox.origin.x < 180, bbox.origin.x + bbox.size.width > 180 {
 			let left = OSMRect(
 				origin: OSMPoint(x: bbox.origin.x, y: bbox.origin.y),

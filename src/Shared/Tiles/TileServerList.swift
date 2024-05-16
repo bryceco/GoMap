@@ -81,22 +81,6 @@ final class TileServerList {
 			delta = CACurrentMediaTime() - delta
 			print("TileServerList decode time = \(delta)")
 
-#if false && DEBUG
-			// serialize to bplist
-			do {
-				let data2 = FastEncoder.encode(externalAerials)
-				delta = CACurrentMediaTime()
-				let list2 = try FastDecoder.decode([TileServer].self, from: data2)
-				delta = CACurrentMediaTime() - delta
-				print("t2 = \(delta)")
-				if list2 == externalAerials {
-					print("match")
-				}
-			} catch {
-				print("\(error)")
-			}
-#endif
-
 			updateDownloadList(with: externalAerials)
 			completion(false)
 
