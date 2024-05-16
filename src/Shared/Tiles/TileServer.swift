@@ -413,7 +413,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 							json.statusCode == 200,
 							let resource = json.resourceSets.first?.resources.first
 						else {
-							callback?(.failure(NSError()))
+							callback?(.failure(NSError(domain: "TileServer", code: 1)))
 							return
 						}
 

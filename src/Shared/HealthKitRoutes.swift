@@ -36,7 +36,8 @@ class HealthKitRoutes {
 		// Check if HealthKit is available on the device
 		guard HKHealthStore.isHealthDataAvailable() else {
 			completion(.failure(
-				NSError(domain: "com.example.healthkit", code: 1,
+				NSError(domain: "com.example.healthkit", 
+						code: 1,
 				        userInfo: [NSLocalizedDescriptionKey: "HealthKit is not available on this device."])))
 			return
 		}
@@ -65,7 +66,8 @@ class HealthKitRoutes {
 						completion(.success(routes))
 					} else {
 						completion(.failure(
-							NSError(domain: "com.example.healthkit", code: 2,
+							NSError(domain: "com.example.healthkit", 
+									code: 2,
 							        userInfo: [NSLocalizedDescriptionKey: "No route data found."])))
 					}
 				}
