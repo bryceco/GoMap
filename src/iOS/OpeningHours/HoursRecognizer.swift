@@ -982,6 +982,10 @@ public class HoursRecognizer: ObservableObject {
 				// a day line can contain dashes, so expand those to sets of days
 				var line = line
 				while let dashIndex = line.indices.first(where: { line[$0].token.isDash() }) {
+					if dashIndex == 0 || dashIndex == line.count - 1 {
+						line.removeSubrange(dashIndex...dashIndex)
+						continue
+					}
 					var prev = line[dashIndex - 1].token.day()!
 					let next = line[dashIndex + 1].token.day()!
 					line.removeSubrange((dashIndex - 1)...(dashIndex + 1))
