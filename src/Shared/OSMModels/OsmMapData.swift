@@ -1616,11 +1616,15 @@ final class OsmMapData: NSObject, NSSecureCoding {
 				print("failed to rename SQL database")
 			}
 			t2 = CACurrentMediaTime() - t2
-			print(String(
-				format: "%@Discard save time = %f, saved %ld objects",
-				t2 > 1.0 ? "*** " : "",
-				t2,
-				Int(nodeCount()) + Int(wayCount()) + Int(relationCount())))
+
+			if isUnderDebugger() {
+				// calling nodeCount() etc here isn't thread safe
+				print(String(
+					format: "%@Discard save time = %f, saved %ld objects",
+					t2 > 1.0 ? "*** " : "",
+					t2,
+					Int(nodeCount()) + Int(wayCount()) + Int(relationCount())))
+			}
 
 			DispatchQueue.main.async(execute: {
 				self.previousDiscardDate = Date()
