@@ -148,6 +148,12 @@
             "state" : "translated",
             "value" : "將您的設備與物體的方向平行放置。"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "將您的設備與物體的方向平行放置。"
+          }
         }
       }
     },
@@ -300,6 +306,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "取消"

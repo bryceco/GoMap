@@ -104,6 +104,12 @@
             "state" : "translated",
             "value" : "處理資料..."
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "處理資料..."
+          }
         }
       }
     },
@@ -201,6 +207,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL 內容無法辨識。"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "URL 內容無法辨識。"
@@ -313,6 +325,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不幸的是選取的影像並沒有位置資訊。"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "不幸的是選取的影像並沒有位置資訊。"

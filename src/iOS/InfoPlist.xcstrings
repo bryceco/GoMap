@@ -166,6 +166,12 @@
             "state" : "translated",
             "value" : "Go Map!!"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
         }
       }
     },
@@ -346,6 +352,12 @@
             "state" : "translated",
             "value" : "Go Map!!"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
         }
       }
     },
@@ -490,6 +502,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS 交換格式 (GPX)"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "GPS 交換格式 (GPX)"
@@ -656,6 +674,12 @@
             "state" : "translated",
             "value" : "連線到其他藍牙 GPS 裝置"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "連線到其他藍牙 GPS 裝置"
+          }
         }
       }
     },
@@ -794,6 +818,12 @@
             "state" : "translated",
             "value" : "您的相機將會被用來測量建築物或實體物件的高度，同時也用於營業時間標示的文字辨識。"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您的相機將會被用來測量建築物或實體物件的高度，同時也用於營業時間標示的文字辨識。"
+          }
         }
       }
     },
@@ -842,6 +872,12 @@
             "state" : "translated",
             "value" : "你的訓練路線能被匯入為 GPX 路徑。"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的訓練路線能被匯入為 GPX 路徑。"
+          }
         }
       }
     },
@@ -886,6 +922,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "健康資訊從未更新。"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "健康資訊從未更新。"
@@ -1012,6 +1054,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版權所有 2012-2021 Bryce Cogswell"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "版權所有 2012-2021 Bryce Cogswell"
@@ -1162,6 +1210,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "持續定位並允許 app 紀錄資訊到 GPX 檔案，當 app 在背景執行時。"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "持續定位並允許 app 紀錄資訊到 GPX 檔案，當 app 在背景執行時。"
@@ -1322,6 +1376,12 @@
             "state" : "translated",
             "value" : "您的定位動態將會顯示在地圖上。"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您的定位動態將會顯示在地圖上。"
+          }
         }
       }
     },
@@ -1450,6 +1510,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "允許位置服務來讓 app 顯示你附近的物件。這讓你很容易在探查時更新或新增資料。"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "允許位置服務來讓 app 顯示你附近的物件。這讓你很容易在探查時更新或新增資料。"
@@ -1600,6 +1666,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您的定位動態將會顯示在地圖上。"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "您的定位動態將會顯示在地圖上。"

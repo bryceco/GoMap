@@ -124,6 +124,12 @@
             "state" : "translated",
             "value" : "Mapnik 圖磚"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mapnik 圖磚"
+          }
         }
       }
     },
@@ -268,6 +274,12 @@
             "state" : "translated",
             "value" : "我沒有帳號"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我沒有帳號"
+          }
         }
       }
     },
@@ -406,6 +418,12 @@
             "state" : "translated",
             "value" : "致謝"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "致謝"
+          }
         }
       }
     },
@@ -510,6 +528,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在您編輯的當下，如果網路通訊受到限制，您可以先下載空照影像或 Mapnik 圖磚，這將包含了放大兩階後，目前畫面範圍內的區域。"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "在您編輯的當下，如果網路通訊受到限制，您可以先下載空照影像或 Mapnik 圖磚，這將包含了放大兩階後，目前畫面範圍內的區域。"
@@ -630,6 +654,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下載放大後的圖磚"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "下載放大後的圖磚"
@@ -756,6 +786,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "顯示觸控的位置"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "顯示觸控的位置"
@@ -898,6 +934,12 @@
             "state" : "translated",
             "value" : "詳細內容"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "詳細內容"
+          }
         }
       }
     },
@@ -954,6 +996,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名稱"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "名稱"
@@ -1069,8 +1117,14 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "您可以指定主機，如果您要編輯的資料儲存於其他 OSM 伺服器。預設的主機為 api.openstreetmap.org。\n\n你也可以輸入\"dev\"表示開發伺服器 (為了測試)，\"ohm\" 則是開放歷史地圖伺服器，或是留空使用預設伺服器。"
+            "state" : "translated",
+            "value" : "如果您想要編輯其他 OSM 伺服器的資料，請選擇一台伺服器。"
+          }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "如果您想要編輯其他 OSM 伺服器的資料，請選擇一台伺服器。"
           }
         }
       }
@@ -1216,6 +1270,12 @@
             "state" : "translated",
             "value" : "OpenStreetMap 伺服器"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OpenStreetMap 伺服器"
+          }
         }
       }
     },
@@ -1354,6 +1414,12 @@
             "state" : "translated",
             "value" : "詳細內容"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "詳細內容"
+          }
         }
       }
     },
@@ -1404,6 +1470,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開放街圖帳號"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "開放街圖帳號"
@@ -1540,6 +1612,12 @@
             "state" : "translated",
             "value" : "OpenStreetMap 登入"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OpenStreetMap 登入"
+          }
         }
       }
     },
@@ -1650,6 +1728,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "api.openstreetmap.org"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "api.openstreetmap.org"
@@ -1798,6 +1882,12 @@
             "state" : "translated",
             "value" : "語言"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "語言"
+          }
         }
       }
     },
@@ -1942,6 +2032,12 @@
             "state" : "translated",
             "value" : "聯絡我們"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "聯絡我們"
+          }
         }
       }
     },
@@ -2080,6 +2176,12 @@
             "state" : "translated",
             "value" : "設定"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定"
+          }
         }
       }
     },
@@ -2206,6 +2308,12 @@
             "state" : "translated",
             "value" : "空照圖磚"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "空照圖磚"
+          }
         }
       }
     },
@@ -2262,6 +2370,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "帳號資訊"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "帳號資訊"
@@ -2364,6 +2478,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2012-2020 Bryce Cogswell © 版權所有 \n保留所有權利\n\n以開放資料庫授權條款 (Open Database License, ODbL) 授權開放街圖資料：\nhttps://www.openstreetmap.com/copyright\n\nBing 空照圖微軟及其供應商所有：\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox 空照圖 Mapbox 及其供應商所有：https://www.mapbox.com/tos\n\n感謝 Robbie Hanson 的 KissXML XML 解析：\nhttps://github.com/robbiehanson/KissXML\n\nEXIF 解析程式碼 2010-2015 Mayank Lahiri 版權所有 (c)\nhttps://github.com/mayanklahiri/easyexif\n\nSJJB 提供地圖圖示：\nhttp://www.sjjb.co.uk/mapicons\n\n其他圖示來自 Glyphish:\nhttp://glyphish.com\n"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "2012-2020 Bryce Cogswell © 版權所有 \n保留所有權利\n\n以開放資料庫授權條款 (Open Database License, ODbL) 授權開放街圖資料：\nhttps://www.openstreetmap.com/copyright\n\nBing 空照圖微軟及其供應商所有：\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox 空照圖 Mapbox 及其供應商所有：https://www.mapbox.com/tos\n\n感謝 Robbie Hanson 的 KissXML XML 解析：\nhttps://github.com/robbiehanson/KissXML\n\nEXIF 解析程式碼 2010-2015 Mayank Lahiri 版權所有 (c)\nhttps://github.com/mayanklahiri/easyexif\n\nSJJB 提供地圖圖示：\nhttp://www.sjjb.co.uk/mapicons\n\n其他圖示來自 Glyphish:\nhttp://glyphish.com\n"
@@ -2512,6 +2632,12 @@
             "state" : "translated",
             "value" : "開始"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開始"
+          }
         }
       }
     },
@@ -2640,6 +2766,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weblate - 翻譯"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Weblate - 翻譯"
@@ -2776,6 +2908,12 @@
             "state" : "translated",
             "value" : "臭蟲回報與建議回饋"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "臭蟲回報與建議回饋"
+          }
         }
       }
     },
@@ -2860,6 +2998,12 @@
             "state" : "translated",
             "value" : "登入"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登入"
+          }
         }
       }
     },
@@ -2938,6 +3082,12 @@
             "state" : "translated",
             "value" : "Detail detail detail detail detail"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detail detail detail detail detail"
+          }
         }
       }
     },
@@ -2988,6 +3138,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "-"
@@ -3136,6 +3292,12 @@
             "state" : "translated",
             "value" : "註冊新帳號"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "註冊新帳號"
+          }
         }
       }
     },
@@ -3268,6 +3430,12 @@
             "state" : "translated",
             "value" : "憑證"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "憑證"
+          }
         }
       }
     },
@@ -3384,6 +3552,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "顯示觸控位置於螢幕錄製中"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "顯示觸控位置於螢幕錄製中"
@@ -3532,6 +3706,12 @@
             "state" : "translated",
             "value" : "進階設定"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "進階設定"
+          }
         }
       }
     },
@@ -3666,6 +3846,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "進階"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "進階"
@@ -3814,6 +4000,12 @@
             "state" : "translated",
             "value" : "進階設定"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "進階設定"
+          }
         }
       }
     },
@@ -3946,6 +4138,12 @@
             "state" : "translated",
             "value" : "標題"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "標題"
+          }
         }
       }
     },
@@ -4002,6 +4200,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重新整理帳號"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "重新整理帳號"
@@ -4140,6 +4344,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "語言"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "語言"
@@ -4288,6 +4498,12 @@
             "state" : "translated",
             "value" : "電子郵件回饋"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "電子郵件回饋"
+          }
         }
       }
     },
@@ -4362,6 +4578,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Title title title title"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Title title title title"
@@ -4504,6 +4726,12 @@
             "state" : "translated",
             "value" : "附近的圖客"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "附近的圖客"
+          }
         }
       }
     },
@@ -4632,6 +4860,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "副標題"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "副標題"
@@ -4770,6 +5004,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上一步"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "上一步"
@@ -4918,6 +5158,12 @@
             "state" : "translated",
             "value" : "聯絡我們"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "聯絡我們"
+          }
         }
       }
     },
@@ -5052,6 +5298,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "詳細內容"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "詳細內容"
@@ -5194,6 +5446,12 @@
             "state" : "translated",
             "value" : "離線使用的前置作業"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "離線使用的前置作業"
+          }
         }
       }
     },
@@ -5328,6 +5586,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "成為測試者"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "成為測試者"
@@ -5470,6 +5734,12 @@
             "state" : "translated",
             "value" : "詳細內容"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "詳細內容"
+          }
         }
       }
     },
@@ -5604,6 +5874,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "雜項"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "雜項"
@@ -5746,6 +6022,12 @@
             "state" : "translated",
             "value" : "登入"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登入"
+          }
         }
       }
     },
@@ -5880,6 +6162,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "關於我們"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "關於我們"
@@ -6022,6 +6310,12 @@
             "state" : "translated",
             "value" : "語言"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "語言"
+          }
         }
       }
     },
@@ -6156,6 +6450,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "離線使用的前置作業"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "離線使用的前置作業"
@@ -6298,6 +6598,12 @@
             "state" : "translated",
             "value" : "開始"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開始"
+          }
         }
       }
     },
@@ -6348,6 +6654,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "-"
@@ -6490,6 +6802,12 @@
             "state" : "translated",
             "value" : "致謝"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "致謝"
+          }
         }
       }
     },
@@ -6624,6 +6942,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "若要上傳變更，您需要一組已在 openstreetmap.org 註冊成功的帳號密碼。 "
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "若要上傳變更，您需要一組已在 openstreetmap.org 註冊成功的帳號密碼。 "
@@ -6772,6 +7096,12 @@
             "state" : "translated",
             "value" : "OpenStreetMap 帳號"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OpenStreetMap 帳號"
+          }
         }
       }
     },
@@ -6900,6 +7230,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加入 TestFlight 測試"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "加入 TestFlight 測試"
@@ -7042,6 +7378,12 @@
             "state" : "translated",
             "value" : "顯示 FPS"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "顯示 FPS"
+          }
         }
       }
     },
@@ -7170,6 +7512,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "幀 / 秒"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "幀 / 秒"
@@ -7308,6 +7656,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "附近的圖客"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "附近的圖客"
@@ -7456,6 +7810,12 @@
             "state" : "translated",
             "value" : "電子郵件回饋"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "電子郵件回饋"
+          }
         }
       }
     },
@@ -7516,6 +7876,12 @@
             "state" : "translated",
             "value" : "登出"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登出"
+          }
         }
       }
     },
@@ -7572,6 +7938,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "編輯變動集"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "編輯變動集"
@@ -7720,6 +8092,12 @@
             "state" : "translated",
             "value" : "GitHub 議題與原始碼"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitHub 議題與原始碼"
+          }
         }
       }
     },
@@ -7860,6 +8238,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開發者設定"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "開發者設定"

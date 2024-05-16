@@ -130,6 +130,12 @@
             "state" : "translated",
             "value" : "不要"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不要"
+          }
         }
       }
     },
@@ -264,6 +270,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "類型"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "類型"
@@ -412,6 +424,12 @@
             "state" : "translated",
             "value" : "上一步"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上一步"
+          }
         }
       }
     },
@@ -556,6 +574,12 @@
             "state" : "translated",
             "value" : "屬性"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "屬性"
+          }
         }
       }
     },
@@ -694,6 +718,12 @@
             "state" : "translated",
             "value" : "標題"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "標題"
+          }
         }
       }
     },
@@ -816,6 +846,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "興趣點"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "興趣點"
@@ -964,6 +1000,12 @@
             "state" : "translated",
             "value" : "標題"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "標題"
+          }
         }
       }
     },
@@ -1104,6 +1146,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "是的"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "是的"
@@ -1252,6 +1300,12 @@
             "state" : "translated",
             "value" : "全部標籤"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全部標籤"
+          }
         }
       }
     },
@@ -1390,6 +1444,12 @@
             "state" : "translated",
             "value" : "餐廳"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "餐廳"
+          }
         }
       }
     },
@@ -1488,6 +1548,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "編號"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "編號"
@@ -1630,6 +1696,12 @@
             "state" : "translated",
             "value" : "狗"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "狗"
+          }
         }
       }
     },
@@ -1768,6 +1840,12 @@
             "state" : "translated",
             "value" : "配置"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "配置"
+          }
         }
       }
     },
@@ -1896,6 +1974,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新增"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "新增"
@@ -2044,6 +2128,12 @@
             "state" : "translated",
             "value" : "全部標籤"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全部標籤"
+          }
         }
       }
     },
@@ -2176,6 +2266,12 @@
             "state" : "translated",
             "value" : "值"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值"
+          }
         }
       }
     },
@@ -2292,6 +2388,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "預設組合的鍵"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "預設組合的鍵"
@@ -2428,6 +2530,12 @@
             "state" : "translated",
             "value" : "值 8"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 8"
+          }
         }
       }
     },
@@ -2560,6 +2668,12 @@
             "state" : "translated",
             "value" : "標記"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "標記"
+          }
         }
       }
     },
@@ -2668,6 +2782,12 @@
             "state" : "translated",
             "value" : "預設組合會被套用，如果所編輯物件的鍵與值有匹配到相對應的預設組合。或者您可以留下空白，效果等同萬用字元。"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "預設組合會被套用，如果所編輯物件的鍵與值有匹配到相對應的預設組合。或者您可以留下空白，效果等同萬用字元。"
+          }
         }
       }
     },
@@ -2772,6 +2892,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "套用到"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "套用到"
@@ -2908,6 +3034,12 @@
             "state" : "translated",
             "value" : "值 9"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 9"
+          }
         }
       }
     },
@@ -3040,6 +3172,12 @@
             "state" : "translated",
             "value" : "寵物同行"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "寵物同行"
+          }
         }
       }
     },
@@ -3168,6 +3306,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鍵"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "鍵"
@@ -3310,6 +3454,12 @@
             "state" : "translated",
             "value" : "屬性"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "屬性"
+          }
         }
       }
     },
@@ -3436,6 +3586,12 @@
             "state" : "translated",
             "value" : "值 3"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 3"
+          }
         }
       }
     },
@@ -3556,6 +3712,12 @@
             "state" : "translated",
             "value" : "指定的"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "指定的"
+          }
         }
       }
     },
@@ -3660,6 +3822,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清除"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "清除"
@@ -3796,6 +3964,12 @@
             "state" : "translated",
             "value" : "自定義標籤"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定義標籤"
+          }
         }
       }
     },
@@ -3912,6 +4086,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定義預設組合"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "自定義預設組合"
@@ -4048,6 +4228,12 @@
             "state" : "translated",
             "value" : "標記"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "標記"
+          }
         }
       }
     },
@@ -4104,6 +4290,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lorem ipsum dolor "
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lorem ipsum dolor "
@@ -4246,6 +4438,12 @@
             "state" : "translated",
             "value" : "值"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值"
+          }
         }
       }
     },
@@ -4380,6 +4578,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上一步"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "上一步"
@@ -4522,6 +4726,12 @@
             "state" : "translated",
             "value" : "屬性"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "屬性"
+          }
         }
       }
     },
@@ -4650,6 +4860,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "變更集"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "變更集"
@@ -4786,6 +5002,12 @@
             "state" : "translated",
             "value" : "值 1"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 1"
+          }
         }
       }
     },
@@ -4918,6 +5140,12 @@
             "state" : "translated",
             "value" : "興趣點類型"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "興趣點類型"
+          }
         }
       }
     },
@@ -5034,6 +5262,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "可能的預設組合"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "可能的預設組合"
@@ -5164,6 +5398,12 @@
             "state" : "translated",
             "value" : "預設組合的值"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "預設組合的值"
+          }
         }
       }
     },
@@ -5268,6 +5508,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "休閒娛樂 "
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "休閒娛樂 "
@@ -5410,6 +5656,12 @@
             "state" : "translated",
             "value" : "上一步"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上一步"
+          }
         }
       }
     },
@@ -5538,6 +5790,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 5"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "值 5"
@@ -5686,6 +5944,12 @@
             "state" : "translated",
             "value" : "常用標籤"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "常用標籤"
+          }
         }
       }
     },
@@ -5808,6 +6072,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通用標籤"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "通用標籤"
@@ -5944,6 +6214,12 @@
             "state" : "translated",
             "value" : "名稱"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名稱"
+          }
         }
       }
     },
@@ -6076,6 +6352,12 @@
             "state" : "translated",
             "value" : "值 4"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 4"
+          }
         }
       }
     },
@@ -6138,6 +6420,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ⓘ"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ⓘ"
@@ -6274,6 +6562,12 @@
             "state" : "translated",
             "value" : "值 2"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 2"
+          }
         }
       }
     },
@@ -6406,6 +6700,12 @@
             "state" : "translated",
             "value" : "值 11"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 11"
+          }
         }
       }
     },
@@ -6498,6 +6798,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拴著的"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "拴著的"
@@ -6612,6 +6918,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "公園"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "公園"
@@ -6748,6 +7060,12 @@
             "state" : "translated",
             "value" : "名稱"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名稱"
+          }
         }
       }
     },
@@ -6864,6 +7182,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定義預設組合"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "自定義預設組合"
@@ -7012,6 +7336,12 @@
             "state" : "translated",
             "value" : "類型"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "類型"
+          }
         }
       }
     },
@@ -7128,6 +7458,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定義預設組合"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "自定義預設組合"
@@ -7264,6 +7600,12 @@
             "state" : "translated",
             "value" : "餐廳"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "餐廳"
+          }
         }
       }
     },
@@ -7386,6 +7728,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "預設組合的名稱"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "預設組合的名稱"
@@ -7518,6 +7866,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 6"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "值 6"
@@ -7660,6 +8014,12 @@
             "state" : "translated",
             "value" : "取消"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
         }
       }
     },
@@ -7716,6 +8076,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "value"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "value"
@@ -7846,6 +8212,12 @@
             "state" : "translated",
             "value" : "角色"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "角色"
+          }
         }
       }
     },
@@ -7968,6 +8340,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鍵"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "鍵"
@@ -8104,6 +8482,12 @@
             "state" : "translated",
             "value" : "標題"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "標題"
+          }
         }
       }
     },
@@ -8236,6 +8620,12 @@
             "state" : "translated",
             "value" : "關係"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "關係"
+          }
         }
       }
     },
@@ -8362,6 +8752,12 @@
             "state" : "translated",
             "value" : "預設組合"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "預設組合"
+          }
         }
       }
     },
@@ -8478,6 +8874,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無障礙通行"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "無障礙通行"
@@ -8604,6 +9006,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "是"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "是"
@@ -8770,6 +9178,12 @@
             "state" : "translated",
             "value" : "值 12"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 12"
+          }
         }
       }
     },
@@ -8898,6 +9312,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 10"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "值 10"
@@ -9034,6 +9454,12 @@
             "state" : "translated",
             "value" : "值 7"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 7"
+          }
         }
       }
     },
@@ -9166,6 +9592,12 @@
             "state" : "translated",
             "value" : "鍵"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鍵"
+          }
         }
       }
     },
@@ -9286,6 +9718,12 @@
             "state" : "translated",
             "value" : "食物和飲料"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "食物和飲料"
+          }
         }
       }
     },
@@ -9348,6 +9786,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "key"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "key"
@@ -9484,6 +9928,12 @@
             "state" : "translated",
             "value" : "值"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值"
+          }
         }
       }
     },
@@ -9606,6 +10056,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ⓘ"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ⓘ"
@@ -9738,6 +10194,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "副標題"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "副標題"

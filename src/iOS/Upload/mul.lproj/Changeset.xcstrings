@@ -142,6 +142,12 @@
             "state" : "translated",
             "value" : "變更："
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "變更："
+          }
         }
       }
     },
@@ -268,6 +274,12 @@
             "state" : "translated",
             "value" : "Lorem ipsum dolor sit er elit lamet,"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lorem ipsum dolor sit er elit lamet,"
+          }
         }
       }
     },
@@ -390,6 +402,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提交"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "提交"
@@ -538,6 +556,12 @@
             "state" : "translated",
             "value" : "編輯"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "編輯"
+          }
         }
       }
     },
@@ -606,6 +630,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔽"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "🔽"
@@ -732,6 +762,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "變更集說明："
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "變更集說明："
@@ -880,6 +916,12 @@
             "state" : "translated",
             "value" : "上傳"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上傳"
+          }
         }
       }
     },
@@ -1006,6 +1048,12 @@
             "state" : "translated",
             "value" : "Lorem ipsum dolor sit er elit lamet,"
           }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lorem ipsum dolor sit er elit lamet,"
+          }
         }
       }
     },
@@ -1116,6 +1164,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "踏查、Bing 之類的。"
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "踏查、Bing 之類的。"
@@ -1416,6 +1470,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "來源："
+          }
+        },
+        "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "來源："
