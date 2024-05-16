@@ -158,6 +158,7 @@ final class PresetFeature: CustomDebugStringConvertible, FastCodable {
 			if let preset = PresetsDatabase.shared.presetFeatureForFeatureID(redirect) {
 				return preset.name
 			}
+			print("bad preset redirect: \(redirect)")
 		}
 		return nameWithRedirect
 	}
@@ -173,6 +174,7 @@ final class PresetFeature: CustomDebugStringConvertible, FastCodable {
 				{
 					return fields
 				}
+				print("bad preset redirect: \(redirect)")
 			}
 			return [$0]
 		}
@@ -188,7 +190,8 @@ final class PresetFeature: CustomDebugStringConvertible, FastCodable {
 				   let moreFields = preset.moreFields
 				{
 					return moreFields
-				}
+				} 
+				print("bad preset redirect: \(redirect)")
 			}
 			return [$0]
 		}

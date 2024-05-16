@@ -305,7 +305,7 @@ extension PresetsDatabase {
 					return nil
 				}
 			} else {
-				print("bad")
+				print("bad preset prerequisiteTag")
 			}
 		}
 

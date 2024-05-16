@@ -188,7 +188,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 				}
 				layerList[z].append(layer)
 			} else {
-				print("oops")
+				print("unfound layer in MercatorTileLayer")
 			}
 		}
 

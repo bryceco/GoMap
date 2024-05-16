@@ -25,10 +25,13 @@ enum ArchivePath {
 	func url() -> URL {
 		switch self {
 		case .gpxPoints:
+#if DEBUG
+			// This is a work in progress. We'd like to get the iCloud Documents directory here.
+			// Not sure it is even possible.
 			DispatchQueue.main.async {
 				MetadataClass.shared.ubiquitousUrlForName("gpxPoints", in: .documentDirectory, callback: { _ in })
 			}
-
+#endif
 			return Self.urlForName("gpxPoints",
 			                       in: .documentDirectory,
 			                       bundleID: false)
@@ -163,7 +166,7 @@ class MetadataClass {
 			})
 		metadataQuery.enableUpdates()
 		let ok = metadataQuery.start()
-		print("\(ok)")
+		print("metadataQuery: \(ok)")
 
 		/*
 		 DispatchQueue.global(qos: .default).async {
@@ -188,6 +191,6 @@ class MetadataClass {
 	@objc func handleQueryNotification(_ notification: Any?) {
 		let notification = notification as! NSNotification
 		let query = notification.object as! NSMetadataQuery
-		print("\(query)")
+		print("Metadata query: \(query)")
 	}
 }
