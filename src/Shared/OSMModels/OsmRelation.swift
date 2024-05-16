@@ -297,8 +297,8 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 						continue
 					}
 					let way = member.obj as! OsmWay
-					let enumerator = (way.nodes[0] == loop.last!) ? way.nodes.makeIterator()
-						: (way.nodes.last! == loop.last!) ? way.nodes.reversed().makeIterator()
+					let enumerator = (way.nodes.first == loop.last) ? way.nodes.makeIterator()
+						: (way.nodes.last == loop.last) ? way.nodes.reversed().makeIterator()
 						: nil
 					if let enumerator = enumerator {
 						foundAdjacent = true
