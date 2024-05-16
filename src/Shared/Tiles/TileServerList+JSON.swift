@@ -211,7 +211,6 @@ extension TileServerList {
 			                                               range: NSRange(location: 0,
 			                                                              length: identifier.utf8.count)) != 0 }) != nil
 			{
-				print("Discard \(identifier)")
 				continue
 			}
 

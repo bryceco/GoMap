@@ -79,7 +79,7 @@ final class PresetsDatabase {
 	lazy var taginfoCache = TagInfo()
 
 	init(withLanguageCode code: String, debug: Bool = true) {
-		// OSM TagInfo database
+		let startTime = Date()
 
 		// get translations for current language
 		let file = "translations/" + code + ".json"
@@ -123,6 +123,7 @@ final class PresetsDatabase {
 		nsiGeoJson = [String: GeoJSON]()
 
 		DispatchQueue.global(qos: .userInitiated).async {
+			let startTime = Date()
 			let nsiDict = Self.jsonForFile("nsi_presets.json") as! [String: Any]
 			let nsiPresets = (nsiDict["presets"] as! [String: Any])
 				.mapValuesWithKeys({ k, v in
@@ -141,6 +142,7 @@ final class PresetsDatabase {
 				}
 #endif
 			}
+			print("NSI decode time = \(Date().timeIntervalSince(startTime))")
 		}
 
 		// Load geojson outlines for NSI in the background
@@ -165,6 +167,7 @@ final class PresetsDatabase {
 				}
 			}
 		}
+		print("PresetsDatabase decode time = \(Date().timeIntervalSince(startTime))")
 	}
 
 	/// basePresets is always the regular presets
