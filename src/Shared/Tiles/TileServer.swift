@@ -621,7 +621,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 		return loc
 	}
 
-	func url(forZoom zoom: Int, tileX: Int, tileY: Int) -> URL {
+	func url(forZoom zoom: Int, tileX: Int, tileY: Int) -> URL? {
 		var url = self.url
 
 		// handle switch in URL
@@ -681,6 +681,6 @@ final class TileServer: Equatable, Codable, FastCodable {
 		// expand spaces
 		url = url.replacingOccurrences(of: " ", with: "%20")
 
-		return URL(string: url)!
+		return URL(string: url)
 	}
 }
