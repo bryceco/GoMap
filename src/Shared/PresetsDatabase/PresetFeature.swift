@@ -6,11 +6,12 @@
 //  Copyright © 2020 Bryce Cogswell. All rights reserved.
 //
 
+import FastCodable
 import Foundation
 import UIKit
 
 // A feature-defining tag such as amenity=shop
-final class PresetFeature: CustomDebugStringConvertible {
+final class PresetFeature: CustomDebugStringConvertible, FastCodable {
 	static let uninitializedImage = UIImage()
 
 	let _addTags: [String: String]?
@@ -20,7 +21,7 @@ final class PresetFeature: CustomDebugStringConvertible {
 	let geometry: [String]
 	let icon: String? // icon on the map
 	let locationSet: LocationSet
-	let matchScore: Float
+	let matchScore: Double
 	let moreFieldsWithRedirect: [String]?
 	let nameWithRedirect: String
 	let reference: [String: String]?
@@ -40,7 +41,7 @@ final class PresetFeature: CustomDebugStringConvertible {
 	     geometry: [String],
 	     icon: String?, // icon on the map
 	     locationSet: LocationSet,
-	     matchScore: Float,
+	     matchScore: Double,
 	     moreFieldsWithRedirect: [String]?,
 	     nameWithRedirect: String,
 	     nsiSuggestion: Bool,
@@ -82,7 +83,7 @@ final class PresetFeature: CustomDebugStringConvertible {
 			geometry: jsonDict["geometry"] as! [String]? ?? [],
 			icon: jsonDict["icon"] as! String?,
 			locationSet: LocationSet(withJson: jsonDict["locationSet"]),
-			matchScore: Float(jsonDict["matchScore"] as! Double? ?? 1.0),
+			matchScore: jsonDict["matchScore"] as! Double? ?? 1.0,
 			moreFieldsWithRedirect: jsonDict["moreFields"] as! [String]?,
 			nameWithRedirect: jsonDict["name"] as! String? ?? featureID,
 			nsiSuggestion: isNSI,
@@ -97,6 +98,44 @@ final class PresetFeature: CustomDebugStringConvertible {
 					return jsonDict["terms"] as! [String]? ?? jsonDict["matchNames"] as! [String]? ?? []
 				}
 			}())
+	}
+
+	init(fromFast decoder: FastDecoder) throws {
+		_addTags = try decoder.decode()
+		aliases = try decoder.decode()
+		featureID = try decoder.decode()
+		fieldsWithRedirect = try decoder.decode()
+		geometry = try decoder.decode()
+		icon = try decoder.decode()
+		locationSet = try decoder.decode()
+		matchScore = try decoder.decode()
+		moreFieldsWithRedirect = try decoder.decode()
+		nameWithRedirect = try decoder.decode()
+		nsiSuggestion = try decoder.decode()
+		reference = try decoder.decode()
+		_removeTags = try decoder.decode()
+		searchable = try decoder.decode()
+		tags = try decoder.decode()
+		terms = try decoder.decode()
+	}
+
+	func fastEncode(to encoder: FastEncoder) {
+		encoder.encode(_addTags)
+		encoder.encode(aliases)
+		encoder.encode(featureID)
+		encoder.encode(fieldsWithRedirect)
+		encoder.encode(geometry)
+		encoder.encode(icon)
+		encoder.encode(locationSet)
+		encoder.encode(matchScore)
+		encoder.encode(moreFieldsWithRedirect)
+		encoder.encode(nameWithRedirect)
+		encoder.encode(nsiSuggestion)
+		encoder.encode(reference)
+		encoder.encode(_removeTags)
+		encoder.encode(searchable)
+		encoder.encode(tags)
+		encoder.encode(terms)
 	}
 
 	let nsiSuggestion: Bool // is from NSI
@@ -343,7 +382,7 @@ final class PresetFeature: CustomDebugStringConvertible {
 			return 0.0
 		}
 
-		var totalScore: Float = 1.0
+		var totalScore = 1.0
 
 		var seen = Set<String>()
 		for (key, value) in tags {
