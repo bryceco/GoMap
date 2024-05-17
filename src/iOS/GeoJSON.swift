@@ -31,12 +31,22 @@ struct GeoJSONFeature: Decodable {
 	let geometry: GeoJSONGeometry
 }
 
+extension LatLon {
+	init(array: [NSNumber]) throws {
+		if array.count != 2 {
+			throw GeoJsonError.invalidFormat
+		}
+		self.lon = array[0].doubleValue
+		self.lat = array[1].doubleValue
+	}
+}
+
 struct GeoJSONGeometry: Codable {
 	let geometryPoints: GeometryType
 	let bezierPath: UIBezierPath
 	var cgPath: CGPath { return bezierPath.cgPath }
 
-	typealias Point = [Double]
+	typealias Point = LatLon
 	typealias LineString = [Point]
 	typealias Polygon = [[Point]]
 
@@ -50,32 +60,32 @@ struct GeoJSONGeometry: Codable {
 
 		init(point points: [Any]) throws {
 			guard let nsPoints = points as? [NSNumber] else { throw GeoJsonError.invalidFormat }
-			self = .point(points: nsPoints.map { $0.doubleValue })
+			self = .point(points: try LatLon(array: nsPoints))
 		}
 
 		init(multiPoint points: [Any]) throws {
 			guard let nsPoints = points as? [[NSNumber]] else { throw GeoJsonError.invalidFormat }
-			self = .multiPoint(points: nsPoints.map { $0.map { $0.doubleValue }})
+			self = .multiPoint(points: try nsPoints.map { try LatLon(array: $0)})
 		}
 
 		init(lineString points: [Any]) throws {
 			guard let nsPoints = points as? [[NSNumber]] else { throw GeoJsonError.invalidFormat }
-			self = .lineString(points: nsPoints.map { $0.map { $0.doubleValue }})
+			self = .lineString(points: try nsPoints.map { try LatLon(array: $0)})
 		}
 
 		init(multiLineString points: [Any]) throws {
 			guard let nsPoints = points as? [[[NSNumber]]] else { throw GeoJsonError.invalidFormat }
-			self = .multiLineString(points: nsPoints.map { $0.map { $0.map { $0.doubleValue }}})
+			self = .multiLineString(points: try nsPoints.map { try $0.map { try LatLon(array: $0)}})
 		}
 
 		init(polygon points: [Any]) throws {
 			guard let nsPoints = points as? [[[NSNumber]]] else { throw GeoJsonError.invalidFormat }
-			self = .polygon(points: nsPoints.map { $0.map { $0.map { $0.doubleValue }}})
+			self = .polygon(points: try nsPoints.map { try $0.map { try LatLon(array: $0)}})
 		}
 
 		init(multiPolygon points: [Any]) throws {
 			guard let nsPoints = points as? [[[[NSNumber]]]] else { throw GeoJsonError.invalidFormat }
-			self = .multiPolygon(points: nsPoints.map { $0.map { $0.map { $0.map { $0.doubleValue }}}})
+			self = .multiPolygon(points: try nsPoints.map { try $0.map { try $0.map { try LatLon(array: $0)}}})
 		}
 
 		// This init is used by TileServerList, where the JSON is already decoded
@@ -109,28 +119,29 @@ struct GeoJSONGeometry: Codable {
 			case coordinates
 		}
 
+		// This is called when parsing NSI geojsons, CountryCoder, etc
 		init(from decoder: Decoder) throws {
 			do {
 				let container = try decoder.container(keyedBy: CodingKeys.self)
 				let type = try container.decode(String.self, forKey: .type)
 				switch type {
 				case "Point":
-					let points = try container.decode(Point.self, forKey: .coordinates)
+					let points = try container.decode([Double].self, forKey: .coordinates)
 					self = try GeometryType(point: points)
 				case "MultiPoint":
-					let points = try container.decode([Point].self, forKey: .coordinates)
+					let points = try container.decode([Double].self, forKey: .coordinates)
 					self = try GeometryType(multiPoint: points)
 				case "LineString":
-					let points = try container.decode(LineString.self, forKey: .coordinates)
+					let points = try container.decode([[Double]].self, forKey: .coordinates)
 					self = try GeometryType(lineString: points)
 				case "MultiLineString":
-					let points = try container.decode([LineString].self, forKey: .coordinates)
+					let points = try container.decode([[[Double]]].self, forKey: .coordinates)
 					self = try GeometryType(multiLineString: points)
 				case "Polygon":
-					let points = try container.decode(Polygon.self, forKey: .coordinates)
+					let points = try container.decode([[[Double]]].self, forKey: .coordinates)
 					self = try GeometryType(polygon: points)
 				case "MultiPolygon":
-					let points = try container.decode([Polygon].self, forKey: .coordinates)
+					let points = try container.decode([[[[Double]]]].self, forKey: .coordinates)
 					self = try GeometryType(multiPolygon: points)
 				default:
 					throw GeoJsonError.invalidFormat
@@ -180,57 +191,52 @@ struct GeoJSONGeometry: Codable {
 // MARK: Bezier path stuff
 
 extension GeoJSONGeometry {
-	private static func pointForPointArray(_ point: [Double]) throws -> CGPoint {
-		guard point.count == 2 else {
-			throw GeoJsonError.invalidFormat
-		}
-		let lon = point[0]
-		let lat = point[1]
-		return CGPoint(x: lon, y: lat)
+	private static func cgForPoint(_ point: LatLon) -> CGPoint {
+		return CGPoint(x: point.lon, y: point.lat)
 	}
 
-	private static func addLineStringPoints(_ points: [[Double]], to path: UIBezierPath) throws {
+	private static func addLineStringPoints(_ points: [LatLon], to path: UIBezierPath) throws {
 		if points.count < 2 {
 			throw GeoJsonError.invalidFormat
 		}
-		path.move(to: try Self.pointForPointArray(points[0]))
+		path.move(to: Self.cgForPoint(points[0]))
 		for pt in points.dropFirst() {
-			path.addLine(to: try Self.pointForPointArray(pt))
+			path.addLine(to: Self.cgForPoint(pt))
 		}
 	}
 
-	private static func addLoopPoints(_ points: [[Double]], to path: UIBezierPath) throws {
+	private static func addLoopPoints(_ points: [LatLon], to path: UIBezierPath) throws {
 		if points.count < 4 {
 			throw GeoJsonError.invalidFormat
 		}
-		path.move(to: try Self.pointForPointArray(points[0]))
+		path.move(to: Self.cgForPoint(points[0]))
 		for pt in points.dropFirst() {
-			path.addLine(to: try Self.pointForPointArray(pt))
+			path.addLine(to: Self.cgForPoint(pt))
 		}
 		path.close()
 	}
 
 	// A Polygon is an outer ring plus optional holes
-	private static func addPolygonPoints(_ points: [[[Double]]], to path: UIBezierPath) throws {
+	private static func addPolygonPoints(_ points: [[LatLon]], to path: UIBezierPath) throws {
 		for loop in points {
 			try Self.addLoopPoints(loop, to: path)
 		}
 	}
 
 	// A MultiPolygon is a list of Polygons
-	private static func addMultiPolygonPoints(_ points: [[[[Double]]]], to path: UIBezierPath) throws {
+	private static func addMultiPolygonPoints(_ points: [[[LatLon]]], to path: UIBezierPath) throws {
 		for loop in points {
 			try Self.addPolygonPoints(loop, to: path)
 		}
 	}
 
-	static func bezierPathFor(lineString points: [[Double]]) throws -> UIBezierPath {
+	static func bezierPathFor(lineString points: [LatLon]) throws -> UIBezierPath {
 		let path = UIBezierPath()
 		try Self.addLineStringPoints(points, to: path)
 		return path
 	}
 
-	static func bezierPathFor(multiLineString points: [[[Double]]]) throws -> UIBezierPath {
+	static func bezierPathFor(multiLineString points: [[LatLon]]) throws -> UIBezierPath {
 		let path = UIBezierPath()
 		for line in points {
 			try Self.addLineStringPoints(line, to: path)
@@ -238,13 +244,13 @@ extension GeoJSONGeometry {
 		return path
 	}
 
-	static func bezierPathFor(polygon points: [[[Double]]]) throws -> UIBezierPath {
+	static func bezierPathFor(polygon points: [[LatLon]]) throws -> UIBezierPath {
 		let path = UIBezierPath()
 		try Self.addPolygonPoints(points, to: path)
 		return path
 	}
 
-	static func bezierPathFor(multipolygon points: [[[[Double]]]]) throws -> UIBezierPath {
+	static func bezierPathFor(multipolygon points: [[[LatLon]]]) throws -> UIBezierPath {
 		let path = UIBezierPath()
 		try Self.addMultiPolygonPoints(points, to: path)
 		return path
@@ -294,22 +300,22 @@ extension GeoJSONGeometry.GeometryType: FastCodable {
 		let type = try Int(fromFast: decoder)
 		switch type {
 		case 1:
-			let points = try [Double].init(fromFast: decoder)
+			let points = try LatLon.init(fromFast: decoder)
 			self = .point(points: points)
 		case 2:
-			let points = try [[Double]].init(fromFast: decoder)
+			let points = try [LatLon].init(fromFast: decoder)
 			self = .multiPoint(points: points)
 		case 3:
-			let points = try [[Double]].init(fromFast: decoder)
+			let points = try [LatLon].init(fromFast: decoder)
 			self = .lineString(points: points)
 		case 4:
-			let points = try [[[Double]]].init(fromFast: decoder)
+			let points = try [[LatLon]].init(fromFast: decoder)
 			self = .multiLineString(points: points)
 		case 5:
-			let points = try [[[Double]]].init(fromFast: decoder)
+			let points = try [[LatLon]].init(fromFast: decoder)
 			self = .polygon(points: points)
 		case 6:
-			let points = try [[[[Double]]]].init(fromFast: decoder)
+			let points = try [[[LatLon]]].init(fromFast: decoder)
 			self = .multiPolygon(points: points)
 		default:
 			fatalError()

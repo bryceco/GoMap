@@ -38,22 +38,22 @@ final class CustomLayer: LineDrawingLayer {
 			case .point, .multiPoint:
 				break
 			case let .lineString(poly):
-				let shape = LineShapeLayer(with: poly.map { LatLon(x: $0[0], y: $0[1]) })
+				let shape = LineShapeLayer(with: poly)
 				lines.append(shape)
 			case let .multiLineString(points):
 				for line in points {
-					let shape = LineShapeLayer(with: line.map { LatLon(x: $0[0], y: $0[1]) })
+					let shape = LineShapeLayer(with: line)
 					lines.append(shape)
 				}
 			case let .polygon(poly):
 				for line in poly {
-					let shape = LineShapeLayer(with: line.map { LatLon(x: $0[0], y: $0[1]) })
+					let shape = LineShapeLayer(with: line)
 					lines.append(shape)
 				}
 			case let .multiPolygon(multi):
 				for poly in multi {
 					for line in poly {
-						let shape = LineShapeLayer(with: line.map { LatLon(x: $0[0], y: $0[1]) })
+						let shape = LineShapeLayer(with: line)
 						lines.append(shape)
 					}
 				}
