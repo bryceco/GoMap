@@ -36,8 +36,8 @@ extension LatLon {
 		if array.count != 2 {
 			throw GeoJsonError.invalidFormat
 		}
-		self.lon = array[0].doubleValue
-		self.lat = array[1].doubleValue
+		lon = array[0].doubleValue
+		lat = array[1].doubleValue
 	}
 }
 
@@ -65,27 +65,27 @@ struct GeoJSONGeometry: Codable {
 
 		init(multiPoint points: [Any]) throws {
 			guard let nsPoints = points as? [[NSNumber]] else { throw GeoJsonError.invalidFormat }
-			self = .multiPoint(points: try nsPoints.map { try LatLon(array: $0)})
+			self = .multiPoint(points: try nsPoints.map { try LatLon(array: $0) })
 		}
 
 		init(lineString points: [Any]) throws {
 			guard let nsPoints = points as? [[NSNumber]] else { throw GeoJsonError.invalidFormat }
-			self = .lineString(points: try nsPoints.map { try LatLon(array: $0)})
+			self = .lineString(points: try nsPoints.map { try LatLon(array: $0) })
 		}
 
 		init(multiLineString points: [Any]) throws {
 			guard let nsPoints = points as? [[[NSNumber]]] else { throw GeoJsonError.invalidFormat }
-			self = .multiLineString(points: try nsPoints.map { try $0.map { try LatLon(array: $0)}})
+			self = .multiLineString(points: try nsPoints.map { try $0.map { try LatLon(array: $0) }})
 		}
 
 		init(polygon points: [Any]) throws {
 			guard let nsPoints = points as? [[[NSNumber]]] else { throw GeoJsonError.invalidFormat }
-			self = .polygon(points: try nsPoints.map { try $0.map { try LatLon(array: $0)}})
+			self = .polygon(points: try nsPoints.map { try $0.map { try LatLon(array: $0) }})
 		}
 
 		init(multiPolygon points: [Any]) throws {
 			guard let nsPoints = points as? [[[[NSNumber]]]] else { throw GeoJsonError.invalidFormat }
-			self = .multiPolygon(points: try nsPoints.map { try $0.map { try $0.map { try LatLon(array: $0)}}})
+			self = .multiPolygon(points: try nsPoints.map { try $0.map { try $0.map { try LatLon(array: $0) }}})
 		}
 
 		// This init is used by TileServerList, where the JSON is already decoded
@@ -300,7 +300,7 @@ extension GeoJSONGeometry.GeometryType: FastCodable {
 		let type = try Int(fromFast: decoder)
 		switch type {
 		case 1:
-			let points = try LatLon.init(fromFast: decoder)
+			let points = try LatLon(fromFast: decoder)
 			self = .point(points: points)
 		case 2:
 			let points = try [LatLon].init(fromFast: decoder)

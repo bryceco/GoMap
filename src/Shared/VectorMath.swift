@@ -11,8 +11,8 @@
 // OsmPoint, etc that is explicitely 64-bit double
 
 import CoreLocation
-import UIKit
 import FastCodable
+import UIKit
 
 // https://developer.apple.com/library/mac/#samplecode/glut/Listings/gle_vvector_h.html
 
@@ -652,6 +652,7 @@ extension LatLon: FastCodable {
 		lat = try decoder.decode()
 		lon = try decoder.decode()
 	}
+
 	func fastEncode(to encoder: FastEncoder) {
 		encoder.encode(lat)
 		encoder.encode(lon)

@@ -165,127 +165,133 @@ extension TileServerList {
 
 		var externalAerials: [TileServer] = []
 		for entry in featureArray {
-			guard
-				try entry.type == "Feature"
-			else {
-				print("Aerial: skipping non-Feature")
-				continue
-			}
-			let properties = try entry.properties
+			do {
+				let properties = try entry.properties
+				let name = try properties.name
 
-			let type = try properties.type
-			switch type {
-			case .tms, .wms:
-				break
-			case .scanex,
-			     .wms_endpoint,
-			     .wmts,
-			     .bing:
-				// Not supported
-				continue
-			}
-
-			let name = try properties.name
-			if name.hasPrefix("Maxar ") {
-				// we special case their imagery because they require a special key
-				continue
-			}
-
-			let identifier = try properties.id
-
-			if let category = try properties.category,
-			   let supported = categories[category],
-			   supported
-			{
-				// good
-			} else if identifier == "OpenTopoMap" {
-				// special exception for this one
-			} else if identifier == MapBoxLocatorId {
-				// this can replace our built-in version
-			} else {
-				continue
-			}
-
-			// check if it's in our discard list
-			if discardRE.contains(where: {
-				let range = NSRange(location: 0, length: identifier.utf8.count)
-				return $0.firstMatch(in: identifier, range: range) != nil
-			}) {
-				continue
-			}
-
-			let startDateString = try properties.start_date
-			let endDateString = try properties.end_date
-			let endDate = TileServer.date(from: endDateString)
-			if let endDate = endDate,
-			   endDate.timeIntervalSinceNow < -20 * 365.0 * 24 * 60 * 60
-			{
-				continue
-			}
-			let url = try properties.url
-			guard
-				url.hasPrefix("http:") || url.hasPrefix("https:")
-			else {
-				print("Aerial: bad url: \(name)")
-				continue
-			}
-
-			let maxZoom = try properties.max_zoom ?? 0
-
-			if (try properties.overlay) ?? false,
-			   identifier != MapBoxLocatorId
-			{
-				// we don@"t support overlays except locator
-				continue
-			}
-
-			// we only support some types of WMS projections
-			var projection: String?
-			if type == .wms {
-				projection = try properties.available_projections?.first(where: { supportedProjections.contains($0) })
-				if projection == nil {
+				guard
+					try entry.type == "Feature"
+				else {
+					print("Aerial: skipping non-Feature")
 					continue
 				}
+
+				let type = try properties.type
+				switch type {
+				case .tms, .wms:
+					break
+				case .scanex,
+				     .wms_endpoint,
+				     .wmts,
+				     .bing:
+					// Not supported
+					continue
+				}
+
+				if name.hasPrefix("Maxar ") {
+					// we special case their imagery because they require a special key
+					continue
+				}
+
+				let identifier = try properties.id
+
+				if let category = try properties.category,
+				   let supported = categories[category],
+				   supported
+				{
+					// good
+				} else if identifier == "OpenTopoMap" {
+					// special exception for this one
+				} else if identifier == MapBoxLocatorId {
+					// this can replace our built-in version
+				} else {
+					continue
+				}
+
+				// check if it's in our discard list
+				if discardRE.contains(where: {
+					let range = NSRange(location: 0, length: identifier.utf8.count)
+					return $0.firstMatch(in: identifier, range: range) != nil
+				}) {
+					continue
+				}
+
+				let startDateString = try properties.start_date
+				let endDateString = try properties.end_date
+				let endDate = TileServer.date(from: endDateString)
+				if let endDate = endDate,
+				   endDate.timeIntervalSinceNow < -20 * 365.0 * 24 * 60 * 60
+				{
+					continue
+				}
+				let url = try properties.url
+				guard
+					url.hasPrefix("http:") || url.hasPrefix("https:")
+				else {
+					print("Aerial: bad url: \(name)")
+					continue
+				}
+
+				let maxZoom = try properties.max_zoom ?? 0
+
+				if (try properties.overlay) ?? false,
+				   identifier != MapBoxLocatorId
+				{
+					// we don@"t support overlays except locator
+					continue
+				}
+
+				// we only support some types of WMS projections
+				var projection: String?
+				if type == .wms {
+					projection = try properties.available_projections?
+						.first(where: { supportedProjections.contains($0) })
+					if projection == nil {
+						continue
+					}
+				}
+
+				let attribIconString = try properties.icon
+				let attribDict = try properties.attribution
+				let attribString = try attribDict?.text ?? ""
+				let attribUrl = try attribDict?.url ?? ""
+
+				let best = try properties.best ?? false
+
+				// support for {apikey}
+				var apikey = ""
+				if identifier == MapBoxLocatorId || identifier == MapBoxLayerId {
+					apikey = MapboxLocatorToken
+				} else if url.contains(".thunderforest.com/") {
+					// Please don't use in other apps. Sign up for a free account at Thunderforest.com insead.
+					apikey = "be3dc024e3924c22beb5f841d098a8a3"
+				}
+				if url.contains("{apikey}"),
+				   apikey == ""
+				{
+					print("Missing {apikey} for \(name)")
+					continue
+				}
+
+				let service = TileServer(withName: name,
+				                         identifier: identifier,
+				                         url: url,
+				                         best: best,
+				                         apiKey: apikey,
+				                         maxZoom: maxZoom,
+				                         roundUp: true,
+				                         startDate: startDateString,
+				                         endDate: endDateString,
+				                         wmsProjection: projection,
+				                         geoJSON: try entry.geometry,
+				                         attribString: attribString,
+				                         attribIconString: attribIconString,
+				                         attribUrl: attribUrl)
+
+				externalAerials.append(service)
+			} catch {
+				print("TileServer \((try? entry.properties.name) ?? "<unknown>"): \(error)")
 			}
-
-			let attribIconString = try properties.icon
-			let attribDict = try properties.attribution
-			let attribString = try attribDict?.text ?? ""
-			let attribUrl = try attribDict?.url ?? ""
-
-			let best = try properties.best ?? false
-
-			// support for {apikey}
-			var apikey = ""
-			if identifier == MapBoxLocatorId || identifier == MapBoxLayerId {
-				apikey = MapboxLocatorToken
-			} else if url.contains(".thunderforest.com/") {
-				// Please don't use in other apps. Sign up for a free account at Thunderforest.com insead.
-				apikey = "be3dc024e3924c22beb5f841d098a8a3"
-			}
-			if url.contains("{apikey}"),
-			   apikey == ""
-			{
-				print("Missing {apikey} for \(name)")
-				continue
-			}
-
-			let service = TileServer(withName: name,
-			                         identifier: identifier,
-			                         url: url,
-			                         best: best,
-			                         apiKey: apikey,
-			                         maxZoom: maxZoom,
-			                         roundUp: true,
-			                         startDate: startDateString,
-			                         endDate: endDateString,
-			                         wmsProjection: projection,
-			                         geoJSON: try? entry.geometry,
-			                         attribString: attribString,
-			                         attribIconString: attribIconString,
-			                         attribUrl: attribUrl)
-
-			externalAerials.append(service)
 		}
 		return externalAerials
 	}
