@@ -190,7 +190,7 @@ final class PresetFeature: CustomDebugStringConvertible, FastCodable {
 				   let moreFields = preset.moreFields
 				{
 					return moreFields
-				} 
+				}
 				print("bad preset redirect: \(redirect)")
 			}
 			return [$0]

@@ -87,7 +87,7 @@ public final class CountryCoder {
 		struct Feature: Decodable {
 			let type: String
 			let properties: Properties
-			let geometry: GeoJSON?
+			let geometry: GeoJSONGeometry?
 		}
 		struct Geometry: Decodable {
 			let type: String

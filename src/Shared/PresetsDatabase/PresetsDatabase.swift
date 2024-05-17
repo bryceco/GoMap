@@ -21,7 +21,7 @@ final class PresetsDatabase {
 	// these map a tag key to a list of features that require that key
 	let stdFeatureIndex: [String: [PresetFeature]] // generic preset index
 	var nsiFeatureIndex: [String: [PresetFeature]] // generic+NSI index
-	var nsiGeoJson: [String: GeoJSON] // geojson regions for NSI
+	var nsiGeoJson: [String: GeoJSONGeometry] // geojson regions for NSI
 
 	class func pathForFile(_ file: String) -> URL? {
 		return Bundle.main.resourceURL?
@@ -120,7 +120,7 @@ final class PresetsDatabase {
 		// name suggestion index
 		nsiFeatures = [String: PresetFeature]()
 		nsiFeatureIndex = stdFeatureIndex
-		nsiGeoJson = [String: GeoJSON]()
+		nsiGeoJson = [String: GeoJSONGeometry]()
 
 		DispatchQueue.global(qos: .userInitiated).async {
 			let startTime = Date()
@@ -147,19 +147,14 @@ final class PresetsDatabase {
 
 		// Load geojson outlines for NSI in the background
 		DispatchQueue.global(qos: .userInitiated).async {
-			if let json = Self.jsonForFile("nsi_geojson.json") {
-				let featureList = (json as! [String: Any])["features"] as! [[String: Any]]
-				var featureDict = [String: GeoJSON]()
-				for feature in featureList {
-					if feature["type"] as! String == "Feature" {
-						let name = feature["id"] as! String
-						let geomDict = feature["geometry"] as! [String: Any]
-						do {
-							let geojson = try GeoJSON(geometry: geomDict)
-							featureDict[name] = geojson
-						} catch {
-							print("\(error)")
-						}
+			if let data = Self.dataForFile("nsi_geojson.json"),
+			   let geoJson = try? GeoJSONFile(data: data)
+			{
+				var featureDict = [String: GeoJSONGeometry]()
+				for feature in geoJson.features {
+					if feature.type == "Feature" {
+						let name = feature.id!
+						featureDict[name] = feature.geometry
 					}
 				}
 				DispatchQueue.main.async {

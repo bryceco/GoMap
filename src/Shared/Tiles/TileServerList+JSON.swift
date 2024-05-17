@@ -43,9 +43,9 @@ extension TileServerList {
 
 	private struct Feature {
 		private let json: [String: Any]
-		var geometry: GeoJSON? { get throws {
+		var geometry: GeoJSONGeometry? { get throws {
 			if json["geometry"] is NSNull { return nil }
-			return try GeoJSON(geometry: json["geometry"] --> [String: Any]?.self)
+			return try GeoJSONGeometry(geometry: json["geometry"] --> [String: Any]?.self)
 		} }
 		var properties: Properties { get throws { try Properties(json["properties"] --> Any.self) } }
 		var type: String { get throws { try json["type"] --> String.self } }

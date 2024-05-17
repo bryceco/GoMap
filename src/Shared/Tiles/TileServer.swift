@@ -46,7 +46,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 	let startDate: String?
 	let endDate: String?
 	let wmsProjection: String
-	let geoJSON: GeoJSON?
+	let geoJSON: GeoJSONGeometry?
 	let attributionString: String
 	let attributionIconString: String?
 	let attributionUrl: String
@@ -96,7 +96,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 		let startDate = try container.decode(String?.self, forKey: .startDate)
 		let endDate = try container.decode(String?.self, forKey: .endDate)
 		let wmsProjection = try container.decode(String.self, forKey: .wmsProjection)
-		let geoJSON = try container.decode(GeoJSON?.self, forKey: .geoJSON)
+		let geoJSON = try container.decode(GeoJSONGeometry?.self, forKey: .geoJSON)
 		let attributionString = try container.decode(String.self, forKey: .attributionString)
 		let attributionIconString = try container.decode(String?.self, forKey: .attributionIconString)
 		let attributionUrl = try container.decode(String.self, forKey: .attributionUrl)
@@ -153,7 +153,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 		let startDate = try String?(fromFast: decoder)
 		let endDate = try String?(fromFast: decoder)
 		let wmsProjection = try String(fromFast: decoder)
-		let geoJSON = try GeoJSON?(fromFast: decoder)
+		let geoJSON = try GeoJSONGeometry?(fromFast: decoder)
 		let attributionString = try String(fromFast: decoder)
 		let attributionIconString = try String?(fromFast: decoder)
 		let attributionUrl = try String(fromFast: decoder)
@@ -175,7 +175,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 		startDate: String?,
 		endDate: String?,
 		wmsProjection projection: String?,
-		geoJSON: GeoJSON?,
+		geoJSON: GeoJSONGeometry?,
 		attribString: String,
 		attribIconString: String?,
 		attribUrl: String)
