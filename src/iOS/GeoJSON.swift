@@ -6,7 +6,6 @@
 //  Copyright © 2022 Bryce Cogswell. All rights reserved.
 //
 
-import CoreGraphics.CGPath
 import FastCodable
 import Foundation
 import UIKit.UIBezierPath
@@ -27,7 +26,7 @@ struct GeoJSONFile: Decodable {
 
 struct GeoJSONFeature: Decodable {
 	let type: String // e.g. "Feature"
-	let id: String?
+	let id: String? // String or Number
 	let geometry: GeoJSONGeometry
 }
 
@@ -43,20 +42,19 @@ extension LatLon {
 
 struct GeoJSONGeometry: Codable {
 	let geometryPoints: GeometryType
-	let bezierPath: UIBezierPath
-	var cgPath: CGPath { return bezierPath.cgPath }
+	let latLonBezierPath: UIBezierPath
 
-	typealias Point = LatLon
-	typealias LineString = [Point]
-	typealias Polygon = [[Point]]
+	typealias LineString = [LatLon]
+	typealias Polygon = [[LatLon]]
 
 	enum GeometryType: Codable {
-		case point(points: Point)
-		case multiPoint(points: [Point])
+		case point(points: LatLon)
+		case multiPoint(points: [LatLon])
 		case lineString(points: LineString)
 		case multiLineString(points: [LineString])
 		case polygon(points: Polygon)
 		case multiPolygon(points: [Polygon])
+		case geometryCollection(points: [GeoJSONGeometry])
 
 		init(point points: [Any]) throws {
 			guard let nsPoints = points as? [NSNumber] else { throw GeoJsonError.invalidFormat }
@@ -88,6 +86,10 @@ struct GeoJSONGeometry: Codable {
 			self = .multiPolygon(points: try nsPoints.map { try $0.map { try $0.map { try LatLon(array: $0) }}})
 		}
 
+		init(geometryCollection points: [GeoJSONGeometry]) throws {
+			self = .geometryCollection(points: points)
+		}
+
 		// This init is used by TileServerList, where the JSON is already decoded
 		init(json: [String: Any]) throws {
 			guard
@@ -117,6 +119,7 @@ struct GeoJSONGeometry: Codable {
 		private enum CodingKeys: String, CodingKey {
 			case type
 			case coordinates
+			case geometries
 		}
 
 		// This is called when parsing NSI geojsons, CountryCoder, etc
@@ -143,6 +146,9 @@ struct GeoJSONGeometry: Codable {
 				case "MultiPolygon":
 					let points = try container.decode([[[[Double]]]].self, forKey: .coordinates)
 					self = try GeometryType(multiPolygon: points)
+				case "GeometryCollection":
+					let points = try container.decode([GeoJSONGeometry].self, forKey: .geometries)
+					self = try GeometryType(geometryCollection: points)
 				default:
 					throw GeoJsonError.invalidFormat
 				}
@@ -161,13 +167,13 @@ struct GeoJSONGeometry: Codable {
 	init?(geometry: [String: Any]?) throws {
 		guard let geometry = geometry else { return nil }
 		geometryPoints = try GeometryType(json: geometry)
-		bezierPath = try Self.bezierPath(for: geometryPoints)
+		latLonBezierPath = try geometryPoints.bezierPath()
 	}
 
 	init(from decoder: Decoder) throws {
 		do {
 			geometryPoints = try GeometryType(from: decoder)
-			bezierPath = try Self.bezierPath(for: geometryPoints)
+			latLonBezierPath = try geometryPoints.bezierPath()
 		} catch {
 			print("\(error)")
 			throw error
@@ -179,7 +185,7 @@ struct GeoJSONGeometry: Codable {
 	}
 
 	func contains(_ point: CGPoint) -> Bool {
-		return bezierPath.contains(point)
+		return latLonBezierPath.contains(point)
 	}
 
 	func contains(_ latLon: LatLon) -> Bool {
@@ -190,7 +196,7 @@ struct GeoJSONGeometry: Codable {
 
 // MARK: Bezier path stuff
 
-extension GeoJSONGeometry {
+extension GeoJSONGeometry.GeometryType {
 	private static func cgForPoint(_ point: LatLon) -> CGPoint {
 		return CGPoint(x: point.lon, y: point.lat)
 	}
@@ -256,8 +262,8 @@ extension GeoJSONGeometry {
 		return path
 	}
 
-	static func bezierPath(for coordinates: GeometryType) throws -> UIBezierPath {
-		switch coordinates {
+	func bezierPath() throws -> UIBezierPath {
+		switch self {
 		case .point, .multiPoint:
 			return UIBezierPath()
 		case let .lineString(points):
@@ -268,10 +274,25 @@ extension GeoJSONGeometry {
 			return try Self.bezierPathFor(polygon: points)
 		case let .multiPolygon(points):
 			return try Self.bezierPathFor(multipolygon: points)
+		case let .geometryCollection(points):
+			let all = UIBezierPath()
+			for geo in points {
+				let path = try geo.geometryPoints.bezierPath()
+				all.append(path)
+			}
+			return all
 		}
 	}
 }
 
+// LineShapeLayer support
+extension GeoJSONGeometry {
+	func lineShapeLayer() -> LineShapeLayer {
+		return LineShapeLayer(with: self.latLonBezierPath.cgPath)
+	}
+}
+
+// FastCodable support
 extension GeoJSONGeometry.GeometryType: FastCodable {
 	func fastEncode(to encoder: FastEncoder) {
 		switch self {
@@ -292,6 +313,9 @@ extension GeoJSONGeometry.GeometryType: FastCodable {
 			points.fastEncode(to: encoder)
 		case let .multiPolygon(points):
 			6.fastEncode(to: encoder)
+			points.fastEncode(to: encoder)
+		case let .geometryCollection(points):
+			7.fastEncode(to: encoder)
 			points.fastEncode(to: encoder)
 		}
 	}
@@ -317,6 +341,9 @@ extension GeoJSONGeometry.GeometryType: FastCodable {
 		case 6:
 			let points = try [[[LatLon]]].init(fromFast: decoder)
 			self = .multiPolygon(points: points)
+		case 7:
+			let points = try [GeoJSONGeometry].init(fromFast: decoder)
+			self = .geometryCollection(points: points)
 		default:
 			fatalError()
 		}
@@ -330,6 +357,6 @@ extension GeoJSONGeometry: FastCodable {
 
 	init(fromFast decoder: FastDecoder) throws {
 		geometryPoints = try GeometryType(fromFast: decoder)
-		bezierPath = try Self.bezierPath(for: geometryPoints)
+		latLonBezierPath = try geometryPoints.bezierPath()
 	}
 }

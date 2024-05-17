@@ -38,12 +38,16 @@ class LineShapeLayer: CAShapeLayer {
 		super.init(layer: layer)
 	}
 
-	init(with points: [LatLon]) {
-		firstPoint = points.first
+	init(with points: CGPath) {
+		if let first = points.getPoints().first {
+			firstPoint = LatLon(lon: first.x, lat: first.y)
+		} else {
+			firstPoint = nil
+		}
 		super.init()
 		var refPoint = OSMPoint.zero
 		shapePaths = [CGPath?](repeating: nil, count: 32)
-		shapePaths[0] = Self.path(for: points, refPoint: &refPoint)
+		shapePaths[0] = Self.mapPath(for: points, refPoint: &refPoint)
 		path = shapePaths[0]
 		anchorPoint = CGPoint.zero
 		position = CGPoint(refPoint)
@@ -75,48 +79,44 @@ class LineShapeLayer: CAShapeLayer {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	// Convert the points to a CGPath so we can draw it
-	fileprivate static func path(for points: [LatLon], refPoint: inout OSMPoint) -> CGPath {
-		var path = CGMutablePath()
-		var initial = OSMPoint(x: 0, y: 0)
-		var haveInitial = false
-		var first = true
+	// Convert the points to a CGPath in Map coordinates so we can draw it
+	fileprivate static func mapPath(for latLonPath: CGPath, refPoint: inout OSMPoint) -> CGPath {
+		var newPath = CGMutablePath()
+		var haveFirst = false
 
-		for point in points {
-			var pt = MapTransform.mapPoint(forLatLon: point)
-			if pt.x.isInfinite {
-				break
+		latLonPath.apply(action: { element in
+			let elementPt = element.points[0]
+			var mappedPoint = MapTransform.mapPoint(forLatLon: LatLon(lon: elementPt.x, lat: elementPt.y))
+			if !haveFirst {
+				haveFirst = true
+				refPoint = mappedPoint
 			}
-			if !haveInitial {
-				initial = pt
-				haveInitial = true
+			mappedPoint.x -= refPoint.x
+			mappedPoint.y -= refPoint.y
+			mappedPoint.x *= PATH_SCALING
+			mappedPoint.y *= PATH_SCALING
+			switch element.type {
+			case .moveToPoint:
+				newPath.move(to: CGPoint(mappedPoint))
+			case .addLineToPoint:
+				newPath.addLine(to: CGPoint(mappedPoint))
+			case .closeSubpath:
+				newPath.closeSubpath()
+			default:
+				// not implemented
+				fatalError()
 			}
-			pt.x -= initial.x
-			pt.y -= initial.y
-			pt.x *= PATH_SCALING
-			pt.y *= PATH_SCALING
-			if first {
-				path.move(to: CGPoint(x: pt.x, y: pt.y))
-				first = false
-			} else {
-				path.addLine(to: CGPoint(x: pt.x, y: pt.y))
-			}
+		})
+
+		// place refPoint at upper-left corner of bounding box so it can be the origin for the frame/anchorPoint
+		let bbox = newPath.boundingBoxOfPath
+		var tran = CGAffineTransform(translationX: -bbox.origin.x, y: -bbox.origin.y)
+		if let path2 = newPath.mutableCopy(using: &tran) {
+			newPath = path2
 		}
-
-		if haveInitial {
-			// place refPoint at upper-left corner of bounding box so it can be the origin for the frame/anchorPoint
-			let bbox = path.boundingBoxOfPath
-			if !bbox.origin.x.isInfinite {
-				var tran = CGAffineTransform(translationX: -bbox.origin.x, y: -bbox.origin.y)
-				if let path2 = path.mutableCopy(using: &tran) {
-					path = path2
-				}
-				refPoint = OSMPoint(x: initial.x + Double(bbox.origin.x) / PATH_SCALING,
-				                    y: initial.y + Double(bbox.origin.y) / PATH_SCALING)
-			} else {}
-		}
-
-		return path
+		refPoint = OSMPoint(x: refPoint.x + Double(bbox.origin.x) / PATH_SCALING,
+		                    y: refPoint.y + Double(bbox.origin.y) / PATH_SCALING)
+		return newPath
 	}
 }
 
@@ -163,7 +163,7 @@ class LineDrawingLayer: CALayer {
 		}
 	}
 
-	func layoutSublayersSafe() {
+	private func layoutSublayersSafe() {
 		let tRotation = mapView.screenFromMapTransform.rotation()
 		let tScale = mapView.screenFromMapTransform.scale()
 		let pScale = tScale / PATH_SCALING

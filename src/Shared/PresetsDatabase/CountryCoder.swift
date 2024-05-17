@@ -117,7 +117,7 @@ public final class CountryCoder {
 		var regions: [CountryCoderRegion] = []
 
 		for feature in jsonResult.features {
-			let bezierPath = feature.geometry?.bezierPath
+			let bezierPath = feature.geometry?.latLonBezierPath
 			let properties = feature.properties
 			regions.append(CountryCoderRegion(country: properties.country,
 			                                  iso1A2: properties.iso1A2,

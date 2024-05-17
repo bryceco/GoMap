@@ -186,9 +186,14 @@ final class GpxLayer: LineDrawingLayer, GetDiskCacheSize {
 	}
 
 	override func allLineShapeLayers() -> [LineShapeLayer] {
-		return allTracks().map({
+		return allTracks().compactMap({
 			if $0.shapeLayer == nil {
-				$0.shapeLayer = LineShapeLayer(with: $0.points.map { $0.latLon })
+				let geom = GeoJSONGeometry.GeometryType.lineString(points: $0.points.map { $0.latLon })
+				if let path = try? geom.bezierPath().cgPath {
+					$0.shapeLayer = LineShapeLayer(with: path)
+				} else {
+					return nil
+				}
 			}
 			$0.shapeLayer!.color =
 				$0 == selectedTrack ? UIColor.red : UIColor(red: 1.0,

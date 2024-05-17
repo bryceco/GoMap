@@ -200,7 +200,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 		self.startDate = startDate
 		self.endDate = endDate
 		self.geoJSON = geoJSON
-		polygon = geoJSON?.cgPath.copy()
+		polygon = geoJSON?.latLonBezierPath.cgPath.copy()
 
 		placeholderImage = TileServer.getPlaceholderImage(forIdentifier: identifier)
 	}
