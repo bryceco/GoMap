@@ -146,7 +146,14 @@ final class GpxTrack: NSObject, NSSecureCoding {
 	var creationDate = Date() // when trace was recorded or downloaded
 	private(set) var points: [GpxPoint] = []
 	private(set) var wayPoints: [GpxPoint] = []
-	var shapeLayer: LineShapeLayer?
+	private var geoJSONGeometry: GeoJSONGeometry?
+
+	var geoJSON: GeoJSONGeometry {
+		if geoJSONGeometry == nil {
+			geoJSONGeometry = GeoJSONGeometry(geometry: .lineString(points: points.map { $0.latLon }))
+		}
+		return geoJSONGeometry!
+	}
 
 	func addPoint(_ location: CLLocation) {
 		recording = true
@@ -178,6 +185,9 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		                  extensions: [])
 
 		points.append(pt)
+
+		// need to recompute shape
+		geoJSONGeometry = nil
 	}
 
 	func finish() {

@@ -42,7 +42,8 @@ extension LatLon {
 
 struct GeoJSONGeometry: Codable {
 	let geometryPoints: GeometryType
-	let latLonBezierPath: UIBezierPath
+	let latLonBezierPath: UIBezierPath?
+	let uuid = UUID()
 
 	typealias LineString = [LatLon]
 	typealias Polygon = [[LatLon]]
@@ -164,16 +165,24 @@ struct GeoJSONGeometry: Codable {
 		}
 	}
 
+	init(geometry: GeometryType) {
+		geometryPoints = geometry
+		do {
+			latLonBezierPath = try geometryPoints.bezierPath()
+		} catch {
+			print("GeoJSON bezier path: \(error)")
+			latLonBezierPath = nil
+		}
+	}
+
 	init?(geometry: [String: Any]?) throws {
 		guard let geometry = geometry else { return nil }
-		geometryPoints = try GeometryType(json: geometry)
-		latLonBezierPath = try geometryPoints.bezierPath()
+		self.init(geometry: try GeometryType(json: geometry))
 	}
 
 	init(from decoder: Decoder) throws {
 		do {
-			geometryPoints = try GeometryType(from: decoder)
-			latLonBezierPath = try geometryPoints.bezierPath()
+			self.init(geometry: try GeometryType(from: decoder))
 		} catch {
 			print("\(error)")
 			throw error
@@ -185,7 +194,7 @@ struct GeoJSONGeometry: Codable {
 	}
 
 	func contains(_ point: CGPoint) -> Bool {
-		return latLonBezierPath.contains(point)
+		return latLonBezierPath?.contains(point) ?? false
 	}
 
 	func contains(_ latLon: LatLon) -> Bool {
@@ -282,13 +291,6 @@ extension GeoJSONGeometry.GeometryType {
 			}
 			return all
 		}
-	}
-}
-
-// LineShapeLayer support
-extension GeoJSONGeometry {
-	func lineShapeLayer() -> LineShapeLayer {
-		return LineShapeLayer(with: self.latLonBezierPath.cgPath)
 	}
 }
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LineShapeLayer: CAShapeLayer {
+private class LineShapeLayer: CAShapeLayer {
 	fileprivate struct Properties {
 		var position: OSMPoint?
 		var lineWidth: CGFloat
@@ -120,9 +120,16 @@ class LineShapeLayer: CAShapeLayer {
 	}
 }
 
+protocol GeoJSONDataSource {
+	func geojsonData() -> [(GeoJSONGeometry, UIColor)]
+}
+
 class LineDrawingLayer: CALayer {
-	func allLineShapeLayers() -> [LineShapeLayer] { fatalError() } // superclass should implement this
 	let mapView: MapView
+
+	var geojsonDelegate: GeoJSONDataSource?
+
+	private var layerDict: [UUID: LineShapeLayer]
 
 	@available(*, unavailable)
 	required init?(coder aDecoder: NSCoder) {
@@ -131,6 +138,7 @@ class LineDrawingLayer: CALayer {
 
 	init(mapView: MapView) {
 		self.mapView = mapView
+		layerDict = [:]
 		super.init()
 
 		actions = [
@@ -149,6 +157,10 @@ class LineDrawingLayer: CALayer {
 		mapView.mapTransform.observe(by: self, callback: { self.setNeedsLayout() })
 
 		setNeedsLayout()
+	}
+
+	func center(on point: LatLon) {
+		mapView.centerOn(latLon: point, metersWide: 20.0)
 	}
 
 	// MARK: Drawing
@@ -172,7 +184,33 @@ class LineDrawingLayer: CALayer {
 			scale = 0
 		}
 
-		for layer in allLineShapeLayers() {
+		// get list of GeoJSON structs
+		let geoList = geojsonDelegate?.geojsonData() ?? []
+
+		// compute what's new and what's old
+		var newDict: [UUID: LineShapeLayer] = [:]
+		for (item, color) in geoList {
+			if let layer = layerDict.removeValue(forKey: item.uuid) {
+				layer.color = color
+				newDict[item.uuid] = layer
+			} else {
+				do {
+					let layer = LineShapeLayer(with: try item.geometryPoints.bezierPath().cgPath)
+					layer.color = color
+					newDict[item.uuid] = layer
+				} catch {
+					print("\(error)")
+				}
+			}
+		}
+		for layer in layerDict.values {
+			layer.removeFromSuperlayer()
+		}
+		layerDict = newDict
+
+		// move the layers to the correct location on screen
+		for layer in layerDict.values {
+			// adjust point density according to zoom level
 			if layer.shapePaths[scale] == nil {
 				let epsilon = pow(Double(10.0), Double(scale)) / 256.0
 				layer.shapePaths[scale] = layer.shapePaths[0]?.pathWithReducedPoints(epsilon)

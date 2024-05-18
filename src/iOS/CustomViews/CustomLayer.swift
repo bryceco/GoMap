@@ -12,38 +12,29 @@ import CoreLocation.CLLocation
 import UIKit
 
 // A layer in MapView that displays custom data (GeoJSON, etc) that the user wants to load
-final class CustomLayer: LineDrawingLayer {
-	private(set) var allLayers: [LineShapeLayer] = []
-
+final class CustomLayer: LineDrawingLayer, GeoJSONDataSource {
 	override init(mapView: MapView) {
 		super.init(mapView: mapView)
+		geojsonDelegate = self
 	}
 
-	override func allLineShapeLayers() -> [LineShapeLayer] {
-		return allLayers
-	}
+	var allCustom: [GeoJSONFile] = []
 
-	func center(on point: LatLon) {
-		mapView.centerOn(latLon: point, metersWide: 20.0)
+	func geojsonData() -> [(GeoJSONGeometry, UIColor)] {
+		//let color = UIColor(red: 115 / 255.0, green: 67 / 255.0, blue: 211 / 255.0, alpha: 1.0)
+		return allCustom.flatMap { $0.features.map { ($0.geometry, UIColor.cyan) } }
 	}
 
 	// Load GeoJSON from an external source
 	func loadGeoJSON(_ data: Data, center: Bool) throws {
 		let geo = try GeoJSONFile(data: data)
-		let color = UIColor(red: 115 / 255.0, green: 67 / 255.0, blue: 211 / 255.0, alpha: 1.0)
 
-		let shapeLayers = geo.features.map {
-			$0.geometry.lineShapeLayer()
-		}
-		for line in shapeLayers {
-			line.color = color
-		}
 		if center,
-		   let first = shapeLayers.first?.firstPoint
+		   let first = geo.features.first?.geometry.latLonBezierPath?.cgPath.getPoints().first
 		{
-			self.center(on: first)
+			self.center(on: LatLon(lon: first.x, lat: first.y))
 		}
-		allLayers = shapeLayers
+		allCustom.append(geo)
 		isHidden = false
 		setNeedsLayout()
 	}

@@ -9,7 +9,7 @@
 import CoreLocation.CLLocation
 import UIKit
 
-final class GpxLayer: LineDrawingLayer, GetDiskCacheSize {
+final class GpxLayer: LineDrawingLayer, GetDiskCacheSize, GeoJSONDataSource {
 	private static let DefaultExpirationDays = 7
 
 	var stabilizingCount = 0
@@ -26,19 +26,11 @@ final class GpxLayer: LineDrawingLayer, GetDiskCacheSize {
 
 	private(set) var previousTracks: [GpxTrack] = [] // sorted with most recent first
 
-	/*
-	 override init(layer: Any) {
-	 	let layer = layer as! GpxLayer
-	 	mapView = layer.mapView
-	 	uploadedTracks = [:]
-	 	super.init(layer: layer)
-	 }
-	  */
-
 	override init(mapView: MapView) {
 		let uploads = UserPrefs.shared.object(forKey: .gpxUploadedGpxTracks) as? [String: NSNumber] ?? [:]
 		uploadedTracks = uploads.mapValues({ $0.boolValue })
 		super.init(mapView: mapView)
+		super.geojsonDelegate = self
 	}
 
 	var uploadedTracks: [String: Bool] {
@@ -103,7 +95,6 @@ final class GpxLayer: LineDrawingLayer, GetDiskCacheSize {
 		let path = URL(fileURLWithPath: saveDirectory()).appendingPathComponent(track.fileName()).path
 		try? FileManager.default.removeItem(atPath: path)
 		previousTracks.removeAll { $0 === track }
-		track.shapeLayer?.removeFromSuperlayer()
 		uploadedTracks.removeValue(forKey: track.name)
 		setNeedsLayout()
 	}
@@ -138,10 +129,6 @@ final class GpxLayer: LineDrawingLayer, GetDiskCacheSize {
 
 	func addPoint(_ location: CLLocation) {
 		if let activeTrack = activeTrack {
-			// need to recompute shape layer
-			activeTrack.shapeLayer?.removeFromSuperlayer()
-			activeTrack.shapeLayer = nil
-
 			// ignore bad data while starting up
 			stabilizingCount += 1
 			if stabilizingCount >= 5 {
@@ -185,23 +172,16 @@ final class GpxLayer: LineDrawingLayer, GetDiskCacheSize {
 		}
 	}
 
-	override func allLineShapeLayers() -> [LineShapeLayer] {
-		return allTracks().compactMap({
-			if $0.shapeLayer == nil {
-				let geom = GeoJSONGeometry.GeometryType.lineString(points: $0.points.map { $0.latLon })
-				if let path = try? geom.bezierPath().cgPath {
-					$0.shapeLayer = LineShapeLayer(with: path)
-				} else {
-					return nil
-				}
-			}
-			$0.shapeLayer!.color =
-				$0 == selectedTrack ? UIColor.red : UIColor(red: 1.0,
-				                                            green: 99 / 255.0,
-				                                            blue: 249 / 255.0,
-				                                            alpha: 1.0)
-			return $0.shapeLayer!
-		})
+	func geojsonData() -> [(GeoJSONGeometry, UIColor)] {
+		return allTracks().compactMap {
+			let color = $0 == selectedTrack
+				? UIColor.red
+				: UIColor(red: 1.0,
+						  green: 99 / 255.0,
+						  blue: 249 / 255.0,
+						  alpha: 1.0)
+			return ($0.geoJSON, color)
+		}
 	}
 
 	func saveDirectory() -> String {
