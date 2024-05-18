@@ -31,12 +31,36 @@ struct GeoJSONFeature: Decodable {
 }
 
 extension LatLon {
+	init(array: [Double]) throws {
+		if array.count != 2 {
+			throw GeoJsonError.invalidFormat
+		}
+		lon = array[0]
+		lat = array[1]
+	}
 	init(array: [NSNumber]) throws {
 		if array.count != 2 {
 			throw GeoJsonError.invalidFormat
 		}
 		lon = array[0].doubleValue
 		lat = array[1].doubleValue
+	}
+	init(from decoder: Decoder) throws {
+		do {
+			enum CodingKeys: String, CodingKey {
+				case lat
+				case lon
+			}
+			let container = try decoder.container(keyedBy: CodingKeys.self)
+			let lat = try container.decode(Double.self, forKey: .lat)
+			let lon = try container.decode(Double.self, forKey: .lon)
+			self.init(lon: lon, lat: lat)
+		} catch {
+			// try decoding as [Double]
+			let container = try decoder.singleValueContainer()
+			let array = try container.decode([Double].self)
+			try self.init(array: array)
+		}
 	}
 }
 
@@ -57,66 +81,6 @@ struct GeoJSONGeometry: Codable {
 		case multiPolygon(points: [Polygon])
 		case geometryCollection(points: [GeoJSONGeometry])
 
-		init(point points: [Any]) throws {
-			guard let nsPoints = points as? [NSNumber] else { throw GeoJsonError.invalidFormat }
-			self = .point(points: try LatLon(array: nsPoints))
-		}
-
-		init(multiPoint points: [Any]) throws {
-			guard let nsPoints = points as? [[NSNumber]] else { throw GeoJsonError.invalidFormat }
-			self = .multiPoint(points: try nsPoints.map { try LatLon(array: $0) })
-		}
-
-		init(lineString points: [Any]) throws {
-			guard let nsPoints = points as? [[NSNumber]] else { throw GeoJsonError.invalidFormat }
-			self = .lineString(points: try nsPoints.map { try LatLon(array: $0) })
-		}
-
-		init(multiLineString points: [Any]) throws {
-			guard let nsPoints = points as? [[[NSNumber]]] else { throw GeoJsonError.invalidFormat }
-			self = .multiLineString(points: try nsPoints.map { try $0.map { try LatLon(array: $0) }})
-		}
-
-		init(polygon points: [Any]) throws {
-			guard let nsPoints = points as? [[[NSNumber]]] else { throw GeoJsonError.invalidFormat }
-			self = .polygon(points: try nsPoints.map { try $0.map { try LatLon(array: $0) }})
-		}
-
-		init(multiPolygon points: [Any]) throws {
-			guard let nsPoints = points as? [[[[NSNumber]]]] else { throw GeoJsonError.invalidFormat }
-			self = .multiPolygon(points: try nsPoints.map { try $0.map { try $0.map { try LatLon(array: $0) }}})
-		}
-
-		init(geometryCollection points: [GeoJSONGeometry]) throws {
-			self = .geometryCollection(points: points)
-		}
-
-		// This init is used by TileServerList, where the JSON is already decoded
-		init(json: [String: Any]) throws {
-			guard
-				let type = json["type"] as? String,
-				let points = json["coordinates"] as? [Any]
-			else {
-				throw GeoJsonError.invalidFormat
-			}
-			switch type {
-			case "Point":
-				self = try GeometryType(point: points)
-			case "MultiPoint":
-				self = try GeometryType(multiPoint: points)
-			case "LineString":
-				self = try GeometryType(lineString: points)
-			case "MultiLineString":
-				self = try GeometryType(multiLineString: points)
-			case "Polygon":
-				self = try GeometryType(polygon: points)
-			case "MultiPolygon":
-				self = try GeometryType(multiPolygon: points)
-			default:
-				throw GeoJsonError.invalidFormat
-			}
-		}
-
 		private enum CodingKeys: String, CodingKey {
 			case type
 			case coordinates
@@ -130,26 +94,26 @@ struct GeoJSONGeometry: Codable {
 				let type = try container.decode(String.self, forKey: .type)
 				switch type {
 				case "Point":
-					let points = try container.decode([Double].self, forKey: .coordinates)
-					self = try GeometryType(point: points)
+					let points = try container.decode(LatLon.self, forKey: .coordinates)
+					self = .point(points: points)
 				case "MultiPoint":
-					let points = try container.decode([Double].self, forKey: .coordinates)
-					self = try GeometryType(multiPoint: points)
+					let points = try container.decode([LatLon].self, forKey: .coordinates)
+					self = .multiPoint(points: points)
 				case "LineString":
-					let points = try container.decode([[Double]].self, forKey: .coordinates)
-					self = try GeometryType(lineString: points)
+					let points = try container.decode([LatLon].self, forKey: .coordinates)
+					self = .lineString(points: points)
 				case "MultiLineString":
-					let points = try container.decode([[[Double]]].self, forKey: .coordinates)
-					self = try GeometryType(multiLineString: points)
+					let points = try container.decode([[LatLon]].self, forKey: .coordinates)
+					self = .multiLineString(points: points)
 				case "Polygon":
-					let points = try container.decode([[[Double]]].self, forKey: .coordinates)
-					self = try GeometryType(polygon: points)
+					let points = try container.decode([[LatLon]].self, forKey: .coordinates)
+					self = .polygon(points: points)
 				case "MultiPolygon":
-					let points = try container.decode([[[[Double]]]].self, forKey: .coordinates)
-					self = try GeometryType(multiPolygon: points)
+					let points = try container.decode([[[LatLon]]].self, forKey: .coordinates)
+					self = .multiPolygon(points: points)
 				case "GeometryCollection":
 					let points = try container.decode([GeoJSONGeometry].self, forKey: .geometries)
-					self = try GeometryType(geometryCollection: points)
+					self = .geometryCollection(points: points)
 				default:
 					throw GeoJsonError.invalidFormat
 				}
@@ -163,6 +127,72 @@ struct GeoJSONGeometry: Codable {
 			// not implemented
 			fatalError()
 		}
+
+		// Everything below is for when we decoded the JSON explicitely:
+
+		private init(pointJSON json: Any) throws {
+			guard let nsPoints = json as? [NSNumber] else { throw GeoJsonError.invalidFormat }
+			self = .point(points: try LatLon(array: nsPoints))
+		}
+
+		private init(multiPointJSON json: Any) throws {
+			guard let nsPoints = json as? [[NSNumber]] else { throw GeoJsonError.invalidFormat }
+			self = .multiPoint(points: try nsPoints.map { try LatLon(array: $0) })
+		}
+
+		private init(lineStringJSON json: Any) throws {
+			guard let nsPoints = json as? [[NSNumber]] else { throw GeoJsonError.invalidFormat }
+			self = .lineString(points: try nsPoints.map { try LatLon(array: $0) })
+		}
+
+		private init(multiLineStringJSON json: Any) throws {
+			guard let nsPoints = json as? [[[NSNumber]]] else { throw GeoJsonError.invalidFormat }
+			self = .multiLineString(points: try nsPoints.map { try $0.map { try LatLon(array: $0) }})
+		}
+
+		private init(polygonJSON json: Any) throws {
+			guard let nsPoints = json as? [[[NSNumber]]] else { throw GeoJsonError.invalidFormat }
+			self = .polygon(points: try nsPoints.map { try $0.map { try LatLon(array: $0) }})
+		}
+
+		private init(multiPolygonJSON json: Any) throws {
+			guard let nsPoints = json as? [[[[NSNumber]]]] else { throw GeoJsonError.invalidFormat }
+			self = .multiPolygon(points: try nsPoints.map { try $0.map { try $0.map { try LatLon(array: $0) }}})
+		}
+
+		private init(geometryCollectionJSON json: Any) throws {
+			guard let list = json as? [[String: Any]] else { throw GeoJsonError.invalidFormat }
+			let geomList = try list.map { try GeoJSONGeometry(geometry: $0) }
+			self = .geometryCollection(points: geomList)
+		}
+
+		// This init is used by TileServerList, where the JSON is already decoded
+		init(json: [String: Any]) throws {
+			guard
+				let type = json["type"] as? String,
+				let points = json["coordinates"]
+			else {
+				throw GeoJsonError.invalidFormat
+			}
+			switch type {
+			case "Point":
+				self = try GeometryType(pointJSON: points)
+			case "MultiPoint":
+				self = try GeometryType(multiPointJSON: points)
+			case "LineString":
+				self = try GeometryType(lineStringJSON: points)
+			case "MultiLineString":
+				self = try GeometryType(multiLineStringJSON: points)
+			case "Polygon":
+				self = try GeometryType(polygonJSON: points)
+			case "MultiPolygon":
+				self = try GeometryType(multiPolygonJSON: points)
+			case "GeometryCollection":
+				self = try GeometryType(geometryCollectionJSON: points)
+			default:
+				throw GeoJsonError.invalidFormat
+			}
+		}
 	}
 
 	init(geometry: GeometryType) {
@@ -175,9 +205,13 @@ struct GeoJSONGeometry: Codable {
 		}
 	}
 
+	init(geometry: [String: Any]) throws {
+		self.init(geometry: try GeometryType(json: geometry))
+	}
+
 	init?(geometry: [String: Any]?) throws {
 		guard let geometry = geometry else { return nil }
-		self.init(geometry: try GeometryType(json: geometry))
+		try self.init(geometry: geometry)
 	}
 
 	init(from decoder: Decoder) throws {
