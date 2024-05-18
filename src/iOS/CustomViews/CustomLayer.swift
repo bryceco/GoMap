@@ -12,7 +12,7 @@ import CoreLocation.CLLocation
 import UIKit
 
 // A layer in MapView that displays custom data (GeoJSON, etc) that the user wants to load
-final class CustomLayer: LineDrawingLayer, GeoJSONDataSource {
+final class CustomLayer: GeoJSONLayer, GeoJSONLayerDelegate {
 	override init(mapView: MapView) {
 		super.init(mapView: mapView)
 		geojsonDelegate = self
@@ -20,8 +20,8 @@ final class CustomLayer: LineDrawingLayer, GeoJSONDataSource {
 
 	var allCustom: [GeoJSONFile] = []
 
+	// Delegate function
 	func geojsonData() -> [(GeoJSONGeometry, UIColor)] {
-		//let color = UIColor(red: 115 / 255.0, green: 67 / 255.0, blue: 211 / 255.0, alpha: 1.0)
 		return allCustom.flatMap { $0.features.map { ($0.geometry, UIColor.cyan) } }
 	}
 

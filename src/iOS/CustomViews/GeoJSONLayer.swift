@@ -8,7 +8,7 @@
 
 import UIKit
 
-private class LineShapeLayer: CAShapeLayer {
+private class PathShapeLayer: CAShapeLayer {
 	fileprivate struct Properties {
 		var position: OSMPoint?
 		var lineWidth: CGFloat
@@ -30,7 +30,7 @@ private class LineShapeLayer: CAShapeLayer {
 	}
 
 	override init(layer: Any) {
-		let layer = layer as! LineShapeLayer
+		let layer = layer as! PathShapeLayer
 		props = layer.props
 		shapePaths = layer.shapePaths
 		color = layer.color
@@ -38,8 +38,8 @@ private class LineShapeLayer: CAShapeLayer {
 		super.init(layer: layer)
 	}
 
-	init(with points: CGPath) {
-		if let first = points.getPoints().first {
+	init(withLatLonPath latLonPath: CGPath) {
+		if let first = latLonPath.getPoints().first {
 			firstPoint = LatLon(lon: first.x, lat: first.y)
 		} else {
 			firstPoint = nil
@@ -47,7 +47,7 @@ private class LineShapeLayer: CAShapeLayer {
 		super.init()
 		var refPoint = OSMPoint.zero
 		shapePaths = [CGPath?](repeating: nil, count: 32)
-		shapePaths[0] = Self.mapPath(for: points, refPoint: &refPoint)
+		shapePaths[0] = Self.mapPath(for: latLonPath, refPoint: &refPoint)
 		path = shapePaths[0]
 		anchorPoint = CGPoint.zero
 		position = CGPoint(refPoint)
@@ -120,16 +120,16 @@ private class LineShapeLayer: CAShapeLayer {
 	}
 }
 
-protocol GeoJSONDataSource {
+protocol GeoJSONLayerDelegate {
 	func geojsonData() -> [(GeoJSONGeometry, UIColor)]
 }
 
-class LineDrawingLayer: CALayer {
+class GeoJSONLayer: CALayer {
 	let mapView: MapView
 
-	var geojsonDelegate: GeoJSONDataSource?
+	var geojsonDelegate: GeoJSONLayerDelegate?
 
-	private var layerDict: [UUID: LineShapeLayer]
+	private var layerDict: [UUID: PathShapeLayer]
 
 	@available(*, unavailable)
 	required init?(coder aDecoder: NSCoder) {
@@ -185,21 +185,21 @@ class LineDrawingLayer: CALayer {
 		}
 
 		// get list of GeoJSON structs
-		let geoList = geojsonDelegate?.geojsonData() ?? []
+		let geomList = geojsonDelegate?.geojsonData() ?? []
 
 		// compute what's new and what's old
-		var newDict: [UUID: LineShapeLayer] = [:]
-		for (item, color) in geoList {
-			if let layer = layerDict.removeValue(forKey: item.uuid) {
+		var newDict: [UUID: PathShapeLayer] = [:]
+		for (geom, color) in geomList {
+			if let layer = layerDict.removeValue(forKey: geom.uuid) {
+				// Layer already exists
 				layer.color = color
-				newDict[item.uuid] = layer
+				newDict[geom.uuid] = layer
 			} else {
-				do {
-					let layer = LineShapeLayer(with: try item.geometryPoints.bezierPath().cgPath)
+				// It's a new layer
+				if let path = geom.latLonBezierPath {
+					let layer = PathShapeLayer(withLatLonPath: path.cgPath)
 					layer.color = color
-					newDict[item.uuid] = layer
-				} catch {
-					print("\(error)")
+					newDict[geom.uuid] = layer
 				}
 			}
 		}

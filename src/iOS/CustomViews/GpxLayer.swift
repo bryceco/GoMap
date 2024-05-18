@@ -9,7 +9,7 @@
 import CoreLocation.CLLocation
 import UIKit
 
-final class GpxLayer: LineDrawingLayer, GetDiskCacheSize, GeoJSONDataSource {
+final class GpxLayer: GeoJSONLayer, GetDiskCacheSize, GeoJSONLayerDelegate {
 	private static let DefaultExpirationDays = 7
 
 	var stabilizingCount = 0
@@ -172,14 +172,15 @@ final class GpxLayer: LineDrawingLayer, GetDiskCacheSize, GeoJSONDataSource {
 		}
 	}
 
+	// Delegate function to provide GeoJSONLayer with data
 	func geojsonData() -> [(GeoJSONGeometry, UIColor)] {
 		return allTracks().compactMap {
 			let color = $0 == selectedTrack
 				? UIColor.red
 				: UIColor(red: 1.0,
-						  green: 99 / 255.0,
-						  blue: 249 / 255.0,
-						  alpha: 1.0)
+				          green: 99 / 255.0,
+				          blue: 249 / 255.0,
+				          alpha: 1.0)
 			return ($0.geoJSON, color)
 		}
 	}
