@@ -113,6 +113,9 @@ final class RenderInfo {
 		if renderInfo.casingColor == nil {
 			renderInfo.casingColor = UIColor.black
 			renderInfo.casingWidth = renderInfo.lineWidth + 1
+		} else if renderInfo.casingDashPattern != nil {
+			// dashes in casing are hard to see, so make sure they're extra wide 
+			renderInfo.casingWidth = max(renderInfo.casingWidth, renderInfo.lineWidth + 4)
 		} else if renderInfo.lineWidth >= renderInfo.casingWidth {
 			renderInfo.casingWidth = renderInfo.lineWidth + 1
 		}
