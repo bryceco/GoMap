@@ -1606,6 +1606,7 @@ Error: %@</target>
       </trans-unit>
       <trans-unit id="Extract Node" xml:space="preserve">
         <source>Extract Node</source>
+        <target state="translated">Extraer nodo</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Filters" xml:space="preserve">
