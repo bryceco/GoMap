@@ -165,9 +165,8 @@ class MetadataClass {
 				print("Got results (self.query?.results)")
 			})
 		metadataQuery.enableUpdates()
-		let ok = metadataQuery.start()
-		print("metadataQuery: \(ok)")
-
+		metadataQuery.start()
+		
 		/*
 		 DispatchQueue.global(qos: .default).async {
 		 	// let token = FileManager.default.ubiquityIdentityToken
@@ -189,8 +188,10 @@ class MetadataClass {
 	}
 
 	@objc func handleQueryNotification(_ notification: Any?) {
+		/*
 		let notification = notification as! NSNotification
 		let query = notification.object as! NSMetadataQuery
 		print("Metadata query: \(query)")
+		 */
 	}
 }
