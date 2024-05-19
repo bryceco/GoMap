@@ -38,6 +38,7 @@ extension LatLon {
 		lon = array[0]
 		lat = array[1]
 	}
+
 	init(array: [NSNumber]) throws {
 		if array.count != 2 {
 			throw GeoJsonError.invalidFormat
@@ -45,6 +46,7 @@ extension LatLon {
 		lon = array[0].doubleValue
 		lat = array[1].doubleValue
 	}
+
 	init(from decoder: Decoder) throws {
 		do {
 			enum CodingKeys: String, CodingKey {
