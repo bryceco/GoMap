@@ -125,7 +125,9 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 				text.count > 0
 			{
 				// free-form text field
-				tags[tagKeys[keyIndex]] = text
+				// resign first responder so automatic updates to the textField will occur
+				cell.textField?.resignFirstResponder()
+				tags[tagKeys[keyIndex]] = cell.textField?.text
 			} else if let index = tableView.indexPathsForSelectedRows?.first(where: { $0.section == section }),
 			          let text = presetKeys[keyIndex]?.presetList?[index.row].tagValue
 			{
