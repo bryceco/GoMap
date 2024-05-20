@@ -19,7 +19,7 @@ import UIKit
 }
 
 final class MercatorTileLayer: CALayer, GetDiskCacheSize {
-	private var webCache = PersistentWebCache<UIImage>(name: "", memorySize: 0)
+	private var webCache = PersistentWebCache<UIImage>(name: "__temporary", memorySize: 0)
 	private var layerDict: [String: CALayer] = [:] // map of tiles currently displayed
 
 	@objc let mapView: MapView // mark as objc for KVO
