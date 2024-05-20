@@ -177,9 +177,8 @@ class GeoJSONLayer: CALayer {
 
 	private func layoutSublayersSafe() {
 		let tRotation = mapView.screenFromMapTransform.rotation()
-		let tScale = mapView.screenFromMapTransform.scale()
-		let pScale = tScale / PATH_SCALING
-		var scale = Int(floor(-log(pScale)))
+		let tScale = mapView.screenFromMapTransform.scale() / PATH_SCALING
+		var scale = Int(floor(-log(tScale)))
 		if scale < 0 {
 			scale = 0
 		}
@@ -223,11 +222,12 @@ class GeoJSONLayer: CALayer {
 
 			// rotate and scale
 			var t = CGAffineTransform(translationX: CGFloat(pt2.x - pt.x), y: CGFloat(pt2.y - pt.y))
-			t = t.scaledBy(x: CGFloat(pScale), y: CGFloat(pScale))
+			t = t.scaledBy(x: CGFloat(tScale), y: CGFloat(tScale))
 			t = t.rotated(by: CGFloat(tRotation))
+
 			layer.setAffineTransform(t)
 
-			layer.lineWidth = layer.props.lineWidth / CGFloat(pScale)
+			layer.lineWidth = layer.props.lineWidth / CGFloat(tScale)
 
 			// add the layer if not already present
 			if layer.superlayer == nil {

@@ -622,7 +622,7 @@ final class EditorMapLayer: CALayer {
 		wall.transform = t
 
 		let props = wall.properties
-		props.transform = t
+		props.transform3D = t
 		props.position = p1
 		props.lineWidth = 1.0
 		props.is3D = true
@@ -813,7 +813,7 @@ final class EditorMapLayer: CALayer {
 
 								let t = CATransform3DMakeTranslation(0, 0, CGFloat(height))
 								roof.properties.position = refPoint
-								roof.properties.transform = t
+								roof.properties.transform3D = t
 								roof.properties.is3D = true
 								roof.properties.lineWidth = 1.0
 								roof.transform = t
@@ -1559,8 +1559,7 @@ final class EditorMapLayer: CALayer {
 #endif
 
 		let tRotation = owner.mapTransform.rotation()
-		let tScale = owner.mapTransform.scale()
-		let pScale = CGFloat(tScale / PATH_SCALING)
+		let tScale = CGFloat(owner.mapTransform.scale() / PATH_SCALING)
 		let pixelsPerMeter = 0.8 * 1.0 / owner.mapTransform.metersPerPixel(atScreenPoint: bounds.center())
 
 		for object in shownObjects {
@@ -1570,39 +1569,29 @@ final class EditorMapLayer: CALayer {
 				// configure the layer for presentation
 				let isShapeLayer = layer is CAShapeLayer
 				let props = layer.properties
-				let pt = props.position
-				var pt2 = OSMPoint(owner.mapTransform.screenPoint(forMapPoint: pt, birdsEye: false))
 
 				if props.is3D || (isShapeLayer && object.isNode() == nil) {
 					// way or area -- need to rotate and scale
 					if props.is3D {
-						if owner.mapTransform.birdsEye() == nil {
+						guard let t = props.layerTransform3D(mapTransform: owner.mapTransform,
+						                                     pixelsPerMeter: pixelsPerMeter)
+						else {
 							layer.removeFromSuperlayer()
 							continue
 						}
-						var t = CATransform3DMakeTranslation(CGFloat(pt2.x - pt.x), CGFloat(pt2.y - pt.y), 0)
-						t = CATransform3DScale(t, CGFloat(pScale), CGFloat(pScale), CGFloat(pixelsPerMeter))
-						t = CATransform3DRotate(t, CGFloat(tRotation), 0, 0, 1)
-						t = CATransform3DConcat(props.transform, t)
 						layer.transform = t
 						if !isShapeLayer {
-							layer.borderWidth = props.lineWidth / pScale // wall
+							// it's a wall
+							layer.borderWidth = props.lineWidth / tScale
 						}
 					} else {
-						var t = CGAffineTransform(translationX: CGFloat(pt2.x - pt.x), y: CGFloat(pt2.y - pt.y))
-						t = t.scaledBy(x: CGFloat(pScale), y: CGFloat(pScale))
-						t = t.rotated(by: CGFloat(tRotation))
+						let t = props.layerTransformFor(mapTransform: owner.mapTransform)
 						layer.setAffineTransform(t)
 					}
 
 					if isShapeLayer {
-					} else {
-						// its a wall, so bounds are already height/length of wall
-					}
-
-					if isShapeLayer {
 						let shape = layer as! CAShapeLayer
-						shape.lineWidth = CGFloat(props.lineWidth / pScale)
+						shape.lineWidth = CGFloat(props.lineWidth / tScale)
 					}
 				} else {
 					// node or text -- no scale transform applied
@@ -1628,6 +1617,7 @@ final class EditorMapLayer: CALayer {
 					}
 
 					let scale = Double(UIScreen.main.scale)
+					var pt2 = OSMPoint(owner.mapTransform.screenPoint(forMapPoint: props.position, birdsEye: false))
 					pt2.x = round(pt2.x * scale) / scale
 					pt2.y = round(pt2.y * scale) / scale
 					DbgAssert(pt2.y.isFinite)

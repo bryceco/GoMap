@@ -8,7 +8,6 @@
 
 import CoreLocation.CLLocation
 import Foundation
-import QuartzCore
 
 final class GpxPoint: NSObject, NSSecureCoding {
 	static let supportsSecureCoding = true
