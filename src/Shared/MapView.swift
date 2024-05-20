@@ -739,6 +739,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		// dPadView
 		dPadView.delegate = self
 		dPadView.layer.zPosition = ZLAYER.D_PAD.rawValue
+		dPadView.isHidden = true
 
 		// error message label
 		flashLabel.font = UIFont.preferredFont(forTextStyle: .title3)
