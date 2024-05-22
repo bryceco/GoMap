@@ -39,7 +39,7 @@
 		0226B771268300C9005DB9E2 /* Data+Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B770268300C9005DB9E2 /* Data+Wrapper.swift */; };
 		0226B7732683BCB6005DB9E2 /* URLSession+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */; };
 		022B2FDB2718CCAC00AB4C28 /* MapboxLocator.secret in Sources */ = {isa = PBXBuildFile; fileRef = 022B2FDA2718CCAC00AB4C28 /* MapboxLocator.secret */; };
-		023320A22BE07B2000E3311A /* CustomLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023320A12BE07B2000E3311A /* CustomLayer.swift */; };
+		023320A22BE07B2000E3311A /* DataOverlayLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023320A12BE07B2000E3311A /* DataOverlayLayer.swift */; };
 		023320A42BE1DB9900E3311A /* DPadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023320A32BE1DB9900E3311A /* DPadView.swift */; };
 		0235349B294A9BDD00ED5BBE /* MostRecentlyUsed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0235349A294A9BDD00ED5BBE /* MostRecentlyUsed.swift */; };
 		02354F7A246349E100878A04 /* CurvedGlyphLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02354F79246349E100878A04 /* CurvedGlyphLayer.swift */; };
@@ -62,13 +62,14 @@
 		02696CD52B8EF19400AB70B6 /* HealthKitRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02696CD42B8EF19400AB70B6 /* HealthKitRoutes.swift */; };
 		026FC76726509D6E005DDAFF /* SpeechBalloonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */; };
 		026FC7682650A17B005DDAFF /* VoiceAnnouncement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */; };
+		02771D712BFC15C300FE9B79 /* UserFileList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02771D702BFC15C300FE9B79 /* UserFileList.swift */; };
 		027AB4FA250E9C8000C404CD /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB4FC250E9C8000C404CD /* Settings.storyboard */; };
 		027AB4FD250E9C8A00C404CD /* POI.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB4FF250E9C8A00C404CD /* POI.storyboard */; };
 		027AB500250E9C9B00C404CD /* Height.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB502250E9C9B00C404CD /* Height.storyboard */; };
 		027AB503250E9CA500C404CD /* Changeset.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB505250E9CA500C404CD /* Changeset.storyboard */; };
 		027AD5D219F5A18700120654 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027AD5D119F5A18700120654 /* CoreFoundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		027C7FDC296CCF28005C53A8 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027C7FDB296CCF28005C53A8 /* String+Ext.swift */; };
-		027CF8732BDE141700E6F03B /* GeoJSONLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027CF8722BDE141700E6F03B /* GeoJSONLayer.swift */; };
+		027CF8732BDE141700E6F03B /* DrawingLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027CF8722BDE141700E6F03B /* DrawingLayer.swift */; };
 		0282C4C7265F32E800F2D282 /* Sqlite3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282C4C6265F32E800F2D282 /* Sqlite3.swift */; };
 		0282C4C926617E7400F2D282 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282C4C826617E7400F2D282 /* MapView.swift */; };
 		0286EAA52656F15A007CFEE9 /* EditorMapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */; };
@@ -165,6 +166,8 @@
 		02EDBF6A26535BD400B7072E /* OsmRelation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096F2263EBE5E00E3B129 /* OsmRelation.swift */; };
 		02EDBF6B26535BEB00B7072E /* OsmMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096EE263EBE5D00E3B129 /* OsmMember.swift */; };
 		02EDCC081683EC2D007F9934 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02EDCC071683EC2D007F9934 /* CFNetwork.framework */; };
+		02F0297C2BFAFF53002F7956 /* DataOverlays.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02F0297B2BFAFF53002F7956 /* DataOverlays.storyboard */; };
+		02F0297E2BFB01E3002F7956 /* DataOverlaysController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F0297D2BFB01E3002F7956 /* DataOverlaysController.swift */; };
 		02F2449A264F635800C42E41 /* PathUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA924C263FFEF9000A2A99 /* PathUtil.swift */; };
 		02F53298267AB41C0088DF41 /* EditorMapLayer+HitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F53297267AB41C0088DF41 /* EditorMapLayer+HitTest.swift */; };
 		02F6A457268A934900F2ACE7 /* NSAttributedString+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */; };
@@ -337,7 +340,7 @@
 		0226B770268300C9005DB9E2 /* Data+Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Wrapper.swift"; sourceTree = "<group>"; };
 		0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extension.swift"; sourceTree = "<group>"; };
 		022B2FDA2718CCAC00AB4C28 /* MapboxLocator.secret */ = {isa = PBXFileReference; lastKnownFileType = text; path = MapboxLocator.secret; sourceTree = "<group>"; };
-		023320A12BE07B2000E3311A /* CustomLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayer.swift; sourceTree = "<group>"; };
+		023320A12BE07B2000E3311A /* DataOverlayLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataOverlayLayer.swift; sourceTree = "<group>"; };
 		023320A32BE1DB9900E3311A /* DPadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPadView.swift; sourceTree = "<group>"; };
 		0235349A294A9BDD00ED5BBE /* MostRecentlyUsed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostRecentlyUsed.swift; sourceTree = "<group>"; };
 		02354F79246349E100878A04 /* CurvedGlyphLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurvedGlyphLayer.swift; sourceTree = "<group>"; };
@@ -361,6 +364,7 @@
 		0260E05E2BE30D4700975570 /* CompassButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassButton.swift; sourceTree = "<group>"; };
 		0266DE852655A21F007A502E /* Superview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Superview.swift; sourceTree = "<group>"; };
 		02696CD42B8EF19400AB70B6 /* HealthKitRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HealthKitRoutes.swift; path = ../Shared/HealthKitRoutes.swift; sourceTree = "<group>"; };
+		02771D702BFC15C300FE9B79 /* UserFileList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserFileList.swift; path = ../Shared/UserFileList.swift; sourceTree = "<group>"; };
 		0277E29316A673CC00456BED /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		027AB506250E9D0600C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Display.storyboard; sourceTree = "<group>"; };
 		027AB507250E9D0600C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
@@ -371,7 +375,7 @@
 		027AD5D119F5A18700120654 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		027AD5D319F5EA7D00120654 /* libobjc.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libobjc.A.dylib; path = usr/lib/libobjc.A.dylib; sourceTree = SDKROOT; };
 		027C7FDB296CCF28005C53A8 /* String+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Ext.swift"; path = "../../Shared/Utility/String+Ext.swift"; sourceTree = "<group>"; };
-		027CF8722BDE141700E6F03B /* GeoJSONLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSONLayer.swift; sourceTree = "<group>"; };
+		027CF8722BDE141700E6F03B /* DrawingLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingLayer.swift; sourceTree = "<group>"; };
 		0282C4C6265F32E800F2D282 /* Sqlite3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sqlite3.swift; sourceTree = "<group>"; };
 		0282C4C826617E7400F2D282 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = ../Shared/MapView.swift; sourceTree = "<group>"; };
 		0287D25129947B2900BEAD9E /* QuestChooser.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = QuestChooser.storyboard; sourceTree = "<group>"; };
@@ -465,6 +469,8 @@
 		02EA54662AB7CCA4004688F9 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/Settings.xcstrings; sourceTree = "<group>"; };
 		02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		02EDCC071683EC2D007F9934 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		02F0297B2BFAFF53002F7956 /* DataOverlays.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DataOverlays.storyboard; sourceTree = "<group>"; };
+		02F0297D2BFB01E3002F7956 /* DataOverlaysController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataOverlaysController.swift; sourceTree = "<group>"; };
 		02F53297267AB41C0088DF41 /* EditorMapLayer+HitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorMapLayer+HitTest.swift"; sourceTree = "<group>"; };
 		02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Ext.swift"; sourceTree = "<group>"; };
 		02F6A458268AE42800F2ACE7 /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
@@ -719,13 +725,13 @@
 				ED56E5C126027A50000B368C /* CustomPresetListViewController.swift */,
 				64D74BF02253DF39004FFD20 /* Direction */,
 				0244399629CA9A28009FC2D0 /* DisplaySettings */,
+				02E9ABBE2BA1502600F0EF69 /* GoogleMaps.secret */,
 				02BC04E924C6767100BFA5EF /* Height */,
 				02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */,
 				C3D096DA263EB73E00E3B129 /* main.swift */,
 				02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */,
 				C3004F51263A6CA5006BF313 /* MainViewController.swift */,
 				022B2FDA2718CCAC00AB4C28 /* MapboxLocator.secret */,
-				02E9ABBE2BA1502600F0EF69 /* GoogleMaps.secret */,
 				0293FEB2299D84F7002EED90 /* MaxarAerial.secret */,
 				C3D096D7263EAE1E00E3B129 /* MyApplication.swift */,
 				C3004F4C263A6306006BF313 /* NominatimViewController.swift */,
@@ -739,6 +745,7 @@
 				02ACBA3A16713CCB00BB4414 /* Supporting Files */,
 				C3D096AF263D4FF500E3B129 /* TurnRestrictController.swift */,
 				647C150D24268DB7008A9366 /* Upload */,
+				02F0297A2BFAFF2E002F7956 /* UserData */,
 			);
 			name = "Go Map!";
 			sourceTree = "<group>";
@@ -785,6 +792,7 @@
 				C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */,
 				02F5329A267AD0250088DF41 /* Tiles */,
 				C365A562263FC53F007DEC94 /* TurnRestrictHwyView.swift */,
+				02771D702BFC15C300FE9B79 /* UserFileList.swift */,
 				02092ECE29E32DD40095042B /* UserPrefs.swift */,
 				02F5329C267AD2B20088DF41 /* Utility */,
 				C381C305263FD0CA003142BA /* VectorMath.swift */,
@@ -800,10 +808,10 @@
 				ED56E5AA26024DA5000B368C /* AutocompleteTextField.swift */,
 				0260E05E2BE30D4700975570 /* CompassButton.swift */,
 				02B5669E294FDCF200710632 /* CrossHairsLayer.swift */,
-				023320A12BE07B2000E3311A /* CustomLayer.swift */,
+				023320A12BE07B2000E3311A /* DataOverlayLayer.swift */,
 				023320A32BE1DB9900E3311A /* DPadView.swift */,
+				027CF8722BDE141700E6F03B /* DrawingLayer.swift */,
 				C341E1552639DEFC0022E983 /* FpsLabel.swift */,
-				027CF8722BDE141700E6F03B /* GeoJSONLayer.swift */,
 				C3FA925626416BF5000A2A99 /* GpxLayer.swift */,
 				C3D096D4263EACFF00E3B129 /* LocationBallLayer.swift */,
 				02CE3CE829919FC400DDACE0 /* LocationButton.swift */,
@@ -914,6 +922,15 @@
 				027C7FDB296CCF28005C53A8 /* String+Ext.swift */,
 			);
 			path = PhotoShare;
+			sourceTree = "<group>";
+		};
+		02F0297A2BFAFF2E002F7956 /* UserData */ = {
+			isa = PBXGroup;
+			children = (
+				02F0297B2BFAFF53002F7956 /* DataOverlays.storyboard */,
+				02F0297D2BFB01E3002F7956 /* DataOverlaysController.swift */,
+			);
+			path = UserData;
 			sourceTree = "<group>";
 		};
 		02F53299267ACFBB0088DF41 /* EditorLayer */ = {
@@ -1290,6 +1307,7 @@
 				02E9ABC42BA54C9500F0EF69 /* PrivacyInfo.xcprivacy in Resources */,
 				027AB503250E9CA500C404CD /* Changeset.storyboard in Resources */,
 				027AB4FD250E9C8A00C404CD /* POI.storyboard in Resources */,
+				02F0297C2BFAFF53002F7956 /* DataOverlays.storyboard in Resources */,
 				0246A78126A4AA3A00941A44 /* DirectionViewController.xib in Resources */,
 				02EA545E2AB7CCA4004688F9 /* Localizable.xcstrings in Resources */,
 				027AB500250E9C9B00C404CD /* Height.storyboard in Resources */,
@@ -1334,6 +1352,7 @@
 				020798012994706000D3C654 /* QuestBuilderController.swift in Sources */,
 				0293FEB3299D84F7002EED90 /* MaxarAerial.secret in Sources */,
 				02CE3CE229909D1D00DDACE0 /* QuestSolverController.swift in Sources */,
+				02F0297E2BFB01E3002F7956 /* DataOverlaysController.swift in Sources */,
 				02AEBEAF294ABE0700009163 /* KeyValueTableCell.swift in Sources */,
 				EDB2C3A62609E6E100C08293 /* LoginViewController.swift in Sources */,
 				647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */,
@@ -1404,7 +1423,7 @@
 				02696CD52B8EF19400AB70B6 /* HealthKitRoutes.swift in Sources */,
 				02A123EA264C8BA3005638C1 /* TileServerList.swift in Sources */,
 				C3D096AC263D48F700E3B129 /* AppDelegate.swift in Sources */,
-				023320A22BE07B2000E3311A /* CustomLayer.swift in Sources */,
+				023320A22BE07B2000E3311A /* DataOverlayLayer.swift in Sources */,
 				02F2449A264F635800C42E41 /* PathUtil.swift in Sources */,
 				C341E1532639DECC0022E983 /* WikiPage.swift in Sources */,
 				02B5669D294F9D7E00710632 /* MagnifyingGlass.swift in Sources */,
@@ -1415,7 +1434,7 @@
 				02CA15512824A6B40047B0E5 /* String+Ext.swift in Sources */,
 				02CD9974265C65C200213AD6 /* EditorFilters.swift in Sources */,
 				647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */,
-				027CF8732BDE141700E6F03B /* GeoJSONLayer.swift in Sources */,
+				027CF8732BDE141700E6F03B /* DrawingLayer.swift in Sources */,
 				02EA1C6B26631D0D00A0F827 /* VectorMath.swift in Sources */,
 				021FADE22588474300F6E1C0 /* PresetCategory.swift in Sources */,
 				02A59EDF297F358900B0A676 /* PresetArea.swift in Sources */,
@@ -1472,6 +1491,7 @@
 				02A123E9264C8B60005638C1 /* GpxLayer.swift in Sources */,
 				B25C231A2BB8B09C000891B6 /* Theme.swift in Sources */,
 				ED56E5AB26024DA5000B368C /* AutocompleteTextField.swift in Sources */,
+				02771D712BFC15C300FE9B79 /* UserFileList.swift in Sources */,
 				0266DE862655A21F007A502E /* Superview.swift in Sources */,
 				02F53298267AB41C0088DF41 /* EditorMapLayer+HitTest.swift in Sources */,
 				02CB2408265DB7CB00835F32 /* HoursRecognizer.swift in Sources */,

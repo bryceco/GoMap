@@ -7459,6 +7459,18 @@
         }
       }
     },
+    "nzU-It-UAv.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Data Overlays\"; ObjectID = \"nzU-It-UAv\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Data Overlays"
+          }
+        }
+      }
+    },
     "O0U-6M-7AT.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Quests\"; ObjectID = \"O0U-6M-7AT\";",
       "extractionState" : "extracted_with_value",

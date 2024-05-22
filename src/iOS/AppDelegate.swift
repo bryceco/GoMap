@@ -194,7 +194,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				// Load GeoJSON into user custom data layer
 				DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [self] in
 					do {
-						try mapView.customLayer.loadGeoJSON(data, center: true)
+						let geo = try GeoJSONFile(data: data)
+						try geoJsonList.add(name: url.lastPathComponent, data: data)
+						if let loc = geo.firstPoint() {
+							mapView.centerOn(latLon: loc)
+							mapView.displayDataOverlayLayer = true
+						}
 					} catch {
 						displayImportError(
 							error,

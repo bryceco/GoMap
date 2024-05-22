@@ -29,6 +29,7 @@ struct MapViewOverlays: OptionSet {
 	static let NOTES = MapViewOverlays(rawValue: 1 << 2)
 	static let NONAME = MapViewOverlays(rawValue: 1 << 3)
 	static let QUESTS = MapViewOverlays(rawValue: 1 << 4)
+	static let DATAOVERLAY = MapViewOverlays(rawValue: 1 << 5)
 }
 
 enum GPS_STATE: Int {
@@ -215,7 +216,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	private(set) lazy var noNameLayer = MercatorTileLayer(mapView: self)
 	private(set) lazy var editorLayer = EditorMapLayer(owner: self)
 	private(set) lazy var gpxLayer = GpxLayer(mapView: self)
-	private(set) lazy var customLayer = CustomLayer(mapView: self)
+	private(set) lazy var dataOverlayLayer = DataOverlayLayer(mapView: self)
 	private(set) var quadDownloadLayer: QuadDownloadLayer?
 
 	// overlays
@@ -399,9 +400,12 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 	}
 
-	var displayUserCustomData = false {
+	var displayDataOverlayLayer = false {
 		didSet {
-			customLayer.isHidden = !displayUserCustomData
+			dataOverlayLayer.isHidden = !displayDataOverlayLayer
+			if displayDataOverlayLayer {
+				dataOverlayLayer.setNeedsLayout()
+			}
 		}
 	}
 
@@ -613,9 +617,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		gpxLayer.isHidden = true
 		bg.append(gpxLayer)
 
-		customLayer.zPosition = ZLAYER.GPX.rawValue
-		customLayer.isHidden = true
-		bg.append(customLayer)
+		dataOverlayLayer.zPosition = ZLAYER.GPX.rawValue
+		dataOverlayLayer.isHidden = true
+		bg.append(dataOverlayLayer)
 
 #if DEBUG && false
 		quadDownloadLayer = QuadDownloadLayer(mapView: self)
@@ -770,6 +774,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		enableBirdsEye = UserPrefs.shared.bool(forKey: .mapViewEnableBirdsEye) ?? false
 		enableUnnamedRoadHalo = UserPrefs.shared.bool(forKey: .mapViewEnableUnnamedRoadHalo) ?? false
 		displayGpxLogs = UserPrefs.shared.bool(forKey: .mapViewEnableBreadCrumb) ?? false
+		displayDataOverlayLayer = UserPrefs.shared.bool(forKey: .mapViewEnableDataOverlay) ?? false
 		enableTurnRestriction = UserPrefs.shared.bool(forKey: .mapViewEnableTurnRestriction) ?? false
 
 		if let loc = CurrentRegion.fromUserPrefs() {
@@ -835,6 +840,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		UserPrefs.shared.set(enableBirdsEye, forKey: .mapViewEnableBirdsEye)
 		UserPrefs.shared.set(enableUnnamedRoadHalo, forKey: .mapViewEnableUnnamedRoadHalo)
 		UserPrefs.shared.set(displayGpxLogs, forKey: .mapViewEnableBreadCrumb)
+		UserPrefs.shared.set(displayDataOverlayLayer, forKey: .mapViewEnableDataOverlay)
 		UserPrefs.shared.set(enableTurnRestriction, forKey: .mapViewEnableTurnRestriction)
 		UserPrefs.shared.set(enableAutomaticCacheManagement, forKey: .automaticCacheManagement)
 
@@ -1235,7 +1241,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		CATransaction.setAnimationDuration(0.5)
 
 		locatorLayer.isHidden = !newOverlays.contains(.LOCATOR) || locatorLayer.tileServer.apiKey == ""
-		gpsTraceLayer.isHidden = !newOverlays.contains(.GPSTRACE)
 		noNameLayer.isHidden = !newOverlays.contains(.NONAME)
 
 		aerialAlignmentButton.isHidden = true

@@ -22,6 +22,18 @@ struct GeoJSONFile: Decodable {
 	init(data: Data) throws {
 		self = try JSONDecoder().decode(Self.self, from: data)
 	}
+
+	init(url: URL) throws {
+		let data = try Data(contentsOf: url)
+		try self.init(data: data)
+	}
+
+	func firstPoint() -> LatLon? {
+		if let pt = features.lazy.compactMap({ $0.geometry.firstLinePoint() }).first {
+			return pt
+		}
+		return features.first?.geometry.firstPoint()
+	}
 }
 
 struct GeoJSONFeature: Decodable {
@@ -223,6 +235,27 @@ struct GeoJSONGeometry: Codable {
 			print("\(error)")
 			throw error
 		}
+	}
+
+	func firstPoint() -> LatLon? {
+		switch geometryPoints {
+		case let .point(points: pt):
+			return pt
+		case let .multiPoint(points: pts):
+			return pts.first
+		default:
+			if let pt = latLonBezierPath?.cgPath.getPoints().first {
+				return LatLon(lon: pt.x, lat: pt.y)
+			}
+		}
+		return nil
+	}
+
+	func firstLinePoint() -> LatLon? {
+		if let pt = latLonBezierPath?.cgPath.getPoints().first {
+			return LatLon(lon: pt.x, lat: pt.y)
+		}
+		return nil
 	}
 
 	func encode(to encoder: Encoder) throws {

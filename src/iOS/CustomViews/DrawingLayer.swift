@@ -1,5 +1,5 @@
 //
-//  LineDrawingLayer.swift
+//  DrawingLayer.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 4/27/24.
@@ -120,14 +120,15 @@ private class PathShapeLayer: CAShapeLayer {
 	}
 }
 
-protocol GeoJSONLayerDelegate {
+protocol DrawingLayerDelegate {
 	func geojsonData() -> [(GeoJSONGeometry, UIColor)]
 }
 
-class GeoJSONLayer: CALayer {
+// A layer that draws things stored in GeoJSON formats.
+class DrawingLayer: CALayer {
 	let mapView: MapView
 
-	var geojsonDelegate: GeoJSONLayerDelegate?
+	var geojsonDelegate: DrawingLayerDelegate?
 
 	private var layerDict: [UUID: PathShapeLayer]
 
@@ -157,10 +158,6 @@ class GeoJSONLayer: CALayer {
 		mapView.mapTransform.observe(by: self, callback: { self.setNeedsLayout() })
 
 		setNeedsLayout()
-	}
-
-	func center(on point: LatLon) {
-		mapView.centerOn(latLon: point, metersWide: 20.0)
 	}
 
 	// MARK: Drawing

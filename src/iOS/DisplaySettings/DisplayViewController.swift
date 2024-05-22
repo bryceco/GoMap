@@ -17,6 +17,7 @@ class DisplayViewController: UITableViewController {
 	@IBOutlet var notesSwitch: UISwitch!
 	@IBOutlet var questsSwitch: UISwitch!
 	@IBOutlet var gpsTraceSwitch: UISwitch!
+	@IBOutlet var dataOverlaySwitch: UISwitch!
 	@IBOutlet var unnamedRoadSwitch: UISwitch!
 	@IBOutlet var gpxLoggingSwitch: UISwitch!
 	@IBOutlet var turnRestrictionSwitch: UISwitch!
@@ -62,16 +63,18 @@ class DisplayViewController: UITableViewController {
 			}
 		}
 
-		var mask = MapViewOverlays()
-		mask.insert(notesSwitch.isOn ? .NOTES : [])
-		mask.insert(questsSwitch.isOn ? .QUESTS : [])
-		mask.insert(gpsTraceSwitch.isOn ? .GPSTRACE : [])
-		mask.insert(unnamedRoadSwitch.isOn ? .NONAME : [])
-		mapView.viewOverlayMask = mask
+		mapView.viewOverlayMask = [
+			notesSwitch.isOn ? .NOTES : [],
+			questsSwitch.isOn ? .QUESTS : [],
+			gpsTraceSwitch.isOn ? .GPSTRACE : [],
+			unnamedRoadSwitch.isOn ? .NONAME : [],
+			dataOverlaySwitch.isOn ? .DATAOVERLAY : []
+		]
 
 		mapView.enableRotation = rotationSwitch.isOn
 		mapView.enableUnnamedRoadHalo = unnamedRoadSwitch.isOn
 		mapView.displayGpxLogs = gpxLoggingSwitch.isOn
+		mapView.displayDataOverlayLayer = dataOverlaySwitch.isOn
 		mapView.enableTurnRestriction = turnRestrictionSwitch.isOn
 
 		mapView.editorLayer.setNeedsLayout()
@@ -81,6 +84,12 @@ class DisplayViewController: UITableViewController {
 		// need this to take effect immediately in case they exit the app without dismissing this controller, and they want GPS enabled in background
 		let mapView = AppDelegate.shared.mapView
 		mapView?.displayGpxLogs = gpxLoggingSwitch.isOn
+	}
+
+	@IBAction func dataOverlaySwitchChanged(_ sender: Any) {
+		// need this to take effect immediately in case they exit the app without dismissing this controller, and they want GPS enabled in background
+		let mapView = AppDelegate.shared.mapView
+		mapView?.displayDataOverlayLayer = dataOverlaySwitch.isOn
 	}
 
 	@IBAction func toggleObjectFilters(_ sender: UISwitch) {
@@ -105,7 +114,8 @@ class DisplayViewController: UITableViewController {
 
 		notesSwitch.isOn = mapView.viewOverlayMask.contains(.NOTES)
 		questsSwitch.isOn = mapView.viewOverlayMask.contains(.QUESTS)
-		gpsTraceSwitch.isOn = !mapView.gpsTraceLayer.isHidden
+		gpsTraceSwitch.isOn = mapView.displayGpxLogs
+		dataOverlaySwitch.isOn = mapView.displayDataOverlayLayer
 
 		rotationSwitch.isOn = mapView.enableRotation
 		unnamedRoadSwitch.isOn = mapView.enableUnnamedRoadHalo

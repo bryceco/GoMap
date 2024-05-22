@@ -45,6 +45,7 @@ final class UserPrefs {
 		case automaticCacheManagement
 		case mapViewEnableUnnamedRoadHalo
 		case mapViewEnableBreadCrumb
+		case mapViewEnableDataOverlay
 		case mapViewEnableTurnRestriction
 		case latestAerialCheckLatLon = "LatestAerialCheckLatLon"
 
@@ -55,6 +56,9 @@ final class UserPrefs {
 		case gpxRecordsTracksInBackground = "GpxTrackBackgroundTracking"
 		case gpxUploadedGpxTracks = "GpxUploads"
 		case gpxTracksExpireAfterDays = "GpxTrackExpirationDays"
+
+		// GeoJSON
+		case geoJsonFileList = "GeoJsonFileList"
 
 		// Quest stuff
 		case questTypeEnabledDict = "QuestTypeEnabledDict"
@@ -240,6 +244,10 @@ extension UserPrefs.Pref {
 		case .gpxTracksExpireAfterDays,
 		     .gpxRecordsTracksInBackground,
 		     .gpxUploadedGpxTracks:
+			return false
+
+		case .geoJsonFileList,
+		     .mapViewEnableDataOverlay:
 			return false
 
 		case .osmServerUrl:
