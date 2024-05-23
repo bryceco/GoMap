@@ -820,34 +820,37 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	func updateTileOverlayLayers() {
-		let serverNames = UserPrefs.shared.object(forKey: .tileOverlaySelections) as? [String] ?? []
+		let serverIdents = UserPrefs.shared.object(forKey: .tileOverlaySelections) as? [String] ?? []
 
 		// remove any layers no longer displayed
-		for layerIndex in backgroundLayers.indices {
-			let layer = backgroundLayers[layerIndex]
+		let removals = backgroundLayers.filter { layer in
 			guard let layer = layer as? MercatorTileLayer,
 			      layer.tileServer.overlay
 			else {
-				continue
+				return false
 			}
-			if displayDataOverlayLayer, serverNames.contains(layer.tileServer.name) {
-				// we want it displayed
-			} else {
-				// remove the layer
-				backgroundLayers.remove(at: layerIndex)
-				layer.removeFromSuperlayer()
+			if displayDataOverlayLayer, serverIdents.contains(layer.tileServer.identifier) {
+				return false
 			}
+			return true
+		}
+		for layer in removals {
+			backgroundLayers.removeAll(where: { $0 == layer })
+			layer.removeFromSuperlayer()
 		}
 
 		if displayDataOverlayLayer {
 			// create any overlay layers the user had enabled
-			for name in serverNames {
-				if backgroundLayers.contains(where: { ($0 as? MercatorTileLayer)?.tileServer.name == name }) {
+			for ident in serverIdents {
+				if backgroundLayers.contains(where: { ($0 as? MercatorTileLayer)?.tileServer.identifier == ident }) {
 					// already have it
 					continue
 				}
-				guard let tileServer = tileServerList.serviceNamed(name) else {
-					// server doesn't exist
+				guard let tileServer = tileServerList.serviceWithIdentifier(ident) else {
+					// server doesn't exist anymore
+					var list = serverIdents
+					list.removeAll(where: { $0 != ident })
+					UserPrefs.shared.set(object: list, forKey: .tileOverlaySelections)
 					continue
 				}
 

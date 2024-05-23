@@ -59,8 +59,8 @@ final class TileServerList {
 		return userDefinedList
 	}
 
-	func serviceNamed(_ name: String) -> TileServer? {
-		return downloadedList.first(where: { name == $0.name })
+	func serviceWithIdentifier(_ identifier: String) -> TileServer? {
+		return downloadedList.first(where: { identifier == $0.identifier })
 	}
 
 	private func pathToExternalAerialsCache() -> String {

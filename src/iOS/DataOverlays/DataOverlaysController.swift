@@ -91,7 +91,7 @@ class DataOverlaysController: UITableViewController {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "UserDataTableCell", for: indexPath)
 				as! UserDataTableCell
 			cell.title?.text = server.name
-			cell.onOff.isOn = overlaySelections.contains(server.name)
+			cell.onOff.isOn = overlaySelections.contains(server.identifier)
 
 			return cell
 		default:
@@ -123,9 +123,9 @@ class DataOverlaysController: UITableViewController {
 		case .predefinedSection:
 			let server = overlayList[indexPath.row]
 			if cell.onOff.isOn {
-				overlaySelections.append(server.name)
+				overlaySelections.append(server.identifier)
 			} else {
-				overlaySelections.removeAll(where: { $0 == server.name })
+				overlaySelections.removeAll(where: { $0 == server.identifier })
 			}
 			UserPrefs.shared.set(object: overlaySelections, forKey: .tileOverlaySelections)
 			AppDelegate.shared.mapView.updateTileOverlayLayers()
