@@ -22534,6 +22534,7 @@
     },
     "Clear Aerial Tiles" : {
       "comment" : "Delete cached data",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -22837,6 +22838,7 @@
     },
     "Clear GPX Tracks" : {
       "comment" : "Delete cached data",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -22968,6 +22970,7 @@
     },
     "Clear Locator Overlay Tiles" : {
       "comment" : "Delete cached data",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -23328,9 +23331,6 @@
           }
         }
       }
-    },
-    "Clear Other Overlay Tiles" : {
-      "comment" : "Delete cached data"
     },
     "Commit" : {
       "localizations" : {

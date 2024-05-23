@@ -11,10 +11,6 @@ import UIKit
 private enum Row: Int {
 	case osmData = 0
 	case mapnik = 1
-	case aerial = 2
-	case userGPX = 3
-	case mapboxLocator = 4
-	case overlayData = 5
 }
 
 protocol GetDiskCacheSize {
@@ -66,18 +62,6 @@ class ClearCacheViewController: UITableViewController {
 		case Row.mapnik.rawValue:
 			title = NSLocalizedString("Clear Mapnik Tiles", comment: "Delete cached data")
 			object = [mapView.mapnikLayer]
-		case Row.userGPX.rawValue:
-			title = NSLocalizedString("Clear GPX Tracks", comment: "Delete cached data")
-			object = [mapView.gpxLayer]
-		case Row.aerial.rawValue:
-			title = NSLocalizedString("Clear Aerial Tiles", comment: "Delete cached data")
-			object = [mapView.aerialLayer]
-		case Row.mapboxLocator.rawValue:
-			title = NSLocalizedString("Clear Locator Overlay Tiles", comment: "Delete cached data")
-			object = [mapView.locatorLayer]
-		case Row.overlayData.rawValue:
-			title = NSLocalizedString("Clear Other Overlay Tiles", comment: "Delete cached data")
-			object = mapView.tileOverlayLayers()
 		default:
 			fatalError()
 		}
@@ -182,16 +166,6 @@ class ClearCacheViewController: UITableViewController {
 			refreshAfterPurge()
 		case .mapnik /* Mapnik */:
 			appDelegate.mapView.mapnikLayer.purgeTileCache()
-		case .userGPX /* Breadcrumb */:
-			appDelegate.mapView.gpxLayer.purgeTileCache()
-		case .aerial /* Bing */:
-			appDelegate.mapView.aerialLayer.purgeTileCache()
-		case .mapboxLocator /* Locator Overlay */:
-			appDelegate.mapView.locatorLayer.purgeTileCache()
-		case .overlayData /* Overlays Overlay */:
-			for obj in appDelegate.mapView.tileOverlayLayers() {
-				obj.purgeTileCache()
-			}
 		}
 		dismiss(animated: true)
 	}

@@ -309,7 +309,7 @@
     },
     "2Ku-Lb-uCf.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Details\"; ObjectID = \"2Ku-Lb-uCf\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3429,7 +3429,7 @@
     },
     "eFa-yZ-YZl.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Aerial Tiles\"; ObjectID = \"eFa-yZ-YZl\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3939,7 +3939,7 @@
     },
     "EmS-9F-1qc.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Details\"; ObjectID = \"EmS-9F-1qc\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4233,7 +4233,7 @@
     },
     "eTY-48-gab.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Aerial Tiles\"; ObjectID = \"eTY-48-gab\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4365,7 +4365,7 @@
     },
     "F9l-B0-puf.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Details\"; ObjectID = \"F9l-B0-puf\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4659,7 +4659,7 @@
     },
     "fHH-rC-iGa.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Aerial Tiles\"; ObjectID = \"fHH-rC-iGa\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4953,7 +4953,7 @@
     },
     "g46-cV-NBw.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Aerial Tiles\"; ObjectID = \"g46-cV-NBw\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11457,7 +11457,7 @@
     },
     "xve-fW-qM7.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Details\"; ObjectID = \"xve-fW-qM7\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
