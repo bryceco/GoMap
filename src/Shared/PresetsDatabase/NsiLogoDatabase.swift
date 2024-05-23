@@ -11,7 +11,9 @@ import UIKit
 class NsiLogoDatabase {
 	static let shared = NsiLogoDatabase()
 
-	var logoCache = PersistentWebCache<UIImage>(name: "presetLogoCache", memorySize: 5 * 1_000000)
+	var logoCache = PersistentWebCache<UIImage>(name: "presetLogoCache", 
+												memorySize: 5 * 1_000000,
+												daysToKeep: 90.0)
 
 	// MARK: NSI Logo icon retrieval
 

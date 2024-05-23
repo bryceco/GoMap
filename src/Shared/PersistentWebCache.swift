@@ -54,19 +54,20 @@ final class PersistentWebCache<T: AnyObject> {
 		return a
 	}
 
-	init(name: String, memorySize: Int) {
+	init(name: String, memorySize: Int, daysToKeep: Double) {
 		let name = PersistentWebCache.encodeKey(forFilesystem: name)
 		cacheDirectory = ArchivePath.webCache(name).url()
 		memoryCache = NSCache<NSString, T>()
 		memoryCache.countLimit = 1000
 		memoryCache.totalCostLimit = memorySize
-
 		pending = [:]
 
 		try? FileManager.default.createDirectory(
 			at: cacheDirectory,
 			withIntermediateDirectories: true,
 			attributes: nil)
+
+		removeObjectsAsyncOlderThan(Date(timeIntervalSinceNow: -daysToKeep * 24 * 60 * 60))
 	}
 
 	func removeAllObjects() {
@@ -79,7 +80,7 @@ final class PersistentWebCache<T: AnyObject> {
 		memoryCache.removeAllObjects()
 	}
 
-	func removeObjectsAsyncOlderThan(_ expiration: Date) {
+	private func removeObjectsAsyncOlderThan(_ expiration: Date) {
 		DispatchQueue.global(qos: .background).async(execute: { [self] in
 			for url in fileEnumerator(withAttributes: [.contentModificationDateKey]) {
 				if let url = url as? URL,

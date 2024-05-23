@@ -155,8 +155,12 @@ class WikiPage {
 		}
 	}
 
-	private let descriptionCache = PersistentWebCache<KeyValueDescription>(name: "wikiTagStore", memorySize: 10_000000)
-	private let imageCache = PersistentWebCache<UIImage>(name: "wikiImageStore", memorySize: 10_000000)
+	private let descriptionCache = PersistentWebCache<KeyValueDescription>(name: "wikiTagStore",
+																		   memorySize: 10_000000,
+																		   daysToKeep: 45.0)
+	private let imageCache = PersistentWebCache<UIImage>(name: "wikiImageStore",
+														 memorySize: 10_000000,
+														 daysToKeep: 45.0)
 	private let equals = "=".addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics) ?? ""
 
 	func resetCache() {

@@ -78,10 +78,9 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 			layerDict.removeAll()
 
 			// update service
-			webCache = PersistentWebCache(name: tileServer.identifier, memorySize: 20 * 1000 * 1000)
-
-			let expirationDate = Date(timeIntervalSinceNow: -7 * 24 * 60 * 60)
-			purgeOldCacheItemsAsync(expirationDate)
+			webCache = PersistentWebCache(name: tileServer.identifier, 
+										  memorySize: 20 * 1000 * 1000,
+										  daysToKeep: 30.0)
 			setNeedsLayout()
 		}
 	}
@@ -124,10 +123,6 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		sublayers = nil
 		URLCache.shared.removeAllCachedResponses()
 		setNeedsLayout()
-	}
-
-	func purgeOldCacheItemsAsync(_ expiration: Date) {
-		webCache?.removeObjectsAsyncOlderThan(expiration)
 	}
 
 	func getDiskCacheSize() -> (size: Int, count: Int) {
