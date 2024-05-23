@@ -130,8 +130,8 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		webCache?.removeObjectsAsyncOlderThan(expiration)
 	}
 
-	func getDiskCacheSize(_ pSize: inout Int, count pCount: inout Int) {
-		webCache?.getDiskCacheSize(&pSize, count: &pCount)
+	func getDiskCacheSize() -> (size: Int, count: Int) {
+		return webCache!.getDiskCacheSize()
 	}
 
 	private func layerOverlapsScreen(_ layer: CALayer) -> Bool {

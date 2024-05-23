@@ -92,7 +92,7 @@ final class PersistentWebCache<T: AnyObject> {
 		})
 	}
 
-	func getDiskCacheSize(_ pSize: UnsafeMutablePointer<Int>, count pCount: UnsafeMutablePointer<Int>) {
+	func getDiskCacheSize() -> (size: Int, count: Int) {
 		var count = 0
 		var size = 0
 		for url in fileEnumerator(withAttributes: [URLResourceKey.fileAllocatedSizeKey]) {
@@ -106,8 +106,7 @@ final class PersistentWebCache<T: AnyObject> {
 				size += len.intValue
 			}
 		}
-		pSize.pointee = size
-		pCount.pointee = count
+		return (size,count)
 	}
 
 	func object(

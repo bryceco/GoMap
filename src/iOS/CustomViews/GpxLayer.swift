@@ -274,7 +274,7 @@ final class GpxLayer: DrawingLayer, GetDiskCacheSize, DrawingLayerDelegate {
 		})
 	}
 
-	func getDiskCacheSize(_ pSize: inout Int, count pCount: inout Int) {
+	func getDiskCacheSize() -> (size: Int, count: Int) {
 		var size = 0
 		let dir = saveDirectory()
 		var files: [String] = []
@@ -289,8 +289,8 @@ final class GpxLayer: DrawingLayer, GetDiskCacheSize, DrawingLayerDelegate {
 				size += (Int(status.st_size) + 511) & -512
 			}
 		}
-		pSize = size
-		pCount = files.count + (activeTrack != nil ? 1 : 0)
+		return (size,
+				files.count + (activeTrack != nil ? 1 : 0))
 	}
 
 	func purgeTileCache() {
