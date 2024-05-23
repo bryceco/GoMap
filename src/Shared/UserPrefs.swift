@@ -59,6 +59,7 @@ final class UserPrefs {
 
 		// GeoJSON
 		case geoJsonFileList = "GeoJsonFileList"
+		case tileOverlaySelections
 
 		// Quest stuff
 		case questTypeEnabledDict = "QuestTypeEnabledDict"
@@ -247,7 +248,8 @@ extension UserPrefs.Pref {
 			return false
 
 		case .geoJsonFileList,
-		     .mapViewEnableDataOverlay:
+		     .mapViewEnableDataOverlay,
+		     .tileOverlaySelections:
 			return false
 
 		case .osmServerUrl:
@@ -331,7 +333,7 @@ extension UserPrefs.Pref {
 		}
 	}
 
-	static func prefFor(geom: GEOMETRY) -> Self {
+	static func mostRecentPrefFor(geom: GEOMETRY) -> Self {
 		switch geom {
 		case .AREA: return .mostRecentTypes_area
 		case .VERTEX: return .mostRecentTypes_vertex

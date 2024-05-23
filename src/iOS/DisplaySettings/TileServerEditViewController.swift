@@ -86,6 +86,7 @@ class TileServerEditViewController: UITableViewController {
 			identifier: identifier,
 			url: url,
 			best: false,
+			overlay: false,
 			apiKey: "",
 			maxZoom: maxZoom,
 			roundUp: true,

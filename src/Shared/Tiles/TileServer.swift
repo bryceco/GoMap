@@ -40,6 +40,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 	let identifier: String
 	let url: String
 	let best: Bool
+	let overlay: Bool
 	let apiKey: String
 	let maxZoom: Int
 	let roundZoomUp: Bool
@@ -59,6 +60,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 		case identifier
 		case url
 		case best
+		case overlay
 		case apiKey
 		case maxZoom
 		case roundZoomUp
@@ -90,6 +92,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 		let identifier = try container.decode(String.self, forKey: .identifier)
 		let url = try container.decode(String.self, forKey: .url)
 		let best = try container.decode(Bool.self, forKey: .best)
+		let overlay = try container.decode(Bool.self, forKey: .overlay)
 		let apiKey = try container.decode(String.self, forKey: .apiKey)
 		let maxZoom = try container.decode(Int.self, forKey: .maxZoom)
 		let roundZoomUp = try container.decode(Bool.self, forKey: .roundZoomUp)
@@ -101,7 +104,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 		let attributionIconString = try container.decode(String?.self, forKey: .attributionIconString)
 		let attributionUrl = try container.decode(String.self, forKey: .attributionUrl)
 
-		self.init(withName: name, identifier: identifier, url: url, best: best,
+		self.init(withName: name, identifier: identifier, url: url, best: best, overlay: overlay,
 		          apiKey: apiKey, maxZoom: maxZoom, roundUp: roundZoomUp, startDate: startDate, endDate: endDate,
 		          wmsProjection: wmsProjection, geoJSON: geoJSON,
 		          attribString: attributionString, attribIconString: attributionIconString, attribUrl: attributionUrl)
@@ -147,6 +150,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 		let identifier = try String(fromFast: decoder)
 		let url = try String(fromFast: decoder)
 		let best = try Bool(fromFast: decoder)
+		let overlay = try Bool(fromFast: decoder)
 		let apiKey = try String(fromFast: decoder)
 		let maxZoom = try Int(fromFast: decoder)
 		let roundZoomUp = try Bool(fromFast: decoder)
@@ -158,7 +162,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 		let attributionIconString = try String?(fromFast: decoder)
 		let attributionUrl = try String(fromFast: decoder)
 
-		self.init(withName: name, identifier: identifier, url: url, best: best,
+		self.init(withName: name, identifier: identifier, url: url, best: best, overlay: overlay,
 		          apiKey: apiKey, maxZoom: maxZoom, roundUp: roundZoomUp, startDate: startDate, endDate: endDate,
 		          wmsProjection: wmsProjection, geoJSON: geoJSON,
 		          attribString: attributionString, attribIconString: attributionIconString, attribUrl: attributionUrl)
@@ -169,6 +173,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 		identifier: String,
 		url: String,
 		best: Bool,
+		overlay: Bool,
 		apiKey: String,
 		maxZoom: Int,
 		roundUp: Bool,
@@ -189,6 +194,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 		self.identifier = identifier
 		self.url = url
 		self.best = best
+		self.overlay = overlay
 		self.apiKey = apiKey
 		wmsProjection = projection ?? ""
 		attributionString = attribString.count != 0 ? attribString : name
@@ -272,6 +278,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 		identifier: "",
 		url: "",
 		best: false,
+		overlay: false,
 		apiKey: "",
 		maxZoom: 0,
 		roundUp: false,
@@ -288,6 +295,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 		identifier: MAXAR_PREMIUM_IDENTIFIER,
 		url: MaxarPremiumUrl,
 		best: false,
+		overlay: false,
 		apiKey: "",
 		maxZoom: 21,
 		roundUp: true,
@@ -304,6 +312,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 		identifier: MAPNIK_IDENTIFIER,
 		url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
 		best: false,
+		overlay: false,
 		apiKey: "",
 		maxZoom: 19,
 		roundUp: false,
@@ -320,6 +329,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 		identifier: OSM_GPS_TRACE_IDENTIFIER,
 		url: "https://gps.tile.openstreetmap.org/lines/{z}/{x}/{y}.png",
 		best: false,
+		overlay: false,
 		apiKey: "",
 		maxZoom: 20,
 		roundUp: false,
@@ -336,6 +346,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 		identifier: MAPBOX_LOCATOR_IDENTIFIER,
 		url: "https://api.mapbox.com/styles/v1/openstreetmap/ckasmteyi1tda1ipfis6wqhuq/tiles/256/{zoom}/{x}/{y}?access_token={apikey}",
 		best: false,
+		overlay: false,
 		apiKey: MapboxLocatorToken,
 		maxZoom: 20,
 		roundUp: false,
@@ -352,6 +363,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 		identifier: NO_NAME_IDENTIFIER,
 		url: "https://tile{switch:2,3}.poole.ch/noname/{zoom}/{x}/{y}.png",
 		best: false,
+		overlay: false,
 		apiKey: "",
 		maxZoom: 25,
 		roundUp: false,
@@ -368,6 +380,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 		identifier: BING_IDENTIFIER,
 		url: "https://ecn.{switch:t0,t1,t2,t3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=10618&key={apikey}",
 		best: false,
+		overlay: false,
 		apiKey: BING_MAPS_KEY,
 		maxZoom: 21,
 		roundUp: true,
@@ -430,6 +443,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 						                      identifier: Self.builtinBingAerial.identifier,
 						                      url: imageUrl,
 						                      best: false,
+						                      overlay: false,
 						                      apiKey: BING_MAPS_KEY,
 						                      maxZoom: resource.zoomMax,
 						                      roundUp: Self.builtinBingAerial.roundZoomUp,
@@ -484,6 +498,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 		          identifier: url,
 		          url: url,
 		          best: false,
+		          overlay: false,
 		          apiKey: "",
 		          maxZoom: (dict["zoom"] as? NSNumber)?.intValue ?? 0,
 		          roundUp: (dict["roundUp"] as? NSNumber)?.boolValue ?? false,

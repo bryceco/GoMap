@@ -22717,6 +22717,7 @@
     },
     "Clear GPS Overlay Tiles" : {
       "comment" : "Delete cached data",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -23327,6 +23328,9 @@
           }
         }
       }
+    },
+    "Clear Other Overlay Tiles" : {
+      "comment" : "Delete cached data"
     },
     "Commit" : {
       "localizations" : {

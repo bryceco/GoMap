@@ -59,6 +59,10 @@ final class TileServerList {
 		return userDefinedList
 	}
 
+	func serviceNamed(_ name: String) -> TileServer? {
+		return downloadedList.first(where: { name == $0.name })
+	}
+
 	private func pathToExternalAerialsCache() -> String {
 		return ArchivePath.aerialProviers.path()
 	}
@@ -142,12 +146,6 @@ final class TileServerList {
 		for service in userDefinedList {
 			dict[service.identifier] = service
 		}
-		/*
-		  MAXAR is unavailable for the foreseeable future
-		 for service in [TileServer.maxarPremiumAerial] {
-		 	dict[service.identifier] = service
-		 }
-		  */
 
 		// fetch and decode recently used list
 		recentlyUsedList.load(withMapping: { dict[$0] })
@@ -165,18 +163,16 @@ final class TileServerList {
 		recentlyUsedList.save(withMapping: { $0.identifier })
 	}
 
-	func allServices(at latLon: LatLon) -> [TileServer] {
+	func allServices(at latLon: LatLon, overlay: Bool) -> [TileServer] {
 		// find imagery relavent to the viewport
 		var result: [TileServer] = []
 		for service in downloadedList {
-			if service.coversLocation(latLon) {
+			if service.overlay == overlay,
+			   service.coversLocation(latLon)
+			{
 				result.append(service)
 			}
 		}
-		/*
-		  MAXAR is unavailable for the foreseeable future
-		 result.append(TileServer.maxarPremiumAerial)
-		 */
 
 		result = result.sorted(by: {
 			if $0.best, !$1.best {

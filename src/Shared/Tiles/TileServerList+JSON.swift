@@ -234,13 +234,6 @@ extension TileServerList {
 
 				let maxZoom = try properties.max_zoom ?? 0
 
-				if (try properties.overlay) ?? false,
-				   identifier != MapBoxLocatorId
-				{
-					// we don@"t support overlays except locator
-					continue
-				}
-
 				// we only support some types of WMS projections
 				var projection: String?
 				if type == .wms {
@@ -257,6 +250,7 @@ extension TileServerList {
 				let attribUrl = try attribDict?.url ?? ""
 
 				let best = try properties.best ?? false
+				let overlay = try properties.overlay ?? false
 
 				// support for {apikey}
 				var apikey = ""
@@ -277,6 +271,7 @@ extension TileServerList {
 				                         identifier: identifier,
 				                         url: url,
 				                         best: best,
+				                         overlay: overlay,
 				                         apiKey: apikey,
 				                         maxZoom: maxZoom,
 				                         roundUp: true,

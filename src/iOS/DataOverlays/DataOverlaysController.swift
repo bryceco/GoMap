@@ -21,6 +21,9 @@ class DataOverlaysController: UITableViewController {
 		case predefinedSection = 1
 	}
 
+	var overlayList: [TileServer] = []
+	var overlaySelections: [String] = []
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		navigationItem.rightBarButtonItem = editButtonItem
@@ -28,6 +31,10 @@ class DataOverlaysController: UITableViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		let mapView = AppDelegate.shared.mapView!
+		let latLon = mapView.screenCenterLatLon()
+		overlayList = mapView.tileServerList.allServices(at: latLon, overlay: true)
+		overlaySelections = UserPrefs.shared.object(forKey: .tileOverlaySelections) as? [String] ?? []
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -40,7 +47,7 @@ class DataOverlaysController: UITableViewController {
 	// MARK: Table view delegate
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
+		return 2
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -59,7 +66,7 @@ class DataOverlaysController: UITableViewController {
 		case .geojsonSection:
 			return geoJsonList.count + 1
 		case .predefinedSection:
-			return 0
+			return overlayList.count
 		default:
 			return 0
 		}
@@ -80,7 +87,13 @@ class DataOverlaysController: UITableViewController {
 				return cell
 			}
 		case .predefinedSection:
-			return UITableViewCell(frame: .zero)
+			let server = overlayList[indexPath.row]
+			let cell = tableView.dequeueReusableCell(withIdentifier: "UserDataTableCell", for: indexPath)
+				as! UserDataTableCell
+			cell.title?.text = server.name
+			cell.onOff.isOn = overlaySelections.contains(server.name)
+
+			return cell
 		default:
 			return UITableViewCell(frame: .zero)
 		}
@@ -102,10 +115,23 @@ class DataOverlaysController: UITableViewController {
 
 	@IBAction func didToggleSwitch(_ sender: Any) {
 		guard let cell: UserDataTableCell = (sender as? UIView)?.superviewOfType(),
-		      let indexPath = tableView.indexPath(for: cell),
-		      Section(rawValue: indexPath.section) == .geojsonSection
+		      let indexPath = tableView.indexPath(for: cell)
 		else { return }
-		geoJsonList.toggleVisible(indexPath.row)
+		switch Section(rawValue: indexPath.section) {
+		case .geojsonSection:
+			geoJsonList.toggleVisible(indexPath.row)
+		case .predefinedSection:
+			let server = overlayList[indexPath.row]
+			if cell.onOff.isOn {
+				overlaySelections.append(server.name)
+			} else {
+				overlaySelections.removeAll(where: { $0 == server.name })
+			}
+			UserPrefs.shared.set(object: overlaySelections, forKey: .tileOverlaySelections)
+			AppDelegate.shared.mapView.updateTileOverlayLayers()
+		default:
+			fatalError()
+		}
 	}
 
 	// MARK: Edit rows

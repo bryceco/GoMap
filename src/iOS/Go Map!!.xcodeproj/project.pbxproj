@@ -745,7 +745,7 @@
 				02ACBA3A16713CCB00BB4414 /* Supporting Files */,
 				C3D096AF263D4FF500E3B129 /* TurnRestrictController.swift */,
 				647C150D24268DB7008A9366 /* Upload */,
-				02F0297A2BFAFF2E002F7956 /* UserData */,
+				02F0297A2BFAFF2E002F7956 /* DataOverlays */,
 			);
 			name = "Go Map!";
 			sourceTree = "<group>";
@@ -924,13 +924,13 @@
 			path = PhotoShare;
 			sourceTree = "<group>";
 		};
-		02F0297A2BFAFF2E002F7956 /* UserData */ = {
+		02F0297A2BFAFF2E002F7956 /* DataOverlays */ = {
 			isa = PBXGroup;
 			children = (
 				02F0297B2BFAFF53002F7956 /* DataOverlays.storyboard */,
 				02F0297D2BFB01E3002F7956 /* DataOverlaysController.swift */,
 			);
-			path = UserData;
+			path = DataOverlays;
 			sourceTree = "<group>";
 		};
 		02F53299267ACFBB0088DF41 /* EditorLayer */ = {

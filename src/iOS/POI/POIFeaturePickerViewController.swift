@@ -44,7 +44,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		} else {
 			mostRecentMaximum = MOST_RECENT_DEFAULT_COUNT
 		}
-		let pref = UserPrefs.Pref.prefFor(geom: geometry)
+		let pref = UserPrefs.Pref.mostRecentPrefFor(geom: geometry)
 		let a = UserPrefs.shared.object(forKey: pref) as? [String] ?? []
 		mostRecentArray = a.compactMap({ PresetsDatabase.shared.presetFeatureForFeatureID($0) })
 	}
@@ -195,7 +195,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		}
 
 		let a = mostRecentArray.map({ $0.featureID })
-		let pref = UserPrefs.Pref.prefFor(geom: geometry)
+		let pref = UserPrefs.Pref.mostRecentPrefFor(geom: geometry)
 		UserPrefs.shared.set(object: a, forKey: pref)
 	}
 

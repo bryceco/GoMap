@@ -221,7 +221,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	// overlays
 	private(set) lazy var locatorLayer = MercatorTileLayer(mapView: self)
-	private(set) lazy var gpsTraceLayer = MercatorTileLayer(mapView: self)
 
 	private(set) var backgroundLayers: [CALayer] = [] // list of all layers that need to be resized, etc.
 
@@ -403,9 +402,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	var displayDataOverlayLayer = false {
 		didSet {
 			dataOverlayLayer.isHidden = !displayDataOverlayLayer
+
 			if displayDataOverlayLayer {
 				dataOverlayLayer.setNeedsLayout()
 			}
+			updateTileOverlayLayers()
 		}
 	}
 
@@ -577,60 +578,51 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		// this option needs to be set before the editor is initialized
 		enableAutomaticCacheManagement = UserPrefs.shared.bool(forKey: .automaticCacheManagement) ?? true
 
-		var bg: [CALayer] = []
-
 		locatorLayer = MercatorTileLayer(mapView: self)
 		locatorLayer.zPosition = ZLAYER.LOCATOR.rawValue
 		locatorLayer.tileServer = TileServer.mapboxLocator
 		locatorLayer.isHidden = true
-		bg.append(locatorLayer)
-
-		gpsTraceLayer = MercatorTileLayer(mapView: self)
-		gpsTraceLayer.zPosition = ZLAYER.GPSTRACE.rawValue
-		gpsTraceLayer.tileServer = TileServer.gpsTrace
-		gpsTraceLayer.isHidden = true
-		bg.append(gpsTraceLayer)
+		backgroundLayers.append(locatorLayer)
 
 		noNameLayer = MercatorTileLayer(mapView: self)
 		noNameLayer.zPosition = ZLAYER.NONAME.rawValue
 		noNameLayer.tileServer = TileServer.noName
 		noNameLayer.isHidden = true
-		bg.append(noNameLayer)
+		backgroundLayers.append(noNameLayer)
 
 		aerialLayer = MercatorTileLayer(mapView: self)
 		aerialLayer.zPosition = ZLAYER.AERIAL.rawValue
 		aerialLayer.tileServer = tileServerList.currentServer
 		aerialLayer.isHidden = true
-		bg.append(aerialLayer)
+		backgroundLayers.append(aerialLayer)
 
 		mapnikLayer = MercatorTileLayer(mapView: self)
 		mapnikLayer.tileServer = TileServer.mapnik
 		mapnikLayer.zPosition = ZLAYER.MAPNIK.rawValue
 		mapnikLayer.isHidden = true
-		bg.append(mapnikLayer)
+		backgroundLayers.append(mapnikLayer)
 
 		editorLayer = EditorMapLayer(owner: self)
 		editorLayer.zPosition = ZLAYER.EDITOR.rawValue
-		bg.append(editorLayer)
+		backgroundLayers.append(editorLayer)
 
 		gpxLayer.zPosition = ZLAYER.GPX.rawValue
 		gpxLayer.isHidden = true
-		bg.append(gpxLayer)
+		backgroundLayers.append(gpxLayer)
 
 		dataOverlayLayer.zPosition = ZLAYER.GPX.rawValue
 		dataOverlayLayer.isHidden = true
-		bg.append(dataOverlayLayer)
+		backgroundLayers.append(dataOverlayLayer)
 
 #if DEBUG && false
 		quadDownloadLayer = QuadDownloadLayer(mapView: self)
 		if let quadDownloadLayer = quadDownloadLayer {
 			quadDownloadLayer.zPosition = Z_QUADDOWNLOAD
 			quadDownloadLayer.isHidden = false
-			bg.append(quadDownloadLayer)
+			backgroundLayers.append(quadDownloadLayer)
 		}
 #endif
 
-		backgroundLayers = bg
 		for layer in backgroundLayers {
 			self.layer.addSublayer(layer)
 		}
@@ -820,6 +812,55 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	func acceptsFirstResponder() -> Bool {
 		return true
+	}
+
+	func tileOverlayLayers() -> [MercatorTileLayer] {
+		return backgroundLayers.filter { ($0 as? MercatorTileLayer)?.tileServer.overlay ?? false }
+			as! [MercatorTileLayer]
+	}
+
+	func updateTileOverlayLayers() {
+		let serverNames = UserPrefs.shared.object(forKey: .tileOverlaySelections) as? [String] ?? []
+
+		// remove any layers no longer displayed
+		for layerIndex in backgroundLayers.indices {
+			let layer = backgroundLayers[layerIndex]
+			guard let layer = layer as? MercatorTileLayer,
+			      layer.tileServer.overlay
+			else {
+				continue
+			}
+			if displayDataOverlayLayer, serverNames.contains(layer.tileServer.name) {
+				// we want it displayed
+			} else {
+				// remove the layer
+				backgroundLayers.remove(at: layerIndex)
+				layer.removeFromSuperlayer()
+			}
+		}
+
+		if displayDataOverlayLayer {
+			// create any overlay layers the user had enabled
+			for name in serverNames {
+				if backgroundLayers.contains(where: { ($0 as? MercatorTileLayer)?.tileServer.name == name }) {
+					// already have it
+					continue
+				}
+				guard let tileServer = tileServerList.serviceNamed(name) else {
+					// server doesn't exist
+					continue
+				}
+
+				let layer = MercatorTileLayer(mapView: self)
+				layer.zPosition = ZLAYER.GPSTRACE.rawValue
+				layer.tileServer = tileServer
+				layer.isHidden = false
+
+				backgroundLayers.append(layer)
+				self.layer.addSublayer(layer)
+			}
+		}
+		layoutSubviews()
 	}
 
 	func save() {

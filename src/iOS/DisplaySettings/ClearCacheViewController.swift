@@ -14,7 +14,7 @@ private enum Row: Int {
 	case aerial = 2
 	case userGPX = 3
 	case mapboxLocator = 4
-	case osmGPS = 5
+	case overlayData = 5
 }
 
 protocol GetDiskCacheSize {
@@ -57,29 +57,29 @@ class ClearCacheViewController: UITableViewController {
 		let mapView = AppDelegate.shared.mapView!
 		let mapData = mapView.editorLayer.mapData
 
-		var title: String?
-		var object: GetDiskCacheSize?
+		let title: String?
+		let object: [GetDiskCacheSize]
 		switch indexPath.row {
 		case Row.osmData.rawValue:
 			title = NSLocalizedString("Clear OSM Data", comment: "Delete cached data")
-			object = nil
+			object = []
 		case Row.mapnik.rawValue:
 			title = NSLocalizedString("Clear Mapnik Tiles", comment: "Delete cached data")
-			object = mapView.mapnikLayer
+			object = [mapView.mapnikLayer]
 		case Row.userGPX.rawValue:
 			title = NSLocalizedString("Clear GPX Tracks", comment: "Delete cached data")
-			object = mapView.gpxLayer
+			object = [mapView.gpxLayer]
 		case Row.aerial.rawValue:
 			title = NSLocalizedString("Clear Aerial Tiles", comment: "Delete cached data")
-			object = mapView.aerialLayer
+			object = [mapView.aerialLayer]
 		case Row.mapboxLocator.rawValue:
 			title = NSLocalizedString("Clear Locator Overlay Tiles", comment: "Delete cached data")
-			object = mapView.locatorLayer
-		case Row.osmGPS.rawValue:
-			title = NSLocalizedString("Clear GPS Overlay Tiles", comment: "Delete cached data")
-			object = mapView.gpsTraceLayer
+			object = [mapView.locatorLayer]
+		case Row.overlayData.rawValue:
+			title = NSLocalizedString("Clear Other Overlay Tiles", comment: "Delete cached data")
+			object = mapView.tileOverlayLayers()
 		default:
-			break
+			fatalError()
 		}
 		cell.titleLabel.text = title
 		cell.detailLabel.text = ""
@@ -92,9 +92,15 @@ class ClearCacheViewController: UITableViewController {
 		} else {
 			cell.detailLabel.text = NSLocalizedString("computing size...", comment: "")
 			DispatchQueue.global(qos: .default).async(execute: {
-				var size = Int()
-				var count = Int()
-				object?.getDiskCacheSize(&size, count: &count)
+				var size = 0
+				var count = 0
+				for obj in object {
+					var tSize = 0
+					var tCount = 0
+					obj.getDiskCacheSize(&tSize, count: &tCount)
+					size += tSize
+					count += tCount
+				}
 				DispatchQueue.main.async(execute: {
 					cell.detailLabel.text = String.localizedStringWithFormat(
 						NSLocalizedString("%.2f MB, %ld files", comment: ""),
@@ -184,8 +190,10 @@ class ClearCacheViewController: UITableViewController {
 			appDelegate.mapView.aerialLayer.purgeTileCache()
 		case .mapboxLocator /* Locator Overlay */:
 			appDelegate.mapView.locatorLayer.purgeTileCache()
-		case .osmGPS /* GPS Overlay */:
-			appDelegate.mapView.gpsTraceLayer.purgeTileCache()
+		case .overlayData /* Overlays Overlay */:
+			for obj in appDelegate.mapView.tileOverlayLayers() {
+				obj.purgeTileCache()
+			}
 		}
 		dismiss(animated: true)
 	}
