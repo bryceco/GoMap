@@ -338,6 +338,10 @@ class GpxViewController: UITableViewController {
 						expiration)
 				cell.expirationButton.setTitle(title, for: .normal)
 				cell.expirationButton.sizeToFit()
+#if targetEnvironment(macCatalyst)
+				// Catalyst doesn't support the picker control we use here, so disable the button
+				cell.expirationButton.isEnabled = false
+#endif
 				return cell
 			case 1:
 				// enable background use
