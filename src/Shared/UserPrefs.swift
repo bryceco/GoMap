@@ -156,6 +156,7 @@ final class UserPrefs {
 		                                       selector: #selector(Self.ubiquitousKeyValueStoreDidChange(_:)),
 		                                       name: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
 		                                       object: NSUbiquitousKeyValueStore.default)
+		synchronize()
 	}
 
 	@objc func ubiquitousKeyValueStoreDidChange(_ notification: NSNotification) {

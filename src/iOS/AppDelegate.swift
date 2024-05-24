@@ -308,6 +308,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		// remove badge now, so it disappears promptly on exit
 		UIApplication.shared.applicationIconBadgeNumber = 0
+
+		// Update preferences in case ubiquitous values changed while in the background
+		UserPrefs.shared.synchronize()
 	}
 
 	func applicationDidBecomeActive(_ application: UIApplication) {

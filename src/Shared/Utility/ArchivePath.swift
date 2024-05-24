@@ -159,6 +159,7 @@ class MetadataClass {
 
 	init() {}
 	static let shared = MetadataClass()
+
 	func ubiquitousUrlForName(_ name: String,
 	                          in folder: FileManager.SearchPathDirectory,
 	                          callback: @escaping (URL?) -> Void)

@@ -40,9 +40,8 @@ class TagInfo {
 	private class func load() -> CacheType {
 		do {
 			let path = pathToSaveFile()
-			let plistEncoder = PropertyListDecoder()
 			let data = try Data(contentsOf: path)
-			return try plistEncoder.decode(CacheType.self, from: data)
+			return try PropertyListDecoder().decode(CacheType.self, from: data)
 		} catch {
 			if (error as NSError).domain == NSCocoaErrorDomain,
 			   (error as NSError).code == NSFileReadNoSuchFileError
