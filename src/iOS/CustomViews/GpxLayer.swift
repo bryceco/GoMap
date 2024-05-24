@@ -27,7 +27,7 @@ final class GpxLayer: DrawingLayer, GetDiskCacheSize, DrawingLayerDelegate {
 	private(set) var previousTracks: [GpxTrack] = [] // sorted with most recent first
 
 	override init(mapView: MapView) {
-		let uploads = UserPrefs.shared.object(forKey: .gpxUploadedGpxTracks) as? [String: NSNumber] ?? [:]
+		let uploads = UserPrefs.shared.gpxUploadedGpxTracks.value ?? [:]
 		uploadedTracks = uploads.mapValues({ $0.boolValue })
 		super.init(mapView: mapView)
 		super.geojsonDelegate = self
@@ -36,7 +36,7 @@ final class GpxLayer: DrawingLayer, GetDiskCacheSize, DrawingLayerDelegate {
 	var uploadedTracks: [String: Bool] {
 		didSet {
 			let dict = uploadedTracks.mapValues({ NSNumber(value: $0) })
-			UserPrefs.shared.set(object: dict, forKey: .gpxUploadedGpxTracks)
+			UserPrefs.shared.gpxUploadedGpxTracks.value = dict
 		}
 	}
 
@@ -206,19 +206,19 @@ final class GpxLayer: DrawingLayer, GetDiskCacheSize, DrawingLayerDelegate {
 	// If zero then never delete them
 	static var expirationDays: Int {
 		get {
-			UserPrefs.shared.integer(forKey: .gpxTracksExpireAfterDays) ?? Self.DefaultExpirationDays
+			UserPrefs.shared.gpxTracksExpireAfterDays.value ?? Self.DefaultExpirationDays
 		}
 		set {
-			UserPrefs.shared.set(newValue, forKey: .gpxTracksExpireAfterDays)
+			UserPrefs.shared.gpxTracksExpireAfterDays.value = newValue
 		}
 	}
 
 	static var backgroundTracking: Bool {
 		get {
-			UserPrefs.shared.bool(forKey: .gpxRecordsTracksInBackground) ?? false
+			UserPrefs.shared.gpxRecordsTracksInBackground.value ?? false
 		}
 		set {
-			UserPrefs.shared.set(newValue, forKey: .gpxRecordsTracksInBackground)
+			UserPrefs.shared.gpxRecordsTracksInBackground.value = newValue
 		}
 	}
 
@@ -290,7 +290,7 @@ final class GpxLayer: DrawingLayer, GetDiskCacheSize, DrawingLayerDelegate {
 			}
 		}
 		return (size,
-				files.count + (activeTrack != nil ? 1 : 0))
+		        files.count + (activeTrack != nil ? 1 : 0))
 	}
 
 	func purgeTileCache() {

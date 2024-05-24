@@ -499,12 +499,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		                                regions: [])
 
 		func saveToUserPrefs() {
-			UserPrefs.shared.set(object: try? PropertyListEncoder().encode(self),
-			                     forKey: .currentRegion)
+			UserPrefs.shared.currentRegion.value = try? PropertyListEncoder().encode(self)
 		}
 
 		static func fromUserPrefs() -> Self? {
-			if let data = UserPrefs.shared.object(forKey: .currentRegion) as? Data {
+			if let data = UserPrefs.shared.currentRegion.value {
 				return try? PropertyListDecoder().decode(CurrentRegion.self, from: data)
 			}
 			return nil
@@ -576,7 +575,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		backgroundColor = UIColor(white: 0.1, alpha: 1.0)
 
 		// this option needs to be set before the editor is initialized
-		enableAutomaticCacheManagement = UserPrefs.shared.bool(forKey: .automaticCacheManagement) ?? true
+		enableAutomaticCacheManagement = UserPrefs.shared.automaticCacheManagement.value ?? true
 
 		locatorLayer = MercatorTileLayer(mapView: self)
 		locatorLayer.zPosition = ZLAYER.LOCATOR.rawValue
@@ -758,16 +757,16 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		addGestureRecognizer(tapAndDragGesture)
 
 		// these need to be loaded late because assigning to them changes the view
-		viewState = MapViewState(rawValue: UserPrefs.shared.integer(forKey: .mapViewState) ?? -999)
+		viewState = MapViewState(rawValue: UserPrefs.shared.mapViewState.value ?? -999)
 			?? MapViewState.EDITORAERIAL
-		viewOverlayMask = MapViewOverlays(rawValue: UserPrefs.shared.integer(forKey: .mapViewOverlays) ?? 0)
+		viewOverlayMask = MapViewOverlays(rawValue: UserPrefs.shared.mapViewOverlays.value ?? 0)
 
-		enableRotation = UserPrefs.shared.bool(forKey: .mapViewEnableRotation) ?? true
-		enableBirdsEye = UserPrefs.shared.bool(forKey: .mapViewEnableBirdsEye) ?? false
-		enableUnnamedRoadHalo = UserPrefs.shared.bool(forKey: .mapViewEnableUnnamedRoadHalo) ?? false
-		displayGpxLogs = UserPrefs.shared.bool(forKey: .mapViewEnableBreadCrumb) ?? false
-		displayDataOverlayLayer = UserPrefs.shared.bool(forKey: .mapViewEnableDataOverlay) ?? false
-		enableTurnRestriction = UserPrefs.shared.bool(forKey: .mapViewEnableTurnRestriction) ?? false
+		enableRotation = UserPrefs.shared.mapViewEnableRotation.value ?? true
+		enableBirdsEye = UserPrefs.shared.mapViewEnableBirdsEye.value ?? false
+		enableUnnamedRoadHalo = UserPrefs.shared.mapViewEnableUnnamedRoadHalo.value ?? false
+		displayGpxLogs = UserPrefs.shared.mapViewEnableBreadCrumb.value ?? false
+		displayDataOverlayLayer = UserPrefs.shared.mapViewEnableDataOverlay.value ?? false
+		enableTurnRestriction = UserPrefs.shared.mapViewEnableTurnRestriction.value ?? false
 
 		if let loc = CurrentRegion.fromUserPrefs() {
 			currentRegion = loc
@@ -791,9 +790,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			windowPresented = true
 
 			// get current location
-			if let lat = UserPrefs.shared.double(forKey: .view_latitude),
-			   let lon = UserPrefs.shared.double(forKey: .view_longitude),
-			   let scale = UserPrefs.shared.double(forKey: .view_scale)
+			if let lat = UserPrefs.shared.view_latitude.value,
+			   let lon = UserPrefs.shared.view_longitude.value,
+			   let scale = UserPrefs.shared.view_scale.value
 			{
 				setTransformFor(latLon: LatLon(latitude: lat, longitude: lon),
 				                scale: scale)
@@ -820,7 +819,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	func updateTileOverlayLayers() {
-		let serverIdents = UserPrefs.shared.object(forKey: .tileOverlaySelections) as? [String] ?? []
+		let serverIdents = UserPrefs.shared.tileOverlaySelections.value ?? []
 
 		// remove any layers no longer displayed
 		let removals = backgroundLayers.filter { layer in
@@ -850,7 +849,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					// server doesn't exist anymore
 					var list = serverIdents
 					list.removeAll(where: { $0 != ident })
-					UserPrefs.shared.set(object: list, forKey: .tileOverlaySelections)
+					UserPrefs.shared.tileOverlaySelections.value = list
 					continue
 				}
 
@@ -873,20 +872,20 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 #if false && DEBUG
 		assert(scale > 1.0)
 #endif
-		UserPrefs.shared.set(scale, forKey: .view_scale)
-		UserPrefs.shared.set(latLon.lat, forKey: .view_latitude)
-		UserPrefs.shared.set(latLon.lon, forKey: .view_longitude)
+		UserPrefs.shared.view_scale.value = scale
+		UserPrefs.shared.view_latitude.value = latLon.lat
+		UserPrefs.shared.view_longitude.value = latLon.lon
 
-		UserPrefs.shared.set(viewState.rawValue, forKey: .mapViewState)
-		UserPrefs.shared.set(viewOverlayMask.rawValue, forKey: .mapViewOverlays)
+		UserPrefs.shared.mapViewState.value = viewState.rawValue
+		UserPrefs.shared.mapViewOverlays.value = viewOverlayMask.rawValue
 
-		UserPrefs.shared.set(enableRotation, forKey: .mapViewEnableRotation)
-		UserPrefs.shared.set(enableBirdsEye, forKey: .mapViewEnableBirdsEye)
-		UserPrefs.shared.set(enableUnnamedRoadHalo, forKey: .mapViewEnableUnnamedRoadHalo)
-		UserPrefs.shared.set(displayGpxLogs, forKey: .mapViewEnableBreadCrumb)
-		UserPrefs.shared.set(displayDataOverlayLayer, forKey: .mapViewEnableDataOverlay)
-		UserPrefs.shared.set(enableTurnRestriction, forKey: .mapViewEnableTurnRestriction)
-		UserPrefs.shared.set(enableAutomaticCacheManagement, forKey: .automaticCacheManagement)
+		UserPrefs.shared.mapViewEnableRotation.value = enableRotation
+		UserPrefs.shared.mapViewEnableBirdsEye.value = enableBirdsEye
+		UserPrefs.shared.mapViewEnableUnnamedRoadHalo.value = enableUnnamedRoadHalo
+		UserPrefs.shared.mapViewEnableBreadCrumb.value = displayGpxLogs
+		UserPrefs.shared.mapViewEnableDataOverlay.value = displayDataOverlayLayer
+		UserPrefs.shared.mapViewEnableTurnRestriction.value = enableTurnRestriction
+		UserPrefs.shared.automaticCacheManagement.value = enableAutomaticCacheManagement
 
 		currentRegion.saveToUserPrefs()
 
@@ -1144,7 +1143,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		// Check if we've moved a long distance from the last check
 		let latLon = screenCenterLatLon()
-		if let prevLatLonData = UserPrefs.shared.object(forKey: .latestAerialCheckLatLon) as? Data,
+		if let prevLatLonData = UserPrefs.shared.latestAerialCheckLatLon.value,
 		   let prevLatLon = try? PropertyListDecoder().decode(LatLon.self, from: prevLatLonData),
 		   GreatCircleDistance(latLon, prevLatLon) < 10 * 1000
 		{
@@ -1188,8 +1187,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			mainViewController.present(alert, animated: true)
 		}
 
-		UserPrefs.shared.set(object: try? PropertyListEncoder().encode(latLon),
-		                     forKey: .latestAerialCheckLatLon)
+		UserPrefs.shared.latestAerialCheckLatLon.value = try? PropertyListEncoder().encode(latLon)
 	}
 
 	func updateCurrentRegionForLocationUsingCountryCoder() {

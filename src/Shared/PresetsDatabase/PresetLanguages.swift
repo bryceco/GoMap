@@ -24,7 +24,7 @@ final class PresetLanguages {
 	}()
 
 	class func preferredLanguageIsDefault() -> Bool {
-		let code = UserPrefs.shared.string(forKey: .preferredLanguage)
+		let code = UserPrefs.shared.preferredLanguage.value
 		return code == nil
 	}
 
@@ -46,7 +46,7 @@ final class PresetLanguages {
 	}
 
 	class func preferredPresetLanguageCode() -> String {
-		if let code = UserPrefs.shared.string(forKey: .preferredLanguage) {
+		if let code = UserPrefs.shared.preferredLanguage.value {
 			return code
 		}
 		let matches = Bundle.preferredLocalizations(from: PresetLanguages.languageCodeList,
@@ -56,7 +56,7 @@ final class PresetLanguages {
 
 	// code is either a language code, or nil if the default is requested
 	class func setPreferredLanguageCode(_ code: String?) {
-		UserPrefs.shared.set(code, forKey: .preferredLanguage)
+		UserPrefs.shared.preferredLanguage.value = code
 	}
 
 	class func languageNameForCode(_ code: String) -> String? {

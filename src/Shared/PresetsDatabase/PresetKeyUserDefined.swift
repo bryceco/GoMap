@@ -85,7 +85,7 @@ class PresetKeyUserDefinedList: Codable {
 
 	init() {
 		// First try reading from UserPrefs
-		if let data = UserPrefs.shared.object(forKey: .userDefinedPresetKeys) as? Data,
+		if let data = UserPrefs.shared.userDefinedPresetKeys.value,
 		   let list = try? JSONDecoder().decode([PresetKeyUserDefined].self, from: data)
 		{
 			self.list = list
@@ -104,21 +104,20 @@ class PresetKeyUserDefinedList: Codable {
 				list = []
 			}
 		}
-		UserPrefs.shared.onChange(.userDefinedPresetKeys, callback: { pref in
+		UserPrefs.shared.userDefinedPresetKeys.onChangePerform { pref in
 			guard
-				let newValue = UserPrefs.shared.object(forKey: pref),
-				let data = newValue as? Data,
+				let data = pref.value,
 				let list = try? JSONDecoder().decode([PresetKeyUserDefined].self, from: data)
 			else {
 				return
 			}
 			self.list = list
-		})
+		}
 	}
 
 	func save() {
 		if let encodeData = try? JSONEncoder().encode(list) {
-			UserPrefs.shared.set(object: encodeData, forKey: .userDefinedPresetKeys)
+			UserPrefs.shared.userDefinedPresetKeys.value = encodeData
 		}
 	}
 

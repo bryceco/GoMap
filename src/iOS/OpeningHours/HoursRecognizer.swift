@@ -580,7 +580,7 @@ public class HoursRecognizer: ObservableObject {
 	}
 
 	private static var lastLanguageSelected = { () -> Language in
-		if let raw = UserPrefs.shared.string(forKey: .hoursRecognizerLanguage),
+		if let raw = UserPrefs.shared.hoursRecognizerLanguage.value,
 		   let lang = languageList.first(where: { $0.isoCode == raw })
 		{
 			return lang
@@ -591,7 +591,7 @@ public class HoursRecognizer: ObservableObject {
 	@Published public var language: Language = lastLanguageSelected {
 		willSet {
 			HoursRecognizer.lastLanguageSelected = newValue
-			UserPrefs.shared.set(newValue.isoCode, forKey: .hoursRecognizerLanguage)
+			UserPrefs.shared.hoursRecognizerLanguage.value = newValue.isoCode
 		}
 	}
 

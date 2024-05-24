@@ -12,37 +12,33 @@ import Foundation
 class MostRecentlyUsed<T: Equatable> {
 	private(set) var items: [T]
 	let maxCount: Int
-	let userPrefsKey: UserPrefs.Pref
-	let autoLoadSave: Bool
+	let userPrefsKey: Pref<[T]>
 
 	var count: Int { return items.count }
 
 	init(maxCount: Int,
-	     userPrefsKey: UserPrefs.Pref,
-	     autoLoadSave: Bool = true)
+	     userPrefsKey: Pref<[T]>)
 	{
 		self.maxCount = maxCount
 		self.userPrefsKey = userPrefsKey
-		self.autoLoadSave = autoLoadSave
-		if autoLoadSave {
-			items = UserPrefs.shared.object(forKey: userPrefsKey) as? [T] ?? []
-		} else {
-			items = []
-		}
+		items = userPrefsKey.value ?? []
 	}
 
-	func load(withMapping: (String) -> T?) {
-		let strings = UserPrefs.shared.object(forKey: userPrefsKey) as? [String] ?? []
-		items = strings.compactMap(withMapping)
-	}
+	/*
+	 func load(withMapping: (String) -> T?) {
+	 	let strings = userPrefsKey.value as! [String]? ?? []
+	 	items = strings.compactMap(withMapping)
+	 }
 
-	func save(withMapping: (T) -> String) {
-		let strings = items.map(withMapping)
-		UserPrefs.shared.set(object: strings, forKey: userPrefsKey)
-	}
+	 func save(withMapping: (T) -> String) {
+	 	let strings = items.map(withMapping)
+	 	userPrefsKey.value = strings
+	 }
+	 */
 
 	func remove(_ item: T) {
 		items.removeAll(where: { $0 == item })
+		userPrefsKey.value = items
 	}
 
 	func updateWith(_ item: T) {
@@ -51,8 +47,6 @@ class MostRecentlyUsed<T: Equatable> {
 		while items.count > maxCount {
 			items.removeLast()
 		}
-		if autoLoadSave {
-			UserPrefs.shared.set(object: items, forKey: userPrefsKey)
-		}
+		userPrefsKey.value = items
 	}
 }

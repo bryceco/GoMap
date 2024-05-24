@@ -353,10 +353,10 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		return nil
 	}
 
-	static var _nextUnusedIdentifier = UserPrefs.shared.integer(forKey: .nextUnusedIdentifier) ?? 0
+	static var _nextUnusedIdentifier = UserPrefs.shared.nextUnusedIdentifier.value ?? 0
 	static func nextUnusedIdentifier() -> Int64 {
 		Self._nextUnusedIdentifier -= 1
-		UserPrefs.shared.set(Self._nextUnusedIdentifier, forKey: .nextUnusedIdentifier)
+		UserPrefs.shared.nextUnusedIdentifier.value = Self._nextUnusedIdentifier
 		return Int64(Self._nextUnusedIdentifier)
 	}
 

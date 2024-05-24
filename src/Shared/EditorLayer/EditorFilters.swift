@@ -13,54 +13,55 @@ final class EditorFilters {
 
 	var enableObjectFilters = false { // turn all filters on/on
 		didSet {
-			UserPrefs.shared.set(object: enableObjectFilters, forKey: .editor_enableObjectFilters)
+			UserPrefs.shared.editor_enableObjectFilters.value = enableObjectFilters
 			onChange?()
 		}
 	}
 
-	var showLevel = false { didSet { save(.editor_showLevel, showLevel) }}
-	var showPoints = false { didSet { save(.editor_showPoints, showPoints) }}
-	var showTrafficRoads = false { didSet { save(.editor_showTrafficRoads, showTrafficRoads) }}
-	var showServiceRoads = false { didSet { save(.editor_showServiceRoads, showServiceRoads) }}
-	var showPaths = false { didSet { save(.editor_showPaths, showPaths) }}
-	var showBuildings = false { didSet { save(.editor_showBuildings, showBuildings) }}
-	var showLanduse = false { didSet { save(.editor_showLanduse, showLanduse) }}
-	var showBoundaries = false { didSet { save(.editor_showBoundaries, showBoundaries) }}
-	var showWater = false { didSet { save(.editor_showWater, showWater) }}
-	var showRail = false { didSet { save(.editor_showRail, showRail) }}
-	var showPower = false { didSet { save(.editor_showPower, showPower) }}
-	var showPastFuture = false { didSet { save(.editor_showPastFuture, showPastFuture) }}
-	var showOthers = false { didSet { save(.editor_showOthers, showOthers) }}
+	let prefs = UserPrefs.shared
+	var showLevel = false { didSet { save(prefs.editor_showLevel, showLevel) }}
+	var showPoints = false { didSet { save(prefs.editor_showPoints, showPoints) }}
+	var showTrafficRoads = false { didSet { save(prefs.editor_showTrafficRoads, showTrafficRoads) }}
+	var showServiceRoads = false { didSet { save(prefs.editor_showServiceRoads, showServiceRoads) }}
+	var showPaths = false { didSet { save(prefs.editor_showPaths, showPaths) }}
+	var showBuildings = false { didSet { save(prefs.editor_showBuildings, showBuildings) }}
+	var showLanduse = false { didSet { save(prefs.editor_showLanduse, showLanduse) }}
+	var showBoundaries = false { didSet { save(prefs.editor_showBoundaries, showBoundaries) }}
+	var showWater = false { didSet { save(prefs.editor_showWater, showWater) }}
+	var showRail = false { didSet { save(prefs.editor_showRail, showRail) }}
+	var showPower = false { didSet { save(prefs.editor_showPower, showPower) }}
+	var showPastFuture = false { didSet { save(prefs.editor_showPastFuture, showPastFuture) }}
+	var showOthers = false { didSet { save(prefs.editor_showOthers, showOthers) }}
 
 	var showLevelRange = "" { // range of levels for building level
 		didSet {
-			UserPrefs.shared.set(self.showLevelRange, forKey: .editor_showLevelRange)
+			UserPrefs.shared.editor_showLevelRange.value = self.showLevelRange
 			onChange?()
 		}
 	}
 
-	func save(_ pref: UserPrefs.Pref, _ value: Bool) {
-		UserPrefs.shared.set(value, forKey: pref)
+	func save(_ pref: Pref<Bool>, _ value: Bool) {
+		pref.value = value
 		onChange?()
 	}
 
 	init() {
 		let prefs = UserPrefs.shared
-		enableObjectFilters = prefs.bool(forKey: .editor_enableObjectFilters) ?? false
-		showLevel = prefs.bool(forKey: .editor_showLevel) ?? false
-		showLevelRange = prefs.object(forKey: .editor_showLevelRange) as? String ?? ""
-		showPoints = prefs.bool(forKey: .editor_showPoints) ?? false
-		showTrafficRoads = prefs.bool(forKey: .editor_showTrafficRoads) ?? false
-		showServiceRoads = prefs.bool(forKey: .editor_showServiceRoads) ?? false
-		showPaths = prefs.bool(forKey: .editor_showPaths) ?? false
-		showBuildings = prefs.bool(forKey: .editor_showBuildings) ?? false
-		showLanduse = prefs.bool(forKey: .editor_showLanduse) ?? false
-		showBoundaries = prefs.bool(forKey: .editor_showBoundaries) ?? false
-		showWater = prefs.bool(forKey: .editor_showWater) ?? false
-		showRail = prefs.bool(forKey: .editor_showRail) ?? false
-		showPower = prefs.bool(forKey: .editor_showPower) ?? false
-		showPastFuture = prefs.bool(forKey: .editor_showPastFuture) ?? false
-		showOthers = prefs.bool(forKey: .editor_showOthers) ?? false
+		enableObjectFilters = prefs.editor_enableObjectFilters.value ?? false
+		showLevel = prefs.editor_showLevel.value ?? false
+		showLevelRange = prefs.editor_showLevelRange.value ?? ""
+		showPoints = prefs.editor_showPoints.value ?? false
+		showTrafficRoads = prefs.editor_showTrafficRoads.value ?? false
+		showServiceRoads = prefs.editor_showServiceRoads.value ?? false
+		showPaths = prefs.editor_showPaths.value ?? false
+		showBuildings = prefs.editor_showBuildings.value ?? false
+		showLanduse = prefs.editor_showLanduse.value ?? false
+		showBoundaries = prefs.editor_showBoundaries.value ?? false
+		showWater = prefs.editor_showWater.value ?? false
+		showRail = prefs.editor_showRail.value ?? false
+		showPower = prefs.editor_showPower.value ?? false
+		showPastFuture = prefs.editor_showPastFuture.value ?? false
+		showOthers = prefs.editor_showOthers.value ?? false
 	}
 
 	private let traffic_roads: Set<String> = [

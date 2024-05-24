@@ -106,7 +106,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			purgeSoft()
 		}
 
-		UserPrefs.shared.set(hostname, forKey: .osmServerUrl)
+		UserPrefs.shared.osmServerUrl.value = hostname
 		OSM_API_URL = hostname
 	}
 
@@ -1202,8 +1202,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	// MARK: Init/Save/Restore
 
 	func initCommon() {
-		let server = UserPrefs.shared.string(forKey: .osmServerUrl)
-			?? "https://api.openstreetmap.org/"
+		let server = UserPrefs.shared.osmServerUrl.value ?? "https://api.openstreetmap.org/"
 		setServer(server)
 		setupPeriodicSaveTimer()
 	}

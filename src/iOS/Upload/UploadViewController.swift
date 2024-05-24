@@ -25,8 +25,10 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 	@IBOutlet var commentHistoryButton: UIButton!
 	@IBOutlet var sourceHistoryButton: UIButton!
 
-	var recentCommentList = MostRecentlyUsed<String>(maxCount: 5, userPrefsKey: .recentCommitComments)
-	var recentSourceList = MostRecentlyUsed<String>(maxCount: 5, userPrefsKey: .recentSourceComments)
+	var recentCommentList = MostRecentlyUsed<String>(maxCount: 5,
+	                                                 userPrefsKey: UserPrefs.shared.recentCommitComments)
+	var recentSourceList = MostRecentlyUsed<String>(maxCount: 5,
+	                                                userPrefsKey: UserPrefs.shared.recentSourceComments)
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -65,8 +67,8 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 		let mapView = AppDelegate.shared.mapView
 		mapData = mapView?.editorLayer.mapData
 
-		commentTextView.text = UserPrefs.shared.string(forKey: .uploadComment)
-		sourceTextField.text = UserPrefs.shared.string(forKey: .uploadSource)
+		commentTextView.text = UserPrefs.shared.uploadComment.value
+		sourceTextField.text = UserPrefs.shared.uploadSource.value
 		sourceTextField.placeholder = "survey, Bing, knowledge" // overrules translations: see #557
 
 		let text = mapData?.changesetAsAttributedString()
@@ -94,8 +96,8 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
-		UserPrefs.shared.set(commentTextView.text, forKey: .uploadComment)
-		UserPrefs.shared.set(sourceTextField.text, forKey: .uploadSource)
+		UserPrefs.shared.uploadComment.value = commentTextView.text
+		UserPrefs.shared.uploadSource.value = sourceTextField.text
 	}
 
 	func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -151,7 +153,7 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 		}
 
 		guard
-			let didPrev = UserPrefs.shared.bool(forKey: .userDidPreviousUpload),
+			let didPrev = UserPrefs.shared.userDidPreviousUpload.value,
 			didPrev
 		else {
 			let alert = UIAlertController(
@@ -166,7 +168,7 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 			alert.addAction(UIAlertAction(title: NSLocalizedString("Commit", comment: ""),
 			                              style: .default,
 			                              handler: { [self] _ in
-			                              	UserPrefs.shared.set(true, forKey: .userDidPreviousUpload)
+			                              	UserPrefs.shared.userDidPreviousUpload.value = true
 			                              	commit(nil)
 			                              }))
 			present(alert, animated: true)
@@ -231,9 +233,9 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 					appDelegate.mapView.flashMessage(NSLocalizedString("Upload complete!", comment: ""), duration: 1.5)
 
 					// record number of uploads
-					var editCount = UserPrefs.shared.integer(forKey: .uploadCountPerVersion) ?? 0
+					var editCount = UserPrefs.shared.uploadCountPerVersion.value ?? 0
 					editCount += 1
-					UserPrefs.shared.set(editCount, forKey: .uploadCountPerVersion)
+					UserPrefs.shared.uploadCountPerVersion.value = editCount
 					appDelegate.mapView.ask(toRate: editCount)
 				})
 			}

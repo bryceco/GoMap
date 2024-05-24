@@ -64,7 +64,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 	}
 
 	func updateButtonPositionsFor(layout: MainViewButtonLayout) {
-		UserPrefs.shared.set(layout.rawValue, forKey: .mapViewButtonLayout)
+		UserPrefs.shared.mapViewButtonLayout.value = layout.rawValue
 
 		let isLeft = layout == .buttonsOnLeft
 		let attribute: NSLayoutConstraint.Attribute = isLeft ? .leading : .trailing
@@ -133,7 +133,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		navigationController?.isNavigationBarHidden = true
 
 		// update button layout constraints
-		buttonLayout = MainViewButtonLayout(rawValue: UserPrefs.shared.integer(forKey: .mapViewButtonLayout)
+		buttonLayout = MainViewButtonLayout(rawValue: UserPrefs.shared.mapViewButtonLayout.value
 			?? MainViewButtonLayout.buttonsOnRight.rawValue)
 
 		if #available(iOS 13.4, macCatalyst 13.0, *) {

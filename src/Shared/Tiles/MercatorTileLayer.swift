@@ -78,9 +78,9 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 			layerDict.removeAll()
 
 			// update service
-			webCache = PersistentWebCache(name: tileServer.identifier, 
-										  memorySize: 20 * 1000 * 1000,
-										  daysToKeep: 30.0)
+			webCache = PersistentWebCache(name: tileServer.identifier,
+			                              memorySize: 20 * 1000 * 1000,
+			                              daysToKeep: 30.0)
 			setNeedsLayout()
 		}
 	}
@@ -411,17 +411,17 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 	func downloadTile(forKey cacheKey: String, completion: @escaping () -> Void) {
 		let (tileX, tileY, zoomLevel) = QuadKeyToTileXY(cacheKey)
 		let data2 = webCache!.object(withKey: cacheKey,
-		                            fallbackURL: {
-		                            	self.tileServer.url(forZoom: zoomLevel, tileX: tileX, tileY: tileY)
-		                            },
-		                            objectForData: { data in
-		                            	if data.count == 0 || self.tileServer.isPlaceholderImage(data) {
-		                            		return nil
-		                            	}
-		                            	return UIImage(data: data)
-		                            }, completion: { _ in
-		                            	completion()
-		                            })
+		                             fallbackURL: {
+		                             	self.tileServer.url(forZoom: zoomLevel, tileX: tileX, tileY: tileY)
+		                             },
+		                             objectForData: { data in
+		                             	if data.count == 0 || self.tileServer.isPlaceholderImage(data) {
+		                             		return nil
+		                             	}
+		                             	return UIImage(data: data)
+		                             }, completion: { _ in
+		                             	completion()
+		                             })
 		if data2 != nil {
 			completion()
 		}

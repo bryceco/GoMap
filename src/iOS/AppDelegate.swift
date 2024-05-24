@@ -22,8 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	let oAuth2 = OAuth2()
 
 	var userName: String? {
-		get { UserPrefs.shared.string(forKey: .userName) }
-		set { UserPrefs.shared.set(newValue, forKey: .userName) }
+		get { UserPrefs.shared.userName.value }
+		set { UserPrefs.shared.userName.value = newValue }
 	}
 
 	override init() {
@@ -79,12 +79,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #endif
 
 		// save the app version so we can detect upgrades
-		let prevVersion = UserPrefs.shared.string(forKey: .appVersion)
+		let prevVersion = UserPrefs.shared.appVersion.value
 		if prevVersion != appVersion() {
 			print("Upgrade!")
 			isAppUpgrade = true
-			UserPrefs.shared.set(appVersion(), forKey: .appVersion)
-			UserPrefs.shared.set(0, forKey: .uploadCountPerVersion)
+			UserPrefs.shared.appVersion.value = appVersion()
+			UserPrefs.shared.uploadCountPerVersion.value = 0
 		}
 
 		// Sync preferences in iCloud
@@ -284,14 +284,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// set app badge if edits are pending
 		let pendingEdits = mapView?.editorLayer.mapData.modificationCount() ?? 0
 		if pendingEdits != 0 {
-			UNUserNotificationCenter.current().requestAuthorization(options: .badge, completionHandler: { _, _ in
-			})
+			UNUserNotificationCenter.current().requestAuthorization(options: .badge,
+			                                                        completionHandler: { _, _ in
+			                                                        })
 		}
 		UIApplication.shared.applicationIconBadgeNumber = pendingEdits
 
 		// while in background don't update our location so we don't download tiles/OSM data when moving
 		mapView.userOverrodeLocationPosition = true
 		mapView?.locationManager.stopUpdatingHeading()
+
+		// Save preferences in case user force-kills us while we're in background
+		UserPrefs.shared.synchronize()
 	}
 
 	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.

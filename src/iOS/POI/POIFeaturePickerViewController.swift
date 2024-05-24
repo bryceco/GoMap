@@ -37,15 +37,15 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	weak var delegate: POIFeaturePickerDelegate?
 
 	class func loadMostRecent(forGeometry geometry: GEOMETRY) {
-		if let max = UserPrefs.shared.integer(forKey: .mostRecentTypesMaximum),
+		if let max = UserPrefs.shared.mostRecentTypesMaximum.value,
 		   max > 0
 		{
 			mostRecentMaximum = max
 		} else {
 			mostRecentMaximum = MOST_RECENT_DEFAULT_COUNT
 		}
-		let pref = UserPrefs.Pref.mostRecentPrefFor(geom: geometry)
-		let a = UserPrefs.shared.object(forKey: pref) as? [String] ?? []
+		let pref = UserPrefs.shared.mostRecentPrefFor(geom: geometry)
+		let a = pref.value ?? []
 		mostRecentArray = a.compactMap({ PresetsDatabase.shared.presetFeatureForFeatureID($0) })
 	}
 
@@ -195,8 +195,8 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		}
 
 		let a = mostRecentArray.map({ $0.featureID })
-		let pref = UserPrefs.Pref.mostRecentPrefFor(geom: geometry)
-		UserPrefs.shared.set(object: a, forKey: pref)
+		let pref = UserPrefs.shared.mostRecentPrefFor(geom: geometry)
+		pref.value = a
 	}
 
 	func updateTags(with feature: PresetFeature) {
@@ -275,7 +275,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 				count = 99
 			}
 			mostRecentMaximum = count
-			UserPrefs.shared.set(mostRecentMaximum, forKey: .mostRecentTypesMaximum)
+			UserPrefs.shared.mostRecentTypesMaximum.value = mostRecentMaximum
 		}))
 		alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
 		present(alert, animated: true)

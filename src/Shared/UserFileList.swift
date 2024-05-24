@@ -8,7 +8,7 @@
 
 import Foundation
 
-let geoJsonList = UserFileList(prefsKey: .geoJsonFileList,
+let geoJsonList = UserFileList(prefsKey: UserPrefs.shared.geoJsonFileList,
                                archiveKey: .geoJSONs)
 
 class UserFileList {
@@ -18,7 +18,7 @@ class UserFileList {
 	}
 
 	let archiveKey: ArchivePath
-	let prefsKey: UserPrefs.Pref
+	let prefsKey: Pref<[String: Bool]>
 
 	private var list: [Entry] = []
 
@@ -26,11 +26,11 @@ class UserFileList {
 		return list.compactMap { $0.visible ? $0.url : nil }
 	}
 
-	init(prefsKey: UserPrefs.Pref, archiveKey: ArchivePath) {
+	init(prefsKey: Pref<[String: Bool]>, archiveKey: ArchivePath) {
 		self.prefsKey = prefsKey
 		self.archiveKey = archiveKey
 		do {
-			let prefDict = UserPrefs.shared.object(forKey: self.prefsKey) as? [String: Bool] ?? [:]
+			let prefDict = prefsKey.value ?? [:]
 			let files = try FileManager.default.contentsOfDirectory(at: archiveKey.url(),
 			                                                        includingPropertiesForKeys: nil)
 			list = files.map {
@@ -43,7 +43,7 @@ class UserFileList {
 
 	private func savePrefs() {
 		let prefDict = list.reduce(into: [String: Bool](), { $0[$1.url.lastPathComponent] = $1.visible })
-		UserPrefs.shared.set(object: prefDict, forKey: prefsKey)
+		prefsKey.value = prefDict
 	}
 
 	var count: Int {

@@ -20,12 +20,11 @@ final class TileServerList {
 	private var downloadedList: [TileServer] = []
 	var mapboxLocator = TileServer.mapboxLocator
 
-	private var recentlyUsedList = MostRecentlyUsed<TileServer>(maxCount: 6,
-	                                                            userPrefsKey: .recentAerialsList,
-	                                                            autoLoadSave: false)
+	private var recentlyUsedList = MostRecentlyUsed<String>(maxCount: 6,
+	                                                        userPrefsKey: UserPrefs.shared.recentAerialsList)
 	private(set) var lastDownloadDate: Date? {
-		get { UserPrefs.shared.object(forKey: .lastImageryDownloadDate) as? Date }
-		set { UserPrefs.shared.set(object: newValue, forKey: .lastImageryDownloadDate) }
+		get { UserPrefs.shared.lastImageryDownloadDate.value }
+		set { UserPrefs.shared.lastImageryDownloadDate.value = newValue }
 	}
 
 	var onChange: (() -> Void)?
@@ -42,11 +41,11 @@ final class TileServerList {
 			}
 		})
 
-		UserPrefs.shared.onChange(.customAerialList, callback: { _ in
+		UserPrefs.shared.customAerialList.onChangePerform { _ in
 			// This occurs if a user added imagery on a different device and it shared to us via iCloud
 			self.load()
 			self.onChange?()
-		})
+		}
 	}
 
 	func builtinServers() -> [TileServer] {
@@ -131,36 +130,31 @@ final class TileServerList {
 		}
 	}
 
+	func allServices() -> [TileServer] {
+		return builtinServers() + downloadedList + userDefinedList
+	}
+
+	func allServicesDict() -> [String: TileServer] {
+		// build a dictionary of all known sources
+		return allServices().reduce(into: [:], { $0[$1.identifier] = $1 })
+	}
+
 	private func load() {
-		let list = UserPrefs.shared.object(forKey: .customAerialList) as? [[String: Any]] ?? []
+		let list = UserPrefs.shared.customAerialList.value ?? []
 		userDefinedList = list.map({ TileServer(withDictionary: $0) })
 
 		// build a dictionary of all known sources
-		var dict: [String: TileServer] = [:]
-		for service in builtinServers() {
-			dict[service.identifier] = service
-		}
-		for service in downloadedList {
-			dict[service.identifier] = service
-		}
-		for service in userDefinedList {
-			dict[service.identifier] = service
-		}
+		let dict = allServicesDict()
 
-		// fetch and decode recently used list
-		recentlyUsedList.load(withMapping: { dict[$0] })
-
-		let currentIdentifier = UserPrefs.shared.string(forKey: .currentAerialSelection)
+		let currentIdentifier = UserPrefs.shared.currentAerialSelection.value
 			?? TileServer.defaultServer
 		currentServer = dict[currentIdentifier] ?? dict[TileServer.defaultServer] ?? builtinServers()[0]
 	}
 
 	func save() {
 		let a = userDefinedList.map({ $0.dictionary() })
-		UserPrefs.shared.set(object: a, forKey: .customAerialList)
-		UserPrefs.shared.set(currentServer.identifier, forKey: .currentAerialSelection)
-
-		recentlyUsedList.save(withMapping: { $0.identifier })
+		UserPrefs.shared.customAerialList.value = a
+		UserPrefs.shared.currentAerialSelection.value = currentServer.identifier
 	}
 
 	func allServices(at latLon: LatLon, overlay: Bool) -> [TileServer] {
@@ -199,12 +193,13 @@ final class TileServerList {
 
 	var currentServer = TileServer.bingAerial {
 		didSet {
-			recentlyUsedList.updateWith(currentServer)
+			recentlyUsedList.updateWith(currentServer.identifier)
 		}
 	}
 
 	func recentlyUsed() -> [TileServer] {
-		return recentlyUsedList.items
+		let dict = allServicesDict()
+		return recentlyUsedList.items.compactMap { dict[$0] }
 	}
 
 	func count() -> Int {
@@ -228,6 +223,6 @@ final class TileServerList {
 		if service == currentServer {
 			currentServer = builtinServers()[0]
 		}
-		recentlyUsedList.remove(service)
+		recentlyUsedList.remove(service.identifier)
 	}
 }

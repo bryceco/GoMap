@@ -34,7 +34,7 @@ class DataOverlaysController: UITableViewController {
 		let mapView = AppDelegate.shared.mapView!
 		let latLon = mapView.screenCenterLatLon()
 		overlayList = mapView.tileServerList.allServices(at: latLon, overlay: true)
-		overlaySelections = UserPrefs.shared.object(forKey: .tileOverlaySelections) as? [String] ?? []
+		overlaySelections = UserPrefs.shared.tileOverlaySelections.value ?? []
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -127,7 +127,7 @@ class DataOverlaysController: UITableViewController {
 			} else {
 				overlaySelections.removeAll(where: { $0 == server.identifier })
 			}
-			UserPrefs.shared.set(object: overlaySelections, forKey: .tileOverlaySelections)
+			UserPrefs.shared.tileOverlaySelections.value = overlaySelections
 			AppDelegate.shared.mapView.updateTileOverlayLayers()
 		default:
 			fatalError()

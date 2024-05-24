@@ -79,7 +79,7 @@ class ClearCacheViewController: UITableViewController {
 				var size = 0
 				var count = 0
 				for obj in object {
-					let (tSize,tCount) = obj.getDiskCacheSize()
+					let (tSize, tCount) = obj.getDiskCacheSize()
 					size += tSize
 					count += tCount
 				}

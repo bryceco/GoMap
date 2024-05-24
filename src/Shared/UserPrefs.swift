@@ -8,111 +8,154 @@
 
 import Foundation
 
-final class UserPrefs {
-	enum Pref: String, CaseIterable {
-		case userName
-		case appVersion
-		case mapViewButtonLayout = "buttonLayout"
+protocol PrefProtocol {
+	associatedtype T
+	var key: String { get }
+	var ubiquitous: Bool { get }
+	var value: T? { get set }
+	func didChange()
+}
 
-		case hoursRecognizerLanguage = "HoursRecognizerLanguage"
+class Pref<T>: PrefProtocol {
+	let key: String
+	let ubiquitous: Bool
 
-		case poiTabIndex = "POITabIndex"
-		case copyPasteTags
-		case currentRegion = "CurrentRegion"
-
-		// Next OSM ID
-		case nextUnusedIdentifier
-
-		case osmServerUrl = "OSM Server"
-		case preferredLanguage
-
-		// Uploads
-		case recentCommitComments
-		case recentSourceComments
-		case uploadComment
-		case uploadSource
-		case userDidPreviousUpload
-		case uploadCountPerVersion = "uploadCount"
-
-		// MapView
-		case view_scale = "view.scale"
-		case view_latitude = "view.latitude"
-		case view_longitude = "view.longitude"
-		case mapViewState
-		case mapViewOverlays
-		case mapViewEnableBirdsEye
-		case mapViewEnableRotation
-		case automaticCacheManagement
-		case mapViewEnableUnnamedRoadHalo
-		case mapViewEnableBreadCrumb
-		case mapViewEnableDataOverlay
-		case mapViewEnableTurnRestriction
-		case latestAerialCheckLatLon = "LatestAerialCheckLatLon"
-
-		// Nominatim
-		case searchHistory
-
-		// GPX
-		case gpxRecordsTracksInBackground = "GpxTrackBackgroundTracking"
-		case gpxUploadedGpxTracks = "GpxUploads"
-		case gpxTracksExpireAfterDays = "GpxTrackExpirationDays"
-
-		// GeoJSON
-		case geoJsonFileList = "GeoJsonFileList"
-		case tileOverlaySelections
-
-		// Quest stuff
-		case questTypeEnabledDict = "QuestTypeEnabledDict"
-		case questUserDefinedList = "QuestUserDefinedList"
-
-		// Tile Server List
-		case lastImageryDownloadDate
-		case customAerialList = "AerialList"
-		case currentAerialSelection = "AerialListSelection"
-		case recentAerialsList = "AerialListRecentlyUsed"
-
-		// POI presets
-		case userDefinedPresetKeys
-
-		// Stuff for most recent POI features
-		case mostRecentTypesMaximum
-		case mostRecentTypes_point = "mostRecentTypes.point"
-		case mostRecentTypes_line = "mostRecentTypes.line"
-		case mostRecentTypes_area = "mostRecentTypes.area"
-		case mostRecentTypes_vertex = "mostRecentTypes.vertex"
-
-		// Editor filters
-		case editor_enableObjectFilters = "editor.enableObjectFilters"
-		case editor_showLevel = "editor.showLevel"
-		case editor_showLevelRange = "editor.showLevelRange"
-		case editor_showPoints = "editor.showPoints"
-		case editor_showTrafficRoads = "editor.showTrafficRoads"
-		case editor_showServiceRoads = "editor.showServiceRoads"
-		case editor_showPaths = "editor.showPaths"
-		case editor_showBuildings = "editor.showBuildings"
-		case editor_showLanduse = "editor.showLanduse"
-		case editor_showBoundaries = "editor.showBoundaries"
-		case editor_showWater = "editor.showWater"
-		case editor_showRail = "editor.showRail"
-		case editor_showPower = "editor.showPower"
-		case editor_showPastFuture = "editor.showPastFuture"
-		case editor_showOthers = "editor.showOthers"
+	init(key: String, ubiquitous: Bool = false) {
+		assert(key != "")
+		self.key = key
+		self.ubiquitous = ubiquitous
 	}
 
-	static let shared = UserPrefs()
-	private var onChangeDelegates: [Pref: [(Pref) -> Void]] = [:]
+	var value: T? {
+		get {
+			if ubiquitous,
+			   let obj = NSUbiquitousKeyValueStore.default.object(forKey: key),
+			   let obj2 = obj as! T?
+			{
+				return obj2
+			}
+			return UserDefaults.standard.value(forKey: key) as! T?
+		}
+		set {
+			UserDefaults.standard.set(newValue, forKey: key)
+			if ubiquitous {
+				NSUbiquitousKeyValueStore.default.set(newValue, forKey: key)
+			}
+		}
+	}
+
+	private var onChangeCallbacks: [(Pref<T>) -> Void] = []
+
+	func onChangePerform(_ callback: @escaping ((Pref<T>) -> Void)) {
+		onChangeCallbacks.append(callback)
+	}
+
+	func didChange() {
+		for callback in onChangeCallbacks {
+			callback(self)
+		}
+	}
+}
+
+final class UserPrefs {
+	public static let shared = UserPrefs()
+
+	let userName = Pref<String>(key: "userName")
+	let appVersion = Pref<String>(key: "appVersion")
+	let mapViewButtonLayout = Pref<Int>(key: "buttonLayout")
+	let hoursRecognizerLanguage = Pref<String>(key: "HoursRecognizerLanguage", ubiquitous: true)
+
+	let poiTabIndex = Pref<Int>(key: "POITabIndex", ubiquitous: true)
+	let copyPasteTags = Pref<[String: String]>(key: "copyPasteTags", ubiquitous: true)
+	let currentRegion = Pref<Data>(key: "CurrentRegion")
+
+	// Next OSM ID
+	let nextUnusedIdentifier = Pref<Int>(key: "nextUnusedIdentifier")
+
+	let osmServerUrl = Pref<String>(key: "OSM Server")
+	let preferredLanguage = Pref<String>(key: "preferredLanguage", ubiquitous: true)
+
+	// Uploads
+	let recentCommitComments = Pref<[String]>(key: "recentCommitComments", ubiquitous: true)
+	let recentSourceComments = Pref<[String]>(key: "recentSourceComments", ubiquitous: true)
+	let uploadComment = Pref<String>(key: "uploadComment", ubiquitous: true)
+	let uploadSource = Pref<String>(key: "uploadSource", ubiquitous: true)
+	let userDidPreviousUpload = Pref<Bool>(key: "userDidPreviousUpload", ubiquitous: true)
+	let uploadCountPerVersion = Pref<Int>(key: "uploadCount")
+
+	// MapView
+	let view_scale = Pref<Double>(key: "view.scale")
+	let view_latitude = Pref<Double>(key: "view.latitude")
+	let view_longitude = Pref<Double>(key: "view.longitude")
+	let mapViewState = Pref<Int>(key: "mapViewState")
+	let mapViewOverlays = Pref<Int>(key: "mapViewOverlays")
+	let mapViewEnableBirdsEye = Pref<Bool>(key: "mapViewEnableBirdsEye")
+	let mapViewEnableRotation = Pref<Bool>(key: "mapViewEnableRotation")
+	let automaticCacheManagement = Pref<Bool>(key: "automaticCacheManagement")
+	let mapViewEnableUnnamedRoadHalo = Pref<Bool>(key: "mapViewEnableUnnamedRoadHalo")
+	let mapViewEnableBreadCrumb = Pref<Bool>(key: "mapViewEnableBreadCrumb")
+	let mapViewEnableDataOverlay = Pref<Bool>(key: "mapViewEnableDataOverlay")
+	let mapViewEnableTurnRestriction = Pref<Bool>(key: "mapViewEnableTurnRestriction")
+	let latestAerialCheckLatLon = Pref<Data>(key: "LatestAerialCheckLatLon")
+
+	// Nominatim
+	let searchHistory = Pref<[String]>(key: "searchHistory", ubiquitous: true)
+
+	// GPX
+	let gpxRecordsTracksInBackground = Pref<Bool>(key: "GpxTrackBackgroundTracking")
+	let gpxUploadedGpxTracks = Pref<[String: NSNumber]>(key: "GpxUploads")
+	let gpxTracksExpireAfterDays = Pref<Int>(key: "GpxTrackExpirationDays")
+
+	// GeoJSON
+	let geoJsonFileList = Pref<[String: Bool]>(key: "GeoJsonFileList")
+	let tileOverlaySelections = Pref<[String]>(key: "tileOverlaySelections")
+
+	// Quest stuff
+	let questTypeEnabledDict = Pref<[String: Bool]>(key: "QuestTypeEnabledDict", ubiquitous: true)
+	let questUserDefinedList = Pref<Data>(key: "QuestUserDefinedList", ubiquitous: true)
+
+	// Tile Server List
+	let lastImageryDownloadDate = Pref<Date>(key: "lastImageryDownloadDate")
+	let customAerialList = Pref<[[String: Any]]>(key: "AerialList", ubiquitous: true)
+	let currentAerialSelection = Pref<String>(key: "AerialListSelection")
+	let recentAerialsList = Pref<[String]>(key: "AerialListRecentlyUsed")
+
+	// POI presets
+	let userDefinedPresetKeys = Pref<Data>(key: "userDefinedPresetKeys", ubiquitous: true)
+
+	// Stuff for most recent POI features
+	let mostRecentTypesMaximum = Pref<Int>(key: "mostRecentTypesMaximum", ubiquitous: true)
+	let mostRecentTypes_point = Pref<[String]>(key: "mostRecentTypes.point", ubiquitous: true)
+	let mostRecentTypes_line = Pref<[String]>(key: "mostRecentTypes.line", ubiquitous: true)
+	let mostRecentTypes_area = Pref<[String]>(key: "mostRecentTypes.area", ubiquitous: true)
+	let mostRecentTypes_vertex = Pref<[String]>(key: "mostRecentTypes.vertex", ubiquitous: true)
+
+	// Editor filters
+	let editor_enableObjectFilters = Pref<Bool>(key: "editor.enableObjectFilters")
+	let editor_showLevel = Pref<Bool>(key: "editor.showLevel")
+	let editor_showLevelRange = Pref<String>(key: "editor.showLevelRange")
+	let editor_showPoints = Pref<Bool>(key: "editor.showPoints")
+	let editor_showTrafficRoads = Pref<Bool>(key: "editor.showTrafficRoads")
+	let editor_showServiceRoads = Pref<Bool>(key: "editor.showServiceRoads")
+	let editor_showPaths = Pref<Bool>(key: "editor.showPaths")
+	let editor_showBuildings = Pref<Bool>(key: "editor.showBuildings")
+	let editor_showLanduse = Pref<Bool>(key: "editor.showLanduse")
+	let editor_showBoundaries = Pref<Bool>(key: "editor.showBoundaries")
+	let editor_showWater = Pref<Bool>(key: "editor.showWater")
+	let editor_showRail = Pref<Bool>(key: "editor.showRail")
+	let editor_showPower = Pref<Bool>(key: "editor.showPower")
+	let editor_showPastFuture = Pref<Bool>(key: "editor.showPastFuture")
+	let editor_showOthers = Pref<Bool>(key: "editor.showOthers")
+
+	private(set) var allPrefs: [any PrefProtocol] = []
 
 	init() {
+		allPrefs = Mirror(reflecting: self).children.compactMap { $0.value as? any PrefProtocol }
+
 		NotificationCenter.default.addObserver(self,
 		                                       selector: #selector(Self.ubiquitousKeyValueStoreDidChange(_:)),
 		                                       name: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
 		                                       object: NSUbiquitousKeyValueStore.default)
-	}
-
-	func onChange(_ key: Pref, callback: @escaping ((Pref) -> Void)) {
-		var list = onChangeDelegates[key] ?? []
-		list.append(callback)
-		onChangeDelegates[key] = list
 	}
 
 	@objc func ubiquitousKeyValueStoreDidChange(_ notification: NSNotification) {
@@ -134,10 +177,10 @@ final class UserPrefs {
 
 		DispatchQueue.main.async {
 			for key in changes ?? [] {
-				guard let pref = Pref(rawValue: key) else { continue }
-				for callback in self.onChangeDelegates[pref] ?? [] {
-					callback(pref)
+				guard let pref = self.allPrefs.first(where: { $0.key == key }) else {
+					continue
 				}
+				pref.didChange()
 			}
 		}
 	}
@@ -151,194 +194,19 @@ final class UserPrefs {
 		guard NSUbiquitousKeyValueStore.default.dictionaryRepresentation.count == 0 else {
 			return
 		}
-		for pref in Pref.allCases where pref.sharedAcrossDevices {
-			if let obj = UserDefaults.standard.object(forKey: pref.rawValue) {
-				NSUbiquitousKeyValueStore.default.set(obj, forKey: pref.rawValue)
+		for pref in allPrefs where pref.ubiquitous {
+			if let obj = UserDefaults.standard.object(forKey: pref.key) {
+				NSUbiquitousKeyValueStore.default.set(obj, forKey: pref.key)
 			}
 		}
 	}
 
-	// String
-	func string(forKey key: Pref) -> String? {
-		return object(forKey: key) as? String
-	}
-
-	func set(_ value: String?, forKey key: Pref) {
-		UserDefaults.standard.set(value, forKey: key.rawValue)
-		if key.sharedAcrossDevices {
-			NSUbiquitousKeyValueStore.default.set(value, forKey: key.rawValue)
-		}
-	}
-
-	// Integer
-	func integer(forKey key: Pref) -> Int? {
-		guard let number = object(forKey: key) as? NSNumber else {
-			return nil
-		}
-		return number.intValue
-	}
-
-	func set(_ value: Int, forKey key: Pref) {
-		UserDefaults.standard.set(value, forKey: key.rawValue)
-		if key.sharedAcrossDevices {
-			NSUbiquitousKeyValueStore.default.set(value, forKey: key.rawValue)
-		}
-	}
-
-	// Double
-	func double(forKey key: Pref) -> Double? {
-		guard let number = object(forKey: key) as? NSNumber else {
-			return nil
-		}
-		return number.doubleValue
-	}
-
-	func set(_ value: Double, forKey key: Pref) {
-		UserDefaults.standard.set(value, forKey: key.rawValue)
-		if key.sharedAcrossDevices {
-			NSUbiquitousKeyValueStore.default.set(value, forKey: key.rawValue)
-		}
-	}
-
-	// Bool
-	func bool(forKey key: Pref) -> Bool? {
-		guard let number = object(forKey: key) as? NSNumber else {
-			return nil
-		}
-		return number.boolValue
-	}
-
-	func set(_ value: Bool, forKey key: Pref) {
-		UserDefaults.standard.set(value, forKey: key.rawValue)
-		if key.sharedAcrossDevices {
-			NSUbiquitousKeyValueStore.default.set(value, forKey: key.rawValue)
-		}
-	}
-
-	// Object
-	func object(forKey key: Pref) -> Any? {
-		if key.sharedAcrossDevices,
-		   let obj = NSUbiquitousKeyValueStore.default.object(forKey: key.rawValue)
-		{
-			return obj
-		}
-		return UserDefaults.standard.object(forKey: key.rawValue)
-	}
-
-	func set(object value: Any?, forKey key: Pref) {
-		UserDefaults.standard.set(value, forKey: key.rawValue)
-		if key.sharedAcrossDevices {
-			NSUbiquitousKeyValueStore.default.set(value, forKey: key.rawValue)
-		}
-	}
-}
-
-extension UserPrefs.Pref {
-	var sharedAcrossDevices: Bool {
-		switch self {
-		case .userName,
-		     .appVersion,
-		     .uploadCountPerVersion,
-		     .nextUnusedIdentifier:
-			return false
-
-		case .gpxTracksExpireAfterDays,
-		     .gpxRecordsTracksInBackground,
-		     .gpxUploadedGpxTracks:
-			return false
-
-		case .geoJsonFileList,
-		     .mapViewEnableDataOverlay,
-		     .tileOverlaySelections:
-			return false
-
-		case .osmServerUrl:
-			return false
-
-		case .preferredLanguage:
-			return true
-
-		case .hoursRecognizerLanguage,
-		     .copyPasteTags,
-		     .poiTabIndex:
-			return true
-
-		// POI types
-		case .userDefinedPresetKeys:
-			return true
-		case .mostRecentTypesMaximum,
-		     .mostRecentTypes_point,
-		     .mostRecentTypes_line,
-		     .mostRecentTypes_area,
-		     .mostRecentTypes_vertex:
-			return true
-
-		// Object filters
-		case .editor_enableObjectFilters,
-		     .editor_showLevel,
-		     .editor_showLevelRange,
-		     .editor_showPoints,
-		     .editor_showTrafficRoads,
-		     .editor_showServiceRoads,
-		     .editor_showPaths,
-		     .editor_showBuildings,
-		     .editor_showLanduse,
-		     .editor_showBoundaries,
-		     .editor_showWater,
-		     .editor_showRail,
-		     .editor_showPower,
-		     .editor_showPastFuture,
-		     .editor_showOthers:
-			return false
-
-		// MapView
-		case .view_scale,
-		     .view_latitude,
-		     .view_longitude,
-		     .currentRegion,
-		     .mapViewState,
-		     .mapViewOverlays,
-		     .mapViewEnableBirdsEye,
-		     .mapViewEnableRotation,
-		     .automaticCacheManagement,
-		     .mapViewEnableUnnamedRoadHalo,
-		     .mapViewEnableBreadCrumb,
-		     .mapViewEnableTurnRestriction,
-		     .mapViewButtonLayout,
-		     .latestAerialCheckLatLon:
-			return false
-
-		case .lastImageryDownloadDate,
-		     .currentAerialSelection,
-		     .recentAerialsList:
-			return false
-
-		case .questTypeEnabledDict,
-		     .questUserDefinedList:
-			return true
-
-		// User-defined imagery
-		case .customAerialList:
-			return true
-
-		case .searchHistory:
-			return true
-
-		case .uploadComment,
-		     .uploadSource,
-		     .recentCommitComments,
-		     .recentSourceComments,
-		     .userDidPreviousUpload:
-			return true
-		}
-	}
-
-	static func mostRecentPrefFor(geom: GEOMETRY) -> Self {
+	func mostRecentPrefFor(geom: GEOMETRY) -> Pref<[String]> {
 		switch geom {
-		case .AREA: return .mostRecentTypes_area
-		case .VERTEX: return .mostRecentTypes_vertex
-		case .LINE: return .mostRecentTypes_line
-		case .POINT: return .mostRecentTypes_point
+		case .AREA: return mostRecentTypes_area
+		case .VERTEX: return mostRecentTypes_vertex
+		case .LINE: return mostRecentTypes_line
+		case .POINT: return mostRecentTypes_point
 		}
 	}
 }

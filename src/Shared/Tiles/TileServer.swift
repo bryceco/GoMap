@@ -29,9 +29,9 @@ private let MAXAR_PREMIUM_IDENTIFIER = "Maxar-Premium"
 /// A provider of tile imagery, such as Bing or Mapbox
 final class TileServer: Equatable, Codable, FastCodable {
 	private static let iconCache: PersistentWebCache<UIImage> = {
-		let cache = PersistentWebCache<UIImage>(name: "AerialServiceIconCache", 
-												memorySize: 10000,
-												daysToKeep: 90.0)
+		let cache = PersistentWebCache<UIImage>(name: "AerialServiceIconCache",
+		                                        memorySize: 10000,
+		                                        daysToKeep: 90.0)
 		return cache
 	}()
 
