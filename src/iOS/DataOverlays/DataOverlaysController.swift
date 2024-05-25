@@ -187,6 +187,7 @@ extension DataOverlaysController: UIDocumentPickerDelegate {
 		let picker = UIDocumentPickerViewController(forOpeningContentTypes: [utType], asCopy: true)
 		picker.delegate = self
 		picker.allowsMultipleSelection = true
+		picker.shouldShowFileExtensions = true
 		present(picker, animated: true)
 	}
 
