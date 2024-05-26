@@ -6,6 +6,7 @@
 //  Copyright © 2024 Bryce Cogswell. All rights reserved.
 //
 
+#if canImport(ActivityKit)
 import ActivityKit
 import AppIntents
 import SwiftUI
@@ -99,3 +100,4 @@ private extension GpxTrackAttributes.ContentState {
 } contentStates: {
 	GpxTrackAttributes.ContentState.smiley
 }
+#endif

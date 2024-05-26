@@ -6,6 +6,7 @@
 //  Copyright © 2024 Bryce Cogswell. All rights reserved.
 //
 
+#if canImport(ActivityKit)
 import SwiftUI
 import WidgetKit
 
@@ -15,3 +16,4 @@ struct GpxWidgetBundle: WidgetBundle {
 		GpxWidgetLiveActivity()
 	}
 }
+#endif

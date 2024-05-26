@@ -6,6 +6,8 @@
 //  Copyright © 2024 Bryce Cogswell. All rights reserved.
 //
 
+#if canImport(ActivityKit)
+// ActivityKit not supported in MacCatalyst
 import ActivityKit
 import AppIntents
 import SwiftUI
@@ -88,3 +90,4 @@ struct StartGpxTrackIntent: LiveActivityIntent {
 		return .result()
 	}
 }
+#endif

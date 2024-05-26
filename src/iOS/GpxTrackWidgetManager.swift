@@ -6,6 +6,7 @@
 //  Copyright © 2024 Bryce Cogswell. All rights reserved.
 //
 
+#if canImport(ActivityKit)
 import ActivityKit
 
 func widgetStartGPS() {
@@ -151,3 +152,4 @@ final class GpxTrackWidgetManager: GpxTrackWidgetManagerProtocol {
 		self.activity = nil
 	}
 }
+#endif

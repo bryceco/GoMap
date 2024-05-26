@@ -47,9 +47,11 @@ final class GpxLayer: DrawingLayer, GetDiskCacheSize, DrawingLayerDelegate {
 		stabilizingCount = 0
 		selectedTrack = activeTrack
 
+#if canImport(ActivityKit)
 		if #available(iOS 16.2, *) {
 			GpxTrackWidgetManager.shared.startTrack(fromWidget: false)
 		}
+#endif
 	}
 
 	func endActiveTrack() {
@@ -59,9 +61,11 @@ final class GpxLayer: DrawingLayer, GetDiskCacheSize, DrawingLayerDelegate {
 
 			activeTrack.finish()
 
+#if canImport(ActivityKit)
 			if #available(iOS 16.2, *) {
 				GpxTrackWidgetManager.shared.endTrack(fromWidget: false)
 			}
+#endif
 
 			// add to list of previous tracks
 			if activeTrack.points.count > 1 {
@@ -137,9 +141,11 @@ final class GpxLayer: DrawingLayer, GetDiskCacheSize, DrawingLayerDelegate {
 	func addPoint(_ location: CLLocation) {
 		if let activeTrack = activeTrack {
 			defer {
+#if canImport(ActivityKit)
 				if #available(iOS 16.2, *) {
 					GpxTrackWidgetManager.shared.updateTrack()
 				}
+#endif
 			}
 			// ignore bad data while starting up
 			stabilizingCount += 1
