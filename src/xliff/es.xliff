@@ -583,6 +583,7 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="nzU-It-UAv.text" xml:space="preserve">
         <source>Data Overlays</source>
+        <target state="translated">Superposiciones de datos</target>
         <note>Class = "UILabel"; text = "Data Overlays"; ObjectID = "nzU-It-UAv";</note>
       </trans-unit>
       <trans-unit id="oSD-0y-Vt0.title" xml:space="preserve">
