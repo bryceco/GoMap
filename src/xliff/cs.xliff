@@ -390,6 +390,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="Sdv-R2-za8.normalTitle" xml:space="preserve">
         <source>Import</source>
+        <target state="translated">Importovat</target>
         <note>Class = "UIButton"; normalTitle = "Import"; ObjectID = "Sdv-R2-za8";</note>
       </trans-unit>
       <trans-unit id="Uum-Wn-9CF.text" xml:space="preserve">
@@ -434,6 +435,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="ahv-4V-kjV.text" xml:space="preserve">
         <source>HealthKit routes:</source>
+        <target state="translated">Trasy ze Zdraví:</target>
         <note>Class = "UILabel"; text = "HealthKit routes:"; ObjectID = "ahv-4V-kjV";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.footerTitle" xml:space="preserve">
@@ -750,10 +752,12 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="NSHealthShareUsageDescription" xml:space="preserve">
         <source>Routes from your workouts can be imported as GPX routes.</source>
+        <target state="translated">Trasy z vašich tréninků mohou být importovány jako GPX trasy.</target>
         <note>Privacy - Health Share Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHealthUpdateUsageDescription" xml:space="preserve">
         <source>Health information is never updated.</source>
+        <target state="translated">Zdravotní údaje nejsou nikdy aktualizovány.</target>
         <note>Privacy - Health Update Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
@@ -805,14 +809,14 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       <trans-unit id=" (%d members)&#10;|==|plural.few" xml:space="preserve">
         <source> (%d members)
 </source>
-        <target state="new"> (%d members)
+        <target state="translated"> (%d členi)
 </target>
         <note/>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;|==|plural.many" xml:space="preserve">
         <source> (%d members)
 </source>
-        <target state="new"> (%d members)
+        <target state="translated"> (%d členů)
 </target>
         <note/>
       </trans-unit>
@@ -833,14 +837,14 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       <trans-unit id=" (%d nodes)&#10;|==|plural.few" xml:space="preserve">
         <source> (%d nodes)
 </source>
-        <target state="new"> (%d nodes)
+        <target state="translated"> (%d body)
 </target>
         <note/>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;|==|plural.many" xml:space="preserve">
         <source> (%d nodes)
 </source>
-        <target state="new"> (%d nodes)
+        <target state="translated"> (%d bodů)
 </target>
         <note/>
       </trans-unit>
@@ -975,12 +979,12 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="%ld Days|==|plural.few" xml:space="preserve">
         <source>%ld Days</source>
-        <target state="new">%ld Days</target>
+        <target state="translated">%ld dny</target>
         <note>One or more days</note>
       </trans-unit>
       <trans-unit id="%ld Days|==|plural.many" xml:space="preserve">
         <source>%ld Days</source>
-        <target state="new">%ld Days</target>
+        <target state="translated">%ld dnů</target>
         <note>One or more days</note>
       </trans-unit>
       <trans-unit id="%ld Days|==|plural.one" xml:space="preserve">
@@ -995,12 +999,12 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.few" xml:space="preserve">
         <source>%ld edits, last active %@</source>
-        <target state="new">%ld edits, last active %@</target>
+        <target state="translated">%ld úpravy, naposledy aktivní %@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.many" xml:space="preserve">
         <source>%ld edits, last active %@</source>
-        <target state="new">%ld edits, last active %@</target>
+        <target state="translated">%ld úprav, naposledy aktivní %@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.one" xml:space="preserve">
@@ -1020,42 +1024,42 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.few" xml:space="preserve">
         <source>%1$ld meters</source>
-        <target state="new">%1$ld meters</target>
+        <target state="translated">%1$ld metry</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.many" xml:space="preserve">
         <source>%1$ld meters</source>
-        <target state="new">%1$ld meters</target>
+        <target state="translated">%1$ld metrů</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%1$ld meter</source>
-        <target state="new">%1$ld meter</target>
+        <target state="translated">%1$ld metr</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%1$ld meters</source>
-        <target state="new">%1$ld meters</target>
+        <target state="translated">%1$ld metrů</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.few" xml:space="preserve">
         <source>%2$ld nodes</source>
-        <target state="new">%2$ld nodes</target>
+        <target state="translated">%2$ld body</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.many" xml:space="preserve">
         <source>%2$ld nodes</source>
-        <target state="new">%2$ld nodes</target>
+        <target state="translated">%2$ld bodů</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.one" xml:space="preserve">
         <source>%2$ld node</source>
-        <target state="new">%2$ld node</target>
+        <target state="translated">%2$ld bod</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.other" xml:space="preserve">
         <source>%2$ld nodes</source>
-        <target state="new">%2$ld nodes</target>
+        <target state="translated">%2$ld bodů</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
@@ -1171,58 +1175,58 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped" xml:space="preserve">
         <source>%1$#@routes@ imported,
 %2$#@duplicates@ skipped</source>
-        <target state="new">%1$#@routes@ imported,
-%2$#@duplicates@ skipped</target>
+        <target state="translated">%1$#@routes@ importováno,
+%2$#@duplicates@ přeskočeno</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.few" xml:space="preserve">
         <source>%2$ld duplicates</source>
-        <target state="new">%2$ld duplicates</target>
+        <target state="translated">%2$ld duplicity</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.many" xml:space="preserve">
         <source>%2$ld duplicates</source>
-        <target state="new">%2$ld duplicates</target>
+        <target state="translated">%2$ld duplicit</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.one" xml:space="preserve">
         <source>%2$ld duplicate</source>
-        <target state="new">%2$ld duplicate</target>
+        <target state="translated">%2$ld duplicita</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.other" xml:space="preserve">
         <source>%2$ld duplicates</source>
-        <target state="new">%2$ld duplicates</target>
+        <target state="translated">%2$ld duplicit</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.routes.plural.few" xml:space="preserve">
         <source>%1$ld new routes</source>
-        <target state="new">%1$ld new routes</target>
+        <target state="translated">%1$ld nové trasy</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.routes.plural.many" xml:space="preserve">
         <source>%1$ld new routes</source>
-        <target state="new">%1$ld new routes</target>
+        <target state="translated">%1$ld nových tras</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.routes.plural.one" xml:space="preserve">
         <source>%1$ld new route</source>
-        <target state="new">%1$ld new route</target>
+        <target state="translated">%1$ld nová trasa</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.routes.plural.other" xml:space="preserve">
         <source>%1$ld new routes</source>
-        <target state="new">%1$ld new routes</target>
+        <target state="translated">%1$ld nových tras</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.few" xml:space="preserve">
         <source>%ld objects</source>
-        <target state="new">%ld objects</target>
+        <target state="translated">%ld objekty</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.many" xml:space="preserve">
         <source>%ld objects</source>
-        <target state="new">%ld objects</target>
+        <target state="translated">%ld objektů</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
@@ -1237,12 +1241,12 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="%lu tiles needed|==|plural.few" xml:space="preserve">
         <source>%lu tiles needed</source>
-        <target state="new">%lu tiles needed</target>
+        <target state="translated">jsou potřeba %lu dlaždice</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="%lu tiles needed|==|plural.many" xml:space="preserve">
         <source>%lu tiles needed</source>
-        <target state="new">%lu tiles needed</target>
+        <target state="translated">je potřeba %lu dlaždic</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="%lu tiles needed|==|plural.one" xml:space="preserve">
@@ -1473,6 +1477,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Building" xml:space="preserve">
         <source>Building</source>
+        <target state="translated">Budova</target>
         <note>The object is a building</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
@@ -1795,6 +1800,7 @@ Chyba: %@</target>
       </trans-unit>
       <trans-unit id="Extract Node" xml:space="preserve">
         <source>Extract Node</source>
+        <target state="translated">Vyčlenit bod</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Filters" xml:space="preserve">
@@ -1804,6 +1810,7 @@ Chyba: %@</target>
       </trans-unit>
       <trans-unit id="GPX" xml:space="preserve">
         <source>GPX</source>
+        <target state="translated">GPX</target>
         <note>The name of a GPX file</note>
       </trans-unit>
       <trans-unit id="GPX Upload Complete" xml:space="preserve">
@@ -1818,6 +1825,7 @@ Chyba: %@</target>
       </trans-unit>
       <trans-unit id="GeoJSON" xml:space="preserve">
         <source>GeoJSON</source>
+        <target state="translated">GeoJSON</target>
         <note>The name of a GeoJSON file</note>
       </trans-unit>
       <trans-unit id="Geometry" xml:space="preserve">
@@ -1827,6 +1835,7 @@ Chyba: %@</target>
       </trans-unit>
       <trans-unit id="HealthKit" xml:space="preserve">
         <source>HealthKit</source>
+        <target state="translated">Zdraví</target>
         <note>iOS HealthKit framework</note>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
@@ -2223,32 +2232,32 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.few" xml:space="preserve">
         <source>Pasting %ld characters, maximum tag length is 255</source>
-        <target state="new">Pasting %ld characters, maximum tag length is 255</target>
+        <target state="translated">Vkládány %ld znaky, maximální délka značky je 255 znaků</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.many" xml:space="preserve">
         <source>Pasting %ld characters, maximum tag length is 255</source>
-        <target state="new">Pasting %ld characters, maximum tag length is 255</target>
+        <target state="translated">Vkládáno %ld znaků, maximální délka značky je 255 znaků</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.one" xml:space="preserve">
         <source>Pasting %ld character, maximum tag length is 255</source>
-        <target state="new">Pasting %ld character, maximum tag length is 255</target>
+        <target state="translated">Vkládán %ld znak, maximální délka značky je 255 znaků</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.other" xml:space="preserve">
         <source>Pasting %ld characters, maximum tag length is 255</source>
-        <target state="new">Pasting %ld characters, maximum tag length is 255</target>
+        <target state="translated">Vkládáno %ld znaků, maximální délka značky je 255 znaků</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.few" xml:space="preserve">
         <source>Pasting %ld tags</source>
-        <target state="new">Pasting %ld tags</target>
+        <target state="translated">Vkládání %ld značek</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.many" xml:space="preserve">
         <source>Pasting %ld tags</source>
-        <target state="new">Pasting %ld tags</target>
+        <target state="translated">Vkládání %ld značek</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.one" xml:space="preserve">
@@ -2459,6 +2468,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Sorry, an error occurred while loading the %@ file" xml:space="preserve">
         <source>Sorry, an error occurred while loading the %@ file</source>
+        <target state="translated">Došlo k chybě při  načítání souboru %@</target>
         <note>Argument is a file type like 'GPX' or 'GeoJSON'</note>
       </trans-unit>
       <trans-unit id="Space" xml:space="preserve">
@@ -2805,18 +2815,18 @@ Stažení členové jsou označeni symbolem „&gt;“.</target>
         <source>You've uploaded %ld changesets with this version of Go Map!!
 
 Rate this app?</source>
-        <target state="new">You've uploaded %ld changesets with this version of Go Map!!
+        <target state="translated">Nahráli jste už %ld sady změn s touto verzí Go Map!!
 
-Rate this app?</target>
+Napíšete nám recenzi?</target>
         <note/>
       </trans-unit>
       <trans-unit id="You've uploaded %ld changesets with this version of Go Map!!&#10;&#10;Rate this app?|==|plural.many" xml:space="preserve">
         <source>You've uploaded %ld changesets with this version of Go Map!!
 
 Rate this app?</source>
-        <target state="new">You've uploaded %ld changesets with this version of Go Map!!
+        <target state="translated">Nahráli jste už %ld sad změn s touto verzí Go Map!!
 
-Rate this app?</target>
+Napíšete nám recenzi?</target>
         <note/>
       </trans-unit>
       <trans-unit id="You've uploaded %ld changesets with this version of Go Map!!&#10;&#10;Rate this app?|==|plural.one" xml:space="preserve">
