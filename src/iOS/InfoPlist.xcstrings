@@ -831,6 +831,12 @@
       "comment" : "Privacy - Health Share Usage Description",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trasy z vašich tréninků mohou být importovány jako GPX trasy."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -885,6 +891,12 @@
       "comment" : "Privacy - Health Update Usage Description",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zdravotní údaje nejsou nikdy aktualizovány."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",

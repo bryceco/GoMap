@@ -1979,6 +1979,12 @@
       "comment" : "Class = \"UILabel\"; text = \"HealthKit routes:\"; ObjectID = \"ahv-4V-kjV\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trasy ze Zdraví:"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9131,6 +9137,12 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"Import\"; ObjectID = \"Sdv-R2-za8\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importovat"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",

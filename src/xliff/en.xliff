@@ -581,6 +581,11 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <target state="new">Background</target>
         <note>Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ";</note>
       </trans-unit>
+      <trans-unit id="nzU-It-UAv.text" xml:space="preserve">
+        <source>Data Overlays</source>
+        <target state="new">Data Overlays</target>
+        <note>Class = "UILabel"; text = "Data Overlays"; ObjectID = "nzU-It-UAv";</note>
+      </trans-unit>
       <trans-unit id="oSD-0y-Vt0.title" xml:space="preserve">
         <source>Configure GPX Tracks</source>
         <target state="new">Configure GPX Tracks</target>

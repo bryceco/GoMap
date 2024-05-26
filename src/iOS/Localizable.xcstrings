@@ -415,14 +415,14 @@
             "plural" : {
               "few" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : " (%d members)\n"
+                  "state" : "translated",
+                  "value" : " (%d členi)\n"
                 }
               },
               "many" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : " (%d members)\n"
+                  "state" : "translated",
+                  "value" : " (%d členů)\n"
                 }
               },
               "one" : {
@@ -1031,14 +1031,14 @@
             "plural" : {
               "few" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : " (%d nodes)\n"
+                  "state" : "translated",
+                  "value" : " (%d body)\n"
                 }
               },
               "many" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : " (%d nodes)\n"
+                  "state" : "translated",
+                  "value" : " (%d bodů)\n"
                 }
               },
               "one" : {
@@ -4208,8 +4208,8 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%#@meters@ 公尺, %#@nodes@ 節點"
+            "state" : "translated",
+            "value" : "%#@meters@, %#@nodes@"
           },
           "substitutions" : {
             "meters" : {
@@ -6258,14 +6258,14 @@
             "plural" : {
               "few" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "%ld Days"
+                  "state" : "translated",
+                  "value" : "%ld dny"
                 }
               },
               "many" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "%ld Days"
+                  "state" : "translated",
+                  "value" : "%ld dnů"
                 }
               },
               "one" : {
@@ -6875,14 +6875,14 @@
             "plural" : {
               "few" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "%ld edits, last active %@"
+                  "state" : "translated",
+                  "value" : "%ld úpravy, naposledy aktivní %@"
                 }
               },
               "many" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "%ld edits, last active %@"
+                  "state" : "translated",
+                  "value" : "%ld úprav, naposledy aktivní %@"
                 }
               },
               "one" : {
@@ -7608,26 +7608,26 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg meters"
+                      "state" : "translated",
+                      "value" : "%arg metry"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg meters"
+                      "state" : "translated",
+                      "value" : "%arg metrů"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg meter"
+                      "state" : "translated",
+                      "value" : "%arg metr"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg meters"
+                      "state" : "translated",
+                      "value" : "%arg metrů"
                     }
                   }
                 }
@@ -7640,26 +7640,26 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg nodes"
+                      "state" : "translated",
+                      "value" : "%arg body"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg nodes"
+                      "state" : "translated",
+                      "value" : "%arg bodů"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg node"
+                      "state" : "translated",
+                      "value" : "%arg bod"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg nodes"
+                      "state" : "translated",
+                      "value" : "%arg bodů"
                     }
                   }
                 }
@@ -8906,7 +8906,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@meters@, %#@nodes@"
+            "value" : "%#@meters@ 公尺, %#@nodes@ 節點"
           },
           "substitutions" : {
             "meters" : {
@@ -10482,8 +10482,8 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%#@meters@ 公尺, %#@points@ 點"
+            "state" : "translated",
+            "value" : "%#@meters@ 公尺, %#@points@ 節點"
           },
           "substitutions" : {
             "meters" : {
@@ -10493,8 +10493,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg 公尺"
                     }
                   }
                 }
@@ -10507,8 +10507,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg 節點"
                     }
                   }
                 }
@@ -12701,8 +12701,8 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%#@meters@ 公尺， %#@points@ 點， %#@waypoints@ 航點"
+            "state" : "translated",
+            "value" : "%#@meters@ 公尺, %#@points@ 節點, %#@waypoints@ 路徑"
           },
           "substitutions" : {
             "meters" : {
@@ -12712,8 +12712,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg 公尺"
                     }
                   }
                 }
@@ -12726,8 +12726,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg 節點"
                     }
                   }
                 }
@@ -12740,8 +12740,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg 路徑"
                     }
                   }
                 }
@@ -12998,8 +12998,8 @@
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%#@routes@ imported,\n%#@duplicates@ skipped"
+            "state" : "translated",
+            "value" : "%#@routes@ importováno,\n%#@duplicates@ přeskočeno"
           },
           "substitutions" : {
             "duplicates" : {
@@ -13009,26 +13009,26 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg duplicates"
+                      "state" : "translated",
+                      "value" : "%arg duplicity"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg duplicates"
+                      "state" : "translated",
+                      "value" : "%arg duplicit"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg duplicate"
+                      "state" : "translated",
+                      "value" : "%arg duplicita"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg duplicates"
+                      "state" : "translated",
+                      "value" : "%arg duplicit"
                     }
                   }
                 }
@@ -13041,26 +13041,26 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg new routes"
+                      "state" : "translated",
+                      "value" : "%arg nové trasy"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg new routes"
+                      "state" : "translated",
+                      "value" : "%arg nových tras"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg new route"
+                      "state" : "translated",
+                      "value" : "%arg nová trasa"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg new routes"
+                      "state" : "translated",
+                      "value" : "%arg nových tras"
                     }
                   }
                 }
@@ -14470,14 +14470,14 @@
             "plural" : {
               "few" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "%ld objects"
+                  "state" : "translated",
+                  "value" : "%ld objekty"
                 }
               },
               "many" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "%ld objects"
+                  "state" : "translated",
+                  "value" : "%ld objektů"
                 }
               },
               "one" : {
@@ -15087,14 +15087,14 @@
             "plural" : {
               "few" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "%lu tiles needed"
+                  "state" : "translated",
+                  "value" : "jsou potřeba %lu dlaždice"
                 }
               },
               "many" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "%lu tiles needed"
+                  "state" : "translated",
+                  "value" : "je potřeba %lu dlaždic"
                 }
               },
               "one" : {
@@ -20408,6 +20408,12 @@
     "Building" : {
       "comment" : "The object is a building",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Budova"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -29997,7 +30003,27 @@
       }
     },
     "Extract Node" : {
-      "comment" : "Edit action"
+      "comment" : "Edit action",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vyčlenit bod"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extraer nodo"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "精確的節點"
+          }
+        }
+      }
     },
     "Filters" : {
       "comment" : "Header for quest filters section",
@@ -30085,6 +30111,12 @@
     "GeoJSON" : {
       "comment" : "The name of a GeoJSON file",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GeoJSON"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -30202,6 +30234,12 @@
     "GPX" : {
       "comment" : "The name of a GPX file",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -30491,6 +30529,12 @@
     "HealthKit" : {
       "comment" : "iOS HealthKit framework",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zdraví"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -40758,26 +40802,26 @@
             "plural" : {
               "few" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "Pasting %ld characters, maximum tag length is 255"
+                  "state" : "translated",
+                  "value" : "Vkládány %ld znaky, maximální délka značky je 255 znaků"
                 }
               },
               "many" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "Pasting %ld characters, maximum tag length is 255"
+                  "state" : "translated",
+                  "value" : "Vkládáno %ld znaků, maximální délka značky je 255 znaků"
                 }
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "Pasting %ld character, maximum tag length is 255"
+                  "state" : "translated",
+                  "value" : "Vkládán %ld znak, maximální délka značky je 255 znaků"
                 }
               },
               "other" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "Pasting %ld characters, maximum tag length is 255"
+                  "state" : "translated",
+                  "value" : "Vkládáno %ld znaků, maximální délka značky je 255 znaků"
                 }
               }
             }
@@ -41374,14 +41418,14 @@
             "plural" : {
               "few" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "Pasting %ld tags"
+                  "state" : "translated",
+                  "value" : "Vkládání %ld značek"
                 }
               },
               "many" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "Pasting %ld tags"
+                  "state" : "translated",
+                  "value" : "Vkládání %ld značek"
                 }
               },
               "one" : {
@@ -46773,6 +46817,12 @@
     "Sorry, an error occurred while loading the %@ file" : {
       "comment" : "Argument is a file type like 'GPX' or 'GeoJSON'",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Došlo k chybě při  načítání souboru %@"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -54692,14 +54742,14 @@
             "plural" : {
               "few" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?"
+                  "state" : "translated",
+                  "value" : "Nahráli jste už %ld sady změn s touto verzí Go Map!!\n\nNapíšete nám recenzi?"
                 }
               },
               "many" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?"
+                  "state" : "translated",
+                  "value" : "Nahráli jste už %ld sad změn s touto verzí Go Map!!\n\nNapíšete nám recenzi?"
                 }
               },
               "one" : {

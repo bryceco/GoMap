@@ -581,6 +581,10 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
         <target state="translated">Fondo</target>
         <note>Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ";</note>
       </trans-unit>
+      <trans-unit id="nzU-It-UAv.text" xml:space="preserve">
+        <source>Data Overlays</source>
+        <note>Class = "UILabel"; text = "Data Overlays"; ObjectID = "nzU-It-UAv";</note>
+      </trans-unit>
       <trans-unit id="oSD-0y-Vt0.title" xml:space="preserve">
         <source>Configure GPX Tracks</source>
         <target state="translated">Configurar trazas GPX</target>
