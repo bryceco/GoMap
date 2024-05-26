@@ -29,17 +29,19 @@ struct GeoJSONFile: Decodable {
 	}
 
 	func firstPoint() -> LatLon? {
-		if let pt = features.lazy.compactMap({ $0.geometry.firstLinePoint() }).first {
+		// First try to get a point connected to a line
+		if let pt = features.lazy.compactMap({ $0.geometry?.firstLinePoint() }).first {
 			return pt
 		}
-		return features.first?.geometry.firstPoint()
+		// If that fails then take any point
+		return features.first?.geometry?.firstPoint()
 	}
 }
 
 struct GeoJSONFeature: Decodable {
 	let type: String // e.g. "Feature"
 	let id: String? // String or Number
-	let geometry: GeoJSONGeometry
+	let geometry: GeoJSONGeometry?
 }
 
 extension LatLon {

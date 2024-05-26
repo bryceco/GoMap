@@ -40,7 +40,10 @@ final class DataOverlayLayer: DrawingLayer, DrawingLayerDelegate {
 
 	// Delegate function
 	func geojsonData() -> [(GeoJSONGeometry, UIColor)] {
-		return allCustom.values.flatMap { $0.features.map { ($0.geometry, UIColor.cyan) } }
+		return allCustom.values.flatMap { $0.features.compactMap {
+			guard let geometry = $0.geometry else { return  nil }
+			return (geometry, UIColor.cyan) }
+		}
 	}
 
 	// MARK: Properties
