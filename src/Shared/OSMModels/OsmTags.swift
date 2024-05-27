@@ -259,4 +259,40 @@ final class OsmTags {
 
 		return value
 	}
+
+	static func unitsFor(key: String) -> [String]? {
+		switch key {
+		case "distance":
+			return ["", "km", "mi"]
+
+		case "building:height",
+		     "ele",
+		     "height",
+		     "maxheight",
+		     "roof:height",
+		     "width":
+			return ["", "m", "ft"]
+
+		case "seamark:light:range",
+		     "siren:range":
+			return nil // defaults to nmi: nautical miles
+
+		case "maxspeed",
+		     "maxspeed:forward",
+		     "maxspeed:backward":
+			return ["", "km/h", "mph"]
+
+		case "maxweight":
+			return ["kg", "lbs", "st"]
+
+		case "power":
+			return nil
+
+		case "pressure":
+			return nil
+
+		default:
+			return nil
+		}
+	}
 }

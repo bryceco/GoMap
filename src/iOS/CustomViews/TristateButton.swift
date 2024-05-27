@@ -109,12 +109,10 @@ class KmhMphToggle: UISegmentedControl {
 
 	// input is a value like "55 mph"
 	func setSelection(forString value: String) {
-		let text: String
-		if let index = value.firstIndex(where: { !($0.isNumber || $0 == ".") }) {
-			text = String(value.suffix(from: index)).trimmingCharacters(in: .whitespacesAndNewlines)
-		} else {
-			text = ""
-		}
+		var text = String(value.compactMap {
+			$0.isNumber || $0 == "." ? nil : $0
+		})
+		text = text.trimmingCharacters(in: .whitespacesAndNewlines)
 
 		switch text {
 		case "":
