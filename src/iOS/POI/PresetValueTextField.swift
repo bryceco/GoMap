@@ -136,7 +136,6 @@ class PresetValueTextField: AutocompleteTextField {
 		DbgAssert(textField === self)
 		var value = text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
 		if key != "", value != "" {
-
 			// if the field has a units toggle then apply the proper unit string
 			if let unitToggle = textField.rightView as? UnitToggleButton {
 				if OsmTags.alphabeticPortionOf(text: value) == nil,

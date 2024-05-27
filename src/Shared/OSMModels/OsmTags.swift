@@ -289,12 +289,15 @@ final class OsmTags {
 			        UnitValue(label: NSLocalizedString("mi", comment: "Distance in miles, please abbreviate"),
 			                  values: ["mi"])]
 
-		case "building:height",
-		     "ele",
+		case "ele",
 		     "height",
 		     "maxheight",
+		     "building:height",
 		     "roof:height",
-		     "width":
+		     "width",
+		     "maxwidth",
+		     "length",
+		     "maxlength":
 			return [UnitValue(label: NSLocalizedString("m", comment: "Height or width in meters, please abbreviate"),
 			                  values: ["", "m"]),
 			        UnitValue(label: NSLocalizedString("ft", comment: "Height or width in feet, please abbreviate"),
