@@ -619,28 +619,10 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		      case let .key(presetKey) = cell.presetKey
 		else { return }
 
-		let prettyValue = textField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
-		textField.text = prettyValue
-
 		// convert to raw value if necessary
-		let tagValue = presetKey.tagValueForPrettyName(prettyValue)
+		let tagValue = presetKey.tagValueForPrettyName(textField.text ?? "")
 		firstResponderTextField = nil
 		updateTagDict(withValue: tagValue, forKey: presetKey.tagKey)
-
-		// do automatic value updates for special keys
-		if tagValue.count > 0,
-		   let newValue = OsmTags.convertWikiUrlToReference(withKey: presetKey.tagKey, value: tagValue)
-		   ?? OsmTags.convertWebsiteValueToHttps(withKey: presetKey.tagKey, value: tagValue)
-		{
-			textField.text = newValue
-		}
-
-		if let tri = cell.valueField.rightView as? TristateYesNoButton {
-			tri.setSelection(forString: textField.text ?? "")
-		}
-		if let tri = cell.valueField.rightView as? KmhMphToggle {
-			tri.setSelection(forString: textField.text ?? "")
-		}
 	}
 
 	@objc func textField(_ textField: UITextField,

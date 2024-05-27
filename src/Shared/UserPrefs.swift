@@ -122,6 +122,7 @@ final class UserPrefs {
 
 	// POI presets
 	let userDefinedPresetKeys = Pref<Data>(key: "userDefinedPresetKeys", ubiquitous: true)
+	let preferredUnitsForKeys = Pref<[String: String]>(key: "preferredUnitsForKeys", ubiquitous: true)
 
 	// Stuff for most recent POI features
 	let mostRecentTypesMaximum = Pref<Int>(key: "mostRecentTypesMaximum", ubiquitous: true)

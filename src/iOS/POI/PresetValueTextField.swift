@@ -133,18 +133,39 @@ class PresetValueTextField: AutocompleteTextField {
 	}
 
 	@objc func textFieldEditingDidEnd(_ textField: UITextField) {
-		let value = textField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
-		text = value
+		DbgAssert(textField === self)
+		var value = text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
 		if key != "", value != "" {
+
+			// if the field has a units toggle then apply the proper unit string
+			if let unitToggle = textField.rightView as? UnitToggleButton {
+				if OsmTags.alphabeticPortionOf(text: value) == nil,
+				   let number = OsmTags.numericPortionOf(text: value)
+				{
+					// user didn't supply units, so get them from toggle
+					if let newUnits = unitToggle.stringForSelection() {
+						value = number + " " + newUnits
+					}
+				} else {
+					// update toggle if user provided explicit units
+					unitToggle.setSelection(forString: value)
+				}
+			}
+
+			if let yesNo = textField.rightView as? TristateYesNoButton {
+				yesNo.setSelection(forString: value)
+			}
+
 			// do automatic value updates for special keys
 			// add https:// prefix to website=
 			if let newValue = OsmTags.convertWikiUrlToReference(withKey: key, value: value)
 				?? OsmTags.convertWebsiteValueToHttps(withKey: key, value: value)
 				?? OsmTags.fixUpOpeningHours(withKey: key, value: value)
 			{
-				text = newValue
+				value = newValue
 			}
 		}
+		text = value
 		updateAssociatedContent()
 		notifyValueChange(ended: true)
 	}
@@ -160,7 +181,8 @@ class PresetValueTextField: AutocompleteTextField {
 			?? getDirectionButton()
 		let associatedView2 = getHeightButton()
 			?? getYesNoButton(keyValueDict: owner?.keyValueDict ?? [:])
-			?? getSpeedButton()
+			?? getUnitsButton()
+
 		rightView = associatedView1 ?? associatedView2
 		rightViewMode = rightView != nil ? .always : .never
 		if #available(iOS 13.0, *) {
@@ -379,27 +401,32 @@ class PresetValueTextField: AutocompleteTextField {
 		return button
 	}
 
-	// MARK: MPH/KPH tristate button
+	// MARK: MPH/KPH-style toggle button
 
-	private func getSpeedButton() -> UIView? {
+	private func getUnitsButton() -> UIView? {
 		guard let presetKey = presetKey,
-		      presetKey.type == "roadspeed"
+		      let units = OsmTags.unitsFor(key: presetKey.tagKey),
+		      units.count == 2
 		else { return nil }
 
-		let button = KmhMphToggle()
+		let button = UnitToggleButton(values: units)
 		button.onSelect = { newValue in
 			// update units on existing value
-			if let number = self.text?.prefix(while: { $0.isNumber || $0 == "." }),
-			   number != ""
-			{
+			if let number = OsmTags.numericPortionOf(text: self.text) {
 				let v = newValue == nil ? String(number) : number + " " + newValue!
 				self.text = v
-				self.notifyValueChange(ended: false)
-			} else {
-				button.setSelection(forString: "")
+				self.notifyValueChange(ended: true)
 			}
+
+			// Update user preferences for units
+			var dict = UserPrefs.shared.preferredUnitsForKeys.value ?? [:]
+			dict[presetKey.tagKey] = newValue
+			UserPrefs.shared.preferredUnitsForKeys.value = dict
 		}
-		button.setSelection(forString: text ?? "")
+
+		button.setSelection(forString: ((text?.count ?? 0) > 0 ? text : nil)
+			?? UserPrefs.shared.preferredUnitsForKeys.value?[presetKey.tagKey]
+			?? "")
 		return button
 	}
 

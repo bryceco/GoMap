@@ -30114,6 +30114,9 @@
         }
       }
     },
+    "ft" : {
+      "comment" : "Height or width in feet, please abbreviate"
+    },
     "GeoJSON" : {
       "comment" : "The name of a GeoJSON file",
       "localizations" : {
@@ -31992,8 +31995,14 @@
         }
       }
     },
+    "kg" : {
+      "comment" : "Weight in kilograms, please abbreviate"
+    },
+    "km" : {
+      "comment" : "Distance in kilometers, please abbreviate"
+    },
     "km/h" : {
-      "comment" : "kilometers per hour speed",
+      "comment" : "kilometers per hour speed, please abbreviate",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -32471,6 +32480,9 @@
           }
         }
       }
+    },
+    "lbs" : {
+      "comment" : "Weight in pounds, please abbreviate"
     },
     "Left" : {
       "localizations" : {
@@ -33323,6 +33335,12 @@
           }
         }
       }
+    },
+    "lt" : {
+      "comment" : "Weight in long tons, please abbreviate"
+    },
+    "m" : {
+      "comment" : "Height or width in meters, please abbreviate"
     },
     "Mail delivery is not available on this device" : {
       "localizations" : {
@@ -34721,6 +34739,9 @@
         }
       }
     },
+    "mi" : {
+      "comment" : "Distance in miles, please abbreviate"
+    },
     "Missing way to connect to" : {
       "localizations" : {
         "ar" : {
@@ -36048,7 +36069,7 @@
       }
     },
     "mph" : {
-      "comment" : "miles per hour speed",
+      "comment" : "miles per hour speed, please abbreviate",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -47093,6 +47114,9 @@
         }
       }
     },
+    "st" : {
+      "comment" : "Weight in short tons, please abbreviate"
+    },
     "Standard imagery" : {
       "localizations" : {
         "ar" : {
@@ -47720,6 +47744,9 @@
           }
         }
       }
+    },
+    "t" : {
+      "comment" : "Weight in metric tons, please abbreviate"
     },
     "Tag Key" : {
       "localizations" : {
