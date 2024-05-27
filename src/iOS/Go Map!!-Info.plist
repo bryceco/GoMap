@@ -6,6 +6,10 @@
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
 	<string>${DISPLAY_NAME}</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>slack</string>
+	</array>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>

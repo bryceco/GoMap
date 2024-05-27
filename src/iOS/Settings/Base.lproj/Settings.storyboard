@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -515,7 +515,7 @@
                             <textView clipsSubviews="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BHr-ta-k6F">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <string key="text">Copyright © 2012-2020 Bryce Cogswell. 
+                                <string key="text">Copyright © 2012-2024 Bryce Cogswell. 
 All rights reserved.
 
 OpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):
@@ -528,9 +528,6 @@ Mapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com
 
 XML parsing courtesy of Robbie Hanson's KissXML:
 https://github.com/robbiehanson/KissXML
-
-EXIF parsing code Copyright (c) 2010-2015 Mayank Lahiri
-https://github.com/mayanklahiri/easyexif
 
 Map icons by SJJB:
 http://www.sjjb.co.uk/mapicons
@@ -783,14 +780,14 @@ http://glyphish.com
                             <tableViewSection headerTitle="Developer settings" id="yAO-9B-CTd">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="QRb-MZ-ZLs">
-                                        <rect key="frame" x="0.0" y="183" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="183" width="414" height="43"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QRb-MZ-ZLs" id="C3b-mV-Gif">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show FPS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UeH-ME-EV8">
-                                                    <rect key="frame" x="17" y="3" width="79.5" height="21.5"/>
+                                                    <rect key="frame" x="17" y="3" width="79.5" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -799,13 +796,13 @@ http://glyphish.com
                                                     </attributedString>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Gpb-Pt-4ii">
-                                                    <rect key="frame" x="347" y="6.5" width="51" height="31"/>
+                                                    <rect key="frame" x="347" y="6" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="switchFPS:" destination="bSZ-Mq-pv6" eventType="valueChanged" id="vaU-d0-HiF"/>
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Frames/Second" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="UvN-Qa-roL">
-                                                    <rect key="frame" x="17" y="24.5" width="94.5" height="16"/>
+                                                    <rect key="frame" x="17" y="24" width="94.5" height="16"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -825,20 +822,20 @@ http://glyphish.com
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="9vC-qJ-lmS">
-                                        <rect key="frame" x="0.0" y="226.5" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="226" width="414" height="43"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9vC-qJ-lmS" id="csd-bd-m3P">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="eeu-dh-YPQ">
-                                                    <rect key="frame" x="347" y="6.5" width="51" height="31"/>
+                                                    <rect key="frame" x="347" y="6" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="switchTouch:" destination="bSZ-Mq-pv6" eventType="valueChanged" id="LBr-cl-8py"/>
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show Touches" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Zi-cz-7Va">
-                                                    <rect key="frame" x="17" y="3" width="379" height="21.5"/>
+                                                    <rect key="frame" x="17" y="3" width="379" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -847,7 +844,7 @@ http://glyphish.com
                                                     </attributedString>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="100" text="Touches for screen recording" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Gcr-zK-nDq">
-                                                    <rect key="frame" x="17" y="24.5" width="177.5" height="16"/>
+                                                    <rect key="frame" x="17" y="24" width="177.5" height="16"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -957,8 +954,28 @@ http://glyphish.com
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="whL-SZ-HD5" style="IBUITableViewCellStyleDefault" id="myo-0d-vz2">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="zuh-G8-yy9" style="IBUITableViewCellStyleDefault" id="PuI-S7-AQD" userLabel="Slack Cell">
                                         <rect key="frame" x="0.0" y="235.5" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PuI-S7-AQD" id="z5A-7X-CR1">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Slack - Discussion" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="zuh-G8-yy9">
+                                                    <rect key="frame" x="20" y="0.0" width="374" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="For opening the Slack app"/>
+                                                    </attributedString>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="whL-SZ-HD5" style="IBUITableViewCellStyleDefault" id="myo-0d-vz2">
+                                        <rect key="frame" x="0.0" y="279.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="myo-0d-vz2" id="ooh-2A-hcS">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -979,7 +996,7 @@ http://glyphish.com
                             <tableViewSection headerTitle="Become a Tester" id="m7u-CH-jgg">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="TrT-Nn-WKe" style="IBUITableViewCellStyleDefault" id="G39-sQ-irl">
-                                        <rect key="frame" x="0.0" y="327.5" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="371.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="G39-sQ-irl" id="a5R-LQ-kjN">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -1008,6 +1025,7 @@ http://glyphish.com
                     <connections>
                         <outlet property="githubCell" destination="3hT-sJ-xBt" id="N6H-wb-r5F"/>
                         <outlet property="sendMailCell" destination="myo-0d-vz2" id="XWY-Da-Uci"/>
+                        <outlet property="slackCell" destination="PuI-S7-AQD" id="IyG-8h-Ps0"/>
                         <outlet property="testFlightCell" destination="G39-sQ-irl" id="VNM-8H-t1t"/>
                         <outlet property="weblateCell" destination="v06-Ax-28S" id="kTo-OW-G9E"/>
                     </connections>
@@ -1045,7 +1063,7 @@ http://glyphish.com
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
