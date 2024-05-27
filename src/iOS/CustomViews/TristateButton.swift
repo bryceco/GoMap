@@ -79,6 +79,7 @@ class UnitToggleButton: UISegmentedControl {
 	var onSelect: ((String?) -> Void)?
 	let values: [OsmTags.UnitValue]
 
+	@available(*, unavailable)
 	override init(frame: CGRect) {
 		fatalError()
 	}
@@ -112,10 +113,11 @@ class UnitToggleButton: UISegmentedControl {
 
 	// input is a value like "55 mph"
 	func setSelection(forString value: String) {
-		if let text = OsmTags.alphabeticPortionOf(text: value),
-		   let index = values.firstIndex(where: { $0.values.contains(text) })
-		{
-			super.selectedSegmentIndex = index
+		let text = OsmTags.alphabeticPortionOf(text: value) ?? ""
+		if let index = values.firstIndex(where: { $0.values.contains(text) }) {
+			selectedSegmentIndex = index
+		} else {
+			selectedSegmentIndex = UISegmentedControl.noSegment
 		}
 	}
 }
