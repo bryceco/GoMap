@@ -16,7 +16,6 @@ class DisplayViewController: UITableViewController {
 	@IBOutlet var rotationSwitch: UISwitch!
 	@IBOutlet var notesSwitch: UISwitch!
 	@IBOutlet var questsSwitch: UISwitch!
-	@IBOutlet var gpsTraceSwitch: UISwitch!
 	@IBOutlet var dataOverlaySwitch: UISwitch!
 	@IBOutlet var unnamedRoadSwitch: UISwitch!
 	@IBOutlet var gpxLoggingSwitch: UISwitch!
@@ -66,7 +65,6 @@ class DisplayViewController: UITableViewController {
 		mapView.viewOverlayMask = [
 			notesSwitch.isOn ? .NOTES : [],
 			questsSwitch.isOn ? .QUESTS : [],
-			gpsTraceSwitch.isOn ? .GPSTRACE : [],
 			unnamedRoadSwitch.isOn ? .NONAME : [],
 			dataOverlaySwitch.isOn ? .DATAOVERLAY : []
 		]
@@ -114,7 +112,6 @@ class DisplayViewController: UITableViewController {
 
 		notesSwitch.isOn = mapView.viewOverlayMask.contains(.NOTES)
 		questsSwitch.isOn = mapView.viewOverlayMask.contains(.QUESTS)
-		gpsTraceSwitch.isOn = mapView.displayGpxLogs
 		dataOverlaySwitch.isOn = mapView.displayDataOverlayLayer
 
 		rotationSwitch.isOn = mapView.enableRotation

@@ -5967,7 +5967,7 @@
     },
     "hMJ-yP-XJe.text" : {
       "comment" : "Class = \"UILabel\"; text = \"OpenStreetMap GPS Traces\"; ObjectID = \"hMJ-yP-XJe\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

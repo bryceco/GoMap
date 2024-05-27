@@ -92,7 +92,6 @@ private enum ZLAYER: CGFloat {
 	case NONAME = -99
 	case MAPNIK = -98
 	case LOCATOR = -50
-	case GPSTRACE = -40
 	case EDITOR = -20
 	case QUADDOWNLOAD = -18
 	case CUSTOM = -16
@@ -848,13 +847,13 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				guard let tileServer = tileServerList.serviceWithIdentifier(ident) else {
 					// server doesn't exist anymore
 					var list = serverIdents
-					list.removeAll(where: { $0 != ident })
+					list.removeAll(where: { $0 == ident })
 					UserPrefs.shared.tileOverlaySelections.value = list
 					continue
 				}
 
 				let layer = MercatorTileLayer(mapView: self)
-				layer.zPosition = ZLAYER.GPSTRACE.rawValue
+				layer.zPosition = ZLAYER.GPX.rawValue
 				layer.tileServer = tileServer
 				layer.isHidden = false
 
