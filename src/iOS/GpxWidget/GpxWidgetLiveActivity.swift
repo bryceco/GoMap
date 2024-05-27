@@ -66,16 +66,16 @@ struct GpxWidgetLiveActivity: Widget {
 					Text("\(context.state.durationHMS)")
 				}
 				DynamicIslandExpandedRegion(.center) {
-					Image("AppIcon")
+					Image("AppIconTransparent")
 				}
 			} compactLeading: {
-				Image("AppIcon")
+				Image("AppIconTransparent")
 					.resizable()
 					.aspectRatio(contentMode: .fill)
 			} compactTrailing: {
 				Text("\(context.state.durationHMS)")
 			} minimal: {
-				Image("AppIcon")
+				Image("AppIconTransparent")
 					.resizable()
 					.aspectRatio(contentMode: .fill)
 			}

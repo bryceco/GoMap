@@ -4269,8 +4269,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg nodes"
+                      "state" : "translated",
+                      "value" : "%arg 節點"
                     }
                   }
                 }
@@ -7669,7 +7669,7 @@
         },
         "de" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%#@meters@, %#@nodes@"
           },
           "substitutions" : {
@@ -7680,14 +7680,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg meter"
+                      "state" : "translated",
+                      "value" : "%arg Meter"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg meters"
+                      "state" : "translated",
+                      "value" : "%arg Meter"
                     }
                   }
                 }
@@ -7700,14 +7700,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg node"
+                      "state" : "translated",
+                      "value" : "%arg Knoten"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg nodes"
+                      "state" : "translated",
+                      "value" : "%arg Knoten"
                     }
                   }
                 }
@@ -8906,7 +8906,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@meters@ 公尺, %#@nodes@ 節點"
+            "value" : "%#@meters@, %#@nodes@"
           },
           "substitutions" : {
             "meters" : {
@@ -10483,7 +10483,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@meters@ 公尺, %#@points@ 節點"
+            "value" : "%#@meters@, %#@points@"
           },
           "substitutions" : {
             "meters" : {
@@ -10529,8 +10529,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld meters"
+                      "state" : "translated",
+                      "value" : "%ld 公尺"
                     }
                   }
                 }
@@ -10543,8 +10543,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld points"
+                      "state" : "translated",
+                      "value" : "%ld 節點"
                     }
                   }
                 }
@@ -12702,7 +12702,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@meters@ 公尺, %#@points@ 節點, %#@waypoints@ 路徑"
+            "value" : "%#@meters@, %#@points@, %#@waypoints@"
           },
           "substitutions" : {
             "meters" : {
@@ -12762,8 +12762,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld meters"
+                      "state" : "translated",
+                      "value" : "%ld 公尺"
                     }
                   }
                 }
@@ -12776,8 +12776,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld points"
+                      "state" : "translated",
+                      "value" : "%ld 節點"
                     }
                   }
                 }
@@ -13070,8 +13070,8 @@
         },
         "de" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%#@routes@ imported,\n%#@duplicates@ skipped"
+            "state" : "translated",
+            "value" : "%#@routes@ importiert,\n%#@duplicates@ übersprungen"
           },
           "substitutions" : {
             "duplicates" : {
@@ -13081,14 +13081,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg duplicate"
+                      "state" : "translated",
+                      "value" : "%arg Duplikat"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg duplicates"
+                      "state" : "translated",
+                      "value" : "%arg Duplikate"
                     }
                   }
                 }
@@ -13101,14 +13101,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg new route"
+                      "state" : "translated",
+                      "value" : "%arg neue Route"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg new routes"
+                      "state" : "translated",
+                      "value" : "%arg neue Routen"
                     }
                   }
                 }
@@ -29139,9 +29139,6 @@
         }
       }
     },
-    "Enable GPX" : {
-
-    },
     "Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" : {
       "localizations" : {
         "ar" : {
@@ -30014,6 +30011,12 @@
             "value" : "Vyčlenit bod"
           }
         },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Knoten entnehmen"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -30115,6 +30118,12 @@
       "comment" : "The name of a GeoJSON file",
       "localizations" : {
         "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GeoJSON"
+          }
+        },
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "GeoJSON"
@@ -30238,6 +30247,12 @@
       "comment" : "The name of a GPX file",
       "localizations" : {
         "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX"
+          }
+        },
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "GPX"
@@ -40835,14 +40850,14 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "Pasting %ld character, maximum tag length is 255"
+                  "state" : "translated",
+                  "value" : "%ld Zeichen einfügen, maximal 255 Zeichen zulässig"
                 }
               },
               "other" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "Pasting %ld characters, maximum tag length is 255"
+                  "state" : "translated",
+                  "value" : "%ld Zeichen einfügen, maximal 255 Zeichen zulässig"
                 }
               }
             }
@@ -41945,6 +41960,12 @@
           }
         }
       }
+    },
+    "Pause GPX" : {
+
+    },
+    "Pause recording GPX tracks." : {
+
     },
     "Perform Action" : {
       "localizations" : {
@@ -46826,6 +46847,12 @@
             "value" : "Došlo k chybě při  načítání souboru %@"
           }
         },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leider ist beim Laden der Datei %@ ein Fehler aufgetreten"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -47333,7 +47360,10 @@
         }
       }
     },
-    "Start/Stop recording GPX tracks." : {
+    "Start GPX" : {
+
+    },
+    "Start recording GPX tracks." : {
 
     },
     "Stop" : {
@@ -47471,6 +47501,12 @@
           }
         }
       }
+    },
+    "Stop GPX" : {
+
+    },
+    "Stop recording GPX tracks." : {
+
     },
     "Straighten" : {
       "comment" : "Edit action",

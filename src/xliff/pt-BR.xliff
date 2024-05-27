@@ -674,6 +674,72 @@ Limpe as quadrículas Mapnik ou de sobreposição para poder baixar as últimas 
       </trans-unit>
     </body>
   </file>
+  <file original="GpxWidget/InfoPlist.xcstrings" source-language="en" target-language="pt-BR" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.4" build-num="15F31d"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleDisplayName" xml:space="preserve">
+        <source>GpxWidget</source>
+        <note>Bundle display name</note>
+      </trans-unit>
+      <trans-unit id="CFBundleName" xml:space="preserve">
+        <source>GpxWidgetExtension</source>
+        <note>Bundle name</note>
+      </trans-unit>
+      <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
+        <source>Copyright © 2024 Bryce Cogswell. All rights reserved.</source>
+        <note>Copyright (human-readable)</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="GpxWidget/Localizable.xcstrings" source-language="en" target-language="pt-BR" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.4" build-num="15F31d"/>
+    </header>
+    <body>
+      <trans-unit id="%@" xml:space="preserve">
+        <source>%@</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="%lld GPX points" xml:space="preserve">
+        <source>%lld GPX points</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="%lld points" xml:space="preserve">
+        <source>%lld points</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Pause GPX" xml:space="preserve">
+        <source>Pause GPX</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
+        <source>Pause recording GPX tracks.</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Start GPX" xml:space="preserve">
+        <source>Start GPX</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Start recording GPX tracks." xml:space="preserve">
+        <source>Start recording GPX tracks.</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Stop" xml:space="preserve">
+        <source>Stop</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Stop GPX" xml:space="preserve">
+        <source>Stop GPX</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Stop recording GPX tracks." xml:space="preserve">
+        <source>Stop recording GPX tracks.</source>
+        <note/>
+      </trans-unit>
+    </body>
+  </file>
   <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="pt-BR" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.4" build-num="15F31d"/>
@@ -2027,6 +2093,14 @@ Never delete old tracks</note>
         <target state="needs-review-l10n">Colando %ld etiquetas</target>
         <note/>
       </trans-unit>
+      <trans-unit id="Pause GPX" xml:space="preserve">
+        <source>Pause GPX</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
+        <source>Pause recording GPX tracks.</source>
+        <note/>
+      </trans-unit>
       <trans-unit id="Perform Action" xml:space="preserve">
         <source>Perform Action</source>
         <target state="translated">Executar a ação</target>
@@ -2247,9 +2321,25 @@ Never delete old tracks</note>
         <target state="translated">Iniciar</target>
         <note>Begin downloading tiles</note>
       </trans-unit>
+      <trans-unit id="Start GPX" xml:space="preserve">
+        <source>Start GPX</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Start recording GPX tracks." xml:space="preserve">
+        <source>Start recording GPX tracks.</source>
+        <note/>
+      </trans-unit>
       <trans-unit id="Stop" xml:space="preserve">
         <source>Stop</source>
         <target state="translated">Parar</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Stop GPX" xml:space="preserve">
+        <source>Stop GPX</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Stop recording GPX tracks." xml:space="preserve">
+        <source>Stop recording GPX tracks.</source>
         <note/>
       </trans-unit>
       <trans-unit id="Straighten" xml:space="preserve">
