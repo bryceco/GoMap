@@ -379,19 +379,18 @@ class PresetValueTextField: AutocompleteTextField {
 		return button
 	}
 
-	// MARK: MPH/KPH tristate button
+	// MARK: MPH/KPH toggle button
 
 	private func getSpeedButton() -> UIView? {
 		guard let presetKey = presetKey,
-		      presetKey.type == "roadspeed"
+			  let units = OsmTags.unitsFor(key: presetKey.tagKey),
+			  units.count == 2
 		else { return nil }
 
-		let button = KmhMphToggle()
+		let button = UnitToggleButton(values: units)
 		button.onSelect = { newValue in
 			// update units on existing value
-			if let number = self.text?.prefix(while: { $0.isNumber || $0 == "." }),
-			   number != ""
-			{
+			if let number = OsmTags.numericPortionOf(text: self.text) {
 				let v = newValue == nil ? String(number) : number + " " + newValue!
 				self.text = v
 				self.notifyValueChange(ended: false)

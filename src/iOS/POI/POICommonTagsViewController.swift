@@ -638,7 +638,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		if let tri = cell.valueField.rightView as? TristateYesNoButton {
 			tri.setSelection(forString: textField.text ?? "")
 		}
-		if let tri = cell.valueField.rightView as? KmhMphToggle {
+		if let tri = cell.valueField.rightView as? UnitToggleButton {
 			tri.setSelection(forString: textField.text ?? "")
 		}
 	}

@@ -75,16 +75,22 @@ class TristateYesNoButton: TristateButton {
 	}
 }
 
-class KmhMphToggle: UISegmentedControl {
+class UnitToggleButton: UISegmentedControl {
 	var onSelect: ((String?) -> Void)?
+	let values: [OsmTags.UnitValue]
 
 	override init(frame: CGRect) {
-		super.init(frame: frame)
+		fatalError()
 	}
 
-	init() {
-		super.init(items: [NSLocalizedString("km/h", comment: "kilometers per hour speed"),
-		                   NSLocalizedString("mph", comment: "miles per hour speed")])
+	@available(*, unavailable)
+	required init?(coder: NSCoder) {
+		fatalError()
+	}
+
+	init(values: [OsmTags.UnitValue]) {
+		self.values = values
+		super.init(items: values.map { $0.label })
 		apportionsSegmentWidthsByContent = true
 		setEnabled(true, forSegmentAt: 0)
 		addTarget(self, action: #selector(valueChanged(_:)), for: .valueChanged)
@@ -99,28 +105,17 @@ class KmhMphToggle: UISegmentedControl {
 		feedback.impactOccurred()
 	}
 
-	required init?(coder: NSCoder) {
-		super.init(coder: coder)
-	}
-
 	func stringForSelection() -> String? {
-		return [nil, "mph"][selectedSegmentIndex]
+		let string = values[selectedSegmentIndex].values.first
+		return string == "" ? nil : string
 	}
 
 	// input is a value like "55 mph"
 	func setSelection(forString value: String) {
-		var text = String(value.compactMap {
-			$0.isNumber || $0 == "." ? nil : $0
-		})
-		text = text.trimmingCharacters(in: .whitespacesAndNewlines)
-
-		switch text {
-		case "":
-			super.selectedSegmentIndex = 0
-		case "mph":
-			super.selectedSegmentIndex = 1
-		default:
-			break
+		if let text = OsmTags.alphabeticPortionOf(text: value),
+		   let index = values.firstIndex(where: { $0.values.contains(text) })
+		{
+			super.selectedSegmentIndex = index
 		}
 	}
 }

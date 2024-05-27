@@ -260,10 +260,32 @@ final class OsmTags {
 		return value
 	}
 
-	static func unitsFor(key: String) -> [String]? {
+	static func numericPortionOf(text: String?) -> String? {
+		if let number = text?.split(separator: " ").first(where: { Double($0) != nil }) {
+			return String(number)
+		}
+		return nil
+	}
+
+	static func alphabeticPortionOf(text: String?) -> String? {
+		if let alphaList = text?.split(separator: " ").compactMap({ $0 != "" && Double($0) == nil ? $0 : nil }) {
+			return alphaList.joined(separator: " ")
+		}
+		return nil
+	}
+
+	struct UnitValue {
+		let label: String // localized label that will appear on a button (e.g. "m" or "ft")
+		let values: [String] // possible OSM values, in order of preference
+	}
+
+	static func unitsFor(key: String) -> [UnitValue]? {
 		switch key {
 		case "distance":
-			return ["", "km", "mi"]
+			return [UnitValue(label: NSLocalizedString("km", comment: "Distance in kilometers, please abbreviate"),
+			                  values: ["", "km"]),
+			        UnitValue(label: NSLocalizedString("mi", comment: "Distance in miles, please abbreviate"),
+			                  values: ["mi"])]
 
 		case "building:height",
 		     "ele",
@@ -271,7 +293,10 @@ final class OsmTags {
 		     "maxheight",
 		     "roof:height",
 		     "width":
-			return ["", "m", "ft"]
+			return [UnitValue(label: NSLocalizedString("m", comment: "Height or width in meters, please abbreviate"),
+			                  values: ["", "m"]),
+			        UnitValue(label: NSLocalizedString("ft", comment: "Height or width in feet, please abbreviate"),
+			                  values: ["ft"])]
 
 		case "seamark:light:range",
 		     "siren:range":
@@ -280,10 +305,22 @@ final class OsmTags {
 		case "maxspeed",
 		     "maxspeed:forward",
 		     "maxspeed:backward":
-			return ["", "km/h", "mph"]
+			return [UnitValue(label: NSLocalizedString("km/h", comment: "kilometers per hour speed, please abbreviate"),
+			                  values: [""]),
+			        UnitValue(label: NSLocalizedString("mph", comment: "miles per hour speed, please abbreviate"),
+			                  values: ["mph"])]
 
 		case "maxweight":
-			return ["kg", "lbs", "st"]
+			return [UnitValue(label: NSLocalizedString("t", comment: "Weight in metric tons, please abbreviate"),
+			                  values: ["", "t"]),
+			        UnitValue(label: NSLocalizedString("lbs", comment: "Weight in pounds, please abbreviate"),
+			                  values: ["lbs"]),
+			        UnitValue(label: NSLocalizedString("kg", comment: "Weight in kilograms, please abbreviate"),
+			                  values: ["kg"]),
+			        UnitValue(label: NSLocalizedString("st", comment: "Weight in short tons, please abbreviate"),
+			                  values: ["st"]),
+			        UnitValue(label: NSLocalizedString("lt", comment: "Weight in long tons, please abbreviate"),
+			                  values: ["lt"])]
 
 		case "power":
 			return nil
