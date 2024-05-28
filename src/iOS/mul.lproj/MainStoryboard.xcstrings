@@ -1,6 +1,30 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "1tR-eI-DSh.configuration.title" : {
+      "comment" : "Class = \"UIButton\"; configuration.title = \"username\"; ObjectID = \"1tR-eI-DSh\"; Note = \"Placeholder - Do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "username"
+          }
+        }
+      }
+    },
+    "1tR-eI-DSh.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"1tR-eI-DSh\"; Note = \"Placeholder - Do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Button"
+          }
+        }
+      }
+    },
     "1xx-L0-hKm.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Get Directions\"; ObjectID = \"1xx-L0-hKm\";",
       "extractionState" : "extracted_with_value",
@@ -699,7 +723,7 @@
     },
     "9G2-Gl-CeP.text" : {
       "comment" : "Class = \"UILabel\"; text = \"username\"; ObjectID = \"9G2-Gl-CeP\"; Note = \"Placeholder - Do not translate\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {

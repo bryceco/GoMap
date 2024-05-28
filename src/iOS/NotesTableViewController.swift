@@ -7,11 +7,12 @@
 //
 
 import MapKit
+import SafariServices
 import UIKit
 
 class NotesOldCommentCell: UITableViewCell {
 	@IBOutlet var date: UILabel!
-	@IBOutlet var user: UILabel!
+	@IBOutlet var user: UIButton!
 	@IBOutlet var action: UILabel!
 	@IBOutlet var comment: UITextView!
 	@IBOutlet var commentBackground: UIView!
@@ -77,10 +78,12 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 				withIdentifier: "noteCommentCell",
 				for: indexPath) as! NotesOldCommentCell
 			let comment = note.comments[indexPath.row]
-			let user = comment.user.count > 0 ? comment.user : "anonymous"
+			let isAnonymous = comment.user == ""
+			let user = isAnonymous ? "anonymous" : comment.user
 			cell.date.text = comment.date
-			cell.user.text = user
+			cell.user.setTitle(user, for: .normal)
 			cell.action.text = comment.action
+			cell.user.isEnabled = !isAnonymous
 			if comment.text.count == 0 {
 				cell.commentBackground.isHidden = true
 				cell.comment.text = nil
@@ -160,12 +163,12 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 					mapView.updateMapMarkerButtonPositions()
 				})
 			case let .failure(error):
-				let alert2 = UIAlertController(
-					title: NSLocalizedString("Error", comment: ""),
-					message: error.localizedDescription,
-					preferredStyle: .alert)
-				alert2
-					.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+				let alert2 = UIAlertController(title: NSLocalizedString("Error", comment: ""),
+				                               message: error.localizedDescription,
+				                               preferredStyle: .alert)
+				alert2.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+				                               style: .cancel,
+				                               handler: nil))
 				present(alert2, animated: true)
 			}
 		}
@@ -189,6 +192,19 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 			let s = newComment?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 			cell.commentButton.isEnabled = (s?.count ?? 0) > 0
 		}
+	}
+
+	@IBAction func showUser(_ sender: Any?) {
+		guard let cell: NotesOldCommentCell = (sender as? UIButton)?.superviewOfType(),
+		      let name = cell.user.titleLabel?.text,
+		      let url = URL(string: "https://www.openstreetmap.org/user/\(name)")
+		else {
+			return
+		}
+		let safariViewController = SFSafariViewController(url: url)
+		safariViewController.modalPresentationStyle = .pageSheet
+		safariViewController.popoverPresentationController?.sourceView = view
+		present(safariViewController, animated: true)
 	}
 
 	@IBAction func done(_ sender: Any?) {
