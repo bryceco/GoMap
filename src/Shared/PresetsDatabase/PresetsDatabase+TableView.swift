@@ -84,7 +84,7 @@ extension PresetsDatabase {
 
 	func allTagValuesForKey(_ key: String) -> Set<String> {
 		var set = Set<String>()
-		for (_, field) in presetFields {
+		for field in presetFields.values {
 			if let k = field.key,
 			   k == key,
 			   let list = field.options
@@ -231,7 +231,7 @@ extension PresetsDatabase {
 					let name = OsmTags.PrettyTag(value)
 					return PresetValue(name: name, details: nil, icon: icons?[value], tagValue: value)
 				}
-			}.sorted(by: { $0.name.caseInsensitiveCompare($1.name) == .orderedAscending })
+			}
 		}
 		let tag = PresetKey(
 			name: label,
@@ -392,6 +392,7 @@ extension PresetsDatabase {
 			let options = field.options ?? []
 			let options2 = taginfoCache.taginfoFor(key: key, searchKeys: false, update: update)
 				.filter({ !options.contains($0) })
+				.sorted()
 			let tag = comboWith(
 				label: label,
 				key: key,

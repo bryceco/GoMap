@@ -112,7 +112,7 @@ class TagInfo {
 
 		// if no result or it's out of date then fetch it asynchronously
 		if let update = update,
-		   Date().timeIntervalSince(date) > 7 * 24 * 60 * 60
+		   Date().timeIntervalSince(date) > 30 * 24 * 60 * 60
 		{
 			taginfoCache[cacheKey] = ResultType(date: Date(), result: []) // mark as in-transit
 			Self.taginfoFor(key: key, searchKeys: searchKeys, update: { result in
