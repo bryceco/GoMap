@@ -210,7 +210,7 @@ extension TileServerList {
 
 				// check if it's in our discard list
 				if discardRE.contains(where: {
-					let range = NSRange(location: 0, length: identifier.utf8.count)
+					let range = NSRange(location: 0, length: identifier.utf16.count)
 					return $0.firstMatch(in: identifier, range: range) != nil
 				}) {
 					continue
