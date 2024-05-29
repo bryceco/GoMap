@@ -30,16 +30,26 @@ class OfflineViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		let rect = AppDelegate.shared.mapView.boundingMapRectForScreen()
+
 		tableView.estimatedRowHeight = 100
 		tableView.rowHeight = UITableView.automaticDimension
 		aerialCell.tileLayer = AppDelegate.shared.mapView.aerialLayer
 		mapnikCell.tileLayer = AppDelegate.shared.mapView.mapnikLayer
 		for cell in [aerialCell!, mapnikCell!] {
-			cell.tileList = cell.tileLayer!.allTilesIntersectingVisibleRect()
-			cell.detailLabel.text = String.localizedStringWithFormat(
-				NSLocalizedString("%lu tiles needed", comment: ""),
-				UInt(cell.tileList.count))
-			cell.button.isEnabled = cell.tileList.count > 0
+			cell.activityView.startAnimating()
+			cell.button.isEnabled = false
+			DispatchQueue.global(qos: .userInitiated).async {
+				let tiles = cell.tileLayer!.allTilesIntersecting(mapRect: rect)
+				DispatchQueue.main.async {
+					cell.tileList = tiles
+					cell.detailLabel.text = String.localizedStringWithFormat(
+						NSLocalizedString("%lu tiles needed", comment: ""),
+						UInt(cell.tileList.count))
+					cell.button.isEnabled = cell.tileList.count > 0
+					cell.activityView.stopAnimating()
+				}
+			}
 		}
 	}
 
@@ -51,6 +61,10 @@ class OfflineViewController: UITableViewController {
 	}
 
 	// MARK: - Table view delegate
+
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
+	}
 
 	func downloadFile(for cell: OfflineTableViewCell) {
 		if let cacheKey = cell.tileList.popLast() {

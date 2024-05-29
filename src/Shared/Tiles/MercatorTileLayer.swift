@@ -428,11 +428,10 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 	}
 
 	// Used for bulk downloading tiles for offline use
-	func allTilesIntersectingVisibleRect() -> [String] {
+	func allTilesIntersecting(mapRect rect: OSMRect) -> [String] {
 		let currentTiles = webCache!.allKeys()
 		let currentSet = Set(currentTiles)
 
-		let rect = mapView.boundingMapRectForScreen()
 		let minZoomLevel = min(zoomLevel(), tileServer.maxZoom)
 		let maxZoomLevel = min(zoomLevel() + 2, tileServer.maxZoom)
 
