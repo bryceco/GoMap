@@ -123,8 +123,10 @@ final class MapTransform {
 
 	func screenPoint(forMapPoint point: OSMPoint, birdsEye: Bool) -> CGPoint {
 		var point = point.withTransform(transform)
-		if birdsEyeRotation != 0.0, birdsEye {
-			point = Self.ToBirdsEye(screenPoint: point, screenCenter: center, birdsEyeDistance, birdsEyeRotation)
+		if birdsEye, birdsEyeRotation != 0.0 {
+			point = Self.ToBirdsEye(screenPoint: point,
+			                        screenCenter: center,
+			                        birdsEyeDistance, birdsEyeRotation)
 		}
 		return CGPoint(point)
 	}

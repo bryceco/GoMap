@@ -1683,6 +1683,23 @@ final class EditorMapLayer: CALayer {
 
 	// MARK: Highlighting and Selection
 
+	struct Selections {
+		var node: OsmNode?
+		var way: OsmWay?
+		var relation: OsmRelation?
+	}
+
+	var selections: Selections {
+		get {
+			return Selections(node: selectedNode, way: selectedWay, relation: selectedRelation)
+		}
+		set {
+			selectedNode = newValue.node
+			selectedWay = newValue.way
+			selectedRelation = newValue.relation
+		}
+	}
+
 	var selectedPrimary: OsmBaseObject? { selectedNode ?? selectedWay ?? selectedRelation }
 
 	var selectedNode: OsmNode? {

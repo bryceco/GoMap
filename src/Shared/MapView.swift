@@ -2716,9 +2716,26 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 	}
 
+	var tapAndDragSelections: EditorMapLayer.Selections?
+	var tapAndDragPushpinLatLon: LatLon?
+
 	@objc func handleTapAndDragGesture(_ tapAndDrag: TapAndDragGesture) {
 		// do single-finger zooming
-		if tapAndDrag.state == .changed {
+		switch tapAndDrag.state {
+		case .began:
+			// we don't want the initial tap to change object selection
+			if let tapAndDragSelections = tapAndDragSelections {
+				editorLayer.selections = tapAndDragSelections
+				if let tapAndDragPushpinLatLon = tapAndDragPushpinLatLon {
+					let pt = mapTransform.screenPoint(forLatLon: tapAndDragPushpinLatLon, birdsEye: true)
+					placePushpinForSelection(at: pt)
+				} else {
+					removePin()
+				}
+				self.tapAndDragSelections = nil
+			}
+
+		case .changed:
 			userOverrodeLocationZoom = true
 
 			DisplayLink.shared.removeName(DisplayLinkPanning)
@@ -2727,14 +2744,25 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			let scale = 1.0 - delta.y * 0.01
 			let zoomCenter = centerPoint()
 			adjustZoom(by: scale, aroundScreenPoint: zoomCenter)
-		} else if tapAndDrag.state == .ended {
+		case .ended:
 			updateMapMarkersFromServer(withDelay: 0, including: [])
+		default:
+			break
 		}
 	}
 
 	/// Invoked to select an object on the screen
 	@IBAction func screenTapGesture(_ tap: UITapGestureRecognizer) {
-		if tap.state == .ended {
+		switch tap.state {
+		case .ended:
+			// we don't want the initial tap of a tap-and-drag to change object selection
+			tapAndDragSelections = editorLayer.selections
+			if let pushPin = pushPin {
+				tapAndDragPushpinLatLon = mapTransform.latLon(forScreenPoint: pushPin.arrowPoint)
+			} else {
+				tapAndDragPushpinLatLon = nil
+			}
+
 			// disable rotation if in action
 			if isRotateObjectMode != nil {
 				endObjectRotation()
@@ -2747,6 +2775,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			} else {
 				editorLayer.selectObjectAtPoint(point)
 			}
+		default:
+			break
 		}
 	}
 
