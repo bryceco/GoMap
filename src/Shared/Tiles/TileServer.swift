@@ -54,8 +54,6 @@ final class TileServer: Equatable, Codable, FastCodable {
 	let attributionUrl: String
 	let placeholderImage: Data?
 
-	private let polygon: CGPath?
-
 	enum CodingKeys: String, CodingKey {
 		case name
 		case identifier
@@ -207,7 +205,6 @@ final class TileServer: Equatable, Codable, FastCodable {
 		self.startDate = startDate
 		self.endDate = endDate
 		self.geoJSON = geoJSON
-		polygon = geoJSON?.latLonBezierPath?.cgPath.copy()
 
 		placeholderImage = TileServer.getPlaceholderImage(forIdentifier: identifier)
 	}
@@ -220,39 +217,39 @@ final class TileServer: Equatable, Codable, FastCodable {
 		return identifier == BING_IDENTIFIER
 	}
 
-	func isMapnik() -> Bool {
-		return identifier == MAPNIK_IDENTIFIER
-	}
-
-	func isOsmGpxOverlay() -> Bool {
-		return identifier == OSM_GPS_TRACE_IDENTIFIER
-	}
-
 	func isMaxar() -> Bool {
 		return identifier == MAXAR_PREMIUM_IDENTIFIER
 	}
 
+	func daysToCache() -> Double {
+		switch identifier {
+		case MAPNIK_IDENTIFIER:
+			return 7.0
+		default:
+			return 90.0
+		}
+	}
+
 	func coversLocation(_ point: LatLon) -> Bool {
-		guard let polygon = polygon else { return true }
-		return polygon.contains(CGPoint(OSMPoint(point)), using: .winding)
+		return geoJSON?.contains(point) ?? true
 	}
 
 	func isGlobalImagery() -> Bool {
-		return polygon == nil
+		return geoJSON == nil
 	}
 
-	static var dateFormatterList: [DateFormatter] = {
+	static let dateFormatterList: [DateFormatter] = {
 		let formatterYYYYMMDD = DateFormatter()
 		formatterYYYYMMDD.dateFormat = "yyyy-MM-dd"
-		formatterYYYYMMDD.timeZone = NSTimeZone(forSecondsFromGMT: 0) as TimeZone
+		formatterYYYYMMDD.timeZone = TimeZone(secondsFromGMT: 0)
 
 		let formatterYYYYMM = DateFormatter()
 		formatterYYYYMM.dateFormat = "yyyy-MM"
-		formatterYYYYMM.timeZone = NSTimeZone(forSecondsFromGMT: 0) as TimeZone
+		formatterYYYYMM.timeZone = TimeZone(secondsFromGMT: 0)
 
 		let formatterYYYY = DateFormatter()
 		formatterYYYY.dateFormat = "yyyy"
-		formatterYYYY.timeZone = NSTimeZone(forSecondsFromGMT: 0) as TimeZone
+		formatterYYYY.timeZone = TimeZone(secondsFromGMT: 0)
 
 		return [
 			formatterYYYYMMDD,
@@ -266,8 +263,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 			return nil
 		}
 		for formatter in dateFormatterList {
-			let date = formatter.date(from: string)
-			if let date = date {
+			if let date = formatter.date(from: string) {
 				return date
 			}
 		}
