@@ -1,0 +1,106 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        }
+      }
+    },
+    "%lld GPX points" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puntos %lld GPX"
+          }
+        }
+      }
+    },
+    "%lld points" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld puntos"
+          }
+        }
+      }
+    },
+    "Pause GPX" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX pausado"
+          }
+        }
+      }
+    },
+    "Pause recording GPX tracks." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausa la grabación de pistas GPX."
+          }
+        }
+      }
+    },
+    "Start GPX" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar GPX"
+          }
+        }
+      }
+    },
+    "Start recording GPX tracks." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empezar a grabar pistas GPX."
+          }
+        }
+      }
+    },
+    "Stop" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parar"
+          }
+        }
+      }
+    },
+    "Stop GPX" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parar GPX"
+          }
+        }
+      }
+    },
+    "Stop recording GPX tracks." : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detener la grabación de pistas GPX."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
