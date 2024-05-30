@@ -154,6 +154,8 @@
 		02D6238926A6628300A4F147 /* PhotoShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 02D6237F26A6628300A4F147 /* PhotoShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		02D95B9629E0AE7F00F8FCA9 /* CharacterSet+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D95B9529E0AE7F00F8FCA9 /* CharacterSet+Extension.swift */; };
 		02DC59811671B79100213558 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02DC59801671B79100213558 /* CoreText.framework */; };
+		02DEDA0D2C0915F800C84DA8 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 02DEDA0C2C0915F800C84DA8 /* InfoPlist.xcstrings */; };
+		02DEDA0F2C0915F800C84DA8 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 02DEDA0E2C0915F800C84DA8 /* Localizable.xcstrings */; };
 		02DFFD1E2BF3E0F0002A0189 /* LocationSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DFFD1D2BF3E0F0002A0189 /* LocationSet.swift */; };
 		02E049BA2650B0E10028B57F /* TurnRestrictController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096AF263D4FF500E3B129 /* TurnRestrictController.swift */; };
 		02E049BB2651BAB90028B57F /* UndoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C381C306263FD0E8003142BA /* UndoManager.swift */; };
@@ -475,6 +477,8 @@
 		02D6238A26A6628300A4F147 /* PhotoShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PhotoShare.entitlements; sourceTree = "<group>"; };
 		02D95B9529E0AE7F00F8FCA9 /* CharacterSet+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CharacterSet+Extension.swift"; sourceTree = "<group>"; };
 		02DC59801671B79100213558 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		02DEDA0C2C0915F800C84DA8 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		02DEDA0E2C0915F800C84DA8 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		02DFFD1D2BF3E0F0002A0189 /* LocationSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSet.swift; sourceTree = "<group>"; };
 		02E049BC2651D1750028B57F /* UndoAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UndoAction.h; sourceTree = "<group>"; };
 		02E049BD2651D1750028B57F /* UndoAction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UndoAction.m; sourceTree = "<group>"; };
@@ -928,6 +932,8 @@
 		02CBF3B62BE8529A000DE2AD /* GpxWidget */ = {
 			isa = PBXGroup;
 			children = (
+				02DEDA0C2C0915F800C84DA8 /* InfoPlist.xcstrings */,
+				02DEDA0E2C0915F800C84DA8 /* Localizable.xcstrings */,
 				02CBF3BD2BE8529B000DE2AD /* Assets.xcassets */,
 				02CBF3B72BE8529A000DE2AD /* GpxWidgetBundle.swift */,
 				02CBF3C32BE8529B000DE2AD /* GpxWidgetExtension.entitlements */,
@@ -1397,7 +1403,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02DEDA0D2C0915F800C84DA8 /* InfoPlist.xcstrings in Resources */,
 				02CBF3BE2BE8529B000DE2AD /* Assets.xcassets in Resources */,
+				02DEDA0F2C0915F800C84DA8 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

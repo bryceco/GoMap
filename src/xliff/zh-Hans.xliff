@@ -5,6 +5,14 @@
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.4" build-num="15F31d"/>
     </header>
     <body>
+      <trans-unit id="1tR-eI-DSh.configuration.title" xml:space="preserve">
+        <source>username</source>
+        <note>Class = "UIButton"; configuration.title = "username"; ObjectID = "1tR-eI-DSh"; Note = "Placeholder - Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="1tR-eI-DSh.normalTitle" xml:space="preserve">
+        <source>Button</source>
+        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "1tR-eI-DSh"; Note = "Placeholder - Do not translate";</note>
+      </trans-unit>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
         <source>Get Directions</source>
         <note>Class = "UILabel"; text = "Get Directions"; ObjectID = "1xx-L0-hKm";</note>
@@ -2488,14 +2496,42 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="translated">复制</target>
         <note>create a duplicate</note>
       </trans-unit>
+      <trans-unit id="ft" xml:space="preserve">
+        <source>ft</source>
+        <note>Height or width in feet, please abbreviate</note>
+      </trans-unit>
+      <trans-unit id="kg" xml:space="preserve">
+        <source>kg</source>
+        <note>Weight in kilograms, please abbreviate</note>
+      </trans-unit>
+      <trans-unit id="km" xml:space="preserve">
+        <source>km</source>
+        <note>Distance in kilometers, please abbreviate</note>
+      </trans-unit>
       <trans-unit id="km/h" xml:space="preserve">
         <source>km/h</source>
-        <note>kilometers per hour speed</note>
+        <note>kilometers per hour speed, please abbreviate</note>
+      </trans-unit>
+      <trans-unit id="lbs" xml:space="preserve">
+        <source>lbs</source>
+        <note>Weight in pounds, please abbreviate</note>
+      </trans-unit>
+      <trans-unit id="lt" xml:space="preserve">
+        <source>lt</source>
+        <note>Weight in long tons, please abbreviate</note>
+      </trans-unit>
+      <trans-unit id="m" xml:space="preserve">
+        <source>m</source>
+        <note>Height or width in meters, please abbreviate</note>
       </trans-unit>
       <trans-unit id="meters" xml:space="preserve">
         <source>meters</source>
         <target state="translated">米</target>
         <note/>
+      </trans-unit>
+      <trans-unit id="mi" xml:space="preserve">
+        <source>mi</source>
+        <note>Distance in miles, please abbreviate</note>
       </trans-unit>
       <trans-unit id="move" xml:space="preserve">
         <source>move</source>
@@ -2504,7 +2540,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="mph" xml:space="preserve">
         <source>mph</source>
-        <note>miles per hour speed</note>
+        <note>miles per hour speed, please abbreviate</note>
       </trans-unit>
       <trans-unit id="no" xml:space="preserve">
         <source>no</source>
@@ -2533,6 +2569,14 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>set tags</source>
         <target state="translated">设置标签</target>
         <note/>
+      </trans-unit>
+      <trans-unit id="st" xml:space="preserve">
+        <source>st</source>
+        <note>Weight in short tons, please abbreviate</note>
+      </trans-unit>
+      <trans-unit id="t" xml:space="preserve">
+        <source>t</source>
+        <note>Weight in metric tons, please abbreviate</note>
       </trans-unit>
       <trans-unit id="update relation members" xml:space="preserve">
         <source>update relation members</source>
@@ -3077,7 +3121,7 @@ You may want to clear the cache (under Display settings) to improve performance.
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "AVI-04-hFN";</note>
       </trans-unit>
       <trans-unit id="BHr-ta-k6F.text" xml:space="preserve">
-        <source>Copyright © 2012-2020 Bryce Cogswell. 
+        <source>Copyright © 2012-2024 Bryce Cogswell. 
 All rights reserved.
 
 OpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):
@@ -3091,16 +3135,13 @@ Mapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com
 XML parsing courtesy of Robbie Hanson's KissXML:
 https://github.com/robbiehanson/KissXML
 
-EXIF parsing code Copyright (c) 2010-2015 Mayank Lahiri
-https://github.com/mayanklahiri/easyexif
-
 Map icons by SJJB:
 http://www.sjjb.co.uk/mapicons
 
 Other icons by Glyphish:
 http://glyphish.com
 </source>
-        <note>Class = "UITextView"; text = "Copyright © 2012-2020 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nEXIF parsing code Copyright (c) 2010-2015 Mayank Lahiri\nhttps://github.com/mayanklahiri/easyexif\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F";</note>
+        <note>Class = "UITextView"; text = "Copyright © 2012-2024 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F";</note>
       </trans-unit>
       <trans-unit id="CHj-a3-gC9.text" xml:space="preserve">
         <source>Weblate - Translations</source>
@@ -3322,6 +3363,10 @@ http://glyphish.com
         <source>Developer settings</source>
         <target state="translated">开发者设置</target>
         <note>Class = "UITableViewSection"; headerTitle = "Developer settings"; ObjectID = "yAO-9B-CTd";</note>
+      </trans-unit>
+      <trans-unit id="zuh-G8-yy9.text" xml:space="preserve">
+        <source>Slack - Discussion</source>
+        <note>Class = "UILabel"; text = "Slack - Discussion"; ObjectID = "zuh-G8-yy9"; Note = "For opening the Slack app";</note>
       </trans-unit>
     </body>
   </file>

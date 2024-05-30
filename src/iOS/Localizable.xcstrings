@@ -41983,10 +41983,24 @@
       }
     },
     "Pause GPX" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausar GPX"
+          }
+        }
+      }
     },
     "Pause recording GPX tracks." : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausa la grabación de pistas GPX."
+          }
+        }
+      }
     },
     "Perform Action" : {
       "localizations" : {
@@ -47385,10 +47399,24 @@
       }
     },
     "Start GPX" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar GPX"
+          }
+        }
+      }
     },
     "Start recording GPX tracks." : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empieza a grabar pistas GPX."
+          }
+        }
+      }
     },
     "Stop" : {
       "localizations" : {
@@ -47527,10 +47555,24 @@
       }
     },
     "Stop GPX" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detener GPX"
+          }
+        }
+      }
     },
     "Stop recording GPX tracks." : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detener la grabación de pistas GPX."
+          }
+        }
+      }
     },
     "Straighten" : {
       "comment" : "Edit action",
