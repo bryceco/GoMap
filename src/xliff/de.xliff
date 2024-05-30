@@ -7,10 +7,12 @@
     <body>
       <trans-unit id="1tR-eI-DSh.configuration.title" xml:space="preserve">
         <source>username</source>
+        <target state="translated">Benutzername</target>
         <note>Class = "UIButton"; configuration.title = "username"; ObjectID = "1tR-eI-DSh"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="1tR-eI-DSh.normalTitle" xml:space="preserve">
         <source>Button</source>
+        <target state="translated">Schaltfläche</target>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "1tR-eI-DSh"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
@@ -717,6 +719,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
         <source>Copyright © 2024 Bryce Cogswell. All rights reserved.</source>
+        <target state="translated">Copyright © 2024 Bryce Cogswell. Alle Rechte vorbehalten.</target>
         <note>Copyright (human-readable)</note>
       </trans-unit>
     </body>
@@ -728,18 +731,22 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
     <body>
       <trans-unit id="%@" xml:space="preserve">
         <source>%@</source>
+        <target state="translated">%@</target>
         <note/>
       </trans-unit>
       <trans-unit id="%lld GPX points" xml:space="preserve">
         <source>%lld GPX points</source>
+        <target state="translated">%lld GPX-Punkte</target>
         <note/>
       </trans-unit>
       <trans-unit id="%lld points" xml:space="preserve">
         <source>%lld points</source>
+        <target state="translated">%lld Punkte</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
         <source>Pause GPX</source>
+        <target state="translated">GPX pausieren</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
@@ -748,6 +755,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       </trans-unit>
       <trans-unit id="Start GPX" xml:space="preserve">
         <source>Start GPX</source>
+        <target state="translated">GPX starten</target>
         <note/>
       </trans-unit>
       <trans-unit id="Start recording GPX tracks." xml:space="preserve">
@@ -756,10 +764,12 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       </trans-unit>
       <trans-unit id="Stop" xml:space="preserve">
         <source>Stop</source>
+        <target state="translated">Stopp</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop GPX" xml:space="preserve">
         <source>Stop GPX</source>
+        <target state="translated">GPX stoppen</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop recording GPX tracks." xml:space="preserve">
@@ -2133,6 +2143,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
         <source>Pause GPX</source>
+        <target state="translated">GPX pausieren</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
@@ -2362,6 +2373,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Start GPX" xml:space="preserve">
         <source>Start GPX</source>
+        <target state="translated">GPX starten</target>
         <note/>
       </trans-unit>
       <trans-unit id="Start recording GPX tracks." xml:space="preserve">
@@ -2375,6 +2387,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Stop GPX" xml:space="preserve">
         <source>Stop GPX</source>
+        <target state="translated">GPX stoppen</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop recording GPX tracks." xml:space="preserve">
@@ -2819,10 +2832,12 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="kg" xml:space="preserve">
         <source>kg</source>
+        <target state="translated">kg</target>
         <note>Weight in kilograms, please abbreviate</note>
       </trans-unit>
       <trans-unit id="km" xml:space="preserve">
         <source>km</source>
+        <target state="translated">km</target>
         <note>Distance in kilometers, please abbreviate</note>
       </trans-unit>
       <trans-unit id="km/h" xml:space="preserve">
@@ -2840,6 +2855,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="m" xml:space="preserve">
         <source>m</source>
+        <target state="translated">m</target>
         <note>Height or width in meters, please abbreviate</note>
       </trans-unit>
       <trans-unit id="meters" xml:space="preserve">
@@ -2849,6 +2865,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="mi" xml:space="preserve">
         <source>mi</source>
+        <target state="translated">mi</target>
         <note>Distance in miles, please abbreviate</note>
       </trans-unit>
       <trans-unit id="move" xml:space="preserve">
@@ -2897,6 +2914,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="t" xml:space="preserve">
         <source>t</source>
+        <target state="translated">t</target>
         <note>Weight in metric tons, please abbreviate</note>
       </trans-unit>
       <trans-unit id="update relation members" xml:space="preserve">
@@ -3752,6 +3770,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="zuh-G8-yy9.text" xml:space="preserve">
         <source>Slack - Discussion</source>
+        <target state="translated">Slack - Diskussion</target>
         <note>Class = "UILabel"; text = "Slack - Discussion"; ObjectID = "zuh-G8-yy9"; Note = "For opening the Slack app";</note>
       </trans-unit>
     </body>
