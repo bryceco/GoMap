@@ -133,7 +133,7 @@ final class GpxTrackWidgetManager: GpxTrackWidgetManagerProtocol {
 
 	func endTrack(fromWidget: Bool) {
 		if fromWidget {
-			// This will call us to be called again with fromWidget = false
+			// This will cause us to be called again with fromWidget = false
 			AppDelegate.shared.mapView.mainViewController.setGpsState(.NONE)
 			return
 		}
@@ -150,6 +150,18 @@ final class GpxTrackWidgetManager: GpxTrackWidgetManagerProtocol {
 			await activity.end(using: state, dismissalPolicy: .immediate)
 		}
 		self.activity = nil
+	}
+
+	// If app is being terminated from the background we call this to remove any live widgets
+	static func endAllActivitiesSynchronously() {
+		let semaphore = DispatchSemaphore(value: 0)
+		Task {
+			for activity in Activity<GpxTrackAttributes>.activities {
+				await activity.end(nil, dismissalPolicy: .immediate)
+			}
+			semaphore.signal()
+		}
+		semaphore.wait()
 	}
 }
 #endif

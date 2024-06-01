@@ -80,7 +80,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 			// update service
 			webCache = PersistentWebCache(name: tileServer.identifier,
 			                              memorySize: 20 * 1000 * 1000,
-										  daysToKeep: tileServer.daysToCache())
+			                              daysToKeep: tileServer.daysToCache())
 			setNeedsLayout()
 		}
 	}

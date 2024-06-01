@@ -318,7 +318,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	func applicationWillTerminate(_ application: UIApplication) {
-		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground.
+
+		// Turn off GPS so we gracefully end GPX trace.
+		AppDelegate.shared.mapView.mainViewController.setGpsState(.NONE)
+
+		// Remove any live activities
+		if #available(iOS 16.2, *) {
+			GpxTrackWidgetManager.endAllActivitiesSynchronously()
+		}
 	}
 
 	class func askUser(toAllowLocationAccess parentVC: UIViewController) {
