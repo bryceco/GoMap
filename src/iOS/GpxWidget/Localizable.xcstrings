@@ -3,6 +3,12 @@
   "strings" : {
     "%@" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13,6 +19,12 @@
     },
     "%lld GPX points" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld GPX-Punkte"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -23,6 +35,12 @@
     },
     "%lld points" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld Punkte"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -33,6 +51,12 @@
     },
     "Pause GPX" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX pausieren"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -53,6 +77,12 @@
     },
     "Start GPX" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX starten"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -73,6 +103,12 @@
     },
     "Stop" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stopp"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -83,6 +119,12 @@
     },
     "Stop GPX" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX stoppen"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",

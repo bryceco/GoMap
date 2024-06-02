@@ -5,10 +5,22 @@
       "comment" : "Class = \"UIButton\"; configuration.title = \"username\"; ObjectID = \"1tR-eI-DSh\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benutzername"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "username"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nombre de usuario"
           }
         }
       }
@@ -17,10 +29,22 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"1tR-eI-DSh\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schaltfläche"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Button"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón"
           }
         }
       }

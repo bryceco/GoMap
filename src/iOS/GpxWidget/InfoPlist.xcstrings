@@ -28,6 +28,12 @@
             "state" : "new",
             "value" : "GpxWidgetExtension"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GpxWidgetExtension"
+          }
         }
       }
     },
@@ -35,6 +41,12 @@
       "comment" : "Copyright (human-readable)",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2024 Bryce Cogswell. Alle Rechte vorbehalten."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",

@@ -30115,7 +30115,15 @@
       }
     },
     "ft" : {
-      "comment" : "Height or width in feet, please abbreviate"
+      "comment" : "Height or width in feet, please abbreviate",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ft"
+          }
+        }
+      }
     },
     "GeoJSON" : {
       "comment" : "The name of a GeoJSON file",
@@ -31996,10 +32004,38 @@
       }
     },
     "kg" : {
-      "comment" : "Weight in kilograms, please abbreviate"
+      "comment" : "Weight in kilograms, please abbreviate",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kg"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kg"
+          }
+        }
+      }
     },
     "km" : {
-      "comment" : "Distance in kilometers, please abbreviate"
+      "comment" : "Distance in kilometers, please abbreviate",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "km"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "km"
+          }
+        }
+      }
     },
     "km/h" : {
       "comment" : "kilometers per hour speed, please abbreviate",
@@ -32482,7 +32518,15 @@
       }
     },
     "lbs" : {
-      "comment" : "Weight in pounds, please abbreviate"
+      "comment" : "Weight in pounds, please abbreviate",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "lbs"
+          }
+        }
+      }
     },
     "Left" : {
       "localizations" : {
@@ -33337,10 +33381,32 @@
       }
     },
     "lt" : {
-      "comment" : "Weight in long tons, please abbreviate"
+      "comment" : "Weight in long tons, please abbreviate",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "lt"
+          }
+        }
+      }
     },
     "m" : {
-      "comment" : "Height or width in meters, please abbreviate"
+      "comment" : "Height or width in meters, please abbreviate",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "m"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "m"
+          }
+        }
+      }
     },
     "Mail delivery is not available on this device" : {
       "localizations" : {
@@ -34740,7 +34806,21 @@
       }
     },
     "mi" : {
-      "comment" : "Distance in miles, please abbreviate"
+      "comment" : "Distance in miles, please abbreviate",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mi"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mi"
+          }
+        }
+      }
     },
     "Missing way to connect to" : {
       "localizations" : {
@@ -41984,6 +42064,12 @@
     },
     "Pause GPX" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX pausieren"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -47129,7 +47215,15 @@
       }
     },
     "st" : {
-      "comment" : "Weight in short tons, please abbreviate"
+      "comment" : "Weight in short tons, please abbreviate",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "st"
+          }
+        }
+      }
     },
     "Standard imagery" : {
       "localizations" : {
@@ -47400,6 +47494,12 @@
     },
     "Start GPX" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX starten"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -47556,6 +47656,12 @@
     },
     "Stop GPX" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX stoppen"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -47788,7 +47894,21 @@
       }
     },
     "t" : {
-      "comment" : "Weight in metric tons, please abbreviate"
+      "comment" : "Weight in metric tons, please abbreviate",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "t"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "t"
+          }
+        }
+      }
     },
     "Tag Key" : {
       "localizations" : {
