@@ -323,10 +323,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Turn off GPS so we gracefully end GPX trace.
 		AppDelegate.shared.mapView.mainViewController.setGpsState(.NONE)
 
-		// Remove any live activities
+// Remove any live activities
+#if canImport(ActivityKit)
 		if #available(iOS 16.2, *) {
 			GpxTrackWidgetManager.endAllActivitiesSynchronously()
 		}
+#endif
 	}
 
 	class func askUser(toAllowLocationAccess parentVC: UIViewController) {

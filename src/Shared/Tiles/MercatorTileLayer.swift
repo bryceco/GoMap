@@ -383,7 +383,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 					zoomLevel: zoomLevel,
 					completion: { [self] error in
 						if let error = error {
-							mapView.presentError(error, flash: true)
+							mapView.presentError(title: tileServer.name, error: error, flash: true)
 						}
 						mapView.progressDecrement()
 					})

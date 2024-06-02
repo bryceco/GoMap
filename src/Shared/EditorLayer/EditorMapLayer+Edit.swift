@@ -861,7 +861,8 @@ extension EditorMapLayer {
 						                                  to: self.selectedRelation!,
 						                                  withRole: role)
 						add()
-						owner.flashMessage(NSLocalizedString("added to multipolygon relation", comment: ""))
+						owner.flashMessage(title: nil,
+						                   message: NSLocalizedString("added to multipolygon relation", comment: ""))
 						self.setNeedsLayout()
 					} catch {
 						owner.showAlert(NSLocalizedString("Error", comment: ""),
@@ -1077,7 +1078,8 @@ extension EditorMapLayer {
 
 	func addNode(at dropPoint: CGPoint) {
 		if isHidden {
-			owner.flashMessage(NSLocalizedString("Editing layer not visible", comment: ""))
+			owner.flashMessage(title: nil,
+			                   message: NSLocalizedString("Editing layer not visible", comment: ""))
 			return
 		}
 
@@ -1097,7 +1099,8 @@ extension EditorMapLayer {
 
 		let prevPointIsOffScreen = !bounds.contains(pushpinView.arrowPoint)
 		let offscreenWarning: (() -> Void) = {
-			self.owner.flashMessage(NSLocalizedString("Selected object is off screen", comment: ""))
+			self.owner.flashMessage(title: nil,
+			                        message: NSLocalizedString("Selected object is off screen", comment: ""))
 		}
 
 		if let selectedWay = selectedWay,

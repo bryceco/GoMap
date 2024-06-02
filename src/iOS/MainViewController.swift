@@ -663,7 +663,8 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			}
 #endif
 		}
-		mapView.flashMessage(NSLocalizedString("Low memory: clearing cache", comment: ""))
+		mapView.flashMessage(title: nil,
+		                     message: NSLocalizedString("Low memory: clearing cache", comment: ""))
 		mapView.editorLayer.didReceiveMemoryWarning()
 	}
 

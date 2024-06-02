@@ -962,7 +962,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		mainViewController.present(alertError, animated: true)
 	}
 
-	func flashMessage(_ message: String, duration: TimeInterval) {
+	func flashMessage(title: String?, message: String, duration: TimeInterval) {
 		let MAX_ALPHA: CGFloat = 0.8
 
 		if let attrText = NSMutableAttributedString(withHtmlString: message,
@@ -970,9 +970,22 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		                                            backgroundColor: UIColor.black),
 			attrText.length > 0
 		{
-			flashLabel.attributedText = attrText
+			if let title = title {
+				let attrTitle = NSMutableAttributedString(string: title + "\n\n", attributes: [
+					.foregroundColor: UIColor.white,
+					.backgroundColor: UIColor.black
+				])
+				attrTitle.append(attrText)
+				flashLabel.attributedText = attrTitle
+			} else {
+				flashLabel.attributedText = attrText
+			}
 		} else {
-			flashLabel.text = message
+			if let title = title {
+				flashLabel.text = title + "\n\n" + message
+			} else {
+				flashLabel.text = message
+			}
 		}
 
 		if flashLabel.isHidden {
@@ -999,15 +1012,14 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		})
 	}
 
-	func flashMessage(_ message: String) {
-		flashMessage(message, duration: 0.7)
+	func flashMessage(title: String?, message: String) {
+		flashMessage(title: title, message: message, duration: 0.7)
 	}
 
-	func presentError(_ error: Error, flash: Bool) {
+	func presentError(title: String?, error: Error, flash: Bool) {
 		if lastErrorDate == nil || Date().timeIntervalSince(lastErrorDate ?? Date()) > 3.0 {
+			var title = title ?? NSLocalizedString("Error", comment: "")
 			var text = error.localizedDescription
-
-			var title = NSLocalizedString("Error", comment: "")
 
 			var isNetworkError = false
 			var ignoreButton: String?
@@ -1041,7 +1053,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			}
 
 			if flash {
-				flashMessage(text, duration: 0.9)
+				flashMessage(title: title, message: text, duration: 0.9)
 			} else {
 				let alertError = UIAlertController(title: title, message: text, preferredStyle: .alert)
 				if let attrText = NSMutableAttributedString(withHtmlString: text,
@@ -1424,7 +1436,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		if enableAutomaticCacheManagement {
 			let changed = editorLayer.mapData.discardStaleData()
 			if changed {
-				flashMessage(NSLocalizedString("Cache trimmed", comment: ""))
+				flashMessage(title: nil, message: NSLocalizedString("Cache trimmed", comment: ""))
 				editorLayer.updateMapLocation() // download data if necessary
 			}
 		}
@@ -1684,14 +1696,14 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			error = NSError(domain: "Location", code: 100, userInfo: [
 				NSLocalizedDescriptionKey: text
 			])
-			presentError(error, flash: false)
+			presentError(title: nil, error: error, flash: false)
 		} else {
 			// driving through a tunnel or something
 			let text = NSLocalizedString("Location unavailable", comment: "")
 			error = NSError(domain: "Location", code: 100, userInfo: [
 				NSLocalizedDescriptionKey: text
 			])
-			presentError(error, flash: true)
+			presentError(title: nil, error: error, flash: true)
 		}
 	}
 
@@ -1721,7 +1733,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	@IBAction func undo(_ sender: Any?) {
 		if editorLayer.isHidden {
-			flashMessage(NSLocalizedString("Editing layer not visible", comment: ""))
+			flashMessage(title: nil, message: NSLocalizedString("Editing layer not visible", comment: ""))
 			return
 		}
 		// if just dropped a pin then undo removes the pin
@@ -1736,7 +1748,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	@IBAction func redo(_ sender: Any?) {
 		if editorLayer.isHidden {
-			flashMessage(NSLocalizedString("Editing layer not visible", comment: ""))
+			flashMessage(title: nil, message: NSLocalizedString("Editing layer not visible", comment: ""))
 			return
 		}
 		removePin()

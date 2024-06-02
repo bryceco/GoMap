@@ -44,10 +44,10 @@ protocol EditorMapLayerOwner: UIView, MapViewProgress {
 	func placePushpin(at: CGPoint, object: OsmBaseObject?)
 	func placePushpinForSelection(at point: CGPoint?)
 
-	func flashMessage(_ message: String)
+	func flashMessage(title: String?, message: String)
 	func showAlert(_ title: String, message: String?)
 	func presentAlert(alert: UIAlertController, location: MenuLocation)
-	func presentError(_ error: Error, flash: Bool)
+	func presentError(title: String?, error: Error, flash: Bool)
 
 	func setScreenFromMap(transform: OSMTransform) // used when undo/redo change the location
 	func screenLatLonRect() -> OSMRect
@@ -233,7 +233,7 @@ final class EditorMapLayer: CALayer {
 				self.owner.removePin()
 			}
 			let message = "\(title) \(action)"
-			self.owner.flashMessage(message)
+			self.owner.flashMessage(title: nil, message: message)
 		}
 		addSublayer(baseLayer)
 
@@ -362,7 +362,7 @@ final class EditorMapLayer: CALayer {
 				DispatchQueue.main.async(execute: { [self] in
 					// if we've been hidden don't bother displaying errors
 					if !isHidden {
-						owner.presentError(error, flash: true)
+						owner.presentError(title: nil, error: error, flash: true)
 					}
 				})
 				return
