@@ -64,7 +64,7 @@
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityLabel" xml:space="preserve">
         <source>Compass</source>
-        <target state="translated">羅盤</target>
+        <target state="translated">指南針</target>
         <note>Class = "UIButton"; accessibilityLabel = "Compass"; ObjectID = "E22-sL-sNt";</note>
       </trans-unit>
       <trans-unit id="FaM-WV-S6I.title" xml:space="preserve">
