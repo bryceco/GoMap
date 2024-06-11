@@ -56,7 +56,7 @@ final class PresetFeature: CustomDebugStringConvertible, FastCodable {
 		self.featureID = featureID
 		self.fieldsWithRedirect = fieldsWithRedirect
 		self.geometry = geometry
-		self.iconName = icon
+		iconName = icon
 		self.locationSet = locationSet
 		self.matchScore = matchScore
 		self.moreFieldsWithRedirect = moreFieldsWithRedirect

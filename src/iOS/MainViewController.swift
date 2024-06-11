@@ -498,25 +498,22 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 	// MARK: Keyboard shortcuts
 
 	override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-		if action == #selector(undo(_:)) {
+		switch action {
+		case #selector(undo(_:)):
 			return mapView.editorLayer.mapData.canUndo()
-		}
-		if action == #selector(redo(_:)) {
+		case #selector(redo(_:)):
 			return mapView.editorLayer.mapData.canRedo()
-		}
-		if action == #selector(copy(_:)) {
+		case #selector(copy(_:)):
 			return mapView.editorLayer.selectedPrimary != nil
-		}
-		if action == #selector(paste(_:)) {
+		case #selector(paste(_:)):
 			return mapView.editorLayer.selectedPrimary != nil && mapView.editorLayer.canPasteTags()
-		}
-		if action == #selector(delete(_:)) {
+		case #selector(delete(_:)):
 			return (mapView.editorLayer.selectedPrimary != nil) && (mapView.editorLayer.selectedRelation == nil)
-		}
-		if action == #selector(showHelp(_:)) {
+		case #selector(showHelp(_:)):
 			return true
+		default:
+			return false
 		}
-		return false
 	}
 
 	@objc func undo(_ sender: Any?) {

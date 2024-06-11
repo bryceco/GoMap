@@ -381,8 +381,8 @@ final class EditorMapLayer: CALayer {
 	// MARK: Common Drawing
 
 	static func ImageScaledToSize(_ image: UIImage, _ iconSize: CGFloat) -> UIImage {
-		var size = CGSize(width: Int(iconSize * UIScreen.main.scale), 
-						  height: Int(iconSize * UIScreen.main.scale))
+		var size = CGSize(width: Int(iconSize * UIScreen.main.scale),
+		                  height: Int(iconSize * UIScreen.main.scale))
 		let ratio = image.size.height / image.size.width
 		if ratio < 1.0 {
 			size.height *= ratio
@@ -945,10 +945,10 @@ final class EditorMapLayer: CALayer {
 			let padding: CGFloat = 4
 			let iconSize = max(icon.size.width, icon.size.height)
 			let imageSize = CGFloat(MinIconSizeInPixels) - padding * 2
-			let dx = (iconSize-icon.size.width)/iconSize*imageSize
-			let dy = (iconSize-icon.size.height)/iconSize*imageSize
-			iconMaskLayer.frame = CGRect(x: padding + dx*0.5,
-			                             y: padding + dy*0.5,
+			let dx = (iconSize - icon.size.width) / iconSize * imageSize
+			let dy = (iconSize - icon.size.height) / iconSize * imageSize
+			iconMaskLayer.frame = CGRect(x: padding + dx * 0.5,
+			                             y: padding + dy * 0.5,
 			                             width: imageSize - dx,
 			                             height: imageSize - dy)
 			iconMaskLayer.contents = icon.cgImage
