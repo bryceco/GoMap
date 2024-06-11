@@ -159,6 +159,7 @@ final class PresetFeature: CustomDebugStringConvertible, FastCodable {
 				return preset.name
 			}
 			print("bad preset redirect: \(redirect)")
+			DbgAssert(false)
 		}
 		return nameWithRedirect
 	}
@@ -175,6 +176,7 @@ final class PresetFeature: CustomDebugStringConvertible, FastCodable {
 					return fields
 				}
 				print("bad preset redirect: \(redirect)")
+				DbgAssert(false)
 			}
 			return [$0]
 		}
@@ -192,6 +194,7 @@ final class PresetFeature: CustomDebugStringConvertible, FastCodable {
 					return moreFields
 				}
 				print("bad preset redirect: \(redirect)")
+				DbgAssert(false)
 			}
 			return [$0]
 		}

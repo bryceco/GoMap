@@ -54,6 +54,8 @@ final class PresetField: CustomDebugStringConvertible {
 			{
 				return newValue
 			}
+			print("bad preset redirect: \(redirect)")
+			DbgAssert(false)
 		}
 		return value as? T
 	}
