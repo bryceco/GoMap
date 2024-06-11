@@ -381,7 +381,8 @@ final class EditorMapLayer: CALayer {
 	// MARK: Common Drawing
 
 	static func ImageScaledToSize(_ image: UIImage, _ iconSize: CGFloat) -> UIImage {
-		var size = CGSize(width: Int(iconSize * UIScreen.main.scale), height: Int(iconSize * UIScreen.main.scale))
+		var size = CGSize(width: Int(iconSize * UIScreen.main.scale), 
+						  height: Int(iconSize * UIScreen.main.scale))
 		let ratio = image.size.height / image.size.width
 		if ratio < 1.0 {
 			size.height *= ratio
@@ -926,11 +927,10 @@ final class EditorMapLayer: CALayer {
 		if let icon = icon {
 			/// White circle as the background
 			let backgroundLayer = CALayer()
-			backgroundLayer.bounds = CGRect(
-				x: 0,
-				y: 0,
-				width: CGFloat(MinIconSizeInPixels),
-				height: CGFloat(MinIconSizeInPixels))
+			backgroundLayer.bounds = CGRect(x: 0,
+			                                y: 0,
+			                                width: CGFloat(MinIconSizeInPixels),
+			                                height: CGFloat(MinIconSizeInPixels))
 			backgroundLayer.backgroundColor = UIColor.white.cgColor
 			backgroundLayer.cornerRadius = MinIconSizeInPixels / 2.0
 			backgroundLayer.masksToBounds = true
@@ -943,19 +943,20 @@ final class EditorMapLayer: CALayer {
 			/// icons.
 			let iconMaskLayer = CALayer()
 			let padding: CGFloat = 4
-			iconMaskLayer.frame = CGRect(
-				x: padding,
-				y: padding,
-				width: CGFloat(MinIconSizeInPixels) - padding * 2,
-				height: CGFloat(MinIconSizeInPixels) - padding * 2)
+			let iconSize = max(icon.size.width, icon.size.height)
+			let imageSize = CGFloat(MinIconSizeInPixels) - padding * 2
+			let dx = (iconSize-icon.size.width)/iconSize*imageSize
+			let dy = (iconSize-icon.size.height)/iconSize*imageSize
+			iconMaskLayer.frame = CGRect(x: padding + dx*0.5,
+			                             y: padding + dy*0.5,
+			                             width: imageSize - dx,
+			                             height: imageSize - dy)
 			iconMaskLayer.contents = icon.cgImage
-
 			let iconLayer = CALayer()
-			iconLayer.bounds = CGRect(
-				x: 0,
-				y: 0,
-				width: CGFloat(MinIconSizeInPixels),
-				height: CGFloat(MinIconSizeInPixels))
+			iconLayer.bounds = CGRect(x: 0,
+			                          y: 0,
+			                          width: CGFloat(MinIconSizeInPixels),
+			                          height: CGFloat(MinIconSizeInPixels))
 			let iconColor = defaultColor(for: node)
 			iconLayer.backgroundColor = (iconColor ?? UIColor.black).cgColor
 			iconLayer.mask = iconMaskLayer
@@ -991,18 +992,16 @@ final class EditorMapLayer: CALayer {
 			} else {
 				// generic box
 				let layer = CAShapeLayerWithProperties()
-				let rect = CGRect(
-					x: CGFloat(round(MinIconSizeInPixels / 4)),
-					y: CGFloat(round(MinIconSizeInPixels / 4)),
-					width: CGFloat(round(MinIconSizeInPixels / 2)),
-					height: CGFloat(round(MinIconSizeInPixels / 2)))
+				let rect = CGRect(x: CGFloat(round(MinIconSizeInPixels / 4)),
+				                  y: CGFloat(round(MinIconSizeInPixels / 4)),
+				                  width: CGFloat(round(MinIconSizeInPixels / 2)),
+				                  height: CGFloat(round(MinIconSizeInPixels / 2)))
 				let path = CGPath(rect: rect, transform: nil)
 				layer.path = path
-				layer.frame = CGRect(
-					x: -MinIconSizeInPixels / 2,
-					y: -MinIconSizeInPixels / 2,
-					width: MinIconSizeInPixels,
-					height: MinIconSizeInPixels)
+				layer.frame = CGRect(x: -MinIconSizeInPixels / 2,
+				                     y: -MinIconSizeInPixels / 2,
+				                     width: MinIconSizeInPixels,
+				                     height: MinIconSizeInPixels)
 				layer.position = CGPoint(x: pt.x, y: pt.y)
 				layer.strokeColor = (color ?? UIColor.black).cgColor
 				layer.fillColor = nil

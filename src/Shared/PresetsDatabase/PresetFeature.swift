@@ -19,7 +19,7 @@ final class PresetFeature: CustomDebugStringConvertible, FastCodable {
 	let featureID: String
 	let fieldsWithRedirect: [String]?
 	let geometry: [String]
-	let icon: String? // icon on the map
+	let iconName: String? // icon on the map
 	let locationSet: LocationSet
 	let matchScore: Double
 	let moreFieldsWithRedirect: [String]?
@@ -56,7 +56,7 @@ final class PresetFeature: CustomDebugStringConvertible, FastCodable {
 		self.featureID = featureID
 		self.fieldsWithRedirect = fieldsWithRedirect
 		self.geometry = geometry
-		self.icon = icon
+		self.iconName = icon
 		self.locationSet = locationSet
 		self.matchScore = matchScore
 		self.moreFieldsWithRedirect = moreFieldsWithRedirect
@@ -106,7 +106,7 @@ final class PresetFeature: CustomDebugStringConvertible, FastCodable {
 		featureID = try decoder.decode()
 		fieldsWithRedirect = try decoder.decode()
 		geometry = try decoder.decode()
-		icon = try decoder.decode()
+		iconName = try decoder.decode()
 		locationSet = try decoder.decode()
 		matchScore = try decoder.decode()
 		moreFieldsWithRedirect = try decoder.decode()
@@ -125,7 +125,7 @@ final class PresetFeature: CustomDebugStringConvertible, FastCodable {
 		encoder.encode(featureID)
 		encoder.encode(fieldsWithRedirect)
 		encoder.encode(geometry)
-		encoder.encode(icon)
+		encoder.encode(iconName)
 		encoder.encode(locationSet)
 		encoder.encode(matchScore)
 		encoder.encode(moreFieldsWithRedirect)
@@ -218,7 +218,11 @@ final class PresetFeature: CustomDebugStringConvertible, FastCodable {
 
 	var iconUnscaled: UIImage? {
 		if _iconUnscaled === PresetFeature.uninitializedImage {
-			_iconUnscaled = icon != nil ? UIImage(named: icon!) : nil
+			if let iconName = iconName {
+				_iconUnscaled = UIImage(named: iconName)
+			} else {
+				_iconUnscaled = nil
+			}
 		}
 		return _iconUnscaled
 	}
