@@ -31,17 +31,14 @@ class AdvancedSettingsViewController: UITableViewController {
 	}
 
 	@IBAction func textFieldReturn(_ sender: UITextField) {
-		let mapData = AppDelegate.shared.mapView.editorLayer.mapData
-		hostname.text = mapData.serverNameCanonicalized(hostname.text ?? "")
-
+		hostname.text = OsmServer.serverNameCanonicalized(hostname.text ?? "")
 		sender.resignFirstResponder()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		let appDelegate = AppDelegate.shared
-		let mapData = appDelegate.mapView.editorLayer.mapData
-		hostname.text = mapData.getServer()
+		hostname.text = OSM_SERVER.apiURL
 		originalHostname = hostname.text
 
 		let app = UIApplication.shared as! MyApplication
@@ -52,15 +49,15 @@ class AdvancedSettingsViewController: UITableViewController {
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 
-		let appDelegate = AppDelegate.shared
-		let mapData = appDelegate.mapView.editorLayer.mapData
 		if hostname.text != originalHostname {
 			// FIXME: need to make this sequence an API
+			let appDelegate = AppDelegate.shared
 			appDelegate.mapView.removePin()
 			appDelegate.mapView.editorLayer.selectedNode = nil
 			appDelegate.mapView.editorLayer.selectedWay = nil
 			appDelegate.mapView.editorLayer.selectedRelation = nil
-			mapData.setServer(hostname.text!)
+
+			OSM_SERVER = OsmServer.serverForUrl(hostname.text!)
 			appDelegate.mapView.editorLayer.setNeedsLayout()
 		}
 	}

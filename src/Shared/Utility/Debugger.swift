@@ -29,7 +29,7 @@ func DLog(_ args: String...) {
 
 func DbgAssert(_ x: Bool) {
 #if DEBUG
-	isUnderDebugger() {
+	if isUnderDebugger() {
 		assert(x, "unspecified")
 	}
 #endif

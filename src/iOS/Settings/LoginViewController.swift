@@ -12,7 +12,7 @@ final class LoginViewController: UITableViewController {
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 
 	@IBAction func registerAccount(_ sender: Any) {
-		if let url = URL(string: "https://www.openstreetmap.org/user/new") {
+		if let url = URL(string: "\(OSM_SERVER.queryURL)user/new") {
 			UIApplication.shared.open(
 				url,
 				options: [:],

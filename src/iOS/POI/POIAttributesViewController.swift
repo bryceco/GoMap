@@ -225,16 +225,15 @@ class POIAttributesViewController: UITableViewController {
 			case .identifier:
 				let type = object.osmType.string
 				let ident = object.ident
-				urlString = "https://www.openstreetmap.org/\(type)/\(ident)"
+				urlString = "\(OSM_SERVER.queryURL)\(type)/\(ident)"
 			case .user:
-				let user = object.user
-				urlString = "https://www.openstreetmap.org/user/\(user)"
+				urlString = "\(OSM_SERVER.queryURL)user/\(object.user)"
 			case .version:
 				let type = object.osmType.string
 				let ident = object.ident
-				urlString = "https://www.openstreetmap.org/\(type)/\(ident)/history"
+				urlString = "\(OSM_SERVER.queryURL)\(type)/\(ident)/history"
 			case .changeset:
-				urlString = "https://www.openstreetmap.org/changeset/\(object.changeset)"
+				urlString = "\(OSM_SERVER.queryURL)changeset/\(object.changeset)"
 			case .uid, .modified:
 				return
 			}

@@ -222,7 +222,7 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 
 extension MapMarkerDatabase {
 	func addNoteMarkers(forRegion box: OSMRect, completion: @escaping () -> Void) {
-		let url = OSM_API_URL +
+		let url = OSM_SERVER.apiURL +
 			"api/0.6/notes?closed=0&bbox=\(box.origin.x),\(box.origin.y),\(box.origin.x + box.size.width),\(box.origin.y + box.size.height)"
 		if let url1 = URL(string: url) {
 			URLSession.shared.data(with: url1, completionHandler: { [self] result in
@@ -263,7 +263,7 @@ extension MapMarkerDatabase {
 		allowedChars.remove(charactersIn: "+;&")
 		let comment = comment.addingPercentEncoding(withAllowedCharacters: allowedChars) ?? ""
 
-		var url = OSM_API_URL + "api/0.6/notes"
+		var url = OSM_SERVER.apiURL + "api/0.6/notes"
 
 		if note.comments.count == 0 {
 			// brand new note

@@ -35,7 +35,7 @@ class OAuth2 {
 	private(set) var authorizationHeader: (name: String, value: String)?
 
 	// These values are all computed dynamically based on the current server (kinda ugly)
-	var server: OsmServer { OsmServerList.first(where: { $0.apiURL == OSM_API_URL }) ?? OsmServerList[0] }
+	var server: OsmServer { OSM_SERVER }
 	var client_id: String { server.client_id }
 	var serverURL: String { server.authURL }
 	var oauthUrl: URL { return URL(string: serverURL)!.appendingPathComponent("oauth2") }

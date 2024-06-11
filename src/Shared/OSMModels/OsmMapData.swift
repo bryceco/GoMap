@@ -16,9 +16,6 @@ typealias EditActionWithNode = (OsmNode) -> Void
 typealias EditActionReturnWay = () -> OsmWay
 typealias EditActionReturnNode = () -> OsmNode
 
-// "https://api.openstreetmap.org/"
-var OSM_API_URL = ""
-
 final class OsmUserStatistics {
 	var user = ""
 	var lastEdit: Date!
@@ -75,43 +72,11 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 	// MARK: Utility
 
-	func serverNameCanonicalized(_ hostname: String) -> String {
-		var hostname = hostname
-		hostname = hostname.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-
-		if hostname.hasPrefix("http://") || hostname.hasPrefix("https://") {
-			// great
-		} else {
-			hostname = "https://" + hostname
-		}
-
-		while hostname.hasSuffix("/") {
-			hostname = String(hostname.dropLast())
-		}
-		hostname = hostname + "/"
-
-		return hostname
-	}
-
-	func setServer(_ hostname: String) {
-		let hostname = serverNameCanonicalized(hostname)
-
-		if OSM_API_URL == hostname {
-			// no change
-			return
-		}
-
-		if OSM_API_URL.count != 0 {
+	func setServer(_ host: OsmServer) {
+		if OSM_SERVER.apiURL.count != 0 {
 			// get rid of old data before connecting to new server
 			purgeSoft()
 		}
-
-		UserPrefs.shared.osmServerUrl.value = hostname
-		OSM_API_URL = hostname
-	}
-
-	func getServer() -> String {
-		return OSM_API_URL
 	}
 
 	func setupPeriodicSaveTimer() {
@@ -685,7 +650,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			progress.progressIncrement()
 
 			let rc = query.rect
-			let url = OSM_API_URL +
+			let url = OSM_SERVER.apiURL +
 				"api/0.6/map?bbox=\(rc.origin.x),\(rc.origin.y),\(rc.origin.x + rc.size.width),\(rc.origin.y + rc.size.height)"
 
 			OsmDownloader.osmData(forUrl: url, completion: { result in
@@ -855,7 +820,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		retries: Int,
 		completion: @escaping (_ error: Error?) -> Void)
 	{
-		let url2 = OSM_API_URL + "api/0.6/changeset/\(changesetID)/upload"
+		let url2 = OSM_SERVER.apiURL + "api/0.6/changeset/\(changesetID)/upload"
 		putRequest(url: url2, method: "POST", xml: xmlChanges) { [self] result in
 
 			switch result {
@@ -884,7 +849,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					   let objType = objType
 					{
 						let objType = (objType as String).lowercased()
-						var url3 = OSM_API_URL + "api/0.6/\(objType)/\(objId)"
+						var url3 = OSM_SERVER.apiURL + "api/0.6/\(objType)/\(objId)"
 						if objType == "way" || objType == "relation" {
 							url3 = url3 + "/full"
 						}
@@ -968,7 +933,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 				updateSql(sqlUpdate)
 
-				let url3 = OSM_API_URL + "api/0.6/changeset/\(changesetID)/close"
+				let url3 = OSM_SERVER.apiURL + "api/0.6/changeset/\(changesetID)/close"
 				putRequest(url: url3, method: "PUT", xml: nil) { result in
 					switch result {
 					case .success:
@@ -1106,7 +1071,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			tags["locale"] = locale
 		}
 		if let xmlCreate = OsmXmlGenerator.createXml(withType: "changeset", tags: tags) {
-			let url = OSM_API_URL + "api/0.6/changeset/create"
+			let url = OSM_SERVER.apiURL + "api/0.6/changeset/create"
 			putRequest(url: url, method: "PUT", xml: xmlCreate) { result in
 				switch result {
 				case let .failure(error):
@@ -1202,8 +1167,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	// MARK: Init/Save/Restore
 
 	func initCommon() {
-		let server = UserPrefs.shared.osmServerUrl.value ?? "https://api.openstreetmap.org/"
-		setServer(server)
+		setServer(OSM_SERVER)
 		setupPeriodicSaveTimer()
 	}
 

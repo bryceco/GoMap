@@ -58,7 +58,7 @@ class TagInfo {
 	class func taginfoFor(key: String, searchKeys: Bool, update: @escaping ([String]) -> Void) {
 		DispatchQueue.global(qos: .default).async(execute: {
 			let cleanKey = searchKeys ? key.trimmingCharacters(in: CharacterSet(charactersIn: ":")) : key
-			let abibase = "https://taginfo.openstreetmap.org/api/4"
+			let abibase = "\(OSM_SERVER.taginfoUrl)api/4"
 			let urlText = searchKeys
 				? "\(abibase)/keys/all?query=\(cleanKey)&page=1&rp=25&sortname=count_all&sortorder=desc"
 				: "\(abibase)/key/values?key=\(cleanKey)&page=1&rp=25&sortname=count_all&sortorder=desc"
@@ -127,7 +127,7 @@ class TagInfo {
 	// search the taginfo database
 	class func wikiInfoFor(key: String, value: String, update: @escaping (String) -> Void) {
 		DispatchQueue.global(qos: .default).async(execute: {
-			let abibase = "https://taginfo.openstreetmap.org/api/4/"
+			let abibase = "\(OSM_SERVER.taginfoUrl)api/4/"
 			let urlText: String
 			if value == "" {
 				urlText = "\(abibase)key/wiki_pages?key=\(key)"

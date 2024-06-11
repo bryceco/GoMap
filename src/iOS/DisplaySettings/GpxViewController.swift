@@ -154,7 +154,7 @@ class GpxViewController: UITableViewController {
 
 		// let progress window display before we submit work
 		DispatchQueue.main.async(execute: {
-			let url = OSM_API_URL + "api/0.6/gpx/create"
+			let url = OSM_SERVER.apiURL + "api/0.6/gpx/create"
 
 			guard var request = AppDelegate.shared.oAuth2.urlRequest(string: url) else { return }
 			let boundary = "----------------------------d10f7aa230e8"

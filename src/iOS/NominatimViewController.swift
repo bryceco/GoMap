@@ -132,7 +132,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		}
 
 		activityIndicator.startAnimating()
-		var url = OSM_API_URL + "api/0.6/\(objType.string)/\(objIdent)"
+		var url = OSM_SERVER.apiURL + "api/0.6/\(objType.string)/\(objIdent)"
 		if objType != .NODE {
 			url += "/full"
 		}
@@ -221,8 +221,8 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 
 		let lang = PresetLanguages.preferredLanguageCode()
 		if let text = string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed),
-		   let url = URL(string:
-		   	"https://nominatim.openstreetmap.org/search?q=\(text)&format=json&limit=50&accept-language=\(lang)")
+		   let url =
+		   URL(string: "\(OSM_SERVER.nominatimUrl)search?q=\(text)&format=json&limit=50&accept-language=\(lang)")
 		{
 			activityIndicator.startAnimating()
 

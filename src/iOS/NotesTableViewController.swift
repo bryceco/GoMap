@@ -197,7 +197,7 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 	@IBAction func showUser(_ sender: Any?) {
 		guard let cell: NotesOldCommentCell = (sender as? UIButton)?.superviewOfType(),
 		      let name = cell.user.titleLabel?.text,
-		      let url = URL(string: "https://www.openstreetmap.org/user/\(name)")
+		      let url = URL(string: "\(OSM_SERVER.queryURL)user/\(name)")
 		else {
 			return
 		}
