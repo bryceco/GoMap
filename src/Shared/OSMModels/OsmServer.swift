@@ -20,7 +20,7 @@ var OSM_SERVER: OsmServer = {
 			return
 		}
 		UserPrefs.shared.osmServerUrl.value = OSM_SERVER.apiURL
-		AppDelegate.shared.mapView.editorLayer.mapData.setServer(OSM_SERVER)
+		AppDelegate.shared.mapView.editorLayer.mapData.resetServer(OSM_SERVER)
 	}
 }
 

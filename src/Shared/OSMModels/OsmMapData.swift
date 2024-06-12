@@ -72,7 +72,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 	// MARK: Utility
 
-	func setServer(_ host: OsmServer) {
+	func resetServer(_ host: OsmServer) {
 		if OSM_SERVER.apiURL.count != 0 {
 			// get rid of old data before connecting to new server
 			purgeSoft()
@@ -1167,7 +1167,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	// MARK: Init/Save/Restore
 
 	func initCommon() {
-		setServer(OSM_SERVER)
 		setupPeriodicSaveTimer()
 	}
 
@@ -1350,8 +1349,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		deleteRelations: [OsmRelation],
 		isUpdate: Bool)
 	{
-		if (saveNodes.count + saveWays.count + saveRelations.count + deleteNodes.count + deleteWays
-			.count + deleteRelations.count) == 0
+		if (saveNodes.count + saveWays.count + saveRelations.count +
+			deleteNodes.count + deleteWays.count + deleteRelations.count) == 0
 		{
 			return
 		}
