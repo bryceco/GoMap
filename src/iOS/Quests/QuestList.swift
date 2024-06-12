@@ -42,7 +42,7 @@ final class QuestUserList: Codable {
 		self.init()
 	}
 
-	static func userQuests(fromJsonData data: Data) throws -> [QuestDefinition]  {
+	static func userQuests(fromJsonData data: Data) throws -> [QuestDefinition] {
 		let decoder = JSONDecoder()
 
 		// First try the old-fashioned way we did it
