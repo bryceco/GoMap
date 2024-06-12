@@ -72,7 +72,7 @@ struct QuestDefinitionWithFeatures: QuestDefinition {
 		ident: String,
 		title: String,
 		label: String,
-		tagKey: String, // The value the user is being asked to set
+		editKey: String, // The value the user is being asked to set
 		// The set of features the user is interested in (everything if empty)
 		includeFeaturePresets: [PresetFeature],
 		accepts: @escaping ((String) -> Bool))
@@ -84,13 +84,13 @@ struct QuestDefinitionWithFeatures: QuestDefinition {
 		let applies: (OsmBaseObject) -> Bool = { obj in
 			// we ignore geometry currently, but probably will need to handle it in the future
 			let tags = obj.tags
-			return tags[tagKey] == nil && includeFunc(tags)
+			return tags[editKey] == nil && includeFunc(tags)
 		}
 
 		return QuestInstance(ident: ident,
 		                     title: title,
 		                     label: label,
-		                     tagKeys: [tagKey],
+		                     editKeys: [editKey],
 		                     appliesToObject: applies,
 		                     acceptsValue: accepts)
 	}
@@ -122,7 +122,7 @@ struct QuestDefinitionWithFeatures: QuestDefinition {
 		return Self.makeInstanceWith(ident: ident,
 		                             title: title,
 		                             label: label,
-		                             tagKey: tagKey,
+		                             editKey: tagKey,
 		                             includeFeaturePresets: include,
 		                             accepts: accepts ?? { !$0.isEmpty })
 	}

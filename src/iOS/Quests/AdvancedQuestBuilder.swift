@@ -116,17 +116,17 @@ struct AdvancedQuestBuilder: View {
 				header: Text("Keys", comment: "The tag keys section of a quest definition"),
 				content: {
 					Text("What tag key is modified by this quest?")
-					ForEach(quest.tagKeys.indices, id: \.self) { index in
+					ForEach(quest.editKeys.indices, id: \.self) { index in
 						HStack {
 							Spacer()
-							TextField("", text: $quest.tagKeys[index])
+							TextField("", text: $quest.editKeys[index])
 								.frame(width: 200, alignment: .center)
 								.textFieldStyle(.roundedBorder)
 								.autocapitalization(.none)
 								.autocorrectionDisabled()
 								.keyboardType(.asciiCapable)
 
-							let showPlus = index == quest.tagKeys.count - 1
+							let showPlus = index == quest.editKeys.count - 1
 							Button(action: addKey) {
 								Label("", systemImage: "plus")
 							}
@@ -136,10 +136,10 @@ struct AdvancedQuestBuilder: View {
 						}
 					}
 					.onDelete { indexSet in
-						quest.tagKeys.remove(atOffsets: indexSet)
+						quest.editKeys.remove(atOffsets: indexSet)
 					}
 					.onMove { indexSet, index in
-						quest.tagKeys.move(fromOffsets: indexSet, toOffset: index)
+						quest.editKeys.move(fromOffsets: indexSet, toOffset: index)
 					}
 					.listRowSeparator(.hidden)
 				})
@@ -190,7 +190,7 @@ struct AdvancedQuestBuilder: View {
 				})
 				quest.title = quest.title.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 				quest.label = quest.label.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-				quest.tagKeys = quest.tagKeys.compactMap {
+				quest.editKeys = quest.editKeys.compactMap {
 					let s = $0.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 					return s.isEmpty ? nil : s
 				}
@@ -215,7 +215,7 @@ struct AdvancedQuestBuilder: View {
 	}
 
 	func addKey() {
-		quest.tagKeys.append("")
+		quest.editKeys.append("")
 	}
 }
 
@@ -223,7 +223,7 @@ struct AdvancedQuestBuilder: View {
 struct AdvancedQuestBuilder_Previews: PreviewProvider {
 	static let quest = QuestDefinitionWithFilters(title: "Add Cuisine",
 	                                              label: "🍽️",
-	                                              tagKeys: ["cuisine"],
+	                                              editKeys: ["cuisine"],
 	                                              filters: [
 	                                              	QuestDefinitionFilter(
 	                                              		tagKey: "amenity",

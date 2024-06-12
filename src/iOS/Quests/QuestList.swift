@@ -20,11 +20,13 @@ final class QuestUserList: Codable {
 	convenience init(fromJsonData data: Data) throws {
 		self.init()
 		let decoder = JSONDecoder()
+
 		// First try the old-fashioned way we did it
 		if let list = try? decoder.decode([QuestDefinitionWithFeatures].self, from: data) {
 			self.list = list
 			return
 		}
+
 		// FIXME: Silly to make a temporary version of the object then copy it
 		let listCopy = try decoder.decode(QuestUserList.self, from: data)
 		list = listCopy.list
@@ -38,6 +40,26 @@ final class QuestUserList: Codable {
 			}
 		} catch {}
 		self.init()
+	}
+
+	static func userQuests(fromJsonData data: Data) throws -> [QuestDefinition]  {
+		let decoder = JSONDecoder()
+
+		// First try the old-fashioned way we did it
+		if let list = try? decoder.decode([QuestDefinitionWithFeatures].self, from: data) {
+			return list
+		}
+
+		// try importing as a single quest rather than a list
+		if let quest = try? decoder.decode(QuestDefinitionWithFeatures.self, from: data) {
+			return [quest]
+		}
+		if let quest = try? decoder.decode(QuestDefinitionWithFilters.self, from: data) {
+			return [quest]
+		}
+
+		// import as a dictionary containing both feature and filter quest arrays
+		return try decoder.decode(QuestUserList.self, from: data).list
 	}
 
 	func save(toUserPrefsWith pref: Pref<Data>) {
@@ -102,7 +124,7 @@ class ResurveyQuest: QuestInstance {
 		super.init(ident: "__needsSurvey",
 		           title: NSLocalizedString("Needs Survey", comment: "Quest for objects that aren't recently updated"),
 		           label: "ic_quest_check",
-		           tagKeys: ["check_date", "name", "phone", "opening_hours"],
+		           editKeys: ["check_date", "name", "phone", "opening_hours"],
 		           appliesToObject: predicate,
 		           acceptsValue: { _ in true })
 	}
@@ -133,7 +155,7 @@ class QuestList {
 				ident: "__BuildingType",
 				title: NSLocalizedString("Add Building Type", comment: "A type of quest"),
 				label: "ic_quest_building",
-				tagKeys: ["building"],
+				editKeys: ["building"],
 				appliesToObject: { obj in
 					obj.tags["building"] == "yes"
 				},
@@ -143,7 +165,7 @@ class QuestList {
 				ident: "__SidewalkSurface",
 				title: NSLocalizedString("Add Sidewalk Surface", comment: "A type of quest"),
 				label: "ic_quest_sidewalk",
-				tagKeys: ["surface"],
+				editKeys: ["surface"],
 				appliesToObject: { obj in
 					guard let way = obj as? OsmWay else { return false }
 					switch way.tags["highway"] {
@@ -168,7 +190,7 @@ class QuestList {
 				ident: "__HighwaySurface",
 				title: NSLocalizedString("Add Highway Surface", comment: "A type of quest"),
 				label: "ic_quest_way_surface",
-				tagKeys: ["surface"],
+				editKeys: ["surface"],
 				appliesToObject: { obj in
 					guard let way = obj as? OsmWay else { return false }
 					switch way.tags["highway"] {
@@ -198,7 +220,7 @@ class QuestList {
 				ident: "__SpeedLimit",
 				title: NSLocalizedString("Add Speed Limit", comment: "A type of quest"),
 				label: "ic_quest_max_speed",
-				tagKeys: ["maxspeed"],
+				editKeys: ["maxspeed"],
 				appliesToObject: { obj in
 					guard let way = obj as? OsmWay,
 					      way.tags["maxspeed"] == nil else { return false }
@@ -225,7 +247,7 @@ class QuestList {
 				ident: "__TelephoneNumber",
 				title: NSLocalizedString("Add Telephone Number", comment: "A type of quest"),
 				label: "ic_quest_phone",
-				tagKeys: ["phone"],
+				editKeys: ["phone"],
 				appliesToObject: { (obj: OsmBaseObject) in
 					let tags = obj.tags
 					return phoneFeaturesPredicate(tags) &&
@@ -240,7 +262,7 @@ class QuestList {
 				ident: "__ParkingLotTYpe",
 				title: NSLocalizedString("Add Parking Type", comment: "A type of quest"),
 				label: "ic_quest_parking",
-				tagKeys: ["parking"],
+				editKeys: ["parking"],
 				appliesToObject: { obj in
 					obj.tags["amenity"] == "parking" && obj.tags["parking"] == nil
 				},
@@ -253,7 +275,7 @@ class QuestList {
 				ident: "__Website",
 				title: NSLocalizedString("Add Website", comment: "A type of quest"),
 				label: "🌐",
-				tagKeys: ["website"],
+				editKeys: ["website"],
 				appliesToObject: { (obj: OsmBaseObject) in
 					let tags = obj.tags
 					return websitePredicate(tags) &&
@@ -370,8 +392,8 @@ class QuestList {
 	// MARK: Import/export
 
 	func importQuests(fromText text: String) throws {
+		let data = Data(text.utf8)
 		do {
-			let data = Data(text.utf8)
 			let list = try QuestUserList(fromJsonData: data)
 			for quest in list.list {
 				try addUserQuest(quest, replacing: nil)

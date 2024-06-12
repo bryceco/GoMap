@@ -87,14 +87,14 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 
 	var title: String
 	var label: String
-	var tagKeys: [String]
+	var editKeys: [String]
 	var filters: [QuestDefinitionFilter]
 	var geometry: Geometries
 
-	init(title: String, label: String, tagKeys: [String], filters: [QuestDefinitionFilter], geometry: Geometries) {
+	init(title: String, label: String, editKeys: [String], filters: [QuestDefinitionFilter], geometry: Geometries) {
 		self.title = title
 		self.label = label
-		self.tagKeys = tagKeys
+		self.editKeys = editKeys
 		self.filters = filters
 		self.geometry = geometry
 	}
@@ -104,8 +104,9 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 	enum CodingKeys: String, CodingKey {
 		case title
 		case label
-		case tagKeys
-		case tagKey // old alias for tagKeys
+		case editKeys
+		case tagKeys // old alias for editKeys
+		case tagKey // old alias for editKeys
 		case filters
 		case geometry
 	}
@@ -115,10 +116,13 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 			let container = try decoder.container(keyedBy: CodingKeys.self)
 			title = try container.decode(String.self, forKey: .title)
 			label = try container.decode(String.self, forKey: .label)
+			// editKeys has been renamed several times:
 			if let string = try? container.decode(String.self, forKey: .tagKey) {
-				tagKeys = string.split(separator: ",").map { String($0) }
+				editKeys = string.split(separator: ",").map { String($0) }
+			} else if let tagKeys = try? container.decode([String].self, forKey: .tagKeys) {
+				editKeys = tagKeys
 			} else {
-				tagKeys = try container.decode([String].self, forKey: .tagKeys)
+				editKeys = try container.decode([String].self, forKey: .editKeys)
 			}
 			filters = try container.decode([QuestDefinitionFilter].self, forKey: .filters)
 			geometry = (try? container.decode(Geometries.self, forKey: .geometry)) ?? Geometries()
@@ -132,7 +136,7 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 		var container = encoder.container(keyedBy: CodingKeys.self)
 		try container.encode(title, forKey: .title)
 		try container.encode(label, forKey: .label)
-		try container.encode(tagKeys, forKey: .tagKeys)
+		try container.encode(editKeys, forKey: .editKeys)
 		try container.encode(filters, forKey: .filters)
 		try container.encode(geometry, forKey: .geometry)
 	}
@@ -145,19 +149,33 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 	 highway != lamp
 	 highway != path		// gets ANDed with previous
 	 */
-	private typealias predicate = ([String: String]) -> Bool
-	private static func makeGroups(list: [QuestDefinitionFilter])
-		-> [(predicate: predicate, included: Bool)]
+	private typealias Predicate = ([String: String]) -> Bool
+	private static func makeGroups(list: [QuestDefinitionFilter], editKeys: [String])
+		-> [(predicate: Predicate, included: QuestDefinitionFilter.Included)]
 	{
 		var list = list
-		var groups: [(predicate, Bool)] = []
+		var groups: [(Predicate, QuestDefinitionFilter.Included)] = []
 		while let rule = list.popLast() {
 			// collect all items that match first item for key and relation
 			var pred = rule.makePredicate()
+
 			while let otherIndex = list.indices.first(where: {
-				list[$0].tagKey == rule.tagKey &&
-					list[$0].relation == rule.relation &&
-					list[$0].included == rule.included
+				let other = list[$0]
+				// special case to detect situation where the user wants to edit any of several missing editKeys
+				if editKeys.contains(rule.tagKey),
+				   editKeys.contains(other.tagKey),
+				   rule.relation == .equal,
+				   other.relation == .equal,
+				   rule.tagValue == "",
+				   other.tagValue == "",
+				   rule.included == .include,
+				   other.included == .include
+				{
+					return true
+				}
+				return other.tagKey == rule.tagKey
+					&& other.relation == rule.relation
+					&& other.included == rule.included
 			}) {
 				let rhs = list[otherIndex].makePredicate()
 				list.remove(at: otherIndex)
@@ -169,12 +187,14 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 					pred = { tags in lhs(tags) && rhs(tags) }
 				}
 			}
-			groups.append((pred, rule.included == .include))
+			groups.append((pred, rule.included))
 		}
 		return groups
 	}
 
-	private static func makePredicateFor(filters: [QuestDefinitionFilter]) throws -> (([String: String]) -> Bool) {
+	private static func makePredicateFor(filters: [QuestDefinitionFilter],
+	                                     editKeys: [String]) throws -> (([String: String]) -> Bool)
+	{
 		if filters.contains(where: { $0.tagKey == "" }) {
 			throw QuestError.emptyKeyString
 		}
@@ -183,16 +203,16 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 		}
 
 		// handle filters
-		var groups = makeGroups(list: filters)
+		var groups = makeGroups(list: filters, editKeys: editKeys)
 
 		let group = groups.popLast()!
 		let p = group.predicate
-		var pred = group.included ? p : { !p($0) }
+		var pred = group.included == .include ? p : { !p($0) }
 
 		while let rhsGroup = groups.popLast() {
 			let lhs = pred
 			let rhs = rhsGroup.predicate
-			if rhsGroup.included {
+			if rhsGroup.included == .include {
 				pred = { lhs($0) && rhs($0) }
 			} else {
 				pred = { lhs($0) && !rhs($0) }
@@ -221,7 +241,7 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 			throw QuestError.illegalLabel(label)
 		}
 
-		let filterPred = try Self.makePredicateFor(filters: filters)
+		let filterPred = try Self.makePredicateFor(filters: filters, editKeys: editKeys)
 		let pred: (OsmBaseObject) -> Bool
 		if let geomPred = Self.makePredicateFor(geometry: geometry) {
 			pred = { geomPred($0.geometry()) && filterPred($0.tags) }
@@ -231,7 +251,7 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 		return QuestInstance(ident: title,
 		                     title: title,
 		                     label: label,
-		                     tagKeys: tagKeys,
+		                     editKeys: editKeys,
 		                     appliesToObject: pred,
 		                     acceptsValue: { _ in true })
 	}

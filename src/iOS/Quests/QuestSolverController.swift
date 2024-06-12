@@ -20,12 +20,12 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 	var object: OsmBaseObject!
 	var presetFeature: PresetFeature?
 	var presetKeys: [PresetKey?] = []
-	var tagKeys: [String] = []
+	var editKeys: [String] = []
 	var onClose: (() -> Void)?
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		tableView.allowsMultipleSelection = tagKeys.count > 1
+		tableView.allowsMultipleSelection = editKeys.count > 1
 		navigationItem.rightBarButtonItem?.isEnabled = false
 		tableView.separatorStyle = .none
 	}
@@ -65,7 +65,7 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 
 		var didChange = false
 		for preset in presets.allPresetKeys() {
-			if let index = tagKeys.firstIndex(where: { $0 == preset.tagKey }) {
+			if let index = editKeys.firstIndex(where: { $0 == preset.tagKey }) {
 				if presetKeys[index] == preset {
 					continue // no change
 				} else {
@@ -90,8 +90,8 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 		vc.questMarker = marker
 		vc.title = NSLocalizedString("Quest", comment: "The current Quest the user is answering")
 		vc.onClose = onClose
-		vc.tagKeys = marker.quest.tagKeys
-		vc.presetKeys = vc.tagKeys.map { _ in nil }
+		vc.editKeys = marker.quest.editKeys
+		vc.presetKeys = vc.editKeys.map { _ in nil }
 		vc.presetFeature = PresetsDatabase.shared.presetFeatureMatching(
 			tags: object.tags,
 			// We don't use the object geometry here in case the object has tags that match against
@@ -99,7 +99,7 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 			geometry: nil, // object.geometry(),
 			location: AppDelegate.shared.mapView.currentRegion,
 			includeNSI: false,
-			withPresetKey: vc.tagKeys.first)
+			withPresetKey: vc.editKeys.first)
 		_ = vc.refreshPresetKey()
 		return vc2
 	}
@@ -127,12 +127,12 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 				// free-form text field
 				// resign first responder so automatic updates to the textField will occur
 				cell.textField?.resignFirstResponder()
-				tags[tagKeys[keyIndex]] = cell.textField?.text
+				tags[editKeys[keyIndex]] = cell.textField?.text
 			} else if let index = tableView.indexPathsForSelectedRows?.first(where: { $0.section == section }),
 			          let text = presetKeys[keyIndex]?.presetList?[index.row].tagValue
 			{
 				// user selected a preset
-				tags[tagKeys[keyIndex]] = text
+				tags[editKeys[keyIndex]] = text
 			} else {
 				// No value set
 			}
@@ -183,7 +183,7 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 
 	override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
 		guard
-			indexPath.section > 0, indexPath.section < 1 + tagKeys.count,
+			indexPath.section > 0, indexPath.section < 1 + editKeys.count,
 			!(tableView.cellForRow(at: indexPath) is QuestSolverTextEntryCell)
 		else {
 			return nil
@@ -201,7 +201,7 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 		case 0:
 			// heaader
 			break
-		case 1 + tagKeys.count:
+		case 1 + editKeys.count:
 			// footer
 			break
 		default:
@@ -210,17 +210,17 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 1 + tagKeys.count + 1
+		return 1 + editKeys.count + 1
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		switch section {
 		case 0:
 			return nil
-		case tagKeys.count + 1:
+		case editKeys.count + 1:
 			return nil
 		default:
-			return tagKeys[section - 1]
+			return editKeys[section - 1]
 		}
 	}
 
@@ -228,7 +228,7 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 		switch section {
 		case 0:
 			return NUMBER_OF_HEADERS
-		case 1 + tagKeys.count: // header section + tagKeys
+		case 1 + editKeys.count: // header section + editKeys
 			return NUMBER_OF_FOOTERS
 		default:
 			if let presetKey = presetKeys[section - 1],
@@ -266,7 +266,7 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 			default:
 				fatalError()
 			}
-		case tagKeys.count + 1:
+		case editKeys.count + 1:
 			// Footers
 			switch indexPath.row {
 			case 0:
@@ -288,7 +288,7 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 				let presetValue = presetKey?.presetList?[indexPath.row]
 				let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCellTagValue", for: indexPath)
 				cell.textLabel?.text = presetValue?.name ?? ""
-				if let value = object.tags[tagKeys[indexPath.section - 1]],
+				if let value = object.tags[editKeys[indexPath.section - 1]],
 				   value == presetValue?.tagValue
 				{
 					// The value is already set
@@ -303,9 +303,9 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 				if let presetKey = presetKeys[indexPath.section - 1] {
 					cell.textField?.presetKey = presetKey
 				} else {
-					cell.textField?.key = tagKeys[indexPath.section - 1]
+					cell.textField?.key = editKeys[indexPath.section - 1]
 				}
-				if let value = object.tags[tagKeys[indexPath.section - 1]] {
+				if let value = object.tags[editKeys[indexPath.section - 1]] {
 					// The value is already set
 					cell.textField?.text = value
 				}
