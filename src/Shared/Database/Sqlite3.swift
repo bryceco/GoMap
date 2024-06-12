@@ -14,22 +14,21 @@ enum SqliteError: LocalizedError {
 	case close(Int32, String)
 	case exec(String, Int32, String)
 	case prepare(String, Int32, String)
-	case clearBindings(Int32, String)
-	case bind(Int32, String)
-	case step(Int32, String)
+	case clearBindings(Int32)
+	case bind(Int32)
+	case step(Int32)
 
 	public var errorDescription: String? {
 		switch self {
 		case let .open(rc, msg): return "SqliteError.open() -> \(Sqlite.errorMessageFor(code: rc)) - \(msg)"
 		case let .close(rc, msg): return "SqliteError.close() -> \(Sqlite.errorMessageFor(code: rc)) - \(msg)"
-		case let .exec(stmt, rc,
-		               msg): return "SqliteError.exec('\(stmt)') -> \(Sqlite.errorMessageFor(code: rc)) - \(msg)"
-		case let .prepare(stmt, rc,
-		                  msg): return "SqliteError.prepare('\(stmt)') -> \(Sqlite.errorMessageFor(code: rc)) - \(msg)"
-		case let .clearBindings(rc,
-		                        msg): return "SqliteError.clearBindings() -> \(Sqlite.errorMessageFor(code: rc)) - \(msg)"
-		case let .bind(rc, msg): return "SqliteError.bind() -> \(Sqlite.errorMessageFor(code: rc)) - \(msg)"
-		case let .step(rc, msg): return "SqliteError.step() -> \(Sqlite.errorMessageFor(code: rc)) - \(msg)"
+		case let .exec(stmt, rc, msg):
+			return "SqliteError.exec('\(stmt)') -> \(Sqlite.errorMessageFor(code: rc)) - \(msg)"
+		case let .prepare(stmt, rc, msg):
+			return "SqliteError.prepare('\(stmt)') -> \(Sqlite.errorMessageFor(code: rc)) - \(msg)"
+		case let .clearBindings(rc): return "SqliteError.clearBindings() -> \(Sqlite.errorMessageFor(code: rc))"
+		case let .bind(rc): return "SqliteError.bind() -> \(Sqlite.errorMessageFor(code: rc))"
+		case let .step(rc): return "SqliteError.step() -> \(Sqlite.errorMessageFor(code: rc))"
 		}
 	}
 }
@@ -37,14 +36,93 @@ enum SqliteError: LocalizedError {
 private typealias sqlite3_db = OpaquePointer
 private typealias sqlite3_stmt = OpaquePointer
 
+private let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
+
 final class SqliteStatement {
-	fileprivate let value: sqlite3_stmt
+	fileprivate let stmt: sqlite3_stmt
 	deinit {
-		sqlite3_finalize(value)
+		sqlite3_finalize(stmt)
 	}
 
 	init(value: OpaquePointer) {
-		self.value = value
+		stmt = value
+	}
+
+	func clearBindings() throws {
+		let rc = sqlite3_clear_bindings(stmt)
+		if rc != SQLITE_OK {
+			throw SqliteError.clearBindings(rc)
+		}
+	}
+
+	func reset() throws {
+		let rc = sqlite3_reset(stmt)
+		if rc != SQLITE_OK {
+			throw SqliteError.clearBindings(rc)
+		}
+	}
+
+	func bindText(_ index: Int32, _ value: String?) throws {
+		let rc = sqlite3_bind_text(stmt, index, value, -1, SQLITE_TRANSIENT)
+		if rc != SQLITE_OK {
+			throw SqliteError.bind(rc)
+		}
+	}
+
+	func bindInt32(_ index: Int32, _ value: Int32) throws {
+		let rc = sqlite3_bind_int(stmt, index, value)
+		if rc != SQLITE_OK {
+			throw SqliteError.bind(rc)
+		}
+	}
+
+	func bindInt64(_ index: Int32, _ value: Int64) throws {
+		let rc = sqlite3_bind_int64(stmt, index, value)
+		if rc != SQLITE_OK {
+			throw SqliteError.bind(rc)
+		}
+	}
+
+	func bindDouble(_ index: Int32, _ value: Double) throws {
+		let rc = sqlite3_bind_double(stmt, index, value)
+		if rc != SQLITE_OK {
+			throw SqliteError.bind(rc)
+		}
+	}
+
+	func step(hasResult: Int32?) throws -> Bool {
+		let rc = sqlite3_step(stmt)
+		if rc == SQLITE_DONE {
+			return false
+		}
+		if let hasResult = hasResult,
+		   rc == hasResult
+		{
+			return true
+		}
+		throw SqliteError.step(rc)
+	}
+
+	func step() throws {
+		_ = try step(hasResult: nil)
+	}
+
+	func columnText(_ index: Int32) -> String {
+		let text = sqlite3_column_text(stmt, index)
+		assert(text != nil)
+		return String(cString: text!)
+	}
+
+	func columnInt32(_ index: Int32) -> Int32 {
+		return sqlite3_column_int(stmt, index)
+	}
+
+	func columnInt64(_ index: Int32) -> Int64 {
+		return sqlite3_column_int64(stmt, index)
+	}
+
+	func columnDouble(_ index: Int32) -> Double {
+		return sqlite3_column_double(stmt, index)
 	}
 }
 
@@ -54,8 +132,6 @@ final class Sqlite {
 
 	let path: String
 	private let db: sqlite3_db
-
-	private let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
 
 	class func pathForOsmName(_ name: String) -> String {
 		let basename = "data.sqlite3"
@@ -117,89 +193,12 @@ final class Sqlite {
 		return SqliteStatement(value: statement!)
 	}
 
-	func clearBindings(_ statement: SqliteStatement) throws {
-		let rc = sqlite3_clear_bindings(statement.value)
-		if rc != SQLITE_OK {
-			throw SqliteError.clearBindings(rc, String(utf8String: sqlite3_errmsg(db)) ?? "")
-		}
-	}
-
-	func reset(_ statement: SqliteStatement) throws {
-		let rc = sqlite3_reset(statement.value)
-		if rc != SQLITE_OK {
-			throw SqliteError.clearBindings(rc, String(utf8String: sqlite3_errmsg(db)) ?? "")
-		}
-	}
-
-	func bindText(_ statement: SqliteStatement, _ index: Int32, _ value: String?) throws {
-		let rc = sqlite3_bind_text(statement.value, index, value, -1, SQLITE_TRANSIENT)
-		if rc != SQLITE_OK {
-			throw SqliteError.bind(rc, String(utf8String: sqlite3_errmsg(db)) ?? "")
-		}
-	}
-
-	func bindInt32(_ statement: SqliteStatement, _ index: Int32, _ value: Int32) throws {
-		let rc = sqlite3_bind_int(statement.value, index, value)
-		if rc != SQLITE_OK {
-			throw SqliteError.bind(rc, String(utf8String: sqlite3_errmsg(db)) ?? "")
-		}
-	}
-
-	func bindInt64(_ statement: SqliteStatement, _ index: Int32, _ value: Int64) throws {
-		let rc = sqlite3_bind_int64(statement.value, index, value)
-		if rc != SQLITE_OK {
-			throw SqliteError.bind(rc, String(utf8String: sqlite3_errmsg(db)) ?? "")
-		}
-	}
-
-	func bindDouble(_ statement: SqliteStatement, _ index: Int32, _ value: Double) throws {
-		let rc = sqlite3_bind_double(statement.value, index, value)
-		if rc != SQLITE_OK {
-			throw SqliteError.bind(rc, String(utf8String: sqlite3_errmsg(db)) ?? "")
-		}
-	}
-
-	func step(_ statement: SqliteStatement, hasResult: Int32?) throws -> Bool {
-		let rc = sqlite3_step(statement.value)
-		if rc == SQLITE_DONE {
-			return false
-		}
-		if let hasResult = hasResult,
-		   rc == hasResult
-		{
-			return true
-		}
-		throw SqliteError.step(rc, String(utf8String: sqlite3_errmsg(db)) ?? "")
-	}
-
-	func step(_ statement: SqliteStatement) throws {
-		_ = try step(statement, hasResult: nil)
-	}
-
-	func columnText(_ statement: SqliteStatement, _ index: Int32) -> String {
-		let text = sqlite3_column_text(statement.value, index)
-		assert(text != nil)
-		return String(cString: text!)
-	}
-
-	func columnInt32(_ statement: SqliteStatement, _ index: Int32) -> Int32 {
-		return sqlite3_column_int(statement.value, index)
-	}
-
-	func columnInt64(_ statement: SqliteStatement, _ index: Int32) -> Int64 {
-		return sqlite3_column_int64(statement.value, index)
-	}
-
-	func columnDouble(_ statement: SqliteStatement, _ index: Int32) -> Double {
-		return sqlite3_column_double(statement.value, index)
-	}
-
 	func printAllTables() throws {
 		print("")
 		print("Sqlite3 Tables:")
 		let stmt = try prepare("SELECT * FROM sqlite_master where type='table';")
-		while try step(stmt, hasResult: Sqlite.ROW) {
-			let msg = columnText(stmt, 1)
+		while try stmt.step(hasResult: Sqlite.ROW) {
+			let msg = stmt.columnText(1)
 			print("\(msg)")
 		}
 	}
