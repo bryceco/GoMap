@@ -49,13 +49,16 @@ final class PresetField: CustomDebugStringConvertible {
 		   value.hasSuffix("}")
 		{
 			let redirect = String(value.dropFirst().dropLast())
-			if let newField = PresetsDatabase.shared.presetFields[redirect],
-			   let newValue: T = newField.redirected(property: property)
-			{
-				return newValue
+			guard let newField = PresetsDatabase.shared.presetFields[redirect] else {
+				print("bad preset redirect: \(redirect)")
+				DbgAssert(false)
+				return nil
 			}
-			print("bad preset redirect: \(redirect)")
-			DbgAssert(false)
+			if let newValue: T = newField.redirected(property: property) {
+				return newValue
+			} else {
+				return nil
+			}
 		}
 		return value as? T
 	}

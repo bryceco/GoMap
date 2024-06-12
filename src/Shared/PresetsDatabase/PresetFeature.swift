@@ -170,13 +170,12 @@ final class PresetFeature: CustomDebugStringConvertible, FastCodable {
 		return fieldsWithRedirect.flatMap {
 			if $0.hasPrefix("{"), $0.hasSuffix("}") {
 				let redirect = String($0.dropFirst().dropLast())
-				if let preset = PresetsDatabase.shared.presetFeatureForFeatureID(redirect),
-				   let fields = preset.fields
-				{
-					return fields
+				guard let preset = PresetsDatabase.shared.presetFeatureForFeatureID(redirect) else {
+					print("bad preset redirect: \(redirect)")
+					DbgAssert(false)
+					return [String]()
 				}
-				print("bad preset redirect: \(redirect)")
-				DbgAssert(false)
+				return preset.fields ?? []
 			}
 			return [$0]
 		}
@@ -188,13 +187,12 @@ final class PresetFeature: CustomDebugStringConvertible, FastCodable {
 		return moreFieldsWithRedirect.flatMap {
 			if $0.hasPrefix("{"), $0.hasSuffix("}") {
 				let redirect = String($0.dropFirst().dropLast())
-				if let preset = PresetsDatabase.shared.presetFeatureForFeatureID(redirect),
-				   let moreFields = preset.moreFields
-				{
-					return moreFields
+				guard let preset = PresetsDatabase.shared.presetFeatureForFeatureID(redirect) else {
+					print("bad preset redirect: \(redirect)")
+					DbgAssert(false)
+					return [String]()
 				}
-				print("bad preset redirect: \(redirect)")
-				DbgAssert(false)
+				return preset.moreFields ?? []
 			}
 			return [$0]
 		}
