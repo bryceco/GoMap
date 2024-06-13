@@ -709,12 +709,10 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>GpxWidget</source>
-        <target state="needs-translation">GpxWidget</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>GpxWidgetExtension</source>
-        <target state="needs-translation">GpxWidgetExtension</target>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">

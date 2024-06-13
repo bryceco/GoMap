@@ -8255,6 +8255,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Slack - Discussion\"; ObjectID = \"zuh-G8-yy9\"; Note = \"For opening the Slack app\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slack – Diskuze"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",

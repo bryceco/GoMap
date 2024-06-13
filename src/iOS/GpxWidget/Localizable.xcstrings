@@ -3,6 +3,12 @@
   "strings" : {
     "%@" : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19,6 +25,12 @@
     },
     "%lld GPX points" : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld GPX body"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -35,6 +47,12 @@
     },
     "%lld points" : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld body"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -51,6 +69,12 @@
     },
     "Pause GPX" : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pozastavit GPX"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -67,6 +91,12 @@
     },
     "Pause recording GPX tracks." : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pozastavit záznam GPX tras."
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -77,6 +107,12 @@
     },
     "Start GPX" : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spustit GPX"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -93,6 +129,12 @@
     },
     "Start recording GPX tracks." : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spustit záznam GPX tras."
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -103,6 +145,12 @@
     },
     "Stop" : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zastavit"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -119,6 +167,12 @@
     },
     "Stop GPX" : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zastavit GPX"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -135,6 +189,12 @@
     },
     "Stop recording GPX tracks." : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zastavit záznam GPX tras."
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",

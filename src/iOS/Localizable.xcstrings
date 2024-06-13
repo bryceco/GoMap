@@ -7597,7 +7597,7 @@
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%#@meters@, %#@nodes@"
           },
           "substitutions" : {
@@ -30117,6 +30117,12 @@
     "ft" : {
       "comment" : "Height or width in feet, please abbreviate",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ft"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -32006,6 +32012,12 @@
     "kg" : {
       "comment" : "Weight in kilograms, please abbreviate",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kg"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -32023,6 +32035,12 @@
     "km" : {
       "comment" : "Distance in kilometers, please abbreviate",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "km"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -32520,6 +32538,12 @@
     "lbs" : {
       "comment" : "Weight in pounds, please abbreviate",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "lbs"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -33383,6 +33407,12 @@
     "lt" : {
       "comment" : "Weight in long tons, please abbreviate",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "lt"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -33394,6 +33424,12 @@
     "m" : {
       "comment" : "Height or width in meters, please abbreviate",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "m"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -34808,6 +34844,12 @@
     "mi" : {
       "comment" : "Distance in miles, please abbreviate",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mi"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -42064,6 +42106,12 @@
     },
     "Pause GPX" : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pozastavit GPX"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -42080,6 +42128,12 @@
     },
     "Pause recording GPX tracks." : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pozastavit záznam GPX tras."
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -47217,6 +47271,12 @@
     "st" : {
       "comment" : "Weight in short tons, please abbreviate",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "st"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -47494,6 +47554,12 @@
     },
     "Start GPX" : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spustit GPX"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -47510,6 +47576,12 @@
     },
     "Start recording GPX tracks." : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spustit záznam GPX tras."
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -47656,6 +47728,12 @@
     },
     "Stop GPX" : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zastavit GPX"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -47672,6 +47750,12 @@
     },
     "Stop recording GPX tracks." : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zastavit záznam GPX tras."
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -47896,6 +47980,12 @@
     "t" : {
       "comment" : "Weight in metric tons, please abbreviate",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "t"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",

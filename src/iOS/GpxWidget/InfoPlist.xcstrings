@@ -41,6 +41,12 @@
       "comment" : "Copyright (human-readable)",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2024 Bryce Cogswell. Všechna práva vyhrazena."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",

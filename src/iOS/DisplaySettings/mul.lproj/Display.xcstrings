@@ -7469,6 +7469,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Data Overlays\"; ObjectID = \"nzU-It-UAv\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datové překryvy"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
