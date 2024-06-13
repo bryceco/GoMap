@@ -21,9 +21,8 @@ private let BING_MAPS_KEY: String = [
 
 private let BING_IDENTIFIER = "BingIdentifier"
 private let MAPNIK_IDENTIFIER = "MapnikIdentifier"
-private let OSM_GPS_TRACE_IDENTIFIER = "OsmGpsTraceIdentifier"
 private let MAPBOX_LOCATOR_IDENTIFIER = "MapboxLocatorIdentifier"
-private let NO_NAME_IDENTIFIER = "No Name Identifier"
+private let NO_NAME_IDENTIFIER = "Unnamed Roads"
 private let MAXAR_PREMIUM_IDENTIFIER = "Maxar-Premium"
 
 /// A provider of tile imagery, such as Bing or Mapbox
@@ -321,23 +320,6 @@ final class TileServer: Equatable, Codable, FastCodable {
 		attribIconString: nil,
 		attribUrl: "")
 
-	static let gpsTrace = TileServer(
-		withName: "OSM GPS Traces",
-		identifier: OSM_GPS_TRACE_IDENTIFIER,
-		url: "https://gps.tile.openstreetmap.org/lines/{z}/{x}/{y}.png",
-		best: false,
-		overlay: false,
-		apiKey: "",
-		maxZoom: 20,
-		roundUp: false,
-		startDate: nil,
-		endDate: nil,
-		wmsProjection: nil,
-		geoJSON: nil,
-		attribString: "",
-		attribIconString: nil,
-		attribUrl: "")
-
 	static let mapboxLocator = TileServer(
 		withName: "Mapbox Locator",
 		identifier: MAPBOX_LOCATOR_IDENTIFIER,
@@ -356,11 +338,11 @@ final class TileServer: Equatable, Codable, FastCodable {
 		attribUrl: "")
 
 	static let noName = TileServer(
-		withName: "QA Poole No Name",
+		withName: "Unnamed Roads",
 		identifier: NO_NAME_IDENTIFIER,
 		url: "https://tile{switch:2,3}.poole.ch/noname/{zoom}/{x}/{y}.png",
 		best: false,
-		overlay: false,
+		overlay: true,
 		apiKey: "",
 		maxZoom: 25,
 		roundUp: false,

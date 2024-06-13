@@ -675,7 +675,7 @@ final class EditorMapLayer: CALayer {
 						haloLayer.path = path
 						haloLayer.strokeColor = UIColor.red.cgColor
 						haloLayer.fillColor = nil
-						haloLayer.lineWidth = renderInfo.lineWidth + 2
+						haloLayer.lineWidth = renderInfo.lineWidth + 4
 						haloLayer.lineCap = DEFAULT_LINECAP
 						haloLayer.lineJoin = DEFAULT_LINEJOIN
 						haloLayer.zPosition = Z_HALO

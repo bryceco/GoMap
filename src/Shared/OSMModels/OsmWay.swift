@@ -226,9 +226,19 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 	}
 
 	func needsNoNameHighlight() -> Bool {
-		guard let highway = tags["highway"] else { return false }
-		if highway == "service" {
-			return false
+		switch tags["highway"] {
+		case nil,
+		     "bridleway",
+		     "footway",
+		     "path",
+		     "pedestrian",
+		     "proposed",
+		     "service",
+		     "steps",
+		     "track"
+		     : return false
+		default:
+			break
 		}
 		if givenName() != nil {
 			return false

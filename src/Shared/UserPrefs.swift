@@ -92,7 +92,6 @@ final class UserPrefs {
 	let mapViewEnableBirdsEye = Pref<Bool>(key: "mapViewEnableBirdsEye")
 	let mapViewEnableRotation = Pref<Bool>(key: "mapViewEnableRotation")
 	let automaticCacheManagement = Pref<Bool>(key: "automaticCacheManagement")
-	let mapViewEnableUnnamedRoadHalo = Pref<Bool>(key: "mapViewEnableUnnamedRoadHalo")
 	let mapViewEnableBreadCrumb = Pref<Bool>(key: "mapViewEnableBreadCrumb")
 	let mapViewEnableDataOverlay = Pref<Bool>(key: "mapViewEnableDataOverlay")
 	let mapViewEnableTurnRestriction = Pref<Bool>(key: "mapViewEnableTurnRestriction")

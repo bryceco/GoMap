@@ -27,7 +27,6 @@ struct MapViewOverlays: OptionSet {
 	static let LOCATOR = MapViewOverlays(rawValue: 1 << 0)
 	static let GPSTRACE = MapViewOverlays(rawValue: 1 << 1)
 	static let NOTES = MapViewOverlays(rawValue: 1 << 2)
-	static let NONAME = MapViewOverlays(rawValue: 1 << 3)
 	static let QUESTS = MapViewOverlays(rawValue: 1 << 4)
 	static let DATAOVERLAY = MapViewOverlays(rawValue: 1 << 5)
 }
@@ -89,18 +88,16 @@ enum EDIT_ACTION: Int {
 
 private enum ZLAYER: CGFloat {
 	case AERIAL = -100
-	case NONAME = -99
 	case MAPNIK = -98
 	case LOCATOR = -50
 	case EDITOR = -20
 	case QUADDOWNLOAD = -18
-	case CUSTOM = -16
 	case GPX = -15
 	case ROTATEGRAPHIC = -3
 	case BLINK = 4
 	case CROSSHAIRS = 5
 	case D_PAD = 6
-	case BALL = 10
+	case LOCATION_BALL = 10
 	case TOOLBAR = 90
 	case PUSHPIN = 105
 	case FLASH = 110
@@ -212,7 +209,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	private(set) lazy var aerialLayer = MercatorTileLayer(mapView: self)
 	private(set) lazy var mapnikLayer = MercatorTileLayer(mapView: self)
-	private(set) lazy var noNameLayer = MercatorTileLayer(mapView: self)
 	private(set) lazy var editorLayer = EditorMapLayer(owner: self)
 	private(set) lazy var gpxLayer = GpxLayer(mapView: self)
 	private(set) lazy var dataOverlayLayer = DataOverlayLayer(mapView: self)
@@ -379,14 +375,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				let centerPoint = centerPoint()
 				let angle = CGFloat(screenFromMapTransform.rotation())
 				rotate(by: -angle, aroundScreenPoint: centerPoint)
-			}
-		}
-	}
-
-	var enableUnnamedRoadHalo = false {
-		didSet {
-			if enableUnnamedRoadHalo != oldValue {
-				editorLayer.clearCachedProperties()
 			}
 		}
 	}
@@ -582,12 +570,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		locatorLayer.isHidden = true
 		backgroundLayers.append(locatorLayer)
 
-		noNameLayer = MercatorTileLayer(mapView: self)
-		noNameLayer.zPosition = ZLAYER.NONAME.rawValue
-		noNameLayer.tileServer = TileServer.noName
-		noNameLayer.isHidden = true
-		backgroundLayers.append(noNameLayer)
-
 		aerialLayer = MercatorTileLayer(mapView: self)
 		aerialLayer.zPosition = ZLAYER.AERIAL.rawValue
 		aerialLayer.tileServer = tileServerList.currentServer
@@ -631,7 +613,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		crossHairs.zPosition = ZLAYER.CROSSHAIRS.rawValue
 		layer.addSublayer(crossHairs)
 
-		locationBallLayer.zPosition = ZLAYER.BALL.rawValue
+		locationBallLayer.zPosition = ZLAYER.LOCATION_BALL.rawValue
 		locationBallLayer.heading = 0.0
 		locationBallLayer.showHeading = true
 		locationBallLayer.isHidden = true
@@ -762,7 +744,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		enableRotation = UserPrefs.shared.mapViewEnableRotation.value ?? true
 		enableBirdsEye = UserPrefs.shared.mapViewEnableBirdsEye.value ?? false
-		enableUnnamedRoadHalo = UserPrefs.shared.mapViewEnableUnnamedRoadHalo.value ?? false
 		displayGpxLogs = UserPrefs.shared.mapViewEnableBreadCrumb.value ?? false
 		displayDataOverlayLayer = UserPrefs.shared.mapViewEnableDataOverlay.value ?? false
 		enableTurnRestriction = UserPrefs.shared.mapViewEnableTurnRestriction.value ?? false
@@ -819,6 +800,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	func updateTileOverlayLayers() {
 		let serverIdents = UserPrefs.shared.tileOverlaySelections.value ?? []
+
+		// if they toggled display of the noname layer we need to refresh the editor layer
+		if serverIdents.contains(TileServer.noName.identifier) != useUnnamedRoadHalo() {
+			editorLayer.clearCachedProperties()
+		}
 
 		// remove any layers no longer displayed
 		let removals = backgroundLayers.filter { layer in
@@ -880,7 +866,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		UserPrefs.shared.mapViewEnableRotation.value = enableRotation
 		UserPrefs.shared.mapViewEnableBirdsEye.value = enableBirdsEye
-		UserPrefs.shared.mapViewEnableUnnamedRoadHalo.value = enableUnnamedRoadHalo
 		UserPrefs.shared.mapViewEnableBreadCrumb.value = displayGpxLogs
 		UserPrefs.shared.mapViewEnableDataOverlay.value = displayDataOverlayLayer
 		UserPrefs.shared.mapViewEnableTurnRestriction.value = enableTurnRestriction
@@ -1218,6 +1203,13 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		                              regions: CountryCoder.regionsStringsForRegions(regions))
 	}
 
+	func unnamedRoadLayer() -> MercatorTileLayer? {
+		let noName = TileServer.noName.identifier
+		return backgroundLayers.first(where: {
+			($0 as? MercatorTileLayer)?.tileServer.identifier == noName
+		}) as? MercatorTileLayer
+	}
+
 	// MARK: Rotate object
 
 	func startObjectRotation() {
@@ -1264,6 +1256,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	func viewStateWillChangeTo(_ state: MapViewState, overlays: MapViewOverlays, zoomedOut: Bool) {
 		if viewState == state, viewOverlayMask == overlays, viewStateZoomedOut == zoomedOut {
+			// no change
 			return
 		}
 
@@ -1274,7 +1267,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 		func OverlaysFor(_ state: MapViewState, overlays: MapViewOverlays, zoomedOut: Bool) -> MapViewOverlays {
 			if zoomedOut, state == .EDITORAERIAL { return overlays.union(.LOCATOR) }
-			if !zoomedOut { return overlays.subtracting(.NONAME) }
 			return overlays
 		}
 
@@ -1294,7 +1286,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		CATransaction.setAnimationDuration(0.5)
 
 		locatorLayer.isHidden = !newOverlays.contains(.LOCATOR) || locatorLayer.tileServer.apiKey == ""
-		noNameLayer.isHidden = !newOverlays.contains(.NONAME)
 
 		aerialAlignmentButton.isHidden = true
 		dPadView.isHidden = true
@@ -1330,6 +1321,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			}
 		}
 		quadDownloadLayer?.isHidden = editorLayer.isHidden
+
+		if let noName = unnamedRoadLayer() {
+			noName.isHidden = !editorLayer.isHidden
+		}
 
 		CATransaction.commit()
 
@@ -2915,7 +2910,7 @@ extension MapView: EditorMapLayerOwner {
 	}
 
 	func useUnnamedRoadHalo() -> Bool {
-		return enableUnnamedRoadHalo
+		return unnamedRoadLayer() != nil
 	}
 
 	func useAutomaticCacheManagement() -> Bool {

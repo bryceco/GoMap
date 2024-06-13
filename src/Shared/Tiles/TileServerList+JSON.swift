@@ -288,6 +288,7 @@ extension TileServerList {
 				print("TileServer \((try? entry.properties.name) ?? "<unknown>"): \(error)")
 			}
 		}
+		externalAerials.append(TileServer.noName)
 		return externalAerials
 	}
 

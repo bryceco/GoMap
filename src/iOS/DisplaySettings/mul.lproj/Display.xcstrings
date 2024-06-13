@@ -5709,7 +5709,7 @@
     },
     "H3p-Ta-kIy.title" : {
       "comment" : "Class = \"UINavigationItem\"; title = \"QA Poole No Name Tiles\"; ObjectID = \"H3p-Ta-kIy\"; Note = \"Title for Simon Poole's \\\"No name\\\" (missing name) tile overlay\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6117,7 +6117,7 @@
     },
     "hsp-Xj-TU6.text" : {
       "comment" : "Class = \"UITextView\"; text = \"Simon Poole Map Data © OpenStreetMap contributors\\n\"; ObjectID = \"hsp-Xj-TU6\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -12621,7 +12621,7 @@
     },
     "ZP1-qY-kXe.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Unnamed Roads\"; ObjectID = \"ZP1-qY-kXe\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

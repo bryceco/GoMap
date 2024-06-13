@@ -17,7 +17,6 @@ class DisplayViewController: UITableViewController {
 	@IBOutlet var notesSwitch: UISwitch!
 	@IBOutlet var questsSwitch: UISwitch!
 	@IBOutlet var dataOverlaySwitch: UISwitch!
-	@IBOutlet var unnamedRoadSwitch: UISwitch!
 	@IBOutlet var gpxLoggingSwitch: UISwitch!
 	@IBOutlet var turnRestrictionSwitch: UISwitch!
 	@IBOutlet var objectFiltersSwitch: UISwitch!
@@ -65,12 +64,10 @@ class DisplayViewController: UITableViewController {
 		mapView.viewOverlayMask = [
 			notesSwitch.isOn ? .NOTES : [],
 			questsSwitch.isOn ? .QUESTS : [],
-			unnamedRoadSwitch.isOn ? .NONAME : [],
 			dataOverlaySwitch.isOn ? .DATAOVERLAY : []
 		]
 
 		mapView.enableRotation = rotationSwitch.isOn
-		mapView.enableUnnamedRoadHalo = unnamedRoadSwitch.isOn
 		mapView.displayGpxLogs = gpxLoggingSwitch.isOn
 		mapView.displayDataOverlayLayer = dataOverlaySwitch.isOn
 		mapView.enableTurnRestriction = turnRestrictionSwitch.isOn
@@ -115,7 +112,6 @@ class DisplayViewController: UITableViewController {
 		dataOverlaySwitch.isOn = mapView.displayDataOverlayLayer
 
 		rotationSwitch.isOn = mapView.enableRotation
-		unnamedRoadSwitch.isOn = mapView.enableUnnamedRoadHalo
 		gpxLoggingSwitch.isOn = mapView.displayGpxLogs
 		turnRestrictionSwitch.isOn = mapView.enableTurnRestriction
 		objectFiltersSwitch.isOn = mapView.editorLayer.objectFilters.enableObjectFilters
