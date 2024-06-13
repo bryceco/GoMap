@@ -70,9 +70,13 @@ final class GpxTrackWidgetManager: GpxTrackWidgetManagerProtocol {
 		                                              status: .running)
 		let s2 = ActivityContent<GpxTrackAttributes.GpxTrackStatus>(state: state,
 		                                                            staleDate: nil)
-		activity = try? Activity<GpxTrackAttributes>.request(attributes: attributes,
-		                                                     content: s2,
-		                                                     pushType: nil)
+		do {
+			activity = try Activity<GpxTrackAttributes>.request(attributes: attributes,
+			                                                    content: s2,
+			                                                    pushType: nil)
+		} catch {
+			print("Live Activity: \(error.localizedDescription)")
+		}
 	}
 
 	func resumeTrack() {

@@ -316,9 +316,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				// update collection of GPX points
 				if oldValue == .NONE, gpsState != .NONE {
 					// because recording GPX tracks is cheap we record them every time GPS is enabled
-					gpxLayer.startNewTrack()
+					gpxLayer.startNewTrack(continuing: false)
 				} else if gpsState == .NONE {
-					gpxLayer.endActiveTrack()
+					gpxLayer.endActiveTrack(continuing: false)
 				}
 
 				if gpsState == .NONE {
