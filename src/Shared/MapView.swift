@@ -208,7 +208,12 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	private(set) lazy var mapMarkerDatabase = MapMarkerDatabase()
 
 	private(set) lazy var aerialLayer = MercatorTileLayer(mapView: self)
+	#if true
+	private(set) lazy var mapnikLayer = MapboxVectorTilesView(mapView: self)
+	#else
 	private(set) lazy var mapnikLayer = MercatorTileLayer(mapView: self)
+	#endif
+	private(set) lazy var noNameLayer = MercatorTileLayer(mapView: self)
 	private(set) lazy var editorLayer = EditorMapLayer(owner: self)
 	private(set) lazy var gpxLayer = GpxLayer(mapView: self)
 	private(set) lazy var dataOverlayLayer = DataOverlayLayer(mapView: self)
@@ -217,7 +222,12 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	// overlays
 	private(set) lazy var locatorLayer = MercatorTileLayer(mapView: self)
 
-	private(set) var backgroundLayers: [CALayer] = [] // list of all layers that need to be resized, etc.
+
+	enum LayerOrView {
+		   case layer(CALayer)
+		   case view(UIView)
+	   }
+	private(set) var backgroundLayers: [LayerOrView] = [] // list of all layers that need to be resized, etc.
 
 	var mapTransform = MapTransform()
 	var screenFromMapTransform: OSMTransform {
@@ -576,9 +586,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		aerialLayer.isHidden = true
 		backgroundLayers.append(aerialLayer)
 
-		mapnikLayer = MercatorTileLayer(mapView: self)
-		mapnikLayer.tileServer = TileServer.mapnik
-		mapnikLayer.zPosition = ZLAYER.MAPNIK.rawValue
+		mapnikLayer = MapboxVectorTilesView(mapView: self)
+		mapnikLayer.layer.zPosition = ZLAYER.MAPNIK.rawValue
 		mapnikLayer.isHidden = true
 		backgroundLayers.append(mapnikLayer)
 
@@ -603,8 +612,14 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 #endif
 
-		for layer in backgroundLayers {
-			self.layer.addSublayer(layer)
+		backgroundLayers = bg
+		for bg in backgroundLayers {
+			switch bg {
+			case .layer(let layer):
+				self.layer.addSublayer(layer)
+			case .view(let view):
+				self.addSubview(view)
+			}
 		}
 
 		// implement crosshairs
@@ -893,9 +908,19 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		let bounds = self.bounds
 
 		// update bounds of layers
-		for layer in backgroundLayers {
-			layer.frame = bounds
-			layer.bounds = bounds
+		for bg in backgroundLayers {
+			switch bg {
+			case .layer(let layer):
+				layer.frame = bounds
+				layer.bounds = bounds
+			case .view(let view):
+				view.frame = bounds
+				if view is MapboxVectorTilesView {
+					view.bounds = bounds.offsetBy(dx: bounds.width/2, dy: bounds.height/2)
+				} else {
+					view.bounds = bounds
+				}
+			}
 		}
 
 		crossHairs.position = bounds.center()

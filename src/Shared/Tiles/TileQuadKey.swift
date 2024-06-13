@@ -54,3 +54,8 @@ func QuadKeyToTileXY(_ quadKey: String) -> (x: Int, y: Int, z: Int) {
 	}
 	return (tileX, tileY, tileZ)
 }
+
+func QuadKey(forZoom zoom: Int, tileX: Int, tileY: Int) -> String {
+	return TileToQuadKey(x: tileX, y: tileY, z: zoom)
+}
+

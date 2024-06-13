@@ -217,10 +217,6 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		}
 	}
 
-	private func quadKey(forZoom zoom: Int, tileX: Int, tileY: Int) -> String {
-		return TileToQuadKey(x: tileX, y: tileY, z: zoom)
-	}
-
 	private func fetchTile(
 		forTileX tileX: Int,
 		tileY: Int,
@@ -258,8 +254,8 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 			isPerformingLayout.decrement()
 
 			// check memory cache
-			let cacheKey = String(quadKey(forZoom: zoomLevel, tileX: tileModX, tileY: tileModY))
-			let cachedImage: UIImage? = webCache!.object(
+			let cacheKey = QuadKey(forZoom: zoomLevel, tileX: tileModX, tileY: tileModY)
+			let cachedImage: UIImage? = webCache.object(
 				withKey: cacheKey,
 				fallbackURL: { [self] in
 					self.tileServer.url(forZoom: zoomLevel, tileX: tileModX, tileY: tileModY)
@@ -491,5 +487,15 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 	@available(*, unavailable)
 	required init?(coder aDecoder: NSCoder) {
 		fatalError()
+	}
+}
+
+extension MercatorTileLayer: TilesProvider {
+	func currentTiles() -> [String] {
+		return webCache.allKeys()
+	}
+
+	func maxZoom() -> Int {
+		return tileServer.maxZoom
 	}
 }

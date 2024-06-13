@@ -181,6 +181,8 @@
 		02F0297C2BFAFF53002F7956 /* DataOverlays.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02F0297B2BFAFF53002F7956 /* DataOverlays.storyboard */; };
 		02F0297E2BFB01E3002F7956 /* DataOverlaysController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F0297D2BFB01E3002F7956 /* DataOverlaysController.swift */; };
 		02F2449A264F635800C42E41 /* PathUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA924C263FFEF9000A2A99 /* PathUtil.swift */; };
+		02F3F8412B96CCAE00ECB99F /* MapLibre in Frameworks */ = {isa = PBXBuildFile; productRef = 02F3F8402B96CCAE00ECB99F /* MapLibre */; };
+		02F3F8432B96CDA600ECB99F /* MapboxVectorTilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F3F8422B96CDA600ECB99F /* MapboxVectorTilesView.swift */; };
 		02F53298267AB41C0088DF41 /* EditorMapLayer+HitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F53297267AB41C0088DF41 /* EditorMapLayer+HitTest.swift */; };
 		02F6A457268A934900F2ACE7 /* NSAttributedString+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */; };
 		02F6A459268AE42800F2ACE7 /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F6A458268AE42800F2ACE7 /* Debugger.swift */; };
@@ -504,6 +506,7 @@
 		02EDCC071683EC2D007F9934 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		02F0297B2BFAFF53002F7956 /* DataOverlays.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DataOverlays.storyboard; sourceTree = "<group>"; };
 		02F0297D2BFB01E3002F7956 /* DataOverlaysController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataOverlaysController.swift; sourceTree = "<group>"; };
+		02F3F8422B96CDA600ECB99F /* MapboxVectorTilesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapboxVectorTilesView.swift; sourceTree = "<group>"; };
 		02F53297267AB41C0088DF41 /* EditorMapLayer+HitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorMapLayer+HitTest.swift"; sourceTree = "<group>"; };
 		02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Ext.swift"; sourceTree = "<group>"; };
 		02F6A458268AE42800F2ACE7 /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
@@ -615,6 +618,7 @@
 				025CCA12271244B800074726 /* KissXML in Frameworks */,
 				02B52E7728C9788200CB55F3 /* libswiftCoreGraphics.tbd in Frameworks */,
 				02ACBA3616713CCB00BB4414 /* Foundation.framework in Frameworks */,
+				02F3F8412B96CCAE00ECB99F /* MapLibre in Frameworks */,
 				021C6AB3168768C800FB17B0 /* MessageUI.framework in Frameworks */,
 				02092ECD29E2497E0095042B /* FastCodable in Frameworks */,
 				02ACBD1F16717BBB00BB4414 /* QuartzCore.framework in Frameworks */,
@@ -1022,6 +1026,7 @@
 				020E160A267A82050037DE49 /* TileServer.swift */,
 				C3FA924F2640329B000A2A99 /* TileServerList.swift */,
 				0244398C29C9402B009FC2D0 /* TileServerList+JSON.swift */,
+				02F3F8422B96CDA600ECB99F /* MapboxVectorTilesView.swift */,
 			);
 			name = Tiles;
 			path = ../Shared/Tiles;
@@ -1203,6 +1208,7 @@
 			packageProductDependencies = (
 				025CCA11271244B800074726 /* KissXML */,
 				02092ECC29E2497E0095042B /* FastCodable */,
+				02F3F8402B96CCAE00ECB99F /* MapLibre */,
 			);
 			productName = OSMiOS;
 			productReference = 02ACBA2F16713CCB00BB4414 /* Go Map!!.app */;
@@ -1358,6 +1364,7 @@
 			packageReferences = (
 				025CCA10271244B800074726 /* XCRemoteSwiftPackageReference "KissXML" */,
 				02092ECB29E2497E0095042B /* XCRemoteSwiftPackageReference "FastCodable" */,
+				02F3F83F2B96CCAE00ECB99F /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */,
 			);
 			productRefGroup = 02ACBA3016713CCB00BB4414 /* Products */;
 			projectDirPath = "";
@@ -1561,6 +1568,7 @@
 				64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */,
 				02FEDAF42651DCC100DF15D7 /* POIAllTagsViewController.swift in Sources */,
 				C3D096DB263EB73E00E3B129 /* main.swift in Sources */,
+				02F3F8432B96CDA600ECB99F /* MapboxVectorTilesView.swift in Sources */,
 				02034743266C2CB9000A7C3D /* MapMarkerDatabase.swift in Sources */,
 				C3FA9249263FF95B000A2A99 /* LocationParser.swift in Sources */,
 				02CB523429907832007F758D /* QuestMarker.swift in Sources */,
@@ -1903,6 +1911,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CODE_SIGN_ENTITLEMENTS = "Go Map!!/Go Map!!.entitlements";
 				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = "Go Map!!/Go Map!!.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1948,6 +1957,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CODE_SIGN_ENTITLEMENTS = "Go Map!!/Go Map!!.entitlements";
 				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = "Go Map!!/Go Map!!.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -2420,6 +2430,14 @@
 				kind = branch;
 			};
 		};
+		02F3F83F2B96CCAE00ECB99F /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/maplibre/maplibre-gl-native-distribution";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2432,6 +2450,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 025CCA10271244B800074726 /* XCRemoteSwiftPackageReference "KissXML" */;
 			productName = KissXML;
+		};
+		02F3F8402B96CCAE00ECB99F /* MapLibre */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02F3F83F2B96CCAE00ECB99F /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */;
+			productName = MapLibre;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
