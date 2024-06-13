@@ -140,6 +140,15 @@ class DisplayViewController: UITableViewController {
 				custom.button.sizeToFit()
 			}
 		}
+
+		// set the name of the basemap provider
+		if indexPath.section == BACKGROUND_SECTION, indexPath.row == 3 {
+			if let custom = cell as? CustomBackgroundCell {
+				let server = BasemapTileServerListViewController.currentBasemapServer()
+				custom.button.setTitle(server.name, for: .normal)
+				custom.button.sizeToFit()
+			}
+		}
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {

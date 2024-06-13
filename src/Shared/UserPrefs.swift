@@ -119,6 +119,9 @@ final class UserPrefs {
 	let currentAerialSelection = Pref<String>(key: "AerialListSelection")
 	let recentAerialsList = Pref<[String]>(key: "AerialListRecentlyUsed")
 
+	// Basemap server
+	let currentBasemapSelection = Pref<String>(key: "BasemapSelectionId")
+
 	// POI presets
 	let userDefinedPresetKeys = Pref<Data>(key: "userDefinedPresetKeys", ubiquitous: true)
 	let preferredUnitsForKeys = Pref<[String: String]>(key: "preferredUnitsForKeys", ubiquitous: true)

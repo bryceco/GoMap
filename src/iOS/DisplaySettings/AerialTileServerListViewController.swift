@@ -1,5 +1,5 @@
 //
-//  TileServerListViewController.swift
+//  AerialTileServerListViewController.swift
 //  Go Map!!
 //
 //  Copyright © 2021 Bryce Cogswell. All rights reserved.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TileServerListViewController: UITableViewController {
+class AerialTileServerListViewController: UITableViewController {
 	var serverList: TileServerList!
 	var imageryForRegion: [TileServer] = []
 

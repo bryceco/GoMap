@@ -20,6 +20,7 @@ private let BING_MAPS_KEY: String = [
 ].reduce("", { r, x in r + x })
 
 private let BING_IDENTIFIER = "BingIdentifier"
+private let CYCLOSM_IDENTIFIER = "CyclOSMIdentifier"
 private let MAPNIK_IDENTIFIER = "MapnikIdentifier"
 private let MAPBOX_LOCATOR_IDENTIFIER = "MapboxLocatorIdentifier"
 private let NO_NAME_IDENTIFIER = "Unnamed Roads"
@@ -304,13 +305,30 @@ final class TileServer: Equatable, Codable, FastCodable {
 		attribUrl: "https://wiki.openstreetmap.org/wiki/DigitalGlobe")
 
 	static let mapnik = TileServer(
-		withName: "MapnikTiles",
+		withName: "Mapnik",
 		identifier: MAPNIK_IDENTIFIER,
 		url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-		best: false,
+		best: true,
 		overlay: false,
 		apiKey: "",
 		maxZoom: 19,
+		roundUp: false,
+		startDate: nil,
+		endDate: nil,
+		wmsProjection: nil,
+		geoJSON: nil,
+		attribString: "",
+		attribIconString: nil,
+		attribUrl: "")
+
+	static let cyclOSM = TileServer(
+		withName: "CyclOSM",
+		identifier: CYCLOSM_IDENTIFIER,
+		url: "https://{switch:a,b,c}.tile-cyclosm.openstreetmap.fr/cyclosm/{zoom}/{x}/{y}.png",
+		best: false,
+		overlay: false,
+		apiKey: "",
+		maxZoom: 20,
 		roundUp: false,
 		startDate: nil,
 		endDate: nil,

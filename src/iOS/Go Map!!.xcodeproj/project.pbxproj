@@ -85,6 +85,7 @@
 		02930750268BFB6700B2A326 /* QuadDownloadLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */; };
 		0293FEB1299D5C78002EED90 /* MapMarkerIgnoreList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0293FEB0299D5C78002EED90 /* MapMarkerIgnoreList.swift */; };
 		0293FEB3299D84F7002EED90 /* MaxarAerial.secret in Sources */ = {isa = PBXBuildFile; fileRef = 0293FEB2299D84F7002EED90 /* MaxarAerial.secret */; };
+		029853B72C1B4F1E00C31C95 /* BasemapTileServerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029853B62C1B4F1E00C31C95 /* BasemapTileServerListViewController.swift */; };
 		029A17C8257AB8A70035C6ED /* POI-Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */; };
 		02A123E9264C8B60005638C1 /* GpxLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925626416BF5000A2A99 /* GpxLayer.swift */; };
 		02A123EA264C8BA3005638C1 /* TileServerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA924F2640329B000A2A99 /* TileServerList.swift */; };
@@ -241,7 +242,7 @@
 		ED91352526020945006A637A /* OfflineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED91352426020945006A637A /* OfflineViewController.swift */; };
 		ED9649C12601C33E00EC0A60 /* AdvancedSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649BF2601C33E00EC0A60 /* AdvancedSettingsViewController.swift */; };
 		ED9649C22601C33E00EC0A60 /* TileServerEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649C02601C33E00EC0A60 /* TileServerEditViewController.swift */; };
-		ED9649D32601C4CE00EC0A60 /* TileServerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649D22601C4CE00EC0A60 /* TileServerListViewController.swift */; };
+		ED9649D32601C4CE00EC0A60 /* AerialTileServerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649D22601C4CE00EC0A60 /* AerialTileServerListViewController.swift */; };
 		ED9649DB2601CB7A00EC0A60 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649DA2601CB7A00EC0A60 /* SettingsViewController.swift */; };
 		ED9649F12601CEC800EC0A60 /* POITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649F02601CEC800EC0A60 /* POITabBarController.swift */; };
 		ED9649F92601D58900EC0A60 /* POIPresetValuePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9649F82601D58900EC0A60 /* POIPresetValuePickerController.swift */; };
@@ -407,6 +408,7 @@
 		0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadDownloadLayer.swift; sourceTree = "<group>"; };
 		0293FEB0299D5C78002EED90 /* MapMarkerIgnoreList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerIgnoreList.swift; sourceTree = "<group>"; };
 		0293FEB2299D84F7002EED90 /* MaxarAerial.secret */ = {isa = PBXFileReference; lastKnownFileType = text; path = MaxarAerial.secret; sourceTree = "<group>"; };
+		029853B62C1B4F1E00C31C95 /* BasemapTileServerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasemapTileServerListViewController.swift; sourceTree = "<group>"; };
 		029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "POI-Icons.xcassets"; path = "../POI-Icons/POI-Icons.xcassets"; sourceTree = "<group>"; };
 		02A123EC264CAE6F005638C1 /* Atomic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
 		02A194B119C6A432002338DA /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
@@ -590,7 +592,7 @@
 		ED91352426020945006A637A /* OfflineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineViewController.swift; sourceTree = "<group>"; };
 		ED9649BF2601C33E00EC0A60 /* AdvancedSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedSettingsViewController.swift; sourceTree = "<group>"; };
 		ED9649C02601C33E00EC0A60 /* TileServerEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileServerEditViewController.swift; sourceTree = "<group>"; };
-		ED9649D22601C4CE00EC0A60 /* TileServerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileServerListViewController.swift; sourceTree = "<group>"; };
+		ED9649D22601C4CE00EC0A60 /* AerialTileServerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AerialTileServerListViewController.swift; sourceTree = "<group>"; };
 		ED9649DA2601CB7A00EC0A60 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		ED9649F02601CEC800EC0A60 /* POITabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POITabBarController.swift; sourceTree = "<group>"; };
 		ED9649F82601D58900EC0A60 /* POIPresetValuePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIPresetValuePickerController.swift; sourceTree = "<group>"; };
@@ -676,6 +678,8 @@
 		0244399629CA9A28009FC2D0 /* DisplaySettings */ = {
 			isa = PBXGroup;
 			children = (
+				ED9649D22601C4CE00EC0A60 /* AerialTileServerListViewController.swift */,
+				029853B62C1B4F1E00C31C95 /* BasemapTileServerListViewController.swift */,
 				ED56E5B326026541000B368C /* ClearCacheViewController.swift */,
 				0291D83524427AFA00F793BE /* Display.storyboard */,
 				ED56E5E326028181000B368C /* DisplayViewController.swift */,
@@ -683,7 +687,6 @@
 				ED56E5E826028B5F000B368C /* GpxConfigureViewController.swift */,
 				ED56E5EA26028B5F000B368C /* GpxViewController.swift */,
 				ED9649C02601C33E00EC0A60 /* TileServerEditViewController.swift */,
-				ED9649D22601C4CE00EC0A60 /* TileServerListViewController.swift */,
 			);
 			path = DisplaySettings;
 			sourceTree = "<group>";
@@ -1458,7 +1461,7 @@
 				C3D096CB263E9A1100E3B129 /* DownloadThreadPool.swift in Sources */,
 				02930750268BFB6700B2A326 /* QuadDownloadLayer.swift in Sources */,
 				C3D096FC263F118500E3B129 /* FpsLabel.swift in Sources */,
-				ED9649D32601C4CE00EC0A60 /* TileServerListViewController.swift in Sources */,
+				ED9649D32601C4CE00EC0A60 /* AerialTileServerListViewController.swift in Sources */,
 				02C456A829C8DB410077E3FD /* TagInfo.swift in Sources */,
 				ED9649C22601C33E00EC0A60 /* TileServerEditViewController.swift in Sources */,
 				02CB2405265DB7CB00835F32 /* OpeningHoursRecognizerView.swift in Sources */,
@@ -1585,6 +1588,7 @@
 				02A123E9264C8B60005638C1 /* GpxLayer.swift in Sources */,
 				B25C231A2BB8B09C000891B6 /* Theme.swift in Sources */,
 				ED56E5AB26024DA5000B368C /* AutocompleteTextField.swift in Sources */,
+				029853B72C1B4F1E00C31C95 /* BasemapTileServerListViewController.swift in Sources */,
 				02771D712BFC15C300FE9B79 /* UserFileList.swift in Sources */,
 				0266DE862655A21F007A502E /* Superview.swift in Sources */,
 				02F53298267AB41C0088DF41 /* EditorMapLayer+HitTest.swift in Sources */,

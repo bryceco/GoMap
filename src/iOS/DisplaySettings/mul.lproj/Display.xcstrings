@@ -631,6 +631,18 @@
         }
       }
     },
+    "3k9-ML-Zea.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Mapnik Raster\"; ObjectID = \"3k9-ML-Zea\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mapnik Raster"
+          }
+        }
+      }
+    },
     "4s8-Bj-JOX.normalTitle" : {
       "comment" : "Class = \"UIButton\"; normalTitle = \"99 Days\"; ObjectID = \"4s8-Bj-JOX\";",
       "extractionState" : "extracted_with_value",
@@ -1513,6 +1525,18 @@
         }
       }
     },
+    "8iI-nH-O9H.title" : {
+      "comment" : "Class = \"UINavigationItem\"; title = \"Basemap\"; ObjectID = \"8iI-nH-O9H\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Basemap"
+          }
+        }
+      }
+    },
     "8S7-Kw-QHF.normalTitle" : {
       "comment" : "Class = \"UIButton\"; normalTitle = \"Details\"; ObjectID = \"8S7-Kw-QHF\";",
       "extractionState" : "extracted_with_value",
@@ -1677,7 +1701,7 @@
     },
     "9L3-JO-Whj.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Mapnik only\"; ObjectID = \"9L3-JO-Whj\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8859,6 +8883,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "互動效果"
+          }
+        }
+      }
+    },
+    "RK2-Uw-eHM.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Basemap\"; ObjectID = \"RK2-Uw-eHM\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Basemap"
+          }
+        }
+      }
+    },
+    "rWF-4C-sRA.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Title\"; ObjectID = \"rWF-4C-sRA\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Title"
           }
         }
       }
