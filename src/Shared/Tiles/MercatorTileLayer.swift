@@ -18,7 +18,7 @@ import UIKit
 	return m
 }
 
-final class MercatorTileLayer: CALayer, GetDiskCacheSize {
+final class MercatorTileLayer: CALayer {
 	private var webCache: PersistentWebCache<UIImage>?
 	private var layerDict: [String: CALayer] = [:] // map of tiles currently displayed
 
@@ -54,7 +54,10 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 			"isHidden": NSNull()
 		]
 
-		mapView.mapTransform.observe(by: self, callback: {
+		mapView.mapTransform.observe(by: self, callback: { [weak self] in
+			guard let self = self,
+			      !self.isHidden
+			else { return }
 			var t = CATransform3DIdentity
 			t.m34 = -1 / CGFloat(mapView.mapTransform.birdsEyeDistance)
 			t = CATransform3DRotate(t, CGFloat(mapView.mapTransform.birdsEyeRotation), 1, 0, 0)
@@ -63,9 +66,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		})
 	}
 
-	deinit {
-		// mapView.removeObserver(self, forKeyPath: "screenFromMapTransform")
-	}
+	deinit {}
 
 	var tileServer: TileServer {
 		didSet {
@@ -123,10 +124,6 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		sublayers = nil
 		URLCache.shared.removeAllCachedResponses()
 		setNeedsLayout()
-	}
-
-	func getDiskCacheSize() -> (size: Int, count: Int) {
-		return webCache!.getDiskCacheSize()
 	}
 
 	private func layerOverlapsScreen(_ layer: CALayer) -> Bool {
@@ -255,7 +252,7 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 
 			// check memory cache
 			let cacheKey = QuadKey(forZoom: zoomLevel, tileX: tileModX, tileY: tileModY)
-			let cachedImage: UIImage? = webCache.object(
+			let cachedImage: UIImage? = webCache!.object(
 				withKey: cacheKey,
 				fallbackURL: { [self] in
 					self.tileServer.url(forZoom: zoomLevel, tileX: tileModX, tileY: tileModY)
@@ -423,41 +420,6 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 		}
 	}
 
-	// Used for bulk downloading tiles for offline use
-	func allTilesIntersecting(mapRect rect: OSMRect) -> [String] {
-		let currentTiles = webCache!.allKeys()
-		let currentSet = Set(currentTiles)
-
-		let minZoomLevel = min(zoomLevel(), tileServer.maxZoom)
-		let maxZoomLevel = min(zoomLevel() + 2, tileServer.maxZoom)
-
-		var neededTiles: [String] = []
-		for zoomLevel in minZoomLevel...maxZoomLevel {
-			let zoom = Double(1 << zoomLevel) / 256.0
-			let tileNorth = Int(floor(rect.origin.y * zoom))
-			let tileWest = Int(floor(rect.origin.x * zoom))
-			let tileSouth = Int(ceil((rect.origin.y + rect.size.height) * zoom))
-			let tileEast = Int(ceil((rect.origin.x + rect.size.width) * zoom))
-
-			if tileWest < 0 || tileWest >= tileEast || tileNorth < 0 || tileNorth >= tileSouth {
-				// stuff breaks if they zoom all the way out
-				continue
-			}
-
-			for tileX in tileWest..<tileEast {
-				for tileY in tileNorth..<tileSouth {
-					let cacheKey = quadKey(forZoom: zoomLevel, tileX: tileX, tileY: tileY)
-					if currentSet.contains(cacheKey) {
-						// already have it
-					} else {
-						neededTiles.append(cacheKey)
-					}
-				}
-			}
-		}
-		return neededTiles
-	}
-
 	override var transform: CATransform3D {
 		get {
 			return super.transform
@@ -492,10 +454,16 @@ final class MercatorTileLayer: CALayer, GetDiskCacheSize {
 
 extension MercatorTileLayer: TilesProvider {
 	func currentTiles() -> [String] {
-		return webCache.allKeys()
+		return webCache!.allKeys()
 	}
 
 	func maxZoom() -> Int {
 		return tileServer.maxZoom
+	}
+}
+
+extension MercatorTileLayer: GetDiskCacheSize {
+	func getDiskCacheSize() -> (size: Int, count: Int) {
+		return webCache!.getDiskCacheSize()
 	}
 }

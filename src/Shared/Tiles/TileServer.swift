@@ -19,8 +19,9 @@ private let BING_MAPS_KEY: String = [
 	"Gl4RsItKW4Fkk"
 ].reduce("", { r, x in r + x })
 
+private let AMERICANA_IDENTIFIER = "AmericanaIdentifier"
 private let BING_IDENTIFIER = "BingIdentifier"
-private let CYCLOSM_IDENTIFIER = "CyclOSMIdentifier"
+private let HUMANITARIAN_IDENTIFIER = "HotOSMIdentifier"
 private let MAPNIK_IDENTIFIER = "MapnikIdentifier"
 private let MAPBOX_LOCATOR_IDENTIFIER = "MapboxLocatorIdentifier"
 private let NO_NAME_IDENTIFIER = "Unnamed Roads"
@@ -53,6 +54,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 	let attributionIconString: String?
 	let attributionUrl: String
 	let placeholderImage: Data?
+	let isVector: Bool
 
 	enum CodingKeys: String, CodingKey {
 		case name
@@ -102,11 +104,13 @@ final class TileServer: Equatable, Codable, FastCodable {
 		let attributionString = try container.decode(String.self, forKey: .attributionString)
 		let attributionIconString = try container.decode(String?.self, forKey: .attributionIconString)
 		let attributionUrl = try container.decode(String.self, forKey: .attributionUrl)
+		let isVector = false
 
 		self.init(withName: name, identifier: identifier, url: url, best: best, overlay: overlay,
 		          apiKey: apiKey, maxZoom: maxZoom, roundUp: roundZoomUp, startDate: startDate, endDate: endDate,
 		          wmsProjection: wmsProjection, geoJSON: geoJSON,
-		          attribString: attributionString, attribIconString: attributionIconString, attribUrl: attributionUrl)
+		          attribString: attributionString, attribIconString: attributionIconString, attribUrl: attributionUrl,
+		          isVector: isVector)
 	}
 
 	func encode(to encoder: Encoder) throws {
@@ -164,7 +168,8 @@ final class TileServer: Equatable, Codable, FastCodable {
 		self.init(withName: name, identifier: identifier, url: url, best: best, overlay: overlay,
 		          apiKey: apiKey, maxZoom: maxZoom, roundUp: roundZoomUp, startDate: startDate, endDate: endDate,
 		          wmsProjection: wmsProjection, geoJSON: geoJSON,
-		          attribString: attributionString, attribIconString: attributionIconString, attribUrl: attributionUrl)
+		          attribString: attributionString, attribIconString: attributionIconString, attribUrl: attributionUrl,
+		          isVector: false)
 	}
 
 	init(
@@ -182,7 +187,8 @@ final class TileServer: Equatable, Codable, FastCodable {
 		geoJSON: GeoJSONGeometry?,
 		attribString: String,
 		attribIconString: String?,
-		attribUrl: String)
+		attribUrl: String,
+		isVector: Bool)
 	{
 		// normalize URLs
 		var url = url
@@ -205,6 +211,7 @@ final class TileServer: Equatable, Codable, FastCodable {
 		self.startDate = startDate
 		self.endDate = endDate
 		self.geoJSON = geoJSON
+		self.isVector = isVector
 
 		placeholderImage = TileServer.getPlaceholderImage(forIdentifier: identifier)
 	}
@@ -285,7 +292,8 @@ final class TileServer: Equatable, Codable, FastCodable {
 		geoJSON: nil,
 		attribString: "",
 		attribIconString: nil,
-		attribUrl: "")
+		attribUrl: "",
+		isVector: false)
 
 	static let maxarPremiumAerial = TileServer(
 		withName: "Maxar Premium Aerial",
@@ -302,7 +310,8 @@ final class TileServer: Equatable, Codable, FastCodable {
 		geoJSON: nil,
 		attribString: "Maxar Premium",
 		attribIconString: "https://osmlab.github.io/editor-layer-index/sources/world/Maxar.png",
-		attribUrl: "https://wiki.openstreetmap.org/wiki/DigitalGlobe")
+		attribUrl: "https://wiki.openstreetmap.org/wiki/DigitalGlobe",
+		isVector: false)
 
 	static let mapnik = TileServer(
 		withName: "Mapnik",
@@ -319,12 +328,13 @@ final class TileServer: Equatable, Codable, FastCodable {
 		geoJSON: nil,
 		attribString: "",
 		attribIconString: nil,
-		attribUrl: "")
+		attribUrl: "",
+		isVector: false)
 
-	static let cyclOSM = TileServer(
-		withName: "CyclOSM",
-		identifier: CYCLOSM_IDENTIFIER,
-		url: "https://{switch:a,b,c}.tile-cyclosm.openstreetmap.fr/cyclosm/{zoom}/{x}/{y}.png",
+	static let humanitarian = TileServer(
+		withName: "Humanitarian",
+		identifier: HUMANITARIAN_IDENTIFIER,
+		url: "http://{switch:a,b,c}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
 		best: false,
 		overlay: false,
 		apiKey: "",
@@ -336,7 +346,26 @@ final class TileServer: Equatable, Codable, FastCodable {
 		geoJSON: nil,
 		attribString: "",
 		attribIconString: nil,
-		attribUrl: "")
+		attribUrl: "",
+		isVector: false)
+
+	static let americana = TileServer(
+		withName: "Americana",
+		identifier: AMERICANA_IDENTIFIER,
+		url: "https://zelonewolf.github.io/openstreetmap-americana/style.json",
+		best: false,
+		overlay: false,
+		apiKey: "",
+		maxZoom: 20,
+		roundUp: false,
+		startDate: nil,
+		endDate: nil,
+		wmsProjection: nil,
+		geoJSON: nil,
+		attribString: "",
+		attribIconString: nil,
+		attribUrl: "",
+		isVector: true)
 
 	static let mapboxLocator = TileServer(
 		withName: "Mapbox Locator",
@@ -353,7 +382,8 @@ final class TileServer: Equatable, Codable, FastCodable {
 		geoJSON: nil,
 		attribString: "",
 		attribIconString: nil,
-		attribUrl: "")
+		attribUrl: "",
+		isVector: false)
 
 	static let noName = TileServer(
 		withName: "Unnamed Roads",
@@ -370,7 +400,8 @@ final class TileServer: Equatable, Codable, FastCodable {
 		geoJSON: nil,
 		attribString: "",
 		attribIconString: nil,
-		attribUrl: "")
+		attribUrl: "",
+		isVector: false)
 
 	private static let builtinBingAerial = TileServer(
 		withName: "Bing Aerial",
@@ -387,7 +418,8 @@ final class TileServer: Equatable, Codable, FastCodable {
 		geoJSON: nil,
 		attribString: "",
 		attribIconString: "bing-logo-white",
-		attribUrl: "")
+		attribUrl: "",
+		isVector: false)
 
 	private static var dynamicBingAerial: TileServer?
 
@@ -450,7 +482,8 @@ final class TileServer: Equatable, Codable, FastCodable {
 						                      geoJSON: Self.builtinBingAerial.geoJSON,
 						                      attribString: Self.builtinBingAerial.attributionString,
 						                      attribIconString: json.brandLogoUri,
-						                      attribUrl: Self.builtinBingAerial.attributionUrl)
+						                      attribUrl: Self.builtinBingAerial.attributionUrl,
+						                      isVector: false)
 						Self.dynamicBingAerial = bing
 						callback?(.success(bing))
 					} catch {
@@ -504,7 +537,8 @@ final class TileServer: Equatable, Codable, FastCodable {
 		          geoJSON: nil,
 		          attribString: "",
 		          attribIconString: nil,
-		          attribUrl: "")
+		          attribUrl: "",
+		          isVector: false)
 	}
 
 	var metadataUrl: String? {

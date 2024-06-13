@@ -12,8 +12,9 @@ import UIKit
 
 let BasemapServerList: [TileServer] = [
 	TileServer.mapnik,
-	TileServer.cyclOSM
-]
+	TileServer.humanitarian,
+	TileServer.americana
+].sorted(by: { a, b in a.best == b.best ? a.name.caseInsensitiveCompare(b.name).rawValue < 0 : a.best })
 
 class BasemapTileServerListViewController: UITableViewController {
 	weak var displayViewController: DisplayViewController?
@@ -30,14 +31,8 @@ class BasemapTileServerListViewController: UITableViewController {
 		super.viewWillDisappear(animated)
 
 		if isMovingFromParent {
-			let server = Self.currentBasemapServer()
-			//AppDelegate.shared.mapView.setBasemapTileServer(server)
+			// save any changes if necessary
 		}
-	}
-
-	class func currentBasemapServer() -> TileServer {
-		let selection = UserPrefs.shared.currentBasemapSelection.value
-		return BasemapServerList.first(where: { $0.identifier == selection }) ?? BasemapServerList.first!
 	}
 
 	// MARK: - Table view data source
@@ -63,7 +58,7 @@ class BasemapTileServerListViewController: UITableViewController {
 		if tileServer.best {
 			title = "☆" + title // star best imagery
 		}
-		if tileServer == Self.currentBasemapServer() {
+		if tileServer == AppDelegate.shared.mapView.basemapServer {
 			title = "\u{2714} " + title // add checkmark
 		}
 
@@ -76,11 +71,8 @@ class BasemapTileServerListViewController: UITableViewController {
 	// MARK: - Navigation
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
 		let server = BasemapServerList[indexPath.row]
-		UserPrefs.shared.currentBasemapSelection.value = server.identifier
-
-		// AppDelegate.shared.mapView.setBasemapTileServer(currentServer!)
+		AppDelegate.shared.mapView.basemapServer = server
 
 		// if popping all the way up we need to tell Settings to save changes
 		displayViewController?.applyChanges()

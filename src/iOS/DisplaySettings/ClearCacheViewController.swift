@@ -61,7 +61,14 @@ class ClearCacheViewController: UITableViewController {
 			object = []
 		case Row.mapnik.rawValue:
 			title = NSLocalizedString("Clear Mapnik Tiles", comment: "Delete cached data")
-			object = [mapView.mapnikLayer]
+			switch mapView.basemapLayer {
+			case let .tileLayer(layer):
+				object = [layer]
+			case let .tileView(view):
+				object = [view]
+			default:
+				object = []
+			}
 		default:
 			fatalError()
 		}
@@ -165,7 +172,14 @@ class ClearCacheViewController: UITableViewController {
 			appDelegate.mapView.editorLayer.purgeCachedData(.hard)
 			refreshAfterPurge()
 		case .mapnik /* Mapnik */:
-			appDelegate.mapView.mapnikLayer.purgeTileCache()
+			switch appDelegate.mapView.basemapLayer {
+			case let .tileLayer(layer):
+				layer.purgeTileCache()
+			case let .tileView(view):
+				view.purgeTileCache()
+			default:
+				break
+			}
 		}
 		dismiss(animated: true)
 	}

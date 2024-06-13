@@ -244,7 +244,7 @@ class LocationParser {
 					switch queryItem.value {
 					case "aerial+editor": view = .EDITORAERIAL
 					case "aerial": view = .AERIAL
-					case "mapnik": view = .MAPNIK
+					case "mapnik": view = .BASEMAP
 					case "editor": view = .EDITOR
 					default: break
 					}

@@ -281,7 +281,8 @@ extension TileServerList {
 				                         geoJSON: try entry.geometry,
 				                         attribString: attribString,
 				                         attribIconString: attribIconString,
-				                         attribUrl: attribUrl)
+				                         attribUrl: attribUrl,
+				                         isVector: false)
 
 				externalAerials.append(service)
 			} catch {

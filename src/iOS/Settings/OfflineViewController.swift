@@ -35,7 +35,14 @@ class OfflineViewController: UITableViewController {
 		tableView.estimatedRowHeight = 100
 		tableView.rowHeight = UITableView.automaticDimension
 		aerialCell.tileLayer = AppDelegate.shared.mapView.aerialLayer
-		mapnikCell.tileLayer = AppDelegate.shared.mapView.mapnikLayer
+		switch AppDelegate.shared.mapView.basemapLayer {
+		case let .tileLayer(layer):
+			mapnikCell.tileLayer = layer
+		case let .tileView(view):
+			mapnikCell.tileLayer = view
+		default:
+			fatalError()
+		}
 		for cell in [aerialCell!, mapnikCell!] {
 			cell.activityView.startAnimating()
 			cell.button.isEnabled = false
@@ -127,10 +134,9 @@ protocol TilesProvider {
 
 extension TilesProvider {
 	// Used for bulk downloading tiles for offline use
-	func allTilesIntersectingVisibleRect() -> [String] {
+	func allTilesIntersecting(mapRect rect: OSMRect) -> [String] {
 		let currentSet = Set(currentTiles())
 
-		let rect = mapView.boundingMapRectForScreen()
 		let minZoomLevel = min(zoomLevel(), maxZoom())
 		let maxZoomLevel = min(zoomLevel() + 2, maxZoom())
 

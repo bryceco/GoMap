@@ -18,7 +18,7 @@ enum MapViewState: Int {
 	case EDITOR
 	case EDITORAERIAL
 	case AERIAL
-	case MAPNIK
+	case BASEMAP
 }
 
 /// Overlays on top of the map: Locator when zoomed, GPS traces, etc.
@@ -205,14 +205,56 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 	}
 
+	public var basemapServer: TileServer {
+		get {
+			let ident = UserPrefs.shared.currentBasemapSelection.value
+			return BasemapServerList.first(where: { $0.identifier == ident }) ?? BasemapServerList.first!
+		}
+		set {
+			let oldServerId = basemapServer.identifier
+			backgroundLayers.removeAll(where: {
+				switch $0 {
+				case let .tileLayer(layer):
+					if layer.tileServer.identifier == oldServerId {
+						layer.removeFromSuperlayer()
+						return true
+					}
+				case let .tileView(view):
+					if view.tileServer.identifier == oldServerId {
+						view.removeFromSuperview()
+						return true
+					}
+				case .otherLayer:
+					break
+				}
+				return false
+			})
+
+			if newValue.isVector {
+				let view = MapLibreVectorTilesView(mapView: self, tileServer: newValue)
+				view.styleURL = URL(string: newValue.url)!
+				view.layer.zPosition = ZLAYER.MAPNIK.rawValue
+				addSubview(view)
+				basemapLayer = .tileView(view)
+			} else {
+				let layer = MercatorTileLayer(mapView: self)
+				layer.tileServer = newValue
+				layer.zPosition = ZLAYER.MAPNIK.rawValue
+				self.layer.addSublayer(layer)
+				basemapLayer = .tileLayer(layer)
+			}
+			backgroundLayers.append(basemapLayer)
+
+			UserPrefs.shared.currentBasemapSelection.value = newValue.identifier
+
+			basemapLayer.isHidden = viewState != .BASEMAP
+		}
+	}
+
 	private(set) lazy var mapMarkerDatabase = MapMarkerDatabase()
 
 	private(set) lazy var aerialLayer = MercatorTileLayer(mapView: self)
-	#if true
-	private(set) lazy var mapnikLayer = MapboxVectorTilesView(mapView: self)
-	#else
-	private(set) lazy var mapnikLayer = MercatorTileLayer(mapView: self)
-	#endif
+	private(set) lazy var basemapLayer: LayerOrView = .tileLayer(MercatorTileLayer(mapView: self))
 	private(set) lazy var noNameLayer = MercatorTileLayer(mapView: self)
 	private(set) lazy var editorLayer = EditorMapLayer(owner: self)
 	private(set) lazy var gpxLayer = GpxLayer(mapView: self)
@@ -222,11 +264,29 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	// overlays
 	private(set) lazy var locatorLayer = MercatorTileLayer(mapView: self)
 
+	enum LayerOrView: Equatable {
+		case otherLayer(CALayer)
+		case tileLayer(MercatorTileLayer)
+		case tileView(MapLibreVectorTilesView)
 
-	enum LayerOrView {
-		   case layer(CALayer)
-		   case view(UIView)
-	   }
+		var isHidden: Bool {
+			get {
+				switch self {
+				case let .otherLayer(layer): return layer.isHidden
+				case let .tileLayer(layer): return layer.isHidden
+				case let .tileView(view): return view.isHidden
+				}
+			}
+			set {
+				switch self {
+				case let .otherLayer(layer): layer.isHidden = newValue
+				case let .tileLayer(layer): layer.isHidden = newValue
+				case let .tileView(view): view.isHidden = newValue
+				}
+			}
+		}
+	}
+
 	private(set) var backgroundLayers: [LayerOrView] = [] // list of all layers that need to be resized, etc.
 
 	var mapTransform = MapTransform()
@@ -578,47 +638,47 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		locatorLayer.zPosition = ZLAYER.LOCATOR.rawValue
 		locatorLayer.tileServer = TileServer.mapboxLocator
 		locatorLayer.isHidden = true
-		backgroundLayers.append(locatorLayer)
+		backgroundLayers.append(.tileLayer(locatorLayer))
 
 		aerialLayer = MercatorTileLayer(mapView: self)
 		aerialLayer.zPosition = ZLAYER.AERIAL.rawValue
 		aerialLayer.tileServer = tileServerList.currentServer
 		aerialLayer.isHidden = true
-		backgroundLayers.append(aerialLayer)
+		backgroundLayers.append(.tileLayer(aerialLayer))
 
-		mapnikLayer = MapboxVectorTilesView(mapView: self)
-		mapnikLayer.layer.zPosition = ZLAYER.MAPNIK.rawValue
-		mapnikLayer.isHidden = true
-		backgroundLayers.append(mapnikLayer)
+		// self-assigning will do everything to set up the appropriate layer
+		basemapServer = basemapServer
+		basemapLayer.isHidden = true
 
 		editorLayer = EditorMapLayer(owner: self)
 		editorLayer.zPosition = ZLAYER.EDITOR.rawValue
-		backgroundLayers.append(editorLayer)
+		backgroundLayers.append(.otherLayer(editorLayer))
 
 		gpxLayer.zPosition = ZLAYER.GPX.rawValue
 		gpxLayer.isHidden = true
-		backgroundLayers.append(gpxLayer)
+		backgroundLayers.append(.otherLayer(gpxLayer))
 
 		dataOverlayLayer.zPosition = ZLAYER.GPX.rawValue
 		dataOverlayLayer.isHidden = true
-		backgroundLayers.append(dataOverlayLayer)
+		backgroundLayers.append(.otherLayer(dataOverlayLayer))
 
 #if DEBUG && false
 		quadDownloadLayer = QuadDownloadLayer(mapView: self)
 		if let quadDownloadLayer = quadDownloadLayer {
 			quadDownloadLayer.zPosition = Z_QUADDOWNLOAD
 			quadDownloadLayer.isHidden = false
-			backgroundLayers.append(quadDownloadLayer)
+			backgroundLayers.append(.otherlayer(quadDownloadLayer))
 		}
 #endif
 
-		backgroundLayers = bg
 		for bg in backgroundLayers {
 			switch bg {
-			case .layer(let layer):
+			case let .otherLayer(layer):
 				self.layer.addSublayer(layer)
-			case .view(let view):
-				self.addSubview(view)
+			case let .tileLayer(layer):
+				self.layer.addSublayer(layer)
+			case let .tileView(view):
+				addSubview(view)
 			}
 		}
 
@@ -809,8 +869,12 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	func tileOverlayLayers() -> [MercatorTileLayer] {
-		return backgroundLayers.filter { ($0 as? MercatorTileLayer)?.tileServer.overlay ?? false }
-			as! [MercatorTileLayer]
+		return backgroundLayers.filter {
+			if case let .tileLayer(layer) = $0 {
+				return layer.tileServer.overlay
+			}
+			return false
+		} as! [MercatorTileLayer]
 	}
 
 	func updateTileOverlayLayers() {
@@ -823,7 +887,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		// remove any layers no longer displayed
 		let removals = backgroundLayers.filter { layer in
-			guard let layer = layer as? MercatorTileLayer,
+			guard case let .tileLayer(layer) = layer,
 			      layer.tileServer.overlay
 			else {
 				return false
@@ -835,13 +899,23 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 		for layer in removals {
 			backgroundLayers.removeAll(where: { $0 == layer })
-			layer.removeFromSuperlayer()
+			switch layer {
+			case let .otherLayer(layer):
+				layer.removeFromSuperlayer()
+			case let .tileLayer(layer):
+				layer.removeFromSuperlayer()
+			case let .tileView(view):
+				view.removeFromSuperview()
+			}
 		}
 
 		if displayDataOverlayLayer {
 			// create any overlay layers the user had enabled
 			for ident in serverIdents {
-				if backgroundLayers.contains(where: { ($0 as? MercatorTileLayer)?.tileServer.identifier == ident }) {
+				if backgroundLayers.contains(where: {
+					guard case let .tileLayer(layer) = $0 else { return false }
+					return layer.tileServer.identifier == ident
+				}) {
 					// already have it
 					continue
 				}
@@ -857,8 +931,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				layer.zPosition = ZLAYER.GPX.rawValue
 				layer.tileServer = tileServer
 				layer.isHidden = false
-
-				backgroundLayers.append(layer)
+				backgroundLayers.append(.tileLayer(layer))
 				self.layer.addSublayer(layer)
 			}
 		}
@@ -910,16 +983,15 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		// update bounds of layers
 		for bg in backgroundLayers {
 			switch bg {
-			case .layer(let layer):
+			case let .otherLayer(layer):
 				layer.frame = bounds
 				layer.bounds = bounds
-			case .view(let view):
+			case let .tileLayer(layer):
+				layer.frame = bounds
+				layer.bounds = bounds
+			case let .tileView(view):
 				view.frame = bounds
-				if view is MapboxVectorTilesView {
-					view.bounds = bounds.offsetBy(dx: bounds.width/2, dy: bounds.height/2)
-				} else {
-					view.bounds = bounds
-				}
+				view.bounds = bounds.offsetBy(dx: bounds.width / 2, dy: bounds.height / 2)
 			}
 		}
 
@@ -1230,9 +1302,14 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	func unnamedRoadLayer() -> MercatorTileLayer? {
 		let noName = TileServer.noName.identifier
-		return backgroundLayers.first(where: {
-			($0 as? MercatorTileLayer)?.tileServer.identifier == noName
-		}) as? MercatorTileLayer
+		for layer in backgroundLayers {
+			if case let .tileLayer(layer) = layer,
+			   layer.tileServer.identifier == noName
+			{
+				return layer
+			}
+		}
+		return nil
 	}
 
 	// MARK: Rotate object
@@ -1286,7 +1363,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 
 		func StateFor(_ state: MapViewState, zoomedOut: Bool) -> MapViewState {
-			if zoomedOut, state == .EDITOR { return .MAPNIK }
+			if zoomedOut, state == .EDITOR { return .BASEMAP }
 			if zoomedOut, state == .EDITORAERIAL { return .AERIAL }
 			return state
 		}
@@ -1319,14 +1396,14 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		case MapViewState.EDITOR:
 			editorLayer.isHidden = false
 			aerialLayer.isHidden = true
-			mapnikLayer.isHidden = true
+			basemapLayer.isHidden = true
 			userInstructionLabel.isHidden = true
 			editorLayer.whiteText = true
 		case MapViewState.EDITORAERIAL:
 			aerialLayer.tileServer = tileServerList.currentServer
 			editorLayer.isHidden = false
 			aerialLayer.isHidden = false
-			mapnikLayer.isHidden = true
+			basemapLayer.isHidden = true
 			userInstructionLabel.isHidden = true
 			editorLayer.whiteText = true
 			aerialAlignmentButton.isHidden = false
@@ -1334,12 +1411,12 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			aerialLayer.tileServer = tileServerList.currentServer
 			editorLayer.isHidden = true
 			aerialLayer.isHidden = false
-			mapnikLayer.isHidden = true
+			basemapLayer.isHidden = true
 			userInstructionLabel.isHidden = true
-		case MapViewState.MAPNIK:
+		case MapViewState.BASEMAP:
 			editorLayer.isHidden = true
 			aerialLayer.isHidden = true
-			mapnikLayer.isHidden = false
+			basemapLayer.isHidden = false
 			userInstructionLabel.isHidden = state != .EDITOR && state != .EDITORAERIAL
 			if !userInstructionLabel.isHidden {
 				userInstructionLabel.text = NSLocalizedString("Zoom to Edit", comment: "")

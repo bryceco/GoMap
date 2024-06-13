@@ -144,7 +144,7 @@ class DisplayViewController: UITableViewController {
 		// set the name of the basemap provider
 		if indexPath.section == BACKGROUND_SECTION, indexPath.row == 3 {
 			if let custom = cell as? CustomBackgroundCell {
-				let server = BasemapTileServerListViewController.currentBasemapServer()
+				let server = AppDelegate.shared.mapView.basemapServer
 				custom.button.setTitle(server.name, for: .normal)
 				custom.button.sizeToFit()
 			}

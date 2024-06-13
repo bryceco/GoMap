@@ -96,7 +96,8 @@ class TileServerEditViewController: UITableViewController {
 			geoJSON: nil,
 			attribString: "",
 			attribIconString: nil,
-			attribUrl: "")
+			attribUrl: "",
+			isVector: false)
 		completion?(service)
 
 		navigationController?.popViewController(animated: true)

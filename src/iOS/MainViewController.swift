@@ -577,7 +577,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 				mapView.setAerialTileServer(service)
 				if mapView.viewState == MapViewState.EDITOR {
 					mapView.viewState = MapViewState.EDITORAERIAL
-				} else if mapView.viewState == MapViewState.MAPNIK {
+				} else if mapView.viewState == MapViewState.BASEMAP {
 					mapView.viewState = MapViewState.EDITORAERIAL
 				}
 			}))
@@ -614,7 +614,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		case .AERIAL:
 			actionSheet.addAction(editorAerial)
 			actionSheet.addAction(editorOnly)
-		case .MAPNIK:
+		case .BASEMAP:
 			actionSheet.addAction(editorAerial)
 			actionSheet.addAction(editorOnly)
 			actionSheet.addAction(aerialOnly)

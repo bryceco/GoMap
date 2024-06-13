@@ -21,7 +21,7 @@ enum MapViewState: Int {
 	case EDITOR
 	case EDITORAERIAL
 	case AERIAL
-	case MAPNIK
+	case BASEMAP
 }
 
 /// Duplicated so we can re-use the URL parsing code in LocationParser
