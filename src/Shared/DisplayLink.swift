@@ -21,6 +21,13 @@ final class DisplayLink {
 		displayLink = CADisplayLink(target: self, selector: #selector(step))
 		displayLink.isPaused = true
 		displayLink.add(to: RunLoop.main, forMode: .default)
+
+		if #available(iOS 15.0, *) {
+			let rng = CAFrameRateRange(minimum: 30.0,
+									   maximum: Float(UIScreen.main.maximumFramesPerSecond),
+									   preferred: Float(60.0))
+			displayLink.preferredFrameRateRange = rng
+		}
 	}
 
 	@objc func step() {

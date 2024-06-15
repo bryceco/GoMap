@@ -93,6 +93,8 @@ final class PresetsDatabase {
 		noForLocale = yesNoDict?["no"] ?? "No"
 		unknownForLocale = fieldTrans["opening_hours"]?["placeholder"] as! String? ?? "???"
 
+		let readTime = Date()
+
 		// get presets files
 		presetDefaults = Self.Translate(Self.jsonForFile("preset_defaults.json")!,
 		                                jsonTranslation["defaults"]) as! [String: [String]]
@@ -125,6 +127,7 @@ final class PresetsDatabase {
 		DispatchQueue.global(qos: .userInitiated).async {
 			let startTime = Date()
 			let nsiDict = Self.jsonForFile("nsi_presets.json") as! [String: Any]
+			let readTime = Date()
 			let nsiPresets = (nsiDict["presets"] as! [String: Any])
 				.mapValuesWithKeys({ k, v in
 					PresetFeature(withID: k,
@@ -142,7 +145,8 @@ final class PresetsDatabase {
 				}
 #endif
 			}
-			print("NSI decode time = \(Date().timeIntervalSince(startTime))")
+			print("NSI read = \(readTime.timeIntervalSince(startTime)), " +
+				  "decode = \(Date().timeIntervalSince(readTime))")
 		}
 
 		// Load geojson outlines for NSI in the background
@@ -162,7 +166,8 @@ final class PresetsDatabase {
 				}
 			}
 		}
-		print("PresetsDatabase decode time = \(Date().timeIntervalSince(startTime))")
+		print("PresetsDatabase read = \(readTime.timeIntervalSince(startTime)), " +
+			  "decode = \(Date().timeIntervalSince(readTime))")
 	}
 
 	/// basePresets is always the regular presets
