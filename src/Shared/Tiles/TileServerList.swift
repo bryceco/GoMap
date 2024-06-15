@@ -82,8 +82,8 @@ final class TileServerList {
 		let readTime = CACurrentMediaTime()
 		if let data = cachedData {
 			let externalAerials = Self.processOsmLabAerialsData(data)
-			print("TileServerList read = \(readTime-startTime), " +
-				  "decode = \(CACurrentMediaTime() - readTime)")
+			print("TileServerList read = \(readTime - startTime), " +
+				"decode = \(CACurrentMediaTime() - readTime)")
 
 			updateDownloadList(with: externalAerials)
 			completion(false)

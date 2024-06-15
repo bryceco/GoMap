@@ -146,7 +146,7 @@ final class PresetsDatabase {
 #endif
 			}
 			print("NSI read = \(readTime.timeIntervalSince(startTime)), " +
-				  "decode = \(Date().timeIntervalSince(readTime))")
+				"decode = \(Date().timeIntervalSince(readTime))")
 		}
 
 		// Load geojson outlines for NSI in the background
@@ -167,7 +167,7 @@ final class PresetsDatabase {
 			}
 		}
 		print("PresetsDatabase read = \(readTime.timeIntervalSince(startTime)), " +
-			  "decode = \(Date().timeIntervalSince(readTime))")
+			"decode = \(Date().timeIntervalSince(readTime))")
 	}
 
 	/// basePresets is always the regular presets
