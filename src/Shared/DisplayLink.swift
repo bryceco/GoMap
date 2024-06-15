@@ -21,11 +21,16 @@ final class DisplayLink {
 		displayLink = CADisplayLink(target: self, selector: #selector(step))
 		displayLink.isPaused = true
 		displayLink.add(to: RunLoop.main, forMode: .default)
+		setFrameRate()
+	}
 
+	func setFrameRate() {
 		if #available(iOS 15.0, *) {
+			let maxFPS = Float(UIScreen.main.maximumFramesPerSecond)
+			let preferredFPS = (UserPrefs.shared.maximizeFrameRate.value ?? false) ? maxFPS : 60.0
 			let rng = CAFrameRateRange(minimum: 30.0,
-									   maximum: Float(UIScreen.main.maximumFramesPerSecond),
-									   preferred: Float(60.0))
+									   maximum: maxFPS,
+									   preferred: preferredFPS)
 			displayLink.preferredFrameRateRange = rng
 		}
 	}

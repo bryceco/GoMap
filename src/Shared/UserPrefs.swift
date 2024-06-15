@@ -96,6 +96,7 @@ final class UserPrefs {
 	let mapViewEnableDataOverlay = Pref<Bool>(key: "mapViewEnableDataOverlay")
 	let mapViewEnableTurnRestriction = Pref<Bool>(key: "mapViewEnableTurnRestriction")
 	let latestAerialCheckLatLon = Pref<Data>(key: "LatestAerialCheckLatLon")
+	let maximizeFrameRate = Pref<Bool>(key: "maximizeFrameRate")
 
 	// Nominatim
 	let searchHistory = Pref<[String]>(key: "searchHistory", ubiquitous: true)

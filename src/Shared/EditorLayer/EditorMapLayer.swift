@@ -175,7 +175,8 @@ final class EditorMapLayer: CALayer {
 		whiteText = true
 
 		// observe changes to screen
-		owner.mapTransform.observe(by: self, callback: { self.updateMapLocation() })
+		owner.mapTransform.observe(by: self,
+		                           callback: { [weak self] in self?.updateMapLocation() })
 
 		OsmMapData.g_EditorMapLayerForArchive = self
 

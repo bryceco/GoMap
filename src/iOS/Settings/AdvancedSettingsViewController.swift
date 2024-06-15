@@ -11,6 +11,7 @@ class AdvancedSettingsViewController: UITableViewController {
 	@IBOutlet var hostname: UITextField!
 	@IBOutlet var switchFPS: UISwitch!
 	@IBOutlet var switchTouches: UISwitch!
+	@IBOutlet var switchMaxFPS: UISwitch!
 
 	private var originalHostname: String?
 	var hostnameButton: UIButton!
@@ -44,6 +45,8 @@ class AdvancedSettingsViewController: UITableViewController {
 		let app = UIApplication.shared as! MyApplication
 		switchFPS.isOn = appDelegate.mapView.automatedFramerateTestActive
 		switchTouches.isOn = app.showTouchCircles
+
+		switchMaxFPS.isOn = UserPrefs.shared.maximizeFrameRate.value ?? false
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -62,16 +65,22 @@ class AdvancedSettingsViewController: UITableViewController {
 		}
 	}
 
-	@IBAction func switchFPS(_ sender: Any) {
+	@IBAction func switchShowFPS(_ sender: Any) {
 		let toggle = sender as! UISwitch
 		let appDelegate = AppDelegate.shared
 		appDelegate.mapView.automatedFramerateTestActive = toggle.isOn
 	}
 
-	@IBAction func switchTouch(_ sender: Any) {
+	@IBAction func switchShowTouches(_ sender: Any) {
 		let toggle = sender as! UISwitch
 		let app = UIApplication.shared as! MyApplication
 		app.showTouchCircles = toggle.isOn
+	}
+
+	@IBAction func switchUseMaxFPS(_ sender: Any) {
+		let toggle = sender as! UISwitch
+		UserPrefs.shared.maximizeFrameRate.value = toggle.isOn
+		DisplayLink.shared.setFrameRate()
 	}
 
 	@IBAction func showSourceHistory(_ sender: Any) {

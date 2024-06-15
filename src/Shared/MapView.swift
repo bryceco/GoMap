@@ -495,47 +495,25 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				fpsLabel.showFPS = true
 
 				// this set's the starting center point
-				let startLatLon = OSMPoint(x: -122.205831, y: 47.675024)
-				let startZoom = 18.0 // 17.302591
-				setTransformFor(latLon: LatLon(startLatLon), zoom: startZoom)
+				let startLatLon = LatLon(lon: -122.2060122462481, lat: 47.675389766549706)
+				let startZoom = 18.0
 
 				// sets the size of the circle
-				let radius: Double = 100
-				let startAngle: CGFloat = 1.5 * .pi
-				let rpm: CGFloat = 2.0
-				let zoomTotal: CGFloat = 1.1 // 10% larger
-				let zoomDelta = pow(zoomTotal, 1 / 60.0)
-
-				var angle = startAngle
-				var prevTime = CACurrentMediaTime()
+				let mpd = MetersPerDegreeAt(latitude: startLatLon.lat)
+				let radius = 35.0
+				let radius2 = CGPoint(x: radius / mpd.x, y: radius / mpd.y)
+				let startTime = CACurrentMediaTime()
+				let periodSeconds = 2.0
 				weak var weakSelf = self
 
 				displayLink.addName(AUTOSCROLL_DISPLAYLINK_NAME, block: {
 					guard let myself = weakSelf else { return }
-					let time = CACurrentMediaTime()
-					let delta = time - prevTime
-					let newAngle = angle + (2 * .pi) / rpm *
-						CGFloat(delta) // angle change depends on framerate to maintain 2/RPM
-
-					if angle < startAngle, newAngle >= startAngle {
-						// reset to start position
-						myself.setTransformFor(latLon: LatLon(startLatLon), zoom: startZoom)
-						angle = startAngle
-					} else {
-						// move along circle
-						let x1 = cos(angle)
-						let y1 = sin(angle)
-						let x2 = cos(newAngle)
-						let y2 = sin(newAngle)
-						let dx = CGFloat(Double(x2 - x1) * radius)
-						let dy = CGFloat(Double(y2 - y1) * radius)
-
-						myself.adjustOrigin(by: CGPoint(x: dx, y: dy))
-						let zoomRatio = Double(dy >= 0 ? zoomDelta : 1 / zoomDelta)
-						myself.adjustZoom(by: CGFloat(zoomRatio), aroundScreenPoint: myself.crossHairs.position)
-						angle = fmod(newAngle, 2 * .pi)
-					}
-					prevTime = time
+					let offset = 1.0 - fmod((CACurrentMediaTime() - startTime) / periodSeconds, 1.0)
+					let origin = LatLon(lon: startLatLon.lon + cos(offset * 2.0 * .pi) * radius2.x,
+					                    lat: startLatLon.lat + sin(offset * 2.0 * .pi) * radius2.y)
+					let zoomFrac = (1.0 + cos(offset * 2.0 * .pi)) * 0.5
+					let zoom = startZoom * (1 + zoomFrac * 0.01)
+					myself.setTransformFor(latLon: origin, zoom: zoom)
 				})
 			} else {
 				fpsLabel.showFPS = false
@@ -2746,6 +2724,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		if pan.state == .began {
 			// start pan
 			DisplayLink.shared.removeName(DisplayLinkPanning)
+			// disable frame rate test if active
+			automatedFramerateTestActive = false
 		} else if pan.state == .changed {
 			// move pan
 			if SHOW_3D {
