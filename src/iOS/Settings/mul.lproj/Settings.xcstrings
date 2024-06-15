@@ -1904,13 +1904,13 @@
       }
     },
     "AEl-sZ-ech.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Prefer > 60 FPS\"; ObjectID = \"AEl-sZ-ech\"; Note = \"Display the user's touches when they tap the screen\";",
+      "comment" : "Class = \"UILabel\"; text = \"Enables > 60 FPS\"; ObjectID = \"AEl-sZ-ech\"; Note = \"Display the user's touches when they tap the screen\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Prefer > 60 FPS"
+            "value" : "Enables > 60 FPS"
           }
         }
       }

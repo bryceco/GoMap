@@ -24,8 +24,9 @@ private let BING_IDENTIFIER = "BingIdentifier"
 private let HUMANITARIAN_IDENTIFIER = "HotOSMIdentifier"
 private let MAPNIK_IDENTIFIER = "MapnikIdentifier"
 private let MAPBOX_LOCATOR_IDENTIFIER = "MapboxLocatorIdentifier"
-private let NO_NAME_IDENTIFIER = "Unnamed Roads"
 private let MAXAR_PREMIUM_IDENTIFIER = "Maxar-Premium"
+private let OHM_IDENTIFIER = "OpenHistoricalMapIdentifier"
+private let NO_NAME_IDENTIFIER = "Unnamed Roads"
 
 /// A provider of tile imagery, such as Bing or Mapbox
 final class TileServer: Equatable, Codable, FastCodable {
@@ -353,6 +354,24 @@ final class TileServer: Equatable, Codable, FastCodable {
 		withName: "Americana",
 		identifier: AMERICANA_IDENTIFIER,
 		url: "https://zelonewolf.github.io/openstreetmap-americana/style.json",
+		best: false,
+		overlay: false,
+		apiKey: "",
+		maxZoom: 20,
+		roundUp: false,
+		startDate: nil,
+		endDate: nil,
+		wmsProjection: nil,
+		geoJSON: nil,
+		attribString: "",
+		attribIconString: nil,
+		attribUrl: "",
+		isVector: true)
+
+	static let openHistoricalMap = TileServer(
+		withName: "OpenHistoricalMap",
+		identifier: OHM_IDENTIFIER,
+		url: "https://openhistoricalmap.github.io/map-styles/main/main.json",
 		best: false,
 		overlay: false,
 		apiKey: "",
