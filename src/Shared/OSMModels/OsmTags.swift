@@ -252,10 +252,18 @@ final class OsmTags {
 			}
 		}
 		// remove any repeating spaces
-		value = value.description.replacingOccurrences(of: "  ", with: " ")
+		value = value.replacingOccurrences(of: "  ", with: " ")
 
 		// remove spaces following commas
-		value = value.description.replacingOccurrences(of: ", ", with: ",")
+		value = value.replacingOccurrences(of: ", ", with: ",")
+
+		// put a space in front of days that follow a time and comma
+		if #available(iOS 16.0, *) {
+			while let match = try? /[0-9][0-9]:[0-9][0-9],[MTWFS]/.firstMatch(in: value) {
+				let spacePos = value.index(match.range.upperBound, offsetBy: -1)
+				value.insert(" ", at: spacePos)
+			}
+		}
 
 		return value
 	}
