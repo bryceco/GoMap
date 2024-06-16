@@ -29,8 +29,8 @@ final class DisplayLink {
 			let maxFPS = Float(UIScreen.main.maximumFramesPerSecond)
 			let preferredFPS = (UserPrefs.shared.maximizeFrameRate.value ?? false) ? maxFPS : 60.0
 			let rng = CAFrameRateRange(minimum: 30.0,
-									   maximum: maxFPS,
-									   preferred: preferredFPS)
+			                           maximum: maxFPS,
+			                           preferred: preferredFPS)
 			displayLink.preferredFrameRateRange = rng
 		}
 	}

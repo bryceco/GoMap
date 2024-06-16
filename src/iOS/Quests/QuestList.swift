@@ -109,10 +109,7 @@ class ResurveyQuest: QuestInstance {
 		let age = Date().addingTimeInterval(-ageInSeconds)
 		let dateString = OsmBaseObject.rfc3339DateFormatter().string(from: age)
 
-		guard let shopPredicate = try? QuestList.predicateForKey("phone", more: true)
-		else {
-			fatalError()
-		}
+		let shopPredicate = try! QuestList.predicateForKey("phone", more: true)
 
 		let predicate: (OsmBaseObject) -> Bool = { obj in
 			if obj.timestamp >= dateString || obj.isModified() {

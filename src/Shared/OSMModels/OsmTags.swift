@@ -14,7 +14,7 @@ final class OsmTags {
 	                                                            options: [])
 
 	class func PrettyTag(_ tag: String) -> String {
-		if PrettyTagExpr.matches(in: tag, options: [], range: NSRange(location: 0, length: tag.count)).count > 0 {
+		if PrettyTagExpr.matches(in: tag, options: [], range: NSRange(location: 0, length: tag.utf16.count)).count > 0 {
 			return tag.replacingOccurrences(of: "_", with: " ").capitalized
 		}
 		return tag
@@ -259,7 +259,8 @@ final class OsmTags {
 
 		// put a space in front of days that follow a time and comma
 		if #available(iOS 16.0, *) {
-			while let match = try? /[0-9][0-9]:[0-9][0-9],[MTWFS]/.firstMatch(in: value) {
+			let regex = try! Regex("[0-9][0-9]:[0-9][0-9],[MTWFS]")
+			while let match = try? regex.firstMatch(in: value) {
 				let spacePos = value.index(match.range.upperBound, offsetBy: -1)
 				value.insert(" ", at: spacePos)
 			}

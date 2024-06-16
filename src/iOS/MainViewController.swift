@@ -327,24 +327,24 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 				                                     cornerRadius: view.layer.cornerRadius).cgPath
 			}
 			// image blue tint
-			if let button = view as? UIButton {
-				if button != mapView.compassButton, button != mapView.helpButton,
-				   button != mapView.aerialAlignmentButton
-				{
-					let image = button.currentImage?.withRenderingMode(.alwaysTemplate)
-					button.setImage(image, for: .normal)
-					if #available(iOS 13.0, *) {
-						button.tintColor = UIColor.link
-					} else {
-						button.tintColor = UIColor.systemBlue
-					}
-					if button == mapView.addNodeButton {
-						// resize images on button to be smaller
-						button.imageEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
-					} else {
-						// resize images on button to be smaller
-						button.imageEdgeInsets = UIEdgeInsets(top: 9, left: 9, bottom: 9, right: 9)
-					}
+			if let button = view as? UIButton,
+			   button != mapView.compassButton,
+			   button != mapView.helpButton,
+			   button != mapView.aerialAlignmentButton
+			{
+				let image = button.currentImage?.withRenderingMode(.alwaysTemplate)
+				button.setImage(image, for: .normal)
+				if #available(iOS 13.0, *) {
+					button.tintColor = UIColor.link
+				} else {
+					button.tintColor = UIColor.systemBlue
+				}
+				if button == mapView.addNodeButton {
+					// resize images on button to be smaller
+					button.imageEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+				} else {
+					// resize images on button to be smaller
+					button.imageEdgeInsets = UIEdgeInsets(top: 9, left: 9, bottom: 9, right: 9)
 				}
 			}
 
