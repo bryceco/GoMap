@@ -28,6 +28,7 @@ func roundToEvenValue(_ value: Double) -> Double {
 class RulerView: UIView {
 	private var shapeLayer: CAShapeLayer
 	private var textLayer: CATextLayer
+	private let measurementFormatter = MeasurementFormatter()
 	private var unitType: UnitType {
 		didSet {
 			updateText()
@@ -84,6 +85,11 @@ class RulerView: UIView {
 
 		layer.addSublayer(shapeLayer)
 		layer.addSublayer(textLayer)
+
+		measurementFormatter.unitOptions = [.providedUnit]
+		measurementFormatter.numberFormatter = NumberFormatter()
+		measurementFormatter.numberFormatter.minimumSignificantDigits = 3
+		measurementFormatter.numberFormatter.maximumSignificantDigits = 3
 
 		let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(toggleUnitType))
 		addGestureRecognizer(tapGestureRecognizer)
@@ -147,12 +153,7 @@ class RulerView: UIView {
 			}
 		}
 
-		let formatter = MeasurementFormatter()
-		formatter.unitOptions = [.providedUnit]
-		formatter.numberFormatter = NumberFormatter()
-		formatter.numberFormatter.minimumSignificantDigits = 3
-		formatter.numberFormatter.maximumSignificantDigits = 3
-		textLayer.string = formatter.string(from: width)
+		textLayer.string = measurementFormatter.string(from: width)
 	}
 
 	@objc private func toggleUnitType() {
