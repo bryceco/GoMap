@@ -27,6 +27,7 @@ private let MAPBOX_LOCATOR_IDENTIFIER = "MapboxLocatorIdentifier"
 private let MAXAR_PREMIUM_IDENTIFIER = "Maxar-Premium"
 private let OHM_IDENTIFIER = "OpenHistoricalMapIdentifier"
 private let NO_NAME_IDENTIFIER = "Unnamed Roads"
+private let OPEN_GEO_FICTION_IDENTIFIER = "OpenGeoFictionIdentifier"
 
 /// A provider of tile imagery, such as Bing or Mapbox
 final class TileServer: Equatable, Codable, FastCodable {
@@ -412,6 +413,24 @@ final class TileServer: Equatable, Codable, FastCodable {
 		overlay: true,
 		apiKey: "",
 		maxZoom: 25,
+		roundUp: false,
+		startDate: nil,
+		endDate: nil,
+		wmsProjection: nil,
+		geoJSON: nil,
+		attribString: "",
+		attribIconString: nil,
+		attribUrl: "",
+		isVector: false)
+
+	static let openGeoFiction = TileServer(
+		withName: "OpenGeoFiction",
+		identifier: OPEN_GEO_FICTION_IDENTIFIER,
+		url: "https://tiles04.rent-a-planet.com/ogf-carto/{z}/{x}/{y}.png",
+		best: false,
+		overlay: false,
+		apiKey: "",
+		maxZoom: 20,
 		roundUp: false,
 		startDate: nil,
 		endDate: nil,
