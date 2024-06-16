@@ -118,7 +118,7 @@ struct MapLocation {
 }
 
 protocol MapViewProgress {
-	func progressIncrement()
+	func progressIncrement(_ delta: Int)
 	func progressDecrement()
 }
 
@@ -1519,11 +1519,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	// MARK: Progress indicator
 
-	func progressIncrement() {
-		if progressActive.value() == 0 {
+	func progressIncrement(_ delta: Int = 1) {
+		if progressActive.value() == 0 && delta > 0 {
 			progressIndicator.startAnimating()
 		}
-		progressActive.increment()
+		progressActive.increment(delta)
 	}
 
 	func progressDecrement() {

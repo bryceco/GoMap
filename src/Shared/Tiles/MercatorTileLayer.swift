@@ -366,9 +366,9 @@ final class MercatorTileLayer: CALayer {
 		}
 
 		// create any tiles that don't yet exist
+		mapView.progressIncrement( (tileEast-tileWest)*(tileSouth-tileNorth) )
 		for tileX in tileWest..<tileEast {
 			for tileY in tileNorth..<tileSouth {
-				mapView.progressIncrement()
 				fetchTile(
 					forTileX: tileX,
 					tileY: tileY,

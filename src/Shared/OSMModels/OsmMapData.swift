@@ -647,7 +647,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		// submit each query to the server and process the results
 		for query in queryList {
-			progress.progressIncrement()
+			progress.progressIncrement(1)
 
 			let rc = query.rect
 			let url = OSM_SERVER.apiURL +
