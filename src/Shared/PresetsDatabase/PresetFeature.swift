@@ -6,12 +6,11 @@
 //  Copyright © 2020 Bryce Cogswell. All rights reserved.
 //
 
-import FastCodable
 import Foundation
 import UIKit
 
 // A feature-defining tag such as amenity=shop
-final class PresetFeature: CustomDebugStringConvertible, FastCodable {
+final class PresetFeature: CustomDebugStringConvertible {
 	static let uninitializedImage = UIImage()
 
 	let _addTags: [String: String]?
@@ -98,44 +97,6 @@ final class PresetFeature: CustomDebugStringConvertible, FastCodable {
 					return jsonDict["terms"] as! [String]? ?? jsonDict["matchNames"] as! [String]? ?? []
 				}
 			}())
-	}
-
-	init(fromFast decoder: FastDecoder) throws {
-		_addTags = try decoder.decode()
-		aliases = try decoder.decode()
-		featureID = try decoder.decode()
-		fieldsWithRedirect = try decoder.decode()
-		geometry = try decoder.decode()
-		iconName = try decoder.decode()
-		locationSet = try decoder.decode()
-		matchScore = try decoder.decode()
-		moreFieldsWithRedirect = try decoder.decode()
-		nameWithRedirect = try decoder.decode()
-		nsiSuggestion = try decoder.decode()
-		reference = try decoder.decode()
-		_removeTags = try decoder.decode()
-		searchable = try decoder.decode()
-		tags = try decoder.decode()
-		terms = try decoder.decode()
-	}
-
-	func fastEncode(to encoder: FastEncoder) {
-		encoder.encode(_addTags)
-		encoder.encode(aliases)
-		encoder.encode(featureID)
-		encoder.encode(fieldsWithRedirect)
-		encoder.encode(geometry)
-		encoder.encode(iconName)
-		encoder.encode(locationSet)
-		encoder.encode(matchScore)
-		encoder.encode(moreFieldsWithRedirect)
-		encoder.encode(nameWithRedirect)
-		encoder.encode(nsiSuggestion)
-		encoder.encode(reference)
-		encoder.encode(_removeTags)
-		encoder.encode(searchable)
-		encoder.encode(tags)
-		encoder.encode(terms)
 	}
 
 	let nsiSuggestion: Bool // is from NSI

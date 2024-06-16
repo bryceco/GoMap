@@ -6,7 +6,6 @@
 //  Copyright © 2022 Bryce Cogswell. All rights reserved.
 //
 
-import FastCodable
 import Foundation
 import UIKit.UIBezierPath
 
@@ -362,74 +361,5 @@ extension GeoJSONGeometry.GeometryType {
 			}
 			return all
 		}
-	}
-}
-
-// FastCodable support
-extension GeoJSONGeometry.GeometryType: FastCodable {
-	func fastEncode(to encoder: FastEncoder) {
-		switch self {
-		case let .point(points):
-			1.fastEncode(to: encoder)
-			points.fastEncode(to: encoder)
-		case let .multiPoint(points):
-			2.fastEncode(to: encoder)
-			points.fastEncode(to: encoder)
-		case let .lineString(points):
-			3.fastEncode(to: encoder)
-			points.fastEncode(to: encoder)
-		case let .multiLineString(points):
-			4.fastEncode(to: encoder)
-			points.fastEncode(to: encoder)
-		case let .polygon(points):
-			5.fastEncode(to: encoder)
-			points.fastEncode(to: encoder)
-		case let .multiPolygon(points):
-			6.fastEncode(to: encoder)
-			points.fastEncode(to: encoder)
-		case let .geometryCollection(points):
-			7.fastEncode(to: encoder)
-			points.fastEncode(to: encoder)
-		}
-	}
-
-	init(fromFast decoder: FastDecoder) throws {
-		let type = try Int(fromFast: decoder)
-		switch type {
-		case 1:
-			let points = try LatLon(fromFast: decoder)
-			self = .point(points: points)
-		case 2:
-			let points = try [LatLon].init(fromFast: decoder)
-			self = .multiPoint(points: points)
-		case 3:
-			let points = try [LatLon].init(fromFast: decoder)
-			self = .lineString(points: points)
-		case 4:
-			let points = try [[LatLon]].init(fromFast: decoder)
-			self = .multiLineString(points: points)
-		case 5:
-			let points = try [[LatLon]].init(fromFast: decoder)
-			self = .polygon(points: points)
-		case 6:
-			let points = try [[[LatLon]]].init(fromFast: decoder)
-			self = .multiPolygon(points: points)
-		case 7:
-			let points = try [GeoJSONGeometry].init(fromFast: decoder)
-			self = .geometryCollection(points: points)
-		default:
-			fatalError()
-		}
-	}
-}
-
-extension GeoJSONGeometry: FastCodable {
-	func fastEncode(to encoder: FastEncoder) {
-		geometryPoints.fastEncode(to: encoder)
-	}
-
-	init(fromFast decoder: FastDecoder) throws {
-		geometryPoints = try GeometryType(fromFast: decoder)
-		latLonBezierPath = try geometryPoints.bezierPath()
 	}
 }

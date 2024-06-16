@@ -11,7 +11,6 @@
 // OsmPoint, etc that is explicitely 64-bit double
 
 import CoreLocation
-import FastCodable
 import UIKit
 
 // https://developer.apple.com/library/mac/#samplecode/glut/Listings/gle_vvector_h.html
@@ -644,18 +643,6 @@ struct LatLon: Equatable, Codable {
 
 	@inline(__always) public static func ==(_ a: LatLon, _ b: LatLon) -> Bool {
 		return a.lon == b.lon && a.lat == b.lat
-	}
-}
-
-extension LatLon: FastCodable {
-	init(fromFast decoder: FastDecoder) throws {
-		lat = try decoder.decode()
-		lon = try decoder.decode()
-	}
-
-	func fastEncode(to encoder: FastEncoder) {
-		encoder.encode(lat)
-		encoder.encode(lon)
 	}
 }
 

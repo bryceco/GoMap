@@ -17,7 +17,6 @@
 		0203B06529B3D62900B020DF /* OsmType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0203B06329B3D62900B020DF /* OsmType.swift */; };
 		020798012994706000D3C654 /* QuestBuilderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020798002994706000D3C654 /* QuestBuilderController.swift */; };
 		02079803299470FB00D3C654 /* QuestBuilder.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02079802299470FB00D3C654 /* QuestBuilder.storyboard */; };
-		02092ECD29E2497E0095042B /* FastCodable in Frameworks */ = {isa = PBXBuildFile; productRef = 02092ECC29E2497E0095042B /* FastCodable */; };
 		02092ECF29E32DD40095042B /* UserPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02092ECE29E32DD40095042B /* UserPrefs.swift */; };
 		02092ED129E8ADB70095042B /* ArchivePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02092ED029E8ADB70095042B /* ArchivePath.swift */; };
 		020E160B267A82050037DE49 /* TileServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020E160A267A82050037DE49 /* TileServer.swift */; };
@@ -92,7 +91,6 @@
 		02A123EB264C9B17005638C1 /* RenderInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096B8263DFA2A00E3B129 /* RenderInfo.swift */; };
 		02A123ED264CAE6F005638C1 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A123EC264CAE6F005638C1 /* Atomic.swift */; };
 		02A123EE264CBBE5005638C1 /* DisplayLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096C1263E567200E3B129 /* DisplayLink.swift */; };
-		02A123EF264EE7BC005638C1 /* aes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096BD263E178600E3B129 /* aes.swift */; };
 		02A123F1264EF139005638C1 /* QuadMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA924A263FFD7E000A2A99 /* QuadMap.swift */; };
 		02A194B219C6A432002338DA /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A194B119C6A432002338DA /* libsqlite3.0.dylib */; };
 		02A59EDB297DE4E100B0A676 /* PresetField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A59EDA297DE4E100B0A676 /* PresetField.swift */; };
@@ -559,7 +557,6 @@
 		C3D096B2263D618E00E3B129 /* HeightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightViewController.swift; sourceTree = "<group>"; };
 		C3D096B5263DF82F00E3B129 /* RulerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RulerView.swift; sourceTree = "<group>"; };
 		C3D096B8263DFA2A00E3B129 /* RenderInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderInfo.swift; sourceTree = "<group>"; };
-		C3D096BD263E178600E3B129 /* aes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = aes.swift; sourceTree = "<group>"; };
 		C3D096C1263E567200E3B129 /* DisplayLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DisplayLink.swift; path = ../Shared/DisplayLink.swift; sourceTree = "<group>"; };
 		C3D096CA263E9A1100E3B129 /* DownloadThreadPool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadThreadPool.swift; path = ../Shared/DownloadThreadPool.swift; sourceTree = "<group>"; };
 		C3D096CE263EA0DB00E3B129 /* KeyChain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
@@ -620,7 +617,6 @@
 				02ACBA3616713CCB00BB4414 /* Foundation.framework in Frameworks */,
 				02F3F8412B96CCAE00ECB99F /* MapLibre in Frameworks */,
 				021C6AB3168768C800FB17B0 /* MessageUI.framework in Frameworks */,
-				02092ECD29E2497E0095042B /* FastCodable in Frameworks */,
 				02ACBD1F16717BBB00BB4414 /* QuartzCore.framework in Frameworks */,
 				02E6267219973A0700565D62 /* Security.framework in Frameworks */,
 				02ACBA3416713CCB00BB4414 /* UIKit.framework in Frameworks */,
@@ -1045,7 +1041,6 @@
 		02F5329C267AD2B20088DF41 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				C3D096BD263E178600E3B129 /* aes.swift */,
 				02092ED029E8ADB70095042B /* ArchivePath.swift */,
 				02A123EC264CAE6F005638C1 /* Atomic.swift */,
 				02D95B9529E0AE7F00F8FCA9 /* CharacterSet+Extension.swift */,
@@ -1207,7 +1202,6 @@
 			name = "Go Map!!";
 			packageProductDependencies = (
 				025CCA11271244B800074726 /* KissXML */,
-				02092ECC29E2497E0095042B /* FastCodable */,
 				02F3F8402B96CCAE00ECB99F /* MapLibre */,
 			);
 			productName = OSMiOS;
@@ -1609,7 +1603,6 @@
 				02F6A457268A934900F2ACE7 /* NSAttributedString+Ext.swift in Sources */,
 				02DFFD1E2BF3E0F0002A0189 /* LocationSet.swift in Sources */,
 				02CB2406265DB7CB00835F32 /* CameraView.swift in Sources */,
-				02A123EF264EE7BC005638C1 /* aes.swift in Sources */,
 				CD677FFA2A5FC17300F28605 /* AccountInfoTableViewController.swift in Sources */,
 				6442666722540EDF00C0D545 /* Lock.swift in Sources */,
 				02C8C56726F44728003B0122 /* OsmNoteMarker.swift in Sources */,
@@ -2441,11 +2434,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		02092ECC29E2497E0095042B /* FastCodable */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 02092ECB29E2497E0095042B /* XCRemoteSwiftPackageReference "FastCodable" */;
-			productName = FastCodable;
-		};
 		025CCA11271244B800074726 /* KissXML */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 025CCA10271244B800074726 /* XCRemoteSwiftPackageReference "KissXML" */;

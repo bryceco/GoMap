@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Bryce Cogswell. All rights reserved.
 //
 
-import CommonCrypto
 import Foundation
 import Security
 

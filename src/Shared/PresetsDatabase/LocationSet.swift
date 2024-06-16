@@ -6,12 +6,11 @@
 //  Copyright © 2024 Bryce Cogswell. All rights reserved.
 //
 
-import FastCodable
 import Foundation
 
-struct LocationSet: FastCodable {
-	enum LocationEntry: FastCodable {
-		struct LatLonRadius: FastCodable {
+struct LocationSet {
+	enum LocationEntry {
+		struct LatLonRadius {
 			let lat: Double
 			let lon: Double
 			let radius: Double
@@ -20,49 +19,6 @@ struct LocationSet: FastCodable {
 				self.lat = lat
 				self.lon = lon
 				self.radius = radius
-			}
-
-			init(fromFast decoder: FastDecoder) throws {
-				lat = try decoder.decode()
-				lon = try decoder.decode()
-				radius = try decoder.decode()
-			}
-
-			func fastEncode(to encoder: FastEncoder) {
-				encoder.encode(lat)
-				encoder.encode(lon)
-				encoder.encode(radius)
-			}
-		}
-
-		init(fromFast decoder: FastDecoder) throws {
-			switch try decoder.decode() as Int {
-			case 0:
-				self = .world
-			case 1:
-				self = .region(try decoder.decode())
-			case 2:
-				self = .geojson(try decoder.decode())
-			case 3:
-				self = .latLonRadius(try decoder.decode())
-			default:
-				fatalError()
-			}
-		}
-
-		func fastEncode(to encoder: FastEncoder) {
-			switch self {
-			case .world:
-				encoder.encode(0)
-			case let .region(r):
-				encoder.encode(1)
-				encoder.encode(r)
-			case let .geojson(s):
-				encoder.encode(2)
-				encoder.encode(s)
-			case let .latLonRadius(n):
-				encoder.encode(3)
-				encoder.encode(n)
 			}
 		}
 
@@ -142,16 +98,6 @@ struct LocationSet: FastCodable {
 		}
 		include = json["include"]?.map { LocationEntry($0) } ?? []
 		exclude = json["exclude"]?.map { LocationEntry($0) } ?? []
-	}
-
-	func fastEncode(to encoder: FastEncoder) {
-		encoder.encode(include)
-		encoder.encode(exclude)
-	}
-
-	init(fromFast decoder: FastDecoder) throws {
-		include = try decoder.decode()
-		exclude = try decoder.decode()
 	}
 
 	func contains(countryCode: String) -> Bool {
