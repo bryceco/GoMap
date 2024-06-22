@@ -24,7 +24,7 @@ class OfflineTableViewCell: UITableViewCell {
 
 class OfflineViewController: UITableViewController {
 	@IBOutlet var aerialCell: OfflineTableViewCell!
-	@IBOutlet var mapnikCell: OfflineTableViewCell!
+	@IBOutlet var basemapCell: OfflineTableViewCell!
 	var activityCount = 0
 
 	override func viewDidLoad() {
@@ -37,13 +37,13 @@ class OfflineViewController: UITableViewController {
 		aerialCell.tileLayer = AppDelegate.shared.mapView.aerialLayer
 		switch AppDelegate.shared.mapView.basemapLayer {
 		case let .tileLayer(layer):
-			mapnikCell.tileLayer = layer
+			basemapCell.tileLayer = layer
 		case let .tileView(view):
-			mapnikCell.tileLayer = view
+			basemapCell.tileLayer = view
 		default:
 			fatalError()
 		}
-		for cell in [aerialCell!, mapnikCell!] {
+		for cell in [aerialCell!, basemapCell!] {
 			cell.activityView.startAnimating()
 			cell.button.isEnabled = false
 			DispatchQueue.global(qos: .userInitiated).async {
@@ -62,7 +62,7 @@ class OfflineViewController: UITableViewController {
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
-		for cell in [aerialCell, mapnikCell] {
+		for cell in [aerialCell, basemapCell] {
 			cell?.activityView.stopAnimating()
 		}
 	}
@@ -101,7 +101,7 @@ class OfflineViewController: UITableViewController {
 		if sender == aerialCell.button {
 			cell = aerialCell
 		} else {
-			cell = mapnikCell
+			cell = basemapCell
 		}
 
 		if cell.activityView.isAnimating {

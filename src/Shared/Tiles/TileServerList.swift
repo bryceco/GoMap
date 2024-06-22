@@ -147,8 +147,8 @@ final class TileServerList {
 		let dict = allServicesDict()
 
 		let currentIdentifier = UserPrefs.shared.currentAerialSelection.value
-			?? TileServer.defaultServer
-		currentServer = dict[currentIdentifier] ?? dict[TileServer.defaultServer] ?? builtinServers()[0]
+			?? TileServer.bingAerial.identifier
+		currentServer = dict[currentIdentifier] ?? dict[TileServer.bingAerial.identifier] ?? builtinServers()[0]
 	}
 
 	func save() {

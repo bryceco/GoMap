@@ -22722,6 +22722,9 @@
         }
       }
     },
+    "Clear Basemap Tiles" : {
+      "comment" : "Delete cached data"
+    },
     "Clear GPS Overlay Tiles" : {
       "comment" : "Delete cached data",
       "extractionState" : "stale",
@@ -23090,6 +23093,7 @@
     },
     "Clear Mapnik Tiles" : {
       "comment" : "Delete cached data",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

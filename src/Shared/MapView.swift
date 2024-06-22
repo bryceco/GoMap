@@ -13,7 +13,7 @@ import SafariServices
 import StoreKit
 import UIKit
 
-/// The main map display: Editor, Aerial, Mapnik etc.
+/// The main map display: Editor, Aerial, Basemap etc.
 enum MapViewState: Int {
 	case EDITOR
 	case EDITORAERIAL
@@ -88,7 +88,7 @@ enum EDIT_ACTION: Int {
 
 private enum ZLAYER: CGFloat {
 	case AERIAL = -100
-	case MAPNIK = -98
+	case BASEMAP = -98
 	case LOCATOR = -50
 	case EDITOR = -20
 	case QUADDOWNLOAD = -18
@@ -233,13 +233,13 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			if newValue.isVector {
 				let view = MapLibreVectorTilesView(mapView: self, tileServer: newValue)
 				view.styleURL = URL(string: newValue.url)!
-				view.layer.zPosition = ZLAYER.MAPNIK.rawValue
+				view.layer.zPosition = ZLAYER.BASEMAP.rawValue
 				addSubview(view)
 				basemapLayer = .tileView(view)
 			} else {
 				let layer = MercatorTileLayer(mapView: self)
 				layer.tileServer = newValue
-				layer.zPosition = ZLAYER.MAPNIK.rawValue
+				layer.zPosition = ZLAYER.BASEMAP.rawValue
 				self.layer.addSublayer(layer)
 				basemapLayer = .tileLayer(layer)
 			}
@@ -1352,7 +1352,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		// Things are complicated because the user has their own preference for the view
 		// but when they zoom out we make automatic substitutions:
-		// 	Editor only --> Mapnik
+		// 	Editor only --> Basemap
 		//	Editor+Aerial --> Aerial+Locator
 		let oldState = StateFor(viewState, zoomedOut: viewStateZoomedOut)
 		let newState = StateFor(state, zoomedOut: zoomedOut)

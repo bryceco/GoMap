@@ -10,7 +10,7 @@ import UIKit
 
 private enum Row: Int {
 	case osmData = 0
-	case mapnik = 1
+	case basemap = 1
 }
 
 protocol DiskCacheSizeProtocol {
@@ -59,8 +59,8 @@ class ClearCacheViewController: UITableViewController {
 		case Row.osmData.rawValue:
 			title = NSLocalizedString("Clear OSM Data", comment: "Delete cached data")
 			object = []
-		case Row.mapnik.rawValue:
-			title = NSLocalizedString("Clear Mapnik Tiles", comment: "Delete cached data")
+		case Row.basemap.rawValue:
+			title = NSLocalizedString("Clear Basemap Tiles", comment: "Delete cached data")
 			switch mapView.basemapLayer {
 			case let .tileLayer(layer):
 				object = [layer]
@@ -110,7 +110,7 @@ class ClearCacheViewController: UITableViewController {
 		}
 
 		switch row {
-		case .osmData /* OSM */:
+		case .osmData:
 			let alert = UIAlertController(
 				title: NSLocalizedString("Warning", comment: ""),
 				message: NSLocalizedString(
@@ -171,7 +171,7 @@ class ClearCacheViewController: UITableViewController {
 			}
 			appDelegate.mapView.editorLayer.purgeCachedData(.hard)
 			refreshAfterPurge()
-		case .mapnik /* Mapnik */:
+		case .basemap:
 			switch appDelegate.mapView.basemapLayer {
 			case let .tileLayer(layer):
 				layer.purgeTileCache()

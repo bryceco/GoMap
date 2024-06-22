@@ -103,7 +103,7 @@ extension MapLibreVectorTilesView: TilesProvider {
 	}
 
 	func purgeTileCache() {
-		MLNOfflineStorage.shared.resetDatabase(completionHandler: {error in })
+		MLNOfflineStorage.shared.resetDatabase(completionHandler: { _ in })
 		URLCache.shared.removeAllCachedResponses()
 		setNeedsLayout()
 	}

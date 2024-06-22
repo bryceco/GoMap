@@ -2,132 +2,132 @@
   "sourceLanguage" : "en",
   "strings" : {
     "0Hk-5U-2Kg.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Mapnik Tiles\"; ObjectID = \"0Hk-5U-2Kg\";",
+      "comment" : "Class = \"UILabel\"; text = \"Basemap Tiles\"; ObjectID = \"0Hk-5U-2Kg\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "الصور المتجانبة من Mapnik"
           }
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "الصور المتجانبة من Mapnik"
           }
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mapnik dlaždice"
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mapnik Kacheln"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Mapnik Tiles"
+            "value" : "Basemap Tiles"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Azulejos Mapnik"
           }
         },
         "et" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mapnik paanid"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Tuiles Mapnik"
           }
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mapnik pločice"
           }
         },
         "id" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Ubin Mapnik"
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mapnikタイル"
           }
         },
         "nb-NO" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mapnik-flis"
           }
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mapnik-tegels"
           }
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Quadrículas Mapnik"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Quadrículas Mapnik"
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Тайлы Mapnik"
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Тайли Mapnik"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mảnh Mapnik"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mapnik瓦片"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mapnik 圖磚"
           }
         },
         "zh-Hant-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mapnik 圖磚"
           }
         }
@@ -428,114 +428,114 @@
       }
     },
     "2TW-mO-uX2.footerTitle" : {
-      "comment" : "Class = \"UITableViewSection\"; footerTitle = \"If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area.\"; ObjectID = \"2TW-mO-uX2\";",
+      "comment" : "Class = \"UITableViewSection\"; footerTitle = \"If you are mapping somewhere with limited connectivity you can download the aerial and/or basemap tiles for the next two higher zoom levels that are in the current view area.\"; ObjectID = \"2TW-mO-uX2\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "إذا كنت تقوم برسم الخرائط في مكان ما به اتصال محدود، يمكنك تنزيل الصور الجوية المتجانبة و / أو صور خريطة Mapnik لمنطقة العرض الحالية وبمستويي تكبير للخريطة."
           }
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "إذا كنت تقوم برسم الخرائط في مكان ما به اتصال محدود، يمكنك تنزيل الصور الجوية المتجانبة و / أو صور خريطة Mapnik لمنطقة العرض الحالية وبمستويي تكبير للخريطة."
           }
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Pokud mapujete v místech s omezeným připojením, můžete si stáhnout letecké snímky či Mapnik dlaždice pro další dvě vyšší úrovně přiblížení, než je aktuálně zobrazená oblast."
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Wenn Sie beim Kartieren eine schlechte Datenverbindung haben, können Sie die Luftbild- und/oder Karten-Kacheln für die beiden nächsthöheren Zoomstufen herunterladen, die sich im aktuellen Sichtbereich befinden."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area."
+            "value" : "If you are mapping somewhere with limited connectivity you can download the aerial and/or basemap tiles for the next two higher zoom levels that are in the current view area."
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Si estás cartografiando algún lugar con conectividad limitada, puedes descargar las baldosas aéreas y/o de Mapnik para los dos niveles de zoom superiores siguientes que se encuentren en el área de la visualización actual."
           }
         },
         "et" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Kaardistades piiratud ühendusega, saad alla laadida aerofoto ja/või Mapnik paanid praeguses vaateväljas asuva kahe järgmise kõrgema suurendustaseme jaoks."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Si vous cartographiez depuis une zone avec une mauvaise connexion vous pouvez télécharger les tuiles aériennes ou Mapnik pour les deux niveaux de zoom supérieurs dans la zone actuellement visible."
           }
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Ako mapiraš negdje s ograničenom povezanošću, možeš preuzeti aerofotografije i/ili Mapnik pločice za sljedeće dvije veće razine zumiranja, koje se nalaze u trenutačnom području prikaza."
           }
         },
         "it" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Se devi mappare aree con una connettività limitata, puoi scaricare le immagini aeree e/o Mapnik per i due livelli di zoom successivi più alti che si trovano nell'area di visualizzazione corrente."
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "ネット接続が制限されているところでマッピングする際には、衛星画像やMapnikタイルを現在見えているエリア内の2段階高いズームレベルでダウンロードできます。"
           }
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Als je ergens in kaart aan het brengen bent met beperkte verbinding kan je de luchtbeelden en/of Mapnik-tegels voor de volgende twee hogere zoomniveaus die in je huidige weergave-gebied zijn downloaden."
           }
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Se estiver a mapear algum lugar com ligação à Internet limitada ou mesmo sem Internet, pode descarregar as quadrículas de imagens aéreas e/ou Mapnik (mapa renderizado) para os próximos dois níveis de ampliação mais altos que estão na área de visualização atual."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Se você estiver mapeando algum lugar com conectividade limitada ou sem conectividade, você pode baixar as quadrículas aéreas e/ou Mapnik para os próximos dois níveis de zoom mais altos que estão na área de visualização atual."
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Если вы занимаетесь картографированием на местности, где нет доступа в интернет, вы можете скачать аэрофотоснимки и/или тайлы Mapnik для текущего места с возможностью увеличения ещё на два следующих уровня зума."
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Якщо ви мапите у місцях з поганим звʼязком, ви можете завантажити аерофото і тайли Mapnik двох наступних рівнів збільшення для місцини яка відкрита у редакторі."
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "在您編輯的當下，如果網路通訊受到限制，您可以先下載空照影像或 Mapnik 圖磚，這將包含了放大兩階後，目前畫面範圍內的區域。"
           }
         },
         "zh-Hant-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "在您編輯的當下，如果網路通訊受到限制，您可以先下載空照影像或 Mapnik 圖磚，這將包含了放大兩階後，目前畫面範圍內的區域。"
           }
         }

@@ -8,6 +8,8 @@
 
 import UIKit
 
+private let BingIdentifier = "BingIdentifier"
+
 private let BING_MAPS_KEY: String = [
 	"ApunJH62",
 	"__wQs1qE32KV",
@@ -17,16 +19,6 @@ private let BING_MAPS_KEY: String = [
 	"Gl4RsItKW4Fkk"
 ].reduce("", { r, x in r + x })
 
-private let AMERICANA_IDENTIFIER = "AmericanaIdentifier"
-private let BING_IDENTIFIER = "BingIdentifier"
-private let HUMANITARIAN_IDENTIFIER = "HotOSMIdentifier"
-private let MAPNIK_IDENTIFIER = "MapnikIdentifier"
-private let MAPBOX_LOCATOR_IDENTIFIER = "MapboxLocatorIdentifier"
-private let MAXAR_PREMIUM_IDENTIFIER = "Maxar-Premium"
-private let OHM_IDENTIFIER = "OpenHistoricalMapIdentifier"
-private let NO_NAME_IDENTIFIER = "Unnamed Roads"
-private let OPEN_GEO_FICTION_IDENTIFIER = "OpenGeoFictionIdentifier"
-
 /// A provider of tile imagery, such as Bing or Mapbox
 final class TileServer: Equatable, Codable {
 	private static let iconCache: PersistentWebCache<UIImage> = {
@@ -35,8 +27,6 @@ final class TileServer: Equatable, Codable {
 		                                        daysToKeep: 90.0)
 		return cache
 	}()
-
-	static let defaultServer = BING_IDENTIFIER
 
 	let name: String
 	let identifier: String
@@ -180,18 +170,17 @@ final class TileServer: Equatable, Codable {
 	}
 
 	func isBingAerial() -> Bool {
-		return identifier == BING_IDENTIFIER
+		return self === Self.bingAerial
 	}
 
 	func isMaxar() -> Bool {
-		return identifier == MAXAR_PREMIUM_IDENTIFIER
+		return self === Self.maxarPremiumAerial
 	}
 
 	func daysToCache() -> Double {
-		switch identifier {
-		case MAPNIK_IDENTIFIER:
+		if self === Self.mapnik {
 			return 7.0
-		default:
+		} else {
 			return 90.0
 		}
 	}
@@ -256,7 +245,7 @@ final class TileServer: Equatable, Codable {
 
 	static let maxarPremiumAerial = TileServer(
 		withName: "Maxar Premium Aerial",
-		identifier: MAXAR_PREMIUM_IDENTIFIER,
+		identifier: "Maxar-Premium",
 		url: MaxarPremiumUrl,
 		best: false,
 		overlay: false,
@@ -274,7 +263,7 @@ final class TileServer: Equatable, Codable {
 
 	static let mapnik = TileServer(
 		withName: "Mapnik",
-		identifier: MAPNIK_IDENTIFIER,
+		identifier: "MapnikIdentifier",
 		url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
 		best: true,
 		overlay: false,
@@ -292,7 +281,7 @@ final class TileServer: Equatable, Codable {
 
 	static let humanitarian = TileServer(
 		withName: "Humanitarian",
-		identifier: HUMANITARIAN_IDENTIFIER,
+		identifier: "HotOSMIdentifier",
 		url: "http://{switch:a,b,c}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
 		best: false,
 		overlay: false,
@@ -310,7 +299,7 @@ final class TileServer: Equatable, Codable {
 
 	static let americana = TileServer(
 		withName: "Americana",
-		identifier: AMERICANA_IDENTIFIER,
+		identifier: "AmericanaIdentifier",
 		url: "https://zelonewolf.github.io/openstreetmap-americana/style.json",
 		best: false,
 		overlay: false,
@@ -328,7 +317,7 @@ final class TileServer: Equatable, Codable {
 
 	static let openHistoricalMap = TileServer(
 		withName: "OpenHistoricalMap",
-		identifier: OHM_IDENTIFIER,
+		identifier: "OpenHistoricalMapIdentifier",
 		url: "https://openhistoricalmap.github.io/map-styles/main/main.json",
 		best: false,
 		overlay: false,
@@ -346,7 +335,7 @@ final class TileServer: Equatable, Codable {
 
 	static let mapboxLocator = TileServer(
 		withName: "Mapbox Locator",
-		identifier: MAPBOX_LOCATOR_IDENTIFIER,
+		identifier: "MapboxLocatorIdentifier",
 		url: "https://api.mapbox.com/styles/v1/openstreetmap/ckasmteyi1tda1ipfis6wqhuq/tiles/256/{zoom}/{x}/{y}?access_token={apikey}",
 		best: false,
 		overlay: false,
@@ -364,7 +353,7 @@ final class TileServer: Equatable, Codable {
 
 	static let noName = TileServer(
 		withName: "Unnamed Roads",
-		identifier: NO_NAME_IDENTIFIER,
+		identifier: "Unnamed Roads",
 		url: "https://tile{switch:2,3}.poole.ch/noname/{zoom}/{x}/{y}.png",
 		best: false,
 		overlay: true,
@@ -382,7 +371,7 @@ final class TileServer: Equatable, Codable {
 
 	static let openGeoFiction = TileServer(
 		withName: "OpenGeoFiction",
-		identifier: OPEN_GEO_FICTION_IDENTIFIER,
+		identifier: "OpenGeoFictionIdentifier",
 		url: "https://tiles04.rent-a-planet.com/ogf-carto/{z}/{x}/{y}.png",
 		best: false,
 		overlay: false,
@@ -400,7 +389,7 @@ final class TileServer: Equatable, Codable {
 
 	private static let builtinBingAerial = TileServer(
 		withName: "Bing Aerial",
-		identifier: BING_IDENTIFIER,
+		identifier: BingIdentifier,
 		url: "https://ecn.{switch:t0,t1,t2,t3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=10618&key={apikey}",
 		best: false,
 		overlay: false,
@@ -418,8 +407,11 @@ final class TileServer: Equatable, Codable {
 
 	private static var dynamicBingAerial: TileServer?
 
-	static var bingAerial: TileServer {
-		return Self.dynamicBingAerial ?? builtinBingAerial
+	class var bingAerial: TileServer {
+		if let bing = Self.dynamicBingAerial {
+			return bing
+		}
+		return builtinBingAerial
 	}
 
 	static func fetchDynamicBingServer(_ callback: ((Result<TileServer, Error>) -> Void)?) {
@@ -547,9 +539,12 @@ final class TileServer: Equatable, Codable {
 	private static func getPlaceholderImage(forIdentifier ident: String) -> Data? {
 		let name: String
 		switch ident {
-		case BING_IDENTIFIER: name = "BingPlaceholderImage"
-		case "EsriWorldImagery": name = "EsriPlaceholderImage"
-		default: return nil
+		case BingIdentifier:
+			name = "BingPlaceholderImage"
+		case "EsriWorldImagery":
+			name = "EsriPlaceholderImage"
+		default:
+			return nil
 		}
 		if let path = Bundle.main.path(forResource: name, ofType: "png") ??
 			Bundle.main.path(forResource: name, ofType: "jpg"),
