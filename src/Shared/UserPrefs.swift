@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol PrefProtocol {
+private protocol PrefProtocol {
 	associatedtype T
 	var key: String { get }
 	var ubiquitous: Bool { get }
@@ -151,7 +151,7 @@ final class UserPrefs {
 	let editor_showPastFuture = Pref<Bool>(key: "editor.showPastFuture")
 	let editor_showOthers = Pref<Bool>(key: "editor.showOthers")
 
-	private(set) var allPrefs: [any PrefProtocol] = []
+	private var allPrefs: [any PrefProtocol] = []
 
 	init() {
 		allPrefs = Mirror(reflecting: self).children.compactMap { $0.value as? any PrefProtocol }
@@ -166,7 +166,7 @@ final class UserPrefs {
 	@objc func ubiquitousKeyValueStoreDidChange(_ notification: NSNotification) {
 		let reason = notification.userInfo?[NSUbiquitousKeyValueStoreChangeReasonKey] as? Int
 		let changes = notification.userInfo?[NSUbiquitousKeyValueStoreChangedKeysKey] as? [String]
-
+#if DEBUG
 		switch reason {
 		case NSUbiquitousKeyValueStoreServerChange:
 			print("Server change")
@@ -179,6 +179,7 @@ final class UserPrefs {
 		default:
 			print("other reason")
 		}
+#endif
 
 		DispatchQueue.main.async {
 			for key in changes ?? [] {
