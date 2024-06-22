@@ -151,6 +151,10 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 			preferredStyle: .alert)
 		present(alert, animated: true)
 
+		// if user created a note then make sure notes are visible
+		AppDelegate.shared.mapView.viewOverlayMask.insert(.NOTES)
+		AppDelegate.shared.mapView.updateMapMarkersFromServer(withDelay: 0.1, including: [.notes])
+
 		mapView.mapMarkerDatabase.update(note: note, close: resolves, comment: text) { [self] result in
 			alert.dismiss(animated: true)
 			switch result {
