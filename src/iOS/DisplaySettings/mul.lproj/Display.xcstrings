@@ -8888,13 +8888,13 @@
       }
     },
     "RK2-Uw-eHM.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Basemap\"; ObjectID = \"RK2-Uw-eHM\";",
+      "comment" : "Class = \"UILabel\"; text = \"Basemap only\"; ObjectID = \"RK2-Uw-eHM\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Basemap"
+            "value" : "Basemap only"
           }
         }
       }
