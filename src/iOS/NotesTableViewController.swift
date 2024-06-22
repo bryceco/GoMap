@@ -90,7 +90,7 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 			} else {
 				cell.commentBackground.isHidden = false
 				cell.commentBackground.layer.cornerRadius = 5
-				cell.commentBackground.layer.borderColor = UIColor.black.cgColor
+				cell.commentBackground.layer.borderColor = cell.comment.textColor?.cgColor ?? UIColor.black.cgColor
 				cell.commentBackground.layer.borderWidth = 1.0
 				cell.commentBackground.layer.masksToBounds = true
 				cell.comment.text = comment.text
@@ -101,7 +101,7 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 				withIdentifier: "noteResolveCell",
 				for: indexPath) as! NotesNewCommentCell
 			cell.textView.layer.cornerRadius = 5.0
-			cell.textView.layer.borderColor = UIColor.black.cgColor
+			cell.textView.layer.borderColor = cell.textView.textColor?.cgColor ?? UIColor.black.cgColor
 			cell.textView.layer.borderWidth = 1.0
 			cell.textView.delegate = self
 			cell.textView.text = newComment
