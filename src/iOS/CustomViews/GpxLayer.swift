@@ -9,7 +9,7 @@
 import CoreLocation.CLLocation
 import UIKit
 
-final class GpxLayer: DrawingLayer, GetDiskCacheSize, DrawingLayerDelegate {
+final class GpxLayer: DrawingLayer, DiskCacheSizeProtocol, DrawingLayerDelegate {
 	private static let DefaultExpirationDays = 7
 	var stabilizingCount = 0
 

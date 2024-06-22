@@ -101,10 +101,17 @@ extension MapLibreVectorTilesView: TilesProvider {
 	func downloadTile(forKey cacheKey: String, completion: @escaping () -> Void) {
 		print("xx")
 	}
+
+	func purgeTileCache() {
+		MLNOfflineStorage.shared.resetDatabase(completionHandler: {error in })
+		URLCache.shared.removeAllCachedResponses()
+		setNeedsLayout()
+	}
 }
 
-extension MapLibreVectorTilesView: GetDiskCacheSize {
+extension MapLibreVectorTilesView: DiskCacheSizeProtocol {
 	func getDiskCacheSize() -> (size: Int, count: Int) {
-		return (0, 0)
+		let size = Int(MLNOfflineStorage.shared.countOfBytesCompleted)
+		return (size, 1)
 	}
 }

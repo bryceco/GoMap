@@ -128,8 +128,8 @@ protocol TilesProvider {
 	func currentTiles() -> [String]
 	func zoomLevel() -> Int
 	func maxZoom() -> Int
-	func purgeTileCache()
 	func downloadTile(forKey cacheKey: String, completion: @escaping () -> Void)
+	func purgeTileCache()
 }
 
 extension TilesProvider {
@@ -165,9 +165,5 @@ extension TilesProvider {
 			}
 		}
 		return neededTiles
-	}
-
-	func purgeTileCache() {
-		URLCache.shared.removeAllCachedResponses()
 	}
 }

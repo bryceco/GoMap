@@ -13,7 +13,7 @@ private enum Row: Int {
 	case mapnik = 1
 }
 
-protocol GetDiskCacheSize {
+protocol DiskCacheSizeProtocol {
 	func getDiskCacheSize() -> (size: Int, count: Int)
 }
 
@@ -54,7 +54,7 @@ class ClearCacheViewController: UITableViewController {
 		let mapData = mapView.editorLayer.mapData
 
 		let title: String?
-		let object: [GetDiskCacheSize]
+		let object: [DiskCacheSizeProtocol]
 		switch indexPath.row {
 		case Row.osmData.rawValue:
 			title = NSLocalizedString("Clear OSM Data", comment: "Delete cached data")
