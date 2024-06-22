@@ -1520,7 +1520,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	// MARK: Progress indicator
 
 	func progressIncrement(_ delta: Int = 1) {
-		if progressActive.value() == 0 && delta > 0 {
+		if progressActive.value() == 0, delta > 0 {
 			progressIndicator.startAnimating()
 		}
 		progressActive.increment(delta)
