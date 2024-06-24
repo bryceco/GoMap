@@ -1357,7 +1357,6 @@
 			mainGroup = 02ACBA2416713CCB00BB4414;
 			packageReferences = (
 				025CCA10271244B800074726 /* XCRemoteSwiftPackageReference "KissXML" */,
-				02092ECB29E2497E0095042B /* XCRemoteSwiftPackageReference "FastCodable" */,
 				02F3F83F2B96CCAE00ECB99F /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */,
 			);
 			productRefGroup = 02ACBA3016713CCB00BB4414 /* Products */;
@@ -2407,14 +2406,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		02092ECB29E2497E0095042B /* XCRemoteSwiftPackageReference "FastCodable" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/bryceco/FastCodable";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		025CCA10271244B800074726 /* XCRemoteSwiftPackageReference "KissXML" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/robbiehanson/KissXML";
