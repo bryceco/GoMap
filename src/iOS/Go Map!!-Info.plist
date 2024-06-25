@@ -6,6 +6,8 @@
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>UIPrefersShowingLanguageSettings</key>
+	<true/>
 	<key>CFBundleDisplayName</key>
 	<string>${DISPLAY_NAME}</string>
 	<key>LSApplicationQueriesSchemes</key>
