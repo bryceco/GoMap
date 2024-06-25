@@ -1,15 +1,6 @@
 {
-  "originHash" : "88679d61992cf8f7f487163874629affe9f90c5f2942af80394468be941f6bb3",
+  "originHash" : "7fb3a771fd1e29c02e9dc158e1a167de01626e0941da4240413396214dd615ec",
   "pins" : [
-    {
-      "identity" : "fastcodable",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/bryceco/FastCodable",
-      "state" : {
-        "branch" : "main",
-        "revision" : "4f698d964291095ea4dd211ae432582bbea631e3"
-      }
-    },
     {
       "identity" : "kissxml",
       "kind" : "remoteSourceControl",
