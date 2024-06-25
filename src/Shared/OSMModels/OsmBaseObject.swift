@@ -394,7 +394,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	}
 
 	func dateForTimestamp() -> Date {
-		if let date = OsmBaseObject.rfc3339DateFormatter().date(from: timestamp) {
+		if let date = Self.rfc3339DateFormatter().date(from: timestamp) {
 			return date
 		}
 		return Date()
@@ -407,7 +407,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 				selector: #selector(setTimestamp(_:undo:)),
 				objects: [dateForTimestamp(), undo!])
 		}
-		timestamp = OsmBaseObject.rfc3339DateFormatter().string(from: date)
+		timestamp = Self.rfc3339DateFormatter().string(from: date)
 	}
 
 	func clearCachedProperties() {
@@ -468,6 +468,10 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	func serverUpdate(ident: OsmIdentifier) {
 		assert(self.ident < 0 && ident > 0)
 		self.ident = ident
+	}
+
+	func serverUpdate(timestamp: Date) {
+		setTimestamp(timestamp, undo: nil)
 	}
 
 	func serverUpdate(with newerVersion: OsmBaseObject) {

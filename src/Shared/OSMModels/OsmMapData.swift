@@ -889,6 +889,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					completion(OsmMapDataError.otherError("Upload failed: invalid server respsonse"))
 					return
 				}
+				let timestamp = Date()
 
 				var sqlUpdate: [OsmBaseObject: Bool] = [:]
 				for element in diffResult.children ?? [] {
@@ -907,6 +908,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 							newId: newId,
 							version: newVersion,
 							changeset: changesetID,
+							timestamp: timestamp,
 							sqlUpdate: &sqlUpdate)
 					} else if name == "way" {
 						OsmMapData.updateObjectDictionary(
@@ -915,6 +917,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 							newId: newId,
 							version: newVersion,
 							changeset: changesetID,
+							timestamp: timestamp,
 							sqlUpdate: &sqlUpdate)
 					} else if name == "relation" {
 						OsmMapData.updateObjectDictionary(
@@ -923,6 +926,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 							newId: newId,
 							version: newVersion,
 							changeset: changesetID,
+							timestamp: timestamp,
 							sqlUpdate: &sqlUpdate)
 					} else {
 						DLog("Bad upload diff document")
@@ -969,6 +973,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		newId: OsmIdentifier,
 		version newVersion: Int,
 		changeset: Int64,
+		timestamp: Date,
 		sqlUpdate: inout [OsmBaseObject: Bool])
 	{
 		let object = dictionary[oldId]!
@@ -986,6 +991,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		assert(newVersion > 0)
 		object.serverUpdate(version: newVersion)
 		object.serverUpdate(changeset: changeset)
+		object.serverUpdate(timestamp: timestamp)
 		sqlUpdate[object] = true // mark for insertion
 
 		if oldId != newId {
