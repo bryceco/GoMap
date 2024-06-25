@@ -2042,7 +2042,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Маршруты от HealthKit:"
+            "value" : "Маршруты от HealthKit"
           }
         },
         "zh-Hant" : {
@@ -3188,7 +3188,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Собрать в подложку:"
+            "value" : "Записывать в фоновом режиме"
           }
         },
         "uk" : {
@@ -3560,7 +3560,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Тайлы аэрофотосъемки"
+            "value" : "Тайлы аэрофотосъёмки"
           }
         },
         "uk" : {
@@ -4364,7 +4364,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Тайлы аэрофотосъемки"
+            "value" : "Тайлы аэрофотосъёмки"
           }
         },
         "uk" : {
@@ -4658,7 +4658,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Тайлы аэрофотосъемки"
+            "value" : "Тайлы аэрофотосъёмки"
           }
         },
         "uk" : {
@@ -4796,7 +4796,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Тайлы аэрофотосъемки"
+            "value" : "Тайлы аэрофотосъёмки"
           }
         },
         "uk" : {
@@ -5090,7 +5090,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Тайлы аэрофотосъемки"
+            "value" : "Тайлы аэрофотосъёмки"
           }
         },
         "uk" : {
@@ -7322,7 +7322,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Редактор с аэрофотосъемкой"
+            "value" : "Редактор с аэрофотосъёмкой"
           }
         },
         "uk" : {
@@ -7515,6 +7515,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Superposiciones de datos"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prekrivanja podataka"
           }
         }
       }
@@ -11510,7 +11516,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Удалить треки после:"
+            "value" : "Удалять треки после"
           }
         },
         "uk" : {
@@ -12920,7 +12926,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Тайлы аэрофотосъемки"
+            "value" : "Тайлы аэрофотосъёмки"
           }
         },
         "uk" : {

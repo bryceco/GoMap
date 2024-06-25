@@ -22,6 +22,12 @@
             "state" : "translated",
             "value" : "nombre de usuario"
           }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "korisničko ime"
+          }
         }
       }
     },
@@ -45,6 +51,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Botón"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gumb"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопка"
           }
         }
       }
@@ -4047,6 +4065,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Thác Niagara"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尼亚加拉瀑布"
           }
         },
         "zh-Hant" : {

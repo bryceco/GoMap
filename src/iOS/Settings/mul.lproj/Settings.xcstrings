@@ -2312,7 +2312,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Тайлы аэрофотосъемки"
+            "value" : "Тайлы аэрофотосъёмки"
           }
         },
         "uk" : {
@@ -7382,7 +7382,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Показывать частоту кадров"
+            "value" : "Показать частоту кадров"
           }
         },
         "uk" : {
@@ -7520,7 +7520,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "кадров в секунду"
+            "value" : "Кадры в секунду"
           }
         },
         "uk" : {
@@ -8301,6 +8301,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Slack - Discusión"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slack – Diskusija"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slack - чат"
           }
         }
       }

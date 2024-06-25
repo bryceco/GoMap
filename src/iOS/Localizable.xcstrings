@@ -6643,7 +6643,7 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%ld дня"
+                  "value" : "%ld дней"
                 }
               },
               "many" : {
@@ -6655,7 +6655,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%ld день"
+                  "value" : "%ld дня"
                 }
               },
               "other" : {
@@ -18551,7 +18551,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Только аэрофотосъемки"
+            "value" : "Только аэрофотосъёмки"
           }
         },
         "uk" : {
@@ -22635,7 +22635,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Очистить тайлы аэрофотосъемки"
+            "value" : "Очистить тайлы аэрофотосъёмки"
           }
         },
         "uk" : {
@@ -29108,7 +29108,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Редактор с аэрофотосъемкой"
+            "value" : "Редактор с аэрофотосъёмкой"
           }
         },
         "uk" : {
@@ -30027,6 +30027,12 @@
             "value" : "Extraer nodo"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Izdvoji čvor"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -30128,6 +30134,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ft"
+          }
+        },
+        "hr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ft"
@@ -32033,6 +32045,12 @@
             "state" : "translated",
             "value" : "kg"
           }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kg"
+          }
         }
       }
     },
@@ -32052,6 +32070,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "km"
+          }
+        },
+        "hr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "km"
@@ -32549,6 +32573,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "lbs"
+          }
+        },
+        "hr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "lbs"
@@ -33422,6 +33452,12 @@
             "state" : "translated",
             "value" : "lt"
           }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "lt"
+          }
         }
       }
     },
@@ -33441,6 +33477,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "m"
+          }
+        },
+        "hr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "m"
@@ -34861,6 +34903,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mi"
+          }
+        },
+        "hr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "mi"
@@ -42127,6 +42175,12 @@
             "state" : "translated",
             "value" : "Pausar GPX"
           }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaustavi GPX"
+          }
         }
       }
     },
@@ -42142,6 +42196,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pausa la grabación de pistas GPX."
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaustavi snimanje GPX staza."
           }
         }
       }
@@ -47286,6 +47346,12 @@
             "state" : "translated",
             "value" : "st"
           }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "st"
+          }
         }
       }
     },
@@ -47575,6 +47641,12 @@
             "state" : "translated",
             "value" : "Iniciar GPX"
           }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pokreni GPX"
+          }
         }
       }
     },
@@ -47590,6 +47662,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Empieza a grabar pistas GPX."
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pokreni snimanje GPX staza."
           }
         }
       }
@@ -47749,6 +47827,12 @@
             "state" : "translated",
             "value" : "Detener GPX"
           }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prekini GPX"
+          }
         }
       }
     },
@@ -47764,6 +47848,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Detener la grabación de pistas GPX."
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prekini snimanje GPX staza."
           }
         }
       }
@@ -47997,6 +48087,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "t"
+          }
+        },
+        "hr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "t"

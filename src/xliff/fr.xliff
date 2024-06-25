@@ -235,6 +235,10 @@
         <target state="translated">Vider le cache</target>
         <note>Class = "UILabel"; text = "Clear Cache"; ObjectID = "2ZY-zi-luF";</note>
       </trans-unit>
+      <trans-unit id="3k9-ML-Zea.normalTitle" xml:space="preserve">
+        <source>Mapnik</source>
+        <note>Class = "UIButton"; normalTitle = "Mapnik"; ObjectID = "3k9-ML-Zea";</note>
+      </trans-unit>
       <trans-unit id="4s8-Bj-JOX.normalTitle" xml:space="preserve">
         <source>99 Days</source>
         <target state="translated">99 jours</target>
@@ -269,6 +273,10 @@
         <source>Overlays</source>
         <target state="translated">Surcouches</target>
         <note>Class = "UITableViewSection"; headerTitle = "Overlays"; ObjectID = "8es-4f-sj3";</note>
+      </trans-unit>
+      <trans-unit id="8iI-nH-O9H.title" xml:space="preserve">
+        <source>Basemap</source>
+        <note>Class = "UINavigationItem"; title = "Basemap"; ObjectID = "8iI-nH-O9H";</note>
       </trans-unit>
       <trans-unit id="9L3-JO-Whj.text" xml:space="preserve">
         <source>Mapnik only</source>
@@ -362,6 +370,10 @@
         <target state="translated">Interactions</target>
         <note>Class = "UITableViewSection"; headerTitle = "Interactions"; ObjectID = "RJU-Z2-QFh";</note>
       </trans-unit>
+      <trans-unit id="RK2-Uw-eHM.text" xml:space="preserve">
+        <source>Basemap only</source>
+        <note>Class = "UILabel"; text = "Basemap only"; ObjectID = "RK2-Uw-eHM";</note>
+      </trans-unit>
       <trans-unit id="RxO-IV-UE7.text" xml:space="preserve">
         <source>Service Roads</source>
         <target state="translated">Voies de service</target>
@@ -372,13 +384,13 @@
 
 Warning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.
 
-Clear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed.</source>
-        <target state="translated">Videz le cache de données OSM si l'application n'est plus à jour vis-à-vis du serveur OSM. Cela peut arriver si quelqu'un d'autre modifie des données que vous éditez, ou si un de vos téléversements échoue en cours de route, vous empêchant de téléverser des données supplémentaires.
+Clear the Basemap or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed.</source>
+        <target state="needs-review-l10n">Videz le cache de données OSM si l'application n'est plus à jour vis-à-vis du serveur OSM. Cela peut arriver si quelqu'un d'autre modifie des données que vous éditez, ou si un de vos téléversements échoue en cours de route, vous empêchant de téléverser des données supplémentaires.
 
 Avertissement : vider le cache OSM entraînera la perte de toutes les modifications que vous n'avez pas encore téléversées.
 
 Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernières tuiles rendant compte de vos modifications soumises précédemment. Vos modifications peuvent mettre jusqu'à 24 heures pour être prises en compte.</target>
-        <note>Class = "UITableViewSection"; footerTitle = "Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. \n\nWarning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.\n\nClear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed."; ObjectID = "SNa-W1-wga";</note>
+        <note>Class = "UITableViewSection"; footerTitle = "Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. \n\nWarning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.\n\nClear the Basemap or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed."; ObjectID = "SNa-W1-wga";</note>
       </trans-unit>
       <trans-unit id="SNa-W1-wga.headerTitle" xml:space="preserve">
         <source>Discard &amp; Refresh</source>
@@ -598,6 +610,10 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
         <source>Turn Restrictions</source>
         <target state="translated">Interdictions de tourner</target>
         <note>Class = "UILabel"; text = "Turn Restrictions"; ObjectID = "r6a-cT-Ufa";</note>
+      </trans-unit>
+      <trans-unit id="rWF-4C-sRA.text" xml:space="preserve">
+        <source>Title</source>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "rWF-4C-sRA";</note>
       </trans-unit>
       <trans-unit id="scg-Po-M3L.headerTitle" xml:space="preserve">
         <source>Filter Objects</source>
@@ -1416,6 +1432,10 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Clear All" xml:space="preserve">
         <source>Clear All</source>
         <note/>
+      </trans-unit>
+      <trans-unit id="Clear Basemap Tiles" xml:space="preserve">
+        <source>Clear Basemap Tiles</source>
+        <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear GPS Overlay Tiles" xml:space="preserve">
         <source>Clear GPS Overlay Tiles</source>
@@ -3301,9 +3321,9 @@ Vous pouvez vider le cache (dans Paramètres d'affichage) pour améliorer les pe
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
-        <source>Mapnik Tiles</source>
-        <target state="translated">Tuiles Mapnik</target>
-        <note>Class = "UILabel"; text = "Mapnik Tiles"; ObjectID = "0Hk-5U-2Kg";</note>
+        <source>Basemap Tiles</source>
+        <target state="needs-review-l10n">Tuiles Mapnik</target>
+        <note>Class = "UILabel"; text = "Basemap Tiles"; ObjectID = "0Hk-5U-2Kg";</note>
       </trans-unit>
       <trans-unit id="1Mo-xe-IbY.headerTitle" xml:space="preserve">
         <source>I don't have an account</source>
@@ -3316,9 +3336,9 @@ Vous pouvez vider le cache (dans Paramètres d'affichage) pour améliorer les pe
         <note>Class = "UINavigationItem"; title = "Credits"; ObjectID = "1SU-BF-K3n";</note>
       </trans-unit>
       <trans-unit id="2TW-mO-uX2.footerTitle" xml:space="preserve">
-        <source>If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area.</source>
-        <target state="translated">Si vous cartographiez depuis une zone avec une mauvaise connexion vous pouvez télécharger les tuiles aériennes ou Mapnik pour les deux niveaux de zoom supérieurs dans la zone actuellement visible.</target>
-        <note>Class = "UITableViewSection"; footerTitle = "If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area."; ObjectID = "2TW-mO-uX2";</note>
+        <source>If you are mapping somewhere with limited connectivity you can download the aerial and/or basemap tiles for the next two higher zoom levels that are in the current view area.</source>
+        <target state="needs-review-l10n">Si vous cartographiez depuis une zone avec une mauvaise connexion vous pouvez télécharger les tuiles aériennes ou Mapnik pour les deux niveaux de zoom supérieurs dans la zone actuellement visible.</target>
+        <note>Class = "UITableViewSection"; footerTitle = "If you are mapping somewhere with limited connectivity you can download the aerial and/or basemap tiles for the next two higher zoom levels that are in the current view area."; ObjectID = "2TW-mO-uX2";</note>
       </trans-unit>
       <trans-unit id="2TW-mO-uX2.headerTitle" xml:space="preserve">
         <source>Download zoomed tiles</source>
@@ -3329,6 +3349,10 @@ Vous pouvez vider le cache (dans Paramètres d'affichage) pour améliorer les pe
         <source>Show Touches</source>
         <target state="translated">Afficher les touches</target>
         <note>Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va"; Note = "Display the user's touches when they tap the screen";</note>
+      </trans-unit>
+      <trans-unit id="3AM-Eb-jch.text" xml:space="preserve">
+        <source>Maximize FPS</source>
+        <note>Class = "UILabel"; text = "Maximize FPS"; ObjectID = "3AM-Eb-jch"; Note = "Display the user's touches when they tap the screen";</note>
       </trans-unit>
       <trans-unit id="3qk-15-BUc.text" xml:space="preserve">
         <source>Details</source>
@@ -3372,6 +3396,10 @@ Vous pouvez vider le cache (dans Paramètres d'affichage) pour améliorer les pe
         <source>Language</source>
         <target state="translated">Langue</target>
         <note>Class = "UITableViewSection"; headerTitle = "Language"; ObjectID = "355-dx-Oi8";</note>
+      </trans-unit>
+      <trans-unit id="AEl-sZ-ech.text" xml:space="preserve">
+        <source>Enables &gt; 60 FPS</source>
+        <note>Class = "UILabel"; text = "Enables &gt; 60 FPS"; ObjectID = "AEl-sZ-ech"; Note = "Display the user's touches when they tap the screen";</note>
       </trans-unit>
       <trans-unit id="AHZ-L8-yUA.title" xml:space="preserve">
         <source>Settings</source>

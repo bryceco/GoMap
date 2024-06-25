@@ -20,6 +20,12 @@
             "state" : "translated",
             "value" : "%@"
           }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
         }
       }
     },
@@ -41,6 +47,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Puntos %lld GPX"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld GPX točke"
           }
         }
       }
@@ -64,6 +76,12 @@
             "state" : "translated",
             "value" : "%lld puntos"
           }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld točke"
+          }
         }
       }
     },
@@ -86,6 +104,12 @@
             "state" : "translated",
             "value" : "GPX pausado"
           }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaustavi GPX"
+          }
         }
       }
     },
@@ -101,6 +125,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pausa la grabación de pistas GPX."
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaustavi snimanje GPX staza."
           }
         }
       }
@@ -124,6 +154,12 @@
             "state" : "translated",
             "value" : "Iniciar GPX"
           }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pokreni GPX"
+          }
         }
       }
     },
@@ -139,6 +175,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Empezar a grabar pistas GPX."
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pokreni snimanje GPX staza."
           }
         }
       }
@@ -162,6 +204,12 @@
             "state" : "translated",
             "value" : "Parar"
           }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prekini"
+          }
         }
       }
     },
@@ -184,6 +232,12 @@
             "state" : "translated",
             "value" : "Parar GPX"
           }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prekini GPX"
+          }
         }
       }
     },
@@ -199,6 +253,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Detener la grabación de pistas GPX."
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prekini snimanje GPX staza."
           }
         }
       }

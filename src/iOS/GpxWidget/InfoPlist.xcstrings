@@ -16,6 +16,12 @@
             "state" : "translated",
             "value" : "widgetgpx"
           }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GpxWidget"
+          }
         }
       }
     },
@@ -30,6 +36,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GpxWidgetExtension"
+          }
+        },
+        "hr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "GpxWidgetExtension"
@@ -63,6 +75,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Derechos de autor © 2024 Bryce Cogswell. Todos los derechos reservados."
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Autorska prava © 2024. Bryce Cogswell. Sva prava pridržana."
           }
         }
       }
