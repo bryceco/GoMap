@@ -10,11 +10,19 @@ import Foundation
 
 import UIKit
 
+#if canImport(MapLibre)
+private let AmericanaServer: TileServer? = TileServer.americana
+#else
+private let AmericanaServer: TileServer? = nil
+#endif
+
 let BasemapServerList: [TileServer] = [
 	TileServer.mapnik,
 	TileServer.humanitarian,
-	TileServer.americana
-].sorted(by: { a, b in a.best == b.best ? a.name.caseInsensitiveCompare(b.name).rawValue < 0 : a.best })
+	AmericanaServer
+]
+.compactMap { $0 }
+.sorted(by: { a, b in a.best == b.best ? a.name.caseInsensitiveCompare(b.name).rawValue < 0 : a.best })
 
 class BasemapTileServerListViewController: UITableViewController {
 	weak var displayViewController: DisplayViewController?

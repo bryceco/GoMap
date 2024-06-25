@@ -6,7 +6,7 @@
 //  Copyright © 2024 Bryce Cogswell. All rights reserved.
 //
 
-import Foundation
+#if canImport(MapLibre)
 import MapLibre
 
 class MapLibreVectorTilesView: MLNMapView, MLNMapViewDelegate {
@@ -115,3 +115,42 @@ extension MapLibreVectorTilesView: DiskCacheSizeProtocol {
 		return (size, 1)
 	}
 }
+#else
+
+// Create a minimal dummy implementation that asserts if used
+import UIKit
+class MapLibreVectorTilesView: UIView, TilesProvider, DiskCacheSizeProtocol {
+	var mapView: MapView
+	let tileServer: TileServer
+	var styleURL: URL
+
+	init(mapView: MapView, tileServer: TileServer) {
+		fatalError()
+	}
+
+	@available(*, unavailable)
+	required init?(coder: NSCoder) {
+		fatalError()
+	}
+
+	func currentTiles() -> [String] {
+		return []
+	}
+
+	func zoomLevel() -> Int {
+		return 0
+	}
+
+	func maxZoom() -> Int {
+		return 0
+	}
+
+	func downloadTile(forKey cacheKey: String, completion: @escaping () -> Void) {}
+
+	func purgeTileCache() {}
+
+	func getDiskCacheSize() -> (size: Int, count: Int) {
+		return (0, 0)
+	}
+}
+#endif

@@ -179,7 +179,7 @@
 		02F0297C2BFAFF53002F7956 /* DataOverlays.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02F0297B2BFAFF53002F7956 /* DataOverlays.storyboard */; };
 		02F0297E2BFB01E3002F7956 /* DataOverlaysController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F0297D2BFB01E3002F7956 /* DataOverlaysController.swift */; };
 		02F2449A264F635800C42E41 /* PathUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA924C263FFEF9000A2A99 /* PathUtil.swift */; };
-		02F3F8412B96CCAE00ECB99F /* MapLibre in Frameworks */ = {isa = PBXBuildFile; productRef = 02F3F8402B96CCAE00ECB99F /* MapLibre */; };
+		02F3F8412B96CCAE00ECB99F /* MapLibre in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 02F3F8402B96CCAE00ECB99F /* MapLibre */; settings = {ATTRIBUTES = (Required, ); }; };
 		02F3F8432B96CDA600ECB99F /* MapLibreVectorTilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F3F8422B96CDA600ECB99F /* MapLibreVectorTilesView.swift */; };
 		02F53298267AB41C0088DF41 /* EditorMapLayer+HitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F53297267AB41C0088DF41 /* EditorMapLayer+HitTest.swift */; };
 		02F6A457268A934900F2ACE7 /* NSAttributedString+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */; };
