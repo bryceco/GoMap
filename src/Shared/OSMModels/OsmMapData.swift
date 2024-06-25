@@ -150,14 +150,18 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		var a: [OsmBaseObject] = []
 
 		if let object = object as? OsmNode {
-			for (_, way) in ways {
-				if way.nodes.contains(object) {
+			// Don't scan everything: for performance reasons only consider visible objects
+			let shownObjects = AppDelegate.shared.mapView.editorLayer.shownObjects
+			for obj in shownObjects {
+				if let way = obj as? OsmWay,
+				   way.nodes.contains(object)
+				{
 					a.append(way)
 				}
 			}
 		}
 
-		for (_, relation) in relations {
+		for relation in relations.values {
 			if relation.containsObject(object) {
 				a.append(relation)
 			}
@@ -430,14 +434,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		node.setLongitude(latLon.lon, latitude: latLon.lat, undo: undoManager)
 		spatial.updateMember(node, fromBox: bboxNode, undo: undoManager)
 
-		for i in 0..<parents.count {
-			let (parent, box) = parents[i]
-#if false
-			// mark parent as modified when child node changes
-			incrementModifyCount(parent)
-#else
+		for (parent, box) in parents {
 			clearCachedProperties(parent, undo: undoManager)
-#endif
 			parent.computeBoundingBox()
 			spatial.updateMember(parent, fromBox: box, undo: undoManager)
 		}

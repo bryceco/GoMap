@@ -455,14 +455,13 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 	}
 
 	func containsObject(_ target: OsmBaseObject) -> Bool {
-		let set = allMemberObjects()
-		for obj in set {
-			if obj == target {
+		for obj in allMemberObjects() {
+			if obj === target {
 				return true
 			}
-			if let way = obj as? OsmWay,
-			   let node = target as? OsmNode,
-			   way.nodes.contains(node)
+			if let node = target as? OsmNode,
+			   let way = obj as? OsmWay,
+			   way.nodes.contains(where: { $0 === node })
 			{
 				return true
 			}
