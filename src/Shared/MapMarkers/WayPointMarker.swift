@@ -9,7 +9,7 @@
 import Foundation
 
 // A GPX waypoint
-class WayPointMarker: MapMarker {
+final class WayPointMarker: MapMarker {
 	let description: String
 
 	init(with latLon: LatLon, description: String) {
