@@ -26,6 +26,8 @@ class MapLibreVectorTilesView: MLNMapView, MLNMapViewDelegate {
 		compassView.isHidden = true
 		attributionButton.isHidden = true
 
+		setPreferredFrameRate()
+
 		let transformCallback = { [weak self] in
 			guard let self = self else { return }
 			let center = mapView.mapTransform.latLon(forScreenPoint: mapView.mapTransform.center)
@@ -58,30 +60,13 @@ class MapLibreVectorTilesView: MLNMapView, MLNMapViewDelegate {
 				}
 			}
 		}
-		/*
-		 for layer: MLNStyleLayer in style.layers {
-		 	switch layer {
-		 	case let layer as MLNBackgroundStyleLayer:
-		 		break
-		 	case let layer as MLNForegroundStyleLayer:
-		 		switch layer {
-		 		case let layer as MLNRasterStyleLayer:
-		 			break
-		 		case let layer as MLNHillshadeStyleLayer:
-		 			break
-		 		case let layer as MLNVectorStyleLayer:
-		 			break
-		 		default:
-		 			break
-		 		}
-		 		break
-		 	case let layer as MLNFillStyleLayer:
-		 		break
-		 	default:
-		 		break
-		 	}
-		 }
-		  */
+	}
+
+	func setPreferredFrameRate() {
+		if #available(iOS 15.0, *) {
+			let rate = Int(DisplayLink.shared.displayLink.preferredFrameRateRange.maximum)
+			preferredFramesPerSecond = MLNMapViewPreferredFramesPerSecond(rawValue: rate)
+		}
 	}
 }
 

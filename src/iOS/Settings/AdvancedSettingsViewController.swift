@@ -81,6 +81,11 @@ class AdvancedSettingsViewController: UITableViewController {
 		let toggle = sender as! UISwitch
 		UserPrefs.shared.maximizeFrameRate.value = toggle.isOn
 		DisplayLink.shared.setFrameRate()
+
+		if case let .tileView(mapLibre) = AppDelegate.shared.mapView.basemapLayer {
+			// Call this after updating DisplayLink speed
+			mapLibre.setPreferredFrameRate()
+		}
 	}
 
 	@IBAction func showSourceHistory(_ sender: Any) {
