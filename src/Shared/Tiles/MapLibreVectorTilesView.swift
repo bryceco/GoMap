@@ -53,6 +53,7 @@ class MapLibreVectorTilesView: MLNMapView, MLNMapViewDelegate {
 	func mapView(_ map: MLNMapView, didFinishLoading style: MLNStyle) {
 		let locale = Locale(identifier: PresetLanguages.preferredLanguageCode())
 		style.localizeLabels(into: locale)
+
 		for source: MLNSource in style.sources {
 			if let tileSource = source as? MLNTileSource {
 				for attrib in tileSource.attributionInfos {
@@ -60,6 +61,23 @@ class MapLibreVectorTilesView: MLNMapView, MLNMapViewDelegate {
 				}
 			}
 		}
+
+		let bad = [
+			"place_town",
+			"place_city"
+		]
+		for layer in style.layers {
+			if let layer = layer as? MLNSymbolStyleLayer {
+				// an icon and/or label
+				if bad.contains(layer.identifier) {
+					continue
+				}
+				layer.text = layer.text.mgl_expressionLocalized(into: locale)
+			}
+		}
+	}
+
+	func mapViewDidFinishLoadingMap(_ mapView: MLNMapView) {
 	}
 
 	func setPreferredFrameRate() {
