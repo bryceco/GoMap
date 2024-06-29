@@ -41,6 +41,7 @@ struct GeoJSONFeature: Decodable {
 	let type: String // e.g. "Feature"
 	let id: String? // String or Number
 	let geometry: GeoJSONGeometry?
+	let properties: AnyJSON?
 }
 
 extension LatLon {

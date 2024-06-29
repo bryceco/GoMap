@@ -38,6 +38,7 @@
 		0226B771268300C9005DB9E2 /* Data+Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B770268300C9005DB9E2 /* Data+Wrapper.swift */; };
 		0226B7732683BCB6005DB9E2 /* URLSession+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */; };
 		022B2FDB2718CCAC00AB4C28 /* MapboxLocator.secret in Sources */ = {isa = PBXBuildFile; fileRef = 022B2FDA2718CCAC00AB4C28 /* MapboxLocator.secret */; };
+		022BF8792C30C25300E07528 /* AnyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022BF8782C30C25300E07528 /* AnyJSON.swift */; };
 		023320A22BE07B2000E3311A /* DataOverlayLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023320A12BE07B2000E3311A /* DataOverlayLayer.swift */; };
 		023320A42BE1DB9900E3311A /* DPadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023320A32BE1DB9900E3311A /* DPadView.swift */; };
 		0235349B294A9BDD00ED5BBE /* MostRecentlyUsed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0235349A294A9BDD00ED5BBE /* MostRecentlyUsed.swift */; };
@@ -360,6 +361,7 @@
 		0226B770268300C9005DB9E2 /* Data+Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Wrapper.swift"; sourceTree = "<group>"; };
 		0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extension.swift"; sourceTree = "<group>"; };
 		022B2FDA2718CCAC00AB4C28 /* MapboxLocator.secret */ = {isa = PBXFileReference; lastKnownFileType = text; path = MapboxLocator.secret; sourceTree = "<group>"; };
+		022BF8782C30C25300E07528 /* AnyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyJSON.swift; sourceTree = "<group>"; };
 		023320A12BE07B2000E3311A /* DataOverlayLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataOverlayLayer.swift; sourceTree = "<group>"; };
 		023320A32BE1DB9900E3311A /* DPadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPadView.swift; sourceTree = "<group>"; };
 		0235349A294A9BDD00ED5BBE /* MostRecentlyUsed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostRecentlyUsed.swift; sourceTree = "<group>"; };
@@ -1041,6 +1043,7 @@
 		02F5329C267AD2B20088DF41 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				022BF8782C30C25300E07528 /* AnyJSON.swift */,
 				02092ED029E8ADB70095042B /* ArchivePath.swift */,
 				02A123EC264CAE6F005638C1 /* Atomic.swift */,
 				02D95B9529E0AE7F00F8FCA9 /* CharacterSet+Extension.swift */,
@@ -1548,6 +1551,7 @@
 				02505C5329A2EAD60078D60D /* AdvancedQuestBuilder.swift in Sources */,
 				020EBA7926506156001D56F4 /* MercatorTileLayer.swift in Sources */,
 				02D95B9629E0AE7F00F8FCA9 /* CharacterSet+Extension.swift in Sources */,
+				022BF8792C30C25300E07528 /* AnyJSON.swift in Sources */,
 				02354F7A246349E100878A04 /* CurvedGlyphLayer.swift in Sources */,
 				0226B771268300C9005DB9E2 /* Data+Wrapper.swift in Sources */,
 				0260E05F2BE30D4700975570 /* CompassButton.swift in Sources */,
