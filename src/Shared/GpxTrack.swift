@@ -145,13 +145,17 @@ final class GpxTrack: NSObject, NSSecureCoding {
 	var creationDate = Date() // when trace was recorded or downloaded
 	private(set) var points: [GpxPoint] = []
 	private(set) var wayPoints: [GpxPoint] = []
-	private var geoJSONGeometry: GeoJSONGeometry?
+	private var geoJSONFeature: GeoJSONFeature?
 
-	var geoJSON: GeoJSONGeometry {
-		if geoJSONGeometry == nil {
-			geoJSONGeometry = GeoJSONGeometry(geometry: .lineString(points: points.map { $0.latLon }))
+	var geoJSON: GeoJSONFeature {
+		if geoJSONFeature == nil {
+			let geom = GeoJSONGeometry(geometry: .lineString(points: points.map { $0.latLon }))
+			geoJSONFeature = GeoJSONFeature(type: "Feature",
+			                                id: name,
+			                                geometry: geom,
+			                                properties: nil)
 		}
-		return geoJSONGeometry!
+		return geoJSONFeature!
 	}
 
 	func addPoint(_ location: CLLocation) {
@@ -186,7 +190,7 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		points.append(pt)
 
 		// need to recompute shape
-		geoJSONGeometry = nil
+		geoJSONFeature = nil
 	}
 
 	func finish() {

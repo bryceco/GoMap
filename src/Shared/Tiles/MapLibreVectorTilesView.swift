@@ -77,8 +77,7 @@ class MapLibreVectorTilesView: MLNMapView, MLNMapViewDelegate {
 		}
 	}
 
-	func mapViewDidFinishLoadingMap(_ mapView: MLNMapView) {
-	}
+	func mapViewDidFinishLoadingMap(_ mapView: MLNMapView) {}
 
 	func setPreferredFrameRate() {
 		if #available(iOS 15.0, *) {

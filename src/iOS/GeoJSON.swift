@@ -41,16 +41,47 @@ struct GeoJSONFeature: Decodable {
 	let type: String // e.g. "Feature"
 	let id: String? // String or Number
 	let geometry: GeoJSONGeometry?
-	let properties: AnyJSON?
+	let properties: Any?
+
+	init(type: String,
+	     id: String?,
+	     geometry: GeoJSONGeometry?,
+	     properties: Any?)
+	{
+		self.type = type
+		self.id = id
+		self.geometry = geometry
+		self.properties = properties
+	}
+
+	init(from decoder: Decoder) throws {
+		enum CodingKeys: String, CodingKey {
+			case type
+			case id
+			case geometry
+			case properties
+		}
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		type = try container.decode(String.self, forKey: .type)
+		do {
+			id = try container.decodeIfPresent(String.self, forKey: .id)
+		} catch {
+			let num = try container.decode(Int.self, forKey: .id)
+			id = "\(num)"
+		}
+		geometry = try container.decodeIfPresent(GeoJSONGeometry.self, forKey: .geometry)
+		properties = try container.decodeIfPresent(AnyJSON.self, forKey: .properties)?.value
+	}
 }
 
 extension LatLon {
 	init(array: [Double]) throws {
-		if array.count != 2 {
+		guard (2...3).contains(array.count) else {
 			throw GeoJsonError.invalidFormat
 		}
 		lon = array[0]
 		lat = array[1]
+		// also permissible to have an altitude component, which we ignore
 	}
 
 	init(array: [NSNumber]) throws {

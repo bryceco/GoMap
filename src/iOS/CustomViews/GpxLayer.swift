@@ -193,13 +193,14 @@ final class GpxLayer: DrawingLayer, DiskCacheSizeProtocol, DrawingLayerDelegate 
 	// Delegate function to provide GeoJSONLayer with data
 	func geojsonData() -> [(GeoJSONGeometry, UIColor)] {
 		return allTracks().compactMap {
+			guard let geom = $0.geoJSON.geometry else { return nil }
 			let color = $0 == selectedTrack
 				? UIColor.red
 				: UIColor(red: 1.0,
 				          green: 99 / 255.0,
 				          blue: 249 / 255.0,
 				          alpha: 1.0)
-			return ($0.geoJSON, color)
+			return (geom, color)
 		}
 	}
 

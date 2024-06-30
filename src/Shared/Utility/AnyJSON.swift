@@ -20,8 +20,8 @@ enum AnyJSON: Hashable, Codable {
 		case let .string(value): return value
 		case let .double(value): return value
 		case let .bool(value): return value
-		case let .array(value): return value
-		case let .dictionary(value): return value
+		case let .array(value): return value.map { $0.value }
+		case let .dictionary(value): return value.mapValues { $0.value }
 		}
 	}
 
