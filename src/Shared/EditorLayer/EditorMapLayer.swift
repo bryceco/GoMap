@@ -922,7 +922,9 @@ final class EditorMapLayer: CALayer {
 		var icon = feature?.iconScaled24
 		if icon == nil {
 			let poiList = ["amenity", "highway", "name"]
-			if feature != nil || poiList.contains(where: { node.tags[$0] != nil }) {
+			if (feature != nil && feature!.featureID != "point") ||
+				poiList.contains(where: { node.tags[$0] != nil })
+			{
 				icon = Self.genericMarkerIcon
 			}
 		}
