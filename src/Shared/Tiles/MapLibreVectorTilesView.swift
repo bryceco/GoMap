@@ -154,5 +154,7 @@ class MapLibreVectorTilesView: UIView, TilesProvider, DiskCacheSizeProtocol {
 	func getDiskCacheSize() -> (size: Int, count: Int) {
 		return (0, 0)
 	}
+
+	func setPreferredFrameRate() {}
 }
 #endif
