@@ -247,6 +247,7 @@
       </trans-unit>
       <trans-unit id="3k9-ML-Zea.normalTitle" xml:space="preserve">
         <source>Mapnik</source>
+        <target state="translated">Mapnik</target>
         <note>Class = "UIButton"; normalTitle = "Mapnik"; ObjectID = "3k9-ML-Zea";</note>
       </trans-unit>
       <trans-unit id="4s8-Bj-JOX.normalTitle" xml:space="preserve">
@@ -286,6 +287,7 @@
       </trans-unit>
       <trans-unit id="8iI-nH-O9H.title" xml:space="preserve">
         <source>Basemap</source>
+        <target state="translated">Basiskarte</target>
         <note>Class = "UINavigationItem"; title = "Basemap"; ObjectID = "8iI-nH-O9H";</note>
       </trans-unit>
       <trans-unit id="9L3-JO-Whj.text" xml:space="preserve">
@@ -385,6 +387,7 @@
       </trans-unit>
       <trans-unit id="RK2-Uw-eHM.text" xml:space="preserve">
         <source>Basemap only</source>
+        <target state="translated">Nur Basiskarte</target>
         <note>Class = "UILabel"; text = "Basemap only"; ObjectID = "RK2-Uw-eHM";</note>
       </trans-unit>
       <trans-unit id="RxO-IV-UE7.text" xml:space="preserve">
@@ -631,6 +634,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       </trans-unit>
       <trans-unit id="rWF-4C-sRA.text" xml:space="preserve">
         <source>Title</source>
+        <target state="translated">Titel</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "rWF-4C-sRA";</note>
       </trans-unit>
       <trans-unit id="scg-Po-M3L.headerTitle" xml:space="preserve">
@@ -727,10 +731,12 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>GpxWidget</source>
+        <target state="translated">GpxWidget</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>GpxWidgetExtension</source>
+        <target state="translated">GpxWidget Erweiterung</target>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
@@ -767,6 +773,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       </trans-unit>
       <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
         <source>Pause recording GPX tracks.</source>
+        <target state="translated">Aufzeichnung von GPX-Tracks pausieren.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Start GPX" xml:space="preserve">
@@ -776,6 +783,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       </trans-unit>
       <trans-unit id="Start recording GPX tracks." xml:space="preserve">
         <source>Start recording GPX tracks.</source>
+        <target state="translated">Aufzeichnung von GPX-Tracks starten.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop" xml:space="preserve">
@@ -790,6 +798,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       </trans-unit>
       <trans-unit id="Stop recording GPX tracks." xml:space="preserve">
         <source>Stop recording GPX tracks.</source>
+        <target state="translated">Aufzeichnung von GPX-Tracks beenden.</target>
         <note/>
       </trans-unit>
     </body>
@@ -1484,6 +1493,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Clear Basemap Tiles" xml:space="preserve">
         <source>Clear Basemap Tiles</source>
+        <target state="translated">Basiskarten-Kacheln löschen</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear GPS Overlay Tiles" xml:space="preserve">
@@ -2168,6 +2178,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
         <source>Pause recording GPX tracks.</source>
+        <target state="translated">Aufzeichnung von GPX-Tracks pausieren.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Perform Action" xml:space="preserve">
@@ -2398,6 +2409,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Start recording GPX tracks." xml:space="preserve">
         <source>Start recording GPX tracks.</source>
+        <target state="translated">Aufzeichnung von GPX-Tracks starten.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop" xml:space="preserve">
@@ -2412,6 +2424,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Stop recording GPX tracks." xml:space="preserve">
         <source>Stop recording GPX tracks.</source>
+        <target state="translated">Aufzeichnung von GPX-Tracks beenden.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Straighten" xml:space="preserve">
@@ -2848,6 +2861,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="ft" xml:space="preserve">
         <source>ft</source>
+        <target state="translated">ft</target>
         <note>Height or width in feet, please abbreviate</note>
       </trans-unit>
       <trans-unit id="kg" xml:space="preserve">
@@ -2867,10 +2881,12 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="lbs" xml:space="preserve">
         <source>lbs</source>
+        <target state="translated">lb</target>
         <note>Weight in pounds, please abbreviate</note>
       </trans-unit>
       <trans-unit id="lt" xml:space="preserve">
         <source>lt</source>
+        <target state="translated">tn. l.</target>
         <note>Weight in long tons, please abbreviate</note>
       </trans-unit>
       <trans-unit id="m" xml:space="preserve">
@@ -2930,6 +2946,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="st" xml:space="preserve">
         <source>st</source>
+        <target state="translated">tn. sh.</target>
         <note>Weight in short tons, please abbreviate</note>
       </trans-unit>
       <trans-unit id="t" xml:space="preserve">
@@ -3459,6 +3476,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="3AM-Eb-jch.text" xml:space="preserve">
         <source>Maximize FPS</source>
+        <target state="translated">FPS maximieren</target>
         <note>Class = "UILabel"; text = "Maximize FPS"; ObjectID = "3AM-Eb-jch"; Note = "Display the user's touches when they tap the screen";</note>
       </trans-unit>
       <trans-unit id="3qk-15-BUc.text" xml:space="preserve">
@@ -3508,6 +3526,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="AEl-sZ-ech.text" xml:space="preserve">
         <source>Enables &gt; 60 FPS</source>
+        <target state="translated">Aktiviert &gt; 60 FPS</target>
         <note>Class = "UILabel"; text = "Enables &gt; 60 FPS"; ObjectID = "AEl-sZ-ech"; Note = "Display the user's touches when they tap the screen";</note>
       </trans-unit>
       <trans-unit id="AHZ-L8-yUA.title" xml:space="preserve">
