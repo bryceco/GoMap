@@ -114,7 +114,8 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		textView.autocapitalizationType = .sentences
 		textView.autocorrectionType = .yes
 		textView.keyboardType = .default
-		textView.inputAccessoryView = textField.inputAccessoryView
+		textView.inputAccessoryView = (textField as? PresetValueTextField)?.defaultInputAccessoryView
+			?? textField.inputAccessoryView
 		textView.returnKeyType = .done
 		textView.delegate = self
 		contentView.addSubview(textView)
