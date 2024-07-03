@@ -51883,6 +51883,7 @@
       }
     },
     "Unknown" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {

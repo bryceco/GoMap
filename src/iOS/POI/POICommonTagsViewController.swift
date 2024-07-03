@@ -27,7 +27,6 @@ class FeaturePresetAreaCell: UITableViewCell {
 	@IBOutlet var isSet: UIView!
 	var presetKey: PresetKey!
 
-	private static let placeholderText = NSLocalizedString("Unknown", comment: "")
 	private static let placeholderColor: UIColor = {
 		if #available(iOS 13.0, *) {
 			return UIColor.placeholderText
@@ -44,17 +43,21 @@ class FeaturePresetAreaCell: UITableViewCell {
 		}
 	}()
 
-	static func addPlaceholderText(_ textView: UITextView) {
-		if textView.text == "" {
-			textView.textColor = Self.placeholderColor
-			textView.text = Self.placeholderText
+	func placeholderText() -> String {
+		return presetKey.placeholder
+	}
+
+	func addPlaceholderText() {
+		if valueField.text == "" {
+			valueField.textColor = Self.placeholderColor
+			valueField.text = placeholderText()
 		}
 	}
 
-	static func removePlaceholderText(_ textView: UITextView) {
-		if textView.text == Self.placeholderText, textView.textColor == Self.placeholderColor {
-			textView.textColor = Self.regularColor
-			textView.text = ""
+	func removePlaceholderText() {
+		if valueField.text == placeholderText(), valueField.textColor == Self.placeholderColor {
+			valueField.textColor = Self.regularColor
+			valueField.text = ""
 		}
 	}
 }
@@ -375,7 +378,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 						self?.updateTextViewSize(cell.valueField)
 					})
 				} else {
-					FeaturePresetAreaCell.addPlaceholderText(cell.valueField)
+					cell.addPlaceholderText()
 				}
 				return cell
 			}
@@ -651,7 +654,9 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	}
 
 	func textViewDidBeginEditing(_ textView: UITextView) {
-		FeaturePresetAreaCell.removePlaceholderText(textView)
+		if let cell: FeaturePresetAreaCell = textView.superviewOfType() {
+			cell.removePlaceholderText()
+		}
 	}
 
 	func textViewDidChange(_ textView: UITextView) {
@@ -674,7 +679,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		updateTagDict(withValue: value, forKey: cell.presetKey.tagKey)
 
 		// fake placeholder text
-		FeaturePresetAreaCell.addPlaceholderText(textView)
+		cell.addPlaceholderText()
 	}
 
 	func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
