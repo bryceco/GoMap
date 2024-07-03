@@ -42,8 +42,7 @@ final class OsmTags {
 		return key == baseKey || key.hasSuffix(":" + baseKey) || key.hasPrefix(baseKey + ":")
 	}
 
-	static let surveyDateSynonyms: Set<String> = [
-		"check_date",
+	static let _surveyDateSynonyms: Set<String> = [
 		"survey_date",
 		"survey:date",
 		"survey",
@@ -52,6 +51,15 @@ final class OsmTags {
 		"updated",
 		"checked_exists:date"
 	]
+	static func isKeySurveyDate(_ key: String) -> Bool {
+		if _surveyDateSynonyms.contains(key) {
+			return true
+		}
+		if isKey(key, variantOf: "check_date") {
+			return true
+		}
+		return false
+	}
 
 	// editing
 	static let tagsToAutomaticallyStrip: Set<String> =

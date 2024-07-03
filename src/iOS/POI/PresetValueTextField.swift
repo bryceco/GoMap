@@ -173,10 +173,10 @@ class PresetValueTextField: AutocompleteTextField {
 
 	private func updateAssociatedContent() {
 		// Swift doesn't like too many ??'s so we break it into pieces 🤷‍♂️
-		let associatedView1 = getAssociatedColor()
+		let associatedView1 = getSurveyDateButton()
+			?? getAssociatedColor()
 			?? getOpeningHoursButton()
 			?? getWebsiteButton()
-			?? getSurveyDateButton()
 			?? getDirectionButton()
 		let associatedView2 = getHeightButton()
 			?? getYesNoButton(keyValueDict: owner?.keyValueDict ?? [:])
@@ -286,7 +286,7 @@ class PresetValueTextField: AutocompleteTextField {
 	}
 
 	private func getSurveyDateButton() -> UIView? {
-		if OsmTags.surveyDateSynonyms.contains(key) {
+		if OsmTags.isKeySurveyDate(key) {
 			let button = UIButton(type: .contactAdd)
 			button.addTarget(self, action: #selector(setSurveyDate(_:)), for: .touchUpInside)
 			return button
