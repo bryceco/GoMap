@@ -365,6 +365,9 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 				cell.accessoryType = .none
 				cell.nameLabel.text = presetKey.name
 				cell.presetKey = presetKey
+				if #available(iOS 13.0, *) {
+					cell.valueField.backgroundColor = UIColor.secondarySystemBackground
+				}
 				if value != "" {
 					// This shouldn't be necessary but the cell height isn't correct
 					// when the cell first appears.
