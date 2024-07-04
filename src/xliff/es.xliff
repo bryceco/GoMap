@@ -251,6 +251,7 @@
       </trans-unit>
       <trans-unit id="3k9-ML-Zea.normalTitle" xml:space="preserve">
         <source>Mapnik</source>
+        <target state="translated">Mapnik</target>
         <note>Class = "UIButton"; normalTitle = "Mapnik"; ObjectID = "3k9-ML-Zea";</note>
       </trans-unit>
       <trans-unit id="4s8-Bj-JOX.normalTitle" xml:space="preserve">
@@ -290,6 +291,7 @@
       </trans-unit>
       <trans-unit id="8iI-nH-O9H.title" xml:space="preserve">
         <source>Basemap</source>
+        <target state="translated">Basemap</target>
         <note>Class = "UINavigationItem"; title = "Basemap"; ObjectID = "8iI-nH-O9H";</note>
       </trans-unit>
       <trans-unit id="9L3-JO-Whj.text" xml:space="preserve">
@@ -389,6 +391,7 @@
       </trans-unit>
       <trans-unit id="RK2-Uw-eHM.text" xml:space="preserve">
         <source>Basemap only</source>
+        <target state="translated">Solo Basemap</target>
         <note>Class = "UILabel"; text = "Basemap only"; ObjectID = "RK2-Uw-eHM";</note>
       </trans-unit>
       <trans-unit id="RxO-IV-UE7.text" xml:space="preserve">
@@ -635,6 +638,7 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="rWF-4C-sRA.text" xml:space="preserve">
         <source>Title</source>
+        <target state="translated">Título</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "rWF-4C-sRA";</note>
       </trans-unit>
       <trans-unit id="scg-Po-M3L.headerTitle" xml:space="preserve">
@@ -1493,6 +1497,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Clear Basemap Tiles" xml:space="preserve">
         <source>Clear Basemap Tiles</source>
+        <target state="translated">Borrar mosaicos de Basemap</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear GPS Overlay Tiles" xml:space="preserve">
@@ -3475,6 +3480,7 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="3AM-Eb-jch.text" xml:space="preserve">
         <source>Maximize FPS</source>
+        <target state="translated">Maximizar FPS</target>
         <note>Class = "UILabel"; text = "Maximize FPS"; ObjectID = "3AM-Eb-jch"; Note = "Display the user's touches when they tap the screen";</note>
       </trans-unit>
       <trans-unit id="3qk-15-BUc.text" xml:space="preserve">
@@ -3524,6 +3530,7 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="AEl-sZ-ech.text" xml:space="preserve">
         <source>Enables &gt; 60 FPS</source>
+        <target state="translated">Activar &gt; 60 FPS</target>
         <note>Class = "UILabel"; text = "Enables &gt; 60 FPS"; ObjectID = "AEl-sZ-ech"; Note = "Display the user's touches when they tap the screen";</note>
       </trans-unit>
       <trans-unit id="AHZ-L8-yUA.title" xml:space="preserve">
