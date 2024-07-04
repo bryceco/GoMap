@@ -285,7 +285,7 @@ final class OsmTags {
 	}
 
 	static func alphabeticPortionOf(text: String?) -> String? {
-		if let alphaList = text?.split(separator: " ").compactMap({ $0 != "" && Double($0) == nil ? $0 : nil }),
+		if let alphaList = text?.split(separator: " ").filter({ $0 != "" && Double($0) == nil }),
 		   alphaList.count > 0
 		{
 			return alphaList.joined(separator: " ")

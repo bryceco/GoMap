@@ -107,8 +107,13 @@ class UnitToggleButton: UISegmentedControl {
 	}
 
 	func stringForSelection() -> String? {
-		let string = values[selectedSegmentIndex].values.first
-		return string == "" ? nil : string
+		if values.indices.contains(selectedSegmentIndex),
+		   let string = values[selectedSegmentIndex].values.first,
+		   string != ""
+		{
+			return string
+		}
+		return nil
 	}
 
 	// input is a value like "55 mph"

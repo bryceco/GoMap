@@ -178,12 +178,11 @@ class DataOverlaysController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView,
-				   targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath,
-				   toProposedIndexPath proposedDestinationIndexPath: IndexPath
-		) -> IndexPath
+	                        targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath,
+	                        toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath
 	{
 		if proposedDestinationIndexPath.section > 0 || proposedDestinationIndexPath.row >= geoJsonList.count {
-			return IndexPath(row: geoJsonList.count-1, section: 0)
+			return IndexPath(row: geoJsonList.count - 1, section: 0)
 		}
 		return proposedDestinationIndexPath
 	}
