@@ -125,6 +125,12 @@
             "value" : "Изменения:"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зміни:"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -395,6 +401,12 @@
             "value" : "Внести изменения"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Здійснити зміни"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -539,6 +551,12 @@
             "value" : "Править"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Редагувати"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -624,6 +642,12 @@
           }
         },
         "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔽"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "🔽"
@@ -747,6 +771,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Комментарий к пакету правок:"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Коментар до набору змін:"
           }
         },
         "vi" : {
@@ -897,6 +927,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Загрузить"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завантажити"
           }
         },
         "vi" : {
@@ -1157,6 +1193,12 @@
             "value" : "обследование, Bing и т.д."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "обстеження, Bing і т. д."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1299,6 +1341,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Почта"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пошта"
           }
         },
         "vi" : {
@@ -1455,6 +1503,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "මූලාශ්‍රය:"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Джерело:"
           }
         },
         "vi" : {

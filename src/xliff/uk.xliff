@@ -156,7 +156,6 @@
       </trans-unit>
       <trans-unit id="tOO-VD-MeJ.text" xml:space="preserve">
         <source>2014-06-17 17:54 UTC</source>
-        <target state="needs-translation">2014-06-17 17:54 UTC</target>
         <note>Class = "UILabel"; text = "2014-06-17 17:54 UTC"; ObjectID = "tOO-VD-MeJ";</note>
       </trans-unit>
       <trans-unit id="vRO-Aj-Sdr.text" xml:space="preserve">
@@ -1284,7 +1283,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped" xml:space="preserve">
         <source>%1$#@routes@ imported,
 %2$#@duplicates@ skipped</source>
-        <target state="needs-translation">%1$#@routes@ imported,
+        <target state="new">%1$#@routes@ imported,
 %2$#@duplicates@ skipped</target>
         <note>result of importing GPX routes</note>
       </trans-unit>

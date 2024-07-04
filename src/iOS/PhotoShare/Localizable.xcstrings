@@ -99,6 +99,12 @@
             "value" : "Обработка данных..."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обробка даних..."
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -204,6 +210,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Не распознано содержимое URL."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не розпізнано вміст URL."
           }
         },
         "zh-Hant" : {

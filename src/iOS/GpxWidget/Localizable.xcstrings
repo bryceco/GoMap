@@ -26,6 +26,12 @@
             "state" : "translated",
             "value" : "%@"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
         }
       }
     },
@@ -53,6 +59,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld GPX točke"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld точок у GPX"
           }
         }
       }
@@ -82,6 +94,12 @@
             "state" : "translated",
             "value" : "%lld točke"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld точок"
+          }
         }
       }
     },
@@ -110,6 +128,12 @@
             "state" : "translated",
             "value" : "Zaustavi GPX"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Призупинити GPX"
+          }
         }
       }
     },
@@ -119,6 +143,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pozastavit záznam GPX tras."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufzeichnung von GPX-Tracks pausieren."
           }
         },
         "es" : {
@@ -131,6 +161,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zaustavi snimanje GPX staza."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Призупинити записування треків GPX."
           }
         }
       }
@@ -160,6 +196,12 @@
             "state" : "translated",
             "value" : "Pokreni GPX"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запустити GPX"
+          }
         }
       }
     },
@@ -169,6 +211,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Spustit záznam GPX tras."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufzeichnung von GPX-Tracks starten."
           }
         },
         "es" : {
@@ -181,6 +229,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pokreni snimanje GPX staza."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запустити записування треків GPX."
           }
         }
       }
@@ -210,6 +264,12 @@
             "state" : "translated",
             "value" : "Prekini"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зупинити"
+          }
         }
       }
     },
@@ -238,6 +298,12 @@
             "state" : "translated",
             "value" : "Prekini GPX"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зупинити GPX"
+          }
         }
       }
     },
@@ -247,6 +313,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zastavit záznam GPX tras."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufzeichnung von GPX-Tracks beenden."
           }
         },
         "es" : {
@@ -259,6 +331,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prekini snimanje GPX staza."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зупинити записування треків GPX."
           }
         }
       }

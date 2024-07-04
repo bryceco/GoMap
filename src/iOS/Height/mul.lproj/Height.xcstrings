@@ -125,6 +125,12 @@
             "value" : "Высота"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Висота"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -275,6 +281,12 @@
             "value" : "Отмена"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скасувати"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -417,6 +429,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Задать высоту"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Встановити висоту"
           }
         },
         "vi" : {
@@ -567,6 +585,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Расстояние"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відстань"
           }
         },
         "vi" : {

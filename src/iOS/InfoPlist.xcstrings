@@ -873,6 +873,12 @@
             "value" : "Маршруты ваших тренировок можно импортировать как GPX."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Маршрути ваших тренувань можна імпортувати як GPX-треки."
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -931,6 +937,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Приложение никогда не изменяет данные о Вашем здоровье."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Застосунок ніколи не змінює інформацію про здоровʼя."
           }
         },
         "zh-Hant" : {

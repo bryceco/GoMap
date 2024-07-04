@@ -407,6 +407,12 @@
             "value" : "Назад"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назад"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -555,6 +561,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Атрибуты"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Властивості"
           }
         },
         "vi" : {
@@ -833,6 +845,12 @@
             "value" : "Точка интереса"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Точка інтересу"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -978,6 +996,12 @@
           }
         },
         "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заголовок"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Заголовок"
@@ -1131,6 +1155,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Да"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Так"
           }
         },
         "vi" : {
@@ -1422,6 +1452,12 @@
           }
         },
         "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ресторан"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ресторан"
@@ -1823,6 +1859,12 @@
             "value" : "Настроить"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Налаштувати"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1959,6 +2001,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Добавить новый"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Додати нову"
           }
         },
         "vi" : {
@@ -2375,6 +2423,12 @@
             "value" : "Ключ пресета"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ключ заготовки"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2511,6 +2565,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Значение 8"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значення 8"
           }
         },
         "vi" : {
@@ -2771,6 +2831,12 @@
             "value" : "Данный пресет будет доступен при редактировании объектов с данной комбинацией ключ/значение. Оставьте незаполненным любое из полей для возможности подстановки."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заготовка буде доступною під час редагування обʼєктів, що відповідають цій комбінації ключа і значення. Залиште будь-який з полів порожнім для підстановки."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2883,6 +2949,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Применимо к"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Застосовується до"
           }
         },
         "vi" : {
@@ -3015,6 +3087,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Значение 9"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значення 9"
           }
         },
         "vi" : {
@@ -3153,6 +3231,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Собакам разрешено"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Собакам дозволено"
           }
         },
         "vi" : {
@@ -3299,6 +3383,12 @@
             "value" : "Ключ"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ключ"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3437,6 +3527,12 @@
             "value" : "Атрибуты"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Властивості"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3573,6 +3669,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Значение 3"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значення 3"
           }
         },
         "vi" : {
@@ -4073,6 +4175,12 @@
             "value" : "Пользовательские предустановки"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Користувацькі заготовки"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4421,6 +4529,12 @@
             "value" : "значение"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "значення"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4560,6 +4674,12 @@
           }
         },
         "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назад"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Назад"
@@ -4709,6 +4829,12 @@
             "value" : "Атрибуты"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Властивості"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4845,6 +4971,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Пакет правок"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Набір змін"
           }
         },
         "vi" : {
@@ -4985,6 +5117,12 @@
             "value" : "Значение 1"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значення 1"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5123,6 +5261,12 @@
             "value" : "Тип POI"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тип точки інтересу"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5255,6 +5399,12 @@
             "value" : "Возможные значения для предустановки"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Можливі значення для заготовки"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5379,6 +5529,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Предустановленные значения"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значення заготовки"
           }
         },
         "vi" : {
@@ -5639,6 +5795,12 @@
             "value" : "Назад"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назад"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5775,6 +5937,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Значение 5"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значення 5"
           }
         },
         "vi" : {
@@ -6197,6 +6365,12 @@
             "value" : "Наименование"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назва"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6335,6 +6509,12 @@
             "value" : "Значение 4"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значення 4"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6414,6 +6594,12 @@
           }
         },
         "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ⓘ"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ⓘ"
@@ -6543,6 +6729,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Значение 2"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значення 2"
           }
         },
         "vi" : {
@@ -6681,6 +6873,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Значение 11"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значення 11"
           }
         },
         "vi" : {
@@ -7043,6 +7241,12 @@
             "value" : "Наименование"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назва"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7167,6 +7371,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Пользовательская предустановка"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Користувацька заготовка"
           }
         },
         "vi" : {
@@ -7319,6 +7529,12 @@
             "value" : "Тип"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тип"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7443,6 +7659,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Настроить предустановки"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Налаштувати заготовки"
           }
         },
         "vi" : {
@@ -7583,6 +7805,12 @@
             "value" : "Ресторан"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ресторан"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7713,6 +7941,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Название предустановки"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назва заготовки"
           }
         },
         "vi" : {
@@ -7851,6 +8085,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Значение 6"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значення 6"
           }
         },
         "vi" : {
@@ -7995,6 +8235,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Отмена"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скасувати"
           }
         },
         "vi" : {
@@ -8328,6 +8574,12 @@
           }
         },
         "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ключ"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ключ"
@@ -8735,6 +8987,12 @@
             "value" : "Предустановки"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заготовки"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8859,6 +9117,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Доступ для инвалидных колясок"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Доступність для інвалідних візків"
           }
         },
         "vi" : {
@@ -9167,6 +9431,12 @@
             "value" : "Значение 12"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значення 12"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9297,6 +9567,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Значение 10"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значення 10"
           }
         },
         "vi" : {
@@ -9435,6 +9711,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Значение 7"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значення 7"
           }
         },
         "vi" : {
@@ -9911,6 +10193,12 @@
             "value" : "Значение"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значення"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10038,6 +10326,12 @@
           }
         },
         "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ⓘ"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ⓘ"

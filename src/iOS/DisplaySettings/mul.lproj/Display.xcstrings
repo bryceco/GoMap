@@ -635,9 +635,21 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"Mapnik\"; ObjectID = \"3k9-ML-Zea\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mapnik"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "Mapnik"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Mapnik"
           }
         }
@@ -1529,10 +1541,22 @@
       "comment" : "Class = \"UINavigationItem\"; title = \"Basemap\"; ObjectID = \"8iI-nH-O9H\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basiskarte"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Basemap"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Базова мапа"
           }
         }
       }
@@ -2043,6 +2067,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Маршруты от HealthKit"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Маршрути HealthKit:"
           }
         },
         "zh-Hant" : {
@@ -7522,6 +7552,12 @@
             "state" : "translated",
             "value" : "Prekrivanja podataka"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Накладки з даними"
+          }
         }
       }
     },
@@ -8897,10 +8933,22 @@
       "comment" : "Class = \"UILabel\"; text = \"Basemap only\"; ObjectID = \"RK2-Uw-eHM\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nur Basiskarte"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Basemap only"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тільки базова мапа"
           }
         }
       }
@@ -8909,10 +8957,22 @@
       "comment" : "Class = \"UILabel\"; text = \"Title\"; ObjectID = \"rWF-4C-sRA\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titel"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Title"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заголовок"
           }
         }
       }
@@ -9249,6 +9309,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Импортировать"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Імпортувати"
           }
         },
         "zh-Hant" : {

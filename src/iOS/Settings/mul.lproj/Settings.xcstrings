@@ -803,10 +803,22 @@
       "comment" : "Class = \"UILabel\"; text = \"Maximize FPS\"; ObjectID = \"3AM-Eb-jch\"; Note = \"Display the user's touches when they tap the screen\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FPS maximieren"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Maximize FPS"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Максимізувати FPS"
           }
         }
       }
@@ -929,6 +941,12 @@
             "value" : "Подробнее"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Деталі"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1005,6 +1023,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Имя"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назва"
           }
         },
         "zh-Hant" : {
@@ -1409,6 +1433,12 @@
             "value" : "Подробности"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Деталі"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1479,6 +1509,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Аккаунт OpenStreetMap"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обліковка OpenStreetMap"
           }
         },
         "zh-Hant" : {
@@ -1727,6 +1763,12 @@
             "value" : "api.openstreetmap.org"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "api.openstreetmap.org"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1907,10 +1949,22 @@
       "comment" : "Class = \"UILabel\"; text = \"Enables > 60 FPS\"; ObjectID = \"AEl-sZ-ech\"; Note = \"Display the user's touches when they tap the screen\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktiviert > 60 FPS"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Enables > 60 FPS"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Застосовує > 60 FPS"
           }
         }
       }
@@ -2183,6 +2237,12 @@
             "value" : "Настройки"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Налаштування"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2391,6 +2451,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Информация об аккаунте"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Інформація про обліковку"
           }
         },
         "zh-Hant" : {
@@ -2777,6 +2843,12 @@
             "value" : "Weblate - переводы"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weblate — переклади"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3156,6 +3228,12 @@
           }
         },
         "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "-"
@@ -4151,6 +4229,12 @@
             "value" : "Заголовок"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заголовок"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4221,6 +4305,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Обновить аккаунт"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Оновити обліковку"
           }
         },
         "zh-Hant" : {
@@ -4353,6 +4443,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Язык"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мова"
           }
         },
         "vi" : {
@@ -4877,6 +4973,12 @@
             "value" : "Подзаголовок"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Підзаголовок"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5010,6 +5112,12 @@
           }
         },
         "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назад"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Назад"
@@ -5307,6 +5415,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Подробнее"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Деталі"
           }
         },
         "vi" : {
@@ -5741,6 +5855,12 @@
             "value" : "Подробности"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Деталі"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6029,6 +6149,12 @@
             "value" : "Логин"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Логін"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6173,6 +6299,12 @@
             "value" : "О нас"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Про нас"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6315,6 +6447,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Язык"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мова"
           }
         },
         "vi" : {
@@ -6672,6 +6810,12 @@
           }
         },
         "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "-"
@@ -7895,6 +8039,12 @@
             "value" : "Выйти"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вийти"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7959,6 +8109,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Пакеты правок"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Набори змін"
           }
         },
         "zh-Hant" : {
@@ -8313,6 +8469,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Slack - чат"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slack — дискусії"
           }
         }
       }

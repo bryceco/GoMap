@@ -5,6 +5,12 @@
       "comment" : "Bundle display name",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GpxWidget"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -22,6 +28,12 @@
             "state" : "translated",
             "value" : "GpxWidget"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GpxWidget"
+          }
         }
       }
     },
@@ -29,6 +41,12 @@
       "comment" : "Bundle name",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GpxWidget Erweiterung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -42,6 +60,12 @@
           }
         },
         "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GpxWidgetExtension"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "GpxWidgetExtension"
@@ -81,6 +105,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Autorska prava © 2024. Bryce Cogswell. Sva prava pridržana."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Авторські права © 2024 Брайс Коґсвелл. Всі права застережено."
           }
         }
       }
