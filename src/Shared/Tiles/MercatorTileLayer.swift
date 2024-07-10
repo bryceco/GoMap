@@ -25,12 +25,15 @@ final class MercatorTileLayer: CALayer {
 	@objc let mapView: MapView // mark as objc for KVO
 	private var isPerformingLayout = AtomicInt(0)
 
+	var supportDarkMode = false
+
 	// MARK: Implementation
 
 	override init(layer: Any) {
 		let layer = layer as! MercatorTileLayer
 		mapView = layer.mapView
 		tileServer = layer.tileServer
+		supportDarkMode = layer.supportDarkMode
 		super.init(layer: layer)
 	}
 
@@ -116,6 +119,13 @@ final class MercatorTileLayer: CALayer {
 				})
 			})
 		}
+	}
+
+	func updateDarkMode() {
+		webCache?.resetMemoryCache()
+		layerDict.removeAll()
+		sublayers = nil
+		setNeedsLayout()
 	}
 
 	func purgeTileCache() {
@@ -261,7 +271,14 @@ final class MercatorTileLayer: CALayer {
 					if data.count == 0 || self.tileServer.isPlaceholderImage(data) {
 						return nil
 					}
-					return UIImage(data: data)
+					if self.supportDarkMode,
+					   #available(iOS 13.0, *),
+					   UIScreen.main.traitCollection.userInterfaceStyle == .dark
+					{
+						return DarkModeImage.shared.darkModeImageFor(data: data)
+					} else {
+						return UIImage(data: data)
+					}
 				},
 				completion: { [self] result in
 					switch result {

@@ -109,6 +109,7 @@
 		02ACBD2116717BC500BB4414 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD2016717BC500BB4414 /* CoreLocation.framework */; };
 		02AEBEAF294ABE0700009163 /* KeyValueTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AEBEAE294ABE0700009163 /* KeyValueTableCell.swift */; };
 		02AFBF242458C1E800BE43F4 /* BingPlaceholderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */; };
+		02B2E25E2C3F3DC600815F08 /* DarkModeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B2E25D2C3F3DC600815F08 /* DarkModeImage.swift */; };
 		02B52E7728C9788200CB55F3 /* libswiftCoreGraphics.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 02B52E7628C9784700CB55F3 /* libswiftCoreGraphics.tbd */; };
 		02B5669D294F9D7E00710632 /* MagnifyingGlass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B5669C294F9D7E00710632 /* MagnifyingGlass.swift */; };
 		02B5669F294FDCF200710632 /* CrossHairsLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B5669E294FDCF200710632 /* CrossHairsLayer.swift */; };
@@ -431,6 +432,7 @@
 		02ACBD2016717BC500BB4414 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		02AEBEAE294ABE0700009163 /* KeyValueTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueTableCell.swift; sourceTree = "<group>"; };
 		02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BingPlaceholderImage.png; path = ../Shared/BingPlaceholderImage.png; sourceTree = "<group>"; };
+		02B2E25D2C3F3DC600815F08 /* DarkModeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkModeImage.swift; sourceTree = "<group>"; };
 		02B52E7628C9784700CB55F3 /* libswiftCoreGraphics.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftCoreGraphics.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk/usr/lib/swift/libswiftCoreGraphics.tbd; sourceTree = DEVELOPER_DIR; };
 		02B5669C294F9D7E00710632 /* MagnifyingGlass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnifyingGlass.swift; sourceTree = "<group>"; };
 		02B5669E294FDCF200710632 /* CrossHairsLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossHairsLayer.swift; sourceTree = "<group>"; };
@@ -1047,6 +1049,7 @@
 				02092ED029E8ADB70095042B /* ArchivePath.swift */,
 				02A123EC264CAE6F005638C1 /* Atomic.swift */,
 				02D95B9529E0AE7F00F8FCA9 /* CharacterSet+Extension.swift */,
+				02B2E25D2C3F3DC600815F08 /* DarkModeImage.swift */,
 				0226B770268300C9005DB9E2 /* Data+Wrapper.swift */,
 				02F6A458268AE42800F2ACE7 /* Debugger.swift */,
 				02A59EE0297F6E6A00B0A676 /* Dictionary+Extension.swift */,
@@ -1502,6 +1505,7 @@
 				EDB2C3A12609E2A000C08293 /* LanguageTableViewController.swift in Sources */,
 				02A59EE1297F6E6A00B0A676 /* Dictionary+Extension.swift in Sources */,
 				02EDBF6926535BB700B7072E /* OsmWay.swift in Sources */,
+				02B2E25E2C3F3DC600815F08 /* DarkModeImage.swift in Sources */,
 				ED56E5C426027A50000B368C /* CustomPresetController.swift in Sources */,
 				02A123EE264CBBE5005638C1 /* DisplayLink.swift in Sources */,
 				02CE3CE929919FC400DDACE0 /* LocationButton.swift in Sources */,
