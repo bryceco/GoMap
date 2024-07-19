@@ -300,7 +300,7 @@ final class TileServer: Equatable, Codable {
 	static let americana = TileServer(
 		withName: "Americana",
 		identifier: "AmericanaIdentifier",
-		url: "https://zelonewolf.github.io/openstreetmap-americana/style.json",
+		url: "https://americanamap.org/style.json",
 		best: false,
 		overlay: false,
 		apiKey: "",
