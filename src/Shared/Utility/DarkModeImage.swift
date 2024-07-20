@@ -18,17 +18,14 @@ class DarkModeImage {
 	@available(iOS 13.0, *)
 	func darkModeImageFor(data: Data) -> UIImage? {
 		guard let orig = CIImage(data: data) else { return nil }
-		let image = orig
-
 		let filter = CIFilter.colorControls()
-		filter.saturation = 1.0
 		filter.brightness = -0.4
 		filter.contrast = 1.0
-
-		filter.inputImage = image
-		guard let image = filter.outputImage else { return nil }
-
-		guard let cgImage = context.createCGImage(image, from: orig.extent) else { return nil }
+		filter.saturation = 1.0
+		filter.inputImage = orig
+		guard let image = filter.outputImage,
+		      let cgImage = context.createCGImage(image, from: orig.extent)
+		else { return nil }
 		return UIImage(cgImage: cgImage)
 	}
 
