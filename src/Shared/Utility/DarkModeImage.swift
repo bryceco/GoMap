@@ -23,8 +23,8 @@ class DarkModeImage {
 		filter.contrast = 1.0
 		filter.saturation = 1.0
 		filter.inputImage = orig
-		guard let image = filter.outputImage,
-		      let cgImage = context.createCGImage(image, from: orig.extent)
+		guard let ciImage = filter.outputImage,
+		      let cgImage = context.createCGImage(ciImage, from: orig.extent)
 		else { return nil }
 		return UIImage(cgImage: cgImage)
 	}
