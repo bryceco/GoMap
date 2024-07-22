@@ -296,10 +296,7 @@ final class GpxLayer: DrawingLayer, DiskCacheSizeProtocol, DrawingLayerDelegate 
 	func getDiskCacheSize() -> (size: Int, count: Int) {
 		var size = 0
 		let dir = saveDirectory()
-		var files: [String] = []
-		do {
-			files = try FileManager.default.contentsOfDirectory(atPath: dir)
-		} catch {}
+		let files = (try? FileManager.default.contentsOfDirectory(atPath: dir)) ?? []
 		for file in files {
 			if file.hasSuffix(".track") {
 				let path = URL(fileURLWithPath: dir).appendingPathComponent(file).path
