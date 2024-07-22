@@ -24,9 +24,10 @@ class LanguageTableViewController: UITableViewController {
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		if section == 0 {
-			return NSLocalizedString(
-				"Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English.",
+			let line = NSLocalizedString(
+				"Select the language used for Presets. Other app content will use your default language.",
 				comment: "")
+			return line
 		}
 		return nil
 	}

@@ -32355,6 +32355,7 @@
       }
     },
     "Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -46341,6 +46342,9 @@
           }
         }
       }
+    },
+    "Select the language used for Presets. Other app content will use your default language." : {
+
     },
     "Selected object is off screen" : {
       "localizations" : {
