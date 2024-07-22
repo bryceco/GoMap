@@ -561,32 +561,31 @@
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="176"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2g1-vb-Cjc">
-                                                    <rect key="frame" x="302" y="136" width="71" height="32"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                                    <state key="normal" title="Comment"/>
-                                                    <connections>
-                                                        <action selector="doComment:" destination="S30-cU-QcE" eventType="touchUpInside" id="nyd-9w-bWE"/>
-                                                    </connections>
-                                                </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OJ0-aO-ri1">
-                                                    <rect key="frame" x="237" y="136" width="57" height="32"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                                    <state key="normal" title="Resolve">
+                                                    <rect key="frame" x="188.66666666666663" y="133.66666666666666" width="184.33333333333337" height="34.333333333333343"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="Comment &amp; Resolve">
                                                         <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
+                                                    <buttonConfiguration key="configuration" style="plain" title="Comment &amp; Resolve">
+                                                        <fontDescription key="titleFontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    </buttonConfiguration>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Add a comment and resolve Note"/>
+                                                    </attributedString>
                                                     <connections>
                                                         <action selector="doResolve:" destination="S30-cU-QcE" eventType="touchUpInside" id="HhW-Gc-0Kx"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New comment:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9hH-Ja-fKn">
-                                                    <rect key="frame" x="20" y="8" width="365" height="20"/>
+                                                    <rect key="frame" x="20" y="8.0000000000000018" width="365" height="17.666666666666671"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="HeZ-95-3K1">
-                                                    <rect key="frame" x="33" y="36" width="331" height="90"/>
+                                                    <rect key="frame" x="33" y="33.666666666666657" width="331" height="90"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="90" id="YeB-Z0-JF0"/>
                                                     </constraints>
@@ -598,20 +597,35 @@
                                                         <fragment content="Placeholder - do not translate"/>
                                                     </attributedString>
                                                 </textView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2g1-vb-Cjc">
+                                                    <rect key="frame" x="78.666666666666686" y="133.66666666666666" width="102" height="34.333333333333343"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="Comment"/>
+                                                    <buttonConfiguration key="configuration" style="plain" title="Comment">
+                                                        <fontDescription key="titleFontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    </buttonConfiguration>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Add a comment for a Note"/>
+                                                    </attributedString>
+                                                    <connections>
+                                                        <action selector="doComment:" destination="S30-cU-QcE" eventType="touchUpInside" id="nyd-9w-bWE"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="9hH-Ja-fKn" firstAttribute="top" secondItem="Fc0-ki-3cW" secondAttribute="top" constant="8" id="3L4-MT-IyH"/>
                                                 <constraint firstAttribute="bottom" secondItem="OJ0-aO-ri1" secondAttribute="bottom" constant="8" id="3N1-l1-zQY"/>
-                                                <constraint firstAttribute="trailing" secondItem="2g1-vb-Cjc" secondAttribute="trailing" constant="20" symbolic="YES" id="3mi-St-by2"/>
                                                 <constraint firstItem="HeZ-95-3K1" firstAttribute="leading" secondItem="Fc0-ki-3cW" secondAttribute="leading" constant="33" id="Gt4-em-uMc"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="HeZ-95-3K1" secondAttribute="trailing" constant="9" id="NyS-Lu-WDp"/>
                                                 <constraint firstAttribute="bottom" secondItem="2g1-vb-Cjc" secondAttribute="bottom" constant="8" id="QCN-db-FqZ"/>
                                                 <constraint firstItem="9hH-Ja-fKn" firstAttribute="leading" secondItem="Fc0-ki-3cW" secondAttribute="leadingMargin" id="SoD-4m-A9n"/>
                                                 <constraint firstItem="OJ0-aO-ri1" firstAttribute="top" secondItem="HeZ-95-3K1" secondAttribute="bottom" constant="10" id="URH-iH-0cm"/>
+                                                <constraint firstItem="OJ0-aO-ri1" firstAttribute="leading" secondItem="2g1-vb-Cjc" secondAttribute="trailing" constant="8" symbolic="YES" id="WdM-ht-TiZ"/>
                                                 <constraint firstItem="2g1-vb-Cjc" firstAttribute="top" secondItem="HeZ-95-3K1" secondAttribute="bottom" constant="10" id="Zy2-S2-jsN"/>
                                                 <constraint firstAttribute="trailing" secondItem="9hH-Ja-fKn" secondAttribute="trailing" constant="8" id="f3f-y8-vwJ"/>
-                                                <constraint firstItem="2g1-vb-Cjc" firstAttribute="leading" secondItem="OJ0-aO-ri1" secondAttribute="trailing" constant="8" symbolic="YES" id="lcF-Eq-BuX"/>
-                                                <constraint firstItem="OJ0-aO-ri1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Fc0-ki-3cW" secondAttribute="leading" constant="8" id="t7q-Ww-mXe"/>
+                                                <constraint firstAttribute="trailing" secondItem="OJ0-aO-ri1" secondAttribute="trailing" constant="20" symbolic="YES" id="nBf-MM-Gqk"/>
+                                                <constraint firstItem="2g1-vb-Cjc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Fc0-ki-3cW" secondAttribute="leading" constant="20" symbolic="YES" id="otv-tU-A78"/>
                                                 <constraint firstItem="HeZ-95-3K1" firstAttribute="top" secondItem="9hH-Ja-fKn" secondAttribute="bottom" constant="8" symbolic="YES" id="v3N-Cn-JjZ"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -1061,10 +1075,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
