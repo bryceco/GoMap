@@ -75,7 +75,7 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.section == 0, note.comments.count > 0 {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "noteCommentCell",
-													 for: indexPath) as! NotesOldCommentCell
+			                                         for: indexPath) as! NotesOldCommentCell
 			let comment = note.comments[indexPath.row]
 			let isAnonymous = comment.user == ""
 			let user = isAnonymous ? "anonymous" : comment.user
@@ -97,7 +97,7 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 			return cell
 		} else if indexPath.row == 0 {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "noteResolveCell",
-													 for: indexPath) as! NotesNewCommentCell
+			                                         for: indexPath) as! NotesNewCommentCell
 			cell.textView.layer.cornerRadius = 5.0
 			cell.textView.layer.borderColor = cell.textView.textColor?.cgColor ?? UIColor.black.cgColor
 			cell.textView.layer.borderWidth = 1.0

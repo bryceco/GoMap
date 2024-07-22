@@ -42,6 +42,10 @@ final class OsmTags {
 		return key == baseKey || key.hasSuffix(":" + baseKey) || key.hasPrefix(baseKey + ":")
 	}
 
+	class func isFixme(_ key: String) -> Bool {
+		return Self.isKey(key, variantOf: "fixme") || Self.isKey(key, variantOf: "FIXME")
+	}
+
 	static let _surveyDateSynonyms: Set<String> = [
 		"survey_date",
 		"survey:date",

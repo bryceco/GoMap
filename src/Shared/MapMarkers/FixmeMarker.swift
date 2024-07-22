@@ -18,7 +18,7 @@ final class FixmeMarker: MapMarker {
 
 	/// If the object contains a fixme then returns the fixme value, else nil
 	static func fixmeTag(_ object: OsmBaseObject) -> String? {
-		if let tag = object.tags.first(where: { $0.key.caseInsensitiveCompare("fixme") == .orderedSame }) {
+		if let tag = object.tags.first(where: { OsmTags.isFixme($0.key) }) {
 			return tag.value
 		}
 		return nil
