@@ -239,6 +239,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			} else {
 				let layer = MercatorTileLayer(mapView: self)
 				layer.tileServer = newValue
+				layer.supportDarkMode = true
 				layer.zPosition = ZLAYER.BASEMAP.rawValue
 				self.layer.addSublayer(layer)
 				basemapLayer = .tileLayer(layer)
@@ -991,6 +992,16 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				width: bounds.size.width,
 				height: bounds.size.height)
 			super.bounds = bounds
+		}
+	}
+
+	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+		super.traitCollectionDidChange(previousTraitCollection)
+		if #available(iOS 13.0, *),
+		   traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection),
+		   case let .tileLayer(view) = basemapLayer
+		{
+			view.updateDarkMode()
 		}
 	}
 

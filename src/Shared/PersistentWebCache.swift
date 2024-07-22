@@ -70,6 +70,10 @@ final class PersistentWebCache<T: AnyObject> {
 		removeObjectsAsyncOlderThan(Date(timeIntervalSinceNow: -daysToKeep * 24 * 60 * 60))
 	}
 
+	func resetMemoryCache() {
+		memoryCache.removeAllObjects()
+	}
+
 	func removeAllObjects() {
 		for url in fileEnumerator(withAttributes: []) {
 			guard let url = url as? URL else {
