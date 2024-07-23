@@ -8102,7 +8102,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$#@メートル@, %2$#@ノード@"
+            "value" : "%#@meters@, %#@nodes@"
           },
           "substitutions" : {
             "meters" : {
@@ -13503,7 +13503,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$#@ルート@ インポート完了,\n%2$#@重複@ スキップ"
+            "value" : "%#@routes@ インポート完了,\n%#@duplicates@ スキップ"
           },
           "substitutions" : {
             "duplicates" : {
