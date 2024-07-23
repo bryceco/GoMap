@@ -803,6 +803,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Maximize FPS\"; ObjectID = \"3AM-Eb-jch\"; Note = \"Display the user's touches when they tap the screen\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximalizovat FPS"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -813,6 +819,24 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Maximize FPS"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximizar FPS"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maksimiraj broj sličica u sekundi"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FPS最大化"
           }
         },
         "uk" : {
@@ -1949,6 +1973,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Enables > 60 FPS\"; ObjectID = \"AEl-sZ-ech\"; Note = \"Display the user's touches when they tap the screen\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Povolit > 60 FPS"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1959,6 +1989,24 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Enables > 60 FPS"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activar > 60 FPS"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktivira > 60 sličica u sekundi"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "> 60 FPS 有効化"
           }
         },
         "uk" : {
@@ -8463,6 +8511,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Slack – Diskusija"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slack - 意見交換"
           }
         },
         "ru" : {

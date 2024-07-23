@@ -8101,8 +8101,8 @@
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%#@meters@, %#@nodes@"
+            "state" : "translated",
+            "value" : "%1$#@メートル@, %2$#@ノード@"
           },
           "substitutions" : {
             "meters" : {
@@ -8112,8 +8112,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg meters"
+                      "state" : "translated",
+                      "value" : "%arg メートル"
                     }
                   }
                 }
@@ -8126,8 +8126,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg nodes"
+                      "state" : "translated",
+                      "value" : "%arg ノード"
                     }
                   }
                 }
@@ -13502,8 +13502,8 @@
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%#@routes@ imported,\n%#@duplicates@ skipped"
+            "state" : "translated",
+            "value" : "%1$#@ルート@ インポート完了,\n%2$#@重複@ スキップ"
           },
           "substitutions" : {
             "duplicates" : {
@@ -13513,8 +13513,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg duplicates"
+                      "state" : "translated",
+                      "value" : "%arg 重複"
                     }
                   }
                 }
@@ -13527,8 +13527,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg new routes"
+                      "state" : "translated",
+                      "value" : "%arg 新しいルート"
                     }
                   }
                 }
@@ -22761,10 +22761,34 @@
     "Clear Basemap Tiles" : {
       "comment" : "Delete cached data",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vyčistit dlaždice podkladové mapy"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Basiskarten-Kacheln löschen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Borrar mosaicos de Basemap"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Izbriši pločice osnovne karte"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ベースマップのタイルを消去"
           }
         },
         "uk" : {
@@ -30167,6 +30191,12 @@
             "value" : "Izdvoji čvor"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ノードを抽出"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -30291,6 +30321,12 @@
             "value" : "ft"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ft"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -30321,6 +30357,12 @@
           }
         },
         "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GeoJSON"
+          }
+        },
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "GeoJSON"
@@ -30456,6 +30498,12 @@
           }
         },
         "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX"
+          }
+        },
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "GPX"
@@ -32222,6 +32270,12 @@
             "value" : "kg"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kg"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -32252,6 +32306,12 @@
           }
         },
         "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "km"
+          }
+        },
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "km"
@@ -32774,6 +32834,12 @@
           }
         },
         "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "lbs"
+          }
+        },
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "lbs"
@@ -33666,6 +33732,12 @@
             "value" : "lt"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "lt"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -33696,6 +33768,12 @@
           }
         },
         "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "m"
+          }
+        },
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "m"
@@ -35134,6 +35212,12 @@
           }
         },
         "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mi"
+          }
+        },
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "mi"
@@ -41480,8 +41564,8 @@
             "plural" : {
               "other" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "Pasting %ld characters, maximum tag length is 255"
+                  "state" : "translated",
+                  "value" : "%ld 文字を貼付けています, タグの最大長は255"
                 }
               }
             }
@@ -42455,6 +42539,12 @@
             "value" : "Zaustavi GPX"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX停止"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -42487,6 +42577,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zaustavi snimanje GPX staza."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX経路の記録を停止"
           }
         },
         "uk" : {
@@ -47404,6 +47500,12 @@
             "value" : "Nažalost se dogodila greške tijekom učitavanja datoteke %@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ ファイルの読み込に中にエラーが発生しました"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -47660,6 +47762,12 @@
           }
         },
         "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "st"
+          }
+        },
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "st"
@@ -47966,6 +48074,12 @@
             "value" : "Pokreni GPX"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX開始"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -47998,6 +48112,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pokreni snimanje GPX staza."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX経路の記録を開始"
           }
         },
         "uk" : {
@@ -48073,7 +48193,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "停止"
+            "value" : "終了"
           }
         },
         "mr" : {
@@ -48170,6 +48290,12 @@
             "value" : "Prekini GPX"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX終了"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -48202,6 +48328,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prekini snimanje GPX staza."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX経路の記録を終了"
           }
         },
         "uk" : {
@@ -48447,6 +48579,12 @@
           }
         },
         "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "t"
+          }
+        },
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "t"

@@ -635,6 +635,12 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"Mapnik\"; ObjectID = \"3k9-ML-Zea\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mapnik"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -644,6 +650,24 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "Mapnik"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mapnik"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mapnik"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Mapnik"
           }
         },
@@ -1541,6 +1565,12 @@
       "comment" : "Class = \"UINavigationItem\"; title = \"Basemap\"; ObjectID = \"8iI-nH-O9H\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podkladová mapa"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1551,6 +1581,24 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Basemap"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basemap"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Osnovna karta"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ベースマップ"
           }
         },
         "uk" : {
@@ -7553,6 +7601,12 @@
             "value" : "Prekrivanja podataka"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "データのオーバーレイ"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8933,6 +8987,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Basemap only\"; ObjectID = \"RK2-Uw-eHM\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pouze podkladová mapa"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8943,6 +9003,24 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Basemap only"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo Basemap"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Samo osnovna karta"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ベースマップのみ"
           }
         },
         "uk" : {
@@ -8957,6 +9035,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Title\"; ObjectID = \"rWF-4C-sRA\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Název"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8967,6 +9051,24 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Title"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Título"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naslov"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タイトル"
           }
         },
         "uk" : {

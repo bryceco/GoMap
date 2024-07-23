@@ -27,6 +27,12 @@
             "value" : "%@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -59,6 +65,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld GPX točke"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld GPX ポイント"
           }
         },
         "uk" : {
@@ -95,6 +107,12 @@
             "value" : "%lld točke"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ポイント"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -127,6 +145,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zaustavi GPX"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX停止"
           }
         },
         "uk" : {
@@ -163,6 +187,12 @@
             "value" : "Zaustavi snimanje GPX staza."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX経路の記録を停止"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -195,6 +225,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pokreni GPX"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX開始"
           }
         },
         "uk" : {
@@ -231,6 +267,12 @@
             "value" : "Pokreni snimanje GPX staza."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX経路の記録を開始"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -263,6 +305,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prekini"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "終了"
           }
         },
         "uk" : {
@@ -299,6 +347,12 @@
             "value" : "Prekini GPX"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX終了"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -331,6 +385,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prekini snimanje GPX staza."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX経路の記録を終了"
           }
         },
         "uk" : {

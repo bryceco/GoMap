@@ -28,10 +28,14 @@
         <target state="translated">Attribuzione Bing</target>
         <note>Class = "UIButton"; normalTitle = "Bing attribution"; ObjectID = "2Ka-IT-DQC";</note>
       </trans-unit>
+      <trans-unit id="2g1-vb-Cjc.configuration.title" xml:space="preserve">
+        <source>Comment</source>
+        <note>Class = "UIButton"; configuration.title = "Comment"; ObjectID = "2g1-vb-Cjc"; Note = "Add a comment for a Note";</note>
+      </trans-unit>
       <trans-unit id="2g1-vb-Cjc.normalTitle" xml:space="preserve">
         <source>Comment</source>
         <target state="translated">Commento</target>
-        <note>Class = "UIButton"; normalTitle = "Comment"; ObjectID = "2g1-vb-Cjc";</note>
+        <note>Class = "UIButton"; normalTitle = "Comment"; ObjectID = "2g1-vb-Cjc"; Note = "Add a comment for a Note";</note>
       </trans-unit>
       <trans-unit id="7Ua-cx-BHI.title" xml:space="preserve">
         <source>Upload</source>
@@ -97,10 +101,14 @@
         <target state="translated">Ingrandisci per modificare</target>
         <note>Class = "UILabel"; text = "Zoom to Edit"; ObjectID = "N5Q-nV-TPG";</note>
       </trans-unit>
+      <trans-unit id="OJ0-aO-ri1.configuration.title" xml:space="preserve">
+        <source>Comment &amp; Resolve</source>
+        <note>Class = "UIButton"; configuration.title = "Comment &amp; Resolve"; ObjectID = "OJ0-aO-ri1"; Note = "Add a comment and resolve Note";</note>
+      </trans-unit>
       <trans-unit id="OJ0-aO-ri1.normalTitle" xml:space="preserve">
-        <source>Resolve</source>
-        <target state="translated">Risolvi</target>
-        <note>Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1";</note>
+        <source>Comment &amp; Resolve</source>
+        <target state="needs-review-l10n">Risolvi</target>
+        <note>Class = "UIButton"; normalTitle = "Comment &amp; Resolve"; ObjectID = "OJ0-aO-ri1"; Note = "Add a comment and resolve Note";</note>
       </trans-unit>
       <trans-unit id="PHk-s9-onx.text" xml:space="preserve">
         <source>Various comments...</source>
@@ -2136,6 +2144,10 @@ Never delete old tracks</note>
         <source>Select a highway approaching the intersection</source>
         <note/>
       </trans-unit>
+      <trans-unit id="Select the language used for Presets. Other app content will use your default language." xml:space="preserve">
+        <source>Select the language used for Presets. Other app content will use your default language.</source>
+        <note/>
+      </trans-unit>
       <trans-unit id="Selected object is off screen" xml:space="preserve">
         <source>Selected object is off screen</source>
         <note/>
@@ -3174,9 +3186,9 @@ You may want to clear the cache (under Display settings) to improve performance.
         <note>Class = "UITextField"; placeholder = "api.openstreetmap.org"; ObjectID = "66J-ih-Lfh";</note>
       </trans-unit>
       <trans-unit id="355-dx-Oi8.headerTitle" xml:space="preserve">
-        <source>Language</source>
-        <target state="translated">Lingua</target>
-        <note>Class = "UITableViewSection"; headerTitle = "Language"; ObjectID = "355-dx-Oi8";</note>
+        <source>Presets Language</source>
+        <target state="needs-review-l10n">Lingua</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Presets Language"; ObjectID = "355-dx-Oi8";</note>
       </trans-unit>
       <trans-unit id="AEl-sZ-ech.text" xml:space="preserve">
         <source>Enables &gt; 60 FPS</source>
@@ -3371,9 +3383,9 @@ http://glyphish.com
         <note>Class = "UILabel"; text = "Email Feedback"; ObjectID = "iR4-av-Q7M";</note>
       </trans-unit>
       <trans-unit id="ib9-wt-IzD.title" xml:space="preserve">
-        <source>Language</source>
-        <target state="translated">Lingua</target>
-        <note>Class = "UINavigationItem"; title = "Language"; ObjectID = "ib9-wt-IzD";</note>
+        <source>Presets Language</source>
+        <target state="needs-review-l10n">Lingua</target>
+        <note>Class = "UINavigationItem"; title = "Presets Language"; ObjectID = "ib9-wt-IzD";</note>
       </trans-unit>
       <trans-unit id="jcn-Lx-tj3.text" xml:space="preserve">
         <source>Nearby Mappers</source>
@@ -3411,9 +3423,9 @@ http://glyphish.com
         <note>Class = "UITableViewSection"; headerTitle = "About Us"; ObjectID = "oIj-UV-kLH";</note>
       </trans-unit>
       <trans-unit id="osk-Kq-gDX.text" xml:space="preserve">
-        <source>Language</source>
-        <target state="translated">Lingua</target>
-        <note>Class = "UILabel"; text = "Language"; ObjectID = "osk-Kq-gDX";</note>
+        <source>Presets Language</source>
+        <target state="needs-review-l10n">Lingua</target>
+        <note>Class = "UILabel"; text = "Presets Language"; ObjectID = "osk-Kq-gDX";</note>
       </trans-unit>
       <trans-unit id="rfX-TP-V0l.text" xml:space="preserve">
         <source>Prepare for Offline</source>
