@@ -32,6 +32,7 @@
       </trans-unit>
       <trans-unit id="2g1-vb-Cjc.configuration.title" xml:space="preserve">
         <source>Comment</source>
+        <target state="translated">Comentario</target>
         <note>Class = "UIButton"; configuration.title = "Comment"; ObjectID = "2g1-vb-Cjc"; Note = "Add a comment for a Note";</note>
       </trans-unit>
       <trans-unit id="2g1-vb-Cjc.normalTitle" xml:space="preserve">
@@ -106,6 +107,7 @@
       </trans-unit>
       <trans-unit id="OJ0-aO-ri1.configuration.title" xml:space="preserve">
         <source>Comment &amp; Resolve</source>
+        <target state="translated">Comentar &amp; Resolver</target>
         <note>Class = "UIButton"; configuration.title = "Comment &amp; Resolve"; ObjectID = "OJ0-aO-ri1"; Note = "Add a comment and resolve Note";</note>
       </trans-unit>
       <trans-unit id="OJ0-aO-ri1.normalTitle" xml:space="preserve">
@@ -2355,6 +2357,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Select the language used for Presets. Other app content will use your default language." xml:space="preserve">
         <source>Select the language used for Presets. Other app content will use your default language.</source>
+        <target state="translated">Selecciona el idioma que se usará para los ajustes preestablecidos. El resto del contenido de la aplicación usará tu idioma predeterminado.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Selected object is off screen" xml:space="preserve">
