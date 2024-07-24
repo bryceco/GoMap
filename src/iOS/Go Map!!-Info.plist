@@ -127,7 +127,7 @@
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>Health information is never updated.</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright 2012-2021 Bryce Cogswell</string>
+	<string>Copyright 2012-2024 Bryce Cogswell</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Always on location tracking allows the app to record GPX files when inactive.</string>
 	<key>NSLocationAlwaysUsageDescription</key>

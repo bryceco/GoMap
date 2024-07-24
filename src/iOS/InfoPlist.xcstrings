@@ -965,127 +965,127 @@
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "حقوق النشر 2012-2021 Bryce Cogswell"
           }
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "حقوق النشر 2012-2021 Bryce Cogswell"
           }
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Copyright 2012–2021 Bryce Cogswell"
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Urheberrecht 2012-2021 Bryce Cogswell"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Copyright 2012-2021 Bryce Cogswell"
+            "value" : "Copyright 2012-2024 Bryce Cogswell"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "© 2012-2021 de Bryce Cogswell"
           }
         },
         "et" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Autoriõigus 2012-2021 Bryce Cogswell"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Droits d’auteur 2012-2021 Bryce Cogswell"
           }
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Autorska prava 2012. – 2021. Bryce Cogswell"
           }
         },
         "id" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Hak Cipta 2012-2021 Bryce Cogswell"
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "著作権 2012-2021 Bryce Cogswell"
           }
         },
         "mr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "प्रकाशनाधिकार 2012-2021 Bryce Cogswell"
           }
         },
         "nb-NO" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Opphavsrett 2012-2021 Bryce Cogswell"
           }
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Copyright 2012-2021 Bryce Cogswell"
           }
         },
         "oc" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Drechs d’autor 2012-2021 Bryce Cogswell"
           }
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Direitos de autor: 2012-2021 Bryce Cogswell"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Direitos autorais 2012-2021 Bryce Cogswell"
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Авторское право 2012-2021 Брайс Когсвелл"
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Усі права застережено 2012—2023 Брайс Коґсвелл"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "版權所有 2012-2021 Bryce Cogswell"
           }
         },
         "zh-Hant-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "版權所有 2012-2021 Bryce Cogswell"
           }
         }
