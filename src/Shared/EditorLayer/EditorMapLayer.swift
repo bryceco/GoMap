@@ -113,7 +113,6 @@ final class EditorMapLayer: CALayer {
 	var silentUndo = false // don't flash message about undo
 
 	private(set) var atVisibleObjectLimit = false
-	private let geekbenchScoreProvider = Geekbench()
 
 	init(owner: EditorMapLayerOwner) {
 		self.owner = owner
@@ -1148,8 +1147,7 @@ final class EditorMapLayer: CALayer {
 	}
 
 	func getShapeLayersForHighlights() -> [CALayer] {
-		let geekScore = Geekbench.score
-		var nameLimit = Int(5 + (geekScore - 500) / 200) // 500 -> 5, 2500 -> 10
+		var nameLimit = 15
 		var nameSet: Set<String> = []
 		var layers: [CALayer & LayerPropertiesProviding] = []
 		let wayColor = UIColor(red: 0.2, green: 1.0, blue: 0.4, alpha: 1.0)
@@ -1374,12 +1372,6 @@ final class EditorMapLayer: CALayer {
 		return layers
 	}
 
-	/// Determines whether text layers that display street names should be rasterized.
-	/// - Returns: The value to use for the text layer's `shouldRasterize` property.
-	func shouldRasterizeStreetNames() -> Bool {
-		return Geekbench.score < 2500
-	}
-
 	func resetDisplayLayers() {
 		// need to refresh all text objects
 		mapData.enumerateObjects(usingBlock: { obj in
@@ -1462,8 +1454,9 @@ final class EditorMapLayer: CALayer {
 	}
 
 	func getObjectsToDisplay() -> ContiguousArray<OsmBaseObject> {
-		let geekScore = Int(Geekbench.score)
-		var objectLimit = 3 * (50 + (geekScore - 500) / 40) // 500 -> 50, 2500 -> 10
+		// Preferred maximum number of objects to display. This could be modified up or down depending
+		// on the distribution of objects wrt renderInfo.renderPriority
+		var objectLimit = 300
 
 		// get objects in visible rect
 		var objects = getVisibleObjects()

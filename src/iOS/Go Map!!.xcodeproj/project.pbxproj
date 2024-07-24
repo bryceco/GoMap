@@ -225,7 +225,6 @@
 		C3D096B6263DF82F00E3B129 /* RulerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096B5263DF82F00E3B129 /* RulerView.swift */; };
 		C3D096CB263E9A1100E3B129 /* DownloadThreadPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096CA263E9A1100E3B129 /* DownloadThreadPool.swift */; };
 		C3D096CF263EA0DB00E3B129 /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096CE263EA0DB00E3B129 /* KeyChain.swift */; };
-		C3D096D0263EA76500E3B129 /* Geekbench.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341E1572639DF090022E983 /* Geekbench.swift */; };
 		C3D096DB263EB73E00E3B129 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096DA263EB73E00E3B129 /* main.swift */; };
 		C3D096DC263EB7DE00E3B129 /* MyApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096D7263EAE1E00E3B129 /* MyApplication.swift */; };
 		C3D096FC263F118500E3B129 /* FpsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341E1552639DEFC0022E983 /* FpsLabel.swift */; };
@@ -543,7 +542,6 @@
 		C3004F61263B2524006BF313 /* POIAllTagsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POIAllTagsViewController.swift; sourceTree = "<group>"; };
 		C341E1522639DECC0022E983 /* WikiPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WikiPage.swift; path = ../Shared/WikiPage.swift; sourceTree = "<group>"; };
 		C341E1552639DEFC0022E983 /* FpsLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FpsLabel.swift; sourceTree = "<group>"; };
-		C341E1572639DF090022E983 /* Geekbench.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Geekbench.swift; sourceTree = "<group>"; };
 		C341E1592639DF210022E983 /* NotesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotesTableViewController.swift; sourceTree = "<group>"; };
 		C341E15B2639DF440022E983 /* NearbyMappersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyMappersViewController.swift; sourceTree = "<group>"; };
 		C365A562263FC53F007DEC94 /* TurnRestrictHwyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurnRestrictHwyView.swift; sourceTree = "<group>"; };
@@ -1053,7 +1051,6 @@
 				0226B770268300C9005DB9E2 /* Data+Wrapper.swift */,
 				02F6A458268AE42800F2ACE7 /* Debugger.swift */,
 				02A59EE0297F6E6A00B0A676 /* Dictionary+Extension.swift */,
-				C341E1572639DF090022E983 /* Geekbench.swift */,
 				028816A02659B4A600C30EA2 /* GZip.swift */,
 				C3D096CE263EA0DB00E3B129 /* KeyChain.swift */,
 				0235349A294A9BDD00ED5BBE /* MostRecentlyUsed.swift */,
@@ -1615,7 +1612,6 @@
 				02C8C56726F44728003B0122 /* OsmNoteMarker.swift in Sources */,
 				02505C5B29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift in Sources */,
 				028816A12659B4A600C30EA2 /* GZip.swift in Sources */,
-				C3D096D0263EA76500E3B129 /* Geekbench.swift in Sources */,
 				02CE3CE52990A8CE00DDACE0 /* QuestChooserController.swift in Sources */,
 				024909CF267EADC70027E531 /* OsmXmlGenerator.swift in Sources */,
 				020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */,
