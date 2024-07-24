@@ -10,11 +10,17 @@ import Foundation
 
 import UIKit
 
+private let AmericanaServer: TileServer? = {
 #if canImport(MapLibre)
-private let AmericanaServer: TileServer? = TileServer.americana
+	if #available(iOS 14.0, *) {
+		return TileServer.americana
+	} else {
+		return nil
+	}
 #else
-private let AmericanaServer: TileServer? = nil
+	return nil
 #endif
+}()
 
 let BasemapServerList: [TileServer] = [
 	TileServer.mapnik,
