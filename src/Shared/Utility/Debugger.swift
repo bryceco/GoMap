@@ -35,7 +35,7 @@ func DbgAssert(_ x: Bool) {
 #endif
 }
 
-func mach_task_self() -> task_t {
+private func mach_task_self() -> task_t {
 	return mach_task_self_
 }
 
