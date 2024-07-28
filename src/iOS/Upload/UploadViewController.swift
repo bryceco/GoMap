@@ -94,8 +94,8 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 		sourceTextField.rightViewMode = recentSourceList.count > 0 ? .always : .never
 	}
 
-	override func viewDidDisappear(_ animated: Bool) {
-		super.viewDidDisappear(animated)
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
 		UserPrefs.shared.uploadComment.value = commentTextView.text
 		UserPrefs.shared.uploadSource.value = sourceTextField.text
 	}
