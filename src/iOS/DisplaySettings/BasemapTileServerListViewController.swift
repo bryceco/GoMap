@@ -10,22 +10,10 @@ import Foundation
 
 import UIKit
 
-private let AmericanaServer: TileServer? = {
-#if canImport(MapLibre)
-	if #available(iOS 14.0, *) {
-		return TileServer.americana
-	} else {
-		return nil
-	}
-#else
-	return nil
-#endif
-}()
-
 let BasemapServerList: [TileServer] = [
 	TileServer.mapnik,
 	TileServer.humanitarian,
-	AmericanaServer
+	TileServer.americana
 ]
 .compactMap { $0 }
 .sorted(by: { a, b in a.best == b.best ? a.name.caseInsensitiveCompare(b.name).rawValue < 0 : a.best })
