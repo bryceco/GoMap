@@ -34,20 +34,20 @@ final class PersistentWebCache<T: AnyObject> {
 		return string
 	}
 
-	func fileEnumerator(withAttributes attr: [URLResourceKey]) -> FileManager.DirectoryEnumerator {
-		return FileManager.default.enumerator(
-			at: cacheDirectory,
-			includingPropertiesForKeys: attr,
-			options: [.skipsSubdirectoryDescendants, .skipsPackageDescendants, .skipsHiddenFiles],
-			errorHandler: nil)!
+	func fileList(withAttributes attr: [URLResourceKey]) -> [URL] {
+		let fm = FileManager.default
+		let options: FileManager.DirectoryEnumerationOptions = [.skipsSubdirectoryDescendants,
+		                                                        .skipsPackageDescendants,
+		                                                        .skipsHiddenFiles]
+		let list = try? fm.contentsOfDirectory(at: cacheDirectory,
+		                                       includingPropertiesForKeys: attr,
+		                                       options: options)
+		return list ?? []
 	}
 
 	func allKeys() -> [String] {
 		var a: [String] = []
-		for url in fileEnumerator(withAttributes: []) {
-			guard let url = url as? URL else {
-				continue
-			}
+		for url in fileList(withAttributes: []) {
 			let s = url.lastPathComponent // automatically removes escape encoding
 			a.append(s)
 		}
@@ -75,10 +75,7 @@ final class PersistentWebCache<T: AnyObject> {
 	}
 
 	func removeAllObjects() {
-		for url in fileEnumerator(withAttributes: []) {
-			guard let url = url as? URL else {
-				continue
-			}
+		for url in fileList(withAttributes: []) {
 			try? FileManager.default.removeItem(at: url)
 		}
 		memoryCache.removeAllObjects()
@@ -86,9 +83,8 @@ final class PersistentWebCache<T: AnyObject> {
 
 	private func removeObjectsAsyncOlderThan(_ expiration: Date) {
 		DispatchQueue.global(qos: .background).async(execute: { [self] in
-			for url in fileEnumerator(withAttributes: [.contentModificationDateKey]) {
-				if let url = url as? URL,
-				   let date = try? url.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate,
+			for url in fileList(withAttributes: [.contentModificationDateKey]) {
+				if let date = try? url.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate,
 				   date < expiration
 				{
 					try? FileManager.default.removeItem(at: url)
@@ -100,10 +96,8 @@ final class PersistentWebCache<T: AnyObject> {
 	func getDiskCacheSize() -> (size: Int, count: Int) {
 		var count = 0
 		var size = 0
-		for url in fileEnumerator(withAttributes: [URLResourceKey.fileAllocatedSizeKey]) {
-			guard let url = url as? NSURL else {
-				continue
-			}
+		for url in fileList(withAttributes: [URLResourceKey.fileAllocatedSizeKey]) {
+			let url = url as NSURL
 			var len: AnyObject?
 			try? url.getResourceValue(&len, forKey: URLResourceKey.fileAllocatedSizeKey)
 			count += 1
