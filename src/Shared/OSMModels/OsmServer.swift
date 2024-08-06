@@ -40,7 +40,7 @@ struct OsmServer {
 	     apiHost: String,
 	     authHost: String,
 	     nominatimHost: String,
-		 osmchaHost: String?,
+	     osmchaHost: String?,
 	     client_id: String)
 	{
 		self.fullName = fullName
@@ -112,27 +112,27 @@ let OsmServerList = [
 	          apiHost: "api.openstreetmap.org",
 	          authHost: "www.openstreetmap.org",
 	          nominatimHost: "nominatim.openstreetmap.org",
-			  osmchaHost: "osmcha.org",
+	          osmchaHost: "osmcha.org",
 	          client_id: "mzRn5Z-X0nSptHgA3o5g30HeaaljTXfv0GMOLhmwqeo"),
 
 	OsmServer(fullName: "OSM Dev Server",
 	          apiHost: "api06.dev.openstreetmap.org",
 	          authHost: "master.apis.dev.openstreetmap.org",
 	          nominatimHost: "nominatim.openstreetmap.org",
-			  osmchaHost: nil,
+	          osmchaHost: nil,
 	          client_id: "SGsePsBukg7xPkIaqNIQlAgiAa3vjauIFkbcsPXB2Tg"),
 
 	OsmServer(fullName: "OpenHistoricalMap",
 	          apiHost: "www.openhistoricalmap.org",
 	          authHost: "www.openhistoricalmap.org",
 	          nominatimHost: "nominatim-api.openhistoricalmap.org",
-			  osmchaHost: "osmcha.openhistoricalmap.org",
+	          osmchaHost: "osmcha.openhistoricalmap.org",
 	          client_id: "UnjOHLFzRNc1VKeQJYz2ptqJu_K8fj2hVSsGkTLFjC4"),
 
 	OsmServer(fullName: "OpenGeoFiction",
 	          apiHost: "opengeofiction.net",
 	          authHost: "opengeofiction.net",
 	          nominatimHost: "nominatim.opengeofiction.net",
-			  osmchaHost: nil,
+	          osmchaHost: nil,
 	          client_id: "EwlSaN_GLSz6fhkncxU4GWtXG1NyEy2z63QER9ISGFA")
 ]
