@@ -9,39 +9,220 @@
 import CoreGraphics
 import Foundation
 
-final class MapMarkerDatabase: NSObject {
+final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 	private let workQueue = OperationQueue()
-	private var _keepRightIgnoreList: [Int: Bool]? // FIXME: Use UserDefaults for storage so this becomes non-optional
-	private var noteForTag: [Int: MapMarker] = [:] // return the note with the given button tag (tagId)
-	private var tagForKey: [String: Int] = [:]
+	private var markerForIdentifier: [String: MapMarker] = [:] // map the marker key (unique string) to a marker
+	private var ignoreList: MapMarkerIgnoreList
 	weak var mapData: OsmMapData!
 
-	override init() {
-		super.init()
+	init() {
 		workQueue.maxConcurrentOperationCount = 1
+		ignoreList = MapMarkerIgnoreList()
 	}
 
-	func reset() {
+	var allMapMarkers: AnySequence<MapMarker> { AnySequence(markerForIdentifier.values) }
+
+	func removeAll() {
 		workQueue.cancelAllOperations()
-		noteForTag.removeAll()
-		tagForKey.removeAll()
+		markerForIdentifier.removeAll()
 	}
 
-	/// This is called when we download a new note. If it is an update to an existing note then
-	/// we need to delete the reference to the previous tag, so the button can be replaced.
-	func addOrUpdate(_ newNote: MapMarker) {
-		let key = newNote.key
-		let newTag = newNote.buttonId
-		if let oldTag = tagForKey[key] {
-			// remove any existing tag with the same key
-			noteForTag.removeValue(forKey: oldTag)
+	func refreshMarkersFor(object: OsmBaseObject) -> [MapMarker] {
+		// Remove all markers that reference the object
+		let remove = markerForIdentifier.compactMap { k, v in v.object === object ? k : nil }
+		for k in remove {
+			markerForIdentifier.removeValue(forKey: k)
 		}
-		tagForKey[key] = newTag
-		noteForTag[newTag] = newNote
+		if object.deleted {
+			return []
+		}
+		// Build a new list of markers that reference the object
+		var list = [MapMarker]()
+		for quest in QuestList.shared.questsForObject(object) {
+			if let marker = QuestMarker(object: object, quest: quest, ignorable: self) {
+				addOrUpdate(marker: marker)
+				list.append(marker)
+			}
+		}
+		if let fixme = FixmeMarker.fixmeTag(object) {
+			let marker = FixmeMarker(object: object, text: fixme)
+			addOrUpdate(marker: marker)
+			list.append(marker)
+		}
+		return list
 	}
 
-	func updateMarkers(forRegion box: OSMRect, fixmeData mapData: OsmMapData, completion: @escaping () -> Void) {
-		let url = OSM_API_URL +
+	// MARK: Ignorable
+
+	func shouldIgnore(ident: String) -> Bool {
+		return ignoreList.shouldIgnore(ident: ident)
+	}
+
+	func shouldIgnore(marker: MapMarker) -> Bool {
+		return ignoreList.shouldIgnore(marker: marker)
+	}
+
+	func ignore(marker: MapMarker, reason: IgnoreReason) {
+		markerForIdentifier.removeValue(forKey: marker.markerIdentifier)
+		ignoreList.ignore(marker: marker, reason: reason)
+	}
+
+	// MARK: marker type-specific update functions
+
+	/// This is called when we get a new marker.
+	func addOrUpdate(marker newMarker: MapMarker) {
+		if let oldMarker = markerForIdentifier[newMarker.markerIdentifier] {
+			// This marker is already in our database, so reuse it's button
+			newMarker.reuseButtonFrom(oldMarker)
+		}
+		markerForIdentifier[newMarker.markerIdentifier] = newMarker
+	}
+
+	func addFixmeMarkers(forRegion box: OSMRect, mapData: OsmMapData) {
+		mapData.enumerateObjects(inRegion: box, block: { [self] obj in
+			if let fixme = FixmeMarker.fixmeTag(obj) {
+				let marker = FixmeMarker(object: obj, text: fixme)
+				self.addOrUpdate(marker: marker)
+			}
+		})
+	}
+
+	func addQuestMarkers(forRegion box: OSMRect, mapData: OsmMapData) {
+		mapData.enumerateObjects(inRegion: box, block: { obj in
+			for quest in QuestList.shared.questsForObject(obj) {
+				if let marker = QuestMarker(object: obj, quest: quest, ignorable: self) {
+					self.addOrUpdate(marker: marker)
+				}
+			}
+		})
+	}
+
+	func addGpxWaypoints() {
+		DispatchQueue.main.async(execute: { [self] in
+			for track in AppDelegate.shared.mapView.gpxLayer.allTracks() {
+				for point in track.wayPoints {
+					let marker = WayPointMarker(with: point)
+					addOrUpdate(marker: marker)
+				}
+			}
+		})
+	}
+
+	func addKeepRight(forRegion box: OSMRect, mapData: OsmMapData, completion: @escaping () -> Void) {
+		let template =
+			"https://keepright.at/export.php?format=gpx&ch=0,30,40,70,90,100,110,120,130,150,160,180,191,192,193,194,195,196,197,198,201,202,203,204,205,206,207,208,210,220,231,232,270,281,282,283,284,285,291,292,293,294,295,296,297,298,311,312,313,320,350,370,380,401,402,411,412,413&left=%f&bottom=%f&right=%f&top=%f"
+		let url = String(
+			format: template,
+			box.origin.x,
+			box.origin.y,
+			box.origin.x + box.size.width,
+			box.origin.y + box.size.height)
+		guard let url1 = URL(string: url) else { return }
+		URLSession.shared.data(with: url1, completionHandler: { [self] result in
+			if case let .success(data) = result,
+			   let gpxTrack = try? GpxTrack(xmlData: data)
+			{
+				DispatchQueue.main.async(execute: { [self] in
+					for point in gpxTrack.wayPoints {
+						if let note = KeepRightMarker(gpxWaypoint: point, mapData: mapData, ignorable: self) {
+							addOrUpdate(marker: note)
+						}
+					}
+					completion()
+				})
+			}
+		})
+	}
+
+	// MARK: update markers
+
+	struct MapMarkerSet: OptionSet {
+		let rawValue: Int
+		static let notes = MapMarkerSet(rawValue: 1 << 0)
+		static let fixme = MapMarkerSet(rawValue: 1 << 1)
+		static let quest = MapMarkerSet(rawValue: 1 << 2)
+		static let gpx = MapMarkerSet(rawValue: 1 << 3)
+	}
+
+	func removeMarkers(where predicate: (MapMarker) -> Bool) {
+		let remove = markerForIdentifier.compactMap { key, marker in predicate(marker) ? key : nil }
+		for key in remove {
+			markerForIdentifier.removeValue(forKey: key)
+		}
+	}
+
+	func updateMarkers(
+		forRegion box: OSMRect,
+		mapData: OsmMapData,
+		including: MapMarkerSet,
+		completion: @escaping () -> Void)
+	{
+		if including.contains(.fixme) {
+			removeMarkers(where: { ($0 as? FixmeMarker)?.shouldHide() ?? false })
+			addFixmeMarkers(forRegion: box, mapData: mapData)
+		} else {
+			removeMarkers(where: { $0 is FixmeMarker })
+		}
+		if including.contains(.quest) {
+			addQuestMarkers(forRegion: box, mapData: mapData)
+		} else {
+			removeMarkers(where: { $0 is QuestMarker })
+		}
+		if including.contains(.gpx) {
+			addGpxWaypoints()
+		} else {
+			removeMarkers(where: { $0 is WayPointMarker })
+		}
+		if including.contains(.notes) {
+			removeMarkers(where: { ($0 as? OsmNoteMarker)?.shouldHide() ?? false })
+			addNoteMarkers(forRegion: box, completion: completion)
+			return // don't call completion until async finishes
+		} else {
+			removeMarkers(where: { $0 is OsmNoteMarker })
+		}
+		completion()
+	}
+
+	func updateRegion(
+		_ bbox: OSMRect,
+		withDelay delay: CGFloat,
+		mapData: OsmMapData,
+		including: MapMarkerSet,
+		completion: @escaping () -> Void)
+	{
+		// Schedule work to be done in a short while, but if we're called before then
+		// cancel that operation and schedule a new one.
+		workQueue.cancelAllOperations()
+		workQueue.addOperation({
+			usleep(UInt32(1000 * (delay + 0.25)))
+		})
+		workQueue.addOperation({ [self] in
+			DispatchQueue.main.async {
+				self.updateMarkers(forRegion: bbox, mapData: mapData, including: including, completion: completion)
+			}
+		})
+	}
+
+	func mapMarker(forButtonId buttonId: Int) -> MapMarker? {
+		return markerForIdentifier.values.first(where: { $0.buttonId == buttonId })
+	}
+
+	// MARK: object selection
+
+	func didSelectObject(_ object: OsmBaseObject?) {
+		for marker in markerForIdentifier.values {
+			if let button = marker.button {
+				button.isHighlighted = object != nil && object == marker.object
+			}
+		}
+	}
+}
+
+// MARK: Notes functions
+
+extension MapMarkerDatabase {
+	func addNoteMarkers(forRegion box: OSMRect, completion: @escaping () -> Void) {
+		let url = OSM_SERVER.apiURL +
 			"api/0.6/notes?closed=0&bbox=\(box.origin.x),\(box.origin.y),\(box.origin.x + box.size.width),\(box.origin.y + box.size.height)"
 		if let url1 = URL(string: url) {
 			URLSession.shared.data(with: url1, completionHandler: { [self] result in
@@ -63,114 +244,12 @@ final class MapMarkerDatabase: NSObject {
 				DispatchQueue.main.async(execute: { [self] in
 					// add downloaded notes
 					for note in newNotes {
-						addOrUpdate(note)
+						addOrUpdate(marker: note)
 					}
-
-					// add from FIXME=yes tags
-					mapData.enumerateObjects(inRegion: box, block: { [self] obj in
-						if let fixme = FixmeMarker.fixmeTag(obj) {
-							let marker = FixmeMarker(object: obj, text: fixme)
-							self.addOrUpdate(marker)
-						}
-
-#if DEBUG
-						for quest in QuestList.shared.questsForObject(obj) {
-							let marker = QuestMarker(object: obj, quest: quest)
-							self.addOrUpdate(marker)
-						}
-#endif
-					})
 
 					completion()
 				})
 			})
-		}
-	}
-
-	func update(withGpxWaypoints xmlText: String, mapData: OsmMapData, completion: @escaping () -> Void) {
-		guard let xmlDoc = try? DDXMLDocument(xmlString: xmlText, options: 0)
-		else {
-			return
-		}
-
-		DispatchQueue.main.async(execute: { [self] in
-
-			if let namespace1 = DDXMLElement.namespace(
-				withName: "ns1",
-				stringValue: "http://www.topografix.com/GPX/1/0") as? DDXMLElement
-			{
-				xmlDoc.rootElement()?.addNamespace(namespace1)
-			}
-			if let namespace2 = DDXMLElement.namespace(
-				withName: "ns2",
-				stringValue: "http://www.topografix.com/GPX/1/1") as? DDXMLElement
-			{
-				xmlDoc.rootElement()?.addNamespace(namespace2)
-			}
-			for ns in ["ns1:", "ns2:", ""] {
-				let path = "./\(ns)gpx/\(ns)wpt"
-
-				guard let a: [DDXMLNode] = try? xmlDoc.nodes(forXPath: path) as? [DDXMLElement]
-				else {
-					continue
-				}
-
-				for waypointElement in a {
-					guard let waypointElement = waypointElement as? DDXMLElement else {
-						continue
-					}
-					if let note = KeepRightMarker(gpxWaypointXml: waypointElement,
-					                              namespace: ns,
-					                              mapData: mapData)
-					{
-						addOrUpdate(note)
-					}
-				}
-			}
-			completion()
-		})
-	}
-
-	func updateKeepRight(forRegion box: OSMRect, mapData: OsmMapData, completion: @escaping () -> Void) {
-		let template =
-			"https://keepright.at/export.php?format=gpx&ch=0,30,40,70,90,100,110,120,130,150,160,180,191,192,193,194,195,196,197,198,201,202,203,204,205,206,207,208,210,220,231,232,270,281,282,283,284,285,291,292,293,294,295,296,297,298,311,312,313,320,350,370,380,401,402,411,412,413&left=%f&bottom=%f&right=%f&top=%f"
-		let url = String(
-			format: template,
-			box.origin.x,
-			box.origin.y,
-			box.origin.x + box.size.width,
-			box.origin.y + box.size.height)
-		guard let url1 = URL(string: url) else { return }
-		URLSession.shared.data(with: url1, completionHandler: { [self] result in
-			if case let .success(data) = result,
-			   let xmlText = String(data: data, encoding: .utf8)
-			{
-				update(withGpxWaypoints: xmlText, mapData: mapData, completion: completion)
-			}
-		})
-	}
-
-	func updateRegion(
-		_ bbox: OSMRect,
-		withDelay delay: CGFloat,
-		fixmeData mapData: OsmMapData,
-		completion: @escaping () -> Void)
-	{
-		workQueue.cancelAllOperations()
-		workQueue.addOperation({
-			usleep(UInt32(1000 * (delay + 0.25)))
-		})
-		workQueue.addOperation({ [self] in
-			updateMarkers(forRegion: bbox, fixmeData: mapData, completion: completion)
-#if false
-			updateKeepRight(forRegion: bbox, mapData: mapData, completion: completion)
-#endif
-		})
-	}
-
-	func enumerateNotes(_ callback: (_ note: MapMarker) -> Void) {
-		for note in noteForTag.values {
-			callback(note)
 		}
 	}
 
@@ -184,11 +263,11 @@ final class MapMarkerDatabase: NSObject {
 		allowedChars.remove(charactersIn: "+;&")
 		let comment = comment.addingPercentEncoding(withAllowedCharacters: allowedChars) ?? ""
 
-		var url = OSM_API_URL + "api/0.6/notes"
+		var url = OSM_SERVER.apiURL + "api/0.6/notes"
 
 		if note.comments.count == 0 {
 			// brand new note
-			url += "?lat=\(note.lat)&lon=\(note.lon)&text=\(comment)"
+			url += "?lat=\(note.latLon.lat)&lon=\(note.latLon.lon)&text=\(comment)"
 		} else {
 			// existing note
 			if close {
@@ -206,7 +285,7 @@ final class MapMarkerDatabase: NSObject {
 			   let noteElement = list.first,
 			   let newNote = OsmNoteMarker(noteXml: noteElement)
 			{
-				addOrUpdate(newNote)
+				addOrUpdate(marker: newNote)
 				completion(.success(newNote))
 			} else {
 				if case let .failure(error) = result {
@@ -218,42 +297,5 @@ final class MapMarkerDatabase: NSObject {
 				}
 			}
 		})
-	}
-
-	func mapMarker(forTag tag: Int) -> MapMarker? {
-		return noteForTag[tag]
-	}
-
-	// MARK: Ignore list
-
-	// FIXME: change this to just use non-optional _keepRightIgnoreList
-	func ignoreList() -> [Int: Bool] {
-		if _keepRightIgnoreList == nil {
-			let path = URL(fileURLWithPath: FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)
-				.map(\.path).last ?? "").appendingPathComponent("keepRightIgnoreList").path
-			_keepRightIgnoreList = NSKeyedUnarchiver.unarchiveObject(withFile: path) as? [Int: Bool]
-			if _keepRightIgnoreList == nil {
-				_keepRightIgnoreList = [:]
-			}
-		}
-		return _keepRightIgnoreList!
-	}
-
-	func ignore(_ note: MapMarker) {
-		if _keepRightIgnoreList == nil {
-			_keepRightIgnoreList = [:]
-		}
-		_keepRightIgnoreList![note.buttonId] = true
-
-		let path = URL(fileURLWithPath: FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)
-			.map(\.path).last ?? "").appendingPathComponent("keepRightIgnoreList").path
-		NSKeyedArchiver.archiveRootObject(_keepRightIgnoreList!, toFile: path)
-	}
-
-	func isIgnored(_ note: MapMarker) -> Bool {
-		if ignoreList()[note.buttonId] != nil {
-			return true
-		}
-		return false
 	}
 }

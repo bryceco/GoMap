@@ -9,7 +9,9 @@
 import UIKit
 
 @objcMembers
-final class OsmRelation: OsmBaseObject {
+final class OsmRelation: OsmBaseObject, NSSecureCoding {
+	static let supportsSecureCoding = true
+
 	private(set) var members: [OsmMember]
 
 	override var description: String {
@@ -63,10 +65,12 @@ final class OsmRelation: OsmBaseObject {
 	}
 
 	func resolveToMapData(_ mapData: OsmMapData) -> Bool {
+		DbgAssert(mapData.relations[ident] === self)
 		var needsRedraw = false
 		for member in members {
 			if member.obj != nil {
 				// already resolved
+				DbgAssert(member.obj!.parentRelations.contains(self))
 				continue
 			}
 
@@ -165,9 +169,9 @@ final class OsmRelation: OsmBaseObject {
 		}
 	}
 
-	override func serverUpdate(inPlace newerVersion: OsmBaseObject) {
+	override func serverUpdate(with newerVersion: OsmBaseObject) {
 		let newerVersion = newerVersion as! OsmRelation
-		super.serverUpdate(inPlace: newerVersion)
+		super.serverUpdate(with: newerVersion)
 		members = newerVersion.members
 	}
 
@@ -264,6 +268,9 @@ final class OsmRelation: OsmBaseObject {
 	static func buildMultipolygonFromMembers(_ memberList: [OsmMember],
 	                                         repairing: Bool) -> ([[OsmNode]], Bool)
 	{
+		// FIXME: This code has at least one out-of-bounds crash, almost certainly due to a
+		// malformed relation. Probably needs to be rewritten to be more robust. Also need
+		// to identify the relation(s) that cause crashes.
 		var loopList: [[OsmNode]] = []
 		var loop: [OsmNode] = []
 		var members = memberList.filter({ ($0.obj is OsmWay) && ($0.role == "outer" || $0.role == "inner") })
@@ -290,8 +297,8 @@ final class OsmRelation: OsmBaseObject {
 						continue
 					}
 					let way = member.obj as! OsmWay
-					let enumerator = (way.nodes[0] == loop.last!) ? way.nodes.makeIterator()
-						: (way.nodes.last! == loop.last!) ? way.nodes.reversed().makeIterator()
+					let enumerator = (way.nodes.first == loop.last) ? way.nodes.makeIterator()
+						: (way.nodes.last == loop.last) ? way.nodes.reversed().makeIterator()
 						: nil
 					if let enumerator = enumerator {
 						foundAdjacent = true
@@ -419,7 +426,7 @@ final class OsmRelation: OsmBaseObject {
 	}
 
 	override func distance(toLineSegment point1: OSMPoint, point point2: OSMPoint) -> Double {
-		var dist = 1000000.0
+		var dist = 1_000000.0
 		for member in members {
 			if let object = member.obj {
 				if object.isRelation() == nil {
@@ -435,7 +442,7 @@ final class OsmRelation: OsmBaseObject {
 
 	override func latLonOnObject(forLatLon target: LatLon) -> LatLon {
 		var bestPoint = target
-		var bestDistance = 10000000.0
+		var bestDistance = 10_000000.0
 		for object in allMemberObjects() {
 			let pt = object.latLonOnObject(forLatLon: target)
 			let dist = OSMPoint(target).distanceToPoint(OSMPoint(pt))
@@ -448,14 +455,13 @@ final class OsmRelation: OsmBaseObject {
 	}
 
 	func containsObject(_ target: OsmBaseObject) -> Bool {
-		let set = allMemberObjects()
-		for obj in set {
-			if obj == target {
+		for obj in allMemberObjects() {
+			if obj === target {
 				return true
 			}
-			if let way = obj as? OsmWay,
-			   let node = target as? OsmNode,
-			   way.nodes.contains(node)
+			if let node = target as? OsmNode,
+			   let way = obj as? OsmWay,
+			   way.nodes.contains(where: { $0 === node })
 			{
 				return true
 			}

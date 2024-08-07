@@ -10,6 +10,40 @@
 
 import UIKit
 
+private struct Welcome: Decodable {
+	let authenticationResultCode: String
+	let brandLogoURI: String?
+	let copyright: String
+	let resourceSets: [ResourceSet]
+	let statusCode: Int
+	let statusDescription, traceId: String
+}
+
+private struct ResourceSet: Decodable {
+	let estimatedTotal: Int
+	let resources: [Resource]
+}
+
+private struct Resource: Decodable {
+	let __type: String
+	let imageHeight: Int
+	let imageUrl: String
+	let imageWidth: Int
+	let imageryProviders: [ImageryProvider]?
+	let vintageEnd, vintageStart: String?
+	let zoomMax, zoomMin: Int
+}
+
+private struct ImageryProvider: Decodable {
+	let attribution: String
+	let coverageAreas: [CoverageArea]
+}
+
+private struct CoverageArea: Decodable {
+	let bbox: [Double]
+	let zoomMax, zoomMin: Int
+}
+
 class BingMetadataViewController: UIViewController {
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 	@IBOutlet var textView: UITextView!
@@ -37,41 +71,36 @@ class BingMetadataViewController: UIViewController {
 			}
 			switch result {
 			case let .success(data):
-				let json = try? JSONSerialization.jsonObject(with: data, options: [])
-
 				var attrList: [String] = []
 
-				let resourceSets = (json as? [String: Any])?["resourceSets"] as? [Any]
-				for resourceSet in resourceSets ?? [] {
-					let resources = (resourceSet as? [String: Any])?["resources"]
-					guard let resources = resources as? [Any] else { continue }
-					for resource in resources {
-						let vintageStart = ((resource as? [String: Any])?["vintageStart"] as? String) ?? ""
-						let vintageEnd = ((resource as? [String: Any])?["vintageEnd"] as? String) ?? ""
-						guard let providers = (resource as? [String: Any])?["imageryProviders"] else { continue }
-						guard let providers = providers as? [Any] else { continue }
-						for provider in providers {
-							var attribution = ((provider as? [String: Any])?["attribution"] as? String) ?? ""
-							let areas = (provider as? [String: Any])?["coverageAreas"] as? [Any]
-							for area in areas ?? [] {
-								guard let area = area as? [String: Any] else { continue }
-								let zoomMin = (area["zoomMin"] as? NSNumber)?.intValue ?? 0
-								let zoomMax = (area["zoomMax"] as? NSNumber)?.intValue ?? 0
-								guard let bbox = area["bbox"] as? [NSNumber],
-								      bbox.count == 4
-								else { continue }
-								var rect = OSMRect(origin: OSMPoint(x: bbox[1].doubleValue,
-								                                    y: bbox[0].doubleValue),
-								                   size: OSMSize(width: bbox[3].doubleValue,
-								                                 height: bbox[2].doubleValue))
+				let welcome: Welcome?
+				do {
+					welcome = try JSONDecoder().decode(Welcome.self, from: data)
+				} catch {
+					print("error = \(error)")
+					welcome = nil
+				}
+
+				for resourceSet in welcome?.resourceSets ?? [] {
+					for resource in resourceSet.resources {
+						for provider in resource.imageryProviders ?? [] {
+							var attribution = provider.attribution
+							for area in provider.coverageAreas {
+								guard area.bbox.count == 4 else { continue }
+								var rect = OSMRect(origin: OSMPoint(x: area.bbox[1],
+								                                    y: area.bbox[0]),
+								                   size: OSMSize(width: area.bbox[3],
+								                                 height: area.bbox[2]))
 								rect.size.width -= rect.origin.x
 								rect.size.height -= rect.origin.y
-								if zoomLevel >= zoomMin,
-								   zoomLevel <= zoomMax,
+								if zoomLevel >= area.zoomMin,
+								   zoomLevel <= area.zoomMax,
 								   viewRect.intersectsRect(rect)
 								{
-									if vintageStart != "", vintageEnd != "" {
-										attribution = "\(attribution)\n   \(vintageStart) - \(vintageEnd)"
+									if let vintageStart = resource.vintageStart,
+									   let vintageEnd = resource.vintageEnd
+									{
+										attribution = "\(attribution)\n\(vintageStart) - \(vintageEnd)"
 									}
 									attrList.append(attribution)
 								}
@@ -87,10 +116,10 @@ class BingMetadataViewController: UIViewController {
 					return obj1 < obj2
 				})
 
-				let text = attrList.joined(separator: "\n\n• ")
+				let text = attrList.joined(separator: "\n\n")
 				self.textView.text = String.localizedStringWithFormat(
 					NSLocalizedString("Background imagery %@", comment: "identifies current aerial imagery"),
-					text)
+					"") + "\n\n" + text
 			case let .failure(error):
 				self.textView.text = String.localizedStringWithFormat(
 					NSLocalizedString("Error fetching metadata: %@", comment: ""),

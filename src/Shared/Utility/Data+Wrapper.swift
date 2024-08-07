@@ -3,7 +3,7 @@
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 6/22/21.
-//  Copyright © 2021 Bryce. All rights reserved.
+//  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
 import Foundation
@@ -17,7 +17,8 @@ extension Data {
 	}
 
 	static func fromStruct<Type>(_ v: Type) -> Data {
-		var v = v
-		return Data(bytes: &v, count: MemoryLayout.size(ofValue: v))
+		withUnsafePointer(to: v) { v2 in
+			Data(bytes: v2, count: MemoryLayout.size(ofValue: v))
+		}
 	}
 }

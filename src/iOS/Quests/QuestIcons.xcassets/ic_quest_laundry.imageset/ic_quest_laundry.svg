@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <path d="M128,64C128,99.346 99.346,128 64,128 28.654,128 0,99.346 0,64 0,28.654 28.654,0 64,0c35.346,0 64,28.654 64,64" fill="#e9a76f"/>
+  <path d="M32,20h64v84h-64z" fill="#fff"/>
+  <path d="M64,64m-20,0a20,20 0,1 1,40 0a20,20 0,1 1,-40 0" fill="#6381b1" stroke-width="4" stroke="#5b5b5b"/>
+  <path d="M32,20h64v16h-64z" fill="#ccd6dd"/>
+  <path d="M32,104h64v4h-64z" fill="#000"/>
+  <path d="M57.658,55.64m-4.337,0a4.337,4.337 0,1 1,8.675 0a4.337,4.337 0,1 1,-8.675 0" fill="#fff"/>
+  <path d="m76,64c-1.421,7.07 -5.708,10.716 -12,12" fill="none" stroke-linecap="round" stroke-width="8" stroke="#fff"/>
+  <path d="M64,28m-6,0a6,6 0,1 1,12 0a6,6 0,1 1,-12 0" fill="#5b5b5b"/>
+  <path d="M36.896,28h15.104v4h-15.104z" fill="#5b5b5b"/>
+  <path d="M76,24h16v8h-16z" fill="#5b5b5b"/>
+  <path d="m32,92c64,0 64,0 64,0" fill="none" stroke-width="4" stroke="#ccd6dd"/>
+</svg>

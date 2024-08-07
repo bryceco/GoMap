@@ -6,7 +6,9 @@
 //  Copyright © 2020 Bryce Cogswell. All rights reserved.
 //
 
-final class OsmNode: OsmBaseObject {
+final class OsmNode: OsmBaseObject, NSSecureCoding {
+	static let supportsSecureCoding = true
+
 	private(set) var latLon: LatLon
 	private(set) var wayCount: Int
 
@@ -77,9 +79,9 @@ final class OsmNode: OsmBaseObject {
 		latLon = LatLon(latitude: latitude, longitude: longitude)
 	}
 
-	override func serverUpdate(inPlace newerVersion: OsmBaseObject) {
+	override func serverUpdate(with newerVersion: OsmBaseObject) {
 		let newerVersion = newerVersion as! OsmNode
-		super.serverUpdate(inPlace: newerVersion)
+		super.serverUpdate(with: newerVersion)
 		latLon = newerVersion.latLon
 	}
 

@@ -10,78 +10,153 @@ import Foundation
 import UIKit
 
 // A feature-defining tag such as amenity=shop
-final class PresetFeature {
+final class PresetFeature: CustomDebugStringConvertible {
 	static let uninitializedImage = UIImage()
 
-	let featureID: String
-
-	// from json dictionary:
 	let _addTags: [String: String]?
-	let fields: [String]?
+	let aliases: [String] // an alias is a localizable alternative to 'name'
+	let featureID: String
+	let fieldsWithRedirect: [String]?
 	let geometry: [String]
-	let icon: String? // icon on the map
-	let logoURL: String? // NSI brand image
-	let locationSet: [String: [String]]?
-	let matchScore: Float
-	let moreFields: [String]?
-	let name: String?
+	let iconName: String? // icon on the map
+	let locationSet: LocationSet
+	let matchScore: Double
+	let moreFieldsWithRedirect: [String]?
+	let nameWithRedirect: String
 	let reference: [String: String]?
 	let _removeTags: [String: String]?
 	let searchable: Bool
 	let tags: [String: String]
 	let terms: [String]
-	let aliases: [String] // an alias is a localizable alternative to 'name'
 
-	init(withID featureID: String, jsonDict: [String: Any], isNSI: Bool) {
+	// computed properties
+	var addTags: [String: String] { return _addTags ?? tags }
+	var removeTags: [String: String] { return _removeTags ?? addTags }
+
+	init(_addTags: [String: String]?,
+	     aliases: [String], // an alias is a localizable alternative to 'name'
+	     featureID: String,
+	     fieldsWithRedirect: [String]?,
+	     geometry: [String],
+	     icon: String?, // icon on the map
+	     locationSet: LocationSet,
+	     matchScore: Double,
+	     moreFieldsWithRedirect: [String]?,
+	     nameWithRedirect: String,
+	     nsiSuggestion: Bool,
+	     reference: [String: String]?,
+	     _removeTags: [String: String]?,
+	     searchable: Bool,
+	     tags: [String: String],
+	     terms: [String])
+	{
+		self._addTags = _addTags
+		self.aliases = aliases
 		self.featureID = featureID
-
-		_addTags = jsonDict["addTags"] as? [String: String]
-		fields = jsonDict["fields"] as? [String]
-		geometry = jsonDict["geometry"] as? [String] ?? []
-		icon = jsonDict["icon"] as? String
-		logoURL = jsonDict["imageURL"] as? String
-		locationSet = PresetFeature.convertLocationSet(jsonDict["locationSet"] as? [String: [String]])
-		matchScore = Float(jsonDict["matchScore"] as? Double ?? 1.0)
-		moreFields = jsonDict["moreFields"] as? [String]
-		name = jsonDict["name"] as? String
-		reference = jsonDict["reference"] as? [String: String]
-		_removeTags = jsonDict["removeTags"] as? [String: String]
-		searchable = jsonDict["searchable"] as? Bool ?? true
-		tags = jsonDict["tags"] as! [String: String]
-		if let terms = jsonDict["terms"] as? String {
-			self.terms = terms.split(separator: ",").map({ String($0) })
-		} else {
-			terms = jsonDict["terms"] as? [String] ?? jsonDict["matchNames"] as? [String] ?? []
-		}
-		aliases = (jsonDict["aliases"] as? String)?.split(separator: "\n").map({ String($0) }) ?? []
-
-		nsiSuggestion = isNSI
+		self.fieldsWithRedirect = fieldsWithRedirect
+		self.geometry = geometry
+		iconName = icon
+		self.locationSet = locationSet
+		self.matchScore = matchScore
+		self.moreFieldsWithRedirect = moreFieldsWithRedirect
+		self.nameWithRedirect = nameWithRedirect
+		self.nsiSuggestion = nsiSuggestion
+		self.reference = reference
+		self._removeTags = _removeTags
+		self.searchable = searchable
+		self.tags = tags
+		self.terms = terms
 	}
 
-	class func convertLocationSet(_ locationSet: [String: [String]]?) -> [String: [String]]? {
-		// convert locations to country codes
-		guard var includes = locationSet?["include"] else { return nil }
-		for i in 0..<includes.count {
-			switch includes[i] {
-			case "conus":
-				includes[i] = "us"
-			case "001":
-				return nil
-			default:
-				continue
-			}
-		}
-		return ["include": includes]
+	convenience init?(withID featureID: String,
+	                  jsonDict: [String: Any],
+	                  isNSI: Bool)
+	{
+		guard jsonDict["tags"] is [String: String] else { return nil }
+
+		self.init(
+			_addTags: jsonDict["addTags"] as! [String: String]?,
+			aliases: (jsonDict["aliases"] as! String?)?.split(separator: "\n").map({ String($0) }) ?? [],
+			featureID: featureID,
+			fieldsWithRedirect: jsonDict["fields"] as! [String]?,
+			geometry: jsonDict["geometry"] as! [String]? ?? [],
+			icon: jsonDict["icon"] as! String?,
+			locationSet: LocationSet(withJson: jsonDict["locationSet"]),
+			matchScore: jsonDict["matchScore"] as! Double? ?? 1.0,
+			moreFieldsWithRedirect: jsonDict["moreFields"] as! [String]?,
+			nameWithRedirect: jsonDict["name"] as! String? ?? featureID,
+			nsiSuggestion: isNSI,
+			reference: jsonDict["reference"] as! [String: String]?,
+			_removeTags: jsonDict["removeTags"] as! [String: String]?,
+			searchable: jsonDict["searchable"] as! Bool? ?? true,
+			tags: jsonDict["tags"] as! [String: String],
+			terms: {
+				if let terms = jsonDict["terms"] as? String {
+					return terms.split(separator: ",").map({ String($0) })
+				} else {
+					return jsonDict["terms"] as! [String]? ?? jsonDict["matchNames"] as! [String]? ?? []
+				}
+			}())
 	}
 
 	let nsiSuggestion: Bool // is from NSI
-	var nsiLogo: UIImage? // from NSI imageURL
-
-	var _iconUnscaled: UIImage? = PresetFeature.uninitializedImage
-	var _iconScaled24: UIImage? = PresetFeature.uninitializedImage
+	private var _nsiLogo: UIImage? // from NSI imageURL
+	private var _iconUnscaled: UIImage? = PresetFeature.uninitializedImage
+	private var _iconScaled24: UIImage? = PresetFeature.uninitializedImage
 
 	var description: String {
 		return featureID
+	}
+
+	var debugDescription: String {
+		return description
+	}
+
+	var name: String {
+		// This has to be done in a lazy manner because the redirect may not exist yet when we are instantiated
+		if nameWithRedirect.hasPrefix("{"), nameWithRedirect.hasSuffix("}") {
+			let redirect = String(nameWithRedirect.dropFirst().dropLast())
+			if let preset = PresetsDatabase.shared.presetFeatureForFeatureID(redirect) {
+				return preset.name
+			}
+			print("bad preset redirect: \(redirect)")
+			DbgAssert(false)
+		}
+		return nameWithRedirect
+	}
+
+	var fields: [String]? {
+		// This has to be done in a lazy manner because the redirect may not exist yet when we are instantiated
+		guard let fieldsWithRedirect = fieldsWithRedirect else { return nil }
+		return fieldsWithRedirect.flatMap {
+			if $0.hasPrefix("{"), $0.hasSuffix("}") {
+				let redirect = String($0.dropFirst().dropLast())
+				guard let preset = PresetsDatabase.shared.presetFeatureForFeatureID(redirect) else {
+					print("bad preset redirect: \(redirect)")
+					DbgAssert(false)
+					return [String]()
+				}
+				return preset.fields ?? []
+			}
+			return [$0]
+		}
+	}
+
+	var moreFields: [String]? {
+		// This has to be done in a lazy manner because the redirect may not exist yet when we are instantiated
+		guard let moreFieldsWithRedirect = moreFieldsWithRedirect else { return nil }
+		return moreFieldsWithRedirect.flatMap {
+			if $0.hasPrefix("{"), $0.hasSuffix("}") {
+				let redirect = String($0.dropFirst().dropLast())
+				guard let preset = PresetsDatabase.shared.presetFeatureForFeatureID(redirect) else {
+					print("bad preset redirect: \(redirect)")
+					DbgAssert(false)
+					return [String]()
+				}
+				return preset.moreFields ?? []
+			}
+			return [$0]
+		}
 	}
 
 	func isGeneric() -> Bool {
@@ -91,7 +166,7 @@ final class PresetFeature {
 	}
 
 	func friendlyName() -> String {
-		return name ?? featureID
+		return name
 	}
 
 	func summary() -> String? {
@@ -100,16 +175,42 @@ final class PresetFeature {
 		return result as? String
 	}
 
-	func iconUnscaled() -> UIImage? {
-		if _iconUnscaled == PresetFeature.uninitializedImage {
-			_iconUnscaled = icon != nil ? UIImage(named: icon!) : nil
+	var iconUnscaled: UIImage? {
+		if _iconUnscaled === PresetFeature.uninitializedImage {
+			if let iconName = iconName {
+				_iconUnscaled = UIImage(named: iconName)
+			} else {
+				_iconUnscaled = nil
+			}
 		}
 		return _iconUnscaled
 	}
 
-	func iconScaled24() -> UIImage? {
-		if _iconScaled24 == PresetFeature.uninitializedImage {
-			if let image = iconUnscaled() {
+	func nsiLogo(_ callback: ((UIImage) -> Void)?) -> UIImage? {
+		guard nsiSuggestion else {
+			return iconUnscaled?.withRenderingMode(.alwaysTemplate)
+		}
+
+		if let icon = _nsiLogo {
+			return icon
+		}
+		if let callback = callback {
+			if let icon = NsiLogoDatabase.shared.retrieveLogoForNsiItem(featureID: featureID,
+			                                                            whenFinished: { img in
+			                                                            	self._nsiLogo = img
+			                                                            	callback(img)
+			                                                            })
+			{
+				_nsiLogo = icon
+				return icon
+			}
+		}
+		return iconUnscaled?.withRenderingMode(.alwaysTemplate)
+	}
+
+	var iconScaled24: UIImage? {
+		if _iconScaled24 === PresetFeature.uninitializedImage {
+			if let image = iconUnscaled {
 				_iconScaled24 = EditorMapLayer.IconScaledForDisplay(image)
 			} else {
 				_iconScaled24 = nil
@@ -118,25 +219,20 @@ final class PresetFeature {
 		return _iconScaled24
 	}
 
-	func addTags() -> [String: String] {
-		return _addTags ?? tags
-	}
-
-	func removeTags() -> [String: String] {
-		return _removeTags ?? addTags()
-	}
-
-	func objectTagsUpdatedForFeature(_ tags: [String: String], geometry: GEOMETRY) -> [String: String] {
+	func objectTagsUpdatedForFeature(_ tags: [String: String], geometry: GEOMETRY,
+	                                 location: MapView.CurrentRegion) -> [String: String]
+	{
 		var tags = tags
 
-		let oldFeature = PresetsDatabase.shared.matchObjectTagsToFeature(
-			tags,
+		let oldFeature = PresetsDatabase.shared.presetFeatureMatching(
+			tags: tags,
 			geometry: geometry,
+			location: location,
 			includeNSI: true)
 
 		// remove previous feature tags
-		var removeTags = oldFeature?.removeTags() ?? [:]
-		for key in addTags().keys {
+		var removeTags = oldFeature?.removeTags ?? [:]
+		for key in addTags.keys {
 			removeTags.removeValue(forKey: key)
 		}
 		for key in removeTags.keys {
@@ -144,7 +240,7 @@ final class PresetFeature {
 		}
 
 		// add new feature tags
-		for (key, value) in addTags() {
+		for (key, value) in addTags {
 			if value == "*" {
 				if tags[key] == nil {
 					tags[key] = "yes"
@@ -164,15 +260,41 @@ final class PresetFeature {
 			}
 		}
 
+		// add area=yes if it is implied
+		if PresetArea.shared.needsAreaKey(forTags: tags, geometry: geometry, feature: self) {
+			tags["area"] = "yes"
+		}
+
 		// remove any empty values
 		tags = tags.compactMapValues({ $0 == "" ? nil : $0 })
 
 		return tags
 	}
 
+	/// Returns the parent feature of a feature. For example "highway/residential" returns "highway".
+	/// - Parameter featureID: The featureID of interest.
+	/// - Returns: The featureID with the last component removed, or nil if none.
 	class func parentIDofID(_ featureID: String) -> String? {
 		if let range = featureID.range(of: "/", options: .backwards, range: nil, locale: nil) {
 			return String(featureID.prefix(upTo: range.lowerBound))
+		}
+		return nil
+	}
+
+	/// Return the ``PresetField`` that references the provided tag key.
+	/// This is used for recognizing quests.
+	///
+	/// - Parameters:
+	///  - key: The tag key we're looking for, such as "surface"
+	///  - more: Boolean indicating whether to search moreFields as well as regular fields.
+	func fieldContainingTagKey(_ key: String, more: Bool) -> PresetField? {
+		let allFields = (fields ?? []) + (more ? (moreFields ?? []) : [])
+		for fieldName in allFields {
+			if let field = PresetsDatabase.shared.presetFields[fieldName],
+			   field.key == key || (field.keys?.contains(key) ?? false)
+			{
+				return field
+			}
 		}
 		return nil
 	}
@@ -196,9 +318,7 @@ final class PresetFeature {
 		if !self.geometry.contains(geometry.rawValue) {
 			return nil
 		}
-		if let name = name,
-		   let range = name.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive])
-		{
+		if let range = name.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) {
 			return (range.lowerBound == name.startIndex
 				? PresetMatchScore.namePrefix : PresetMatchScore.nameInternal).rawValue
 		}
@@ -221,10 +341,17 @@ final class PresetFeature {
 		return nil
 	}
 
-	func matchObjectTagsScore(_ objectTags: [String: String], geometry: GEOMETRY) -> Double {
-		guard self.geometry.contains(geometry.rawValue) else { return 0.0 }
+	func matchObjectTagsScore(_ objectTags: [String: String], geometry: GEOMETRY?,
+	                          location: MapView.CurrentRegion) -> Double
+	{
+		if let geometry = geometry,
+		   !self.geometry.contains(geometry.rawValue) ||
+		   !locationSet.overlaps(location)
+		{
+			return 0.0
+		}
 
-		var totalScore: Float = 1.0
+		var totalScore = 1.0
 
 		var seen = Set<String>()
 		for (key, value) in tags {
@@ -255,15 +382,65 @@ final class PresetFeature {
 		var result: [String: String] = [:]
 		let fields = PresetsForFeature.fieldsFor(featureID: featureID, field: { f in f.fields })
 		for fieldName in fields {
-			if let field = PresetsDatabase.shared.jsonFields[fieldName] as? [String: Any],
-			   let key = field["key"] as? String,
-			   let def = field["default"] as? String,
-			   let geom = field["geometry"] as? [String],
+			if let field = PresetsDatabase.shared.presetFields[fieldName],
+			   let key = field.key,
+			   let def = field.defaultValue,
+			   let geom = field.geometry,
 			   geom.contains(geometry.rawValue)
 			{
 				result[key] = def
 			}
 		}
 		return result
+	}
+
+	private var cachedWikiDescription: Any? = NSNull()
+	func wikiDescription(update: @escaping (String) -> Void) -> String? {
+		if nsiSuggestion {
+			// NSI entries have their own, more specific description
+			return nil
+		}
+		if !(cachedWikiDescription is NSNull) {
+			return cachedWikiDescription as! String?
+		}
+		cachedWikiDescription = nil
+		let key: String
+		let value: String
+		if let reference = reference {
+			key = reference["key"]!
+			value = reference["value"] ?? ""
+		} else if tags.count == 1 {
+			let kv = tags.first!
+			key = kv.key
+			value = kv.value
+		} else {
+			return nil
+		}
+
+		let languageCode = PresetLanguages.preferredPresetLanguageCode()
+		if let result =
+			WikiPage.shared.wikiDataFor(key: key,
+			                            value: value,
+			                            language: languageCode,
+			                            imageWidth: 0,
+			                            update: { result in
+			                            	if let result = result {
+			                            		self.cachedWikiDescription = result.description
+			                            		update(result.description)
+			                            	} else {
+			                            		TagInfo.wikiInfoFor(key: key,
+			                            		                    value: value,
+			                            		                    update: { result in
+			                            		                    	guard result != "" else { return }
+			                            		                    	self.cachedWikiDescription = result
+			                            		                    	update(result)
+			                            		                    })
+			                            	}
+			                            })
+		{
+			cachedWikiDescription = result.description
+			return result.description
+		}
+		return nil
 	}
 }

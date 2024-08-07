@@ -9,50 +9,57 @@
 import Foundation
 
 final class PresetsDatabase {
-	static var shared = PresetsDatabase()
-	class func reload() {
+	static var shared = PresetsDatabase(withLanguageCode: PresetLanguages.preferredPresetLanguageCode())
+	class func reload(withLanguageCode code: String) {
 		// called when language changes
-		shared = PresetsDatabase()
+		shared = PresetsDatabase(withLanguageCode: code)
 	}
 
 	// these map a FeatureID to a feature
-	let stdPresets: [String: PresetFeature] // only generic presets
-	var nsiPresets: [String: PresetFeature] // only NSI presets
+	let stdFeatures: [String: PresetFeature] // only generic presets
+	var nsiFeatures: [String: PresetFeature] // only NSI presets
 	// these map a tag key to a list of features that require that key
-	let stdIndex: [String: [PresetFeature]] // generic preset index
-	var nsiIndex: [String: [PresetFeature]] // generic+NSI index
+	let stdFeatureIndex: [String: [PresetFeature]] // generic preset index
+	var nsiFeatureIndex: [String: [PresetFeature]] // generic+NSI index
+	var nsiGeoJson: [String: GeoJSONGeometry] // geojson regions for NSI
 
-	private class func DictionaryForFile(_ file: String?) -> Any? {
-		guard let file = file else { return nil }
-		let rootDir = Bundle.main.resourcePath!
-		let rootPresetPath = rootDir + "/presets/" + file
-		guard let rootPresetData = NSData(contentsOfFile: rootPresetPath) as Data? else { return nil }
-		do {
-			let dict = try JSONSerialization.jsonObject(with: rootPresetData, options: [])
-			return dict
-		} catch {}
-		return nil
+	class func pathForFile(_ file: String) -> URL? {
+		return Bundle.main.resourceURL?
+			.appendingPathComponent("presets")
+			.appendingPathComponent(file)
+	}
+
+	private class func dataForFile(_ file: String) -> Data? {
+		guard let path = Self.pathForFile(file) else {
+			return nil
+		}
+		return try? Data(contentsOf: path)
+	}
+
+	private class func jsonForFile(_ file: String) -> Any? {
+		guard let data = dataForFile(file) else { return nil }
+		return try? JSONSerialization.jsonObject(with: data, options: [])
 	}
 
 	private class func Translate(_ orig: Any, _ translation: Any?) -> Any {
-		guard let translation = translation else {
+		guard let translation = translation as? [String: Any] else {
 			return orig
 		}
 		let orig = orig as! [String: Any]
-		let translation2 = translation as! [String: Any]
 
 		// both are dictionaries, so recurse on each key/value pair
 		var newDict = [String: Any]()
 		for (key, obj) in orig {
 			if key == "options" {
 				newDict[key] = obj
-				newDict["strings"] = translation2[key]
+				newDict["strings"] = translation[key]
 			} else {
-				newDict[key] = Translate(obj, translation2[key])
+				newDict[key] = Translate(obj, translation[key])
 			}
 		}
-		for (key, obj) in translation2 {
-			// need to add things that don't exist in orig
+
+		// need to add things that don't exist in orig
+		for (key, obj) in translation {
 			if newDict[key] == nil {
 				newDict[key] = obj
 			}
@@ -60,95 +67,107 @@ final class PresetsDatabase {
 		return newDict
 	}
 
-	let jsonAddressFormats: [Any] // address formats for different countries
-	let jsonDefaults: [String: Any] // map a geometry to a set of features/categories
-	let jsonCategories: [String: Any] // map a top-level category ("building") to a set of specific features ("building/retail")
-	let jsonFields: [String: Any] // possible values for a preset key ("oneway=")
+	let presetAddressFormats: [PresetAddressFormat] // address formats for different countries
+	let presetDefaults: [String: [String]] // map a geometry to a set of features/categories
+	let presetCategories: [String: PresetCategory] // map a top-level category ("building") to a set of specific features ("building/retail")
+	let presetFields: [String: PresetField] // possible values for a preset key ("oneway=")
 
 	let yesForLocale: String
 	let noForLocale: String
 	let unknownForLocale: String
 
-	init() {
+	lazy var taginfoCache = TagInfo()
+
+	init(withLanguageCode code: String, debug: Bool = true) {
+		let startTime = Date()
+
 		// get translations for current language
-		let presetLanguages =
-			PresetLanguages() // don't need to save this, it doesn't get used again unless user changes the language
-		let code = presetLanguages.preferredLanguageCode()
 		let file = "translations/" + code + ".json"
-		let trans = PresetsDatabase.DictionaryForFile(file) as! [String: [String: Any]]
-		let jsonTranslation = (trans[code]?["presets"] as? [String: [String: Any]]) ?? [String: [String: Any]]()
-		let yesNoDict =
-			(jsonTranslation["fields"]?["internet_access"] as? [String: Any])?["options"] as? [String: String]
+		let trans = Self.jsonForFile(file) as! [String: [String: Any]]
+		let jsonTranslation = (trans[code]?["presets"] as! [String: [String: Any]]?) ?? [:]
+
+		// get localized common words
+		let fieldTrans = jsonTranslation["fields"] as! [String: [String: Any]]? ?? [:]
+		let yesNoDict = fieldTrans["internet_access"]?["options"] as! [String: String]?
 		yesForLocale = yesNoDict?["yes"] ?? "Yes"
 		noForLocale = yesNoDict?["no"] ?? "No"
-		unknownForLocale =
-			(jsonTranslation["fields"]?["opening_hours"] as? [String: Any])?["placeholder"] as? String ??
-			"???"
+		unknownForLocale = fieldTrans["opening_hours"]?["placeholder"] as! String? ?? "???"
+
+		let readTime = Date()
 
 		// get presets files
-		let jsonDefaultsPre = PresetsDatabase.DictionaryForFile("preset_defaults.json")!
-		let jsonCategoriesPre = PresetsDatabase.DictionaryForFile("preset_categories.json")!
-		let jsonFieldsPre = PresetsDatabase.DictionaryForFile("fields.json")!
-		jsonDefaults = (PresetsDatabase.Translate(jsonDefaultsPre, jsonTranslation["defaults"]) as? [String: Any])!
-		jsonCategories = (PresetsDatabase
-			.Translate(jsonCategoriesPre, jsonTranslation["categories"]) as? [String: Any])!
-		jsonFields = (PresetsDatabase.Translate(jsonFieldsPre, jsonTranslation["fields"]) as? [String: Any])!
+		presetDefaults = Self.Translate(Self.jsonForFile("preset_defaults.json")!,
+		                                jsonTranslation["defaults"]) as! [String: [String]]
+		presetFields = (Self.Translate(Self.jsonForFile("fields.json")!,
+		                               jsonTranslation["fields"]) as! [String: Any])
+			.compactMapValues({ PresetField(withJson: $0 as! [String: Any]) })
 
 		// address formats
-		jsonAddressFormats = PresetsDatabase.DictionaryForFile("address_formats.json") as! [Any]
+		presetAddressFormats = (Self.jsonForFile("address_formats.json") as! [Any])
+			.map({ PresetAddressFormat(withJson: $0 as! [String: Any]) })
 
 		// initialize presets and index them
-		var jsonPresetsDict = PresetsDatabase.DictionaryForFile("presets.json")!
-		jsonPresetsDict = PresetsDatabase.Translate(jsonPresetsDict, jsonTranslation["presets"])
-		stdPresets = PresetsDatabase.featureDictForJsonDict(jsonPresetsDict as! [String: [String: Any]], isNSI: false)
-		stdIndex = PresetsDatabase.buildTagIndex([stdPresets], basePresets: stdPresets)
+		let presets = (Self.Translate(Self.jsonForFile("presets.json")!,
+		                              jsonTranslation["presets"]) as! [String: Any])
+			.compactMapValuesWithKeys({ k, v in
+				PresetFeature(withID: k, jsonDict: v as! [String: Any], isNSI: false)
+			})
+		stdFeatures = presets
+		stdFeatureIndex = Self.buildTagIndex([stdFeatures], basePresets: stdFeatures)
+
+		presetCategories = (Self.Translate(Self.jsonForFile("preset_categories.json")!,
+		                                   jsonTranslation["categories"]) as! [String: Any])
+			.mapValuesWithKeys({ k, v in PresetCategory(withID: k, json: v, presets: presets) })
 
 		// name suggestion index
-		nsiPresets = [String: PresetFeature]()
-		nsiIndex = stdIndex
+		nsiFeatures = [String: PresetFeature]()
+		nsiFeatureIndex = stdFeatureIndex
+		nsiGeoJson = [String: GeoJSONGeometry]()
 
 		DispatchQueue.global(qos: .userInitiated).async {
-			let jsonNsiPresetsDict = PresetsDatabase.DictionaryForFile("nsi_presets.json")
-			let nsiPresets2 = PresetsDatabase.featureDictForJsonDict(
-				jsonNsiPresetsDict as! [String: [String: Any]],
-				isNSI: true)
-			let nsiIndex2 = PresetsDatabase.buildTagIndex([self.stdPresets, nsiPresets2], basePresets: self.stdPresets)
+			let startTime = Date()
+			let nsiDict = Self.jsonForFile("nsi_presets.json") as! [String: Any]
+			let readTime = Date()
+			let nsiPresets = (nsiDict["presets"] as! [String: Any])
+				.mapValuesWithKeys({ k, v in
+					PresetFeature(withID: k,
+					              jsonDict: v as! [String: Any],
+					              isNSI: true)!
+				})
+			let nsiIndex = Self.buildTagIndex([self.stdFeatures, nsiPresets],
+			                                  basePresets: self.stdFeatures)
 			DispatchQueue.main.async {
-				self.nsiPresets = nsiPresets2
-				self.nsiIndex = nsiIndex2
-
-#if DEBUG
-				// verify all fields can be read
-				for (field, info) in self.jsonFields {
-					var geometry = GEOMETRY.LINE
-					if let info = info as? [String: Any],
-					   let geom = info["geometry"] as? [String]
-					{
-						geometry = GEOMETRY(rawValue: geom[0])!
-					}
-					_ = self.groupForField(fieldName: field,
-					                       objectTags: [:],
-					                       geometry: geometry,
-					                       ignore: [],
-					                       update: nil)
+				self.nsiFeatures = nsiPresets
+				self.nsiFeatureIndex = nsiIndex
+#if DEBUG && false
+				if debug, isUnderDebugger() {
+					self.testAllPresetFields()
 				}
 #endif
 			}
+			print("NSI read = \(readTime.timeIntervalSince(startTime)), " +
+				"decode = \(Date().timeIntervalSince(readTime))")
 		}
-	}
 
-	// OSM TagInfo database in the cloud: contains either a group or an array of values
-	var taginfoCache = [String: [String]]()
-
-	// initialize presets database
-	private class func featureDictForJsonDict(_ dict: [String: [String: Any]], isNSI: Bool) -> [String: PresetFeature] {
-		let presetDict = isNSI ? dict["presets"] as! [String: [String: Any]] : dict
-		var presets = [String: PresetFeature]()
-		presets.reserveCapacity(presetDict.count)
-		for (name, values) in presetDict {
-			presets[name] = PresetFeature(withID: name, jsonDict: values, isNSI: isNSI)
+		// Load geojson outlines for NSI in the background
+		DispatchQueue.global(qos: .userInitiated).async {
+			if let data = Self.dataForFile("nsi_geojson.json"),
+			   let geoJson = try? GeoJSONFile(data: data)
+			{
+				var featureDict = [String: GeoJSONGeometry]()
+				for feature in geoJson.features {
+					if feature.type == "Feature" {
+						let name = feature.id!
+						featureDict[name] = feature.geometry
+					}
+				}
+				DispatchQueue.main.async {
+					self.nsiGeoJson = featureDict
+				}
+			}
 		}
-		return presets
+		print("PresetsDatabase read = \(readTime.timeIntervalSince(startTime)), " +
+			"decode = \(Date().timeIntervalSince(readTime))")
 	}
 
 	/// basePresets is always the regular presets
@@ -158,7 +177,7 @@ final class PresetsDatabase {
 	{
 		// keys contains all tag keys that have an associated preset
 		var keys: [String: Int] = [:]
-		for (featureID, _) in basePresets {
+		for featureID in basePresets.keys {
 			var key = featureID
 			if let range = key.range(of: "/") {
 				key = String(key.prefix(upTo: range.lowerBound))
@@ -167,7 +186,7 @@ final class PresetsDatabase {
 		}
 		var tagIndex: [String: [PresetFeature]] = [:]
 		for list in inputList {
-			for (_, feature) in list {
+			for feature in list.values {
 				var added = false
 				for key in feature.tags.keys {
 					if keys[key] != nil {
@@ -189,16 +208,25 @@ final class PresetsDatabase {
 
 	// enumerate contents of database
 	func enumeratePresetsUsingBlock(_ block: (_ feature: PresetFeature) -> Void) {
-		for (_, v) in stdPresets {
+		for v in stdFeatures.values {
 			block(v)
 		}
 	}
 
-	func enumeratePresetsAndNsiUsingBlock(_ block: (_ feature: PresetFeature) -> Void) {
-		for (_, v) in stdPresets {
+	// Cache features in the local region to speed up searches
+	var localRegion = MapView.CurrentRegion.none
+	var stdLocal: [PresetFeature] = []
+	var nsiLocal: [PresetFeature] = []
+	func enumeratePresetsAndNsiIn(region: MapView.CurrentRegion, using block: (_ feature: PresetFeature) -> Void) {
+		if region != localRegion {
+			localRegion = region
+			stdLocal = stdFeatures.values.filter({ $0.searchable && $0.locationSet.overlaps(region) })
+			nsiLocal = nsiFeatures.values.filter({ $0.searchable && $0.locationSet.overlaps(region) })
+		}
+		for v in stdLocal {
 			block(v)
 		}
-		for (_, v) in nsiPresets {
+		for v in nsiLocal {
 			block(v)
 		}
 	}
@@ -222,33 +250,51 @@ final class PresetsDatabase {
 	}
 
 	func inheritedValueOfFeature(_ featureID: String?,
-	                             fieldGetter: @escaping (_ feature: PresetFeature) -> Any?)
-		-> Any?
+	                             fieldGetter: @escaping (_ feature: PresetFeature) -> Any?) -> Any?
 	{
 		// This is currently never used for NSI entries, so we can ignore nsiPresets
-		return PresetsDatabase.inheritedFieldForPresetsDict(stdPresets, featureID: featureID, field: fieldGetter)
+		return PresetsDatabase.inheritedFieldForPresetsDict(stdFeatures, featureID: featureID, field: fieldGetter)
 	}
 
 	func presetFeatureForFeatureID(_ featureID: String) -> PresetFeature? {
-		return stdPresets[featureID] ?? nsiPresets[featureID]
+		return stdFeatures[featureID] ?? nsiFeatures[featureID]
 	}
 
-	func matchObjectTagsToFeature(_ objectTags: [String: String]?,
-	                              geometry: GEOMETRY,
-	                              includeNSI: Bool) -> PresetFeature?
+	func presetFeatureMatching(tags objectTags: [String: String]?,
+	                           geometry: GEOMETRY?,
+	                           location: MapView.CurrentRegion,
+	                           includeNSI: Bool,
+	                           withPresetKey: String? = nil) -> PresetFeature?
 	{
 		guard let objectTags = objectTags else { return nil }
 
 		var bestFeature: PresetFeature?
 		var bestScore = 0.0
 
-		let index = includeNSI ? nsiIndex : stdIndex
+		let index = includeNSI ? nsiFeatureIndex : stdFeatureIndex
 		let keys = objectTags.keys + [""]
 		for key in keys {
 			if let list = index[key] {
 				for feature in list {
-					let score = feature.matchObjectTagsScore(objectTags, geometry: geometry)
-					if score > bestScore {
+					var score = feature.matchObjectTagsScore(objectTags, geometry: geometry, location: location)
+					guard score > 0 else {
+						continue
+					}
+					if !feature.searchable {
+						score *= 0.999
+					}
+					if score >= bestScore {
+						// special case for quests where we want to ensure we pick
+						// a feature containing presetKey
+						if let withPresetKey = withPresetKey,
+						   feature.fieldContainingTagKey(withPresetKey, more: true) == nil
+						{
+							continue
+						}
+						// For ties we take the first alphabetically, just to be consistent
+						if score == bestScore, feature.featureID > bestFeature!.featureID {
+							continue
+						}
 						bestScore = score
 						bestFeature = feature
 					}
@@ -258,32 +304,42 @@ final class PresetsDatabase {
 		return bestFeature
 	}
 
-	func featuresMatchingSearchText(_ searchText: String?, geometry: GEOMETRY,
-	                                country: String?) -> [(PresetFeature, Int)]
+	func featuresMatchingSearchText(_ searchText: String?,
+	                                geometry: GEOMETRY,
+	                                location: MapView.CurrentRegion) -> [(PresetFeature, Int)]
 	{
 		var list = [(PresetFeature, Int)]()
-		enumeratePresetsAndNsiUsingBlock { feature in
-			if feature.searchable {
-				if let country = country,
-				   let loc = feature.locationSet,
-				   let includes = loc["include"]
-				{
-					if !includes.contains(where: {
-						if let dashIndex = $0.firstIndex(of: "-") {
-							// FIXME: we don't yet support checking the state/province following the "-"
-							return $0[..<dashIndex] == country
-						} else {
-							return $0 == country
-						}
-					}) {
-						return
+		enumeratePresetsAndNsiIn(region: location, using: { feature in
+			guard
+				let score = feature.matchesSearchText(searchText, geometry: geometry)
+			else {
+				return
+			}
+			list.append((feature, score))
+		})
+		return list
+	}
+
+#if DEBUG
+	func testAllPresetFields() {
+		// Verify all fields can be read in all languages
+		for langCode in PresetLanguages.languageCodeList {
+			DispatchQueue.global(qos: .background).async {
+				let presets = PresetsDatabase(withLanguageCode: langCode, debug: false)
+				for (name, field) in presets.presetFields {
+					var geometry = GEOMETRY.LINE
+					if let geom = field.geometry {
+						geometry = GEOMETRY(rawValue: geom[0])!
 					}
-				}
-				if let score = feature.matchesSearchText(searchText, geometry: geometry) {
-					list.append((feature, score))
+					_ = presets.presetGroupForField(fieldName: name,
+					                                objectTags: [:],
+					                                geometry: geometry,
+					                                countryCode: "us",
+					                                ignore: [],
+					                                update: nil)
 				}
 			}
 		}
-		return list
 	}
+#endif
 }

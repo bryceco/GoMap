@@ -462,7 +462,7 @@ class HeightViewController: UIViewController {
 					} else {
 						label.layer.anchorPoint = CGPoint(x: 0, y: 0.5)
 						label.text = String.localizedStringWithFormat(
-							NSLocalizedString("%@ meters", comment: "Always plural"),
+							NSLocalizedString("%@ meters", comment: ""),
 							distanceString(forFloat: Double(height - scrollHeight)))
 						label.font = UIFont.preferredFont(forTextStyle: .headline)
 						label.backgroundColor = UIColor(white: 1.0, alpha: 0.5)

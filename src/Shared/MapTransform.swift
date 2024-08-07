@@ -3,7 +3,7 @@
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 6/17/21.
-//  Copyright © 2021 Bryce. All rights reserved.
+//  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
 import CoreGraphics
@@ -123,8 +123,10 @@ final class MapTransform {
 
 	func screenPoint(forMapPoint point: OSMPoint, birdsEye: Bool) -> CGPoint {
 		var point = point.withTransform(transform)
-		if birdsEyeRotation != 0.0, birdsEye {
-			point = Self.ToBirdsEye(screenPoint: point, screenCenter: center, birdsEyeDistance, birdsEyeRotation)
+		if birdsEye, birdsEyeRotation != 0.0 {
+			point = Self.ToBirdsEye(screenPoint: point,
+			                        screenCenter: center,
+			                        birdsEyeDistance, birdsEyeRotation)
 		}
 		return CGPoint(point)
 	}
@@ -291,6 +293,13 @@ final class MapTransform {
 		let p2 = CGPoint(x: p1.x + 1.0, y: p1.y) // one pixel apart
 		let c1 = latLon(forScreenPoint: p1)
 		let c2 = latLon(forScreenPoint: p2)
+		let meters = GreatCircleDistance(c1, c2)
+		return meters
+	}
+
+	func distance(from: CGPoint, to: CGPoint) -> Double {
+		let c1 = latLon(forScreenPoint: from)
+		let c2 = latLon(forScreenPoint: to)
 		let meters = GreatCircleDistance(c1, c2)
 		return meters
 	}

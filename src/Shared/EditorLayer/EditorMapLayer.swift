@@ -1,5 +1,5 @@
 //
-//  OsmMapLayer.swift
+//  EditorMapLayer.swift
 //  OpenStreetMap
 //
 //  Created by Bryce Cogswell on 10/5/12.
@@ -16,7 +16,7 @@ private let FADE_INOUT = false
 private let SINGLE_SIDED_WALLS = true
 
 // drawing options
-private let DEFAULT_LINECAP = CAShapeLayerLineCap.square
+private let DEFAULT_LINECAP = CAShapeLayerLineCap.butt
 private let DEFAULT_LINEJOIN = CAShapeLayerLineJoin.miter
 private let MinIconSizeInPixels: CGFloat = 24.0
 private let Pixels_Per_Character: CGFloat = 8.0
@@ -37,17 +37,17 @@ enum MenuLocation {
 protocol EditorMapLayerOwner: UIView, MapViewProgress {
 	var mapTransform: MapTransform { get }
 
-	func crosshairs() -> CGPoint
+	func centerPoint() -> CGPoint
 
 	func pushpinView() -> PushPinView? // fetch the pushpin from owner
 	func removePin()
 	func placePushpin(at: CGPoint, object: OsmBaseObject?)
 	func placePushpinForSelection(at point: CGPoint?)
 
-	func flashMessage(_ message: String)
+	func flashMessage(title: String?, message: String)
 	func showAlert(_ title: String, message: String?)
 	func presentAlert(alert: UIAlertController, location: MenuLocation)
-	func presentError(_ error: Error, flash: Bool)
+	func presentError(title: String?, error: Error, flash: Bool)
 
 	func setScreenFromMap(transform: OSMTransform) // used when undo/redo change the location
 	func screenLatLonRect() -> OSMRect
@@ -74,6 +74,7 @@ protocol EditorMapLayerOwner: UIView, MapViewProgress {
 	// notify owner that tags changed so it can refresh e.g. fixme= buttons
 	func didUpdateObject()
 	func selectionDidChange()
+	func didDownloadData()
 }
 
 // MARK: EditorMapLayer
@@ -89,7 +90,8 @@ final class EditorMapLayer: CALayer {
 	struct DragState {
 		var startPoint: LatLon // to track total movement
 		var didMove: Bool // to maintain undo stack
-		var confirmDrag: Bool // should we confirm that the user wanted to drag the selected object? Only if they haven't modified it since selecting it
+		var confirmDrag: Bool // should we confirm that the user wanted to drag the selected object? Only if they
+		// haven't modified it since selecting it
 	}
 
 	var dragState = DragState(startPoint: .zero, didMove: false, confirmDrag: false)
@@ -111,7 +113,6 @@ final class EditorMapLayer: CALayer {
 	var silentUndo = false // don't flash message about undo
 
 	private(set) var atVisibleObjectLimit = false
-	private let geekbenchScoreProvider = Geekbench()
 
 	init(owner: EditorMapLayerOwner) {
 		self.owner = owner
@@ -132,8 +133,9 @@ final class EditorMapLayer: CALayer {
 					title: NSLocalizedString("Cache size warning", comment: ""),
 					message: text,
 					preferredStyle: .alert)
-				alert!
-					.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+				alert!.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+				                               style: .cancel,
+				                               handler: nil))
 			}
 			self.mapData = mapData
 		} catch {
@@ -151,8 +153,9 @@ final class EditorMapLayer: CALayer {
 				                          	"Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.",
 				                          	comment: ""),
 				                          preferredStyle: .alert)
-				alert!
-					.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+				alert!.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+				                               style: .cancel,
+				                               handler: nil))
 			}
 		}
 
@@ -171,7 +174,8 @@ final class EditorMapLayer: CALayer {
 		whiteText = true
 
 		// observe changes to screen
-		owner.mapTransform.observe(by: self, callback: { self.updateMapLocation() })
+		owner.mapTransform.observe(by: self,
+		                           callback: { [weak self] in self?.updateMapLocation() })
 
 		OsmMapData.g_EditorMapLayerForArchive = self
 
@@ -217,7 +221,8 @@ final class EditorMapLayer: CALayer {
 			if let pushpin = context["pushpin"] as? String,
 			   let primary = self.selectedPrimary
 			{
-				// since we don't record the pushpin location until after a drag has begun we need to re-center on the object:
+				// since we don't record the pushpin location until after a drag has begun we need to re-center on the
+				// object:
 				var pt = NSCoder.cgPoint(for: pushpin)
 				let loc = self.owner.mapTransform.latLon(forScreenPoint: pt)
 				let pos = primary.latLonOnObject(forLatLon: loc)
@@ -228,7 +233,7 @@ final class EditorMapLayer: CALayer {
 				self.owner.removePin()
 			}
 			let message = "\(title) \(action)"
-			self.owner.flashMessage(message)
+			self.owner.flashMessage(title: nil, message: message)
 		}
 		addSublayer(baseLayer)
 
@@ -279,16 +284,58 @@ final class EditorMapLayer: CALayer {
 		setNeedsLayout()
 	}
 
-	func purgeCachedDataHard(_ hard: Bool) {
+	enum MapDataPurgeStyle {
+		case hard // purges everything
+		case soft // purges everything except user edits
+	}
+
+	func purgeCachedData(_ style: MapDataPurgeStyle) {
+#if DEBUG
+		// Get a weak reference to every object. Once we've purged everything then all
+		// references should be zeroed. If not then there is a retain cycle somewhere.
+		//
+		// Exception: If the user has an object selected and the tag editor open when
+		// this is called then POITabBarController will have a reference to it.
+		struct Weakly {
+			weak var obj: OsmBaseObject?
+		}
+		var weakly: [Weakly] = []
+		weakly += mapData.nodes.values.map { Weakly(obj: $0) }
+		weakly += mapData.ways.values.map { Weakly(obj: $0) }
+		weakly += mapData.relations.values.map { Weakly(obj: $0) }
+#endif
+
 		owner.removePin()
 		selectedNode = nil
 		selectedWay = nil
 		selectedRelation = nil
-		if hard {
+		switch style {
+		case .hard:
 			mapData.purgeHard()
-		} else {
+		case .soft:
 			mapData.purgeSoft()
 		}
+		for object in shownObjects + fadingOutSet {
+			for layer in object.shapeLayers ?? [] {
+				layer.removeFromSuperlayer()
+			}
+		}
+		shownObjects = []
+		fadingOutSet = []
+
+#if DEBUG
+		weakly.removeAll(where: { $0.obj == nil })
+
+		if let presented = UIApplication.shared.keyWindow?.rootViewController?.presentedViewController,
+		   let selection = (presented as? POITabBarController)?.selection
+		{
+			print("Holding reference to: \(selection)")
+		}
+		if isUnderDebugger() {
+			// if there were dirty objects then they'll still be in mapData
+			assert(weakly.count == mapData.nodeCount() + mapData.wayCount() + mapData.relationCount())
+		}
+#endif
 
 		setNeedsLayout()
 		updateMapLocation()
@@ -315,25 +362,27 @@ final class EditorMapLayer: CALayer {
 				DispatchQueue.main.async(execute: { [self] in
 					// if we've been hidden don't bother displaying errors
 					if !isHidden {
-						owner.presentError(error, flash: true)
+						owner.presentError(title: nil, error: error, flash: true)
 					}
 				})
 				return
 			}
 			setNeedsLayout()
+			owner.didDownloadData()
 		})
 		setNeedsLayout()
 	}
 
 	func didReceiveMemoryWarning() {
-		purgeCachedDataHard(false)
+		purgeCachedData(.soft)
 		save()
 	}
 
 	// MARK: Common Drawing
 
 	static func ImageScaledToSize(_ image: UIImage, _ iconSize: CGFloat) -> UIImage {
-		var size = CGSize(width: Int(iconSize * UIScreen.main.scale), height: Int(iconSize * UIScreen.main.scale))
+		var size = CGSize(width: Int(iconSize * UIScreen.main.scale),
+		                  height: Int(iconSize * UIScreen.main.scale))
 		let ratio = image.size.height / image.size.width
 		if ratio < 1.0 {
 			size.height *= ratio
@@ -376,22 +425,25 @@ final class EditorMapLayer: CALayer {
 	static let medicalColor = UIColor(red: 0xDA / 255.0, green: 0x00 / 255.0, blue: 0x92 / 255.0, alpha: 1.0)
 	static let poiColor = UIColor.blue
 	static let stopColor = UIColor(red: 196 / 255.0, green: 4 / 255.0, blue: 4 / 255.0, alpha: 1.0)
+	static let springColor = UIColor(red: 0.4, green: 0.4, blue: 1.0, alpha: 1.0)
 
 	func defaultColor(for object: OsmBaseObject) -> UIColor? {
 		if object.tags["shop"] != nil {
-			return EditorMapLayer.shopColor
+			return Self.shopColor
 		} else if object.tags["amenity"] != nil || object.tags["building"] != nil || object.tags["leisure"] != nil {
-			return EditorMapLayer.amenityColor
+			return Self.amenityColor
 		} else if object.tags["tourism"] != nil || object.tags["transport"] != nil {
-			return EditorMapLayer.tourismColor
+			return Self.tourismColor
 		} else if object.tags["medical"] != nil {
-			return EditorMapLayer.medicalColor
+			return Self.medicalColor
 		} else if object.tags["name"] != nil {
-			return EditorMapLayer.poiColor
+			return Self.poiColor
 		} else if object.tags["natural"] == "tree" {
-			return EditorMapLayer.treeColor
+			return Self.treeColor
 		} else if object.isNode() != nil, object.tags["highway"] == "stop" {
-			return EditorMapLayer.stopColor
+			return Self.stopColor
+		} else if object.tags["natural"] == "spring" {
+			return Self.springColor
 		}
 		return nil
 	}
@@ -408,16 +460,16 @@ final class EditorMapLayer: CALayer {
 
 	func invoke(
 		alongScreenClippedWay way: OsmWay,
-		block: @escaping (_ p1: OSMPoint, _ p2: OSMPoint, _ isEntry: Bool, _ isExit: Bool) -> Bool)
+		block: @escaping (_ p1: CGPoint, _ p2: CGPoint, _ isEntry: Bool, _ isExit: Bool) -> Bool)
 	{
-		let viewRect = OSMRect(bounds)
+		let viewRect = bounds
 		var prevInside = false
-		var prev = OSMPoint.zero
+		var prev = CGPoint.zero
 		var first = true
 
 		for node in way.nodes {
-			let pt = OSMPoint(owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false))
-			let inside = viewRect.containsPoint(pt)
+			let pt = owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false)
+			let inside = viewRect.contains(pt)
 			defer {
 				prev = pt
 				prevInside = inside
@@ -427,7 +479,7 @@ final class EditorMapLayer: CALayer {
 				continue
 			}
 
-			var cross: [OSMPoint] = []
+			var cross: [CGPoint] = []
 			if !(prevInside && inside) {
 				// at least one point was outside, so determine where line intersects the screen
 				cross = Self.ClipLineToRect(p1: prev, p2: pt, rect: viewRect)
@@ -480,8 +532,8 @@ final class EditorMapLayer: CALayer {
 	func pathClipped(toViewRect way: OsmWay, length pLength: UnsafeMutablePointer<CGFloat>?) -> CGPath? {
 		var path: CGMutablePath?
 		var length = 0.0
-		var firstPoint = OSMPoint.zero
-		var lastPoint = OSMPoint.zero
+		var firstPoint = CGPoint.zero
+		var lastPoint = CGPoint.zero
 
 		invoke(alongScreenClippedWay: way, block: { p1, p2, _, isExit in
 			if path == nil {
@@ -515,7 +567,7 @@ final class EditorMapLayer: CALayer {
 
 	private static let ZSCALE: CGFloat = 0.001
 	private static let Z_BASE: CGFloat = -1.0
-	private let Z_OCEAN = Z_BASE + 1 * ZSCALE
+	public let Z_OCEAN = Z_BASE + 1 * ZSCALE
 	private let Z_AREA = Z_BASE + 2 * ZSCALE
 	private let Z_HALO = Z_BASE + 3 * ZSCALE
 	private let Z_CASING = Z_BASE + 4 * ZSCALE
@@ -571,7 +623,7 @@ final class EditorMapLayer: CALayer {
 		wall.transform = t
 
 		let props = wall.properties
-		props.transform = t
+		props.transform3D = t
 		props.position = p1
 		props.lineWidth = 1.0
 		props.is3D = true
@@ -580,8 +632,8 @@ final class EditorMapLayer: CALayer {
 	}
 
 	func getShapeLayers(for object: OsmBaseObject) -> [CALayer & LayerPropertiesProviding] {
-		if object.shapeLayers != nil {
-			return object.shapeLayers!
+		if let shapeLayers = object.shapeLayers {
+			return shapeLayers
 		}
 
 		let renderInfo = object.renderInfo!
@@ -593,7 +645,7 @@ final class EditorMapLayer: CALayer {
 
 		// casing
 		if object.isWay() != nil || (object.isRelation()?.isMultipolygon() ?? false) {
-			if renderInfo.lineWidth != 0.0, !(object.isWay()?.isArea() ?? false) {
+			if renderInfo.casingWidth > renderInfo.lineWidth, renderInfo.casingColor != nil {
 				var refPoint = OSMPoint.zero
 				let path = object.linePathForObject(withRefPoint: &refPoint)
 				if let path = path {
@@ -602,27 +654,15 @@ final class EditorMapLayer: CALayer {
 						layer.anchorPoint = CGPoint(x: 0, y: 0)
 						layer.position = CGPoint(refPoint)
 						layer.path = path
-						layer.strokeColor = UIColor.black.cgColor
+						layer.strokeColor = renderInfo.casingColor?.cgColor // TODO: type check
 						layer.fillColor = nil
-						layer.lineWidth = (1 + renderInfo.lineWidth) * highwayScale
-						layer.lineCap = DEFAULT_LINECAP
+						layer.lineWidth = renderInfo.casingWidth
+						layer.lineCap = renderInfo.casingCap
+						layer.lineDashPattern = renderInfo.casingDashPattern
 						layer.lineJoin = DEFAULT_LINEJOIN
 						layer.zPosition = Z_CASING
-						let props = layer.properties
-						props.position = refPoint
-						props.lineWidth = layer.lineWidth
-						if let bridge = object.tags["bridge"],
-						   !OsmTags.isOsmBooleanFalse(bridge)
-						{
-							props.lineWidth += 4
-						}
-						if let tunnel = object.tags["tunnel"],
-						   !OsmTags.isOsmBooleanFalse(tunnel)
-						{
-							props.lineWidth += 2
-							layer.strokeColor = UIColor.brown.cgColor
-						}
-
+						layer.properties.position = refPoint
+						layer.properties.lineWidth = layer.lineWidth
 						layers.append(layer)
 					}
 
@@ -635,7 +675,7 @@ final class EditorMapLayer: CALayer {
 						haloLayer.path = path
 						haloLayer.strokeColor = UIColor.red.cgColor
 						haloLayer.fillColor = nil
-						haloLayer.lineWidth = (2 + renderInfo.lineWidth) * highwayScale
+						haloLayer.lineWidth = renderInfo.lineWidth + 4
 						haloLayer.lineCap = DEFAULT_LINECAP
 						haloLayer.lineJoin = DEFAULT_LINEJOIN
 						haloLayer.zPosition = Z_HALO
@@ -654,9 +694,10 @@ final class EditorMapLayer: CALayer {
 			let path = object.linePathForObject(withRefPoint: &refPoint)
 
 			if let path = path {
-				var lineWidth = renderInfo.lineWidth * highwayScale
+				var lineWidth = renderInfo.lineWidth
 				if lineWidth == 0 {
-					lineWidth = 1
+					DbgAssert(false)	// handle this in RenderInfo
+					lineWidth = 2
 				}
 
 				let layer = CAShapeLayerWithProperties()
@@ -665,11 +706,12 @@ final class EditorMapLayer: CALayer {
 				layer.bounds = CGRect(x: 0, y: 0, width: bbox.size.width, height: bbox.size.height)
 				layer.position = CGPoint(refPoint)
 				layer.path = path
-				layer.strokeColor = (renderInfo.lineColor ?? UIColor.black).cgColor
+				layer.strokeColor = (renderInfo.lineColor ?? UIColor.white).cgColor
 				layer.fillColor = nil
 				layer.lineWidth = lineWidth
-				layer.lineCap = DEFAULT_LINECAP
-				layer.lineJoin = DEFAULT_LINEJOIN
+				layer.lineCap = renderInfo.lineCap
+				layer.lineDashPattern = renderInfo.lineDashPattern
+				layer.lineJoin = .round
 				layer.zPosition = Z_LINE
 
 				let props = layer.properties
@@ -773,7 +815,7 @@ final class EditorMapLayer: CALayer {
 
 								let t = CATransform3DMakeTranslation(0, 0, CGFloat(height))
 								roof.properties.position = refPoint
-								roof.properties.transform = t
+								roof.properties.transform3D = t
 								roof.properties.is3D = true
 								roof.properties.lineWidth = 1.0
 								roof.transform = t
@@ -872,23 +914,27 @@ final class EditorMapLayer: CALayer {
 		var drawRef = true
 
 		// fetch icon
-		let feature = PresetsDatabase.shared.matchObjectTagsToFeature(node.tags,
-		                                                              geometry: node.geometry(),
-		                                                              includeNSI: false)
-		var icon = feature?.iconScaled24()
+		let location = AppDelegate.shared.mapView.currentRegion
+		let feature = PresetsDatabase.shared.presetFeatureMatching(tags: node.tags,
+		                                                           geometry: node.geometry(),
+		                                                           location: location,
+		                                                           includeNSI: false)
+		var icon = feature?.iconScaled24
 		if icon == nil {
-			if node.tags["amenity"] != nil || node.tags["name"] != nil {
+			let poiList = ["amenity", "highway", "name"]
+			if (feature != nil && feature!.featureID != "point") ||
+				poiList.contains(where: { node.tags[$0] != nil })
+			{
 				icon = Self.genericMarkerIcon
 			}
 		}
 		if let icon = icon {
 			/// White circle as the background
 			let backgroundLayer = CALayer()
-			backgroundLayer.bounds = CGRect(
-				x: 0,
-				y: 0,
-				width: CGFloat(MinIconSizeInPixels),
-				height: CGFloat(MinIconSizeInPixels))
+			backgroundLayer.bounds = CGRect(x: 0,
+			                                y: 0,
+			                                width: CGFloat(MinIconSizeInPixels),
+			                                height: CGFloat(MinIconSizeInPixels))
 			backgroundLayer.backgroundColor = UIColor.white.cgColor
 			backgroundLayer.cornerRadius = MinIconSizeInPixels / 2.0
 			backgroundLayer.masksToBounds = true
@@ -897,22 +943,24 @@ final class EditorMapLayer: CALayer {
 			backgroundLayer.borderWidth = 1.0
 			backgroundLayer.isOpaque = true
 
-			/// The actual icon image serves as a `mask` for the icon's color layer, allowing for "tinting" of the icons.
+			/// The actual icon image serves as a `mask` for the icon's color layer, allowing for "tinting" of the
+			/// icons.
 			let iconMaskLayer = CALayer()
 			let padding: CGFloat = 4
-			iconMaskLayer.frame = CGRect(
-				x: padding,
-				y: padding,
-				width: CGFloat(MinIconSizeInPixels) - padding * 2,
-				height: CGFloat(MinIconSizeInPixels) - padding * 2)
+			let iconSize = max(icon.size.width, icon.size.height)
+			let imageSize = CGFloat(MinIconSizeInPixels) - padding * 2
+			let dx = (iconSize - icon.size.width) / iconSize * imageSize
+			let dy = (iconSize - icon.size.height) / iconSize * imageSize
+			iconMaskLayer.frame = CGRect(x: padding + dx * 0.5,
+			                             y: padding + dy * 0.5,
+			                             width: imageSize - dx,
+			                             height: imageSize - dy)
 			iconMaskLayer.contents = icon.cgImage
-
 			let iconLayer = CALayer()
-			iconLayer.bounds = CGRect(
-				x: 0,
-				y: 0,
-				width: CGFloat(MinIconSizeInPixels),
-				height: CGFloat(MinIconSizeInPixels))
+			iconLayer.bounds = CGRect(x: 0,
+			                          y: 0,
+			                          width: CGFloat(MinIconSizeInPixels),
+			                          height: CGFloat(MinIconSizeInPixels))
 			let iconColor = defaultColor(for: node)
 			iconLayer.backgroundColor = (iconColor ?? UIColor.black).cgColor
 			iconLayer.mask = iconMaskLayer
@@ -948,18 +996,16 @@ final class EditorMapLayer: CALayer {
 			} else {
 				// generic box
 				let layer = CAShapeLayerWithProperties()
-				let rect = CGRect(
-					x: CGFloat(round(MinIconSizeInPixels / 4)),
-					y: CGFloat(round(MinIconSizeInPixels / 4)),
-					width: CGFloat(round(MinIconSizeInPixels / 2)),
-					height: CGFloat(round(MinIconSizeInPixels / 2)))
+				let rect = CGRect(x: CGFloat(round(MinIconSizeInPixels / 4)),
+				                  y: CGFloat(round(MinIconSizeInPixels / 4)),
+				                  width: CGFloat(round(MinIconSizeInPixels / 2)),
+				                  height: CGFloat(round(MinIconSizeInPixels / 2)))
 				let path = CGPath(rect: rect, transform: nil)
 				layer.path = path
-				layer.frame = CGRect(
-					x: -MinIconSizeInPixels / 2,
-					y: -MinIconSizeInPixels / 2,
-					width: MinIconSizeInPixels,
-					height: MinIconSizeInPixels)
+				layer.frame = CGRect(x: -MinIconSizeInPixels / 2,
+				                     y: -MinIconSizeInPixels / 2,
+				                     width: MinIconSizeInPixels,
+				                     height: MinIconSizeInPixels)
 				layer.position = CGPoint(x: pt.x, y: pt.y)
 				layer.strokeColor = (color ?? UIColor.black).cgColor
 				layer.fillColor = nil
@@ -1061,7 +1107,7 @@ final class EditorMapLayer: CALayer {
 		var directionValue: String?
 		if highway == "traffic_signals" {
 			directionValue = node.tags["traffic_signals:direction"]
-		} else if highway == "stop" {
+		} else if highway == "stop" || highway == "give_way" {
 			directionValue = node.tags["direction"]
 		}
 		if let directionValue = directionValue {
@@ -1102,11 +1148,12 @@ final class EditorMapLayer: CALayer {
 	}
 
 	func getShapeLayersForHighlights() -> [CALayer] {
-		let geekScore = Geekbench.score
-		var nameLimit = Int(5 + (geekScore - 500) / 200) // 500 -> 5, 2500 -> 10
+		var nameLimit = 15
 		var nameSet: Set<String> = []
 		var layers: [CALayer & LayerPropertiesProviding] = []
-		let regularColor = UIColor.cyan
+		let wayColor = UIColor(red: 0.2, green: 1.0, blue: 0.4, alpha: 1.0)
+		let nodeInWayColor = UIColor.cyan
+		let selectedNodeColor = UIColor.yellow
 		let relationColor = UIColor(red: 66 / 255.0, green: 188 / 255.0, blue: 244 / 255.0, alpha: 1.0)
 
 		// highlighting
@@ -1128,13 +1175,8 @@ final class EditorMapLayer: CALayer {
 
 			if let way = object as? OsmWay {
 				let path = self.path(for: way)
-				var lineWidth: CGFloat = selected ? 1.0 : 2.0
-				let wayColor = selected ? regularColor : relationColor
-
-				if lineWidth == 0 {
-					lineWidth = 1
-				}
-				lineWidth += 2 // since we're drawing highlight 2-wide we don't want it to intrude inward on way
+				let lineWidth: CGFloat = (object.renderInfo?.lineWidth ?? 2.0) + 2
+				let wayColor = selected ? wayColor : relationColor
 
 				let layer = CAShapeLayerWithProperties()
 				layer.strokeColor = wayColor.cgColor
@@ -1201,7 +1243,7 @@ final class EditorMapLayer: CALayer {
 				for node in nodes {
 					let layer2 = CAShapeLayerWithProperties()
 					layer2.position = owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false)
-					layer2.strokeColor = node == selectedNode ? UIColor.yellow.cgColor : UIColor.green.cgColor
+					layer2.strokeColor = node == selectedNode ? selectedNodeColor.cgColor : nodeInWayColor.cgColor
 					layer2.fillColor = UIColor.clear.cgColor
 					layer2.lineWidth = 3.0
 					layer2.shadowColor = UIColor.black.cgColor
@@ -1331,12 +1373,6 @@ final class EditorMapLayer: CALayer {
 		return layers
 	}
 
-	/// Determines whether text layers that display street names should be rasterized.
-	/// - Returns: The value to use for the text layer's `shouldRasterize` property.
-	func shouldRasterizeStreetNames() -> Bool {
-		return Geekbench.score < 2500
-	}
-
 	func resetDisplayLayers() {
 		// need to refresh all text objects
 		mapData.enumerateObjects(usingBlock: { obj in
@@ -1419,8 +1455,9 @@ final class EditorMapLayer: CALayer {
 	}
 
 	func getObjectsToDisplay() -> ContiguousArray<OsmBaseObject> {
-		let geekScore = Int(Geekbench.score)
-		var objectLimit = 3 * (50 + (geekScore - 500) / 40) // 500 -> 50, 2500 -> 10
+		// Preferred maximum number of objects to display. This could be modified up or down depending
+		// on the distribution of objects wrt renderInfo.renderPriority
+		var objectLimit = 300
 
 		// get objects in visible rect
 		var objects = getVisibleObjects()
@@ -1434,10 +1471,7 @@ final class EditorMapLayer: CALayer {
 		// get renderInfo for objects
 		for object in objects {
 			if object.renderInfo == nil {
-				object.renderInfo = RenderInfoDatabase.shared.renderInfoForObject(object)
-			}
-			if object.renderPriorityCached == 0 {
-				object.renderPriorityCached = object.renderInfo!.renderPriorityForObject(object)
+				object.renderInfo = RenderInfo.forObject(object)
 			}
 		}
 
@@ -1449,14 +1483,16 @@ final class EditorMapLayer: CALayer {
 		var addressCount = 0
 		while addressCount < objectLimit {
 			let obj = objects[objectLimit - addressCount - 1]
-			if !obj.renderInfo!.isAddressPoint() {
+			if !obj.renderInfo!.isAddressPoint {
 				break
 			}
 			addressCount += 1
 		}
 		if addressCount > 50 {
 			let range = NSIndexSet(indexesIn: NSRange(location: objectLimit - addressCount, length: addressCount))
-			for deletionIndex in range.reversed() { objects.remove(at: deletionIndex) }
+			for deletionIndex in range.reversed() {
+				objects.remove(at: deletionIndex)
+			}
 		}
 
 		return objects
@@ -1520,8 +1556,7 @@ final class EditorMapLayer: CALayer {
 #endif
 
 		let tRotation = owner.mapTransform.rotation()
-		let tScale = owner.mapTransform.scale()
-		let pScale = CGFloat(tScale / PATH_SCALING)
+		let tScale = CGFloat(owner.mapTransform.scale() / PATH_SCALING)
 		let pixelsPerMeter = 0.8 * 1.0 / owner.mapTransform.metersPerPixel(atScreenPoint: bounds.center())
 
 		for object in shownObjects {
@@ -1531,39 +1566,29 @@ final class EditorMapLayer: CALayer {
 				// configure the layer for presentation
 				let isShapeLayer = layer is CAShapeLayer
 				let props = layer.properties
-				let pt = props.position
-				var pt2 = OSMPoint(owner.mapTransform.screenPoint(forMapPoint: pt, birdsEye: false))
 
 				if props.is3D || (isShapeLayer && object.isNode() == nil) {
 					// way or area -- need to rotate and scale
 					if props.is3D {
-						if owner.mapTransform.birdsEye() == nil {
+						guard let t = props.layerTransform3D(mapTransform: owner.mapTransform,
+						                                     pixelsPerMeter: pixelsPerMeter)
+						else {
 							layer.removeFromSuperlayer()
 							continue
 						}
-						var t = CATransform3DMakeTranslation(CGFloat(pt2.x - pt.x), CGFloat(pt2.y - pt.y), 0)
-						t = CATransform3DScale(t, CGFloat(pScale), CGFloat(pScale), CGFloat(pixelsPerMeter))
-						t = CATransform3DRotate(t, CGFloat(tRotation), 0, 0, 1)
-						t = CATransform3DConcat(props.transform, t)
 						layer.transform = t
 						if !isShapeLayer {
-							layer.borderWidth = props.lineWidth / pScale // wall
+							// it's a wall
+							layer.borderWidth = props.lineWidth / tScale
 						}
 					} else {
-						var t = CGAffineTransform(translationX: CGFloat(pt2.x - pt.x), y: CGFloat(pt2.y - pt.y))
-						t = t.scaledBy(x: CGFloat(pScale), y: CGFloat(pScale))
-						t = t.rotated(by: CGFloat(tRotation))
+						let t = props.layerTransformFor(mapTransform: owner.mapTransform)
 						layer.setAffineTransform(t)
 					}
 
 					if isShapeLayer {
-					} else {
-						// its a wall, so bounds are already height/length of wall
-					}
-
-					if isShapeLayer {
 						let shape = layer as! CAShapeLayer
-						shape.lineWidth = CGFloat(props.lineWidth / pScale)
+						shape.lineWidth = CGFloat(props.lineWidth / tScale)
 					}
 				} else {
 					// node or text -- no scale transform applied
@@ -1589,6 +1614,7 @@ final class EditorMapLayer: CALayer {
 					}
 
 					let scale = Double(UIScreen.main.scale)
+					var pt2 = OSMPoint(owner.mapTransform.screenPoint(forMapPoint: props.position, birdsEye: false))
 					pt2.x = round(pt2.x * scale) / scale
 					pt2.y = round(pt2.y * scale) / scale
 					DbgAssert(pt2.y.isFinite)
@@ -1621,8 +1647,7 @@ final class EditorMapLayer: CALayer {
 		highlightLayers = getShapeLayersForHighlights()
 
 		// get ocean
-		let ocean = getOceanLayer(shownObjects)
-		if let ocean = ocean {
+		if let ocean = getOceanLayer(shownObjects) {
 			highlightLayers.append(ocean)
 		}
 		for layer in highlightLayers {
@@ -1655,6 +1680,23 @@ final class EditorMapLayer: CALayer {
 
 	// MARK: Highlighting and Selection
 
+	struct Selections {
+		var node: OsmNode?
+		var way: OsmWay?
+		var relation: OsmRelation?
+	}
+
+	var selections: Selections {
+		get {
+			return Selections(node: selectedNode, way: selectedWay, relation: selectedRelation)
+		}
+		set {
+			selectedNode = newValue.node
+			selectedWay = newValue.way
+			selectedRelation = newValue.relation
+		}
+	}
+
 	var selectedPrimary: OsmBaseObject? { selectedNode ?? selectedWay ?? selectedRelation }
 
 	var selectedNode: OsmNode? {
@@ -1678,7 +1720,7 @@ final class EditorMapLayer: CALayer {
 	var selectedRelation: OsmRelation? {
 		didSet {
 			if oldValue != selectedRelation {
-				self.setNeedsDisplay()
+				setNeedsDisplay()
 				owner.selectionDidChange()
 			}
 		}
@@ -1692,9 +1734,9 @@ final class EditorMapLayer: CALayer {
 				updateMapLocation()
 			}
 			if !wasHidden, isHidden {
-				self.selectedNode = nil
-				self.selectedWay = nil
-				self.selectedRelation = nil
+				selectedNode = nil
+				selectedWay = nil
+				selectedRelation = nil
 				owner.removePin()
 			}
 		}

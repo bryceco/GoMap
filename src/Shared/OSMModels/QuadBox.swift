@@ -3,7 +3,7 @@
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 6/14/21.
-//  Copyright © 2021 Bryce. All rights reserved.
+//  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
 import Foundation
@@ -21,13 +21,15 @@ enum QUAD_ENUM: Int, CaseIterable {
 	case NW = 3
 }
 
-final class QuadBox: NSObject, NSCoding {
-	static let emptyChildren: [QuadBox?] = [nil, nil, nil, nil]
+final class QuadBox: NSObject, NSSecureCoding {
+	static let supportsSecureCoding = true
+
+	static let emptyChildren: ContiguousArray<QuadBox?> = [nil, nil, nil, nil]
 
 	let rect: OSMRect
-	var parent: QuadBox?
+	weak var parent: QuadBox?
 
-	var children: [QuadBox?] = QuadBox.emptyChildren
+	var children: ContiguousArray<QuadBox?> = QuadBox.emptyChildren
 	// this quad successfully downloaded all of its data, so we don't need to track children anymore
 	var isDownloaded = false
 	var downloadDate = 0.0
@@ -36,7 +38,7 @@ final class QuadBox: NSObject, NSCoding {
 	var isSplit = false
 
 	// member is used only for spatial
-	var members: [OsmBaseObject] = []
+	var members: ContiguousArray<OsmBaseObject> = []
 
 	private init(rect: OSMRect, parent: QuadBox?) {
 		self.rect = rect

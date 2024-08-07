@@ -23,8 +23,8 @@ extension EditorMapLayer {
 	// MARK: Copy/Paste
 
 	private var copyPasteTags: [String: String] {
-		get { return UserDefaults.standard.object(forKey: "copyPasteTags") as? [String: String] ?? [:] }
-		set { UserDefaults.standard.set(newValue, forKey: "copyPasteTags") }
+		get { UserPrefs.shared.copyPasteTags.value ?? [:] }
+		set { UserPrefs.shared.copyPasteTags.value = newValue }
 	}
 
 	func copyTags(_ object: OsmBaseObject) -> Bool {
@@ -69,18 +69,18 @@ extension EditorMapLayer {
 				title: NSLocalizedString("Paste", comment: ""),
 				message: question,
 				preferredStyle: .alert)
-			alertPaste
-				.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
-			alertPaste
-				.addAction(UIAlertAction(title: NSLocalizedString("Merge Tags", comment: ""),
-				                         style: .default, handler: { [self] _ in
-				                         	self.pasteTagsMerge(selectedPrimary)
-				                         }))
-			alertPaste
-				.addAction(UIAlertAction(title: NSLocalizedString("Replace Tags", comment: ""), style: .default,
-				                         handler: { [self] _ in
-				                         	self.pasteTagsReplace(selectedPrimary)
-				                         }))
+			alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+			                                   style: .cancel,
+			                                   handler: nil))
+			alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Merge Tags", comment: ""),
+			                                   style: .default, handler: { [self] _ in
+			                                   	self.pasteTagsMerge(selectedPrimary)
+			                                   }))
+			alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Replace Tags", comment: ""),
+			                                   style: .default,
+			                                   handler: { [self] _ in
+			                                   	self.pasteTagsReplace(selectedPrimary)
+			                                   }))
 			owner.presentAlert(alert: alertPaste, location: .none)
 		} else {
 			pasteTagsReplace(selectedPrimary)
@@ -339,21 +339,24 @@ extension EditorMapLayer {
 				title: NSLocalizedString("Confirm move", comment: ""),
 				message: NSLocalizedString("Move selected object?", comment: ""),
 				preferredStyle: .alert)
+			alertMove.addAction(UIAlertAction(title: NSLocalizedString("Undo", comment: ""),
+			                                  style: .cancel,
+			                                  handler: { _ in
+			                                  	// cancel move
+			                                  	self.mapData.undo()
+			                                  	self.mapData.removeMostRecentRedo()
+			                                  	self.selectedNode = nil
+			                                  	self.selectedWay = nil
+			                                  	self.selectedRelation = nil
+			                                  	self.owner.removePin()
+			                                  	self.setNeedsLayout()
+			                                  }))
 			alertMove
-				.addAction(UIAlertAction(title: NSLocalizedString("Undo", comment: ""), style: .cancel, handler: { _ in
-					// cancel move
-					self.mapData.undo()
-					self.mapData.removeMostRecentRedo()
-					self.selectedNode = nil
-					self.selectedWay = nil
-					self.selectedRelation = nil
-					self.owner.removePin()
-					self.setNeedsLayout()
-				}))
-			alertMove
-				.addAction(UIAlertAction(title: NSLocalizedString("Move", comment: ""), style: .default, handler: { _ in
-					// okay
-				}))
+				.addAction(UIAlertAction(title: NSLocalizedString("Move", comment: ""),
+				                         style: .default,
+				                         handler: { _ in
+				                         	// okay
+				                         }))
 			owner.presentAlert(alert: alertMove, location: .none)
 		}
 	}
@@ -528,12 +531,21 @@ extension EditorMapLayer {
 		let deleteHandler: ((_ action: UIAlertAction?) -> Void) = { [self] _ in
 			do {
 				let canDelete = try self.canDeleteSelectedObject()
+				let deletedNode: Int? = selectedNode == nil ? nil : selectedWay?.nodes.firstIndex(of: selectedNode!)
 				canDelete()
 				var pos = pushpinView.arrowPoint
 				owner.removePin()
-				if self.selectedPrimary != nil {
-					pos = owner.mapTransform.screenPoint(on: selectedPrimary, forScreenPoint: pos)
-					if let primary = self.selectedPrimary {
+				// update location of pushpin
+				if let primary = self.selectedPrimary {
+					if let way = primary as? OsmWay,
+					   let nodeIndex = deletedNode,
+					   let node = nodeIndex == 0 ? way.nodes.first : nodeIndex == way.nodes.count ? way.nodes.last : nil
+					{
+						selectedNode = node
+						pos = owner.mapTransform.screenPoint(on: node, forScreenPoint: pos)
+						owner.placePushpin(at: pos, object: node)
+					} else {
+						pos = owner.mapTransform.screenPoint(on: primary, forScreenPoint: pos)
 						owner.placePushpin(at: pos, object: primary)
 					}
 				}
@@ -548,32 +560,29 @@ extension EditorMapLayer {
 				title: NSLocalizedString("Delete", comment: ""),
 				message: NSLocalizedString("Member of multipolygon relation", comment: ""),
 				preferredStyle: .actionSheet)
-			alertDelete
-				.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
-				                         style: .cancel,
-				                         handler: { _ in
-				                         }))
-			alertDelete
-				.addAction(UIAlertAction(title: NSLocalizedString("Delete completely", comment: ""),
-				                         style: .default,
-				                         handler: deleteHandler))
-			alertDelete
-				.addAction(UIAlertAction(title: NSLocalizedString("Detach from relation", comment: ""),
-				                         style: .default,
-				                         handler: { [self] _ in
-				                         	do {
-				                         		let canRemove = try self.mapData.canRemove(selectedPrimary,
-				                         		                                           from: self
-				                         		                                           	.selectedRelation!)
-				                         		canRemove()
-				                         		self.selectedRelation = nil
-				                         		owner.didUpdateObject()
-				                         	} catch {
-				                         		owner.showAlert(
-				                         			NSLocalizedString("Delete failed", comment: ""),
-				                         			message: error.localizedDescription)
-				                         	}
-				                         }))
+			alertDelete.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+			                                    style: .cancel,
+			                                    handler: { _ in
+			                                    }))
+			alertDelete.addAction(UIAlertAction(title: NSLocalizedString("Delete completely", comment: ""),
+			                                    style: .default,
+			                                    handler: deleteHandler))
+			alertDelete.addAction(UIAlertAction(
+				title: NSLocalizedString("Detach from relation", comment: ""),
+				style: .default,
+				handler: { [self] _ in
+					do {
+						let canRemove = try self.mapData.canRemove(selectedPrimary,
+						                                           from: self.selectedRelation!)
+						canRemove()
+						self.selectedRelation = nil
+						owner.didUpdateObject()
+					} catch {
+						owner.showAlert(
+							NSLocalizedString("Delete failed", comment: ""),
+							message: error.localizedDescription)
+					}
+				}))
 			owner.presentAlert(alert: alertDelete, location: .editBar)
 
 		} else {
@@ -604,6 +613,7 @@ extension EditorMapLayer {
 				let disconnect = parentWays.count > 1 ||
 					selectedNode.hasInterestingTags() ||
 					selectedWay.isSelfIntersection(selectedNode)
+				let extract = selectedNode.hasInterestingTags()
 				let split = selectedWay.isClosed() ||
 					(selectedNode != selectedWay.nodes[0] && selectedNode != selectedWay.nodes.last)
 				let join = parentWays.count > 1
@@ -614,6 +624,9 @@ extension EditorMapLayer {
 
 				if disconnect {
 					actionList.append(.DISCONNECT)
+				}
+				if extract {
+					actionList.append(.EXTRACTNODE)
 				}
 				if split {
 					actionList.append(.SPLIT)
@@ -675,7 +688,7 @@ extension EditorMapLayer {
 				selectedNode = nil
 				owner.didUpdateObject()
 			}
-		case .SPLIT, .JOIN, .DISCONNECT, .RESTRICT, .ADDNOTE, .DELETE, .MORE:
+		case .SPLIT, .JOIN, .DISCONNECT, .EXTRACTNODE, .RESTRICT, .ADDNOTE, .DELETE, .MORE:
 			break
 		}
 
@@ -697,13 +710,13 @@ extension EditorMapLayer {
 				guard let primary = selectedPrimary,
 				      let pushpinView = owner.pushpinView()
 				else { return }
-				let delta = CGPoint(x: owner.crosshairs().x - pushpinView.arrowPoint.x,
-				                    y: owner.crosshairs().y - pushpinView.arrowPoint.y)
+				let delta = CGPoint(x: owner.centerPoint().x - pushpinView.arrowPoint.x,
+				                    y: owner.centerPoint().y - pushpinView.arrowPoint.y)
 				var offset: OSMPoint
 				if hypot(delta.x, delta.y) > 20 {
 					// move to position of crosshairs
 					let p1 = owner.mapTransform.latLon(forScreenPoint: pushpinView.arrowPoint)
-					let p2 = owner.mapTransform.latLon(forScreenPoint: owner.crosshairs())
+					let p2 = owner.mapTransform.latLon(forScreenPoint: owner.centerPoint())
 					offset = OSMPoint(x: p2.lon - p1.lon, y: p2.lat - p1.lat)
 				} else {
 					offset = OSMPoint(x: 0.00005, y: -0.00005)
@@ -740,6 +753,9 @@ extension EditorMapLayer {
 				let disconnect = try mapData.canDisconnectWay(selectedWay!, at: selectedNode!)
 				selectedNode = disconnect()
 				owner.placePushpinForSelection(at: nil)
+			case .EXTRACTNODE:
+				let extract = try mapData.canExtractNode(selectedNode!)
+				extract()
 			case .SPLIT:
 				let split = try mapData.canSplitWay(selectedWay!, at: selectedNode!)
 				_ = split()
@@ -827,23 +843,30 @@ extension EditorMapLayer {
 		}
 
 		// special case for adding members to relations:
-		if selectedPrimary?.isRelation()?.isMultipolygon() ?? false {
+		if let relation = selectedPrimary as? OsmRelation,
+		   relation.isMultipolygon()
+		{
 			let ways = objects.compactMap({ $0 as? OsmWay })
-			if ways.count == 1 {
+			if ways.count == 1,
+			   let way = ways.first,
+			   !relation.members.contains(where: { $0.obj == way })
+			{
 				let confirm = UIAlertController(
 					title: NSLocalizedString("Add way to multipolygon?", comment: ""),
 					message: nil,
 					preferredStyle: .alert)
 				let addMmember: ((String?) -> Void) = { [self] role in
 					do {
-						let add = try self.mapData.canAdd(ways[0],
+						let add = try self.mapData.canAdd(way,
 						                                  to: self.selectedRelation!,
 						                                  withRole: role)
 						add()
-						owner.flashMessage(NSLocalizedString("added to multipolygon relation", comment: ""))
+						owner.flashMessage(title: nil,
+						                   message: NSLocalizedString("added to multipolygon relation", comment: ""))
 						self.setNeedsLayout()
 					} catch {
-						owner.showAlert(NSLocalizedString("Error", comment: ""), message: error.localizedDescription)
+						owner.showAlert(NSLocalizedString("Error", comment: ""),
+						                message: error.localizedDescription)
 					}
 				}
 				confirm.addAction(UIAlertAction(
@@ -859,11 +882,12 @@ extension EditorMapLayer {
 						addMmember("inner")
 					}))
 				confirm
-					.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel,
+					.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+					                         style: .cancel,
 					                         handler: nil))
 				owner.presentAlert(alert: confirm, location: .none)
+				return
 			}
-			return
 		}
 
 		let multiSelectSheet = UIAlertController(
@@ -902,8 +926,9 @@ extension EditorMapLayer {
 				owner.placePushpin(at: pos, object: object)
 			}))
 		}
-		multiSelectSheet
-			.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
+		multiSelectSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+		                                         style: .cancel,
+		                                         handler: nil))
 		let rc = CGRect(x: point.x, y: point.y, width: 0.0, height: 0.0)
 		owner.presentAlert(alert: multiSelectSheet, location: .rect(rc))
 	}
@@ -1053,7 +1078,8 @@ extension EditorMapLayer {
 
 	func addNode(at dropPoint: CGPoint) {
 		if isHidden {
-			owner.flashMessage(NSLocalizedString("Editing layer not visible", comment: ""))
+			owner.flashMessage(title: nil,
+			                   message: NSLocalizedString("Editing layer not visible", comment: ""))
 			return
 		}
 
@@ -1073,7 +1099,8 @@ extension EditorMapLayer {
 
 		let prevPointIsOffScreen = !bounds.contains(pushpinView.arrowPoint)
 		let offscreenWarning: (() -> Void) = {
-			self.owner.flashMessage(NSLocalizedString("Selected object is off screen", comment: ""))
+			self.owner.flashMessage(title: nil,
+			                        message: NSLocalizedString("Selected object is off screen", comment: ""))
 		}
 
 		if let selectedWay = selectedWay,

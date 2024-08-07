@@ -9,39 +9,6 @@
 import Foundation
 import UIKit
 
-enum OsmObject: LocalizedError {
-	case invalidRelationMemberType
-
-	public var errorDescription: String? {
-		switch self {
-		case .invalidRelationMemberType: return "invalidRelationMemberType"
-		}
-	}
-}
-
-enum OSM_TYPE: Int {
-	case NODE = 1
-	case WAY = 2
-	case RELATION = 3
-
-	var string: String {
-		switch self {
-		case .NODE: return "node"
-		case .WAY: return "way"
-		case .RELATION: return "relation"
-		}
-	}
-
-	init(string: String) throws {
-		switch string {
-		case "node": self = .NODE
-		case "way": self = .WAY
-		case "relation": self = .RELATION
-		default: throw OsmObject.invalidRelationMemberType
-		}
-	}
-}
-
 enum ONEWAY: Int {
 	case BACKWARD = -1
 	case NONE = 0
@@ -80,6 +47,13 @@ struct OsmExtendedIdentifier: Equatable, Hashable {
 	}
 }
 
+enum GEOMETRY: String, Codable {
+	case POINT = "point"
+	case LINE = "line"
+	case AREA = "area"
+	case VERTEX = "vertex"
+}
+
 @objcMembers
 class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	private(set) final var ident: OsmIdentifier
@@ -96,13 +70,12 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 	final var _constructed = false
 
-	public final var renderPriorityCached = 0
-
 	private(set) final var deleted = false
 
 	final var renderInfo: RenderInfo?
 	private(set) final var modifyCount: Int32 = 0
 	private(set) final var parentRelations: [OsmRelation] = []
+	final var observer: ((OsmBaseObject) -> Void)?
 
 	override init() {
 		ident = 0
@@ -114,6 +87,31 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		visible = false
 		deleted = false
 		modifyCount = 0
+	}
+
+	override var hash: Int {
+		var hasher = Hasher()
+		hasher.combine(ident)
+		return hasher.finalize()
+	}
+
+	// The default NSObject isEqual checks for object equivalence which is incorrect for us
+	override func isEqual(_ other: Any?) -> Bool {
+		guard let other = other as? OsmBaseObject
+		else {
+			DbgAssert(false)
+			return false
+		}
+		if self === other {
+			return true
+		}
+		// Occasionally we'll build a temporary object and then see if that object already exists,
+		// in which case don't assert if either object is not marked as constructed
+		let equal = ident == other.ident && type(of: self) === type(of: other)
+		DbgAssert(!equal
+			|| !constructed()
+			|| !other.constructed()) // There should never be more than one copy of an object
+		return equal
 	}
 
 	func encode(with coder: NSCoder) {
@@ -144,14 +142,13 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		assert(ident != 0)
 	}
 
-	init(
-		withVersion version: Int,
-		changeset: Int64,
-		user: String,
-		uid: Int,
-		ident: Int64,
-		timestamp: String,
-		tags: [String: String])
+	init(withVersion version: Int,
+	     changeset: Int64,
+	     user: String,
+	     uid: Int,
+	     ident: Int64,
+	     timestamp: String,
+	     tags: [String: String])
 	{
 		var timestamp = timestamp
 		if timestamp == "" {
@@ -192,24 +189,19 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		}
 	}
 
-#if DEBUG
-	// sometimes we end up with duplicates of objects and they need to be disambiguated:
-	func address() -> UnsafeRawPointer {
-		return UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
-	}
-#endif
-
 	var osmType: OSM_TYPE { return self is OsmNode ? .NODE : self is OsmWay ? .WAY : .RELATION }
 
 	var extendedIdentifier: OsmExtendedIdentifier {
 		return OsmExtendedIdentifier(self)
 	}
 
+	override var debugDescription: String {
+		return description
+	}
+
 	// attributes
 
-	// FIXME: This needed to be an NSMutableDictionary because of how Database treated it,
-	// but I think we can remove that now that everything is swift
-	private(set) var tags: [String: String] = NSMutableDictionary() as! [String: String]
+	private(set) var tags: [String: String] = [:]
 
 	public var _boundingBox: OSMRect? // public only so subclasses can set it
 	var boundingBox: OSMRect {
@@ -240,16 +232,20 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	}
 
 	func isCoastline() -> Bool {
-		let natural = tags["natural"]
-		if let natural = natural {
-			if natural == "coastline" {
-				return true
-			}
-			if natural == "water" {
-				if isRelation() == nil, parentRelations.count == 0 {
-					return false // its a lake or something
-				}
-				return true
+		guard let natural = tags["natural"] else {
+			return false
+		}
+		if natural == "coastline" {
+			return self is OsmWay
+		}
+		if natural == "water" {
+			if let way = self as? OsmWay {
+				// if it is closed it's a lake
+				return !way.isClosed()
+			} else if let relation = self as? OsmRelation {
+				// If the way is part of a larger body of water then process it as coastline,
+				// since we need to connect the various pieces together for rendering
+				return relation.isMultipolygon()
 			}
 		}
 		return false
@@ -268,18 +264,22 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	}
 
 	public func computeBoundingBox() {
+		// This is specialized for OsmNode, OsmWay, OsmRelation so we should never get here
 		fatalError()
 	}
 
 	func distance(toLineSegment point1: OSMPoint, point point2: OSMPoint) -> Double {
+		// This is specialized for OsmNode, OsmWay, OsmRelation so we should never get here
 		fatalError()
 	}
 
 	func selectionPoint() -> LatLon {
+		// This is specialized for OsmNode, OsmWay, OsmRelation so we should never get here
 		fatalError()
 	}
 
 	func latLonOnObject(forLatLon target: LatLon) -> LatLon {
+		// This is specialized for OsmNode, OsmWay, OsmRelation so we should never get here
 		fatalError()
 	}
 
@@ -353,14 +353,11 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		return nil
 	}
 
-	static var _nextUnusedIdentifier: Int64 = 0
+	static var _nextUnusedIdentifier = UserPrefs.shared.nextUnusedIdentifier.value ?? 0
 	static func nextUnusedIdentifier() -> Int64 {
-		if OsmBaseObject._nextUnusedIdentifier == 0 {
-			OsmBaseObject._nextUnusedIdentifier = Int64(UserDefaults.standard.integer(forKey: "nextUnusedIdentifier"))
-		}
-		OsmBaseObject._nextUnusedIdentifier -= 1
-		UserDefaults.standard.set(OsmBaseObject._nextUnusedIdentifier, forKey: "nextUnusedIdentifier")
-		return OsmBaseObject._nextUnusedIdentifier
+		Self._nextUnusedIdentifier -= 1
+		UserPrefs.shared.nextUnusedIdentifier.value = Self._nextUnusedIdentifier
+		return Int64(Self._nextUnusedIdentifier)
 	}
 
 	// MARK: Construction
@@ -397,7 +394,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	}
 
 	func dateForTimestamp() -> Date {
-		if let date = OsmBaseObject.rfc3339DateFormatter().date(from: timestamp) {
+		if let date = Self.rfc3339DateFormatter().date(from: timestamp) {
 			return date
 		}
 		return Date()
@@ -410,19 +407,26 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 				selector: #selector(setTimestamp(_:undo:)),
 				objects: [dateForTimestamp(), undo!])
 		}
-		timestamp = OsmBaseObject.rfc3339DateFormatter().string(from: date)
+		timestamp = Self.rfc3339DateFormatter().string(from: date)
 	}
 
 	func clearCachedProperties() {
 		renderInfo = nil
-		renderPriorityCached = 0
 		isShown = .UNKNOWN
 		_boundingBox = nil
+		_geometry = nil
 
 		for layer in shapeLayers ?? [] {
 			layer.removeFromSuperlayer()
 		}
 		shapeLayers = nil
+
+		if let observer = observer {
+			// need to do this async because changes won't have been applied to the object yet
+			DispatchQueue.main.async {
+				observer(self)
+			}
+		}
 	}
 
 	func isModified() -> Bool {
@@ -451,20 +455,26 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		clearCachedProperties()
 	}
 
-	func serverUpdateVersion(_ version: Int) {
+	// MARK: Update properties with refreshed data from server
+
+	func serverUpdate(version: Int) {
 		self.version = version
 	}
 
-	func serverUpdateChangeset(_ changeset: OsmIdentifier) {
+	func serverUpdate(changeset: OsmIdentifier) {
 		self.changeset = changeset
 	}
 
-	func serverUpdateIdent(_ ident: OsmIdentifier) {
+	func serverUpdate(ident: OsmIdentifier) {
 		assert(self.ident < 0 && ident > 0)
 		self.ident = ident
 	}
 
-	func serverUpdate(inPlace newerVersion: OsmBaseObject) {
+	func serverUpdate(timestamp: Date) {
+		setTimestamp(timestamp, undo: nil)
+	}
+
+	func serverUpdate(with newerVersion: OsmBaseObject) {
 		assert(ident == newerVersion.ident)
 		assert(version < newerVersion.version)
 		tags = newerVersion.tags
@@ -531,9 +541,33 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		"living_street": .name
 	]
 	func givenName() -> String? {
+		// first try the name in the user's locale
+		var preferredLocale = PresetLanguages.preferredLanguageCode()
+		if let name = tags["name:\(preferredLocale)"] {
+			return name
+		}
+		// if the language code has a dash then try it without it
+		while let index = preferredLocale.lastIndex(of: "-") {
+			preferredLocale = String(preferredLocale[..<index])
+			if let name = tags["name:\(preferredLocale)"] {
+				return name
+			}
+		}
+		// then try name tag
 		if let name = tags["name"] {
 			return name
 		}
+		// then try name:en
+		if let name = tags["name:en"] {
+			return name
+		}
+		// then try any other name:* tag
+		if let name = tags.first(where: { key, _ in
+			key.starts(with: "name:")
+		}) {
+			return name.value
+		}
+		// for ways, use ref tag
 		if isWay() != nil,
 		   let highway = tags["highway"],
 		   let uses = OsmBaseObject.givenNameHighwayTypes[highway],
@@ -542,6 +576,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		{
 			return name
 		}
+		// final fallback use brand
 		return tags["brand"]
 	}
 
@@ -550,9 +585,11 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 			return name
 		}
 
-		if let feature = PresetsDatabase.shared.matchObjectTagsToFeature(tags,
-		                                                                 geometry: geometry(),
-		                                                                 includeNSI: true),
+		let location = AppDelegate.shared.mapView.currentRegion
+		if let feature = PresetsDatabase.shared.presetFeatureMatching(tags: tags,
+		                                                              geometry: geometry(),
+		                                                              location: location,
+		                                                              includeNSI: true),
 			!feature.isGeneric()
 		{
 			return feature.friendlyName()
@@ -664,6 +701,11 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 				selector: #selector(removeParentRelation(_:undo:)),
 				objects: [parentRelation, undo!])
 		}
+#if DEBUG
+		if let current = AppDelegate.shared.mapView?.editorLayer.mapData.relations[parentRelation.ident] {
+			DbgAssert(current === parentRelation)
+		}
+#endif
 		parentRelations.append(parentRelation)
 	}
 
@@ -675,13 +717,15 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 				objects: [parentRelation, undo!])
 		}
 		guard let index = parentRelations.firstIndex(of: parentRelation) else {
-			DLog("missing relation")
+			// This happens if the relation contains an object as a member
+			// multiple times, in which case we'll try to remove the parent
+			// multiple times.
 			return
 		}
 		parentRelations.remove(at: index)
 	}
 
-	func geometry() -> GEOMETRY {
+	private func computeGeometry() -> GEOMETRY {
 		if let way = isWay() {
 			if way.isArea() {
 				return GEOMETRY.AREA
@@ -692,7 +736,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 			if node.wayCount > 0 {
 				return GEOMETRY.VERTEX
 			} else {
-				return GEOMETRY.NODE
+				return GEOMETRY.POINT
 			}
 		} else if let relation = isRelation() {
 			if relation.isMultipolygon() {
@@ -702,6 +746,14 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 			}
 		}
 		fatalError()
+	}
+
+	var _geometry: GEOMETRY?
+	func geometry() -> GEOMETRY {
+		if _geometry == nil {
+			_geometry = computeGeometry()
+		}
+		return _geometry!
 	}
 
 	func geometryName() -> String {

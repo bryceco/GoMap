@@ -8,8 +8,63 @@
 import UIKit
 
 class POIPresetValuePickerController: UITableViewController {
-	var tag = ""
-	var valueDefinitions: [PresetValue]?
+	static let ImageWidth = 80
+	var key = ""
+	var presetValueList: [PresetValue] = []
+	var onSetValue: ((String) -> Void)?
+	var descriptions: [String: String] = [:]
+	var images: [String: UIImage] = [:]
+
+	let placeholderImage: UIImage = {
+		UIGraphicsBeginImageContextWithOptions(
+			CGSize(width: ImageWidth, height: ImageWidth / 2),
+			false,
+			UIScreen.main.scale)
+		let image = UIGraphicsGetImageFromCurrentImageContext()!
+		UIGraphicsEndImageContext()
+		return image
+	}()
+
+	func fetchWikiImagesAndDescriptions() {
+		let languageCode = PresetLanguages.preferredPresetLanguageCode()
+		for preset in presetValueList {
+			if let meta = WikiPage.shared.wikiDataFor(
+				key: key,
+				value: preset.tagValue,
+				language: languageCode,
+				imageWidth: Self.ImageWidth,
+				update: { meta in
+					guard let meta = meta else { return }
+					let tag = meta.key + "=" + meta.value
+					self.descriptions[tag] = meta.description
+					self.images[tag] = meta.image
+					self.tableView.reloadData()
+				})
+			{
+				let tag = meta.key + "=" + meta.value
+				descriptions[tag] = meta.description
+				images[tag] = meta.image
+			}
+		}
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+#if false
+		// We have the ability to display relevant OSM Wiki information and images along with
+		// the preset, but currently the Wiki doesn't have enough entries to make it worthwhile.
+		fetchWikiImagesAndDescriptions()
+#endif
+		// Set images for icons associated with the presets
+		for preset in presetValueList {
+			if let iconName = preset.icon {
+				let tag = key + "=" + preset.tagValue
+				if let image = UIImage(named: iconName) {
+					let scaled = EditorMapLayer.ImageScaledToSize(image, CGFloat(Self.ImageWidth))
+					images[tag] = scaled
+				}
+			}
+		}
+	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -25,7 +80,7 @@ class POIPresetValuePickerController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		valueDefinitions?.count ?? 0
+		presetValueList.count
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -37,37 +92,33 @@ class POIPresetValuePickerController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		var cell: UITableViewCell?
-		let preset = valueDefinitions?[indexPath.row]
+		let preset = presetValueList[indexPath.row]
 
-		if preset?.details != nil {
-			cell = tableView.dequeueReusableCell(withIdentifier: "SubtitleCell", for: indexPath)
+		let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "SubtitleCell", for: indexPath)
+		let tag = key + "=" + preset.tagValue
+
+		if preset.name != "" {
+			cell.textLabel?.text = preset.name
+			cell.detailTextLabel?.text = preset.details ?? descriptions[tag] ?? ""
 		} else {
-			cell = tableView.dequeueReusableCell(withIdentifier: "BasicCell", for: indexPath)
+			let text = preset.tagValue.replacingOccurrences(of: "_", with: " ").capitalized
+			cell.textLabel?.text = text
+			cell.detailTextLabel?.text = descriptions[tag] ?? ""
 		}
-
-		if preset?.name != nil {
-			cell?.textLabel?.text = preset?.name
-			cell?.detailTextLabel?.text = preset?.details
-		} else {
-			var text = preset?.tagValue.replacingOccurrences(of: "_", with: " ")
-			text = text?.capitalized
-			cell?.textLabel?.text = text
-			cell?.detailTextLabel?.text = nil
+		if images.count > 0 {
+			cell.imageView?.image = images[tag] ?? placeholderImage
 		}
 
 		let tabController = tabBarController as? POITabBarController
-		let selected = tabController?.keyValueDict[tag] == preset?.tagValue
-		cell?.accessoryType = selected ? .checkmark : .none
+		let selected = tabController?.keyValueDict[key] == preset.tagValue
+		cell.accessoryType = selected ? .checkmark : .none
 
-		return cell!
+		return cell
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let preset = valueDefinitions?[indexPath.row]
-		let tab = tabBarController as? POITabBarController
-		tab?.keyValueDict[tag] = preset?.tagValue
-
+		let preset = presetValueList[indexPath.row]
+		onSetValue?(preset.tagValue)
 		navigationController?.popViewController(animated: true)
 	}
 }

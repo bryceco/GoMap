@@ -3,25 +3,29 @@
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 9/16/21.
-//  Copyright © 2021 Bryce. All rights reserved.
+//  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
 import Foundation
 
 // A keep-right entry. These use XML just like a GPS waypoint, but with an extension to define OSM data.
-class KeepRightMarker: MapMarker {
+final class KeepRightMarker: MapMarker {
 	let description: String
 	let keepRightID: Int
-	let objectId: OsmExtendedIdentifier
+	private let objectId: OsmExtendedIdentifier
 
-	override var key: String {
+	override var markerIdentifier: String {
 		return "keepright-\(keepRightID)"
 	}
 
 	override var buttonLabel: String { "R" }
 
+	func object(from mapData: OsmMapData) -> OsmBaseObject? {
+		return mapData.object(withExtendedIdentifier: objectId)
+	}
+
 	/// Initialize based on KeepRight query
-	init?(gpxWaypointXml waypointElement: DDXMLElement, namespace ns: String, mapData: OsmMapData) {
+	init?(gpxWaypoint gpx: GpxPoint, mapData: OsmMapData, ignorable: MapMarkerIgnoreListProtocol) {
 		//		<wpt lon="-122.2009985" lat="47.6753189">
 		//		<name><![CDATA[website, http error]]></name>
 		//		<desc><![CDATA[The URL (<a target="_blank" href="http://www.stjamesespresso.com/">http://www.stjamesespresso.com/</a>) cannot be opened (HTTP status code 301)]]></desc>
@@ -33,13 +37,10 @@ class KeepRightMarker: MapMarker {
 		//								<object_id>2627663149</object_id>
 		//		</extensions></wpt>
 
-		guard let (lon, lat, desc, extensions) = WayPointMarker.parseXML(gpxWaypointXml: waypointElement, namespace: ns)
-		else { return nil }
-
 		var osmIdent: OsmIdentifier?
 		var osmType: String?
 		var keepRightID: Int?
-		for child2 in extensions {
+		for child2 in gpx.extensions {
 			guard let child2 = child2 as? DDXMLElement else {
 				continue
 			}
@@ -70,10 +71,18 @@ class KeepRightMarker: MapMarker {
 			objectName = "\(osmType) \(osmIdent)"
 		}
 
-		description = "\(objectName): \(desc)"
+		description = "\(objectName): \(gpx.desc)"
 		self.keepRightID = keepRightID
 		self.objectId = objectId
-		super.init(lat: lat,
-		           lon: lon)
+		super.init(latLon: gpx.latLon)
+		self.ignorable = ignorable
+	}
+
+	func ignore() {
+		ignorable!.ignore(marker: self, reason: .userRequest)
+	}
+
+	func shouldHide() -> Bool {
+		return ignorable!.shouldIgnore(marker: self)
 	}
 }

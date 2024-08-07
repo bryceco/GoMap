@@ -1,5 +1,170 @@
 # Changelog
 
+## 3.4.8
+
+- Add highlighting of set tags in All Tags
+- Correctly handle renaming key in key/value table cells in Common Tags
+- Update translations
+
+## 3.4.7 
+
+- Fixes crash when editing description=* (and related keys) fields in Common Tags
+- Key/Value pairs in Common Tags now behave more similar to All Tags
+- Various minor bug fixes
+
+## 3.4.6
+
+- Fixes a hang when user-defined presets contained non-ASCII characters.
+- Fixes a bug with pressing quest buttons
+- Updates translations
+
+## 3.4.5
+
+- Fix issues displaying Mapbox aerial imagery
+- Enable tap-and-drag to zoom, 
+
+## 3.4.4
+
+- Ruler is now localized and has new behavior
+- Opening hours recognition supports "noon" & "midnight"
+- Updates translations
+- Lots of bug fixes
+
+## 3.4.3
+
+- Various bug fixes
+
+## 3.4.2
+
+- Various bug fixes
+
+## 3.4.1
+
+- Minor bug fixes
+
+## 3.4.0
+
+- Fixes bugs in opening_hours camera use
+- opening_hours will now format inputs for you, so "mo-fr 8-15" will become "Mo-Fr 08:00-15:00"
+- Fixes various crashes on iOS 12
+
+## 3.3.9
+
+- More bug fixes
+- Stores Custom Presets on openstreetmap.com so they can be shared between devices.
+- Updates translations
+- Displays feature icons in Common Tags
+
+## 3.3.8
+
+- Adds a "Needs Survey" quest. 
+- Adds geometry filter to advanced quests builder
+- Selecting an object highlights the related quest
+- Quests with presets now also include a text entry field
+- Various bug fixes
+
+## 3.3.7 
+
+- Fixes a bunch of UI issues when tagging things.
+- Adds the ability to share Google Maps locations to Go Map!! (it already supported Apple Maps, Organic Maps and plain old OSM URLs).
+
+As before:
+* Advanced quest builder now supports multiple answer keys
+* Adds more built-in quests
+* Unifies support for accessory buttons across Common Tags, All Tags, and Quests.
+* Fixes a crash during launch in older iOS versions
+* Fixes an issue with reading the aerial imagery database
+
+## 3.3.6
+
+- Advanced quest builder now supports multiple answer keys
+- Adds more built-in quests
+- Unifies support for accessory buttons across Common Tags, All Tags, and Quests.
+- Fixes a crash during launch in older iOS versions
+- Fixes an issue with reading the aerial imagery database
+
+## 3.3.5
+
+- Advanced quest builder now supports multiple answer keys
+- Adds more built-in quests
+- Uniform support for accessory buttons across Common Tags, All Tags, and Quests.
+- Fixes a crash during launch in older iOS versions
+- Fixes an issue with reading the aerial imagery database
+
+## 3.3.3 
+
+- Adds a new Advanced Quest Builder to provide finer grained control over filters.
+
+## 3.3.0
+
+- Implements StreetComplete style quests (enable them on the Display page). Initially there are just a few, but you can also easily define your own, and I'm happy to add quests to the built-in set. 
+- Fixes Maxar imagery
+- Fixes minor issues with Opening Hours recognizer
+- Fixes some issues with drawing water areas
+
+## 3.2.1
+
+- Authentication now uses OAuth 2.0. You'll be prompted to authenticate the first time you try to upload. This change breaks the ability to use an alternate server (e.g. https://www.openhistoricalmap.org). If this affects you and you'd like a fix for it please contact me and I'll add support back in.
+- Increases system requirements to iOS 12.  
+- Fixes a problem with displaying recently used changeset messages.
+- Fixes an issue with area=yes not being automatically added for some presets
+- Lots of refactoring and code cleanup, as well as moving to more modern APIs. 
+- Updates translations and other minor bug fixes and improvements.
+
+## 3.1.11
+
+- Only show magnifying glass after dragging an object
+- Adds support for multi-line tag values in Common Tags and All Tags (note=*, description=*, etc)
+- Adds swipe-to-delete in Common Tags
+- Common Tags highlight color is now blue instead of green
+
+## 3.1.10
+
+- Imported GPX files containing waypoints now drops a marker that is visible when Notes & Fixmes is enabled.
+- Common Tags now displays any tags missing a preset in a format similar to All Tags.
+- Common Tags now highlights tags that are defined.
+- Changeset comments now support history.
+- Magnifying glass now appears when editing nodes.
+
+## 3.1.9
+
+- Improves heuristics for when we suggest better aerial imagery
+- Updates translations
+
+## 3.1.8
+
+- Updates presets to use 5.0 preset schema. 
+- Lots of improvements relating to only showing NSI brands in appropriate locations. There may be some bugs so if you see a preset that seems to be for a different country be sure to file a bug on it. 
+- You can now share an Organic Maps (open source replacement for Maps.me) URL to Go Map!! and it will properly interpret the lat/lon encoding. If there's demand for Maps.me support as well it's probably trivial to add.
+- Updates translations 
+- A couple minor Mac Catalyst fixes
+
+## 3.1.6
+
+- App will now prompt to use "best" imagery when available
+- Displays the area of closed ways in Attributes tab
+- Search button now handles coordinates like 26°35'36"N 106°40'44"E
+- Miscellaneous UI improvements
+- Updates translations and name suggestion index
+
+## 3.1.5
+
+- iOS 16 updates
+- Adds a kph/mph toggle to maxspeed preset
+- Updates presets
+- Updates translations
+- Minor bug fixes
+
+## 3.1.4
+
+- Updates presets 
+- Fixes some presets bugs 
+- Fix a bug with deep linking URLs 
+- Removes Maxar Standard imagery (Premium remains) 
+- Fix a bug with GPX display when zooming out
+
+Adds Brazilian Portuguese  * Fixes some hit-testing issues with the pushpin
+
 ## 3.1.0
 
 - 'All Tags' tab now has a Feature picker
@@ -156,3 +321,5 @@ Version 1.3 features improved graphics performance, map rotation, and new editin
 - Various bug fixes and other improvements
 
 ## 1.0
+
+- Initial release

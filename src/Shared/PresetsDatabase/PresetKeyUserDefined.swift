@@ -41,6 +41,7 @@ final class PresetKeyUserDefined: PresetKey {
 		self.appliesToKey = appliesToKey
 		self.appliesToValue = appliesToValue
 		super.init(name: name,
+		           type: "",
 		           tagKey: key,
 		           defaultValue: nil,
 		           placeholder: placeholder,
@@ -55,44 +56,68 @@ final class PresetKeyUserDefined: PresetKey {
 		coder.encode(appliesToKey, forKey: "appliesToKey")
 		coder.encode(appliesToValue, forKey: "appliesToValue")
 	}
+
+	// MARK: Codable
+
+	enum CodingKeys: String, CodingKey {
+		case appliesToKey
+		case appliesToValue
+	}
+
+	required init(from decoder: Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		appliesToKey = try container.decode(String.self, forKey: .appliesToKey)
+		appliesToValue = try container.decode(String.self, forKey: .appliesToValue)
+		try super.init(from: decoder)
+	}
+
+	override func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(appliesToKey, forKey: .appliesToKey)
+		try container.encode(appliesToValue, forKey: .appliesToValue)
+		try super.encode(to: encoder)
+	}
 }
 
-class PresetKeyUserDefinedList {
+class PresetKeyUserDefinedList: Codable {
 	private(set) var list: [PresetKeyUserDefined] = []
-
 	public static let shared = PresetKeyUserDefinedList()
 
 	init() {
-		do {
-			// some people experience a crash during loading...
-			let path = PresetKeyUserDefinedList.archivePath()
-			// decode
-			if #available(iOS 11.0, *) {
+		// First try reading from UserPrefs
+		if let data = UserPrefs.shared.userDefinedPresetKeys.value,
+		   let list = try? JSONDecoder().decode([PresetKeyUserDefined].self, from: data)
+		{
+			self.list = list
+		} else {
+			// Legacy method of storing data
+			do {
+				let path = PresetKeyUserDefinedList.archivePath()
 				let data = try Data(contentsOf: URL(fileURLWithPath: path))
 				let classList = [NSArray.self,
 				                 NSMutableString.self,
 				                 PresetKeyUserDefined.self,
 				                 PresetValue.self]
-
-				list = try NSKeyedUnarchiver
-					.unarchivedObject(ofClasses: classList, from: data) as? [PresetKeyUserDefined] ?? []
-			} else {
-				let oldList = NSKeyedUnarchiver.unarchiveObject(withFile: path)
-				list = oldList as? [PresetKeyUserDefined] ?? []
+				list = try NSKeyedUnarchiver.unarchivedObject(ofClasses: classList, from: data)
+					as? [PresetKeyUserDefined] ?? []
+			} catch {
+				list = []
 			}
-		} catch {
-			print("error loading custom presets: \(error)")
-			list = []
+		}
+		UserPrefs.shared.userDefinedPresetKeys.onChangePerform { pref in
+			guard
+				let data = pref.value,
+				let list = try? JSONDecoder().decode([PresetKeyUserDefined].self, from: data)
+			else {
+				return
+			}
+			self.list = list
 		}
 	}
 
 	func save() {
-		let path = PresetKeyUserDefinedList.archivePath()
-		if #available(iOS 11.0, *) {
-			let data = try? NSKeyedArchiver.archivedData(withRootObject: list as NSArray, requiringSecureCoding: true)
-			try? data?.write(to: URL(fileURLWithPath: path))
-		} else {
-			NSKeyedArchiver.archiveRootObject(list as NSArray, toFile: path)
+		if let encodeData = try? JSONEncoder().encode(list) {
+			UserPrefs.shared.userDefinedPresetKeys.value = encodeData
 		}
 	}
 
@@ -105,9 +130,22 @@ class PresetKeyUserDefinedList {
 	}
 
 	private class func archivePath() -> String {
-		let paths = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).map(\.path)
-		let cacheDirectory = paths[0]
-		let fullPath = URL(fileURLWithPath: cacheDirectory).appendingPathComponent("CustomPresetList.data").path
-		return fullPath
+		return ArchivePath.customPresets.path()
+	}
+
+	// MARK: Codable
+
+	enum CodingKeys: String, CodingKey {
+		case list
+	}
+
+	required init(from decoder: Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		list = try container.decode([PresetKeyUserDefined].self, forKey: .list)
+	}
+
+	func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(list, forKey: .list)
 	}
 }

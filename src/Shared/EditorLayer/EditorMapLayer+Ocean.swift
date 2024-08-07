@@ -18,20 +18,50 @@ extension OSMPoint: Hashable {
 }
 
 extension EditorMapLayer {
-	private static func AppendNodes(_ list: inout [OsmNode], way: OsmWay, addToBack: Bool, reverseNodes: Bool) {
-		let nodes = reverseNodes ? way.nodes.reversed() : way.nodes
-		if addToBack {
-			// insert at back of list
-			let a = nodes[1..<nodes.count]
-			list.append(contentsOf: a)
-		} else {
-			// insert at front of list
-			let a = nodes[0..<nodes.count - 1]
-			list.insert(contentsOf: a, at: 0)
+	private enum CoastType: Int {
+		case landOnLeft // it's tagged natural=coastline
+		case outer // outer member of natural=water relation
+		case inner // inner member of natural=water relation
+		case unknown
+	}
+
+	private struct Coastline<T: Equatable>: Equatable,
+		CustomStringConvertible, CustomDebugStringConvertible, CustomReflectable
+	{
+		var points: [T]
+		var coastType: CoastType
+
+		var description: String {
+			return "\(coastType): \(points.first!) - \(points.last!)"
+		}
+
+		var debugDescription: String {
+			return "\(coastType): \(points.first!) - \(points.last!)"
+		}
+
+		var customMirror: Mirror {
+#if true
+			return Mirror(self, children: [:])
+#else
+			return Mirror(self,
+			              children: ["coastType": coastType,
+			                         "points": [points.first!, points.last!]])
+#endif
 		}
 	}
 
-	private static func IsPointInRect(_ pt: OSMPoint, rect: OSMRect) -> Bool {
+	private static func AppendNodes(to list: inout [LatLon], from: [LatLon], addToBack: Bool, reverseNodes: Bool) {
+		let nodes = reverseNodes ? from.reversed() : from
+		if addToBack {
+			// insert at back of list
+			list.append(contentsOf: nodes.dropFirst())
+		} else {
+			// insert at front of list
+			list.insert(contentsOf: nodes.dropLast(), at: 0)
+		}
+	}
+
+	private static func IsPointInRect(_ pt: CGPoint, rect: CGRect) -> Bool {
 		let delta = 0.0001
 		if pt.x < rect.origin.x - delta {
 			return false
@@ -52,7 +82,7 @@ extension EditorMapLayer {
 		case LEFT, TOP, RIGHT, BOTTOM
 	}
 
-	private static func WallForPoint(_ pt: OSMPoint, rect: OSMRect) -> SIDE {
+	private static func WallForPoint(_ pt: CGPoint, rect: CGRect) -> SIDE {
 		let delta = 0.01
 		if fabs(pt.x - rect.origin.x) < delta {
 			return .LEFT
@@ -69,27 +99,7 @@ extension EditorMapLayer {
 		fatalError()
 	}
 
-	private static func IsClockwisePolygon(_ points: [OSMPoint]) -> Bool {
-		if points.count < 4 { // first and last repeat
-			return false // invalid
-		}
-		if points[0] != points.last! {
-			return false // invalid
-		}
-		var area = 0.0
-		let offset = points[0]
-		var previous = OSMPoint(x: 0, y: 0)
-
-		for point in points[1..<points.count] {
-			let current = OSMPoint(x: point.x - offset.x, y: point.y - offset.y)
-			area += previous.x * current.y - previous.y * current.x
-			previous = current
-		}
-		area *= 0.5
-		return area >= 0
-	}
-
-	private static func RotateLoop(_ loop: inout [OSMPoint], viewRect: OSMRect) -> Bool {
+	private static func RotateLoop(_ loop: inout [CGPoint], viewRect: CGRect) -> Bool {
 		if loop.count < 4 {
 			return false // bad loop
 		}
@@ -99,7 +109,7 @@ extension EditorMapLayer {
 		loop.removeLast()
 		var index = 0
 		for point in loop {
-			if !viewRect.containsPoint(point) {
+			if !viewRect.contains(point) {
 				break
 			}
 			index += 1
@@ -118,7 +128,7 @@ extension EditorMapLayer {
 		return index >= 0
 	}
 
-	static func ClipLineToRect(p1: OSMPoint, p2: OSMPoint, rect: OSMRect) -> [OSMPoint] {
+	static func ClipLineToRect(p1: CGPoint, p2: CGPoint, rect: CGRect) -> [CGPoint] {
 		if p1.x.isInfinite || p2.x.isInfinite {
 			return []
 		}
@@ -160,7 +170,7 @@ extension EditorMapLayer {
 		cross.sort()
 
 		// get the points that are actually inside the rect (max 2)
-		let pts = cross.map { OSMPoint(x: p1.x + $0 * dx, y: p1.y + $0 * dy) }.filter { IsPointInRect($0, rect: rect) }
+		let pts = cross.map { CGPoint(x: p1.x + $0 * dx, y: p1.y + $0 * dy) }.filter { IsPointInRect($0, rect: rect) }
 
 		return pts
 	}
@@ -168,77 +178,79 @@ extension EditorMapLayer {
 	// input is an array of OsmWay
 	// output is an array of arrays of OsmNode
 	// take a list of ways and return a new list of ways with contiguous ways joined together.
-	private static func joinConnectedWays(_ origList: [OsmWay]) -> [[OsmNode]] {
+	private static func joinConnectedWays(_ origList: [Coastline<LatLon>]) -> [Coastline<LatLon>] {
 		// connect ways together forming congiguous runs
-		var origList = origList.filter({ $0.nodes.count > 1 })
-		var newList = [[OsmNode]]()
-		while origList.count > 0 {
+		var origList = origList.filter({ $0.points.count > 1 })
+		var newList = [Coastline<LatLon>]()
+		while var parent = origList.popLast() {
 			// find all connected segments
-			let way = origList.removeLast()
-
-			var firstNode = way.nodes[0] // FIXME: remove these
-			var lastNode = way.nodes.last
-			var nodeList = [firstNode]
-			Self.AppendNodes(&nodeList, way: way, addToBack: true, reverseNodes: false)
-			while nodeList[0] != nodeList.last {
+			while true {
+				let firstNode = parent.points[0]
+				let lastNode = parent.points.last!
+				if firstNode == lastNode {
+					break
+				}
 				// find a way adjacent to current list
-				var found: OsmWay?
-				for way in origList {
-					if lastNode == way.nodes[0] {
-						Self.AppendNodes(&nodeList, way: way, addToBack: true, reverseNodes: false)
-						lastNode = nodeList.last
-						found = way
+				var found: (index: Int, back: Bool, reverse: Bool)?
+				for index in origList.indices {
+					let way = origList[index]
+					guard way.coastType == parent.coastType else {
+						continue
+					}
+					if lastNode == way.points[0] {
+						found = (index, true, false)
 						break
 					}
-					if lastNode == way.nodes.last {
-						Self.AppendNodes(&nodeList, way: way, addToBack: true, reverseNodes: true)
-						lastNode = nodeList.last
-						found = way
+					if lastNode == way.points.last {
+						found = (index, true, true)
 						break
 					}
-					if firstNode == way.nodes.last {
-						Self.AppendNodes(&nodeList, way: way, addToBack: false, reverseNodes: false)
-						firstNode = nodeList[0]
-						found = way
+					if firstNode == way.points.last {
+						found = (index, false, false)
 						break
 					}
-					if firstNode == way.nodes[0] {
-						Self.AppendNodes(&nodeList, way: way, addToBack: false, reverseNodes: true)
-						firstNode = nodeList[0]
-						found = way
+					if firstNode == way.points[0] {
+						found = (index, false, true)
 						break
 					}
 				}
-				if found == nil {
+				guard let found = found else {
 					break // didn't find anything to connect to
 				}
-				origList.removeAll(where: { $0 == found! })
+				let sibling = origList[found.index]
+				Self.AppendNodes(to: &parent.points,
+				                 from: sibling.points,
+				                 addToBack: found.back,
+				                 reverseNodes: found.reverse)
+				if sibling.coastType.rawValue < parent.coastType.rawValue {
+					// Sibling is more accurate so inherit it's value
+					parent.coastType = sibling.coastType
+					if found.reverse {
+						// if the sibling was reversed we need to reverse everything to match it
+						parent.points.reverse()
+					}
+				}
+				origList.remove(at: found.index)
 			}
-			newList.append(nodeList)
+			newList.append(parent)
 		}
 		return newList
 	}
 
-	private func convertNodesToScreenPoints(_ nodeList: [OsmNode]) -> [OSMPoint] {
-		if nodeList.count == 0 {
-			return []
-		}
-		let pointlist = nodeList.map { node -> OSMPoint in
-			let pt = self.owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false)
-			return OSMPoint(pt)
-		}
-		return pointlist
+	private func convertLatLonToScreenPoint(_ latLon: LatLon) -> CGPoint {
+		return owner.mapTransform.screenPoint(forLatLon: latLon, birdsEye: false)
 	}
 
-	private static func visibleSegmentsOfWay(_ way: inout [OSMPoint], inView viewRect: OSMRect) -> [[OSMPoint]] {
+	private static func visibleSegmentsOfWay(_ way: [CGPoint], inView viewRect: CGRect) -> [[CGPoint]] {
 		// trim nodes in outlines to only internal paths
-		var newWays = [[OSMPoint]]()
+		var way = way
+		var newWays = [[CGPoint]]()
 
 		var first = true
 		var prevInside = false
 		let isLoop = way[0] == way.last!
-		var prevPoint = OSMPoint(x: 0, y: 0)
-		var trimmedSegment: [OSMPoint]?
+		var prevPoint = CGPoint(x: 0, y: 0)
+		var trimmedSegment: [CGPoint]?
 
 		if isLoop {
 			// rotate loop to ensure start/end point is outside viewRect
@@ -250,7 +262,7 @@ extension EditorMapLayer {
 		}
 
 		for pt in way {
-			let isInside = viewRect.containsPoint(pt)
+			let isInside = viewRect.contains(pt)
 			if first {
 				first = false
 			} else {
@@ -308,13 +320,12 @@ extension EditorMapLayer {
 		return newWays
 	}
 
-	private static func addPointList(_ list: [OSMPoint], toPath path: CGMutablePath) {
+	private static func addPointList(_ list: [CGPoint], toPath path: CGMutablePath) {
 		var first = true
-		for p in list {
-			if p.x.isInfinite {
+		for pt in list {
+			if pt.x.isInfinite {
 				break
 			}
-			let pt = CGPoint(p)
 			if first {
 				first = false
 				path.move(to: pt)
@@ -326,99 +337,126 @@ extension EditorMapLayer {
 
 	public func getOceanLayer(_ objectList: ContiguousArray<OsmBaseObject>) -> CAShapeLayer? {
 		// get all coastline ways
-		var outerWays = [OsmWay]()
-		var innerWays = [OsmWay]()
+		let landuseCount = 10
+		var osmWays = [(way: OsmWay, coastType: CoastType)]()
+
+		var landPoints = [CGPoint]()
 
 		for object in objectList {
-			if object.isWay()?.isClosed() == true,
-			   let value = object.tags["natural"],
-			   value == "water"
-			{
-				continue // lakes are not a concern of this function
+			guard !(object is OsmNode) else {
+				continue
 			}
-			if object.isCoastline() {
-				if let way = object.isWay(),
-				   way.nodes.count >= 2
-				{
-					outerWays.append(way)
-				} else if let relation = object.isRelation() {
-					for member in relation.members {
-						if let way = member.obj as? OsmWay,
-						   way.nodes.count >= 2
-						{
-							if member.role == "outer" {
-								outerWays.append(way)
-							} else if member.role == "inner" {
-								innerWays.append(way)
-							} else {
-								// skip
-							}
-						}
+
+#if false
+			// record objects that we can use later to distinguish ocean from land
+			if landPoints.count < landuseCount,
+			   let way = object as? OsmWay,
+			   way.nodes.count > 1,
+			   way.tags["highway"] != nil || way.tags["building"] != nil
+			{
+				for n in [way.nodes.first!, way.nodes.last!, way.nodes[way.nodes.count / 2]] {
+					let latLon = convertLatLonToScreenPoint(n.latLon)
+					if bounds.contains(latLon) {
+						landPoints.append(latLon)
+						break
 					}
 				}
 			}
-		}
-		if outerWays.count == 0 {
+#endif
+
+			guard object.isCoastline() else {
+				continue
+			}
+
+			if let way = object as? OsmWay,
+			   way.nodes.count >= 2
+			{
+				let isCoastline = object.tags["natural"] == "coastline"
+				osmWays.append((way, coastType: isCoastline ? .landOnLeft : .unknown))
+			} else if let relation = object as? OsmRelation {
+				for member in relation.members {
+					guard let way = member.obj as? OsmWay,
+					      way.nodes.count >= 2
+					else { continue }
+
+					if member.role == "outer" {
+						osmWays.append((way, .outer))
+					} else if member.role == "inner" {
+						osmWays.append((way, .inner))
+					} else {
+						// skip
+					}
+				}
+			}
+		} // end of loop filtering objects
+		if osmWays.count == 0 {
 			return nil
 		}
 
+		// remove any objects that are duplicated, prefering known coastline types
+		osmWays.sort(by: { a, b in a.coastType.rawValue < b.coastType.rawValue })
+		var latLonWays = [Coastline<LatLon>]()
+		var seen = Set<OsmWay>()
+		for item in osmWays {
+			guard seen.insert(item.way).inserted else {
+				continue
+			}
+			latLonWays.append(Coastline<LatLon>(points: item.way.nodes.map { $0.latLon },
+			                                    coastType: item.coastType))
+		}
+
 		// connect ways together forming contiguous runs
-		let outerNodes = Self.joinConnectedWays(outerWays)
-		let innerNodes = Self.joinConnectedWays(innerWays)
+		latLonWays = Self.joinConnectedWays(latLonWays.map { $0 })
 
 		// convert lists of nodes to screen points
-		var outerSegments = outerNodes.map { self.convertNodesToScreenPoints($0) }
-		var innerSegments = innerNodes.map { self.convertNodesToScreenPoints($0) }
+		var screenWays = latLonWays.map { way in
+			Coastline<CGPoint>(points: way.points.map { convertLatLonToScreenPoint($0) },
+			                   coastType: way.coastType)
+		}
 
 		// Delete loops with a degenerate number of nodes. These are typically data errors:
-		outerSegments = outerSegments.filter { $0.count >= 4 || $0[0] != $0.last! }
-		innerSegments = innerSegments.filter { $0.count >= 4 || $0[0] != $0.last! }
+		screenWays = screenWays.filter { $0.points.count >= 4 || $0.points[0] != $0.points.last! }
 
-		// ensure that outer ways are clockwise and inner ways are counterclockwise
-		for index in 0..<outerSegments.count {
-			let way = outerSegments[index]
-			if way[0] == way.last! {
-				if !Self.IsClockwisePolygon(way) {
-					// reverse points
-					outerSegments[index].reverse()
+		// ensure that closed outer ways are clockwise and inner are counter-clockwise
+		for index in screenWays.indices {
+			let way = screenWays[index]
+			if way.points[0] == way.points.last! {
+				// Its a closed loop
+				let reverse: Bool
+				switch way.coastType {
+				case .outer:
+					reverse = !(IsClockwisePolygon(way.points) ?? true)
+				case .inner:
+					reverse = IsClockwisePolygon(way.points) ?? false
+				case .landOnLeft, .unknown:
+					reverse = false
+				}
+				if reverse {
+					screenWays[index].points.reverse()
+				}
+			} else {
+				if way.coastType != .landOnLeft {
+					screenWays[index].coastType = .unknown
 				}
 			}
 		}
-		for index in 0..<innerSegments.count {
-			let way = innerSegments[index]
-			if way[0] == way.last! {
-				if Self.IsClockwisePolygon(way) {
-					// reverse points
-					innerSegments[index].reverse()
-				}
-			}
-		}
-
-		let cgViewRect = bounds
-		let viewRect = OSMRect(cgViewRect)
-		let viewCenter = OSMPoint(cgViewRect.center())
 
 		// trim nodes in segments to only visible paths
-		var visibleSegments = [[OSMPoint]]()
-		for index in 0..<outerSegments.count {
-			let a = Self.visibleSegmentsOfWay(&outerSegments[index], inView: viewRect)
-			visibleSegments.append(contentsOf: a)
+		let viewRect = bounds
+		var visibleSegments = screenWays.flatMap { way in
+			Self.visibleSegmentsOfWay(way.points, inView: viewRect)
+				.map { Coastline<CGPoint>(points: $0, coastType: way.coastType) }
 		}
-		for index in 0..<innerSegments.count {
-			let a = Self.visibleSegmentsOfWay(&innerSegments[index], inView: viewRect)
-			visibleSegments.append(contentsOf: a)
-		}
-
 		if visibleSegments.count == 0 {
 			// nothing is on screen
 			return nil
 		}
 
-		// pull islands into a separate list
-		var islands = [[OSMPoint]]()
+		// pull islands (loops) into a separate list
+		var islands = [[CGPoint]]()
 		visibleSegments.removeAll(where: { a -> Bool in
-			if a[0] == a.last! {
-				islands.append(a)
+			if a.points[0] == a.points.last! {
+				islands.append(a.points)
 				return true
 			} else {
 				return false
@@ -426,43 +464,47 @@ extension EditorMapLayer {
 		})
 
 		// get list of all external points
-		var pointSet = Set<OSMPoint>()
-		var entryDict = [OSMPoint: [OSMPoint]]()
+		var pointSet: Set<CGPoint> = []
+		var entryDict: [CGPoint: Coastline<CGPoint>] = [:]
 		for way in visibleSegments {
-			pointSet.insert(way[0])
-			pointSet.insert(way.last!)
-			entryDict[way[0]] = way
+			pointSet.insert(way.points[0])
+			pointSet.insert(way.points.last!)
+			entryDict[way.points[0]] = way
 		}
 
-		// sort points clockwise
-		let points = pointSet.sorted(by: { pt1, pt2 -> Bool in
+		// Sort points clockwise. When we see a way that exits the view bounding box
+		// we can quickly find the next way that reenters the bounding box.
+		let viewCenter = viewRect.center()
+		let borderPoints = pointSet.sorted(by: { pt1, pt2 -> Bool in
 			let ang1 = atan2(pt1.y - viewCenter.y, pt1.x - viewCenter.x)
 			let ang2 = atan2(pt2.y - viewCenter.y, pt2.x - viewCenter.x)
 			let angle = ang1 - ang2
 			return angle < 0
 		})
 
-		// now have a set of discontiguous arrays of coastline nodes. Draw segments adding points at screen corners to connect them
-		var haveCoastline = false
-		let path = CGMutablePath()
-		while visibleSegments.count > 0 {
-			let firstOutline = visibleSegments.removeLast()
-			var exit = firstOutline.last!
+		// sort so coastlines come first
+		visibleSegments.sort { a, b in a.coastType.rawValue < b.coastType.rawValue }
 
-			Self.addPointList(firstOutline, toPath: path)
+		// now have a set of discontiguous arrays of coastline nodes.
+		// Draw segments adding points at screen corners to connect them
+		let path = CGMutablePath()
+		while let firstOutline = visibleSegments.popLast() {
+			var exit = firstOutline.points.last!
+
+			Self.addPointList(firstOutline.points, toPath: path)
 
 			while true {
 				// find next point following exit point
-				var nextOutline: [OSMPoint]? = entryDict[exit] // check if exit point is also entry point
+				var nextOutline = entryDict[exit] // check if exit point is also entry point
 				if nextOutline == nil { // find next entry point following exit point
-					let exitIndex = points.firstIndex(of: exit)!
-					let entryIndex = (exitIndex + 1) % points.count
-					nextOutline = entryDict[points[entryIndex]]
+					let exitIndex = borderPoints.firstIndex(of: exit)!
+					let entryIndex = (exitIndex + 1) % borderPoints.count
+					nextOutline = entryDict[borderPoints[entryIndex]]
 				}
-				if nextOutline == nil {
+				guard let nextOutline = nextOutline else {
 					return nil
 				}
-				let entry = nextOutline![0]
+				let entry = nextOutline.points[0]
 
 				// connect exit point to entry point following clockwise borders
 				if true {
@@ -477,48 +519,50 @@ extension EditorMapLayer {
 							if wall2 == .LEFT, point1.y > point2.y {
 								break wall_loop
 							}
-							point1 = OSMPoint(x: viewRect.origin.x, y: viewRect.origin.y)
-							path.addLine(to: CGPoint(point1))
+							point1 = CGPoint(x: viewRect.origin.x,
+							                 y: viewRect.origin.y)
+							path.addLine(to: point1)
 							fallthrough
 						case .TOP:
 							if wall2 == .TOP, point1.x < point2.x {
 								break wall_loop
 							}
-							point1 = OSMPoint(x: viewRect.origin.x + viewRect.size.width, y: viewRect.origin.y)
-							path.addLine(to: CGPoint(point1))
+							point1 = CGPoint(x: viewRect.origin.x + viewRect.size.width,
+							                 y: viewRect.origin.y)
+							path.addLine(to: point1)
 							fallthrough
 						case .RIGHT:
 							if wall2 == .RIGHT, point1.y < point2.y {
 								break wall_loop
 							}
-							point1 = OSMPoint(
-								x: viewRect.origin.x + viewRect.size.width,
-								y: viewRect.origin.y + viewRect.size.height)
-							path.addLine(to: CGPoint(point1))
+							point1 = CGPoint(x: viewRect.origin.x + viewRect.size.width,
+							                 y: viewRect.origin.y + viewRect.size.height)
+							path.addLine(to: point1)
 							fallthrough
 						case .BOTTOM:
 							if wall2 == .BOTTOM, point1.x > point2.x {
 								break wall_loop
 							}
-							point1 = OSMPoint(x: viewRect.origin.x, y: viewRect.origin.y + viewRect.size.height)
-							path.addLine(to: CGPoint(point1))
+							point1 = CGPoint(x: viewRect.origin.x,
+							                 y: viewRect.origin.y + viewRect.size.height)
+							path.addLine(to: point1)
 							wall1 = .LEFT
 						}
 					}
 				}
 
-				haveCoastline = true
 				if nextOutline == firstOutline {
 					break
 				}
-				if !visibleSegments.contains(nextOutline!) {
+
+				if !visibleSegments.contains(nextOutline) {
 					return nil
 				}
-				for pt in nextOutline! {
-					path.addLine(to: CGPoint(pt))
+				for pt in nextOutline.points {
+					path.addLine(to: pt)
 				}
 
-				exit = nextOutline!.last!
+				exit = nextOutline.points.last!
 				visibleSegments.removeAll { $0 == nextOutline }
 			}
 		}
@@ -526,26 +570,26 @@ extension EditorMapLayer {
 		// draw islands
 		for island in islands {
 			Self.addPointList(island, toPath: path)
-
-			if !haveCoastline, Self.IsClockwisePolygon(island) {
-				// this will still fail if we have an island with a lake in it
-				haveCoastline = true
-			}
 		}
+
+#if false
+		let insideCount = landPoints.reduce(0, { prev, point in
+			prev + (path.contains(point) ? 1 : 0)
+		})
 
 		// if no coastline then draw water everywhere
-		if !haveCoastline {
-			path.addRect(cgViewRect)
+		print("\(insideCount) < \(landPoints.count - insideCount)")
+		if insideCount < landPoints.count - insideCount {
+			path.addRect(viewRect)
 		}
+#endif
 
 		let layer = CAShapeLayer()
 		layer.path = path
 		layer.frame = bounds
 		layer.bounds = bounds
 		layer.fillColor = UIColor(red: 0, green: 0, blue: 1, alpha: 0.1).cgColor
-		layer.strokeColor = UIColor.blue.cgColor
-		layer.lineWidth = 2.0
-		//		layer.zPosition		= Z_OCEAN;	// FIXME
+		layer.zPosition = Z_OCEAN
 
 		return layer
 	}
