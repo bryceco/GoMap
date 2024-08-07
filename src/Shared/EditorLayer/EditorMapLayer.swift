@@ -696,6 +696,7 @@ final class EditorMapLayer: CALayer {
 			if let path = path {
 				var lineWidth = renderInfo.lineWidth
 				if lineWidth == 0 {
+					DbgAssert(false)	// handle this in RenderInfo
 					lineWidth = 2
 				}
 

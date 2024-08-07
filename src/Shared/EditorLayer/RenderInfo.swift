@@ -35,14 +35,14 @@ final class RenderInfo {
 	var value: String?
 	var lineColor: UIColor?
 	var lineWidth: CGFloat = 0.0
-	var lineCap: CAShapeLayerLineCap = .butt
+	var lineCap: CAShapeLayerLineCap
 	var lineDashPattern: [NSNumber]?
 	var casingColor: UIColor?
-	var casingWidth: CGFloat = 0.0
-	var casingCap: CAShapeLayerLineCap = .butt
+	var casingWidth: CGFloat
+	var casingCap: CAShapeLayerLineCap
 	var casingDashPattern: [NSNumber]?
 	var areaColor: UIColor?
-	var isAddressPoint = false
+	var isAddressPoint: Bool
 
 	var description: String {
 		return "\(type(of: self)): \(key)=\(value ?? "")"
@@ -64,7 +64,7 @@ final class RenderInfo {
 	init(
 		key: String = "",
 		value: String? = nil,
-		lineColor: UIColor? = UIColor.white,
+		lineColor: UIColor? = .white,
 		lineWidth: CGFloat = 1.0,
 		lineCap: CAShapeLayerLineCap = .round,
 		lineDashPattern: [CGFloat]? = nil,
@@ -85,21 +85,18 @@ final class RenderInfo {
 		self.casingCap = casingCap
 		self.casingDashPattern = casingDashPattern?.map { NSNumber(value: $0) }
 		self.areaColor = areaColor
+		isAddressPoint = false
 	}
 
 	class func forObject(_ object: OsmBaseObject) -> RenderInfo {
 		var tags = object.tags
 		// if the object is part of a rendered relation then inherit that relation's tags
-		if object.isWay() != nil,
+		if object is OsmWay,
 		   object.parentRelations.count != 0,
-		   !object.hasInterestingTags()
+		   !object.hasInterestingTags(),
+		   let parent = object.parentRelations.first(where: { $0.isBoundary() })
 		{
-			for parent in object.parentRelations {
-				if parent.isBoundary() {
-					tags = parent.tags
-					break
-				}
-			}
+			tags = parent.tags
 		}
 
 		let renderInfo = RenderInfo.style(tags: tags)
