@@ -10,20 +10,23 @@ import UIKit
 
 private let RenderInfoMaxPriority = (33 + 1) * 3
 
-private let g_AddressRender: RenderInfo = {
-	let info = RenderInfo()
-	info.key = "ADDRESS"
-	info.lineWidth = 0.0
-	return info
-}()
-
-private let g_DefaultRender: RenderInfo = {
-	let info = RenderInfo()
-	info.key = "DEFAULT"
-	info.lineColor = UIColor.black
-	info.lineWidth = 0.0
-	return info
-}()
+func DynamicColor(red r: CGFloat, green g: CGFloat, blue b: CGFloat, alpha: CGFloat) -> UIColor {
+	if #available(iOS 13.0, *) { // Dark Mode
+		return UIColor(dynamicProvider: { traitCollection in
+			if traitCollection.userInterfaceStyle == .dark {
+				// lighten colors for dark mode
+				let delta: CGFloat = 0.3
+				let r3 = r * (1 - delta) + delta
+				let g3 = g * (1 - delta) + delta
+				let b3 = b * (1 - delta) + delta
+				return UIColor(red: r3, green: g3, blue: b3, alpha: alpha)
+			}
+			return UIColor(red: r, green: g, blue: b, alpha: alpha)
+		})
+	} else {
+		return UIColor(red: r, green: g, blue: b, alpha: alpha)
+	}
+}
 
 final class RenderInfo {
 	var renderPriority = 0
@@ -32,107 +35,152 @@ final class RenderInfo {
 	var value: String?
 	var lineColor: UIColor?
 	var lineWidth: CGFloat = 0.0
+	var lineCap: CAShapeLayerLineCap
+	var lineDashPattern: [NSNumber]?
+	var casingColor: UIColor?
+	var casingWidth: CGFloat
+	var casingCap: CAShapeLayerLineCap
+	var casingDashPattern: [NSNumber]?
 	var areaColor: UIColor?
+	var isAddressPoint: Bool
 
 	var description: String {
 		return "\(type(of: self)): \(key)=\(value ?? "")"
 	}
 
-	func isAddressPoint() -> Bool {
-		return self === g_AddressRender
+	func isDefault() -> Bool {
+		// These values should match the init() defaults
+		return lineColor == UIColor.white
+			&& lineWidth == 1.0
+			&& lineCap == .round
+			&& lineDashPattern == nil
+			&& casingColor == nil
+			&& casingWidth == 0.0
+			&& casingCap == .butt
+			&& casingDashPattern == nil
+			&& areaColor == nil
 	}
 
-	class func color(forHexString text: String?) -> UIColor? {
-		guard let text = text else {
-			return nil
-		}
-		assert(text.count == 6)
+	init(
+		key: String = "",
+		value: String? = nil,
+		lineColor: UIColor? = .white,
+		lineWidth: CGFloat = 1.0,
+		lineCap: CAShapeLayerLineCap = .round,
+		lineDashPattern: [CGFloat]? = nil,
+		casingColor: UIColor? = nil,
+		casingWidth: CGFloat = 0.0,
+		casingCap: CAShapeLayerLineCap = .butt,
+		casingDashPattern: [CGFloat]? = nil,
+		areaColor: UIColor? = nil)
+	{
+		self.key = key
+		self.value = value
+		self.lineColor = lineColor
+		self.lineWidth = lineWidth
+		self.lineCap = lineCap
+		self.lineDashPattern = lineDashPattern?.map { NSNumber(value: $0) }
+		self.casingColor = casingColor
+		self.casingWidth = casingWidth
+		self.casingCap = casingCap
+		self.casingDashPattern = casingDashPattern?.map { NSNumber(value: $0) }
+		self.areaColor = areaColor
+		isAddressPoint = false
+	}
 
-		var r: CGFloat = 0
-		var g: CGFloat = 0
-		var b: CGFloat = 0
-		let start = text.index(text.startIndex, offsetBy: 0)
-		let hexColor = String(text[start...])
-		if hexColor.count == 6 {
-			let scanner = Scanner(string: hexColor)
-			var hexNumber: UInt64 = 0
-			if scanner.scanHexInt64(&hexNumber) {
-				r = CGFloat((hexNumber & 0xFF0000) >> 16) / 255.0
-				g = CGFloat((hexNumber & 0x00FF00) >> 8) / 255.0
-				b = CGFloat((hexNumber & 0x0000FF) >> 0) / 255.0
-			}
+	class func forObject(_ object: OsmBaseObject) -> RenderInfo {
+		var tags = object.tags
+		// if the object is part of a rendered relation then inherit that relation's tags
+		if object is OsmWay,
+		   object.parentRelations.count != 0,
+		   !object.hasInterestingTags(),
+		   let parent = object.parentRelations.first(where: { $0.isBoundary() })
+		{
+			tags = parent.tags
 		}
 
-		if #available(iOS 13.0, *) { // Dark Mode
-			let color = UIColor(dynamicProvider: { traitCollection in
-				if traitCollection.userInterfaceStyle == .dark {
-					// lighten colors for dark mode
-					let delta: CGFloat = 0.3
-					let r3 = r * (1 - delta) + delta
-					let g3 = g * (1 - delta) + delta
-					let b3 = b * (1 - delta) + delta
-					return UIColor(red: r3, green: g3, blue: b3, alpha: 1.0)
-				}
-				return UIColor(red: r, green: g, blue: b, alpha: 1.0)
-			})
-			return color
-		} else {
-			return UIColor(red: r, green: g, blue: b, alpha: 1.0)
+		let renderInfo = RenderInfo.style(tags: tags)
+		let isDefault = renderInfo.isDefault()
+
+		// adjust things for improved visibility
+		renderInfo.lineWidth = 2 * renderInfo.lineWidth
+		renderInfo.casingWidth = 2 * renderInfo.casingWidth
+		renderInfo.lineDashPattern = renderInfo.lineDashPattern?.map({ NSNumber(value: $0.doubleValue * 0.5) })
+		renderInfo.casingDashPattern = renderInfo.casingDashPattern?.map({ NSNumber(value: $0.doubleValue * 0.5) })
+		if renderInfo.casingColor == nil {
+			renderInfo.casingColor = UIColor.black
+			renderInfo.casingWidth = renderInfo.lineWidth + 1
+		} else if renderInfo.casingDashPattern != nil {
+			// dashes in casing are hard to see, so make sure they're extra wide
+			renderInfo.casingWidth = max(renderInfo.casingWidth, renderInfo.lineWidth + 4)
+		} else if renderInfo.lineWidth >= renderInfo.casingWidth {
+			renderInfo.casingWidth = renderInfo.lineWidth + 1
 		}
+
+		// check if it is an address point
+		if isDefault,
+		   object is OsmNode,
+		   !tags.isEmpty,
+		   tags.keys.first(where: { OsmTags.IsInterestingKey($0) && !$0.hasPrefix("addr:") }) == nil
+		{
+			renderInfo.isAddressPoint = true
+		}
+
+		// do this last: compute priority (what gets displayed when zoomed out)
+		renderInfo.renderPriority = renderInfo.computeRenderPriority(object)
+
+		return renderInfo
 	}
 
 	// The priority is a small integer bounded by RenderInfoMaxPriority which
 	// allows us to sort them quickly using a Counting Sort algorithm.
 	// The priority is cached per-object in renderPriority
-	func renderPriorityForObject(_ object: OsmBaseObject) -> Int {
+	func computeRenderPriority(_ object: OsmBaseObject) -> Int {
+		guard renderPriority == 0 else { return renderPriority }
 		var priority: Int
 		if object.modifyCount > 0 {
 			priority = 33
 		} else {
-			if renderPriority == 0 {
-				switch (key, value) {
-				case ("natural", "coastline"): renderPriority = 32
-				case ("natural", "water"): renderPriority = 31
-				case ("waterway", "riverbank"): renderPriority = 30
-				case ("landuse", _): renderPriority = 29
-
-				case ("highway", "motorway"): renderPriority = 29
-				case ("highway", "trunk"): renderPriority = 28
-				case ("highway", "motorway_link"): renderPriority = 27
-				case ("highway", "primary"): renderPriority = 26
-				case ("highway", "trunk_link"): renderPriority = 25
-				case ("highway", "secondary"): renderPriority = 24
-				case ("highway", "tertiary"): renderPriority = 23
-				case ("railway", _): renderPriority = 22
-				case ("highway", "primary_link"): renderPriority = 21
-				case ("highway", "residential"): renderPriority = 20
-				case ("highway", "raceway"): renderPriority = 19
-				case ("highway", "secondary_link"): renderPriority = 18
-				case ("highway", "tertiary_link"): renderPriority = 17
-				case ("highway", "living_street"): renderPriority = 16
-				case ("highway", "road"): renderPriority = 15
-				case ("highway", "unclassified"): renderPriority = 14
-				case ("highway", "service"): renderPriority = 13
-				case ("highway", "bus_guideway"): renderPriority = 12
-				case ("highway", "track"): renderPriority = 11
-				case ("highway", "pedestrian"): renderPriority = 10
-				case ("highway", "cycleway"): renderPriority = 9
-				case ("highway", "path"): renderPriority = 8
-				case ("highway", "bridleway"): renderPriority = 7
-				case ("highway", "footway"): renderPriority = 6
-				case ("highway", "steps"): renderPriority = 5
-				case ("highway", "construction"): renderPriority = 4
-				case ("highway", "proposed"): renderPriority = 3
-				case ("highway", _): renderPriority = 3
-				default:
-					if isAddressPoint() {
-						renderPriority = 1
-					} else {
-						renderPriority = 2
-					}
+			switch (key, value) {
+			case ("natural", "coastline"): priority = 32
+			case ("natural", "water"): priority = 31
+			case ("waterway", "riverbank"): priority = 30
+			case ("landuse", _): priority = 29
+			case ("highway", "motorway"): priority = 29
+			case ("highway", "trunk"): priority = 28
+			case ("highway", "motorway_link"): priority = 27
+			case ("highway", "primary"): priority = 26
+			case ("highway", "trunk_link"): priority = 25
+			case ("highway", "secondary"): priority = 24
+			case ("highway", "tertiary"): priority = 23
+			case ("railway", _): priority = 22
+			case ("highway", "primary_link"): priority = 21
+			case ("highway", "residential"): priority = 20
+			case ("highway", "raceway"): priority = 19
+			case ("highway", "secondary_link"): priority = 18
+			case ("highway", "tertiary_link"): priority = 17
+			case ("highway", "living_street"): priority = 16
+			case ("highway", "road"): priority = 15
+			case ("highway", "unclassified"): priority = 14
+			case ("highway", "service"): priority = 13
+			case ("highway", "bus_guideway"): priority = 12
+			case ("highway", "track"): priority = 11
+			case ("highway", "pedestrian"): priority = 10
+			case ("highway", "cycleway"): priority = 9
+			case ("highway", "path"): priority = 8
+			case ("highway", "bridleway"): priority = 7
+			case ("highway", "footway"): priority = 6
+			case ("highway", "steps"): priority = 5
+			case ("highway", "construction"): priority = 4
+			case ("highway", "proposed"): priority = 3
+			case ("highway", _): priority = 3
+			default:
+				if isAddressPoint {
+					priority = 1
+				} else {
+					priority = 2
 				}
 			}
-			priority = renderPriority
 		}
 
 		let bonus: Int
@@ -155,7 +203,7 @@ final class RenderInfo {
 		var countOfPriority = [Int](repeating: 0, count: RenderInfoMaxPriority)
 
 		for obj in list {
-			countOfPriority[(RenderInfoMaxPriority - 1) - obj.renderPriorityCached] += 1
+			countOfPriority[(RenderInfoMaxPriority - 1) - obj.renderInfo!.renderPriority] += 1
 		}
 
 		var max = listCount
@@ -164,15 +212,18 @@ final class RenderInfo {
 			let newSum = countOfPriority[i] + prevSum
 			countOfPriority[i] = newSum
 			if max == listCount {
+				// we are returning only the first k items, but we don't want to
+				// throw out other items of the same priority, so include them as well
+				// as long as it means we don't exceed 2*k items.
 				if prevSum >= k || newSum >= 2 * k {
 					max = prevSum
 				}
 			}
 		}
-		let tmp = OsmNode(asUserCreated: "")
+		guard let tmp = list.first else { return [] }
 		var output = ContiguousArray<OsmBaseObject>(repeating: tmp, count: max)
 		for obj in list {
-			let index = (RenderInfoMaxPriority - 1) - obj.renderPriorityCached
+			let index = (RenderInfoMaxPriority - 1) - obj.renderInfo!.renderPriority
 			let dest = countOfPriority[index] - 1
 			countOfPriority[index] = dest
 			if dest < max {
@@ -180,109 +231,5 @@ final class RenderInfo {
 			}
 		}
 		return output
-	}
-}
-
-final class RenderInfoDatabase {
-	var allFeatures: [RenderInfo] = []
-	var keyDict: [String: [String: RenderInfo]] = [:]
-
-	static let shared = RenderInfoDatabase()
-
-	class func readConfiguration() -> [RenderInfo] {
-		var text = NSData(contentsOfFile: "RenderInfo.json") as Data?
-		if text == nil {
-			if let path = Bundle.main.path(forResource: "RenderInfo", ofType: "json") {
-				text = NSData(contentsOfFile: path) as Data?
-			}
-		}
-		var features: [String: [String: Any]] = [:]
-		do {
-			if let text = text {
-				features = try JSONSerialization.jsonObject(with: text, options: []) as? [String: [String: Any]] ?? [:]
-			}
-		} catch {}
-
-		var renderList: [RenderInfo] = []
-
-		for (feature, dict) in features {
-			let keyValue = feature.components(separatedBy: "/")
-			let render = RenderInfo()
-			render.key = keyValue[0]
-			render.value = keyValue.count > 1 ? keyValue[1] : ""
-			render.lineColor = RenderInfo.color(forHexString: dict["lineColor"] as? String)
-			render.areaColor = RenderInfo.color(forHexString: dict["areaColor"] as? String)
-			render.lineWidth = CGFloat((dict["lineWidth"] as? NSNumber ?? NSNumber(value: 0)).doubleValue)
-			renderList.append(render)
-		}
-		return renderList
-	}
-
-	required init() {
-		allFeatures = RenderInfoDatabase.readConfiguration()
-		keyDict = [:]
-		for tag: RenderInfo in allFeatures {
-			var valDict = keyDict[tag.key]
-			if valDict == nil {
-				valDict = [tag.value ?? "": tag]
-			} else {
-				valDict![tag.value ?? ""] = tag
-			}
-			keyDict[tag.key] = valDict
-		}
-	}
-
-	func renderInfoForObject(_ object: OsmBaseObject) -> RenderInfo {
-		var tags = object.tags
-		// if the object is part of a rendered relation than inherit that relation's tags
-		if object.isWay() != nil,
-		   object.parentRelations.count != 0,
-		   !object.hasInterestingTags()
-		{
-			for parent in object.parentRelations {
-				if parent.isBoundary() {
-					tags = parent.tags
-					break
-				}
-			}
-		}
-
-		// try exact match
-		var bestRender: RenderInfo?
-		var bestIsDefault = false
-		var bestCount = 0
-		for (key, value) in tags {
-			guard let valDict = keyDict[key] else { continue }
-			var isDefault = false
-			var render = valDict[value]
-			if render == nil {
-				render = valDict[""]
-				if render != nil {
-					isDefault = true
-				}
-			}
-			guard let render = render else { continue }
-
-			let count: Int = ((render.lineColor != nil) ? 1 : 0) + ((render.areaColor != nil) ? 1 : 0)
-			if bestRender == nil || (bestIsDefault && !isDefault) || (count > bestCount) {
-				bestRender = render
-				bestCount = count
-				bestIsDefault = isDefault
-				continue
-			}
-		}
-		if let bestRender = bestRender {
-			return bestRender
-		}
-
-		// check if it is an address point
-		if object.isNode() != nil,
-		   !object.tags.isEmpty,
-		   tags.first(where: { key, _ in OsmTags.IsInterestingKey(key) && !key.hasPrefix("addr:") }) == nil
-		{
-			return g_AddressRender
-		}
-
-		return g_DefaultRender
 	}
 }

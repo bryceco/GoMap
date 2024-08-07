@@ -31,11 +31,17 @@ public struct OpeningHoursRecognizerView: View {
 		onRecognize: ((String) -> Void)? = nil)
 	{
 		let recognizer = HoursRecognizer()
-		recognizer.onRecognize = onRecognize
-
 		self.onAccept = onAccept
 		self.onCancel = onCancel
 		_recognizer = StateObject(wrappedValue: recognizer)
+
+		let feedback = UINotificationFeedbackGenerator()
+		feedback.prepare()
+		recognizer.onRecognize = {
+			feedback.notificationOccurred(.success)
+			onRecognize?($0)
+			feedback.prepare()
+		}
 	}
 
 	public var body: some View {
@@ -64,16 +70,15 @@ public struct OpeningHoursRecognizerView: View {
 					Spacer()
 				}
 			}
-			Picker(recognizer.language.rawValue, selection: $recognizer.language) {
-				ForEach(HoursRecognizer.Language.allCases) { lang in
+			Picker(recognizer.language.isoCode, selection: $recognizer.language) {
+				ForEach(HoursRecognizer.languageList) { lang in
 					Text(lang.name).tag(lang)
 				}
 			}
-			.pickerStyle(MenuPickerStyle())
-			.foregroundColor(.white)
-			.padding()
-			.overlay(Capsule(style: .continuous)
-				.stroke(Color.white, lineWidth: 2.0))
+			.pickerStyle(.menu)
+			.background(
+				RoundedRectangle(cornerRadius: 50.0, style: .continuous)
+					.fill(.white))
 		}
 	}
 }
@@ -93,7 +98,12 @@ struct CameraViewWrapper: UIViewRepresentable {
 			!recognizer.finished
 		}
 		cam.languages = [recognizer.language.isoCode]
+		cam.startRunning()
 		return cam
+	}
+
+	static func dismantleUIView(_ uiView: Self.UIViewType, coordinator: Self.Coordinator) {
+		uiView.stopRunning()
 	}
 
 	func updateUIView(_ uiView: CameraView, context: Context) {

@@ -8,42 +8,55 @@
 
 import Foundation
 
+// This class provides a list of all languages that iD presets have been translated into,
+// which is a larger list than the languages the app has been translated into.
 final class PresetLanguages {
-	static let codeList: [String] = {
+	static let languageCodeList: [String] = {
 		let path = Bundle.main.resourcePath! + "/presets/translations"
 		var list = (try? FileManager.default.contentsOfDirectory(atPath: path)) ?? []
 		list = list.map({ $0.replacingOccurrences(of: ".json", with: "") })
 		list.sort(by: { code1, code2 -> Bool in
 			let s1 = PresetLanguages.languageNameForCode(code1) ?? ""
 			let s2 = PresetLanguages.languageNameForCode(code2) ?? ""
-			return s1.caseInsensitiveCompare(s2) == ComparisonResult.orderedAscending
+			return s1.caseInsensitiveCompare(s2) == .orderedAscending
 		})
 		return list
 	}()
 
-	init() {}
-
-	func preferredLanguageIsDefault() -> Bool {
-		let code = UserDefaults.standard.object(forKey: "preferredLanguage") as? String
+	class func preferredLanguageIsDefault() -> Bool {
+		let code = UserPrefs.shared.preferredLanguage.value
 		return code == nil
 	}
 
-	func preferredLanguageCode() -> String {
-		var code = UserDefaults.standard.object(forKey: "preferredLanguage") as? String
-		if code == nil {
-			let userPrefs = NSLocale.preferredLanguages
-			let matches = Bundle.preferredLocalizations(from: PresetLanguages.codeList, forPreferences: userPrefs)
-			code = matches.first ?? "en"
+	private static let preferredLanguageCodes_: [String] = Locale.preferredLanguages.map {
+		// the language code includes a region that we don't want, so rebuild it without it
+		let locale = Locale(identifier: $0)
+		let code = [locale.languageCode, locale.scriptCode]
+			.compactMap { $0 }
+			.joined(separator: "-")
+		return code
+	}
+
+	class func preferredLanguageCodes() -> [String] {
+		return Self.preferredLanguageCodes_
+	}
+
+	class func preferredLanguageCode() -> String {
+		return Self.preferredLanguageCodes().first ?? "en"
+	}
+
+	class func preferredPresetLanguageCode() -> String {
+		if let code = UserPrefs.shared.preferredLanguage.value {
+			return code
 		}
-		return code!
+		let matches = Bundle.preferredLocalizations(from: PresetLanguages.languageCodeList,
+		                                            forPreferences: NSLocale.preferredLanguages)
+		return matches.first ?? "en"
 	}
 
-	func setPreferredLanguageCode(_ code: String?) {
-		UserDefaults.standard.set(code, forKey: "preferredLanguage")
-	}
-
-	func languageCodes() -> [String] {
-		return PresetLanguages.codeList
+	// code is either a language code, or nil if the default is requested
+	class func setPreferredLanguageCode(_ code: String?) {
+		UserPrefs.shared.preferredLanguage.value = code
 	}
 
 	class func languageNameForCode(_ code: String) -> String? {

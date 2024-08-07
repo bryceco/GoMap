@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Bryce Cogswell. All rights reserved.
 //
 
-import CommonCrypto
 import Foundation
 import Security
 
@@ -27,7 +26,7 @@ final class KeyChain {
 		]
 	}
 
-	class func getStringForIdentifier(_ identifier: String) -> String {
+	class func getStringForIdentifier(_ identifier: String) -> String? {
 		// Setup dictionary to access keychain.
 		var searchDictionary = self.searchDictionary(forIdentifier: identifier)
 		// Limit search results to one.
@@ -44,10 +43,10 @@ final class KeyChain {
 		{
 			return string
 		}
-		return ""
+		return nil
 	}
 
-	class func update(_ value: String, forIdentifier identifier: String) -> Bool {
+	private class func update(_ value: String, forIdentifier identifier: String) -> Bool {
 		// Setup dictionary to access keychain.
 		let searchDictionary = self.searchDictionary(forIdentifier: identifier)
 		guard let valueData = value.data(using: .utf8) else { return false }

@@ -18,9 +18,9 @@ struct AtomicInt {
 		self.count = count
 	}
 
-	mutating func increment() {
+	mutating func increment(_ delta: Int = 1) {
 		wait(); defer { signal() }
-		count += 1
+		count += delta
 	}
 
 	mutating func decrement() {

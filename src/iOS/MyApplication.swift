@@ -8,7 +8,7 @@
 
 import UIKit
 
-let TOUCH_RADIUS: CGFloat = 22
+private let TOUCH_RADIUS: CGFloat = 22
 
 class MyApplication: UIApplication {
 	private var touches: [UITouch: (UIWindow, TimeInterval)] = [:]

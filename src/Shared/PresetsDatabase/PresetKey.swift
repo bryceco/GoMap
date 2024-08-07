@@ -25,18 +25,12 @@ let UITextAutocapitalizationTypeWords = 2
 
 #endif
 
-enum GEOMETRY: String {
-	case NODE = "point"
-	case LINE = "line"
-	case AREA = "area"
-	case VERTEX = "vertex"
-}
-
 // A key along with information about possible values
-class PresetKey: NSObject, NSSecureCoding {
+class PresetKey: NSObject, NSSecureCoding, Codable {
 	public class var supportsSecureCoding: Bool { return true }
 
 	let name: String // name of the preset, e.g. Hours
+	let type: String // the type of value, e.g. "roadspeed"
 	let tagKey: String // the key being set, e.g. opening_hours
 	let defaultValue: String?
 	let placeholder: String // placeholder text in the UITextField
@@ -47,6 +41,7 @@ class PresetKey: NSObject, NSSecureCoding {
 
 	init(
 		name: String,
+		type: String,
 		tagKey tag: String,
 		defaultValue: String?,
 		placeholder: String?,
@@ -56,9 +51,11 @@ class PresetKey: NSObject, NSSecureCoding {
 		presets: [PresetValue]?)
 	{
 		self.name = name
+		self.type = type
 		tagKey = tag
-		self.placeholder = placeholder ?? PresetKey.placeholderForPresets(presets) ?? PresetsDatabase.shared
-			.unknownForLocale
+		self.placeholder = placeholder
+			?? PresetKey.placeholderForPresets(presets)
+			?? PresetsDatabase.shared.unknownForLocale
 		keyboardType = keyboard
 		autocapitalizationType = capitalize
 		autocorrectType = autocorrect
@@ -74,10 +71,11 @@ class PresetKey: NSObject, NSSecureCoding {
 		   let placeholder = coder.decodeObject(forKey: "placeholder") as? String,
 		   let presetList = coder.decodeObject(forKey: "presetList") as? [PresetValue],
 		   let keyboardType = UIKeyboardType(rawValue: coder.decodeInteger(forKey: "keyboardType")),
-		   let autocapitalizationType = UITextAutocapitalizationType(rawValue: coder
-		   	.decodeInteger(forKey: "capitalize"))
+		   let autocapitalizationType = UITextAutocapitalizationType(rawValue:
+		   	coder.decodeInteger(forKey: "capitalize"))
 		{
 			self.name = name
+			type = ""
 			self.tagKey = tagKey
 			self.placeholder = placeholder
 			self.presetList = presetList
@@ -98,6 +96,33 @@ class PresetKey: NSObject, NSSecureCoding {
 		coder.encode(keyboardType.rawValue, forKey: "keyboardType")
 		coder.encode(autocapitalizationType.rawValue, forKey: "capitalize")
 		// coder.encode(autocorrectType.rawValue, forKey: "autocorrect")
+	}
+
+	enum CodingKeys: String, CodingKey {
+		case name
+		case tagKey
+		case presetList
+	}
+
+	required init(from decoder: Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		name = try container.decode(String.self, forKey: .name)
+		tagKey = try container.decode(String.self, forKey: .tagKey)
+		presetList = try container.decode([PresetValue].self, forKey: .presetList)
+		type = ""
+		defaultValue = nil
+		placeholder = ""
+		keyboardType = .default
+		autocapitalizationType = .none
+		autocorrectType = .no
+		super.init()
+	}
+
+	func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(name, forKey: .name)
+		try container.encode(tagKey, forKey: .tagKey)
+		try container.encode(presetList, forKey: .presetList)
 	}
 
 	func prettyNameForTagValue(_ value: String) -> String {
@@ -161,6 +186,6 @@ class PresetKey: NSObject, NSSecureCoding {
 	}
 
 	override var description: String {
-		return name
+		return "\(tagKey): \(name)"
 	}
 }

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21699.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rRu-gY-Gv4">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Quest Solver-->
+        <scene sceneID="9kR-eE-Swa">
+            <objects>
+                <tableViewController title="Quest Editor" id="rRu-gY-Gv4" userLabel="Quest Solver" customClass="QuestSolverController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="2aQ-XZ-01d">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="QuestCellTitle" textLabel="ifw-wR-ilR" style="IBUITableViewCellStyleDefault" id="zoI-Qh-SFG">
+                                <rect key="frame" x="0.0" y="50" width="375" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zoI-Qh-SFG" id="UrN-wk-f2L">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="What is the name of this restaurant?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ifw-wR-ilR">
+                                            <rect key="frame" x="20" y="0.0" width="335" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Placeholder - don't localize"/>
+                                            </attributedString>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationLevel="2" indentationWidth="10" reuseIdentifier="QuestCellTagValue" textLabel="C8B-hx-GxG" style="IBUITableViewCellStyleDefault" id="t9c-Rh-Oy3">
+                                <rect key="frame" x="0.0" y="93.666667938232422" width="375" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="t9c-Rh-Oy3" id="frm-xP-l6G">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="C8B-hx-GxG">
+                                            <rect key="frame" x="40" y="0.0" width="315" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Placeholder - don't localize"/>
+                                            </attributedString>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationLevel="2" indentationWidth="10" reuseIdentifier="QuestCellTextEntry" id="GNG-rr-CUE" customClass="QuestSolverTextEntryCell" customModule="Go_Map__" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="137.33333587646484" width="375" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GNG-rr-CUE" id="ZD1-cz-uUJ">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6jK-Gz-RhS" customClass="PresetValueTextField" customModule="Go_Map__" customModuleProvider="target">
+                                            <rect key="frame" x="40" y="7" width="315" height="30"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="6jK-Gz-RhS" secondAttribute="trailing" constant="20" id="Ocz-dz-WN1"/>
+                                        <constraint firstItem="6jK-Gz-RhS" firstAttribute="leading" secondItem="ZD1-cz-uUJ" secondAttribute="leading" constant="40" id="bve-cp-7Tu"/>
+                                        <constraint firstItem="6jK-Gz-RhS" firstAttribute="centerY" secondItem="ZD1-cz-uUJ" secondAttribute="centerY" id="n2k-bP-CrG"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="textField" destination="6jK-Gz-RhS" id="giO-61-4nh"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="QuestCellIgnore" id="Xdu-Wl-JWk">
+                                <rect key="frame" x="0.0" y="181.00000381469727" width="375" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Xdu-Wl-JWk" id="IjF-C8-1Uv">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8d4-oo-Jk1">
+                                            <rect key="frame" x="20" y="4.6666666666666679" width="335" height="34.333333333333329"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IFG-Ak-kOo">
+                                                    <rect key="frame" x="0.0" y="0.0" width="98.333333333333329" height="34.333333333333336"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" title="Ignore"/>
+                                                    <connections>
+                                                        <action selector="ignoreAlways:" destination="rRu-gY-Gv4" eventType="touchUpInside" id="c9b-Md-qPX"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Wj-nB-ieT">
+                                                    <rect key="frame" x="106.33333333333333" y="0.0" width="228.66666666666669" height="34.333333333333336"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" title="Ignore this session"/>
+                                                    <connections>
+                                                        <action selector="ignoreThisSession:" destination="rRu-gY-Gv4" eventType="touchUpInside" id="NIh-UT-Jy1"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="8d4-oo-Jk1" firstAttribute="centerY" secondItem="IjF-C8-1Uv" secondAttribute="centerY" id="5Ij-Bs-1kf"/>
+                                        <constraint firstAttribute="trailing" secondItem="8d4-oo-Jk1" secondAttribute="trailing" constant="20" symbolic="YES" id="Qfl-up-Zq6"/>
+                                        <constraint firstItem="8d4-oo-Jk1" firstAttribute="leading" secondItem="IjF-C8-1Uv" secondAttribute="leading" constant="20" symbolic="YES" id="Zkg-nu-gWd"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="QuestCellOpenEditor" id="N24-xv-FNx">
+                                <rect key="frame" x="0.0" y="224.66667175292969" width="375" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="N24-xv-FNx" id="LeH-zY-p5d">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="evO-fJ-hhD" userLabel="Open Tag Editor">
+                                            <rect key="frame" x="114.33333333333333" y="4.6666666666666679" width="146.33333333333337" height="34.333333333333329"/>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" title="Open Tag Editor"/>
+                                            <connections>
+                                                <action selector="openTagEditor:" destination="rRu-gY-Gv4" eventType="touchUpInside" id="UYm-Wt-ghy"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="evO-fJ-hhD" firstAttribute="centerX" secondItem="LeH-zY-p5d" secondAttribute="centerX" id="Kd9-1c-Jzx"/>
+                                        <constraint firstItem="evO-fJ-hhD" firstAttribute="centerY" secondItem="LeH-zY-p5d" secondAttribute="centerY" id="ihB-1V-JT9"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="rRu-gY-Gv4" id="pop-6Y-hTI"/>
+                            <outlet property="delegate" destination="rRu-gY-Gv4" id="m60-WV-S6U"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Quest" id="FM8-GC-9Kg">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="3nj-QR-7tl">
+                            <connections>
+                                <action selector="onCancel:" destination="rRu-gY-Gv4" id="gUM-Vk-uGR"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="8ZX-yB-h8w">
+                            <connections>
+                                <action selector="onSave:" destination="rRu-gY-Gv4" id="hab-pr-Ixj"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="v1g-Cz-lmk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1438" y="-46"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="aTw-w4-uMs">
+            <objects>
+                <navigationController storyboardIdentifier="QuestSolver" id="4au-3j-8YJ" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KGv-hT-hDP">
+                        <rect key="frame" x="0.0" y="50" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="rRu-gY-Gv4" kind="relationship" relationship="rootViewController" id="ezR-av-z3r"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JKs-lZ-JwR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-323" y="-45"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

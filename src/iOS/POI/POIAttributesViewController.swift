@@ -22,22 +22,8 @@ enum ROW: Int {
 private
 enum SectionType: Int {
 	case metadata
-	case nodeLatlon
-	case wayExtra
+	case extraInfo
 	case wayNodes
-
-	func getRawValue() -> Int {
-		switch self {
-		case .metadata:
-			return 0
-		case .nodeLatlon:
-			return 1
-		case .wayExtra:
-			return 1
-		case .wayNodes:
-			return 2
-		}
-	}
 }
 
 class AttributeCustomCell: UITableViewCell {
@@ -52,12 +38,9 @@ class POIAttributesViewController: UITableViewController {
 		super.viewDidLoad()
 
 		let object = AppDelegate.shared.mapView.editorLayer.selectedPrimary
-		title = object?.isNode() != nil
-			? NSLocalizedString("Node Attributes", comment: "")
-			: object?.isWay() != nil
-			? NSLocalizedString("Way Attributes", comment: "")
-			: object?.isRelation() != nil
-			? NSLocalizedString("Relation Attributes", comment: "")
+		title = object is OsmNode ? NSLocalizedString("Node Attributes", comment: "")
+			: object is OsmWay ? NSLocalizedString("Way Attributes", comment: "")
+			: object is OsmRelation ? NSLocalizedString("Relation Attributes", comment: "")
 			: NSLocalizedString("Attributes", comment: "node/way/relation attributes")
 	}
 
@@ -69,42 +52,63 @@ class POIAttributesViewController: UITableViewController {
 	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		let object = AppDelegate.shared.mapView.editorLayer.selectedPrimary
-		return object?.isNode() != nil ? 2 : object?.isWay() != nil ? 3 : 1
+		guard let object = AppDelegate.shared.mapView.editorLayer.selectedPrimary else {
+			return 0
+		}
+		switch object {
+		case is OsmNode:
+			return 2
+		case is OsmWay:
+			return 3
+		case is OsmRelation:
+			return 1
+		default:
+			return 0
+		}
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		guard let object = AppDelegate.shared.mapView.editorLayer.selectedPrimary else { return 0 }
 
-		if section == SectionType.metadata.getRawValue() {
+		switch SectionType(rawValue: section) {
+		case .metadata:
 			return 6
-		}
-		if object.isNode() != nil {
-			if section == SectionType.nodeLatlon.getRawValue() {
+		case .extraInfo:
+			switch object {
+			case is OsmNode:
 				return 1 // longitude/latitude
+			case let way as OsmWay:
+				return way.isClosed() ? 2 : 1
+			case is OsmRelation:
+				return 0
+			default:
+				return 0
 			}
-		} else if let way = object.isWay() {
-			if section == SectionType.wayExtra.getRawValue() {
-				return 1
-			} else if section == SectionType.wayNodes.getRawValue() {
-				return way.nodes.count // all nodes
+		case .wayNodes:
+			if let way = object as? OsmWay {
+				return way.nodes.count
 			}
+			return 0
+		default:
+			return 0
 		}
-		return 0
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AttributeCustomCell
 		cell.accessoryType = .none
 
-		guard let object = AppDelegate.shared.mapView.editorLayer.selectedPrimary else {
+		guard let object = AppDelegate.shared.mapView.editorLayer.selectedPrimary,
+		      let section = SectionType(rawValue: indexPath.section)
+		else {
 			// should never happen (but it has)
 			cell.title.text = nil
 			cell.value.text = nil
 			return cell
 		}
 
-		if indexPath.section == SectionType.metadata.getRawValue() {
+		switch section {
+		case .metadata:
 			switch indexPath.row {
 			case ROW.identifier.rawValue:
 				cell.title.text = NSLocalizedString("Identifier", comment: "OSM node/way/relation identifier")
@@ -135,40 +139,58 @@ class POIAttributesViewController: UITableViewController {
 			default:
 				assertionFailure()
 			}
-		} else if let node = object.isNode() {
-			if indexPath.section == SectionType.nodeLatlon.getRawValue() {
+		case .extraInfo:
+			switch object {
+			case let node as OsmNode:
 				cell.title.text = NSLocalizedString("Lat/Lon", comment: "coordinates")
 				cell.value.text = "\(node.latLon.lat),\(node.latLon.lon)"
-			}
-		} else if let way = object.isWay() {
-			if indexPath.section == SectionType.wayExtra.getRawValue() {
-				let len = way.lengthInMeters()
-				let nodes = way.nodes.count
-				cell.title.text = NSLocalizedString("Length", comment: "")
-				cell.value.text = len >= 10
-					? String.localizedStringWithFormat(
-						NSLocalizedString("%.0f meters, %ld nodes", comment: "way length if > 10m"),
-						len,
-						nodes)
-					: String.localizedStringWithFormat(
-						NSLocalizedString("%.1f meters, %ld nodes", comment: "way length if < 10m"),
-						len,
-						nodes)
-				cell.accessoryType = .none
-			} else if indexPath.section == SectionType.wayNodes.getRawValue() {
-				let node = way.nodes[indexPath.row]
-				cell.title.text = NSLocalizedString("Node", comment: "")
-				var name = node.friendlyDescription()
-				if !name.hasPrefix("(") {
-					name = "\(name) (\(node.ident))"
-				} else {
-					name = "\(node.ident)"
+			case let way as OsmWay:
+				switch indexPath.row {
+				case 0:
+					// length
+					let len = way.lengthInMeters()
+					let nodes = way.nodes.count
+					cell.title.text = NSLocalizedString("Length", comment: "")
+					cell.value.text = len >= 10
+						? String.localizedStringWithFormat(
+							NSLocalizedString("%ld meters, %ld nodes", comment: "way length if > 10m"),
+							Int(len),
+							nodes)
+						: String.localizedStringWithFormat(
+							NSLocalizedString("%.1f meters, %ld nodes", comment: "way length if < 10m"),
+							len,
+							nodes)
+					cell.accessoryType = .none
+				case 1:
+					// area (only if closed way)
+					let area = way.areaInSquareMeters()
+					cell.title.text = NSLocalizedString("Area", comment: "Area of an object in m^2")
+					cell.value.text = String.localizedStringWithFormat(
+						NSLocalizedString("%.0f m^2", comment: "area in m^2"), area)
+				case 2:
+					// building
+					cell.title.text = NSLocalizedString("Building", comment: "The object is a building")
+					cell.value.text = object.tags["building"]
+					cell.accessoryType = .disclosureIndicator
+				default:
+					break
 				}
-				cell.value.text = name
+			case is OsmRelation:
+				break
+			default:
+				assertionFailure()
 			}
-		} else {
-			// shouldn't be here
-			assertionFailure()
+		case .wayNodes:
+			let way = object as! OsmWay
+			let node = way.nodes[indexPath.row]
+			cell.title.text = NSLocalizedString("Node", comment: "")
+			var name = node.friendlyDescription()
+			if !name.hasPrefix("(") {
+				name = "\(name) (\(node.ident))"
+			} else {
+				name = "\(node.ident)"
+			}
+			cell.value.text = name
 		}
 		// do extra work so keyboard won't display if they select a value
 		let value = cell.value
@@ -188,30 +210,34 @@ class POIAttributesViewController: UITableViewController {
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		guard let object = AppDelegate.shared.mapView.editorLayer.selectedPrimary,
-		      let row = ROW(rawValue: indexPath.row)
+		      let section = SectionType(rawValue: indexPath.section)
 		else {
 			return
 		}
 
 		let urlString: String
-
-		switch row {
-		case .identifier:
-			let type = object.osmType.string
-			let ident = object.ident
-			urlString = "https://www.openstreetmap.org/browse/\(type)/\(ident)"
-		case .user:
-			let user = object.user
-			urlString = "https://www.openstreetmap.org/user/\(user)"
-		case .version:
-			let type = object.osmType.string
-			let ident = object.ident
-			urlString = "https://www.openstreetmap.org/browse/\(type)/\(ident)/history"
-		case .changeset:
-			urlString = String(
-				format: "https://www.openstreetmap.org/browse/changeset/%ld",
-				Int(object.changeset))
-		case .uid, .modified:
+		switch section {
+		case .metadata:
+			guard let row = ROW(rawValue: indexPath.row) else {
+				return
+			}
+			switch row {
+			case .identifier:
+				let type = object.osmType.string
+				let ident = object.ident
+				urlString = "\(OSM_SERVER.queryURL)\(type)/\(ident)"
+			case .user:
+				urlString = "\(OSM_SERVER.queryURL)user/\(object.user)"
+			case .version:
+				let type = object.osmType.string
+				let ident = object.ident
+				urlString = "\(OSM_SERVER.queryURL)\(type)/\(ident)/history"
+			case .changeset:
+				urlString = "\(OSM_SERVER.queryURL)changeset/\(object.changeset)"
+			case .uid, .modified:
+				return
+			}
+		default:
 			return
 		}
 
@@ -225,7 +251,7 @@ class POIAttributesViewController: UITableViewController {
 
 	override func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
 		// Allow the user to copy the latitude/longitude
-		return indexPath.section != SectionType.metadata.getRawValue()
+		return indexPath.section != SectionType.metadata.rawValue
 	}
 
 	override func tableView(
@@ -234,7 +260,7 @@ class POIAttributesViewController: UITableViewController {
 		forRowAt indexPath: IndexPath,
 		withSender sender: Any?) -> Bool
 	{
-		if indexPath.section != SectionType.metadata.getRawValue(),
+		if indexPath.section != SectionType.metadata.rawValue,
 		   action == #selector(copy(_:))
 		{
 			// Allow users to copy latitude/longitude.
@@ -256,7 +282,7 @@ class POIAttributesViewController: UITableViewController {
 			return
 		}
 
-		if indexPath.section != SectionType.metadata.getRawValue(),
+		if indexPath.section != SectionType.metadata.rawValue,
 		   action == #selector(copy(_:))
 		{
 			UIPasteboard.general.string = customCell.value.text

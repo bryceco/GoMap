@@ -1,16 +1,24 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "KissXML",
-        "repositoryURL": "https://github.com/robbiehanson/KissXML",
-        "state": {
-          "branch": "master",
-          "revision": "990cdef080213b5a3f0d9709b845d553bd3ddb97",
-          "version": null
-        }
+  "originHash" : "7fb3a771fd1e29c02e9dc158e1a167de01626e0941da4240413396214dd615ec",
+  "pins" : [
+    {
+      "identity" : "kissxml",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/robbiehanson/KissXML",
+      "state" : {
+        "branch" : "master",
+        "revision" : "990cdef080213b5a3f0d9709b845d553bd3ddb97"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "maplibre-gl-native-distribution",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/maplibre/maplibre-gl-native-distribution",
+      "state" : {
+        "revision" : "cf66f087af489ebc091c03cbd4f38d0540135871",
+        "version" : "6.5.3"
+      }
+    }
+  ],
+  "version" : 3
 }

@@ -3,7 +3,7 @@
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 6/18/21.
-//  Copyright © 2021 Bryce. All rights reserved.
+//  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
 import Foundation
@@ -149,14 +149,6 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 		default:
 			DLog("OSM parser: Unknown tag '%@'", elementName)
 			parserStack.append(elementName)
-#if false
-			parseError = NSError(domain: "Parser", code: 102, userInfo: [
-				NSLocalizedDescriptionKey: "OSM parser: Unknown tag '\(elementName)'"
-			])
-			parseError = OsmParserError.unknown
-
-			parser.abortParsing()
-#endif
 		}
 	}
 
@@ -206,7 +198,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 		if let error = parseError {
 			return .failure(error)
 		} else if !ok {
-			return .failure(NSError())
+			return .failure(NSError(domain: "OsmDownloader", code: 1))
 		}
 		return .success(result)
 	}

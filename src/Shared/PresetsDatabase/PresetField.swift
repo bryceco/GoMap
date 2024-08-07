@@ -1,0 +1,85 @@
+//
+//  PresetField.swift
+//  Go Map!!
+//
+//  Created by Bryce Cogswell on 1/22/23.
+//  Copyright © 2023 Bryce Cogswell. All rights reserved.
+//
+
+import Foundation
+
+final class PresetField: CustomDebugStringConvertible {
+	let jsonDict: [String: Any]
+
+	init?(withJson json: [String: Any]) {
+		guard json["type"] is String else { return nil }
+		jsonDict = json
+	}
+
+	var key: String? { jsonDict["key"] as! String? }
+	var keys: [String]? { jsonDict["keys"] as! [String]? }
+	var type: String { jsonDict["type"] as! String }
+	var defaultValue: String? { jsonDict["default"] as! String? }
+	var options: [String]? { jsonDict["options"] as! [String]? }
+	var autoSuggestions: Bool { (jsonDict["autoSuggestions"] as! Bool?) ?? true }
+	var replacement: String? { jsonDict["replacement"] as! String? }
+	var reference: [String: String]? { jsonDict["reference"] as! [String: String]? }
+	var icons: [String: String]? { jsonDict["icons"] as! [String: String]? }
+	var universal: Bool { (jsonDict["universal"] as! Bool?) ?? false }
+
+	// preconditions
+	var geometry: [String]? { jsonDict["geometry"] as! [String]? }
+	var prerequisiteTag: [String: String]? { jsonDict["prerequisiteTag"] as! [String: String]? }
+	var locationSet: LocationSet? { LocationSet(withJson: jsonDict["locationSet"]) }
+
+	// localizable strings
+	var placeholder: String? { redirected(property: "placeholder") as String? }
+	var placeholders: [String: Any]? { jsonDict["placeholders"] as! [String: Any]? }
+	var label: String? { redirected(property: "label") as String? }
+	var strings: [String: String]? { redirected(property: "strings") as [String: String]? }
+	var types: [String: String]? { jsonDict["types"] as! [String: String]? }
+
+	// Some field values can have a redirect to a different field using a {other_field} notation
+	func redirected<T>(property: String) -> T? {
+		let value = property == "strings"
+			? jsonDict["stringsCrossReference"] ?? jsonDict["strings"]
+			: jsonDict[property]
+		if let value = value as? String,
+		   value.hasPrefix("{"),
+		   value.hasSuffix("}")
+		{
+			let redirect = String(value.dropFirst().dropLast())
+			guard let newField = PresetsDatabase.shared.presetFields[redirect] else {
+				print("bad preset redirect: \(redirect)")
+				DbgAssert(false)
+				return nil
+			}
+			if let newValue: T = newField.redirected(property: property) {
+				return newValue
+			} else {
+				return nil
+			}
+		}
+		return value as? T
+	}
+
+	var allKeys: [String] {
+		if let keys = keys {
+			if let key = key {
+				var all = keys
+				all.append(key)
+				return all
+			} else {
+				return keys
+			}
+		} else if let key = key {
+			return [key]
+		} else {
+			return []
+		}
+	}
+
+	var debugDescription: String {
+		return key ?? keys!.joined(separator: ",")
+	}
+}

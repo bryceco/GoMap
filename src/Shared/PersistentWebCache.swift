@@ -23,7 +23,8 @@ enum WebCacheError: LocalizedError {
 final class PersistentWebCache<T: AnyObject> {
 	private let cacheDirectory: URL
 	private let memoryCache: NSCache<NSString, T>
-	// track objects we're already downloading so we don't issue multiple requests
+	// Track objects we're already downloading so we don't issue duplicate requests.
+	// Each object has a list of completions to call when it becomes available.
 	private var pending: [String: [(Result<T, Error>) -> Void]]
 
 	class func encodeKey(forFilesystem string: String) -> String {
@@ -33,65 +34,57 @@ final class PersistentWebCache<T: AnyObject> {
 		return string
 	}
 
-	func fileEnumerator(withAttributes attr: [URLResourceKey]) -> FileManager.DirectoryEnumerator {
-		return FileManager.default.enumerator(
-			at: cacheDirectory,
-			includingPropertiesForKeys: attr,
-			options: [.skipsSubdirectoryDescendants, .skipsPackageDescendants, .skipsHiddenFiles],
-			errorHandler: nil)!
+	func fileList(withAttributes attr: [URLResourceKey]) -> [URL] {
+		let fm = FileManager.default
+		let options: FileManager.DirectoryEnumerationOptions = [.skipsSubdirectoryDescendants,
+		                                                        .skipsPackageDescendants,
+		                                                        .skipsHiddenFiles]
+		let list = try? fm.contentsOfDirectory(at: cacheDirectory,
+		                                       includingPropertiesForKeys: attr,
+		                                       options: options)
+		return list ?? []
 	}
 
 	func allKeys() -> [String] {
 		var a: [String] = []
-		for url in fileEnumerator(withAttributes: []) {
-			guard let url = url as? URL else {
-				continue
-			}
+		for url in fileList(withAttributes: []) {
 			let s = url.lastPathComponent // automatically removes escape encoding
 			a.append(s)
 		}
 		return a
 	}
 
-	init(name: String, memorySize: Int) {
+	init(name: String, memorySize: Int, daysToKeep: Double) {
 		let name = PersistentWebCache.encodeKey(forFilesystem: name)
-		let bundleName = Bundle.main.infoDictionary?["CFBundleIdentifier"] as! String
-		cacheDirectory = try! FileManager.default.url(
-			for: .cachesDirectory,
-			in: .userDomainMask,
-			appropriateFor: nil,
-			create: true).appendingPathComponent(bundleName, isDirectory: true)
-			.appendingPathComponent(name, isDirectory: true)
-
+		cacheDirectory = ArchivePath.webCache(name).url()
 		memoryCache = NSCache<NSString, T>()
 		memoryCache.countLimit = 1000
 		memoryCache.totalCostLimit = memorySize
-
 		pending = [:]
 
 		try? FileManager.default.createDirectory(
 			at: cacheDirectory,
 			withIntermediateDirectories: true,
 			attributes: nil)
+
+		removeObjectsAsyncOlderThan(Date(timeIntervalSinceNow: -daysToKeep * 24 * 60 * 60))
+	}
+
+	func resetMemoryCache() {
+		memoryCache.removeAllObjects()
 	}
 
 	func removeAllObjects() {
-		for url in fileEnumerator(withAttributes: []) {
-			guard let url = url as? URL else {
-				continue
-			}
-			do {
-				try FileManager.default.removeItem(at: url)
-			} catch {}
+		for url in fileList(withAttributes: []) {
+			try? FileManager.default.removeItem(at: url)
 		}
 		memoryCache.removeAllObjects()
 	}
 
-	func removeObjectsAsyncOlderThan(_ expiration: Date) {
+	private func removeObjectsAsyncOlderThan(_ expiration: Date) {
 		DispatchQueue.global(qos: .background).async(execute: { [self] in
-			for url in fileEnumerator(withAttributes: [.contentModificationDateKey]) {
-				if let url = url as? URL,
-				   let date = try? url.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate,
+			for url in fileList(withAttributes: [.contentModificationDateKey]) {
+				if let date = try? url.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate,
 				   date < expiration
 				{
 					try? FileManager.default.removeItem(at: url)
@@ -100,13 +93,11 @@ final class PersistentWebCache<T: AnyObject> {
 		})
 	}
 
-	func getDiskCacheSize(_ pSize: UnsafeMutablePointer<Int>, count pCount: UnsafeMutablePointer<Int>) {
+	func getDiskCacheSize() -> (size: Int, count: Int) {
 		var count = 0
 		var size = 0
-		for url in fileEnumerator(withAttributes: [URLResourceKey.fileAllocatedSizeKey]) {
-			guard let url = url as? NSURL else {
-				continue
-			}
+		for url in fileList(withAttributes: [URLResourceKey.fileAllocatedSizeKey]) {
+			let url = url as NSURL
 			var len: AnyObject?
 			try? url.getResourceValue(&len, forKey: URLResourceKey.fileAllocatedSizeKey)
 			count += 1
@@ -114,8 +105,7 @@ final class PersistentWebCache<T: AnyObject> {
 				size += len.intValue
 			}
 		}
-		pSize.pointee = size
-		pCount.pointee = count
+		return (size, count)
 	}
 
 	func object(
@@ -130,9 +120,10 @@ final class PersistentWebCache<T: AnyObject> {
 			return cachedObject
 		}
 
-		if let plist = pending[cacheKey] {
+		if var plist = pending[cacheKey] {
 			// already being downloaded
-			pending[cacheKey] = plist + [completion]
+			plist.append(completion)
+			pending[cacheKey] = plist
 			return nil
 		}
 		pending[cacheKey] = [completion]
@@ -154,7 +145,7 @@ final class PersistentWebCache<T: AnyObject> {
 				r = .failure(error)
 			}
 			DispatchQueue.main.async(execute: {
-				if case let .success(obj) = r {
+				if let obj = try? r.get() {
 					self.memoryCache.setObject(obj,
 					                           forKey: cacheKey as NSString,
 					                           cost: size)
@@ -181,7 +172,7 @@ final class PersistentWebCache<T: AnyObject> {
 				}
 				URLSession.shared.data(with: url, completionHandler: { result in
 					if processData(result),
-					   case let .success(data) = result
+					   let data = try? result.get()
 					{
 						DispatchQueue.global(qos: .default).async(execute: {
 							(data as NSData).write(to: filePath, atomically: true)

@@ -10,14 +10,8 @@ import CoreGraphics
 
 extension CGPath {
 	func apply(action: (CGPathElement) -> Void) {
-		// get a copy of the block to invoke on each element
-		var action = action
-		// call the native CGPath.apply(), passing the block in info
-		apply(info: &action, function: { type, element in
-			// cast info to be a function pointer
-			let block = type!.bindMemory(to: ((CGPathElement) -> Void).self, capacity: 1).pointee
-			// call the function
-			block(element.pointee)
+		applyWithBlock({ elementPointer in
+			action(elementPointer.pointee)
 		})
 	}
 
@@ -148,46 +142,36 @@ extension CGPath {
 	}
 
 	private static func DouglasPeuckerCore(
-		_ points: [CGPoint],
-		_ first: Int,
-		_ last: Int,
+		_ points: ArraySlice<CGPoint>,
 		_ epsilon: Double,
 		_ result: inout [CGPoint])
 	{
-		// Find the point with the maximum distance
-		var dmax = 0.0
-		var index = 0
-		let end1 = OSMPoint(points[first])
-		let end2 = OSMPoint(points[last])
-		for i in (first + 1)..<last {
-			let p = OSMPoint(points[i])
-			let d = p.distanceToLineSegment(end1, end2)
-			if d > dmax {
-				index = i
-				dmax = d
-			}
-		}
+		// Find the point the maximum distance away from the line connecting first and last points
+		let p1 = OSMPoint(points.first!)
+		let p2 = OSMPoint(points.last!)
+		let distances = points.map({ OSMPoint($0).distanceToLineSegment(p1, p2) })
+		let maxDist = distances.indices.max(by: { distances[$0] < distances[$1] })!
+
 		// If max distance is greater than epsilon, recursively simplify
-		if dmax > epsilon {
+		if distances[maxDist] > epsilon {
 			// Recursive call
-			DouglasPeuckerCore(points, first, index, epsilon, &result)
+			let midpoint = points.startIndex + maxDist
+			DouglasPeuckerCore(points[..<midpoint], epsilon, &result)
 			result.removeLast()
-			DouglasPeuckerCore(points, index, last, epsilon, &result)
+			DouglasPeuckerCore(points[midpoint...], epsilon, &result)
 		} else {
-			result.append(CGPoint(end1))
-			result.append(CGPoint(end2))
+			result.append(CGPoint(p1))
+			result.append(CGPoint(p2))
 		}
 	}
 
-	func pathWithReducePoints(_ epsilon: Double) -> CGMutablePath {
-		let count = pointCount()
-		if count < 3 {
+	func pathWithReducedPoints(_ epsilon: Double) -> CGMutablePath {
+		let points = getPoints()
+		if points.count < 3 {
 			return mutableCopy()!
 		}
-		let points = getPoints()
-		var result = [CGPoint].init(repeating: CGPoint(), count: points.count)
-		CGPath.DouglasPeuckerCore(points, 0, count - 1, epsilon, &result)
-
+		var result = [CGPoint]()
+		CGPath.DouglasPeuckerCore(points[points.indices], epsilon, &result)
 		let newPath = CGMutablePath()
 		newPath.addLines(between: result)
 		return newPath

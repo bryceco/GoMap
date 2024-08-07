@@ -6,59 +6,103 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
-import SafariServices
 import UIKit
 
 private let EDIT_RELATIONS = false
 
-class TextPairTableCell: UITableViewCell {
-	@IBOutlet var text1: AutocompleteTextField!
-	@IBOutlet var text2: AutocompleteTextField!
-	@IBOutlet var infoButton: UIButton!
+private class SectionHeaderCell: UITableViewHeaderFooterView {
+	static let reuseIdentifier = "SectionHeaderCell"
 
-	override func willTransition(to state: UITableViewCell.StateMask) {
-		super.willTransition(to: state)
+	let label = UILabel()
+	let button = UIButton()
 
-		// don't allow editing text while deleting
-		if state.rawValue != 0,
-		   (UITableViewCell.StateMask.showingEditControl.rawValue != 0) ||
-		   (UITableViewCell.StateMask.showingDeleteConfirmation.rawValue != 0)
-		{
-			text1.resignFirstResponder()
-			text2.resignFirstResponder()
+	override init(reuseIdentifier: String?) {
+		super.init(reuseIdentifier: reuseIdentifier)
+		configureContents()
+	}
+
+	@available(*, unavailable)
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
+	func configureContents() {
+		label.translatesAutoresizingMaskIntoConstraints = false
+		button.translatesAutoresizingMaskIntoConstraints = false
+
+		if #available(iOS 13.0, *) {
+			label.textColor = UIColor.secondaryLabel
+		} else {
+			label.textColor = UIColor.darkGray
+		}
+		button.setTitle(">", for: .normal)
+		button.setTitleColor(UIColor.systemBlue, for: .normal)
+		button.addTarget(self, action: #selector(pickFeature(_:)), for: .touchUpInside)
+
+		contentView.addSubview(label)
+		contentView.addSubview(button)
+
+		NSLayoutConstraint.activate([
+			label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+			label.leadingAnchor.constraint(equalToSystemSpacingAfter: contentView.leadingAnchor, multiplier: 1.0),
+			label.trailingAnchor.constraint(greaterThanOrEqualTo: button.leadingAnchor, constant: 10.0),
+
+			button.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+			button.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor, constant: 10.0),
+			button.widthAnchor.constraint(equalToConstant: 44.0)
+		])
+	}
+
+	@objc func pickFeature(_ sender: Any?) {
+		var r: UIResponder = self
+		while true {
+			if let vc = r as? POIAllTagsViewController {
+				let storyboard = UIStoryboard(name: "POI", bundle: nil)
+				let myVC = storyboard.instantiateViewController(withIdentifier: "PoiTypeViewController")
+					as! POIFeaturePickerViewController
+				myVC.delegate = vc
+				vc.navigationController?.pushViewController(myVC, animated: true)
+				return
+			}
+			guard let next = r.next else { return }
+			r = next
 		}
 	}
 }
 
-class SectionHeaderCell: UITableViewCell {
-	@IBOutlet var label: UILabel!
-}
-
-class POIAllTagsViewController: UITableViewController, POITypeViewControllerDelegate {
-	private var tags: [(k: String, v: String)] = []
+class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate, KeyValueTableCellOwner {
+	var allPresetKeys: [PresetKey] = []
+	private var tags: KeyValueTableSection!
 	private var relations: [OsmRelation] = []
 	private var members: [OsmMember] = []
 	@IBOutlet var saveButton: UIBarButtonItem!
-	private var childViewPresented = false
+	internal var childViewPresented = false
 	private var currentFeature: PresetFeature?
-	private var currentTextField: UITextField?
-	private var allPresetKeys: [PresetKey] = [] // updated whenever a value changes
+	internal var currentTextField: UITextField?
+	private var prevNextToolbar: UIToolbar!
 
 	override func viewDidLoad() {
+		tags = KeyValueTableSection(tableView: tableView)
+		tableView.register(SectionHeaderCell.self,
+		                   forHeaderFooterViewReuseIdentifier: SectionHeaderCell.reuseIdentifier)
+
 		super.viewDidLoad()
 
-		let editButton = editButtonItem
-		editButton.target = self
-		editButton.action = #selector(toggleTableRowEditing(_:))
-		navigationItem.rightBarButtonItems = [navigationItem.rightBarButtonItem, editButton].compactMap { $0 }
+		editButtonItem.target = self
+		editButtonItem.action = #selector(toggleTableRowEditing(_:))
+		navigationItem.rightBarButtonItems = [navigationItem.rightBarButtonItem, editButtonItem].compactMap { $0 }
+
+		tableView.estimatedRowHeight = 44.0
+		tableView.rowHeight = UITableView.automaticDimension
+		tableView.keyboardDismissMode = .none
 
 		let tabController = tabBarController as! POITabBarController
 
-		if tabController.selection?.isNode() != nil {
+		if tabController.selection is OsmNode {
 			title = NSLocalizedString("Node Tags", comment: "")
-		} else if tabController.selection?.isWay() != nil {
+		} else if tabController.selection is OsmWay {
 			title = NSLocalizedString("Way Tags", comment: "")
-		} else if tabController.selection?.isRelation() != nil {
+		} else if tabController.selection is OsmRelation {
 			if let type = tabController.keyValueDict["type"],
 			   !type.isEmpty
 			{
@@ -71,48 +115,61 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 		} else {
 			title = NSLocalizedString("All Tags", comment: "")
 		}
+
+		prevNextToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 44))
+		prevNextToolbar.items = [
+			UIBarButtonItem(
+				title: NSLocalizedString("Previous", comment: ""),
+				style: .plain,
+				target: self,
+				action: #selector(tabPrevious(_:))),
+			UIBarButtonItem(
+				title: NSLocalizedString("Next", comment: ""),
+				style: .plain,
+				target: self,
+				action: #selector(tabNext(_:)))
+		]
 	}
 
-	deinit {}
-
-	// return -1 if unchanged, else row to set focus
-	func updateWithRecomendations(forFeature forceReload: Bool) -> Int {
+	// return nil if unchanged, else row to set focus
+	func updateWithRecomendations(forFeature forceReload: Bool) -> Int? {
 		let tabController = tabBarController as? POITabBarController
-		let geometry = tabController?.selection?.geometry() ?? GEOMETRY.NODE
-		let dict = keyValueDictionary()
-		let newFeature = PresetsDatabase.shared.matchObjectTagsToFeature(
-			dict,
+		let geometry = tabController?.selection?.geometry() ?? GEOMETRY.POINT
+		let dict = tags.keyValueDictionary()
+		let newFeature = PresetsDatabase.shared.presetFeatureMatching(
+			tags: dict,
 			geometry: geometry,
+			location: AppDelegate.shared.mapView.currentRegion,
 			includeNSI: true)
 
 		if !forceReload, newFeature?.featureID == currentFeature?.featureID {
-			return -1
+			return nil
 		}
 		currentFeature = newFeature
 
-		// remove all entries without key & value
-		tags = tags.filter { $0.k != "" && $0.v != "" }
+		// Keep entries with key & value
+		var list = tags.allTags
+		list.removeAll(where: { $0.k == "" || $0.v == "" })
 
 		let nextRow = tags.count
 
-		// add new cell ready to be edited
-		tags.append(("", ""))
+		list.append(("", ""))
 
 		// add placeholder keys
-		allPresetKeys = []
 		if let newFeature = currentFeature {
-			let presets = PresetsForFeature(withFeature: newFeature, objectTags: dict, geometry: geometry, update: nil)
+			let presets = PresetsForFeature(withFeature: newFeature,
+			                                objectTags: dict,
+			                                geometry: geometry,
+			                                update: nil)
 			allPresetKeys = presets.allPresetKeys()
-			var newKeys: [String] = allPresetKeys.map({ $0.tagKey }).filter({ $0 != "" })
-			newKeys = newKeys.filter { key in
-				tags.first(where: { $0.k == key }) == nil
-			}
-			newKeys.sort()
-			for key in newKeys {
-				tags.append((key, ""))
+			let newKeys: Set<String> = Set(allPresetKeys.map({ $0.tagKey }).filter({ $0 != "" }))
+				.subtracting(tags.allTags.map { $0.k })
+
+			for key in Array(newKeys).sorted() {
+				list.append((key, ""))
 			}
 		}
-
+		tags.setRaw(list)
 		tableView.reloadData()
 
 		return nextRow
@@ -125,22 +182,7 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 		relations = tabController.relationList
 		members = (tabController.selection as? OsmRelation)?.members ?? []
 
-		tags = []
-		for (key, value) in tabController.keyValueDict {
-			tags.append((key, value))
-		}
-
-		tags.sort(by: { obj1, obj2 in
-			let key1 = obj1.k
-			let key2 = obj2.k
-			let tiger1 = key1.hasPrefix("tiger:") || key1.hasPrefix("gnis:")
-			let tiger2 = key2.hasPrefix("tiger:") || key2.hasPrefix("gnis:")
-			if tiger1 == tiger2 {
-				return key1 < key2
-			} else {
-				return (tiger1 ? 1 : 0) < (tiger2 ? 1 : 0)
-			}
-		})
+		tags.set(tabController.keyValueDict.map { ($0.key, $0.value) })
 
 		_ = updateWithRecomendations(forFeature: true)
 
@@ -152,7 +194,7 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 
 	func saveState() {
 		let tabController = tabBarController as? POITabBarController
-		tabController?.keyValueDict = keyValueDictionary()
+		tabController?.keyValueDict = tags.keyValueDictionary()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -192,23 +234,21 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 
 	// MARK: - Feature picker
 
-	@IBAction func didRequestFeature() {
-		performSegue(withIdentifier: "POITypeSegue", sender: nil)
-	}
-
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let dest = segue.destination as? POIFeaturePickerViewController {
 			dest.delegate = self
 		}
 	}
 
-	func typeViewController(_ typeViewController: POIFeaturePickerViewController,
-	                        didChangeFeatureTo newFeature: PresetFeature)
+	func featurePicker(_ typeViewController: POIFeaturePickerViewController,
+	                   didChangeFeatureTo newFeature: PresetFeature)
 	{
 		let tabController = tabBarController as! POITabBarController
-		let geometry = tabController.selection?.geometry() ?? GEOMETRY.NODE
+		let geometry = tabController.selection?.geometry() ?? GEOMETRY.POINT
+		let location = AppDelegate.shared.mapView.currentRegion
 		tabController.keyValueDict = newFeature.objectTagsUpdatedForFeature(tabController.keyValueDict,
-		                                                                    geometry: geometry)
+		                                                                    geometry: geometry,
+		                                                                    location: location)
 		_ = updateWithRecomendations(forFeature: true)
 		saveButton.isEnabled = tabController.isTagDictChanged()
 		if #available(iOS 13.0, *) {
@@ -231,7 +271,7 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		if section == 0 {
-			return NSLocalizedString("Tags", comment: "")
+			return nil // NSLocalizedString("Tags", comment: "")
 		} else if section == 1 {
 			return NSLocalizedString("Relations", comment: "")
 		} else {
@@ -264,246 +304,30 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 		}
 	}
 
-	// MARK: Accessory buttons
-
-	private func getAssociatedColor(for cell: TextPairTableCell) -> UIView? {
-		if let key = cell.text1.text,
-		   let value = cell.text2.text,
-		   key == "colour" || key == "color" || key.hasSuffix(":colour") || key.hasSuffix(":color")
-		{
-			let color = Colors.cssColorForColorName(value)
-			if let color = color {
-				var size = cell.text2.bounds.size.height
-				size = CGFloat(round(Double(size * 0.5)))
-				let square = UIView(frame: CGRect(x: 0, y: 0, width: size, height: size))
-				square.backgroundColor = color
-				square.layer.borderColor = UIColor.black.cgColor
-				square.layer.borderWidth = 1.0
-				let view = UIView(frame: CGRect(x: 0, y: 0, width: size + 6, height: size))
-				view.backgroundColor = UIColor.clear
-				view.addSubview(square)
-				return view
-			}
-		}
-		return nil
-	}
-
-	@IBAction func openWebsite(_ sender: UIView?) {
-		guard let pair: TextPairTableCell = sender?.superviewOfType(),
-		      let key = pair.text1.text,
-		      let value = pair.text2.text
-		else { return }
-		let string: String
-		if key == "wikipedia" || key.hasSuffix(":wikipedia") {
-			let a = value.components(separatedBy: ":")
-			guard a.count >= 2,
-			      let lang = a[0].addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed),
-			      let page = a[1].addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)
-			else { return }
-			string = "https://\(lang).wikipedia.org/wiki/\(page)"
-		} else if key == "wikidata" || key.hasSuffix(":wikidata") {
-			guard let page = value.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)
-			else { return }
-			string = "https://www.wikidata.org/wiki/\(page)"
-		} else if value.hasPrefix("http://") || value.hasPrefix("https://") {
-			string = value
-		} else {
-			return
-		}
-
-		let url = URL(string: string)
-		if let url = url {
-			let viewController = SFSafariViewController(url: url)
-			present(viewController, animated: true)
-		} else {
-			let alert = UIAlertController(
-				title: NSLocalizedString("Invalid URL", comment: ""),
-				message: nil,
-				preferredStyle: .alert)
-			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
-			present(alert, animated: true)
-		}
-	}
-
-	private func getWebsiteButton(for cell: TextPairTableCell) -> UIView? {
-		if let key = cell.text1.text,
-		   let value = cell.text2.text,
-		   key == "wikipedia"
-		   || key == "wikidata"
-		   || key.hasSuffix(":wikipedia")
-		   || key.hasSuffix(":wikidata")
-		   || value.hasPrefix("http://")
-		   || value.hasPrefix("https://")
-		{
-			let button = UIButton(type: .system)
-			button.layer.borderWidth = 2.0
-			button.layer.borderColor = UIColor.systemBlue.cgColor
-			button.layer.cornerRadius = 15.0
-			button.setTitle("🔗", for: .normal)
-
-			button.addTarget(self, action: #selector(openWebsite(_:)), for: .touchUpInside)
-			return button
-		}
-		return nil
-	}
-
-	@IBAction func setSurveyDate(_ sender: UIView?) {
-		guard let pair: TextPairTableCell = sender?.superviewOfType() else { return }
-
-		let now = Date()
-		let dateFormatter = ISO8601DateFormatter()
-		dateFormatter.formatOptions = [.withYear, .withMonth, .withDay, .withDashSeparatorInDate]
-		dateFormatter.timeZone = NSTimeZone.local
-		let text = dateFormatter.string(from: now)
-		pair.text2.text = text
-		textFieldChanged(pair.text2)
-		textFieldEditingDidEnd(pair.text2)
-	}
-
-	private func getSurveyDateButton(for cell: TextPairTableCell) -> UIView? {
-		let synonyms = [
-			"check_date",
-			"survey_date",
-			"survey:date",
-			"survey",
-			"lastcheck",
-			"last_checked",
-			"updated",
-			"checked_exists:date"
-		]
-		if let text = cell.text1.text,
-		   synonyms.contains(text)
-		{
-			let button = UIButton(type: .contactAdd)
-			button.addTarget(self, action: #selector(setSurveyDate(_:)), for: .touchUpInside)
-			return button
-		}
-		return nil
-	}
-
-	@IBAction func setDirection(_ sender: Any) {
-		guard let pair: TextPairTableCell = (sender as? UIView)?.superviewOfType() else { return }
-
-		let directionViewController = DirectionViewController(
-			key: pair.text1.text ?? "",
-			value: pair.text2.text,
-			setValue: { [self] newValue in
-				pair.text2.text = newValue
-				textFieldChanged(pair.text2)
-				textFieldEditingDidEnd(pair.text2)
-			})
-		childViewPresented = true
-
-		present(directionViewController, animated: true)
-	}
-
-	private func getDirectionButton(for cell: TextPairTableCell) -> UIView? {
-		let synonyms = [
-			"direction",
-			"camera:direction"
-		]
-		if let text = cell.text1.text,
-		   synonyms.contains(text)
-		{
-			let button = UIButton(type: .contactAdd)
-			button.addTarget(self, action: #selector(setDirection(_:)), for: .touchUpInside)
-			return button
-		}
-		return nil
-	}
-
-	@IBAction func setHeight(_ sender: UIView?) {
-		guard let pair: TextPairTableCell = sender?.superviewOfType() else { return }
-
-		if HeightViewController.unableToInstantiate(withUserWarning: self) {
-			return
-		}
-
-		let vc = HeightViewController.instantiate()
-		vc.callback = { newValue in
-			pair.text2.text = newValue
-			self.textFieldChanged(pair.text2)
-			self.textFieldEditingDidEnd(pair.text2)
-		}
-		present(vc, animated: true)
-		childViewPresented = true
-	}
-
-	private func getHeightButton(for cell: TextPairTableCell) -> UIView? {
-		if cell.text1.text == "height" {
-			let button = UIButton(type: .contactAdd)
-			button.addTarget(self, action: #selector(setHeight(_:)), for: .touchUpInside)
-			return button
-		}
-		return nil
-	}
-
-	private func updateAssociatedContent(for cell: TextPairTableCell) {
-		let associatedView = getAssociatedColor(for: cell)
-			?? getWebsiteButton(for: cell)
-			?? getSurveyDateButton(for: cell)
-			?? getDirectionButton(for: cell)
-			?? getHeightButton(for: cell)
-
-		cell.text2.rightView = associatedView
-		cell.text2.rightViewMode = associatedView != nil ? .always : .never
-	}
-
-	@IBAction func infoButtonPressed(_ sender: Any?) {
-		guard let pair: TextPairTableCell = (sender as? UIView)?.superviewOfType() else { return }
-
-		// show OSM wiki page
-		guard let key = pair.text1.text,
-		      let value = pair.text2.text,
-		      !key.isEmpty
-		else { return }
-		let presetLanguages = PresetLanguages()
-		let languageCode = presetLanguages.preferredLanguageCode
-
-		let progress = UIActivityIndicatorView(style: .gray)
-		progress.frame = pair.infoButton.bounds
-		pair.infoButton.addSubview(progress)
-		pair.infoButton.isEnabled = false
-		pair.infoButton.titleLabel?.layer.opacity = 0.0
-		progress.startAnimating()
-		WikiPage.shared.bestWikiPage(forKey: key, value: value, language: languageCode()) { [self] url in
-			progress.removeFromSuperview()
-			pair.infoButton.isEnabled = true
-			pair.infoButton.titleLabel?.layer.opacity = 1.0
-			if url != nil, view.window != nil {
-				var viewController: SFSafariViewController?
-				if let url = url {
-					viewController = SFSafariViewController(url: url)
-				}
-				childViewPresented = true
-				if let viewController = viewController {
-					present(viewController, animated: true)
-				}
-			}
-		}
+	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return UITableView.automaticDimension
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.section == 0 {
 			// Tags
-			let cell = tableView.dequeueReusableCell(withIdentifier: "TagCell", for: indexPath) as! TextPairTableCell
-			let kv = tags[indexPath.row]
+			let cell = tableView.dequeueReusableCell(withIdentifier: "KeyValueCell",
+			                                         for: indexPath) as! KeyValueTableCell
+			cell.keyValueCellOwner = self
 			// assign text contents of fields
+			let kv = tags[indexPath.row]
 			cell.text1.isEnabled = true
 			cell.text2.isEnabled = true
 			cell.text1.text = kv.k
+			cell.text2.key = kv.k
 			cell.text2.text = kv.v
+			cell.text1.inputAccessoryView = prevNextToolbar
+			cell.text1.autocorrectionType = .no
+			cell.text1.autocapitalizationType = .none
+			cell.text1.spellCheckingType = .no
+			cell.text2.defaultInputAccessoryView = prevNextToolbar
 
-			updateAssociatedContent(for: cell)
-
-			weak var weakCell = cell
-			cell.text1.didSelectAutocomplete = {
-				weakCell?.text2.becomeFirstResponder()
-			}
-			cell.text2.didSelectAutocomplete = {
-				weakCell?.text2.resignFirstResponder()
-			}
-
+			cell.isSet.backgroundColor = kv.k == "" || kv.v == "" ? nil : UIColor.systemBlue
 			return cell
 		} else if indexPath.section == 1 {
 			// Relations
@@ -549,19 +373,6 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 		}
 	}
 
-	func keyValueDictionary() -> [String: String] {
-		var dict = [String: String]()
-		for (k, v) in tags {
-			// strip whitespace around text
-			let key = k.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-			let val = v.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-			if key.count != 0, val.count != 0 {
-				dict[key] = val
-			}
-		}
-		return dict
-	}
-
 	// MARK: Tab key
 
 	override var keyCommands: [UIKeyCommand]? {
@@ -572,152 +383,26 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 
 	// MARK: TextField delegate
 
-	@IBAction func textFieldReturn(_ sender: UIView) {
-		sender.resignFirstResponder()
-		_ = updateWithRecomendations(forFeature: true)
+	var keyValueDict: [String: String] {
+		return tags.keyValueDictionary()
 	}
 
-	func setTextAttributesForKey(key: String, textField: UITextField) {
-		// set text formatting options for text field
-		switch key {
-		case "note", "comment", "description", "fixme":
-			textField.autocapitalizationType = .sentences
-			textField.autocorrectionType = .yes
-		default:
-			textField.autocapitalizationType = .none
-			textField.autocorrectionType = .no
-		}
-		if let preset = allPresetKeys.first(where: { key == $0.tagKey }) {
-			textField.autocapitalizationType = preset.autocapitalizationType
-			textField.autocorrectionType = preset.autocorrectType
-		}
-	}
-
-	@IBAction func textFieldEditingDidBegin(_ textField: AutocompleteTextField) {
-		currentTextField = textField
-
-		guard let pair: TextPairTableCell = textField.superviewOfType(),
-		      let indexPath = tableView.indexPath(for: pair)
-		else { return }
-
-		if indexPath.section == 0 {
-			let isValue = textField == pair.text2
-
-			if isValue {
-				// set up capitalization and autocorrect
-				setTextAttributesForKey(key: pair.text1?.text ?? "", textField: pair.text2)
-
-				// get list of values for current key
-				let kv = tags[indexPath.row]
-				let key = kv.k
-				if PresetsDatabase.shared.eligibleForAutocomplete(key) {
-					var set: Set<String> = PresetsDatabase.shared.allTagValuesForKey(key)
-					let appDelegate = AppDelegate.shared
-					let values = appDelegate.mapView.editorLayer.mapData.tagValues(forKey: key)
-					set = set.union(values)
-					let list: [String] = Array(set)
-					textField.autocompleteStrings = list
-				}
-			} else {
-				// get list of keys
-				let set = PresetsDatabase.shared.allTagKeys()
-				let list = Array(set)
-				textField.autocompleteStrings = list
-			}
-		}
-	}
-
-	@objc func textFieldEditingDidEnd(_ textField: UITextField) {
-		guard let pair: TextPairTableCell = textField.superviewOfType(),
-		      let indexPath = tableView.indexPath(for: pair)
-		else { return }
-
-		if indexPath.section == 0 {
-			var kv = tags[indexPath.row]
-
-			updateAssociatedContent(for: pair)
-
-			if kv.k.count != 0 && kv.v.count != 0 {
-				// do automatic value updates for special keys
-				// for example add https:// prefix to website=
-				if let newValue = OsmTags.convertWikiUrlToReference(withKey: kv.k, value: kv.v)
-					?? OsmTags.convertWebsiteValueToHttps(withKey: kv.k, value: kv.v)
-				{
-					kv.v = newValue
-					pair.text2.text = newValue
-					tags[indexPath.row] = kv
-				}
-
-				// move the edited row up
-				var index = (0..<indexPath.row)
-					.first(where: { tags[$0].k.count == 0 || tags[$0].v.count == 0 }) ?? indexPath.row
-				if index < indexPath.row {
-					tags.remove(at: indexPath.row)
-					tags.insert(kv, at: index)
-					tableView.moveRow(at: indexPath, to: IndexPath(row: index, section: 0))
-				}
-
-				// if we created a row that defines a key that duplicates a row with
-				// the same key elsewhere then delete the other row
-				while let i = tags.indices.first(where: { $0 != index && tags[$0].k == kv.k }) {
-					tags.remove(at: i)
-					tableView.deleteRows(at: [IndexPath(row: i, section: 0)], with: .none)
-					if i < index { index -= 1 }
-				}
-
-				// update recommended tags
-				let nextRow = updateWithRecomendations(forFeature: false)
-				if nextRow >= 0 {
-					// a new feature was defined
-					let newPath = IndexPath(row: nextRow, section: 0)
-					tableView.scrollToRow(at: newPath, at: .middle, animated: false)
-
-					// move focus to next empty cell
-					let nextCell = tableView.cellForRow(at: newPath) as! TextPairTableCell
-					nextCell.text1.becomeFirstResponder()
-				}
-
-				tableView.scrollToRow(at: IndexPath(row: index, section: 0), at: .middle, animated: true)
-
-			} else if kv.k.count != 0 || kv.v.count != 0 {
-				// ensure there's a blank line either elsewhere, or create one below us
-				let haveBlank = tags.first(where: { $0.k.count == 0 && $0.v.count == 0 }) != nil
-				if !haveBlank {
-					let newPath = IndexPath(row: indexPath.row + 1, section: indexPath.section)
-					tags.insert(("", ""), at: newPath.row)
-					tableView.insertRows(at: [newPath], with: .none)
-				}
-			}
-		}
-	}
-
-	@IBAction func textFieldChanged(_ textField: UITextField) {
-		guard let pair: TextPairTableCell = textField.superviewOfType(),
-		      let indexPath = tableView.indexPath(for: pair)
-		else { return }
+	func keyValueEditingChanged(for kvCell: KeyValueTableCell) {
+		guard let indexPath = tableView.indexPath(for: kvCell) else { return }
+		let kv = (k: kvCell.key, v: kvCell.value)
+		tags[indexPath.row] = kv
+		kvCell.isSet.backgroundColor = kv.k == "" || kv.v == "" ? nil : UIColor.systemBlue
 
 		let tabController = tabBarController as! POITabBarController
-
-		if indexPath.section == 0 {
-			// edited tags
-			var kv = tags[indexPath.row]
-			let isValue = textField == pair.text2
-
-			if isValue {
-				// new value
-				kv.v = textField.text ?? ""
-			} else {
-				// new key name
-				kv.k = textField.text ?? ""
-			}
-			tags[indexPath.row] = kv
-
-			let dict = keyValueDictionary()
-			saveButton.isEnabled = tabController.isTagDictChanged(dict)
-			if #available(iOS 13.0, *) {
-				tabBarController?.isModalInPresentation = saveButton.isEnabled
-			}
+		saveButton.isEnabled = tabController.isTagDictChanged(tags.keyValueDictionary())
+		if #available(iOS 13.0, *) {
+			tabBarController?.isModalInPresentation = saveButton.isEnabled
 		}
+	}
+
+	func keyValueEditingEnded(for kvCell: KeyValueTableCell) {
+		_ = tags.keyValueEditingEnded(for: kvCell)
+		saveState()
 	}
 
 	func tab(toNext forward: Bool) {
@@ -763,67 +448,14 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 		tab(toNext: true)
 	}
 
-	@objc func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-		let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 44))
-		toolbar.items = [
-			UIBarButtonItem(
-				title: NSLocalizedString("Previous", comment: ""),
-				style: .plain,
-				target: self,
-				action: #selector(tabPrevious(_:))),
-			UIBarButtonItem(
-				title: NSLocalizedString("Next", comment: ""),
-				style: .plain,
-				target: self,
-				action: #selector(tabNext(_:)))
-		]
-		textField.inputAccessoryView = toolbar
-		return true
-	}
-
-	static func shouldChangeTag(origText: String,
-	                            charactersIn remove: NSRange,
-	                            replacementString insert: String,
-	                            warningVC: UIViewController?) -> Bool
-	{
-		let MAX_LENGTH = 255
-		let newLength = origText.count - remove.length + insert.count
-		let allowed = newLength <= MAX_LENGTH || insert == "\n"
-		if !allowed,
-		   insert.count > 1,
-		   let vc = warningVC
-		{
-			let format = NSLocalizedString("Pasting %@ characters, maximum tag length is 255", comment: "")
-			let message = String(format: format, NSNumber(value: insert.count))
-			let alert = UIAlertController(title: NSLocalizedString("Error", comment: ""),
-			                              message: message,
-			                              preferredStyle: .alert)
-			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
-			                              style: .default,
-			                              handler: nil))
-			vc.present(alert, animated: true)
-		}
-		return allowed
-	}
-
-	@objc func textField(_ textField: UITextField,
-	                     shouldChangeCharactersIn remove: NSRange,
-	                     replacementString insert: String) -> Bool
-	{
-		guard let origText = textField.text else { return false }
-		return Self.shouldChangeTag(origText: origText,
-		                            charactersIn: remove,
-		                            replacementString: insert,
-		                            warningVC: self)
-	}
-
 	// MARK: - Table view delegate
 
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		if section == 0 {
-			let ident = "SectionHeaderCell"
-			let cell: SectionHeaderCell = tableView.dequeueReusableCell(withIdentifier: ident) as! SectionHeaderCell
-			cell.label.text = currentFeature?.name ?? "TAGS"
+			let cell: SectionHeaderCell = tableView
+				.dequeueReusableHeaderFooterView(withIdentifier: SectionHeaderCell
+					.reuseIdentifier) as! SectionHeaderCell
+			cell.label.text = currentFeature?.name.uppercased() ?? "TAGS"
 			return cell
 		} else {
 			return nil
@@ -862,10 +494,9 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 		}
 	}
 
-	override func tableView(
-		_ tableView: UITableView,
-		commit editingStyle: UITableViewCell.EditingStyle,
-		forRowAt indexPath: IndexPath)
+	override func tableView(_ tableView: UITableView,
+	                        commit editingStyle: UITableViewCell.EditingStyle,
+	                        forRowAt indexPath: IndexPath)
 	{
 		if editingStyle == .delete {
 			// Delete the row from the data source
@@ -873,14 +504,14 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 			if indexPath.section == 0 {
 				let kv = tags[indexPath.row]
 				tabController.removeValueFromKeyValueDict(key: kv.k)
-				//			[tabController.keyValueDict removeObjectForKey:tag];
-				tags.remove(at: indexPath.row)
+				tags.remove(at: indexPath)
 			} else if indexPath.section == 1 {
 				relations.remove(at: indexPath.row)
+				tableView.deleteRows(at: [indexPath], with: .fade)
 			} else {
 				members.remove(at: indexPath.row)
+				tableView.deleteRows(at: [indexPath], with: .fade)
 			}
-			tableView.deleteRows(at: [indexPath], with: .fade)
 
 			saveButton.isEnabled = tabController.isTagDictChanged()
 			if #available(iOS 13.0, *) {
@@ -893,7 +524,6 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 
 	@IBAction func cancel(_ sender: Any) {
 		view.endEditing(true)
-
 		dismiss(animated: true)
 	}
 
@@ -907,8 +537,11 @@ class POIAllTagsViewController: UITableViewController, POITypeViewControllerDele
 
 	override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
 		// don't allow switching to relation if current selection is modified
+		if identifier == "POITypeSegue" {
+			return true
+		}
 		let tabController = tabBarController as! POITabBarController
-		let dict = keyValueDictionary()
+		let dict = tags.keyValueDictionary()
 		if tabController.isTagDictChanged(dict) {
 			let alert = UIAlertController(
 				title: NSLocalizedString("Object modified", comment: ""),

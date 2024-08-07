@@ -8,7 +8,9 @@
 
 import UIKit
 
-final class OsmWay: OsmBaseObject {
+final class OsmWay: OsmBaseObject, NSSecureCoding {
+	static let supportsSecureCoding = true
+
 	var nodeRefs: [OsmIdentifier]? // only used during construction
 	private(set) var nodes: [OsmNode]
 
@@ -78,14 +80,14 @@ final class OsmWay: OsmBaseObject {
 		computeBoundingBox()
 	}
 
-	override func serverUpdate(inPlace newerVersion: OsmBaseObject) {
-		super.serverUpdate(inPlace: newerVersion)
+	override func serverUpdate(with newerVersion: OsmBaseObject) {
+		super.serverUpdate(with: newerVersion)
 		nodeRefs = (newerVersion as! OsmWay).nodeRefs
 		nodes = (newerVersion as! OsmWay).nodes
 	}
 
 	func isArea() -> Bool {
-		return PresetsDatabase.shared.isArea(self)
+		return PresetArea.shared.isArea(self)
 	}
 
 	func isClosed() -> Bool {
@@ -102,6 +104,9 @@ final class OsmWay: OsmBaseObject {
 			"rope_tow": true,
 			"magic_carpet": true,
 			"yes": true
+		],
+		"barrier": [
+			"retaining_wall": true
 		],
 		"highway": [
 			"motorway": true,
@@ -221,9 +226,19 @@ final class OsmWay: OsmBaseObject {
 	}
 
 	func needsNoNameHighlight() -> Bool {
-		guard let highway = tags["highway"] else { return false }
-		if highway == "service" {
-			return false
+		switch tags["highway"] {
+		case nil,
+		     "bridleway",
+		     "footway",
+		     "path",
+		     "pedestrian",
+		     "proposed",
+		     "service",
+		     "steps",
+		     "track"
+		     : return false
+		default:
+			break
 		}
 		if givenName() != nil {
 			return false
@@ -277,7 +292,7 @@ final class OsmWay: OsmBaseObject {
 		if nodes.count == 1 {
 			return nodes.last!.distance(toLineSegment: point1, point: point2)
 		}
-		var dist = 1000000.0
+		var dist = 1_000000.0
 		var prevNode: OsmNode?
 		for node in nodes {
 			if let prevNode = prevNode,
@@ -403,25 +418,23 @@ final class OsmWay: OsmBaseObject {
 		return len
 	}
 
+	func areaInSquareMeters() -> Double {
+		let points = nodes.map { $0.latLon }
+		return AreaInSquareMeters(points: points)
+	}
+
 	// pick a point close to the center of the way
 	override func selectionPoint() -> LatLon {
-		var dist = lengthInMeters() / 2
-		var first = true
-		var prev = OSMPoint.zero
-		for node in nodes {
-			let pt = node.location()
-			if !first {
-				let segment = GreatCircleDistance(LatLon(pt), LatLon(prev))
-				if segment >= dist {
-					let pos = Add(prev, Mult(Sub(pt, prev), dist / segment))
-					return LatLon(pos)
-				}
-				dist -= segment
-			}
-			first = false
-			prev = pt
+		switch nodes.count {
+		case 0:
+			return LatLon.zero
+		case 1:
+			return nodes[0].latLon
+		default:
+			// midway between the first 2 nodes
+			return LatLon(latitude: (nodes[0].latLon.lat + nodes[1].latLon.lat) / 2,
+			              longitude: (nodes[0].latLon.lon + nodes[1].latLon.lon) / 2)
 		}
-		return LatLon(prev) // dummy value, shouldn't ever happen
 	}
 
 	class func isClockwiseArrayOfNodes(_ nodes: [OsmNode]) -> Bool {
@@ -499,7 +512,7 @@ final class OsmWay: OsmBaseObject {
 	func segmentClosestToPoint(_ point: LatLon) -> Int {
 		let point = OSMPoint(point)
 		var best = -1
-		var bestDist = 100000000.0
+		var bestDist = 100_000000.0
 		for index in nodes.indices.dropLast() {
 			let this = nodes[index]
 			let next = nodes[index + 1]

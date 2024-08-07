@@ -16,10 +16,6 @@ typealias EditActionWithNode = (OsmNode) -> Void
 typealias EditActionReturnWay = () -> OsmWay
 typealias EditActionReturnNode = () -> OsmNode
 
-// "https://api.openstreetmap.org/"
-let OSM_SERVER_KEY = "OSM Server"
-var OSM_API_URL = ""
-
 final class OsmUserStatistics {
 	var user = ""
 	var lastEdit: Date!
@@ -38,6 +34,8 @@ enum OsmMapDataError: LocalizedError {
 	case osmWayResolveToMapDataFoundNilNodeRefs
 	case osmWayResolveToMapDataCouldntFindNodeRef
 	case badURL(String)
+	case otherError(String)
+	case badXML
 
 	public var errorDescription: String? {
 		switch self {
@@ -45,11 +43,15 @@ enum OsmMapDataError: LocalizedError {
 		case .osmWayResolveToMapDataFoundNilNodeRefs: return "OsmMapDataError.osmWayResolveToMapDataFoundNilNodeRefs"
 		case .osmWayResolveToMapDataCouldntFindNodeRef: return "OsmMapDataError.osmWayResolveToMapDataCouldntFindNodeRef"
 		case let .badURL(url): return "OsmMapDataError.badURL(\(url))"
+		case let .otherError(message): return "OsmMapDataError.otherError(\(message))"
+		case .badXML: return "OsmMapDataError:badXML"
 		}
 	}
 }
 
-final class OsmMapData: NSObject, NSCoding {
+final class OsmMapData: NSObject, NSSecureCoding {
+	static let supportsSecureCoding = true
+
 	// only used when saving/restoring undo manager
 	public static var g_EditorMapLayerForArchive: EditorMapLayer?
 
@@ -70,57 +72,11 @@ final class OsmMapData: NSObject, NSCoding {
 
 	// MARK: Utility
 
-	func serverNameCanonicalized(_ hostname: String) -> String {
-		var hostname = hostname
-		hostname = hostname.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-
-		switch hostname {
-		case "":
-			hostname = "api.openstreetmap.org"
-		case "dev":
-			hostname = "api06.dev.openstreetmap.org"
-		default:
-			break
-		}
-
-		if hostname.hasPrefix("http://") || hostname.hasPrefix("https://") {
-			// great
-		} else {
-			hostname = "https://" + hostname
-		}
-
-		while hostname.hasSuffix("//") {
-			// fix for previous releases that may have accidently set an extra slash
-			hostname = (hostname as NSString?)?.substring(to: hostname.count - 1) ?? ""
-		}
-		if hostname.hasSuffix("/") {
-			// great
-		} else {
-			hostname = hostname + "/"
-		}
-
-		return hostname
-	}
-
-	func setServer(_ hostname: String) {
-		let hostname = serverNameCanonicalized(hostname)
-
-		if OSM_API_URL == hostname {
-			// no change
-			return
-		}
-
-		if OSM_API_URL.count != 0 {
+	func resetServer(_ host: OsmServer) {
+		if OSM_SERVER.apiURL.count != 0 {
 			// get rid of old data before connecting to new server
 			purgeSoft()
 		}
-
-		UserDefaults.standard.set(hostname, forKey: OSM_SERVER_KEY)
-		OSM_API_URL = hostname
-	}
-
-	func getServer() -> String {
-		return OSM_API_URL
 	}
 
 	func setupPeriodicSaveTimer() {
@@ -194,14 +150,18 @@ final class OsmMapData: NSObject, NSCoding {
 		var a: [OsmBaseObject] = []
 
 		if let object = object as? OsmNode {
-			for (_, way) in ways {
-				if way.nodes.contains(object) {
+			// Don't scan everything: for performance reasons only consider visible objects
+			let shownObjects = AppDelegate.shared.mapView.editorLayer.shownObjects
+			for obj in shownObjects {
+				if let way = obj as? OsmWay,
+				   way.nodes.contains(object)
+				{
 					a.append(way)
 				}
 			}
 		}
 
-		for (_, relation) in relations {
+		for relation in relations.values {
 			if relation.containsObject(object) {
 				a.append(relation)
 			}
@@ -223,9 +183,6 @@ final class OsmMapData: NSObject, NSCoding {
 	}
 
 	func enumerateObjects(inRegion bbox: OSMRect, block: (_ obj: OsmBaseObject) -> Void) {
-#if false && DEBUG
-		print("box = \(NSCoder.string(for: CGRectFromOSMRect(bbox)))")
-#endif
 		if bbox.origin.x < 180, bbox.origin.x + bbox.size.width > 180 {
 			let left = OSMRect(
 				origin: OSMPoint(x: bbox.origin.x, y: bbox.origin.y),
@@ -262,7 +219,7 @@ final class OsmMapData: NSObject, NSCoding {
 
 		// special case for street names
 		if key == "addr:street" {
-			for (_, object) in ways {
+			for object in ways.values {
 				if object.tags["highway"] != nil {
 					if let nameValue = object.tags["name"] {
 						set.insert(nameValue)
@@ -347,7 +304,7 @@ final class OsmMapData: NSObject, NSCoding {
 	}
 
 	func createNode(atLocation loc: LatLon) -> OsmNode {
-		let node = OsmNode(asUserCreated: AppDelegate.shared.userName)
+		let node = OsmNode(asUserCreated: AppDelegate.shared.userName ?? "")
 		node.setLongitude(loc.lon, latitude: loc.lat, undo: nil)
 		node.setDeleted(true, undo: nil)
 		setConstructed(node)
@@ -360,7 +317,7 @@ final class OsmMapData: NSObject, NSCoding {
 	}
 
 	func createWay() -> OsmWay {
-		let way = OsmWay(asUserCreated: AppDelegate.shared.userName)
+		let way = OsmWay(asUserCreated: AppDelegate.shared.userName ?? "")
 		way.setDeleted(true, undo: nil)
 		setConstructed(way)
 		ways[way.ident] = way
@@ -371,7 +328,7 @@ final class OsmMapData: NSObject, NSCoding {
 	}
 
 	func createRelation() -> OsmRelation {
-		let relation = OsmRelation(asUserCreated: AppDelegate.shared.userName)
+		let relation = OsmRelation(asUserCreated: AppDelegate.shared.userName ?? "")
 		relation.setDeleted(true, undo: nil)
 		setConstructed(relation)
 		relations[relation.ident] = relation
@@ -388,7 +345,7 @@ final class OsmMapData: NSObject, NSCoding {
 				while memberIndex < relation.members.count {
 					let member = relation.members[memberIndex]
 					if member.obj == object {
-						deleteMember(inRelationUnsafe: relation, index: memberIndex)
+						deleteMember(inRelationUnsafe: relation, index: memberIndex, deletingRelationIfEmpty: true)
 					} else {
 						memberIndex += 1
 					}
@@ -477,14 +434,8 @@ final class OsmMapData: NSObject, NSCoding {
 		node.setLongitude(latLon.lon, latitude: latLon.lat, undo: undoManager)
 		spatial.updateMember(node, fromBox: bboxNode, undo: undoManager)
 
-		for i in 0..<parents.count {
-			let (parent, box) = parents[i]
-#if false
-			// mark parent as modified when child node changes
-			incrementModifyCount(parent)
-#else
+		for (parent, box) in parents {
 			clearCachedProperties(parent, undo: undoManager)
-#endif
 			parent.computeBoundingBox()
 			spatial.updateMember(parent, fromBox: box, undo: undoManager)
 		}
@@ -500,15 +451,19 @@ final class OsmMapData: NSObject, NSCoding {
 		}
 	}
 
-	func deleteMember(inRelationUnsafe relation: OsmRelation, index: Int) {
-		if relation.members.count == 1 {
+	func deleteMember(inRelationUnsafe relation: OsmRelation, index: Int, deletingRelationIfEmpty: Bool) {
+		if deletingRelationIfEmpty, relation.members.count == 1 {
 			// deleting last member of relation, so delete relation
 			deleteRelationUnsafe(relation)
 		} else {
+			AppDelegate.shared.mapView.editorLayer.mapData.consistencyCheck()
+
 			registerUndoCommentString(NSLocalizedString("delete object from relation", comment: ""))
 			let bbox = relation.boundingBox
 			relation.removeMemberAtIndex(index, undo: undoManager)
 			spatial.updateMember(relation, fromBox: bbox, undo: undoManager)
+			AppDelegate.shared.mapView.editorLayer.mapData.consistencyCheck()
+
 			updateMultipolygonRelationRoles(relation)
 		}
 	}
@@ -532,7 +487,6 @@ final class OsmMapData: NSObject, NSCoding {
 		if let undoCommentCallback = undoCommentCallback {
 			undoCommentCallback(true, comment ?? [:])
 		}
-		consistencyCheck()
 		return comment
 	}
 
@@ -691,10 +645,10 @@ final class OsmMapData: NSObject, NSCoding {
 
 		// submit each query to the server and process the results
 		for query in queryList {
-			progress.progressIncrement()
+			progress.progressIncrement(1)
 
 			let rc = query.rect
-			let url = OSM_API_URL +
+			let url = OSM_SERVER.apiURL +
 				"api/0.6/map?bbox=\(rc.origin.x),\(rc.origin.y),\(rc.origin.x + rc.size.width),\(rc.origin.y + rc.size.height)"
 
 			OsmDownloader.osmData(forUrl: url, completion: { result in
@@ -732,6 +686,9 @@ final class OsmMapData: NSObject, NSCoding {
 	// MARK: Download
 
 	func merge(_ newData: OsmDownloadData, savingToDatabase save: Bool) throws {
+		if newData.nodes.count + newData.ways.count + newData.relations.count == 0 {
+			return
+		}
 		var newNodes: [OsmNode] = []
 		var newWays: [OsmWay] = []
 		var newRelations: [OsmRelation] = []
@@ -744,7 +701,7 @@ final class OsmMapData: NSObject, NSCoding {
 				if current.version < node.version {
 					// already exists, so do an in-place update
 					let bbox = current.boundingBox
-					current.serverUpdate(inPlace: node)
+					current.serverUpdate(with: node)
 					spatial.updateMember(current, fromBox: bbox, undo: nil)
 					newNodes.append(current)
 				}
@@ -759,7 +716,7 @@ final class OsmMapData: NSObject, NSCoding {
 			if let current = ways[way.ident] {
 				if current.version < way.version {
 					let bbox = current.boundingBox
-					current.serverUpdate(inPlace: way)
+					current.serverUpdate(with: way)
 					try current.resolveToMapData(self)
 					spatial.updateMember(current, fromBox: bbox, undo: nil)
 					newWays.append(current)
@@ -776,7 +733,7 @@ final class OsmMapData: NSObject, NSCoding {
 			if let current = relations[relation.ident] {
 				if current.version < relation.version {
 					let bbox = current.boundingBox
-					current.serverUpdate(inPlace: relation)
+					current.serverUpdate(with: relation)
 					spatial.updateMember(current, fromBox: bbox, undo: nil)
 					newRelations.append(current)
 				}
@@ -793,7 +750,7 @@ final class OsmMapData: NSObject, NSCoding {
 		var didChange = true
 		while didChange {
 			didChange = false
-			for (_, relation) in relations {
+			for relation in relations.values {
 				let bbox = relation.boundingBox
 				relation.clearCachedProperties()
 				didChange = relation.resolveToMapData(self) || didChange
@@ -831,6 +788,8 @@ final class OsmMapData: NSObject, NSCoding {
 		consistencyCheck()
 	}
 
+	// MARK: Upload
+
 	/// Adds a changeset=* value to each node/way/relation in the XML
 	class func addChangesetId(_ changesetID: Int64, toXML xmlDoc: DDXMLDocument) {
 		for changeType in xmlDoc.rootElement()?.children ?? [] {
@@ -857,14 +816,14 @@ final class OsmMapData: NSObject, NSCoding {
 		xml xmlChanges: DDXMLDocument,
 		changesetID: Int64,
 		retries: Int,
-		completion: @escaping (_ errorMessage: String?) -> Void)
+		completion: @escaping (_ error: Error?) -> Void)
 	{
-		let url2 = OSM_API_URL + "api/0.6/changeset/\(changesetID)/upload"
+		let url2 = OSM_SERVER.apiURL + "api/0.6/changeset/\(changesetID)/upload"
 		putRequest(url: url2, method: "POST", xml: xmlChanges) { [self] result in
 
 			switch result {
 			case let .failure(error):
-				completion("\(error.localizedDescription)")
+				completion(error)
 				return
 			case let .success(postData):
 				let response = String(decoding: postData, as: UTF8.self)
@@ -888,7 +847,7 @@ final class OsmMapData: NSObject, NSCoding {
 					   let objType = objType
 					{
 						let objType = (objType as String).lowercased()
-						var url3 = OSM_API_URL + "api/0.6/\(objType)/\(objId)"
+						var url3 = OSM_SERVER.apiURL + "api/0.6/\(objType)/\(objId)"
 						if objType == "way" || objType == "relation" {
 							url3 = url3 + "/full"
 						}
@@ -903,7 +862,7 @@ final class OsmMapData: NSObject, NSCoding {
 									retries: retries - 1,
 									completion: completion)
 							case let .failure(error):
-								completion("\(error.localizedDescription)")
+								completion(error)
 							}
 						})
 						return
@@ -912,27 +871,25 @@ final class OsmMapData: NSObject, NSCoding {
 
 				// we expect to receive an XML document with server updates
 				if !response.hasPrefix("<?xml") {
-					completion(response)
+					completion(OsmMapDataError.otherError(response))
 					return
 				}
 
 				let diffDoc: DDXMLDocument
 				do {
 					diffDoc = try DDXMLDocument(data: postData, options: 0)
-				} catch let error as LocalizedError {
-					completion(error.localizedDescription)
-					return
 				} catch {
-					completion("XML conversion error")
+					completion(error)
 					return
 				}
 
 				guard let diffResult = diffDoc.rootElement(),
 				      diffResult.name == "diffResult"
 				else {
-					completion("Upload failed: invalid server respsonse")
+					completion(OsmMapDataError.otherError("Upload failed: invalid server respsonse"))
 					return
 				}
+				let timestamp = Date()
 
 				var sqlUpdate: [OsmBaseObject: Bool] = [:]
 				for element in diffResult.children ?? [] {
@@ -951,6 +908,7 @@ final class OsmMapData: NSObject, NSCoding {
 							newId: newId,
 							version: newVersion,
 							changeset: changesetID,
+							timestamp: timestamp,
 							sqlUpdate: &sqlUpdate)
 					} else if name == "way" {
 						OsmMapData.updateObjectDictionary(
@@ -959,6 +917,7 @@ final class OsmMapData: NSObject, NSCoding {
 							newId: newId,
 							version: newVersion,
 							changeset: changesetID,
+							timestamp: timestamp,
 							sqlUpdate: &sqlUpdate)
 					} else if name == "relation" {
 						OsmMapData.updateObjectDictionary(
@@ -967,6 +926,7 @@ final class OsmMapData: NSObject, NSCoding {
 							newId: newId,
 							version: newVersion,
 							changeset: changesetID,
+							timestamp: timestamp,
 							sqlUpdate: &sqlUpdate)
 					} else {
 						DLog("Bad upload diff document")
@@ -975,14 +935,13 @@ final class OsmMapData: NSObject, NSCoding {
 
 				updateSql(sqlUpdate)
 
-				let url3 = OSM_API_URL + "api/0.6/changeset/\(changesetID)/close"
+				let url3 = OSM_SERVER.apiURL + "api/0.6/changeset/\(changesetID)/close"
 				putRequest(url: url3, method: "PUT", xml: nil) { result in
 					switch result {
 					case .success:
 						completion(nil)
 					case let .failure(error):
-						let errorMsg = "\(error.localizedDescription) (ignored, changes already committed)"
-						completion(errorMsg)
+						completion(error)
 					}
 				}
 
@@ -995,20 +954,18 @@ final class OsmMapData: NSObject, NSCoding {
 	// upload xml generated by mapData
 	func generateXMLandUploadChangeset(_ changesetID: Int64,
 	                                   retries: Int,
-	                                   completion: @escaping (_ errorMessage: String?) -> Void)
+	                                   completion: @escaping (_ error: Error?) -> Void)
 	{
 		guard let xmlChanges = OsmXmlGenerator.createXmlFor(nodes: nodes.values,
 		                                                    ways: ways.values,
 		                                                    relations: relations.values)
 		else {
-			completion("Failure generating XML")
+			completion(OsmMapDataError.badXML)
 			return
 		}
 		OsmMapData.addChangesetId(changesetID, toXML: xmlChanges)
 		uploadChangeset(xml: xmlChanges, changesetID: changesetID, retries: retries, completion: completion)
 	}
-
-	// MARK: Upload
 
 	static func updateObjectDictionary<T: OsmBaseObject>(
 		_ dictionary: inout [OsmIdentifier: T],
@@ -1016,6 +973,7 @@ final class OsmMapData: NSObject, NSCoding {
 		newId: OsmIdentifier,
 		version newVersion: Int,
 		changeset: Int64,
+		timestamp: Date,
 		sqlUpdate: inout [OsmBaseObject: Bool])
 	{
 		let object = dictionary[oldId]!
@@ -1031,15 +989,16 @@ final class OsmMapData: NSObject, NSCoding {
 		}
 
 		assert(newVersion > 0)
-		object.serverUpdateVersion(newVersion)
-		object.serverUpdateChangeset(changeset)
+		object.serverUpdate(version: newVersion)
+		object.serverUpdate(changeset: changeset)
+		object.serverUpdate(timestamp: timestamp)
 		sqlUpdate[object] = true // mark for insertion
 
 		if oldId != newId {
 			// replace placeholder object with new server provided identity
 			assert(oldId < 0 && newId > 0)
 			dictionary.removeValue(forKey: object.ident)
-			object.serverUpdateIdent(newId)
+			object.serverUpdate(ident: newId)
 			dictionary[object.ident] = object
 		} else {
 			assert(oldId > 0)
@@ -1059,11 +1018,10 @@ final class OsmMapData: NSObject, NSCoding {
 		xml: DDXMLDocument?,
 		completion: @escaping (Result<Data, Error>) -> Void)
 	{
-		guard let url1 = URL(string: url) else {
+		guard var request = AppDelegate.shared.oAuth2.urlRequest(string: url) else {
 			completion(.failure(OsmMapDataError.badURL(url)))
 			return
 		}
-		let request = NSMutableURLRequest(url: url1)
 		request.httpMethod = method
 		if let xml = xml {
 			var data = xml.xmlData(withOptions: 0)
@@ -1072,14 +1030,9 @@ final class OsmMapData: NSObject, NSCoding {
 			request.setValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
 			request.setValue("gzip", forHTTPHeaderField: "Content-Encoding")
 		}
-		request.cachePolicy = .reloadIgnoringLocalCacheData
+		request.cachePolicy = URLRequest.CachePolicy.reloadIgnoringLocalCacheData
 
-		var auth = "\(AppDelegate.shared.userName):\(AppDelegate.shared.userPassword)"
-		auth = OsmMapData.encodeBase64(auth)
-		auth = "Basic \(auth)"
-		request.setValue(auth, forHTTPHeaderField: "Authorization")
-
-		URLSession.shared.data(with: request as URLRequest, completionHandler: { result in
+		URLSession.shared.data(with: request, completionHandler: { result in
 			DispatchQueue.main.async(execute: {
 				completion(result)
 			})
@@ -1122,7 +1075,7 @@ final class OsmMapData: NSObject, NSCoding {
 			tags["locale"] = locale
 		}
 		if let xmlCreate = OsmXmlGenerator.createXml(withType: "changeset", tags: tags) {
-			let url = OSM_API_URL + "api/0.6/changeset/create"
+			let url = OSM_SERVER.apiURL + "api/0.6/changeset/create"
 			putRequest(url: url, method: "PUT", xml: xmlCreate) { result in
 				switch result {
 				case let .failure(error):
@@ -1161,14 +1114,14 @@ final class OsmMapData: NSObject, NSCoding {
 		source: String,
 		imagery: String,
 		locale: String,
-		completion: @escaping (_ errorMessage: String?) -> Void)
+		completion: @escaping (_ error: Error?) -> Void)
 	{
 		openNewChangeset(withComment: comment, source: source, imagery: imagery, locale: locale) { [self] result in
 			switch result {
 			case let .success(changesetID):
 				generateXMLandUploadChangeset(changesetID, retries: 20, completion: completion)
 			case let .failure(error):
-				completion(error.localizedDescription)
+				completion(error)
 			}
 		}
 	}
@@ -1180,7 +1133,7 @@ final class OsmMapData: NSObject, NSCoding {
 		source: String,
 		imagery: String,
 		locale: String,
-		completion: @escaping (_ error: String?) -> Void)
+		completion: @escaping (_ error: Error?) -> Void)
 	{
 		consistencyCheck()
 
@@ -1190,38 +1143,7 @@ final class OsmMapData: NSObject, NSCoding {
 				OsmMapData.addChangesetId(changesetID, toXML: xmlChanges)
 				uploadChangeset(xml: xmlChanges, changesetID: changesetID, retries: 0, completion: completion)
 			case let .failure(error):
-				completion(error.localizedDescription)
-			}
-		}
-	}
-
-	func verifyUserCredentials(withCompletion completion: @escaping (_ errorMessage: String?) -> Void) {
-		let appDelegate = AppDelegate.shared
-
-		let url = OSM_API_URL + "api/0.6/user/details"
-		putRequest(url: url, method: "GET", xml: nil) { result in
-			switch result {
-			case let .success(data):
-				var ok = false
-				let text = String(data: data, encoding: .utf8)
-				if let doc = try? DDXMLDocument(xmlString: text ?? "", options: 0),
-				   let users = doc.rootElement()?.elements(forName: "user"),
-				   let user = users.last,
-				   let displayName = user.attribute(forName: "display_name")?.stringValue,
-				   displayName.compare(appDelegate.userName, options: .caseInsensitive) == .orderedSame
-				{
-					// update display name to have proper case:
-					appDelegate.userName = displayName
-					ok = true
-				}
-				if ok {
-					completion(nil)
-					return
-				}
-				fallthrough
-			case .failure:
-				let errorMsg = NSLocalizedString("Not found", comment: "User credentials not found")
-				completion(errorMsg)
+				completion(error)
 			}
 		}
 	}
@@ -1249,9 +1171,6 @@ final class OsmMapData: NSObject, NSCoding {
 	// MARK: Init/Save/Restore
 
 	func initCommon() {
-		UserDefaults.standard.register(defaults: [OSM_SERVER_KEY: "https://api.openstreetmap.org/"])
-		let server = UserDefaults.standard.object(forKey: OSM_SERVER_KEY) as! String
-		setServer(server)
 		setupPeriodicSaveTimer()
 	}
 
@@ -1335,14 +1254,18 @@ final class OsmMapData: NSObject, NSCoding {
 		assert(r.isSubset(of: modRelations))
 #endif
 
-		var modified = OsmDownloadData()
-		modified.nodes = modNodes
-		modified.ways = modWays
-		modified.relations = modRelations
+		let modified = OsmDownloadData(nodes: modNodes,
+		                               ways: modWays,
+		                               relations: modRelations)
 		return modified
 	}
 
 	func purgeExceptUndo() {
+		// deresolve relations to get rid of retain cycles via parentRelations property
+		for rel in relations.values {
+			rel.deresolveRefs()
+		}
+
 		nodes.removeAll()
 		ways.removeAll()
 		relations.removeAll()
@@ -1362,57 +1285,40 @@ final class OsmMapData: NSObject, NSCoding {
 	func purgeSoft() {
 		// get a list of all dirty objects
 		var dirty: Set<OsmBaseObject> = []
-
-		for (_, object) in nodes {
-			if object.isModified() {
-				_ = dirty.insert(object)
-			}
-		}
-		for (_, object) in ways {
-			if object.isModified() {
-				_ = dirty.insert(object)
-			}
-		}
-		for (_, object) in relations {
-			if object.isModified() {
-				_ = dirty.insert(object)
-			}
-		}
+		dirty.formUnion(nodes.values.compactMap({ $0.isModified() ? $0 : nil }))
+		dirty.formUnion(ways.values.compactMap({ $0.isModified() ? $0 : nil }))
+		dirty.formUnion(relations.values.compactMap({ $0.isModified() ? $0 : nil }))
 
 		// get objects referenced by undo manager
 		let undoRefs = undoManager.objectRefs()
 		dirty = dirty.union(undoRefs)
 
 		// add nodes in ways to dirty set, because we must preserve them to maintain consistency
-		for way in Array(dirty) {
-			if way is OsmWay {
-				if let way = way as? OsmWay {
-					dirty.formUnion(Set(way.nodes))
-				}
-			}
-		}
-
-		// deresolve relations
-		for rel in dirty {
-			guard let rel = rel as? OsmRelation else {
-				continue
-			}
-			rel.deresolveRefs()
-		}
+		dirty.formUnion(dirty.flatMap({ ($0 as? OsmWay)?.nodes ?? [] }))
 
 		// purge everything
 		purgeExceptUndo()
 
 		// put dirty stuff back in
 		for object in dirty {
-			if let obj = object.isNode() {
+			if let obj = object as? OsmNode {
 				nodes[object.ident] = obj
-			} else if let obj = object.isWay() {
+			} else if let obj = object as? OsmWay {
 				ways[object.ident] = obj
-			} else if let obj = object.isRelation() {
+			} else if let obj = object as? OsmRelation {
 				relations[object.ident] = obj
 			} else {
 				assertionFailure()
+			}
+		}
+
+		// reset way counts in nodes
+		for node in nodes.values {
+			node.setWayCount(0, undo: nil)
+		}
+		for way in ways.values {
+			for node in way.nodes {
+				node.setWayCount(node.wayCount + 1, undo: nil)
 			}
 		}
 
@@ -1435,16 +1341,7 @@ final class OsmMapData: NSObject, NSCoding {
 	}
 
 	static func pathToArchiveFile() -> String {
-		// get tile cache folder
-		let paths = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).map(\.path)
-		let bundleName = Bundle.main.infoDictionary?["CFBundleIdentifier"] as? String
-		let path = URL(fileURLWithPath: URL(fileURLWithPath: paths[0]).appendingPathComponent(bundleName ?? "").path)
-			.appendingPathComponent("OSM Downloaded Data.archive").path
-		try? FileManager.default.createDirectory(
-			atPath: URL(fileURLWithPath: path).deletingLastPathComponent().path,
-			withIntermediateDirectories: true,
-			attributes: nil)
-		return path
+		return ArchivePath.osmDataArchive.path()
 	}
 
 	func sqlSave(
@@ -1456,8 +1353,8 @@ final class OsmMapData: NSObject, NSCoding {
 		deleteRelations: [OsmRelation],
 		isUpdate: Bool)
 	{
-		if (saveNodes.count + saveWays.count + saveRelations.count + deleteNodes.count + deleteWays
-			.count + deleteRelations.count) == 0
+		if (saveNodes.count + saveWays.count + saveRelations.count +
+			deleteNodes.count + deleteWays.count + deleteRelations.count) == 0
 		{
 			return
 		}
@@ -1489,7 +1386,7 @@ final class OsmMapData: NSObject, NSCoding {
 		})
 	}
 
-	func discardStaleData() -> Bool {
+	func discardStaleData(maxObjects: Int = 100000, maxAge: Int = 24 * 60 * 60) -> Bool {
 #if DEBUG
 		let minTimeBetweenDiscards = 5.0 // seconds
 #else
@@ -1506,16 +1403,11 @@ final class OsmMapData: NSObject, NSCoding {
 			return false
 		}
 
-// remove objects if they are too old, or we have too many:
-#if DEBUG
-		let limit = 500000
-#else
-		let limit = 100000
-#endif
-		var oldest = Date(timeIntervalSinceNow: -24 * 60 * 60)
+		// remove objects if they are too old, or we have too many:
+		var oldest = Date(timeIntervalSinceNow: -Double(maxAge))
 
 		// get rid of old quads marked as downloaded
-		var fraction = Double(nodes.count + ways.count + relations.count) / Double(limit)
+		var fraction = Double(nodes.count + ways.count + relations.count) / Double(maxObjects)
 		if fraction <= 1.0 {
 			// the number of objects is acceptable
 			fraction = 0.0
@@ -1621,9 +1513,9 @@ final class OsmMapData: NSObject, NSCoding {
 				relations.removeValue(forKey: k)
 			}
 
-			print(String(format: "remove %ld objects\n", removeNodes.count + removeWays.count + removeRelations.count))
+			print(String(format: "remove %ld objects", removeNodes.count + removeWays.count + removeRelations.count))
 
-			if Double(nodes.count + ways.count + relations.count) < (Double(limit) * 1.3) {
+			if Double(nodes.count + ways.count + relations.count) < (Double(maxObjects) * 1.3) {
 				// good enough
 				if !didExpand, removeNodes.count + removeWays.count + removeRelations.count == 0 {
 					previousDiscardDate = now
@@ -1659,7 +1551,7 @@ final class OsmMapData: NSObject, NSCoding {
 		consistencyCheck()
 
 		t = CACurrentMediaTime() - t
-		print("Discard sweep time = \(t)\n")
+		print("Discard sweep time = \(t)")
 
 		// make a copy of items to save because the dictionary might get updated by the time the Database block runs
 		let saveNodes = nodes.values
@@ -1681,20 +1573,24 @@ final class OsmMapData: NSObject, NSCoding {
 				// need to let db2 go out of scope here so file is no longer in use
 			} catch {
 				// we couldn't create the new database, so abort the discard
-				print("failed to recreate SQL database\n")
+				print("failed to recreate SQL database")
 				return
 			}
 			let realPath = Database.databasePath(withName: "")
 			let error = rename(tmpPath, realPath)
 			if error != 0 {
-				print("failed to rename SQL database\n")
+				print("failed to rename SQL database")
 			}
 			t2 = CACurrentMediaTime() - t2
-			print(String(
-				format: "%@Discard save time = %f, saved %ld objects\n",
-				t2 > 1.0 ? "*** " : "",
-				t2,
-				Int(nodeCount()) + Int(wayCount()) + Int(relationCount())))
+
+			if isUnderDebugger() {
+				// calling nodeCount() etc here isn't thread safe
+				print(String(
+					format: "%@Discard save time = %f, saved %ld objects",
+					t2 > 1.0 ? "*** " : "",
+					t2,
+					Int(nodeCount()) + Int(wayCount()) + Int(relationCount())))
+			}
 
 			DispatchQueue.main.async(execute: {
 				self.previousDiscardDate = Date()
@@ -1759,6 +1655,9 @@ final class OsmMapData: NSObject, NSCoding {
 
 		// update self with minimized versions appropriate for saving
 		let modified = modifiedObjects()
+		// FIXME: if an object gets duplicated in the undo manager somehow then
+		// this code will crash because the ident key is duplicated. This requires
+		// tracking down the cause of the duplication, not fixing it here.
 		nodes = Dictionary(uniqueKeysWithValues: modified.nodes.map({ ($0.ident, $0) }))
 		ways = Dictionary(uniqueKeysWithValues: modified.ways.map({ ($0.ident, $0) }))
 		relations = Dictionary(uniqueKeysWithValues: modified.relations.map({ ($0.ident, $0) }))
@@ -1769,8 +1668,10 @@ final class OsmMapData: NSObject, NSCoding {
 		_ = archiver.saveArchive(mapData: self)
 
 		t = CACurrentMediaTime() - t
-		DLog(
-			"Archive save \(nodeCount()),\(wayCount()),\(relationCount()),\(undoManager.countUndoGroups),\(region.countOfObjects()) = \(t)")
+		DLog("""
+		Archive save \(nodeCount()),\(wayCount()),\(relationCount()),\
+		 \(undoManager.countUndoGroups),\(region.countOfObjects()) = \(t)
+		""")
 
 		// restore originals
 		nodes = origNodes
@@ -1803,25 +1704,23 @@ final class OsmMapData: NSObject, NSCoding {
 			newData.nodes = try db.queryNodes()
 			newData.ways = try db.queryWays()
 			newData.relations = try db.queryRelations()
-
 			try decode.merge(newData, savingToDatabase: false)
 		} catch {
 			// database couldn't be read
 			print("Error: \(error.localizedDescription)")
-			print("Unable to read database: recreating from scratch\n")
+			print("Unable to read database: recreating from scratch")
 			try? Database.delete(withName: "")
 			// need to download all regions
 			decode.region.rootQuad.reset()
 		}
 
-		decode.consistencyCheck()
 		return decode
 	}
 
 	// MARK: Consistency checking
 
 	func consistencyCheckRelationMembers() {
-		// make sure that every relation member contains the relation in parentRelations
+		// make sure that parentRelations is correct for every relation member
 		var allMembers = Set<OsmBaseObject>()
 		for (_, relation) in relations {
 			for member in relation.members {
@@ -1832,24 +1731,20 @@ final class OsmMapData: NSObject, NSCoding {
 			}
 		}
 		// ensure there is no object with parentRelations that isn't actually a member
-		nodes.values
-			.forEach({ obj in
-				obj.parentRelations.forEach({ assert($0.members.map({ $0.obj }).contains(obj)) }) })
-		ways.values
-			.forEach({ obj in
-				obj.parentRelations.forEach({ assert($0.members.map({ $0.obj }).contains(obj)) }) })
-		relations.values
-			.forEach({ obj in
-				obj.parentRelations.forEach({ assert($0.members.map({ $0.obj }).contains(obj)) }) })
+		nodes.values.forEach({ obj in
+			obj.parentRelations.forEach({ assert($0.members.map({ $0.obj }).contains(obj)) }) })
+		ways.values.forEach({ obj in
+			obj.parentRelations.forEach({ assert($0.members.map({ $0.obj }).contains(obj)) }) })
+		relations.values.forEach({ obj in
+			obj.parentRelations.forEach({ assert($0.members.map({ $0.obj }).contains(obj)) }) })
 	}
 
 	func consistencyCheckDebugOnly() {
 		// This is extremely expensive: DEBUG only!
-
 		consistencyCheckRelationMembers()
-		spatial.consistencyCheck(nodes: Array(nodes.values),
-		                         ways: Array(ways.values),
-		                         relations: Array(relations.values))
+		spatial.consistencyCheck(nodes: nodes,
+		                         ways: ways,
+		                         relations: relations)
 
 		// make sure that if the undo manager is holding an object that it's consistent with mapData
 		let undoObjects = undoManager.objectRefs()
@@ -1893,7 +1788,7 @@ final class OsmMapData: NSObject, NSCoding {
 				wayCountDict[node.ident]! -= 1
 			}
 		}
-		if let index = wayCountDict.first(where: { $0.1 != 0 }) {
+		if let index = wayCountDict.first(where: { $0.value != 0 }) {
 			print("node \(index.key) has bad wayCount: \(index.value)")
 			assertionFailure()
 		}
@@ -1927,10 +1822,10 @@ enum MapDataError: LocalizedError {
 class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 	func saveArchive(mapData: OsmMapData) -> Bool {
 		let path = OsmMapData.pathToArchiveFile()
-		let data = NSMutableData()
-		let archiver = NSKeyedArchiver(forWritingWith: data)
+		let archiver = NSKeyedArchiver(requiringSecureCoding: true)
 		archiver.encode(mapData, forKey: "OsmMapData")
 		archiver.finishEncoding()
+		let data = archiver.encodedData as NSData
 		let ok = data.write(toFile: path, atomically: true)
 		return ok
 	}
@@ -1942,13 +1837,29 @@ class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 			print("Archive file doesn't exist")
 			throw MapDataError.archiveDoesNotExist
 		}
-		guard let data = try? Data(contentsOf: url) else {
+		guard
+			let data = try? Data(contentsOf: url),
+			let unarchiver = try? NSKeyedUnarchiver(forReadingFrom: data)
+		else {
 			print("Archive file doesn't exist")
 			throw MapDataError.archiveCannotBeRead
 		}
-		let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
 		unarchiver.delegate = self
-		guard let decode = unarchiver.decodeObject(forKey: "OsmMapData") as? OsmMapData else {
+
+		guard let decode = unarchiver.decodeObject(of: [OsmMapData.self,
+		                                                OsmNode.self,
+		                                                OsmWay.self,
+		                                                OsmRelation.self,
+		                                                OsmMember.self,
+		                                                QuadMap.self,
+		                                                QuadBox.self,
+		                                                MyUndoManager.self,
+		                                                UndoAction.self,
+		                                                NSDictionary.self,
+		                                                NSMutableData.self,
+		                                                NSArray.self],
+		                                           forKey: "OsmMapData") as? OsmMapData
+		else {
 			print("Couldn't decode archive file")
 			if let error = unarchiver.error {
 				print("\(error)")

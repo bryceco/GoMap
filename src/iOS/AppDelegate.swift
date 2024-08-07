@@ -17,10 +17,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
 	weak var mapView: MapView!
-	var userName = ""
-	var userPassword = ""
 	private(set) var isAppUpgrade = false
-	var externalGPS: ExternalGPS?
+
+	let oAuth2 = OAuth2()
+
+	var userName: String? {
+		get { UserPrefs.shared.userName.value }
+		set { UserPrefs.shared.userName.value = newValue }
+	}
 
 	override init() {
 		super.init()
@@ -74,45 +78,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 #endif
 
-		let defaults = UserDefaults.standard
-
 		// save the app version so we can detect upgrades
-		let prevVersion = defaults.object(forKey: "appVersion") as? String
+		let prevVersion = UserPrefs.shared.appVersion.value
 		if prevVersion != appVersion() {
 			print("Upgrade!")
 			isAppUpgrade = true
+			UserPrefs.shared.appVersion.value = appVersion()
+			UserPrefs.shared.uploadCountPerVersion.value = 0
 		}
-		defaults.set(appVersion(), forKey: "appVersion")
 
-		// read name/password from keychain
-		userName = KeyChain.getStringForIdentifier("username")
-		userPassword = KeyChain.getStringForIdentifier("password")
-
-		removePlaintextCredentialsFromUserDefaults()
-
-		// self.externalGPS = [[ExternalGPS alloc] init];
-
+		// Sync preferences in iCloud
+		UserPrefs.shared.synchronize()
+		if isAppUpgrade {
+			// This only does any work if the iCloud store is empty,
+			// otherwise it just returns
+			UserPrefs.shared.copyUserDefaultsToUbiquitousStore()
+		}
 		return true
 	}
 
-	func application(
-		_ application: UIApplication,
-		continue userActivity: NSUserActivity,
-		restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool
+	func application(_ application: UIApplication,
+	                 continue userActivity: NSUserActivity,
+	                 restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool
 	{
-		if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
-			let url = userActivity.webpageURL
-			if let url = url {
-				return self.application(application, open: url, options: [:])
-			}
+		if userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+		   let url = userActivity.webpageURL
+		{
+			return self.application(application, open: url, options: [:])
 		}
 		return false
-	}
-
-	/// Makes sure that the user defaults do not contain plaintext credentials from previous app versions.
-	func removePlaintextCredentialsFromUserDefaults() {
-		UserDefaults.standard.removeObject(forKey: "username")
-		UserDefaults.standard.removeObject(forKey: "password")
 	}
 
 	func setMapLocation(_ location: MapLocation) {
@@ -143,9 +137,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		return try Data(contentsOf: url, options: [])
 	}
 
-	func displayGpxError(_ error: Error) {
-		var message = NSLocalizedString("Sorry, an error occurred while loading the GPX file",
-		                                comment: "")
+	func displayImportError(_ error: Error, filetype: String) {
+		var message = String.localizedStringWithFormat(
+			NSLocalizedString("Sorry, an error occurred while loading the %@ file",
+			                  comment: "Argument is a file type like 'GPX' or 'GeoJSON'"),
+			filetype)
 		message += "\n\n"
 		message += error.localizedDescription
 		mapView.showAlert(NSLocalizedString("Open URL", comment: ""),
@@ -156,6 +152,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	                 open url: URL,
 	                 options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool
 	{
+		let localizedGPX = NSLocalizedString("GPX", comment: "The name of a GPX file")
+
 		if url.isFileURL {
 			let data: Data
 			do {
@@ -173,8 +171,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [self] in
 					do {
 						try mapView.gpxLayer.loadGPXData(data, center: true)
+						mapView.updateMapMarkersFromServer(withDelay: 0.1, including: [.gpx])
 					} catch {
-						displayGpxError(error)
+						displayImportError(error, filetype: localizedGPX)
 					}
 				})
 				return true
@@ -191,12 +190,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 					return false
 				}
 				return false
+			case "geojson":
+				// Load GeoJSON into user custom data layer
+				DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [self] in
+					do {
+						let geo = try GeoJSONFile(data: data)
+						try geoJsonList.add(name: url.lastPathComponent, data: data)
+						if let loc = geo.firstPoint() {
+							mapView.centerOn(latLon: loc)
+							mapView.displayDataOverlayLayer = true
+						}
+					} catch {
+						displayImportError(
+							error,
+							filetype: NSLocalizedString("GeoJSON", comment: "The name of a GeoJSON file"))
+					}
+				})
+				return true
 			default:
 				return false
 			}
 
 		} else {
 			guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else { return false }
+
+			if components.scheme == "gomaposm",
+			   components.host == "oauth",
+			   components.path == "/callback"
+			{
+				// OAuth result
+				oAuth2.redirectHandler(url: url, options: options)
+				return true
+			}
 
 			if components.scheme == "gomaposm",
 			   let base64 = components.queryItems?.first(where: { $0.name == "gpxurl" })?.value,
@@ -210,11 +235,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 						case let .success(data):
 							do {
 								try mapView.gpxLayer.loadGPXData(data, center: true)
+								mapView.updateMapMarkersFromServer(withDelay: 0.1, including: [.gpx])
 							} catch {
-								displayGpxError(error)
+								displayImportError(error, filetype: localizedGPX)
 							}
 						case let .failure(error):
-							displayGpxError(error)
+							displayImportError(error, filetype: localizedGPX)
 						}
 					})
 				}
@@ -258,14 +284,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// set app badge if edits are pending
 		let pendingEdits = mapView?.editorLayer.mapData.modificationCount() ?? 0
 		if pendingEdits != 0 {
-			UNUserNotificationCenter.current().requestAuthorization(options: .badge, completionHandler: { _, _ in
-			})
+			UNUserNotificationCenter.current().requestAuthorization(options: .badge,
+			                                                        completionHandler: { _, _ in
+			                                                        })
 		}
 		UIApplication.shared.applicationIconBadgeNumber = pendingEdits
 
 		// while in background don't update our location so we don't download tiles/OSM data when moving
 		mapView.userOverrodeLocationPosition = true
 		mapView?.locationManager.stopUpdatingHeading()
+
+		// Save preferences in case user force-kills us while we're in background
+		UserPrefs.shared.synchronize()
 	}
 
 	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
@@ -278,6 +308,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		// remove badge now, so it disappears promptly on exit
 		UIApplication.shared.applicationIconBadgeNumber = 0
+
+		// Update preferences in case ubiquitous values changed while in the background
+		UserPrefs.shared.synchronize()
 	}
 
 	func applicationDidBecomeActive(_ application: UIApplication) {
@@ -285,10 +318,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	func applicationWillTerminate(_ application: UIApplication) {
-		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground.
+
+		// Turn off GPS so we gracefully end GPX trace.
+		AppDelegate.shared.mapView.mainViewController.setGpsState(.NONE)
+
+// Remove any live activities
+#if canImport(ActivityKit)
+		if #available(iOS 16.2, *) {
+			GpxTrackWidgetManager.endAllActivitiesSynchronously()
+		}
+#endif
 	}
 
-	class func askUser(toAllowLocationAccess parentVC: UIViewController?) {
+	class func askUser(toAllowLocationAccess parentVC: UIViewController) {
 		let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
 		let title = String.localizedStringWithFormat(
 			NSLocalizedString("Turn On Location Services to Allow %@ to Determine Your Location", comment: ""),
@@ -297,7 +340,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		AppDelegate.askUserToOpenSettings(withAlertTitle: title, message: nil, parentVC: parentVC)
 	}
 
-	class func askUserToOpenSettings(withAlertTitle title: String?, message: String?, parentVC: UIViewController?) {
+	class func askUserToOpenSettings(withAlertTitle title: String, message: String?, parentVC: UIViewController) {
 		let alertController = UIAlertController(
 			title: title,
 			message: message,
@@ -316,7 +359,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		alertController.addAction(openSettings)
 		alertController.addAction(okayAction)
 
-		parentVC?.present(alertController, animated: true)
+		parentVC.present(alertController, animated: true)
 	}
 
 	class func openAppSettings() {

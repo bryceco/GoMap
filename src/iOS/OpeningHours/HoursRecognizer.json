@@ -1,0 +1,135 @@
+{
+  "languages": [
+	{
+	  "isoCode": "en",
+	  "days": {
+		"Mo": [
+		  "monday"
+		],
+		"Tu": [
+		  "tuesday"
+		],
+		"We": [
+		  "wednesday"
+		],
+		"Th": [
+		  "thursday",
+		  "thur"
+		],
+		"Fr": [
+		  "friday"
+		],
+		"Sa": [
+		  "saturday"
+		],
+		"Su": [
+		  "sunday"
+		]
+	  },
+	  "open": "open",
+	  "closed": "closed",
+	  "through": "to",
+	  "noon": "noon",
+	  "midnight": "midnight",
+	  "minuteSeparators": ":. "
+	},
+	{
+	  "isoCode": "de",
+	  "days": {
+		"Mo": [
+		  "montag"
+		],
+		"Tu": [
+		  "dienstag"
+		],
+		"We": [
+		  "mittwoch"
+		],
+		"Th": [
+		  "donnerstag"
+		],
+		"Fr": [
+		  "freitag"
+		],
+		"Sa": [
+		  "samstag"
+		],
+		"Su": [
+		  "sonntag"
+		]
+	  },
+	  "open": "geöffnet",
+	  "closed": "geschlossen",
+	  "through": "bis",
+	  "noon": "mittag",
+	  "midnight": "mitternacht",
+	  "minuteSeparators": ":. "
+	},
+	{
+	  "isoCode": "fr",
+	  "days": {
+		"Mo": [
+		  "lundi"
+		],
+		"Tu": [
+		  "mardi"
+		],
+		"We": [
+		  "mercredi",
+		  "mercr"
+		],
+		"Th": [
+		  "jeudi"
+		],
+		"Fr": [
+		  "vendredi",
+		  "vendr"
+		],
+		"Sa": [
+		  "samedi"
+		],
+		"Su": [
+		  "dimanche"
+		]
+	  },
+	  "open": "ouvert",
+	  "closed": "fermé",
+	  "through": "à",
+	  "noon": "midi",
+	  "midnight": "minuit",
+	  "minuteSeparators": ":. h"
+	},
+	{
+	  "isoCode": "it",
+	  "days": {
+		"Mo": [
+		  "lunedì"
+		],
+		"Tu": [
+		  "martedì"
+		],
+		"We": [
+		  "mercoledì"
+		],
+		"Th": [
+		  "giovedì"
+		],
+		"Fr": [
+		  "venerdì"
+		],
+		"Sa": [
+		  "sabato"
+		],
+		"Su": [
+		  "domenica"
+		]
+	  },
+	  "open": "aperto",
+	  "closed": "chiuso",
+	  "through": "alle",
+	  "noon": "mezzogiorno",
+	  "midnight": "mezzanotte",
+	  "minuteSeparators": ":. "
+	}
+  ]
+}
