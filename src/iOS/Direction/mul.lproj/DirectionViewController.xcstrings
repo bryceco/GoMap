@@ -29,6 +29,12 @@
             "value" : "Richte dein Gerät parallel zur Objektrichtung aus."
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τοποθετήστε την συσκευή σας παράλληλα προς την κατεύθυνση του αντικειμένου."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -183,6 +189,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Abbrechen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ακύρωση"
           }
         },
         "en" : {

@@ -881,8 +881,8 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
         <note>Privacy - Health Update Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
-        <source>Copyright 2012-2021 Bryce Cogswell</source>
-        <target state="translated">Copyright 2012–2021 Bryce Cogswell</target>
+        <source>Copyright 2012-2024 Bryce Cogswell</source>
+        <target state="needs-review-l10n">Copyright 2012–2021 Bryce Cogswell</target>
         <note>Copyright (human-readable)</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">

@@ -46440,7 +46440,20 @@
       }
     },
     "Select the language used for Presets. Other app content will use your default language." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle die Sprache aus, die für die Voreinstellungen verwendet wird. Andere App-Inhalte werden in deiner Standardsprache angezeigt."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecciona el idioma que se usará para los ajustes preestablecidos. El resto del contenido de la aplicación usará tu idioma predeterminado."
+          }
+        }
+      }
     },
     "Selected object is off screen" : {
       "localizations" : {

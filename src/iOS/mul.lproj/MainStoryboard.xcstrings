@@ -11,6 +11,12 @@
             "value" : "Benutzername"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "όνομα χρήστη"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -34,6 +40,12 @@
             "state" : "translated",
             "value" : "ユーザー名"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用者名稱"
+          }
         }
       }
     },
@@ -45,6 +57,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Schaltfläche"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κουμπί"
           }
         },
         "en" : {
@@ -76,6 +94,12 @@
             "state" : "translated",
             "value" : "Кнопка"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按鈕"
+          }
         }
       }
     },
@@ -105,6 +129,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wegbeschreibung abrufen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Λήψη οδηγιών"
           }
         },
         "en" : {
@@ -377,10 +407,34 @@
       "comment" : "Class = \"UIButton\"; configuration.title = \"Comment\"; ObjectID = \"2g1-vb-Cjc\"; Note = \"Add a comment for a Note\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kommentar"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σχόλιο"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Comment"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comentario"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "留言"
           }
         }
       }
@@ -411,6 +465,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kommentar"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σχόλιο"
           }
         },
         "en" : {
@@ -657,6 +717,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hochladen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μεταφόρτωση"
           }
         },
         "en" : {
@@ -911,6 +977,12 @@
             "value" : "Neuer Kommentar:"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Νέο σχόλιο:"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -1053,6 +1125,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "66,6 FPS"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "66.6 FPS"
           }
         },
         "en" : {
@@ -1301,6 +1379,12 @@
             "value" : "Karte nach Norden ausrichten"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Επαναπροσανατολισμός του χάρτη προς το βορρά"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -1437,6 +1521,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kompass"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πυξίδα"
           }
         },
         "en" : {
@@ -1595,6 +1685,12 @@
             "value" : "Nach Ort suchen"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αναζήτηση Τοποθεσίας"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -1743,6 +1839,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zentrieren"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κέντρο"
           }
         },
         "en" : {
@@ -2369,6 +2471,12 @@
             "value" : "Hinweis"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σημείωση"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -2523,6 +2631,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zoomen zum bearbeiten"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μεγέθυνετε για Επεξεργασία"
           }
         },
         "en" : {
@@ -2717,10 +2831,28 @@
       "comment" : "Class = \"UIButton\"; configuration.title = \"Comment & Resolve\"; ObjectID = \"OJ0-aO-ri1\"; Note = \"Add a comment and resolve Note\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kommentieren & Beheben"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Comment & Resolve"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comentar & Resolver"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "留言&解決"
           }
         }
       }
@@ -2999,6 +3131,12 @@
             "value" : "Bezeichnung"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ετικέτα"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -3129,6 +3267,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bing Maps"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χάρτες Bing"
           }
         },
         "en" : {
@@ -3281,6 +3425,12 @@
             "value" : "Nach Ort suchen"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αναζήτηση Τοποθεσίας"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -3423,6 +3573,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Titel"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τίτλος"
           }
         },
         "en" : {
@@ -3581,6 +3737,12 @@
             "value" : "Geben Sie einen Namen (\"Berlin\"), eine URL oder einen anderen Text mit Breiten-/Längenkoordinaten oder einen Verweis auf ein OSM-Objekt (\"way 51014987\") an:"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ορίστε ένα όνομα(\"Νέα Υόρκη\"), ένα URL ή άλλο τύπο κειμένου που να περιέχει συντεταγμένες σε μορφή lat/long (γεωγραφικό πλάτος/γεωγραφικό μήκος), ή μία αναφορά σε ένα αντικείμενο OSM (\"Μονοπάτι 5101497\"):"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -3696,6 +3858,12 @@
           }
         },
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2014-06-17 17:54 UTC"
+          }
+        },
+        "el" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "2014-06-17 17:54 UTC"
@@ -3863,6 +4031,12 @@
             "value" : "Titel"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τίτλος"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -3993,6 +4167,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Niagarafälle"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Καταρράκτες Νιαγάρα"
           }
         },
         "en" : {
@@ -4151,6 +4331,12 @@
             "value" : "Attribute"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ετικέτες"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -4307,6 +4493,12 @@
             "value" : "Löschen"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Διαγραφή"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -4461,6 +4653,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mehr..."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Περισσότερα..."
           }
         },
         "en" : {
