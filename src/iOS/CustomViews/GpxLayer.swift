@@ -195,7 +195,7 @@ final class GpxLayer: DrawingLayer, DiskCacheSizeProtocol, DrawingLayerDelegate 
 		return allTracks().compactMap {
 			guard let geom = $0.geoJSON.geometry else { return nil }
 			let color = $0 == selectedTrack
-				? UIColor.red
+				? UIColor(red: 0/255, green: 99/255, blue: 21/255, alpha: 1.0)
 				: UIColor(red: 1.0,
 				          green: 99 / 255.0,
 				          blue: 249 / 255.0,
