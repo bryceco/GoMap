@@ -345,9 +345,9 @@
         <note>Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe";</note>
       </trans-unit>
       <trans-unit id="LxX-tl-ZLH.text" xml:space="preserve">
-        <source>Enable Filters</source>
-        <target state="translated">Ativar filtros</target>
-        <note>Class = "UILabel"; text = "Enable Filters"; ObjectID = "LxX-tl-ZLH";</note>
+        <source>Filters</source>
+        <target state="needs-review-l10n">Ativar filtros</target>
+        <note>Class = "UILabel"; text = "Filters"; ObjectID = "LxX-tl-ZLH";</note>
       </trans-unit>
       <trans-unit id="MPq-PX-jf0.text" xml:space="preserve">
         <source>Editor with Aerial</source>
@@ -426,9 +426,9 @@ Limpe os ficheiros temporários das quadrículas Mapnik ou de sobreposição par
         <note>Class = "UILabel"; text = "Others"; ObjectID = "Uum-Wn-9CF";</note>
       </trans-unit>
       <trans-unit id="VUR-wT-knn.text" xml:space="preserve">
-        <source>Enable Rotation</source>
-        <target state="translated">Ativar rotação</target>
-        <note>Class = "UILabel"; text = "Enable Rotation"; ObjectID = "VUR-wT-knn";</note>
+        <source>Map Rotation</source>
+        <target state="needs-review-l10n">Ativar rotação</target>
+        <note>Class = "UILabel"; text = "Map Rotation"; ObjectID = "VUR-wT-knn";</note>
       </trans-unit>
       <trans-unit id="WnI-tY-WWa.text" xml:space="preserve">
         <source>Delete tracks after:</source>
