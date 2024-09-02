@@ -907,7 +907,7 @@ Limpe os ficheiros temporários das quadrículas Mapnik ou de sobreposição par
       <trans-unit id=" (%d members)&#10;|==|plural.one" xml:space="preserve">
         <source> (%d member)
 </source>
-        <target state="needs-review-l10n"> (%d membros)
+        <target state="translated"> (%d membro)
 </target>
         <note/>
       </trans-unit>
@@ -921,7 +921,7 @@ Limpe os ficheiros temporários das quadrículas Mapnik ou de sobreposição par
       <trans-unit id=" (%d nodes)&#10;|==|plural.one" xml:space="preserve">
         <source> (%d node)
 </source>
-        <target state="needs-review-l10n"> (%d nós)
+        <target state="translated"> (%d nó)
 </target>
         <note/>
       </trans-unit>
@@ -944,7 +944,7 @@ Limpe os ficheiros temporários das quadrículas Mapnik ou de sobreposição par
       </trans-unit>
       <trans-unit id="%.0f m^2" xml:space="preserve">
         <source>%.0f m²</source>
-        <target state="needs-review-l10n">%.0f m^2</target>
+        <target state="translated">%.0f m²</target>
         <note>area in m^2</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
@@ -954,22 +954,22 @@ Limpe os ficheiros temporários das quadrículas Mapnik ou de sobreposição par
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%1$.1f meter</source>
-        <target state="needs-review-l10n">%1$.1f</target>
+        <target state="translated">%1$.1f metro</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%1$.1f meters</source>
-        <target state="needs-review-l10n">%1$.1f</target>
+        <target state="translated">%1$.1f metros</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.nodes.plural.one" xml:space="preserve">
         <source>%2$ld node</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld nó</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.nodes.plural.other" xml:space="preserve">
         <source>%2$ld nodes</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld nós</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
@@ -979,22 +979,22 @@ Limpe os ficheiros temporários das quadrículas Mapnik ou de sobreposição par
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.files.plural.one" xml:space="preserve">
         <source>%2$ld file</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld ficheiro</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.files.plural.other" xml:space="preserve">
         <source>%2$ld files</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld ficheiros</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.megabytes.plural.one" xml:space="preserve">
         <source>%1$.2f MB</source>
-        <target state="needs-review-l10n">%1$.2f</target>
+        <target state="translated">%1$.2f MB</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.megabytes.plural.other" xml:space="preserve">
         <source>%1$.2f MB</source>
-        <target state="needs-review-l10n">%1$.2f</target>
+        <target state="translated">%1$.2f MB</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
@@ -1019,7 +1019,7 @@ Limpe os ficheiros temporários das quadrículas Mapnik ou de sobreposição par
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.one" xml:space="preserve">
         <source>%ld edit, last active %@</source>
-        <target state="needs-review-l10n">%1$ld edições, última atividade %2$@</target>
+        <target state="translated">%1$ld edição, última atividade %2$@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.other" xml:space="preserve">
@@ -1029,27 +1029,27 @@ Limpe os ficheiros temporários das quadrículas Mapnik ou de sobreposição par
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes" xml:space="preserve">
         <source>%1$#@meters@, %2$#@nodes@</source>
-        <target state="new">%1$#@meters@, %2$#@nodes@</target>
+        <target state="translated">%1$#@meters@ metros, %2$#@nodes@ nós</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%1$ld meter</source>
-        <target state="new">%1$ld meter</target>
+        <target state="translated">%1$ld metro</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%1$ld meters</source>
-        <target state="new">%1$ld meters</target>
+        <target state="translated">%1$ld metros</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.one" xml:space="preserve">
         <source>%2$ld node</source>
-        <target state="new">%2$ld node</target>
+        <target state="translated">%2$ld nó</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.other" xml:space="preserve">
         <source>%2$ld nodes</source>
-        <target state="new">%2$ld nodes</target>
+        <target state="translated">%2$ld nós</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
@@ -3451,7 +3451,7 @@ Pode limpar os ficheiros temporários (nas configurações, em Visualização) p
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.footerTitle" xml:space="preserve">
         <source>Select a server if you would like to edit data located on an alternate OSM server.</source>
-        <target state="needs-review-l10n">Especifique um host se quiser editar os dados localizados num servidor OpenStreetMap alternativo. O host padrão é api.openstreetmap.org.</target>
+        <target state="translated">Especifique um servidor se quiser editar os dados localizados num servidor OpenStreetMap alternativo. O servidor padrão é api.openstreetmap.org.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Select a server if you would like to edit data located on an alternate OSM server."; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.headerTitle" xml:space="preserve">
@@ -3480,11 +3480,12 @@ Pode limpar os ficheiros temporários (nas configurações, em Visualização) p
       </trans-unit>
       <trans-unit id="355-dx-Oi8.headerTitle" xml:space="preserve">
         <source>Presets Language</source>
-        <target state="needs-review-l10n">Idioma</target>
+        <target state="translated">Idioma dos modelos de etiquetas</target>
         <note>Class = "UITableViewSection"; headerTitle = "Presets Language"; ObjectID = "355-dx-Oi8";</note>
       </trans-unit>
       <trans-unit id="AEl-sZ-ech.text" xml:space="preserve">
         <source>Enables &gt; 60 FPS</source>
+        <target state="translated">Ativa &gt; 60 FPS</target>
         <note>Class = "UILabel"; text = "Enables &gt; 60 FPS"; ObjectID = "AEl-sZ-ech"; Note = "Display the user's touches when they tap the screen";</note>
       </trans-unit>
       <trans-unit id="AHZ-L8-yUA.title" xml:space="preserve">
