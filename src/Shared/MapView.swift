@@ -2059,7 +2059,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 						editControlActions = [.EDITTAGS, .PASTETAGS]
 					}
 				} else {
-					editControlActions = [.EDITTAGS, .PASTETAGS, .DELETE, .MORE]
+                    editControlActions = [.EDITTAGS, .PASTETAGS, .DELETE, .REVERSE, .MORE]
 				}
 			}
 			editControl.removeAllSegments()
