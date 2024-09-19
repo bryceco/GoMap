@@ -561,6 +561,28 @@ extension OsmMapData {
 			}
 		}
 	}
+    
+    func toggleOneWay(_ way: OsmWay) throws -> EditAction {
+        return { [self] in
+            registerUndoCommentString(NSLocalizedString("Toggle One Way", comment: ""))
+            
+            var newWayTags = way.tags
+            switch (way.isOneWay) {
+            case .BACKWARD:
+                break;
+                
+            case .NONE:
+                newWayTags["oneway"] = "yes"
+                setTags(newWayTags, for: way)
+                break;
+                
+            case .FORWARD:
+                newWayTags.removeValue(forKey: "oneway")
+                setTags(newWayTags, for: way)
+                break;
+            }
+        }
+    }
 
 	func canReverse(_ way: OsmWay) throws -> EditAction {
 		let roleReversals = [

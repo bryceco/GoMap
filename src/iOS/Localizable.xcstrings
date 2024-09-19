@@ -50879,6 +50879,9 @@
         }
       }
     },
+    "Toggle One Way" : {
+      "comment" : "Edit action"
+    },
     "Travel ALLOWED from %@ to %@" : {
       "localizations" : {
         "ar" : {

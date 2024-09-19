@@ -58,6 +58,7 @@ enum EDIT_ACTION: Int {
 	case PASTETAGS
 	case RESTRICT
 	case CREATE_RELATION
+    case TOGGLEONEWAY
 
 	/// Localized names of edit actions
 	func actionTitle(abbreviated: Bool = false) -> String {
@@ -82,6 +83,7 @@ enum EDIT_ACTION: Int {
 			? NSLocalizedString("Restrict", comment: "Edit action")
 			: NSLocalizedString("Turn Restrictions", comment: "Edit action")
 		case .CREATE_RELATION: return NSLocalizedString("Create Relation", comment: "Edit action")
+        case .TOGGLEONEWAY: return NSLocalizedString("Toggle One Way", comment: "Edit action")
 		}
 	}
 }
@@ -2059,7 +2061,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 						editControlActions = [.EDITTAGS, .PASTETAGS]
 					}
 				} else {
-                    editControlActions = [.EDITTAGS, .PASTETAGS, .DELETE, .REVERSE, .MORE]
+                    editControlActions = [.EDITTAGS, .PASTETAGS, .DELETE, .REVERSE, .TOGGLEONEWAY, .MORE]
 				}
 			}
 			editControl.removeAllSegments()

@@ -677,7 +677,7 @@ extension EditorMapLayer {
 		// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
 		switch action {
 		case .RECTANGULARIZE, .STRAIGHTEN, .REVERSE, .DUPLICATE, .ROTATE, .CIRCULARIZE, .COPYTAGS, .PASTETAGS,
-		     .EDITTAGS, .CREATE_RELATION:
+                .EDITTAGS, .CREATE_RELATION, .TOGGLEONEWAY:
 			if let way = selectedWay,
 			   let node = selectedNode,
 			   node.tags.count == 0,
@@ -783,6 +783,9 @@ extension EditorMapLayer {
 				owner.presentEditActionSheet(nil)
 			case .RESTRICT:
 				owner.presentTurnRestrictionEditor()
+            case .TOGGLEONEWAY:
+                let toggleOneWay = try mapData.toggleOneWay(selectedWay!)
+                toggleOneWay()
 			case .CREATE_RELATION:
 				guard let selectedPrimary = selectedPrimary else { return }
 				let create: ((_ type: String) -> Void) = { [self] type in
