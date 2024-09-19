@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 private class PathShapeLayer: CAShapeLayer {
 	fileprivate struct Properties {
 		var position: OSMPoint?
@@ -28,6 +29,37 @@ private class PathShapeLayer: CAShapeLayer {
 			setNeedsLayout()
 		}
 	}
+    
+    var polygonFillColor: UIColor = .cyan {
+        didSet {
+            strokeColor = color.cgColor
+            setNeedsLayout()
+        }
+    }
+    
+    private func isPolygon(points: [CGPoint]) -> Bool {
+        if points.count < 3 {
+            return false
+        }
+        
+        // Check if all points are connected
+        for i in 0..<points.count {
+            let currentPoint = points[i]
+            let nextPoint = points[(i + 1) % points.count]
+            let previousPoint = points[(i - 1 + points.count) % points.count]
+
+            // Calculate the distance between the current point and the next/previous points using the Pythagorean theorem
+            let distanceToNext = sqrt(pow(nextPoint.x - currentPoint.x, 2) + pow(nextPoint.y - currentPoint.y, 2))
+            let distanceToPrevious = sqrt(pow(previousPoint.x - currentPoint.x, 2) + pow(previousPoint.y - currentPoint.y, 2))
+
+            // If the distance is zero, the points are touching
+            if distanceToNext == 0 && distanceToPrevious == 0 {
+                return true
+            }
+        }
+
+        return false
+    }
 
 	override init(layer: Any) {
 		let layer = layer as! PathShapeLayer
@@ -39,7 +71,8 @@ private class PathShapeLayer: CAShapeLayer {
 	}
 
 	init(withLatLonPath latLonPath: CGPath) {
-		if let first = latLonPath.getPoints().first {
+        let points = latLonPath.getPoints()
+		if let first = points.first {
 			firstPoint = LatLon(lon: first.x, lat: first.y)
 		} else {
 			firstPoint = nil
@@ -52,7 +85,10 @@ private class PathShapeLayer: CAShapeLayer {
 		anchorPoint = CGPoint.zero
 		position = CGPoint(refPoint)
 		strokeColor = color.cgColor
-		fillColor = nil
+        fillColor = nil
+        if isPolygon(points: points) {
+            fillColor = polygonFillColor.cgColor
+        }
 		lineWidth = 2.0
 		lineCap = .square
 		lineJoin = .miter

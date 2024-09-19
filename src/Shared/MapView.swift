@@ -461,6 +461,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	var displayDataOverlayLayer = false {
 		didSet {
+            print("here");
 			dataOverlayLayer.isHidden = !displayDataOverlayLayer
 
 			if displayDataOverlayLayer {
