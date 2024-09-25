@@ -170,7 +170,7 @@ final class TileServer: Equatable, Codable {
 	}
 
 	func isBingAerial() -> Bool {
-		return self === Self.bingAerial
+		return self.identifier == BingIdentifier
 	}
 
 	func isMaxar() -> Bool {
@@ -244,7 +244,7 @@ final class TileServer: Equatable, Codable {
 		isVector: false)
 
 	static let maxarPremiumAerial = TileServer(
-		withName: "Maxar Premium Aerial",
+		withName: "Maxar Premium",
 		identifier: "Maxar-Premium",
 		url: MaxarPremiumUrl,
 		best: false,
@@ -388,7 +388,7 @@ final class TileServer: Equatable, Codable {
 		isVector: false)
 
 	private static let builtinBingAerial = TileServer(
-		withName: "Bing Aerial",
+		withName: "Bing",
 		identifier: BingIdentifier,
 		url: "https://ecn.{switch:t0,t1,t2,t3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=10618&key={apikey}",
 		best: false,
