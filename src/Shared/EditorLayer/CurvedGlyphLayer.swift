@@ -214,8 +214,8 @@ final class CurvedGlyphLayer {
 		var layers: [GlyphLayer] = []
 
 		for run in stringGlyphs.runs {
-			let runFont = StringGlyphs
-				.fontForRun(run) // every run potentially has a different font, due to font substitution
+			// every run potentially has a different font, due to font substitution
+			let runFont = StringGlyphs.fontForRun(run)
 			let glyphs = StringGlyphs.glyphsForRun(run)
 			let advances = StringGlyphs.advancesForRun(run)
 			let size = CTFontGetBoundingBox(runFont).size
