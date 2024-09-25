@@ -19,7 +19,7 @@ let TRANSFORM_3D = 0
 
 // MARK: Point
 
-extension CGPoint: Hashable {
+extension CGPoint: @retroactive Hashable {
 	public func hash(into hasher: inout Hasher) {
 		hasher.combine(x)
 		hasher.combine(y)
