@@ -19,7 +19,7 @@ class DarkModeImage {
 	func darkModeImageFor(data: Data) -> UIImage? {
 		guard let orig = CIImage(data: data) else { return nil }
 		let filter = CIFilter.colorControls()
-		filter.brightness = -0.4
+		filter.brightness = -0.2
 		filter.contrast = 1.0
 		filter.saturation = 1.0
 		filter.inputImage = orig
