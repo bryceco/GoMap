@@ -74,6 +74,7 @@ class BasemapTileServerListViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let server = BasemapServerList[indexPath.row]
 		AppDelegate.shared.mapView.basemapServer = server
+		AppDelegate.shared.mapView.viewState = .BASEMAP
 
 		// if popping all the way up we need to tell Settings to save changes
 		displayViewController?.applyChanges()
