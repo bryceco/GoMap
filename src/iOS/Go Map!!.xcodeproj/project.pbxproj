@@ -1914,7 +1914,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CURRENT_PROJECT_VERSION = 4301;
 				DEVELOPMENT_TEAM = 2STHX823T6;
-				DISPLAY_NAME = "Go Map!! Debug";
+				DISPLAY_NAME = "Go Kaart Debug";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Go Map!!-Prefix.pch";
 				GCC_WARN_UNUSED_LABEL = YES;
@@ -1960,7 +1960,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CURRENT_PROJECT_VERSION = 4301;
 				DEVELOPMENT_TEAM = 2STHX823T6;
-				DISPLAY_NAME = "Go Map!!";
+				DISPLAY_NAME = "Go Kaart";
 				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Go Map!!-Prefix.pch";
