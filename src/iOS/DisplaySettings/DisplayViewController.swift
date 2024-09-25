@@ -92,10 +92,10 @@ class DisplayViewController: UITableViewController {
 	}
 
 	func setButtonLayoutTitle() {
-		let title = AppDelegate.shared.mapView.mainViewController.buttonLayout == MainViewButtonLayout
-			.buttonsOnLeft ? NSLocalizedString(
-				"Left",
-				comment: "") : NSLocalizedString("Right", comment: "")
+		let onLeft = AppDelegate.shared.mapView.mainViewController.buttonLayout == MainViewButtonLayout.buttonsOnLeft
+		let title = onLeft
+			? NSLocalizedString("Left", comment: "")
+			: NSLocalizedString("Right", comment: "")
 		addButtonPosition.setTitle(title, for: .normal)
 	}
 

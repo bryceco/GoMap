@@ -61,43 +61,43 @@ class FilterObjectsViewController: UITableViewController, UITextFieldDelegate {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		let editor = AppDelegate.shared.mapView.editorLayer.objectFilters
+		let filters = AppDelegate.shared.mapView.editorLayer.objectFilters
 
-		levelsText.text = editor.showLevelRange
-		switchLevel.isOn = editor.showLevel
-		switchPoints.isOn = editor.showPoints
-		switchTrafficRoads.isOn = editor.showTrafficRoads
-		switchServiceRoads.isOn = editor.showServiceRoads
-		switchPaths.isOn = editor.showPaths
-		switchBuildings.isOn = editor.showBuildings
-		switchLanduse.isOn = editor.showLanduse
-		switchBoundaries.isOn = editor.showBoundaries
-		switchWater.isOn = editor.showWater
-		switchRail.isOn = editor.showRail
-		switchPower.isOn = editor.showPower
-		switchPastFuture.isOn = editor.showPastFuture
-		switchOthers.isOn = editor.showOthers
+		levelsText.text = filters.showLevelRange
+		switchLevel.isOn = filters.showLevel
+		switchPoints.isOn = filters.showPoints
+		switchTrafficRoads.isOn = filters.showTrafficRoads
+		switchServiceRoads.isOn = filters.showServiceRoads
+		switchPaths.isOn = filters.showPaths
+		switchBuildings.isOn = filters.showBuildings
+		switchLanduse.isOn = filters.showLanduse
+		switchBoundaries.isOn = filters.showBoundaries
+		switchWater.isOn = filters.showWater
+		switchRail.isOn = filters.showRail
+		switchPower.isOn = filters.showPower
+		switchPastFuture.isOn = filters.showPastFuture
+		switchOthers.isOn = filters.showOthers
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 
-		let editor = AppDelegate.shared.mapView.editorLayer.objectFilters
+		let filters = AppDelegate.shared.mapView.editorLayer.objectFilters
 
-		editor.showLevelRange = levelsText.text!
-		editor.showLevel = switchLevel.isOn
-		editor.showPoints = switchPoints.isOn
-		editor.showTrafficRoads = switchTrafficRoads.isOn
-		editor.showServiceRoads = switchServiceRoads.isOn
-		editor.showPaths = switchPaths.isOn
-		editor.showBuildings = switchBuildings.isOn
-		editor.showLanduse = switchLanduse.isOn
-		editor.showBoundaries = switchBoundaries.isOn
-		editor.showWater = switchWater.isOn
-		editor.showRail = switchRail.isOn
-		editor.showPower = switchPower.isOn
-		editor.showPastFuture = switchPastFuture.isOn
-		editor.showOthers = switchOthers.isOn
+		filters.showLevelRange = levelsText.text!
+		filters.showLevel = switchLevel.isOn
+		filters.showPoints = switchPoints.isOn
+		filters.showTrafficRoads = switchTrafficRoads.isOn
+		filters.showServiceRoads = switchServiceRoads.isOn
+		filters.showPaths = switchPaths.isOn
+		filters.showBuildings = switchBuildings.isOn
+		filters.showLanduse = switchLanduse.isOn
+		filters.showBoundaries = switchBoundaries.isOn
+		filters.showWater = switchWater.isOn
+		filters.showRail = switchRail.isOn
+		filters.showPower = switchPower.isOn
+		filters.showPastFuture = switchPastFuture.isOn
+		filters.showOthers = switchOthers.isOn
 	}
 
 	// show filter text in red if the level range is invalid
