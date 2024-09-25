@@ -47114,7 +47114,7 @@
       }
     },
     "Share" : {
-      "comment" : "Open iOS sharing sheet\n   Title for sharing options",
+      "comment" : "Open iOS sharing sheet\nTitle for sharing options",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
