@@ -38,16 +38,20 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 		}
 		// Build a new list of markers that reference the object
 		var list = [MapMarker]()
-		for quest in QuestList.shared.questsForObject(object) {
-			if let marker = QuestMarker(object: object, quest: quest, ignorable: self) {
+		if AppDelegate.shared.mapView.viewOverlayMask.contains(.QUESTS) {
+			for quest in QuestList.shared.questsForObject(object) {
+				if let marker = QuestMarker(object: object, quest: quest, ignorable: self) {
+					addOrUpdate(marker: marker)
+					list.append(marker)
+				}
+			}
+		}
+		if AppDelegate.shared.mapView.viewOverlayMask.contains(.NOTES) {
+			if let fixme = FixmeMarker.fixmeTag(object) {
+				let marker = FixmeMarker(object: object, text: fixme)
 				addOrUpdate(marker: marker)
 				list.append(marker)
 			}
-		}
-		if let fixme = FixmeMarker.fixmeTag(object) {
-			let marker = FixmeMarker(object: object, text: fixme)
-			addOrUpdate(marker: marker)
-			list.append(marker)
 		}
 		return list
 	}
