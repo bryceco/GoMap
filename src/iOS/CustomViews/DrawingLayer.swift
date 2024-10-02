@@ -36,6 +36,17 @@ private class PathShapeLayer: CAShapeLayer {
             setNeedsLayout()
         }
     }
+    
+    private func isPolygon(points: [CGPoint]) -> Bool {
+        if points.count < 3 {
+            return false
+        }
+        
+        if points.first == points.last {
+            return true
+        }
+        return false
+    }
 
 	override init(layer: Any) {
 		let layer = layer as! PathShapeLayer
@@ -62,6 +73,9 @@ private class PathShapeLayer: CAShapeLayer {
 		position = CGPoint(refPoint)
 		strokeColor = color.cgColor
         fillColor = nil
+        if isPolygon(points: points) {
+            fillColor = polygonFillColor.cgColor
+        }
 		lineWidth = 2.0
 		lineCap = .square
 		lineJoin = .miter
