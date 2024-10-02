@@ -47,6 +47,12 @@
             "value" : "Mapnik paanid"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basemap laukiak"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -177,6 +183,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mul ei ole kontot"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ez dut konturik"
           }
         },
         "fi" : {
@@ -893,6 +905,12 @@
             "value" : "Üksikasjad"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xehetasun"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1025,6 +1043,12 @@
             "value" : "Nombre"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Izen"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1147,8 +1171,8 @@
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Especifique um host se quiser editar os dados localizados num servidor OpenStreetMap alternativo. O host padrão é api.openstreetmap.org."
+            "state" : "translated",
+            "value" : "Especifique um servidor se quiser editar os dados localizados num servidor OpenStreetMap alternativo. O servidor padrão é api.openstreetmap.org."
           }
         },
         "pt-BR" : {
@@ -1233,6 +1257,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OpenStreetMap server"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OpenStreetMap zerbidorea"
           }
         },
         "fi" : {
@@ -1385,6 +1415,12 @@
             "value" : "Lisateave"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xehetasun"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1517,6 +1553,12 @@
             "value" : "Cuenta en OpenStreetMap"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OpenStreetMap kontua"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1599,6 +1641,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OpenStreetMap sisse logimine"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OpenStreetMap-en sartu"
           }
         },
         "fr" : {
@@ -1716,6 +1764,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "api.openstreetmap.org"
+          }
+        },
+        "eu" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "api.openstreetmap.org"
@@ -1865,6 +1919,12 @@
             "value" : "Keel"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hizkuntza"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -1879,8 +1939,8 @@
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Jezik"
+            "state" : "translated",
+            "value" : "Jezik predodređenih postavki"
           }
         },
         "id" : {
@@ -1921,8 +1981,8 @@
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Idioma"
+            "state" : "translated",
+            "value" : "Idioma dos modelos de etiquetas"
           }
         },
         "pt-BR" : {
@@ -2007,6 +2067,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "> 60 FPS 有効化"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ativa > 60 FPS"
           }
         },
         "uk" : {
@@ -2361,6 +2427,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aerofotode paanid"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zerutikako lauki"
           }
         },
         "fr" : {
@@ -4435,8 +4507,8 @@
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Jezik"
+            "state" : "translated",
+            "value" : "Jezik predodređenih postavki"
           }
         },
         "id" : {
@@ -6439,8 +6511,8 @@
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Jezik"
+            "state" : "translated",
+            "value" : "Jezik predodređenih postavki"
           }
         },
         "id" : {

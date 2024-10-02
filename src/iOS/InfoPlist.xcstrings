@@ -47,6 +47,12 @@
             "value" : "Go Map!!"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -233,6 +239,12 @@
             "value" : "Go Map!!"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -397,6 +409,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GPS-vahetusformaat (GPX)"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS Exchange Format (GPX)"
           }
         },
         "fi" : {

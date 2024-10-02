@@ -215,6 +215,12 @@
             "value" : "Tühista"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ezabatu"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",

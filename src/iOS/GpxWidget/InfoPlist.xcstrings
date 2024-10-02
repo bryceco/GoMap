@@ -29,6 +29,12 @@
             "value" : "widgetgpx"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GpxWidget"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -36,6 +42,12 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GpxWidget"
+          }
+        },
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "GpxWidget"
@@ -89,6 +101,12 @@
             "value" : "GpxWidgetExtension"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GpxWidgetExtension"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -135,6 +153,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Copyright © 2024 Bryce Cogswell. All rights reserved."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "© 2024 Брайс Когсвелл"
           }
         },
         "uk" : {

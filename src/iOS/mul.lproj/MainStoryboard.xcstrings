@@ -41,6 +41,12 @@
             "value" : "ユーザー名"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "username"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -165,6 +171,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Saznaj smjer"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Útbaigazítás"
           }
         },
         "id" : {
@@ -299,6 +311,12 @@
             "value" : "Esimene"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lehena"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -315,6 +333,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prvi"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Első"
           }
         },
         "id" : {
@@ -431,6 +455,30 @@
             "value" : "Comentario"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oharra"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dodaj komentar"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Megjegyzés"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Комментировать"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -491,6 +539,12 @@
             "value" : "Kommentaar"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oharra"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -507,6 +561,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Komentar"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Megjegyzés"
           }
         },
         "id" : {
@@ -743,6 +803,12 @@
             "value" : "Saada"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Igorri"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -759,6 +825,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prenesi"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feltöltés"
           }
         },
         "id" : {
@@ -1001,6 +1073,12 @@
             "value" : "Uus kommentaar:"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ohar berria:"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1017,6 +1095,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Novi komentar:"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Új megjegyzés:"
           }
         },
         "id" : {
@@ -1145,6 +1229,12 @@
             "value" : "66,6 FPS"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "66.6 FPS"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1158,6 +1248,12 @@
           }
         },
         "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "66.6 FPS"
+          }
+        },
+        "hu" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "66.6 FPS"
@@ -1257,6 +1353,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "El comentario del conjunto de cambios va aquí"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aldaketa-multzoaren komentarioa hemen"
           }
         },
         "hr" : {
@@ -1403,6 +1505,12 @@
             "value" : "Suuna kaart põhja"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iparrari itzul"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1413,6 +1521,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Okreni kartu na sjever"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A térkép északi irányú tájolása"
           }
         },
         "id" : {
@@ -1547,6 +1661,12 @@
             "value" : "Kompass"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ipar orratza"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1563,6 +1683,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kompas"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iránytű"
           }
         },
         "id" : {
@@ -1709,6 +1835,12 @@
             "value" : "Leia asukoht"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Helbidea bilatu"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1719,6 +1851,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Traži mjesto"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Helyzet keresése"
           }
         },
         "id" : {
@@ -1865,6 +2003,12 @@
             "value" : "Keskkoht"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erdira"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1875,6 +2019,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Centriraj"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Középre"
           }
         },
         "id" : {
@@ -2013,6 +2163,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rakenda"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onartu"
           }
         },
         "fr" : {
@@ -2255,6 +2411,12 @@
             "value" : "Alapealkiri"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Azpi-titulu"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2495,6 +2657,12 @@
             "value" : "Märge"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oharra"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2511,6 +2679,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bilješka"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jegyzet"
           }
         },
         "id" : {
@@ -2657,6 +2831,12 @@
             "value" : "Suurenda muutmiseks"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editatzeko, zoom egin"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2667,6 +2847,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Za uređivanje uvećaj prikaz"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nagyíts a szerkesztéshez"
           }
         },
         "id" : {
@@ -2849,6 +3035,30 @@
             "value" : "Comentar & Resolver"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Komentatu ta zuzendu"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dodaj komentar i riješi"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Megjegyzés hozzáadása & jegyzet megoldása"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Комментировать и устранить"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2903,6 +3113,12 @@
             "value" : "Lahenda"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zuzendu"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2911,8 +3127,8 @@
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Riješi"
+            "state" : "translated",
+            "value" : "Dodaj komentar i riješi"
           }
         },
         "id" : {
@@ -3293,6 +3509,12 @@
             "value" : "Bing kaardid"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bing mapak"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3309,6 +3531,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bing karte"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bing térkép"
           }
         },
         "id" : {
@@ -3447,6 +3675,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Leia asukoht"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Helbidea bilatu"
           }
         },
         "fr" : {
@@ -3597,6 +3831,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pealkiri"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titulu"
           }
         },
         "fi" : {
@@ -3881,6 +4121,12 @@
             "value" : "17-06-2014 17:54 UTC"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2014-06-17 17:54 UTC"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4047,6 +4293,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Título"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titulu"
           }
         },
         "fi" : {
@@ -4355,6 +4607,12 @@
             "value" : "Sildid"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ikurrak"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4517,6 +4775,12 @@
             "value" : "Kustuta"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kendu"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4677,6 +4941,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Veel…"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gehiago..."
           }
         },
         "fi" : {

@@ -47,6 +47,12 @@
             "value" : "GPX rajad"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX hatzak"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -359,6 +365,12 @@
             "value" : "Üksikasjad"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xehetasunak"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -665,6 +677,12 @@
             "value" : "Mapnik"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mapnik"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -672,6 +690,12 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mapnik"
+          }
+        },
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mapnik"
@@ -735,6 +759,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "99 päeva"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "99 egun"
           }
         },
         "fi" : {
@@ -897,6 +927,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Projektsioon"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proiekzioa"
           }
         },
         "fi" : {
@@ -1170,6 +1206,12 @@
           }
         },
         "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-1..3,7"
+          }
+        },
+        "eu" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "-1..3,7"
@@ -1469,6 +1511,12 @@
             "value" : "Aerofotod"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zerutik"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1601,6 +1649,12 @@
             "value" : "Basemap"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basemap"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1611,6 +1665,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ベースマップ"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Базовая карта"
           }
         },
         "uk" : {
@@ -1827,6 +1887,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ainult Mapnik"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bakarrik Mapnik"
           }
         },
         "fr" : {
@@ -2195,6 +2261,12 @@
             "value" : "Go Map!! jätab jõudluse optimeerimiseks vanad andmed automaatselt kõrvale."
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!-ek, zalutasuna hobetzeko, datu zaharrak ezabatuko ditu."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2475,6 +2547,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pealkiri"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titulu"
           }
         },
         "fi" : {
@@ -3443,6 +3521,12 @@
             "value" : "Bing"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bing"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3593,6 +3677,12 @@
             "value" : "Aerofotode paanid"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zerutikako laukiak"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3707,6 +3797,12 @@
             "value" : "12:00:00"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "12:00:00"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3813,6 +3909,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nupp"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botoia"
           }
         },
         "fi" : {
@@ -3971,6 +4073,12 @@
             "value" : "Paiguta + nupp "
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+ botoia kokatu "
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4101,6 +4209,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Üksikasjad"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xehetasunak"
           }
         },
         "fi" : {
@@ -4397,6 +4511,12 @@
             "value" : "Aerofotode paanid"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zerutikako laukiak"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4527,6 +4647,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Üksikasjad"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xehetasunak"
           }
         },
         "fi" : {
@@ -4685,6 +4811,12 @@
             "value" : "Aerofotode paanid"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zerutikako laukiak"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4821,6 +4953,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aerofotode paanid"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zerutikako laukiak"
           }
         },
         "fr" : {
@@ -5117,6 +5255,12 @@
             "value" : "Aerofotode paanid"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zerutikako laukiak"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5397,6 +5541,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Üksikasjad"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xehetasunak"
           }
         },
         "fi" : {
@@ -5867,6 +6017,12 @@
             "value" : "QA Poole nimetud paanid"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Izenik gabeko QA Poole laukiak"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6123,6 +6279,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OpenStreetMap GPS jäljed"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OpenStreetMap GPS hatzak"
           }
         },
         "fi" : {
@@ -6521,6 +6683,12 @@
             "value" : "(TMS)"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(TMS)"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6651,6 +6819,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rajad"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bideak"
           }
         },
         "fr" : {
@@ -7235,6 +7409,12 @@
             "value" : "Salvestatud või alla laetud GPX-rajad kustutatakse automaatselt pärast seda:"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grabatu edo kargatutako GPX hatzak ezabatuko dira honen geroztik:"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7491,6 +7671,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aerofotode pakkuja"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Goi bista emalea"
           }
         },
         "fr" : {
@@ -7755,6 +7941,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tühista"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utzi"
           }
         },
         "fi" : {
@@ -8351,6 +8543,12 @@
             "value" : "Tagasi"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gibelka"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8489,6 +8687,12 @@
             "value" : "Notas y correcciones"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ohar eta zuzentzekoak"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8595,6 +8799,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Piirid"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mugak"
           }
         },
         "fi" : {
@@ -9023,6 +9233,12 @@
             "value" : "Solo Basemap"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basemap bakarrik"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9033,6 +9249,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ベースマップのみ"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Только базовая карта"
           }
         },
         "uk" : {
@@ -9075,6 +9297,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Título"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titulu"
           }
         },
         "hr" : {
@@ -9147,6 +9375,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Teenindusteed"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zerbitzu bideak"
           }
         },
         "fr" : {
@@ -9553,8 +9787,8 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Очистите кэш данных OSM, если состояние данных в приложении не синхронизировано с сервером OSM. Это может происходить, если кто-то еще вносит правки в те же объекты, которые редактируете вы, или если загрузка одного из ваших пакетов была неудачной, что мешает дальнейшей загрузке данных. \n\nВнимание: Очистка кэша OSM приведёт к потере данных, которые ещё не были загружены на сервер.\n\nОчистите кэш тайлов Mapnik или кэш накладываемых слоёв, чтобы загрузить обновленные тайлы, на которых будут отображены внесённые вами изменения. Обработка ваших правок может занимать до 24 часов."
+            "state" : "translated",
+            "value" : "Очистите кэш данных OSM, если состояние данных в приложении не синхронизировано с сервером OSM. Это может происходить, если кто-то еще вносит правки в те же объекты, которые редактируете вы, или если загрузка одного из ваших пакетов была неудачной, что мешает дальнейшей загрузке данных. \n\nВнимание: Очистка кэша OSM приведёт к потере данных, которые ещё не были загружены на сервер.\n\nОчистите кэш тайлов базовой карты или кэш накладываемых слоёв, чтобы загрузить обновленные тайлы, на которых будут отображены внесённые вами изменения. Обработка ваших правок может занимать до 24 часов."
           }
         },
         "uk" : {
@@ -10367,6 +10601,12 @@
             "value" : "Ainult aerofotod"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zerutik bakarrik"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10665,6 +10905,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Muud"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bertze"
           }
         },
         "fi" : {
@@ -11489,6 +11735,12 @@
             "value" : "Lähtesta"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Berrabiatu"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11777,6 +12029,12 @@
             "value" : "Üksikasjad"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xehetasun"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11933,6 +12191,12 @@
             "value" : "Nimi"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Izen"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12087,6 +12351,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GPX rajad"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX hatzak"
           }
         },
         "fi" : {
@@ -12509,6 +12779,12 @@
             "value" : "Lisa uus"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Berri gehitu"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12785,6 +13061,12 @@
             "value" : "WMS projektsioon"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WMS proiekzio"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13059,6 +13341,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aerofotode paanid"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zerutikako laukiak"
           }
         },
         "fr" : {

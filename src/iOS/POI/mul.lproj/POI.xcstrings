@@ -2378,7 +2378,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Predodređeni ključ"
+            "value" : "Ključ predodređene postavke"
           }
         },
         "id" : {
@@ -5348,7 +5348,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Moguće predodređene vrijednosti"
+            "value" : "Moguće vrijednosti za predodređenu postavku"
           }
         },
         "id" : {
@@ -5480,7 +5480,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Predodređene vrijednosti"
+            "value" : "Vrijednosti predodređene postavke"
           }
         },
         "id" : {
@@ -6165,6 +6165,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Levinumad sildid"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ohizko ikurrak"
           }
         },
         "fr" : {
@@ -7892,7 +7898,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Predodređeno ime"
+            "value" : "Ime predodređene postavke"
           }
         },
         "id" : {
@@ -10266,6 +10272,12 @@
           }
         },
         "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ⓘ"
+          }
+        },
+        "eu" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ⓘ"

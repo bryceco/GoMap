@@ -512,6 +512,24 @@
             }
           }
         },
+        "eu" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : " (%d member)\n"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : " (%d members)\n"
+                }
+              }
+            }
+          }
+        },
         "fi" : {
           "variations" : {
             "plural" : {
@@ -763,8 +781,8 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : " (%d membros)\n"
+                  "state" : "translated",
+                  "value" : " (%d membro)\n"
                 }
               },
               "other" : {
@@ -1128,6 +1146,24 @@
             }
           }
         },
+        "eu" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : " (%d node)\n"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : " (%d nodes)\n"
+                }
+              }
+            }
+          }
+        },
         "fi" : {
           "variations" : {
             "plural" : {
@@ -1379,8 +1415,8 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : " (%d nós)\n"
+                  "state" : "translated",
+                  "value" : " (%d nó)\n"
                 }
               },
               "other" : {
@@ -1906,6 +1942,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "(uus objekt)"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(objektu berri)"
           }
         },
         "fi" : {
@@ -2518,6 +2560,12 @@
             "value" : "(tee)"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(bide)"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2667,6 +2715,12 @@
             "value" : "%.0f m²"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.0f m²"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2687,8 +2741,8 @@
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%.0f m^2"
+            "state" : "translated",
+            "value" : "%.0f m²"
           }
         },
         "pt-BR" : {
@@ -3155,6 +3209,54 @@
                     "stringUnit" : {
                       "state" : "needs_review",
                       "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%#@meters@ metro, %#@nodes@ korapilo"
+          },
+          "substitutions" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg metro"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg metro"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
+              "argNum" : 2,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg node"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg nodes"
                     }
                   }
                 }
@@ -3811,14 +3913,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg metro"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg metros"
                     }
                   }
                 }
@@ -3831,14 +3933,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg nó"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg nós"
                     }
                   }
                 }
@@ -4739,6 +4841,54 @@
             }
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@megabytes@ , %#@files@"
+          },
+          "substitutions" : {
+            "files" : {
+              "argNum" : 2,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg file"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg files"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg MB"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg MB"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5388,14 +5538,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg ficheiro"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg ficheiros"
                     }
                   }
                 }
@@ -5408,14 +5558,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg MB"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg MB"
                     }
                   }
                 }
@@ -6355,6 +6505,24 @@
             }
           }
         },
+        "eu" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%ld egun"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%ld egun"
+                }
+              }
+            }
+          }
+        },
         "fi" : {
           "variations" : {
             "plural" : {
@@ -6972,6 +7140,24 @@
             }
           }
         },
+        "eu" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%ld edit, last active %@"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%ld edits, last active %@"
+                }
+              }
+            }
+          }
+        },
         "fi" : {
           "variations" : {
             "plural" : {
@@ -7223,8 +7409,8 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "%1$ld edições, última atividade %2$@"
+                  "state" : "translated",
+                  "value" : "%1$ld edição, última atividade %2$@"
                 }
               },
               "other" : {
@@ -7812,6 +7998,54 @@
           }
         },
         "et" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@meters@, %#@nodes@"
+          },
+          "substitutions" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg meter"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg meters"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
+              "argNum" : 2,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg node"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg nodes"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "eu" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "%#@meters@, %#@nodes@"
@@ -8497,8 +8731,8 @@
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%#@meters@, %#@nodes@"
+            "state" : "translated",
+            "value" : "%#@meters@ metros, %#@nodes@ nós"
           },
           "substitutions" : {
             "meters" : {
@@ -8508,14 +8742,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg meter"
+                      "state" : "translated",
+                      "value" : "%arg metro"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg meters"
+                      "state" : "translated",
+                      "value" : "%arg metros"
                     }
                   }
                 }
@@ -8528,14 +8762,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg node"
+                      "state" : "translated",
+                      "value" : "%arg nó"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg nodes"
+                      "state" : "translated",
+                      "value" : "%arg nós"
                     }
                   }
                 }
@@ -9429,6 +9663,54 @@
                     "stringUnit" : {
                       "state" : "needs_review",
                       "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@meters@, %#@points@"
+          },
+          "substitutions" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld meter"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld meters"
+                    }
+                  }
+                }
+              }
+            },
+            "points" : {
+              "argNum" : 2,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld point"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld points"
                     }
                   }
                 }
@@ -11146,6 +11428,74 @@
           }
         },
         "et" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@meters@, %#@points@, %#@waypoints@"
+          },
+          "substitutions" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld meter"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld meters"
+                    }
+                  }
+                }
+              }
+            },
+            "points" : {
+              "argNum" : 2,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld point"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld points"
+                    }
+                  }
+                }
+              }
+            },
+            "waypoints" : {
+              "argNum" : 3,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld waypoint"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld waypoints"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "eu" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "%#@meters@, %#@points@, %#@waypoints@"
@@ -13260,6 +13610,54 @@
             }
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@routes@ imported,\n%#@duplicates@ skipped"
+          },
+          "substitutions" : {
+            "duplicates" : {
+              "argNum" : 2,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg duplicate"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg duplicates"
+                    }
+                  }
+                }
+              }
+            },
+            "routes" : {
+              "argNum" : 1,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg new route"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg bide berri"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "new",
@@ -14567,6 +14965,24 @@
             }
           }
         },
+        "eu" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "objektu %ld"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%ld objektu"
+                }
+              }
+            }
+          }
+        },
         "fi" : {
           "variations" : {
             "plural" : {
@@ -15184,6 +15600,24 @@
             }
           }
         },
+        "eu" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "lauki %lu behar"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lu lauki behar"
+                }
+              }
+            }
+          }
+        },
         "fi" : {
           "variations" : {
             "plural" : {
@@ -15770,6 +16204,12 @@
             "value" : "<tundmatu>"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "<ezezaguna>"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15899,6 +16339,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "1 Día"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "egun 1"
           }
         },
         "fi" : {
@@ -16365,6 +16811,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nõustu"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onartu"
           }
         },
         "fi" : {
@@ -18512,6 +18964,12 @@
             "value" : "Ainult aerofotod"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zerutik bakarrik"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18794,6 +19252,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kõik sildid"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ikur guziak"
           }
         },
         "fi" : {
@@ -19347,6 +19811,12 @@
             "value" : "Tähelepanu"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kontuz"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19786,6 +20256,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tagasi"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gibelka"
           }
         },
         "fr" : {
@@ -20448,6 +20924,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Edificio"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eraikuntza"
           }
         },
         "hr" : {
@@ -22608,6 +23090,12 @@
             "value" : "Tühjenda aerofotode paanid"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zerutikako laukiak hustu"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -22779,6 +23267,12 @@
             "value" : "Borrar mosaicos de Basemap"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basemap laukiak hustu"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -22789,6 +23283,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ベースマップのタイルを消去"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отчистить тайлы базовой карты"
           }
         },
         "uk" : {
@@ -22837,6 +23337,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tühjenda GPS ülekatete paanid"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gaineko GPS laukiak hustu"
           }
         },
         "fr" : {
@@ -23203,6 +23709,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tühjenda Mapnik paanid"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mapnik laukiak hustu"
           }
         },
         "fr" : {
@@ -30571,6 +31083,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GPX üleslaadimine lõpetatud"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX igorria"
           }
         },
         "fr" : {
@@ -39546,6 +40064,12 @@
             "value" : "Ei ole midagi üles laadida, muudatusi ei tehtud."
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aldaketarik gabe: ezer igortzeko."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -41469,6 +41993,24 @@
             }
           }
         },
+        "eu" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "Pasting %ld character, maximum tag length is 255"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "Pasting %ld characters, maximum tag length is 255"
+                }
+              }
+            }
+          }
+        },
         "fi" : {
           "variations" : {
             "plural" : {
@@ -42085,6 +42627,24 @@
             }
           }
         },
+        "eu" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%ld ikurra pegatuz"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%ld ikur pegatuz"
+                }
+              }
+            }
+          }
+        },
         "fi" : {
           "variations" : {
             "plural" : {
@@ -42543,6 +43103,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GPX停止"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приостановить GPX"
           }
         },
         "uk" : {
@@ -46452,6 +47018,12 @@
             "state" : "translated",
             "value" : "Selecciona el idioma que se usará para los ajustes preestablecidos. El resto del contenido de la aplicación usará tu idioma predeterminado."
           }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odaberi jezik za predodređene postavke. Drugi sadržaj aplikacije koristit će tvoj standardni jezik."
+          }
         }
       }
     },
@@ -46871,6 +47443,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "määra sildid"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ikurrak ezar"
           }
         },
         "fi" : {
@@ -52207,6 +52785,12 @@
             "value" : "Muudatusi ei saa üles laadida"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aldaketak ezin igorri"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -52913,6 +53497,12 @@
             "value" : "Värskenda '%@' silti"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'%@' ikurra eguneratu"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -53274,6 +53864,12 @@
             "value" : "Üleslaadimine lõpetatud!"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Igorria!"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -53396,6 +53992,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OSM-i üleslaadimine"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OSMera igorri"
           }
         },
         "fr" : {
@@ -53644,6 +54246,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GPX üleslaadimine…"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPXa igortzen ari..."
           }
         },
         "fr" : {
@@ -55929,6 +56537,24 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "Oled üles laadinud %ld muudatuste komplekti selle Go Map!!i versiooniga.\n\nHinda seda rakendust?"
+                }
+              }
+            }
+          }
+        },
+        "eu" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "You've uploaded %ld changeset with this version of Go Map!!\n\nRate this app?"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?"
                 }
               }
             }

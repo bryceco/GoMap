@@ -47,6 +47,12 @@
             "value" : "Muudatused:"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aldaketak:"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -335,6 +341,12 @@
             "value" : "Rakenda"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onartu"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -473,6 +485,12 @@
             "value" : "Muuda"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aldatu"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -606,6 +624,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔽"
+          }
+        },
+        "eu" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "🔽"
@@ -849,6 +873,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Saada"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Igorri"
           }
         },
         "fi" : {
@@ -1139,6 +1169,12 @@
             "value" : "küsitlus, Bing jne."
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "inkesta, Bing, etab."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1413,6 +1449,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Allikas:"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iturria:"
           }
         },
         "fi" : {

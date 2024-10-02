@@ -2,7 +2,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="eu" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.4" build-num="15F31d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
     </header>
     <body>
       <trans-unit id="1tR-eI-DSh.configuration.title" xml:space="preserve">
@@ -15,7 +15,6 @@
       </trans-unit>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
         <source>Get Directions</source>
-        <target state="needs-translation">Helbidea lortu</target>
         <note>Class = "UILabel"; text = "Get Directions"; ObjectID = "1xx-L0-hKm";</note>
       </trans-unit>
       <trans-unit id="2.title" xml:space="preserve">
@@ -25,7 +24,6 @@
       </trans-unit>
       <trans-unit id="2Ka-IT-DQC.normalTitle" xml:space="preserve">
         <source>Bing attribution</source>
-        <target state="needs-translation">Bing attribution</target>
         <note>Class = "UIButton"; normalTitle = "Bing attribution"; ObjectID = "2Ka-IT-DQC";</note>
       </trans-unit>
       <trans-unit id="2g1-vb-Cjc.configuration.title" xml:space="preserve">
@@ -171,7 +169,6 @@
       </trans-unit>
       <trans-unit id="xw9-Ro-Fai.placeholder" xml:space="preserve">
         <source>Niagara Falls</source>
-        <target state="needs-translation">Niagara Falls</target>
         <note>Class = "UISearchBar"; placeholder = "Niagara Falls"; ObjectID = "xw9-Ro-Fai";</note>
       </trans-unit>
       <trans-unit id="zrW-uc-hfQ.segmentTitles[0]" xml:space="preserve">
@@ -193,7 +190,7 @@
   </file>
   <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="eu" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.4" build-num="15F31d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
     </header>
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
@@ -221,12 +218,11 @@
   </file>
   <file original="DisplaySettings/Base.lproj/Display.storyboard" source-language="en" target-language="eu" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.4" build-num="15F31d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
     </header>
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
         <source>Cancel</source>
-        <target state="needs-translation">Utzi</target>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "1SY-O5-qJR";</note>
       </trans-unit>
       <trans-unit id="1f0-8q-yCi.text" xml:space="preserve">
@@ -241,7 +237,6 @@
       </trans-unit>
       <trans-unit id="2ZY-zi-luF.text" xml:space="preserve">
         <source>Clear Cache</source>
-        <target state="needs-translation">Memoria hustu</target>
         <note>Class = "UILabel"; text = "Clear Cache"; ObjectID = "2ZY-zi-luF";</note>
       </trans-unit>
       <trans-unit id="3k9-ML-Zea.normalTitle" xml:space="preserve">
@@ -261,7 +256,6 @@
       </trans-unit>
       <trans-unit id="7df-49-qTa.text" xml:space="preserve">
         <source>Rail Features</source>
-        <target state="needs-translation">Trenbide elementu</target>
         <note>Class = "UILabel"; text = "Rail Features"; ObjectID = "7df-49-qTa";</note>
       </trans-unit>
       <trans-unit id="7ga-PZ-MfV.placeholder" xml:space="preserve">
@@ -276,12 +270,10 @@
       </trans-unit>
       <trans-unit id="8S7-Kw-QHF.normalTitle" xml:space="preserve">
         <source>Details</source>
-        <target state="needs-translation">Xehetasun</target>
         <note>Class = "UIButton"; normalTitle = "Details"; ObjectID = "8S7-Kw-QHF";</note>
       </trans-unit>
       <trans-unit id="8es-4f-sj3.headerTitle" xml:space="preserve">
         <source>Overlays</source>
-        <target state="needs-translation">Gain-azalak</target>
         <note>Class = "UITableViewSection"; headerTitle = "Overlays"; ObjectID = "8es-4f-sj3";</note>
       </trans-unit>
       <trans-unit id="8iI-nH-O9H.title" xml:space="preserve">
@@ -396,7 +388,6 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="SNa-W1-wga.headerTitle" xml:space="preserve">
         <source>Discard &amp; Refresh</source>
-        <target state="needs-translation">Utzi ta berritu</target>
         <note>Class = "UITableViewSection"; headerTitle = "Discard &amp; Refresh"; ObjectID = "SNa-W1-wga";</note>
       </trans-unit>
       <trans-unit id="Sdv-R2-za8.normalTitle" xml:space="preserve">
@@ -423,12 +414,10 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="ZP1-qY-kXe.text" xml:space="preserve">
         <source>Unnamed Roads</source>
-        <target state="needs-translation">Izengabeko bideak</target>
         <note>Class = "UILabel"; text = "Unnamed Roads"; ObjectID = "ZP1-qY-kXe";</note>
       </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.footerTitle" xml:space="preserve">
         <source>If specifying a WMS URL you must also provide the projection used</source>
-        <target state="needs-translation">WMS URL bat hautatuz, erabilitako proiekzioa eman</target>
         <note>Class = "UITableViewSection"; footerTitle = "If specifying a WMS URL you must also provide the projection used"; ObjectID = "Zn9-Sg-9fS";</note>
       </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.headerTitle" xml:space="preserve">
@@ -456,7 +445,6 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="cXC-ij-AMQ.title" xml:space="preserve">
         <source>Show Objects</source>
-        <target state="needs-translation">Objektu erakuts</target>
         <note>Class = "UINavigationItem"; title = "Show Objects"; ObjectID = "cXC-ij-AMQ";</note>
       </trans-unit>
       <trans-unit id="cpC-iE-1Dm.text" xml:space="preserve">
@@ -470,19 +458,15 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="dIe-MC-t44.text" xml:space="preserve">
         <source>Automatic</source>
-        <target state="needs-translation">Automatiko</target>
         <note>Class = "UILabel"; text = "Automatic"; ObjectID = "dIe-MC-t44";</note>
       </trans-unit>
       <trans-unit id="dci-gg-ddc.title" xml:space="preserve">
         <source>Cancel</source>
-        <target state="needs-translation">Utzi</target>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "dci-gg-ddc";</note>
       </trans-unit>
       <trans-unit id="dzT-B4-za3.placeholder" xml:space="preserve">
         <source>http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
  </source>
-        <target state="needs-translation">http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
- </target>
         <note>Class = "UITextField"; placeholder = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "; ObjectID = "dzT-B4-za3";</note>
       </trans-unit>
       <trans-unit id="eFa-yZ-YZl.text" xml:space="preserve">
@@ -526,7 +510,6 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve">
         <source>Details</source>
-        <target state="needs-translation">Xehetasunak</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "g2G-5j-Y4q";</note>
       </trans-unit>
       <trans-unit id="g46-cV-NBw.text" xml:space="preserve">
@@ -536,12 +519,10 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="gdL-Os-R6R.text" xml:space="preserve">
         <source>Points</source>
-        <target state="needs-translation">Puntuak</target>
         <note>Class = "UILabel"; text = "Points"; ObjectID = "gdL-Os-R6R";</note>
       </trans-unit>
       <trans-unit id="gre-3S-iPA.text" xml:space="preserve">
         <source>Detail</source>
-        <target state="needs-translation">Xehetasun</target>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "gre-3S-iPA";</note>
       </trans-unit>
       <trans-unit id="h1O-06-ApF.text" xml:space="preserve">
@@ -569,7 +550,6 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="lu0-kr-5Cc.text" xml:space="preserve">
         <source>Past/Future</source>
-        <target state="needs-translation">Lehen/Gero</target>
         <note>Class = "UILabel"; text = "Past/Future"; ObjectID = "lu0-kr-5Cc";</note>
       </trans-unit>
       <trans-unit id="lwG-AE-nIZ.headerTitle" xml:space="preserve">
@@ -586,7 +566,6 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="pQK-9y-t4z.text" xml:space="preserve">
         <source>Buildings</source>
-        <target state="needs-translation">Eraikinak</target>
         <note>Class = "UILabel"; text = "Buildings"; ObjectID = "pQK-9y-t4z";</note>
       </trans-unit>
       <trans-unit id="pR1-M8-pXH.title" xml:space="preserve">
@@ -614,7 +593,6 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="swu-t3-p5w.text" xml:space="preserve">
         <source>URL</source>
-        <target state="needs-translation">URL</target>
         <note>Class = "UILabel"; text = "URL"; ObjectID = "swu-t3-p5w";</note>
       </trans-unit>
       <trans-unit id="tS9-CP-pqu.title" xml:space="preserve">
@@ -623,7 +601,6 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="tU9-Ml-4ko.title" xml:space="preserve">
         <source>Back</source>
-        <target state="needs-translation">Gibelka</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "tU9-Ml-4ko";</note>
       </trans-unit>
       <trans-unit id="twn-Ve-8vl.text" xml:space="preserve">
@@ -637,17 +614,14 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="uQ3-vb-l3H.placeholder" xml:space="preserve">
         <source>21</source>
-        <target state="needs-translation">21</target>
         <note>Class = "UITextField"; placeholder = "21"; ObjectID = "uQ3-vb-l3H";</note>
       </trans-unit>
       <trans-unit id="uZo-P0-sR7.text" xml:space="preserve">
         <source>Building Level</source>
-        <target state="needs-translation">Eraikin maila</target>
         <note>Class = "UILabel"; text = "Building Level"; ObjectID = "uZo-P0-sR7";</note>
       </trans-unit>
       <trans-unit id="v6h-g5-fka.text" xml:space="preserve">
         <source>12/22/20, 7:55 PM</source>
-        <target state="needs-translation">2020-12-22 19:55</target>
         <note>Class = "UILabel"; text = "12/22/20, 7:55 PM"; ObjectID = "v6h-g5-fka";</note>
       </trans-unit>
       <trans-unit id="voF-Yf-33h.text" xml:space="preserve">
@@ -656,7 +630,6 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="w75-Lj-3jF.placeholder" xml:space="preserve">
         <source>Portlandia GIS</source>
-        <target state="needs-translation">Portlandia GIS</target>
         <note>Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF"; Note = "A hypothetical aerial imagery provider";</note>
       </trans-unit>
       <trans-unit id="wev-ax-u4C.headerTitle" xml:space="preserve">
@@ -676,7 +649,6 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.footerTitle" xml:space="preserve">
         <source>A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL</source>
-        <target state="needs-translation">TMS URL {x}, {y} eta {z} ordezkariekin, edo WMS URL bat</target>
         <note>Class = "UITableViewSection"; footerTitle = "A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL"; ObjectID = "zD6-m4-1PD";</note>
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.headerTitle" xml:space="preserve">
@@ -692,7 +664,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
   </file>
   <file original="GpxWidget/InfoPlist.xcstrings" source-language="en" target-language="eu" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.4" build-num="15F31d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -702,7 +674,6 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>GpxWidgetExtension</source>
-        <target state="needs-translation">GpxWidgetExtension</target>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
@@ -713,7 +684,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
   </file>
   <file original="GpxWidget/Localizable.xcstrings" source-language="en" target-language="eu" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.4" build-num="15F31d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
     </header>
     <body>
       <trans-unit id="%@" xml:space="preserve">
@@ -723,17 +694,14 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%lld GPX points" xml:space="preserve">
         <source>%lld GPX points</source>
-        <target state="needs-translation">%lld GPX puntu</target>
         <note/>
       </trans-unit>
       <trans-unit id="%lld points" xml:space="preserve">
         <source>%lld points</source>
-        <target state="needs-translation">%lld puntu</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
         <source>Pause GPX</source>
-        <target state="needs-translation">Pausa GPXa</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
@@ -768,7 +736,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
   </file>
   <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="eu" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.4" build-num="15F31d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
     </header>
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
@@ -791,7 +759,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
   </file>
   <file original="InfoPlist.xcstrings" source-language="en" target-language="eu" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.4" build-num="15F31d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -801,7 +769,6 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="CFBundleGetInfoString" xml:space="preserve">
         <source/>
-        <target state="new"/>
         <note>Get Info string</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
@@ -831,7 +798,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <note>Privacy - Health Update Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
-        <source>Copyright 2012-2021 Bryce Cogswell</source>
+        <source>Copyright 2012-2024 Bryce Cogswell</source>
         <note>Copyright (human-readable)</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
@@ -854,12 +821,11 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
   </file>
   <file original="Localizable.xcstrings" source-language="en" target-language="eu" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.4" build-num="15F31d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
     </header>
     <body>
       <trans-unit id="" xml:space="preserve">
         <source/>
-        <target state="new"/>
         <note/>
       </trans-unit>
       <trans-unit id="&#9;Relation " xml:space="preserve">
@@ -873,21 +839,29 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       <trans-unit id=" (%d members)&#10;|==|plural.one" xml:space="preserve">
         <source> (%d member)
 </source>
+        <target state="new"> (%d member)
+</target>
         <note/>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;|==|plural.other" xml:space="preserve">
         <source> (%d members)
 </source>
+        <target state="new"> (%d members)
+</target>
         <note/>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;|==|plural.one" xml:space="preserve">
         <source> (%d node)
 </source>
+        <target state="new"> (%d node)
+</target>
         <note/>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;|==|plural.other" xml:space="preserve">
         <source> (%d nodes)
 </source>
+        <target state="new"> (%d nodes)
+</target>
         <note/>
       </trans-unit>
       <trans-unit id=" (node)" xml:space="preserve">
@@ -920,30 +894,37 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.nodes.plural.one" xml:space="preserve">
         <source>%2$ld node</source>
+        <target state="new">%2$ld node</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.nodes.plural.other" xml:space="preserve">
         <source>%2$ld nodes</source>
+        <target state="new">%2$ld nodes</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
         <source>%1$#@megabytes@ , %2$#@files@</source>
+        <target state="new">%1$#@megabytes@ , %2$#@files@</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.files.plural.one" xml:space="preserve">
         <source>%2$ld file</source>
+        <target state="new">%2$ld file</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.files.plural.other" xml:space="preserve">
         <source>%2$ld files</source>
+        <target state="new">%2$ld files</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.megabytes.plural.one" xml:space="preserve">
         <source>%1$.2f MB</source>
+        <target state="new">%1$.2f MB</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.megabytes.plural.other" xml:space="preserve">
         <source>%1$.2f MB</source>
+        <target state="new">%1$.2f MB</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
@@ -966,95 +947,119 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.one" xml:space="preserve">
         <source>%ld edit, last active %@</source>
+        <target state="new">%ld edit, last active %@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.other" xml:space="preserve">
         <source>%ld edits, last active %@</source>
+        <target state="new">%ld edits, last active %@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes" xml:space="preserve">
         <source>%1$#@meters@, %2$#@nodes@</source>
+        <target state="new">%1$#@meters@, %2$#@nodes@</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%1$ld meter</source>
+        <target state="new">%1$ld meter</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%1$ld meters</source>
+        <target state="new">%1$ld meters</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.one" xml:space="preserve">
         <source>%2$ld node</source>
+        <target state="new">%2$ld node</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.other" xml:space="preserve">
         <source>%2$ld nodes</source>
+        <target state="new">%2$ld nodes</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@</source>
+        <target state="new">%1$#@meters@, %2$#@points@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@, %3$#@waypoints@</source>
+        <target state="new">%1$#@meters@, %2$#@points@, %3$#@waypoints@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%ld meter</source>
+        <target state="new">%ld meter</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
+        <target state="new">%ld meters</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.one" xml:space="preserve">
         <source>%ld point</source>
+        <target state="new">%ld point</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.other" xml:space="preserve">
         <source>%ld points</source>
+        <target state="new">%ld points</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.one" xml:space="preserve">
         <source>%ld waypoint</source>
+        <target state="new">%ld waypoint</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.other" xml:space="preserve">
         <source>%ld waypoints</source>
+        <target state="new">%ld waypoints</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%ld meter</source>
+        <target state="new">%ld meter</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
+        <target state="new">%ld meters</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.one" xml:space="preserve">
         <source>%ld point</source>
+        <target state="new">%ld point</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.other" xml:space="preserve">
         <source>%ld points</source>
+        <target state="new">%ld points</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped" xml:space="preserve">
         <source>%1$#@routes@ imported,
 %2$#@duplicates@ skipped</source>
+        <target state="new">%1$#@routes@ imported,
+%2$#@duplicates@ skipped</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.one" xml:space="preserve">
         <source>%2$ld duplicate</source>
+        <target state="new">%2$ld duplicate</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.other" xml:space="preserve">
         <source>%2$ld duplicates</source>
+        <target state="new">%2$ld duplicates</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.routes.plural.one" xml:space="preserve">
         <source>%1$ld new route</source>
+        <target state="new">%1$ld new route</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.routes.plural.other" xml:space="preserve">
@@ -1106,7 +1111,6 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="+ Button Position" xml:space="preserve">
         <source>+ Button Position</source>
-        <target state="needs-translation">+ botoia kokatze</target>
         <note>Location of Add Node button on the screen</note>
       </trans-unit>
       <trans-unit id="1 Day" xml:space="preserve">
@@ -1363,7 +1367,6 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Clear Locator Overlay Tiles" xml:space="preserve">
         <source>Clear Locator Overlay Tiles</source>
-        <target state="needs-translation">Gaineko Locator laukiak hustu</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear Mapnik Tiles" xml:space="preserve">
@@ -1550,7 +1553,6 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="GPX Upload Failed" xml:space="preserve">
         <source>GPX Upload Failed</source>
-        <target state="needs-translation">Ezin igorri GPXa</target>
         <note/>
       </trans-unit>
       <trans-unit id="GeoJSON" xml:space="preserve">
@@ -1880,10 +1882,12 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.one" xml:space="preserve">
         <source>Pasting %ld character, maximum tag length is 255</source>
+        <target state="new">Pasting %ld character, maximum tag length is 255</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.other" xml:space="preserve">
         <source>Pasting %ld characters, maximum tag length is 255</source>
+        <target state="new">Pasting %ld characters, maximum tag length is 255</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.one" xml:space="preserve">
@@ -2055,7 +2059,7 @@ Never delete old tracks</note>
       <trans-unit id="Share" xml:space="preserve">
         <source>Share</source>
         <note>Open iOS sharing sheet
-   Title for sharing options</note>
+Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Show Recent Items" xml:space="preserve">
         <source>Show Recent Items</source>
@@ -2233,7 +2237,6 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="U-Turn from %@ allowed" xml:space="preserve">
         <source>U-Turn from %@ allowed</source>
-        <target state="needs-translation">Itzulketa %@ -tik onartua</target>
         <note/>
       </trans-unit>
       <trans-unit id="U-Turn from %@ prohibited" xml:space="preserve">
@@ -2290,7 +2293,6 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Upload your changes" xml:space="preserve">
         <source>Upload your changes</source>
-        <target state="needs-translation">Aldaketak igorri behar</target>
         <note/>
       </trans-unit>
       <trans-unit id="Uploading GPX..." xml:space="preserve">
@@ -2355,7 +2357,6 @@ These members are marked with '&gt;'.</source>
       </trans-unit>
       <trans-unit id="You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." xml:space="preserve">
         <source>You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost.</source>
-        <target state="needs-translation">Egin dituzun aldaketak igorri gabe daude. "Cache" memoria ezabatuz aldaketak galduko dituzu.</target>
         <note/>
       </trans-unit>
       <trans-unit id="You must save or discard changes to the current object before editing its associated relation" xml:space="preserve">
@@ -2366,12 +2367,18 @@ These members are marked with '&gt;'.</source>
         <source>You've uploaded %ld changeset with this version of Go Map!!
 
 Rate this app?</source>
+        <target state="new">You've uploaded %ld changeset with this version of Go Map!!
+
+Rate this app?</target>
         <note/>
       </trans-unit>
       <trans-unit id="You've uploaded %ld changesets with this version of Go Map!!&#10;&#10;Rate this app?|==|plural.other" xml:space="preserve">
         <source>You've uploaded %ld changesets with this version of Go Map!!
 
 Rate this app?</source>
+        <target state="new">You've uploaded %ld changesets with this version of Go Map!!
+
+Rate this app?</target>
         <note/>
       </trans-unit>
       <trans-unit id="Your OSM data cache is getting large, which may lead to slow startup and shutdown times.&#10;&#10;You may want to clear the cache (under Display settings) to improve performance." xml:space="preserve">
@@ -2553,7 +2560,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="PhotoShare/Base.lproj/MainInterface.storyboard" source-language="en" target-language="eu" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.4" build-num="15F31d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
     </header>
     <body>
       <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
@@ -2572,7 +2579,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="PhotoShare/InfoPlist.xcstrings" source-language="en" target-language="eu" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.4" build-num="15F31d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -2587,7 +2594,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="PhotoShare/Localizable.xcstrings" source-language="en" target-language="eu" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.4" build-num="15F31d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
     </header>
     <body>
       <trans-unit id="Processing data..." xml:space="preserve">
@@ -2606,7 +2613,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="POI/Base.lproj/POI.storyboard" source-language="en" target-language="eu" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.4" build-num="15F31d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
     </header>
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
@@ -2927,7 +2934,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="Settings/Base.lproj/Settings.storyboard" source-language="en" target-language="eu" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.4" build-num="15F31d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
@@ -2946,12 +2953,10 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="2TW-mO-uX2.footerTitle" xml:space="preserve">
         <source>If you are mapping somewhere with limited connectivity you can download the aerial and/or basemap tiles for the next two higher zoom levels that are in the current view area.</source>
-        <target state="needs-translation">Mapatzen baduzu konekzio ahula dun toki batetik, zerutikako eta/edo basemap laukiak karga ditzakezu, ber eremuko bi zoom mailetan.</target>
         <note>Class = "UITableViewSection"; footerTitle = "If you are mapping somewhere with limited connectivity you can download the aerial and/or basemap tiles for the next two higher zoom levels that are in the current view area."; ObjectID = "2TW-mO-uX2";</note>
       </trans-unit>
       <trans-unit id="2TW-mO-uX2.headerTitle" xml:space="preserve">
         <source>Download zoomed tiles</source>
-        <target state="needs-translation">Jaso zoomatutako laukiak</target>
         <note>Class = "UITableViewSection"; headerTitle = "Download zoomed tiles"; ObjectID = "2TW-mO-uX2";</note>
       </trans-unit>
       <trans-unit id="2Zi-cz-7Va.text" xml:space="preserve">
@@ -3234,7 +3239,7 @@ http://glyphish.com
   </file>
   <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="eu" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.4" build-num="15F31d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
     </header>
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">
@@ -3262,7 +3267,6 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Rqu-ny-n3F.normalTitle" xml:space="preserve">
         <source>Export</source>
-        <target state="needs-translation">Exportatu</target>
         <note>Class = "UIButton"; normalTitle = "Export"; ObjectID = "Rqu-ny-n3F";</note>
       </trans-unit>
       <trans-unit id="feW-AK-msn.title" xml:space="preserve">
@@ -3277,7 +3281,6 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="ikj-u9-9Bn.text" xml:space="preserve">
         <source>Changeset comment:</source>
-        <target state="needs-translation">Aldaketa-multzoaren komentarioa:</target>
         <note>Class = "UILabel"; text = "Changeset comment:"; ObjectID = "ikj-u9-9Bn";</note>
       </trans-unit>
       <trans-unit id="ps9-Hb-Vow.placeholder" xml:space="preserve">

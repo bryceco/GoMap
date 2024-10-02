@@ -21,6 +21,12 @@
             "value" : "%@"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -28,6 +34,12 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@"
@@ -153,6 +165,12 @@
             "value" : "GPX停止"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приостановить GPX"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -221,6 +239,12 @@
             "value" : "Iniciar GPX"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPXa has"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -231,6 +255,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GPX開始"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начать GPX"
           }
         },
         "uk" : {
@@ -259,6 +289,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Empezar a grabar pistas GPX."
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX hatzen grabaketa hasi."
           }
         },
         "hr" : {
@@ -301,6 +337,12 @@
             "value" : "Parar"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geldi"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -311,6 +353,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "終了"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Остановить"
           }
         },
         "uk" : {
@@ -341,6 +389,12 @@
             "value" : "Parar GPX"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX geldi"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -351,6 +405,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GPX終了"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Остановить GPX"
           }
         },
         "uk" : {
