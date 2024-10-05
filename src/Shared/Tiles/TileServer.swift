@@ -170,7 +170,7 @@ final class TileServer: Equatable, Codable {
 	}
 
 	func isBingAerial() -> Bool {
-		return self.identifier == BingIdentifier
+		return identifier == BingIdentifier
 	}
 
 	func isMaxar() -> Bool {

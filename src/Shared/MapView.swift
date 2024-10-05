@@ -514,7 +514,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					                    lat: startLatLon.lat + sin(offset * 2.0 * .pi) * radius2.y)
 					let zoomFrac = (1.0 + cos(offset * 2.0 * .pi)) * 0.5
 					let zoom = startZoom * (1 + zoomFrac * 0.01)
-					myself.setTransformFor(latLon: origin, zoom: zoom)
+					myself.centerOn(latLon: origin, zoom: zoom)
 				})
 			} else {
 				fpsLabel.showFPS = false
@@ -1464,7 +1464,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		return mapTransform.latLon(forScreenPoint: centerPoint())
 	}
 
-	private func setTransformFor(latLon: LatLon) {
+	// MARK: Set location
+
+	// Try not to call this directly, since scale isn't something exposed.
+	// Use one of the centerOn() functions instead.
+	private func setTransformFor(latLon: LatLon, scale: Double? = nil) {
 		var lat = latLon.lat
 		lat = min(lat, MapTransform.latitudeLimit)
 		lat = max(lat, -MapTransform.latitudeLimit)
@@ -1473,47 +1477,41 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		let center = crossHairs.position
 		let delta = CGPoint(x: center.x - point.x, y: center.y - point.y)
 		adjustOrigin(by: delta)
+
+		if let scale = scale {
+			let ratio = scale / screenFromMapTransform.scale()
+			adjustZoom(by: CGFloat(ratio), aroundScreenPoint: crossHairs.position)
+		}
 	}
 
-	func setTransformFor(latLon: LatLon, scale: Double) {
-		// translate
-		setTransformFor(latLon: latLon)
-
-		let ratio = scale / screenFromMapTransform.scale()
-		adjustZoom(by: CGFloat(ratio), aroundScreenPoint: crossHairs.position)
+	// center without changing zoom
+	func centerOn(latLon: LatLon) {
+		setTransformFor(latLon: latLon, scale: nil)
 	}
 
-	func centerOn(latLon: LatLon, widthDegrees: Double) {
-		let scale = 360 / (widthDegrees / 2)
+	func centerOn(latLon: LatLon, zoom: Double) {
+		let scale = pow(2.0, zoom)
 		setTransformFor(latLon: latLon,
 		                scale: scale)
 	}
 
 	func centerOn(latLon: LatLon, metersWide: Double) {
 		let degrees = metersToDegrees(meters: metersWide, latitude: latLon.lat)
-		centerOn(latLon: latLon, widthDegrees: degrees)
-	}
-
-	func centerOn(latLon: LatLon) {
-		centerOn(latLon: latLon, metersWide: 20.0)
-	}
-
-	func setMapLocation(_ location: MapLocation) {
-		let zoom = location.zoom > 0 ? location.zoom : 21.0
-		let scale = pow(2, zoom)
-		setTransformFor(latLon: LatLon(latitude: location.latitude, longitude: location.longitude),
+		let scale = 360 / (degrees / 2)
+		setTransformFor(latLon: latLon,
 		                scale: scale)
+	}
+
+	func centerOn(_ location: MapLocation) {
+		let zoom = location.zoom > 0 ? location.zoom : 21.0
+		let latLon = LatLon(latitude: location.latitude, longitude: location.longitude)
+		centerOn(latLon: latLon,
+		         zoom: zoom)
 		let rotation = location.direction * .pi / 180.0 + screenFromMapTransform.rotation()
 		rotate(by: CGFloat(-rotation), aroundScreenPoint: crossHairs.position)
 		if let state = location.viewState {
 			viewState = state
 		}
-	}
-
-	func setTransformFor(latLon: LatLon, zoom: Double) {
-		let scale = pow(2, zoom)
-		setTransformFor(latLon: latLon,
-		                scale: scale)
 	}
 
 	// MARK: Discard stale data
@@ -1605,7 +1603,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		userOverrodeLocationPosition = false
 		if let location = locationManager.location {
-			setTransformFor(latLon: LatLon(location.coordinate))
+			centerOn(latLon: LatLon(location.coordinate))
 		}
 	}
 
@@ -1742,7 +1740,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		if !userOverrodeLocationPosition {
 			// move view to center on new location
 			if userOverrodeLocationZoom {
-				setTransformFor(latLon: LatLon(newLocation.coordinate))
+				centerOn(latLon: LatLon(newLocation.coordinate))
 			} else {
 				centerOn(latLon: LatLon(newLocation.coordinate),
 				         metersWide: 20.0)
@@ -1771,7 +1769,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			if !isLocationSpecified() {
 				// go home
 				centerOn(latLon: LatLon(latitude: 47.6858, longitude: -122.1917),
-				         widthDegrees: 0.01)
+				         metersWide: 50.0)
 			}
 			var text = String.localizedStringWithFormat(
 				NSLocalizedString(
@@ -1801,6 +1799,15 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			removePin()
 			return
 		}
+
+		// Make sure editor is visible
+		switch viewState {
+		case .AERIAL, .BASEMAP:
+			viewState = .EDITORAERIAL
+		case .EDITOR, .EDITORAERIAL:
+			break
+		}
+
 		let loc: LatLon
 		if let point = point {
 			let latLon = mapTransform.latLon(forScreenPoint: point)
@@ -1808,12 +1815,16 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		} else {
 			loc = selection.selectionPoint()
 		}
+
 		let point = mapTransform.screenPoint(forLatLon: loc, birdsEye: true)
 		placePushpin(at: point, object: selection)
 
-		if !bounds.contains(pushPin!.arrowPoint) {
+		if viewStateZoomedOut {
+			// set location and zoom in
+			centerOn(latLon: loc, metersWide: 30.0)
+		} else if !bounds.contains(pushPin!.arrowPoint) {
 			// set location without changing zoom
-			setTransformFor(latLon: loc)
+			centerOn(latLon: loc)
 		}
 	}
 

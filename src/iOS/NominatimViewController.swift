@@ -94,8 +94,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		   zoom > 1,
 		   zoom < 24
 		{
-			let scale = pow(2.0, zoom)
-			appDelegate.mapView.setTransformFor(latLon: latLon, scale: scale)
+			appDelegate.mapView.centerOn(latLon: latLon, zoom: zoom)
 		} else {
 			appDelegate.mapView.centerOn(latLon: latLon, metersWide: 50.0)
 		}

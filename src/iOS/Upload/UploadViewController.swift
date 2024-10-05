@@ -344,9 +344,9 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 		if name.count == 0 {
 			return false
 		}
-		let ident = Int64((name as NSString).substring(from: 1)) ?? 0
+		let ident = Int64(name.dropFirst()) ?? 0
 		let extendedId: OsmExtendedIdentifier
-		switch name[name.index(name.startIndex, offsetBy: 0)] {
+		switch name.prefix(1) {
 		case "n":
 			extendedId = OsmExtendedIdentifier(.NODE, ident)
 		case "w":

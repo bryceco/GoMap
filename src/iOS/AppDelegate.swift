@@ -111,7 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func setMapLocation(_ location: MapLocation) {
 		DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [self] in
-			mapView.setMapLocation(location)
+			mapView.centerOn(location)
 		})
 	}
 
