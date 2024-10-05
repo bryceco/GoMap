@@ -372,7 +372,7 @@
       </trans-unit>
       <trans-unit id="O0U-6M-7AT.text" xml:space="preserve">
         <source>Quests</source>
-        <target state="translated">Quests</target>
+        <target state="translated">Aufgaben</target>
         <note>Class = "UILabel"; text = "Quests"; ObjectID = "O0U-6M-7AT";</note>
       </trans-unit>
       <trans-unit id="OiJ-GU-gZ3.title" xml:space="preserve">
@@ -2173,12 +2173,12 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.one" xml:space="preserve">
         <source>Pasting %ld tag</source>
-        <target state="needs-review-l10n">%ld Attribut(e) einfügen</target>
+        <target state="translated">%ld Tag einfügen</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.other" xml:space="preserve">
         <source>Pasting %ld tags</source>
-        <target state="needs-review-l10n">%ld Attribut(e) einfügen</target>
+        <target state="translated">%ld Tags einfügen</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
@@ -2228,7 +2228,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Quest" xml:space="preserve">
         <source>Quest</source>
-        <target state="translated">Quest</target>
+        <target state="translated">Aufgabe</target>
         <note>The current Quest the user is answering</note>
       </trans-unit>
       <trans-unit id="Quest Definition Error" xml:space="preserve">
@@ -3575,7 +3575,7 @@ http://www.sjjb.co.uk/mapicons
 Other icons by Glyphish:
 http://glyphish.com
 </source>
-        <target state="needs-review-l10n">Urheberrecht © 2012-2020 Bryce Cogswell.
+        <target state="translated">Urheberrecht © 2012-2020 Bryce Cogswell.
 Alle Rechte vorbehalten.
 
 OpenStreetMap-Daten sind lizenziert unter der Open Data Commons Open Database License (ODbL):
@@ -3588,9 +3588,6 @@ Mapbox-Luftbilddaten unterliegen dem Copyright von Mapbox und seinen Lieferanten
 
 XML-Parsing mit freundlicher Genehmigung von Robbie Hanson's KissXML:
 https://github.com/robbiehanson/KissXML
-
-EXIF-Parsing-Code Urheberrecht (c) 2010-2015 Mayank Lahiri
-https://github.com/mayanklahiri/easyexif
 
 Kartensymbole von SJJB:
 http://www.sjjb.co.uk/mapicons
