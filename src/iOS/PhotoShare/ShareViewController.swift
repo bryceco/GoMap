@@ -193,18 +193,20 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 		}
 	}
 
-	func openApp(withUrl url: URL) {
-		let selector = #selector(openURL(_:))
-		var responder: UIResponder? = self as UIResponder
+	@objc @discardableResult private func openApp(withUrl url: URL) -> Bool {
+		var responder: UIResponder? = self
 		while responder != nil {
-			if responder!.responds(to: selector),
-			   responder != self
-			{
-				responder!.perform(selector, with: url)
-				return
+			if let application = responder as? UIApplication {
+				if #available(iOS 18.0, *) {
+					application.open(url, options: [:], completionHandler: nil)
+					return true
+				} else {
+					return application.perform(#selector(openURL(_:)), with: url) != nil
+				}
 			}
 			responder = responder?.next
 		}
+		return false
 	}
 
 	@IBAction func buttonPressOK() {
