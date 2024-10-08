@@ -172,7 +172,7 @@ extension RenderInfo {
 		if (primary == "highway" && primaryValue == "tertiary") ||
 			(primary == "highway" && primaryValue == "tertiary_link") || has(tags, "tertiary")
 		{
-			r.lineColor = DynamicColor(red: 1.0, green: 0.976, blue: 0.702, alpha: 1.0)
+			r.lineColor = DynamicColor(red: 64/255, green: 140/255, blue: 204/255, alpha: 1.0)
 			r.casingColor = DynamicColor(red: 0.439, green: 0.216, blue: 0.184, alpha: 1.0)
 		}
 		if (primary == "highway" && primaryValue == "residential") || has(tags, "residential") {
