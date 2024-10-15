@@ -2306,6 +2306,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Type" xml:space="preserve">
         <source>Type</source>
+        <target state="translated">Tipo</target>
         <note>The 'Type' header in Common Tags</note>
       </trans-unit>
       <trans-unit id="U-Turn from %@ allowed" xml:space="preserve">
@@ -2331,6 +2332,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Unknown" xml:space="preserve">
         <source>Unknown</source>
+        <target state="translated">Ezezaguna</target>
         <note/>
       </trans-unit>
       <trans-unit id="Unknown role" xml:space="preserve">
@@ -2343,6 +2345,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Update" xml:space="preserve">
         <source>Update</source>
+        <target state="translated">Eguneratu</target>
         <note>update an osm note</note>
       </trans-unit>
       <trans-unit id="Update '%@' tag" xml:space="preserve">
@@ -2376,6 +2379,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="User" xml:space="preserve">
         <source>User</source>
+        <target state="translated">Erabiltzaile</target>
         <note>OSM user name</note>
       </trans-unit>
       <trans-unit id="User-defined imagery" xml:space="preserve">
@@ -2384,6 +2388,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Version" xml:space="preserve">
         <source>Version</source>
+        <target state="translated">Bertsioa</target>
         <note>OSM object versioh</note>
       </trans-unit>
       <trans-unit id="Vertex" xml:space="preserve">
