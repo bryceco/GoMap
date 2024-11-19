@@ -28,7 +28,8 @@ extension OsmNode {
 		"west": 270,
 		"W": 270,
 		"WNW": 292.5,
-		"NW": 315
+		"NW": 315,
+		"NNW": 337.5
 	]
 
 	/// The direction in which the node is facing.
