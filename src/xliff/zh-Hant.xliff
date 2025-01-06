@@ -297,6 +297,7 @@
       </trans-unit>
       <trans-unit id="8iI-nH-O9H.title" xml:space="preserve">
         <source>Basemap</source>
+        <target state="translated">基底地圖</target>
         <note>Class = "UINavigationItem"; title = "Basemap"; ObjectID = "8iI-nH-O9H";</note>
       </trans-unit>
       <trans-unit id="9L3-JO-Whj.text" xml:space="preserve">
@@ -613,6 +614,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="nzU-It-UAv.text" xml:space="preserve">
         <source>Data Overlays</source>
+        <target state="translated">資料套疊</target>
         <note>Class = "UILabel"; text = "Data Overlays"; ObjectID = "nzU-It-UAv";</note>
       </trans-unit>
       <trans-unit id="oSD-0y-Vt0.title" xml:space="preserve">
@@ -739,14 +741,17 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>GpxWidget</source>
+        <target state="translated">GpxWidget</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>GpxWidgetExtension</source>
+        <target state="translated">GpxWidgetExtension</target>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
         <source>Copyright © 2024 Bryce Cogswell. All rights reserved.</source>
+        <target state="translated">版權 © 2024 Bryce Cogswell 所有，保留所有權利。</target>
         <note>Copyright (human-readable)</note>
       </trans-unit>
     </body>
@@ -758,42 +763,52 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
     <body>
       <trans-unit id="%@" xml:space="preserve">
         <source>%@</source>
+        <target state="translated">%@</target>
         <note/>
       </trans-unit>
       <trans-unit id="%lld GPX points" xml:space="preserve">
         <source>%lld GPX points</source>
+        <target state="translated">%lld GPX 點</target>
         <note/>
       </trans-unit>
       <trans-unit id="%lld points" xml:space="preserve">
         <source>%lld points</source>
+        <target state="translated">%lld 點</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
         <source>Pause GPX</source>
+        <target state="translated">暫停 GPX</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
         <source>Pause recording GPX tracks.</source>
+        <target state="translated">暫停記錄 GPX 軌跡。</target>
         <note/>
       </trans-unit>
       <trans-unit id="Start GPX" xml:space="preserve">
         <source>Start GPX</source>
+        <target state="translated">開始 GPX</target>
         <note/>
       </trans-unit>
       <trans-unit id="Start recording GPX tracks." xml:space="preserve">
         <source>Start recording GPX tracks.</source>
+        <target state="translated">開始記錄 GPX 軌跡。</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop" xml:space="preserve">
         <source>Stop</source>
+        <target state="translated">停止</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop GPX" xml:space="preserve">
         <source>Stop GPX</source>
+        <target state="translated">停止 GPX</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop recording GPX tracks." xml:space="preserve">
         <source>Stop recording GPX tracks.</source>
+        <target state="translated">停止記錄 GPX 軌跡。</target>
         <note/>
       </trans-unit>
     </body>
@@ -946,7 +961,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
         <source>%1$#@meters@, %2$#@nodes@</source>
-        <target state="translated">%1$#@meters@, %2$#@nodes@</target>
+        <target state="translated">%1$#@meters@ 公尺, %2$#@nodes@ 個節點</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.meters.plural.other" xml:space="preserve">
@@ -996,7 +1011,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes" xml:space="preserve">
         <source>%1$#@meters@, %2$#@nodes@</source>
-        <target state="translated">%1$#@meters@, %2$#@nodes@</target>
+        <target state="translated">%1$#@meters@ 公尺, %2$#@nodes@ 個節點</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.other" xml:space="preserve">
@@ -1011,12 +1026,12 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@</source>
-        <target state="translated">%1$#@meters@, %2$#@points@</target>
+        <target state="translated">%1$#@meters@ 公尺, %2$#@points@ 個節點</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@, %3$#@waypoints@</source>
-        <target state="translated">%1$#@meters@, %2$#@points@, %3$#@waypoints@</target>
+        <target state="translated">%1$#@meters@ 公尺, %2$#@points@ 個節點, %3$#@waypoints@ 個路徑節點</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.other" xml:space="preserve">
@@ -1389,6 +1404,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Clear Basemap Tiles" xml:space="preserve">
         <source>Clear Basemap Tiles</source>
+        <target state="translated">清除基底地圖圖磚</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear GPS Overlay Tiles" xml:space="preserve">
@@ -2058,10 +2074,12 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
         <source>Pause GPX</source>
+        <target state="translated">暫停 GPX</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
         <source>Pause recording GPX tracks.</source>
+        <target state="translated">暫停記錄 GPX 軌跡。</target>
         <note/>
       </trans-unit>
       <trans-unit id="Perform Action" xml:space="preserve">
@@ -2226,6 +2244,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Select the language used for Presets. Other app content will use your default language." xml:space="preserve">
         <source>Select the language used for Presets. Other app content will use your default language.</source>
+        <target state="translated">選擇預先組合所使用的語言，其他 app 內容則會使用你預設的語言。</target>
         <note/>
       </trans-unit>
       <trans-unit id="Selected object is off screen" xml:space="preserve">
@@ -2291,10 +2310,12 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Start GPX" xml:space="preserve">
         <source>Start GPX</source>
+        <target state="translated">開始 GPX</target>
         <note/>
       </trans-unit>
       <trans-unit id="Start recording GPX tracks." xml:space="preserve">
         <source>Start recording GPX tracks.</source>
+        <target state="translated">開始記錄 GPX 軌跡。</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop" xml:space="preserve">
@@ -2304,10 +2325,12 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Stop GPX" xml:space="preserve">
         <source>Stop GPX</source>
+        <target state="translated">停止 GPX</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop recording GPX tracks." xml:space="preserve">
         <source>Stop recording GPX tracks.</source>
+        <target state="translated">停止記錄 GPX 軌跡。</target>
         <note/>
       </trans-unit>
       <trans-unit id="Straighten" xml:space="preserve">
@@ -2735,14 +2758,17 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="ft" xml:space="preserve">
         <source>ft</source>
+        <target state="translated">呎</target>
         <note>Height or width in feet, please abbreviate</note>
       </trans-unit>
       <trans-unit id="kg" xml:space="preserve">
         <source>kg</source>
+        <target state="translated">公斤</target>
         <note>Weight in kilograms, please abbreviate</note>
       </trans-unit>
       <trans-unit id="km" xml:space="preserve">
         <source>km</source>
+        <target state="translated">公里</target>
         <note>Distance in kilometers, please abbreviate</note>
       </trans-unit>
       <trans-unit id="km/h" xml:space="preserve">
@@ -2752,14 +2778,17 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="lbs" xml:space="preserve">
         <source>lbs</source>
+        <target state="translated">磅</target>
         <note>Weight in pounds, please abbreviate</note>
       </trans-unit>
       <trans-unit id="lt" xml:space="preserve">
         <source>lt</source>
+        <target state="translated">長噸</target>
         <note>Weight in long tons, please abbreviate</note>
       </trans-unit>
       <trans-unit id="m" xml:space="preserve">
         <source>m</source>
+        <target state="translated">公尺</target>
         <note>Height or width in meters, please abbreviate</note>
       </trans-unit>
       <trans-unit id="meters" xml:space="preserve">
@@ -2769,6 +2798,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="mi" xml:space="preserve">
         <source>mi</source>
+        <target state="translated">哩</target>
         <note>Distance in miles, please abbreviate</note>
       </trans-unit>
       <trans-unit id="move" xml:space="preserve">
@@ -2813,10 +2843,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="st" xml:space="preserve">
         <source>st</source>
+        <target state="translated">短頓</target>
         <note>Weight in short tons, please abbreviate</note>
       </trans-unit>
       <trans-unit id="t" xml:space="preserve">
         <source>t</source>
+        <target state="translated">公頓</target>
         <note>Weight in metric tons, please abbreviate</note>
       </trans-unit>
       <trans-unit id="update relation members" xml:space="preserve">
@@ -3340,6 +3372,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="3AM-Eb-jch.text" xml:space="preserve">
         <source>Maximize FPS</source>
+        <target state="translated">最大化 FPS</target>
         <note>Class = "UILabel"; text = "Maximize FPS"; ObjectID = "3AM-Eb-jch"; Note = "Display the user's touches when they tap the screen";</note>
       </trans-unit>
       <trans-unit id="3qk-15-BUc.text" xml:space="preserve">
@@ -3389,6 +3422,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="AEl-sZ-ech.text" xml:space="preserve">
         <source>Enables &gt; 60 FPS</source>
+        <target state="translated">啟用 &gt; 60 FPS</target>
         <note>Class = "UILabel"; text = "Enables &gt; 60 FPS"; ObjectID = "AEl-sZ-ech"; Note = "Display the user's touches when they tap the screen";</note>
       </trans-unit>
       <trans-unit id="AHZ-L8-yUA.title" xml:space="preserve">
@@ -3422,7 +3456,7 @@ http://www.sjjb.co.uk/mapicons
 Other icons by Glyphish:
 http://glyphish.com
 </source>
-        <target state="needs-review-l10n">2012-2020 Bryce Cogswell © 版權所有 
+        <target state="translated">2012-2020 Bryce Cogswell © 版權所有 
 保留所有權利
 
 以開放資料庫授權條款 (Open Database License, ODbL) 授權開放街圖資料：
@@ -3435,9 +3469,6 @@ Mapbox 空照圖 Mapbox 及其供應商所有：https://www.mapbox.com/tos
 
 感謝 Robbie Hanson 的 KissXML XML 解析：
 https://github.com/robbiehanson/KissXML
-
-EXIF 解析程式碼 2010-2015 Mayank Lahiri 版權所有 (c)
-https://github.com/mayanklahiri/easyexif
 
 SJJB 提供地圖圖示：
 http://www.sjjb.co.uk/mapicons
@@ -3679,6 +3710,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="zuh-G8-yy9.text" xml:space="preserve">
         <source>Slack - Discussion</source>
+        <target state="translated">Slack - 討論</target>
         <note>Class = "UILabel"; text = "Slack - Discussion"; ObjectID = "zuh-G8-yy9"; Note = "For opening the Slack app";</note>
       </trans-unit>
     </body>
