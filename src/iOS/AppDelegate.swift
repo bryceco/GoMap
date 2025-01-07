@@ -324,7 +324,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		AppDelegate.shared.mapView.mainViewController.setGpsState(.NONE)
 
 // Remove any live activities
-#if canImport(ActivityKit)
+#if canImport(ActivityKit) && !targetEnvironment(macCatalyst)
 		if #available(iOS 16.2, *) {
 			GpxTrackWidgetManager.endAllActivitiesSynchronously()
 		}

@@ -47,7 +47,7 @@ final class GpxLayer: DrawingLayer, DiskCacheSizeProtocol, DrawingLayerDelegate 
 		stabilizingCount = 0
 		selectedTrack = activeTrack
 
-#if canImport(ActivityKit)
+#if canImport(ActivityKit) && !targetEnvironment(macCatalyst)
 		if #available(iOS 16.2, *), !continuing {
 			GpxTrackWidgetManager.shared.startTrack(fromWidget: false)
 		}
@@ -61,7 +61,7 @@ final class GpxLayer: DrawingLayer, DiskCacheSizeProtocol, DrawingLayerDelegate 
 
 			activeTrack.finish()
 
-#if canImport(ActivityKit)
+#if canImport(ActivityKit) && !targetEnvironment(macCatalyst)
 			if #available(iOS 16.2, *), !continuing {
 				GpxTrackWidgetManager.shared.endTrack(fromWidget: false)
 			}
@@ -141,7 +141,7 @@ final class GpxLayer: DrawingLayer, DiskCacheSizeProtocol, DrawingLayerDelegate 
 	func addPoint(_ location: CLLocation) {
 		if let activeTrack = activeTrack {
 			defer {
-#if canImport(ActivityKit)
+#if canImport(ActivityKit) && !targetEnvironment(macCatalyst)
 				if #available(iOS 16.2, *) {
 					GpxTrackWidgetManager.shared.updateTrack()
 				}
