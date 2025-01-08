@@ -101,12 +101,12 @@
       </trans-unit>
       <trans-unit id="OJ0-aO-ri1.configuration.title" xml:space="preserve">
         <source>Comment &amp; Resolve</source>
-        <target state="translated">கருத்து &amp; ஆம்ப்; தீர்க்க</target>
+        <target state="translated">கருத்து &amp; தீர்க்க</target>
         <note>Class = "UIButton"; configuration.title = "Comment &amp; Resolve"; ObjectID = "OJ0-aO-ri1"; Note = "Add a comment and resolve Note";</note>
       </trans-unit>
       <trans-unit id="OJ0-aO-ri1.normalTitle" xml:space="preserve">
         <source>Comment &amp; Resolve</source>
-        <target state="translated">கருத்து &amp; ஆம்ப்; தீர்க்க</target>
+        <target state="translated">கருத்து &amp; தீர்க்க</target>
         <note>Class = "UIButton"; normalTitle = "Comment &amp; Resolve"; ObjectID = "OJ0-aO-ri1"; Note = "Add a comment and resolve Note";</note>
       </trans-unit>
       <trans-unit id="PHk-s9-onx.text" xml:space="preserve">
@@ -412,7 +412,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="SNa-W1-wga.headerTitle" xml:space="preserve">
         <source>Discard &amp; Refresh</source>
-        <target state="translated">நிராகரிக்க &amp; ஆம்ப்; புதுப்பிக்கவும்</target>
+        <target state="translated">நிராகரிக்க &amp; புதுப்பிக்கவும்</target>
         <note>Class = "UITableViewSection"; headerTitle = "Discard &amp; Refresh"; ObjectID = "SNa-W1-wga";</note>
       </trans-unit>
       <trans-unit id="Sdv-R2-za8.normalTitle" xml:space="preserve">
@@ -3697,7 +3697,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="dbi-X6-Day.headerTitle" xml:space="preserve">
         <source>Bug Reports &amp; Suggestions</source>
-        <target state="translated">பிழை அறிக்கைகள் &amp; ஆம்ப்; பரிந்துரைகள்</target>
+        <target state="translated">பிழை அறிக்கைகள் &amp; பரிந்துரைகள்</target>
         <note>Class = "UITableViewSection"; headerTitle = "Bug Reports &amp; Suggestions"; ObjectID = "dbi-X6-Day";</note>
       </trans-unit>
       <trans-unit id="fbD-Hr-HNI.headerTitle" xml:space="preserve">
@@ -3787,7 +3787,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="x4m-oT-EG8.text" xml:space="preserve">
         <source>GitHub - Issues &amp; Source Code</source>
-        <target state="translated">அறிவிலிமையம் - சிக்கல்கள் &amp; ஆம்ப்; மூலக் குறியீடு</target>
+        <target state="translated">அறிவிலிமையம் - சிக்கல்கள் &amp; மூலக் குறியீடு</target>
         <note>Class = "UILabel"; text = "GitHub - Issues &amp; Source Code"; ObjectID = "x4m-oT-EG8";</note>
       </trans-unit>
       <trans-unit id="yAO-9B-CTd.headerTitle" xml:space="preserve">
