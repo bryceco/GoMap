@@ -882,7 +882,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       <trans-unit id=" (%d nodes)&#10;|==|plural.other" xml:space="preserve">
         <source> (%d nodes)
 </source>
-        <target state="new"> (%d nodes)
+        <target state="translated"> (%d nodo)
 </target>
         <note/>
       </trans-unit>
@@ -916,27 +916,27 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.nodes.plural.one" xml:space="preserve">
         <source>%2$ld node</source>
-        <target state="new">%2$ld node</target>
+        <target state="translated">%2$ld nodo</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.nodes.plural.other" xml:space="preserve">
         <source>%2$ld nodes</source>
-        <target state="new">%2$ld nodes</target>
+        <target state="translated">%2$ld nodo</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
         <source>%1$#@megabytes@ , %2$#@files@</source>
-        <target state="new">%1$#@megabytes@ , %2$#@files@</target>
+        <target state="translated">%1$#@MB@ , %2$#@fitxategi@</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.files.plural.one" xml:space="preserve">
         <source>%2$ld file</source>
-        <target state="new">%2$ld file</target>
+        <target state="translated">fitxategi %2$ld</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.files.plural.other" xml:space="preserve">
         <source>%2$ld files</source>
-        <target state="new">%2$ld files</target>
+        <target state="translated">%2$ld fitxategi</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.megabytes.plural.one" xml:space="preserve">
@@ -969,57 +969,57 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.one" xml:space="preserve">
         <source>%ld edit, last active %@</source>
-        <target state="new">%ld edit, last active %@</target>
+        <target state="translated">%ld aldaketa, azkena: %@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.other" xml:space="preserve">
         <source>%ld edits, last active %@</source>
-        <target state="new">%ld edits, last active %@</target>
+        <target state="translated">%ld aldaketa, azkena: %@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes" xml:space="preserve">
         <source>%1$#@meters@, %2$#@nodes@</source>
-        <target state="new">%1$#@meters@, %2$#@nodes@</target>
+        <target state="translated">%1$#@metro@, %2$#@nodo@</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%1$ld meter</source>
-        <target state="new">%1$ld meter</target>
+        <target state="translated">metro %1$ld</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%1$ld meters</source>
-        <target state="new">%1$ld meters</target>
+        <target state="translated">%1$ld metro</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.one" xml:space="preserve">
         <source>%2$ld node</source>
-        <target state="new">%2$ld node</target>
+        <target state="translated">nodo %2$ld</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.other" xml:space="preserve">
         <source>%2$ld nodes</source>
-        <target state="new">%2$ld nodes</target>
+        <target state="translated">%2$ld nodo</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@</source>
-        <target state="new">%1$#@meters@, %2$#@points@</target>
+        <target state="translated">%1$#@metro@, %2$#@puntu@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@, %3$#@waypoints@</source>
-        <target state="new">%1$#@meters@, %2$#@points@, %3$#@waypoints@</target>
+        <target state="translated">%1$#@metro@, %2$#@puntu@, %3$#@bide-puntu@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%ld meter</source>
-        <target state="new">%ld meter</target>
+        <target state="translated">metro %ld</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="new">%ld meters</target>
+        <target state="translated">%ld metro</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.one" xml:space="preserve">
@@ -1034,22 +1034,22 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.one" xml:space="preserve">
         <source>%ld waypoint</source>
-        <target state="new">%ld waypoint</target>
+        <target state="translated">bide-puntu %ld</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.other" xml:space="preserve">
         <source>%ld waypoints</source>
-        <target state="new">%ld waypoints</target>
+        <target state="translated">%ld bide-puntu</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%ld meter</source>
-        <target state="new">%ld meter</target>
+        <target state="translated">metro %ld</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="new">%ld meters</target>
+        <target state="translated">%ld metro</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.one" xml:space="preserve">
@@ -1432,6 +1432,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Copied" xml:space="preserve">
         <source>Copied</source>
+        <target state="translated">Kopiatua</target>
         <note>text was copied to the system clipboard</note>
       </trans-unit>
       <trans-unit id="Copy Tags" xml:space="preserve">
@@ -1832,6 +1833,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="No Data" xml:space="preserve">
         <source>No Data</source>
+        <target state="translated">Daturik ez</target>
         <note>Alert title</note>
       </trans-unit>
       <trans-unit id="No Left Turn restriction" xml:space="preserve">
@@ -1940,6 +1942,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Open URL" xml:space="preserve">
         <source>Open URL</source>
+        <target state="translated">URLa ireki</target>
         <note/>
       </trans-unit>
       <trans-unit id="Paste" xml:space="preserve">
@@ -2082,6 +2085,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Right" xml:space="preserve">
         <source>Right</source>
+        <target state="translated">Eskuin</target>
         <note/>
       </trans-unit>
       <trans-unit id="Right side" xml:space="preserve">
@@ -2130,6 +2134,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Share" xml:space="preserve">
         <source>Share</source>
+        <target state="translated">Partekatu</target>
         <note>Open iOS sharing sheet
 Title for sharing options</note>
       </trans-unit>
@@ -2252,6 +2257,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="This action requires GPS to be turned on" xml:space="preserve">
         <source>This action requires GPS to be turned on</source>
+        <target state="translated">Horren egiteko, GPSa piztu</target>
         <note/>
       </trans-unit>
       <trans-unit id="This app does not yet support editing turn restrictions without a node as the 'via' member" xml:space="preserve">
@@ -2532,10 +2538,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="delete way" xml:space="preserve">
         <source>delete way</source>
+        <target state="translated">bidea ken</target>
         <note/>
       </trans-unit>
       <trans-unit id="duplicate" xml:space="preserve">
         <source>duplicate</source>
+        <target state="translated">bikoiztu</target>
         <note>create a duplicate</note>
       </trans-unit>
       <trans-unit id="ft" xml:space="preserve">
@@ -3177,10 +3185,12 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="LaB-Et-hHT.text" xml:space="preserve">
         <source>Details</source>
+        <target state="translated">Xehetasunak</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "LaB-Et-hHT";</note>
       </trans-unit>
       <trans-unit id="Mus-SG-1Sz.text" xml:space="preserve">
         <source>Detail</source>
+        <target state="translated">Xehetasun</target>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "Mus-SG-1Sz";</note>
       </trans-unit>
       <trans-unit id="O6E-f1-A1k.title" xml:space="preserve">
@@ -3218,6 +3228,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="VDO-HW-SLB.title" xml:space="preserve">
         <source>Nearby Mappers</source>
+        <target state="translated">Mapatzaile hurbilak</target>
         <note>Class = "UINavigationItem"; title = "Nearby Mappers"; ObjectID = "VDO-HW-SLB";</note>
       </trans-unit>
       <trans-unit id="WpM-6Q-OOf.normalTitle" xml:space="preserve">
