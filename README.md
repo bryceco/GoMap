@@ -47,16 +47,18 @@ A number of assets used in the app come from other repositories, and should be p
 - Name Suggestion Index (https://github.com/osmlab/name-suggestion-index)
 - NSI brand imagery (pulled from Facebook/Twitter/Wikipedia)
 - StreetComplete quest filters (https://github.com/streetcomplete/StreetComplete)
-- WebLate translations (https://hosted.weblate.org/projects/go-map/app)
+- Weblate translations (https://hosted.weblate.org/projects/go-map/app)
 
-### How to update external assets
+### Updating external assets
 
-Starting from the `src` directory:
-- `(cd presets && ./update.sh)`				# fetches latest presets.json, etc. files and NSI
-- `(cd presets && ./getBrandIcons.py)`		# downloads images from various websites and converts them to png as necessary
-- `(cd presets && ./uploadBrandIcons.sh)`	# uploads imagery to gomaposm.com where they can be downloaded on demand at runtime (password required)
-- `(cd POI-Icons && ./update.sh)`			# fetches maki/temaki icons 
-- `(cd xliff && ./update.sh)`					# downloads latest translations from weblate (password required). This step is very noisy and produces many pages of warnings that can be ignored.
+```sh
+cd src
+(cd presets && ./update.sh)			# fetches latest presets.json, etc. files and NSI
+(cd presets && ./getBrandIcons.py)		# downloads images from various websites and converts them to PNG as necessary
+(cd presets && ./uploadBrandIcons.sh)	# uploads imagery to gomaposm.com where they can be downloaded on demand at runtime (password required)
+(cd POI-Icons && ./update.sh)			# fetches Maki/Temaki icons 
+(cd xliff && ./update.sh)				# downloads latest translations from Weblate (API token required). The output is very noisy and can be ignored
+```
 
 ## Continuous integration
 
