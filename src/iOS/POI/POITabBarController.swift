@@ -31,6 +31,13 @@ class POITabBarController: UITabBarController {
 
 		// hide attributes tab on new objects
 		updatePOIAttributesTabBarItemVisibility(withSelectedObject: selection)
+
+		if #available(iOS 17, *) {
+			// On MacCatalyst (and maybe iPad) UITabBar is broken.
+			// This fixes it.
+			// See https://forums.developer.apple.com/forums/thread/759478
+			traitOverrides.horizontalSizeClass = .compact
+		}
 	}
 
 	func removeValueFromKeyValueDict(key: String) {
