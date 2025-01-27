@@ -348,7 +348,7 @@ for file_path in sorted(css_files):
             key, value = l.split(":", 1)
             value = value.replace("!important", "").strip()
             if key not in css_keys:
-                err("Error, key not in css_keys:", key)
+                err("Error, key not in css_keys:", key, value)
                 continue
 
             if key == "stroke":

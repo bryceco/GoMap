@@ -17,7 +17,7 @@ private let SINGLE_SIDED_WALLS = true
 
 // drawing options
 private let DEFAULT_LINECAP = CAShapeLayerLineCap.butt
-private let DEFAULT_LINEJOIN = CAShapeLayerLineJoin.miter
+private let DEFAULT_LINEJOIN = CAShapeLayerLineJoin.round
 private let MinIconSizeInPixels: CGFloat = 24.0
 private let Pixels_Per_Character: CGFloat = 8.0
 private let NodeHighlightRadius: CGFloat = 6.0
