@@ -416,20 +416,27 @@ extension RenderInfo {
 		}
 		if has(tags, "bridge") {
 			r.casingColor = DynamicColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+			r.casingOpacity = 0.3
 			r.casingWidth = 8.0
 			r.casingCap = .butt
 			r.casingDashPattern = nil
 		}
+		if has(tags, "tunnel") || (tags["location"] == "underground") || (tags["location"] == "underwater") {
+			r.lineOpacity = 0.15
+		}
 		if has(tags, "tunnel") || (tags["location"] == "underground") {
+			r.casingOpacity = 0.25
 			r.casingCap = .butt
 			r.casingDashPattern = nil
 		}
 		if tags["location"] == "underwater" {
+			r.lineOpacity = 0.25
 			r.lineCap = .butt
 			r.lineDashPattern = nil
 		}
 		if has(tags, "embankment") || has(tags, "cutting") {
 			r.casingColor = DynamicColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+			r.casingOpacity = 0.25
 			r.casingWidth = 11.0
 			r.casingCap = .butt
 			r.casingDashPattern = [1, 2]
