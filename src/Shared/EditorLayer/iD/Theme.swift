@@ -194,7 +194,9 @@ extension RenderInfo {
 		if (primary == "highway" && primaryValue == "path") || (primary == "highway" && primaryValue == "footway") ||
 			(primary == "highway" && primaryValue == "cycleway") ||
 			(primary == "highway" && primaryValue == "bridleway") ||
-			(primary == "highway" && primaryValue == "corridor") || (primary == "highway" && primaryValue == "steps")
+			(primary == "highway" && primaryValue == "corridor") ||
+			(primary == "highway" && primaryValue == "ladder") ||
+			(primary == "highway" && primaryValue == "steps")
 		{
 			r.lineWidth = 1.5
 			r.casingWidth = 2.5
@@ -277,7 +279,7 @@ extension RenderInfo {
 		if (primary == "leisure" && primaryValue == "track") || tags["leisure"] == "track" {
 			r.lineColor = DynamicColor(red: 0.898, green: 0.722, blue: 0.169, alpha: 1.0)
 		}
-		if primary == "highway" && primaryValue == "steps" {
+		if (primary == "highway" && primaryValue == "steps") || (primary == "highway" && primaryValue == "ladder") {
 			r.lineColor = DynamicColor(red: 0.506, green: 0.824, blue: 0.361, alpha: 1.0)
 			r.lineCap = .butt
 			r.lineDashPattern = [1.5, 1.5]
@@ -331,9 +333,15 @@ extension RenderInfo {
 			r.lineWidth = 2.5
 			r.casingWidth = 3.5
 		}
+		if (primary == "waterway" && primaryValue == "river") || (primary == "waterway" && primaryValue == "flowline") {
+			r.casingWidth = 5.0
+		}
 		if primary == "waterway" && primaryValue == "river" {
 			r.lineWidth = 4.0
-			r.casingWidth = 5.0
+		}
+		if primary == "waterway" && primaryValue == "flowline" {
+			r.lineOpacity = 0.5
+			r.lineWidth = 4.0
 		}
 		if primary == "waterway" && primaryValue == "ditch" {
 			r.lineColor = DynamicColor(red: 0.2, green: 0.6, blue: 0.667, alpha: 1.0)
@@ -416,27 +424,20 @@ extension RenderInfo {
 		}
 		if has(tags, "bridge") {
 			r.casingColor = DynamicColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
-			r.casingOpacity = 0.3
+			r.casingOpacity = 0.6
 			r.casingWidth = 8.0
 			r.casingCap = .butt
 			r.casingDashPattern = nil
 		}
 		if has(tags, "tunnel") || (tags["location"] == "underground") || (tags["location"] == "underwater") {
-			r.lineOpacity = 0.15
-		}
-		if has(tags, "tunnel") || (tags["location"] == "underground") {
-			r.casingOpacity = 0.25
+			r.lineOpacity = 0.3
+			r.casingOpacity = 0.5
 			r.casingCap = .butt
 			r.casingDashPattern = nil
 		}
-		if tags["location"] == "underwater" {
-			r.lineOpacity = 0.25
-			r.lineCap = .butt
-			r.lineDashPattern = nil
-		}
 		if has(tags, "embankment") || has(tags, "cutting") {
 			r.casingColor = DynamicColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
-			r.casingOpacity = 0.25
+			r.casingOpacity = 0.5
 			r.casingWidth = 11.0
 			r.casingCap = .butt
 			r.casingDashPattern = [1, 2]
@@ -565,6 +566,7 @@ extension RenderInfo {
 			((primary == "highway" && primaryValue == "service") && has(tags, "bridge")) ||
 			((primary == "highway" && primaryValue == "track") && has(tags, "bridge")) ||
 			((primary == "highway" && primaryValue == "steps") && has(tags, "bridge")) ||
+			((primary == "highway" && primaryValue == "ladder") && has(tags, "bridge")) ||
 			((primary == "highway" && primaryValue == "footway") && has(tags, "bridge")) ||
 			((primary == "highway" && primaryValue == "cycleway") && has(tags, "bridge")) ||
 			((primary == "highway" && primaryValue == "bridleway") && has(tags, "bridge"))
@@ -602,7 +604,9 @@ extension RenderInfo {
 			(
 				primary == "highway" && tags["construction"] == "bridleway" && status != nil && status ==
 					"construction") ||
-			(primary == "highway" && tags["construction"] == "steps" && status != nil && status == "construction")
+			(primary == "highway" && tags["construction"] == "corridor" && status != nil && status == "construction") ||
+			(primary == "highway" && tags["construction"] == "steps" && status != nil && status == "construction") ||
+			(primary == "highway" && tags["construction"] == "ladder" && status != nil && status == "construction")
 		{
 			r.lineWidth = 2.0
 			r.lineCap = .butt
@@ -615,7 +619,8 @@ extension RenderInfo {
 			(primary == "highway" && tags["proposed"] == "footway" && status != nil && status == "proposed") ||
 			(primary == "highway" && tags["proposed"] == "cycleway" && status != nil && status == "proposed") ||
 			(primary == "highway" && tags["proposed"] == "bridleway" && status != nil && status == "proposed") ||
-			(primary == "highway" && tags["proposed"] == "steps" && status != nil && status == "proposed")
+			(primary == "highway" && tags["proposed"] == "steps" && status != nil && status == "proposed") ||
+			(primary == "highway" && tags["proposed"] == "ladder" && status != nil && status == "proposed")
 		{
 			r.lineWidth = 1.5
 			r.casingWidth = 2.25
@@ -630,6 +635,8 @@ extension RenderInfo {
 				status ==
 				"proposed") ||
 			(primary == "highway" && has(tags, "bridge") && tags["proposed"] == "steps" && status != nil && status ==
+				"proposed") ||
+			(primary == "highway" && has(tags, "bridge") && tags["proposed"] == "ladder" && status != nil && status ==
 				"proposed")
 		{
 			r.casingWidth = 5.0

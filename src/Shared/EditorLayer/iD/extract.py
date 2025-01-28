@@ -301,32 +301,32 @@ css_keys = {
 }
 
 
-def parse_css_color(json_css, key, value):
+def parse_css_color(value):
     if value.startswith("#"):
         value = value.removeprefix("#")
         if len(value) == 3:
-            json_css[key] = [int(c * 2, 16) for c in value]
+            return [int(c * 2, 16) for c in value]
         elif len(value) == 6:
-            json_css[key] = [int(value[i : i + 2], 16) for i in range(0, 6, 2)]
+            return [int(value[i : i + 2], 16) for i in range(0, 6, 2)]
         else:
             err("Error parsing color:", value)
     elif value.startswith("rgb("):
         value = value.removeprefix("rgb(").removesuffix(")")
-        json_css[key] = [int(c) for c in value.split(",")]
+        return [int(c) for c in value.split(",")]
     elif value.startswith("rgba("):
         value = value.removeprefix("rgba(").removesuffix(")")
         r, g, b, a = [n.strip() for n in value.split(",")]
-        json_css[key] = [int(r), int(g), int(b), float(a)]
+        return [int(r), int(g), int(b), float(a)]
     elif value == "white":
-        json_css[key] = [255, 255, 255, 1.0]
+        return [255, 255, 255, 1.0]
     elif value == "none":
-        pass
+        return None
     else:
         err("Error parsing color:", value)
 
 
-def parse_css_float(json_css, key, value):
-    json_css[key] = float(value.removesuffix("px")) / 2
+def parse_css_width(value):
+    return float(value.removesuffix("px"))
 
 
 def int_or_float(n):
@@ -352,11 +352,13 @@ for file_path in sorted(css_files):
                 continue
 
             if key == "stroke":
-                parse_css_color(json_css, "lineColor", value)
+                color = parse_css_color(value)
+                if color is not None:
+                    json_css["lineColor"] = color
             if key == "stroke-opacity":
-                parse_css_float(json_css, "lineOpacity", value)
+                json_css["lineOpacity"] = float(value)
             if key == "stroke-width":
-                parse_css_float(json_css, "lineWidth", value)
+                json_css["lineWidth"] = parse_css_width(value) / 2
             if key == "stroke-linecap":
                 json_css["lineCap"] = value
             if key == "stroke-dasharray":
@@ -534,9 +536,7 @@ if args.debug:
         + '\t\tprint(String(format: "match   : %.6f ms", total))\n'
     )
 
-decomp = ""
-if args.decomp:
-    decomp = """import Foundation
+decomp = """import Foundation
 
 struct DynamicColor {
     var red: Float
@@ -556,14 +556,21 @@ enum LineCapStyle {
 class RenderInfo {
 	var value: String?
     var lineColor: DynamicColor?
+    var lineOpacity: CGFloat = 1.0
     var lineWidth: CGFloat = 0.0
     var lineCap: LineCapStyle = .butt
     var lineDashPattern: [NSNumber]?
     var casingColor: DynamicColor?
+    var casingOpacity: CGFloat = 1.0
     var casingWidth: CGFloat = 0.0
     var casingCap: LineCapStyle = .butt
     var casingDashPattern: [NSNumber]?
 	var areaColor: DynamicColor?
+}
+
+func has(_ tags: [String: String], _ key: String) -> Bool {
+	let value = tags[key]
+	return value != nil && value != "no"
 }
 """
 
