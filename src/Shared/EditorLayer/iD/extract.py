@@ -554,7 +554,7 @@ enum LineCapStyle {
 }
 
 class RenderInfo {
-	var value: String?
+    var value: String?
     var lineColor: DynamicColor?
     var lineOpacity: CGFloat = 1.0
     var lineWidth: CGFloat = 0.0
@@ -565,12 +565,12 @@ class RenderInfo {
     var casingWidth: CGFloat = 0.0
     var casingCap: LineCapStyle = .butt
     var casingDashPattern: [NSNumber]?
-	var areaColor: DynamicColor?
+    var areaColor: DynamicColor?
 }
 
 func has(_ tags: [String: String], _ key: String) -> Bool {
-	let value = tags[key]
-	return value != nil && value != "no"
+    let value = tags[key]
+    return value != nil && value != "no"
 }
 """
 
