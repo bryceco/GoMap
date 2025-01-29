@@ -34,10 +34,12 @@ final class RenderInfo {
 	var key = ""
 	var value: String?
 	var lineColor: UIColor?
+	var lineOpacity: CGFloat = 1.0
 	var lineWidth: CGFloat = 0.0
 	var lineCap: CAShapeLayerLineCap
 	var lineDashPattern: [NSNumber]?
 	var casingColor: UIColor?
+	var casingOpacity: CGFloat = 1.0
 	var casingWidth: CGFloat
 	var casingCap: CAShapeLayerLineCap
 	var casingDashPattern: [NSNumber]?
@@ -51,10 +53,12 @@ final class RenderInfo {
 	func isDefault() -> Bool {
 		// These values should match the init() defaults
 		return lineColor == UIColor.white
+			&& lineOpacity == 1.0
 			&& lineWidth == 1.0
 			&& lineCap == .round
 			&& lineDashPattern == nil
 			&& casingColor == nil
+			&& casingOpacity == 1.0
 			&& casingWidth == 0.0
 			&& casingCap == .butt
 			&& casingDashPattern == nil
@@ -65,10 +69,12 @@ final class RenderInfo {
 		key: String = "",
 		value: String? = nil,
 		lineColor: UIColor? = .white,
+		lineOpacity: CGFloat = 1.0,
 		lineWidth: CGFloat = 1.0,
 		lineCap: CAShapeLayerLineCap = .round,
 		lineDashPattern: [CGFloat]? = nil,
 		casingColor: UIColor? = nil,
+		casingOpacity: CGFloat = 1.0,
 		casingWidth: CGFloat = 0.0,
 		casingCap: CAShapeLayerLineCap = .butt,
 		casingDashPattern: [CGFloat]? = nil,
@@ -115,6 +121,14 @@ final class RenderInfo {
 			renderInfo.casingWidth = max(renderInfo.casingWidth, renderInfo.lineWidth + 4)
 		} else if renderInfo.lineWidth >= renderInfo.casingWidth {
 			renderInfo.casingWidth = renderInfo.lineWidth + 1
+		}
+		
+		// combine opacity with color's alpha channel
+		if let color = renderInfo.lineColor {
+			renderInfo.lineColor = color.withAlphaComponent(color.cgColor.alpha * renderInfo.lineOpacity)
+		}
+		if let color = renderInfo.casingColor {
+			renderInfo.casingColor = color.withAlphaComponent(color.cgColor.alpha * renderInfo.casingOpacity)
 		}
 
 		// check if it is an address point

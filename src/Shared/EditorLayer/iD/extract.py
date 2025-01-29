@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import argparse
 import os
 import regex
@@ -16,13 +18,9 @@ parser.add_argument(
     "--debug", action="store_true", help="generate code with timing information"
 )
 parser.add_argument(
-<<<<<<< HEAD
     "--decomp",
     action="store_true",
     help="generate standalone code paste-able into godbolt.org",
-=======
-    "--decomp", action="store_true", help="generate standalone code paste-able into godbolt.org"
->>>>>>> be1bb8211f9b1c47340ac2527803e0465ccc603a
 )
 args = parser.parse_args()
 
@@ -62,10 +60,12 @@ render_keys = [
     "and",
     "not",
     "lineColor",
+    "lineOpacity",
     "lineWidth",
     "lineCap",
     "lineDashPattern",
     "casingColor",
+    "casingOpacity",
     "casingWidth",
     "casingCap",
     "casingDashPattern",
@@ -191,8 +191,7 @@ def selector_to_if(selector, cmp="=="):
 
 
 def to_swift_fn(styles, indent=0):
-    res = 'guard primary != nil || primaryValue != nil else { return nil }\n'
-    res += 'let r = RenderInfo(key: primary ?? "", value: primaryValue)\n'
+    res = 'let r = RenderInfo(key: primary ?? "", value: primaryValue)\n'
     for keys, style in styles:
         if_stms = []
         for [selector, and_styles, not_styles] in keys:
@@ -235,7 +234,7 @@ def to_swift(obj, indent=indent_start):
                 ]
 
                 res += (
-                    f"r.{k} = UIColor("
+                    f"r.{k} = DynamicColor("
                     + ", ".join(
                         f"{color_key}: {color_val}"
                         for color_key, color_val in zip(color_keys, [r, g, b, a])
@@ -302,32 +301,32 @@ css_keys = {
 }
 
 
-def parse_css_color(json_css, key, value):
+def parse_css_color(value):
     if value.startswith("#"):
         value = value.removeprefix("#")
         if len(value) == 3:
-            json_css[key] = [int(c * 2, 16) for c in value]
+            return [int(c * 2, 16) for c in value]
         elif len(value) == 6:
-            json_css[key] = [int(value[i : i + 2], 16) for i in range(0, 6, 2)]
+            return [int(value[i : i + 2], 16) for i in range(0, 6, 2)]
         else:
             err("Error parsing color:", value)
     elif value.startswith("rgb("):
         value = value.removeprefix("rgb(").removesuffix(")")
-        json_css[key] = [int(c) for c in value.split(",")]
+        return [int(c) for c in value.split(",")]
     elif value.startswith("rgba("):
         value = value.removeprefix("rgba(").removesuffix(")")
         r, g, b, a = [n.strip() for n in value.split(",")]
-        json_css[key] = [int(r), int(g), int(b), float(a)]
+        return [int(r), int(g), int(b), float(a)]
     elif value == "white":
-        json_css[key] = [255, 255, 255, 1.0]
+        return [255, 255, 255, 1.0]
     elif value == "none":
-        pass
+        return None
     else:
         err("Error parsing color:", value)
 
 
-def parse_css_width(json_css, key, value):
-    json_css[key] = float(value.removesuffix("px")) / 2
+def parse_css_width(value):
+    return float(value.removesuffix("px"))
 
 
 def int_or_float(n):
@@ -349,13 +348,17 @@ for file_path in sorted(css_files):
             key, value = l.split(":", 1)
             value = value.replace("!important", "").strip()
             if key not in css_keys:
-                err("Error, key not in css_keys:", key)
+                err("Error, key not in css_keys:", key, value)
                 continue
 
             if key == "stroke":
-                parse_css_color(json_css, "lineColor", value)
+                color = parse_css_color(value)
+                if color is not None:
+                    json_css["lineColor"] = color
+            if key == "stroke-opacity":
+                json_css["lineOpacity"] = float(value)
             if key == "stroke-width":
-                parse_css_width(json_css, "lineWidth", value)
+                json_css["lineWidth"] = parse_css_width(value) / 2
             if key == "stroke-linecap":
                 json_css["lineCap"] = value
             if key == "stroke-dasharray":
@@ -440,6 +443,9 @@ for file_path in sorted(css_files):
                 if "lineColor" in json_css:
                     new_styles["casingColor"] = json_css["lineColor"]
                     del new_styles["lineColor"]
+                if "lineOpacity" in json_css:
+                    new_styles["casingOpacity"] = json_css["lineOpacity"]
+                    del new_styles["lineOpacity"]
                 if "lineWidth" in json_css:
                     new_styles["casingWidth"] = json_css["lineWidth"]
                     del new_styles["lineWidth"]
@@ -530,18 +536,16 @@ if args.debug:
         + '\t\tprint(String(format: "match   : %.6f ms", total))\n'
     )
 
-decomp = ""
-if args.decomp:
-    decomp = """import Foundation
+decomp = """import Foundation
 
-struct UIColor {
+struct DynamicColor {
     var red: Float
     var green: Float
     var blue: Float
     var alpha: Float
 
-    static let black = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-    static let clear = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+    static let black = DynamicColor(red: 0, green: 0, blue: 0, alpha: 1)
+    static let clear = DynamicColor(red: 0, green: 0, blue: 0, alpha: 0)
 }
 enum LineCapStyle {
     case butt
@@ -550,16 +554,23 @@ enum LineCapStyle {
 }
 
 class RenderInfo {
-	var value: String?
-    var lineColor: UIColor?
+    var value: String?
+    var lineColor: DynamicColor?
+    var lineOpacity: CGFloat = 1.0
     var lineWidth: CGFloat = 0.0
     var lineCap: LineCapStyle = .butt
     var lineDashPattern: [NSNumber]?
-    var casingColor: UIColor?
+    var casingColor: DynamicColor?
+    var casingOpacity: CGFloat = 1.0
     var casingWidth: CGFloat = 0.0
     var casingCap: LineCapStyle = .butt
     var casingDashPattern: [NSNumber]?
-	var areaColor: UIColor?
+    var areaColor: DynamicColor?
+}
+
+func has(_ tags: [String: String], _ key: String) -> Bool {
+    let value = tags[key]
+    return value != nil && value != "no"
 }
 """
 
@@ -599,7 +610,7 @@ extension RenderInfo {
 
 \tstatic """
 
-code += "func match(primary: String?, primaryValue: String?, status: String?, surface: String?, tags: [String: String]) -> RenderInfo? {\n\t\t"
+code += "func match(primary: String?, primaryValue: String?, status: String?, surface: String?, tags: [String: String]) -> RenderInfo {\n\t\t"
 code += debug_start
 code += to_swift_fn(styles, 2)
 code += debug_end
