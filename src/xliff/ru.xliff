@@ -731,7 +731,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="zI2-YM-qbl.normalTitle" xml:space="preserve">
         <source>Add New</source>
-        <target state="translated">Добавить новый</target>
+        <target state="translated">Добавить</target>
         <note>Class = "UIButton"; normalTitle = "Add New"; ObjectID = "zI2-YM-qbl"; Note = "Add new aerial imagery provider";</note>
       </trans-unit>
     </body>
