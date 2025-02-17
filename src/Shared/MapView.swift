@@ -90,6 +90,7 @@ private enum ZLAYER: CGFloat {
 	case AERIAL = -100
 	case BASEMAP = -98
 	case LOCATOR = -50
+	case DATA = -30
 	case EDITOR = -20
 	case QUADDOWNLOAD = -18
 	case GPX = -15
@@ -637,7 +638,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		gpxLayer.isHidden = true
 		backgroundLayers.append(.otherLayer(gpxLayer))
 
-		dataOverlayLayer.zPosition = ZLAYER.GPX.rawValue
+		dataOverlayLayer.zPosition = ZLAYER.DATA.rawValue
 		dataOverlayLayer.isHidden = true
 		backgroundLayers.append(.otherLayer(dataOverlayLayer))
 
