@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 final class AccountInfoTableViewController: UITableViewController {
 	@IBOutlet private var activityIndicator: UIActivityIndicatorView!
@@ -32,6 +33,13 @@ final class AccountInfoTableViewController: UITableViewController {
 		super.viewDidAppear(animated)
 
 		fetchAccountInfos()
+	}
+
+	override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+		guard let cell = tableView.cellForRow(at: indexPath),
+			  cell.accessoryType == .detailButton
+		else { return }
+		showAccountDetails()
 	}
 
 	private func fetchAccountInfos() {
@@ -63,6 +71,21 @@ final class AccountInfoTableViewController: UITableViewController {
 				strongSelf.presentBadLoginDialog()
 			}
 		}
+	}
+
+	private func showAccountDetails() {
+		guard let username = appDelegate.userName,
+			username != ""
+		else {
+			return
+		}
+		let urlAsString = "\(OSM_SERVER.queryURL)/user/\(username)"
+		guard let url = URL(string: urlAsString) else { return }
+
+		let safariViewController = SFSafariViewController(url: url)
+		safariViewController.modalPresentationStyle = .overCurrentContext
+		safariViewController.popoverPresentationController?.sourceView = view
+		present(safariViewController, animated: true)
 	}
 
 	private func setupUI() {
