@@ -73,7 +73,8 @@ final class TileServer: Equatable, Codable {
 		"EPSG:41001",
 		"EPSG:102113", // alias for 3857
 		"EPSG:102100", // alias for 3857
-		"EPSG:3785" // alias for 3857
+		"EPSG:3785", // alias for 3857
+		"EPSG:3765" // regional (Croatia) alias for 4326
 	]
 
 	convenience init(from decoder: Decoder) throws {
