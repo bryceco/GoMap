@@ -247,7 +247,13 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 		if appDelegate.mapView.viewState == MapViewState.EDITORAERIAL ||
 			appDelegate.mapView.viewState == MapViewState.AERIAL
 		{
-			imagery = appDelegate.mapView.aerialLayer.tileServer.name
+			let server = appDelegate.mapView.aerialLayer.tileServer
+			if server.identifier.hasPrefix("http:") || server.identifier.hasPrefix("https:") {
+				// custom user imagery
+				imagery = server.identifier
+			} else {
+				imagery = server.name
+			}
 		}
 
 		if xmlTextView.isEditable {
