@@ -567,6 +567,10 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		}) {
 			return name.value
 		}
+		// then try addr:housename
+		if let name = tags["addr:housename"] {
+			return name
+		}
 		// for ways, use ref tag
 		if isWay() != nil,
 		   let highway = tags["highway"],
