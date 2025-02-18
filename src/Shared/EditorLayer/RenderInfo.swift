@@ -122,7 +122,7 @@ final class RenderInfo {
 		} else if renderInfo.lineWidth >= renderInfo.casingWidth {
 			renderInfo.casingWidth = renderInfo.lineWidth + 1
 		}
-		
+
 		// combine opacity with color's alpha channel
 		if let color = renderInfo.lineColor {
 			renderInfo.lineColor = color.withAlphaComponent(color.cgColor.alpha * renderInfo.lineOpacity)

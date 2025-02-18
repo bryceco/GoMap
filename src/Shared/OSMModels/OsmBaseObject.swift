@@ -641,7 +641,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		}
 
 		// addresses
-		for key in ["addr:housename","addr:housenumber"] {
+		for key in ["addr:housename", "addr:housenumber"] {
 			if let value = tags[key] {
 				return "\(key) = \(value)"
 			}

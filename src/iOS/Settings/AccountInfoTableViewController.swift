@@ -6,8 +6,8 @@
 //  Copyright © 2023 Bryce Cogswell. All rights reserved.
 //
 
-import UIKit
 import SafariServices
+import UIKit
 
 final class AccountInfoTableViewController: UITableViewController {
 	@IBOutlet private var activityIndicator: UIActivityIndicatorView!
@@ -37,7 +37,7 @@ final class AccountInfoTableViewController: UITableViewController {
 
 	override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
 		guard let cell = tableView.cellForRow(at: indexPath),
-			  cell.accessoryType == .detailButton
+		      cell.accessoryType == .detailButton
 		else { return }
 		showAccountDetails()
 	}
@@ -75,7 +75,7 @@ final class AccountInfoTableViewController: UITableViewController {
 
 	private func showAccountDetails() {
 		guard let username = appDelegate.userName,
-			username != ""
+		      username != ""
 		else {
 			return
 		}
