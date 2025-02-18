@@ -642,12 +642,15 @@ final class TileServer: Equatable, Codable {
 		return name
 	}
 
+	private static let epsg4326Aliases = ["EPSG:4326", "EPSG:3765"]
+
 	private static func TileToWMSCoords(_ tx: Int, _ ty: Int, _ z: Int, _ projection: String) -> OSMPoint {
 		let zoomSize = Double(1 << z)
 		let lon = Double(tx) / zoomSize * .pi * 2 - .pi
 		let lat = atan(sinh(.pi * (1 - Double(2 * ty) / zoomSize)))
 		var loc: OSMPoint
-		if projection == "EPSG:4326" {
+
+		if epsg4326Aliases.contains(projection) {
 			loc = OSMPoint(x: lon * 180 / .pi, y: lat * 180 / .pi)
 		} else {
 			// EPSG:3857 and others
@@ -676,7 +679,9 @@ final class TileServer: Equatable, Codable {
 			let minXmaxY = Self.TileToWMSCoords(tileX, tileY, zoom, wmsProjection)
 			let maxXminY = Self.TileToWMSCoords(tileX + 1, tileY + 1, zoom, wmsProjection)
 			let bbox: String
-			if wmsProjection == "EPSG:4326", url.lowercased().contains("crs={proj}") {
+			if Self.epsg4326Aliases.contains(wmsProjection),
+			   url.lowercased().contains("crs={proj}")
+			{
 				// reverse lat/lon for EPSG:4326 when WMS version is 1.3 (WMS 1.1 uses srs=epsg:4326 instead
 				bbox = "\(maxXminY.y),\(minXmaxY.x),\(minXmaxY.y),\(maxXminY.x)" // lat,lon
 			} else {
