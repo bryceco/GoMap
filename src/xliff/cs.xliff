@@ -3808,7 +3808,7 @@ http://www.sjjb.co.uk/mapicons
 Other icons by Glyphish:
 http://glyphish.com
 </source>
-        <target state="needs-review-l10n">Copyright © 2012-2022 Bryce Cogswell. 
+        <target state="translated">Copyright © 2012-2025 Bryce Cogswell. 
 Všechna práva vyhrazena.
 
 OpenStreetMap data jsou licencována pod Open Data Commons Open Database License (ODbL):
@@ -3821,9 +3821,6 @@ Letecké snímky Mapbox – copyright Mapbox a jeho dodavatelé: https://www.map
 
 XML parsování s pomocí KissXML Robbieho Hansona:
 https://github.com/robbiehanson/KissXML
-
-Kód EXIF parsování – copyright © 2010-2015 Mayank Lahiri
-https://github.com/mayanklahiri/easyexif
 
 Mapové ikony – SJJB:
 http://www.sjjb.co.uk/mapicons
