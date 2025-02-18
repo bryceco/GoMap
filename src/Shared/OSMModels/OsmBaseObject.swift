@@ -640,6 +640,13 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 			}
 		}
 
+		// addresses
+		for key in ["addr:housename","addr:housenumber"] {
+			if let value = tags[key] {
+				return "\(key) = \(value)"
+			}
+		}
+
 		// any non-ignored key
 		for (key, value) in tags {
 			if OsmTags.IsInterestingKey(key) {
