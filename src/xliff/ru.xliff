@@ -359,7 +359,7 @@
       </trans-unit>
       <trans-unit id="MPq-PX-jf0.text" xml:space="preserve">
         <source>Editor with Aerial</source>
-        <target state="translated">Редактор с аэрофотосъёмкой</target>
+        <target state="translated">Редактор и аэрофотоснимки</target>
         <note>Class = "UILabel"; text = "Editor with Aerial"; ObjectID = "MPq-PX-jf0";</note>
       </trans-unit>
       <trans-unit id="MZF-am-tCM.title" xml:space="preserve">
@@ -413,11 +413,11 @@
 Warning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.
 
 Clear the Basemap or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed.</source>
-        <target state="translated">Очистите кэш данных OSM, если состояние данных в приложении не синхронизировано с сервером OSM. Это может происходить, если кто-то еще вносит правки в те же объекты, которые редактируете вы, или если загрузка одного из ваших пакетов была неудачной, что мешает дальнейшей загрузке данных. 
+        <target state="translated">Очистите кэш данных OSM, если состояние данных в приложении не синхронизировано с сервером OSM. Это может происходить, если кто-то ещё вносит правки в те же объекты, которые редактируете вы, или если загрузка одного из ваших пакетов была неудачной, что мешает дальнейшей загрузке данных. 
 
 Внимание: Очистка кэша OSM приведёт к потере данных, которые ещё не были загружены на сервер.
 
-Очистите кэш тайлов базовой карты или кэш накладываемых слоёв, чтобы загрузить обновленные тайлы, на которых будут отображены внесённые вами изменения. Обработка ваших правок может занимать до 24 часов.</target>
+Очистите кэш тайлов базовой карты или кэш накладываемых слоёв, чтобы загрузить обновлённые тайлы, на которых будут отображены внесённые вами изменения. Обработка ваших правок может занимать до 24 часов.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. \n\nWarning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.\n\nClear the Basemap or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed."; ObjectID = "SNa-W1-wga";</note>
       </trans-unit>
       <trans-unit id="SNa-W1-wga.headerTitle" xml:space="preserve">
@@ -616,6 +616,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="nzU-It-UAv.text" xml:space="preserve">
         <source>Data Overlays</source>
+        <target state="translated">Накладываемые данные</target>
         <note>Class = "UILabel"; text = "Data Overlays"; ObjectID = "nzU-It-UAv";</note>
       </trans-unit>
       <trans-unit id="oSD-0y-Vt0.title" xml:space="preserve">
@@ -645,6 +646,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="rWF-4C-sRA.text" xml:space="preserve">
         <source>Title</source>
+        <target state="translated">Название</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "rWF-4C-sRA";</note>
       </trans-unit>
       <trans-unit id="scg-Po-M3L.headerTitle" xml:space="preserve">
@@ -699,7 +701,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="w75-Lj-3jF.placeholder" xml:space="preserve">
         <source>Portlandia GIS</source>
-        <target state="translated">Portlandia GIS</target>
+        <target state="translated">ГИС Портландии</target>
         <note>Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF"; Note = "A hypothetical aerial imagery provider";</note>
       </trans-unit>
       <trans-unit id="wev-ax-u4C.headerTitle" xml:space="preserve">
@@ -729,7 +731,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="zI2-YM-qbl.normalTitle" xml:space="preserve">
         <source>Add New</source>
-        <target state="translated">Добавить новый</target>
+        <target state="translated">Добавить</target>
         <note>Class = "UIButton"; normalTitle = "Add New"; ObjectID = "zI2-YM-qbl"; Note = "Add new aerial imagery provider";</note>
       </trans-unit>
     </body>
@@ -768,10 +770,12 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%lld GPX points" xml:space="preserve">
         <source>%lld GPX points</source>
+        <target state="translated">%lld GPX точек</target>
         <note/>
       </trans-unit>
       <trans-unit id="%lld points" xml:space="preserve">
         <source>%lld points</source>
+        <target state="translated">%lld точек</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
@@ -781,6 +785,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
         <source>Pause recording GPX tracks.</source>
+        <target state="translated">Приостановить запись GPX треков</target>
         <note/>
       </trans-unit>
       <trans-unit id="Start GPX" xml:space="preserve">
@@ -790,6 +795,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="Start recording GPX tracks." xml:space="preserve">
         <source>Start recording GPX tracks.</source>
+        <target state="translated">Начать записывать GPX треки</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop" xml:space="preserve">
@@ -804,6 +810,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="Stop recording GPX tracks." xml:space="preserve">
         <source>Stop recording GPX tracks.</source>
+        <target state="translated">Перестать записывать GPX треки</target>
         <note/>
       </trans-unit>
     </body>
@@ -1093,7 +1100,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%@ meters" xml:space="preserve">
         <source>%@ meters</source>
-        <target state="translated">%@ метры</target>
+        <target state="translated">%@ метров</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="%ld Days|==|plural.few" xml:space="preserve">
@@ -1924,6 +1931,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Extract Node" xml:space="preserve">
         <source>Extract Node</source>
+        <target state="translated">Извлечь точку</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Filters" xml:space="preserve">
@@ -2400,6 +2408,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
         <source>Pause recording GPX tracks.</source>
+        <target state="translated">Приостановить запись GPX треков</target>
         <note/>
       </trans-unit>
       <trans-unit id="Perform Action" xml:space="preserve">
@@ -2564,6 +2573,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Select the language used for Presets. Other app content will use your default language." xml:space="preserve">
         <source>Select the language used for Presets. Other app content will use your default language.</source>
+        <target state="translated">Язык пресетов тегов в редакторе</target>
         <note/>
       </trans-unit>
       <trans-unit id="Selected object is off screen" xml:space="preserve">
@@ -2629,10 +2639,12 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Start GPX" xml:space="preserve">
         <source>Start GPX</source>
+        <target state="translated">Начать GPX</target>
         <note/>
       </trans-unit>
       <trans-unit id="Start recording GPX tracks." xml:space="preserve">
         <source>Start recording GPX tracks.</source>
+        <target state="translated">Начать записывать GPX треки</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop" xml:space="preserve">
@@ -2642,10 +2654,12 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Stop GPX" xml:space="preserve">
         <source>Stop GPX</source>
+        <target state="translated">Остановить GPX</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop recording GPX tracks." xml:space="preserve">
         <source>Stop recording GPX tracks.</source>
+        <target state="translated">Перестать записывать GPX треки</target>
         <note/>
       </trans-unit>
       <trans-unit id="Straighten" xml:space="preserve">
@@ -2797,7 +2811,7 @@ Title for sharing options</note>
         <source>Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.
 
 Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route.</source>
-        <target state="translated">Ограничения маневров позволяют определить, на какие дороги можно повернуть, подъезжая к перекрёстку с определенной стороны.
+        <target state="translated">Ограничения манёвров позволяют определить, на какие дороги можно повернуть, подъезжая к перекрёстку с определённой стороны.
 
 Выберите сегмент, по которому вы подъезжаете к перекрёстку, затем нажмите на стрелку, чтобы разрешить/запретить движение в точку назначения.</target>
         <note/>
@@ -3100,14 +3114,17 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="ft" xml:space="preserve">
         <source>ft</source>
+        <target state="translated">фут</target>
         <note>Height or width in feet, please abbreviate</note>
       </trans-unit>
       <trans-unit id="kg" xml:space="preserve">
         <source>kg</source>
+        <target state="translated">кг</target>
         <note>Weight in kilograms, please abbreviate</note>
       </trans-unit>
       <trans-unit id="km" xml:space="preserve">
         <source>km</source>
+        <target state="translated">км</target>
         <note>Distance in kilometers, please abbreviate</note>
       </trans-unit>
       <trans-unit id="km/h" xml:space="preserve">
@@ -3117,14 +3134,17 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="lbs" xml:space="preserve">
         <source>lbs</source>
+        <target state="translated">lbs</target>
         <note>Weight in pounds, please abbreviate</note>
       </trans-unit>
       <trans-unit id="lt" xml:space="preserve">
         <source>lt</source>
+        <target state="translated">lt</target>
         <note>Weight in long tons, please abbreviate</note>
       </trans-unit>
       <trans-unit id="m" xml:space="preserve">
         <source>m</source>
+        <target state="translated">м</target>
         <note>Height or width in meters, please abbreviate</note>
       </trans-unit>
       <trans-unit id="meters" xml:space="preserve">
@@ -3134,6 +3154,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="mi" xml:space="preserve">
         <source>mi</source>
+        <target state="translated">mi</target>
         <note>Distance in miles, please abbreviate</note>
       </trans-unit>
       <trans-unit id="move" xml:space="preserve">
@@ -3178,10 +3199,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="st" xml:space="preserve">
         <source>st</source>
+        <target state="translated">st</target>
         <note>Weight in short tons, please abbreviate</note>
       </trans-unit>
       <trans-unit id="t" xml:space="preserve">
         <source>t</source>
+        <target state="translated">т</target>
         <note>Weight in metric tons, please abbreviate</note>
       </trans-unit>
       <trans-unit id="update relation members" xml:space="preserve">
@@ -3705,6 +3728,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="3AM-Eb-jch.text" xml:space="preserve">
         <source>Maximize FPS</source>
+        <target state="translated">Не ограничивать частоту кадров (FPS)</target>
         <note>Class = "UILabel"; text = "Maximize FPS"; ObjectID = "3AM-Eb-jch"; Note = "Display the user's touches when they tap the screen";</note>
       </trans-unit>
       <trans-unit id="3qk-15-BUc.text" xml:space="preserve">
@@ -3749,11 +3773,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="355-dx-Oi8.headerTitle" xml:space="preserve">
         <source>Presets Language</source>
-        <target state="needs-review-l10n">Язык</target>
+        <target state="translated">Язык</target>
         <note>Class = "UITableViewSection"; headerTitle = "Presets Language"; ObjectID = "355-dx-Oi8";</note>
       </trans-unit>
       <trans-unit id="AEl-sZ-ech.text" xml:space="preserve">
         <source>Enables &gt; 60 FPS</source>
+        <target state="translated">По умолчанию ограничение 60 FPS</target>
         <note>Class = "UILabel"; text = "Enables &gt; 60 FPS"; ObjectID = "AEl-sZ-ech"; Note = "Display the user's touches when they tap the screen";</note>
       </trans-unit>
       <trans-unit id="AHZ-L8-yUA.title" xml:space="preserve">
@@ -3787,7 +3812,7 @@ http://www.sjjb.co.uk/mapicons
 Other icons by Glyphish:
 http://glyphish.com
 </source>
-        <target state="needs-review-l10n">Авторские права © 2012-2020 Брайс Когсвелл. 
+        <target state="translated">Авторские права © 2012-2020 Брайс Когсвелл. 
 Все права защищены.
 
 Данные OpenStreetMap распространяются по лицензии с Open Data Commons Open Database License (ODbL):
@@ -3798,13 +3823,10 @@ https://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/map
 
 Mapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos
 
-XML parsing courtesy of Robbie Hanson's KissXML:
+Парсер XML от KissXML:
 https://github.com/robbiehanson/KissXML
 
-EXIF parsing code Copyright (c) 2010-2015 Mayank Lahiri
-https://github.com/mayanklahiri/easyexif
-
-Map icons by SJJB:
+Значки на карте от SJJB:
 http://www.sjjb.co.uk/mapicons
 
 Другие значки от Glyphish:
@@ -3974,7 +3996,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="ib9-wt-IzD.title" xml:space="preserve">
         <source>Presets Language</source>
-        <target state="needs-review-l10n">Язык</target>
+        <target state="translated">Язык пресетов</target>
         <note>Class = "UINavigationItem"; title = "Presets Language"; ObjectID = "ib9-wt-IzD";</note>
       </trans-unit>
       <trans-unit id="jcn-Lx-tj3.text" xml:space="preserve">
@@ -4014,7 +4036,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="osk-Kq-gDX.text" xml:space="preserve">
         <source>Presets Language</source>
-        <target state="needs-review-l10n">Язык</target>
+        <target state="translated">Язык пресетов</target>
         <note>Class = "UILabel"; text = "Presets Language"; ObjectID = "osk-Kq-gDX";</note>
       </trans-unit>
       <trans-unit id="rfX-TP-V0l.text" xml:space="preserve">
