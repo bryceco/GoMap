@@ -28,8 +28,7 @@ private var mostRecentMaximum = 0
 
 class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate {
 	private var featureList: [PresetFeatureOrCategory] = []
-	private var searchArrayRecent: [PresetFeature] = []
-	private var searchArrayAll: [PresetFeature] = []
+	private var searchArray: [PresetFeature] = []
 	@IBOutlet var searchBar: UISearchBar!
 	private var isTopLevel = false
 
@@ -77,13 +76,17 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
+		if searchArray.count != 0 {
+			return 1
+		}
 		return isTopLevel ? 2 : 1
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		if isTopLevel {
-			return section == 0 ? NSLocalizedString("Most recent", comment: "") :
-				NSLocalizedString("All choices", comment: "")
+			return section == 0 && searchArray.count == 0
+				? NSLocalizedString("Most recent", comment: "")
+				: NSLocalizedString("All choices", comment: "")
 		} else {
 			return nil
 		}
@@ -109,8 +112,8 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if searchArrayAll.count != 0 {
-			return section == 0 && isTopLevel ? searchArrayRecent.count : searchArrayAll.count
+		if searchArray.count != 0 {
+			return searchArray.count
 		} else {
 			if isTopLevel, section == 0 {
 				let count = mostRecentArray.count
@@ -127,9 +130,8 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let feature: PresetFeature
-		if searchArrayAll.count != 0 {
-			feature = (indexPath.section == 0 && isTopLevel) ? searchArrayRecent[indexPath.row] :
-				searchArrayAll[indexPath.row]
+		if searchArray.count != 0 {
+			feature = searchArray[indexPath.row]
 		} else if isTopLevel, indexPath.section == 0 {
 			// most recents
 			feature = mostRecentArray[indexPath.row]
@@ -206,9 +208,8 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		if searchArrayAll.count != 0 {
-			let feature = indexPath
-				.section == 0 && isTopLevel ? searchArrayRecent[indexPath.row] : searchArrayAll[indexPath.row]
+		if searchArray.count != 0 {
+			let feature = searchArray[indexPath.row]
 			updateTags(with: feature)
 			navigationController?.popToRootViewController(animated: true)
 			return
@@ -242,17 +243,15 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 		if searchText.count == 0 {
 			// no search
-			searchArrayAll = []
-			searchArrayRecent = []
+			searchArray = []
 		} else {
 			// searching
 			let geometry = currentSelectionGeometry()
-			searchArrayAll = PresetsDatabase.shared.featuresInCategory(
+			searchArray = PresetsDatabase.shared.featuresInCategory(
 				parentCategory,
 				matching: searchText,
 				geometry: geometry,
 				location: AppDelegate.shared.mapView.currentRegion)
-			searchArrayRecent = mostRecentArray.filter { $0.matchesSearchText(searchText, geometry: geometry) != nil }
 		}
 		tableView.reloadData()
 	}
