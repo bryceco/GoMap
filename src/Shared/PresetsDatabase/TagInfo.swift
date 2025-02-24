@@ -58,12 +58,11 @@ class TagInfo {
 	class func taginfoFor(key: String, searchKeys: Bool, update: @escaping ([String]) -> Void) {
 		DispatchQueue.global(qos: .default).async(execute: {
 			let cleanKey = searchKeys ? key.trimmingCharacters(in: CharacterSet(charactersIn: ":")) : key
-			let abibase = "\(OSM_SERVER.taginfoUrl)api/4"
-			let urlText = searchKeys
-				? "\(abibase)/keys/all?query=\(cleanKey)&page=1&rp=25&sortname=count_all&sortorder=desc"
-				: "\(abibase)/key/values?key=\(cleanKey)&page=1&rp=25&sortname=count_all&sortorder=desc"
-			guard let url = URL(string: urlText),
-			      let rawData = try? Data(contentsOf: url)
+			let abibase = OSM_SERVER.taginfoUrl.appendingPathComponent("api/4")
+			let url = abibase.appendingPathComponent(searchKeys
+				? "keys/all?query=\(cleanKey)&page=1&rp=25&sortname=count_all&sortorder=desc"
+				: "key/values?key=\(cleanKey)&page=1&rp=25&sortname=count_all&sortorder=desc")
+			guard let rawData = try? Data(contentsOf: url)
 			else { return }
 
 			let json = try? JSONSerialization.jsonObject(with: rawData, options: []) as? [String: Any]
@@ -127,15 +126,14 @@ class TagInfo {
 	// search the taginfo database
 	class func wikiInfoFor(key: String, value: String, update: @escaping (String) -> Void) {
 		DispatchQueue.global(qos: .default).async(execute: {
-			let abibase = "\(OSM_SERVER.taginfoUrl)api/4/"
-			let urlText: String
+			let abibase = OSM_SERVER.taginfoUrl.appendingPathComponent("api/4/")
+			let url: URL
 			if value == "" {
-				urlText = "\(abibase)key/wiki_pages?key=\(key)"
+				url = abibase.appendingPathComponent("key/wiki_pages?key=\(key)")
 			} else {
-				urlText = "\(abibase)tag/wiki_pages?key=\(key)&value=\(value)"
+				url = abibase.appendingPathComponent("tag/wiki_pages?key=\(key)&value=\(value)")
 			}
-			guard let url = URL(string: urlText),
-			      let rawData = try? Data(contentsOf: url)
+			guard let rawData = try? Data(contentsOf: url)
 			else { return }
 
 			let json = try? JSONSerialization.jsonObject(with: rawData, options: []) as? [String: Any]

@@ -19,8 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	weak var mapView: MapView!
 	private(set) var isAppUpgrade = false
 
-	let oAuth2 = OAuth2()
-
 	var userName: String? {
 		get { UserPrefs.shared.userName.value }
 		set { UserPrefs.shared.userName.value = newValue }
@@ -219,7 +217,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			   components.path == "/callback"
 			{
 				// OAuth result
-				oAuth2.redirectHandler(url: url, options: options)
+				OSM_SERVER.oAuth2?.redirectHandler(url: url, options: options)
 				return true
 			}
 

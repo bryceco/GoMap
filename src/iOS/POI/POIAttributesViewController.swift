@@ -225,15 +225,15 @@ class POIAttributesViewController: UITableViewController {
 			case .identifier:
 				let type = object.osmType.string
 				let ident = object.ident
-				urlString = "\(OSM_SERVER.queryURL)\(type)/\(ident)"
+				urlString = "\(OSM_SERVER.serverURL)\(type)/\(ident)"
 			case .user:
-				urlString = "\(OSM_SERVER.queryURL)user/\(object.user)"
+				urlString = "\(OSM_SERVER.serverURL)user/\(object.user)"
 			case .version:
 				let type = object.osmType.string
 				let ident = object.ident
-				urlString = "\(OSM_SERVER.queryURL)\(type)/\(ident)/history"
+				urlString = "\(OSM_SERVER.serverURL)\(type)/\(ident)/history"
 			case .changeset:
-				urlString = "\(OSM_SERVER.queryURL)changeset/\(object.changeset)"
+				urlString = "\(OSM_SERVER.serverURL)changeset/\(object.changeset)"
 			case .uid, .modified:
 				return
 			}

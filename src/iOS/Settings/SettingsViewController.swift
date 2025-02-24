@@ -42,7 +42,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 		if let userName = appDelegate.userName {
 			username.text = userName
 		} else {
-			appDelegate.oAuth2.getUserDetails(callback: { dict in
+			OSM_SERVER.oAuth2?.getUserDetails(callback: { dict in
 				if let dict = dict,
 				   let name = dict["display_name"] as? String
 				{
@@ -71,7 +71,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 		self.tableView.deselectRow(at: indexPath, animated: true)
 
 		if let cell = tableView.cellForRow(at: indexPath), cell == openStreetMapAccountCell {
-			if AppDelegate.shared.oAuth2.isAuthorized() {
+			if OSM_SERVER.oAuth2?.isAuthorized() ?? false {
 				performSegue(withIdentifier: SegueIdentifier.accountInfo, sender: self)
 			} else {
 				performSegue(withIdentifier: SegueIdentifier.login, sender: self)

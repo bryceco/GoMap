@@ -147,7 +147,9 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 
 	@IBAction func commit(_ sender: Any?) {
 		let appDelegate = AppDelegate.shared
-		if !appDelegate.oAuth2.isAuthorized() {
+		guard let oAuth = OSM_SERVER.oAuth2,
+		      oAuth.isAuthorized()
+		else {
 			performSegue(withIdentifier: "loginSegue", sender: self)
 			return
 		}
@@ -207,7 +209,7 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 			   code == 401
 			{
 				// authentication error, so redirect to login page
-				appDelegate.oAuth2.removeAuthorization()
+				OSM_SERVER.oAuth2?.removeAuthorization()
 				performSegue(withIdentifier: "loginSegue", sender: self)
 				return
 			} else if let error = error {

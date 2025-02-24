@@ -1018,7 +1018,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		xml: DDXMLDocument?,
 		completion: @escaping (Result<Data, Error>) -> Void)
 	{
-		guard var request = AppDelegate.shared.oAuth2.urlRequest(string: url) else {
+		guard var request = OSM_SERVER.oAuth2?.urlRequest(string: url) else {
 			completion(.failure(OsmMapDataError.badURL(url)))
 			return
 		}

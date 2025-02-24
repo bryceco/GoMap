@@ -12,7 +12,7 @@ final class LoginViewController: UITableViewController {
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 
 	@IBAction func registerAccount(_ sender: Any) {
-		if let url = URL(string: "\(OSM_SERVER.queryURL)user/new") {
+		if let url = URL(string: "\(OSM_SERVER.serverURL)user/new") {
 			UIApplication.shared.open(
 				url,
 				options: [:],
@@ -21,7 +21,7 @@ final class LoginViewController: UITableViewController {
 	}
 
 	@IBAction func loginWithOAuth(_ sender: Any?) {
-		AppDelegate.shared.oAuth2.requestAccessFromUser(withVC: self, onComplete: { result in
+		OSM_SERVER.oAuth2?.requestAccessFromUser(withVC: self, onComplete: { result in
 			switch result {
 			case .success:
 				let alert = UIAlertController(

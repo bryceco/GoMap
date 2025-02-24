@@ -51,7 +51,7 @@ final class AccountInfoTableViewController: UITableViewController {
 		activityIndicator.startAnimating()
 		refreshAccountButton.isHidden = true
 
-		appDelegate.oAuth2.getUserDetails { [weak self] dict in
+		OSM_SERVER.oAuth2?.getUserDetails { [weak self] dict in
 			guard let strongSelf = self else { return }
 
 			strongSelf.activityIndicator.stopAnimating()
@@ -79,7 +79,7 @@ final class AccountInfoTableViewController: UITableViewController {
 		else {
 			return
 		}
-		let urlAsString = "\(OSM_SERVER.queryURL)/user/\(username)"
+		let urlAsString = "\(OSM_SERVER.serverURL)/user/\(username)"
 		guard let url = URL(string: urlAsString) else { return }
 
 		let safariViewController = SFSafariViewController(url: url)
@@ -110,7 +110,7 @@ final class AccountInfoTableViewController: UITableViewController {
 	}
 
 	@IBAction func didTapSignOutButton(_ sender: UIButton) {
-		appDelegate.oAuth2.removeAuthorization()
+		OSM_SERVER.oAuth2?.removeAuthorization()
 		appDelegate.userName = nil
 
 		navigationController?.popToRootViewController(animated: true)

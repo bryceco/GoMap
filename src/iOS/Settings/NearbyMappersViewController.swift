@@ -79,7 +79,7 @@ class NearbyMappersViewController: UITableViewController {
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let stats = mappers[indexPath.row]
-		let urlString = "\(OSM_SERVER.queryURL)user/\(stats.user)"
+		let urlString = "\(OSM_SERVER.serverURL)user/\(stats.user)"
 		let encodedUrlString = urlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
 		let url = URL(string: encodedUrlString ?? "")
 

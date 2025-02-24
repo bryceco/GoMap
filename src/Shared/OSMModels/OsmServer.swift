@@ -21,62 +21,60 @@ var OSM_SERVER: OsmServer = {
 		}
 		UserPrefs.shared.osmServerUrl.value = OSM_SERVER.apiURL
 		AppDelegate.shared.mapView.editorLayer.mapData.resetServer(OSM_SERVER)
+		AppDelegate.shared.userName = nil
 	}
 }
 
 struct OsmServer {
 	let fullName: String // friendly name of the server
-	let apiURL: String // used for API connections
-	let authURL: String // used for OAuth connections
+	let serverURL: String // e.g. www.openstreetmap.com
+	let apiURL: String // e.g. api.openstreetmap.com
+	let oAuth2: OAuth2?
 	let nominatimUrl: String
 	let osmchaUrl: String?
-	let client_id: String // used for OAuth connections
-
-	var queryURL: String { // used for things like "www.openstreetmap.org/user/bryceco"
-		return authURL
-	}
 
 	init(fullName: String,
+	     serverHost: String,
 	     apiHost: String,
-	     authHost: String,
 	     nominatimHost: String,
 	     osmchaHost: String?,
-	     client_id: String)
+	     oAuth_client_id: String)
 	{
 		self.fullName = fullName
 		apiURL = "https://" + apiHost + "/"
-		authURL = "https://" + authHost + "/"
+		serverURL = "https://" + serverHost + "/"
+		oAuth2 = OAuth2(serverURL: URL(string: serverURL)!,
+		                client_id: oAuth_client_id)
 		nominatimUrl = "https://" + nominatimHost + "/"
 		if let osmchaHost = osmchaHost {
 			osmchaUrl = "https://" + osmchaHost + "/"
 		} else {
 			osmchaUrl = nil
 		}
-		self.client_id = client_id
 	}
 
 	init(apiUrl: String) {
 		fullName = ""
 		apiURL = apiUrl
-		authURL = ""
+		serverURL = ""
+		oAuth2 = nil
 		nominatimUrl = ""
 		osmchaUrl = nil
-		client_id = ""
 	}
 
-	var taginfoUrl: String {
-		if var comps = URLComponents(string: authURL),
+	var taginfoUrl: URL {
+		if var comps = URLComponents(string: serverURL),
 		   let parts = comps.host?.split(separator: ".")
 		{
 			let suffix = parts.dropFirst()
 			let newParts = ["taginfo"] + suffix
 			comps.host = newParts.joined(separator: ".")
 			if let url = comps.url {
-				return url.absoluteString
+				return url
 			}
 		}
 		// This won't work but there's nothing we can do about it
-		return authURL
+		return URL(string: serverURL)!
 	}
 
 	static func serverNameCanonicalized(_ hostname: String) -> String {
@@ -109,30 +107,30 @@ struct OsmServer {
 
 let OsmServerList = [
 	OsmServer(fullName: "OpenStreetMap",
+	          serverHost: "www.openstreetmap.org",
 	          apiHost: "api.openstreetmap.org",
-	          authHost: "www.openstreetmap.org",
 	          nominatimHost: "nominatim.openstreetmap.org",
 	          osmchaHost: "osmcha.org",
-	          client_id: "mzRn5Z-X0nSptHgA3o5g30HeaaljTXfv0GMOLhmwqeo"),
+	          oAuth_client_id: "mzRn5Z-X0nSptHgA3o5g30HeaaljTXfv0GMOLhmwqeo"),
 
 	OsmServer(fullName: "OSM Dev Server",
+	          serverHost: "master.apis.dev.openstreetmap.org",
 	          apiHost: "api06.dev.openstreetmap.org",
-	          authHost: "master.apis.dev.openstreetmap.org",
 	          nominatimHost: "nominatim.openstreetmap.org",
 	          osmchaHost: nil,
-	          client_id: "SGsePsBukg7xPkIaqNIQlAgiAa3vjauIFkbcsPXB2Tg"),
+	          oAuth_client_id: "SGsePsBukg7xPkIaqNIQlAgiAa3vjauIFkbcsPXB2Tg"),
 
 	OsmServer(fullName: "OpenHistoricalMap",
+	          serverHost: "www.openhistoricalmap.org",
 	          apiHost: "www.openhistoricalmap.org",
-	          authHost: "www.openhistoricalmap.org",
 	          nominatimHost: "nominatim-api.openhistoricalmap.org",
 	          osmchaHost: "osmcha.openhistoricalmap.org",
-	          client_id: "UnjOHLFzRNc1VKeQJYz2ptqJu_K8fj2hVSsGkTLFjC4"),
+	          oAuth_client_id: "UnjOHLFzRNc1VKeQJYz2ptqJu_K8fj2hVSsGkTLFjC4"),
 
 	OsmServer(fullName: "OpenGeoFiction",
+	          serverHost: "opengeofiction.net",
 	          apiHost: "opengeofiction.net",
-	          authHost: "opengeofiction.net",
 	          nominatimHost: "nominatim.opengeofiction.net",
 	          osmchaHost: nil,
-	          client_id: "EwlSaN_GLSz6fhkncxU4GWtXG1NyEy2z63QER9ISGFA")
+	          oAuth_client_id: "EwlSaN_GLSz6fhkncxU4GWtXG1NyEy2z63QER9ISGFA")
 ]

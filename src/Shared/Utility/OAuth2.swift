@@ -10,8 +10,6 @@ import Foundation
 import SafariServices
 import UIKit
 
-let OAUTH_KEYCHAIN_IDENTIFIER = "OAuth_access_token"
-
 enum OAuthError: LocalizedError {
 	case errorMessasge(String)
 	case badRedirectUrl(String)
@@ -34,21 +32,31 @@ class OAuth2 {
 	private var state = ""
 	private(set) var authorizationHeader: (name: String, value: String)?
 
-	// These values are all computed dynamically based on the current server (kinda ugly)
-	var server: OsmServer { OSM_SERVER }
-	var client_id: String { server.client_id }
-	var serverURL: String { server.authURL }
-	var oauthUrl: URL { return URL(string: serverURL)!.appendingPathComponent("oauth2") }
+	let serverURL: URL
+	let client_id: String
 
-	init() {
-		if let token = KeyChain.getStringForIdentifier(OAUTH_KEYCHAIN_IDENTIFIER) {
+	var oauthUrl: URL { return serverURL.appendingPathComponent("oauth2") }
+	var keychainIdentifier: String {
+		let OAUTH_KEYCHAIN_IDENTIFIER = "OAuth_access_token"
+		if serverURL.host == "www.openstreetmap.org" {
+			return OAUTH_KEYCHAIN_IDENTIFIER
+		}
+		return "\(OAUTH_KEYCHAIN_IDENTIFIER):\(serverURL.host!)"
+	}
+
+	init(serverURL: URL,
+	     client_id: String)
+	{
+		self.serverURL = serverURL
+		self.client_id = client_id
+		if let token = KeyChain.getStringForIdentifier(keychainIdentifier) {
 			setAuthorizationToken(token: token)
 		}
 	}
 
 	private func setAuthorizationToken(token: String) {
 		authorizationHeader = (name: "Authorization", value: "Bearer \(token)")
-		_ = KeyChain.setString(token, forIdentifier: OAUTH_KEYCHAIN_IDENTIFIER)
+		_ = KeyChain.setString(token, forIdentifier: keychainIdentifier)
 	}
 
 	func isAuthorized() -> Bool {
@@ -56,7 +64,7 @@ class OAuth2 {
 	}
 
 	func removeAuthorization() {
-		KeyChain.deleteString(forIdentifier: OAUTH_KEYCHAIN_IDENTIFIER)
+		KeyChain.deleteString(forIdentifier: keychainIdentifier)
 		authorizationHeader = nil
 	}
 
@@ -178,8 +186,8 @@ class OAuth2 {
 
 	// If everything is working correctly this function will succeed in getting user details.
 	func getUserDetails(callback: @escaping ([String: Any]?) -> Void) {
-		let url = serverURL + "api/0.6/user/details.json"
-		if let request = urlRequest(string: url) {
+		let url = serverURL.appendingPathComponent("api/0.6/user/details.json")
+		if let request = urlRequest(url: url) {
 			URLSession.shared.data(with: request, completionHandler: { result in
 				DispatchQueue.main.async {
 					if let data = try? result.get(),
